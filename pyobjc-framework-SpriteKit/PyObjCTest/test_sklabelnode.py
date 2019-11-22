@@ -6,8 +6,8 @@ import objc
 if sys.maxsize > 2 ** 32:
     import SpriteKit
 
-    class TestSKKeyframeSequence (TestCase):
-        @min_os_level('10.9')
+    class TestSKKeyframeSequence(TestCase):
+        @min_os_level("10.9")
         def testConstants(self):
             self.assertEqual(SpriteKit.SKLabelVerticalAlignmentModeBaseline, 0)
             self.assertEqual(SpriteKit.SKLabelVerticalAlignmentModeCenter, 1)

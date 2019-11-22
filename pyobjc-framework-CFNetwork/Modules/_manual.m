@@ -1,5 +1,5 @@
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <CoreServices/CoreServices.h>
@@ -24,26 +24,16 @@ mod_release(const void* info)
     PyGILState_Release(state);
 }
 
-
 static CFStreamClientContext mod_CFStreamClientContext = {
-    0,
-    NULL,
-    (void*(*)(void*))mod_retain,
-    (void(*)(void*))mod_release,
-    NULL
-};
+    0, NULL, (void* (*)(void*))mod_retain, (void (*)(void*))mod_release, NULL};
 
-static CFHostClientContext mod_CFHostClientContext = {
-    0,
-    NULL,
-    mod_retain,
-    mod_release,
-    0
-};
+static CFHostClientContext mod_CFHostClientContext = {0, NULL, mod_retain, mod_release,
+                                                      0};
 
 #if PyObjC_BUILD_RELEASE >= 1005
 static void
-m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList, CFErrorRef error)
+m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
+                                         CFErrorRef error)
 {
     PyObject* context = (PyObject*)_context;
 
@@ -77,7 +67,8 @@ m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList, C
 #endif
 
 static void
-m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamError* error, void* _context)
+m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
+                       const CFStreamError* error, void* _context)
 {
     PyObject* context = (PyObject*)_context;
 
@@ -110,7 +101,8 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamEr
         return;
     }
 
-    PyObject* rv = PyObject_CallFunction(py_func, "NNNO", py_host, py_info, py_error, py_ctx);
+    PyObject* rv =
+        PyObject_CallFunction(py_func, "NNNO", py_host, py_info, py_error, py_ctx);
 
     if (rv == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -121,14 +113,14 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo, const CFStreamEr
     PyGILState_Release(state);
 }
 
-
 #if PyObjC_BUILD_RELEASE >= 1005
-  /* This function is available on 10.5 or later, but the prototype isn't in the headers on 10.5 */
+/* This function is available on 10.5 or later, but the prototype isn't in the headers
+ * on 10.5 */
 WEAK_LINKED_NAME_10_5(CFNetworkExecuteProxyAutoConfigurationScript)
 
 static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__unused__)),
-            PyObject* args)
+                                               PyObject* args)
 {
     CFStringRef script;
     CFURLRef url;
@@ -161,16 +153,15 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
 
     CFRunLoopSourceRef ref = NULL;
 
-    PyObjC_DURING
-        ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationScript)(
-                       script, url,
-                       m_CFProxyAutoConfigurationResultCallback,
-                       &context);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        ref = NULL;
-
-    PyObjC_ENDHANDLER
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationScript)(
+                script, url, m_CFProxyAutoConfigurationResultCallback, &context);
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            ref = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
@@ -189,7 +180,7 @@ WEAK_LINKED_NAME_10_5(CFNetworkExecuteProxyAutoConfigurationURL)
 
 static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unused__)),
-        PyObject* args)
+                                            PyObject* args)
 {
     CFURLRef script;
     CFURLRef url;
@@ -222,16 +213,15 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
 
     CFRunLoopSourceRef ref = NULL;
 
-    PyObjC_DURING
-        ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationURL)(
-            script, url,
-            m_CFProxyAutoConfigurationResultCallback,
-            &context);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ref = USE_10_5(CFNetworkExecuteProxyAutoConfigurationURL)(
+                script, url, m_CFProxyAutoConfigurationResultCallback, &context);
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
             ref = NULL;
-
-    PyObjC_ENDHANDLER
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
@@ -264,12 +254,13 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
     }
 
     if (callback == Py_None) {
-        PyObjC_DURING
-            ok = CFHostSetClient(host, NULL, NULL);
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-
-        PyObjC_ENDHANDLER
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                ok = CFHostSetClient(host, NULL, NULL);
+            } @catch (NSException* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
             return NULL;
@@ -286,16 +277,13 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
     CFHostClientContext context = mod_CFHostClientContext;
     context.info = py_context;
 
-
-    PyObjC_DURING
-        ok = CFHostSetClient(
-            host,
-            m_CFHostClientCallBack,
-            &context);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ok = CFHostSetClient(host, m_CFHostClientCallBack, &context);
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(py_context);
 
@@ -306,44 +294,32 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
     return PyBool_FromLong(!!ok);
 }
 
-
-
 static PyMethodDef mod_methods[] = {
 #if PyObjC_BUILD_RELEASE >= 1005
-    {
-        "CFNetworkExecuteProxyAutoConfigurationScript",
-        (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationScript,
-        METH_VARARGS,
-        "CFNetworkExecuteProxyAutoConfigurationScript(arg0, arg1, arg2, arg3)"
-    },
+    {"CFNetworkExecuteProxyAutoConfigurationScript",
+     (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationScript, METH_VARARGS,
+     "CFNetworkExecuteProxyAutoConfigurationScript(arg0, arg1, arg2, arg3)"},
 #endif /* OSX >= 10.5 */
 #if PyObjC_BUILD_RELEASE >= 1005
-    {
-        "CFNetworkExecuteProxyAutoConfigurationURL",
-        (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationURL,
-        METH_VARARGS,
-        "CFNetworkExecuteProxyAutoConfigurationURL(arg0, arg1, arg2, arg3)"
-    },
+    {"CFNetworkExecuteProxyAutoConfigurationURL",
+     (PyCFunction)m_CFNetworkExecuteProxyAutoConfigurationURL, METH_VARARGS,
+     "CFNetworkExecuteProxyAutoConfigurationURL(arg0, arg1, arg2, arg3)"},
 #endif /* OSX >= 10.5 */
 
-    {
-        "CFHostSetClient",
-        (PyCFunction)m_CFHostSetClient,
-        METH_VARARGS,
-        "CFHostSetClient(arg0, arg1, arg2)"
-    },
+    {"CFHostSetClient", (PyCFunction)m_CFHostSetClient, METH_VARARGS,
+     "CFHostSetClient(arg0, arg1, arg2)"},
 
-    { 0, 0, 0, }
-};
+    {
+        0,
+        0,
+        0,
+    }};
 
 PyObjC_MODULE_INIT(_manual)
 {
     PyObject* m;
 
-    m = PyObjC_MODULE_CREATE(_manual)
-    if (!m) {
-        PyObjC_INITERROR();
-    }
+    m = PyObjC_MODULE_CREATE(_manual) if (!m) { PyObjC_INITERROR(); }
 
     if (PyObjC_ImportAPI(m) < 0) {
         PyObjC_INITERROR();

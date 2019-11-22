@@ -2,10 +2,11 @@
 This module defines a number of context managers. These are meant to be used
 in the context of the with statement (introduced in Python 2.5).
 """
-__all__ = ('CGSavedGState', 'CGTransparencyLayer',  'CGContextPage')
+__all__ = ("CGSavedGState", "CGTransparencyLayer", "CGContextPage")
 import Quartz.CoreGraphics as CG
 
-class CGSavedGState (object):
+
+class CGSavedGState(object):
     """
     Context manager for saving and restoring the graphics state.
 
@@ -22,6 +23,7 @@ class CGSavedGState (object):
         finally:
             CGContextRestoreGState(context)
     """
+
     def __init__(self, context):
         self.context = context
 
@@ -33,7 +35,8 @@ class CGSavedGState (object):
         CG.CGContextRestoreGState(self.context)
         return False
 
-class CGTransparencyLayer (object):
+
+class CGTransparencyLayer(object):
     """
     Context manager for working in a transparancylayer.
 
@@ -50,7 +53,8 @@ class CGTransparencyLayer (object):
         finally:
             CGContextEndTransparencyLayer(context)
     """
-    def __init__(self, context, info, rect = None):
+
+    def __init__(self, context, info, rect=None):
         self.context = context
         self.info = info
         self.rect = rect
@@ -59,14 +63,17 @@ class CGTransparencyLayer (object):
         if self.rect is None:
             result = CG.CGContextBeginTransparencyLayer(self.context, self.info)
         else:
-            result = CG.CGContextBeginTransparencyLayerWithRect(self.context, self.rect, self.info)
+            result = CG.CGContextBeginTransparencyLayerWithRect(
+                self.context, self.rect, self.info
+            )
         return result
 
     def __exit__(self, exc_type, exc_value, exc_tp):
         CG.CGContextEndTransparencyLayer(self.context)
         return False
 
-class CGContextPage (object):
+
+class CGContextPage(object):
     """
     Context manager for saving and restoring the graphics state.
 
@@ -83,7 +90,8 @@ class CGContextPage (object):
         finally:
             CGContextEndPage(context)
     """
-    def __init__(self, context, mediaBox = None):
+
+    def __init__(self, context, mediaBox=None):
         self.context = context
         self.mediaBox = mediaBox
 

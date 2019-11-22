@@ -7,8 +7,8 @@ import objc
 from Cocoa import NSObject
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
-class WSTApplicationDelegate(NSObject):
 
+class WSTApplicationDelegate(NSObject):
     @objc.IBAction
     def newConnectionAction_(self, sender):
         """Action method fired when the user selects the 'new connection'

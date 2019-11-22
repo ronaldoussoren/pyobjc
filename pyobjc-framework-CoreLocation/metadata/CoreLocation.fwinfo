@@ -146,7 +146,7 @@
      {
       "args": {
        "0": {
-        "type_override": "{_CLLocationCoordinate2D=dd}"
+        "type_override": "{CLLocationCoordinate2D=dd}"
        }
       },
       "class_method": false,
@@ -155,7 +155,7 @@
      {
       "class_method": false,
       "retval": {
-       "type_override": "{_CLLocationCoordinate2D=dd}"
+       "type_override": "{CLLocationCoordinate2D=dd}"
       },
       "selector": "coordinate"
      }

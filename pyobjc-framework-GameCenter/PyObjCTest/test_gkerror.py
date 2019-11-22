@@ -5,8 +5,8 @@ import sys
 if sys.maxsize > 2 ** 32:
     import GameCenter
 
-    class TestGKError (TestCase):
-        @min_os_level('10.8')
+    class TestGKError(TestCase):
+        @min_os_level("10.8")
         def testConstants10_8(self):
             self.assertIsInstance(GameCenter.GKErrorDomain, unicode)
 
@@ -37,6 +37,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(GameCenter.GKErrorInvitationsDisabled, 25)
             self.assertEqual(GameCenter.GKErrorPlayerPhotoFailure, 26)
             self.assertEqual(GameCenter.GKErrorUbiquityContainerUnavailable, 27)
+
 
 if __name__ == "__main__":
     main()

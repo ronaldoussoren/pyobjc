@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 import NetFS
 
 
-class TestNetFS (TestCase):
+class TestNetFS(TestCase):
     def testConstants(self):
         self.assertEqual(NetFS.kNetFSAuthenticationInfoKey, "AuthenticationInfo")
         self.assertEqual(NetFS.kNetFSServerDisplayNameKey, "ServerDisplayName")
@@ -11,7 +11,10 @@ class TestNetFS (TestCase):
         self.assertEqual(NetFS.kNetFSSupportsKerberosKey, "SupportsKerberos")
         self.assertEqual(NetFS.kNetFSGuestOnlyKey, "GuestOnly")
         self.assertEqual(NetFS.kNetFSNoMountAuthenticationKey, "NoMountAuthentication")
-        self.assertEqual(NetFS.kNetFSConnectedWithAuthenticationInfoKey, "ConnectedWithAuthenticationInfo")
+        self.assertEqual(
+            NetFS.kNetFSConnectedWithAuthenticationInfoKey,
+            "ConnectedWithAuthenticationInfo",
+        )
         self.assertEqual(NetFS.kNetFSConnectedAsUserKey, "MountedByUser")
         self.assertEqual(NetFS.kNetFSConnectedAsGuestKey, "MountedByGuest")
         self.assertEqual(NetFS.kNetFSConnectedMultiUserKey, "ConnectedMultiUser")
@@ -34,7 +37,9 @@ class TestNetFS (TestCase):
         self.assertEqual(NetFS.kNetFSChangePasswordKey, "ChangePassword")
         self.assertEqual(NetFS.kNetFSAllowLoopbackKey, "AllowLoopback")
         self.assertEqual(NetFS.kNetFSUseKerberosKey, "Kerberos")
-        self.assertEqual(NetFS.kNetFSMountedWithAuthenticationInfoKey, "MountedWithAuthenticationInfo")
+        self.assertEqual(
+            NetFS.kNetFSMountedWithAuthenticationInfoKey, "MountedWithAuthenticationInfo"
+        )
         self.assertEqual(NetFS.kNetFSMountedByUserKey, "MountedByUser")
         self.assertEqual(NetFS.kNetFSMountedByGuestKey, "MountedByGuest")
         self.assertEqual(NetFS.kNetFSMountedMultiUserKey, "MountedMultiUser")
@@ -61,25 +66,25 @@ class TestNetFS (TestCase):
         self.assertEqual(NetFS.kNetFSOpenURLMountKey, "OpenURLMount")
         self.assertEqual(NetFS.kNetFSMountedURLKey, "MountedURL")
 
-
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         self.assertArgIsOut(NetFS.NetFSMountURLSync, 6)
 
-        NetFSMountURLBlock = b'vi^v@'
+        NetFSMountURLBlock = b"vi^v@"
 
         self.assertArgIsOut(NetFS.NetFSMountURLAsync, 6)
         self.assertArgIsBlock(NetFS.NetFSMountURLAsync, 8, NetFSMountURLBlock)
 
         NetFS.NetFSMountURLCancel
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
         NetFS.NetFSMountURLProbe
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testFunctions10_10(self):
         self.assertResultIsCFRetained(NetFS.NetFSCopyURLForRemountingVolume)
+
 
 if __name__ == "__main__":
     main()

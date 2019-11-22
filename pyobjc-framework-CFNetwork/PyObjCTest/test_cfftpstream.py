@@ -1,8 +1,8 @@
 from CFNetwork import *
 from PyObjCTools.TestSupport import *
 
-class TestCFFTPStream (TestCase):
 
+class TestCFFTPStream(TestCase):
     def testConstants(self):
         self.assertIsInstance(kCFStreamErrorDomainFTP, (int, long))
         self.assertIsInstance(kCFStreamPropertyFTPUserName, unicode)
@@ -30,11 +30,11 @@ class TestCFFTPStream (TestCase):
         self.assertResultIsCFRetained(CFReadStreamCreateWithFTPURL)
         url = CFURLCreateWithString(None, "ftp://ftp.python.org/", None)
         self.assertIsInstance(url, CFURLRef)
-        ftp = CFReadStreamCreateWithFTPURL(None,  url)
+        ftp = CFReadStreamCreateWithFTPURL(None, url)
         self.assertIsInstance(ftp, CFReadStreamRef)
 
-        buf = b'-rw-r--r--  1 ronald  staff  1957 Mar 31 07:22 test_cfftpstream.py\r\n'
-        self.assertArgHasType(CFFTPCreateParsedResourceListing, 1, b'n^v')
+        buf = b"-rw-r--r--  1 ronald  staff  1957 Mar 31 07:22 test_cfftpstream.py\r\n"
+        self.assertArgHasType(CFFTPCreateParsedResourceListing, 1, b"n^v")
         self.assertArgSizeInArg(CFFTPCreateParsedResourceListing, 1, 2)
         self.assertArgIsOut(CFFTPCreateParsedResourceListing, 3)
         cnt, out = CFFTPCreateParsedResourceListing(None, buf, len(buf), None)
@@ -45,8 +45,9 @@ class TestCFFTPStream (TestCase):
         self.assertResultIsCFRetained(CFWriteStreamCreateWithFTPURL)
         url = CFURLCreateWithString(None, "ftp://www.rivm.nl/incoming/test.txt", None)
         self.assertIsInstance(url, CFURLRef)
-        ftp = CFWriteStreamCreateWithFTPURL(None,  url)
+        ftp = CFWriteStreamCreateWithFTPURL(None, url)
         self.assertIsInstance(ftp, CFWriteStreamRef)
+
 
 if __name__ == "__main__":
     main()

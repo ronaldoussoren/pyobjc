@@ -10,6 +10,40 @@
 
   },
   "classes": {
+    "NSObject": {
+     "methods": [
+      {
+       "class_method": false,
+       "selector": "playerView:restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:",
+       "args": {
+	"1": {
+	 "callable": {
+ 	  "arguments": {
+      	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "Z" }
+	  },
+	  "retval": { "typestr": "v" }
+	 }
+        }
+       }
+      },
+      {
+       "class_method": false,
+       "selector": "pictureInPictureController:restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:",
+       "args": {
+	"1": {
+	 "callable": {
+ 	  "arguments": {
+      	   "0": { "typestr": "^v" },
+	   "1": { "typestr": "Z" }
+	  },
+	  "retval": { "typestr": "v" }
+	 }
+        }
+       }
+      }
+     ]
+    },
     "AVRoutePickerView": {
      "methods": [
          {

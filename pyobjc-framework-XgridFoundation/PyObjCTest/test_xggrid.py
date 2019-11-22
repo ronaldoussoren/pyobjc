@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
-class TestXGGrid (TestCase):
+
+class TestXGGrid(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(XGGrid.isDefault)
 

@@ -9,6 +9,10 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 These bindings are accessed through the ``QTKit`` package (that is, ``import QTKit``).
 
+.. note::
+
+   This framework was removed in macOS 10.15
+
 API Notes
 ---------
 

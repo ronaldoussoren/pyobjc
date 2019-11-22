@@ -16,9 +16,8 @@ static size_t Decimal_Encoding_Len = 0;
 static PyObject* _NSDecimalNumber_Class = NULL;
 
 typedef struct {
-    PyObject_HEAD
-    NSDecimal value;
-    NSDecimalNumber *objc_value;
+    PyObject_HEAD NSDecimal value;
+    NSDecimalNumber* objc_value;
 } DecimalObject;
 
 #define Decimal_Value(v) ((DecimalObject*)(v))->value
@@ -47,113 +46,92 @@ static PyObject* decimal_round(PyObject* self, PyObject* args, PyObject* kwds);
 static Py_hash_t decimal_hash(PyObject* o);
 
 static PyNumberMethods decimal_asnumber = {
-    .nb_add             = decimal_add,
-    .nb_subtract        = decimal_subtract,
-    .nb_multiply        = decimal_multiply,
-    .nb_power           = decimal_power,
-    .nb_negative        = decimal_negative,
-    .nb_positive        = decimal_positive,
-    .nb_absolute        = decimal_absolute,
-#if PY_MAJOR_VERSION == 2
-    .nb_nonzero         = decimal_nonzero,
-#else /* PY_MAJOR_VERSION == 3 */
-    .nb_bool            = decimal_nonzero,
-#endif /* PY_MAJOR_VERSION == 3 */
-    .nb_floor_divide    = decimal_floordivide,
-    .nb_true_divide     = decimal_divide,
-
-#if PY_MAJOR_VERSION == 2
-    .nb_divide          = decimal_divide,
-    .nb_coerce          = decimal_coerce,
-
-#endif /* PY_MAJOR_VERSION == 2 */
+    .nb_add = decimal_add,
+    .nb_subtract = decimal_subtract,
+    .nb_multiply = decimal_multiply,
+    .nb_power = decimal_power,
+    .nb_negative = decimal_negative,
+    .nb_positive = decimal_positive,
+    .nb_absolute = decimal_absolute,
+    .nb_bool = decimal_nonzero,
+    .nb_floor_divide = decimal_floordivide,
+    .nb_true_divide = decimal_divide,
 };
 
-static NSDecimalNumber *
-Decimal_ObjCValue(PyObject *self) {
-    DecimalObject *pyself = (DecimalObject *)self;
-    NSDecimalNumber *res = pyself->objc_value;
+static NSDecimalNumber*
+Decimal_ObjCValue(PyObject* self)
+{
+    DecimalObject* pyself = (DecimalObject*)self;
+    NSDecimalNumber* res = pyself->objc_value;
 
     if (!res) {
-        res = pyself->objc_value = [[NSDecimalNumber alloc] initWithDecimal:Decimal_Value(self)];
+        res = pyself->objc_value =
+            [[NSDecimalNumber alloc] initWithDecimal:Decimal_Value(self)];
     }
     return res;
 }
 
-static PyObject *
-decimal_get__pyobjc_object__(PyObject *self, void *closure __attribute__((__unused__))) {
-    PyObject *rval = PyObjCObject_New(Decimal_ObjCValue(self), 0, YES);
+static PyObject*
+decimal_get__pyobjc_object__(PyObject* self, void* closure __attribute__((__unused__)))
+{
+    PyObject* rval = PyObjCObject_New(Decimal_ObjCValue(self), 0, YES);
     return rval;
 }
 
-static PyGetSetDef decimal_getseters[] = {
-    {
-        .name   = "__pyobjc_object__",
-        .get    = (getter)decimal_get__pyobjc_object__,
-        .doc    = "NSDecimalNumber instance",
-    },
-    {
-        .name   = NULL /* SENTINEL */
-    }
-};
+static PyGetSetDef decimal_getseters[] = {{
+                                              .name = "__pyobjc_object__",
+                                              .get = (getter)decimal_get__pyobjc_object__,
+                                              .doc = "NSDecimalNumber instance",
+                                          },
+                                          {
+                                              .name = NULL /* SENTINEL */
+                                          }};
 
-static PyMethodDef decimal_methods[] = {
-    {
-        .ml_name    = "as_int",
-        .ml_meth    = (PyCFunction)decimal_asint,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "Convert decimal to a Python int"
-    },
-    {
-        .ml_name    = "as_float",
-        .ml_meth    = (PyCFunction)decimal_asfloat,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "Convert decimal to a Python float"
-    },
-    {
-        .ml_name    = "__round__",
-        .ml_meth    = (PyCFunction)decimal_round,
-        .ml_flags   = METH_VARARGS|METH_KEYWORDS
-    },
-    {
-        .ml_name    = NULL /* SENTINEL */
-    }
-};
+static PyMethodDef decimal_methods[] = {{.ml_name = "as_int",
+                                         .ml_meth = (PyCFunction)decimal_asint,
+                                         .ml_flags = METH_NOARGS,
+                                         .ml_doc = "Convert decimal to a Python int"},
+                                        {.ml_name = "as_float",
+                                         .ml_meth = (PyCFunction)decimal_asfloat,
+                                         .ml_flags = METH_NOARGS,
+                                         .ml_doc = "Convert decimal to a Python float"},
+                                        {.ml_name = "__round__",
+                                         .ml_meth = (PyCFunction)decimal_round,
+                                         .ml_flags = METH_VARARGS | METH_KEYWORDS},
+                                        {
+                                            .ml_name = NULL /* SENTINEL */
+                                        }};
 
 static PyObject*
-decimal_getattro(PyObject *o, PyObject *attr_name)
+decimal_getattro(PyObject* o, PyObject* attr_name)
 {
     return PyObject_GenericGetAttr(o, attr_name);
 }
 
 static PyTypeObject Decimal_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "Foundation.NSDecimal",
-    .tp_basicsize   = sizeof (DecimalObject),
-    .tp_itemsize    = 0,
-    .tp_dealloc     = decimal_dealloc,
-    .tp_repr        = decimal_repr,
-    .tp_str         = decimal_repr,
-    .tp_as_number   = &decimal_asnumber,
-    .tp_hash        = decimal_hash,
-    .tp_getattro    = decimal_getattro,
-    .tp_setattro    = PyObject_GenericSetAttr,
-#if PY_MAJOR_VERSION == 2
-    .tp_flags       = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_RICHCOMPARE,
-#else /* PY_MAJOR_VERSION == 3 */
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-#endif /* PY_MAJOR_VERSION == 3 */
-    .tp_doc         = "NSDecimal wrapper",
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "Foundation.NSDecimal",
+    .tp_basicsize = sizeof(DecimalObject),
+    .tp_itemsize = 0,
+    .tp_dealloc = decimal_dealloc,
+    .tp_repr = decimal_repr,
+    .tp_str = decimal_repr,
+    .tp_as_number = &decimal_asnumber,
+    .tp_hash = decimal_hash,
+    .tp_getattro = decimal_getattro,
+    .tp_setattro = PyObject_GenericSetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_doc = "NSDecimal wrapper",
     .tp_richcompare = decimal_richcompare,
-    .tp_methods     = decimal_methods,
-    .tp_getset      = decimal_getseters,
-    .tp_new         = decimal_new,
+    .tp_methods = decimal_methods,
+    .tp_getset = decimal_getseters,
+    .tp_new = decimal_new,
 };
 
 #define Decimal_Check(obj) PyObject_TypeCheck(obj, &Decimal_Type)
 
 static void
-DecimalFromString(NSDecimal* aDecimal, NSString* aString, void* locale __attribute__((__unused__)))
+DecimalFromString(NSDecimal* aDecimal, NSString* aString,
+                  void* locale __attribute__((__unused__)))
 {
     NSDecimalNumber* num;
 
@@ -163,24 +141,24 @@ DecimalFromString(NSDecimal* aDecimal, NSString* aString, void* locale __attribu
 }
 
 static void
-DecimalFromComponents(NSDecimal* aDecimal, unsigned long long mantissa, unsigned short exponent, BOOL negative)
+DecimalFromComponents(NSDecimal* aDecimal, unsigned long long mantissa,
+                      unsigned short exponent, BOOL negative)
 {
     NSDecimalNumber* num;
 
-    num = [[NSDecimalNumber alloc]
-            initWithMantissa:mantissa
-            exponent:exponent
-            isNegative:negative];
+    num = [[NSDecimalNumber alloc] initWithMantissa:mantissa
+                                           exponent:exponent
+                                         isNegative:negative];
 
     *aDecimal = [num decimalValue];
     [num release];
 }
 
 static PyObject*
-decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args,
+            PyObject* kwds)
 {
     DecimalObject* self;
-
 
     self = PyObject_New(DecimalObject, &Decimal_Type);
     if (self == NULL) {
@@ -189,7 +167,8 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyOb
 
     memset(&self->value, 0, sizeof(self->value));
     self->objc_value = nil;
-    if ((args == NULL || PyTuple_Size(args) == 0) && (kwds == NULL || PyDict_Size(kwds) == 0)) {
+    if ((args == NULL || PyTuple_Size(args) == 0) &&
+        (kwds == NULL || PyDict_Size(kwds) == 0)) {
         DecimalFromComponents(&self->value, 0, 0, 0);
         return (PyObject*)self;
     }
@@ -206,7 +185,7 @@ decimal_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyOb
 static void
 decimal_dealloc(PyObject* self)
 {
-    [((DecimalObject *)self)->objc_value release];
+    [((DecimalObject*)self)->objc_value release];
     PyObject_Free(self);
 }
 
@@ -247,24 +226,6 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
             return 0;
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyInt_Check(pyValue)) {
-        long lng = PyInt_AsLong(pyValue);
-
-        if (lng < 0) {
-            mantissa = -lng;
-            exponent = 0;
-            negative = YES;
-
-        } else{
-            mantissa = lng;
-            exponent = 0;
-            negative = NO;
-        }
-
-        DecimalFromComponents(outResult, mantissa, exponent, negative);
-        return 0;
-#endif
     } else if (PyFloat_Check(pyValue)) {
         /* Explicit conversion from float to NSDecimal
          * first convert the float to a string using repr, that
@@ -272,36 +233,29 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
          * float.
          */
         NSString* stringVal;
-#if PY_MAJOR_VERSION == 2
-        PyObject* strVal = PyObject_Repr(pyValue);
-        PyObject* uniVal = NULL;
 
-        if (strVal == NULL) return -1;
-
-        uniVal = PyUnicode_FromEncodedObject(strVal, "ascii", "strict");
-        Py_DECREF(strVal);
-
-#else /* PY_MAJOR_VERSION == 2 */
         PyObject* uniVal = PyObject_Repr(pyValue);
-        if (uniVal == NULL) return -1;
-#endif /* PY_MAJOR_VERSION == 2 */
+        if (uniVal == NULL)
+            return -1;
 
-        if (uniVal == NULL) return -1;
+        if (uniVal == NULL)
+            return -1;
 
         stringVal = PyObjC_PythonToId(uniVal);
         Py_DECREF(uniVal);
 
-        PyObjC_DURING
-            DecimalFromString(outResult, stringVal, NULL);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                DecimalFromString(outResult, stringVal, NULL);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
-        PyObjC_ENDHANDLER
-
-        if (PyErr_Occurred()) return -1;
+        if (PyErr_Occurred())
+            return -1;
         return 0;
-
     }
 
     if (_NSDecimalNumber_Class == NULL) {
@@ -311,13 +265,15 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
         }
     }
 
-    if (_NSDecimalNumber_Class != NULL && PyObject_IsInstance(pyValue, _NSDecimalNumber_Class)) {
+    if (_NSDecimalNumber_Class != NULL &&
+        PyObject_IsInstance(pyValue, _NSDecimalNumber_Class)) {
         NSDecimalNumber* val = PyObjCObject_GetObject(pyValue);
         *outResult = [val decimalValue];
         return 0;
     }
 
-    PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
+    PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal",
+                 pyValue->ob_type->tp_name);
     return -1;
 }
 
@@ -327,8 +283,8 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
 static int
 decimal_init(PyObject* self, PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "mantissa", "exponent", "isNegative", NULL };
-static char* keywords2[] = { "string", NULL };
+    static char* keywords[] = {"mantissa", "exponent", "isNegative", NULL};
+    static char* keywords2[] = {"string", NULL};
     PyObject* pyMantissa;
     PyObject* pyExponent;
     PyObject* pyNegative;
@@ -338,12 +294,14 @@ static char* keywords2[] = { "string", NULL };
 
     ((DecimalObject*)self)->objc_value = nil;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO", keywords, &pyMantissa, &pyExponent, &pyNegative)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO", keywords, &pyMantissa,
+                                     &pyExponent, &pyNegative)) {
         PyObject* pyValue;
 
         PyErr_Clear();
         if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords2, &pyValue)) {
-            PyErr_SetString(PyExc_TypeError,
+            PyErr_SetString(
+                PyExc_TypeError,
                 "NSDecimal(value) or NSDecimal(mantissa, exponent, isNegative)");
             return -1;
         }
@@ -352,35 +310,32 @@ static char* keywords2[] = { "string", NULL };
             NSObject* value = PyObjC_PythonToId(pyValue);
 
             if ([value isKindOfClass:[NSDecimalNumber class]]) {
-                ((DecimalObject*)self)->value = [
-                    (NSDecimalNumber*)value decimalValue
-                ];
+                ((DecimalObject*)self)->value = [(NSDecimalNumber*)value decimalValue];
 
-                ((DecimalObject*)self)->objc_value =
-                    (NSDecimalNumber*)value;
+                ((DecimalObject*)self)->objc_value = (NSDecimalNumber*)value;
                 [value retain];
                 return 0;
             }
 
-            PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal", pyValue->ob_type->tp_name);
+            PyErr_Format(PyExc_TypeError, "cannot convert object of %s to NSDecimal",
+                         pyValue->ob_type->tp_name);
             return -1;
 
-        } else if (
-#if PY_MAJOR_VERSION == 2
-                PyString_Check(pyValue) ||
-#endif /* PY_MAJOR_VERSION == 2 */
-                PyUnicode_Check(pyValue)) {
+        } else if (PyUnicode_Check(pyValue)) {
 
             NSString* stringVal;
 
             stringVal = PyObjC_PythonToId(pyValue);
-            PyObjC_DURING
-                DecimalFromString(&Decimal_Value(self), stringVal, NULL);
-            PyObjC_HANDLER
-                PyObjCErr_FromObjC(localException);
-            PyObjC_ENDHANDLER
+            Py_BEGIN_ALLOW_THREADS
+                @try {
+                    DecimalFromString(&Decimal_Value(self), stringVal, NULL);
+                } @catch (NSObject* localException) {
+                    PyObjCErr_FromObjC(localException);
+                }
+            Py_END_ALLOW_THREADS
 
-            if (PyErr_Occurred()) return -1;
+            if (PyErr_Occurred())
+                return -1;
             return 0;
 
         } else {
@@ -397,14 +352,10 @@ static char* keywords2[] = { "string", NULL };
         return -1;
     }
 
-    DecimalFromComponents(&Decimal_Value(self),
-        mantissa,
-        exponent,
-        negative);
+    DecimalFromComponents(&Decimal_Value(self), mantissa, exponent, negative);
 
     return 0;
 }
-
 
 static Py_hash_t
 decimal_hash(PyObject* self)
@@ -419,7 +370,6 @@ decimal_hash(PyObject* self)
         return hash;
     }
 }
-
 
 static PyObject*
 decimal_richcompare(PyObject* self, PyObject* other, int type)
@@ -441,9 +391,8 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
             return PyBool_FromLong(1);
         }
 
-        PyErr_Format(PyExc_TypeError,
-            "Cannot compare NSDecimal and %s",
-            other->ob_type->tp_name);
+        PyErr_Format(PyExc_TypeError, "Cannot compare NSDecimal and %s",
+                     other->ob_type->tp_name);
         return NULL;
     }
 
@@ -454,96 +403,93 @@ decimal_richcompare(PyObject* self, PyObject* other, int type)
     res = NSDecimalCompare(&Decimal_Value(self), &Decimal_Value(other));
 
     switch (type) {
-    case Py_LT: return PyBool_FromLong(res == NSOrderedAscending);
-    case Py_LE: return PyBool_FromLong(res != NSOrderedDescending);
-    case Py_EQ: return PyBool_FromLong(res == NSOrderedSame);
-    case Py_NE: return PyBool_FromLong(res != NSOrderedSame);
-    case Py_GE: return PyBool_FromLong(res != NSOrderedAscending);
-    case Py_GT: return PyBool_FromLong(res == NSOrderedDescending);
+    case Py_LT:
+        return PyBool_FromLong(res == NSOrderedAscending);
+    case Py_LE:
+        return PyBool_FromLong(res != NSOrderedDescending);
+    case Py_EQ:
+        return PyBool_FromLong(res == NSOrderedSame);
+    case Py_NE:
+        return PyBool_FromLong(res != NSOrderedSame);
+    case Py_GE:
+        return PyBool_FromLong(res != NSOrderedAscending);
+    case Py_GT:
+        return PyBool_FromLong(res == NSOrderedDescending);
     default:
-            PyErr_SetString(PyExc_TypeError,
-                  "Bad comparison arg");
-            return NULL;
+        PyErr_SetString(PyExc_TypeError, "Bad comparison arg");
+        return NULL;
     }
 }
 
-
-static PyObject* decimal_asint(PyObject* self)
+static PyObject*
+decimal_asint(PyObject* self)
 {
     NSDecimalNumber* tmp = Decimal_ObjCValue(self);
-    return PyInt_FromLong([tmp longValue]);
+    return PyLong_FromLong([tmp longValue]);
 }
 
-static PyObject* decimal_asfloat(PyObject* self)
+static PyObject*
+decimal_asfloat(PyObject* self)
 {
     NSDecimalNumber* tmp = Decimal_ObjCValue(self);
     return PyFloat_FromDouble([tmp doubleValue]);
 }
 
-static PyObject* decimal_power(
-    PyObject* left __attribute__((__unused__)),
-    PyObject* right __attribute__((__unused__)),
-    PyObject* extra __attribute__((__unused__)))
+static PyObject*
+decimal_power(PyObject* left __attribute__((__unused__)),
+              PyObject* right __attribute__((__unused__)),
+              PyObject* extra __attribute__((__unused__)))
 {
-    PyErr_SetString(PyExc_TypeError,
-        "pow() and ** are not supported for NSDecimal");
+    PyErr_SetString(PyExc_TypeError, "pow() and ** are not supported for NSDecimal");
     return NULL;
 }
 
+#define TRY_COERCE(left, right)                                                          \
+    int r = decimal_coerce(&left, &right);                                               \
+    if (r == 1) {                                                                        \
+        Py_INCREF(Py_NotImplemented);                                                    \
+        return Py_NotImplemented;                                                        \
+    }
 
-#if PY_MAJOR_VERSION == 3
-#   define  TRY_COERCE(left, right) \
-        int r = decimal_coerce(&left, &right);  \
-        if (r == 1) {                           \
-            Py_INCREF(Py_NotImplemented);       \
-            return Py_NotImplemented;           \
-        }
-
-#else /* PY_MAJOR_VERSION == 2 */
-
-#   define  TRY_COERCE(left, right)
-
-#endif /* PY_MAJOR_VERSION == 2 */
-
-#define DECIMAL_OPERATOR(py_function, nsdecimal_function) \
-            static PyObject* py_function(PyObject* left, PyObject* right)                                       \
-            {                                                                                                   \
-                NSDecimal  result;                                                                              \
-                NSCalculationError err;                                                                         \
-                                                                                                                \
-                TRY_COERCE(left, right);                                                                        \
-                                                                                                                \
-                err = nsdecimal_function(&result, &Decimal_Value(left), &Decimal_Value(right), NSRoundPlain);   \
-                if (err == NSCalculationOverflow) {                                                             \
-                    PyErr_SetString(PyExc_OverflowError, "Numeric overflow");                                   \
-                    return NULL;                                                                                \
-                                                                                                                \
-                } else if (err == NSCalculationUnderflow) {                                                     \
-                    PyErr_SetString(PyExc_OverflowError, "Numeric underflow");                                  \
-                    return NULL;                                                                                \
-                                                                                                                \
-                } else  {                                                                                       \
-                    NSDecimalCompact(&result);                                                                  \
-                    return Decimal_New(&result);                                                                \
-                }                                                                                               \
-            }
+#define DECIMAL_OPERATOR(py_function, nsdecimal_function)                                \
+    static PyObject* py_function(PyObject* left, PyObject* right)                        \
+    {                                                                                    \
+        NSDecimal result;                                                                \
+        NSCalculationError err;                                                          \
+                                                                                         \
+        TRY_COERCE(left, right);                                                         \
+                                                                                         \
+        err = nsdecimal_function(&result, &Decimal_Value(left), &Decimal_Value(right),   \
+                                 NSRoundPlain);                                          \
+        if (err == NSCalculationOverflow) {                                              \
+            PyErr_SetString(PyExc_OverflowError, "Numeric overflow");                    \
+            return NULL;                                                                 \
+                                                                                         \
+        } else if (err == NSCalculationUnderflow) {                                      \
+            PyErr_SetString(PyExc_OverflowError, "Numeric underflow");                   \
+            return NULL;                                                                 \
+                                                                                         \
+        } else {                                                                         \
+            NSDecimalCompact(&result);                                                   \
+            return Decimal_New(&result);                                                 \
+        }                                                                                \
+    }
 
 DECIMAL_OPERATOR(decimal_add, NSDecimalAdd)
 DECIMAL_OPERATOR(decimal_subtract, NSDecimalSubtract)
 DECIMAL_OPERATOR(decimal_multiply, NSDecimalMultiply)
 DECIMAL_OPERATOR(decimal_divide, NSDecimalDivide)
 
-static PyObject* decimal_floordivide(PyObject* left, PyObject* right)
+static PyObject*
+decimal_floordivide(PyObject* left, PyObject* right)
 {
-    NSDecimal  result, result2;
+    NSDecimal result, result2;
     NSCalculationError err;
 
     TRY_COERCE(left, right);
 
-    err = NSDecimalDivide(&result,
-            &Decimal_Value(left),
-            &Decimal_Value(right),
-            NSRoundPlain);
+    err = NSDecimalDivide(&result, &Decimal_Value(left), &Decimal_Value(right),
+                          NSRoundPlain);
     if (err == NSCalculationOverflow) {
         PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
         return NULL;
@@ -558,7 +504,8 @@ static PyObject* decimal_floordivide(PyObject* left, PyObject* right)
     return Decimal_New(&result2);
 }
 
-static int decimal_nonzero(PyObject* self)
+static int
+decimal_nonzero(PyObject* self)
 {
     NSDecimal zero;
 
@@ -567,13 +514,15 @@ static int decimal_nonzero(PyObject* self)
     return NSDecimalCompare(&zero, &Decimal_Value(self)) == NSOrderedSame;
 }
 
-static PyObject* decimal_positive(PyObject* self)
+static PyObject*
+decimal_positive(PyObject* self)
 {
     Py_INCREF(self);
     return self;
 }
 
-static PyObject* decimal_negative(PyObject* self)
+static PyObject*
+decimal_negative(PyObject* self)
 {
     NSDecimal result;
     NSCalculationError err;
@@ -596,13 +545,13 @@ static PyObject* decimal_negative(PyObject* self)
     }
 }
 
-static PyObject* decimal_absolute(PyObject* self)
+static PyObject*
+decimal_absolute(PyObject* self)
 {
     NSDecimal result;
     NSCalculationError err;
     NSDecimal zero;
     DecimalFromComponents(&zero, 0, 0, 0);
-
 
     switch (NSDecimalCompare(&zero, &Decimal_Value(self))) {
     case NSOrderedSame:
@@ -611,14 +560,10 @@ static PyObject* decimal_absolute(PyObject* self)
         Py_INCREF(self);
         return self;
 
-    case NSOrderedDescending: ;
+    case NSOrderedDescending:;
     }
 
-
-    err = NSDecimalSubtract(&result,
-            &zero,
-            &Decimal_Value(self),
-            NSRoundPlain);
+    err = NSDecimalSubtract(&result, &zero, &Decimal_Value(self), NSRoundPlain);
     if (err == NSCalculationOverflow) {
         PyErr_SetString(PyExc_OverflowError, "Numeric overflow");
         return NULL;
@@ -633,9 +578,10 @@ static PyObject* decimal_absolute(PyObject* self)
     }
 }
 
-static PyObject* decimal_round(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject*
+decimal_round(PyObject* self, PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "digits", NULL };
+    static char* keywords[] = {"digits", NULL};
     Py_ssize_t digits = 0;
     NSDecimal result;
 
@@ -648,8 +594,8 @@ static char* keywords[] = { "digits", NULL };
     return Decimal_New(&result);
 }
 
-
-static int decimal_coerce(PyObject** l, PyObject** r)
+static int
+decimal_coerce(PyObject** l, PyObject** r)
 {
     PyObject* right = NULL;
     PyObject* left = NULL;
@@ -664,34 +610,44 @@ static int decimal_coerce(PyObject** l, PyObject** r)
 
     if (!Decimal_Check(*l)) {
         /* The test is needed to avoid silently converting strings */
-        if (PyBytes_Check(*l) || PyUnicode_Check(*l) || PyFloat_Check(*l)) goto error;
+        if (PyBytes_Check(*l) || PyUnicode_Check(*l) || PyFloat_Check(*l))
+            goto error;
 
         left = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
-        if (left == NULL) goto error;
+        if (left == NULL)
+            goto error;
 
         args = Py_BuildValue("(O)", *l);
-        if (args == NULL) goto error;
+        if (args == NULL)
+            goto error;
 
         res = decimal_init(left, args, NULL);
-        if (res == -1) goto error;
+        if (res == -1)
+            goto error;
 
-        Py_DECREF(args); args = NULL;
+        Py_DECREF(args);
+        args = NULL;
     }
 
     if (!Decimal_Check(*r)) {
         /* The test is needed to avoid silently converting strings */
-        if (PyBytes_Check(*r) || PyUnicode_Check(*r) || PyFloat_Check(*r)) goto error;
+        if (PyBytes_Check(*r) || PyUnicode_Check(*r) || PyFloat_Check(*r))
+            goto error;
 
         right = (PyObject*)PyObject_New(DecimalObject, &Decimal_Type);
-        if (right == NULL) goto error;
+        if (right == NULL)
+            goto error;
 
         args = Py_BuildValue("(O)", *r);
-        if (args == NULL) goto error;
+        if (args == NULL)
+            goto error;
 
         res = decimal_init(right, args, NULL);
-        if (res == -1) goto error;
+        if (res == -1)
+            goto error;
 
-        Py_DECREF(args); args = NULL;
+        Py_DECREF(args);
+        args = NULL;
     }
 
     if (left != NULL) {
@@ -715,7 +671,8 @@ error:
     return 1;
 }
 
-static int decimal_coerce_compare(PyObject** l, PyObject** r)
+static int
+decimal_coerce_compare(PyObject** l, PyObject** r)
 {
     if (PyFloat_Check(*l)) {
         NSDecimal tmp;
@@ -749,13 +706,13 @@ static inline int
 Decimal_Convert(PyObject* self, void* val)
 {
     if (Decimal_Check(self)) {
-         *(NSDecimal**)val = &Decimal_Value(self);
-         return 1;
+        *(NSDecimal**)val = &Decimal_Value(self);
+        return 1;
     }
-    PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'", Py_TYPE(self)->tp_name);
+    PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'",
+                 Py_TYPE(self)->tp_name);
     return 0;
 }
-
 
 static PyObject*
 Decimal_New(NSDecimal* aDecimal)
@@ -763,7 +720,8 @@ Decimal_New(NSDecimal* aDecimal)
     DecimalObject* result;
 
     result = PyObject_New(DecimalObject, &Decimal_Type);
-    if (result == NULL) return NULL;
+    if (result == NULL)
+        return NULL;
 
     result->objc_value = nil;
     result->value = *aDecimal;
@@ -786,20 +744,23 @@ depythonify_nsdecimal(PyObject* value, void* ptr)
         return 0;
 
     } else {
-        PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'", Py_TYPE(value)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'",
+                     Py_TYPE(value)->tp_name);
         return -1;
     }
 }
 
-int IS_DECIMAL(const char* typestr)
+int
+IS_DECIMAL(const char* typestr)
 {
-    return (strncmp(typestr, @encode(NSDecimal), sizeof(@encode(NSDecimal))-1) == 0) || (
-            Decimal_Encoding_Len != 0 && strncmp(typestr, Decimal_Encoding, Decimal_Encoding_Len) == 0);
+    return (strncmp(typestr, @encode(NSDecimal), sizeof(@encode(NSDecimal)) - 1) == 0) ||
+           (Decimal_Encoding_Len != 0 &&
+            strncmp(typestr, Decimal_Encoding, Decimal_Encoding_Len) == 0);
 }
 
 static PyObject*
-call_NSDecimalNumber_decimalNumberWithDecimal_(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSDecimalNumber_decimalNumberWithDecimal_(PyObject* method, PyObject* self,
+                                               PyObject* arguments)
 {
     struct objc_super super;
     NSDecimal* aDecimal;
@@ -809,17 +770,18 @@ call_NSDecimalNumber_decimalNumberWithDecimal_(
         return NULL;
     }
 
-    PyObjC_DURING
-        objc_superSetReceiver(super, object_getClass(PyObjCClass_GetClass(self)));
-        objc_superSetClass(super, object_getClass(PyObjCSelector_GetClass(method)));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, object_getClass(PyObjCClass_GetClass(self)));
+            objc_superSetClass(super, object_getClass(PyObjCSelector_GetClass(method)));
 
-        res = objc_msgSendSuper(&super,
-                PyObjCSelector_GetSelector(method),
-                *aDecimal);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        res = nil;
-    PyObjC_ENDHANDLER
+            res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), *aDecimal);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            res = nil;
+        }
+    Py_END_ALLOW_THREADS
 
     if (res == nil && PyErr_Occurred()) {
         return NULL;
@@ -829,8 +791,8 @@ call_NSDecimalNumber_decimalNumberWithDecimal_(
 }
 
 static PyObject*
-call_NSDecimalNumber_initWithDecimal_(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSDecimalNumber_initWithDecimal_(PyObject* method, PyObject* self,
+                                      PyObject* arguments)
 {
     struct objc_super super;
     NSDecimal* aDecimal;
@@ -840,17 +802,18 @@ call_NSDecimalNumber_initWithDecimal_(
         return NULL;
     }
 
-    PyObjC_DURING
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+            objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-        res = objc_msgSendSuper(&super,
-                PyObjCSelector_GetSelector(method),
-                *aDecimal);
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        res = nil;
-    PyObjC_ENDHANDLER
+            res = ((id(*)(struct objc_super*, SEL, NSDecimal))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), *aDecimal);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            res = nil;
+        }
+    Py_END_ALLOW_THREADS
 
     if (res == nil && PyErr_Occurred()) {
         return NULL;
@@ -860,11 +823,8 @@ call_NSDecimalNumber_initWithDecimal_(
 }
 
 static void
-imp_NSDecimalNumber_initWithDecimal_(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* callable)
+imp_NSDecimalNumber_initWithDecimal_(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                                     void** args, void* callable)
 {
     id self = *(id*)args[0];
     NSDecimal aDecimal = *(NSDecimal*)args[2];
@@ -879,21 +839,27 @@ imp_NSDecimalNumber_initWithDecimal_(
     PyGILState_STATE state = PyGILState_Ensure();
 
     arglist = PyTuple_New(2);
-    if (arglist == NULL) goto error;
+    if (arglist == NULL)
+        goto error;
 
     pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL) goto error;
+    if (pyself == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
     v = Decimal_New(&aDecimal);
-    if (v == NULL) goto error;
+    if (v == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 1, v);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist); arglist = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
-    if (result == NULL) goto error;
+    Py_DECREF(arglist);
+    arglist = NULL;
+    PyObjCObject_ReleaseTransient(pyself, cookie);
+    pyself = NULL;
+    if (result == NULL)
+        goto error;
 
     *pretval = PyObjC_PythonToId(result);
     Py_DECREF(result);
@@ -910,8 +876,7 @@ error:
 }
 
 static PyObject*
-call_NSDecimalNumber_decimalValue(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSDecimalNumber_decimalValue(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super super;
     NSDecimal aDecimal;
@@ -919,24 +884,26 @@ call_NSDecimalNumber_decimalValue(
         return NULL;
     }
 
-    PyObjC_DURING
-        objc_superSetReceiver(super, PyObjCObject_GetObject(self));
-        objc_superSetClass(super, PyObjCSelector_GetClass(method));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            objc_superSetReceiver(super, PyObjCObject_GetObject(self));
+            objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 #if defined(__i386__)
-        /* The call below doesn't work on i386, I'm not sure why.
-         * Because nobody will every subclass NSDecimalNumber this is not
-         * really a problem.
-         */
-        aDecimal = [PyObjCObject_GetObject(self) decimalValue];
+            /* The call below doesn't work on i386, I'm not sure why.
+             * Because nobody will every subclass NSDecimalNumber this is not
+             * really a problem.
+             */
+            aDecimal = [PyObjCObject_GetObject(self) decimalValue];
 #else
-        ((void(*)(void*, struct objc_super*, SEL))objc_msgSendSuper_stret)(&aDecimal, &super,
-                PyObjCSelector_GetSelector(method));
+            ((void (*)(void*, struct objc_super*, SEL))objc_msgSendSuper_stret)(
+                &aDecimal, &super, PyObjCSelector_GetSelector(method));
 #endif
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -946,11 +913,8 @@ call_NSDecimalNumber_decimalValue(
 }
 
 static void
-imp_NSDecimalNumber_decimalNumberWithDecimal_(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* callable)
+imp_NSDecimalNumber_decimalNumberWithDecimal_(ffi_cif* cif __attribute__((__unused__)),
+                                              void* resp, void** args, void* callable)
 {
     Class self = *(id*)args[0];
     NSDecimal aDecimal = *(NSDecimal*)args[2];
@@ -965,21 +929,27 @@ imp_NSDecimalNumber_decimalNumberWithDecimal_(
     PyGILState_STATE state = PyGILState_Ensure();
 
     arglist = PyTuple_New(2);
-    if (arglist == NULL) goto error;
+    if (arglist == NULL)
+        goto error;
 
     pyself = PyObjCClass_New(self);
-    if (pyself == NULL) goto error;
+    if (pyself == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
     v = Decimal_New(&aDecimal);
-    if (v == NULL) goto error;
+    if (v == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 1, v);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist); arglist = NULL;
-    Py_DECREF(pyself); pyself = NULL;
-    if (result == NULL) goto error;
+    Py_DECREF(arglist);
+    arglist = NULL;
+    Py_DECREF(pyself);
+    pyself = NULL;
+    if (result == NULL)
+        goto error;
 
     *pretval = PyObjC_PythonToId(result);
     Py_DECREF(result);
@@ -996,11 +966,8 @@ error:
 }
 
 static void
-imp_NSDecimalNumber_decimalValue(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* callable)
+imp_NSDecimalNumber_decimalValue(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                                 void** args, void* callable)
 {
     id self = *(id*)args[0];
     NSDecimal* pretval = (NSDecimal*)resp;
@@ -1015,16 +982,21 @@ imp_NSDecimalNumber_decimalValue(
     PyGILState_STATE state = PyGILState_Ensure();
 
     arglist = PyTuple_New(1);
-    if (arglist == NULL) goto error;
+    if (arglist == NULL)
+        goto error;
 
     v = PyObjC_IdToPython(self);
-    if (v == NULL) goto error;
+    if (v == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 0, v);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist); arglist = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
-    if (result == NULL) goto error;
+    Py_DECREF(arglist);
+    arglist = NULL;
+    PyObjCObject_ReleaseTransient(pyself, cookie);
+    pyself = NULL;
+    if (result == NULL)
+        goto error;
 
     Decimal_Convert(result, &res);
     if (res == NULL) {
@@ -1044,7 +1016,6 @@ error:
     }
     PyObjCErr_ToObjCWithGILState(&state);
 }
-
 
 int
 PyObjC_setup_nsdecimal(PyObject* m)
@@ -1071,39 +1042,34 @@ PyObjC_setup_nsdecimal(PyObject* m)
     Class classNSDecimalNumber = objc_lookUpClass("NSDecimalNumber");
     Class classNSNumber = objc_lookUpClass("NSNumber");
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSDecimalNumber,
-            @selector(initWithDecimal:),
-            call_NSDecimalNumber_initWithDecimal_,
-            imp_NSDecimalNumber_initWithDecimal_) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSDecimalNumber, @selector(initWithDecimal:),
+                                     call_NSDecimalNumber_initWithDecimal_,
+                                     imp_NSDecimalNumber_initWithDecimal_) < 0) {
         return -1;
     }
 
-    Class classNSDecimalNumberPlaceholder = objc_lookUpClass("NSDecimalNumberPlaceholder");
+    Class classNSDecimalNumberPlaceholder =
+        objc_lookUpClass("NSDecimalNumberPlaceholder");
     if (classNSDecimalNumberPlaceholder != nil) {
-        if (PyObjC_RegisterMethodMapping(
-            classNSDecimalNumberPlaceholder,
-            @selector(initWithDecimal:),
-            call_NSDecimalNumber_initWithDecimal_,
-            imp_NSDecimalNumber_initWithDecimal_) < 0) {
+        if (PyObjC_RegisterMethodMapping(classNSDecimalNumberPlaceholder,
+                                         @selector(initWithDecimal:),
+                                         call_NSDecimalNumber_initWithDecimal_,
+                                         imp_NSDecimalNumber_initWithDecimal_) < 0) {
 
             return -1;
         }
     }
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSDecimalNumber,
-            @selector(decimalNumberWithDecimal:),
-            call_NSDecimalNumber_decimalNumberWithDecimal_,
-            imp_NSDecimalNumber_decimalNumberWithDecimal_) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSDecimalNumber,
+                                     @selector(decimalNumberWithDecimal:),
+                                     call_NSDecimalNumber_decimalNumberWithDecimal_,
+                                     imp_NSDecimalNumber_decimalNumberWithDecimal_) < 0) {
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSNumber,
-            @selector(decimalValue),
-            call_NSDecimalNumber_decimalValue,
-            imp_NSDecimalNumber_decimalValue) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSNumber, @selector(decimalValue),
+                                     call_NSDecimalNumber_decimalValue,
+                                     imp_NSDecimalNumber_decimalValue) < 0) {
         return -1;
     }
 

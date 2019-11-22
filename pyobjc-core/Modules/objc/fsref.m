@@ -7,18 +7,17 @@
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-
 #if USE_TOOLBOX_OBJECT_GLUE
 
-  /* As of the 10.12 SDK it is no longer safe to inlcude pymactoolbox.h
-   * (due to an include that can no longer be resolved). Therefore
-   * provide local declarations.
-   */
-  /*#include "pymactoolbox.h"*/
+/* As of the 10.12 SDK it is no longer safe to inlcude pymactoolbox.h
+ * (due to an include that can no longer be resolved). Therefore
+ * provide local declarations.
+ */
+/*#include "pymactoolbox.h"*/
 
-extern int PyMac_GetFSRef(PyObject *, FSRef *);        /* argument parser for FSRef */
-extern PyObject *PyMac_BuildFSRef(FSRef *);            /* Convert FSRef to PyObject */
-extern PyObject *PyMac_Error(OSErr);                   /* Uses PyMac_GetOSErrException */
+extern int PyMac_GetFSRef(PyObject*, FSRef*); /* argument parser for FSRef */
+extern PyObject* PyMac_BuildFSRef(FSRef*);    /* Convert FSRef to PyObject */
+extern PyObject* PyMac_Error(OSErr);          /* Uses PyMac_GetOSErrException */
 
 #endif
 
@@ -45,7 +44,7 @@ extern PyObject *PyMac_Error(OSErr);                   /* Uses PyMac_GetOSErrExc
 typedef struct {
     PyObject_HEAD
 
-    FSRef ref;
+        FSRef ref;
 } PyObjC_FSRefObject;
 
 static PyObject*
@@ -55,9 +54,8 @@ fsref_as_bytes(PyObject* ref, void* closure __attribute__((__unused__)))
         PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
     }
 
-    return PyBytes_FromStringAndSize(
-        (char*)&((PyObjC_FSRefObject*)ref)->ref,
-        sizeof(FSRef));
+    return PyBytes_FromStringAndSize((char*)&((PyObjC_FSRefObject*)ref)->ref,
+                                     sizeof(FSRef));
 }
 
 static PyObject*
@@ -88,23 +86,15 @@ fsref_as_path(PyObject* ref)
         PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
     }
 
-    rc = FSRefMakePath( &((PyObjC_FSRefObject*)ref)->ref,
-            buffer, sizeof(buffer));
+    rc = FSRefMakePath(&((PyObjC_FSRefObject*)ref)->ref, buffer, sizeof(buffer));
     if (rc != 0) {
-#if (PY_MAJOR_VERSION == 2) && defined (USE_TOOLBOX_OBJECT_GLUE)
-        PyMac_Error(rc);
-
-#else /* (PY_MAJOR_VERSION == 3) || !defined (USE_TOOLBOX_OBJECT_GLUE) */
         PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
 
-#endif /* (PY_MAJOR_VERSION == 3) || !defined (USE_TOOLBOX_OBJECT_GLUE) */
         return NULL;
     }
 
-    return PyUnicode_DecodeUTF8((char*)buffer,
-            strlen((char*)buffer), NULL);
+    return PyUnicode_DecodeUTF8((char*)buffer, strlen((char*)buffer), NULL);
 }
-
 
 static PyObject*
 fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
@@ -117,94 +107,73 @@ fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
     if (PyUnicode_Check(path)) {
         value = PyUnicode_AsEncodedString(path, NULL, NULL);
 
-#if PY_MAJOR_VERSION == 2
-    } else if(PyString_Check(path)) {
-        value = path; Py_INCREF(path);
-#endif /* PY_MAJOR_VERSION == 2 */
-
     } else {
         PyErr_SetString(PyExc_TypeError, "Expecting string");
         return NULL;
     }
 
-    if (value == NULL) return NULL;
+    if (value == NULL)
+        return NULL;
 
     rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
     Py_DECREF(value);
     if (rc != 0) {
 
-#if (PY_MAJOR_VERSION == 2) && defined(USE_TOOLBOX_OBJECT_GLUE)
-        PyMac_Error(rc);
-
-#else /* (PY_MAJOR_VERSION == 3) || !defined(USE_TOOLBOX_OBJECT_GLUE) */
         PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
-
-#endif /* (PY_MAJOR_VERSION == 3) || !defined(USE_TOOLBOX_OBJECT_GLUE) */
-
         return NULL;
     }
 
     return PyObjC_decode_fsref(&result);
 }
 
-static PyGetSetDef fsref_getset[] = {
-    {
-        .name   = "data",
-        .get    = fsref_as_bytes,
-        .doc    = "bytes in the FSRef",
-    },
-    {
-        .name   = NULL /* SENTINEL */
-    }
-};
-
+static PyGetSetDef fsref_getset[] = {{
+                                         .name = "data",
+                                         .get = fsref_as_bytes,
+                                         .doc = "bytes in the FSRef",
+                                     },
+                                     {
+                                         .name = NULL /* SENTINEL */
+                                     }};
 
 static PyMethodDef fsref_methods[] = {
-    {
-        .ml_name    = "as_pathname",
-        .ml_meth    = (PyCFunction)fsref_as_path,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "as_pathname()\n" CLINIC_SEP "\nReturn POSIX path for this object (Unicode string)"
-    },
-    {
-        .ml_name    = "from_pathname",
-        .ml_meth    = (PyCFunction)fsref_from_path,
-        .ml_flags   = METH_O|METH_CLASS,
-        .ml_doc     = "from_pathname(path)\n" CLINIC_SEP "\nCreate FSRef instance for an POSIX path"
-    },
+    {.ml_name = "as_pathname",
+     .ml_meth = (PyCFunction)fsref_as_path,
+     .ml_flags = METH_NOARGS,
+     .ml_doc = "as_pathname()\n" CLINIC_SEP
+               "\nReturn POSIX path for this object (Unicode string)"},
+    {.ml_name = "from_pathname",
+     .ml_meth = (PyCFunction)fsref_from_path,
+     .ml_flags = METH_O | METH_CLASS,
+     .ml_doc =
+         "from_pathname(path)\n" CLINIC_SEP "\nCreate FSRef instance for an POSIX path"},
 
 #if USE_TOOLBOX_OBJECT_GLUE
-    {
-        .ml_name    = "as_carbon",
-        .ml_meth    = (PyCFunction)fsref_as_carbon,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "as_carbon()\n" CLINIC_SEP "\nReturn Carbon.File.FSRef instance for this object"
-    },
+    {.ml_name = "as_carbon",
+     .ml_meth = (PyCFunction)fsref_as_carbon,
+     .ml_flags = METH_NOARGS,
+     .ml_doc = "as_carbon()\n" CLINIC_SEP
+               "\nReturn Carbon.File.FSRef instance for this object"},
 #endif /* USE_TOOLBOX_OBJECT_GLUE */
 
     {
-        .ml_name    = "__sizeof__",
-        .ml_meth    = (PyCFunction)fsref_sizeof,
-        .ml_flags   = METH_NOARGS,
+        .ml_name = "__sizeof__",
+        .ml_meth = (PyCFunction)fsref_sizeof,
+        .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name    = NULL /* SENTINEL */
-    }
-};
-
+        .ml_name = NULL /* SENTINEL */
+    }};
 
 PyTypeObject PyObjC_FSRefType = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "objc.FSRef",
-    .tp_basicsize   = sizeof(PyObjC_FSRefObject),
-    .tp_itemsize    = 0,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_setattro    = PyObject_GenericSetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_methods     = fsref_methods,
-    .tp_getset      = fsref_getset,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.FSRef",
+    .tp_basicsize = sizeof(PyObjC_FSRefObject),
+    .tp_itemsize = 0,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_setattro = PyObject_GenericSetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_methods = fsref_methods,
+    .tp_getset = fsref_getset,
 };
-
 
 int
 PyObjC_encode_fsref(PyObject* value, void* buffer)
@@ -227,12 +196,10 @@ PyObjC_encode_fsref(PyObject* value, void* buffer)
     return -1;
 }
 
-
 PyObject*
 PyObjC_decode_fsref(void* buffer)
 {
-    PyObjC_FSRefObject* result = PyObject_New(
-            PyObjC_FSRefObject, &PyObjC_FSRefType);
+    PyObjC_FSRefObject* result = PyObject_New(PyObjC_FSRefObject, &PyObjC_FSRefType);
 
     if (result == NULL) {
         return NULL;

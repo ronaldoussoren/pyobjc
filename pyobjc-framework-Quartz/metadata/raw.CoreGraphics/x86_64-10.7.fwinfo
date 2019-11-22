@@ -2359,7 +2359,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -2580,7 +2580,7 @@
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGContextGetPathBoundingBox": {
@@ -2691,7 +2691,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -2803,7 +2803,7 @@
      },
      {
       "name": "textEncoding",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -2893,7 +2893,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3132,7 +3132,7 @@
      },
      {
       "name": "quality",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3147,7 +3147,7 @@
      },
      {
       "name": "cap",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3185,7 +3185,7 @@
      },
      {
       "name": "join",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3299,7 +3299,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -3480,7 +3480,7 @@
      },
      {
       "name": "mode",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -5415,7 +5415,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "button",
@@ -5430,7 +5430,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "eventType",
@@ -5445,7 +5445,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -5457,7 +5457,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -5520,7 +5520,7 @@
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGEventSourceGetTypeID": {
@@ -5549,7 +5549,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "key",
@@ -5564,7 +5564,7 @@
     "args": [
      {
       "name": "stateID",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "eventType",
@@ -5835,7 +5835,7 @@
      },
      {
       "name": "format",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -5979,7 +5979,7 @@
      },
      {
       "name": "format",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "glyphs",
@@ -6679,7 +6679,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -6747,7 +6747,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -6803,7 +6803,7 @@
      },
      {
       "name": "intent",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -6918,7 +6918,7 @@
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGImageGetShouldInterpolate": {
@@ -7287,7 +7287,7 @@
      },
      {
       "name": "value",
-      "typestr": "^^(CGPDFObject=)"
+      "typestr": "^^{CGPDFObject=}"
      }
     ],
     "retval": {
@@ -7380,7 +7380,7 @@
      }
     ],
     "retval": {
-     "typestr": "^(CGPDFObject=)"
+     "typestr": "^{CGPDFObject=}"
     }
    },
    "CGPDFContentStreamGetStreams": {
@@ -7582,7 +7582,7 @@
         },
         {
          "typestr": [
-          "^(CGPDFObject=)",
+          "^{CGPDFObject=}",
           false
          ]
         },
@@ -7749,7 +7749,7 @@
      },
      {
       "name": "value",
-      "typestr": "^^(CGPDFObject=)"
+      "typestr": "^^{CGPDFObject=}"
      }
     ],
     "retval": {
@@ -8083,22 +8083,22 @@
     "args": [
      {
       "name": "object",
-      "typestr": "^(CGPDFObject=)"
+      "typestr": "^{CGPDFObject=}"
      }
     ],
     "retval": {
-     "typestr": "I"
+     "typestr": "i"
     }
    },
    "CGPDFObjectGetValue": {
     "args": [
      {
       "name": "object",
-      "typestr": "^(CGPDFObject=)"
+      "typestr": "^{CGPDFObject=}"
      },
      {
       "name": "type",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "value",
@@ -8192,7 +8192,7 @@
      },
      {
       "name": "box",
-      "typestr": "I"
+      "typestr": "i"
      }
     ],
     "retval": {
@@ -8229,7 +8229,7 @@
      },
      {
       "name": "box",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "rect",
@@ -8432,7 +8432,7 @@
      },
      {
       "name": "value",
-      "typestr": "^^(CGPDFObject=)"
+      "typestr": "^^{CGPDFObject=}"
      }
     ],
     "retval": {
@@ -8510,7 +8510,7 @@
      },
      {
       "name": "format",
-      "typestr": "^I"
+      "typestr": "^i"
      }
     ],
     "retval": {
@@ -9273,11 +9273,11 @@
      },
      {
       "name": "lineCap",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "lineJoin",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "miterLimit",
@@ -9531,7 +9531,7 @@
      },
      {
       "name": "tiling",
-      "typestr": "I"
+      "typestr": "i"
      },
      {
       "name": "isColored",
@@ -10897,7 +10897,7 @@
    "CGPathElement": {
     "fieldnames": [],
     "special": false,
-    "typestr": "{CGPathElement=I^{CGPoint=dd}}"
+    "typestr": "{CGPathElement=i^{CGPoint=dd}}"
    },
    "CGPatternCallbacks": {
     "fieldnames": [],

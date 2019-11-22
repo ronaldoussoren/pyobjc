@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import JavaScriptCore
 
-class TestWebKitAvailability (TestCase):
+
+class TestWebKitAvailability(TestCase):
     def test_constants(self):
         self.assertEqual(JavaScriptCore.WEBKIT_VERSION_1_0, 0x0100)
         self.assertEqual(JavaScriptCore.WEBKIT_VERSION_1_1, 0x0110)
@@ -13,6 +14,7 @@ class TestWebKitAvailability (TestCase):
         self.assertEqual(JavaScriptCore.WEBKIT_VERSION_3_1, 0x0310)
         self.assertEqual(JavaScriptCore.WEBKIT_VERSION_4_0, 0x0400)
         self.assertEqual(JavaScriptCore.WEBKIT_VERSION_LATEST, 0x9999)
+
 
 if __name__ == "__main__":
     main()

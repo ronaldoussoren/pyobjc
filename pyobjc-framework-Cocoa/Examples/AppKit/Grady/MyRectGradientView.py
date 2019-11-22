@@ -1,7 +1,8 @@
 from MyBaseGradientView import MyBaseGradientView
 import Cocoa
 
-class MyRectGradientView (MyBaseGradientView):
+
+class MyRectGradientView(MyBaseGradientView):
     def init(self):
         self = super(MyRectGradientView, self).init()
         if self is None:
@@ -15,7 +16,9 @@ class MyRectGradientView (MyBaseGradientView):
 
         # if the "Radial Gradient" checkbox is turned on, draw using 'myOffsetPt'
         if self.myIsRadial:
-            self.myGradient.drawInRect_relativeCenterPosition_(self.bounds(), self.myOffsetPt)
+            self.myGradient.drawInRect_relativeCenterPosition_(
+                self.bounds(), self.myOffsetPt
+            )
 
         else:
             self.myGradient.drawInRect_angle_(self.bounds(), self.myAngle)

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTSampleBuffer (TestCase):
+
+class TestQTSampleBuffer(TestCase):
     def testConstants(self):
         self.assertIsInstance(QTSampleBufferSMPTETimeAttribute, unicode)
         self.assertIsInstance(QTSampleBufferDateRecordedAttribute, unicode)
@@ -15,7 +15,6 @@ class TestQTSampleBuffer (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(QTSampleBuffer.getAudioStreamPacketDescriptions_inRange_)
-
 
 
 if __name__ == "__main__":

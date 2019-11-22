@@ -30,9 +30,9 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     """
 
     testFiles = recursiveGlob(root, pathPattern)
-    testModules = [ x[len(root)+1:-3].replace('/', '.') for x in  testFiles ]
+    testModules = [x[len(root) + 1 : -3].replace("/", ".") for x in testFiles]
     if package is not None:
-        testModules = [(package + '.' + m) for m in testModules]
+        testModules = [(package + "." + m) for m in testModules]
 
     suites = []
 
@@ -40,11 +40,11 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
         try:
             module = __import__(modName)
         except ImportError as msg:
-            print("SKIP %s: %s"%(modName, msg))
+            print("SKIP %s: %s" % (modName, msg))
             continue
 
-        if '.' in modName:
-            for elem in modName.split('.')[1:]:
+        if "." in modName:
+            for elem in modName.split(".")[1:]:
                 module = getattr(module, elem)
 
         s = unittest.defaultTestLoader.loadTestsFromModule(module)
@@ -53,29 +53,28 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
     return unittest.TestSuite(suites)
 
 
-
 def makeTestSuite(use_system_libffi):
     import __main__
+
     topdir = dirname(__main__.__file__)
-    #if sys.version_info[0] == 3:
+    # if sys.version_info[0] == 3:
     #    del sys.path[1]
     #    deja_topdir = dirname(dirname(topdir))
-    #else:
+    # else:
     #    deja_topdir = topdir
     deja_topdir = topdir
 
-    deja_suite = dejagnu.testSuiteForDirectory(join(deja_topdir,
-        'libffi-src/tests/testsuite/libffi.call'))
+    deja_suite = dejagnu.testSuiteForDirectory(
+        join(deja_topdir, "libffi-src/tests/testsuite/libffi.call")
+    )
     print(deja_topdir)
 
-    plain_suite = importExternalTestCases("test_*.py",
-        join(topdir, 'PyObjCTest'), package='PyObjCTest')
-
-    version_suite = importExternalTestCases("test%d_*.py"%(sys.version_info[0],),
-        join(topdir, 'PyObjCTest'), package='PyObjCTest')
+    plain_suite = importExternalTestCases(
+        "test_*.py", join(topdir, "PyObjCTest"), package="PyObjCTest"
+    )
 
     if use_system_libffi:
-        return unittest.TestSuite((plain_suite, version_suite))
+        return plain_suite
 
     else:
-        return unittest.TestSuite((plain_suite, version_suite, deja_suite))
+        return unittest.TestSuite((plain_suite, deja_suite))

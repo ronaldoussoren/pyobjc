@@ -99,7 +99,7 @@ class DotView(Cocoa.NSView):
     def drawRect_(self, rect):
         Cocoa.NSColor.whiteColor().set()
         Cocoa.NSRectFill(self.bounds())
-        origin = (self.center[0]-self.radius, self.center[1]-self.radius)
+        origin = (self.center[0] - self.radius, self.center[1] - self.radius)
         size = (2 * self.radius, 2 * self.radius)
         dotRect = (origin, size)
         self.color.set()

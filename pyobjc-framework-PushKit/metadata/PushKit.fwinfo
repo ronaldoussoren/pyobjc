@@ -1,0 +1,29 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "pushRegistry:didReceiveIncomingPushWithPayload:forType:withCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

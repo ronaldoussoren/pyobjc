@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSColorSpace (TestCase):
+
+class TestNSColorSpace(TestCase):
     def testConstants(self):
         self.assertEqual(NSUnknownColorSpaceModel, -1)
         self.assertEqual(NSGrayColorSpaceModel, 0)
@@ -22,10 +22,12 @@ class TestNSColorSpace (TestCase):
         self.assertEqual(NSColorSpaceModelIndexed, 5)
         self.assertEqual(NSColorSpaceModelPatterned, 6)
 
-
     def testMethods(self):
-        self.assertArgHasType(NSColorSpace.initWithColorSyncProfile_, 0, b"^{OpaqueCMProfileRef=}")
+        self.assertArgHasType(
+            NSColorSpace.initWithColorSyncProfile_, 0, b"^{OpaqueCMProfileRef=}"
+        )
         self.assertResultHasType(NSColorSpace.colorSyncProfile, b"^{OpaqueCMProfileRef=}")
+
 
 if __name__ == "__main__":
     main()

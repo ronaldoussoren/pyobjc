@@ -14,78 +14,83 @@ kSingleDateMode = 0
 kRangeDateMode = 1
 
 
-
-class MyWindowController (Cocoa.NSWindowController):
+class MyWindowController(Cocoa.NSWindowController):
     datePickerControl = objc.ivar()
     shrinkGrowFactor = objc.ivar.int()
 
-    outerBox                = objc.IBOutlet()
-    datePickerPlaceHolder   = objc.IBOutlet()
+    outerBox = objc.IBOutlet()
+    datePickerPlaceHolder = objc.IBOutlet()
 
-    dateResult1             = objc.IBOutlet()
-    dateResult2             = objc.IBOutlet()
-    dateResult3             = objc.IBOutlet()
-    dateResult4             = objc.IBOutlet()
-    dateResult5             = objc.IBOutlet()
+    dateResult1 = objc.IBOutlet()
+    dateResult2 = objc.IBOutlet()
+    dateResult3 = objc.IBOutlet()
+    dateResult4 = objc.IBOutlet()
+    dateResult5 = objc.IBOutlet()
 
     # appearance
-    pickerStylePopup        = objc.IBOutlet()
-    drawsBackgroundCheck    = objc.IBOutlet()
-    bezeledCheck            = objc.IBOutlet()
-    borderedCheck           = objc.IBOutlet()
-    backColorWell           = objc.IBOutlet()
-    textColorWell           = objc.IBOutlet()
-    fontSizePopup           = objc.IBOutlet()
+    pickerStylePopup = objc.IBOutlet()
+    drawsBackgroundCheck = objc.IBOutlet()
+    bezeledCheck = objc.IBOutlet()
+    borderedCheck = objc.IBOutlet()
+    backColorWell = objc.IBOutlet()
+    textColorWell = objc.IBOutlet()
+    fontSizePopup = objc.IBOutlet()
 
     # date and time
-    dateElementChecks       = objc.IBOutlet()
-    timeElementChecks       = objc.IBOutlet()
-    overrideDateCheck       = objc.IBOutlet()
-    overrideDate            = objc.IBOutlet()
+    dateElementChecks = objc.IBOutlet()
+    timeElementChecks = objc.IBOutlet()
+    overrideDateCheck = objc.IBOutlet()
+    overrideDate = objc.IBOutlet()
 
     # date range
-    datePickerModeRadios    = objc.IBOutlet()
-    secondsRangeEdit        = objc.IBOutlet()
-    secondsRangeEditLabel   = objc.IBOutlet()
+    datePickerModeRadios = objc.IBOutlet()
+    secondsRangeEdit = objc.IBOutlet()
+    secondsRangeEditLabel = objc.IBOutlet()
 
-    minDatePicker           = objc.IBOutlet()
-    maxDatePicker           = objc.IBOutlet()
-    setMinDateButton        = objc.IBOutlet()
-    setMaxDateButton        = objc.IBOutlet()
-    clearMinDateButton      = objc.IBOutlet()
-    clearMaxDateButton      = objc.IBOutlet()
+    minDatePicker = objc.IBOutlet()
+    maxDatePicker = objc.IBOutlet()
+    setMinDateButton = objc.IBOutlet()
+    setMaxDateButton = objc.IBOutlet()
+    clearMinDateButton = objc.IBOutlet()
+    clearMaxDateButton = objc.IBOutlet()
 
     def awakeFromNib(self):
         # based our date formatter on CFDateFormatter: allows more configurability and better localization
-        Cocoa.NSDateFormatter.setDefaultFormatterBehavior_(Cocoa.NSDateFormatterBehavior10_4)
+        Cocoa.NSDateFormatter.setDefaultFormatterBehavior_(
+            Cocoa.NSDateFormatterBehavior10_4
+        )
 
         self.setupDatePickerControl_(Cocoa.NSClockAndCalendarDatePickerStyle)
 
         # setup the initial Cocoa.NSDatePickerElementFlags since we are using picker style:
         # Cocoa.NSClockAndCalendarDatePickerStyle
         flags = (
-                  Cocoa.NSYearMonthDatePickerElementFlag
-                | Cocoa.NSYearMonthDayDatePickerElementFlag
-                | Cocoa.NSEraDatePickerElementFlag
-                | Cocoa.NSHourMinuteDatePickerElementFlag
-                | Cocoa.NSHourMinuteSecondDatePickerElementFlag
-                | Cocoa.NSTimeZoneDatePickerElementFlag
-            )
+            Cocoa.NSYearMonthDatePickerElementFlag
+            | Cocoa.NSYearMonthDayDatePickerElementFlag
+            | Cocoa.NSEraDatePickerElementFlag
+            | Cocoa.NSHourMinuteDatePickerElementFlag
+            | Cocoa.NSHourMinuteSecondDatePickerElementFlag
+            | Cocoa.NSTimeZoneDatePickerElementFlag
+        )
         self.datePickerControl.setDatePickerElements_(flags)
 
-        self.datePickerModeRadios.cellWithTag_(1).setEnabled_(False)   # not currently implemened in 10.4.x and earlier
+        self.datePickerModeRadios.cellWithTag_(1).setEnabled_(
+            False
+        )  # not currently implemened in 10.4.x and earlier
 
         self.minDatePicker.setDateValue_(Cocoa.NSDate.date())
         self.maxDatePicker.setDateValue_(Cocoa.NSDate.distantFuture())
 
-        self.updateControls()        # force update of all UI elements and the picker itself
+        self.updateControls()  # force update of all UI elements and the picker itself
 
     def applicationShouldTerminateAfterLastWindowClosed_(self, sender):
         return True
 
     def setupDatePickerControl_(self, pickerStyle):
         # we need to re-create the picker control (due to a resize bug when switching between styles)
-        if self.datePickerControl is not None:        # hide and release the previous date picker, if any
+        if (
+            self.datePickerControl is not None
+        ):  # hide and release the previous date picker, if any
             self.datePickerControl.setHidden_(True)
             self.datePickerControl.setNeedsDisplay_(True)
             self.datePickerControl = None
@@ -97,11 +102,17 @@ class MyWindowController (Cocoa.NSWindowController):
         if self.datePickerControl is None:
             self.datePickerControl = Cocoa.NSDatePicker.alloc().initWithFrame_(frame)
 
-        self.datePickerControl.setFrameOrigin_(Cocoa.NSMakePoint(1,0))        # nudge the control placement a little
+        self.datePickerControl.setFrameOrigin_(
+            Cocoa.NSMakePoint(1, 0)
+        )  # nudge the control placement a little
 
-        self.datePickerControl.setDatePickerStyle_(pickerStyle)        # set our desired picker style
+        self.datePickerControl.setDatePickerStyle_(
+            pickerStyle
+        )  # set our desired picker style
 
-        self.datePickerPlaceHolder.addSubview_(self.datePickerControl)        # embed into our placeholder
+        self.datePickerPlaceHolder.addSubview_(
+            self.datePickerControl
+        )  # embed into our placeholder
         self.datePickerControl.setDrawsBackground_(True)
         self.datePickerControl.setBezeled_(True)
         self.datePickerControl.setBordered_(False)
@@ -115,7 +126,7 @@ class MyWindowController (Cocoa.NSWindowController):
         self.datePickerControl.setDateValue_(Cocoa.NSDate.date())
 
         self.datePickerControl.setNeedsDisplay_(True)
-        self.updateControls()        # force update of all UI elements and the picker itself
+        self.updateControls()  # force update of all UI elements and the picker itself
 
         # synch the picker style popup with the new style change
         self.pickerStylePopup.selectItemWithTag_(pickerStyle)
@@ -126,8 +137,7 @@ class MyWindowController (Cocoa.NSWindowController):
         #                self.datePickerControl.cell().setDelegate_(self)
 
         # we want to respond to date/time changes
-        self.datePickerControl.setAction_('datePickerAction:')
-
+        self.datePickerControl.setAction_("datePickerAction:")
 
     def updateDateResult(self):
         theDate = self.datePickerControl.dateValue()
@@ -174,7 +184,7 @@ class MyWindowController (Cocoa.NSWindowController):
             self.dateResult5.setStringValue_(formattedDateString)
 
     def updateControls(self):
-        self.datePickerControl.setNeedsDisplay_(True) # force it to update
+        self.datePickerControl.setNeedsDisplay_(True)  # force it to update
 
         self.updateDatePickerMode()
         self.updateDateTimeElementFlags()
@@ -192,16 +202,18 @@ class MyWindowController (Cocoa.NSWindowController):
         if tag == Cocoa.NSClockAndCalendarDatePickerStyle:
             # for this picker style, we need to grow the window to make room
 
-            windowFrame.size.height += self.shrinkGrowFactor;
-            windowFrame.origin.y -= self.shrinkGrowFactor;
+            windowFrame.size.height += self.shrinkGrowFactor
+            windowFrame.origin.y -= self.shrinkGrowFactor
 
-            boxFrame.size.height += self.shrinkGrowFactor;
+            boxFrame.size.height += self.shrinkGrowFactor
             self.outerBox.setFrame_(boxFrame)
 
             self.window().setFrame_display_animate_(windowFrame, True, True)
 
             # set our desired picker style
-            self.datePickerControl.setDatePickerStyle_(Cocoa.NSClockAndCalendarDatePickerStyle)
+            self.datePickerControl.setDatePickerStyle_(
+                Cocoa.NSClockAndCalendarDatePickerStyle
+            )
 
             # shows these last
             self.dateResult1.setHidden_(False)
@@ -228,11 +240,11 @@ class MyWindowController (Cocoa.NSWindowController):
 
                 self.window().setFrame_display_animate_(windowFrame, True, True)
 
-            self.setupDatePickerControl_(tag) # set our desired picker style
+            self.setupDatePickerControl_(tag)  # set our desired picker style
 
         self.datePickerControl.setHidden_(False)
 
-        self.updateControls()        # force update of all UI elements and the picker itself
+        self.updateControls()  # force update of all UI elements and the picker itself
 
     @objc.IBAction
     def setFontSize_(self, sender):
@@ -262,9 +274,13 @@ class MyWindowController (Cocoa.NSWindowController):
         else:
             self.datePickerControl.setDelegate_(None)
 
-        self.datePickerControl.setDateValue_(Cocoa.NSDate.date()) # force the delete "datePickerCell" to be called
+        self.datePickerControl.setDateValue_(
+            Cocoa.NSDate.date()
+        )  # force the delete "datePickerCell" to be called
 
-    def datePickerCell_validateProposedDateValue_timeInterval_(self, aDatePickerCell, proposedDateValue, proposedTimeInterval):
+    def datePickerCell_validateProposedDateValue_timeInterval_(
+        self, aDatePickerCell, proposedDateValue, proposedTimeInterval
+    ):
         controller = aDatePickerCell.delegate()
 
         if controller is self and aDatePickerCell is self.datePickerControl.cell():
@@ -297,7 +313,6 @@ class MyWindowController (Cocoa.NSWindowController):
     def setBordered_(self, sender):
         self.datePickerControl.setBordered_(sender.state())
 
-
     @objc.IBAction
     def setDateElementFlags_(self, sender):
         tag = sender.selectedCell().tag()
@@ -325,7 +340,7 @@ class MyWindowController (Cocoa.NSWindowController):
 
         self.datePickerControl.setDatePickerElements_(flags)
 
-        self.updateControls() # force update of all UI elements and the picker itself
+        self.updateControls()  # force update of all UI elements and the picker itself
 
     @objc.IBAction
     def setTimeElementFlags_(self, sender):
@@ -354,7 +369,7 @@ class MyWindowController (Cocoa.NSWindowController):
 
         self.datePickerControl.setDatePickerElements_(flags)
 
-        self.updateControls() # force update of all UI elements and the picker itself
+        self.updateControls()  # force update of all UI elements and the picker itself
 
     def updateDateTimeElementFlags(self):
         elementFlags = self.datePickerControl.datePickerElements()
@@ -375,13 +390,11 @@ class MyWindowController (Cocoa.NSWindowController):
         if (elementFlags & Cocoa.NSEraDatePickerElementFlag) != 0:
             self.dateElementChecks.selectCellWithTag_(2)
 
-
     @objc.IBAction
     def setMinDate_(self, sender):
         self.datePickerControl.setMinDate_(self.minDatePicker.dateValue())
         self.setMinDateButton.setEnabled_(False)
         self.clearMinDateButton.setEnabled_(True)
-
 
     @objc.IBAction
     def setMaxDate_(self, sender):
@@ -394,7 +407,6 @@ class MyWindowController (Cocoa.NSWindowController):
         self.datePickerControl.setMinDate_(NSDate.distantPast())
         self.clearMinDateButton.setEnabled_(False)
         self.setMinDateButton.setEnabled_(True)
-
 
     @objc.IBAction
     def clearMaxDate_(self, sender):
@@ -412,8 +424,7 @@ class MyWindowController (Cocoa.NSWindowController):
         elif tag == kRangeDateMode:
             self.datePickerControl.setDatePickerMode_(NSRangeDateMode)
 
-        self.updateControls() # force update of all UI elements and the picker itself
-
+        self.updateControls()  # force update of all UI elements and the picker itself
 
     def updateDatePickerMode(self):
         mode = self.datePickerControl.datePickerMode()
@@ -440,4 +451,4 @@ class MyWindowController (Cocoa.NSWindowController):
             self.datePickerControl.setTimeInterval_(numSeconds)
 
     def controlTextDidEndEditing_(self, notification):
-        self.updateDatePickerMode()        # force update of the date picker control
+        self.updateDatePickerMode()  # force update of the date picker control

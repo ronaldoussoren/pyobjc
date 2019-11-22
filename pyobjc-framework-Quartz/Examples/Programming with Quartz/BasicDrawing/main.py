@@ -22,6 +22,8 @@ import Shadings
 import ShadowsAndTransparencyLayers
 import Utilities
 
-import objc; objc.setVerbose(True)
+import objc
+
+objc.setVerbose(True)
 
 AppHelper.runEventLoop()

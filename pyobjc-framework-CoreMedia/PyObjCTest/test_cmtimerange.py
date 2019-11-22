@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMedia
 
-class TestCMTimeRange (TestCase):
+
+class TestCMTimeRange(TestCase):
     def test_structs(self):
         v = CoreMedia.CMTimeRange()
         self.assertEqual(v.start, CoreMedia.CMTime())
@@ -19,7 +20,7 @@ class TestCMTimeRange (TestCase):
         self.assertIsInstance(CoreMedia.kCMTimeRangeStartKey, unicode)
         self.assertIsInstance(CoreMedia.kCMTimeRangeDurationKey, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(CoreMedia.kCMTimeMappingInvalid, CoreMedia.CMTimeMapping)
 
@@ -56,7 +57,7 @@ class TestCMTimeRange (TestCase):
         CoreMedia.CMTIMEMAPPING_IS_INVALID
         CoreMedia.CMTIMEMAPPING_IS_EMPTY
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_functions10_11(self):
         CoreMedia.CMTimeMappingMake
         CoreMedia.CMTimeMappingMakeEmpty
@@ -69,9 +70,10 @@ class TestCMTimeRange (TestCase):
 
         CoreMedia.CMTimeMappingShow
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def test_functions10_14(self):
         CoreMedia.CMTimeFoldIntoRange
+
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,12 @@
 import types, itertools
 
+
 def type_string(obj):
     objType = type(obj)
     if objType is types.InstanceType:
         objType = obj.__class__
-    return getattr(objType, '__module__', '-') + '.' + objType.__name__
+    return getattr(objType, "__module__", "-") + "." + objType.__name__
+
 
 class NetRepr(object):
     def __init__(self, objectPool):
@@ -24,15 +26,17 @@ class NetRepr(object):
 
     def netrepr_exception(self, e):
         cls = e.__class__
-        if cls.__module__ == 'exceptions':
+        if cls.__module__ == "exceptions":
             rval = cls.__name__ + self.netrepr_tuple(e.args)
         else:
-            rval = 'Exception(%r)' % ('[Remote] %s.%s %s' % (cls.__module__, cls.__name__, e),)
+            rval = "Exception(%r)" % (
+                "[Remote] %s.%s %s" % (cls.__module__, cls.__name__, e),
+            )
         return rval
 
     def netrepr(self, obj):
         if obj is None:
-            return 'None'
+            return "None"
         objtype = type(obj)
         if objtype is int or objtype is long or objtype is float:
             return repr(obj)
@@ -45,13 +49,13 @@ class NetRepr(object):
                 cached = self.get(cache, obj_id, None)
                 if cached is None:
                     ident = self._identfactory.next()
-                    self.cache[obj_id] = '__cached__(%r)' % (obj_id,)
-                    cached = '__cache__(%r, %r)' % (obj_id, obj)
+                    self.cache[obj_id] = "__cached__(%r)" % (obj_id,)
+                    cached = "__cache__(%r, %r)" % (obj_id, obj)
                 return cached
         return self.netrepr_default(obj)
 
     def netrepr_default(self, obj):
-        method = getattr(obj, '__netrepr__', None)
+        method = getattr(obj, "__netrepr__", None)
         if method is None:
             method = self.objectPool.referenceForObject(obj).__netrepr__
         return method()
@@ -81,29 +85,28 @@ class BaseObjectPool(object):
         pool[ref] = pool.get(ref, 0) + 1
 
     def push(self):
-        #print "pushed pool"
+        # print "pushed pool"
         self.pools.append({})
 
     def pop(self):
         if not self.pools:
             raise RuntimeError("popped too many pools")
-        #print "popped pool"
+        # print "popped pool"
         pool = self.pools.pop()
         for ref, count in pool.iteritems():
             ref.release(count)
 
     def referenceForObject(self, obj):
-        raise TypeError("Can not create a reference to %r, the bridge is unidirectional" % (obj,))
+        raise TypeError(
+            "Can not create a reference to %r, the bridge is unidirectional" % (obj,)
+        )
 
 
 class RemoteObjectPool(BaseObjectPool):
     def __init__(self, writecode):
         BaseObjectPool.__init__(self)
         self.writecode = writecode
-        self.namespace = {
-            'None': None,
-            '__ref__': self.referenceForRemoteIdent,
-        }
+        self.namespace = {"None": None, "__ref__": self.referenceForRemoteIdent}
 
     def referenceForRemoteIdent(self, ident, type_string):
         rval = self.idents.get(ident)
@@ -117,9 +120,7 @@ class ObjectPool(BaseObjectPool):
         BaseObjectPool.__init__(self)
         self._identfactory = itertools.count()
         self.obj_ids = {}
-        self.namespace = {
-            '__obj__': self.objectForIdent,
-        }
+        self.namespace = {"__obj__": self.objectForIdent}
 
     def object_alloc(self, ref, obj_id):
         self.obj_ids[obj_id] = ref
@@ -148,7 +149,7 @@ class BaseObjectReference(object):
         self.retainCount = 1
 
     def retain(self, count=1):
-        #print "%r.retain(%d)" % (self, count)
+        # print "%r.retain(%d)" % (self, count)
         self.retainCount += count
         return self
 
@@ -161,18 +162,21 @@ class BaseObjectReference(object):
         self.retainCount = -1
 
     def release(self, count=1):
-        #print "%r.release(%d)" % (self, count)
+        # print "%r.release(%d)" % (self, count)
         newCount = self.retainCount - count
-        #print "  newCount = %d" % (newCount,)
+        # print "  newCount = %d" % (newCount,)
         if newCount == 0:
             self.dealloc()
         elif newCount < 0:
-            raise ValueError("Reference %r over-released (%r -> %r)" % (self, self.retainCount, newCount))
+            raise ValueError(
+                "Reference %r over-released (%r -> %r)"
+                % (self, self.retainCount, newCount)
+            )
         self.retainCount = newCount
         return self
 
     def autorelease(self):
-        #print "%s.autorelease()" % (self,)
+        # print "%s.autorelease()" % (self,)
         self.objectPool.autorelease(self)
         return self
 
@@ -208,6 +212,7 @@ class ObjectReference(BaseObjectReference):
 
 def test_netrepr():
     import compiler
+
     pool = ObjectPool()
     pool.push()
     netrepr = NetRepr(pool).netrepr
@@ -223,8 +228,10 @@ def test_netrepr():
     pool.pop()
     pool.push()
     assert ref.retainCount == 1
+
     def __ref__(ident, type_string):
         return pool.referenceForIdent(ident)
+
     netref = eval(refrepr)
     assert netref is ref
     assert netref.obj is object

@@ -2,10 +2,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import Contacts
 
-    class TestCNInstantMessageAddress (TestCase):
+    class TestCNInstantMessageAddress(TestCase):
         @min_os_level("10.11")
         def testConstants(self):
             self.assertIsInstance(Contacts.CNInstantMessageAddressUsernameKey, unicode)

@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTError (TestCase):
-    @min_os_level('10.5')
+
+class TestQTError(TestCase):
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(QTKitErrorDomain, unicode)
         self.assertIsInstance(QTErrorCaptureInputKey, unicode)
@@ -36,18 +36,19 @@ class TestQTError (TestCase):
         self.assertEqual(QTErrorExportNoSuchDirectoryOrFile, 1505)
         self.assertEqual(QTErrorExportIOError, 1506)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(QTErrorTimeKey, unicode)
         self.assertIsInstance(QTErrorFileSizeKey, unicode)
 
-    @expectedFailureIf(os_level_key(os_release()) >= os_level_key('10.6'))
-    @min_os_level('10.6')
+    @expectedFailureIf(os_level_key(os_release()) >= os_level_key("10.6"))
+    @min_os_level("10.6")
     def testConstants10_6_fail(self):
         try:
             self.assertIsInstance(QTErrorRecordingSuccessfullyFinishedKey, unicode)
         except NameError:
             self.fail("QTErrorRecordingSuccessfullyFinishedKey not defined")
+
 
 if __name__ == "__main__":
     main()

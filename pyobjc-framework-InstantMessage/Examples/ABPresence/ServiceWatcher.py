@@ -6,19 +6,26 @@ import objc
 kAddressBookPersonStatusChanged = "AddressBookPersonStatusChanged"
 kStatusImagesChanged = "StatusImagesChanged"
 
-class ServiceWatcher (Cocoa.NSObject):
+
+class ServiceWatcher(Cocoa.NSObject):
     def startMonitoring(self):
         nCenter = InstantMessage.IMService.notificationCenter()
         if nCenter is None:
             return None
 
         nCenter.addObserver_selector_name_object_(
-                self, b'imPersonStatusChangedNotification:',
-                InstantMessage.IMPersonStatusChangedNotification, None)
+            self,
+            b"imPersonStatusChangedNotification:",
+            InstantMessage.IMPersonStatusChangedNotification,
+            None,
+        )
 
         nCenter.addObserver_selector_name_object_(
-                self, b'imStatusImagesChangedAppearanceNotification:',
-                InstantMessage.IMStatusImagesChangedAppearanceNotification, None)
+            self,
+            b"imStatusImagesChangedAppearanceNotification:",
+            InstantMessage.IMStatusImagesChangedAppearanceNotification,
+            None,
+        )
 
     def stopMonitoring(self):
         nCenter = InstantMessage.IMService.notificationCenter()
@@ -40,8 +47,7 @@ class ServiceWatcher (Cocoa.NSObject):
 
         center = Cocoa.NSNotificationCenter.defaultCenter()
         for person in abPersons:
-            center.postNotificationName_object_(
-                    kAddressBookPersonStatusChanged, person)
+            center.postNotificationName_object_(kAddressBookPersonStatusChanged, person)
 
     # Received from IMService's custom notification center. Posted when the
     # user changes their preferred images for displaying status.
@@ -52,4 +58,5 @@ class ServiceWatcher (Cocoa.NSObject):
     # See "Class Methods" for IMService in this document.
     def imStatusImagesChangedAppearanceNotification_(self, notification):
         Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_(
-                kStatusImagesChanged, self)
+            kStatusImagesChanged, self
+        )

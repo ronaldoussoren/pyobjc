@@ -1,12 +1,16 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPasteboardHelper (NSObject):
-    def writingOptionsForType_pasteboard_(self, t, p): return 1
-    def readingOptionsForType_pasteboard_(self, t, p): return 1
 
-class TestNSPasteboard (TestCase):
+class TestNSPasteboardHelper(NSObject):
+    def writingOptionsForType_pasteboard_(self, t, p):
+        return 1
+
+    def readingOptionsForType_pasteboard_(self, t, p):
+        return 1
+
+
+class TestNSPasteboard(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSStringPboardType, unicode)
         self.assertIsInstance(NSFilenamesPboardType, unicode)
@@ -32,11 +36,11 @@ class TestNSPasteboard (TestCase):
         self.assertIsInstance(NSFindPboard, unicode)
         self.assertIsInstance(NSDragPboard, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(NSMultipleTextSelectionPboardType, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(NSPasteboardTypeTextFinderOptions, unicode)
 
@@ -60,7 +64,7 @@ class TestNSPasteboard (TestCase):
         self.assertResultIsBOOL(NSPasteboard.writeFileContents_)
         self.assertResultIsBOOL(NSPasteboard.writeFileWrapper_)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSPasteboardTypeString, unicode)
         self.assertIsInstance(NSPasteboardTypePDF, unicode)
@@ -80,18 +84,18 @@ class TestNSPasteboard (TestCase):
         self.assertIsInstance(NSPasteboardURLReadingFileURLsOnlyKey, unicode)
         self.assertIsInstance(NSPasteboardURLReadingContentsConformToTypesKey, unicode)
 
-        self.assertEqual(NSPasteboardWritingPromised, 1<<9)
+        self.assertEqual(NSPasteboardWritingPromised, 1 << 9)
 
         self.assertEqual(NSPasteboardReadingAsData, 0)
-        self.assertEqual(NSPasteboardReadingAsString, 1<<0)
-        self.assertEqual(NSPasteboardReadingAsPropertyList, 1<<1)
-        self.assertEqual(NSPasteboardReadingAsKeyedArchive, 1<<2)
+        self.assertEqual(NSPasteboardReadingAsString, 1 << 0)
+        self.assertEqual(NSPasteboardReadingAsPropertyList, 1 << 1)
+        self.assertEqual(NSPasteboardReadingAsKeyedArchive, 1 << 2)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertEqual(NSPasteboardContentsCurrentHostOnly, 1<<0)
+        self.assertEqual(NSPasteboardContentsCurrentHostOnly, 1 << 0)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(NSPasteboardNameGeneral, unicode)
         self.assertIsInstance(NSPasteboardNameFont, unicode)
@@ -101,8 +105,7 @@ class TestNSPasteboard (TestCase):
         self.assertIsInstance(NSPasteboardTypeURL, unicode)
         self.assertIsInstance(NSPasteboardTypeFileURL, unicode)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSPasteboard.writeObjects_)
         self.assertResultIsBOOL(NSPasteboard.canReadItemWithDataConformingToTypes_)
@@ -111,19 +114,23 @@ class TestNSPasteboard (TestCase):
         self.assertResultIsBOOL(NSPasteboard.setPropertyList_forType_)
         self.assertResultIsBOOL(NSPasteboard.setString_forType_)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSPasteboardWriting')
-        objc.protocolNamed('NSPasteboardReading')
+        objc.protocolNamed("NSPasteboardWriting")
+        objc.protocolNamed("NSPasteboardReading")
 
-    @min_sdk_level('10.14')
+    @min_sdk_level("10.14")
     def testProtocolObjects10_14(self):
-        objc.protocolNamed('NSPasteboardTypeOwner')
+        objc.protocolNamed("NSPasteboardTypeOwner")
 
     def testProtocols(self):
-        self.assertResultHasType(TestNSPasteboardHelper.writingOptionsForType_pasteboard_, objc._C_NSUInteger)
+        self.assertResultHasType(
+            TestNSPasteboardHelper.writingOptionsForType_pasteboard_, objc._C_NSUInteger
+        )
 
-        self.assertResultHasType(TestNSPasteboardHelper.readingOptionsForType_pasteboard_, objc._C_NSUInteger)
+        self.assertResultHasType(
+            TestNSPasteboardHelper.readingOptionsForType_pasteboard_, objc._C_NSUInteger
+        )
 
 
 if __name__ == "__main__":

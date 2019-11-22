@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from PubSub import *
 
-class TestPSFeedSettings (TestCase):
+
+class TestPSFeedSettings(TestCase):
     def testConstants(self):
         self.assertEqual(PSFeedSettingsIntervalDefault, 0.0)
         self.assertEqual(PSFeedSettingsIntervalNever, -1.0)
@@ -15,6 +15,7 @@ class TestPSFeedSettings (TestCase):
 
         self.assertResultIsBOOL(PSFeedSettings.downloadsEnclosures)
         self.assertArgIsBOOL(PSFeedSettings.setDownloadsEnclosures_, 0)
+
 
 if __name__ == "__main__":
     main()

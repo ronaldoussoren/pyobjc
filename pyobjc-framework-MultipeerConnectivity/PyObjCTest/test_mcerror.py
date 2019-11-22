@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import MultipeerConnectivity
 
-    class TestMCError (TestCase):
+    class TestMCError(TestCase):
         @min_os_level("10.10")
         def testContents(self):
             self.assertEqual(MultipeerConnectivity.MCErrorUnknown, 0)
@@ -14,6 +14,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MultipeerConnectivity.MCErrorTimedOut, 4)
             self.assertEqual(MultipeerConnectivity.MCErrorCancelled, 5)
             self.assertEqual(MultipeerConnectivity.MCErrorUnavailable, 6)
+
 
 if __name__ == "__main__":
     main()

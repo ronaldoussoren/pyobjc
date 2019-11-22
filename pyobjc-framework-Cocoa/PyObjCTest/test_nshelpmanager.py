@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSHelpManager (TestCase):
+
+class TestNSHelpManager(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSContextHelpModeDidActivateNotification, unicode)
         self.assertIsInstance(NSContextHelpModeDidDeactivateNotification, unicode)
@@ -12,7 +12,7 @@ class TestNSHelpManager (TestCase):
         self.assertArgIsBOOL(NSHelpManager.setContextHelpModeActive_, 0)
         self.assertResultIsBOOL(NSHelpManager.showContextHelpForObject_locationHint_)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSHelpManager.registerBooksInBundle_)
 

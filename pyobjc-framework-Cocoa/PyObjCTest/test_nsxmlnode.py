@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestXMLNode (TestCase):
+
+class TestXMLNode(TestCase):
     def testConstants(self):
         self.assertEqual(NSXMLInvalidKind, 0)
         self.assertEqual(NSXMLDocumentKind, 1)

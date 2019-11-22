@@ -949,6 +949,167 @@
      }
     ]
    },
+   "NEFilterPacketProvider": {
+    "methods": [
+     {
+      "selector": "packetHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "q" },
+	 "4": { "typestr": "n^v" },
+	 "5": { "typestr": "l" }
+        },
+	"retval": { "typestr": "q" }
+       }
+      }
+     },
+     {
+      "selector": "setPacketHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "q" },
+	  "4": { "typestr": "n^v" },
+	  "5": { "typestr": "l" }
+         },
+	 "retval": { "typestr": "q" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "NEFilterDataProvider": {
+    "methods": [
+     {
+      "selector": "applySettings:completionHandler:",
+      "class_method": true,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+         },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "NEDNSProxyManager": {
+    "methods": [
+     {
+      "selector": "saveToPreferencesWithCompletionHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+         },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "loadFromPreferencesWithCompletionHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+         },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "removeFromPreferencesWithCompletionHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+         },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "NETransparentProxyManager": {
+    "methods": [
+     {
+      "selector": "loadAllFromPreferencesWithCompletionHandler:",
+      "class_method": true,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+         },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "NEFilterProvider": {
+    "methods": [
+     {
+      "selector": "stopFilterWithReason:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" }
+         },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "startFilterWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+         },
+	 "retval": { "typestr": "v" }
+        }
+       }
+      }
+     }
+    ]
+   },
    "NEFilterProviderConfiguration": {
     "methods": [
      {

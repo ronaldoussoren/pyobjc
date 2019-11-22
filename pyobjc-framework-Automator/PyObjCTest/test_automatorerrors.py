@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Automator import *
 
-class TestAutomatorErrors (TestCase):
+
+class TestAutomatorErrors(TestCase):
     def testConstants(self):
         self.assertEqual(AMAutomatorErrorDomain, "com.apple.Automator")
         self.assertEqual(AMActionErrorKey, "AMActionErrorKey")
@@ -42,6 +42,7 @@ class TestAutomatorErrors (TestCase):
         self.assertEqual(AMConversionNotPossibleError, -300)
         self.assertEqual(AMConversionNoDataError, -301)
         self.assertEqual(AMConversionFailedError, -302)
+
 
 if __name__ == "__main__":
     main()

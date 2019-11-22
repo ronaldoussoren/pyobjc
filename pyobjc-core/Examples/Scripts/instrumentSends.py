@@ -9,11 +9,11 @@ all method calls. This file shows how to call that API.
 import objc
 import Foundation
 
-objc.loadBundleFunctions(Foundation.__bundle__, globals(),
-[
-    ('instrumentObjcMessageSends', objc._C_VOID +
-    objc._C_NSBOOL),
-])
+objc.loadBundleFunctions(
+    Foundation.__bundle__,
+    globals(),
+    [("instrumentObjcMessageSends", objc._C_VOID + objc._C_NSBOOL)],
+)
 
 # To enable
 #  - the logfile will be created as ``/tmp/msgSends-<PID>`` (where ``<PID>``

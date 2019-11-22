@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTTrack (TestCase):
+
+class TestQTTrack(TestCase):
     def testConstants(self):
         self.assertIsInstance(QTTrackBoundsAttribute, unicode)
         self.assertIsInstance(QTTrackCreationTimeAttribute, unicode)
@@ -31,6 +31,7 @@ class TestQTTrack (TestCase):
     def testMethods32Bit(self):
         self.assertArgIsOut(QTTrack.trackWithQuickTimeTrack_error_, 1)
         self.assertArgIsOut(QTTrack.initWithQuickTimeTrack_error_, 1)
+
 
 if __name__ == "__main__":
     main()

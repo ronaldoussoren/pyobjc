@@ -2,7 +2,8 @@ import objc
 from objc import super
 import Cocoa
 
-class MyWindowController (Cocoa.NSWindowController):
+
+class MyWindowController(Cocoa.NSWindowController):
     rectGradientView = objc.IBOutlet()
     bezierGradientView = objc.IBOutlet()
 
@@ -13,7 +14,6 @@ class MyWindowController (Cocoa.NSWindowController):
 
     radialCheck = objc.IBOutlet()
     radialExplainText = objc.IBOutlet()
-
 
     def initWithPath_(self, newPath):
         return super(MyWindowController, self).initWithWindowNibName_("TestWindow")

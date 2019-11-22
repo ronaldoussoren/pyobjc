@@ -10,8 +10,5 @@ setup(
     name="TableModelWithSearch",
     app=["main.py"],
     data_files=["English.lproj"],
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

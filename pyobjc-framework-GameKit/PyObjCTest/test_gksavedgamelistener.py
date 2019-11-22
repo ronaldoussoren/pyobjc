@@ -2,9 +2,11 @@ from PyObjCTools.TestSupport import *
 
 import GameKit
 
-class TestGKSavedGameListener (TestCase):
+
+class TestGKSavedGameListener(TestCase):
     def testProtocols(self):
-        objc.protocolNamed('GKSavedGameListener')
+        objc.protocolNamed("GKSavedGameListener")
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCIFilterGenerator (TestCase):
+
+class TestCIFilterGenerator(TestCase):
     def testConstants(self):
         self.assertIsInstance(kCIFilterGeneratorExportedKey, unicode)
         self.assertIsInstance(kCIFilterGeneratorExportedKeyTargetObject, unicode)

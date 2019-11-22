@@ -1,11 +1,11 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
 
     import CoreSpotlight
 
-    class TestCSSearchQuery (TestCase):
+    class TestCSSearchQuery(TestCase):
         def testConstants(self):
             self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeUnknown, -2000)
             self.assertEqual(CoreSpotlight.CSSearchQueryErrorCodeIndexUnreachable, -2001)
@@ -16,10 +16,14 @@ if sys.maxsize > 2**32:
 
         def testMethods(self):
             self.assertResultIsBOOL(CoreSpotlight.CSSearchQuery.isCancelled)
-            self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.foundItemsHandler, b'v@')
-            self.assertArgIsBlock(CoreSpotlight.CSSearchQuery.setFoundItemsHandler_, 0, b'v@')
-            self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.completionHandler, b'v@')
-            self.assertArgIsBlock(CoreSpotlight.CSSearchQuery.setCompletionHandler_, 0, b'v@')
+            self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.foundItemsHandler, b"v@")
+            self.assertArgIsBlock(
+                CoreSpotlight.CSSearchQuery.setFoundItemsHandler_, 0, b"v@"
+            )
+            self.assertResultIsBlock(CoreSpotlight.CSSearchQuery.completionHandler, b"v@")
+            self.assertArgIsBlock(
+                CoreSpotlight.CSSearchQuery.setCompletionHandler_, 0, b"v@"
+            )
 
 
 if __name__ == "__main__":

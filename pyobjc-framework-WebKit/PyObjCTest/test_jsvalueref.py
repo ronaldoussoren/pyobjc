@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import JavaScriptCore
 
-class TestJSValueRef (TestCase):
+
+class TestJSValueRef(TestCase):
     def test_constants(self):
         self.assertEqual(JavaScriptCore.kJSTypeUndefined, 0)
         self.assertEqual(JavaScriptCore.kJSTypeNull, 1)
@@ -24,9 +25,10 @@ class TestJSValueRef (TestCase):
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeArrayBuffer, 9)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeNone, 10)
 
-
     def test_functions(self):
-        self.assertArgHasType(JavaScriptCore.JSValueGetType, 0, JavaScriptCore.JSContextRef.__typestr__)
+        self.assertArgHasType(
+            JavaScriptCore.JSValueGetType, 0, JavaScriptCore.JSContextRef.__typestr__
+        )
 
         self.assertResultHasType(JavaScriptCore.JSValueIsUndefined, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsNull, objc._C_BOOL)
@@ -37,38 +39,69 @@ class TestJSValueRef (TestCase):
         self.assertResultHasType(JavaScriptCore.JSValueIsObjectOfClass, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsEqual, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsStrictEqual, objc._C_BOOL)
-        self.assertResultHasType(JavaScriptCore.JSValueIsInstanceOfConstructor, objc._C_BOOL)
+        self.assertResultHasType(
+            JavaScriptCore.JSValueIsInstanceOfConstructor, objc._C_BOOL
+        )
 
-        self.assertResultHasType(JavaScriptCore.JSValueMakeUndefined, JavaScriptCore.JSValueRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueMakeNull, JavaScriptCore.JSValueRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueMakeBoolean, JavaScriptCore.JSValueRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueMakeNumber, JavaScriptCore.JSValueRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueMakeString, JavaScriptCore.JSValueRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueMakeFromJSONString, JavaScriptCore.JSValueRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueCreateJSONString, JavaScriptCore.JSStringRef.__typestr__)
+        self.assertResultHasType(
+            JavaScriptCore.JSValueMakeUndefined, JavaScriptCore.JSValueRef.__typestr__
+        )
+        self.assertResultHasType(
+            JavaScriptCore.JSValueMakeNull, JavaScriptCore.JSValueRef.__typestr__
+        )
+        self.assertResultHasType(
+            JavaScriptCore.JSValueMakeBoolean, JavaScriptCore.JSValueRef.__typestr__
+        )
+        self.assertResultHasType(
+            JavaScriptCore.JSValueMakeNumber, JavaScriptCore.JSValueRef.__typestr__
+        )
+        self.assertResultHasType(
+            JavaScriptCore.JSValueMakeString, JavaScriptCore.JSValueRef.__typestr__
+        )
+        self.assertResultHasType(
+            JavaScriptCore.JSValueMakeFromJSONString,
+            JavaScriptCore.JSValueRef.__typestr__,
+        )
+        self.assertResultHasType(
+            JavaScriptCore.JSValueCreateJSONString, JavaScriptCore.JSStringRef.__typestr__
+        )
 
         self.assertResultHasType(JavaScriptCore.JSValueToBoolean, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueToNumber, objc._C_DBL)
-        self.assertResultHasType(JavaScriptCore.JSValueToStringCopy, JavaScriptCore.JSStringRef.__typestr__)
-        self.assertResultHasType(JavaScriptCore.JSValueToObject, JavaScriptCore.JSObjectRef.__typestr__)
+        self.assertResultHasType(
+            JavaScriptCore.JSValueToStringCopy, JavaScriptCore.JSStringRef.__typestr__
+        )
+        self.assertResultHasType(
+            JavaScriptCore.JSValueToObject, JavaScriptCore.JSObjectRef.__typestr__
+        )
 
-        self.assertArgHasType(JavaScriptCore.JSValueProtect, 0, JavaScriptCore.JSContextRef.__typestr__)
-        self.assertArgHasType(JavaScriptCore.JSValueUnprotect, 0, JavaScriptCore.JSContextRef.__typestr__)
+        self.assertArgHasType(
+            JavaScriptCore.JSValueProtect, 0, JavaScriptCore.JSContextRef.__typestr__
+        )
+        self.assertArgHasType(
+            JavaScriptCore.JSValueUnprotect, 0, JavaScriptCore.JSContextRef.__typestr__
+        )
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions10_11(self):
         self.assertResultHasType(JavaScriptCore.JSValueIsArray, objc._C_BOOL)
         self.assertResultHasType(JavaScriptCore.JSValueIsDate, objc._C_BOOL)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testFunctions10_12(self):
         self.assertResultHasType(JavaScriptCore.JSValueGetTypedArrayType, objc._C_UINT)
         self.assertArgIsOut(JavaScriptCore.JSValueGetTypedArrayType, 2)
 
-    @min_os_level('10.14.4')
+    @min_os_level("10.14.4")
     def testFunctions10_14_4(self):
-        self.assertResultHasType(JavaScriptCore.JSValueMakeSymbol, JavaScriptCore.JSValueRef.__typestr__)
+        self.assertResultHasType(
+            JavaScriptCore.JSValueMakeSymbol, JavaScriptCore.JSValueRef.__typestr__
+        )
+
+    @min_os_level("10.15")
+    def testFunctions10_15(self):
+        JavaScriptCore.JSValueIsSymbol
+        JavaScriptCore.JSValueMakeSymbol
 
 
 if __name__ == "__main__":

@@ -6,86 +6,52 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OC_TestFilePointer : NSObject
-{
+@interface OC_TestFilePointer : NSObject {
 }
 
--(FILE*)openFile:(char*)path withMode:(char*)mode;
--(NSString*)readline:(FILE*)fp;
+- (FILE*)openFile:(char*)path withMode:(char*)mode;
+- (NSString*)readline:(FILE*)fp;
 @end
 
 @implementation OC_TestFilePointer
--(FILE*)openFile:(char*)path withMode:(char*)mode
+- (FILE*)openFile:(char*)path withMode:(char*)mode
 {
     return fopen(path, mode);
 }
 
--(NSString*)readline:(FILE*)fp
+- (NSString*)readline:(FILE*)fp
 {
     char buf[1024];
 
-    return [NSString stringWithCString: fgets(buf, sizeof(buf), fp)
-                 encoding:NSASCIIStringEncoding];
+    return [NSString stringWithCString:fgets(buf, sizeof(buf), fp)
+                              encoding:NSASCIIStringEncoding];
 }
 @end
 
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
-
-#if PY_VERSION_HEX >= 0x03000000
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "filepointer",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+    PyModuleDef_HEAD_INIT, "filepointer", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_filepointer(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_filepointer(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initfilepointer(void);
-
-void __attribute__((__visibility__("default")))
-initfilepointer(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_filepointer(void)
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("filepointer", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "OC_TestFilePointer",
-            PyObjC_IdToPython([OC_TestFilePointer class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([OC_TestFilePointer class])) < 0) {
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

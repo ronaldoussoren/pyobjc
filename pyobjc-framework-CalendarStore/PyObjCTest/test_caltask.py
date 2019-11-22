@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CalendarStore import *
 
-class TestCalTask (TestCase):
+
+class TestCalTask(TestCase):
     def testConstants(self):
         self.assertEqual(CalPriorityNone, 0)
         self.assertEqual(CalPriorityHigh, 1)

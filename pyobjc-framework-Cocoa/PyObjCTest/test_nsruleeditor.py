@@ -1,14 +1,24 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSRuleEditorHelper (NSObject):
-    def ruleEditor_numberOfChildrenForCriterion_withRowType_(self, ed, cr, rt): return 1
-    def ruleEditor_child_forCriterion_withRowType_(self, ed, ch, cr, rt): return 1
-    def ruleEditor_displayValueForCriterion_inRow_(self, ed, cr, rw): return 1
-    def ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_(self, ed, cr, dv, rw): return 1
 
-class TestNSRuleEditor (TestCase):
+class TestNSRuleEditorHelper(NSObject):
+    def ruleEditor_numberOfChildrenForCriterion_withRowType_(self, ed, cr, rt):
+        return 1
+
+    def ruleEditor_child_forCriterion_withRowType_(self, ed, ch, cr, rt):
+        return 1
+
+    def ruleEditor_displayValueForCriterion_inRow_(self, ed, cr, rw):
+        return 1
+
+    def ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_(
+        self, ed, cr, dv, rw
+    ):
+        return 1
+
+
+class TestNSRuleEditor(TestCase):
     def testConstants(self):
         self.assertEqual(NSRuleEditorNestingModeSingle, 0)
         self.assertEqual(NSRuleEditorNestingModeList, 1)
@@ -33,21 +43,46 @@ class TestNSRuleEditor (TestCase):
         self.assertArgIsBOOL(NSRuleEditor.setEditable_, 0)
         self.assertResultIsBOOL(NSRuleEditor.canRemoveAllRows)
         self.assertArgIsBOOL(NSRuleEditor.setCanRemoveAllRows_, 0)
-        self.assertArgIsBOOL(NSRuleEditor.insertRowAtIndex_withType_asSubrowOfRow_animate_, 3)
+        self.assertArgIsBOOL(
+            NSRuleEditor.insertRowAtIndex_withType_asSubrowOfRow_animate_, 3
+        )
         self.assertArgIsBOOL(NSRuleEditor.removeRowsAtIndexes_includeSubrows_, 1)
         self.assertArgIsBOOL(NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1)
 
-    @min_sdk_level('10.6')
+    @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSRuleEditorDelegate')
+        objc.protocolNamed("NSRuleEditorDelegate")
 
     def testProtocols(self):
-        self.assertResultHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, objc._C_NSInteger)
-        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_, 2, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_, 1, objc._C_NSInteger)
-        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_, 3, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_displayValueForCriterion_inRow_, 2, objc._C_NSInteger)
-        self.assertArgHasType(TestNSRuleEditorHelper.ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_, 3, objc._C_NSInteger)
+        self.assertResultHasType(
+            TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSRuleEditorHelper.ruleEditor_numberOfChildrenForCriterion_withRowType_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_,
+            1,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSRuleEditorHelper.ruleEditor_child_forCriterion_withRowType_,
+            3,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSRuleEditorHelper.ruleEditor_displayValueForCriterion_inRow_,
+            2,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSRuleEditorHelper.ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_,
+            3,
+            objc._C_NSInteger,
+        )
 
 
 if __name__ == "__main__":

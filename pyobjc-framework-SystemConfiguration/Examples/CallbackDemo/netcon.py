@@ -9,8 +9,12 @@ Usage:
     python netcon.py
 """
 from __future__ import print_function
-from SystemConfiguration import SCNetworkConnectionCreateWithServiceID, SCNetworkConnectionScheduleWithRunLoop
+from SystemConfiguration import (
+    SCNetworkConnectionCreateWithServiceID,
+    SCNetworkConnectionScheduleWithRunLoop,
+)
 from CoreFoundation import CFRunLoopGetCurrent, CFRunLoopRun, kCFRunLoopCommonModes
+
 
 def connectionChanged(connection, status, info):
     print("Status of %s connection changed: %s"(info, status))
@@ -18,8 +22,8 @@ def connectionChanged(connection, status, info):
 
 def main():
     conn = SCNetworkConnectionCreateWithServiceID(
-        None, "Automatic",
-        connectionChanged, "foobar")
+        None, "Automatic", connectionChanged, "foobar"
+    )
 
     print(conn)
     assert conn is not None
@@ -27,6 +31,7 @@ def main():
     loop = CFRunLoopGetCurrent()
     SCNetworkConnectionScheduleWithRunLoop(conn, loop, kCFRunLoopCommonModes)
     CFRunLoopRun()
+
 
 if __name__ == "__main__":
     main()

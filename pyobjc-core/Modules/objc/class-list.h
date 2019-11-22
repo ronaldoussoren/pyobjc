@@ -18,7 +18,6 @@
 
 Py_ssize_t PyObjC_ClassCount(void);
 
-
 /*!
  * @function PyObjC_GetClassList
  * @result Returns a list of Objective-C classes

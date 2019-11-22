@@ -6,20 +6,21 @@ from PyObjCTools.TestSupport import *
 
 
 # Test cases for pickling ObjC objects
-class TestPickleObjC (TestCase):
+class TestPickleObjC(TestCase):
     pass
 
 
 # Test cases for pickling mixed Python/ObjC
 # object graphs
-class TestPickleMixedGraph (TestCase):
+class TestPickleMixedGraph(TestCase):
     pass
 
 
 # Test cases for pickling Python subclasses
 # of NSObject
-class TestPicklePythonNSObject (TestCase):
+class TestPicklePythonNSObject(TestCase):
     pass
+
 
 if __name__ == "__main__":
     main()

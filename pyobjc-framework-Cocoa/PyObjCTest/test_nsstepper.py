@@ -2,7 +2,7 @@ from AppKit import *
 from PyObjCTools.TestSupport import *
 
 
-class TestNSStepper (TestCase):
+class TestNSStepper(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSStepper.valueWraps)
         self.assertArgIsBOOL(NSStepper.setValueWraps_, 0)

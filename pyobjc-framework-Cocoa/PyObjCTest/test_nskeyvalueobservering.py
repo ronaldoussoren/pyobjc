@@ -5,23 +5,22 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 
-class TestNSKeyValueObserving (TestCase):
-
+class TestNSKeyValueObserving(TestCase):
     def testConstants(self):
-        self.assertEqual( NSKeyValueObservingOptionNew, 1)
-        self.assertEqual( NSKeyValueObservingOptionOld, 2)
-        self.assertEqual( NSKeyValueObservingOptionInitial, 4)
-        self.assertEqual( NSKeyValueObservingOptionPrior, 8)
+        self.assertEqual(NSKeyValueObservingOptionNew, 1)
+        self.assertEqual(NSKeyValueObservingOptionOld, 2)
+        self.assertEqual(NSKeyValueObservingOptionInitial, 4)
+        self.assertEqual(NSKeyValueObservingOptionPrior, 8)
 
-        self.assertEqual( NSKeyValueChangeSetting, 1)
-        self.assertEqual( NSKeyValueChangeInsertion, 2)
-        self.assertEqual( NSKeyValueChangeRemoval, 3)
-        self.assertEqual( NSKeyValueChangeReplacement, 4)
+        self.assertEqual(NSKeyValueChangeSetting, 1)
+        self.assertEqual(NSKeyValueChangeInsertion, 2)
+        self.assertEqual(NSKeyValueChangeRemoval, 3)
+        self.assertEqual(NSKeyValueChangeReplacement, 4)
 
-        self.assertEqual( NSKeyValueUnionSetMutation, 1)
-        self.assertEqual( NSKeyValueMinusSetMutation, 2)
-        self.assertEqual( NSKeyValueIntersectSetMutation, 3)
-        self.assertEqual( NSKeyValueSetSetMutation, 4)
+        self.assertEqual(NSKeyValueUnionSetMutation, 1)
+        self.assertEqual(NSKeyValueMinusSetMutation, 2)
+        self.assertEqual(NSKeyValueIntersectSetMutation, 3)
+        self.assertEqual(NSKeyValueSetSetMutation, 4)
 
         self.assertIsInstance(NSKeyValueChangeKindKey, unicode)
         self.assertIsInstance(NSKeyValueChangeNewKey, unicode)
@@ -32,50 +31,49 @@ class TestNSKeyValueObserving (TestCase):
     def testContext(self):
         o = NSObject.alloc().init()
         m = o.observeValueForKeyPath_ofObject_change_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], b'^v' )
+        self.assertEqual(m["arguments"][5]["type"], b"^v")
 
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], b'^v' )
+        self.assertEqual(m["arguments"][5]["type"], b"^v")
 
         m = o.setObservationInfo_.__metadata__()
-        self.assertEqual( m['arguments'][2]['type'], b'^v' )
+        self.assertEqual(m["arguments"][2]["type"], b"^v")
 
         m = o.observationInfo.__metadata__()
-        self.assertEqual( m['retval']['type'], b'^v' )
+        self.assertEqual(m["retval"]["type"], b"^v")
 
         o = NSArray.alloc().init()
         m = o.addObserver_toObjectsAtIndexes_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][6]['type'], b'^v' )
+        self.assertEqual(m["arguments"][6]["type"], b"^v")
 
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], b'^v' )
+        self.assertEqual(m["arguments"][5]["type"], b"^v")
 
         o = NSSet.alloc().init()
         m = o.addObserver_forKeyPath_options_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], b'^v' )
+        self.assertEqual(m["arguments"][5]["type"], b"^v")
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testContext10_7(self):
         o = NSObject.alloc().init()
         m = o.removeObserver_forKeyPath_context_.__metadata__()
-        self.assertEqual( m['arguments'][4]['type'], b'^v')
+        self.assertEqual(m["arguments"][4]["type"], b"^v")
 
         o = NSMutableArray.alloc().init()
         m = o.removeObserver_fromObjectsAtIndexes_forKeyPath_context_.__metadata__()
-        self.assertEqual( m['arguments'][5]['type'], b'^v')
+        self.assertEqual(m["arguments"][5]["type"], b"^v")
 
         o = NSOrderedSet.alloc().init()
         m = o.removeObserver_forKeyPath_context_.__metadata__()
-        self.assertEqual( m['arguments'][4]['type'], b'^v')
+        self.assertEqual(m["arguments"][4]["type"], b"^v")
 
         o = NSSet.alloc().init()
         m = o.removeObserver_forKeyPath_context_.__metadata__()
-        self.assertEqual( m['arguments'][4]['type'], b'^v')
-
-
+        self.assertEqual(m["arguments"][4]["type"], b"^v")
 
     def testMethods(self):
         self.assertResultIsBOOL(NSObject.automaticallyNotifiesObserversForKey_)
+
 
 if __name__ == "__main__":
     main()

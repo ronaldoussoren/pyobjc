@@ -1,4 +1,3 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 import sys
@@ -7,13 +6,14 @@ import os
 import sys
 
 if sys.version_info[0] != 2:
+
     def buffer(value):
         if isinstance(value, bytes):
             return value
-        return value.encode('latin1')
+        return value.encode("latin1")
 
 
-class TestCGImage (TestCase):
+class TestCGImage(TestCase):
     def testConstants(self):
         self.assertEqual(kCGImagePixelFormatMask, 0xF0000)
         self.assertEqual(kCGImagePixelFormatPacked, 0 << 16)
@@ -40,7 +40,7 @@ class TestCGImage (TestCase):
         self.assertEqual(kCGBitmapByteOrder16Big, (3 << 12))
         self.assertEqual(kCGBitmapByteOrder32Big, (4 << 12))
 
-        if sys.byteorder == 'big':
+        if sys.byteorder == "big":
             self.assertEqual(kCGBitmapByteOrder16Host, kCGBitmapByteOrder16Big)
             self.assertEqual(kCGBitmapByteOrder32Host, kCGBitmapByteOrder32Big)
         else:
@@ -54,19 +54,40 @@ class TestCGImage (TestCase):
         self.assertEqual(kCGImageByteOrder16Big, 3 << 12)
         self.assertEqual(kCGImageByteOrder32Big, 4 << 12)
 
-
     def testFunctions(self):
         self.assertIsInstance(CGImageGetTypeID(), (int, long))
 
         provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
         self.assertArgHasType(CGImageCreate, 9, objc._C_BOOL)
         self.assertResultIsCFRetained(CGImageCreate)
-        image = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast,
-                provider, None, False, kCGRenderingIntentDefault)
+        image = CGImageCreate(
+            100,
+            80,
+            8,
+            32,
+            400,
+            CGColorSpaceCreateDeviceRGB(),
+            kCGImageAlphaPremultipliedLast,
+            provider,
+            None,
+            False,
+            kCGRenderingIntentDefault,
+        )
         self.assertIsInstance(image, CGImageRef)
 
-        image2 = CGImageCreate(100, 80, 8, 32, 400, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaNoneSkipLast,
-                provider, [0, 1, 0, 1, 0, 1], False, kCGRenderingIntentDefault)
+        image2 = CGImageCreate(
+            100,
+            80,
+            8,
+            32,
+            400,
+            CGColorSpaceCreateDeviceRGB(),
+            kCGImageAlphaNoneSkipLast,
+            provider,
+            [0, 1, 0, 1, 0, 1],
+            False,
+            kCGRenderingIntentDefault,
+        )
         self.assertIsInstance(image2, CGImageRef)
 
         provider = CGDataProviderCreateWithCFData(buffer("1" * 4 * 20 * 10))
@@ -79,33 +100,37 @@ class TestCGImage (TestCase):
         v = CGImageCreateCopy(image)
         self.assertIsInstance(v, CGImageRef)
 
-        fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
+        fn = "/System/Library/CoreServices/DefaultDesktop.jpg"
         if not os.path.exists(fn):
-            fn = '/System/Library/CoreServices/DefaultDesktopServer.jpg'
+            fn = "/System/Library/CoreServices/DefaultDesktopServer.jpg"
             if not os.path.exists(fn):
-                fn = '/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg'
-        with open(fn, 'rb') as fp:
+                fn = "/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg"
+        with open(fn, "rb") as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
         self.assertResultIsCFRetained(CGImageCreateWithJPEGDataProvider)
         self.assertArgHasType(CGImageCreateWithJPEGDataProvider, 2, objc._C_BOOL)
-        v = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
+        v = CGImageCreateWithJPEGDataProvider(
+            provider, None, True, kCGRenderingIntentDefault
+        )
         self.assertIsInstance(v, CGImageRef)
 
-        fname = '/System/Library//CoreServices/Installer.app/Contents/PlugIns/Summary.bundle/Contents/Resources/Success.png'
+        fname = "/System/Library//CoreServices/Installer.app/Contents/PlugIns/Summary.bundle/Contents/Resources/Success.png"
         if not os.path.exists(fname):
-            fname = '/System/Library//Frameworks/Automator.framework/Versions/A/Resources/GearActionDisabled.png'
+            fname = "/System/Library//Frameworks/Automator.framework/Versions/A/Resources/GearActionDisabled.png"
             if not os.path.exists(fname):
-                fname = '/System/Library//Frameworks/Automator.framework/Versions/A/Resources/GlossyStatusViewMid.png'
+                fname = "/System/Library//Frameworks/Automator.framework/Versions/A/Resources/GlossyStatusViewMid.png"
         if not os.path.exists(fname):
             self.fail("test image doesn't exist")
 
-        with open(fname, 'rb') as fp:
+        with open(fname, "rb") as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
         self.assertResultIsCFRetained(CGImageCreateWithPNGDataProvider)
         self.assertArgHasType(CGImageCreateWithPNGDataProvider, 2, objc._C_BOOL)
-        v = CGImageCreateWithPNGDataProvider(provider, None, True, kCGRenderingIntentDefault)
+        v = CGImageCreateWithPNGDataProvider(
+            provider, None, True, kCGRenderingIntentDefault
+        )
         self.assertIsInstance(v, CGImageRef)
 
         self.assertResultIsCFRetained(CGImageCreateWithImageInRect)
@@ -116,13 +141,14 @@ class TestCGImage (TestCase):
         v = CGImageCreateWithMask(image, mask)
         self.assertIsInstance(v, CGImageRef)
 
-
         self.assertResultIsCFRetained(CGImageCreateWithMaskingColors)
-        v = CGImageCreateWithMaskingColors(image2, [0,255]*4)
+        v = CGImageCreateWithMaskingColors(image2, [0, 255] * 4)
         self.assertIsInstance(v, CGImageRef)
 
         self.assertResultIsCFRetained(CGImageCreateCopyWithColorSpace)
-        v = CGImageCreateCopyWithColorSpace(image, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB))
+        v = CGImageCreateCopyWithColorSpace(
+            image, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
+        )
         self.assertIsInstance(v, CGImageRef)
 
         v = CGImageRetain(image)
@@ -178,28 +204,31 @@ class TestCGImage (TestCase):
         v = CGImageGetBitmapInfo(image)
         self.assertIsInstance(v, (int, long))
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions10_11(self):
-        fn = '/System/Library/CoreServices/DefaultDesktop.jpg'
+        fn = "/System/Library/CoreServices/DefaultDesktop.jpg"
         if not os.path.exists(fn):
-            fn = '/System/Library/CoreServices/DefaultDesktopServer.jpg'
+            fn = "/System/Library/CoreServices/DefaultDesktopServer.jpg"
             if not os.path.exists(fn):
-                fn = '/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg'
-        with open(fn, 'rb') as fp:
+                fn = "/System/Library/CoreServices//RemoteManagement/ARDAgent.app/Contents/Resources/Lock.jpg"
+        with open(fn, "rb") as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
         self.assertResultIsCFRetained(CGImageCreateWithJPEGDataProvider)
         self.assertArgHasType(CGImageCreateWithJPEGDataProvider, 2, objc._C_BOOL)
-        image = CGImageCreateWithJPEGDataProvider(provider, None, True, kCGRenderingIntentDefault)
+        image = CGImageCreateWithJPEGDataProvider(
+            provider, None, True, kCGRenderingIntentDefault
+        )
         self.assertIsInstance(image, CGImageRef)
 
         v = CGImageGetUTType(image)
         self.assertIsInstance(v, unicode)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testFunctions10_14(self):
         CGImageGetByteOrderInfo
         CGImageGetPixelFormatInfo
+
 
 if __name__ == "__main__":
     main()

@@ -1,13 +1,19 @@
 import sys
 from Cocoa import NSAppleEventDescriptor
 from Automator import AMBundleAction
-from InstantMessage import IMService, IMPersonFirstNameKey, IMPersonLastNameKey, IMPersonServiceNameKey
+from InstantMessage import (
+    IMService,
+    IMPersonFirstNameKey,
+    IMPersonLastNameKey,
+    IMPersonServiceNameKey,
+)
 from InstantMessage import IMPersonScreenNameKey, IMPersonStatusKey, IMPersonStatusUnknown
 from InstantMessage import IMPersonStatusOffline, IMPersonStatusIdle, IMPersonStatusAway
 from InstantMessage import IMPersonStatusAvailable, IMPersonStatusMessageKey
 from AddressBook import ABAddressBook, ABPerson
 
-class GetBuddyInfo (AMBundleAction):
+
+class GetBuddyInfo(AMBundleAction):
     def runWithInput_fromAction_error_(self, input, anAction, errorInfo):
         people = []
 
@@ -15,19 +21,23 @@ class GetBuddyInfo (AMBundleAction):
         if isinstance(input, NSAppleEventDescriptor):
             count = input.numberOfItems()
 
-            for i in range(1, count+1):
+            for i in range(1, count + 1):
                 personDescriptor = input.descriptorAtIndex_(i)
                 if personDescriptor is not None:
                     # get the uid of the person from this descriptor
-                    if (personDescriptor.descriptorType() == typeObjectSpecifier):
+                    if personDescriptor.descriptorType() == typeObjectSpecifier:
                         container = personDescriptor.descriptorForKeyword_(keyAEContainer)
                         if container is not None:
-                            uidDescriptor = container.descriptorAtIndex_(i).descriptorForKeyword_(keyAEKeyData)
+                            uidDescriptor = container.descriptorAtIndex_(
+                                i
+                            ).descriptorForKeyword_(keyAEKeyData)
                             if uidDescriptor is not None:
                                 uid = uidDescriptor.stringValue()
                                 if uid is not None:
                                     # get the person object from the uid
-                                    person = ABAddressBook.sharedAddressBook().recordForUniqueId_(uid)
+                                    person = ABAddressBook.sharedAddressBook().recordForUniqueId_(
+                                        uid
+                                    )
                                     if person is not None:
                                         people.append(person)
 
@@ -46,13 +56,13 @@ class GetBuddyInfo (AMBundleAction):
                                 firstName = dict[IMPersonFirstNameKey]
                                 if firstName is not None:
                                     description += firstName
-                                    description += ' '
+                                    description += " "
 
                                 lastName = dict[IMPersonLastNameKey]
                                 if lastName is not None:
                                     description += lastName
 
-                                description += '\r'
+                                description += "\r"
 
                                 serviceName = dict[IMPersonServiceNameKey]
                                 if serviceName is not None:

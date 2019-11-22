@@ -2,36 +2,35 @@ from PyObjCTools.TestSupport import *
 import CoreFoundation
 
 
-class TestCFFileSecurity (TestCase):
-    @min_os_level('10.7')
+class TestCFFileSecurity(TestCase):
+    @min_os_level("10.7")
     def testTypes(self):
         try:
-            cls = objc.lookUpClass('__NSFileSecurity')
+            cls = objc.lookUpClass("__NSFileSecurity")
             self.assertIs(cls, CoreFoundation.CFFileSecurityRef)
         except objc.error:
             self.assertIsCFType(CoreFoundation.CFFileSecurityRef)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testTypeID(self):
         self.assertIsInstance(CoreFoundation.CFFileSecurityGetTypeID(), (int, long))
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     @expectedFailure
     def testConstants(self):
         self.fail("kCFFileSecurityRemoveACL")
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     @expectedFailure
     def testConstants10_8(self):
-        self.assertEqual(kCFFileSecurityClearOwner, 1<<0)
-        self.assertEqual(kCFFileSecurityClearGroup, 1<<1)
-        self.assertEqual(kCFFileSecurityClearMode, 1<<2)
-        self.assertEqual(kCFFileSecurityClearOwnerUUID, 1<<3)
-        self.assertEqual(kCFFileSecurityClearGroupUUID, 1<<4)
-        self.assertEqual(kCFFileSecurityClearAccessControlList, 1<<5)
+        self.assertEqual(kCFFileSecurityClearOwner, 1 << 0)
+        self.assertEqual(kCFFileSecurityClearGroup, 1 << 1)
+        self.assertEqual(kCFFileSecurityClearMode, 1 << 2)
+        self.assertEqual(kCFFileSecurityClearOwnerUUID, 1 << 3)
+        self.assertEqual(kCFFileSecurityClearGroupUUID, 1 << 4)
+        self.assertEqual(kCFFileSecurityClearAccessControlList, 1 << 5)
 
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testFunctions10_7(self):
         self.assertResultIsCFRetained(CoreFoundation.CFFileSecurityCreate)
         v = CoreFoundation.CFFileSecurityCreate(None)
@@ -82,23 +81,26 @@ class TestCFFileSecurity (TestCase):
         self.assertTrue(ok)
         self.assertEqual(v, 0o444)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     @expectedFailure
     def testFunctionsUnwrapped(self):
         # There are no usable wrappers for sys/acl.h at this time
         self.fail("ACL Handling")
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         security = CoreFoundation.CFFileSecurityCreate(None)
         self.assertIsInstance(security, CoreFoundation.CFFileSecurityRef)
 
-        CoreFoundation.CFFileSecurityClearProperties(security, CoreFoundation.kCFFileSecurityClearGroup)
+        CoreFoundation.CFFileSecurityClearProperties(
+            security, CoreFoundation.kCFFileSecurityClearGroup
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testFunctions_unsupported(self):
-        self.assertFalse(hasattr(CoreFoundation, 'CFFileSecurityCopyAccessControlList'))
-        self.assertFalse(hasattr(CoreFoundation, 'CFFileSecuritySetAccessControlList'))
+        self.assertFalse(hasattr(CoreFoundation, "CFFileSecurityCopyAccessControlList"))
+        self.assertFalse(hasattr(CoreFoundation, "CFFileSecuritySetAccessControlList"))
+
 
 if __name__ == "__main__":
     main()

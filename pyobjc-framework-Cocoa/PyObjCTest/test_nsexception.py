@@ -4,24 +4,29 @@ import objc
 from Foundation import *
 import Foundation
 
+
 class TestNSExceptionInteraction(TestCase):
     def testRepeatedAllocInit(self):
-        for i in range(1,1000):
-            a = NSException.alloc().initWithName_reason_userInfo_( b"Bogus".decode('ascii'), b"A bad reason".decode('ascii'), { b"foo".decode('ascii') : b"bar".decode('ascii') } )
+        for i in range(1, 1000):
+            a = NSException.alloc().initWithName_reason_userInfo_(
+                b"Bogus".decode("ascii"),
+                b"A bad reason".decode("ascii"),
+                {b"foo".decode("ascii"): b"bar".decode("ascii")},
+            )
 
     def testFormat(self):
         try:
-            NSException.raise_format_('ExceptionName', 'Format: %s %d', b'hello', 42)
+            NSException.raise_format_("ExceptionName", "Format: %s %d", b"hello", 42)
 
         except TypeError:
             raise
 
         except objc.error as e:
-            self.assertEqual(e._pyobjc_info_['name'], 'ExceptionName')
-            self.assertEqual(e._pyobjc_info_['reason'], 'Format: hello 42')
+            self.assertEqual(e._pyobjc_info_["name"], "ExceptionName")
+            self.assertEqual(e._pyobjc_info_["reason"], "Format: hello 42")
 
 
-class TestNSException (TestCase):
+class TestNSException(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSGenericException, unicode)
         self.assertIsInstance(NSRangeException, unicode)
@@ -38,36 +43,41 @@ class TestNSException (TestCase):
         self.assertIsInstance(NSPortReceiveException, unicode)
         self.assertIsInstance(NSOldStyleException, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSAssertionHandlerKey, unicode)
 
     def testUncaughtExceptionHandler(self):
-        self.assertArgIsFunction(NSSetUncaughtExceptionHandler, 0, b'v@', True)
-        self.assertResultIsFunction(NSGetUncaughtExceptionHandler, b'v@')
+        self.assertArgIsFunction(NSSetUncaughtExceptionHandler, 0, b"v@", True)
+        self.assertResultIsFunction(NSGetUncaughtExceptionHandler, b"v@")
 
     def testNoAssert(self):
-        self.assertNotHasAttr(Foundation, 'NSAssert5')
-        self.assertNotHasAttr(Foundation, 'NSAssert4')
-        self.assertNotHasAttr(Foundation, 'NSAssert3')
-        self.assertNotHasAttr(Foundation, 'NSAssert2')
-        self.assertNotHasAttr(Foundation, 'NSAssert1')
-        self.assertNotHasAttr(Foundation, 'NSAssert')
-        self.assertNotHasAttr(Foundation, 'NSParameterAssert')
-        self.assertNotHasAttr(Foundation, 'NSCAssert5')
-        self.assertNotHasAttr(Foundation, 'NSCAssert4')
-        self.assertNotHasAttr(Foundation, 'NSCAssert3')
-        self.assertNotHasAttr(Foundation, 'NSCAssert2')
-        self.assertNotHasAttr(Foundation, 'NSCAssert1')
-        self.assertNotHasAttr(Foundation, 'NSCAssert')
-        self.assertNotHasAttr(Foundation, 'NSCParameterAssert')
+        self.assertNotHasAttr(Foundation, "NSAssert5")
+        self.assertNotHasAttr(Foundation, "NSAssert4")
+        self.assertNotHasAttr(Foundation, "NSAssert3")
+        self.assertNotHasAttr(Foundation, "NSAssert2")
+        self.assertNotHasAttr(Foundation, "NSAssert1")
+        self.assertNotHasAttr(Foundation, "NSAssert")
+        self.assertNotHasAttr(Foundation, "NSParameterAssert")
+        self.assertNotHasAttr(Foundation, "NSCAssert5")
+        self.assertNotHasAttr(Foundation, "NSCAssert4")
+        self.assertNotHasAttr(Foundation, "NSCAssert3")
+        self.assertNotHasAttr(Foundation, "NSCAssert2")
+        self.assertNotHasAttr(Foundation, "NSCAssert1")
+        self.assertNotHasAttr(Foundation, "NSCAssert")
+        self.assertNotHasAttr(Foundation, "NSCParameterAssert")
 
     def testMethods(self):
         self.assertArgIsPrintf(NSException.raise_format_, 1)
 
-        self.assertArgIsPrintf(NSAssertionHandler.handleFailureInMethod_object_file_lineNumber_description_, 4)
-        self.assertArgIsPrintf(NSAssertionHandler.handleFailureInFunction_file_lineNumber_description_, 3)
+        self.assertArgIsPrintf(
+            NSAssertionHandler.handleFailureInMethod_object_file_lineNumber_description_,
+            4,
+        )
+        self.assertArgIsPrintf(
+            NSAssertionHandler.handleFailureInFunction_file_lineNumber_description_, 3
+        )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

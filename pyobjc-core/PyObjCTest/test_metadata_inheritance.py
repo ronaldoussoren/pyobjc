@@ -1,18 +1,20 @@
 from PyObjCTools.TestSupport import *
 import objc
+
 NSObject = objc.lookUpClass("NSObject")
 NSSortDescriptor = objc.lookUpClass("NSSortDescriptor")
 
-objc.registerMetaDataForSelector(b"NSObject", b"selector",
-    dict(
-        retval=dict(type=objc._C_VOID)
-    ))
+objc.registerMetaDataForSelector(
+    b"NSObject", b"selector", dict(retval=dict(type=objc._C_VOID))
+)
 
 
-class MetadataInheritanceHelper (NSObject):
-    def selector(self): return 1
+class MetadataInheritanceHelper(NSObject):
+    def selector(self):
+        return 1
 
-class TestMetadataInheritance (TestCase):
+
+class TestMetadataInheritance(TestCase):
 
     # These tests that PyObjC's signatures overrides don't
     # kick in when the new signature is incompatible with

@@ -4,9 +4,8 @@
  */
 
 static PyObject*
-call_NSBezierPath_elementAtIndex_associatedPoints_(
-    PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* self,
+                                                   PyObject* arguments)
 {
     PyObject* result;
     PyObject* v;
@@ -20,47 +19,51 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
         return NULL;
     }
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            res = ((NSBezierPathElement(*)(id,SEL,NSInteger,NSPoint*))
-            PyObjCIMP_GetIMP(method))(
-                PyObjCObject_GetObject(self),
-                PyObjCIMP_GetSelector(method),
-                idx,
-                points
-           );
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                res = ((NSBezierPathElement(*)(id, SEL, NSInteger,
+                                               NSPoint*))PyObjCIMP_GetIMP(method))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), idx,
+                    points);
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-
-            res = ((NSBezierPathElement(*)(struct objc_super*, SEL, NSInteger, NSPoint*))objc_msgSendSuper)(&super,
-                        PyObjCSelector_GetSelector(method),
-                        idx,
-                        points);
+                res = ((NSBezierPathElement(*)(struct objc_super*, SEL, NSInteger,
+                                               NSPoint*))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), idx, points);
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
     }
 
     switch (res) {
-    case NSMoveToBezierPathElement: pointCount = 1; break;
-    case NSLineToBezierPathElement: pointCount = 1; break;
-    case NSCurveToBezierPathElement: pointCount = 3; break;
-    case NSClosePathBezierPathElement: pointCount = 0; break;
+    case NSMoveToBezierPathElement:
+        pointCount = 1;
+        break;
+    case NSLineToBezierPathElement:
+        pointCount = 1;
+        break;
+    case NSCurveToBezierPathElement:
+        pointCount = 3;
+        break;
+    case NSClosePathBezierPathElement:
+        pointCount = 0;
+        break;
     default:
-        PyErr_SetString(PyExc_ValueError,
-                "ObjC returned illegal value");
+        PyErr_SetString(PyExc_ValueError, "ObjC returned illegal value");
         return NULL;
     }
 
     result = PyTuple_New(2);
-    if (result == NULL) return NULL;
+    if (result == NULL)
+        return NULL;
 
     v = PyObjC_ObjCToPython(@encode(NSBezierPathElement), &res);
     if (v == NULL) {
@@ -81,9 +84,8 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(
 }
 
 static PyObject*
-call_NSBezierPath_setAssociatedPoints_atIndex_(
-    PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
+                                               PyObject* arguments)
 {
     PyObject* result;
     struct objc_super super;
@@ -93,8 +95,7 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(
     PyObject* seq;
     int i, len;
 
-    if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSInteger,
-                           &pointList, &idx)) {
+    if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSInteger, &pointList, &idx)) {
         return NULL;
     }
 
@@ -113,38 +114,36 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(
     }
 
     for (i = 0; i < len; i++) {
-        int err = PyObjC_PythonToObjC(@encode(NSPoint),
-            PySequence_Fast_GET_ITEM(seq, i), points + i);
+        int err = PyObjC_PythonToObjC(@encode(NSPoint), PySequence_Fast_GET_ITEM(seq, i),
+                                      points + i);
         if (err == -1) {
             return NULL;
         }
     }
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            ((void(*)(id,SEL,NSPoint*,NSInteger))
-                PyObjCIMP_GetIMP(method))(
-                PyObjCObject_GetObject(self),
-                PyObjCIMP_GetSelector(method),
-                points,
-                idx);
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                ((void (*)(id, SEL, NSPoint*, NSInteger))PyObjCIMP_GetIMP(method))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), points,
+                    idx);
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-            ((void(*)(struct objc_super*, SEL, NSPoint*, NSInteger))objc_msgSendSuper)(&super,
-                PyObjCSelector_GetSelector(method),
-                points,
-                idx);
+                ((void (*)(struct objc_super*, SEL, NSPoint*,
+                           NSInteger))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), points, idx);
+            }
+
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            result = NULL;
         }
+    Py_END_ALLOW_THREADS
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        result = NULL;
-    PyObjC_ENDHANDLER
-
-    if (PyErr_Occurred()) return NULL;
+    if (PyErr_Occurred())
+        return NULL;
 
     result = Py_None;
     Py_INCREF(result);
@@ -153,14 +152,11 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(
 }
 
 static void
-imp_NSBezierPath_elementAtIndex_associatedPoints_(
-    void* cif __attribute__((__unused__)),
-    void* resp,
-    void** args,
-    void* callable)
+imp_NSBezierPath_elementAtIndex_associatedPoints_(void* cif __attribute__((__unused__)),
+                                                  void* resp, void** args, void* callable)
 {
     id self = *(id*)args[0];
-    //SEL _meth = *(SEL*)args[1];
+    // SEL _meth = *(SEL*)args[1];
     NSInteger idx = *(NSInteger*)args[2];
     NSPoint* points = *(NSPoint**)args[3];
 
@@ -177,64 +173,77 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(
     PyGILState_STATE state = PyGILState_Ensure();
 
     arglist = PyTuple_New(2);
-    if (arglist == NULL) goto error;
+    if (arglist == NULL)
+        goto error;
 
     pyself = PyObjCObject_NewTransient(self, &cookie);
-    if (pyself == NULL) goto error;
+    if (pyself == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 0, pyself);
     Py_INCREF(pyself);
 
-    v = PyInt_FromLong(idx);
-    if (v == NULL) goto error;
+    v = PyLong_FromLong(idx);
+    if (v == NULL)
+        goto error;
     PyTuple_SetItem(arglist, 1, v);
 
     result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist); arglist = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie); pyself = NULL;
-    if (result == NULL) goto error;
+    Py_DECREF(arglist);
+    arglist = NULL;
+    PyObjCObject_ReleaseTransient(pyself, cookie);
+    pyself = NULL;
+    if (result == NULL)
+        goto error;
 
     seq = PySequence_Fast(result, "should return tuple of lenght 2");
     Py_DECREF(result);
-    if (seq == NULL) goto error;
+    if (seq == NULL)
+        goto error;
 
     if (PySequence_Fast_GET_SIZE(seq) != 2) {
-        PyErr_SetString(PyExc_ValueError,
-                "should return tuple of lenght 2");
+        PyErr_SetString(PyExc_ValueError, "should return tuple of lenght 2");
         goto error;
     }
 
     v = PySequence_Fast_GET_ITEM(seq, 0);
 
     err = PyObjC_PythonToObjC(@encode(NSBezierPathElement), v, resp);
-    if (err == -1) goto error;
+    if (err == -1)
+        goto error;
 
     v = PySequence_Fast(PySequence_Fast_GET_ITEM(seq, 1),
-        "result[1] should be a sequence");
-    if (v == NULL) goto error;
+                        "result[1] should be a sequence");
+    if (v == NULL)
+        goto error;
 
     switch (*(NSBezierPathElement*)resp) {
-    case NSMoveToBezierPathElement: pointCount = 1; break;
-    case NSLineToBezierPathElement: pointCount = 1; break;
-    case NSCurveToBezierPathElement: pointCount = 3; break;
-    case NSClosePathBezierPathElement: pointCount = 0; break;
+    case NSMoveToBezierPathElement:
+        pointCount = 1;
+        break;
+    case NSLineToBezierPathElement:
+        pointCount = 1;
+        break;
+    case NSCurveToBezierPathElement:
+        pointCount = 3;
+        break;
+    case NSClosePathBezierPathElement:
+        pointCount = 0;
+        break;
     default:
-        PyErr_SetString(PyExc_ValueError,
-                "Return[0] should be NS{*}PathElement");
+        PyErr_SetString(PyExc_ValueError, "Return[0] should be NS{*}PathElement");
         Py_DECREF(v);
         goto error;
     }
 
     if (PySequence_Fast_GET_SIZE(v) != pointCount) {
-        PyErr_SetString(PyExc_ValueError,
-                "wrong number of points");
+        PyErr_SetString(PyExc_ValueError, "wrong number of points");
         Py_DECREF(v);
         goto error;
     }
 
     for (i = 0; i < pointCount; i++) {
-        err = PyObjC_PythonToObjC(@encode(NSPoint),
-            PySequence_Fast_GET_ITEM(v, i),
-            points + i);
+        err = PyObjC_PythonToObjC(@encode(NSPoint), PySequence_Fast_GET_ITEM(v, i),
+                                  points + i);
         if (err == -1) {
             Py_DECREF(v);
             goto error;
@@ -256,26 +265,25 @@ error:
     PyObjCErr_ToObjCWithGILState(&state);
 }
 
-
-static int setup_nsbezierpath(PyObject* m __attribute__((__unused__)))
+static int
+setup_nsbezierpath(PyObject* m __attribute__((__unused__)))
 {
     Class cls = objc_lookUpClass("NSBezierPath");
     if (!cls) {
         return 0;
     }
 
-    if (PyObjC_RegisterMethodMapping(cls,
-        @selector(elementAtIndex:associatedPoints:),
-        call_NSBezierPath_elementAtIndex_associatedPoints_,
-        imp_NSBezierPath_elementAtIndex_associatedPoints_) < 0 ) {
+    if (PyObjC_RegisterMethodMapping(cls, @selector(elementAtIndex:associatedPoints:),
+                                     call_NSBezierPath_elementAtIndex_associatedPoints_,
+                                     imp_NSBezierPath_elementAtIndex_associatedPoints_) <
+        0) {
 
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(cls,
-        @selector(setAssociatedPoints:atIndex:),
-        call_NSBezierPath_setAssociatedPoints_atIndex_,
-        PyObjCUnsupportedMethod_IMP) < 0 ) {
+    if (PyObjC_RegisterMethodMapping(cls, @selector(setAssociatedPoints:atIndex:),
+                                     call_NSBezierPath_setAssociatedPoints_atIndex_,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
 
         return -1;
     }

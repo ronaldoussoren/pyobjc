@@ -2,14 +2,13 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
+if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
     import SceneKit
 
+    SCNSceneSourceStatusHandler = b"vf" + objc._C_NSInteger + b"@o^Z"
 
-    SCNSceneSourceStatusHandler = b'vf' + objc._C_NSInteger + b'@o^Z'
-
-    class TestSCNSceneSource (TestCase):
+    class TestSCNSceneSource(TestCase):
         def test_constants(self):
             self.assertIsInstance(SceneKit.SCNSceneSourceAssetContributorsKey, unicode)
             self.assertIsInstance(SceneKit.SCNSceneSourceAssetCreatedDateKey, unicode)
@@ -20,7 +19,9 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertIsInstance(SceneKit.SCNSceneSourceAssetAuthorKey, unicode)
             self.assertIsInstance(SceneKit.SCNSceneSourceAssetUnitNameKey, unicode)
             self.assertIsInstance(SceneKit.SCNSceneSourceAssetUnitMeterKey, unicode)
-            self.assertIsInstance(SceneKit.SCNSceneSourceCreateNormalsIfAbsentKey, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceCreateNormalsIfAbsentKey, unicode
+            )
             self.assertIsInstance(SceneKit.SCNSceneSourceCheckConsistencyKey, unicode)
             self.assertIsInstance(SceneKit.SCNSceneSourceFlattenSceneKey, unicode)
             self.assertIsInstance(SceneKit.SCNSceneSourceUseSafeModeKey, unicode)
@@ -45,38 +46,88 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNSceneSourceStatusProcessing, 12)
             self.assertEqual(SceneKit.SCNSceneSourceStatusComplete, 16)
 
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionCreateNormalsIfAbsent, SceneKit.SCNSceneSourceCreateNormalsIfAbsentKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionCheckConsistency, SceneKit.SCNSceneSourceCheckConsistencyKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionFlattenScene, SceneKit.SCNSceneSourceFlattenSceneKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionUseSafeMode, SceneKit.SCNSceneSourceUseSafeModeKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionAssetDirectoryURLs, SceneKit.SCNSceneSourceAssetDirectoryURLsKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionOverrideAssetURLs, SceneKit.SCNSceneSourceOverrideAssetURLsKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionStrictConformance, SceneKit.SCNSceneSourceStrictConformanceKey)
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionCreateNormalsIfAbsent,
+                SceneKit.SCNSceneSourceCreateNormalsIfAbsentKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionCheckConsistency,
+                SceneKit.SCNSceneSourceCheckConsistencyKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionFlattenScene,
+                SceneKit.SCNSceneSourceFlattenSceneKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionUseSafeMode,
+                SceneKit.SCNSceneSourceUseSafeModeKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionAssetDirectoryURLs,
+                SceneKit.SCNSceneSourceAssetDirectoryURLsKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionOverrideAssetURLs,
+                SceneKit.SCNSceneSourceOverrideAssetURLsKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionStrictConformance,
+                SceneKit.SCNSceneSourceStrictConformanceKey,
+            )
 
-
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         def test_constants10_10(self):
             self.assertIsInstance(SceneKit.SCNSceneSourceConvertUnitsToMetersKey, unicode)
             self.assertIsInstance(SceneKit.SCNSceneSourceConvertToYUpKey, unicode)
-            self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyKey, unicode)
-            self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyPlay, unicode)
-            self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyPlay, unicode)
-            self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyPlayRepeatedly, unicode)
-            self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyDoNotPlay, unicode)
-            self.assertIsInstance(SceneKit.SCNSceneSourceAnimationImportPolicyPlayUsingSceneTimeBase, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceAnimationImportPolicyKey, unicode
+            )
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceAnimationImportPolicyPlay, unicode
+            )
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceAnimationImportPolicyPlay, unicode
+            )
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceAnimationImportPolicyPlayRepeatedly, unicode
+            )
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceAnimationImportPolicyDoNotPlay, unicode
+            )
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceAnimationImportPolicyPlayUsingSceneTimeBase,
+                unicode,
+            )
 
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionConvertUnitsToMeters, SceneKit.SCNSceneSourceConvertUnitsToMetersKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionConvertToYUp, SceneKit.SCNSceneSourceConvertToYUpKey)
-            self.assertIs(SceneKit.SCNSceneSourceLoadingOptionAnimationImportPolicy, SceneKit.SCNSceneSourceAnimationImportPolicyKey)
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionConvertUnitsToMeters,
+                SceneKit.SCNSceneSourceConvertUnitsToMetersKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionConvertToYUp,
+                SceneKit.SCNSceneSourceConvertToYUpKey,
+            )
+            self.assertIs(
+                SceneKit.SCNSceneSourceLoadingOptionAnimationImportPolicy,
+                SceneKit.SCNSceneSourceAnimationImportPolicyKey,
+            )
 
-        @min_os_level('10.12')
+        @min_os_level("10.12")
         def test_constants10_12(self):
-            self.assertIsInstance(SceneKit.SCNSceneSourceLoadingOptionPreserveOriginalTopology, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceLoadingOptionPreserveOriginalTopology, unicode
+            )
 
         def testMethods(self):
-            self.assertArgIsBlock(SceneKit.SCNSceneSource.sceneWithOptions_statusHandler_, 1, SCNSceneSourceStatusHandler)
+            self.assertArgIsBlock(
+                SceneKit.SCNSceneSource.sceneWithOptions_statusHandler_,
+                1,
+                SCNSceneSourceStatusHandler,
+            )
             self.assertArgIsOut(SceneKit.SCNSceneSource.sceneWithOptions_error_, 1)
-            self.assertArgIsBlock(SceneKit.SCNSceneSource.entriesPassingTest_, 0, b'Z@@o^Z')
+            self.assertArgIsBlock(
+                SceneKit.SCNSceneSource.entriesPassingTest_, 0, b"Z@@o^Z"
+            )
 
 
 if __name__ == "__main__":

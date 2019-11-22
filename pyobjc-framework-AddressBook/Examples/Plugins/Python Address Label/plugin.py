@@ -9,7 +9,8 @@ not exist yet.
 from AddressBook import kABAddressProperty
 from AppKit import NSObject, NSNull, NSStringPboardType
 
-class PyAddressLabelDelegate (NSObject):
+
+class PyAddressLabelDelegate(NSObject):
     def actionProperty(self):
         return kABAddressProperty
 
@@ -22,17 +23,17 @@ class PyAddressLabelDelegate (NSObject):
     def performActionForPerson_identifier_(self, person, identifier):
         text = person.name()
         if person.department() is not NSNull.null():
-            text += '\n' + person.department()
+            text += "\n" + person.department()
 
         if person.organization() is not NSNull.null():
-            text += '\n' + person.organization()
+            text += "\n" + person.organization()
 
         address = person.address()[0]
-        text += '\n' + address.street()
-        text += '\n' + address.zip() + ' ' + address.city()
+        text += "\n" + address.street()
+        text += "\n" + address.zip() + " " + address.city()
 
         if address.country() is not NSNull.null():
-            text += '\n' + address.country()
+            text += "\n" + address.country()
 
         pboard = NSPasteboard.generalPasteboard()
         pboard.declareTypes_owner_([NSStringPboardType], None)

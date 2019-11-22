@@ -5,18 +5,32 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
-if sys.byteorder == 'little':
-    def littleOrBig(a, b): return a
-else:
-    def littleOrBig(a, b): return b
 
-misc = {
-}
-constants = '''$BCParameterNameBody$BCParameterNameGroup$BCParameterNameIntent$'''
-enums = '''$BCChatButtonStyleDark@1$BCChatButtonStyleLight@0$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+if sys.byteorder == "little":
+
+    def littleOrBig(a, b):
+        return a
+
+
+else:
+
+    def littleOrBig(a, b):
+        return b
+
+
+misc = {}
+constants = """$BCParameterNameBody$BCParameterNameGroup$BCParameterNameIntent$"""
+enums = """$BCChatButtonStyleDark@1$BCChatButtonStyleLight@0$"""
 misc.update({})
 expressions = {}
 

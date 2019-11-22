@@ -4,13 +4,14 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import FinderSync
 
+    class TestFinderSyncHelper(FinderSync.NSObject):
+        def valuesForAttributes_forItemWithURL_completion_(self, at, iu, com):
+            pass
 
-    class TestFinderSyncHelper (FinderSync.NSObject):
-        def valuesForAttributes_forItemWithURL_completion_(self, at, iu, com): pass
-        def makeListenerEndpointForServiceName_itemURL_andReturnError_(self, a, b, c): pass
+        def makeListenerEndpointForServiceName_itemURL_andReturnError_(self, a, b, c):
+            pass
 
-
-    class TestFinderSync (TestCase):
+    class TestFinderSync(TestCase):
         @min_os_level("10.10")
         def testClasses(self):
             self.assertIsInstance(FinderSync.FIFinderSyncController, objc.objc_class)
@@ -18,11 +19,20 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testProtocols(self):
-            self.assertIsInstance(objc.protocolNamed("FIFinderSync"), objc.formal_protocol)
+            self.assertIsInstance(
+                objc.protocolNamed("FIFinderSync"), objc.formal_protocol
+            )
 
-            self.assertArgIsBlock(TestFinderSyncHelper.valuesForAttributes_forItemWithURL_completion_, 2, b'v@@')
+            self.assertArgIsBlock(
+                TestFinderSyncHelper.valuesForAttributes_forItemWithURL_completion_,
+                2,
+                b"v@@",
+            )
 
-            self.assertArgIsOut(TestFinderSyncHelper.makeListenerEndpointForServiceName_itemURL_andReturnError_, 2)
+            self.assertArgIsOut(
+                TestFinderSyncHelper.makeListenerEndpointForServiceName_itemURL_andReturnError_,
+                2,
+            )
 
         @min_os_level("10.10")
         def testConstants(self):
@@ -33,12 +43,21 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.13")
         def testMethods(self):
-            self.assertArgIsBlock(FinderSync.FIFinderSyncController.setLastUsedDate_forItemWithURL_completion_, 2, b'v@')
-            self.assertArgIsBlock(FinderSync.FIFinderSyncController.setTagData_forItemWithURL_completion_, 2, b'v@')
+            self.assertArgIsBlock(
+                FinderSync.FIFinderSyncController.setLastUsedDate_forItemWithURL_completion_,
+                2,
+                b"v@",
+            )
+            self.assertArgIsBlock(
+                FinderSync.FIFinderSyncController.setTagData_forItemWithURL_completion_,
+                2,
+                b"v@",
+            )
 
         @min_os_level("10.14")
         def testMethods10_14(self):
             self.assertResultIsBOOL(FinderSync.FIFinderSyncController.isExtensionEnabled)
+
 
 if __name__ == "__main__":
     main()

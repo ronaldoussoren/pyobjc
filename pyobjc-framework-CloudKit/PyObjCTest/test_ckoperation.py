@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit
 
-    class TestCKOperation (TestCase):
+    class TestCKOperation(TestCase):
         @min_os_level("10.10")
         def testClasses(self):
             self.assertHasAttr(CloudKit, "CKOperation")
@@ -22,15 +22,24 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(CloudKit.CKOperation.isLongLived)
             self.assertArgIsBOOL(CloudKit.CKOperation.setLongLived_, 0)
 
-            self.assertArgIsBlock(CloudKit.CKOperation.setLongLivedOperationWasPersistedBlock_, 0, b'v')
-            self.assertResultIsBlock(CloudKit.CKOperation.longLivedOperationWasPersistedBlock, b'v')
+            self.assertArgIsBlock(
+                CloudKit.CKOperation.setLongLivedOperationWasPersistedBlock_, 0, b"v"
+            )
+            self.assertResultIsBlock(
+                CloudKit.CKOperation.longLivedOperationWasPersistedBlock, b"v"
+            )
 
-        @min_os_level('10.13')
+        @min_os_level("10.13")
         def testMethods10_13(self):
-            self.assertResultIsBOOL(CloudKit.CKOperationConfiguration.allowsCellularAccess)
-            self.assertArgIsBOOL(CloudKit.CKOperationConfiguration.setAllowsCellularAccess_, 0)
+            self.assertResultIsBOOL(
+                CloudKit.CKOperationConfiguration.allowsCellularAccess
+            )
+            self.assertArgIsBOOL(
+                CloudKit.CKOperationConfiguration.setAllowsCellularAccess_, 0
+            )
             self.assertResultIsBOOL(CloudKit.CKOperationConfiguration.isLongLived)
             self.assertArgIsBOOL(CloudKit.CKOperationConfiguration.setLongLived_, 0)
+
 
 if __name__ == "__main__":
     main()

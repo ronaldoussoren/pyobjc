@@ -2,7 +2,7 @@ from Foundation import *
 from PyObjCTools.TestSupport import *
 
 
-class TestNSURLHandle (TestCase):
+class TestNSURLHandle(TestCase):
     def testMethods(self):
         self.assertIsInstance(NSHTTPPropertyStatusCodeKey, unicode)
         self.assertIsInstance(NSHTTPPropertyStatusReasonKey, unicode)
@@ -29,7 +29,8 @@ class TestNSURLHandle (TestCase):
         self.assertResultIsBOOL(NSURLHandle.writeData_)
 
     def testProtocols(self):
-        objc.protocolNamed('NSURLHandleClient')
+        objc.protocolNamed("NSURLHandleClient")
+
 
 if __name__ == "__main__":
     main()

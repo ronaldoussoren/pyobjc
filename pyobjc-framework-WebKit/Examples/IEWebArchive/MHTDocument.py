@@ -2,7 +2,8 @@ from Cocoa import NSDocument
 import objc
 from loader import MHTLoader
 
-class MHTDocument (NSDocument):
+
+class MHTDocument(NSDocument):
     locationbox = objc.IBOutlet()
     webview = objc.IBOutlet()
 
@@ -44,4 +45,4 @@ class MHTDocument (NSDocument):
             fp.write(archive.data().bytes())
         self.webview.mainFrame().stopLoading()
         self.webview.mainFrame().loadArchive_(archive)
-        1/0
+        1 / 0

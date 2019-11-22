@@ -25,25 +25,27 @@ Use ``objc.context.unregister`` to remove the registration of ``myObject``
 when you're done. The argument to unregister is the same object as was
 passed in during registration.
 """
+__all__ = ("context",)
+from typing import Any
 
-__all__ = ('context',)
 
-class ContextRegistry (object):
+class ContextRegistry(object):
     def __init__(self):
         self._registry = {}
 
-    def register(self, object):
-        uniq = id(object)
-        self._registry[uniq] = object
+    def register(self, value: Any) -> int:
+        uniq = id(value)
+        self._registry[uniq] = value
         return uniq
 
-    def unregister(self, object):
+    def unregister(self, value: Any):
         try:
-            del self._registry[id(object)]
+            del self._registry[id(value)]
         except KeyError:
             pass
 
-    def get(self, uniq):
+    def get(self, uniq) -> Any:
         return self._registry[uniq]
+
 
 context = ContextRegistry()

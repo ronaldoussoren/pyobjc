@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSLevelIndicatorCell (TestCase):
+
+class TestNSLevelIndicatorCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSRelevancyLevelIndicatorStyle, 0)
         self.assertEqual(NSContinuousCapacityLevelIndicatorStyle, 1)

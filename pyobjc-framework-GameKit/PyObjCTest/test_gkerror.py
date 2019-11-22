@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import GameKit
 
-class TestGKError (TestCase):
 
+class TestGKError(TestCase):
     def testConstants(self):
         self.assertEqual(GameKit.GKErrorUnknown, 1)
         self.assertEqual(GameKit.GKErrorCancelled, 2)
@@ -34,6 +34,8 @@ class TestGKError (TestCase):
         self.assertEqual(GameKit.GKErrorUbiquityContainerUnavailable, 27)
         self.assertEqual(GameKit.GKErrorMatchNotConnected, 28)
         self.assertEqual(GameKit.GKErrorGameSessionRequestInvalid, 29)
+        self.assertEqual(GameKit.GKErrorRestrictedToAutomatch, 30)
+        self.assertEqual(GameKit.GKErrorAPINotAvailable, 31)
 
 
 if __name__ == "__main__":

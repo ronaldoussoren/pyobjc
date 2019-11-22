@@ -14,37 +14,40 @@ import sys
 import AddressBook
 
 # The names of fields in the export, and the corresponding property.
-FIELD_NAMES=(
-    ('Last Name',  AddressBook.kABLastNameProperty),
-    ('First Name', AddressBook.kABFirstNameProperty),
-    ('E-mail',     AddressBook.kABEmailProperty),
+FIELD_NAMES = (
+    ("Last Name", AddressBook.kABLastNameProperty),
+    ("First Name", AddressBook.kABFirstNameProperty),
+    ("E-mail", AddressBook.kABEmailProperty),
 )
 
 if sys.version_info[0] == 2:
+
     def encodeField(value):
         """
         Encode a value into an UTF-8 string
         """
         if value is None:
-            return ''
+            return ""
 
         if isinstance(value, AddressBook.ABMultiValue):
             # A multi-valued property, merge them into a single string
             result = []
             for i in range(value.count()):
-                result.append(value.valueAtIndex_(i).encode('utf-8'))
+                result.append(value.valueAtIndex_(i).encode("utf-8"))
 
-            return '; '.join(result)
+            return "; ".join(result)
 
-        return value.encode('utf-8')
+        return value.encode("utf-8")
+
 
 else:
+
     def encodeField(value):
         """
         Encode a value into an UTF-8 string
         """
         if value is None:
-            return ''
+            return ""
 
         if isinstance(value, AddressBook.ABMultiValue):
             # A multi-valued property, merge them into a single string
@@ -52,15 +55,14 @@ else:
             for i in range(value.count()):
                 result.append(value.valueAtIndex_(i))
 
-            return '; '.join(result)
+            return "; ".join(result)
 
         return value
 
 
 def personToFields(person, fieldnames):
     """ Extract the specified fields from a person object """
-    return [ encodeField(person.valueForProperty_(nm)) for nm in fieldnames ]
-
+    return [encodeField(person.valueForProperty_(nm)) for nm in fieldnames]
 
 
 def bookFields(book, fieldnames):
@@ -81,11 +83,12 @@ def main(argv=None):
 
     book = AddressBook.ABAddressBook.sharedAddressBook()
 
-    with open(argv[0], 'w') as fp:
+    with open(argv[0], "w") as fp:
         csvStream = csv.writer(fp)
-        csvStream.writerow([ f[0] for f in FIELD_NAMES])
-        for row in bookFields(book, [ f[1] for f in FIELD_NAMES]):
+        csvStream.writerow([f[0] for f in FIELD_NAMES])
+        for row in bookFields(book, [f[1] for f in FIELD_NAMES]):
             csvStream.writerow(row)
+
 
 if __name__ == "__main__":
     main()

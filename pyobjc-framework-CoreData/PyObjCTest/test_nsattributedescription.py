@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestNSAttributeDescription (TestCase):
+
+class TestNSAttributeDescription(TestCase):
     def testConstants(self):
         self.assertEqual(NSUndefinedAttributeType, 0)
         self.assertEqual(NSInteger16AttributeType, 100)
@@ -29,7 +29,16 @@ class TestNSAttributeDescription (TestCase):
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSAttributeDescription.allowsExternalBinaryDataStorage)
-        self.assertArgIsBOOL(NSAttributeDescription.setAllowsExternalBinaryDataStorage_, 0)
+        self.assertArgIsBOOL(
+            NSAttributeDescription.setAllowsExternalBinaryDataStorage_, 0
+        )
+
+    @min_os_level("10.15")
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(NSAttributeDescription.preservesValueInHistoryOnDeletion)
+        self.assertArgIsBOOL(
+            NSAttributeDescription.setPreservesValueInHistoryOnDeletion_, 0
+        )
 
 
 if __name__ == "__main__":

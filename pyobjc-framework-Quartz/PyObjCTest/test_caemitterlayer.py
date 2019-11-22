@@ -2,8 +2,8 @@ from Quartz import *
 from PyObjCTools.TestSupport import *
 
 
-class TestCAEmitterLayer (TestCase):
-    @min_os_level('10.6')
+class TestCAEmitterLayer(TestCase):
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultHasType(CAEmitterLayer.emitterPosition, CGPoint.__typestr__)
         self.assertArgHasType(CAEmitterLayer.setEmitterPosition_, 0, CGPoint.__typestr__)
@@ -13,7 +13,7 @@ class TestCAEmitterLayer (TestCase):
         self.assertResultIsBOOL(CAEmitterLayer.preservesDepth)
         self.assertArgIsBOOL(CAEmitterLayer.setPreservesDepth_, 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCAEmitterLayerPoint, unicode)
         self.assertIsInstance(kCAEmitterLayerLine, unicode)
@@ -30,6 +30,7 @@ class TestCAEmitterLayer (TestCase):
         self.assertIsInstance(kCAEmitterLayerOldestLast, unicode)
         self.assertIsInstance(kCAEmitterLayerBackToFront, unicode)
         self.assertIsInstance(kCAEmitterLayerAdditive, unicode)
+
 
 if __name__ == "__main__":
     main()

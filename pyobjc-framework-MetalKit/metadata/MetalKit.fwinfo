@@ -1,0 +1,263 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "MTKMesh": {
+    "methods": [
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithMesh:device:error:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": true,
+      "selector": "newMeshesFromAsset:device:sourceMeshes:error:"
+     }
+    ]
+   },
+   "MTKTextureLoader": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTextureWithMDLTexture:options:completionHandler:"
+     },
+     {
+      "args": {
+       "5": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTexturesWithNames:scaleFactor:displayGamut:bundle:options:completionHandler:"
+     },
+     {
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTexturesWithNames:scaleFactor:bundle:options:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTextureWithData:options:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTexturesWithContentsOfURLs:options:completionHandler:"
+     },
+     {
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTextureWithName:scaleFactor:bundle:options:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTextureWithCGImage:options:completionHandler:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTextureWithContentsOfURL:options:completionHandler:"
+     },
+     {
+      "args": {
+       "5": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "newTextureWithName:scaleFactor:displayGamut:bundle:options:completionHandler:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newTextureWithContentsOfURL:options:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newTexturesWithContentsOfURLs:options:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newTextureWithData:options:error:"
+     },
+     {
+      "args": {
+       "0": {},
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newTextureWithCGImage:options:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newTextureWithMDLTexture:options:error:"
+     },
+     {
+      "args": {
+       "4": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newTextureWithName:scaleFactor:bundle:options:error:"
+     },
+     {
+      "args": {
+       "5": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newTextureWithName:scaleFactor:displayGamut:bundle:options:error:"
+     }
+    ]
+   },
+   "MTKView": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "colorspace"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setColorspace:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic"
+      ],
+      "name": "colorspace"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {
+   "MTKMetalVertexDescriptorFromModelIOWithError": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "MTKModelIOVertexDescriptorFromMetalWithError": {
+    "args": {
+     "1": { "type_modifier": "o" }
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

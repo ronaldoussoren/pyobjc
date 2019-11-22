@@ -7,20 +7,24 @@
  *
  */
 #ifndef __has_feature
-#  define __has_feature(x) 0
+#define __has_feature(x) 0
 #endif
 #ifndef __has_extension
-#  define __has_extension(x) __has_feature(x)
+#define __has_extension(x) __has_feature(x)
 #endif
 
 #if __has_extension(c_static_assert)
-# define STATIC_ASSERT(test, message) _Static_assert(test, message)
+#define STATIC_ASSERT(test, message) _Static_assert(test, message)
 #else
-# define STATIC_ASSERT(test, message) switch(0){ case 0: case test:;}
+#define STATIC_ASSERT(test, message)                                                     \
+    switch (0) {                                                                         \
+    case 0:                                                                              \
+    case test:;                                                                          \
+    }
 #endif
 
 #if !__has_feature(objc_instancetype)
-#  define instancetype id
+#define instancetype id
 #endif
 
 /*
@@ -34,36 +38,6 @@
  * Also ensure that MAC_OS_X_VERSION_... macros are available
  * for all existing OSX versions.
  */
-#ifndef CGFLOAT_DEFINED
-
-#ifdef __LP64__
-# error "Huh? 64-bit but no CFFloat available???"
-#endif
-
-typedef float CGFloat;
-#define CGFLOAT_MIN FLT_MIN
-#define CGFLOAT_MAX FLT_MAX
-#define CGFLOAT_IS_DOUBLE 0
-#define CGFLOAT_DEFINED
-
-#endif /* CGFLOAT_DEFINED */
-
-#ifndef NSINTEGER_DEFINED
-
-#ifdef __LP64__
-# error "Huh? 64-bit but no NSINTEGER available???"
-#endif
-
-typedef int NSInteger;
-typedef unsigned int NSUInteger;
-
-#define NSIntegerMax    LONG_MAX
-#define NSIntegerMin    LONG_MIN
-#define NSUIntegerMax   ULONG_MAX
-
-#define NSINTEGER_DEFINED
-
-#endif
 
 /* On 10.1 there are no defines for the OS version. */
 #ifndef MAC_OS_X_VERSION_10_1
@@ -73,7 +47,6 @@ typedef unsigned int NSUInteger;
 #error "MAC_OS_X_VERSION_10_1 not defined. You aren't running 10.1 are you?"
 
 #endif
-
 
 #ifndef MAC_OS_X_VERSION_10_2
 #define MAC_OS_X_VERSION_10_2 1020
@@ -203,19 +176,21 @@ typedef unsigned int NSUInteger;
 #define MAC_OS_X_VERSION_10_14_4 101404
 #endif
 
-#if PyObjC_BUILD_RELEASE <= 1005
+#ifndef MAC_OS_X_VERSION_10_14_5
+#define MAC_OS_X_VERSION_10_14_5 101405
+#endif
 
-/* On MacOS X, +signatureWithObjCTypes: is a method of NSMethodSignature,
- * but that method is not present in the header files until Mac OS X 10.5.
- *
- * Add a definition of the method when compiling on ancient OSX releases
- * to ensure that the code gets compiled without warnings.
- */
-@interface NSMethodSignature (WarningKiller)
-    +(instancetype)signatureWithObjCTypes:(const char*)types;
-    @end /* interface NSMethodSignature */
+#ifndef MAC_OS_X_VERSION_10_14_6
+#define MAC_OS_X_VERSION_10_14_6 101406
+#endif
 
-#endif /* PyObjC_BUILD_RELEASE <= 1005 */
+#ifndef MAC_OS_X_VERSION_10_15
+#define MAC_OS_X_VERSION_10_15 101500
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_15_1
+#define MAC_OS_X_VERSION_10_15_1 101501
+#endif
 
 /*
  * Explicit support for weak-linking functions
@@ -242,77 +217,89 @@ typedef unsigned int NSUInteger;
  */
 #include <dlfcn.h>
 
-#define WEAK_LINKED_NAME(NAME)    static __typeof__(&NAME) ptr_ ## NAME;
-#define USE(NAME)        ptr_ ## NAME
-#define CHECK_WEAK_LINK(module, NAME) \
-    do {                                            \
-        void* dl = dlopen(NULL, RTLD_GLOBAL);                        \
-        ptr_ ## NAME = dlsym(dl, PyObjC_STR(NAME));                    \
-        dlclose(dl);                                    \
-        if (ptr_ ## NAME == NULL) {                            \
-            if (PyDict_DelItemString(PyModule_GetDict(module), PyObjC_STR(NAME)) < 0) {    \
-                PyObjC_INITERROR();                        \
-            }                                    \
-        }                                        \
-    } while(0)
+#define WEAK_LINKED_NAME(NAME) static __typeof__(&NAME) ptr_##NAME;
+#define USE(NAME) ptr_##NAME
+#define CHECK_WEAK_LINK(module, NAME)                                                    \
+    do {                                                                                 \
+        void* dl = dlopen(NULL, RTLD_GLOBAL);                                            \
+        ptr_##NAME = dlsym(dl, PyObjC_STR(NAME));                                        \
+        dlclose(dl);                                                                     \
+        if (ptr_##NAME == NULL) {                                                        \
+            if (PyDict_DelItemString(PyModule_GetDict(module), PyObjC_STR(NAME)) < 0) {  \
+                return NULL;                                                             \
+            }                                                                            \
+        }                                                                                \
+    } while (0)
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
 #define WEAK_LINKED_NAME_10_5(NAME)
-#define USE_10_5(NAME)                NAME
-#define CHECK_WEAK_LINK_10_5(module, NAME) do {} while(0)
+#define USE_10_5(NAME) NAME
+#define CHECK_WEAK_LINK_10_5(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_5(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_5(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_5(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_5(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_5(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
 #define WEAK_LINKED_NAME_10_6(NAME)
-#define USE_10_6(NAME)                NAME
-#define CHECK_WEAK_LINK_10_6(module, NAME) do {} while(0)
+#define USE_10_6(NAME) NAME
+#define CHECK_WEAK_LINK_10_6(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_6(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_6(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_6(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_6(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_6(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
 #define WEAK_LINKED_NAME_10_7(NAME)
-#define USE_10_7(NAME)                NAME
-#define CHECK_WEAK_LINK_10_7(module, NAME) do {} while(0)
+#define USE_10_7(NAME) NAME
+#define CHECK_WEAK_LINK_10_7(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_7(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_7(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_7(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_7(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_7(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_8
 #define WEAK_LINKED_NAME_10_8(NAME)
-#define USE_10_8(NAME)                NAME
-#define CHECK_WEAK_LINK_10_8(module, NAME) do {} while(0)
+#define USE_10_8(NAME) NAME
+#define CHECK_WEAK_LINK_10_8(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_8(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_8(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_8(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_8(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_8(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
 #define WEAK_LINKED_NAME_10_9(NAME)
-#define USE_10_9(NAME)                NAME
-#define CHECK_WEAK_LINK_10_9(module, NAME) do {} while(0)
+#define USE_10_9(NAME) NAME
+#define CHECK_WEAK_LINK_10_9(module, NAME)                                               \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_9(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_9(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_9(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_9(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_9(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_10
 #define WEAK_LINKED_NAME_10_10(NAME)
-#define USE_10_10(NAME)                NAME
-#define CHECK_WEAK_LINK_10_10(module, NAME) do {} while(0)
+#define USE_10_10(NAME) NAME
+#define CHECK_WEAK_LINK_10_10(module, NAME)                                              \
+    do {                                                                                 \
+    } while (0)
 #else
-#define WEAK_LINKED_NAME_10_10(NAME)         WEAK_LINKED_NAME(NAME)
-#define USE_10_10(NAME)                USE(NAME)
+#define WEAK_LINKED_NAME_10_10(NAME) WEAK_LINKED_NAME(NAME)
+#define USE_10_10(NAME) USE(NAME)
 #define CHECK_WEAK_LINK_10_10(module, NAME) CHECK_WEAK_LINK(module, NAME)
 #endif
 
@@ -322,7 +309,6 @@ typedef unsigned int NSUInteger;
  *
  */
 
-
 /*
  *
  * Start of compiler support helpers
@@ -330,17 +316,15 @@ typedef unsigned int NSUInteger;
  */
 
 #ifdef __GNUC__
-#define unlikely(x) __builtin_expect (!!(x), 0)
-#define likely(x) __builtin_expect (!!(x), 1)
+#define unlikely(x) __builtin_expect(!!(x), 0)
+#define likely(x) __builtin_expect(!!(x), 1)
 #else
 #define likely(x) x
 #define likely(x) x
 #endif
 
-
-
-
-/* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate. */
+/* On some versions of GCC <limits.h> defines LONG_LONG_MAX but not LLONG_MAX, compensate.
+ */
 #ifndef LLONG_MIN
 #ifdef LONG_LONG_MIN
 #define LLONG_MIN LONG_LONG_MIN
@@ -355,7 +339,6 @@ typedef unsigned int NSUInteger;
  *
  */
 
-
 #if __LP64__
 #define Py_ARG_NSInteger "l"
 #define Py_ARG_NSUInteger "k"
@@ -364,6 +347,8 @@ typedef unsigned int NSUInteger;
 #define Py_ARG_NSUInteger "I"
 #endif
 
+#define PyObjC__STR(x) #x
+#define PyObjC_STR(x) PyObjC__STR(x)
 
 /*
  *
@@ -371,24 +356,11 @@ typedef unsigned int NSUInteger;
  *
  */
 
-
-#define PyObjC__STR(x) #x
-#define PyObjC_STR(x) PyObjC__STR(x)
-
-
 /* Use CLINIC_SEP between the prototype and
  * description in doc strings, to get clean
  * docstrings.
  */
-#if PY_VERSION_HEX >= 0x03040000
-
-# define CLINIC_SEP "--\n"
-
-#else
-
-# define CLINIC_SEP ""
-
-#endif
+#define CLINIC_SEP "--\n"
 
 /* Define PyObjC_UNICODE_FAST_PATH when
  * 1) We're before Python 3.3, and
@@ -398,162 +370,22 @@ typedef unsigned int NSUInteger;
  * makes it impossible (and unnecessary) to use the
  * "fast path"
  */
-#if PY_VERSION_HEX >= 0x03030000
 
-#undef PyObjC_UNICODE_FAST_PATH
+extern int PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
+extern PyObject* PyBytes_InternFromString(const char* v);
+extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
 
-#elif Py_UNICODE_SIZE == 2
-
-#define PyObjC_UNICODE_FAST_PATH
-
-#endif
-
-#if PY_MAJOR_VERSION == 2
-
-    typedef long Py_hash_t;
-
-#   ifndef Py_ARG_BYTES
-#       define Py_ARG_BYTES "z"
-#   endif
-
-    /* Cast a PyObject* to the type expected by the 2.x C API.
-     * This is a macro because the cast is not necessary for the 3.x C API)
-     */
-#   define UNICODE_CAST(item)  ((PyUnicodeObject*)(item))
-#   define SLICE_CAST(item)    ((PySliceObject*)(item))
-
-#   define Py_REFCNT(ob)           (((PyObject*)(ob))->ob_refcnt)
-#   define Py_TYPE(ob)             (((PyObject*)(ob))->ob_type)
-#   define Py_SIZE(ob)             (((PyVarObject*)(ob))->ob_size)
-
-
-    /* Source-level backward compatibility: use PyCapsule API in sources, fall back to
-     * PyCObject when needed.
-     */
-#   if PY_MINOR_VERSION < 7
-#       define PyCapsule_New(pointer, name, destructor) PyCObject_FromVoidPtr(pointer, destructor)
-#       define PyCapsule_GetPointer(object, name) PyCObject_AsVoidPtr(object)
-#       define PyCapsule_CheckExact(object)    PyCObject_Check(object)
-#   endif /* Python < 2.7 */
-
-#ifdef OBJC_VERSION
-
-# ifdef PyErr_Format
-#   undef PyErr_Format
-# endif
-
-#   define PyErr_Format PyObjCErr_Format
-#endif
-
-    extern PyObject* PyObjCErr_Format(PyObject* exception, const char* format, ...);
-
-
-#   define PyText_Check PyString_Check
-#   define PyText_FromFormat PyString_FromFormat
-#   define PyText_FromString PyString_FromString
-#   define PyText_FromStringAndSize PyString_FromStringAndSize
-#   define PyText_InternFromString PyString_InternFromString
-#   define PyText_InternInPlace PyString_InternInPlace
-#   define PyText_Append PyString_ConcatAndDel
-#   define PyText_AsString    PyString_AsString
-
-#   ifndef PyBytes_FromString
-#       define PyBytes_AsString    PyString_AsString
-#       define PyBytes_Size        PyString_Size
-#       define PyBytes_FromString    PyString_FromString
-#       define PyBytes_FromStringAndSize    PyString_FromStringAndSize
-#       define PyBytes_AS_STRING    PyString_AS_STRING
-#       define PyBytes_GET_SIZE    PyString_GET_SIZE
-#   endif /* !PyBytes_FromString */
-
-#   define PyBytes_InternFromString    PyString_InternFromString
-#   define PyBytes_InternFromStringAndSize    PyObjCString_InternFromStringAndSize
-
-    extern PyObject* PyObjCString_InternFromStringAndSize(const char* v, Py_ssize_t l);
-
-#   define PyObjC_INITERROR() return
-#   define PyObjC_INITDONE() return
-
-#   define PyObjC_MODULE_INIT(name) \
-        void init##name(void); \
-        void __attribute__ ((__visibility__ ("default"))) init##name(void)
-
-#   define PyObjC_MODULE_CREATE(name) \
-        Py_InitModule4(PyObjC_STR(name), mod_methods, \
-            NULL, NULL, PYTHON_API_VERSION);
-
-
-# else /* Py_MAJOR_VERSION == 3 */
-
-#   ifndef Py_ARG_BYTES
-#       define Py_ARG_BYTES "y"
-#   endif
-
-#   define UNICODE_CAST(item) (item)
-#   define SLICE_CAST(item) (item)
-
-
-#   define PyText_Check PyUnicode_Check
-#   define PyText_FromFormat PyUnicode_FromFormat
-#   define PyText_FromString PyUnicode_FromString
-#   define PyText_FromStringAndSize PyUnicode_FromStringAndSize
-#   define PyText_InternFromString PyUnicode_InternFromString
-#   define PyText_InternInPlace PyUnicode_InternInPlace
-#   define PyText_Append PyUnicode_Append
-#   define PyText_AsString _PyUnicode_AsString
-
-#   define PyInt_FromLong PyLong_FromLong
-#   define PyInt_FromString PyLong_FromString
-
-    extern int PyObject_Cmp(PyObject *o1, PyObject *o2, int *result);
-    extern PyObject* PyBytes_InternFromString(const char* v);
-    extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
-
-#   define PyObjC_INITERROR() return NULL
-#   define PyObjC_INITDONE() return m
-
-#   define PyObjC_MODULE_INIT(name) \
-        static struct PyModuleDef mod_module = { \
-            PyModuleDef_HEAD_INIT, \
-            PyObjC_STR(name), \
-            NULL, \
-            0, \
-            mod_methods, \
-            NULL, \
-            NULL, \
-            NULL, \
-            NULL \
-        }; \
-        \
-        PyObject* PyInit_##name(void); \
-        PyObject* __attribute__ ((__visibility__ ("default"))) PyInit_##name(void)
-
-#define PyObjC_MODULE_CREATE(name) \
-    PyModule_Create(&mod_module);
-
-#   if PY_MINOR_VERSION >= 3
-
-        /*
-         * A micro optimization: when using Python 3.3 or later it
-         * is possible to access a 'char*' with an ASCII representation
-         * of a unicode object without first converting it to a bytes
-         * string (if the string can be encoded as ASCII in the first
-         * place.
-         *
-         * This slightly reduces the object allocation rate during
-         * attribute access.
-         */
-
-#       define PyObjC_FAST_UNICODE_ASCII 1
-
-        extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
-
-#   endif /* Python >= 3.3 */
-
-#endif /* PY_MAJOR_VERSION == 3 */
-
-
-
+/*
+ * A micro optimization: when using Python 3.3 or later it
+ * is possible to access a 'char*' with an ASCII representation
+ * of a unicode object without first converting it to a bytes
+ * string (if the string can be encoded as ASCII in the first
+ * place.
+ *
+ * This slightly reduces the object allocation rate during
+ * attribute access.
+ */
+extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
 
 #ifdef __clang__
 
@@ -562,14 +394,16 @@ typedef unsigned int NSUInteger;
  */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warray-bounds"
-static inline void _PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
+static inline void
+_PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
 {
     PyTuple_SET_ITEM(tuple, idx, value);
 }
 #undef PyTuple_SET_ITEM
 #define PyTuple_SET_ITEM(a, b, c) _PyObjCTuple_SetItem(a, b, c)
 
-static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
+static inline PyObject*
+_PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 {
     return PyTuple_GET_ITEM(tuple, idx);
 }
@@ -580,68 +414,51 @@ static inline PyObject* _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #endif /* __clang__ */
 
-
-/*
- *
- * Helper macros for Cocoa exceptions and the Python GIL
- *
- */
-
-#ifdef NO_OBJC2_RUNTIME
-
-#define PyObjC_DURING \
-        Py_BEGIN_ALLOW_THREADS \
-        NS_DURING
-
-#define PyObjC_HANDLER NS_HANDLER
-
-#define PyObjC_ENDHANDLER \
-        NS_ENDHANDLER \
-        Py_END_ALLOW_THREADS
-
-#else /* !NO_OBJC2_RUNTIME */
-
-#define    PyObjC_DURING \
-        Py_BEGIN_ALLOW_THREADS \
-        @try {
-
-#define PyObjC_HANDLER } @catch(NSObject* _localException) { \
-        NSException* localException __attribute__((__unused__))= (NSException*)_localException;
-
-#define PyObjC_ENDHANDLER \
-        } \
-        Py_END_ALLOW_THREADS
-
-#endif /* !NO_OBJC2_RUNTIME */
-
-#define PyObjC_BEGIN_WITH_GIL \
-    { \
-        PyGILState_STATE _GILState; \
+#define PyObjC_BEGIN_WITH_GIL                                                            \
+    {                                                                                    \
+        PyGILState_STATE _GILState;                                                      \
         _GILState = PyGILState_Ensure();
 
-#define PyObjC_GIL_FORWARD_EXC() \
-        do { \
-            PyObjCErr_ToObjCWithGILState(&_GILState); \
-        } while (0)
+#define PyObjC_GIL_FORWARD_EXC()                                                         \
+    do {                                                                                 \
+        PyObjCErr_ToObjCWithGILState(&_GILState);                                        \
+    } while (0)
 
+#define PyObjC_GIL_RETURN(val)                                                           \
+    do {                                                                                 \
+        PyGILState_Release(_GILState);                                                   \
+        return (val);                                                                    \
+    } while (0)
 
-#define PyObjC_GIL_RETURN(val) \
-        do { \
-            PyGILState_Release(_GILState); \
-            return (val); \
-        } while (0)
+#define PyObjC_GIL_RETURNVOID                                                            \
+    do {                                                                                 \
+        PyGILState_Release(_GILState);                                                   \
+        return;                                                                          \
+    } while (0)
 
-#define PyObjC_GIL_RETURNVOID \
-        do { \
-            PyGILState_Release(_GILState); \
-            return; \
-        } while (0)
-
-
-#define PyObjC_END_WITH_GIL \
-        PyGILState_Release(_GILState); \
+#define PyObjC_END_WITH_GIL                                                              \
+    PyGILState_Release(_GILState);                                                       \
     }
 
+/* TEMP */
 
+#define PyObjC_INITERROR() return NULL
+#define PyObjC_INITDONE() return m
+
+#define PyObjC_MODULE_INIT(name)                                                         \
+    static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,                       \
+                                            PyObjC_STR(name),                            \
+                                            NULL,                                        \
+                                            0,                                           \
+                                            mod_methods,                                 \
+                                            NULL,                                        \
+                                            NULL,                                        \
+                                            NULL,                                        \
+                                            NULL};                                       \
+                                                                                         \
+    PyObject* PyInit_##name(void);                                                       \
+    PyObject* __attribute__((__visibility__("default"))) PyInit_##name(void)
+
+#define PyObjC_MODULE_CREATE(name) PyModule_Create(&mod_module);
 
 #endif /* PyObjC_COMPAT_H */

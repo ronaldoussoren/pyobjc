@@ -1,6 +1,6 @@
 static PyObject*
-call_NSInvocation_setArgument_atIndex_(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
+                                       PyObject* arguments)
 {
     struct objc_super super;
     NSMethodSignature* signature;
@@ -14,17 +14,18 @@ call_NSInvocation_setArgument_atIndex_(
         return NULL;
     }
 
-    PyObjC_DURING
-        signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
 
-        tp = [signature getArgumentTypeAtIndex:index];
+            tp = [signature getArgumentTypeAtIndex:index];
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        signature = NULL;
-        tp = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            signature = NULL;
+            tp = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -46,25 +47,23 @@ call_NSInvocation_setArgument_atIndex_(
         return NULL;
     }
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            ((void(*)(id,SEL, void*, NSUInteger))
-                    (PyObjCIMP_GetIMP(method)))(
-                        PyObjCObject_GetObject(self),
-                        PyObjCIMP_GetSelector(method),
-                        buf, index);
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                ((void (*)(id, SEL, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), buf,
+                    index);
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-            ((void(*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(&super,
-                    PyObjCSelector_GetSelector(method),
-                    buf, index);
+                ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), buf, index);
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     PyMem_Free(buf);
 
@@ -77,8 +76,7 @@ call_NSInvocation_setArgument_atIndex_(
 }
 
 static PyObject*
-call_NSInvocation_setReturnValue_(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super super;
     NSMethodSignature* signature;
@@ -91,17 +89,18 @@ call_NSInvocation_setReturnValue_(
         return NULL;
     }
 
-    PyObjC_DURING
-        signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
 
-        tp = [signature methodReturnType];
+            tp = [signature methodReturnType];
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        signature = NULL;
-        tp = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            signature = NULL;
+            tp = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -123,25 +122,22 @@ call_NSInvocation_setReturnValue_(
         return NULL;
     }
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            ((void(*)(id,SEL, void*))
-                (PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self),
-                    PyObjCIMP_GetSelector(method),
-                    buf);
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                ((void (*)(id, SEL, void*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), buf);
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-            ((void(*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(&super,
-                PyObjCSelector_GetSelector(method),
-                buf);
+                ((void (*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), buf);
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+    Py_END_ALLOW_THREADS
 
     PyMem_Free(buf);
 
@@ -154,8 +150,8 @@ call_NSInvocation_setReturnValue_(
 }
 
 static PyObject*
-call_NSInvocation_getArgument_atIndex_(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
+                                       PyObject* arguments)
 {
     struct objc_super super;
     NSMethodSignature* signature;
@@ -174,18 +170,18 @@ call_NSInvocation_getArgument_atIndex_(
         return NULL;
     }
 
-    PyObjC_DURING
-        signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
 
-        tp = [signature getArgumentTypeAtIndex:index];
+            tp = [signature getArgumentTypeAtIndex:index];
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        signature = NULL;
-        tp = NULL;
-
-    PyObjC_ENDHANDLER
-
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            signature = NULL;
+            tp = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -202,27 +198,23 @@ call_NSInvocation_getArgument_atIndex_(
         return NULL;
     }
 
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                ((void (*)(id, SEL, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), buf,
+                    index);
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            ((void(*)(id,SEL, void*, NSUInteger))
-                (PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self),
-                    PyObjCIMP_GetSelector(method),
-                    buf, index);
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
-
-            ((void(*)(struct objc_super*,SEL,void*,NSUInteger))objc_msgSendSuper)(&super,
-                    PyObjCSelector_GetSelector(method),
-                    buf, index);
+                ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), buf, index);
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
-
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         PyMem_Free(buf);
@@ -239,8 +231,7 @@ call_NSInvocation_getArgument_atIndex_(
 }
 
 static PyObject*
-call_NSInvocation_getReturnValue_(
-    PyObject* method, PyObject* self, PyObject* arguments)
+call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super super;
     NSMethodSignature* signature;
@@ -258,18 +249,18 @@ call_NSInvocation_getReturnValue_(
         return NULL;
     }
 
-    PyObjC_DURING
-        signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            signature = [(NSInvocation*)PyObjCObject_GetObject(self) methodSignature];
 
-        tp = [signature methodReturnType];
+            tp = [signature methodReturnType];
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        signature = NULL;
-        tp = NULL;
-
-    PyObjC_ENDHANDLER
-
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            signature = NULL;
+            tp = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -286,27 +277,22 @@ call_NSInvocation_getReturnValue_(
         return NULL;
     }
 
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (PyObjCIMP_Check(method)) {
+                ((void (*)(id, SEL, void*))(PyObjCIMP_GetIMP(method)))(
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), buf);
+            } else {
+                PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                                 PyObjCObject_GetObject(self));
 
-    PyObjC_DURING
-        if (PyObjCIMP_Check(method)) {
-            ((void(*)(id,SEL, void*))
-                (PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self),
-                    PyObjCIMP_GetSelector(method),
-                    buf);
-        } else {
-            PyObjC_InitSuper(&super,
-                PyObjCSelector_GetClass(method),
-                PyObjCObject_GetObject(self));
-
-            ((void(*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(&super,
-                PyObjCSelector_GetSelector(method),
-                buf);
+                ((void (*)(struct objc_super*, SEL, void*))objc_msgSendSuper)(
+                    &super, PyObjCSelector_GetSelector(method), buf);
+            }
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
         }
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
-
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         PyMem_Free(buf);
@@ -322,40 +308,32 @@ call_NSInvocation_getReturnValue_(
     return py_value;
 }
 
-
-static int setup_nsinvocation(PyObject* m __attribute__((__unused__)))
+static int
+setup_nsinvocation(PyObject* m __attribute__((__unused__)))
 {
     Class classNSInvocation = objc_lookUpClass("NSInvocation");
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSInvocation,
-            @selector(setArgument:atIndex:),
-            call_NSInvocation_setArgument_atIndex_,
-            PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(setArgument:atIndex:),
+                                     call_NSInvocation_setArgument_atIndex_,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSInvocation,
-            @selector(setReturnValue:),
-            call_NSInvocation_setReturnValue_,
-            PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(setReturnValue:),
+                                     call_NSInvocation_setReturnValue_,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSInvocation,
-            @selector(getArgument:atIndex:),
-            call_NSInvocation_getArgument_atIndex_,
-            PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(getArgument:atIndex:),
+                                     call_NSInvocation_getArgument_atIndex_,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(
-            classNSInvocation,
-            @selector(getReturnValue:),
-            call_NSInvocation_getReturnValue_,
-            PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(getReturnValue:),
+                                     call_NSInvocation_getReturnValue_,
+                                     PyObjCUnsupportedMethod_IMP) < 0) {
         return -1;
     }
 

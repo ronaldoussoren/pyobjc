@@ -2,10 +2,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import Contacts
 
-    class TestCNPostalAddress (TestCase):
+    class TestCNPostalAddress(TestCase):
         @min_os_level("10.11")
         def testConstants(self):
             self.assertIsInstance(Contacts.CNPostalAddressStreetKey, unicode)
@@ -16,7 +16,10 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(Contacts.CNPostalAddressISOCountryCodeKey, unicode)
 
             self.assertIsInstance(Contacts.CNPostalAddressSubLocalityKey, unicode)
-            self.assertIsInstance(Contacts.CNPostalAddressSubAdministrativeAreaKey, unicode)
+            self.assertIsInstance(
+                Contacts.CNPostalAddressSubAdministrativeAreaKey, unicode
+            )
+
 
 if __name__ == "__main__":
     main()

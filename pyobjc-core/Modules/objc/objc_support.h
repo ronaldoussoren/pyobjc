@@ -33,16 +33,21 @@ extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
   @var{type}, that should be coming from an ObjC @encode directive,
   and returns an equivalent Python object where C structures and
   arrays are represented as tuples. */
-extern PyObject *pythonify_c_value (const char *type,
-                    void *datum);
-extern PyObject *pythonify_c_return_value (const char *type,
-                    void *datum);
+extern PyObject* pythonify_c_value(const char* type, void* datum);
+extern PyObject* pythonify_c_return_value(const char* type, void* datum);
 
-extern PyObject *pythonify_c_array_nullterminated(const char* type, void* datum, BOOL already_retained, BOOL already_cfretained);
+extern PyObject* pythonify_c_array_nullterminated(const char* type, void* datum,
+                                                  BOOL already_retained,
+                                                  BOOL already_cfretained);
 
-extern int depythonify_c_array_count(const char* type, Py_ssize_t count, BOOL strict, PyObject* value, void* datum, BOOL already_retained, BOOL already_cfretained);
+extern int depythonify_c_array_count(const char* type, Py_ssize_t count, BOOL strict,
+                                     PyObject* value, void* datum, BOOL already_retained,
+                                     BOOL already_cfretained);
 extern Py_ssize_t c_array_nullterminated_size(PyObject* object, PyObject** seq);
-extern int depythonify_c_array_nullterminated(const char* type, Py_ssize_t count, PyObject* value, void* datum, BOOL already_retained, BOOL already_cfretained);
+extern int depythonify_c_array_nullterminated(const char* type, Py_ssize_t count,
+                                              PyObject* value, void* datum,
+                                              BOOL already_retained,
+                                              BOOL already_cfretained);
 
 /*#F Takes a Python object @var{arg} and translate it into a C value
   pointed by @var{datum} accordingly with the type specification
@@ -50,25 +55,24 @@ extern int depythonify_c_array_nullterminated(const char* type, Py_ssize_t count
   directive.
   Returns NULL on success, or a static error string describing the
   error. */
-extern int depythonify_c_value (const char *type,
-                    PyObject *arg,
-                    void *datum);
-extern int depythonify_c_return_value (const char *type,
-                    PyObject *arg,
-                    void *datum);
+extern int depythonify_c_value(const char* type, PyObject* arg, void* datum);
+extern int depythonify_c_return_value(const char* type, PyObject* arg, void* datum);
 extern int depythonify_python_object(PyObject* argument, id* datum);
-extern int depythonify_c_return_array_count(const char* rettype, Py_ssize_t count, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
-extern int depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg, void* resp, BOOL already_retained, BOOL already_cfretained);
-
+extern int depythonify_c_return_array_count(const char* rettype, Py_ssize_t count,
+                                            PyObject* arg, void* resp,
+                                            BOOL already_retained,
+                                            BOOL already_cfretained);
+extern int depythonify_c_return_array_nullterminated(const char* rettype, PyObject* arg,
+                                                     void* resp, BOOL already_retained,
+                                                     BOOL already_cfretained);
 
 extern Py_ssize_t PyObjCRT_SizeOfReturnType(const char* type) __attribute__((__pure__));
-extern Py_ssize_t PyObjCRT_SizeOfType(const char *type) __attribute__((__pure__));
-extern Py_ssize_t PyObjCRT_AlignOfType(const char *type) __attribute__((__pure__));
-extern const char *PyObjCRT_SkipTypeSpec (const char *type);
-extern const char* PyObjCRT_NextField(const char *type);
-extern const char* PyObjCRT_SkipTypeQualifiers (const char* type);
-extern Py_ssize_t PyObjCRT_AlignedSize (const char *type) __attribute__((__pure__));
-
+extern Py_ssize_t PyObjCRT_SizeOfType(const char* type) __attribute__((__pure__));
+extern Py_ssize_t PyObjCRT_AlignOfType(const char* type) __attribute__((__pure__));
+extern const char* PyObjCRT_SkipTypeSpec(const char* type);
+extern const char* PyObjCRT_NextField(const char* type);
+extern const char* PyObjCRT_SkipTypeQualifiers(const char* type);
+extern Py_ssize_t PyObjCRT_AlignedSize(const char* type) __attribute__((__pure__));
 
 extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 

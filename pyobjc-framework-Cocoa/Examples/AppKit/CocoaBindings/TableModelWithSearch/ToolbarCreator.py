@@ -9,15 +9,23 @@
 import objc
 from objc import super
 from Cocoa import NSObject, NSMenuItem, NSMenu, NSToolbarItem, NSToolbar
-from Cocoa import NSToolbarCustomizeToolbarItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier
-from Cocoa import NSToolbarPrintItemIdentifier, NSToolbarSeparatorItemIdentifier, NSToolbarSpaceItemIdentifier
+from Cocoa import (
+    NSToolbarCustomizeToolbarItemIdentifier,
+    NSToolbarFlexibleSpaceItemIdentifier,
+)
+from Cocoa import (
+    NSToolbarPrintItemIdentifier,
+    NSToolbarSeparatorItemIdentifier,
+    NSToolbarSpaceItemIdentifier,
+)
 
 kToolbarIdentifier = "TableModel Toolbar Identifier"
 kSearchFieldItemIdentifier = "TableModel Search Field Identifier"
 
 from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
 
-class ToolbarCreator (NSObject):
+
+class ToolbarCreator(NSObject):
     filteringArrayController = objc.IBOutlet()
     searchField = objc.IBOutlet()
     window = objc.IBOutlet()
@@ -31,7 +39,9 @@ class ToolbarCreator (NSObject):
         toolbar.setAllowsUserCustomization_(True)
         toolbar.setAutosavesConfiguration_(True)
 
-        searchFieldItem = NSToolbarItem.alloc().initWithItemIdentifier_(kSearchFieldItemIdentifier)
+        searchFieldItem = NSToolbarItem.alloc().initWithItemIdentifier_(
+            kSearchFieldItemIdentifier
+        )
         self.searchFieldItem = searchFieldItem
         searchFieldItem.setLabel_("Search")
         searchFieldItem.setPaletteLabel_("Search Field")
@@ -46,10 +56,12 @@ class ToolbarCreator (NSObject):
 
         self.window.setToolbar_(toolbar)
 
-        cellMenu = NSMenu.alloc().initWithTitle_('Search Menu')
+        cellMenu = NSMenu.alloc().initWithTitle_("Search Menu")
         # note, bottom up!
         for v in [kRegularExpressionSearch, kLiteralSearch]:
-            item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(v, 'changeSearchType:', '')
+            item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_(
+                v, "changeSearchType:", ""
+            )
             item.setRepresentedObject_(v)
             item.setTarget_(self)
             cellMenu.insertItem_atIndex_(item, 0)
@@ -61,7 +73,7 @@ class ToolbarCreator (NSObject):
     def changeSearchType_(self, sender):
         obj = sender.representedObject()
         self.searchField.cell().setPlaceholderString_(obj)
-        self.searchField.setStringValue_('')
+        self.searchField.setStringValue_("")
         self.filteringArrayController.changeSearchType_(obj)
 
     def toolbarDefaultItemIdentifiers_(self, aToolbar):
@@ -82,24 +94,26 @@ class ToolbarCreator (NSObject):
             NSToolbarCustomizeToolbarItemIdentifier,
         ]
 
-    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(self, toolbar, itemIdentifier, flag):
+    def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_(
+        self, toolbar, itemIdentifier, flag
+    ):
         newItem = NSToolbarItem.alloc().initWithItemIdentifier_(itemIdentifier)
         item = self.toolbarItemCache[itemIdentifier]
 
-        newItem.setLabel_( item.label() )
-        newItem.setPaletteLabel_( item.paletteLabel() )
+        newItem.setLabel_(item.label())
+        newItem.setPaletteLabel_(item.paletteLabel())
         if item.view():
-            newItem.setView_( item.view() )
+            newItem.setView_(item.view())
         else:
-            newItem.setImage_( item.image() )
+            newItem.setImage_(item.image())
 
-        newItem.setToolTip_( item.toolTip() )
-        newItem.setTarget_( item.target() )
-        newItem.setAction_( item.action() )
-        newItem.setMenuFormRepresentation_( item.menuFormRepresentation() )
+        newItem.setToolTip_(item.toolTip())
+        newItem.setTarget_(item.target())
+        newItem.setAction_(item.action())
+        newItem.setMenuFormRepresentation_(item.menuFormRepresentation())
 
         if newItem.view():
-            newItem.setMinSize_( item.minSize() )
-            newItem.setMaxSize_( item.maxSize() )
+            newItem.setMinSize_(item.minSize())
+            newItem.setMaxSize_(item.maxSize())
 
         return newItem

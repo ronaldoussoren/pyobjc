@@ -1,21 +1,22 @@
-
 from PyObjCTools.TestSupport import *
 import sys
 import os
 
 import warnings
+
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore")
     import LaunchServices
 
-class TestLSOpen (TestCase):
+
+class TestLSOpen(TestCase):
     def setUp(self):
-        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dummy.txt')
-        fp = open(self.path, 'w')
-        fp.write('test contents')
+        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dummy.txt")
+        fp = open(self.path, "w")
+        fp.write("test contents")
         fp.close()
 
-        self.bpath = self.path.encode('utf-8')
+        self.bpath = self.path.encode("utf-8")
 
     def tearDown(self):
         if os.path.exists(self.path):
@@ -68,7 +69,9 @@ class TestLSOpen (TestCase):
         self.assertEqual(o.asyncRefCon, None)
 
     def testFunctions(self):
-        url = LaunchServices.CFURLCreateFromFileSystemRepresentation(None, self.bpath, len(self.bpath), True)
+        url = LaunchServices.CFURLCreateFromFileSystemRepresentation(
+            None, self.bpath, len(self.bpath), True
+        )
 
         self.assertArgIsOut(LaunchServices.LSOpenCFURLRef, 1)
         ok, u = LaunchServices.LSOpenCFURLRef(url, None)
@@ -82,7 +85,9 @@ class TestLSOpen (TestCase):
         self.assertArgIsOut(LaunchServices.LSOpenItemsWithRole, 5)
         self.assertArgSizeInArg(LaunchServices.LSOpenItemsWithRole, 5, 6)
         ref = objc.FSRef.from_pathname(self.path)
-        ok, psns = LaunchServices.LSOpenItemsWithRole([ref], 1, LaunchServices.kLSRolesAll, None, None, None, 1)
+        ok, psns = LaunchServices.LSOpenItemsWithRole(
+            [ref], 1, LaunchServices.kLSRolesAll, None, None, None, 1
+        )
         self.assertIn(ok, (0, -50))
         self.assertIsInstance(psns, (list, tuple))
         for x in psns:
@@ -96,7 +101,9 @@ class TestLSOpen (TestCase):
         self.assertArgIsIn(LaunchServices.LSOpenURLsWithRole, 3)
         self.assertArgIsOut(LaunchServices.LSOpenURLsWithRole, 4)
         self.assertArgSizeInArg(LaunchServices.LSOpenURLsWithRole, 4, 5)
-        ok, psns = LaunchServices.LSOpenURLsWithRole([url], LaunchServices.kLSRolesAll, None, None, None, 1)
+        ok, psns = LaunchServices.LSOpenURLsWithRole(
+            [url], LaunchServices.kLSRolesAll, None, None, None, 1
+        )
         self.assertEqual(ok, 0)
         self.assertIsInstance(psns, (list, tuple))
         for x in psns:
@@ -111,21 +118,20 @@ class TestLSOpen (TestCase):
         self.assertArgIsIn(LaunchServices.LSOpenApplication, 0)
         self.assertArgIsOut(LaunchServices.LSOpenApplication, 1)
         params = LaunchServices.LSApplicationParameters(
-                version=0,
-                flags = LaunchServices.kLSLaunchDefaults,
-                application = objc.FSRef.from_pathname('/Applications/Utilities/Terminal.app'),
-                asyncLaunchRefCon = None,
-                environment = None,
-                argv = [b"Terminal".decode('latin1')],
-                initialEvent = None,
-            )
+            version=0,
+            flags=LaunchServices.kLSLaunchDefaults,
+            application=objc.FSRef.from_pathname("/Applications/Utilities/Terminal.app"),
+            asyncLaunchRefCon=None,
+            environment=None,
+            argv=[b"Terminal".decode("latin1")],
+            initialEvent=None,
+        )
 
         # Call will fail for now, 'application' is an FSRef pointers and
         # pyobjc-core isn't smart enough to deal with that.
         ok, psn = LaunchServices.LSOpenApplication(params, None)
         self.assertEqual(ok, 0)
         self.assertIsInstance(psn, (int, long))
-
 
     def testFSRef(self):
         # Functions using structs we don't support, probably need
@@ -134,6 +140,7 @@ class TestLSOpen (TestCase):
         self.assertArgIsOut(LaunchServices.LSOpenFromRefSpec, 1)
         self.assertArgIsIn(LaunchServices.LSOpenFromURLSpec, 0)
         self.assertArgIsOut(LaunchServices.LSOpenFromURLSpec, 1)
+
 
 if __name__ == "__main__":
     main()

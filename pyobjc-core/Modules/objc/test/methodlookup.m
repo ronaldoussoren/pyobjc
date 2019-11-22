@@ -7,230 +7,190 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PyObjC_MethodLookup1 : NSObject
-{
+@interface PyObjC_MethodLookup1 : NSObject {
 }
--(int)instance;
--(int)instance2;
--(int)instance3;
--(int)instance4;
--(int)instance5;
--(int)both;
-+(int)both;
-+(int)clsmeth;
-+(int)clsmeth2;
-+(int)clsmeth3;
-+(int)clsmeth4;
-+(int)clsmeth5;
+- (int)instance;
+- (int)instance2;
+- (int)instance3;
+- (int)instance4;
+- (int)instance5;
+- (int)both;
++ (int)both;
++ (int)clsmeth;
++ (int)clsmeth2;
++ (int)clsmeth3;
++ (int)clsmeth4;
++ (int)clsmeth5;
 
-+(id)OC_description;
--(id)OC_description;
--(int)pyobjc__instanceCount;
-+(int)pyobjc__classCount;
--(id)pyobjc_setObject:(id)o forKey:(id)k;
-+(id)pyobjc_setObject:(id)o forKey:(id)k;
++ (id)OC_description;
+- (id)OC_description;
+- (int)pyobjc__instanceCount;
++ (int)pyobjc__classCount;
+- (id)pyobjc_setObject:(id)o forKey:(id)k;
++ (id)pyobjc_setObject:(id)o forKey:(id)k;
 @end
 
 @implementation PyObjC_MethodLookup1
 
--(int)instance
+- (int)instance
 {
     return 1;
 }
 
--(int)instance2
+- (int)instance2
 {
     return -1;
 }
 
--(int)instance3
+- (int)instance3
 {
     return -1;
 }
 
--(int)instance4
+- (int)instance4
 {
     return -1;
 }
 
--(int)instance5
+- (int)instance5
 {
     return -1;
 }
 
--(int)both
+- (int)both
 {
     return 2;
 }
 
-+(int)both
++ (int)both
 {
     return 3;
 }
 
-+(int)clsmeth
++ (int)clsmeth
 {
     return 4;
 }
 
-+(int)clsmeth2
++ (int)clsmeth2
 {
     return 4;
 }
-+(int)clsmeth3
++ (int)clsmeth3
 {
     return 4;
 }
-+(int)clsmeth4
++ (int)clsmeth4
 {
     return 4;
 }
-+(int)clsmeth5
++ (int)clsmeth5
 {
     return 4;
 }
-+(id)OC_description
++ (id)OC_description
 {
     return @"class description";
 }
 
--(id)OC_description
+- (id)OC_description
 {
     return @"method description";
 }
 
--(int)pyobjc__instanceCount
+- (int)pyobjc__instanceCount
 {
     return 42;
 }
 
-+(int)pyobjc__classCount
++ (int)pyobjc__classCount
 {
     return 99;
 }
 
--(id)pyobjc_setObject:(id)o forKey:(id)k
+- (id)pyobjc_setObject:(id)o forKey:(id)k
 {
-    return [NSArray arrayWithObjects: o, k, nil];
+    return [NSArray arrayWithObjects:o, k, nil];
 }
 
-+(id)pyobjc_setObject:(id)o forKey:(id)k
++ (id)pyobjc_setObject:(id)o forKey:(id)k
 {
-    return [NSArray arrayWithObjects: k, o, nil];
+    return [NSArray arrayWithObjects:k, o, nil];
 }
-
 
 @end
 
-
-@interface PyObjC_MethodLookup2 : PyObjC_MethodLookup1
-{
+@interface PyObjC_MethodLookup2 : PyObjC_MethodLookup1 {
 }
--(int)instance;
--(int)instance3;
--(int)both;
-+(int)both;
-+(int)clsmeth;
-+(int)clsmeth3;
+- (int)instance;
+- (int)instance3;
+- (int)both;
++ (int)both;
++ (int)clsmeth;
++ (int)clsmeth3;
 @end
 
 @implementation PyObjC_MethodLookup2
 
--(int)instance
+- (int)instance
 {
     return 10;
 }
 
--(int)instance3
+- (int)instance3
 {
     return -10;
 }
 
-
--(int)both
+- (int)both
 {
     return 20;
 }
 
-+(int)both
++ (int)both
 {
     return 30;
 }
 
-+(int)clsmeth
++ (int)clsmeth
 {
     return 40;
 }
 
-+(int)clsmeth3
++ (int)clsmeth3
 {
     return -40;
 }
 @end
 
-
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
-
-#if PY_VERSION_HEX >= 0x03000000
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "methodlookup",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+    PyModuleDef_HEAD_INIT, "methodlookup", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_methodlookup(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_methodlookup(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initmethodlookup(void);
-
-void __attribute__((__visibility__("default")))
-initmethodlookup(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_methodlookup(void)
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("methodlookup", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "PyObjC_MethodLookup1",
-        PyObjC_IdToPython([PyObjC_MethodLookup1 class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([PyObjC_MethodLookup1 class])) < 0) {
+        return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_MethodLookup2",
-        PyObjC_IdToPython([PyObjC_MethodLookup2 class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([PyObjC_MethodLookup2 class])) < 0) {
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

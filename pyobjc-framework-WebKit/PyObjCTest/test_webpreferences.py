@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestWebPreferences (TestCase):
+
+class TestWebPreferences(TestCase):
     def testConstants(self):
         self.assertEqual(WebCacheModelDocumentViewer, 0)
         self.assertEqual(WebCacheModelDocumentBrowser, 1)
@@ -50,16 +50,16 @@ class TestWebPreferences (TestCase):
         self.assertResultIsBOOL(WebPreferences.usesPageCache)
         self.assertArgIsBOOL(WebPreferences.setUsesPageCache_, 0)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(WebPreferences.suppressesIncrementalRendering)
         self.assertArgIsBOOL(WebPreferences.setSuppressesIncrementalRendering_, 0)
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(WebPreferences.allowsAirPlayForMediaPlayback)
         self.assertArgIsBOOL(WebPreferences.setAllowsAirPlayForMediaPlayback_, 0)
+
 
 if __name__ == "__main__":
     main()

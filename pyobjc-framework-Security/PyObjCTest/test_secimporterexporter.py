@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestSecImportExport (TestCase):
 
+class TestSecImportExport(TestCase):
     def test_constants(self):
         self.assertEqual(Security.kSecFormatUnknown, 0)
         self.assertEqual(Security.kSecFormatOpenSSL, 1)
@@ -58,33 +58,55 @@ class TestSecImportExport (TestCase):
         self.assertIsInstance(Security.kSecImportItemIdentity, unicode)
 
     def test_functions(self):
-        self.assertFalse(hasattr(Security, 'SecKeychainItemExport'))
+        self.assertFalse(hasattr(Security, "SecKeychainItemExport"))
 
         self.assertResultHasType(Security.SecItemExport, objc._C_INT)
         self.assertArgHasType(Security.SecItemExport, 0, objc._C_ID)
         self.assertArgHasType(Security.SecItemExport, 1, objc._C_UINT)
         self.assertArgHasType(Security.SecItemExport, 2, objc._C_UINT)
-        self.assertArgHasType(Security.SecItemExport, 3, objc._C_IN + objc._C_PTR + Security.SecItemImportExportKeyParameters.__typestr__)
-        self.assertArgHasType(Security.SecItemExport, 4, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecItemExport,
+            3,
+            objc._C_IN
+            + objc._C_PTR
+            + Security.SecItemImportExportKeyParameters.__typestr__,
+        )
+        self.assertArgHasType(
+            Security.SecItemExport, 4, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecItemExport, 4)
 
-        self.assertFalse(hasattr(Security, 'SecKeychainItemImport'))
+        self.assertFalse(hasattr(Security, "SecKeychainItemImport"))
 
         self.assertResultHasType(Security.SecItemImport, objc._C_INT)
         self.assertArgHasType(Security.SecItemImport, 0, objc._C_ID)
         self.assertArgHasType(Security.SecItemImport, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecItemImport, 2, objc._C_INOUT + objc._C_PTR + objc._C_UINT)
-        self.assertArgHasType(Security.SecItemImport, 3, objc._C_INOUT + objc._C_PTR + objc._C_UINT)
+        self.assertArgHasType(
+            Security.SecItemImport, 2, objc._C_INOUT + objc._C_PTR + objc._C_UINT
+        )
+        self.assertArgHasType(
+            Security.SecItemImport, 3, objc._C_INOUT + objc._C_PTR + objc._C_UINT
+        )
         self.assertArgHasType(Security.SecItemImport, 4, objc._C_UINT)
-        self.assertArgHasType(Security.SecItemImport, 5, objc._C_IN + objc._C_PTR + Security.SecItemImportExportKeyParameters.__typestr__)
+        self.assertArgHasType(
+            Security.SecItemImport,
+            5,
+            objc._C_IN
+            + objc._C_PTR
+            + Security.SecItemImportExportKeyParameters.__typestr__,
+        )
         self.assertArgHasType(Security.SecItemImport, 6, objc._C_ID)
-        self.assertArgHasType(Security.SecItemImport, 7, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecItemImport, 7, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecItemImport, 7)
 
         self.assertResultHasType(Security.SecPKCS12Import, objc._C_INT)
         self.assertArgHasType(Security.SecPKCS12Import, 0, objc._C_ID)
         self.assertArgHasType(Security.SecPKCS12Import, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecPKCS12Import, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecPKCS12Import, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecPKCS12Import, 2)
 
 

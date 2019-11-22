@@ -1,6 +1,11 @@
 Welcome to the PyObjC repository
 ================================
 
+.. note::
+
+   This branch is a development branch for PyObjC 6.0 and should
+   be considered unstable.
+
 Introduction
 ------------
 
@@ -20,7 +25,7 @@ for the PyObjC project:
 Supported Python versions
 -------------------------
 
-PyObjC is regularly tested using Python 2.7, 3.5, 3.6 and 3.7.
+PyObjC is regularly tested using Python 3.6 and 3.7.
 
 I'm also regularly testing using the development version of Python,
 although support for that might be broken when there are large changes in

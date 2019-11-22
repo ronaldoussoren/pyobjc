@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestSecEncodeTransform (TestCase):
 
+class TestSecEncodeTransform(TestCase):
     def test_constants(self):
         self.assertIsInstance(Security.kSecBase64Encoding, unicode)
         self.assertIsInstance(Security.kSecBase32Encoding, unicode)
@@ -14,12 +14,14 @@ class TestSecEncodeTransform (TestCase):
         self.assertIsInstance(Security.kSecEncodeLineLengthAttribute, unicode)
         self.assertIsInstance(Security.kSecCompressionRatio, unicode)
 
-
     def test_functions(self):
         self.assertResultHasType(Security.SecEncodeTransformCreate, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecEncodeTransformCreate)
         self.assertArgHasType(Security.SecEncodeTransformCreate, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecEncodeTransformCreate, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecEncodeTransformCreate, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
+
 
 if __name__ == "__main__":
     main()

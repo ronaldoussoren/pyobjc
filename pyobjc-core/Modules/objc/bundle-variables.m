@@ -21,11 +21,12 @@ CreateCFBundleFromNSBundle(NSBundle* bundle)
     return CFBundleCreate(kCFAllocatorDefault, bundleURL);
 }
 
-PyObject* PyObjC_loadSpecialVar(
-        PyObject* self __attribute__((__unused__)),
-        PyObject* args, PyObject* kwds)
+PyObject*
+PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)), PyObject* args,
+                      PyObject* kwds)
 {
-static char* keywords[] = { "bundle", "module_globals", "typeid", "name", "skip_undefined", NULL };
+    static char* keywords[] = {"bundle", "module_globals", "typeid",
+                               "name",   "skip_undefined", NULL};
 
     NSBundle* bundle;
     NSString* name;
@@ -35,42 +36,39 @@ static char* keywords[] = { "bundle", "module_globals", "typeid", "name", "skip_
     CFBundleRef cfBundle;
     void* value;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OiO&|i",
-            keywords, PyObjCObject_Convert, &bundle,
-            &module_globals, &typeid,
-            PyObjCObject_Convert, &name, &skip_undefined)) {
+    if (!PyArg_ParseTupleAndKeywords(
+            args, kwds, "O&OiO&|i", keywords, PyObjCObject_Convert, &bundle,
+            &module_globals, &typeid, PyObjCObject_Convert, &name, &skip_undefined)) {
         return NULL;
     }
 
-    PyObjC_DURING
-        cfBundle = CreateCFBundleFromNSBundle(bundle);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            cfBundle = CreateCFBundleFromNSBundle(bundle);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        cfBundle = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            cfBundle = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     if (cfBundle == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
-        PyErr_Format(PyObjCExc_Error,
-            "Cannot convert NSBundle to CFBundle");
+        PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
         return NULL;
     }
 
     if (![name isKindOfClass:[NSString class]]) {
-        PyErr_SetString(PyExc_TypeError,
-                "variable name not a string");
+        PyErr_SetString(PyExc_TypeError, "variable name not a string");
         return NULL;
     }
 
     value = CFBundleGetDataPointerForName(cfBundle, (CFStringRef)name);
     if (value == NULL) {
         if (!skip_undefined) {
-            PyErr_SetString(PyObjCExc_Error,
-                "cannot find a variable");
+            PyErr_SetString(PyObjCExc_Error, "cannot find a variable");
             return NULL;
         }
 
@@ -80,8 +78,7 @@ static char* keywords[] = { "bundle", "module_globals", "typeid", "name", "skip_
             return NULL;
         }
 
-        if (PyDict_SetItemString(module_globals,
-                [name UTF8String], py_val) == -1) {
+        if (PyDict_SetItemString(module_globals, [name UTF8String], py_val) == -1) {
             Py_DECREF(py_val);
             return NULL;
         }
@@ -92,11 +89,12 @@ static char* keywords[] = { "bundle", "module_globals", "typeid", "name", "skip_
     return Py_None;
 }
 
-PyObject* PyObjC_loadBundleVariables(
-        PyObject* self __attribute__((__unused__)),
-        PyObject* args, PyObject* kwds)
+PyObject*
+PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)), PyObject* args,
+                           PyObject* kwds)
 {
-static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_undefined", NULL };
+    static char* keywords[] = {"bundle", "module_globals", "variableInfo",
+                               "skip_undefined", NULL};
     NSBundle* bundle;
     PyObject* module_globals;
     PyObject* variableInfo;
@@ -105,27 +103,27 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
     PyObject* seq;
     Py_ssize_t i, len;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i",
-            keywords, PyObjCObject_Convert, &bundle,
-            &module_globals, &variableInfo, &skip_undefined)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i", keywords, PyObjCObject_Convert,
+                                     &bundle, &module_globals, &variableInfo,
+                                     &skip_undefined)) {
         return NULL;
     }
 
-    PyObjC_DURING
-        cfBundle = CreateCFBundleFromNSBundle(bundle);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            cfBundle = CreateCFBundleFromNSBundle(bundle);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        cfBundle = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+            cfBundle = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     if (cfBundle == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
-        PyErr_Format(PyObjCExc_Error,
-            "Cannot convert NSBundle to CFBundle");
+        PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
         return NULL;
     }
 
@@ -144,21 +142,14 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
 
         if (!PyTuple_Check(item)) {
             PyErr_Format(PyExc_TypeError,
-                "item %" PY_FORMAT_SIZE_T
-                "d has type %s not tuple",
-                i, Py_TYPE(item)->tp_name);
+                         "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
+                         Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
             return NULL;
         }
 
-        if (!PyArg_ParseTuple(item,
-                "O!"Py_ARG_BYTES":variableInfo",
-#if PY_MAJOR_VERSION == 2
-                &PyBaseString_Type,
-#else /* PY_MAJOR_VERSION == 3 */
-                &PyUnicode_Type,
-#endif /* PY_MAJOR_VERSION == 3 */
-                &py_name, &signature)) {
+        if (!PyArg_ParseTuple(item, "O!y:variableInfo", &PyUnicode_Type, &py_name,
+                              &signature)) {
             Py_DECREF(seq);
             return NULL;
         }
@@ -168,15 +159,13 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
             return NULL;
         }
 
-        value = CFBundleGetDataPointerForName(cfBundle,
-                (CFStringRef)name);
+        value = CFBundleGetDataPointerForName(cfBundle, (CFStringRef)name);
         if (value == NULL) {
             value = dlsym(RTLD_DEFAULT, [(NSString*)name UTF8String]);
         }
         if (value == NULL) {
             if (!skip_undefined) {
-                PyErr_SetString(PyObjCExc_Error,
-                    "cannot find a variable");
+                PyErr_SetString(PyObjCExc_Error, "cannot find a variable");
                 Py_DECREF(seq);
                 return NULL;
             }
@@ -194,8 +183,7 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
                 return NULL;
             }
 
-            if (PyDict_SetItemString(module_globals,
-                    [name UTF8String], py_val) == -1) {
+            if (PyDict_SetItemString(module_globals, [name UTF8String], py_val) == -1) {
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
                 return NULL;
@@ -208,10 +196,12 @@ static char* keywords[] = { "bundle", "module_globals", "variableInfo", "skip_un
     return Py_None;
 }
 
-PyObject* PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)),
-        PyObject* args, PyObject* kwds)
+PyObject*
+PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)), PyObject* args,
+                           PyObject* kwds)
 {
-static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_undefined", NULL };
+    static char* keywords[] = {"bundle", "module_globals", "functionInfo",
+                               "skip_undefined", NULL};
     NSBundle* bundle;
     PyObject* module_globals;
     PyObject* functionInfo;
@@ -220,31 +210,31 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
     PyObject* seq;
     Py_ssize_t i, len;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i",
-            keywords, PyObjCObject_Convert, &bundle,
-            &module_globals, &functionInfo, &skip_undefined)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i", keywords, PyObjCObject_Convert,
+                                     &bundle, &module_globals, &functionInfo,
+                                     &skip_undefined)) {
         return NULL;
     }
 
     if (bundle == NULL) {
         cfBundle = NULL;
     } else {
-        PyObjC_DURING
-            cfBundle = CreateCFBundleFromNSBundle(bundle);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                cfBundle = CreateCFBundleFromNSBundle(bundle);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            cfBundle = NULL;
-
-        PyObjC_ENDHANDLER
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+                cfBundle = NULL;
+            }
+        Py_END_ALLOW_THREADS
 
         if (cfBundle == NULL && PyErr_Occurred()) {
             return NULL;
         }
 
         if (cfBundle == NULL) {
-            PyErr_Format(PyObjCExc_Error,
-                "Cannot convert NSBundle to CFBundle");
+            PyErr_Format(PyObjCExc_Error, "Cannot convert NSBundle to CFBundle");
             return NULL;
         }
     }
@@ -266,42 +256,29 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 
         if (!PyTuple_Check(item)) {
             PyErr_Format(PyExc_TypeError,
-                "item %" PY_FORMAT_SIZE_T
-                "d has type %s not tuple",
-                i, Py_TYPE(item)->tp_name);
+                         "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
+                         Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
             return NULL;
         }
 
         doc = NULL;
         if (cfBundle != NULL) {
-            if (!PyArg_ParseTuple(item,
-#if PY_MAJOR_VERSION == 2
-                "O&s|SO;functionInfo",
-#else /* PY_MAJOR_VERSION == 3 */
-                "O&y|UO;functionInfo",
-#endif /* PY_MAJOR_VERSION == 3 */
-                PyObjCObject_Convert, &name, &signature, &doc, &meta)){
+            if (!PyArg_ParseTuple(item, "O&y|UO;functionInfo", PyObjCObject_Convert,
+                                  &name, &signature, &doc, &meta)) {
                 Py_DECREF(seq);
                 return NULL;
             }
             if (![name isKindOfClass:[NSString class]]) {
-                PyErr_SetString(PyExc_TypeError,
-                    "functionInfo name not a string");
+                PyErr_SetString(PyExc_TypeError, "functionInfo name not a string");
                 Py_DECREF(seq);
                 return NULL;
             }
 
-            value = CFBundleGetFunctionPointerForName(cfBundle,
-                    (CFStringRef)name);
+            value = CFBundleGetFunctionPointerForName(cfBundle, (CFStringRef)name);
         } else {
-            if (!PyArg_ParseTuple(item,
-#if PY_MAJOR_VERSION == 2
-                "ss|SO;functionInfo",
-#else /* PY_MAJOR_VERSION == 3 */
-                "sy|UO;functionInfo",
-#endif /* PY_MAJOR_VERSION == 3 */
-                &c_name, &signature, &doc, &meta)){
+            if (!PyArg_ParseTuple(item, "sy|UO;functionInfo", &c_name, &signature, &doc,
+                                  &meta)) {
                 Py_DECREF(seq);
                 return NULL;
             }
@@ -311,8 +288,7 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
 
         if (value == NULL) {
             if (!skip_undefined) {
-                PyErr_SetString(PyObjCExc_Error,
-                    "cannot find a function");
+                PyErr_SetString(PyObjCExc_Error, "cannot find a function");
                 Py_DECREF(seq);
                 return NULL;
             }
@@ -322,22 +298,19 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
             PyObject* py_val;
 
             if (cfBundle == NULL) {
-                py_name = PyText_FromString(c_name);
+                py_name = PyUnicode_FromString(c_name);
             } else {
                 py_name = PyObjC_IdToPython(name);
             }
 
-            py_val = PyObjCFunc_New(
-                    py_name, value, signature,
-                    doc, meta);
+            py_val = PyObjCFunc_New(py_name, value, signature, doc, meta);
             if (py_val == NULL) {
                 Py_DECREF(seq);
                 Py_DECREF(py_name);
                 return NULL;
             }
 
-            if (PyDict_SetItem(module_globals,
-                    py_name, py_val) == -1) {
+            if (PyDict_SetItem(module_globals, py_name, py_val) == -1) {
                 Py_DECREF(seq);
                 Py_DECREF(py_name);
                 Py_DECREF(py_val);
@@ -352,13 +325,14 @@ static char* keywords[] = { "bundle", "module_globals", "functionInfo", "skip_un
     return Py_None;
 }
 
-typedef void(*function)(void);
+typedef void (*function)(void);
 struct functionlist {
     char* name;
     function func;
 };
 
-static function find_function(struct functionlist* functions, PyObject* name)
+static function
+find_function(struct functionlist* functions, PyObject* name)
 {
     while (functions->name != NULL) {
         if (PyObjC_is_ascii_string(name, functions->name)) {
@@ -369,11 +343,12 @@ static function find_function(struct functionlist* functions, PyObject* name)
     return NULL;
 }
 
-PyObject* PyObjC_loadFunctionList(
-        PyObject* self __attribute__((__unused__)),
-        PyObject* args, PyObject* kwds)
+PyObject*
+PyObjC_loadFunctionList(PyObject* self __attribute__((__unused__)), PyObject* args,
+                        PyObject* kwds)
 {
-static char* keywords[] = { "function_list", "module_globals", "functionInfo", "skip_undefined", NULL };
+    static char* keywords[] = {"function_list", "module_globals", "functionInfo",
+                               "skip_undefined", NULL};
     PyObject* pyFunctionsList;
     PyObject* module_globals;
     PyObject* functionInfo;
@@ -382,9 +357,8 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
     Py_ssize_t i, len;
     struct functionlist* function_list;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO|i",
-            keywords, &pyFunctionsList,
-            &module_globals, &functionInfo, &skip_undefined)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO|i", keywords, &pyFunctionsList,
+                                     &module_globals, &functionInfo, &skip_undefined)) {
         return NULL;
     }
 
@@ -415,29 +389,15 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
 
         if (!PyTuple_Check(item)) {
             PyErr_Format(PyExc_TypeError,
-                "item %" PY_FORMAT_SIZE_T
-                "d has type %s not tuple",
-                i, Py_TYPE(item)->tp_name);
+                         "item %" PY_FORMAT_SIZE_T "d has type %s not tuple", i,
+                         Py_TYPE(item)->tp_name);
             Py_DECREF(seq);
             return NULL;
         }
 
         doc = NULL;
-        if (!PyArg_ParseTuple(item,
-#if PY_MAJOR_VERSION == 2
-                    "O!s|O!O:functionInfo tuple", &PyBaseString_Type,
-
-#else /* PY_MAJOR_VERSION == 3 */
-                    "Uy|O!O:functionInfo tuple",
-#endif /* PY_MAJOR_VERSION == 3 */
-                &name, &signature,
-#if PY_MAJOR_VERSION == 2
-                &PyBaseString_Type,
-#else /* PY_MAJOR_VERSION == 3 */
-                &PyUnicode_Type,
-#endif /* PY_MAJOR_VERSION == 3 */
-
-                &doc, &meta)){
+        if (!PyArg_ParseTuple(item, "Uy|O!O:functionInfo tuple", &name, &signature,
+                              &PyUnicode_Type, &doc, &meta)) {
             Py_DECREF(seq);
             return NULL;
         }
@@ -445,26 +405,19 @@ static char* keywords[] = { "function_list", "module_globals", "functionInfo", "
         value = find_function(function_list, name);
         if (value == NULL) {
             if (!skip_undefined) {
-                PyErr_Format(PyObjCExc_Error,
-                    "cannot find function %R", name);
+                PyErr_Format(PyObjCExc_Error, "cannot find function %R", name);
                 Py_DECREF(seq);
                 return NULL;
             }
 
         } else {
-            PyObject* py_val = PyObjCFunc_New(
-                    name,
-                    value,
-                    signature,
-                    doc,
-                    meta);
+            PyObject* py_val = PyObjCFunc_New(name, value, signature, doc, meta);
             if (py_val == NULL) {
                 Py_DECREF(seq);
                 return NULL;
             }
 
-            if (PyDict_SetItem(module_globals,
-                    name, py_val) == -1) {
+            if (PyDict_SetItem(module_globals, name, py_val) == -1) {
                 Py_DECREF(seq);
                 Py_DECREF(py_val);
                 return NULL;

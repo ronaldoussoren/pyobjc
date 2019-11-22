@@ -16,9 +16,9 @@ import warnings
 
 import xml.etree.ElementTree as ET
 
-IDENTIFIER=re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
+IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
-TEST_XML=b"""\
+TEST_XML = b"""\
 <signatures>
   <unknown><!-- ignore -->
     <enum name='nested1' value='4' /><!-- should be ignored -->
@@ -433,62 +433,112 @@ TEST_XML=b"""\
 </signatures>
 """
 
+
 def iter_framework_dir(framework_dir):
     for dn in os.listdir(framework_dir):
-        fn = os.path.join(framework_dir, dn, 'Resources', 'BridgeSupport', dn.replace('.framework', '.bridgesupport'))
+        fn = os.path.join(
+            framework_dir,
+            dn,
+            "Resources",
+            "BridgeSupport",
+            dn.replace(".framework", ".bridgesupport"),
+        )
         if os.path.exists(fn):
             yield fn
 
-        fn = os.path.join(framework_dir, dn, 'Frameworks')
+        fn = os.path.join(framework_dir, dn, "Frameworks")
         if os.path.exists(fn):
             for item in iter_framework_dir(fn):
                 yield item
 
+
 def iter_system_bridgesupport_files():
-    for item in iter_framework_dir('/System/Library/Frameworks'):
+    for item in iter_framework_dir("/System/Library/Frameworks"):
         yield item
+
 
 def contains_any(name, fragments):
     return any(x in name for x in fragments)
 
-class TestBridgeSupportParser (TestCase):
+
+class TestBridgeSupportParser(TestCase):
     def testInvalidToplevel(self):
-        self.assertRaises(objc.error, bridgesupport._BridgeSupportParser, b'<signatures2></signatures2>', 'Cocoa')
-        self.assertRaises(ET.ParseError, bridgesupport._BridgeSupportParser, b'<signatures2></signatures>', 'Cocoa')
+        self.assertRaises(
+            objc.error,
+            bridgesupport._BridgeSupportParser,
+            b"<signatures2></signatures2>",
+            "Cocoa",
+        )
+        self.assertRaises(
+            ET.ParseError,
+            bridgesupport._BridgeSupportParser,
+            b"<signatures2></signatures>",
+            "Cocoa",
+        )
 
     # I'd like to use a test method with subTests here, but that doesn't support marking some subtests as expected failures
-    BROKEN_FRAMEWORKS=(
-            'AE.bridgesupport',             'ATS.bridgesupport',                    'AVFoundation.bridgesupport',
-            'AudioToolbox.bridgesupport',   'CarbonSound.bridgesupport',            'CommonPanels.bridgesupport',
-            'CoreAudio.bridgesupport',      'CoreMIDI.bridgesupport',               'CoreText.bridgesupport',
-            'CoreVideo.bridgesupport',      'GameplayKit.bridgesupport',            'HIServices.bridgesupport',
-            'HIToolbox.bridgesupport',      'IOBluetooth.bridgesupport',            'IOKit.bridgesupport',
-            'Kerberos.bridgesupport',       'LangAnalysis.bridgesupport',           'MPSImage.bridgesupport',
-            'ModelIO.bridgesupport',        'NavigationServices.bridgesupport',     'OSServices.bridgesupport',
-            'Python.bridgesupport',         'QD.bridgesupport',                     'SceneKit.bridgesupport',
-            'Security.bridgesupport',       'SpeechSynthesis.bridgesupport',        'SpriteKit.bridgesupport',
-            'System.bridgesupport',         'TWAIN.bridgesupport',                  'Tk.bridgesupport',
-            'Tcl.bridgesupport',            'Vision.bridgesupport',		    'MPSRayIntersector.bridgesupport',
-            )
+    BROKEN_FRAMEWORKS = (
+        "AE.bridgesupport",
+        "ATS.bridgesupport",
+        "ATSUI.bridgesupport",
+        "AVFoundation.bridgesupport",
+        "AudioToolbox.bridgesupport",
+        "CarbonSound.bridgesupport",
+        "CommonPanels.bridgesupport",
+        "CoreAudio.bridgesupport",
+        "CoreMIDI.bridgesupport",
+        "CoreText.bridgesupport",
+        "CoreVideo.bridgesupport",
+        "GameplayKit.bridgesupport",
+        "HIServices.bridgesupport",
+        "HIToolbox.bridgesupport",
+        "IOBluetooth.bridgesupport",
+        "IOKit.bridgesupport",
+        "Kerberos.bridgesupport",
+        "LangAnalysis.bridgesupport",
+        "MetalPerformanceShaders",
+        "MPSImage.bridgesupport",
+        "ModelIO.bridgesupport",
+        "NavigationServices.bridgesupport",
+        "OSServices.bridgesupport",
+        "Python.bridgesupport",
+        "QD.bridgesupport",
+        "SceneKit.bridgesupport",
+        "Security.bridgesupport",
+        "SpeechSynthesis.bridgesupport",
+        "SpriteKit.bridgesupport",
+        "System.bridgesupport",
+        "TWAIN.bridgesupport",
+        "Tk.bridgesupport",
+        "Tcl.bridgesupport",
+        "Vision.bridgesupport",
+        "MPSRayIntersector.bridgesupport",
+    )
 
     for fn in iter_system_bridgesupport_files():
-        _test_name = 'test_' + fn.replace('/System/Library/Frameworks', '').replace('/', '_').replace('.bridgesupport', '').replace('.framework', '')
+        _test_name = "test_" + fn.replace("/System/Library/Frameworks", "").replace(
+            "/", "_"
+        ).replace(".bridgesupport", "").replace(".framework", "")
+
         def test_func(self, fn=fn):
-            with open(fn, 'rb') as fp:
+            with open(fn, "rb") as fp:
                 xmldata = fp.read()
 
-                self.assert_valid_bridgesupport(os.path.basename(fn).split('.')[0], xmldata)
+                self.assert_valid_bridgesupport(
+                    os.path.basename(fn).split(".")[0], xmldata
+                )
 
         test_func.__name__ = _test_name
-        test_func.__doc__ = "System bridgesupport %r"%(fn,)
+        test_func.__doc__ = "System bridgesupport %r" % (fn,)
 
-        if contains_any(fn, BROKEN_FRAMEWORKS) and any(os_release().startswith(version) for version in ('10.13', '10.14')):
+        if contains_any(fn, BROKEN_FRAMEWORKS) and any(
+            os_release().startswith(version) for version in ("10.13", "10.14", "10.15")
+        ):
             locals()[_test_name] = expectedFailure(test_func)
         else:
             locals()[_test_name] = test_func
         del test_func
         del _test_name
-
 
     def test_xml_structure_variants(self):
         # Run 'verify_xml_structure' for all cpu variant
@@ -500,9 +550,9 @@ class TestBridgeSupportParser (TestCase):
 
         try:
             for is32bit in (True, False):
-                sys.maxsize = 2**31-1 if is32bit else 2**63-1
+                sys.maxsize = 2 ** 31 - 1 if is32bit else 2 ** 63 - 1
 
-                for endian in ('little', 'big'):
+                for endian in ("little", "big"):
                     sys.byteorder = endian
 
                     # Reload the bridgesupport module because
@@ -523,505 +573,722 @@ class TestBridgeSupportParser (TestCase):
             reload(bridgesupport)
 
     def verify_xml_structure(self):
-        prs = self.assert_valid_bridgesupport('TestXML', TEST_XML)
+        prs = self.assert_valid_bridgesupport("TestXML", TEST_XML)
 
         all_constants = [
-            ('constant1', b'@', False,),
-            ('constant2', b'I' if sys.maxsize < 2**32 else b'Q' , False,),
-            ('constant5', objc._C_NSBOOL, False,),
-            ('constant6', objc._C_BOOL, False,),
-            ('constant7', b'@', False,),
-            ('constant8', b'@', True,),
+            ("constant1", b"@", False),
+            ("constant2", b"I" if sys.maxsize < 2 ** 32 else b"Q", False),
+            ("constant5", objc._C_NSBOOL, False),
+            ("constant6", objc._C_BOOL, False),
+            ("constant7", b"@", False),
+            ("constant8", b"@", True),
         ]
-        if sys.maxsize > 2**32:
-            all_constants.append(
-                ('constant4', b'Q', False)
-            )
+        if sys.maxsize > 2 ** 32:
+            all_constants.append(("constant4", b"Q", False))
 
         all_values = {
-            'strconst1': b'string constant1',
-            'strconst2': b'string constant 2' if sys.maxsize < 2**32 else b'string constant two',
-            'strconst1u': b'string constant1 unicode'.decode('ascii'),
-            'strconst2u': b'string constant 2 unicode'.decode('ascii') if sys.maxsize < 2**32 else b'string constant two unicode'.decode('ascii'),
-            'strconst7': b'zee\xebn'.decode('latin1'),
-            'enum1': 1,
-            'enum2': 3 if sys.maxsize < 2**32 else 4,
-            'enum3': 5 if sys.byteorder == 'little' else 6,
-            'enum4': 7,
-            'enum9': 2.5,
-            'enum10': 10.5,
-            'null1': None,
+            "strconst1": b"string constant1",
+            "strconst2": b"string constant 2"
+            if sys.maxsize < 2 ** 32
+            else b"string constant two",
+            "strconst1u": b"string constant1 unicode".decode("ascii"),
+            "strconst2u": b"string constant 2 unicode".decode("ascii")
+            if sys.maxsize < 2 ** 32
+            else b"string constant two unicode".decode("ascii"),
+            "strconst7": b"zee\xebn".decode("latin1"),
+            "enum1": 1,
+            "enum2": 3 if sys.maxsize < 2 ** 32 else 4,
+            "enum3": 5 if sys.byteorder == "little" else 6,
+            "enum4": 7,
+            "enum9": 2.5,
+            "enum10": 10.5,
+            "null1": None,
         }
-        if sys.maxsize > 2**32:
-            all_values['strconst5'] = b'string five'
-            all_values['strconst6'] = b'string five unicode'.decode('ascii')
-            all_values['enum6'] = 4
+        if sys.maxsize > 2 ** 32:
+            all_values["strconst5"] = b"string five"
+            all_values["strconst6"] = b"string five unicode".decode("ascii")
+            all_values["enum6"] = 4
 
-        if sys.byteorder == 'little':
-            all_values['enum8'] = 5
+        if sys.byteorder == "little":
+            all_values["enum8"] = 5
         else:
-            all_values['enum7'] = 6
+            all_values["enum7"] = 6
 
         all_opaque = [
-            ('opaque1', b'^{opaque1}'),
-            ('opaque2', b'^{opaque2=f}' if sys.maxsize < 2**32 else b'^{opaque2=d}'),
+            ("opaque1", b"^{opaque1}"),
+            ("opaque2", b"^{opaque2=f}" if sys.maxsize < 2 ** 32 else b"^{opaque2=d}"),
         ]
-        if sys.maxsize > 2**32:
-            all_opaque.append(
-                ('opaque4', b'^{opaque4=d}'),
-            )
+        if sys.maxsize > 2 ** 32:
+            all_opaque.append(("opaque4", b"^{opaque4=d}"))
 
-        all_func_aliases = [
-            ('func1', 'orig_function'),
-        ]
+        all_func_aliases = [("func1", "orig_function")]
 
-        a = objc.lookUpClass('NSArray').alloc().init()
+        a = objc.lookUpClass("NSArray").alloc().init()
         CFArrayTypeID = a._cfTypeID()
         all_cftypes = [
-            ( 'CFProxy1Ref', b'^{CFProxy}', CFArrayTypeID),
-            ( 'CFProxy2Ref', b'^{CFProxy32}' if sys.maxsize < 2**32 else b'^{CFProxy64}', CFArrayTypeID),
-            ( 'CFProxy3Ref', b'^{CFProxy3}', None, 'NSProxy'),
-            ( 'CFProxy4Ref', b'^{CFProxy4}', None, 'NSProxy2'),
-            ( 'CFProxy5Ref', b'^{CFProxy}', None, 'NSCFType'),
-            ( 'CFProxy6Ref', b'^{CFProxy}', None, 'NSCFType'),
-            ( 'CFProxy7Ref',  b'^{CFProxy32}' if sys.maxsize < 2**32 else b'^{CFProxy64}', None, 'NSCFType' ),
+            ("CFProxy1Ref", b"^{CFProxy}", CFArrayTypeID),
+            (
+                "CFProxy2Ref",
+                b"^{CFProxy32}" if sys.maxsize < 2 ** 32 else b"^{CFProxy64}",
+                CFArrayTypeID,
+            ),
+            ("CFProxy3Ref", b"^{CFProxy3}", None, "NSProxy"),
+            ("CFProxy4Ref", b"^{CFProxy4}", None, "NSProxy2"),
+            ("CFProxy5Ref", b"^{CFProxy}", None, "NSCFType"),
+            ("CFProxy6Ref", b"^{CFProxy}", None, "NSCFType"),
+            (
+                "CFProxy7Ref",
+                b"^{CFProxy32}" if sys.maxsize < 2 ** 32 else b"^{CFProxy64}",
+                None,
+                "NSCFType",
+            ),
         ]
-        if sys.maxsize > 2**32:
-            all_cftypes.append(
-                ( 'CFProxy9Ref',  b'^{CFProxy64}', CFArrayTypeID),
-            )
-
+        if sys.maxsize > 2 ** 32:
+            all_cftypes.append(("CFProxy9Ref", b"^{CFProxy64}", CFArrayTypeID))
 
         all_methods = {
-            (b'MyClass2', b'method2', False): { 'variadic': True },
-            (b'MyClass2', b'method3', False): { 'variadic': True,  'c_array_delimited_by_null': True },
-            (b'MyClass2', b'method4', False): { 'variadic': True,  'c_array_length_in_arg': 4+2 },
-            (b'MyClass2', b'method5', False): { 'retval': { 'type': b'd' } },
-            (b'MyClass2', b'method6', False): { 'retval': { 'type': b'd' } },
-            (b'MyClass2', b'method7', False): { 'suggestion': "don't use this method" },
-            (b'MyClass2', b'method8', False): { 'suggestion': 'ignore me' },
-            (b'MyClass2', b'method9', False): { 'retval': { 'type': b'd' } },
-            (b'MyClass2', b'method10', False ): { 'retval': { 'type': b'd' } },
-            (b'MyClass2', b'method11', False ): {
-                'retval': {
-                    'type': b'f' if sys.maxsize < 2**32 else b'd'
+            (b"MyClass2", b"method2", False): {"variadic": True},
+            (b"MyClass2", b"method3", False): {
+                "variadic": True,
+                "c_array_delimited_by_null": True,
+            },
+            (b"MyClass2", b"method4", False): {
+                "variadic": True,
+                "c_array_length_in_arg": 4 + 2,
+            },
+            (b"MyClass2", b"method5", False): {"retval": {"type": b"d"}},
+            (b"MyClass2", b"method6", False): {"retval": {"type": b"d"}},
+            (b"MyClass2", b"method7", False): {"suggestion": "don't use this method"},
+            (b"MyClass2", b"method8", False): {"suggestion": "ignore me"},
+            (b"MyClass2", b"method9", False): {"retval": {"type": b"d"}},
+            (b"MyClass2", b"method10", False): {"retval": {"type": b"d"}},
+            (b"MyClass2", b"method11", False): {
+                "retval": {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}
+            },
+            (b"MyClass2", b"method13", True): {"retval": {"type_modifier": b"n"}},
+            (b"MyClass2", b"method13b", False): {
+                "retval": {"sel_of_type": b"v@:f", "c_array_of_fixed_length": 4}
+            },
+            (b"MyClass2", b"method14", False): {
+                "retval": {"sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d"}
+            },
+            (b"MyClass2", b"method15", False): {
+                "retval": {"null_accepted": False, "already_retained": True}
+            },
+            (b"MyClass2", b"method16", False): {
+                "retval": {
+                    "c_array_delimited_by_null": True,
+                    "c_array_of_variable_length": True,
+                    "printf_format": True,
+                    "free_result": True,
+                    "already_cfretained": True,
                 }
             },
-            (b'MyClass2', b'method13', True): { 'retval': { 'type_modifier': b'n' } },
-            (b'MyClass2', b'method13b', False): {
-                'retval': { 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 },
+            (b"MyClass2", b"method17", False): {
+                "retval": {"c_array_length_in_arg": 1 + 2}
             },
-            (b'MyClass2', b'method14', False): {
-                'retval': { 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }
+            (b"MyClass2", b"method18", False): {
+                "retval": {"c_array_length_in_arg": (1 + 2, 2 + 2)}
             },
-            (b'MyClass2', b'method15', False): {
-                'retval': { 'null_accepted': False, 'already_retained': True,  }
+            (b"MyClass2", b"method19", False): {
+                "retval": {"c_array_length_in_arg": (4 + 2, 5 + 2)}
             },
-            (b'MyClass2', b'method16', False): {
-                'retval': { 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True, 'printf_format': True,
-                            'free_result': True, 'already_cfretained': True }
+            (b"MyClass2", b"method21", False): {
+                "retval": {
+                    "callable_retained": False,
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                    },
+                }
             },
-            (b'MyClass2', b'method17', False): {
-                'retval': { 'c_array_length_in_arg': 1+2 }
+            (b"MyClass2", b"method22", False): {
+                "retval": {
+                    "callable_retained": False,
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"d"},
+                        },
+                    },
+                }
             },
-            (b'MyClass2', b'method18', False): {
-                'retval': { 'c_array_length_in_arg': (1+2, 2+2) }
+            (b"MyClass2", b"method23", False): {
+                "retval": {
+                    "callable_retained": True,
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                    },
+                }
             },
-            (b'MyClass2', b'method19', False): {
-                'retval': { 'c_array_length_in_arg': (4+2, 5+2) }
+            (b"MyClass2", b"method24", False): {
+                "retval": {
+                    "callable_retained": True,
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"d"},
+                        },
+                    },
+                }
             },
-            (b'MyClass2', b'method21', False): {
-                'retval': { 'callable_retained': False, 'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'@' },
-                        1: { 'type': b'd' },
+            (b"MyClass3", b"method7", False): {
+                "retval": {"type": b"q"},
+                "arguments": {2 + 1: {"type": b"f"}, 2 + 2: {"type": b"d"}},
+            },
+            (b"MyClass3", b"method8", False): {
+                "arguments": {2 + 1: {"type": b"d"}, 2 + 2: {"type": b"d"}}
+            },
+            (b"MyClass3", b"method10", False): {"arguments": {2 + 1: {"type": b"d"}}},
+            (b"MyClass3", b"method11", False): {
+                "arguments": {2 + 1: {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}}
+            },
+            (b"MyClass3", b"method13", False): {
+                "arguments": {2 + 1: {"type_modifier": b"n"}}
+            },
+            (b"MyClass3", b"method13b", False): {
+                "arguments": {
+                    2 + 1: {"sel_of_type": b"v@:f", "c_array_of_fixed_length": 4}
+                }
+            },
+            (b"MyClass3", b"method14", False): {
+                "arguments": {
+                    2 + 1: {"sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d"}
+                }
+            },
+            (b"MyClass3", b"method15", False): {
+                "arguments": {
+                    2
+                    + 1: {
+                        "null_accepted": False,
+                        "already_retained": True,
+                        "c_array_length_in_result": True,
                     }
-                }}
+                }
             },
-            (b'MyClass2', b'method22', False): {
-                'retval': { 'callable_retained': False, 'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'^v' },
-                        1: { 'type': b'@' },
-                        2: { 'type': b'd' },
+            (b"MyClass3", b"method16", False): {
+                "arguments": {
+                    2
+                    + 1: {
+                        "c_array_delimited_by_null": True,
+                        "c_array_of_variable_length": True,
+                        "printf_format": True,
+                        "free_result": True,
+                        "already_cfretained": True,
                     }
-                }}
+                }
             },
-            (b'MyClass2', b'method23', False): {
-                'retval': { 'callable_retained': True, 'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'@' },
-                        1: { 'type': b'd' },
+            (b"MyClass3", b"method17", False): {
+                "arguments": {2 + 1: {"c_array_length_in_arg": 1 + 2}}
+            },
+            (b"MyClass3", b"method18", False): {
+                "arguments": {2 + 1: {"c_array_length_in_arg": (1 + 2, 2 + 2)}}
+            },
+            (b"MyClass3", b"method19", False): {
+                "arguments": {2 + 1: {"c_array_length_in_arg": (4 + 2, 5 + 2)}}
+            },
+            (b"MyClass3", b"method21", False): {
+                "arguments": {
+                    2
+                    + 1: {
+                        "callable_retained": False,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                        },
                     }
-                }}
+                }
             },
-            (b'MyClass2', b'method24', False): {
-                'retval': { 'callable_retained': True, 'callable': {
-                    'retval': { 'type': b'v' },
-                    'arguments': {
-                        0: { 'type': b'^v' },
-                        1: { 'type': b'@' },
-                        2: { 'type': b'd' },
+            (b"MyClass3", b"method22", False): {
+                "arguments": {
+                    2
+                    + 1: {
+                        "callable_retained": False,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {
+                                0: {"type": b"^v"},
+                                1: {"type": b"@"},
+                                2: {"type": b"d"},
+                            },
+                        },
                     }
-                }}
-            },
-            (b'MyClass3', b'method7', False): {
-                'retval': { 'type': b'q' },
-                'arguments': {
-                    2+1: { 'type': b'f' },
-                    2+2: { 'type': b'd' },
                 }
             },
-            (b'MyClass3', b'method8', False): {
-                'arguments': {
-                    2+1: { 'type': b'd' },
-                    2+2: { 'type': b'd' },
+            (b"MyClass3", b"method23", False): {
+                "arguments": {
+                    2
+                    + 1: {
+                        "callable_retained": True,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                        },
+                    }
                 }
             },
-            (b'MyClass3', b'method10', False): {
-                'arguments': {
-                    2+1: { 'type': b'd' }
-                }
-            },
-            (b'MyClass3', b'method11', False): {
-                'arguments': {
-                    2+1: { 'type': b'f' if sys.maxsize < 2**32 else b'd' }
-                }
-            },
-            (b'MyClass3', b'method13', False): {
-                'arguments': {
-                    2+1: { 'type_modifier': b'n' },
-                }
-            },
-            (b'MyClass3', b'method13b', False): {
-                'arguments': {
-                    2+1: { 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }
-                }
-            },
-            (b'MyClass3', b'method14', False): {
-                'arguments': {
-                    2+1: { 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }
-                }
-            },
-            (b'MyClass3', b'method15', False): {
-                'arguments': {
-                    2+1: { 'null_accepted': False, 'already_retained': True,
-                           'c_array_length_in_result': True }
-                }
-            },
-            (b'MyClass3', b'method16', False): {
-                'arguments': {
-                    2+1: { 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True,
-                           'printf_format': True, 'free_result': True, 'already_cfretained': True }
-                }
-            },
-            (b'MyClass3', b'method17', False): {
-                'arguments': {
-                    2+1:  { 'c_array_length_in_arg': 1+2 },
-                }
-            },
-            (b'MyClass3', b'method18', False): {
-                'arguments': {
-                    2+1:  { 'c_array_length_in_arg': (1+2, 2+2) }
-                }
-            },
-            (b'MyClass3', b'method19', False): {
-                'arguments': {
-                    2+1:  { 'c_array_length_in_arg': (4+2, 5+2) }
-                }
-            },
-            (b'MyClass3', b'method21', False): {
-                'arguments': {
-                    2+1: { 'callable_retained': False, 'callable': {
-                        'retval': { 'type': b'v' },
-                        'arguments': {
-                            0:  { 'type': b'@' },
-                            1:  { 'type': b'd' },
-                        }
-                    }}
-                }
-            },
-            (b'MyClass3', b'method22', False): {
-                'arguments': {
-                    2+1: { 'callable_retained': False, 'callable': {
-                        'retval': { 'type': b'v' },
-                        'arguments': {
-                            0:  { 'type': b'^v' },
-                            1:  { 'type': b'@' },
-                            2:  { 'type': b'd' },
-                        }
-                    }}
-                }
-            },
-            (b'MyClass3', b'method23', False): {
-                'arguments': {
-                    2+1: { 'callable_retained': True, 'callable': {
-                        'retval': { 'type': b'v' },
-                        'arguments': {
-                            0:  { 'type': b'@' },
-                            1:  { 'type': b'd' },
-                        }
-                    }}
-                }
-            },
-            (b'MyClass3', b'method24', True): {
-                'arguments': {
-                    2+1: { 'callable_retained': True, 'callable': {
-                        'retval': { 'type': b'v' },
-                        'arguments': {
-                            0:  { 'type': b'^v' },
-                            1:  { 'type': b'@' },
-                            2:  { 'type': b'd' },
-                        }
-                    }}
+            (b"MyClass3", b"method24", True): {
+                "arguments": {
+                    2
+                    + 1: {
+                        "callable_retained": True,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {
+                                0: {"type": b"^v"},
+                                1: {"type": b"@"},
+                                2: {"type": b"d"},
+                            },
+                        },
+                    }
                 }
             },
         }
 
-
-
         all_functions = [
-            ('function2', b'v', '', { 'variadic': True }),
-            ('function3', b'v', '', { 'variadic': True, 'c_array_delimited_by_null': True }),
-            ('function4', b'v', '', { 'variadic': True, 'c_array_length_in_arg': 4 }),
-            ('function5', b'd', '', { 'retval': { 'type': b'd' }}),
-            ('function6', b'd', '', { 'retval': { 'type': b'd' }}),
-            ('function9', b'd', '', { 'retval': { 'type': b'd' }}),
-            ('function10', b'd', '', { 'retval': { 'type': b'd' }}),
-            ('function11', b'f' if sys.maxsize < 2**32 else b'd' , '', { 'retval': { 'type': b'f' if sys.maxsize < 2**32 else b'd' }}),
-            ('function13', b'i', '', { 'retval': {'type': b'i', 'type_modifier': b'n' }}),
-            ('function14', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }}),
-            ('function15', b':', '', { 'retval': {'type': b':', 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }}),
-            ('function16', b'i', '', { 'retval': {'type': b'i',
-                'null_accepted': False, 'already_retained': True, }}),
-            ('function17', b'i', '', { 'retval': {'type': b'i',
-                'already_cfretained': True, 'c_array_delimited_by_null': True, 'c_array_of_variable_length': True,
-                'printf_format': True, 'free_result': True }}),
-            ('function18', b'i', '', { 'retval': { 'type': b'i', 'c_array_length_in_arg': 1 }}),
-            ('function19', b'i', '', { 'retval': { 'type': b'i', 'c_array_length_in_arg': (1,2) }}),
-            ('function20', b'i', '', { 'retval': { 'type': b'i', 'c_array_length_in_arg': (4,5) }}),
-            ('function21', b'?', '', { 'retval': { 'type': b'?', }}),
-            ('function22', b'?', '', { 'retval': { 'type': b'?', 'callable_retained': False, 'callable': {
-                'retval': { 'type': b'v' },
-                'arguments': {
-                    0: { 'type': b'@' },
-                    1: { 'type': b'd' },
-                }
-            }}}),
-            ('function23', b'@?', '', { 'retval': { 'type': b'@?', 'callable_retained': False, 'callable': {
-                'retval': { 'type': b'v' },
-                'arguments': {
-                    0: { 'type': b'^v' },
-                    1: { 'type': b'@' },
-                    2: { 'type': b'd' },
-                }
-            }}}),
-            ('function24', b'?', '', { 'retval': { 'type': b'?', 'callable_retained': True, 'callable': {
-                'retval': { 'type': b'v' },
-                'arguments': {
-                    0: { 'type': b'@' },
-                    1: { 'type': b'd' },
-                }
-            }}}),
-            ('function25', b'@?', '', { 'retval': { 'type': b'@?', 'callable_retained': True, 'callable': {
-                'retval': { 'type': b'v' },
-                'arguments': {
-                    0: { 'type': b'^v' },
-                    1: { 'type': b'@' },
-                    2: { 'type': b'd' },
-                }
-            }}}),
-            ('function26', b'qfd', '', {
-                'retval': { 'type': b'q' },
-                'arguments': {
-                    0:  { 'type': b'f' },
-                    1:  { 'type': b'd' }
-                }
-            }),
-            ('function27', b'vdd', '', {
-                'arguments': {
-                    0:  { 'type': b'd' },
-                    1:  { 'type': b'd' }
-                }
-            }),
-            ('function29', b'vd', '', {
-                'arguments': {
-                    0:  { 'type': b'd' },
-                }
-            }),
-            ('function30', b'vf' if sys.maxsize < 2**32 else b'vd' , '', {
-                'arguments': {
-                    0:  { 'type': b'f' if sys.maxsize < 2**32 else b'd'  },
-                }
-            }),
-            ('function32', b'v@', '', {
-                'arguments': {
-                    0:  { 'type': b'@', 'type_modifier': b'n' }
-                }
-            }),
-            ('function33', b'v:', '', {
-                'arguments': {
-                    0:  { 'type': b':', 'sel_of_type': b'v@:f', 'c_array_of_fixed_length': 4 }
-                }
-            }),
-            ('function34', b'v:', '', {
-                'arguments': {
-                    0:  { 'type': b':', 'sel_of_type': b'v@:f' if sys.maxsize < 2**32 else b'v@:d' }
-                }
-            }),
-            ('function35', b'v@', '', {
-                'arguments': {
-                    0:  { 'type': b'@', 'null_accepted': False, 'already_retained': True, 'c_array_length_in_result': True }
-                }
-            }),
-            ('function36', b'v@', '', {
-                'arguments': {
-                    0:  { 'type': b'@', 'c_array_delimited_by_null': True, 'already_cfretained': True, 'c_array_of_variable_length': True,
-                        'printf_format': True, 'free_result': True }
-                }
-            }),
-            ('function37', b'v@', '', {
-                'arguments': {
-                    0:  { 'type': b'@', 'c_array_length_in_arg': 1 }
-                }
-            }),
-            ('function38', b'v@', '', {
-                'arguments': {
-                    0:  { 'type': b'@', 'c_array_length_in_arg': (1,2) }
-                }
-            }),
-            ('function39', b'v@', '', {
-                'arguments': {
-                    0:  { 'type': b'@', 'c_array_length_in_arg': (4,5) }
-                }
-            }),
-            ('function40', b'v?', '', {
-                'arguments': {
-                    0:  { 'type': b'?' }
-                }
-            }),
-            ('function41', b'v?', '', {
-                'arguments': {
-                    0: {
-                        'type': b'?',
-                        'callable_retained': False,
-                        'callable': {
-                            'retval': { 'type': b'v' },
-                            'arguments': {
-                                0: { 'type': b'@' },
-                                1: { 'type': b'd' }
-                            }
+            ("function2", b"v", "", {"variadic": True}),
+            (
+                "function3",
+                b"v",
+                "",
+                {"variadic": True, "c_array_delimited_by_null": True},
+            ),
+            ("function4", b"v", "", {"variadic": True, "c_array_length_in_arg": 4}),
+            ("function5", b"d", "", {"retval": {"type": b"d"}}),
+            ("function6", b"d", "", {"retval": {"type": b"d"}}),
+            ("function9", b"d", "", {"retval": {"type": b"d"}}),
+            ("function10", b"d", "", {"retval": {"type": b"d"}}),
+            (
+                "function11",
+                b"f" if sys.maxsize < 2 ** 32 else b"d",
+                "",
+                {"retval": {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}},
+            ),
+            ("function13", b"i", "", {"retval": {"type": b"i", "type_modifier": b"n"}}),
+            (
+                "function14",
+                b":",
+                "",
+                {
+                    "retval": {
+                        "type": b":",
+                        "sel_of_type": b"v@:f",
+                        "c_array_of_fixed_length": 4,
+                    }
+                },
+            ),
+            (
+                "function15",
+                b":",
+                "",
+                {
+                    "retval": {
+                        "type": b":",
+                        "sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                    }
+                },
+            ),
+            (
+                "function16",
+                b"i",
+                "",
+                {
+                    "retval": {
+                        "type": b"i",
+                        "null_accepted": False,
+                        "already_retained": True,
+                    }
+                },
+            ),
+            (
+                "function17",
+                b"i",
+                "",
+                {
+                    "retval": {
+                        "type": b"i",
+                        "already_cfretained": True,
+                        "c_array_delimited_by_null": True,
+                        "c_array_of_variable_length": True,
+                        "printf_format": True,
+                        "free_result": True,
+                    }
+                },
+            ),
+            (
+                "function18",
+                b"i",
+                "",
+                {"retval": {"type": b"i", "c_array_length_in_arg": 1}},
+            ),
+            (
+                "function19",
+                b"i",
+                "",
+                {"retval": {"type": b"i", "c_array_length_in_arg": (1, 2)}},
+            ),
+            (
+                "function20",
+                b"i",
+                "",
+                {"retval": {"type": b"i", "c_array_length_in_arg": (4, 5)}},
+            ),
+            ("function21", b"?", "", {"retval": {"type": b"?"}}),
+            (
+                "function22",
+                b"?",
+                "",
+                {
+                    "retval": {
+                        "type": b"?",
+                        "callable_retained": False,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                        },
+                    }
+                },
+            ),
+            (
+                "function23",
+                b"@?",
+                "",
+                {
+                    "retval": {
+                        "type": b"@?",
+                        "callable_retained": False,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {
+                                0: {"type": b"^v"},
+                                1: {"type": b"@"},
+                                2: {"type": b"d"},
+                            },
+                        },
+                    }
+                },
+            ),
+            (
+                "function24",
+                b"?",
+                "",
+                {
+                    "retval": {
+                        "type": b"?",
+                        "callable_retained": True,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                        },
+                    }
+                },
+            ),
+            (
+                "function25",
+                b"@?",
+                "",
+                {
+                    "retval": {
+                        "type": b"@?",
+                        "callable_retained": True,
+                        "callable": {
+                            "retval": {"type": b"v"},
+                            "arguments": {
+                                0: {"type": b"^v"},
+                                1: {"type": b"@"},
+                                2: {"type": b"d"},
+                            },
+                        },
+                    }
+                },
+            ),
+            (
+                "function26",
+                b"qfd",
+                "",
+                {
+                    "retval": {"type": b"q"},
+                    "arguments": {0: {"type": b"f"}, 1: {"type": b"d"}},
+                },
+            ),
+            (
+                "function27",
+                b"vdd",
+                "",
+                {"arguments": {0: {"type": b"d"}, 1: {"type": b"d"}}},
+            ),
+            ("function29", b"vd", "", {"arguments": {0: {"type": b"d"}}}),
+            (
+                "function30",
+                b"vf" if sys.maxsize < 2 ** 32 else b"vd",
+                "",
+                {"arguments": {0: {"type": b"f" if sys.maxsize < 2 ** 32 else b"d"}}},
+            ),
+            (
+                "function32",
+                b"v@",
+                "",
+                {"arguments": {0: {"type": b"@", "type_modifier": b"n"}}},
+            ),
+            (
+                "function33",
+                b"v:",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b":",
+                            "sel_of_type": b"v@:f",
+                            "c_array_of_fixed_length": 4,
                         }
                     }
-                }
-            }),
-            ('function42', b'v@?', '', {
-                'arguments': {
-                    0: {
-                        'type': b'@?',
-                        'callable_retained': False,
-                        'callable': {
-                            'retval': { 'type': b'v' },
-                            'arguments': {
-                                0: { 'type': b'^v' },
-                                1: { 'type': b'@' },
-                                2: { 'type': b'd' }
-                            }
+                },
+            ),
+            (
+                "function34",
+                b"v:",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b":",
+                            "sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
                         }
                     }
-                }
-            }),
-            ('function43', b'v?', '', {
-                'arguments': {
-                    0: {
-                        'type': b'?',
-                        'callable_retained': True,
-                        'callable': {
-                            'retval': { 'type': b'v' },
-                            'arguments': {
-                                0: { 'type': b'@' },
-                                1: { 'type': b'd' }
-                            }
+                },
+            ),
+            (
+                "function35",
+                b"v@",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b"@",
+                            "null_accepted": False,
+                            "already_retained": True,
+                            "c_array_length_in_result": True,
                         }
                     }
-                }
-            }),
-            ('function44', b'v@?', '', {
-                'arguments': {
-                    0: {
-                        'type': b'@?',
-                        'callable_retained': True,
-                        'callable': {
-                            'retval': { 'type': b'v' },
-                            'arguments': {
-                                0: { 'type': b'^v' },
-                                1: { 'type': b'@' },
-                                2: { 'type': b'd' }
-                            }
+                },
+            ),
+            (
+                "function36",
+                b"v@",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b"@",
+                            "c_array_delimited_by_null": True,
+                            "already_cfretained": True,
+                            "c_array_of_variable_length": True,
+                            "printf_format": True,
+                            "free_result": True,
                         }
                     }
-                }
-            }),
+                },
+            ),
+            (
+                "function37",
+                b"v@",
+                "",
+                {"arguments": {0: {"type": b"@", "c_array_length_in_arg": 1}}},
+            ),
+            (
+                "function38",
+                b"v@",
+                "",
+                {"arguments": {0: {"type": b"@", "c_array_length_in_arg": (1, 2)}}},
+            ),
+            (
+                "function39",
+                b"v@",
+                "",
+                {"arguments": {0: {"type": b"@", "c_array_length_in_arg": (4, 5)}}},
+            ),
+            ("function40", b"v?", "", {"arguments": {0: {"type": b"?"}}}),
+            (
+                "function41",
+                b"v?",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b"?",
+                            "callable_retained": False,
+                            "callable": {
+                                "retval": {"type": b"v"},
+                                "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                            },
+                        }
+                    }
+                },
+            ),
+            (
+                "function42",
+                b"v@?",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b"@?",
+                            "callable_retained": False,
+                            "callable": {
+                                "retval": {"type": b"v"},
+                                "arguments": {
+                                    0: {"type": b"^v"},
+                                    1: {"type": b"@"},
+                                    2: {"type": b"d"},
+                                },
+                            },
+                        }
+                    }
+                },
+            ),
+            (
+                "function43",
+                b"v?",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b"?",
+                            "callable_retained": True,
+                            "callable": {
+                                "retval": {"type": b"v"},
+                                "arguments": {0: {"type": b"@"}, 1: {"type": b"d"}},
+                            },
+                        }
+                    }
+                },
+            ),
+            (
+                "function44",
+                b"v@?",
+                "",
+                {
+                    "arguments": {
+                        0: {
+                            "type": b"@?",
+                            "callable_retained": True,
+                            "callable": {
+                                "retval": {"type": b"v"},
+                                "arguments": {
+                                    0: {"type": b"^v"},
+                                    1: {"type": b"@"},
+                                    2: {"type": b"d"},
+                                },
+                            },
+                        }
+                    }
+                },
+            ),
         ]
 
         self.maxDiff = None
-        if sys.maxsize <= 2**32:
+        if sys.maxsize <= 2 ** 32:
             all_protocols = [
-                ('protocol2', [
-                    objc.selector(None, b'selector1', b'v@:f' if sys.maxsize < 2**32 else b'v@:d'),
-                    objc.selector(None, b'selector2', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
-                    objc.selector(None, b'selector3', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d', isClassMethod=True),
-                    objc.selector(None, b'selector4', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
-                    objc. selector(None, b'selector7', b'v@:f'),
-                    objc.selector(None, b'selector8', b'v@:f', isClassMethod=True),
-                ]),
+                (
+                    "protocol2",
+                    [
+                        objc.selector(
+                            None,
+                            b"selector1",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                        ),
+                        objc.selector(
+                            None,
+                            b"selector2",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                        ),
+                        objc.selector(
+                            None,
+                            b"selector3",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            isClassMethod=True,
+                        ),
+                        objc.selector(
+                            None,
+                            b"selector4",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                        ),
+                        objc.selector(None, b"selector7", b"v@:f"),
+                        objc.selector(None, b"selector8", b"v@:f", isClassMethod=True),
+                    ],
+                )
             ]
         else:
             all_protocols = [
-                ('protocol2', [
-                    objc.selector(None, b'selector1', b'v@:f' if sys.maxsize < 2**32 else b'v@:d'),
-                    objc.selector(None, b'selector2', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
-                    objc.selector(None, b'selector3', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d', isClassMethod=True),
-                    objc.selector(None, b'selector4', b'v@:f' if sys.maxsize < 2 **32 else b'v@:d'),
-                    objc.selector(None, b'selector6', b'v@:@'),
-                    objc. selector(None, b'selector7', b'v@:f'),
-                    objc.selector(None, b'selector8', b'v@:f', isClassMethod=True),
-                ]),
+                (
+                    "protocol2",
+                    [
+                        objc.selector(
+                            None,
+                            b"selector1",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                        ),
+                        objc.selector(
+                            None,
+                            b"selector2",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                        ),
+                        objc.selector(
+                            None,
+                            b"selector3",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            isClassMethod=True,
+                        ),
+                        objc.selector(
+                            None,
+                            b"selector4",
+                            b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                        ),
+                        objc.selector(None, b"selector6", b"v@:@"),
+                        objc.selector(None, b"selector7", b"v@:f"),
+                        objc.selector(None, b"selector8", b"v@:f", isClassMethod=True),
+                    ],
+                )
             ]
 
         all_structs = [
-            ('struct3', b'{struct3=@@}', None),
-            ('struct4', b'{struct3=ff}' if sys.maxsize < 2**32 else b'{struct4=dd}', None),
-            ('struct5', b'{struct3=@@}', None),
-            ('struct6', b'{struct6=ZZ}', None),
-            ('struct7', b'{struct7=B@}', None),
-            ('struct8', b'{struct8=@@}', sys.maxsize),
-            ('struct9', b'{struct9=ii}', None),
+            ("struct3", b"{struct3=@@}", None),
+            (
+                "struct4",
+                b"{struct3=ff}" if sys.maxsize < 2 ** 32 else b"{struct4=dd}",
+                None,
+            ),
+            ("struct5", b"{struct3=@@}", None),
+            ("struct6", b"{struct6=ZZ}", None),
+            ("struct7", b"{struct7=B@}", None),
+            ("struct8", b"{struct8=@@}", sys.maxsize),
+            ("struct9", b"{struct9=ii}", None),
         ]
 
         self.maxDiff = None
-        self.assertItemsEqual(prs.constants,    all_constants)
-        self.assertEqual(prs.values,            all_values)
-        self.assertItemsEqual(prs.opaque,       all_opaque)
+        self.assertItemsEqual(prs.constants, all_constants)
+        self.assertEqual(prs.values, all_values)
+        self.assertItemsEqual(prs.opaque, all_opaque)
         self.assertItemsEqual(prs.func_aliases, all_func_aliases)
-        self.assertItemsEqual(prs.cftypes,      all_cftypes)
-        self.assertItemsEqual(prs.functions,    all_functions)
-        self.assertEqual(prs.meta,              all_methods)
-        self.assertItemsEqual(prs.informal_protocols,    all_protocols)
-        self.assertItemsEqual(prs.structs,      all_structs)
+        self.assertItemsEqual(prs.cftypes, all_cftypes)
+        self.assertItemsEqual(prs.functions, all_functions)
+        self.assertEqual(prs.meta, all_methods)
+        self.assertItemsEqual(prs.informal_protocols, all_protocols)
+        self.assertItemsEqual(prs.structs, all_structs)
 
     def assertIsIdentifier(self, value):
         m = IDENTIFIER.match(value)
         if m is None:
-            self.fail("'%s' is not an identifier"%(value,))
-
+            self.fail("'%s' is not an identifier" % (value,))
 
     def assert_valid_callable(self, meta, function):
         if function:
-            if 'arguments' in meta:
+            if "arguments" in meta:
                 indexes = list(sorted(meta["arguments"]))
                 self.assertEqual(indexes, list(range(len(indexes))))
 
@@ -1082,19 +1349,25 @@ class TestBridgeSupportParser (TestCase):
             if key in meta["retval"]:
                 if isinstance(meta["retval"][key], tuple):
                     self.assertEqual(len(meta["retval"][key]), 2)
-                    self.assertTrue(all(isinstance(x, (int, long)) for x in meta["retval"][key]))
+                    self.assertTrue(
+                        all(isinstance(x, (int, long)) for x in meta["retval"][key])
+                    )
                 else:
                     self.assertIsInstance(meta["retval"][key], (int, long))
 
-            for key in ("c_array_delimited_by_null", "printf_format", "c_array_of_variable_length", "null_accepted"):
+            for key in (
+                "c_array_delimited_by_null",
+                "printf_format",
+                "c_array_of_variable_length",
+                "null_accepted",
+            ):
                 if key in meta["retval"]:
                     self.assertIsInstance(meta["retval"][key], bool)
-
 
             self.assertNotIn("c_array_length_in_result", meta["retval"])
             self.assertEqual(set(meta["retval"]) - valid_keys, set())
 
-        if 'arguments' in meta:
+        if "arguments" in meta:
             for idx in meta["arguments"]:
                 self.assertIsInstance(idx, (int, long))
                 arg = meta["arguments"][idx]
@@ -1142,9 +1415,13 @@ class TestBridgeSupportParser (TestCase):
                         for x in arg["c_array_length_in_arg"]:
                             self.assertIsInstance(x, (int, long))
 
-
-                for key in ("c_array_delimited_by_null", "printf_format", "c_array_of_variable_length",
-                            "null_accepted", "c_array_length_in_result"):
+                for key in (
+                    "c_array_delimited_by_null",
+                    "printf_format",
+                    "c_array_of_variable_length",
+                    "null_accepted",
+                    "c_array_length_in_result",
+                ):
                     if key in arg:
                         self.assertIsInstance(arg[key], bool)
 
@@ -1157,8 +1434,19 @@ class TestBridgeSupportParser (TestCase):
             self.assertIsInstance(meta["variadic"], bool)
 
         if "variadic" in meta and meta["variadic"]:
-            self.assertEqual(set(meta.keys()) - {"arguments", "retval", "variadic", "classmethod",
-                    "c_array_length_in_arg", "c_array_delimited_by_null", "suggestion"}, set())
+            self.assertEqual(
+                set(meta.keys())
+                - {
+                    "arguments",
+                    "retval",
+                    "variadic",
+                    "classmethod",
+                    "c_array_length_in_arg",
+                    "c_array_delimited_by_null",
+                    "suggestion",
+                },
+                set(),
+            )
 
             found = False
             if "c_array_length_in_arg" in meta:
@@ -1174,29 +1462,36 @@ class TestBridgeSupportParser (TestCase):
                 arg = meta["arguments"][idx]
                 if "printf_format" in arg and arg["printf_format"]:
                     if found:
-                        self.fail("meta for variadic with two ways to determine size: %s"%(meta,))
+                        self.fail(
+                            "meta for variadic with two ways to determine size: %s"
+                            % (meta,)
+                        )
                     found = True
 
             # NOTE: disabled because having unsupported variadic methods would be fine (e.g.
             #       metadata says the method is variadic, but it doesn't fall into one of the
             #       supported categories)
-            #if not found:
+            # if not found:
             #    self.fail("meta for variadic without method for determining size: %s"%(meta,))
 
         else:
-            self.assertEqual(set(meta.keys()) - {"arguments", "retval", "variadic", "suggestion", "classmethod" }, set())
+            self.assertEqual(
+                set(meta.keys())
+                - {"arguments", "retval", "variadic", "suggestion", "classmethod"},
+                set(),
+            )
 
     def assert_valid_bridgesupport(self, framework_name, xmldata):
         try:
             prs = bridgesupport._BridgeSupportParser(xmldata, framework_name)
         except objc.internal_error as exc:
-            if 'PyObjCRT_SkipTypeSpec: Unhandled type' in str(exc):
+            if "PyObjCRT_SkipTypeSpec: Unhandled type" in str(exc):
                 self.fail("Bad type encoding in metadata (bad type)")
-            elif 'Invalid array definition' in str(exc):
+            elif "Invalid array definition" in str(exc):
                 self.fail("Bad type encoding in metadata (bad array)")
-            elif 'Invalid union definition in type signature' in str(exc):
+            elif "Invalid union definition in type signature" in str(exc):
                 self.fail("Bad type encoding in metadata (bad union)")
-            elif 'Invalid struct definition in type signature' in str(exc):
+            elif "Invalid struct definition in type signature" in str(exc):
                 self.fail("Bad type encoding in metadata (bad struct)")
             else:
                 raise
@@ -1210,9 +1505,8 @@ class TestBridgeSupportParser (TestCase):
                 name, encoding, typeId, tollfreeName = item
                 self.assertIsNot(tollfreeName, None)
 
-
             else:
-                self.fail("Wrong item length in cftypes: %s"%(item,))
+                self.fail("Wrong item length in cftypes: %s" % (item,))
 
             self.assertIsInstance(name, basestring)
             self.assertIsInstance(encoding, bytes)
@@ -1273,11 +1567,14 @@ class TestBridgeSupportParser (TestCase):
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name in prs.values:
-            self.assertIsInstance(prs.values[name], (basestring, long, int, float, bytes, type(None)))
+            self.assertIsInstance(
+                prs.values[name], (basestring, long, int, float, bytes, type(None))
+            )
 
         return prs
 
-class Patcher (object):
+
+class Patcher(object):
     def __init__(self):
         self._changes = {}
 
@@ -1287,17 +1584,17 @@ class Patcher (object):
         self.set(path, value)
 
     def get(self, path):
-        module, name = path.rsplit('.', 1)
+        module, name = path.rsplit(".", 1)
         m = __import__(module)
-        for p in module.split('.')[1:]:
+        for p in module.split(".")[1:]:
             m = getattr(m, p)
 
         return getattr(m, name)
 
     def set(self, path, value):
-        module, name = path.rsplit('.', 1)
+        module, name = path.rsplit(".", 1)
         m = __import__(module)
-        for p in module.split('.')[1:]:
+        for p in module.split(".")[1:]:
             m = getattr(m, p)
 
         setattr(m, name, value)
@@ -1309,7 +1606,8 @@ class Patcher (object):
         for k in self._changes:
             self.set(k, self._changes[k])
 
-class TestParseBridgeSupport (TestCase):
+
+class TestParseBridgeSupport(TestCase):
     def test_calls(self):
         # - Minimal XML with all types of metadata
         # - Mock the APIs used by parseBridgeSupport
@@ -1317,23 +1615,26 @@ class TestParseBridgeSupport (TestCase):
         # - Verify changes to globals where possible
         # - Verify 'updatingmetadata' state
 
-        class InlineTab (object): pass
+        class InlineTab(object):
+            pass
+
         def loadConstant(name, typestr, magic):
             self.assertIsInstance(name, str)
             self.assertIsInstance(typestr, str)
-            self.assertEqual(len(objc.splitSignature(typestr.encode('ascii'))), 1)
+            self.assertEqual(len(objc.splitSignature(typestr.encode("ascii"))), 1)
             self.assertIsInstance(magic, bool)
 
-            if 'raise' in name:
+            if "raise" in name:
                 raise AttributeError(name)
 
-            return '<constant %r>'%(name,)
+            return "<constant %r>" % (name,)
 
-        SENTINEL=object()
+        SENTINEL = object()
+
         def registerCFSignature(name, encoding, typeId, tollfreeName=SENTINEL):
             self.assertIsInstance(name, str)
-            self.assertIsInstance(encoding, bytes);
-            self.assertIsInstance(typeId, (int, long, type(None)));
+            self.assertIsInstance(encoding, bytes)
+            self.assertIsInstance(typeId, (int, long, type(None)))
             if tollfreeName is not SENTINEL:
                 self.assertIsInstance(tollfreeName, str)
 
@@ -1341,9 +1642,10 @@ class TestParseBridgeSupport (TestCase):
                 if tollfreeName is SENTINEL:
                     raise ValueError("Must specify a typeid when not toll-free")
 
-            return "<cftype %r>"%(name,)
+            return "<cftype %r>" % (name,)
 
         metadata_registry = {}
+
         def registerMetaDataForSelector(class_, selector, metadata):
             self.assertIsInstance(class_, bytes)
             self.assertIsInstance(selector, bytes)
@@ -1360,7 +1662,7 @@ class TestParseBridgeSupport (TestCase):
             self.assertIsInstance(doc, (str, type(None)))
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
             self.assertStartswith(typestr, objc._C_PTR)
-            return '<pointer %r>'%(name,)
+            return "<pointer %r>" % (name,)
 
         def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
             self.assertIsInstance(name, str)
@@ -1372,7 +1674,7 @@ class TestParseBridgeSupport (TestCase):
             if fieldnames is not None:
                 for nm in fieldnames:
                     self.assertIsInstance(nm, (str, bytes))
-            return '<struct %r>'%(name,)
+            return "<struct %r>" % (name,)
 
         def createStructAlias(name, typestr, structType):
             self.assertIsInstance(name, str)
@@ -1384,9 +1686,11 @@ class TestParseBridgeSupport (TestCase):
                 self.assertIsInstance(item, objc.selector)
                 self.assertIs(item.callable, None)
 
-            return '<informal_protocol %r>'%(name,)
+            return "<informal_protocol %r>" % (name,)
 
-        def loadBundleFunctions(bundle, module_globals, functionInfo, skip_undefined=True):
+        def loadBundleFunctions(
+            bundle, module_globals, functionInfo, skip_undefined=True
+        ):
             self.assertIs(bundle, None)
             self.assertIsInstance(module_globals, dict)
             self.assertIsInstance(functionInfo, (list, tuple))
@@ -1401,12 +1705,14 @@ class TestParseBridgeSupport (TestCase):
                 if len(item) > 3:
                     self.assertIsInstance(item[3], dict)
 
-                if 'inline' in item[0]:
+                if "inline" in item[0]:
                     continue
 
-                module_globals[item[0]] = '<function %r>'%(item[0],)
+                module_globals[item[0]] = "<function %r>" % (item[0],)
 
-        def loadFunctionList(function_list, module_globals, functionInfo, skip_undefined=True):
+        def loadFunctionList(
+            function_list, module_globals, functionInfo, skip_undefined=True
+        ):
             self.assertIsInstance(function_list, InlineTab)
             self.assertIsInstance(module_globals, dict)
             self.assertIsInstance(functionInfo, (list, tuple))
@@ -1421,48 +1727,52 @@ class TestParseBridgeSupport (TestCase):
                 if len(item) > 3:
                     self.assertIsInstance(item[3], dict)
                 if item[0] not in module_globals:
-                    module_globals[item[0]] = '<inline_function %r>'%(item[0],)
-
+                    module_globals[item[0]] = "<inline_function %r>" % (item[0],)
 
         _meta_updates = []
+
         def _updatingMetadata(flag):
             self.assertIsInstance(flag, bool)
             _meta_updates.append(flag)
 
         with Patcher() as p:
-            p.patch('objc._updatingMetadata', _updatingMetadata)
-            p.patch('objc._loadConstant', loadConstant)
-            p.patch('objc.registerCFSignature', registerCFSignature)
-            p.patch('objc.registerMetaDataForSelector', registerMetaDataForSelector)
-            p.patch('objc.createOpaquePointerType', createOpaquePointerType)
-            p.patch('objc.createStructType', createStructType)
-            p.patch('objc.createStructAlias', createStructAlias)
-            p.patch('objc.informal_protocol', informal_protocol)
-            p.patch('objc.loadBundleFunctions', loadBundleFunctions)
-            p.patch('objc.loadFunctionList', loadFunctionList)
-            p.patch('sys.modules', sys.modules.copy())
+            p.patch("objc._updatingMetadata", _updatingMetadata)
+            p.patch("objc._loadConstant", loadConstant)
+            p.patch("objc.registerCFSignature", registerCFSignature)
+            p.patch("objc.registerMetaDataForSelector", registerMetaDataForSelector)
+            p.patch("objc.createOpaquePointerType", createOpaquePointerType)
+            p.patch("objc.createStructType", createStructType)
+            p.patch("objc.createStructAlias", createStructAlias)
+            p.patch("objc.informal_protocol", informal_protocol)
+            p.patch("objc.loadBundleFunctions", loadBundleFunctions)
+            p.patch("objc.loadFunctionList", loadFunctionList)
+            p.patch("sys.modules", sys.modules.copy())
 
             # 1. Empty metadata
-            _meta_updates  = []
+            _meta_updates = []
             metadata_registry = {}
             module_globals = {}
 
-            objc.parseBridgeSupport(b'''\
+            objc.parseBridgeSupport(
+                b"""\
             <signatures>
             </signatures>
-            ''', module_globals, 'TestFramework')
+            """,
+                module_globals,
+                "TestFramework",
+            )
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(metadata_registry, {})
             self.assertEqual(module_globals, {})
 
             # 2. Various metadata
-            _meta_updates  = []
+            _meta_updates = []
             metadata_registry = {}
             module_globals = {}
             orig_libraries = list(bridgesupport._libraries)
 
-            xml = b'''\
+            xml = b"""\
             <signatures>
               <opaque name='opaque_type' type='^{opaque}'/>
               <struct name='OCPoint' type='{OCPoint=dd}' />
@@ -1498,41 +1808,45 @@ class TestParseBridgeSupport (TestCase):
                 <method selector='sel2:' type='v@:@' />
               </informal_protocol>
             </signatures>
-            '''
-            objc.parseBridgeSupport(xml, module_globals, 'TestFramework')
+            """
+            objc.parseBridgeSupport(xml, module_globals, "TestFramework")
 
             self.assertEqual(_meta_updates, [True, False])
-            self.assertEqual(metadata_registry, {
-                (b'class1', b'sel1:'): {
-                    'arguments': {
-                        2: { 'null_accepted': False, 'type_modifier': b'o' }
+            self.assertEqual(
+                metadata_registry,
+                {
+                    (b"class1", b"sel1:"): {
+                        "arguments": {2: {"null_accepted": False, "type_modifier": b"o"}}
                     }
                 },
-            })
+            )
 
             from distutils.sysconfig import get_config_var
 
-            self.assertNotIn('protocols', module_globals)
-            self.assertEqual(module_globals, {
-                "enum_value":   42,
-                "const_value":  "<constant 'const_value'>",
-                "cftype_value":  "<cftype 'cftype_value'>",
-                "function1":     "<function 'function1'>",
-                "function2":     "<function 'function2'>",
-                "function3":     "<function 'function2'>",
-                "OCPoint":       "<struct 'OCPoint'>",
-                "OCPoint2":      get_config_var,
-                "opaque_type":   "<pointer 'opaque_type'>",
-            })
+            self.assertNotIn("protocols", module_globals)
+            self.assertEqual(
+                module_globals,
+                {
+                    "enum_value": 42,
+                    "const_value": "<constant 'const_value'>",
+                    "cftype_value": "<cftype 'cftype_value'>",
+                    "function1": "<function 'function1'>",
+                    "function2": "<function 'function2'>",
+                    "function3": "<function 'function2'>",
+                    "OCPoint": "<struct 'OCPoint'>",
+                    "OCPoint2": get_config_var,
+                    "opaque_type": "<pointer 'opaque_type'>",
+                },
+            )
             self.assertEqual(orig_libraries, bridgesupport._libraries)
 
             # 3. inlineTab
-            _meta_updates  = []
+            _meta_updates = []
             metadata_registry = {}
             module_globals = {}
             orig_libraries = list(bridgesupport._libraries)
 
-            xml = b'''\
+            xml = b"""\
             <signatures>
               <function name='function1'>
                  <retval type='f' />
@@ -1547,27 +1861,32 @@ class TestParseBridgeSupport (TestCase):
                 <retval type='i' />
               </function>
             </signatures>
-            '''
-            objc.parseBridgeSupport(xml, module_globals, 'TestFramework2', inlineTab=InlineTab())
+            """
+            objc.parseBridgeSupport(
+                xml, module_globals, "TestFramework2", inlineTab=InlineTab()
+            )
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(metadata_registry, {})
-            self.assertNotIn('protocols', module_globals)
-            self.assertNotIn('TestFramework2.protocols', sys.modules)
-            self.assertEqual(module_globals, {
-                "function1":     "<function 'function1'>",
-                "function2":     "<function 'function2'>",
-                "inline_function_name":     "<inline_function 'inline_function_name'>",
-            })
+            self.assertNotIn("protocols", module_globals)
+            self.assertNotIn("TestFramework2.protocols", sys.modules)
+            self.assertEqual(
+                module_globals,
+                {
+                    "function1": "<function 'function1'>",
+                    "function2": "<function 'function2'>",
+                    "inline_function_name": "<inline_function 'inline_function_name'>",
+                },
+            )
             self.assertEqual(orig_libraries, bridgesupport._libraries)
 
             # 4. dylib usage
-            _meta_updates  = []
+            _meta_updates = []
             metadata_registry = {}
             module_globals = {}
             orig_libraries = list(bridgesupport._libraries)
 
-            xml = b'''\
+            xml = b"""\
             <signatures>
               <function name='function1'>
                  <retval type='f' />
@@ -1582,24 +1901,28 @@ class TestParseBridgeSupport (TestCase):
                 <retval type='i' />
               </function>
             </signatures>
-            '''
-            objc.parseBridgeSupport(xml, module_globals, 'TestFramework2', dylib_path='/usr/lib/libxml2.dylib')
+            """
+            objc.parseBridgeSupport(
+                xml, module_globals, "TestFramework2", dylib_path="/usr/lib/libxml2.dylib"
+            )
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(metadata_registry, {})
-            self.assertNotIn('protocols', module_globals)
-            self.assertNotIn('TestFramework2.protocols', sys.modules)
-            self.assertEqual(module_globals, {
-                "function1":     "<function 'function1'>",
-                "function2":     "<function 'function2'>",
-            })
-            self.assertEqual(len(orig_libraries)+1, len(bridgesupport._libraries))
+            self.assertNotIn("protocols", module_globals)
+            self.assertNotIn("TestFramework2.protocols", sys.modules)
+            self.assertEqual(
+                module_globals,
+                {
+                    "function1": "<function 'function1'>",
+                    "function2": "<function 'function2'>",
+                },
+            )
+            self.assertEqual(len(orig_libraries) + 1, len(bridgesupport._libraries))
             self.assertIsInstance(bridgesupport._libraries[-1], ctypes.CDLL)
-            self.assertEqual(bridgesupport._libraries[-1]._name, '/usr/lib/libxml2.dylib')
+            self.assertEqual(bridgesupport._libraries[-1]._name, "/usr/lib/libxml2.dylib")
 
 
-
-class TestInitFrameworkWrapper (TestCase):
+class TestInitFrameworkWrapper(TestCase):
     def test_calls_parse_helper(self):
         # Test functionality of initFrameworkWrapper and _parseBridgeSupport
         # by mocking 'parseBridgeSupport' (and the location of the caller)
@@ -1608,7 +1931,9 @@ class TestInitFrameworkWrapper (TestCase):
             raise_exception = None
             update_globals = None
 
-            def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineTab=None):
+            def parseBridgeSupport(
+                xmldata, globals, frameworkName, dylib_path=None, inlineTab=None
+            ):
                 calls.append((xmldata, globals, frameworkName, dylib_path, inlineTab))
                 if update_globals is not None:
                     globals.update(update_globals)
@@ -1616,12 +1941,10 @@ class TestInitFrameworkWrapper (TestCase):
                 if raise_exception is not None:
                     raise raise_exception()
 
-            class MockModule (object):
+            class MockModule(object):
                 pass
 
-
-            p.patch('objc.parseBridgeSupport', parseBridgeSupport)
-
+            p.patch("objc.parseBridgeSupport", parseBridgeSupport)
 
             # 1. Verify that failures to load bridgesupport emit a warning
             calls = []
@@ -1630,7 +1953,7 @@ class TestInitFrameworkWrapper (TestCase):
 
             with warnings.catch_warnings(record=True) as w:
                 warnings.simplefilter("always")
-                bridgesupport._parseBridgeSupport( '', {}, 'TestFramework')
+                bridgesupport._parseBridgeSupport("", {}, "TestFramework")
             self.assertTrue(len(w) == 1)
             self.assertEqual(w[0].category, RuntimeWarning)
             calls = []
@@ -1638,59 +1961,60 @@ class TestInitFrameworkWrapper (TestCase):
             with warnings.catch_warnings(record=True):
                 warnings.simplefilter("always")
                 g = {}
-                update_globals = {'foo': 42, 'bar': 33,  'protocols': MockModule() }
-                bridgesupport._parseBridgeSupport('', g, 'TestFramework')
+                update_globals = {"foo": 42, "bar": 33, "protocols": MockModule()}
+                bridgesupport._parseBridgeSupport("", g, "TestFramework")
                 self.assertEqual(g, update_globals)
-                self.assertEqual(calls, [('', g, 'TestFramework', None, None)])
+                self.assertEqual(calls, [("", g, "TestFramework", None, None)])
 
-                self.assertEqual(len(g['protocols'].__dict__), 0)
+                self.assertEqual(len(g["protocols"].__dict__), 0)
 
             # 2. Run without problems, without 'protocols' in dictionary
             raise_exception = None
-            update_globals = {'foo': 42, 'bar': 33,  }
+            update_globals = {"foo": 42, "bar": 33}
 
             calls = []
             g = {}
-            bridgesupport._parseBridgeSupport('', g, 'TestFramework', 'a', 'b')
+            bridgesupport._parseBridgeSupport("", g, "TestFramework", "a", "b")
             self.assertEqual(g, update_globals)
-            self.assertEqual(calls, [('', g, 'TestFramework', 'a', 'b')])
-            self.assertNotIn('protocols', g)
+            self.assertEqual(calls, [("", g, "TestFramework", "a", "b")])
+            self.assertNotIn("protocols", g)
 
             calls = []
             g = {}
-            bridgesupport._parseBridgeSupport('', g, 'TestFramework', inlineTab='a')
+            bridgesupport._parseBridgeSupport("", g, "TestFramework", inlineTab="a")
             self.assertEqual(g, update_globals)
-            self.assertEqual(calls, [('', g, 'TestFramework', None, 'a')])
-            self.assertNotIn('protocols', g)
+            self.assertEqual(calls, [("", g, "TestFramework", None, "a")])
+            self.assertNotIn("protocols", g)
 
             # 3. Run witout problems, with 'protocols' in dictionary
             calls = []
             raise_exception = None
-            update_globals = {'foo': 42, 'bar': 33,  'protocols': MockModule() }
+            update_globals = {"foo": 42, "bar": 33, "protocols": MockModule()}
 
             g = {}
-            bridgesupport._parseBridgeSupport('', g, 'TestFramework', 'a', 'b')
+            bridgesupport._parseBridgeSupport("", g, "TestFramework", "a", "b")
             self.assertEqual(g, update_globals)
-            self.assertEqual(calls, [('', g, 'TestFramework', 'a', 'b')])
-            self.assertEqual(len(g['protocols'].__dict__), 0)
+            self.assertEqual(calls, [("", g, "TestFramework", "a", "b")])
+            self.assertEqual(len(g["protocols"].__dict__), 0)
 
             calls = []
             g = {}
-            bridgesupport._parseBridgeSupport('', g, 'TestFramework', inlineTab='a')
+            bridgesupport._parseBridgeSupport("", g, "TestFramework", inlineTab="a")
             self.assertEqual(g, update_globals)
-            self.assertEqual(calls, [('', g, 'TestFramework', None, 'a')])
-            self.assertEqual(len(g['protocols'].__dict__), 0)
-
+            self.assertEqual(calls, [("", g, "TestFramework", None, "a")])
+            self.assertEqual(len(g["protocols"].__dict__), 0)
 
     def test_calls_initwrappper(self):
         with Patcher() as p:
 
-            SENTINEL=object()
+            SENTINEL = object()
 
-            class InlineTab (object): pass
+            class InlineTab(object):
+                pass
 
             bundle_resources = {}
-            class Bundle (object):
+
+            class Bundle(object):
                 def __init__(self, calls=None):
                     if calls is None:
                         calls = []
@@ -1707,12 +2031,18 @@ class TestInitFrameworkWrapper (TestCase):
                     return self.calls == other.calls
 
                 def __repr__(self):
-                    return '<Bundle calls=%r>'%(self.calls,)
-
+                    return "<Bundle calls=%r>" % (self.calls,)
 
             load_calls = []
             bundle_exception = None
-            def loadBundle(module_name, module_globals, bundle_path=SENTINEL, bundle_identifier=SENTINEL, scan_classes=True):
+
+            def loadBundle(
+                module_name,
+                module_globals,
+                bundle_path=SENTINEL,
+                bundle_identifier=SENTINEL,
+                scan_classes=True,
+            ):
                 if bundle_exception is not None:
                     bundle_exception(module_name, bundle_path, bundle_identifier)
                 self.assertIsInstance(module_name, str)
@@ -1723,10 +2053,20 @@ class TestInitFrameworkWrapper (TestCase):
                     self.assertIsInstance(bundle_identifier, str)
                 bool(scan_classes)
                 bundle = Bundle()
-                load_calls.append((bundle, module_name, module_globals, bundle_path, bundle_identifier, scan_classes))
+                load_calls.append(
+                    (
+                        bundle,
+                        module_name,
+                        module_globals,
+                        bundle_path,
+                        bundle_identifier,
+                        scan_classes,
+                    )
+                )
                 return bundle
 
             resources = {}
+
             def resource_exists(package, name):
                 return (package, name) in resources
 
@@ -1737,71 +2077,132 @@ class TestInitFrameworkWrapper (TestCase):
                     raise os.error(name)
 
             parse_calls = []
-            def parseBridgeSupport(xml,  globals, framework, dylib_path=None, inlineTab=None):
+
+            def parseBridgeSupport(
+                xml, globals, framework, dylib_path=None, inlineTab=None
+            ):
                 parse_calls.append((xml, globals, framework, dylib_path, inlineTab))
 
-            TEST_BRIDGESUPPORT_DIRECTORIES=[]
+            TEST_BRIDGESUPPORT_DIRECTORIES = []
 
             p.patch("objc.loadBundle", loadBundle)
             p.patch("pkg_resources.resource_exists", resource_exists)
             p.patch("pkg_resources.resource_string", resource_string)
             p.patch("objc._bridgesupport._parseBridgeSupport", parseBridgeSupport)
-            p.patch("objc._bridgesupport.BRIDGESUPPORT_DIRECTORIES", TEST_BRIDGESUPPORT_DIRECTORIES)
+            p.patch(
+                "objc._bridgesupport.BRIDGESUPPORT_DIRECTORIES",
+                TEST_BRIDGESUPPORT_DIRECTORIES,
+            )
 
-            helper_dir = os.path.join(os.path.dirname(__file__), 'data_bridgesupport')
-
+            helper_dir = os.path.join(os.path.dirname(__file__), "data_bridgesupport")
 
             # 1. No resource files, no bundle files, no library files
             resources = {}
             bundle_resources = {}
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'empty') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "empty")]
 
             def basic_verify(g):
-                self.assertIs(g['objc'], objc)
-                self.assertIs(g['super'], objc.super)
+                self.assertIs(g["objc"], objc)
+                self.assertIs(g["super"], objc.super)
 
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g)
+            objc.initFrameworkWrapper(
+                "TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        True,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, frameworkResourceName='TestResources')
+            objc.initFrameworkWrapper(
+                "TestFramework",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                frameworkResourceName="TestResources",
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        True,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", None, g)
+            objc.initFrameworkWrapper(
+                "TestFramework", "/Library/Framework/Test.framework", None, g
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, '/Library/Framework/Test.framework', SENTINEL, True)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        "/Library/Framework/Test.framework",
+                        SENTINEL,
+                        True,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", None, g, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "TestFramework",
+                "/Library/Framework/Test.framework",
+                None,
+                g,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, '/Library/Framework/Test.framework', SENTINEL, False)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        "/Library/Framework/Test.framework",
+                        SENTINEL,
+                        False,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             load_calls = []
@@ -1810,218 +2211,494 @@ class TestInitFrameworkWrapper (TestCase):
             objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g)
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        True,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "TestFramework", None, "com.apple.Test", g, scan_classes=False
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', False)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
-
 
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g, inlineTab=InlineTab())
+            objc.initFrameworkWrapper(
+                "TestFramework",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=InlineTab(),
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', True)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        True,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=InlineTab(), scan_classes=False)
+            objc.initFrameworkWrapper(
+                "TestFramework",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=InlineTab(),
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('TestFramework', 'bridgesupport', 'BridgeSupport')]), 'TestFramework', g, SENTINEL, 'com.apple.Test', False)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("TestFramework", "bridgesupport", "BridgeSupport")]),
+                        "TestFramework",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
-
 
             # 2. Have resource files, bundle files and library files (only first is used)
             resources = {
-                    ('Test', 'PyObjC.bridgesupport'): b"<signatures><constant name='test resource' type='@' /></signatures>",
+                (
+                    "Test",
+                    "PyObjC.bridgesupport",
+                ): b"<signatures><constant name='test resource' type='@' /></signatures>"
             }
             bundle_resources = {
-                    'Test': os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
+                "Test": os.path.join(helper_dir, "bundle_data", "Test.bridgesupport")
             }
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([]), 'Test', g, SENTINEL, 'com.apple.Test', False)
-            ])
-            self.assertEqual(parse_calls, [
-                (b"<signatures><constant name='test resource' type='@' /></signatures>", g, 'Test', None, inlineTab)
-            ])
+            self.assertEqual(
+                load_calls, [(Bundle([]), "Test", g, SENTINEL, "com.apple.Test", False)]
+            )
+            self.assertEqual(
+                parse_calls,
+                [
+                    (
+                        b"<signatures><constant name='test resource' type='@' /></signatures>",
+                        g,
+                        "Test",
+                        None,
+                        inlineTab,
+                    )
+                ],
+            )
 
             # 3. No resource files, have bundle files and library files (only bundle one is used)
-            resources = {
-            }
+            resources = {}
             bundle_resources = {
-                    ('Test', 'bridgesupport'): os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
+                ("Test", "bridgesupport"): os.path.join(
+                    helper_dir, "bundle_data", "Test.bridgesupport"
+                )
             }
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]),
-                    'Test', g, SENTINEL, 'com.apple.Test', False)
-            ])
-            self.assertEqual(parse_calls, [
-                (b"<signatures><constant name='bundle.test' type='@'/></signatures>\n", g, 'Test', None, None)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle(
+                            [
+                                ("Test", "bridgesupport", "BridgeSupport"),
+                                ("Test", "dylib", "BridgeSupport"),
+                            ]
+                        ),
+                        "Test",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
+            self.assertEqual(
+                parse_calls,
+                [
+                    (
+                        b"<signatures><constant name='bundle.test' type='@'/></signatures>\n",
+                        g,
+                        "Test",
+                        None,
+                        None,
+                    )
+                ],
+            )
 
             # 4. No resource files, have bundle files (with override) and library files (only bundle one is used)
             resources = {
-                    ('Test', 'PyObjCOverrides.bridgesupport'): b"<signatures><constant name='test override' type='@' /></signatures>",
+                (
+                    "Test",
+                    "PyObjCOverrides.bridgesupport",
+                ): b"<signatures><constant name='test override' type='@' /></signatures>"
             }
             bundle_resources = {
-                    ('Test', 'bridgesupport'): os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
+                ("Test", "bridgesupport"): os.path.join(
+                    helper_dir, "bundle_data", "Test.bridgesupport"
+                )
             }
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
-            ])
-            self.assertEqual(parse_calls, [
-                (b"<signatures><constant name='bundle.test' type='@'/></signatures>\n", g, 'Test', None, None),
-                (b"<signatures><constant name='test override' type='@' /></signatures>", g, 'Test', None, inlineTab),
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle(
+                            [
+                                ("Test", "bridgesupport", "BridgeSupport"),
+                                ("Test", "dylib", "BridgeSupport"),
+                            ]
+                        ),
+                        "Test",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
+            self.assertEqual(
+                parse_calls,
+                [
+                    (
+                        b"<signatures><constant name='bundle.test' type='@'/></signatures>\n",
+                        g,
+                        "Test",
+                        None,
+                        None,
+                    ),
+                    (
+                        b"<signatures><constant name='test override' type='@' /></signatures>",
+                        g,
+                        "Test",
+                        None,
+                        inlineTab,
+                    ),
+                ],
+            )
 
             resources = {
-                    ('Test', 'PyObjCOverrides.bridgesupport'): b"<signatures><constant name='test override' type='@' /></signatures>",
+                (
+                    "Test",
+                    "PyObjCOverrides.bridgesupport",
+                ): b"<signatures><constant name='test override' type='@' /></signatures>"
             }
             bundle_resources = {
-                    ('Test', 'bridgesupport'): os.path.join(helper_dir, 'bundle_data', 'Test.bridgesupport'),
-                    ('Test', 'dylib'): os.path.join(helper_dir, 'bundle_data', 'Test.dylib'),
+                ("Test", "bridgesupport"): os.path.join(
+                    helper_dir, "bundle_data", "Test.bridgesupport"
+                ),
+                ("Test", "dylib"): os.path.join(helper_dir, "bundle_data", "Test.dylib"),
             }
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('Test', 'bridgesupport', 'BridgeSupport'), ('Test', 'dylib', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
-            ])
-            self.assertEqual(parse_calls, [
-                (b"<signatures><constant name='bundle.test' type='@'/></signatures>\n", g, 'Test', os.path.join(helper_dir, 'bundle_data', 'Test.dylib'), None),
-                (b"<signatures><constant name='test override' type='@' /></signatures>", g, 'Test', None, inlineTab),
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle(
+                            [
+                                ("Test", "bridgesupport", "BridgeSupport"),
+                                ("Test", "dylib", "BridgeSupport"),
+                            ]
+                        ),
+                        "Test",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
+            self.assertEqual(
+                parse_calls,
+                [
+                    (
+                        b"<signatures><constant name='bundle.test' type='@'/></signatures>\n",
+                        g,
+                        "Test",
+                        os.path.join(helper_dir, "bundle_data", "Test.dylib"),
+                        None,
+                    ),
+                    (
+                        b"<signatures><constant name='test override' type='@' /></signatures>",
+                        g,
+                        "Test",
+                        None,
+                        inlineTab,
+                    ),
+                ],
+            )
 
             # 5. No resource file, no bundle file, have library file
             resources = {}
             bundle_resources = {}
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
-            ])
-            self.assertEqual(parse_calls, [
-                (b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n', g, 'Test', None, None)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("Test", "bridgesupport", "BridgeSupport")]),
+                        "Test",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
+            self.assertEqual(
+                parse_calls,
+                [
+                    (
+                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n',
+                        g,
+                        "Test",
+                        None,
+                        None,
+                    )
+                ],
+            )
 
             resources = {}
             bundle_resources = {}
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data_dylib') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [
+                os.path.join(helper_dir, "with_data_dylib")
+            ]
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
-            ])
-            self.assertEqual(parse_calls, [
-                (b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport 2" /></signatures>\n', g, 'Test', os.path.join(helper_dir, 'with_data_dylib', 'Test.dylib'), None)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("Test", "bridgesupport", "BridgeSupport")]),
+                        "Test",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
+            self.assertEqual(
+                parse_calls,
+                [
+                    (
+                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport 2" /></signatures>\n',
+                        g,
+                        "Test",
+                        os.path.join(helper_dir, "with_data_dylib", "Test.dylib"),
+                        None,
+                    )
+                ],
+            )
 
             # 6. No resource file, no bundle file, have library file (with override)
             resources = {
-                    ('Test', 'PyObjCOverrides.bridgesupport'): b'<signatures><contant name="override" type="@"></signatures>',
+                (
+                    "Test",
+                    "PyObjCOverrides.bridgesupport",
+                ): b'<signatures><contant name="override" type="@"></signatures>'
             }
             bundle_resources = {}
-            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [ os.path.join(helper_dir, 'with_data') ]
+            TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper("Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            objc.initFrameworkWrapper(
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
             basic_verify(g)
             self.assertEqual(len(g), 2)
-            self.assertEqual(load_calls, [
-                (Bundle([('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, SENTINEL, 'com.apple.Test', False)
-            ])
-            self.assertEqual(parse_calls, [
-                (b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n', g, 'Test', None, None),
-                (b'<signatures><contant name="override" type="@"></signatures>', g, 'Test', None, inlineTab)
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle([("Test", "bridgesupport", "BridgeSupport")]),
+                        "Test",
+                        g,
+                        SENTINEL,
+                        "com.apple.Test",
+                        False,
+                    )
+                ],
+            )
+            self.assertEqual(
+                parse_calls,
+                [
+                    (
+                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n',
+                        g,
+                        "Test",
+                        None,
+                        None,
+                    ),
+                    (
+                        b'<signatures><contant name="override" type="@"></signatures>',
+                        g,
+                        "Test",
+                        None,
+                        inlineTab,
+                    ),
+                ],
+            )
 
             # 7. Cannot load bundle (should not look for bridgesupport)
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
+
             def bundle_exception(name, path, identifier):
                 raise ImportError(name)
 
-            self.assertRaises(ImportError, objc.initFrameworkWrapper,
-                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+            self.assertRaises(
+                ImportError,
+                objc.initFrameworkWrapper,
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
 
             self.assertEqual(load_calls, [])
             self.assertEqual(parse_calls, [])
@@ -2036,111 +2713,144 @@ class TestInitFrameworkWrapper (TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
+
             def bundle_exception(name, path, identifier):
                 if identifier is not SENTINEL:
                     raise ImportError(name)
 
             objc.initFrameworkWrapper(
-                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab, scan_classes=False)
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+                scan_classes=False,
+            )
 
-            self.assertEqual(load_calls, [
-                (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, False),
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle(calls=[("Test", "bridgesupport", "BridgeSupport")]),
+                        "Test",
+                        g,
+                        "/Library/Framework/Test.framework",
+                        SENTINEL,
+                        False,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             load_calls = []
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
+
             def bundle_exception(name, path, identifier):
                 if identifier is not SENTINEL:
                     raise ImportError(name)
 
             objc.initFrameworkWrapper(
-                    "Test", "/Library/Framework/Test.framework", "com.apple.Test", g,
-                    inlineTab=inlineTab)
+                "Test",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
+                inlineTab=inlineTab,
+            )
 
-            self.assertEqual(load_calls, [
-                (Bundle(calls=[('Test', 'bridgesupport', 'BridgeSupport')]), 'Test', g, '/Library/Framework/Test.framework', SENTINEL, True),
-            ])
+            self.assertEqual(
+                load_calls,
+                [
+                    (
+                        Bundle(calls=[("Test", "bridgesupport", "BridgeSupport")]),
+                        "Test",
+                        g,
+                        "/Library/Framework/Test.framework",
+                        SENTINEL,
+                        True,
+                    )
+                ],
+            )
             self.assertEqual(parse_calls, [])
 
             # XXX: The following path's aren't properly tested at the moment:
             # 8. Use the 'frameworkResourceName' parameter
 
-
     def test_safe_resource_exists(self):
         with Patcher() as p:
             return_value = False
-            exception  = None
+            exception = None
 
             def resource_exists(resource, path):
-                if exception: raise exception
+                if exception:
+                    raise exception
                 return return_value
+
             p.patch("pkg_resources.resource_exists", resource_exists)
 
             return_value = False
-            exception  = None
+            exception = None
             self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
 
             return_value = True
-            exception  = None
+            exception = None
             self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), True)
 
             return_value = True
-            exception  = ImportError
+            exception = ImportError
             self.assertEqual(bridgesupport.safe_resource_exists("a", "b"), False)
 
-
     def test_real_loader(self):
-        script = os.path.join(os.path.dirname(__file__), 'helper_bridgesupport.py')
+        script = os.path.join(os.path.dirname(__file__), "helper_bridgesupport.py")
         path_elem = os.path.dirname(objc.__file__)
 
-        if sys.byteorder == 'big':
-            if sys.maxsize < 2**32:
-                arch = '-ppc'
+        if sys.byteorder == "big":
+            if sys.maxsize < 2 ** 32:
+                arch = "-ppc"
             else:
-                arch = '-ppc64'
+                arch = "-ppc64"
 
         else:
-            if sys.maxsize < 2**32:
-                arch = '-i386'
+            if sys.maxsize < 2 ** 32:
+                arch = "-i386"
             else:
-                arch = '-x86_64'
+                arch = "-x86_64"
 
-        return # XXX
-        p = subprocess.Popen([
-            '/usr/bin/arch', arch,
-            sys.executable, script, path_elem], stdout=subprocess.PIPE)
+        return  # XXX
+        p = subprocess.Popen(
+            ["/usr/bin/arch", arch, sys.executable, script, path_elem],
+            stdout=subprocess.PIPE,
+        )
         stdout, _ = p.communicate()
         if p.returncode != 0:
             self.fail("Selftest failed: %r" % stdout)
 
-class TestMisc (TestCase):
+
+class TestMisc(TestCase):
     def test_struct_alias(self):
-        tp1 = objc.createStructType('TestStruct1', b'{TestStruct1="f1"d"f2"d}', None)
+        tp1 = objc.createStructType("TestStruct1", b'{TestStruct1="f1"d"f2"d}', None)
 
         with warnings.catch_warnings(record=True) as w:
             warnings.simplefilter("always")
-            objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
+            objc.registerStructAlias(b"{TestStruct2=dd}", tp1)
 
         # XXX: Disabled for now because this function is used in
         # framework bindings...
-        #self.assertTrue(len(w) == 1)
-        #self.assertEqual(w[0].category, DeprecationWarning)
+        # self.assertTrue(len(w) == 1)
+        # self.assertEqual(w[0].category, DeprecationWarning)
 
         with warnings.catch_warnings(record=True):
             warnings.simplefilter("ignore")
-            tp2 = objc.registerStructAlias(b'{TestStruct2=dd}', tp1)
+            tp2 = objc.registerStructAlias(b"{TestStruct2=dd}", tp1)
             self.assertIs(tp1, tp2)
 
-        self.assertHasAttr(objc.ivar, 'TestStruct1')
-        self.assertNotHasAttr(objc.ivar, 'TestStruct2')
+        self.assertHasAttr(objc.ivar, "TestStruct1")
+        self.assertNotHasAttr(objc.ivar, "TestStruct2")
 
-        tp3 = objc.createStructAlias('TestStruct3', b'{TestStruct3=dd}', tp1)
+        tp3 = objc.createStructAlias("TestStruct3", b"{TestStruct3=dd}", tp1)
         self.assertIs(tp1, tp3)
-        self.assertHasAttr(objc.ivar, 'TestStruct3')
+        self.assertHasAttr(objc.ivar, "TestStruct3")
 
 
 if __name__ == "__main__":

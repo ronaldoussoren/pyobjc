@@ -40,15 +40,9 @@
  *    fields.
  *
  */
-PyObject* PyObjC_MakeStructType(
-    const char* name,
-    const char* doc,
-    initproc tpinit,
-    Py_ssize_t numFields,
-    const char** fieldnames,
-    const char* typestr,
-    Py_ssize_t pack);
-
+PyObject* PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
+                                Py_ssize_t numFields, const char** fieldnames,
+                                const char* typestr, Py_ssize_t pack);
 
 /*!
  * @function PyObjC_RegisterStructType
@@ -68,14 +62,10 @@ PyObject* PyObjC_MakeStructType(
  *    PyObjC_CreateRegisteredStruct can then be used to create instances of
  *    the type.
  */
-PyObject* PyObjC_RegisterStructType(
-    const char* signature,
-    const char* name,
-    const char* doc,
-    initproc tpinit,
-    Py_ssize_t numFields,
-    const char** fieldnames,
-    Py_ssize_t pack);
+PyObject* PyObjC_RegisterStructType(const char* signature, const char* name,
+                                    const char* doc, initproc tpinit,
+                                    Py_ssize_t numFields, const char** fieldnames,
+                                    Py_ssize_t pack);
 
 /*!
  * @function PyObjC_CreateRegisteredStruct
@@ -94,7 +84,8 @@ PyObject* PyObjC_RegisterStructType(
  *     The returned instance is uninitialized, all fields are NULL. The
  *     __init__ method has not been called.
  */
-PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len, const char** objc_signature, Py_ssize_t* pack);
+PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len,
+                                        const char** objc_signature, Py_ssize_t* pack);
 
 /*!
  * @function PyObjC_RegisterStructAlias
@@ -120,8 +111,8 @@ int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
  * @function PyObjC_FindRegisteredStruct
  * @param signature   An Objective-C signature for a struct type
  * @param len         Length of the sigature string
- * @result A type registered with PyObjC_CreateRegisteredStruct or PyObjC_RegisterStructAlias,
- *         or NULL when such a type cannot be found.
+ * @result A type registered with PyObjC_CreateRegisteredStruct or
+ * PyObjC_RegisterStructAlias, or NULL when such a type cannot be found.
  *
  * @discussion
  *     This function will not set an error when it cannot find
@@ -129,13 +120,10 @@ int PyObjC_RegisterStructAlias(const char* signature, PyObject* type);
  */
 extern PyObject* PyObjC_FindRegisteredStruct(const char* signature, Py_ssize_t len);
 
-
 extern int PyObjC_SetStructField(PyObject* strval, Py_ssize_t inde, PyObject* value);
 extern PyObject* StructAsTuple(PyObject* strval);
 
-
 extern PyTypeObject StructBase_Type;
 #define PyObjCStruct_Check(obj) PyObject_TypeCheck(obj, &StructBase_Type)
-
 
 #endif /* PyObjC_STRUCT_MEMBER */

@@ -1,63 +1,63 @@
 from PyObjCTools.TestSupport import *
 import objc
 
-objc.registerMetaDataForSelector(b"OCTestNULL", b"callOut:", dict(
-            arguments={
-                2: dict(type_modifier=b'o', null_accepted=True),
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andInOut2:", dict(
-            arguments={
-                3: dict(type_modifier=b'o', null_accepted=True),
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andInOut:", dict(
-            arguments={
-                3: dict(type_modifier=b'N', null_accepted=True),
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andIn:", dict(
-            arguments={
-                3: dict(type_modifier=b'n', null_accepted=True),
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"callList:andOut:", dict(
-            arguments={
-                3: dict(type_modifier=b'o', null_accepted=True),
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callList:andInOut:", dict(
-            arguments={
-                4: dict(type_modifier=b'N', null_accepted=True),
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callList:andIn:", dict(
-            arguments={
-                4: dict(type_modifier=b'n', null_accepted=True),
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callList:andOut:", dict(
-            arguments={
-                4: dict(type_modifier=b'N', null_accepted=True), # N is by design
-            },
-        ))
-objc.registerMetaDataForSelector(b"OCTestNULL", b"on:callOut:", dict(
-            arguments={
-                3: dict(type_modifier=b'N', null_accepted=True), # N is by design
-            },
-        ))
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"callOut:",
+    dict(arguments={2: dict(type_modifier=b"o", null_accepted=True)}),
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"callList:andInOut2:",
+    dict(arguments={3: dict(type_modifier=b"o", null_accepted=True)}),
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"callList:andInOut:",
+    dict(arguments={3: dict(type_modifier=b"N", null_accepted=True)}),
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"callList:andIn:",
+    dict(arguments={3: dict(type_modifier=b"n", null_accepted=True)}),
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"callList:andOut:",
+    dict(arguments={3: dict(type_modifier=b"o", null_accepted=True)}),
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"on:callList:andInOut:",
+    dict(arguments={4: dict(type_modifier=b"N", null_accepted=True)}),
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"on:callList:andIn:",
+    dict(arguments={4: dict(type_modifier=b"n", null_accepted=True)}),
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"on:callList:andOut:",
+    dict(arguments={4: dict(type_modifier=b"N", null_accepted=True)}),  # N is by design
+)
+objc.registerMetaDataForSelector(
+    b"OCTestNULL",
+    b"on:callOut:",
+    dict(arguments={3: dict(type_modifier=b"N", null_accepted=True)}),  # N is by design
+)
 
 from PyObjCTest.NULL import *
 
-class TestNULL (TestCase):
+
+class TestNULL(TestCase):
     def testNULL(self):
-        self.assertHasAttr(objc, 'NULL')
-        self.assertEqual(repr(objc.NULL), 'objc.NULL')
+        self.assertHasAttr(objc, "NULL")
+        self.assertEqual(repr(objc.NULL), "objc.NULL")
         self.assertRaises(TypeError, type(objc.NULL))
 
 
-class TestNullArgumentsHelper (objc.lookUpClass("NSObject")):
-
+class TestNullArgumentsHelper(objc.lookUpClass("NSObject")):
     def callList_andInOut_(self, lst, value):
         lst.append(str(value))
         if value is objc.NULL:
@@ -65,8 +65,7 @@ class TestNullArgumentsHelper (objc.lookUpClass("NSObject")):
         else:
             return (13, value * 2)
 
-    callList_andInOut_ = objc.selector(callList_andInOut_,
-            signature=b"i@:@N^i")
+    callList_andInOut_ = objc.selector(callList_andInOut_, signature=b"i@:@N^i")
 
     def callList_andInOut2_(self, lst, value):
         lst.append(repr(value))
@@ -74,29 +73,30 @@ class TestNullArgumentsHelper (objc.lookUpClass("NSObject")):
             return 29
         else:
             return 29
-    callList_andInOut2_ = objc.selector(callList_andInOut2_,
-            signature=b"i@:@^i")
+
+    callList_andInOut2_ = objc.selector(callList_andInOut2_, signature=b"i@:@^i")
 
     def callList_andIn_(self, lst, value):
         lst.append(repr(value))
         return 26
 
-    callList_andIn_ = objc.selector(callList_andIn_,
-            signature=b"i@:@n^i")
+    callList_andIn_ = objc.selector(callList_andIn_, signature=b"i@:@n^i")
 
     def callList_andOut_(self, lst, value):
         assert value is None or value is objc.NULL
         lst.append("Nothing here")
         return (27, 99)
-    callList_andOut_ = objc.selector(callList_andOut_,
-            signature=b"i@:@o^i")
+
+    callList_andOut_ = objc.selector(callList_andOut_, signature=b"i@:@o^i")
 
     def callOut_(self, value):
         assert value is None or value is objc.NULL
-        return 441;
-    callOut_ = objc.selector(callOut_, signature=b'v@:o^i')
+        return 441
 
-class TestNULLArguments (TestCase):
+    callOut_ = objc.selector(callOut_, signature=b"v@:o^i")
+
+
+class TestNULLArguments(TestCase):
     def testCallInOutNULL(self):
         obj = OCTestNULL.alloc().init()
 
@@ -108,7 +108,7 @@ class TestNULLArguments (TestCase):
         v = []
         rv = obj.callList_andInOut_(v, objc.NULL)
         self.assertEqual(v, ["NULL"])
-        self.assertEqual(rv,  (12, objc.NULL))
+        self.assertEqual(rv, (12, objc.NULL))
 
     def testCallInOutNULL2(self):
         # If nothing is specified the bridge assumes the argument behaves
@@ -123,7 +123,7 @@ class TestNULLArguments (TestCase):
         v = []
         rv = obj.callList_andInOut2_(v, objc.NULL)
         self.assertEqual(v, ["NULL"])
-        self.assertEqual(rv,  (12, objc.NULL))
+        self.assertEqual(rv, (12, objc.NULL))
 
     def testCallInNULL(self):
         obj = OCTestNULL.alloc().init()
@@ -136,8 +136,7 @@ class TestNULLArguments (TestCase):
         v = []
         rv = obj.callList_andIn_(v, objc.NULL)
         self.assertEqual(v, ["NULL"])
-        self.assertEqual(rv,  24)
-
+        self.assertEqual(rv, 24)
 
     def testCalledInOutNULL(self):
         helper = OCTestNULL.alloc().init()
@@ -145,12 +144,12 @@ class TestNULLArguments (TestCase):
 
         v = []
         rv = helper.on_callList_andInOut_(obj, v, 42)
-        self.assertEqual(v, ['42'])
+        self.assertEqual(v, ["42"])
         self.assertEqual(rv, (13, 84))
 
         v = []
         rv = helper.on_callList_andInOut_(obj, v, objc.NULL)
-        self.assertEqual(v, ['objc.NULL'])
+        self.assertEqual(v, ["objc.NULL"])
         self.assertEqual(rv, (13, objc.NULL))
 
     def testCalledInNULL(self):
@@ -159,12 +158,12 @@ class TestNULLArguments (TestCase):
 
         v = []
         rv = helper.on_callList_andIn_(obj, v, 42)
-        self.assertEqual(v, ['42'])
+        self.assertEqual(v, ["42"])
         self.assertEqual(rv, 26)
 
         v = []
         rv = helper.on_callList_andIn_(obj, v, objc.NULL)
-        self.assertEqual(v, ['objc.NULL'])
+        self.assertEqual(v, ["objc.NULL"])
         self.assertEqual(rv, 26)
 
     def testCalledOutNULL(self):
@@ -174,12 +173,12 @@ class TestNULLArguments (TestCase):
 
         v = []
         rv = helper.on_callList_andOut_(obj, v, 42)
-        self.assertEqual(v, ['Nothing here'])
+        self.assertEqual(v, ["Nothing here"])
         self.assertEqual(rv, (27, 99))
 
         v = []
         rv = helper.on_callList_andOut_(obj, v, objc.NULL)
-        self.assertEqual(v, ['Nothing here'])
+        self.assertEqual(v, ["Nothing here"])
         self.assertEqual(rv, (27, objc.NULL))
 
         rv = helper.on_callOut_(obj, 42)
@@ -204,7 +203,6 @@ class TestNULLArguments (TestCase):
           None
         """
 
-
     def dont_testCallOutNULL(self):
         """
         Call a method with an 'out' argument with an additional method
@@ -213,8 +211,6 @@ class TestNULLArguments (TestCase):
         - argument should be NULL in objC
         - result should be objc.NULL
         """
-
-
 
 
 if __name__ == "__main__":

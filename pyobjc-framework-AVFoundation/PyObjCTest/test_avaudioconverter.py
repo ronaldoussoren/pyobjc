@@ -2,9 +2,10 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-AVAudioConverterInputBlock = b'@Io^' + objc._C_NSInteger
+AVAudioConverterInputBlock = b"@Io^" + objc._C_NSInteger
 
-class TestAVAudioConverter (TestCase):
+
+class TestAVAudioConverter(TestCase):
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Pre, 0)
         self.assertEqual(AVFoundation.AVAudioConverterPrimeMethod_Normal, 1)
@@ -24,8 +25,7 @@ class TestAVAudioConverter (TestCase):
         self.assertEqual(v.leadingFrames, 0)
         self.assertEqual(v.trailingFrames, 0)
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioConverter.downmix)
         self.assertArgIsBOOL(AVFoundation.AVAudioConverter.setDownmix_, 0)
@@ -33,13 +33,21 @@ class TestAVAudioConverter (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioConverter.dither)
         self.assertArgIsBOOL(AVFoundation.AVAudioConverter.setDither_, 0)
 
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioConverter.convertToBuffer_fromBuffer_error_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVAudioConverter.convertToBuffer_fromBuffer_error_, 2
+        )
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioConverter.convertToBuffer_fromBuffer_error_)
-        self.assertArgIsOut(AVFoundation.AVAudioConverter.convertToBuffer_fromBuffer_error_, 2)
-
-        self.assertArgIsOut(AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_, 1)
-        self.assertArgIsBlock(AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_, 2, AVAudioConverterInputBlock)
-
+        self.assertArgIsOut(
+            AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_, 1
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioConverter.convertToBuffer_error_withInputFromBlock_,
+            2,
+            AVAudioConverterInputBlock,
+        )
 
 
 if __name__ == "__main__":

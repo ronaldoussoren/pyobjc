@@ -7,14 +7,20 @@ from SelectionNotifyMatrix import RowSelectedNotification, SelectionNotifyMatrix
 
 ToDoItemChangedNotification = "ToDoItemChangedNotification"
 
-class  ToDoDocument (Cocoa.NSDocument):
+
+class ToDoDocument(Cocoa.NSDocument):
     calendar = objc.IBOutlet()
     dayLabel = objc.IBOutlet()
     itemList = objc.IBOutlet()
     statusList = objc.IBOutlet()
 
-
-    __slots__ = ('_dataFromFile', '_activeDays', '_currentItems', '_selectedItem', '_selectedItemEdited')
+    __slots__ = (
+        "_dataFromFile",
+        "_activeDays",
+        "_currentItems",
+        "_selectedItem",
+        "_selectedItemEdited",
+    )
 
     def rowSelected_(self, notification):
         row = notification.object().selectedRow()
@@ -27,7 +33,9 @@ class  ToDoDocument (Cocoa.NSDocument):
         if not isinstance(self._selectedItem, ToDoItem):
             self._selectedItem = None
 
-        Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_userInfo_(ToDoItemChangedNotification, self._selectedItem, None)
+        Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_userInfo_(
+            ToDoItemChangedNotification, self._selectedItem, None
+        )
 
     def init(self):
         self = super(ToDoDocument, self).init()
@@ -41,7 +49,7 @@ class  ToDoDocument (Cocoa.NSDocument):
 
         return self
 
-    def __del__(self): # dealloc in Objective-C code
+    def __del__(self):  # dealloc in Objective-C code
 
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
 
@@ -63,7 +71,7 @@ class  ToDoDocument (Cocoa.NSDocument):
 
             aCell = ToDoCell.alloc().init()
             aCell.setTarget_(self)
-            aCell.setAction_('itemStatusClicked:')
+            aCell.setAction_("itemStatusClicked:")
             self.statusList.putCell_atRow_column_(aCell, index, 0)
 
         if self._dataFromFile:
@@ -72,8 +80,12 @@ class  ToDoDocument (Cocoa.NSDocument):
         else:
             self.loadDocWithData_(None)
 
-        Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self.itemList)
-        Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(self, 'rowSelected:', RowSelectedNotification, self.statusList)
+        Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
+            self, "rowSelected:", RowSelectedNotification, self.itemList
+        )
+        Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
+            self, "rowSelected:", RowSelectedNotification, self.statusList
+        )
 
     def loadDocWithData_(self, data):
         if data:
@@ -89,23 +101,32 @@ class  ToDoDocument (Cocoa.NSDocument):
 
                 anItem = itemEnum.nextObject()
                 while anItem:
-                    if (isinstance(anItem, ToDoItem)
-                            and anItem.secsUntilNotify()
-                            and anItem.status() == INCOMPLETE):
+                    if (
+                        isinstance(anItem, ToDoItem)
+                        and anItem.secsUntilNotify()
+                        and anItem.status() == INCOMPLETE
+                    ):
                         due = anItem.day().addTimeInterfval_(anItem.secondsUntilDue())
                         elapsed = due.timeIntervalSinceDate_(now)
                         if elapsed > 0:
                             self.setTimerForItem_(anItem)
                         else:
                             Cocoa.NSBeep()
-                            Cocoa.NSRunAlertPanel("To Do", "%s on %s is past due!"%(
+                            Cocoa.NSRunAlertPanel(
+                                "To Do",
+                                "%s on %s is past due!"
+                                % (
                                     anItem.itemName(),
                                     due.descriptionWithCalendarFormat_timeZone_locale_(
                                         "%b %d, %Y at %I:%M %p",
                                         Cocoa.NSTimeZone.localTimeZone(),
-                                        None
-                                    )
-                                ), None, None, None)
+                                        None,
+                                    ),
+                                ),
+                                None,
+                                None,
+                                None,
+                            )
                             anItem.setSecsUntilNotify_(0)
                     anItem = itemEnum.nextObject()
 
@@ -118,9 +139,9 @@ class  ToDoDocument (Cocoa.NSDocument):
 
         self.dayLabel.setStringValue_(
             self.calendar.selectedDay().descriptionWithCalendarFormat_timeZone_locale_(
-                "To Do on %a %B %d %Y",
-                Cocoa.NSTimeZone.defaultTimeZone(),
-                None))
+                "To Do on %a %B %d %Y", Cocoa.NSTimeZone.defaultTimeZone(), None
+            )
+        )
 
     def initDataModelWithDictionary_(self, aDict):
         if aDict:
@@ -188,7 +209,9 @@ class  ToDoDocument (Cocoa.NSDocument):
             elif prevNameAtIndex != newName:
                 self._currentItems.objectAtRow_(row).setItemName_(newName)
         elif newName != "":
-            newItem = ToDoItem.alloc().initWithName_andDate_(newName, self.calendar.selectedDay())
+            newItem = ToDoItem.alloc().initWithName_andDate_(
+                newName, self.calendar.selectedDay()
+            )
             self._currentItems.replaceObjectAtIndex_withObject_(row, newItem)
 
         self._selectedItem = self._currentItems.objectAtIndex_(row)
@@ -200,9 +223,9 @@ class  ToDoDocument (Cocoa.NSDocument):
         self._selectedItemEdited = 0
         self.updateChangeCount_(Cocoa.NSChangeDone)
 
-        Cocoa.NSNotificationCenter.defaultCenter(
-            ).postNotificationName_object_userInfo_(
-            ToDoItemChangedNotification, self._selectedItem, None)
+        Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_userInfo_(
+            ToDoItemChangedNotification, self._selectedItem, None
+        )
 
     def selectedItemModified(self):
         if self._selectedItem:
@@ -221,8 +244,9 @@ class  ToDoDocument (Cocoa.NSDocument):
 
         self.dayLabel.setStringValue_(
             date.descriptionWithCalendarFormat_timeZone_locale_(
-            "To Do on %a %B %d %Y", Cocoa.NSTimeZone.defaultTimeZone(),
-            None))
+                "To Do on %a %B %d %Y", Cocoa.NSTimeZone.defaultTimeZone(), None
+            )
+        )
         self.updateLists()
         self.selectedItemAtRow_(0)
 
@@ -247,7 +271,7 @@ class  ToDoDocument (Cocoa.NSDocument):
 
     @objc.IBAction
     def itemStatusClicked_(self, sender):
-        row  = sender.selectedRow()
+        row = sender.selectedRow()
         cell = sender.cellAtRow_column_(row, 0)
         item = self._currentItems.objectAtIndex_(row)
 
@@ -259,18 +283,18 @@ class  ToDoDocument (Cocoa.NSDocument):
             self.updateChangeCount_(Cocoa.NSChangeDone)
 
             Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_userInfo_(
-                ToDoItemChangedNotification, item, None)
+                ToDoItemChangedNotification, item, None
+            )
 
     def setTimerForItem_(self, anItem):
         if anItem.secsUntilNotify() and anItem.status() == INCOMPLETE:
-            notifyDate = anItem.day().addTimeInterval_(anItem.secsUntilDue() - anItem.secsUntilNotify())
+            notifyDate = anItem.day().addTimeInterval_(
+                anItem.secsUntilDue() - anItem.secsUntilNotify()
+            )
 
             aTimer = Cocoa.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-                    notifyDate.timeIntervalSinceNow(),
-                    self,
-                    'itemTimerFired:',
-                    anItem,
-                    False)
+                notifyDate.timeIntervalSinceNow(), self, "itemTimerFired:", anItem, False
+            )
             anItem.setTimer_(aTimer)
         else:
             anItem.setTimer_(None)
@@ -281,18 +305,26 @@ class  ToDoDocument (Cocoa.NSDocument):
 
         Cocoa.NSBeep()
 
-        Cocoa.NSRunAlertPanel("To Do", "%s on %s"%(
-            anItem.itemName(), dueDate.descriptionWithCalendarFormat_timeZone_locale_(
-            "%b %d, %Y at %I:%M: %p", Cocoa.NSTimeZone.defaultTimeZone(), None),
-                 ), None, None, None)
+        Cocoa.NSRunAlertPanel(
+            "To Do",
+            "%s on %s"
+            % (
+                anItem.itemName(),
+                dueDate.descriptionWithCalendarFormat_timeZone_locale_(
+                    "%b %d, %Y at %I:%M: %p", Cocoa.NSTimeZone.defaultTimeZone(), None
+                ),
+            ),
+            None,
+            None,
+            None,
+        )
         anItem.setSecsUntilNotify_(0)
         self.setTimerForItem_(anItem)
         self.updateLists()
 
         Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_userInfo_(
-            ToDoItemChangedNotification,
-            anItem,
-            None)
+            ToDoItemChangedNotification, anItem, None
+        )
 
     def selectItemAtRow_(self, row):
         self.itemList.selectCellAtRow_column_(row, 0)

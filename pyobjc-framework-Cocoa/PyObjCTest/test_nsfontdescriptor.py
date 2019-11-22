@@ -1,16 +1,15 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSFontDescriptor (TestCase):
+
+class TestNSFontDescriptor(TestCase):
     def testConvenience(self):
         v = NSFontDescriptor.fontDescriptorWithName_size_("Courier", 12)
         d = v[NSFontNameAttribute]
         self.assertEqual(v.get(NSFontNameAttribute), d)
-        self.assertEqual(v.get('no-such-name'), None)
+        self.assertEqual(v.get("no-such-name"), None)
         with self.assertRaises(KeyError):
-            v['no-such-name']
-
+            v["no-such-name"]
 
     def testConstants(self):
         self.assertEqual(NSFontUnknownClass, (0 << 28))
@@ -34,7 +33,6 @@ class TestNSFontDescriptor (TestCase):
         self.assertEqual(NSFontMonoSpaceTrait, (1 << 10))
         self.assertEqual(NSFontVerticalTrait, (1 << 11))
         self.assertEqual(NSFontUIOptimizedTrait, (1 << 12))
-
 
         self.assertIsInstance(NSFontFamilyAttribute, unicode)
         self.assertIsInstance(NSFontNameAttribute, unicode)
@@ -84,8 +82,7 @@ class TestNSFontDescriptor (TestCase):
         self.assertEqual(NSFontDescriptorClassScripts, 10 << 28)
         self.assertEqual(NSFontDescriptorClassSymbolic, 12 << 28)
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(NSFontWeightUltraLight, float)
         self.assertIsInstance(NSFontWeightThin, float)
@@ -97,7 +94,14 @@ class TestNSFontDescriptor (TestCase):
         self.assertIsInstance(NSFontWeightHeavy, float)
         self.assertIsInstance(NSFontWeightBlack, float)
 
-    @min_os_level('10.13')
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertIsInstance(NSFontDescriptorSystemDesignDefault, unicode)
+        self.assertIsInstance(NSFontDescriptorSystemDesignSerif, unicode)
+        self.assertIsInstance(NSFontDescriptorSystemDesignMonospaced, unicode)
+        self.assertIsInstance(NSFontDescriptorSystemDesignRounded, unicode)
+
+    @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(NSFontDescriptor.requiresFontAssetRequest)
 

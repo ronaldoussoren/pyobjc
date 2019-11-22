@@ -3,19 +3,19 @@
 
 @implementation OC_BuiltinPythonArray
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return YES;
 }
 
--(Class)classForKeyedArchiver
+- (Class)classForKeyedArchiver
 {
     return [OC_BuiltinPythonArray class];
 }
 
-+(NSArray*)classFallbacksForKeyedArchiver
++ (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObjects:@"OC_PythonArray", @"NSArray", nil];
 }
-
 
 @end

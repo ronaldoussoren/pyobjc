@@ -1,0 +1,74 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "enum": {
+   "ASAuthorizationAppleIDButtonTypeSignUp": { "value": 2 }
+  },
+  "classes": {
+   "ASWebAuthenticationSession": {
+    "methods": [
+     {
+      "selector": "initWithURL:callbackURLScheme:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@"  },
+	  "2": { "type": "@"  }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "ASAuthorizationProviderExtensionAuthorizationRequest": {
+    "methods": [
+     {
+      "selector": "presentAuthorizationViewControllerWithCompletion:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "Z"  },
+	  "2": { "type": "@"  }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "ASAuthorizationAppleIDProvider": {
+    "methods": [
+     {
+      "selector": "getCredentialStateForUserID:completion:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "q"  },
+	  "2": { "type": "@"  }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

@@ -25,21 +25,24 @@ import struct
 kEventHotKeyPressedSubtype = 6
 kEventHotKeyReleasedSubtype = 9
 
-class HotKeyApp(Cocoa.NSApplication):
 
+class HotKeyApp(Cocoa.NSApplication):
     def finishLaunching(self):
         super(HotKeyApp, self).finishLaunching()
         # register cmd-control-J
-        self.hotKeyRef = RegisterEventHotKey(38, cmdKey | controlKey, (0, 0),
-                                             GetApplicationEventTarget(), 0)
+        self.hotKeyRef = RegisterEventHotKey(
+            38, cmdKey | controlKey, (0, 0), GetApplicationEventTarget(), 0
+        )
 
     def sendEvent_(self, theEvent):
-        if theEvent.type() == Cocoa.NSSystemDefined and \
-               theEvent.subtype() == kEventHotKeyPressedSubtype:
+        if (
+            theEvent.type() == Cocoa.NSSystemDefined
+            and theEvent.subtype() == kEventHotKeyPressedSubtype
+        ):
             self.activateIgnoringOtherApps_(True)
-            Cocoa.NSRunAlertPanel('Hot Key Pressed', 'Hot Key Pressed',
-                None, None, None)
+            Cocoa.NSRunAlertPanel("Hot Key Pressed", "Hot Key Pressed", None, None, None)
         super(HotKeyApp, self).sendEvent_(theEvent)
+
 
 if __name__ == "__main__":
     AppHelper.runEventLoop()

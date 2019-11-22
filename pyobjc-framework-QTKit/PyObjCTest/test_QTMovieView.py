@@ -1,17 +1,16 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTMovieView (TestCase):
+
+class TestQTMovieView(TestCase):
     def testConstants(self):
         self.assertIsInstance(QTMovieViewMovieBinding, unicode)
         self.assertIsInstance(QTMovieViewControllerVisibleBinding, unicode)
         self.assertIsInstance(QTMovieViewPreservesAspectRatioBinding, unicode)
         self.assertIsInstance(QTMovieViewFillColorBinding, unicode)
 
-    #def testProtocols(self):
-        #self.assertIsInstance(protocols.QTMovieView_Delegate, objc.informal_protocol)
-
+    # def testProtocols(self):
+    # self.assertIsInstance(protocols.QTMovieView_Delegate, objc.informal_protocol)
 
     def testMethods(self):
         self.assertResultIsBOOL(QTMovieView.isControllerVisible)
@@ -37,6 +36,7 @@ class TestQTMovieView (TestCase):
         self.assertResultIsBOOL(QTMovieView.isTranslateButtonVisible)
         self.assertResultIsBOOL(QTMovieView.isVolumeButtonVisible)
         self.assertResultIsBOOL(QTMovieView.areZoomButtonsVisible)
+
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestArchiver (TestCase):
+
+class TestArchiver(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSInconsistentArchiveException, unicode)
 

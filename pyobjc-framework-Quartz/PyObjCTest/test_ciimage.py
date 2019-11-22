@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCIImage (TestCase):
+
+class TestCIImage(TestCase):
     def testConstants(self):
         self.assertIsInstance(kCIFormatARGB8, (int, long))
         self.assertIsInstance(kCIFormatBGRA8, (int, long))
@@ -12,24 +12,24 @@ class TestCIImage (TestCase):
         self.assertIsInstance(kCIFormatRGBAh, (int, long))
         self.assertIsInstance(kCIImageColorSpace, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(kCIImageProperties, unicode)
         self.assertIsInstance(kCIImageAutoAdjustEnhance, unicode)
         self.assertIsInstance(kCIImageAutoAdjustRedEye, unicode)
         self.assertIsInstance(kCIImageAutoAdjustFeatures, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(kCIImageTextureTarget, unicode)
         self.assertIsInstance(kCIImageTextureFormat, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kCIImageAutoAdjustCrop, unicode)
         self.assertIsInstance(kCIImageAutoAdjustLevel, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCIFormatABGR8, (int, long))
         self.assertIsInstance(kCIFormatA8, (int, long))
@@ -45,7 +45,7 @@ class TestCIImage (TestCase):
         self.assertIsInstance(kCIFormatRGh, (int, long))
         self.assertIsInstance(kCIFormatRGf, (int, long))
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCIFormatL8, (int, long))
         self.assertIsInstance(kCIFormatL16, (int, long))
@@ -57,38 +57,61 @@ class TestCIImage (TestCase):
         self.assertIsInstance(kCIFormatLAh, (int, long))
         self.assertIsInstance(kCIFormatLAf, (int, long))
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCIImageNearestSampling, unicode)
         self.assertIsInstance(kCIImageAuxiliaryDepth, unicode)
         self.assertIsInstance(kCIImageAuxiliaryDisparity, unicode)
         self.assertIsInstance(kCIImageApplyOrientationProperty, unicode)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(kCIImageAuxiliaryPortraitEffectsMatte, unicode)
+
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertIsInstance(kCIImageAuxiliarySemanticSegmentationSkinMatte, unicode)
+        self.assertIsInstance(kCIImageAuxiliarySemanticSegmentationHairMatte, unicode)
+        self.assertIsInstance(kCIImageAuxiliarySemanticSegmentationTeethMatte, unicode)
 
     def testMethods(self):
         self.assertArgIsBOOL(CIImage.imageWithTexture_size_flipped_colorSpace_, 2)
         self.assertArgIsBOOL(CIImage.initWithTexture_size_flipped_colorSpace_, 2)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertArgIsBOOL(CIImage.imageWithTexture_size_flipped_options_, 2)
         self.assertArgIsBOOL(CIImage.initWithTexture_size_flipped_options_, 2)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertArgIsOut(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_, 4)
-        self.assertResultIsBOOL(CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_)
+        self.assertArgIsOut(
+            CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_, 4
+        )
+        self.assertResultIsBOOL(
+            CIContext.writeJPEGRepresentationOfImage_toURL_colorSpace_options_error_
+        )
 
-    @min_os_level('10.13')
+        self.assertArgIsBOOL(CIImage.imageByApplyingTransform_highQualityDownsample_, 1)
+
+    @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertArgIsOut(CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
-        self.assertResultIsBOOL(CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_)
+        self.assertArgIsOut(
+            CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_,
+            5,
+        )
+        self.assertResultIsBOOL(
+            CIContext.writePNGRepresentationOfImage_toURL_format_colorSpace_options_error_
+        )
 
-        self.assertArgIsOut(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_, 5)
-        self.assertResultIsBOOL(CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_)
+        self.assertArgIsOut(
+            CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_,
+            5,
+        )
+        self.assertResultIsBOOL(
+            CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_
+        )
+
 
 if __name__ == "__main__":
     main()

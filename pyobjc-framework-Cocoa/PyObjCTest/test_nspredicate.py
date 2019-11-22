@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSPredicate (TestCase):
+
+class TestNSPredicate(TestCase):
     def testSimple(self):
         pred = NSPredicate.predicateWithFormat_("a == 42")
         self.assertEqual(pred.predicateFormat(), "a == 42")
@@ -18,9 +19,9 @@ class TestNSPredicate (TestCase):
         self.assertResultIsBOOL(NSPredicate.evaluateWithObject_)
         self.assertResultIsBOOL(NSPredicate.evaluateWithObject_substitutionVariables_)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSPredicate.predicateWithBlock_, 0, objc._C_NSBOOL + b'@@')
+        self.assertArgIsBlock(NSPredicate.predicateWithBlock_, 0, objc._C_NSBOOL + b"@@")
 
 
 if __name__ == "__main__":

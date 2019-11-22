@@ -1,8 +1,10 @@
 """ Unittests """
 import os
 
-if 'DYLD_FRAMEWORK_PATH' not in os.environ or \
-    'Library/PrivateFrameworks/' not in os.environ['DYLD_FRAMEWORK_PATH']:
+if (
+    "DYLD_FRAMEWORK_PATH" not in os.environ
+    or "Library/PrivateFrameworks/" not in os.environ["DYLD_FRAMEWORK_PATH"]
+):
     # Check for:
     # DYLD_FRAMEWORK_PATH='/Developer/Library/PrivateFrameworks/'
 

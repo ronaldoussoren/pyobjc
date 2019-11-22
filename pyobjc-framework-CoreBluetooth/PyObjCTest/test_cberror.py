@@ -3,7 +3,8 @@ import sys
 from PyObjCTools.TestSupport import *
 import CoreBluetooth
 
-class TestCBAdvertisementData (TestCase):
+
+class TestCBAdvertisementData(TestCase):
     @min_os_level("10.9")
     def testConstants(self):
         self.assertIsInstance(CoreBluetooth.CBErrorDomain, unicode)
@@ -43,6 +44,7 @@ class TestCBAdvertisementData (TestCase):
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientEncryption, 0x0F)
         self.assertEqual(CoreBluetooth.CBATTErrorUnsupportedGroupType, 0x10)
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientResources, 0x11)
+
 
 if __name__ == "__main__":
     main()

@@ -1,14 +1,13 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSColorPanel (TestCase):
-    @min_os_level('10.5')
+
+class TestNSColorPanel(TestCase):
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertEqual(NSNoModeColorPanel, -1)
 
         self.assertEqual(NSColorPanelModeNone, -1)
-
 
     def testConstants(self):
         self.assertEqual(NSGrayModeColorPanel, 0)
@@ -37,7 +36,7 @@ class TestNSColorPanel (TestCase):
         self.assertEqual(NSColorPanelColorListModeMask, 0x00000020)
         self.assertEqual(NSColorPanelWheelModeMask, 0x00000040)
         self.assertEqual(NSColorPanelCrayonModeMask, 0x00000080)
-        self.assertEqual(NSColorPanelAllModesMask, 0x0000ffff)
+        self.assertEqual(NSColorPanelAllModesMask, 0x0000FFFF)
 
         self.assertIsInstance(NSColorPanelColorDidChangeNotification, unicode)
 

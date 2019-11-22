@@ -6,13 +6,15 @@ from CoreFoundation import *
 import Foundation
 
 
-MachPortClasses = tuple(cls for cls in objc.getClassList() if cls.__name__ == "NSMachPort")
+MachPortClasses = tuple(
+    cls for cls in objc.getClassList() if cls.__name__ == "NSMachPort"
+)
 
 
-class TestMachPort (TestCase):
+class TestMachPort(TestCase):
     def testTypes(self):
         try:
-            if objc.lookUpClass('NSMachPort') is CFMachPortRef:
+            if objc.lookUpClass("NSMachPort") is CFMachPortRef:
                 return
         except objc.error:
             pass
@@ -21,9 +23,11 @@ class TestMachPort (TestCase):
     def testTypeID(self):
         self.assertIsInstance(CFMachPortGetTypeID(), (int, long))
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testCreate10_8(self):
-        class Context: pass
+        class Context:
+            pass
+
         context = Context()
 
         def callout(port, msg, size, info):
@@ -35,17 +39,18 @@ class TestMachPort (TestCase):
         self.assertIsInstance(port, MachPortClasses)
 
     def testCreate(self):
+        class Context:
+            pass
 
-        class Context: pass
         context = Context()
 
         def callout(port, msg, size, info):
             pass
 
         # XXX: This one cannot be tested without bindings to the low-level mach_port API's
-        #port, shouldFree = CFMachPortCreateWithPort(None, 1, callout, context, None)
-        #self.assertIsInstance(port, CFMachPortRef)
-        #self.assertTrue(shouldFree is True or shouldFree is False)
+        # port, shouldFree = CFMachPortCreateWithPort(None, 1, callout, context, None)
+        # self.assertIsInstance(port, CFMachPortRef)
+        # self.assertTrue(shouldFree is True or shouldFree is False)
 
         port, shouldFree = CFMachPortCreate(None, callout, context, None)
 
@@ -59,7 +64,8 @@ class TestMachPort (TestCase):
         cb = CFMachPortGetInvalidationCallBack(port)
         self.assertIs(cb, None)
         global didInvalidate
-        didInvalidate=False
+        didInvalidate = False
+
         def invalidate(port, info):
             global didInvalidate
             didInvalidate = True
@@ -73,6 +79,7 @@ class TestMachPort (TestCase):
         CFMachPortInvalidate(port)
         self.assertFalse(CFMachPortIsValid(port))
         self.assertTrue(didInvalidate)
+
 
 if __name__ == "__main__":
     main()

@@ -1,20 +1,22 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMNodeFilterHelper (NSObject):
-    def acceptNode_(self, n): return 1
 
-class TestDOMNodeFilter (TestCase):
-    @min_sdk_level('10.11')
+class TestDOMNodeFilterHelper(NSObject):
+    def acceptNode_(self, n):
+        return 1
+
+
+class TestDOMNodeFilter(TestCase):
+    @min_sdk_level("10.11")
     def testProtocols(self):
-        objc.protocolNamed('DOMNodeFilter')
+        objc.protocolNamed("DOMNodeFilter")
 
     def testMethods(self):
         self.assertResultHasType(TestDOMNodeFilterHelper.acceptNode_, objc._C_SHT)
         self.assertResultIsBOOL(DOMNodeIterator.expandEntityReferences)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertResultIsBOOL(DOMNodeIterator.pointerBeforeReferenceNode)
 
@@ -35,6 +37,7 @@ class TestDOMNodeFilter (TestCase):
         self.assertEqual(DOM_SHOW_DOCUMENT_TYPE, 0x00000200)
         self.assertEqual(DOM_SHOW_DOCUMENT_FRAGMENT, 0x00000400)
         self.assertEqual(DOM_SHOW_NOTATION, 0x00000800)
+
 
 if __name__ == "__main__":
     main()

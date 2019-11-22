@@ -6,8 +6,7 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-
-class TestFileDescriptor (TestCase):
+class TestFileDescriptor(TestCase):
     def testTypes(self):
         self.assertIsCFType(CFFileDescriptorRef)
 
@@ -15,22 +14,26 @@ class TestFileDescriptor (TestCase):
         self.assertIsInstance(CFFileDescriptorGetTypeID(), (int, long))
 
     def testConstants(self):
-        self.assertEqual(kCFFileDescriptorReadCallBack , 1 << 0)
-        self.assertEqual(kCFFileDescriptorWriteCallBack , 1 << 1)
+        self.assertEqual(kCFFileDescriptorReadCallBack, 1 << 0)
+        self.assertEqual(kCFFileDescriptorWriteCallBack, 1 << 1)
 
     def testInspection(self):
         def callout(fd, types, context):
             pass
+
         class Context:
             pass
+
         context = Context()
         fd = CFFileDescriptorCreate(None, 0, False, callout, context)
         self.assertIsInstance(fd, CFFileDescriptorRef)
-        self.assertEqual(CFFileDescriptorGetNativeDescriptor(fd) , 0)
+        self.assertEqual(CFFileDescriptorGetNativeDescriptor(fd), 0)
         ctx = CFFileDescriptorGetContext(fd, None)
         self.assertIs(ctx, context)
         CFFileDescriptorEnableCallBacks(fd, kCFFileDescriptorReadCallBack)
-        CFFileDescriptorDisableCallBacks(fd, kCFFileDescriptorReadCallBack|kCFFileDescriptorWriteCallBack)
+        CFFileDescriptorDisableCallBacks(
+            fd, kCFFileDescriptorReadCallBack | kCFFileDescriptorWriteCallBack
+        )
 
         rls = CFFileDescriptorCreateRunLoopSource(None, fd, 0)
         self.assertIsInstance(rls, CFRunLoopSourceRef)

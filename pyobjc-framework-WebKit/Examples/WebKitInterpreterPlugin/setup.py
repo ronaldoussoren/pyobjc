@@ -16,21 +16,13 @@ plist = dict(
         MIME: dict(
             WebPluginExtensions=["webkitinterpreter"],
             WebPluginTypeDescription="WebKit PyInterpreter",
-        ),
+        )
     },
 )
 
 setup(
     name="WebKitInterpreter",
-    plugin = ["WebKitInterpreter.py"],
-    options = dict(
-        py2app=dict(
-            plist=plist
-        ),
-    ),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-        "pyobjc-framework-WebKit",
-    ]
+    plugin=["WebKitInterpreter.py"],
+    options=dict(py2app=dict(plist=plist)),
+    setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-WebKit"],
 )

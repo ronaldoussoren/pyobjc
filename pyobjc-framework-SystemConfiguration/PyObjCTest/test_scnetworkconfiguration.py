@@ -3,8 +3,8 @@ from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 import sys
 
-class TestSCNetworkConfiguration (TestCase):
 
+class TestSCNetworkConfiguration(TestCase):
     def testTypes(self):
         self.assertTrue(isinstance(SCNetworkInterfaceRef, objc.objc_class))
         self.assertTrue(isinstance(SCBondStatusRef, objc.objc_class))
@@ -14,7 +14,6 @@ class TestSCNetworkConfiguration (TestCase):
 
         self.assertTrue(SCBondInterfaceRef is SCNetworkInterfaceRef)
         self.assertTrue(SCVLANInterfaceRef is SCNetworkInterfaceRef)
-
 
     def testConstants(self):
         self.assertTrue(isinstance(kSCNetworkInterfaceType6to4, unicode))
@@ -51,15 +50,15 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(isinstance(kSCNetworkProtocolTypeProxies, unicode))
         self.assertTrue(isinstance(kSCNetworkProtocolTypeSMB, unicode))
 
-    @max_os_level('10.11')
+    @max_os_level("10.11")
     def testConstantsUpto10_12(self):
         self.assertTrue(isinstance(kSCNetworkProtocolTypeAppleTalk, unicode))
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_5(self):
         self.assertIsInstance(kSCNetworkInterfaceTypeIPSec, unicode)
 
-    @onlyIf(sys.byteorder == 'little', "Explained crashes on PPC")
+    @onlyIf(sys.byteorder == "little", "Explained crashes on PPC")
     def testFunctions(self):
         r = SCNetworkInterfaceGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))
@@ -69,7 +68,7 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(len(r) > 0)
 
         for iface in r:
-            if SCNetworkInterfaceGetBSDName(iface).startswith('en'):
+            if SCNetworkInterfaceGetBSDName(iface).startswith("en"):
                 break
 
         r = SCNetworkInterfaceGetSupportedInterfaceTypes(iface)
@@ -107,12 +106,12 @@ class TestSCNetworkConfiguration (TestCase):
         r = SCNetworkInterfaceSetConfiguration(iface, {})
         self.assertTrue(r is True or r is False)
 
-
         r = SCNetworkInterfaceSetExtendedConfiguration(iface, "OC", {})
         self.assertTrue(r is True or r is False)
 
-        r, current, active, available = SCNetworkInterfaceCopyMediaOptions(iface,
-                None, None, None, False)
+        r, current, active, available = SCNetworkInterfaceCopyMediaOptions(
+            iface, None, None, None, False
+        )
         self.assertTrue(r is True)
         self.assertTrue(isinstance(current, CFDictionaryRef))
         self.assertTrue(isinstance(active, CFDictionaryRef))
@@ -131,9 +130,9 @@ class TestSCNetworkConfiguration (TestCase):
         self.assertTrue(isinstance(mtu_cur, (int, long)))
         self.assertTrue(isinstance(mtu_min, (int, long)))
         self.assertTrue(isinstance(mtu_max, (int, long)))
-        r = SCNetworkInterfaceSetMediaOptions(iface,
-            current['MediaSubType'],
-            current['MediaOptions'])
+        r = SCNetworkInterfaceSetMediaOptions(
+            iface, current["MediaSubType"], current["MediaOptions"]
+        )
         self.assertTrue(r is True or r is False)
 
         r = SCNetworkInterfaceSetMTU(iface, mtu_cur)
@@ -168,7 +167,6 @@ class TestSCNetworkConfiguration (TestCase):
             r = SCBondInterfaceSetLocalizedDisplayName(iface, "pyobjc.bond")
             self.assertTrue(r is True or r is False)
 
-
             r = SCBondInterfaceSetOptions(iface, {})
             self.assertTrue(r is True or r is False)
 
@@ -183,7 +181,6 @@ class TestSCNetworkConfiguration (TestCase):
 
             r = SCBondInterfaceRemove(iface)
             self.assertTrue(r is True)
-
 
         r = SCBondStatusGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))
@@ -231,7 +228,6 @@ class TestSCNetworkConfiguration (TestCase):
         SCVLANInterfaceSetLocalizedDisplayName
         SCVLANInterfaceSetOptions
 
-
         r = SCNetworkProtocolGetTypeID()
         self.assertTrue(isinstance(r, (int, long)))
 
@@ -267,12 +263,10 @@ class TestSCNetworkConfiguration (TestCase):
         v = SCNetworkServiceAddProtocolType(serv, pr)
         self.assertIsInstance(v, bool)
 
-
         v = SCNetworkServiceCopyProtocols(serv)
         self.assertIsInstance(v, CFArrayRef)
         if v:
             self.assertIsInstance(v[0], SCNetworkProtocolRef)
-
 
         iface = SCNetworkServiceGetInterface(serv)
         self.assertIsInstance(iface, SCNetworkInterfaceRef)
@@ -308,11 +302,10 @@ class TestSCNetworkConfiguration (TestCase):
 
         s2 = SCNetworkServiceCopy(prefs, SCNetworkServiceGetServiceID(serv))
 
-        v = SCNetworkSetAddService(set,  s2)
+        v = SCNetworkSetAddService(set, s2)
         self.assertIsInstance(v, bool)
 
-
-        v  = SCNetworkSetContainsInterface(set, iface)
+        v = SCNetworkSetContainsInterface(set, iface)
         self.assertIsInstance(v, bool)
 
         v = SCNetworkSetCopyAll(prefs)
@@ -350,8 +343,7 @@ class TestSCNetworkConfiguration (TestCase):
 
         self.assertResultIsBOOL(SCNetworkSetRemoveService)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testFunctions10_5(self):
         prefs = SCPreferencesCreate(None, "SystemConfiguration", None)
         self.assertTrue(isinstance(prefs, SCPreferencesRef))
@@ -362,7 +354,6 @@ class TestSCNetworkConfiguration (TestCase):
 
         v = SCNetworkServiceEstablishDefaultConfiguration(serv)
         self.assertIsInstance(v, bool)
-
 
 
 if __name__ == "__main__":

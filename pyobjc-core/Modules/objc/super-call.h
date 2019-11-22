@@ -13,7 +13,6 @@
 
 extern BOOL PyObjC_UpdatingMetaData;
 
-
 /*!
  * @function PyObjC_RegisterMethodMapping
  * @abstract Register a mapping for a specific method
@@ -24,12 +23,9 @@ extern BOOL PyObjC_UpdatingMetaData;
  * @param call_to_python Function for calling into Python (from Objective-C)
  * @result Returns 0 on success, -1 on error.
  */
-extern int PyObjC_RegisterMethodMapping(
-    Class aClass,
-    SEL sel,
-    PyObjC_CallFunc call_to_objc,
-    PyObjCFFI_ClosureFunc call_to_python
-    );
+extern int PyObjC_RegisterMethodMapping(Class aClass, SEL sel,
+                                        PyObjC_CallFunc call_to_objc,
+                                        PyObjCFFI_ClosureFunc call_to_python);
 
 /*!
  * @function PyObjC_RegisterSignatureMapping
@@ -39,10 +35,8 @@ extern int PyObjC_RegisterMethodMapping(
  * @param call_to_python Function for calling into Python (from Objective-C)
  * @result Returns 0 on success, -1 on failure
  */
-extern int PyObjC_RegisterSignatureMapping(
-    char* signature,
-    PyObjC_CallFunc call_to_super,
-    PyObjCFFI_ClosureFunc call_to_python);
+extern int PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_super,
+                                           PyObjCFFI_ClosureFunc call_to_python);
 
 /*!
  * @function PyObjC_FindCallFunc

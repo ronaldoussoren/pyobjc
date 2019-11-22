@@ -1,17 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSKeyValueBindingHelper (NSObject):
+
+class TestNSKeyValueBindingHelper(NSObject):
     def commitEditingWithDelegate_didCommitSelector_contextInfo_(self, d, s, i):
         return None
 
-    def commitEditingAndReturnError_(self, v): return 1
+    def commitEditingAndReturnError_(self, v):
+        return 1
 
-    def commitEditing(self): return 1
+    def commitEditing(self):
+        return 1
 
 
-class TestNSKeyValueBinding (TestCase):
+class TestNSKeyValueBinding(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSMultipleValuesMarker, NSObject)
         self.assertIsInstance(NSNoSelectionMarker, NSObject)
@@ -20,7 +22,6 @@ class TestNSKeyValueBinding (TestCase):
         self.assertIsInstance(NSObservedObjectKey, unicode)
         self.assertIsInstance(NSObservedKeyPathKey, unicode)
         self.assertIsInstance(NSOptionsKey, unicode)
-
 
         self.assertIsInstance(NSAlignmentBinding, unicode)
         self.assertIsInstance(NSAlternateImageBinding, unicode)
@@ -94,9 +95,13 @@ class TestNSKeyValueBinding (TestCase):
         self.assertIsInstance(NSWarningValueBinding, unicode)
         self.assertIsInstance(NSWidthBinding, unicode)
 
-        self.assertIsInstance(NSAllowsEditingMultipleValuesSelectionBindingOption, unicode)
+        self.assertIsInstance(
+            NSAllowsEditingMultipleValuesSelectionBindingOption, unicode
+        )
         self.assertIsInstance(NSAllowsNullArgumentBindingOption, unicode)
-        self.assertIsInstance(NSAlwaysPresentsApplicationModalAlertsBindingOption, unicode)
+        self.assertIsInstance(
+            NSAlwaysPresentsApplicationModalAlertsBindingOption, unicode
+        )
         self.assertIsInstance(NSConditionallySetsEditableBindingOption, unicode)
         self.assertIsInstance(NSConditionallySetsEnabledBindingOption, unicode)
         self.assertIsInstance(NSConditionallySetsHiddenBindingOption, unicode)
@@ -143,21 +148,20 @@ class TestNSKeyValueBinding (TestCase):
     def testMethods(self):
         o = TestNSKeyValueBindingHelper.alloc().init()
         m = o.commitEditingWithDelegate_didCommitSelector_contextInfo_.__metadata__()
-        self.assertEqual(m['arguments'][3]['sel_of_type'], b'v@:@Z^v')
+        self.assertEqual(m["arguments"][3]["sel_of_type"], b"v@:@Z^v")
 
         self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditing)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     @expectedFailure
     def testMethods10_7(self):
         self.assertResultIsBOOL(TestNSKeyValueBindingHelper.commitEditingAndReturnError_)
         self.assertArgIsOut(TestNSKeyValueBindingHelper.commitEditingAndReturnError_, 0)
 
-    @min_sdk_level('10.14')
+    @min_sdk_level("10.14")
     def test_protocols(self):
-        objc.protocolNamed('NSEditor')
-        objc.protocolNamed('NSEditorRegistration')
-
+        objc.protocolNamed("NSEditor")
+        objc.protocolNamed("NSEditorRegistration")
 
 
 if __name__ == "__main__":

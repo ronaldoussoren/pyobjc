@@ -4,15 +4,19 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    nw_parameters_configure_protocol_block_t = b'v@'
-    nw_parameters_iterate_interfaces_block_t = b'B@'
-    nw_parameters_iterate_interface_types_block_t = b'Bi'
-    nw_protocol_stack_iterate_protocols_block_t = b'v@'
+    nw_parameters_configure_protocol_block_t = b"v@"
+    nw_parameters_iterate_interfaces_block_t = b"B@"
+    nw_parameters_iterate_interface_types_block_t = b"Bi"
+    nw_protocol_stack_iterate_protocols_block_t = b"v@"
 
-    class TestParameters (TestCase):
+    class TestParameters(TestCase):
         def test_constants(self):
-            self.assertIsInstance(Network.NW_PARAMETERS_DEFAULT_CONFIGURATION, objc.objc_object)
-            self.assertIsInstance(Network.NW_PARAMETERS_DISABLE_PROTOCOL, objc.objc_object)
+            self.assertIsInstance(
+                Network.NW_PARAMETERS_DEFAULT_CONFIGURATION, objc.objc_object
+            )
+            self.assertIsInstance(
+                Network.NW_PARAMETERS_DISABLE_PROTOCOL, objc.objc_object
+            )
 
             self.assertEqual(Network.nw_service_class_best_effort, 0)
             self.assertEqual(Network.nw_service_class_background, 1)
@@ -32,10 +36,18 @@ if sys.maxsize > 2 ** 32:
 
         def test_functions(self):
             self.assertResultIsRetained(Network.nw_parameters_create_secure_tcp)
-            self.assertArgIsBlock(Network.nw_parameters_create_secure_tcp, 1, nw_parameters_configure_protocol_block_t)
+            self.assertArgIsBlock(
+                Network.nw_parameters_create_secure_tcp,
+                1,
+                nw_parameters_configure_protocol_block_t,
+            )
 
             self.assertResultIsRetained(Network.nw_parameters_create_secure_udp)
-            self.assertArgIsBlock(Network.nw_parameters_create_secure_udp, 1, nw_parameters_configure_protocol_block_t)
+            self.assertArgIsBlock(
+                Network.nw_parameters_create_secure_udp,
+                1,
+                nw_parameters_configure_protocol_block_t,
+            )
 
             self.assertResultIsRetained(Network.nw_parameters_create)
             self.assertResultIsRetained(Network.nw_parameters_copy)
@@ -46,7 +58,11 @@ if sys.maxsize > 2 ** 32:
             Network.nw_parameters_prohibit_interface
             Network.nw_parameters_clear_prohibited_interfaces
 
-            self.assertArgIsBlock(Network.nw_parameters_iterate_prohibited_interfaces, 1, nw_parameters_iterate_interfaces_block_t)
+            self.assertArgIsBlock(
+                Network.nw_parameters_iterate_prohibited_interfaces,
+                1,
+                nw_parameters_iterate_interfaces_block_t,
+            )
 
             Network.nw_parameters_set_required_interface_type
             Network.nw_parameters_get_required_interface_type
@@ -54,7 +70,11 @@ if sys.maxsize > 2 ** 32:
 
             Network.nw_parameters_clear_prohibited_interface_types
 
-            self.assertArgIsBlock(Network.nw_parameters_iterate_prohibited_interface_types, 1, nw_parameters_iterate_interface_types_block_t)
+            self.assertArgIsBlock(
+                Network.nw_parameters_iterate_prohibited_interface_types,
+                1,
+                nw_parameters_iterate_interface_types_block_t,
+            )
 
             Network.nw_parameters_set_prohibit_expensive
             Network.nw_parameters_get_prohibit_expensive
@@ -76,7 +96,11 @@ if sys.maxsize > 2 ** 32:
             Network.nw_protocol_stack_prepend_application_protocol
             Network.nw_protocol_stack_clear_application_protocols
 
-            self.assertArgIsBlock(Network.nw_protocol_stack_iterate_application_protocols, 1, nw_protocol_stack_iterate_protocols_block_t)
+            self.assertArgIsBlock(
+                Network.nw_protocol_stack_iterate_application_protocols,
+                1,
+                nw_protocol_stack_iterate_protocols_block_t,
+            )
 
             self.assertResultIsRetained(Network.nw_protocol_stack_copy_transport_protocol)
 
@@ -92,6 +116,14 @@ if sys.maxsize > 2 ** 32:
             Network.nw_parameters_get_expired_dns_behavior
             Network.nw_parameters_set_include_peer_to_peer
             Network.nw_parameters_get_include_peer_to_peer
+
+        @min_os_level("10.15")
+        def test_functions10_15(self):
+            self.assertResultIsRetained(Network.nw_parameters_create_custom_ip)
+
+            Network.nw_parameters_set_prohibit_constrained
+            Network.nw_parameters_get_prohibit_constrained
+
 
 if __name__ == "__main__":
     main()

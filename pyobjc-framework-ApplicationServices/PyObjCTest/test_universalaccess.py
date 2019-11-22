@@ -1,7 +1,8 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-class TestUniversalAccess (TestCase):
+
+class TestUniversalAccess(TestCase):
     def testConstants(self):
         self.assertEqual(HIServices.kUAZoomFocusTypeOther, 0)
         self.assertEqual(HIServices.kUAZoomFocusTypeInsertionPoint, 1)
@@ -11,6 +12,7 @@ class TestUniversalAccess (TestCase):
 
         self.assertArgIsIn(HIServices.UAZoomChangeFocus, 0)
         self.assertArgIsIn(HIServices.UAZoomChangeFocus, 1)
+
 
 if __name__ == "__main__":
     main()

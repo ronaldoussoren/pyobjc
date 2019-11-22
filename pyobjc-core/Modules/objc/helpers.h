@@ -17,4 +17,3 @@ extern int depythonify_authorizationitem(PyObject* value, void* out);
 extern int IS_AUTHORIZATIONITEM(const char* typestr);
 
 #endif /* PyObjC_HELPERS_H */
-

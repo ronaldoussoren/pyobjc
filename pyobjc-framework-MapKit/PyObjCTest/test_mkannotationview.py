@@ -5,10 +5,12 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKAnnotationView (TestCase):
+    class TestMKAnnotationView(TestCase):
         @min_os_level("10.9")
         def testConstants(self):
-            self.assertIsInstance(MapKit.MKAnnotationCalloutInfoDidChangeNotification, unicode)
+            self.assertIsInstance(
+                MapKit.MKAnnotationCalloutInfoDidChangeNotification, unicode
+            )
 
             self.assertEqual(MapKit.MKAnnotationViewDragStateNone, 0)
             self.assertEqual(MapKit.MKAnnotationViewDragStateStarting, 1)
@@ -29,17 +31,37 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.9")
         def testMethods(self):
-            self.assertResultHasType(MapKit.MKAnnotationView.centerOffset, MapKit.CGPoint.__typestr__)
-            self.assertArgHasType(MapKit.MKAnnotationView.setCenterOffset_, 0, MapKit.CGPoint.__typestr__)
+            self.assertResultHasType(
+                MapKit.MKAnnotationView.centerOffset, MapKit.CGPoint.__typestr__
+            )
+            self.assertArgHasType(
+                MapKit.MKAnnotationView.setCenterOffset_, 0, MapKit.CGPoint.__typestr__
+            )
 
-            self.assertResultHasType(MapKit.MKAnnotationView.calloutOffset, MapKit.CGPoint.__typestr__)
-            self.assertArgHasType(MapKit.MKAnnotationView.setCalloutOffset_, 0, MapKit.CGPoint.__typestr__)
+            self.assertResultHasType(
+                MapKit.MKAnnotationView.calloutOffset, MapKit.CGPoint.__typestr__
+            )
+            self.assertArgHasType(
+                MapKit.MKAnnotationView.setCalloutOffset_, 0, MapKit.CGPoint.__typestr__
+            )
 
-            self.assertResultHasType(MapKit.MKAnnotationView.leftCalloutOffset, MapKit.CGPoint.__typestr__)
-            self.assertArgHasType(MapKit.MKAnnotationView.setLeftCalloutOffset_, 0, MapKit.CGPoint.__typestr__)
+            self.assertResultHasType(
+                MapKit.MKAnnotationView.leftCalloutOffset, MapKit.CGPoint.__typestr__
+            )
+            self.assertArgHasType(
+                MapKit.MKAnnotationView.setLeftCalloutOffset_,
+                0,
+                MapKit.CGPoint.__typestr__,
+            )
 
-            self.assertResultHasType(MapKit.MKAnnotationView.rightCalloutOffset, MapKit.CGPoint.__typestr__)
-            self.assertArgHasType(MapKit.MKAnnotationView.setRightCalloutOffset_, 0, MapKit.CGPoint.__typestr__)
+            self.assertResultHasType(
+                MapKit.MKAnnotationView.rightCalloutOffset, MapKit.CGPoint.__typestr__
+            )
+            self.assertArgHasType(
+                MapKit.MKAnnotationView.setRightCalloutOffset_,
+                0,
+                MapKit.CGPoint.__typestr__,
+            )
 
             self.assertResultIsBOOL(MapKit.MKAnnotationView.isEnabled)
             self.assertArgIsBOOL(MapKit.MKAnnotationView.setEnabled_, 0)
@@ -58,6 +80,7 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(MapKit.MKAnnotationView.isDraggable)
             self.assertArgIsBOOL(MapKit.MKAnnotationView.setDraggable_, 0)
             self.assertArgIsBOOL(MapKit.MKAnnotationView.setDragState_animated_, 1)
+
 
 if __name__ == "__main__":
     main()

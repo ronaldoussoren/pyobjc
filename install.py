@@ -27,6 +27,7 @@ TOPDIR = os.path.dirname(os.path.abspath(__file__))
 #
 # Original topological sort code written by Ofer Faigon (www.bitformation.com) and used with permission
 
+
 def topological_sort(items, partial_order):
     """
     Perform topological sort.
@@ -40,7 +41,7 @@ def topological_sort(items, partial_order):
     def add_node(graph, node):
         """Add a node to the graph if not already exists."""
         if node not in graph:
-            graph[node] = [0] # 0 = number of arcs coming into this node.
+            graph[node] = [0]  # 0 = number of arcs coming into this node.
 
     def add_arc(graph, fromnode, tonode):
         """Add an arc to a graph. Can create multiple arcs.
@@ -64,11 +65,11 @@ def topological_sort(items, partial_order):
     graph = {}
     for v in items:
         add_node(graph, v)
-    for a,b in partial_order:
+    for a, b in partial_order:
         add_arc(graph, a, b)
 
     # Step 2 - find all roots (nodes with zero incoming arcs).
-    roots = [node for (node,nodeinfo) in graph.items() if nodeinfo[0] == 0]
+    roots = [node for (node, nodeinfo) in graph.items() if nodeinfo[0] == 0]
 
     # step 3 - repeatedly emit a root and remove it from the graph. Removing
     # a node may convert some of the node's direct children into roots.
@@ -96,73 +97,83 @@ def topological_sort(items, partial_order):
         return None
     return sorted
 
+
 def get_os_level():
-    pl = plistlib.readPlist('/System/Library/CoreServices/SystemVersion.plist')
-    v = pl['ProductVersion']
-    return '.'.join(v.split('.')[:2])
+    pl = plistlib.readPlist("/System/Library/CoreServices/SystemVersion.plist")
+    v = pl["ProductVersion"]
+    return ".".join(v.split(".")[:2])
+
 
 def get_sdk_level():
-    cflags = get_config_var('CFLAGS')
+    cflags = get_config_var("CFLAGS")
     cflags = shlex.split(cflags)
     for i, val in enumerate(cflags):
-        if val == '-isysroot':
-            sdk = cflags[i+1]
+        if val == "-isysroot":
+            sdk = cflags[i + 1]
             break
     else:
         return None
 
-    if sdk == '/':
+    if sdk == "/":
         return get_os_level()
 
     sdk = os.path.basename(sdk)
-    assert sdk.startswith('MacOSX')
-    assert sdk.endswith('.sdk')
+    assert sdk.startswith("MacOSX")
+    assert sdk.endswith(".sdk")
     return sdk[6:-4]
+
 
 def sorted_framework_wrappers():
     frameworks = []
     partial_order = []
     cur_platform = get_sdk_level() or get_os_level()
     for subdir in os.listdir(TOPDIR):
-        if not subdir.startswith('pyobjc-framework-'):
+        if not subdir.startswith("pyobjc-framework-"):
             continue
 
-
-        setup = os.path.join(TOPDIR, subdir, 'setup.py')
+        setup = os.path.join(TOPDIR, subdir, "setup.py")
         in_requires = False
         requires = []
-        min_platform = '10.0'
-        max_platform = '99.9'
+        min_platform = "10.0"
+        max_platform = "99.9"
 
         with open(setup) as fp:
             for ln in fp:
                 if not in_requires:
-                    if ln.strip().startswith('install_requires'):
+                    if ln.strip().startswith("install_requires"):
                         in_requires = True
                 else:
-                    if ln.strip().startswith(']'):
+                    if ln.strip().startswith("]"):
                         in_requires = False
                         continue
 
                     dep = ln.strip()[1:-1]
-                    if dep.startswith('pyobjc-framework'):
-                        dep = dep.split('>')[0]
+                    if dep.startswith("pyobjc-framework"):
+                        dep = dep.split(">")[0]
                         requires.append(dep)
 
-                if ln.strip().startswith('min_os_level'):
-                    min_platform = ln.strip().split('=')[-1]
-                    if min_platform.endswith(','):
+                if ln.strip().startswith("min_os_level"):
+                    min_platform = ln.strip().split("=")[-1]
+                    if min_platform.endswith(","):
                         min_platform = min_platform[:-1]
                     min_platform = min_platform[1:-1]
 
-                if ln.strip().startswith('max_os_level'):
-                    max_platform = ln.strip().split('=')[-1]
-                    if max_platform.endswith(','):
+                if ln.strip().startswith("max_os_level"):
+                    max_platform = ln.strip().split("=")[-1]
+                    if max_platform.endswith(","):
                         max_platform = max_platform[:-1]
                     max_platform = max_platform[1:-1]
 
-        if not (version_key(min_platform) <= version_key(cur_platform) <= version_key(max_platform)):
-            print("Skipping {!r} because it is not supported on the current platform".format(subdir))
+        if not (
+            version_key(min_platform)
+            <= version_key(cur_platform)
+            <= version_key(max_platform)
+        ):
+            print(
+                "Skipping {!r} because it is not supported on the current platform".format(
+                    subdir
+                )
+            )
             continue
         frameworks.append(subdir)
         for dep in requires:
@@ -171,40 +182,42 @@ def sorted_framework_wrappers():
     frameworks = topological_sort(frameworks, partial_order)
     return frameworks
 
+
 def build_project(project, extra_args):
     proj_dir = os.path.join(TOPDIR, project)
 
     # First ask distutils to clean up
     print("Cleaning {!r} using {!r}".format(project, sys.executable))
-    status = subprocess.call(
-        [sys.executable, "setup.py", "clean"],
-        cwd=proj_dir)
+    status = subprocess.call([sys.executable, "setup.py", "clean"], cwd=proj_dir)
     if status != 0:
         print("Cleaning of {!r} failed, status {}".format(project, status))
         return False
 
     # Explicitly remove the 'build' directory, just in case...
-    if os.path.exists(os.path.join(proj_dir, 'build')):
-        shutil.rmtree(os.path.join(proj_dir, 'build'))
+    if os.path.exists(os.path.join(proj_dir, "build")):
+        shutil.rmtree(os.path.join(proj_dir, "build"))
 
     print("Installing {!r} using {!r}".format(project, sys.executable))
     status = subprocess.call(
-        [sys.executable, "setup.py", "install"] + extra_args,
-        cwd=proj_dir)
+        [sys.executable, "setup.py", "install"] + extra_args, cwd=proj_dir
+    )
     if status != 0:
         print("Installing {!r} failed (status {})".format(project, status))
         return False
 
     return True
 
+
 def version_key(version):
-    return tuple(int(x) for x in version.split('.'))
+    return tuple(int(x) for x in version.split("."))
+
 
 def main():
-    for project in ['pyobjc-core'] + sorted_framework_wrappers():
+    for project in ["pyobjc-core"] + sorted_framework_wrappers():
         ok = build_project(project, sys.argv[1:])
         if not ok:
             break
+
 
 if __name__ == "__main__":
     main()

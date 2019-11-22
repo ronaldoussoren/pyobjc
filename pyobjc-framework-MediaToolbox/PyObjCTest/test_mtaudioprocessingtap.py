@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import MediaToolbox
 
-class TestMTAudioProcessingTap (TestCase):
+
+class TestMTAudioProcessingTap(TestCase):
     def test_cftypes(self):
         self.assertIsCFType(MediaToolbox.MTAudioProcessingTapRef)
 
@@ -14,13 +15,18 @@ class TestMTAudioProcessingTap (TestCase):
         self.assertArgIsOut(MediaToolbox.MTAudioProcessingTapGetSourceAudio, 5)
 
         # XXX: These two funtionss are tested manually:
-        self.assertNotIsInstance(MediaToolbox.MTAudioProcessingTapGetStorage, objc.function)
+        self.assertNotIsInstance(
+            MediaToolbox.MTAudioProcessingTapGetStorage, objc.function
+        )
         self.assertNotIsInstance(MediaToolbox.MTAudioProcessingTapCreate, objc.function)
 
-
     def test_constants(self):
-        self.assertEqual(MediaToolbox.kMTAudioProcessingTapCreationFlag_PreEffects, 1 << 0)
-        self.assertEqual(MediaToolbox.kMTAudioProcessingTapCreationFlag_PostEffects, 1 << 1)
+        self.assertEqual(
+            MediaToolbox.kMTAudioProcessingTapCreationFlag_PreEffects, 1 << 0
+        )
+        self.assertEqual(
+            MediaToolbox.kMTAudioProcessingTapCreationFlag_PostEffects, 1 << 1
+        )
 
         self.assertEqual(MediaToolbox.kMTAudioProcessingTapFlag_StartOfStream, 1 << 8)
         self.assertEqual(MediaToolbox.kMTAudioProcessingTapFlag_EndOfStream, 1 << 9)

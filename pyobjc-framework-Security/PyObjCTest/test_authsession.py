@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestAuthSession (TestCase):
 
+class TestAuthSession(TestCase):
     def test_constants(self):
         self.assertEqual(Security.noSecuritySession, 0)
         self.assertEqual(Security.callerSecuritySession, -1)
@@ -21,13 +21,19 @@ class TestAuthSession (TestCase):
         self.assertEqual(Security.errSessionAuthorizationDenied, -60502)
         self.assertEqual(Security.errSessionValueNotSet, -60503)
         self.assertEqual(Security.errSessionInternal, Security.errAuthorizationInternal)
-        self.assertEqual(Security.errSessionInvalidFlags, Security.errAuthorizationInvalidFlags)
+        self.assertEqual(
+            Security.errSessionInvalidFlags, Security.errAuthorizationInvalidFlags
+        )
 
     def test_functions(self):
         self.assertResultHasType(Security.SessionGetInfo, objc._C_INT)
         self.assertArgHasType(Security.SessionGetInfo, 0, objc._C_UINT)
-        self.assertArgHasType(Security.SessionGetInfo, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT)
-        self.assertArgHasType(Security.SessionGetInfo, 2, objc._C_OUT + objc._C_PTR + objc._C_UINT)
+        self.assertArgHasType(
+            Security.SessionGetInfo, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT
+        )
+        self.assertArgHasType(
+            Security.SessionGetInfo, 2, objc._C_OUT + objc._C_PTR + objc._C_UINT
+        )
 
         self.assertResultHasType(Security.SessionCreate, objc._C_INT)
         self.assertArgHasType(Security.SessionCreate, 0, objc._C_UINT)

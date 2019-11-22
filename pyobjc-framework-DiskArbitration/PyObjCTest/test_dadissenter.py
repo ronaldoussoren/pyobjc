@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiskArbitration
 
-class TestDADissenter (TestCase):
+
+class TestDADissenter(TestCase):
     def test_constants(self):
 
         self.assertEqual(DiskArbitration.kDAReturnSuccess, 0)
@@ -21,7 +22,7 @@ class TestDADissenter (TestCase):
 
     def test_types(self):
         # XXX: DADissenterRef isn't a separate CF Type
-        #self.assertIsCFType(DiskArbitration.DADissenterRef)
+        # self.assertIsCFType(DiskArbitration.DADissenterRef)
         pass
 
     def test_functions(self):
@@ -32,6 +33,7 @@ class TestDADissenter (TestCase):
 
         self.assertEqual(DiskArbitration.DADissenterGetStatus(obj), 42)
         self.assertEqual(DiskArbitration.DADissenterGetStatusString(obj), "hello world")
+
 
 if __name__ == "__main__":
     main()

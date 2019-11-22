@@ -4,9 +4,8 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Photos
 
-    class TestPhotosTypes (TestCase):
-        @min_os_level('10.11')
-        def testConstants(self):
+    class TestPhotosTypes(TestCase):
+        def test_constants(self):
 
             self.assertEqual(Photos.PHAssetMediaTypeUnknown, 0)
             self.assertEqual(Photos.PHAssetMediaTypeImage, 1)
@@ -72,6 +71,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumScreenshots, 211)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumDepthEffect, 212)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLivePhotos, 213)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumAnimated, 214)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLongExposures, 215)
+            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUnableToUpload, 216)
             self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
             self.assertEqual(Photos.PHAssetEditOperationDelete, 1)
@@ -79,8 +81,8 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetEditOperationProperties, 3)
 
             self.assertEqual(Photos.PHAssetBurstSelectionTypeNone, 0)
-            self.assertEqual(Photos.PHAssetBurstSelectionTypeAutoPick, 1<<0)
-            self.assertEqual(Photos.PHAssetBurstSelectionTypeUserPick, 1<<1)
+            self.assertEqual(Photos.PHAssetBurstSelectionTypeAutoPick, 1 << 0)
+            self.assertEqual(Photos.PHAssetBurstSelectionTypeUserPick, 1 << 1)
 
             self.assertEqual(Photos.PHAssetSourceTypeNone, 0)
             self.assertEqual(Photos.PHAssetSourceTypeUserLibrary, 1 << 0)
@@ -96,6 +98,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetResourceTypeAdjustmentData, 7)
             self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBasePhoto, 8)
             self.assertEqual(Photos.PHAssetResourceTypePairedVideo, 9)
+            self.assertEqual(Photos.PHAssetResourceTypeFullSizePairedVideo, 10)
+            self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBasePairedVideo, 11)
+            self.assertEqual(Photos.PHAssetResourceTypeAdjustmentBaseVideo, 12)
 
             self.assertEqual(Photos.PHAssetPlaybackStyleUnsupported, 0)
             self.assertEqual(Photos.PHAssetPlaybackStyleImage, 1)
@@ -103,7 +108,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetPlaybackStyleLivePhoto, 3)
             self.assertEqual(Photos.PHAssetPlaybackStyleVideo, 4)
             self.assertEqual(Photos.PHAssetPlaybackStyleVideoLooping, 5)
-
 
 
 if __name__ == "__main__":

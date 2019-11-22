@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import OSAKit
 
-class TestOSAScript (TestCase):
+
+class TestOSAScript(TestCase):
     def testConstants(self):
         self.assertIsInstance(OSAKit.OSAScriptErrorMessageKey, unicode)
         self.assertIsInstance(OSAKit.OSAScriptErrorBriefMessageKey, unicode)
@@ -34,12 +35,20 @@ class TestOSAScript (TestCase):
     def testMethods(self):
         self.assertArgIsOut(OSAKit.OSAScript.initWithCompiledData_error_, 1)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsOut(OSAKit.OSAScript.initWithContentsOfURL_error_, 1)
-        self.assertArgIsOut(OSAKit.OSAScript.initWithContentsOfURL_languageInstance_usingStorageOptions_error_, 3)
-        self.assertArgIsOut(OSAKit.OSAScript.initWithCompiledData_fromURL_usingStorageOptions_error_, 3)
-        self.assertArgIsOut(OSAKit.OSAScript.initWithScriptDataDescriptor_fromURL_languageInstance_usingStorageOptions_error_, 4)
+        self.assertArgIsOut(
+            OSAKit.OSAScript.initWithContentsOfURL_languageInstance_usingStorageOptions_error_,
+            3,
+        )
+        self.assertArgIsOut(
+            OSAKit.OSAScript.initWithCompiledData_fromURL_usingStorageOptions_error_, 3
+        )
+        self.assertArgIsOut(
+            OSAKit.OSAScript.initWithScriptDataDescriptor_fromURL_languageInstance_usingStorageOptions_error_,
+            4,
+        )
 
         self.assertResultIsBOOL(OSAKit.OSAScript.isCompiled)
 
@@ -57,10 +66,16 @@ class TestOSAScript (TestCase):
         self.assertResultIsBOOL(OSAKit.OSAScript.writeToURL_ofType_error_)
         self.assertArgIsOut(OSAKit.OSAScript.writeToURL_ofType_error_, 2)
 
-        self.assertResultIsBOOL(OSAKit.OSAScript.writeToURL_ofType_usingStorageOptions_error_)
-        self.assertArgIsOut(OSAKit.OSAScript.writeToURL_ofType_usingStorageOptions_error_, 3)
+        self.assertResultIsBOOL(
+            OSAKit.OSAScript.writeToURL_ofType_usingStorageOptions_error_
+        )
+        self.assertArgIsOut(
+            OSAKit.OSAScript.writeToURL_ofType_usingStorageOptions_error_, 3
+        )
 
-        self.assertArgIsOut(OSAKit.OSAScript.compiledDataForType_usingStorageOptions_error_, 2)
+        self.assertArgIsOut(
+            OSAKit.OSAScript.compiledDataForType_usingStorageOptions_error_, 2
+        )
 
 
 if __name__ == "__main__":

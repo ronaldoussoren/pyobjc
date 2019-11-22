@@ -3,22 +3,23 @@ import objc
 
 from AppKit import *
 
+
 class TestNSCell(TestCase):
     def testUnicode(self):
-        u = b'\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8'.decode('latin1')
+        u = b"\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8".decode("latin1")
         cell = NSCell.alloc().initTextCell_(u)
         cell.setStringValue_(u)
         self.assertEqual(cell.stringValue(), u)
 
     def testInt(self):
         i = 17
-        cell = NSCell.alloc().initTextCell_(b"".decode('ascii'))
+        cell = NSCell.alloc().initTextCell_(b"".decode("ascii"))
         cell.setIntValue_(i)
         self.assertEqual(cell.intValue(), i)
 
     def testFloat(self):
         f = 3.125
-        cell = NSCell.alloc().initTextCell_(b"".decode('ascii'))
+        cell = NSCell.alloc().initTextCell_(b"".decode("ascii"))
         cell.setFloatValue_(f)
         self.assertEqual(cell.floatValue(), f)
 
@@ -73,7 +74,6 @@ class TestNSCell(TestCase):
         self.assertResultIsBOOL(NSCell.allowsMixedState)
         self.assertArgIsBOOL(NSCell.setAllowsMixedState_, 0)
 
-
     def testFunctions(self):
         self.assertArgIsBOOL(NSDrawThreePartImage, 4)
         self.assertArgIsBOOL(NSDrawThreePartImage, 7)
@@ -127,17 +127,17 @@ class TestNSCell(TestCase):
         self.assertEqual(NSScaleNone, 2)
 
         self.assertEqual(NSImageScaleProportionallyDown, 0)
-        self.assertEqual(NSImageScaleAxesIndependently,1)
+        self.assertEqual(NSImageScaleAxesIndependently, 1)
         self.assertEqual(NSImageScaleNone, 2)
         self.assertEqual(NSImageScaleProportionallyUpOrDown, 3)
 
         self.assertEqual(NSMixedState, -1)
-        self.assertEqual(NSOffState,  0)
-        self.assertEqual(NSOnState,  1)
+        self.assertEqual(NSOffState, 0)
+        self.assertEqual(NSOnState, 1)
 
         self.assertEqual(NSControlStateMixed, -1)
-        self.assertEqual(NSControlStateOff,  0)
-        self.assertEqual(NSControlStateOn,  1)
+        self.assertEqual(NSControlStateOff, 0)
+        self.assertEqual(NSControlStateOn, 1)
 
         self.assertEqual(NSNoCellMask, 0)
         self.assertEqual(NSContentsCellMask, 1)
@@ -177,12 +177,11 @@ class TestNSCell(TestCase):
         self.assertEqual(NSBackgroundStyleRaised, 2)
         self.assertEqual(NSBackgroundStyleLowered, 3)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSCell.usesSingleLineMode)
         self.assertArgIsBOOL(NSCell.setUsesSingleLineMode_, 0)
 
 
-if __name__ == '__main__':
-    main( )
+if __name__ == "__main__":
+    main()

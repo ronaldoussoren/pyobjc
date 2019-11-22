@@ -11,7 +11,8 @@ import operator
 import objc
 import decimal
 
-class TestNSDecimalWrapper (TestCase):
+
+class TestNSDecimalWrapper(TestCase):
     def test_creation(self):
         d = objc.NSDecimal(0)
         self.assertEqual(str(d), "0")
@@ -19,7 +20,7 @@ class TestNSDecimalWrapper (TestCase):
         d = objc.NSDecimal(-5)
         self.assertEqual(str(d), "-5")
 
-        self.assertRaises(OverflowError, objc.NSDecimal, 1<<66)
+        self.assertRaises(OverflowError, objc.NSDecimal, 1 << 66)
 
         d = objc.NSDecimal(0.0)
         self.assertEqual(str(d), "0")
@@ -31,10 +32,10 @@ class TestNSDecimalWrapper (TestCase):
         self.assertEqual(str(d), "1.24")
 
         d = objc.NSDecimal(500, 3, False)
-        self.assertEqual(str(d), str(500 * 10**3))
+        self.assertEqual(str(d), str(500 * 10 ** 3))
 
         d = objc.NSDecimal(500, -6, True)
-        self.assertEqual(str(d), str(500 * 10**-6 * -1))
+        self.assertEqual(str(d), str(500 * 10 ** -6 * -1))
 
     def test_comparing(self):
         d1 = objc.NSDecimal("1.500")
@@ -58,20 +59,19 @@ class TestNSDecimalWrapper (TestCase):
         self.assertFalse(d1 < d1)
         self.assertFalse(d1 < d2)
         self.assertFalse(d1 < d3)
-        self.assertTrue(d1  < d4)
+        self.assertTrue(d1 < d4)
 
         self.assertFalse(d1 > d1)
         self.assertFalse(d1 > d2)
         self.assertTrue(d1 > d3)
-        self.assertFalse(d1  > d4)
+        self.assertFalse(d1 > d4)
 
         self.assertTrue(d1 >= d1)
         self.assertTrue(d1 >= d2)
         self.assertTrue(d1 >= d3)
-        self.assertFalse(d1  >= d4)
+        self.assertFalse(d1 >= d4)
 
         self.assertEqual(objc.NSDecimal("1.50"), objc.NSDecimal("1.500"))
-
 
         # Comparison with other types is possible when
         # they can be casted to NSDecimal without loosing
@@ -113,7 +113,6 @@ class TestNSDecimalWrapper (TestCase):
         self.assertEqual(d1.as_float(), 1.5)
         self.assertEqual(d2.as_float(), 25.0)
 
-
         self.assertRaises(TypeError, int, d1)
         self.assertRaises(TypeError, float, d1)
 
@@ -134,13 +133,13 @@ class TestNSDecimalWrapper (TestCase):
         d2 = round(d1, -1)
         self.assertEqual(d2, objc.NSDecimal("20"))
 
-
     def test_pow(self):
         self.assertRaises(TypeError, pow, objc.NSDecimal("3.5"), 3, 1)
         self.assertRaises(TypeError, pow, objc.NSDecimal("3.5"), 3)
         self.assertRaises(TypeError, operator.pow, objc.NSDecimal("3.5"), 3)
-        self.assertRaises(TypeError, operator.pow, objc.NSDecimal("3.5"), objc.NSDecimal("2"))
-
+        self.assertRaises(
+            TypeError, operator.pow, objc.NSDecimal("3.5"), objc.NSDecimal("2")
+        )
 
     def test_operators(self):
         d1 = objc.NSDecimal("1.5")
@@ -181,11 +180,9 @@ class TestNSDecimalWrapper (TestCase):
         self.assertRaises(TypeError, operator.mul, d1, 0.5)
         self.assertRaises(TypeError, operator.truediv, d1, 0.5)
 
-
     def test_inplace_ro(self):
         d1 = objc.NSDecimal("1.5")
         d2 = objc.NSDecimal("0.5")
-
 
         orig = d1
         d1 += d2
@@ -208,7 +205,7 @@ class TestNSDecimalWrapper (TestCase):
         self.assertEqual(orig, objc.NSDecimal("1.5"))
 
 
-class TestUsingNSDecimalNumber (TestCase):
+class TestUsingNSDecimalNumber(TestCase):
     def test_creation(self):
         cls = objc.lookUpClass("NSDecimalNumber")
 
@@ -225,7 +222,8 @@ class TestUsingNSDecimalNumber (TestCase):
         v = n.decimalValue()
         self.assertEqual(d, v)
 
-class TestDecimalByReference (TestCase):
+
+class TestDecimalByReference(TestCase):
     def test_byref_in(self):
         d = objc.NSDecimal("1.5")
 
@@ -248,13 +246,20 @@ class TestDecimalByReference (TestCase):
         self.assertEqual(str(d), "2.5")
 
         objc._updatingMetadata(True)
-        objc.registerMetaDataForSelector(b"OC_TestDecimal", b"getDecimal:",
+        objc.registerMetaDataForSelector(
+            b"OC_TestDecimal",
+            b"getDecimal:",
             dict(
                 arguments={
-                    2+0:  dict(type_modifier=objc._C_OUT, type=b'^{_NSDecimal=b8b4b1b1b18[8S]}', null_accepted=False),
-                    #2+0:  dict(type=b'o^{_NSDecimal=b8b4b1b1b18[8S]}', null_accepted=False),
+                    2
+                    + 0: dict(
+                        type_modifier=objc._C_OUT,
+                        type=b"^{_NSDecimal=b8b4b1b1b18[8S]}",
+                        null_accepted=False,
+                    ),
+                    # 2+0:  dict(type=b'o^{_NSDecimal=b8b4b1b1b18[8S]}', null_accepted=False),
                 }
-            )
+            ),
         )
         objc._updatingMetadata(False)
         self.assertArgIsOut(o.getDecimal_, 0)
@@ -264,8 +269,6 @@ class TestDecimalByReference (TestCase):
         d = r[1]
         self.assertIsInstance(d, objc.NSDecimal)
         self.assertEqual(str(d), "2.5")
-
-
 
     def test_byref_inout(self):
         d1 = objc.NSDecimal("1.25")
@@ -277,6 +280,7 @@ class TestDecimalByReference (TestCase):
         self.assertEqual(str(d1), "1.25")
         self.assertIsInstance(d2, objc.NSDecimal)
         self.assertEqual(str(d2), "2.5")
+
 
 if __name__ == "__main__":
     main()

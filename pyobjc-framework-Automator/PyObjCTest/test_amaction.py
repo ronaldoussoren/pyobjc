@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Automator import *
 
-class TestAMAction (TestCase):
+
+class TestAMAction(TestCase):
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertArgIsPrintf(AMAction.logMessageWithLevel_format_, 1)
@@ -26,6 +26,7 @@ class TestAMAction (TestCase):
         self.assertEqual(AMLogLevelInfo, 1)
         self.assertEqual(AMLogLevelWarn, 2)
         self.assertEqual(AMLogLevelError, 3)
+
 
 if __name__ == "__main__":
     main()

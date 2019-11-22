@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 import CFOpenDirectory
 
-class TestCFODNode (TestCase):
+
+class TestCFODNode(TestCase):
     def testMethods(self):
         self.assertIsInstance(CFOpenDirectory.ODQueryGetTypeID(), (int, long))
 
@@ -17,12 +18,17 @@ class TestCFODNode (TestCase):
 
         CFOpenDirectory.ODQuerySynchronize
 
-        self.assertArgIsFunction(CFOpenDirectory.ODQuerySetCallback, 1, b"v^{__ODQuery=}@^{__CFError=}^v", True)
+        self.assertArgIsFunction(
+            CFOpenDirectory.ODQuerySetCallback, 1, b"v^{__ODQuery=}@^{__CFError=}^v", True
+        )
 
         CFOpenDirectory.ODQueryScheduleWithRunLoop
         CFOpenDirectory.ODQueryUnscheduleFromRunLoop
 
-        self.assertArgHasType(CFOpenDirectory.ODQuerySetDispatchQueue, 1, b"^{dispatch_queue_s=}")
+        self.assertArgHasType(
+            CFOpenDirectory.ODQuerySetDispatchQueue, 1, b"^{dispatch_queue_s=}"
+        )
+
 
 if __name__ == "__main__":
     main()

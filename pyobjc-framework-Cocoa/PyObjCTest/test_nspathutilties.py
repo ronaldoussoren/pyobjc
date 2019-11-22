@@ -3,23 +3,37 @@ from PyObjCTools.TestSupport import *
 from objc import *
 from Foundation import *
 
+
 class TestNSPathUtilities(TestCase):
     def testSearchPaths(self):
         self.assertTrue(
-                NSSearchPathForDirectoriesInDomains( NSAllLibrariesDirectory, NSAllDomainsMask, NO ),
-                      "NSSearchPathForDirectoriesInDomains() failed to return anything." )
+            NSSearchPathForDirectoriesInDomains(
+                NSAllLibrariesDirectory, NSAllDomainsMask, NO
+            ),
+            "NSSearchPathForDirectoriesInDomains() failed to return anything.",
+        )
 
         self.assertArgIsBOOL(NSSearchPathForDirectoriesInDomains, 2)
 
     def testTrue(self):
-        for boolVal in (1, 1==1, YES, -1):
+        for boolVal in (1, 1 == 1, YES, -1):
             self.assertEqual(
-                NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask, boolVal)[0][0], '/', boolVal)
+                NSSearchPathForDirectoriesInDomains(
+                    NSLibraryDirectory, NSUserDomainMask, boolVal
+                )[0][0],
+                "/",
+                boolVal,
+            )
 
     def testFalse(self):
-        for boolVal in (0, 1!=1, NO):
+        for boolVal in (0, 1 != 1, NO):
             self.assertNotEqual(
-                NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,NSUserDomainMask, boolVal)[0][0], '/', boolVal)
+                NSSearchPathForDirectoriesInDomains(
+                    NSLibraryDirectory, NSUserDomainMask, boolVal
+                )[0][0],
+                "/",
+                boolVal,
+            )
 
     def testFunctions(self):
         s = NSUserName()
@@ -28,7 +42,7 @@ class TestNSPathUtilities(TestCase):
         self.assertIsInstance(s, unicode)
         s = NSHomeDirectory()
         self.assertIsInstance(s, unicode)
-        s = NSHomeDirectoryForUser('root')
+        s = NSHomeDirectoryForUser("root")
         self.assertIsInstance(s, unicode)
         s = NSTemporaryDirectory()
         self.assertIsInstance(s, unicode)
@@ -57,9 +71,9 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(NSLocalDomainMask, 2)
         self.assertEqual(NSNetworkDomainMask, 4)
         self.assertEqual(NSSystemDomainMask, 8)
-        self.assertEqual(NSAllDomainsMask, 0x0ffff)
+        self.assertEqual(NSAllDomainsMask, 0x0FFFF)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(NSAutosavedInformationDirectory, 11)
 
@@ -72,19 +86,30 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(NSPreferencePanesDirectory, 22)
         self.assertEqual(NSItemReplacementDirectory, 99)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertEqual(NSApplicationScriptsDirectory, 23)
         self.assertEqual(NSTrashDirectory, 102)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSString.isAbsolutePath)
-        self.assertArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0)
-        self.assertArgIsBOOL(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 1)
-        self.assertArgIsOut(NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 2)
+        self.assertArgIsOut(
+            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0
+        )
+        self.assertArgIsBOOL(
+            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 1
+        )
+        self.assertArgIsOut(
+            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 2
+        )
         self.assertResultIsBOOL(NSString.getFileSystemRepresentation_maxLength_)
-        self.assertArgHasType(NSString.getFileSystemRepresentation_maxLength_, 0, b'o^' + objc._C_CHAR_AS_TEXT)
+        self.assertArgHasType(
+            NSString.getFileSystemRepresentation_maxLength_,
+            0,
+            b"o^" + objc._C_CHAR_AS_TEXT,
+        )
         self.assertArgSizeInArg(NSString.getFileSystemRepresentation_maxLength_, 0, 1)
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

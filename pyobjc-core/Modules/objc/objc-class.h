@@ -27,7 +27,6 @@ extern PyTypeObject PyObjCClass_Type;
 
 /*extern int setup_class_meta(void);*/
 
-
 /*!
  * @function PyObjCClass_Check
  * @abstract Check if an object is an Objective-C class
@@ -51,7 +50,6 @@ extern PyTypeObject PyObjCClass_Type;
  *     class_dict (which represents the __dict__ of an Objective-C class.
  */
 extern PyObject* PyObjC_ClassExtender;
-
 
 /*!
  * @struct PyObjCClassObject
@@ -88,11 +86,10 @@ typedef struct _PyObjCClassObject {
 
     Py_ssize_t dictoffset;
     Py_ssize_t generation;
-    unsigned int useKVO:1;
-    unsigned int hasPythonImpl:1;
-    unsigned int isCFWrapper:1;
+    unsigned int useKVO : 1;
+    unsigned int hasPythonImpl : 1;
+    unsigned int isCFWrapper : 1;
 } PyObjCClassObject;
-
 
 extern PyObject* PyObjCClass_DefaultModule;
 extern PyObject* PyObjCClass_New(Class objc_class);
@@ -106,16 +103,20 @@ extern PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
 extern void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
 extern int PyObjCClass_HasPythonImplementation(PyObject* cls);
 extern PyObject* PyObjCClass_ClassForMetaClass(PyObject* meta);
-extern PyObject* PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod); /* returns borrowed */
-extern int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadata);
+extern PyObject* PyObjCClass_HiddenSelector(PyObject* tp, SEL sel,
+                                            BOOL classMethod); /* returns borrowed */
+extern int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod,
+                                 PyObject* metadata);
 extern int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
 extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
 
 /* Returns a borrowed reference or NULL (without necessarily raising an exception) */
 extern PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
-extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
+extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name,
+                                                    SEL sel);
 
-static inline int PyObjCClass_IsCFWrapper(PyTypeObject* tp)
+static inline int
+PyObjCClass_IsCFWrapper(PyTypeObject* tp)
 {
     return ((PyObjCClassObject*)tp)->isCFWrapper;
 }

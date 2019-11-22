@@ -1,12 +1,12 @@
-
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestNSFetchRequest (TestCase):
+
+class TestNSFetchRequest(TestCase):
     @min_os_level("10.5")
     def testConstants(self):
-        self.assertEqual(NSManagedObjectResultType,  0x00)
-        self.assertEqual(NSManagedObjectIDResultType,  0x01)
+        self.assertEqual(NSManagedObjectResultType, 0x00)
+        self.assertEqual(NSManagedObjectIDResultType, 0x01)
 
     @min_os_level("10.5")
     def testMethods(self):
@@ -39,6 +39,7 @@ class TestNSFetchRequest (TestCase):
     @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertArgIsOut(NSFetchRequest.execute_, 0)
+
 
 if __name__ == "__main__":
     main()

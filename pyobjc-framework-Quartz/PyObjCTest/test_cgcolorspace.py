@@ -1,16 +1,17 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 import array
 import sys
 
 if sys.version_info[0] != 2:
+
     def buffer(value):
         if isinstance(value, bytes):
             return value
-        return value.encode('latin1')
+        return value.encode("latin1")
 
-class TestCGColorSpace (TestCase):
+
+class TestCGColorSpace(TestCase):
     def testConstants(self):
         self.assertEqual(kCGRenderingIntentDefault, 0)
         self.assertEqual(kCGRenderingIntentAbsoluteColorimetric, 1)
@@ -36,17 +37,17 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(kCGColorSpaceUserRGB, (str, unicode))
         self.assertIsInstance(kCGColorSpaceUserCMYK, (str, unicode))
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCGColorSpaceGenericRGBLinear, unicode)
         self.assertIsInstance(kCGColorSpaceAdobeRGB1998, unicode)
         self.assertIsInstance(kCGColorSpaceSRGB, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCGColorSpaceGenericGrayGamma2_2, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCGColorSpaceDisplayP3, unicode)
 
@@ -57,7 +58,7 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(kCGColorSpaceROMMRGB, unicode)
         self.assertIsInstance(kCGColorSpaceDCIP3, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCGColorSpaceExtendedSRGB, unicode)
         self.assertIsInstance(kCGColorSpaceLinearSRGB, unicode)
@@ -66,9 +67,24 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(kCGColorSpaceLinearGray, unicode)
         self.assertIsInstance(kCGColorSpaceExtendedLinearGray, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCGColorSpaceGenericLab, unicode)
+
+    @min_os_level("10.14")
+    def testConstants10_14(self):
+        self.assertIsInstance(kCGColorSpaceITUR_2020_PQ_EOTF, unicode)
+
+    @min_os_level("10.14.3")
+    def testConstants10_14_3(self):
+        self.assertIsInstance(kCGColorSpaceExtendedLinearITUR_2020, unicode)
+        self.assertIsInstance(kCGColorSpaceExtendedLinearDisplayP3, unicode)
+
+    @min_os_level("10.15")
+    def testConstants10_14_6(self):
+        self.assertIsInstance(kCGColorSpaceDisplayP3_PQ_EOTF, unicode)
+        self.assertIsInstance(kCGColorSpaceDisplayP3_HLG, unicode)
+        self.assertIsInstance(kCGColorSpaceITUR_2020_HLG, unicode)
 
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorSpaceCreateDeviceGray)
@@ -85,11 +101,18 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(csp, CGColorSpaceRef)
 
         self.assertResultIsCFRetained(CGColorSpaceCreateCalibratedRGB)
-        csp = CGColorSpaceCreateCalibratedRGB((0.5, 0.5, 0.2), (0.9, 0.95, 1.0), (0.7, 0.8, 0.9), (0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99))
+        csp = CGColorSpaceCreateCalibratedRGB(
+            (0.5, 0.5, 0.2),
+            (0.9, 0.95, 1.0),
+            (0.7, 0.8, 0.9),
+            (0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99, 0.99),
+        )
         self.assertIsInstance(csp, CGColorSpaceRef)
 
         self.assertResultIsCFRetained(CGColorSpaceCreateLab)
-        csp = CGColorSpaceCreateLab((0.1, 0.1, 0.1), (0.99, 0.99, 0.99), (0.1, 0.79, 0.5, 0.99))
+        csp = CGColorSpaceCreateLab(
+            (0.1, 0.1, 0.1), (0.99, 0.99, 0.99), (0.1, 0.79, 0.5, 0.99)
+        )
         self.assertIsInstance(csp, CGColorSpaceRef)
 
         self.assertResultIsCFRetained(CGColorSpaceCreatePattern)
@@ -107,7 +130,7 @@ class TestCGColorSpace (TestCase):
         self.assertIsInstance(CGColorSpaceGetTypeID(), (int, long))
         self.assertIsInstance(CGColorSpaceGetNumberOfComponents(csp), (int, long))
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testFunctions10_5(self):
         csp = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
         self.assertIsInstance(CGColorSpaceGetModel(csp), (int, long))
@@ -125,18 +148,21 @@ class TestCGColorSpace (TestCase):
         v = CGColorSpaceCopyICCProfile(csp)
         self.assertIsInstance(v, CFDataRef)
 
-        with open('/Library/ColorSync/Profiles/WebSafeColors.icc', 'rb') as fp:
+        with open("/Library/ColorSync/Profiles/WebSafeColors.icc", "rb") as fp:
             data = fp.read()
         provider = CGDataProviderCreateWithCFData(buffer(data))
-        spc = CGColorSpaceCreateICCBased(3, [0.0, 255.0, 0.0, 255.0, 0.0, 255.0],
-                provider, CGColorSpaceCreateDeviceRGB())
+        spc = CGColorSpaceCreateICCBased(
+            3,
+            [0.0, 255.0, 0.0, 255.0, 0.0, 255.0],
+            provider,
+            CGColorSpaceCreateDeviceRGB(),
+        )
         self.assertIsInstance(spc, CGColorSpaceRef)
 
-        dta= CGColorSpaceCopyICCProfile(csp)
+        dta = CGColorSpaceCopyICCProfile(csp)
         self.assertIsInstance(dta, CFDataRef)
 
-        spc = CGColorSpaceCreateIndexed(CGColorSpaceCreateDeviceRGB(), 10,
-                (0, 1, 2)*11)
+        spc = CGColorSpaceCreateIndexed(CGColorSpaceCreateDeviceRGB(), 10, (0, 1, 2) * 11)
         self.assertIsInstance(spc, CGColorSpaceRef)
 
         self.assertEqual(CGColorSpaceGetModel(spc), kCGColorSpaceModelIndexed)
@@ -144,7 +170,7 @@ class TestCGColorSpace (TestCase):
         v = CGColorSpaceGetColorTableCount(spc)
         self.assertEqual(v, 11)
 
-        buf = array.array('B', [99] * (3*11))
+        buf = array.array("B", [99] * (3 * 11))
         v = CGColorSpaceGetColorTable(spc, buf)
         self.assertTrue(buf is v)
         self.assertTrue(buf[0] == 0)
@@ -157,14 +183,14 @@ class TestCGColorSpace (TestCase):
         spc = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
         self.assertIsInstance(spc, CGColorSpaceRef)
 
-        dta= CGColorSpaceCopyICCProfile(spc)
+        dta = CGColorSpaceCopyICCProfile(spc)
         self.assertIsInstance(dta, CFDataRef)
 
         self.assertResultIsCFRetained(CGColorSpaceCreateWithICCProfile)
         v = CGColorSpaceCreateWithICCProfile(dta)
         self.assertIsInstance(v, CGColorSpaceRef)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions10_6(self):
         csp = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
         self.assertIsInstance(csp, CGColorSpaceRef)
@@ -172,16 +198,21 @@ class TestCGColorSpace (TestCase):
         v = CGColorSpaceCopyName(csp)
         self.assertIsInstance(v, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testFunctions10_12(self):
         self.assertResultIsCFRetained(CGColorSpaceCopyICCData)
         self.assertResultHasType(CGColorSpaceIsWideGamutRGB, objc._C_BOOL)
         self.assertResultHasType(CGColorSpaceSupportsOutput, objc._C_BOOL)
         self.assertResultIsCFRetained(CGColorSpaceCreateWithICCData)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testFunctions10_13(self):
         CGColorSpaceGetName
+
+    @min_os_level("10.15")
+    def testFunctions10_15(self):
+        CGColorSpaceIsHDR
+
 
 if __name__ == "__main__":
     main()

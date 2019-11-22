@@ -20,16 +20,3 @@ def setUseKVOForSetattr(value):
 def getUseKVOForSetattr():
     warnings.warn("Read objc.options.use_kvo instead", DeprecationWarning)
     return _options.use_kvo
-
-
-if hasattr(_options, "strbridge_enabled"):  # pragma: no 3.x cover; pragma: no branch
-
-    def setStrBridgeEnabled(value):
-        warnings.warn("Set objc.options.strbridge_enabled instead", DeprecationWarning)
-        _options.strbridge_enabled = bool(value)
-
-
-    def getStrBridgeEnabled():
-        warnings.warn("Read objc.options.strbridge_enabled instead", DeprecationWarning)
-        return _options.strbridge_enabled
-

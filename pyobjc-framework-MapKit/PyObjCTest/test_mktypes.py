@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKCircle (TestCase):
+    class TestMKCircle(TestCase):
         @min_os_level("10.9")
         def testConstants(self):
             self.assertEqual(MapKit.MKMapTypeStandard, 0)
@@ -19,6 +19,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MapKit.MKErrorLoadingThrottled, 3)
             self.assertEqual(MapKit.MKErrorPlacemarkNotFound, 4)
             self.assertEqual(MapKit.MKErrorDirectionsNotFound, 5)
+            self.assertEqual(MapKit.MKErrorDecodingFailed, 6)
 
             self.assertEqual(MapKit.MKFeatureVisibilityAdaptive, 0)
             self.assertEqual(MapKit.MKFeatureVisibilityHidden, 1)
@@ -29,6 +30,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MapKit.MKMapTypeSatelliteFlyover, 3)
             self.assertEqual(MapKit.MKMapTypeHybridFlyover, 4)
             self.assertEqual(MapKit.MKMapTypeMutedStandard, 5)
+
 
 if __name__ == "__main__":
     main()

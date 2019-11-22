@@ -1,5 +1,5 @@
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #include <objc/objc-runtime.h>
@@ -14,10 +14,10 @@
 static PyObject*
 call_vF3_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    /* calling of method that returns vector_float3 and has a vector_float3 as an argument */
+    /* calling of method that returns vector_float3 and has a vector_float3 as an argument
+     */
     float f1, f2, f3;
     struct objc_super super;
-
 
     if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
         return 0;
@@ -25,16 +25,18 @@ call_vF3_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
-        vec = ((vector_float3(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                             PyObjCObject_GetObject(self));
+            vec = ((vector_float3(*)(struct objc_super*, SEL,
+                                     vector_float3))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), vec);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -59,17 +61,19 @@ call_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 
-    PyObjC_DURING
+    Py_BEGIN_ALLOW_THREADS
+            @try {
         PyObjC_InitSuper(&super,
             PyObjCSelector_GetClass(method),
             PyObjCObject_GetObject(self));
 
         result = ((id(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
 
-    PyObjC_HANDLER
+            } @catch (NSException *localException) {
         PyObjCErr_FromObjC(localException);
 
-    PyObjC_ENDHANDLER
+            }
+        Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -87,24 +91,24 @@ callC_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
     struct objc_super super;
     id result;
 
-
     if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
         return 0;
     }
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            object_getClass(PyObjCSelector_GetClass(method)),
-            PyObjCClass_GetClass(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, object_getClass(PyObjCSelector_GetClass(method)),
+                             PyObjCClass_GetClass(self));
 
-        result = ((id(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
+            result = ((id(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), vec);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -124,18 +128,18 @@ call_vF3_v(PyObject* method, PyObject* self, PyObject* arguments)
         return 0;
     }
 
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                             PyObjCObject_GetObject(self));
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+            vec = ((vector_float3(*)(struct objc_super*, SEL))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method));
 
-        vec = ((vector_float3(*)(struct objc_super*, SEL))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method));
-
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -151,24 +155,24 @@ call_v_vF3(PyObject* method, PyObject* self, PyObject* arguments)
     float f1, f2, f3;
     struct objc_super super;
 
-
     if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
         return 0;
     }
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 
-    PyObjC_DURING
-        PyObjC_InitSuper(&super,
-            PyObjCSelector_GetClass(method),
-            PyObjCObject_GetObject(self));
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            PyObjC_InitSuper(&super, PyObjCSelector_GetClass(method),
+                             PyObjCObject_GetObject(self));
 
-        ((void(*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(&super, PyObjCSelector_GetSelector(method), vec);
+            ((void (*)(struct objc_super*, SEL, vector_float3))objc_msgSendSuper)(
+                &super, PyObjCSelector_GetSelector(method), vec);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -179,7 +183,7 @@ call_v_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 } /* sentinel */
+    {0, 0, 0, 0} /* sentinel */
 };
 
 #define imp_vF3_vF3 PyObjCUnsupportedMethod_IMP
@@ -192,29 +196,21 @@ static PyMethodDef mod_methods[] = {
 PyObjC_MODULE_INIT(_SpriteKit)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_SpriteKit)
-    if (!m) {
-        PyObjC_INITERROR();
-    }
+    m = PyObjC_MODULE_CREATE(_SpriteKit) if (!m) { PyObjC_INITERROR(); }
 
-    if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
+    if (PyObjC_ImportAPI(m) == -1)
+        PyObjC_INITERROR();
 
     {
         Class classSK3DNode = objc_lookUpClass("SK3DNode");
         if (classSK3DNode != NULL) {
-            if (PyObjC_RegisterMethodMapping(
-                    classSK3DNode,
-                    @selector(projectPoint:),
-                    call_vF3_vF3,
-                    imp_vF3_vF3) < 0) {
+            if (PyObjC_RegisterMethodMapping(classSK3DNode, @selector(projectPoint:),
+                                             call_vF3_vF3, imp_vF3_vF3) < 0) {
                 PyObjC_INITERROR();
             }
 
-            if (PyObjC_RegisterMethodMapping(
-                    classSK3DNode,
-                    @selector(unprojectPoint:),
-                    call_vF3_vF3,
-                    imp_vF3_vF3) < 0) {
+            if (PyObjC_RegisterMethodMapping(classSK3DNode, @selector(unprojectPoint:),
+                                             call_vF3_vF3, imp_vF3_vF3) < 0) {
                 PyObjC_INITERROR();
             }
         }
@@ -223,35 +219,25 @@ PyObjC_MODULE_INIT(_SpriteKit)
     {
         Class classSKFieldNode = objc_lookUpClass("SKFieldNode");
         if (classSKFieldNode != NULL) {
-            if (PyObjC_RegisterMethodMapping(
-                    classSKFieldNode,
-                    @selector(direction),
-                    call_vF3_v,
-                    imp_vF3_v) < 0) {
+            if (PyObjC_RegisterMethodMapping(classSKFieldNode, @selector(direction),
+                                             call_vF3_v, imp_vF3_v) < 0) {
                 PyObjC_INITERROR();
             }
 
-            if (PyObjC_RegisterMethodMapping(
-                    classSKFieldNode,
-                    @selector(setDirection:),
-                    call_v_vF3,
-                    imp_v_vF3) < 0) {
+            if (PyObjC_RegisterMethodMapping(classSKFieldNode, @selector(setDirection:),
+                                             call_v_vF3, imp_v_vF3) < 0) {
                 PyObjC_INITERROR();
             }
 
-            if (PyObjC_RegisterMethodMapping(
-                    classSKFieldNode,
-                    @selector(linearGravityFieldWithVector:),
-                    callC_id_vF3,
-                    impC_id_vF3) < 0) {
+            if (PyObjC_RegisterMethodMapping(classSKFieldNode,
+                                             @selector(linearGravityFieldWithVector:),
+                                             callC_id_vF3, impC_id_vF3) < 0) {
                 PyObjC_INITERROR();
             }
 
-            if (PyObjC_RegisterMethodMapping(
-                    classSKFieldNode,
-                    @selector(velocityFieldWithVector:),
-                    callC_id_vF3,
-                    impC_id_vF3) < 0) {
+            if (PyObjC_RegisterMethodMapping(classSKFieldNode,
+                                             @selector(velocityFieldWithVector:),
+                                             callC_id_vF3, impC_id_vF3) < 0) {
                 PyObjC_INITERROR();
             }
         }
@@ -260,22 +246,18 @@ PyObjC_MODULE_INIT(_SpriteKit)
     {
         Class classSKPhysicsWorld = objc_lookUpClass("SKPhysicsWorld");
         if (classSKPhysicsWorld != NULL) {
-            if (PyObjC_RegisterMethodMapping(
-                    classSKPhysicsWorld,
-                    @selector(sampleFieldsAt:),
-                    call_vF3_vF3,
-                    imp_vF3_vF3) < 0) {
+            if (PyObjC_RegisterMethodMapping(classSKPhysicsWorld,
+                                             @selector(sampleFieldsAt:), call_vF3_vF3,
+                                             imp_vF3_vF3) < 0) {
                 PyObjC_INITERROR();
             }
         }
 
         Class classPKPhysicsWorld = objc_lookUpClass("PKPhysicsWorld");
         if (classPKPhysicsWorld != NULL) {
-            if (PyObjC_RegisterMethodMapping(
-                    classPKPhysicsWorld,
-                    @selector(sampleFieldsAt:),
-                    call_vF3_vF3,
-                    imp_vF3_vF3) < 0) {
+            if (PyObjC_RegisterMethodMapping(classPKPhysicsWorld,
+                                             @selector(sampleFieldsAt:), call_vF3_vF3,
+                                             imp_vF3_vF3) < 0) {
                 PyObjC_INITERROR();
             }
         }

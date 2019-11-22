@@ -5,6 +5,7 @@ import Cocoa
 from PyObjCTools import Signals
 from PyObjCTools import AppHelper
 
+
 class TinyTinyDocument(Cocoa.NSDocument):
     textView = objc.IBOutlet()
     path = None
@@ -25,7 +26,7 @@ class TinyTinyDocument(Cocoa.NSDocument):
         with open(path, "w") as f:
             text = self.textView.string()
             if sys.version_info[0] == 2:
-                text = text.encode('utf-8')
+                text = text.encode("utf-8")
             f.write(text)
         return True
 
@@ -34,11 +35,11 @@ class TinyTinyDocument(Cocoa.NSDocument):
             self.readFromUTF8_(self.path)
 
     def readFromUTF8_(self, path):
-        with open(path, 'r') as f:
+        with open(path, "r") as f:
             text = f.read()
 
         if sys.version_info[0] == 2:
-            text = text.decode('utf-8')
+            text = text.decode("utf-8")
         self.textView.setString_(text)
 
 

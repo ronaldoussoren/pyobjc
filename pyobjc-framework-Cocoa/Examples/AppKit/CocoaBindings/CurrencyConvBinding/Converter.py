@@ -2,7 +2,8 @@ from objc import super
 import objc
 from Foundation import NSObject
 
-class Converter (NSObject):
+
+class Converter(NSObject):
     exchangeRate = objc.ivar.double()
     dollarsToConvert = objc.ivar.double()
 
@@ -14,6 +15,7 @@ class Converter (NSObject):
 
     def amountInOtherCurrency(self):
         return self.dollarsToConvert * self.exchangeRate
+
 
 Converter.setKeys_triggerChangeNotificationsForDependentKey_(
     ["dollarsToConvert", "exchangeRate"], "amountInOtherCurrency"

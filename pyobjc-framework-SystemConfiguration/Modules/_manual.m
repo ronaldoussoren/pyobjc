@@ -1,5 +1,5 @@
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -25,48 +25,42 @@ mod_release(const void* info)
     PyGILState_Release(state);
 }
 
-
 static SCDynamicStoreContext mod_SCDynamicStoreContext = {
-    0, /* version */
-    NULL, /* info */
-    mod_retain, /* retain */
+    0,           /* version */
+    NULL,        /* info */
+    mod_retain,  /* retain */
     mod_release, /* release */
-    NULL /* copyDescription */
+    NULL         /* copyDescription */
 };
 
 static SCPreferencesContext mod_SCPreferencesContext = {
-    0, /* version */
-    NULL, /* info */
-    mod_retain, /* retain */
+    0,           /* version */
+    NULL,        /* info */
+    mod_retain,  /* retain */
     mod_release, /* release */
-    NULL /* copyDescription */
+    NULL         /* copyDescription */
 };
 
 static SCNetworkConnectionContext mod_SCNetworkConnectionContext = {
-    0, /* version */
-    NULL, /* info */
-    mod_retain, /* retain */
+    0,           /* version */
+    NULL,        /* info */
+    mod_retain,  /* retain */
     mod_release, /* release */
-    NULL /* copyDescription */
+    NULL         /* copyDescription */
 };
 
 static SCNetworkReachabilityContext mod_SCNetworkReachabilityContext = {
-    0, /* version */
-    NULL, /* info */
-    mod_retain, /* retain */
+    0,           /* version */
+    NULL,        /* info */
+    mod_retain,  /* retain */
     mod_release, /* release */
-    NULL /* copyDescription */
+    NULL         /* copyDescription */
 };
-
 
 /* Callback implementations */
 
-
 static void
-mod_SCDynamicStoreCallBack(
-    SCDynamicStoreRef store,
-    CFArrayRef changedKeys,
-    void* _info)
+mod_SCDynamicStoreCallBack(SCDynamicStoreRef store, CFArrayRef changedKeys, void* _info)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -84,8 +78,8 @@ mod_SCDynamicStoreCallBack(
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-
-    PyObject* result = PyObject_CallFunction(callable, "NNO", py_store, py_keys, real_info);
+    PyObject* result =
+        PyObject_CallFunction(callable, "NNO", py_store, py_keys, real_info);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -94,10 +88,8 @@ mod_SCDynamicStoreCallBack(
 }
 
 static void
-mod_SCPreferencesCallBack(
-    SCPreferencesRef prefs,
-    SCPreferencesNotification notificationType,
-    void* _info)
+mod_SCPreferencesCallBack(SCPreferencesRef prefs,
+                          SCPreferencesNotification notificationType, void* _info)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -108,13 +100,15 @@ mod_SCPreferencesCallBack(
     if (py_prefs == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
-    PyObject* py_type = PyObjC_ObjCToPython(@encode(SCPreferencesNotification), &notificationType);
+    PyObject* py_type =
+        PyObjC_ObjCToPython(@encode(SCPreferencesNotification), &notificationType);
     if (py_type == NULL) {
         Py_DECREF(py_prefs);
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(callable, "NNO", py_prefs, py_type, real_info);
+    PyObject* result =
+        PyObject_CallFunction(callable, "NNO", py_prefs, py_type, real_info);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -122,28 +116,29 @@ mod_SCPreferencesCallBack(
     PyGILState_Release(state);
 }
 
-static void mod_SCNetworkConnectionCallBack(
-    SCNetworkConnectionRef connection,
-    SCNetworkConnectionStatus status,
-    void* _info)
+static void
+mod_SCNetworkConnectionCallBack(SCNetworkConnectionRef connection,
+                                SCNetworkConnectionStatus status, void* _info)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* info = (PyObject*)_info;
     PyObject* callable = PyTuple_GET_ITEM(info, 0);
     PyObject* real_info = PyTuple_GET_ITEM(info, 1);
-    PyObject* py_connection = PyObjC_ObjCToPython(@encode(SCNetworkConnectionRef), &connection);
+    PyObject* py_connection =
+        PyObjC_ObjCToPython(@encode(SCNetworkConnectionRef), &connection);
     if (py_connection == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
-    PyObject* py_status = PyObjC_ObjCToPython(@encode(SCNetworkConnectionStatus), &status);
+    PyObject* py_status =
+        PyObjC_ObjCToPython(@encode(SCNetworkConnectionStatus), &status);
     if (py_status == NULL) {
         Py_DECREF(py_connection);
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(callable, "NNO",
-        py_connection, py_status, real_info);
+    PyObject* result =
+        PyObject_CallFunction(callable, "NNO", py_connection, py_status, real_info);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -151,10 +146,9 @@ static void mod_SCNetworkConnectionCallBack(
     PyGILState_Release(state);
 }
 
-static void mod_SCNetworkReachabilityCallBack(
-    SCNetworkReachabilityRef target,
-    SCNetworkConnectionFlags flags,
-    void* _info)
+static void
+mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
+                                  SCNetworkConnectionFlags flags, void* _info)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -171,8 +165,8 @@ static void mod_SCNetworkReachabilityCallBack(
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(callable, "NNO",
-        py_target, py_flags, real_info);
+    PyObject* result =
+        PyObject_CallFunction(callable, "NNO", py_target, py_flags, real_info);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -182,11 +176,8 @@ static void mod_SCNetworkReachabilityCallBack(
 
 /* And finally the function wrappers */
 
-
 static PyObject*
-mod_SCDynamicStoreCreate(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_SCDynamicStoreCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_name;
@@ -217,18 +208,16 @@ mod_SCDynamicStoreCreate(
     real_context = mod_SCDynamicStoreContext;
     real_context.info = real_info;
 
-    PyObjC_DURING
-        store = SCDynamicStoreCreate(
-            allocator,
-            name,
-            mod_SCDynamicStoreCallBack,
-            &real_context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            store = SCDynamicStoreCreate(allocator, name, mod_SCDynamicStoreCallBack,
+                                         &real_context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        store = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            store = NULL;
+        }
+    Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
 
     if (store == NULL) {
@@ -241,18 +230,15 @@ mod_SCDynamicStoreCreate(
         }
     }
 
-    PyObject* result = PyObjC_ObjCToPython(
-                @encode(SCDynamicStoreRef), &store);
+    PyObject* result = PyObjC_ObjCToPython(@encode(SCDynamicStoreRef), &store);
     CFRelease(store);
 
     return result;
 }
 
-
 static PyObject*
-mod_SCDynamicStoreCreateWithOptions(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_SCDynamicStoreCreateWithOptions(PyObject* self __attribute__((__unused__)),
+                                    PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_name;
@@ -263,7 +249,8 @@ mod_SCDynamicStoreCreateWithOptions(
     CFDictionaryRef storeOptions;
     CFStringRef name;
 
-    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_name, &py_options, &callout, &context)) {
+    if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_name, &py_options, &callout,
+                          &context)) {
         return NULL;
     }
 
@@ -289,19 +276,16 @@ mod_SCDynamicStoreCreateWithOptions(
     real_context = mod_SCDynamicStoreContext;
     real_context.info = real_info;
 
-    PyObjC_DURING
-        store = SCDynamicStoreCreateWithOptions(
-            allocator,
-            name,
-            storeOptions,
-            mod_SCDynamicStoreCallBack,
-            &real_context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            store = SCDynamicStoreCreateWithOptions(
+                allocator, name, storeOptions, mod_SCDynamicStoreCallBack, &real_context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        store = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            store = NULL;
+        }
+    Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
 
     if (store == NULL) {
@@ -314,8 +298,7 @@ mod_SCDynamicStoreCreateWithOptions(
         }
     }
 
-    PyObject* result = PyObjC_ObjCToPython(
-        @encode(SCDynamicStoreRef), &store);
+    PyObject* result = PyObjC_ObjCToPython(@encode(SCDynamicStoreRef), &store);
     if (store != NULL) {
         CFRelease(store);
     }
@@ -323,12 +306,8 @@ mod_SCDynamicStoreCreateWithOptions(
     return result;
 }
 
-
-
 static PyObject*
-mod_SCPreferencesSetCallback(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_SCPreferencesSetCallback(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_prefs;
     PyObject* callout;
@@ -353,17 +332,16 @@ mod_SCPreferencesSetCallback(
     real_context.info = real_info;
 
     Boolean result = FALSE;
-    PyObjC_DURING
-        result = SCPreferencesSetCallback(
-            prefs,
-            mod_SCPreferencesCallBack,
-            &real_context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            result =
+                SCPreferencesSetCallback(prefs, mod_SCPreferencesCallBack, &real_context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        result = FALSE;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            result = FALSE;
+        }
+    Py_END_ALLOW_THREADS
 
     if (!result) {
         Py_DECREF(real_info);
@@ -377,9 +355,8 @@ mod_SCPreferencesSetCallback(
 }
 
 static PyObject*
-mod_SCNetworkConnectionCreateWithServiceID(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_SCNetworkConnectionCreateWithServiceID(PyObject* self __attribute__((__unused__)),
+                                           PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_serviceID;
@@ -388,7 +365,8 @@ mod_SCNetworkConnectionCreateWithServiceID(
     CFAllocatorRef allocator;
     CFStringRef serviceID;
 
-    if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &py_serviceID, &callout, &context)) {
+    if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &py_serviceID, &callout,
+                          &context)) {
         return NULL;
     }
 
@@ -410,18 +388,16 @@ mod_SCNetworkConnectionCreateWithServiceID(
     real_context.info = real_info;
 
     SCNetworkConnectionRef result = NULL;
-    PyObjC_DURING
-        result = SCNetworkConnectionCreateWithServiceID(
-            allocator,
-            serviceID,
-            mod_SCNetworkConnectionCallBack,
-            &real_context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            result = SCNetworkConnectionCreateWithServiceID(
+                allocator, serviceID, mod_SCNetworkConnectionCallBack, &real_context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        result = NULL;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            result = NULL;
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(real_info);
 
@@ -440,9 +416,8 @@ mod_SCNetworkConnectionCreateWithServiceID(
 }
 
 static PyObject*
-mod_SCNetworkReachabilitySetCallback(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_SCNetworkReachabilitySetCallback(PyObject* self __attribute__((__unused__)),
+                                     PyObject* args)
 {
     PyObject* py_target;
     PyObject* callout;
@@ -467,17 +442,16 @@ mod_SCNetworkReachabilitySetCallback(
     real_context.info = real_info;
 
     Boolean result = FALSE;
-    PyObjC_DURING
-        result = SCNetworkReachabilitySetCallback(
-            target,
-            mod_SCNetworkReachabilityCallBack,
-            &real_context);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            result = SCNetworkReachabilitySetCallback(
+                target, mod_SCNetworkReachabilityCallBack, &real_context);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-        result = FALSE;
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+            result = FALSE;
+        }
+    Py_END_ALLOW_THREADS
     Py_DECREF(real_info);
 
     if (!result) {
@@ -488,7 +462,6 @@ mod_SCNetworkReachabilitySetCallback(
 
     return PyBool_FromLong(result);
 }
-
 
 static PyMethodDef mod_methods[] = {
     {
@@ -521,7 +494,7 @@ static PyMethodDef mod_methods[] = {
         METH_VARARGS,
         NULL,
     },
-    { 0, 0, 0, 0 } /* sentinel */
+    {0, 0, 0, 0} /* sentinel */
 };
 
 PyObjC_MODULE_INIT(_manual)

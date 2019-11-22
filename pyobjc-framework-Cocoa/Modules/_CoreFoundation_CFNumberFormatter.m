@@ -1,7 +1,6 @@
 static PyObject*
-mod_CFNumberFormatterGetValueFromString(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__)),
+                                        PyObject* args)
 {
     PyObject* py_formatter;
     CFNumberFormatterRef formatter;
@@ -28,14 +27,16 @@ mod_CFNumberFormatterGetValueFromString(
         CFIndex indexv;
     } buf;
 
-    if (!PyArg_ParseTuple(args, "OOOnO", &py_formatter, &py_string, &py_range, &type, &py_buf)) {
+    if (!PyArg_ParseTuple(args, "OOOnO", &py_formatter, &py_string, &py_range, &type,
+                          &py_buf)) {
         return NULL;
     }
     if (py_buf != Py_None) {
         PyErr_SetString(PyExc_ValueError, "Bad value for buffer");
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter) <
+        0) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CFStringRef), py_string, &string) < 0) {
@@ -46,13 +47,15 @@ mod_CFNumberFormatterGetValueFromString(
     }
 
     Boolean rv = FALSE;
-    PyObjC_DURING
-        rv = CFNumberFormatterGetValueFromString(formatter, string, &range, type, &buf);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFNumberFormatterGetValueFromString(formatter, string, &range, type,
+                                                     &buf);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -122,7 +125,8 @@ mod_CFNumberFormatterGetValueFromString(
             return NULL;
         }
 
-        return Py_BuildValue("NNN", PyBool_FromLong(1), PyObjC_ObjCToPython(@encode(CFRange), &range), n);
+        return Py_BuildValue("NNN", PyBool_FromLong(1),
+                             PyObjC_ObjCToPython(@encode(CFRange), &range), n);
 
     } else {
         return Py_BuildValue("NOO", PyBool_FromLong(0), Py_None, Py_None);
@@ -130,9 +134,8 @@ mod_CFNumberFormatterGetValueFromString(
 }
 
 static PyObject*
-mod_CFNumberFormatterCreateStringWithValue(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFNumberFormatterCreateStringWithValue(PyObject* self __attribute__((__unused__)),
+                                           PyObject* args)
 {
     PyObject* py_allocator;
     CFAllocatorRef allocator;
@@ -164,7 +167,8 @@ mod_CFNumberFormatterCreateStringWithValue(
     if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter) <
+        0) {
         return NULL;
     }
 
@@ -235,13 +239,14 @@ mod_CFNumberFormatterCreateStringWithValue(
     }
 
     CFStringRef rv = NULL;
-    PyObjC_DURING
-        rv = CFNumberFormatterCreateStringWithValue(allocator, formatter, type, &buf);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CFNumberFormatterCreateStringWithValue(allocator, formatter, type, &buf);
 
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -254,18 +259,8 @@ mod_CFNumberFormatterCreateStringWithValue(
     return result;
 }
 
-
-
-#define COREFOUNDATION_NUMBERFORMATTER_METHODS \
-    { \
-        "CFNumberFormatterCreateStringWithValue", \
-        (PyCFunction)mod_CFNumberFormatterCreateStringWithValue, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFNumberFormatterGetValueFromString", \
-        (PyCFunction)mod_CFNumberFormatterGetValueFromString, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_NUMBERFORMATTER_METHODS                                           \
+    {"CFNumberFormatterCreateStringWithValue",                                           \
+     (PyCFunction)mod_CFNumberFormatterCreateStringWithValue, METH_VARARGS, NULL},       \
+        {"CFNumberFormatterGetValueFromString",                                          \
+         (PyCFunction)mod_CFNumberFormatterGetValueFromString, METH_VARARGS, NULL},

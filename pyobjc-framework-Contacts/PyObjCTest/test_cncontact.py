@@ -2,10 +2,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import Contacts
 
-    class TestCNContact (TestCase):
+    class TestCNContact(TestCase):
         @min_os_level("10.12")
         def testConstants10_12(self):
             self.assertIsInstance(Contacts.CNContactPhoneticOrganizationNameKey, unicode)
@@ -21,7 +21,9 @@ if sys.maxsize > 2**32:
             self.assertEqual(Contacts.CNContactSortOrderGivenName, 2)
             self.assertEqual(Contacts.CNContactSortOrderFamilyName, 3)
 
-            self.assertIsInstance(Contacts.CNContactPropertyNotFetchedExceptionName, unicode)
+            self.assertIsInstance(
+                Contacts.CNContactPropertyNotFetchedExceptionName, unicode
+            )
             self.assertIsInstance(Contacts.CNContactIdentifierKey, unicode)
             self.assertIsInstance(Contacts.CNContactNamePrefixKey, unicode)
             self.assertIsInstance(Contacts.CNContactGivenNameKey, unicode)
@@ -51,15 +53,18 @@ if sys.maxsize > 2**32:
             self.assertIsInstance(Contacts.CNContactSocialProfilesKey, unicode)
             self.assertIsInstance(Contacts.CNContactInstantMessageAddressesKey, unicode)
 
-        @min_os_level('10.11')
+        @min_os_level("10.11")
         def testProtocols(self):
-            objc.protocolNamed('CNKeyDescriptor')
+            objc.protocolNamed("CNKeyDescriptor")
 
-        @min_os_level('10.11')
+        @min_os_level("10.11")
         def testMethods(self):
             self.assertResultIsBOOL(Contacts.CNContact.isKeyAvailable_)
             self.assertResultIsBOOL(Contacts.CNContact.areKeysAvailable_)
-            self.assertResultIsBOOL(Contacts.CNContact.isUnifiedWithContactWithIdentifier_)
+            self.assertResultIsBOOL(
+                Contacts.CNContact.isUnifiedWithContactWithIdentifier_
+            )
+
 
 if __name__ == "__main__":
     main()

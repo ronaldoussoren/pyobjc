@@ -12,23 +12,21 @@ static PyTypeObject audio_buffer_list_type; /* Forward definition */
 struct audio_buffer_list {
     PyObject_HEAD
 
-    char             abl_ownsstorage;
-    PyObject*        abl_items; /* cache for Python version of abl_list items, needed for
-                                 * ownership of buffer pointers.
-                                 */
+        char abl_ownsstorage;
+    PyObject* abl_items; /* cache for Python version of abl_list items, needed for
+                          * ownership of buffer pointers.
+                          */
     AudioBufferList* abl_list;
 };
 
 static PyMemberDef abl_members[] = {
-    {
-        .name = "_ownsstorage",
-        .type = T_BOOL,
-        .offset = offsetof(struct audio_buffer_list, abl_ownsstorage),
-        .flags = READONLY,
-        .doc = "True iff this buffer owns the underlying storage"
-    },
+    {.name = "_ownsstorage",
+     .type = T_BOOL,
+     .offset = offsetof(struct audio_buffer_list, abl_ownsstorage),
+     .flags = READONLY,
+     .doc = "True iff this buffer owns the underlying storage"},
 
-    { .name = NULL } /* Sentinel */
+    {.name = NULL} /* Sentinel */
 };
 
 static Py_ssize_t
@@ -93,17 +91,15 @@ static PySequenceMethods abl_as_sequence = {
     .sq_item = abl_get_item,
 };
 
-
 static PyObject*
 abl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "num_buffers", NULL };
+    static char* keywords[] = {"num_buffers", NULL};
     struct audio_buffer_list* result;
     unsigned int num_buffers;
     unsigned int i;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                "I", keywords, &num_buffers)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &num_buffers)) {
         return NULL;
     }
 
@@ -114,7 +110,8 @@ static char* keywords[] = { "num_buffers", NULL };
 
     result->abl_ownsstorage = 1;
     result->abl_items = NULL;
-    result->abl_list = PyMem_Malloc(sizeof(AudioBufferList) + (num_buffers * sizeof(AudioBuffer)));
+    result->abl_list =
+        PyMem_Malloc(sizeof(AudioBufferList) + (num_buffers * sizeof(AudioBuffer)));
     if (result->abl_list == NULL) {
         Py_DECREF(result);
         return NULL;
@@ -123,7 +120,7 @@ static char* keywords[] = { "num_buffers", NULL };
 
     for (i = 0; i < num_buffers; i++) {
         result->abl_list->mBuffers[i].mNumberChannels = 0;
-        result->abl_list->mBuffers[i].mDataByteSize= 0;
+        result->abl_list->mBuffers[i].mDataByteSize = 0;
         result->abl_list->mBuffers[i].mData = NULL;
     }
 
@@ -146,25 +143,23 @@ abl_dealloc(PyObject* object)
 }
 
 PyDoc_STRVAR(abl_doc,
-    "AudioBufferList(num_buffers)\n"
-    CLINIC_SEP
-    "Return an audiobuffer list.");
+             "AudioBufferList(num_buffers)\n" CLINIC_SEP "Return an audiobuffer list.");
 
 static PyTypeObject audio_buffer_list_type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "CoreAudio.AudioBufferList",
-    .tp_basicsize   = sizeof(struct audio_buffer_list),
-    .tp_itemsize    = 0,
-    .tp_dealloc     = abl_dealloc,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_doc         = abl_doc,
-    .tp_members     = abl_members,
-    .tp_new         = abl_new,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioBufferList",
+    .tp_basicsize = sizeof(struct audio_buffer_list),
+    .tp_itemsize = 0,
+    .tp_dealloc = abl_dealloc,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_doc = abl_doc,
+    .tp_members = abl_members,
+    .tp_new = abl_new,
     .tp_as_sequence = &abl_as_sequence,
 };
 
-static PyObject* pythonify_audio_buffer_list(void* pointer)
+static PyObject*
+pythonify_audio_buffer_list(void* pointer)
 {
     AudioBufferList* buf_pointer = (AudioBufferList*)pointer;
     struct audio_buffer_list* result;
@@ -186,16 +181,17 @@ static PyObject* pythonify_audio_buffer_list(void* pointer)
     return (PyObject*)result;
 }
 
-static int depythonify_audio_buffer_list(PyObject* value, void* pointer)
+static int
+depythonify_audio_buffer_list(PyObject* value, void* pointer)
 {
     if (value == Py_None) {
-       *(AudioBufferList**)pointer = NULL;
-       return 0;
+        *(AudioBufferList**)pointer = NULL;
+        return 0;
     }
 
     if (!audio_buffer_list_check(value)) {
         PyErr_Format(PyExc_TypeError, "Expecting 'AudioBufferList', got '%.100s'",
-            Py_TYPE(value)->tp_name);
+                     Py_TYPE(value)->tp_name);
         return -1;
     }
 
@@ -208,11 +204,13 @@ init_audio_buffer_list(PyObject* module)
 {
     int r;
 
-    if (PyType_Ready(&audio_buffer_list_type) == -1) return -1;
+    if (PyType_Ready(&audio_buffer_list_type) == -1)
+        return -1;
 
     r = PyDict_SetItemString(audio_buffer_list_type.tp_dict, "__typestr__",
-            PyBytes_FromString(@encode(AudioBufferList)));
-    if (r == -1) return -1;
+                             PyBytes_FromString(@encode(AudioBufferList)));
+    if (r == -1)
+        return -1;
 
     Py_INCREF(&audio_buffer_list_type);
     r = PyModule_AddObject(module, "AudioBufferList", (PyObject*)&audio_buffer_list_type);
@@ -221,11 +219,9 @@ init_audio_buffer_list(PyObject* module)
         return -1;
     }
 
-    r = PyObjCPointerWrapper_Register(
-        "AudioBufferList*",
-        @encode(AudioBufferList*),
-        pythonify_audio_buffer_list,
-        depythonify_audio_buffer_list);
+    r = PyObjCPointerWrapper_Register("AudioBufferList*", @encode(AudioBufferList*),
+                                      pythonify_audio_buffer_list,
+                                      depythonify_audio_buffer_list);
 
     return r;
 }

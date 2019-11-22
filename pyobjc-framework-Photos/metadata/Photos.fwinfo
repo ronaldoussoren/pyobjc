@@ -19,6 +19,8 @@
    "PHImageErrorKey": { "typestr": "@" }
   },
   "enum": {
+   "PHLivePhotoRequestIDInvalid": { "value": 0 },
+   "PHInvalidAssetResourceDataRequestID": { "value": 0 },
    "PHAuthorizationStatusNotDetermined": { "value": 0 },
    "PHAuthorizationStatusRestricted": { "value": 1 },
    "PHAuthorizationStatusDenied": { "value": 2 },
@@ -118,6 +120,160 @@
    "PHAssetResourceTypePairedVideo": { "value": 9 }
   },
   "classes": {
+   "PHAssetResourceManager": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "requestDataForAssetResource:options:dataReceivedHandler:completionHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       },
+       "3": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "writeDataForAssetResource:toFile:options:completionHandler:",
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "PHContentEditingInputRequestOptions": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "progressHandler",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "d" },
+	 "2": { "typestr": "o^Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setProgressHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "d" },
+	  "2": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "PHVideoRequestOptions": {
+    "methods": [
+     {
+      "comment": "XXX",
+      "class_method": false,
+      "selector": "progressHandler",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "d" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "o^Z" },
+	 "4": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setProgressHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "d" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "o^Z" },
+	  "4": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "PHLivePhotoRequestOptions": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "progressHandler",
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "d" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "o^Z" },
+	 "4": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "setProgressHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "d" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "o^Z" },
+	  "4": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "PHPhotoLibrary": {
     "methods": [
      {
@@ -163,6 +319,89 @@
    },
    "PHImageManager": {
     "methods": [
+     {
+      "selector": "requestAVAssetForVideo:options:resultHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestExportSessionForVideo:options:exportPreset:resultHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestPlayerItemForVideo:options:resultHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestLivePhotoForAsset:targetSize:contentMode:options:resultHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "selector": "requestImageDataAndOrientationForAsset:options:resultHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "I" },
+	  "4": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
      {
       "class_method": false,
       "selector": "requestImageForAsset:targetSize:contentMode:options:resultHandler:",
@@ -329,6 +568,32 @@
    "PHAsset": {
     "methods": [
      {
+      "selector": "requestContentEditingInputWithOptions:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector":  "canPerformEditOperation:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector":  "representsBurst",
+      "retval": { "type_override": "Z" }
+     },
+     {
       "class_method": false,
       "selector":  "isSyncFailureHidden",
       "retval": { "type_override": "Z" }
@@ -417,6 +682,26 @@
 	  "1": { "typestr": "@" },
 	  "2": { "typestr": ["I", "Q"] },
 	  "3": { "typestr": "o^Z" }
+	 }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "PHLivePhoto": {
+    "methods": [
+     {
+      "selector": "requestLivePhotoWithResourceFileURLs:placeholderImage:targetSize:contentMode:resultHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "retval": { "typestr": "v" },
+	  "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
 	 }
 	}
        }

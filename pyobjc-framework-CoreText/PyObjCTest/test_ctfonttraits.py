@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
-class TestCTFontTraits (TestCase):
 
+class TestCTFontTraits(TestCase):
     def testConstants(self):
         self.assertIsInstance(kCTFontSymbolicTrait, unicode)
         self.assertIsInstance(kCTFontWeightTrait, unicode)
@@ -23,12 +22,18 @@ class TestCTFontTraits (TestCase):
         self.assertEqual(kCTFontClassMaskTrait, cast_uint(15 << kCTFontClassMaskShift))
 
         self.assertEqual(kCTFontUnknownClass, cast_uint(0 << kCTFontClassMaskShift))
-        self.assertEqual(kCTFontOldStyleSerifsClass, cast_uint(1 << kCTFontClassMaskShift))
+        self.assertEqual(
+            kCTFontOldStyleSerifsClass, cast_uint(1 << kCTFontClassMaskShift)
+        )
         self.assertEqual(kCTFontTransitionalSerifsClass, (2 << kCTFontClassMaskShift))
         self.assertEqual(kCTFontModernSerifsClass, cast_uint(3 << kCTFontClassMaskShift))
-        self.assertEqual(kCTFontClarendonSerifsClass, cast_uint(4 << kCTFontClassMaskShift))
+        self.assertEqual(
+            kCTFontClarendonSerifsClass, cast_uint(4 << kCTFontClassMaskShift)
+        )
         self.assertEqual(kCTFontSlabSerifsClass, cast_uint(5 << kCTFontClassMaskShift))
-        self.assertEqual(kCTFontFreeformSerifsClass, cast_uint(7 << kCTFontClassMaskShift))
+        self.assertEqual(
+            kCTFontFreeformSerifsClass, cast_uint(7 << kCTFontClassMaskShift)
+        )
         self.assertEqual(kCTFontSansSerifClass, cast_uint(8 << kCTFontClassMaskShift))
         self.assertEqual(kCTFontOrnamentalsClass, cast_uint(9 << kCTFontClassMaskShift))
         self.assertEqual(kCTFontScriptsClass, cast_uint(10 << kCTFontClassMaskShift))
@@ -57,12 +62,10 @@ class TestCTFontTraits (TestCase):
         self.assertEqual(kCTFontClassScripts, (10 << kCTFontClassMaskShift))
         self.assertEqual(kCTFontClassSymbolic, (12 << kCTFontClassMaskShift))
 
-
-
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(kCTFontTraitColorGlyphs, 1<<13)
-        self.assertEqual(kCTFontTraitComposite, 1<<14)
+        self.assertEqual(kCTFontTraitColorGlyphs, 1 << 13)
+        self.assertEqual(kCTFontTraitComposite, 1 << 14)
 
         self.assertEqual(kCTFontColorGlyphsTrait, kCTFontTraitColorGlyphs)
 

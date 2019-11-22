@@ -227,6 +227,17 @@
      }
     ]
    },
+   "MKGeoJSONDecoder": {
+     "methods": [
+       {
+          "args": {
+	   "1": { "type_modifier": "o" }
+	  },
+	  "class_method": false,
+	  "selector": "geoJSONObjectsWithData:error:"
+       }
+     ]
+   },
    "MKTileOverlay": {
      "methods": [
        {

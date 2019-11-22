@@ -14,7 +14,8 @@
 - (id)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil)) return nil;
+    if (unlikely(self == nil))
+        return nil;
 
     oc_value = nil;
 
@@ -22,28 +23,30 @@
     return self;
 }
 
--(PyObject*)__pyobjc_PythonObject__
+- (PyObject*)__pyobjc_PythonObject__
 {
     Py_INCREF(value);
     return value;
 }
 
--(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
 
--(BOOL)supportsWeakPointers {
+- (BOOL)supportsWeakPointers
+{
     return YES;
 }
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return NO;
 }
 
--(oneway void)release
+- (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
     if (unlikely(!Py_IsInitialized())) {
@@ -57,7 +60,7 @@
     PyObjC_END_WITH_GIL
 }
 
--(void)dealloc
+- (void)dealloc
 {
     [oc_value release];
     oc_value = nil;
@@ -76,18 +79,16 @@
     [super dealloc];
 }
 
-
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     PyObjC_encodeWithCoder(value, coder);
 }
 
-
 /*
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
--(void)pyobjcSetValue:(NSObject*)other
+- (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
@@ -97,7 +98,7 @@
     PyObjC_END_WITH_GIL
 }
 
--(id)initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder*)coder
 {
     value = NULL;
 
@@ -130,20 +131,18 @@
 
     } else {
         [NSException raise:NSInvalidArgumentException
-                format:@"decoding Python objects is not supported"];
+                    format:@"decoding Python objects is not supported"];
         return nil;
-
     }
 }
 
--(NSDate*)_make_oc_value
+- (NSDate*)_make_oc_value
 {
     if (oc_value == nil) {
         PyObjC_BEGIN_WITH_GIL
             PyObject* v;
 
-            v = PyObject_CallMethod(value, "strftime", "s",
-                "%Y-%m-%d %H:%M:%S %z");
+            v = PyObject_CallMethod(value, "strftime", "s", "%Y-%m-%d %H:%M:%S %z");
             if (v == NULL) {
                 /* Raise ObjC exception */
                 PyObjC_GIL_FORWARD_EXC();
@@ -151,7 +150,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            oc_value = [NSDate dateWithString: PyObjC_PythonToId(v)];
+            oc_value = [NSDate dateWithString:PyObjC_PythonToId(v)];
 #pragma clang diagnostic pop
             [oc_value retain];
             Py_DECREF(v);
@@ -176,10 +175,8 @@
                 NSInteger minutes = offset % 60;
                 NSInteger hours = offset / 60;
 
-
-
-                snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02ld%02ld",
-                    posneg, (long)hours, (long)minutes);
+                snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02ld%02ld", posneg,
+                         (long)hours, (long)minutes);
                 v = PyObject_CallMethod(value, "strftime", "s", buf);
                 if (v == NULL) {
                     /* Raise ObjC exception */
@@ -187,7 +184,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                oc_value = [NSDate dateWithString: PyObjC_PythonToId(v)];
+                oc_value = [NSDate dateWithString:PyObjC_PythonToId(v)];
 #pragma clang diagnostic pop
                 [oc_value retain];
                 Py_DECREF(v);
@@ -198,11 +195,10 @@
     return oc_value;
 }
 
--(NSTimeInterval)timeIntervalSinceReferenceDate
+- (NSTimeInterval)timeIntervalSinceReferenceDate
 {
     return [[self _make_oc_value] timeIntervalSinceReferenceDate];
 }
-
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -214,12 +210,13 @@
 
 #pragma clang diagnostic pop
 
-- (NSComparisonResult)compare:(NSDate *)anotherDate
+- (NSComparisonResult)compare:(NSDate*)anotherDate
 {
     return [[self _make_oc_value] compare:anotherDate];
 }
 
-- (NSCalendarDate *)dateWithCalendarFormat:(NSString *)formatString timeZone:(NSTimeZone *)timeZone
+- (NSCalendarDate*)dateWithCalendarFormat:(NSString*)formatString
+                                 timeZone:(NSTimeZone*)timeZone
 {
     return [[self _make_oc_value] dateWithCalendarFormat:formatString timeZone:timeZone];
 }
@@ -229,17 +226,21 @@
     return [[self _make_oc_value] description];
 }
 
-- (NSString *)descriptionWithCalendarFormat:(NSString *)formatString timeZone:(NSTimeZone *)aTimeZone locale:(id)localeDictionary
+- (NSString*)descriptionWithCalendarFormat:(NSString*)formatString
+                                  timeZone:(NSTimeZone*)aTimeZone
+                                    locale:(id)localeDictionary
 {
-    return [[self _make_oc_value] descriptionWithCalendarFormat:formatString timeZone:aTimeZone locale:localeDictionary];
+    return [[self _make_oc_value] descriptionWithCalendarFormat:formatString
+                                                       timeZone:aTimeZone
+                                                         locale:localeDictionary];
 }
 
-- (NSString *)descriptionWithLocale:(id)localeDictionary
+- (NSString*)descriptionWithLocale:(id)localeDictionary
 {
     return [[self _make_oc_value] descriptionWithLocale:localeDictionary];
 }
 
-- (NSDate *)earlierDate:(NSDate *)anotherDate
+- (NSDate*)earlierDate:(NSDate*)anotherDate
 {
     if ([[self _make_oc_value] earlierDate:anotherDate] == self) {
         return self;
@@ -248,14 +249,12 @@
     }
 }
 
-
-- (BOOL)isEqualToDate:(NSDate *)anotherDate
+- (BOOL)isEqualToDate:(NSDate*)anotherDate
 {
     return [[self _make_oc_value] isEqualToDate:anotherDate];
 }
 
-
-- (NSDate *)laterDate:(NSDate *)anotherDate
+- (NSDate*)laterDate:(NSDate*)anotherDate
 {
     if ([[self _make_oc_value] laterDate:anotherDate] == self) {
         return self;
@@ -269,7 +268,7 @@
     return [[self _make_oc_value] timeIntervalSince1970];
 }
 
-- (NSTimeInterval)timeIntervalSinceDate:(NSDate *)anotherDate
+- (NSTimeInterval)timeIntervalSinceDate:(NSDate*)anotherDate
 {
     return [[self _make_oc_value] timeIntervalSinceDate:anotherDate];
 }
@@ -278,6 +277,5 @@
 {
     return [[self _make_oc_value] timeIntervalSinceNow];
 }
-
 
 @end /* implementation OC_PythonDate */

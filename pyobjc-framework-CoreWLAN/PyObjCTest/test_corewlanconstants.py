@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import CoreWLAN
 
-class TestCoreWLANConstants (TestCase):
-    @min_os_level('10.7')
+
+class TestCoreWLANConstants(TestCase):
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(CoreWLAN.CWErrorDomain, unicode)
         self.assertIsInstance(CoreWLAN.CWScanCacheDidUpdateNotification, unicode)
@@ -12,7 +13,7 @@ class TestCoreWLANConstants (TestCase):
         self.assertIsInstance(CoreWLAN.CWLinkQualityNotificationTransmitRateKey, unicode)
         self.assertIsInstance(CoreWLAN.CWServiceDidChangeNotification, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(CoreWLAN.kCWErrorDomain, unicode)
         self.assertIsInstance(CoreWLAN.kCWPowerDidChangeNotification, unicode)
@@ -33,7 +34,7 @@ class TestCoreWLANConstants (TestCase):
         self.assertIsInstance(CoreWLAN.kCWScanKeyDwellTime, unicode)
         self.assertIsInstance(CoreWLAN.kCWScanKeyRestTime, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(CoreWLAN.CWPowerDidChangeNotification, unicode)
         self.assertIsInstance(CoreWLAN.CWSSIDDidChangeNotification, unicode)
@@ -41,6 +42,7 @@ class TestCoreWLANConstants (TestCase):
         self.assertIsInstance(CoreWLAN.CWLinkDidChangeNotification, unicode)
         self.assertIsInstance(CoreWLAN.CWModeDidChangeNotification, unicode)
         self.assertIsInstance(CoreWLAN.CWCountryCodeDidChangeNotification, unicode)
+
 
 if __name__ == "__main__":
     main()

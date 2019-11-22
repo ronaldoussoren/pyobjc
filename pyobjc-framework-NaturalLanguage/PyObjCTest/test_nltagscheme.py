@@ -4,12 +4,14 @@ import sys
 if sys.maxsize > 2 ** 32:
     import NaturalLanguage
 
-    class TestNLTagScheme (TestCase):
+    class TestNLTagScheme(TestCase):
         def test_constants(self):
             self.assertIsInstance(NaturalLanguage.NLTagSchemeTokenType, unicode)
             self.assertIsInstance(NaturalLanguage.NLTagSchemeLexicalClass, unicode)
             self.assertIsInstance(NaturalLanguage.NLTagSchemeNameType, unicode)
-            self.assertIsInstance(NaturalLanguage.NLTagSchemeNameTypeOrLexicalClass, unicode)
+            self.assertIsInstance(
+                NaturalLanguage.NLTagSchemeNameTypeOrLexicalClass, unicode
+            )
             self.assertIsInstance(NaturalLanguage.NLTagSchemeLemma, unicode)
             self.assertIsInstance(NaturalLanguage.NLTagSchemeLanguage, unicode)
             self.assertIsInstance(NaturalLanguage.NLTagSchemeScript, unicode)
@@ -45,6 +47,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(NaturalLanguage.NLTagPlaceName, unicode)
             self.assertIsInstance(NaturalLanguage.NLTagOrganizationName, unicode)
 
+        @min_os_level("10.15")
+        def test_constants10_15(self):
+            self.assertIsInstance(NaturalLanguage.NLTagSchemeSentimentScore, unicode)
 
 
 if __name__ == "__main__":

@@ -1,17 +1,17 @@
-
 from PyObjCTools.TestSupport import *
 import CoreServices
 import sys
 import os
 
-class TestLSOpen (TestCase):
+
+class TestLSOpen(TestCase):
     def setUp(self):
-        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dummy.txt')
-        fp = open(self.path, 'w')
-        fp.write('test contents')
+        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dummy.txt")
+        fp = open(self.path, "w")
+        fp.write("test contents")
         fp.close()
 
-        self.bpath = self.path.encode('utf-8')
+        self.bpath = self.path.encode("utf-8")
 
     def tearDown(self):
         if os.path.exists(self.path):
@@ -64,7 +64,9 @@ class TestLSOpen (TestCase):
         self.assertEqual(o.asyncRefCon, None)
 
     def testFunctions(self):
-        url = CoreServices.CFURLCreateFromFileSystemRepresentation(None, self.bpath, len(self.bpath), True)
+        url = CoreServices.CFURLCreateFromFileSystemRepresentation(
+            None, self.bpath, len(self.bpath), True
+        )
 
         self.assertArgIsOut(CoreServices.LSOpenCFURLRef, 1)
         ok, u = CoreServices.LSOpenCFURLRef(url, None)
@@ -78,7 +80,9 @@ class TestLSOpen (TestCase):
         self.assertArgIsOut(CoreServices.LSOpenItemsWithRole, 5)
         self.assertArgSizeInArg(CoreServices.LSOpenItemsWithRole, 5, 6)
         ref = objc.FSRef.from_pathname(self.path)
-        ok, psns = CoreServices.LSOpenItemsWithRole([ref], 1, CoreServices.kLSRolesAll, None, None, None, 1)
+        ok, psns = CoreServices.LSOpenItemsWithRole(
+            [ref], 1, CoreServices.kLSRolesAll, None, None, None, 1
+        )
         self.assertIn(ok, (0, -50))
         self.assertIsInstance(psns, (list, tuple))
         for x in psns:
@@ -92,7 +96,9 @@ class TestLSOpen (TestCase):
         self.assertArgIsIn(CoreServices.LSOpenURLsWithRole, 3)
         self.assertArgIsOut(CoreServices.LSOpenURLsWithRole, 4)
         self.assertArgSizeInArg(CoreServices.LSOpenURLsWithRole, 4, 5)
-        ok, psns = CoreServices.LSOpenURLsWithRole([url], CoreServices.kLSRolesAll, None, None, None, 1)
+        ok, psns = CoreServices.LSOpenURLsWithRole(
+            [url], CoreServices.kLSRolesAll, None, None, None, 1
+        )
         self.assertEqual(ok, 0)
         self.assertIsInstance(psns, (list, tuple))
         for x in psns:
@@ -107,21 +113,20 @@ class TestLSOpen (TestCase):
         self.assertArgIsIn(CoreServices.LSOpenApplication, 0)
         self.assertArgIsOut(CoreServices.LSOpenApplication, 1)
         params = CoreServices.LSApplicationParameters(
-                version=0,
-                flags = CoreServices.kLSLaunchDefaults,
-                application = objc.FSRef.from_pathname('/Applications/Utilities/Terminal.app'),
-                asyncLaunchRefCon = None,
-                environment = None,
-                argv = [b"Terminal".decode('latin1')],
-                initialEvent = None,
-            )
+            version=0,
+            flags=CoreServices.kLSLaunchDefaults,
+            application=objc.FSRef.from_pathname("/Applications/Utilities/Terminal.app"),
+            asyncLaunchRefCon=None,
+            environment=None,
+            argv=[b"Terminal".decode("latin1")],
+            initialEvent=None,
+        )
 
         # Call will fail for now, 'application' is an FSRef pointers and
         # pyobjc-core isn't smart enough to deal with that.
         ok, psn = CoreServices.LSOpenApplication(params, None)
         self.assertEqual(ok, 0)
         self.assertIsInstance(psn, (int, long))
-
 
     def testFSRef(self):
         # Functions using structs we don't support, probably need
@@ -130,6 +135,7 @@ class TestLSOpen (TestCase):
         self.assertArgIsOut(CoreServices.LSOpenFromRefSpec, 1)
         self.assertArgIsIn(CoreServices.LSOpenFromURLSpec, 0)
         self.assertArgIsOut(CoreServices.LSOpenFromURLSpec, 1)
+
 
 if __name__ == "__main__":
     main()

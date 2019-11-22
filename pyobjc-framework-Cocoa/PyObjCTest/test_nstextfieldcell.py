@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSTextFieldCell (TestCase):
+
+class TestNSTextFieldCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSTextFieldSquareBezel, 0)
         self.assertEqual(NSTextFieldRoundedBezel, 1)

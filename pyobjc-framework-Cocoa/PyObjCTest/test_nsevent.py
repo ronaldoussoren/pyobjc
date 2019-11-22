@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSEvent (TestCase):
+
+class TestNSEvent(TestCase):
     def testConstants(self):
         self.assertEqual(NSLeftMouseDown, 1)
         self.assertEqual(NSLeftMouseUp, 2)
@@ -51,7 +52,6 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSEventTypeOtherMouseUp, 26)
         self.assertEqual(NSEventTypeOtherMouseDragged, 27)
 
-
         self.assertEqual(NSLeftMouseDownMask, 1 << NSLeftMouseDown)
         self.assertEqual(NSLeftMouseUpMask, 1 << NSLeftMouseUp)
         self.assertEqual(NSRightMouseDownMask, 1 << NSRightMouseDown)
@@ -91,7 +91,9 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSEventMaskFlagsChanged, 1 << NSEventTypeFlagsChanged)
         self.assertEqual(NSEventMaskAppKitDefined, 1 << NSEventTypeAppKitDefined)
         self.assertEqual(NSEventMaskSystemDefined, 1 << NSEventTypeSystemDefined)
-        self.assertEqual(NSEventMaskApplicationDefined, 1 << NSEventTypeApplicationDefined)
+        self.assertEqual(
+            NSEventMaskApplicationDefined, 1 << NSEventTypeApplicationDefined
+        )
         self.assertEqual(NSEventMaskPeriodic, 1 << NSEventTypePeriodic)
         self.assertEqual(NSEventMaskCursorUpdate, 1 << NSEventTypeCursorUpdate)
         self.assertEqual(NSEventMaskScrollWheel, 1 << NSEventTypeScrollWheel)
@@ -109,7 +111,7 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSNumericPadKeyMask, 1 << 21)
         self.assertEqual(NSHelpKeyMask, 1 << 22)
         self.assertEqual(NSFunctionKeyMask, 1 << 23)
-        self.assertEqual(NSDeviceIndependentModifierFlagsMask, 0xffff0000)
+        self.assertEqual(NSDeviceIndependentModifierFlagsMask, 0xFFFF0000)
 
         self.assertEqual(NSEventModifierFlagCapsLock, 1 << 16)
         self.assertEqual(NSEventModifierFlagShift, 1 << 17)
@@ -119,7 +121,7 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSEventModifierFlagNumericPad, 1 << 21)
         self.assertEqual(NSEventModifierFlagHelp, 1 << 22)
         self.assertEqual(NSEventModifierFlagFunction, 1 << 23)
-        self.assertEqual(NSEventModifierFlagDeviceIndependentFlagsMask, 0xffff0000)
+        self.assertEqual(NSEventModifierFlagDeviceIndependentFlagsMask, 0xFFFF0000)
 
         self.assertEqual(NSUnknownPointingDevice, 0)
         self.assertEqual(NSPenPointingDevice, 1)
@@ -237,7 +239,7 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSHelpFunctionKey, unichr(0xF746))
         self.assertEqual(NSModeSwitchFunctionKey, unichr(0xF747))
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertEqual(NSEventTypeGesture, 29)
         self.assertEqual(NSEventTypeMagnify, 30)
@@ -253,7 +255,7 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSEventMaskBeginGesture, 1 << 19)
         self.assertEqual(NSEventMaskEndGesture, 1 << 20)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(NSEventPhaseNone, 0)
         self.assertEqual(NSEventPhaseBegan, 1)
@@ -270,18 +272,18 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSEventSwipeTrackingLockDirection, 1)
         self.assertEqual(NSEventSwipeTrackingClampGestureAmount, 2)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertEqual(NSEventTypeSmartMagnify, 32)
         self.assertEqual(NSEventTypeQuickLook, 33)
-        self.assertEqual(NSEventMaskSmartMagnify, 1<<32)
+        self.assertEqual(NSEventMaskSmartMagnify, 1 << 32)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertEqual(NSEventTypePressure, 34)
         self.assertEqual(NSEventTypeDirectTouch, 37)
-        self.assertEqual(NSEventMaskPressure, 1<<34)
-        self.assertEqual(NSEventMaskDirectTouch, 1<<37)
+        self.assertEqual(NSEventMaskPressure, 1 << 34)
+        self.assertEqual(NSEventMaskDirectTouch, 1 << 37)
 
         self.assertEqual(NSPressureBehaviorUnknown, -1)
         self.assertEqual(NSPressureBehaviorPrimaryDefault, 0)
@@ -291,6 +293,11 @@ class TestNSEvent (TestCase):
         self.assertEqual(NSPressureBehaviorPrimaryDeepClick, 5)
         self.assertEqual(NSPressureBehaviorPrimaryDeepDrag, 6)
 
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertEqual(NSEventTypeChangeMode, 38)
+        self.assertEqual(NSEventMaskChangeMode, 1 << NSEventTypeChangeMode)
+
     def testFunctions(self):
         v = NSEventMaskFromType(NSLeftMouseDown)
         self.assertEqual(v, NSLeftMouseDownMask)
@@ -298,7 +305,7 @@ class TestNSEvent (TestCase):
         v = NSEventMaskFromType(NSOtherMouseDown)
         self.assertEqual(v, NSOtherMouseDownMask)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertResultIsBOOL(NSEvent.isMouseCoalescingEnabled)
         self.assertArgIsBOOL(NSEvent.setMouseCoalescingEnabled_, 0)
@@ -307,23 +314,44 @@ class TestNSEvent (TestCase):
         self.assertResultIsBOOL(NSEvent.isARepeat)
         self.assertResultIsBOOL(NSEvent.isEnteringProximity)
 
-        self.assertArgIsBOOL(NSEvent.keyEventWithType_location_modifierFlags_timestamp_windowNumber_context_characters_charactersIgnoringModifiers_isARepeat_keyCode_, 8)
-        self.assertArgHasType(NSEvent.enterExitEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_trackingNumber_userData_, 8, b'^v')
+        self.assertArgIsBOOL(
+            NSEvent.keyEventWithType_location_modifierFlags_timestamp_windowNumber_context_characters_charactersIgnoringModifiers_isARepeat_keyCode_,
+            8,
+        )
+        self.assertArgHasType(
+            NSEvent.enterExitEventWithType_location_modifierFlags_timestamp_windowNumber_context_eventNumber_trackingNumber_userData_,
+            8,
+            b"^v",
+        )
 
-        self.assertResultHasType(NSEvent.userData, b'^v')
+        self.assertResultHasType(NSEvent.userData, b"^v")
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, b'v@')
-        self.assertArgIsBlock(NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, b'@@')
+        self.assertArgIsBlock(
+            NSEvent.addGlobalMonitorForEventsMatchingMask_handler_, 1, b"v@"
+        )
+        self.assertArgIsBlock(
+            NSEvent.addLocalMonitorForEventsMatchingMask_handler_, 1, b"@@"
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSEvent.hasPreciseScrollingDeltas)
         self.assertResultIsBOOL(NSEvent.isDirectionInvertedFromDevice)
         self.assertResultIsBOOL(NSEvent.isSwipeTrackingFromScrollEventsEnabled)
 
-        self.assertArgIsBlock(NSEvent.trackSwipeEventWithOptions_dampenAmountThresholdMin_max_usingHandler_, 3, b'v' + objc._C_CGFloat + objc._C_NSUInteger + objc._C_NSBOOL + b'o^' + objc._C_NSBOOL)
+        self.assertArgIsBlock(
+            NSEvent.trackSwipeEventWithOptions_dampenAmountThresholdMin_max_usingHandler_,
+            3,
+            b"v"
+            + objc._C_CGFloat
+            + objc._C_NSUInteger
+            + objc._C_NSBOOL
+            + b"o^"
+            + objc._C_NSBOOL,
+        )
+
 
 if __name__ == "__main__":
     main()

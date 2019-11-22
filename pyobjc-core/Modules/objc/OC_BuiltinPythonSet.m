@@ -3,16 +3,17 @@
 
 @implementation OC_BuiltinPythonSet
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return YES;
 }
 
--(Class)classForKeyedArchiver
+- (Class)classForKeyedArchiver
 {
     return [OC_BuiltinPythonSet class];
 }
 
-+(NSArray*)classFallbacksForKeyedArchiver
++ (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObjects:@"OC_PythonSet", @"NSSet", nil];
 }

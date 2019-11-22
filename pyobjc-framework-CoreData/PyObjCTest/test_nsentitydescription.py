@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestNSEntityDescription (TestCase):
+
+class TestNSEntityDescription(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSEntityDescription.isAbstract)
         self.assertArgIsBOOL(NSEntityDescription.setAbstract_, 0)

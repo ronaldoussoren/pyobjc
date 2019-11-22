@@ -2,13 +2,13 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-SecTrustCallback = b'v@I'
+SecTrustCallback = b"v@I"
+SecTrustWithErrorCallback = b"v@B@"
 
-class TestSecTrusted (TestCase):
 
+class TestSecTrusted(TestCase):
     def test_types(self):
         self.assertIsCFType(Security.SecTrustRef)
-
 
     def test_constants(self):
         self.assertEqual(Security.kSecTrustResultInvalid, 0)
@@ -28,12 +28,12 @@ class TestSecTrusted (TestCase):
         self.assertEqual(Security.kSecTrustOptionUseTrustSettings, 0x00000020)
         self.assertEqual(Security.kSecTrustOptionImplicitAnchors, 0x00000040)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_constants10_7(self):
         self.assertIsInstance(Security.kSecPropertyTypeTitle, unicode)
         self.assertIsInstance(Security.kSecPropertyTypeError, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def test_constants10_9(self):
         self.assertIsInstance(Security.kSecTrustEvaluationDate, unicode)
         self.assertIsInstance(Security.kSecTrustExtendedValidation, unicode)
@@ -42,11 +42,11 @@ class TestSecTrusted (TestCase):
         self.assertIsInstance(Security.kSecTrustRevocationChecked, unicode)
         self.assertIsInstance(Security.kSecTrustRevocationValidUntilDate, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(Security.kSecTrustCertificateTransparency, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def test_constants10_12(self):
         self.assertIsInstance(Security.kSecTrustCertificateTransparencyWhiteList, unicode)
 
@@ -56,7 +56,11 @@ class TestSecTrusted (TestCase):
         self.assertResultHasType(Security.SecTrustCreateWithCertificates, objc._C_INT)
         self.assertArgHasType(Security.SecTrustCreateWithCertificates, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustCreateWithCertificates, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustCreateWithCertificates, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTrustCreateWithCertificates,
+            2,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
         self.assertArgIsCFRetained(Security.SecTrustCreateWithCertificates, 2)
 
         self.assertResultHasType(Security.SecTrustSetPolicies, objc._C_INT)
@@ -65,7 +69,9 @@ class TestSecTrusted (TestCase):
 
         self.assertResultHasType(Security.SecTrustCopyPolicies, objc._C_INT)
         self.assertArgHasType(Security.SecTrustCopyPolicies, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustCopyPolicies, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTrustCopyPolicies, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecTrustCopyPolicies, 1)
 
         self.assertResultHasType(Security.SecTrustSetAnchorCertificates, objc._C_INT)
@@ -74,11 +80,21 @@ class TestSecTrusted (TestCase):
 
         self.assertResultHasType(Security.SecTrustSetAnchorCertificatesOnly, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSetAnchorCertificatesOnly, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustSetAnchorCertificatesOnly, 1, objc._C_NSBOOL)
+        self.assertArgHasType(
+            Security.SecTrustSetAnchorCertificatesOnly, 1, objc._C_NSBOOL
+        )
 
-        self.assertResultHasType(Security.SecTrustCopyCustomAnchorCertificates, objc._C_INT)
-        self.assertArgHasType(Security.SecTrustCopyCustomAnchorCertificates, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustCopyCustomAnchorCertificates, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertResultHasType(
+            Security.SecTrustCopyCustomAnchorCertificates, objc._C_INT
+        )
+        self.assertArgHasType(
+            Security.SecTrustCopyCustomAnchorCertificates, 0, objc._C_ID
+        )
+        self.assertArgHasType(
+            Security.SecTrustCopyCustomAnchorCertificates,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
         self.assertArgIsCFRetained(Security.SecTrustCopyCustomAnchorCertificates, 1)
 
         self.assertResultHasType(Security.SecTrustSetVerifyDate, objc._C_INT)
@@ -92,30 +108,38 @@ class TestSecTrusted (TestCase):
         self.assertArgHasType(Security.SecTrustSetKeychains, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustSetKeychains, 1, objc._C_ID)
 
-        self.assertFalse(hasattr(Security, 'SecTrustSetParameters'))
-        self.assertFalse(hasattr(Security, 'SecTrustGetResult'))
-        self.assertFalse(hasattr(Security, 'SecTrustGetCssmResult'))
-        self.assertFalse(hasattr(Security, 'SecTrustGetCssmResultCode'))
-        self.assertFalse(hasattr(Security, 'SecTrustGetTPHandle'))
+        self.assertFalse(hasattr(Security, "SecTrustSetParameters"))
+        self.assertFalse(hasattr(Security, "SecTrustGetResult"))
+        self.assertFalse(hasattr(Security, "SecTrustGetCssmResult"))
+        self.assertFalse(hasattr(Security, "SecTrustGetCssmResultCode"))
+        self.assertFalse(hasattr(Security, "SecTrustGetTPHandle"))
 
         self.assertResultHasType(Security.SecTrustCopyAnchorCertificates, objc._C_INT)
-        self.assertArgHasType(Security.SecTrustCopyAnchorCertificates, 0, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTrustCopyAnchorCertificates,
+            0,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
         self.assertArgIsCFRetained(Security.SecTrustCopyAnchorCertificates, 0)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_functions_10_7(self):
         self.assertResultHasType(Security.SecTrustEvaluate, objc._C_INT)
         self.assertArgHasType(Security.SecTrustEvaluate, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustEvaluate, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT)
+        self.assertArgHasType(
+            Security.SecTrustEvaluate, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT
+        )
 
         self.assertResultHasType(Security.SecTrustEvaluateAsync, objc._C_INT)
         self.assertArgHasType(Security.SecTrustEvaluateAsync, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustEvaluateAsync, 1, b'^{dispatch_queue_s}')
+        self.assertArgHasType(Security.SecTrustEvaluateAsync, 1, b"^{dispatch_queue_s}")
         self.assertArgIsBlock(Security.SecTrustEvaluateAsync, 2, SecTrustCallback)
 
         self.assertResultHasType(Security.SecTrustGetTrustResult, objc._C_INT)
         self.assertArgHasType(Security.SecTrustGetTrustResult, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustGetTrustResult, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT)
+        self.assertArgHasType(
+            Security.SecTrustGetTrustResult, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT
+        )
 
         self.assertResultHasType(Security.SecTrustCopyPublicKey, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTrustCopyPublicKey)
@@ -126,7 +150,9 @@ class TestSecTrusted (TestCase):
 
         self.assertResultHasType(Security.SecTrustGetCertificateAtIndex, objc._C_ID)
         self.assertArgHasType(Security.SecTrustGetCertificateAtIndex, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustGetCertificateAtIndex, 1, objc._C_NSInteger)
+        self.assertArgHasType(
+            Security.SecTrustGetCertificateAtIndex, 1, objc._C_NSInteger
+        )
 
         self.assertResultHasType(Security.SecTrustCopyProperties, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTrustCopyProperties)
@@ -136,7 +162,7 @@ class TestSecTrusted (TestCase):
         self.assertArgHasType(Security.SecTrustSetOptions, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustSetOptions, 1, objc._C_UINT)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def test_functions_10_9(self):
         self.assertResultHasType(Security.SecTrustSetNetworkFetchAllowed, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSetNetworkFetchAllowed, 0, objc._C_ID)
@@ -144,7 +170,11 @@ class TestSecTrusted (TestCase):
 
         self.assertResultHasType(Security.SecTrustGetNetworkFetchAllowed, objc._C_INT)
         self.assertArgHasType(Security.SecTrustGetNetworkFetchAllowed, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustGetNetworkFetchAllowed, 1, objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
+        self.assertArgHasType(
+            Security.SecTrustGetNetworkFetchAllowed,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_NSBOOL,
+        )
 
         self.assertResultHasType(Security.SecTrustCopyExceptions, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTrustCopyExceptions)
@@ -162,15 +192,24 @@ class TestSecTrusted (TestCase):
         self.assertArgHasType(Security.SecTrustSetOCSPResponse, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustSetOCSPResponse, 1, objc._C_ID)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def test_functions_10_14(self):
         self.assertResultHasType(Security.SecTrustEvaluateWithError, objc._C_BOOL)
         self.assertArgHasType(Security.SecTrustEvaluateWithError, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustEvaluateWithError, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTrustEvaluateWithError, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
-    @min_os_level('10.14.2')
+    @min_os_level("10.14.2")
     def test_functions_10_14_2(self):
         Security.SecTrustSetSignedCertificateTimestamps
+
+    @min_os_level("10.15")
+    def test_functions_10_15(self):
+        self.assertArgIsBlock(
+            Security.SecTrustEvaluateAsyncWithError, 2, SecTrustWithErrorCallback
+        )
+
 
 if __name__ == "__main__":
     main()

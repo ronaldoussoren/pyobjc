@@ -2,7 +2,8 @@ import PrintCore
 import sys
 from PyObjCTools.TestSupport import *
 
-class TestPMErrors (TestCase):
+
+class TestPMErrors(TestCase):
     def test_constants(self):
         self.assertEqual(PrintCore.kPMAllocationFailure, -108)
         self.assertEqual(PrintCore.kPMInternalError, PrintCore.kPMGeneralError)
@@ -15,7 +16,7 @@ class TestPMErrors (TestCase):
         self.assertEqual(PrintCore.kPMInvalidPrinterInfo, -30886)
         self.assertEqual(PrintCore.kPMInvalidConnection, -30887)
         self.assertEqual(PrintCore.kPMInvalidKey, -30888)
-        self.assertEqual(PrintCore.kPMInvalidValue	, -30889)
+        self.assertEqual(PrintCore.kPMInvalidValue, -30889)
         self.assertEqual(PrintCore.kPMInvalidAllocator, -30890)
         self.assertEqual(PrintCore.kPMInvalidTicket, -30891)
         self.assertEqual(PrintCore.kPMInvalidItem, -30892)
@@ -107,7 +108,9 @@ class TestPMErrors (TestCase):
         self.assertEqual(PrintCore.kPMIOAttrNotAvailable, -9787)
         self.assertEqual(PrintCore.kPMReadGotZeroData, -9788)
 
-        self.assertEqual(PrintCore.kPMLastErrorCodeToMakeMaintenanceOfThisListEasier, -9799)
+        self.assertEqual(
+            PrintCore.kPMLastErrorCodeToMakeMaintenanceOfThisListEasier, -9799
+        )
 
 
 if __name__ == "__main__":

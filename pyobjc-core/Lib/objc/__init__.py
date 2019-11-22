@@ -13,8 +13,11 @@ NO = False
 # Import the namespace from the _objc extension
 def _update(g=globals()):
     import objc._objc as _objc
+
     for k in _objc.__dict__:
         g.setdefault(k, getattr(_objc, k))
+
+
 _update()
 del _update
 
@@ -48,32 +51,30 @@ import objc._pycoder as _pycoder
 
 # Helper function for new-style metadata modules
 def _resolve_name(name):
-    if '.' not in name:
+    if "." not in name:
         raise ValueError(name)
 
-    module, name = name.rsplit('.', 1)
+    module, name = name.rsplit(".", 1)
     m = __import__(module)
-    for k in module.split('.')[1:]:
+    for k in module.split(".")[1:]:
         m = getattr(m, k)
 
     return getattr(m, name)
 
 
-
 _NSAutoreleasePool = None
+
+
 class autorelease_pool(object):
     """
-    A context manager that implements the same feature as
-    @synchronized statements in Objective-C. Locking can also
-    be done manually using the ``lock`` and ``unlock`` methods.
-
-    The mutex for object ``anObject`` is represented by
-    ``objc.object_lock(anObject)``.
+    A context manager that runs the body of the block with a fresh
+    autorelease pool. The actual release pool is not accessible.
     """
+
     def __init__(self):
         global _NSAutoreleasePool
         if _NSAutoreleasePool is None:
-            _NSAutoreleasePool = objc.lookUpClass('NSAutoreleasePool')
+            _NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
     def __enter__(self):
         self._pool = _NSAutoreleasePool.alloc().init()

@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-class TestAVAudioUnitComponent (TestCase):
-    @min_os_level('10.10')
+
+class TestAVAudioUnitComponent(TestCase):
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeOutput, unicode)
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeMusicDevice, unicode)
@@ -17,18 +18,32 @@ class TestAVAudioUnitComponent (TestCase):
         self.assertIsInstance(AVFoundation.AVAudioUnitTypeMIDIProcessor, unicode)
         self.assertIsInstance(AVFoundation.AVAudioUnitManufacturerNameApple, unicode)
 
-        self.assertIsInstance(AVFoundation.AVAudioUnitComponentTagsDidChangeNotification, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVAudioUnitComponentTagsDidChangeNotification, unicode
+        )
 
-    @min_os_level('10.10')
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertIsInstance(
+            AVFoundation.AVAudioUnitComponentManagerRegistrationsChangedNotification,
+            unicode,
+        )
+
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.isSandboxSafe)
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.hasMIDIInput)
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.hasMIDIOutput)
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.passesAUVal)
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.hasCustomView)
-        self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.supportsNumberInputChannels_outputChannels_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioUnitComponent.supportsNumberInputChannels_outputChannels_
+        )
 
-        self.assertArgIsBlock(AVFoundation.AVAudioUnitComponentManager.componentsPassingTest_, 0, b'Z@o^Z')
+        self.assertArgIsBlock(
+            AVFoundation.AVAudioUnitComponentManager.componentsPassingTest_, 0, b"Z@o^Z"
+        )
+
 
 if __name__ == "__main__":
     main()

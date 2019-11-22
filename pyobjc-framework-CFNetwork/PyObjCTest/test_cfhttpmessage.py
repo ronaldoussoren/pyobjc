@@ -3,23 +3,24 @@ from PyObjCTools.TestSupport import *
 import sys
 
 if sys.version_info[0] != 2:
-    def buffer(value):
-        return value.encode('latin1')
 
-class TestCFHTTPMessage (TestCase):
-    @min_os_level('10.7')
+    def buffer(value):
+        return value.encode("latin1")
+
+
+class TestCFHTTPMessage(TestCase):
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate2, unicode)
         self.assertIsInstance(kCFHTTPAuthenticationSchemeXMobileMeAuthToken, unicode)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNTLM, unicode)
         self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate, unicode)
 
     @expectedFailure
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kCFHTTPVersion2_0, unicode)
         self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
@@ -86,12 +87,11 @@ class TestCFHTTPMessage (TestCase):
         self.assertEqual(v, "Rocks")
 
         self.assertResultIsBOOL(CFHTTPMessageAppendBytes)
-        self.assertArgHasType(CFHTTPMessageAppendBytes, 1, b'n^v')
+        self.assertArgHasType(CFHTTPMessageAppendBytes, 1, b"n^v")
         self.assertArgSizeInArg(CFHTTPMessageAppendBytes, 1, 2)
 
         v = CFHTTPMessageAppendBytes(req, b"hello world", 11)
         self.assertTrue(v is True)
-
 
         self.assertResultIsBOOL(CFHTTPMessageIsHeaderComplete)
         v = CFHTTPMessageIsHeaderComplete(req)
@@ -111,7 +111,9 @@ class TestCFHTTPMessage (TestCase):
 
         self.assertResultIsBOOL(CFHTTPMessageAddAuthentication)
         self.assertArgIsBOOL(CFHTTPMessageAddAuthentication, 5)
-        v = CFHTTPMessageAddAuthentication(req, resp, "ronald", "secret", kCFHTTPAuthenticationSchemeBasic, False)
+        v = CFHTTPMessageAddAuthentication(
+            req, resp, "ronald", "secret", kCFHTTPAuthenticationSchemeBasic, False
+        )
         self.assertIsInstance(v, bool)
 
         v = CFHTTPMessageGetResponseStatusCode(resp)
@@ -120,6 +122,7 @@ class TestCFHTTPMessage (TestCase):
         self.assertResultIsCFRetained(CFHTTPMessageCopyResponseStatusLine)
         v = CFHTTPMessageCopyResponseStatusLine(resp)
         self.assertIsInstance(v, unicode)
+
 
 if __name__ == "__main__":
     main()

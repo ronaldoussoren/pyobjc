@@ -10,69 +10,78 @@ import sys
 import objc
 from Foundation import *
 
+
 def S(*args):
-    return b''.join(args)
+    return b"".join(args)
+
 
 OSErr = objc._C_SHT
-OUTPSN = b'o^{ProcessSerialNumber=LL}'
-INPSN = b'n^{ProcessSerialNumber=LL}'
+OUTPSN = b"o^{ProcessSerialNumber=LL}"
+INPSN = b"n^{ProcessSerialNumber=LL}"
 
-FUNCTIONS=[
+FUNCTIONS = [
     # These two are public API
-    ( u'GetCurrentProcess', S(OSErr, OUTPSN) ),
-    ( u'SetFrontProcess', S(OSErr, INPSN) ),
+    ("GetCurrentProcess", S(OSErr, OUTPSN)),
+    ("SetFrontProcess", S(OSErr, INPSN)),
     # This is undocumented SPI
-    ( u'CPSSetProcessName', S(OSErr, INPSN, objc._C_CHARPTR) ),
-    ( u'CPSEnableForegroundOperation', S(OSErr, INPSN) ),
+    ("CPSSetProcessName", S(OSErr, INPSN, objc._C_CHARPTR)),
+    ("CPSEnableForegroundOperation", S(OSErr, INPSN)),
 ]
 
-def WMEnable(name='Python'):
+
+def WMEnable(name="Python"):
     if not isinstance(name, bytes):
-        name = name.encode('utf8')
+        name = name.encode("utf8")
     mainBundle = NSBundle.mainBundle()
     bPath = os.path.split(os.path.split(os.path.split(sys.executable)[0])[0])[0]
     if mainBundle.bundlePath() == bPath:
         return True
-    bndl = NSBundle.bundleWithPath_(objc.pathForFramework('/System/Library/Frameworks/ApplicationServices.framework'))
+    bndl = NSBundle.bundleWithPath_(
+        objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework")
+    )
     if bndl is None:
-        print >>sys.stderr, 'ApplicationServices missing'
+        print >>sys.stderr, "ApplicationServices missing"
         return False
     d = {}
     objc.loadBundleFunctions(bndl, d, FUNCTIONS)
     for (fn, sig) in FUNCTIONS:
         if fn not in d:
-            print >>sys.stderr, 'Missing', fn
+            print >>sys.stderr, "Missing", fn
             return False
-    err, psn = d['GetCurrentProcess'](None)
+    err, psn = d["GetCurrentProcess"](None)
     if err:
-        print >>sys.stderr, 'GetCurrentProcess', (err, psn)
+        print >>sys.stderr, "GetCurrentProcess", (err, psn)
         return False
-    err = d['CPSSetProcessName'](psn, name)
+    err = d["CPSSetProcessName"](psn, name)
     if err:
-        print >>sys.stderr, 'CPSSetProcessName', (err, psn)
+        print >>sys.stderr, "CPSSetProcessName", (err, psn)
         return False
-    err = d['CPSEnableForegroundOperation'](psn)
+    err = d["CPSEnableForegroundOperation"](psn)
     if err:
-        print >>sys.stderr, 'CPSEnableForegroundOperation', (err, psn)
+        print >>sys.stderr, "CPSEnableForegroundOperation", (err, psn)
         return False
-    err = d['SetFrontProcess'](psn)
+    err = d["SetFrontProcess"](psn)
     if err:
-        print >>sys.stderr, 'SetFrontProcess', (err, psn)
+        print >>sys.stderr, "SetFrontProcess", (err, psn)
         return False
     return True
 
+
 class AppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, sender):
-        rval = AppKit.NSRunAlertPanel(u'WM Enabled', u'WM was enabled!', None, None, None)
+        rval = AppKit.NSRunAlertPanel("WM Enabled", "WM was enabled!", None, None, None)
         AppKit.NSApp().terminate_(self)
+
 
 if __name__ == "__main__":
     import sys
+
     if WMEnable(os.path.basename(os.path.splitext(sys.argv[0])[0])):
         import AppKit
+
         app = AppKit.NSApplication.sharedApplication()
         delegate = AppDelegate.alloc().init()
         app.setDelegate_(delegate)
         app.run()
     else:
-        print('WM was not enabled')
+        print("WM was not enabled")

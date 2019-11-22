@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGWindow (TestCase):
+
+class TestCGWindow(TestCase):
     def testConstants(self):
         self.assertEqual(kCGWindowIDCFNumberType, kCFNumberSInt32Type)
         self.assertEqual(kCGWindowSharingCFNumberType, kCFNumberSInt32Type)
@@ -48,8 +48,6 @@ class TestCGWindow (TestCase):
         self.assertEqual(kCGWindowImageBestResolution, (1 << 3))
         self.assertEqual(kCGWindowImageNominalResolution, (1 << 4))
 
-
-
     def testFunctions(self):
 
         self.assertResultIsCFRetained(CGWindowListCopyWindowInfo)
@@ -77,6 +75,7 @@ class TestCGWindow (TestCase):
 
         v = CGWindowListCreateImageFromArray(((0, 0), (100, 100)), windowArray, 0)
         self.assertIsInstance(v, CGImageRef)
+
 
 if __name__ == "__main__":
     main()

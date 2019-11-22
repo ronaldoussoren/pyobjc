@@ -1,0 +1,439 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "currentSyncAnchorWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSFileProviderExtension": {
+    "methods": [
+     {
+      "selector": "fetchThumbnailsForItemIdentifiers:requestedSize:perThumbnailCompletionHandler:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       },
+       "3": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "supportedServiceSourcesForItemIdentifier:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "itemForIdentifier:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "importDidFinishWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "deleteItemWithIdentifier:baseVersion:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "createItemBasedOnTemplate:fields:contents:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "itemChanged:baseVersion:changedFields:contents:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "fetchContentsForItemWithIdentifier:version:usingExistingContentsAtURL:existingVersion:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "fetchContentsForItemWithIdentifier:version:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "performActionWithIdentifier:onItemsWithIdentifiers:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "materializedItemsDidChangeWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o"}
+      },
+      "class_method": false,
+      "selector": "itemForIdentifier:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o"}
+      },
+      "class_method": true,
+      "selector": "writePlaceholderAtURL:withMetadata:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o"}
+      },
+      "class_method": false,
+      "selector": "enumeratorForContainerItemIdentifier:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o"}
+      },
+      "class_method": false,
+      "selector": "enumeratorForSearchQuery:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o"}
+      },
+      "class_method": false,
+      "selector": "supportedServiceSourcesForItemIdentifier:error:"
+     }
+    ]
+   },
+   "NSFileProviderManager": {
+    "methods": [
+     {
+      "selector": "evictItemWithIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "setDownloadPolicy:forItemWithIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "reimportItemsBelowItemWithIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "importDomain:fromDirectoryAtURL:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "removeAllDomainsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getDomainsWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "removeDomain:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "addDomain:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getIdentifierForUserVisibleFileAtURL:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "getUserVisibleURLForItemIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "registerURLSessionTask:forItemWithIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "signalEnumeratorForContainerItemIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o"}
+      },
+      "class_method": true,
+      "selector": "writePlaceholderAtURL:withMetadata:error:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {
+   "NSFileProviderServiceSource": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "o"}
+      },
+      "class_method": false,
+      "selector": "makeListenerEndpointAndReturnError:"
+     }
+    ]
+   }
+  },
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

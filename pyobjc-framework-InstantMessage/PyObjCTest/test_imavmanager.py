@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from InstantMessage import *
 
-class TestIMAVManagerHelper (NSObject):
+
+class TestIMAVManagerHelper(NSObject):
     def getPixelBufferPixelFormat_(self, _):
         return 10
 
@@ -15,8 +15,9 @@ class TestIMAVManagerHelper (NSObject):
     def renderIntoOpenGLBuffer_onScreen_forTime_(self, buffer, screen, time):
         return False
 
-class TestIMAVManager (TestCase):
-    @min_os_level('10.5')
+
+class TestIMAVManager(TestCase):
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(IMAVManagerStateChangedNotification, unicode)
         self.assertIsInstance(IMAVManagerURLToShareChangedNotification, unicode)
@@ -32,17 +33,22 @@ class TestIMAVManager (TestCase):
         self.assertEqual(IMVideoOptimizationStills, 1 << 0)
         self.assertEqual(IMVideoOptimizationReplacement, 1 << 1)
 
-    def testInformalProtocol (self):
-        #self.assert_( hasattr(protocols, 'IMVideoDataSource') )
-        #self.assert_( isinstance(protocols.IMVideoDataSource, objc.informal_protocol) )
+    def testInformalProtocol(self):
+        # self.assert_( hasattr(protocols, 'IMVideoDataSource') )
+        # self.assert_( isinstance(protocols.IMVideoDataSource, objc.informal_protocol) )
 
         self.assertArgIsOut(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0)
-        self.assertArgHasType(TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0, b'o^' + objc._C_UINT)
+        self.assertArgHasType(
+            TestIMAVManagerHelper.getPixelBufferPixelFormat_, 0, b"o^" + objc._C_UINT
+        )
 
         self.assertResultIsBOOL(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_)
         self.assertArgIsIn(TestIMAVManagerHelper.renderIntoPixelBuffer_forTime_, 1)
 
-        self.assertResultIsBOOL(TestIMAVManagerHelper.renderIntoOpenGLBuffer_onScreen_forTime_)
+        self.assertResultIsBOOL(
+            TestIMAVManagerHelper.renderIntoOpenGLBuffer_onScreen_forTime_
+        )
+
 
 if __name__ == "__main__":
     main()

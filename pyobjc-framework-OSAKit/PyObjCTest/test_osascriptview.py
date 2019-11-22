@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import OSAKit
 
-class TestOSAScriptView (TestCase):
+
+class TestOSAScriptView(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(OSAKit.OSAScriptView.usesScriptAssistant)
         self.assertArgIsBOOL(OSAKit.OSAScriptView.setUsesScriptAssistant_, 0)
@@ -12,6 +13,7 @@ class TestOSAScriptView (TestCase):
         self.assertArgIsBOOL(OSAKit.OSAScriptView.setWrapsLines_, 0)
         self.assertResultIsBOOL(OSAKit.OSAScriptView.indentsWrappedLines)
         self.assertArgIsBOOL(OSAKit.OSAScriptView.setIndentsWrappedLines_, 0)
+
 
 if __name__ == "__main__":
     main()

@@ -2,59 +2,190 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRTrackHelper (DiscRecording.NSObject):
-    def estimateLengthOfTrack_(self, a): return 1
-    def prepareTrack_forBurn_toMedia_(self, a, b, c): return 1
-    def producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_(self, a, b, c, d, e, f): return 1
-    def produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_(self, a, b, c, d, e, f): return 1
-    def prepareTrackForVerification_(self, a): return 1
-    def verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_(self, a, b, c, d, e, f): return 1
-    def verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_(self, a, b, c, d, e, f): return 1
-    def cleanupTrackAfterVerification_(self, a): return 1
+
+class TestDRTrackHelper(DiscRecording.NSObject):
+    def estimateLengthOfTrack_(self, a):
+        return 1
+
+    def prepareTrack_forBurn_toMedia_(self, a, b, c):
+        return 1
+
+    def producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_(
+        self, a, b, c, d, e, f
+    ):
+        return 1
+
+    def produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_(
+        self, a, b, c, d, e, f
+    ):
+        return 1
+
+    def prepareTrackForVerification_(self, a):
+        return 1
+
+    def verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_(
+        self, a, b, c, d, e, f
+    ):
+        return 1
+
+    def verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_(
+        self, a, b, c, d, e, f
+    ):
+        return 1
+
+    def cleanupTrackAfterVerification_(self, a):
+        return 1
 
 
-
-class TestDRTrack (TestCase):
+class TestDRTrack(TestCase):
     def testProtocols(self):
-        objc.protocolNamed('DRTrackDataProduction')
+        objc.protocolNamed("DRTrackDataProduction")
 
     def testMethods(self):
-        self.assertResultHasType(TestDRTrackHelper.estimateLengthOfTrack_, objc._C_ULNG_LNG)
+        self.assertResultHasType(
+            TestDRTrackHelper.estimateLengthOfTrack_, objc._C_ULNG_LNG
+        )
         self.assertResultIsBOOL(TestDRTrackHelper.prepareTrack_forBurn_toMedia_)
 
-        self.assertResultHasType(TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 1, b'o^v')
-        self.assertArgSizeInArg(TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 1, 2)
-        self.assertArgHasType(TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 2, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 3, objc._C_ULNG_LNG)
-        self.assertArgHasType(TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 4, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 5, b'N^I')
+        self.assertResultHasType(
+            TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            b"o^v",
+        )
+        self.assertArgSizeInArg(
+            TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            2,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            2,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            3,
+            objc._C_ULNG_LNG,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            4,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.producePreGapForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            5,
+            b"N^I",
+        )
 
-        self.assertResultHasType(TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 1, b'o^v')
-        self.assertArgSizeInArg(TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 1, 2)
-        self.assertArgHasType(TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 2, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 3, objc._C_ULNG_LNG)
-        self.assertArgHasType(TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 4, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_, 5, b'N^I')
+        self.assertResultHasType(
+            TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            b"o^v",
+        )
+        self.assertArgSizeInArg(
+            TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            2,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            2,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            3,
+            objc._C_ULNG_LNG,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            4,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.produceDataForTrack_intoBuffer_length_atAddress_blockSize_ioFlags_,
+            5,
+            b"N^I",
+        )
 
         self.assertResultIsBOOL(TestDRTrackHelper.prepareTrackForVerification_)
 
-        self.assertResultIsBOOL(TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_)
-        self.assertArgHasType(TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 1, b'n^v')
-        self.assertArgSizeInArg(TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 1, 2)
-        self.assertArgHasType(TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 2, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 3, objc._C_ULNG_LNG)
-        self.assertArgHasType(TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 4, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 5, b'N^I')
+        self.assertResultIsBOOL(
+            TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            b"n^v",
+        )
+        self.assertArgSizeInArg(
+            TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            2,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            2,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            3,
+            objc._C_ULNG_LNG,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            4,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyPreGapForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            5,
+            b"N^I",
+        )
 
-        self.assertResultIsBOOL(TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_)
-        self.assertArgHasType(TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 1, b'n^v')
-        self.assertArgSizeInArg(TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 1, 2)
-        self.assertArgHasType(TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 2, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 3, objc._C_ULNG_LNG)
-        self.assertArgHasType(TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 4, objc._C_UINT)
-        self.assertArgHasType(TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_, 5, b'N^I')
+        self.assertResultIsBOOL(
+            TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            b"n^v",
+        )
+        self.assertArgSizeInArg(
+            TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            1,
+            2,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            2,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            3,
+            objc._C_ULNG_LNG,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            4,
+            objc._C_UINT,
+        )
+        self.assertArgHasType(
+            TestDRTrackHelper.verifyDataForTrack_inBuffer_length_atAddress_blockSize_ioFlags_,
+            5,
+            b"N^I",
+        )
 
         self.assertResultIsBOOL(TestDRTrackHelper.cleanupTrackAfterVerification_)
 
@@ -124,7 +255,6 @@ class TestDRTrack (TestCase):
         self.assertIsInstance(DiscRecording.DRSubchannelDataFormNone, unicode)
         self.assertIsInstance(DiscRecording.DRSubchannelDataFormPack, unicode)
         self.assertIsInstance(DiscRecording.DRSubchannelDataFormRaw, unicode)
-
 
 
 if __name__ == "__main__":

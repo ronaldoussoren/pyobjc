@@ -1,7 +1,8 @@
 import HIServices
 from PyObjCTools.TestSupport import *
 
-class TestAXActionConstants (TestCase):
+
+class TestAXActionConstants(TestCase):
     def testConstants(self):
         self.assertEqual(HIServices.kAXErrorSuccess, 0)
         self.assertEqual(HIServices.kAXErrorFailure, -25200)
@@ -19,6 +20,7 @@ class TestAXActionConstants (TestCase):
         self.assertEqual(HIServices.kAXErrorNoValue, -25212)
         self.assertEqual(HIServices.kAXErrorParameterizedAttributeUnsupported, -25213)
         self.assertEqual(HIServices.kAXErrorNotEnoughPrecision, -25214)
+
 
 if __name__ == "__main__":
     main()

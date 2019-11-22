@@ -5,25 +5,45 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
-if sys.byteorder == 'little':
-    def littleOrBig(a, b): return a
-else:
-    def littleOrBig(a, b): return b
 
-misc = {
-}
-constants = '''$NSPrefPaneHelpMenuAnchorKey$NSPrefPaneHelpMenuInfoPListKey$NSPrefPaneHelpMenuTitleKey$NSPreferencePaneCancelUnselectNotification$NSPreferencePaneDoUnselectNotification$NSPreferencePaneSwitchToPaneNotification$NSPreferencePaneUpdateHelpMenuNotification$NSPreferencePrefPaneIsAvailableNotification$'''
-enums = '''$NSUnselectCancel@0$NSUnselectLater@2$NSUnselectNow@1$'''
-misc.update({'kNSPrefPaneHelpMenuAnchorKey': b'anchor'.decode("utf-8"), 'kNSPrefPaneHelpMenuTitleKey': b'title'.decode("utf-8"), 'kNSPrefPaneHelpMenuInfoPListKey': b'NSPrefPaneHelpAnchors'.decode("utf-8")})
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+if sys.byteorder == "little":
+
+    def littleOrBig(a, b):
+        return a
+
+
+else:
+
+    def littleOrBig(a, b):
+        return b
+
+
+misc = {}
+constants = """$NSPrefPaneHelpMenuAnchorKey$NSPrefPaneHelpMenuInfoPListKey$NSPrefPaneHelpMenuTitleKey$NSPreferencePaneCancelUnselectNotification$NSPreferencePaneDoUnselectNotification$NSPreferencePaneSwitchToPaneNotification$NSPreferencePaneUpdateHelpMenuNotification$NSPreferencePrefPaneIsAvailableNotification$"""
+enums = """$NSUnselectCancel@0$NSUnselectLater@2$NSUnselectNow@1$"""
+misc.update(
+    {
+        "kNSPrefPaneHelpMenuAnchorKey": b"anchor".decode("utf-8"),
+        "kNSPrefPaneHelpMenuTitleKey": b"title".decode("utf-8"),
+        "kNSPrefPaneHelpMenuInfoPListKey": b"NSPrefPaneHelpAnchors".decode("utf-8"),
+    }
+)
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'NSPreferencePane', b'autoSaveTextFields', {'retval': {'type': 'Z'}})
-    r(b'NSPreferencePane', b'isSelected', {'retval': {'type': 'Z'}})
-    r(b'NSPreferencePane', b'replyToShouldUnselect:', {'arguments': {2: {'type': 'Z'}}})
+    r(b"NSPreferencePane", b"autoSaveTextFields", {"retval": {"type": "Z"}})
+    r(b"NSPreferencePane", b"isSelected", {"retval": {"type": "Z"}})
+    r(b"NSPreferencePane", b"replyToShouldUnselect:", {"arguments": {2: {"type": "Z"}}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}

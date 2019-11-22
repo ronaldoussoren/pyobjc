@@ -3,6 +3,7 @@ import traceback
 import keyword
 import time
 from code import InteractiveConsole
+
 try:
     from code import softspace
 except ImportError:
@@ -17,7 +18,7 @@ from Cocoa import NSLog, NSView
 from PyObjCTools import AppHelper
 import os
 
-FLT_MAX = 3.40282347e+38
+FLT_MAX = 3.402_823_47e38
 
 try:
     unicode
@@ -33,8 +34,10 @@ try:
 except AttributeError:
     sys.ps2 = "... "
 
+
 class PseudoUTF8Output(object):
     softspace = 0
+
     def __init__(self, writemethod):
         self._write = writemethod
 
@@ -53,8 +56,10 @@ class PseudoUTF8Output(object):
     def isatty(self):
         return True
 
+
 class PseudoUTF8Input(object):
     softspace = 0
+
     def __init__(self, readlinemethod):
         self._buffer = ""
         self._readline = readlinemethod
@@ -65,7 +70,7 @@ class PseudoUTF8Input(object):
                 rval = self._buffer
                 self._buffer = ""
                 if rval.endswith("\r"):
-                    rval = rval[:-1]+"\n"
+                    rval = rval[:-1] + "\n"
                 return rval.encode("utf-8")
             else:
                 return self._readline("\x04")[:-1].encode("utf-8")
@@ -77,7 +82,7 @@ class PseudoUTF8Input(object):
                     self._buffer = self._buffer[:-1]
                     break
             rval, self._buffer = self._buffer[:chars], self._buffer[chars:]
-            return rval.encode("utf-8").replace("\r","\n")
+            return rval.encode("utf-8").replace("\r", "\n")
 
     def readline(self):
         if "\r" not in self._buffer:
@@ -87,11 +92,12 @@ class PseudoUTF8Input(object):
             rval = self._buffer[:-1].encode("utf-8")
 
         elif self._buffer.endswith("\r"):
-            rval = self._buffer[:-1].encode("utf-8")+"\n"
+            rval = self._buffer[:-1].encode("utf-8") + "\n"
 
         self._buffer = ""
 
         return rval
+
 
 class AsyncInteractiveConsole(InteractiveConsole):
     lock = False
@@ -107,13 +113,16 @@ class AsyncInteractiveConsole(InteractiveConsole):
         self.lock = True
         if write is None:
             write = self.write
-        cprt = "Type \"help\", \"copyright\", \"credits\" or \"license\" for more information."
+        cprt = 'Type "help", "copyright", "credits" or "license" for more information.'
         if banner is None:
-            write("Python %s in %s\n%s\n" % (
-                sys.version,
-                NSBundle.mainBundle().objectForInfoDictionaryKey_("CFBundleName"),
-                cprt,
-            ))
+            write(
+                "Python %s in %s\n%s\n"
+                % (
+                    sys.version,
+                    NSBundle.mainBundle().objectForInfoDictionaryKey_("CFBundleName"),
+                    cprt,
+                )
+            )
         else:
             write(banner + "\n")
 
@@ -151,7 +160,6 @@ class AsyncInteractiveConsole(InteractiveConsole):
             if softspace is not None and softspace(sys.stdout, 0):
                 print
 
-
     def recommendCompletionsFor(self, word):
         parts = word.split(".")
         if len(parts) > 1:
@@ -170,31 +178,27 @@ class AsyncInteractiveConsole(InteractiveConsole):
                 # that don"t look private or special
                 prefix = ".".join(parts[-2:])
                 check = [
-                    (prefix+_method)
-                    for _method
-                    in dir(obj)
+                    (prefix + _method)
+                    for _method in dir(obj)
                     if _method[:1] != "_" and _method.lower().startswith(wordlower)
                 ]
             else:
                 # they started typing the method name
-                check = filter(lambda s:s.lower().startswith(wordlower), dir(obj))
+                check = filter(lambda s: s.lower().startswith(wordlower), dir(obj))
         else:
             # no dots, must be in the normal namespaces.. no eval necessary
             check = set(dir(__builtins__))
             check.update(keyword.kwlist)
             check.update(self.locals)
             wordlower = parts[-1].lower()
-            check = filter(lambda s:s.lower().startswith(wordlower), check)
+            check = filter(lambda s: s.lower().startswith(wordlower), check)
         check.sort()
         return check, 0
 
+
 DEBUG_DELEGATE = 0
-PASSTHROUGH = (
-   "deleteBackward:",
-   "complete:",
-   "moveRight:",
-   "moveLeft:",
-)
+PASSTHROUGH = ("deleteBackward:", "complete:", "moveRight:", "moveLeft:")
+
 
 class PyInterpreter(NSObject):
     """
@@ -239,14 +243,12 @@ class PyInterpreter(NSObject):
         self._historyView = 0
         self._characterIndexForInput = 0
         self._stdin = PseudoUTF8Input(self._nestedRunLoopReaderUntilEOLchars_)
-        #self._stdin = PseudoUTF8Input(self.readStdin)
+        # self._stdin = PseudoUTF8Input(self.readStdin)
         self._stderr = PseudoUTF8Output(self.writeStderr_)
         self._stdout = PseudoUTF8Output(self.writeStdout_)
         self._isInteracting = False
         self._console = AsyncInteractiveConsole()
-        self._interp = self._console.asyncinteract(
-            write=self.writeCode_,
-        ).next
+        self._interp = self._console.asyncinteract(write=self.writeCode_).next
         self._autoscroll = True
         self.applicationDidFinishLaunching_(None)
 
@@ -264,16 +266,16 @@ class PyInterpreter(NSObject):
         window = self.textView.window()
         self.setCharacterIndexForInput_(self.lengthOfTextView())
         # change the color.. eh
-        self.textView.setTypingAttributes_({
-            NSFontAttributeName:self.font(),
-            NSForegroundColorAttributeName:self.codeColor(),
-        })
+        self.textView.setTypingAttributes_(
+            {
+                NSFontAttributeName: self.font(),
+                NSForegroundColorAttributeName: self.codeColor(),
+            }
+        )
         while True:
             event = app.nextEventMatchingMask_untilDate_inMode_dequeue_(
-                NSAnyEventMask,
-                NSDate.distantFuture(),
-                NSDefaultRunLoopMode,
-                True)
+                NSAnyEventMask, NSDate.distantFuture(), NSDefaultRunLoopMode, True
+            )
             if (event.type() == NSKeyDown) and (event.window() == window):
                 eol = event.characters()
                 if eol in eolchars:
@@ -282,7 +284,7 @@ class PyInterpreter(NSObject):
         cl = self.currentLine()
         if eol == "\r":
             self.writeCode_("\n")
-        return cl+eol
+        return cl + eol
 
     #
     #  Interpreter functions
@@ -323,7 +325,8 @@ class PyInterpreter(NSObject):
         idx = self.characterIndexForInput()
         ts = self.textView.textStorage()
         ts.replaceCharactersInRange_withAttributedString_(
-            (idx, len(ts.mutableString())-idx), self.codeString_(s))
+            (idx, len(ts.mutableString()) - idx), self.codeString_(s)
+        )
 
     #
     #  History functions
@@ -370,13 +373,15 @@ class PyInterpreter(NSObject):
         return NSAttributedString.alloc().initWithString_attributes_(
             s,
             {
-                NSFontAttributeName:self.font(),
-                NSForegroundColorAttributeName:getattr(self, name+"Color")(),
+                NSFontAttributeName: self.font(),
+                NSForegroundColorAttributeName: getattr(self, name + "Color")(),
             },
         )
 
     def _writeString_forOutput_(self, s, name):
-        self.textView.textStorage().appendAttributedString_(getattr(self, name+"String_")(s))
+        self.textView.textStorage().appendAttributedString_(
+            getattr(self, name + "String_")(s)
+        )
 
         window = self.textView.window()
         app = NSApplication.sharedApplication()
@@ -391,7 +396,8 @@ class PyInterpreter(NSObject):
                 NSAnyEventMask,
                 NSDate.dateWithTimeIntervalSinceNow_(0.01),
                 NSDefaultRunLoopMode,
-                True)
+                True,
+            )
 
             if event is None:
                 continue
@@ -403,13 +409,12 @@ class PyInterpreter(NSObject):
 
             app.sendEvent_(event)
 
-
-    codeString_   = lambda self, s: self._formatString_forOutput_(s, "code")
+    codeString_ = lambda self, s: self._formatString_forOutput_(s, "code")
     stderrString_ = lambda self, s: self._formatString_forOutput_(s, "stderr")
     stdoutString_ = lambda self, s: self._formatString_forOutput_(s, "stdout")
-    writeCode_    = lambda self, s: self._writeString_forOutput_(s, "code")
-    writeStderr_  = lambda self, s: self._writeString_forOutput_(s, "stderr")
-    writeStdout_  = lambda self, s: self._writeString_forOutput_(s, "stdout")
+    writeCode_ = lambda self, s: self._writeString_forOutput_(s, "code")
+    writeStderr_ = lambda self, s: self._writeString_forOutput_(s, "stderr")
+    writeStdout_ = lambda self, s: self._writeString_forOutput_(s, "stdout")
 
     #
     #  Accessors
@@ -454,13 +459,14 @@ class PyInterpreter(NSObject):
     def setAutoScroll_(self, v):
         self._autoScroll = v
 
-
     #
     #  Convenience methods for manipulating the NSTextView
     #
 
     def currentLine(self):
-        return self.textView.textStorage().mutableString()[self.characterIndexForInput():]
+        return self.textView.textStorage().mutableString()[
+            self.characterIndexForInput() :
+        ]
 
     def moveAndScrollToIndex_(self, idx):
         self.textView.scrollRangeToVisible_((idx, 0))
@@ -480,17 +486,21 @@ class PyInterpreter(NSObject):
     #  NSTextViewDelegate methods
     #
 
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, begin_length, index):
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(
+        self, aTextView, completions, begin_length, index
+    ):
         begin, length = begin_length
         txt = self.textView.textStorage().mutableString()
-        end = begin+length
-        while (begin>0) and (txt[begin].isalnum() or txt[begin] in "._"):
+        end = begin + length
+        while (begin > 0) and (txt[begin].isalnum() or txt[begin] in "._"):
             begin -= 1
         while not txt[begin].isalnum():
             begin += 1
         return self._console.recommendCompletionsFor(txt[begin:end])
 
-    def textView_shouldChangeTextInRange_replacementString_(self, aTextView, aRange, newString):
+    def textView_shouldChangeTextInRange_replacementString_(
+        self, aTextView, aRange, newString
+    ):
         begin, length = aRange
         lastLocation = self.characterIndexForInput()
         if begin < lastLocation:
@@ -503,15 +513,17 @@ class PyInterpreter(NSObject):
                 # of the interactive line
                 return NO
             # multiline paste support
-            #self.clearLine()
+            # self.clearLine()
             newString = self.currentLine() + newString
             for s in newString.strip().split("\n"):
-                self.writeCode_(s+"\n")
+                self.writeCode_(s + "\n")
                 self.executeLine_(s)
             return NO
         return YES
 
-    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, aTextView, fromRange, toRange):
+    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(
+        self, aTextView, fromRange, toRange
+    ):
         return toRange
         begin, length = toRange
         if length == 0 and begin < self.characterIndexForInput():
@@ -525,7 +537,7 @@ class PyInterpreter(NSObject):
             if aSelector == "insertNewline:":
                 self.writeCode_("\n")
             return NO
-        responder = getattr(self, aSelector.replace(":","_"), None)
+        responder = getattr(self, aSelector.replace(":", "_"), None)
         if responder is not None:
             responder(aTextView)
             return YES
@@ -552,8 +564,8 @@ class PyInterpreter(NSObject):
     def moveToBeginningOfLineAndModifySelection_(self, sender):
         begin, length = self.textView.selectedRange()
         pos = self.characterIndexForInput()
-        if begin+length > pos:
-            self.textView.setSelectedRange_((pos, begin+length-pos))
+        if begin + length > pos:
+            self.textView.setSelectedRange_((pos, begin + length - pos))
         else:
             self.moveToBeginningOfLine_(sender)
 
@@ -573,6 +585,7 @@ class PyInterpreter(NSObject):
     moveDown_ = historyDown_
     moveUp_ = historyUp_
 
+
 class WebKitInterpreter(NSView):
 
     arguments = objc.ivar("arguments")
@@ -589,6 +602,7 @@ class WebKitInterpreter(NSView):
         NSLog(arguments)
         self.arguments = arguments
         return self
+
     pluginViewWithArguments_ = classmethod(pluginViewWithArguments_)
 
     def pluginStart(self):
@@ -597,6 +611,7 @@ class WebKitInterpreter(NSView):
             self.doPluginStart()
         except:
             import traceback
+
             traceback.print_exc()
 
     def doPluginStart(self):
@@ -607,33 +622,28 @@ class WebKitInterpreter(NSView):
         scrollView = NSScrollView.alloc().initWithFrame_(self.frame())
         scrollView.setHasVerticalScroller_(True)
         scrollView.setHasHorizontalScroller_(False)
-        scrollView.setAutoresizingMask_(
-            NSViewWidthSizable | NSViewHeightSizable)
+        scrollView.setAutoresizingMask_(NSViewWidthSizable | NSViewHeightSizable)
         contentSize = scrollView.contentSize()
-        textView = NSTextView.alloc().initWithFrame_(
-            ((0, 0), scrollView.contentSize()))
-        textView.setMinSize_(
-            (0, contentSize.height))
-        textView.setMaxSize_(
-            (FLT_MAX, FLT_MAX))
+        textView = NSTextView.alloc().initWithFrame_(((0, 0), scrollView.contentSize()))
+        textView.setMinSize_((0, contentSize.height))
+        textView.setMaxSize_((FLT_MAX, FLT_MAX))
         textView.setVerticallyResizable_(True)
         textView.setHorizontallyResizable_(False)
         textView.setAutoresizingMask_(NSViewWidthSizable)
 
-        textView.textContainer().setContainerSize_(
-            (contentSize.width, FLT_MAX))
+        textView.textContainer().setContainerSize_((contentSize.width, FLT_MAX))
         textView.textContainer().setWidthTracksTextView_(True)
 
         scrollView.setDocumentView_(textView)
         self.addSubview_(scrollView)
 
-        self.pyInterpreter = PyInterpreter.alloc().initWithTextView_(
-            textView)
+        self.pyInterpreter = PyInterpreter.alloc().initWithTextView_(textView)
 
         self.pyInterpreter.interpreterLocals()["container"] = self.container()
 
     def objectForWebScript(self):
         return self
+
 
 NSLog("loaded WebKitInterpreter")
 

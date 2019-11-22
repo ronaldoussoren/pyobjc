@@ -5,10 +5,11 @@ import Quartz
 import Utilities
 import array
 
+
 def doColorSpaceFillAndStroke(context):
     theColorSpace = Utilities.getTheCalibratedRGBColorSpace()
-    opaqueRed = ( 0.663, 0.0, 0.031, 1.0 ) # red,green,blue,alpha
-    aBlue = ( 0.482, 0.62, 0.871, 1.0 )     # red,green,blue,alpha
+    opaqueRed = (0.663, 0.0, 0.031, 1.0)  # red,green,blue,alpha
+    aBlue = (0.482, 0.62, 0.871, 1.0)  # red,green,blue,alpha
 
     # Set the fill color space to be the generic calibrated RGB color space.
     Quartz.CGContextSetFillColorSpace(context, theColorSpace)
@@ -43,9 +44,11 @@ def doColorSpaceFillAndStroke(context):
     # Don't release the color space since this routine
     # didn't create it.
 
+
 _opaqueRedColor = None
 _opaqueBlueColor = None
 _transparentBlueColor = None
+
 
 def drawWithColorRefs(context):
     global _opaqueRedColor
@@ -66,9 +69,12 @@ def drawWithColorRefs(context):
         _opaqueBlueColor = Quartz.CGColorCreate(theColorSpace, color)
         # Create a new CGColorRef from the opaqueBlue CGColorRef
         # but with a different alpha value.
-        _transparentBlueColor = Quartz.CGColorCreateCopyWithAlpha(
-                _opaqueBlueColor, 0.5)
-        if _opaqueRedColor is None or _opaqueBlueColor is None or _transparentBlueColor is None:
+        _transparentBlueColor = Quartz.CGColorCreateCopyWithAlpha(_opaqueBlueColor, 0.5)
+        if (
+            _opaqueRedColor is None
+            or _opaqueBlueColor is None
+            or _transparentBlueColor is None
+        ):
             print("Couldn't create one of the CGColorRefs!!!")
             return
 
@@ -91,22 +97,27 @@ def drawWithColorRefs(context):
     Quartz.CGContextAddRect(context, Quartz.CGRectMake(140.0, 20.0, 100.0, 100.0))
     Quartz.CGContextDrawPath(context, Quartz.kCGPathFillStroke)
 
+
 def doIndexedColorDrawGraphics(context):
     theBaseRGBSpace = Utilities.getTheCalibratedRGBColorSpace()
-    lookupTable = array.array('B', (0,)*6)
-    opaqueRed = (0, 1) # index, alpha
-    aBlue = (1, 1)     # index, alpha
+    lookupTable = array.array("B", (0,) * 6)
+    opaqueRed = (0, 1)  # index, alpha
+    aBlue = (1, 1)  # index, alpha
 
     # Set the first 3 values in the lookup table to a red of
     # 169/255 = 0.663, no green, and blue = 8/255 = 0.031. This makes
     # the first entry in the lookup table a shade of red.
-    lookupTable[0] = 169; lookupTable[1] = 0; lookupTable[2] = 8
+    lookupTable[0] = 169
+    lookupTable[1] = 0
+    lookupTable[2] = 8
 
     # Set the second 3 values in the lookup table to a red value
     # of 123/255 = 0.482, a green value of 158/255 = 0.62, and
     # a blue value of 222/255 = 0.871. This makes the second entry
     # in the lookup table a shade of blue.
-    lookupTable[3] = 123; lookupTable[4] = 158; lookupTable[5] = 222
+    lookupTable[3] = 123
+    lookupTable[4] = 158
+    lookupTable[5] = 222
 
     # Create the indexed color space with this color lookup table,
     # using the RGB color space as the base color space and a 2 element
@@ -140,9 +151,10 @@ def doIndexedColorDrawGraphics(context):
     else:
         print("Couldn't make the indexed color space!")
 
+
 def drawWithGlobalAlpha(context):
     rect = Quartz.CGRectMake(40.0, 210.0, 100.0, 100.0)
-    color = [1.0, 0.0, 0.0, 1.0] # opaque red
+    color = [1.0, 0.0, 0.0, 1.0]  # opaque red
     # Set the fill color space to that returned by getTheCalibratedRGBColorSpace.
     Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
 
@@ -179,6 +191,7 @@ def drawWithGlobalAlpha(context):
         # Reset the alpha value of the color array to fully opaque.
         color[3] = 1.0
 
+
 def drawWithColorBlendMode(context, url):
     # A pleasant green color.
     green = [0.584, 0.871, 0.318, 1.0]
@@ -195,7 +208,7 @@ def drawWithColorBlendMode(context, url):
     pdfRect.origin.x = pdfRect.origin.y = 0
 
     # Graphic 1, the left portion of the figure.
-    Quartz.CGContextTranslateCTM(context, 20, 10 + Quartz.CGRectGetHeight(pdfRect)/2)
+    Quartz.CGContextTranslateCTM(context, 20, 10 + Quartz.CGRectGetHeight(pdfRect) / 2)
 
     # Draw the PDF document.
     Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
@@ -206,8 +219,11 @@ def drawWithColorBlendMode(context, url):
     Quartz.CGContextSetFillColor(context, green)
 
     # Graphic 2, the top-right portion of the figure.
-    Quartz.CGContextTranslateCTM(context, Quartz.CGRectGetWidth(pdfRect) + 10,
-                                    Quartz.CGRectGetHeight(pdfRect)/2 + 10)
+    Quartz.CGContextTranslateCTM(
+        context,
+        Quartz.CGRectGetWidth(pdfRect) + 10,
+        Quartz.CGRectGetHeight(pdfRect) / 2 + 10,
+    )
 
     # Draw the PDF document again.
     Quartz.CGContextDrawPDFDocument(context, pdfRect, pdfDoc, 1)
@@ -240,26 +256,31 @@ def createEllipsePath(context, center, ellipseSize):
     Quartz.CGContextTranslateCTM(context, center.x, center.y)
     # Scale the coordinate system to half the width and height
     # of the ellipse.
-    Quartz.CGContextScaleCTM(context, ellipseSize.width/2, ellipseSize.height/2)
+    Quartz.CGContextScaleCTM(context, ellipseSize.width / 2, ellipseSize.height / 2)
     Quartz.CGContextBeginPath(context)
     # Add a circular arc to the path, centered at the origin and
     # with a radius of 1.0. This radius, together with the
     # scaling above for the width and height, produces an ellipse
     # of the correct size.
-    Quartz.CGContextAddArc(context, 0.0, 0.0, 1.0, 0.0, Utilities.DEGREES_TO_RADIANS(360.0), 0.0)
+    Quartz.CGContextAddArc(
+        context, 0.0, 0.0, 1.0, 0.0, Utilities.DEGREES_TO_RADIANS(360.0), 0.0
+    )
     # Close the path so that this path is suitable for stroking,
     # should that be desired.
     Quartz.CGContextClosePath(context)
     Quartz.CGContextRestoreGState(context)
 
+
 _opaqueBrownColor = None
 _opaqueOrangeColor = None
+
+
 def doClippedEllipse(context):
     global _opaqueBrownColor, _opaqueOrangeColor
 
     theCenterPoint = Quartz.CGPoint(120.0, 120.0)
     theEllipseSize = Quartz.CGSize(100.0, 200.0)
-    dash = [ 2.0 ]
+    dash = [2.0]
 
     # Initialize the CGColorRefs if necessary.
     if _opaqueBrownColor is None:
@@ -270,7 +291,7 @@ def doClippedEllipse(context):
         # Create a CGColorRef for opaque brown.
         _opaqueBrownColor = Quartz.CGColorCreate(theColorSpace, color)
         # Make the color array correspond to an opaque orange.
-        color = [0.965, 0.584, 0.059, 1.0 ]
+        color = [0.965, 0.584, 0.059, 1.0]
         # Create another CGColorRef for opaque orange.
         _opaqueOrangeColor = Quartz.CGColorCreate(theColorSpace, color)
 

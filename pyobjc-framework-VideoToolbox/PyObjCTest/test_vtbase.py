@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 import VideoToolbox
 
-class TestVTBase (TestCase):
+
+class TestVTBase(TestCase):
     def test_structs(self):
         v = VideoToolbox.VTInt32Point()
         self.assertEqual(v.x, 0)

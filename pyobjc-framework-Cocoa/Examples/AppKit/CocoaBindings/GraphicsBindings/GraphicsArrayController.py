@@ -14,7 +14,8 @@ from Cocoa import NSArrayController, NSColor, NSCalibratedRGBColorSpace
 from random import random
 from math import fabs
 
-class GraphicsArrayController (NSArrayController):
+
+class GraphicsArrayController(NSArrayController):
     """Allow filtering by color, just for the fun of it"""
 
     filterColor = objc.IBOutlet()
@@ -32,15 +33,19 @@ class GraphicsArrayController (NSArrayController):
             return super(GraphicsArrayController, self).arrangeObjects_(objects)
 
         if self.filterColor is None:
-            self.filterColor = NSColor.blackColor().colorUsingColorSpaceName_(NSCalibratedRGBColorSpace)
+            self.filterColor = NSColor.blackColor().colorUsingColorSpaceName_(
+                NSCalibratedRGBColorSpace
+            )
 
         filterHue = self.filterColor.hueComponent()
         filteredObjects = []
         for item in objects:
             hue = item.color.hueComponent()
-            if ((fabs(hue - filterHue) < 0.05) or
-                (fabs(hue - filterHue) > 0.95) or
-                (item is self.newCircle)):
+            if (
+                (fabs(hue - filterHue) < 0.05)
+                or (fabs(hue - filterHue) > 0.95)
+                or (item is self.newCircle)
+            ):
                 filteredObjects.append(item)
                 self.newCircle = None
         return super(GraphicsArrayController, self).arrangeObjects_(filteredObjects)
@@ -52,7 +57,7 @@ class GraphicsArrayController (NSArrayController):
         self.newCircle.radius = radius
 
         height = self.graphicsView.bounds().size.height
-        width  = self.graphicsView.bounds().size.width
+        width = self.graphicsView.bounds().size.width
 
         xOffset = 10.0 + (height - 20.0) * random()
         yOffset = 10.0 + (width - 20.0) * random()
@@ -61,10 +66,8 @@ class GraphicsArrayController (NSArrayController):
         self.newCircle.yLoc = height - yOffset
 
         color = NSColor.colorWithCalibratedHue_saturation_brightness_alpha_(
-            random(),
-            (0.5 + random() / 2.0),
-            (0.333 + random() / 3.0),
-            1.0)
+            random(), (0.5 + random() / 2.0), (0.333 + random() / 3.0), 1.0
+        )
 
         self.newCircle.color = color
         return self.newCircle

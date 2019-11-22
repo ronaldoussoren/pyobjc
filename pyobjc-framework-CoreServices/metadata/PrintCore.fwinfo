@@ -1,0 +1,1010 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "aliases": {
+   "kPMDontWantData": { "alias": "objc.NULL" },
+   "kPMNoData": { "alias": "objc.NULL" },
+   "kPMDontWantData": { "alias": "objc.NULL" },
+   "kPMDontWantBoolean": { "alias": "objc.NULL" },
+   "kPMNoReference": { "alias": "objc.NULL" },
+   "kPMDontWantSize": { "alias": "objc.NULL" },
+   "kPMDontWantData": { "alias": "objc.NULL" },
+   "kPMDontWantBoolean": { "alias": "objc.NULL" }
+  },
+  "expressions": {
+   "kPMOutputOrderKey": { "value": "kPMOutputOrderStr.decode('utf-8')" },
+   "kPMCopiesKey": { "value": "kPMCopiesStr.decode('utf-8')" },
+   "kPMCopyCollateKey": { "value": "kPMCopyCollateStr.decode('utf-8')" },
+   "kPMPrintSelectionOnlyKey": { "value": "kPMPrintSelectionOnlyStr.decode('utf-8')" },
+   "kPMBorderTypeKey": { "value": "kPMBorderTypeStr.decode('utf-8')" },
+   "kPMLayoutNUpKey": { "value": "kPMLayoutNUpStr.decode('utf-8')" },
+   "kPMLayoutRowsKey": { "value": "kPMLayoutRowsStr.decode('utf-8')" },
+   "kPMLayoutColumnsKey": { "value": "kPMLayoutColumnsStr.decode('utf-8')" },
+   "kPMLayoutDirectionKey": { "value": "kPMLayoutDirectionStr.decode('utf-8')" },
+   "kPMLayoutTileOrientationKey": { "value": "kPMLayoutTileOrientationStr.decode('utf-8')" },
+   "kPMJobStateKey": { "value": "kPMJobStateStr.decode('utf-8')" },
+   "kPMJobHoldUntilTimeKey": { "value": "kPMJobHoldUntilTimeStr.decode('utf-8')" },
+   "kPMJobPriorityKey": { "value": "kPMJobPriorityStr.decode('utf-8')" },
+   "kPMDuplexingKey": { "value": "kPMDuplexingStr.decode('utf-8')" },
+   "kPMColorSyncProfileIDKey": { "value": "kPMColorSyncProfileIDStr.decode('utf-8')" },
+   "kPMPrimaryPaperFeedKey": { "value": "kPMPrimaryPaperFeedStr.decode('utf-8')" },
+   "kPMSecondaryPaperFeedKey": { "value": "kPMSecondaryPaperFeedStr.decode('utf-8')" },
+   "kPMPSErrorHandlerKey": { "value": "kPMPSErrorHandlerStr.decode('utf-8')" },
+   "kPMPSTraySwitchKey": { "value": "kPMPSTraySwitchStr.decode('utf-8')" },
+   "kPMTotalBeginPagesKey": { "value": "kPMTotalBeginPagesStr.decode('utf-8')" },
+   "kPMTotalSidesImagedKey": { "value": "kPMTotalSidesImagedStr.decode('utf-8')" },
+   "kPMFitToPageKey": { "value": "kPMFitToPageStr.decode('utf-8')" },
+   "kPMUseOptionalPINKey": { "value": "kPMUseOptionalPINStr.decode('utf-8')" },
+   "kPMUseOptionalAccountIDKey": { "value": "kPMUseOptionalAccountIDStr.decode('utf-8')" },
+   "kPMFaxNumberKey": { "value": "kPMFaxNumberStr.decode('utf-8')" },
+   "kPMFaxToKey": { "value": "kPMFaxToStr.decode('utf-8')" },
+   "kPMFaxPrefixKey": { "value": "kPMFaxPrefixStr.decode('utf-8')" },
+   "kPMFaxSubjectKey": { "value": "kPMFaxSubjectStr.decode('utf-8')" },
+   "kPMFaxCoverSheetKey": { "value": "kPMFaxCoverSheetStr.decode('utf-8')" },
+   "kPMFaxCoverSheetMessageKey": { "value": "kPMFaxCoverSheetMessageStr.decode('utf-8')" },
+   "kPMFaxToneDialingKey": { "value": "kPMFaxToneDialingStr.decode('utf-8')" },
+   "kPMFaxUseSoundKey": { "value": "kPMFaxUseSoundStr.decode('utf-8')" },
+   "kPMFaxWaitForDialToneKey": { "value": "kPMFaxWaitForDialToneStr.decode('utf-8')" },
+   "kPMFaxToLabelKey": { "value": "kPMFaxToLabelStr.decode('utf-8')" },
+   "kPMFaxFromLabelKey": { "value": "kPMFaxFromLabelStr.decode('utf-8')" },
+   "kPMFaxDateLabelKey": { "value": "kPMFaxDateLabelStr.decode('utf-8')" },
+   "kPMFaxSubjectLabelKey": { "value": "kPMFaxSubjectLabelStr.decode('utf-8')" },
+   "kPMFaxSheetsLabelKey": { "value": "kPMFaxSheetsLabelStr.decode('utf-8')" },
+   "kPMCoverPageKey": { "value": "kPMCoverPageStr.decode('utf-8')" },
+   "kPMCoverPageSourceKey": { "value": "kPMCoverPageSourceStr.decode('utf-8')" },
+   "kPMDestinationPrinterIDKey": { "value": "kPMDestinationPrinterIDStr.decode('utf-8')" },
+   "kPMInlineWorkflowKey": { "value": "kPMInlineWorkflowStr.decode('utf-8')" },
+   "kPMPageToPaperMappingTypeKey": { "value": "kPMPageToPaperMappingTypeStr.decode('utf-8')" },
+   "kPMPageToPaperMediaNameKey": { "value": "kPMPageToPaperMediaNameStr.decode('utf-8')" },
+   "kPMPageToPaperMappingAllowScalingUpKey": { "value": "kPMPageToPaperMappingAllowScalingUpStr.decode('utf-8')" },
+   "kPMCustomProfilePathKey": { "value": "kPMCustomProfilePathStr.decode('utf-8')" },
+   "kPMVendorColorMatching": { "value": "kPMVendorColorMatchingStr.decode('utf-8')" },
+   "kPMApplicationColorMatching": { "value": "kPMApplicationColorMatchingStr.decode('utf-8')" },
+   "kPMColorMatchingModeKey": { "value": "kPMColorMatchingModeStr.decode('utf-8')" },
+   "kPMDestinationTypeKey": { "value": "kPMDestinationTypeStr.decode('utf-8')" },
+   "kPMOutputFilenameKey": { "value": "kPMOutputFilenameStr.decode('utf-8')" },
+   "kPMBorderKey": { "value": "kPMBorderStr.decode('utf-8')" }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "willChangePPDOptionKeyValue:ppdChoice:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "initWithBundle:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "shouldHide",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "shouldShowHelp",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "shouldPrint",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "printWindowWillClose:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "saveValuesAndReturnError:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "0": { "type_modifier": "o", "type_override": "^@" }
+      }
+     },
+     {
+      "selector": "restoreValuesAndReturnError:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "0": { "type_modifier": "o", "type_override": "^@" }
+      }
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "literals": {
+   "kDialogExtensionIntfIDStr": { "unicode": true, "value": "A996FD7E-B738-11D3-8519-0050E4603277" },
+   "kGeneralPageSetupDialogTypeIDStr": { "unicode": true, "value": "6E6ED964-B738-11D3-952F-0050E4603277" },
+   "kGeneralPrintDialogTypeIDStr": { "unicode": true, "value": "C1BF838E-B72A-11D3-9644-0050E4603277" },
+   "kAppPageSetupDialogTypeIDStr": { "unicode": true, "value": "B9A0DA98-E57F-11D3-9E83-0050E4603277" },
+   "kAppPrintDialogTypeIDStr": { "unicode": true, "value": "BCB07250-E57F-11D3-8CA6-0050E4603277" },
+   "kAppPrintThumbnailTypeIDStr": { "unicode": true, "value": "9320FE03-B5D5-11D5-84D1-003065D6135E" },
+   "kPrinterModuleTypeIDStr": { "unicode": true, "value": "BDB091F4-E57F-11D3-B5CC-0050E4603277" },
+   "kPMSandboxCompatiblePDEs": { "unicode": true, "value": "PMSandboxCompatiblePDEs" },
+   "SUMMARY_DISPLAY_ORDER": { "unicode": true, "value": "Summary, Display, Order" },
+   "kPMMediaQualityPDEKindID": { "unicode": true, "value": "com.apple.print.pde.MediaQualityPDEKind" },
+   "kPMInkPDEKindID": { "unicode": true, "value": "com.apple.print.pde.InkKind" },
+   "kPMColorPDEKindID": { "unicode": true, "value": "com.apple.print.pde.ColorKind" },
+   "kPMErrorHandlingPDEKindID": { "unicode": true, "value": "com.apple.print.pde.ErrorHandlingKind" },
+   "kPMPaperFeedPDEKindID": { "unicode": true, "value": "com.apple.print.pde.PaperFeedKind" },
+   "kPMPrinterFeaturesPDEKindID": { "unicode": true, "value": "com.apple.print.pde.PrinterFeaturesKind" },
+   "kPMUnsupportedPDEKindID": { "unicode": true, "value": "com.apple.print.pde.UnsupportedPDEKind" },
+   "kPMRotationScalingPDEKindID": { "unicode": true, "value": "com.apple.print.pde.RotationScalingKind" },
+   "kPMPriorityPDEKindID": { "unicode": true, "value": "com.apple.print.pde.PriorityKind" },
+   "kPMPaperSourcePDEKindID": { "unicode": true, "value": "com.apple.print.pde.PaperSourceKind" },
+   "kPMJobPINPDEKindID": { "unicode": true, "value": "com.apple.print.pde.jobPIN" },
+   "kPMUniPrinterPDEKindID": { "unicode": true, "value": "com.apple.print.pde.UniPrinterKind" },
+   "kPMSummaryPanelKindID": { "unicode": true, "value": "com.apple.print.pde.SummaryKind" },
+   "kPMPDFEffectsPDEKindID": { "unicode": true, "value": "com.apple.print.pde.PDFEffects" },
+   "kPMPaperHandlingPDEKindID": { "unicode": true, "value": "com.apple.print.pde.PaperHandlingKind" },
+   "kPMFaxAddressesPDEKindID": { "unicode": true, "value": "com.apple.print.pde.FaxAddressesKind" },
+   "kPMFaxModemPDEKindID": { "unicode": true, "value": "com.apple.print.pde.FaxModemKind" },
+   "kPMFaxCoverPagePDEKindID": { "unicode": true, "value": "com.apple.print.pde.FaxCoverPageKind" },
+   "kPMImagingOptionsPDEKindID": { "unicode": true, "value": "com.apple.print.pde.ImagingOptionsKind" },
+   "kPMSchedulerPDEKindID": { "unicode": true, "value": "com.apple.print.pde.SchedulerKind" },
+   "kPMColorMatchingPDEKindID": { "unicode": true, "value": "com.apple.print.pde.ColorMatchingKind" },
+   "kPMCoverPagePDEKindID": { "unicode": true, "value": "com.apple.print.pde.CoverPageKind" },
+   "kPMCustomPaperSizePDEKindID": { "unicode": true, "value": "com.apple.print.pde.CustomPaperSizeKind" },
+   "kPMOutputOptionsPDEKindID": { "unicode": true, "value": "com.apple.print.pde.OutputOptionsKind" },
+   "kPMDuplexPDEKindID": { "unicode": true, "value": "com.apple.print.pde.DuplexKind" },
+   "kPMLayoutPDEKindID": { "unicode": true, "value": "com.apple.print.pde.LayoutUserOptionKind" },
+   "kPMCopiesAndPagesPDEKindID": { "unicode": true, "value": "com.apple.print.pde.CopiesAndPagesKind" },
+   "kPMPageAttributesKindID": { "unicode": true, "value": "com.apple.print.pde.PageAttributesKind" },
+   "kPMPresetGraphicsTypeNone": { "unicode": true },
+   "kPMPresetGraphicsTypePhoto": { "unicode": true },
+   "kPMPresetGraphicsTypeAll": { "unicode": true },
+   "kPMPresetGraphicsTypeGeneral": { "unicode": true },
+   "kPMPresetGraphicsTypeKey": { "unicode": true },
+   "kPMPrintSelectionTitleKey": { "unicode": true },
+   "kPDFWorkflowModifiedKey": { "unicode": true },
+   "kPDFWorkflowItemsKey": { "unicode": true },
+   "kPDFWorkflowDisplayNameKey": { "unicode": true },
+   "kPDFWorkflowItemURLKey": { "unicode": true },
+   "kPMGraphicsContextCoreGraphics": { "unicode": true },
+   "kPMGraphicsContextDefault": { "unicode": true },
+   "kPMDocumentFormatPostScript": { "unicode": true },
+   "kPMDocumentFormatPDF": { "unicode": true },
+   "kPMPPDDescriptionType": { "unicode": true },
+   "kPMDocumentFormatDefault": { "unicode": true },
+   "kPMPrintSettingsAEType": { "ignore": true },
+   "kPMShowPrintDialogAEType": { "ignore": true },
+   "kPMPrinterAEType": { "ignore": true },
+   "kPMCopiesAEProp": { "ignore": true },
+   "kPMCopiesAEKey": { "ignore": true },
+   "kPMCopieAEType": { "ignore": true },
+   "kPMCollateAEProp": { "ignore": true },
+   "kPMCollateAEKey": { "ignore": true },
+   "kPMCollateAEType": { "ignore": true },
+   "kPMFirstPageAEProp": { "ignore": true },
+   "kPMFirstPageAEKey": { "ignore": true },
+   "kPMFirstPageAEType": { "ignore": true },
+   "kPMLastPageAEProp": { "ignore": true },
+   "kPMLastPageAEKey": { "ignore": true },
+   "kPMLastPageAEType": { "ignore": true },
+   "kPMLayoutAcrossAEProp": { "ignore": true },
+   "kPMLayoutAcrossAEKey": { "ignore": true },
+   "kPMLayoutAcrossAEType": { "ignore": true },
+   "kPMLayoutDownAEProp": { "ignore": true },
+   "kPMLayoutDownAEKey": { "ignore": true },
+   "kPMLayoutDownAEType": { "ignore": true },
+   "kPMErrorHandlingAEProp": { "ignore": true },
+   "kPMErrorHandlingAEKey": { "ignore": true },
+   "kPMErrorHandlingAEType": { "ignore": true },
+   "kPMPrintTimeAEProp": { "ignore": true },
+   "kPMPrintTimeAEKey": { "ignore": true },
+   "kPMPrintTimeAEType": { "ignore": true },
+   "kPMFeatureAEProp": { "ignore": true },
+   "kPMFeatureAEKey": { "ignore": true },
+   "kPMFeatureAEType": { "ignore": true },
+   "kPMFaxNumberAEProp": { "ignore": true },
+   "kPMFaxNumberAEKey": { "ignore": true },
+   "kPMFaxNumberAEType": { "ignore": true },
+   "kPMTargetPrinterAEProp": { "ignore": true },
+   "kPMTargetPrinterAEKey": { "ignore": true },
+   "kPMTargetPrinterAEType": { "ignore": true },
+   "kPMPDFWorkFlowAEProp": { "ignore": true },
+   "kPMPDFWorkFlowAEKey": { "ignore": true },
+   "kPMPDFWorkFlowAEType": { "ignore": true },
+   "kPMPresetAEProp": { "ignore": true },
+   "kPMPresetAEKey": { "ignore": true },
+   "kPMPresetAEType": { "ignore": true },
+   "kPMSaveAsPDFAEProp": { "ignore": true },
+   "kPMSaveAsPDFAEKey": { "ignore": true },
+   "kPMSaveAsPDFAEType": { "ignore": true },
+   "kPMSaveAsPSAEProp": { "ignore": true },
+   "kPMSaveAsPSAEKey": { "ignore": true },
+   "kPMSaveAsPSAEType": { "ignore": true },
+   "kPMErrorHandlingStandardEnum": { "ignore": true },
+   "kPMErrorHandlingDetailedEnum": { "ignore": true },
+   "kPMDontWantData": { "ignore": true },
+   "kPMNoData": { "ignore": true },
+   "kPMDontWantData": { "ignore": true },
+   "kPMDontWantBoolean": { "ignore": true },
+   "kPMNoReference": { "ignore": true },
+   "kPMDontWantSize": { "ignore": true },
+   "kPMDontWantData": { "ignore": true },
+   "kPMDontWantBoolean": { "ignore": true }
+  },
+  "cftypes": {
+   "PMPaper": {
+    "opaque": true,
+    "typestr": "^{OpaquePMPaper}"
+   },
+   "PMPreset": {
+    "opaque": true,
+    "typestr": "^{OpaquePMPreset}"
+   },
+   "PMServer": {
+    "opaque": true,
+    "typestr": "^{OpaquePMServer}"
+   },
+   "PMPrinter": {
+    "opaque": true,
+    "typestr": "^{OpaquePMPrinter}"
+   },
+   "PMPrintSession": {
+    "opaque": true,
+    "typestr": "^{OpaquePMPrintSession}"
+   },
+   "PMPageFormat": {
+    "opaque": true,
+    "typestr": "^{OpaquePMPageFormat}"
+   },
+   "PMPrintSettings": {
+    "opaque": true,
+    "typestr": "^{OpaquePMPrintSettings}"
+   }
+  },
+  "functions": {
+   "PMCGImageCreateWithEPSDataProvider": {
+    "args": {
+     "0": {},
+     "1": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "PMCopyAvailablePPDs": {
+    "args": {
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMCopyLocalizedPPD": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMCopyPPDData": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMCopyPageFormat": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMCopyPrintSettings": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMCreateGenericPrinter": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "PMCreatePageFormat": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "PMCreatePageFormatWithPMPaper": {
+    "args": {
+     "0": { "type_modifier": "o" },
+     "1": {}
+    }
+   },
+   "PMCreatePrintSettings": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "PMCreateSession": {
+    "args": {
+     "0": { "type_modifier": "o" }
+    }
+   },
+   "PMGetAdjustedPageRect": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetAdjustedPaperRect": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetCollate": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetCopies": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetDuplex": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetFirstPage": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetLastPage": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetOrientation": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetPageFormatExtendedData": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "N" },
+     "3": { "type_modifier": "o", "c_array_length_in_arg": 2 }
+    }
+   },
+   "PMGetPageFormatPaper": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetPageRange": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMGetScale": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetUnadjustedPageRect": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMGetUnadjustedPaperRect": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPageFormatCreateDataRepresentation": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPageFormatCreateWithDataRepresentation": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPageFormatGetPrinterID": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperCreateCustom": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "5": { "type_modifier": "n" },
+     "6": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperCreateLocalizedName": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPaperGetHeight": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperGetID": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperGetMargins": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperGetPPDPaperName": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperGetPrinterID": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperGetWidth": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPaperIsCustom": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMPresetCopyName": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPresetCreatePrintSettings": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMPresetGetAttributes": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrintSettingsCopyAsDictionary": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrintSettingsCopyKeys": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrintSettingsCreateDataRepresentation": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrintSettingsCreateWithDataRepresentation": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrintSettingsGetJobName": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrintSettingsGetValue": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMPrintSettingsSetJobName": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMPrintSettingsSetValue": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMPrintSettingsToOptions": {
+    "ignore": true,
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMPrintSettingsToOptionsWithPrinterAndPageFormat": {
+    "ignore": true,
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "PMPrinterCopyDescriptionURL": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrinterCopyDeviceURI": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrinterCopyHostName": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrinterCopyPresets": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrinterCopyState": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMPrinterCreateFromPrinterID": {
+    "args": {
+     "0": {}
+    },
+    "retval": {
+     "already_cfretained": true
+    }
+   },
+   "PMPrinterGetCommInfo": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" },
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetDriverCreator": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetDriverReleaseInfo": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetID": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "PMPrinterGetIndexedPrinterResolution": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetLanguageInfo": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetLocation": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "PMPrinterGetMakeAndModelName": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetMimeTypes": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetName": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "PMPrinterGetOutputResolution": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetPaperList": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetPrinterResolutionCount": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterGetState": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterIsDefault": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMPrinterIsFavorite": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMPrinterIsPostScriptCapable": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMPrinterIsPostScriptPrinter": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterIsRemote": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMPrinterPrintWithFile": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "PMPrinterPrintWithProvider": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "PMPrinterSendCommand": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "PMPrinterSetDefault": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMPrinterSetOutputResolution": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "n" }
+    }
+   },
+   "PMPrinterWritePostScriptToURL": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {},
+     "5": {}
+    }
+   },
+   "PMRelease": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMRetain": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMServerCreatePrinterList": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMServerLaunchPrinterBrowser": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMSessionBeginCGDocumentNoDialog": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "PMSessionBeginPageNoDialog": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "PMSessionCopyDestinationFormat": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMSessionCopyDestinationLocation": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMSessionCopyOutputFormatList": {
+    "args": {
+     "0": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMSessionCreatePageFormatList": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMSessionCreatePrinterList": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o", "already_cfretained": true },
+     "2": { "type_modifier": "o" },
+     "3": { "type_modifier": "o" }
+    }
+   },
+   "PMSessionDefaultPageFormat": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMSessionDefaultPrintSettings": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMSessionEndDocumentNoDialog": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSessionEndPageNoDialog": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSessionError": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSessionGetCGGraphicsContext": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMSessionGetCurrentPrinter": {
+    "args": {
+     "0": {},
+     "1": { "type_modifier": "o" }
+    }
+   },
+   "PMSessionGetDataFromSession": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMSessionGetDestinationType": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMSessionSetCurrentPMPrinter": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMSessionSetDataInSession": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "PMSessionSetDestination": {
+    "args": {
+     "0": {},
+     "1": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "PMSessionSetError": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSessionValidatePageFormat": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMSessionValidatePrintSettings": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "o" }
+    }
+   },
+   "PMSetCollate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSetCopies": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSetDuplex": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSetFirstPage": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSetLastPage": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSetOrientation": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSetPageFormatExtendedData": {
+    "args": {
+     "0": {},
+     "3": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "PMSetPageRange": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMSetScale": {
+    "args": {
+     "0": {}
+    }
+   },
+   "PMWorkflowCopyItems": {
+    "args": {
+     "0": { "type_modifier": "o", "already_cfretained": true }
+    }
+   },
+   "PMWorkflowSubmitPDFWithOptions": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": { "type_modifier": "n", "c_array_delimited_by_null": true },
+     "3": {}
+    }
+   },
+   "PMWorkflowSubmitPDFWithSettings": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

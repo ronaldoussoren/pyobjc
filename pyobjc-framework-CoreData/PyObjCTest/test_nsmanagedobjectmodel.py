@@ -1,11 +1,14 @@
-
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestNSManagedObjectModel (TestCase):
+
+class TestNSManagedObjectModel(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
-        self.assertResultIsBOOL(NSManagedObjectModel.isConfiguration_compatibleWithStoreMetadata_)
+        self.assertResultIsBOOL(
+            NSManagedObjectModel.isConfiguration_compatibleWithStoreMetadata_
+        )
+
 
 if __name__ == "__main__":
     main()

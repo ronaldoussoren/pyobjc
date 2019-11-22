@@ -1,12 +1,14 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCAAnimationHelper (NSObject):
-    def animationDidStop_finished_(self, a, f): pass
 
-class TestCAAnimation (TestCase):
-    @min_os_level('10.5')
+class TestCAAnimationHelper(NSObject):
+    def animationDidStop_finished_(self, a, f):
+        pass
+
+
+class TestCAAnimation(TestCase):
+    @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(CAAnimation.shouldArchiveValueForKey_)
         self.assertResultIsBOOL(CAAnimation.isRemovedOnCompletion)
@@ -20,7 +22,7 @@ class TestCAAnimation (TestCase):
         self.assertResultIsBOOL(CAPropertyAnimation.isCumulative)
         self.assertArgIsBOOL(CAPropertyAnimation.setCumulative_, 0)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCAAnimationLinear, unicode)
         self.assertIsInstance(kCAAnimationDiscrete, unicode)
@@ -38,14 +40,14 @@ class TestCAAnimation (TestCase):
         self.assertIsInstance(kCAAnimationRotateAuto, unicode)
         self.assertIsInstance(kCAAnimationRotateAutoReverse, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kCAAnimationCubic, unicode)
         self.assertIsInstance(kCAAnimationCubicPaced, unicode)
 
-    @min_sdk_level('10.12')
+    @min_sdk_level("10.12")
     def testProtocols(self):
-        objc.protocolNamed('CAAnimationDelegate')
+        objc.protocolNamed("CAAnimationDelegate")
 
 
 if __name__ == "__main__":

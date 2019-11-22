@@ -11,12 +11,14 @@ class TestNSWorkspace(TestCase):
 
         # A method with 2 output parameters, this means the result
         # is a tuple with 3 elements (return value, param1, param2)
-        res = ws.getInfoForFile_application_type_(b'/'.decode('ascii'), None, None)
+        res = ws.getInfoForFile_application_type_(b"/".decode("ascii"), None, None)
         self.assertIsInstance(res, tuple)
         self.assertEqual(len(res), 3)
         self.assertEqual(res[0], 1)
-        self.assertEqual(res[1], b'/System/Library/CoreServices/Finder.app'.decode('ascii'))
-        self.assertEqual(res[2], b''.decode('ascii'))
+        self.assertEqual(
+            res[1], b"/System/Library/CoreServices/Finder.app".decode("ascii")
+        )
+        self.assertEqual(res[2], b"".decode("ascii"))
 
     def testConstants(self):
         self.assertEqual(NSWorkspaceLaunchAndPrint, 0x00000002)
@@ -30,7 +32,7 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(NSWorkspaceLaunchNewInstance, 0x00080000)
         self.assertEqual(NSWorkspaceLaunchAndHide, 0x00100000)
         self.assertEqual(NSWorkspaceLaunchAndHideOthers, 0x00200000)
-        #self.assertEqual(NSWorkspaceLaunchDefault, (
+        # self.assertEqual(NSWorkspaceLaunchDefault, (
         #        NSWorkspaceLaunchAsync | NSWorkspaceLaunchAllowingClassicStartup))
         self.assertEqual(NSWorkspaceLaunchDefault, NSWorkspaceLaunchAsync)
 
@@ -69,8 +71,7 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(NSWorkspaceAuthorizationTypeSetAttributes, 1)
         self.assertEqual(NSWorkspaceAuthorizationTypeReplaceFile, 2)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSWorkspaceDesktopImageScalingKey, unicode)
         self.assertIsInstance(NSWorkspaceDesktopImageAllowClippingKey, unicode)
@@ -94,7 +95,6 @@ class TestNSWorkspace(TestCase):
         self.assertIsInstance(NSWorkspaceLaunchConfigurationEnvironment, unicode)
         self.assertIsInstance(NSWorkspaceLaunchConfigurationArchitecture, unicode)
 
-
     def testMethods(self):
         self.assertResultIsBOOL(NSWorkspace.openFile_)
         self.assertResultIsBOOL(NSWorkspace.openFile_withApplication_)
@@ -115,19 +115,53 @@ class TestNSWorkspace(TestCase):
         self.assertArgIsOut(NSWorkspace.getInfoForFile_application_type_, 2)
         self.assertResultIsBOOL(NSWorkspace.isFilePackageAtPath_)
         self.assertResultIsBOOL(NSWorkspace.setIcon_forFile_options_)
-        self.assertResultIsBOOL(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_)
-        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 1, b'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 2, b'o^' + objc._C_NSBOOL)
-        self.assertArgHasType(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 3, b'o^' + objc._C_NSBOOL)
-        self.assertArgIsOut(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 4)
-        self.assertArgIsOut(NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_, 5)
-        self.assertResultIsBOOL(NSWorkspace.performFileOperation_source_destination_files_tag_)
-        self.assertArgIsOut(NSWorkspace.performFileOperation_source_destination_files_tag_, 4)
+        self.assertResultIsBOOL(
+            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_
+        )
+        self.assertArgHasType(
+            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            1,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgHasType(
+            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            2,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgHasType(
+            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            3,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgIsOut(
+            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            4,
+        )
+        self.assertArgIsOut(
+            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            5,
+        )
+        self.assertResultIsBOOL(
+            NSWorkspace.performFileOperation_source_destination_files_tag_
+        )
+        self.assertArgIsOut(
+            NSWorkspace.performFileOperation_source_destination_files_tag_, 4
+        )
         self.assertResultIsBOOL(NSWorkspace.unmountAndEjectDeviceAtPath_)
-        self.assertResultIsBOOL(NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_)
-        self.assertArgIsOut(NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_, 3)
-        self.assertResultIsBOOL(NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_)
-        self.assertArgIsOut(NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_, 4)
+        self.assertResultIsBOOL(
+            NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_
+        )
+        self.assertArgIsOut(
+            NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_,
+            3,
+        )
+        self.assertResultIsBOOL(
+            NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_
+        )
+        self.assertArgIsOut(
+            NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_,
+            4,
+        )
         self.assertArgIsOut(NSWorkspace.typeOfFile_error_, 1)
         self.assertResultIsBOOL(NSWorkspace.filenameExtension_isValidForType_)
         self.assertResultIsBOOL(NSWorkspace.type_conformsToType_)
@@ -136,13 +170,15 @@ class TestNSWorkspace(TestCase):
         self.assertArgHasType(NSWorkspace.slideImage_from_to_, 1, NSPoint.__typestr__)
         self.assertArgHasType(NSWorkspace.slideImage_from_to_, 2, NSPoint.__typestr__)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgIsOut(NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3)
+        self.assertArgIsOut(
+            NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3
+        )
         self.assertResultIsBOOL(NSWorkspace.showSearchResultsForQueryString_)
 
-        self.assertArgIsBlock(NSWorkspace.recycleURLs_completionHandler_, 1, b'v@@')
-        self.assertArgIsBlock(NSWorkspace.duplicateURLs_completionHandler_, 1, b'v@@')
+        self.assertArgIsBlock(NSWorkspace.recycleURLs_completionHandler_, 1, b"v@@")
+        self.assertArgIsBlock(NSWorkspace.duplicateURLs_completionHandler_, 1, b"v@@")
 
         self.assertResultIsBOOL(NSWorkspace.unmountAndEjectDeviceAtURL_error_)
         self.assertArgIsOut(NSWorkspace.unmountAndEjectDeviceAtURL_error_, 1)
@@ -150,19 +186,60 @@ class TestNSWorkspace(TestCase):
         self.assertResultIsBOOL(NSWorkspace.setDesktopImageURL_forScreen_options_error_)
         self.assertArgIsOut(NSWorkspace.setDesktopImageURL_forScreen_options_error_, 3)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsOut(NSWorkspace.openURL_options_configuration_error_, 3)
-        self.assertArgIsOut(NSWorkspace.openURLs_withApplicationAtURL_options_configuration_error_, 4)
+        self.assertArgIsOut(
+            NSWorkspace.openURLs_withApplicationAtURL_options_configuration_error_, 4
+        )
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(NSWorkspace.isVoiceOverEnabled)
         self.assertResultIsBOOL(NSWorkspace.isSwitchControlEnabled)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testMethods10_14(self):
-        self.assertArgIsBlock(NSWorkspace.requestAuthorizationOfType_completionHandler_, 1, b'v@@')
+        self.assertArgIsBlock(
+            NSWorkspace.requestAuthorizationOfType_completionHandler_, 1, b"v@@"
+        )
 
-if __name__ == '__main__':
-    main( )
+    @min_os_level("10.15")
+    def testMethods10_15(self):
+        self.assertArgIsBlock(
+            NSWorkspace.openURL_configuration_completionHandler_, 2, b"v@@"
+        )
+        self.assertArgIsBlock(
+            NSWorkspace.openURLs_withApplicationAtURL_configuration_completionHandler_,
+            3,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            NSWorkspace.openApplicationAtURL_configuration_completionHandler_, 2, b"v@@"
+        )
+
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.promptsUserIfNeeded)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.addsToRecentItems)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.activates)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.hides)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.hidesOthers)
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.isForPrinting)
+        self.assertResultIsBOOL(
+            NSWorkspaceOpenConfiguration.createsNewApplicationInstance
+        )
+        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.requiresUniversalLinks)
+
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setPromptsUserIfNeeded_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setAddsToRecentItems_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setActivates_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHides_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHidesOthers_, 0)
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setForPrinting_, 0)
+        self.assertArgIsBOOL(
+            NSWorkspaceOpenConfiguration.setCreatesNewApplicationInstance_, 0
+        )
+        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setRequiresUniversalLinks_, 0)
+
+
+if __name__ == "__main__":
+    main()

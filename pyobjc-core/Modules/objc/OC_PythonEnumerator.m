@@ -2,15 +2,16 @@
 
 @implementation OC_PythonEnumerator
 
-+(instancetype)enumeratorWithPythonObject:(PyObject*)object
++ (instancetype)enumeratorWithPythonObject:(PyObject*)object
 {
     return [[[self alloc] initWithPythonObject:object] autorelease];
 }
 
--(id)initWithPythonObject:(PyObject*)object
+- (id)initWithPythonObject:(PyObject*)object
 {
     self = [super init];
-    if (self == nil) return nil;
+    if (self == nil)
+        return nil;
 
     SET_FIELD_INCREF(value, object);
     valid = YES;
@@ -18,7 +19,7 @@
     return self;
 }
 
--(oneway void)release
+- (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
     if (unlikely(!Py_IsInitialized())) {
@@ -32,7 +33,7 @@
     PyObjC_END_WITH_GIL
 }
 
--(void)dealloc
+- (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) {
         [super release];
@@ -46,7 +47,7 @@
     [super dealloc];
 }
 
--(id)nextObject
+- (id)nextObject
 {
     if (!valid) {
         return nil;
@@ -64,7 +65,6 @@
             } else {
                 PyObjC_GIL_FORWARD_EXC();
             }
-
         }
 
         if (object == Py_None) {
@@ -85,7 +85,7 @@
     return result;
 }
 
--(NSArray*)allObjects
+- (NSArray*)allObjects
 {
     NSMutableArray* array;
     NSObject* cur;

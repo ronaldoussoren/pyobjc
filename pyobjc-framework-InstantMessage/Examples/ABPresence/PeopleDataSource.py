@@ -5,9 +5,10 @@ import objc
 
 from ServiceWatcher import kStatusImagesChanged, kAddressBookPersonStatusChanged
 
-class PeopleDataSource (Cocoa.NSObject):
+
+class PeopleDataSource(Cocoa.NSObject):
     _abPeople = objc.ivar()
-    _imPersonStatus = objc.ivar() # Parallel array to abPeople
+    _imPersonStatus = objc.ivar()  # Parallel array to abPeople
     _table = objc.IBOutlet()
 
     def awakeFromNib(self):
@@ -19,16 +20,22 @@ class PeopleDataSource (Cocoa.NSObject):
         self.setupABPeople()
 
         Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, b'abDatabaseChangedExternallyNotification:',
-                AddressBook.kABDatabaseChangedExternallyNotification, None)
+            self,
+            b"abDatabaseChangedExternallyNotification:",
+            AddressBook.kABDatabaseChangedExternallyNotification,
+            None,
+        )
 
         Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, b'addressBookPersonStatusChanged:',
-                kAddressBookPersonStatusChanged, None)
+            self,
+            b"addressBookPersonStatusChanged:",
+            kAddressBookPersonStatusChanged,
+            None,
+        )
 
         Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-                self, b'statusImagesChanged:',
-                kStatusImagesChanged, None)
+            self, b"statusImagesChanged:", kStatusImagesChanged, None
+        )
 
     # This dumps all the status information and rebuilds the array against
     # the current _abPeople
@@ -44,13 +51,15 @@ class PeopleDataSource (Cocoa.NSObject):
                 screenNames = service.screenNamesForPerson_(person)
 
                 for screenName in screenNames:
-                    dictionary = service.infoForScreenName_(
-                            screenName)
+                    dictionary = service.infoForScreenName_(screenName)
                     status = dictionary.get(InstantMessage.IMPersonStatusKey)
                     if status is not None:
                         thisStatus = status
-                        if InstantMessage.IMComparePersonStatus(bestStatus, thisStatus) != Cocoa.NSOrderedAscending:
-                            bestStatus = thisStatus;
+                        if (
+                            InstantMessage.IMComparePersonStatus(bestStatus, thisStatus)
+                            != Cocoa.NSOrderedAscending
+                        ):
+                            bestStatus = thisStatus
 
             self._imPersonStatus[i] = bestStatus
 
@@ -74,7 +83,12 @@ class PeopleDataSource (Cocoa.NSObject):
                         status = dictionary.get(InstantMessage.IMPersonStatusKey)
                         if status is not None:
                             thisStatus = status
-                            if InstantMessage.IMComparePersonStatus(bestStatus, thisStatus) != Cocoa.NSOrderedAscending:
+                            if (
+                                InstantMessage.IMComparePersonStatus(
+                                    bestStatus, thisStatus
+                                )
+                                != Cocoa.NSOrderedAscending
+                            ):
                                 bestStatus = thisStatus
 
                 self._imPersonStatus[i] = bestStatus
@@ -84,14 +98,16 @@ class PeopleDataSource (Cocoa.NSObject):
     # Sets up all our internal data
     def setupABPeople(self):
         # Keep around a copy of all the people in the AB now
-        self._abPeople = AddressBook.ABAddressBook.sharedAddressBook().people().mutableCopy()
+        self._abPeople = (
+            AddressBook.ABAddressBook.sharedAddressBook().people().mutableCopy()
+        )
 
         # Sort them by display name
-        self._abPeople.sortUsingSelector_('compareDisplayNames:')
+        self._abPeople.sortUsingSelector_("compareDisplayNames:")
 
         # Assume everyone is offline.
         self._imPersonStatus.removeAllObjects()
-        offlineNumber =  InstantMessage.IMPersonStatusOffline
+        offlineNumber = InstantMessage.IMPersonStatusOffline
         for i in range(len(self._abPeople)):
             self._imPersonStatus.append(offlineNumber)
 
@@ -110,15 +126,16 @@ class PeopleDataSource (Cocoa.NSObject):
 
     def tableView_objectValueForTableColumn_row_(self, tableView, tableColumn, row):
         identifier = tableColumn.identifier()
-        if identifier == u"image":
+        if identifier == "image":
             status = self._imPersonStatus[row]
-            return Cocoa.NSImage.imageNamed_(InstantMessage.IMService.imageNameForStatus_(status))
+            return Cocoa.NSImage.imageNamed_(
+                InstantMessage.IMService.imageNameForStatus_(status)
+            )
 
-        elif identifier == u"name":
+        elif identifier == "name":
             return self._abPeople[row].displayName()
 
         return None
-
 
     # Posted from ServiceWatcher
     # The object of this notification is an ABPerson who's status has

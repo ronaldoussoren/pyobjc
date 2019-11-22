@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from InstantMessage import *
 
-class TestIMService (TestCase):
+
+class TestIMService(TestCase):
     def testConstants(self):
         self.assertIsInstance(IMServiceStatusChangedNotification, unicode)
         self.assertIsInstance(IMMyStatusChangedNotification, unicode)
@@ -45,6 +45,7 @@ class TestIMService (TestCase):
     def testFunctions10_5(self):
         v = IMComparePersonStatus(IMPersonStatusOffline, IMPersonStatusAway)
         self.assertIsInstance(v, (int, long))
+
 
 if __name__ == "__main__":
     main()

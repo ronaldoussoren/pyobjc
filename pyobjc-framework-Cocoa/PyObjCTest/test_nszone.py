@@ -4,10 +4,11 @@ from Foundation import *
 
 # HACK
 import Foundation
-#NSZonePtr = getattr(Foundation, 'NSZone*')
+
+# NSZonePtr = getattr(Foundation, 'NSZone*')
 
 
-class TestNSZone (TestCase):
+class TestNSZone(TestCase):
     def testWithZones(self):
         obj = NSObject.allocWithZone_(None).init()
         zone = obj.zone()
@@ -19,25 +20,25 @@ class TestNSZone (TestCase):
         self.assertEqual(zone.__pointer__, zone2.__pointer__)
 
         self.assertRaises(TypeError, NSObject.allocWithZone_, 10)
-        #self.assertRaises(TypeError, NSObject.allocWithZone_, objc.NULL)
-
+        # self.assertRaises(TypeError, NSObject.allocWithZone_, objc.NULL)
 
     def testNoMallocAndFriends(self):
         import Foundation
-        self.assertNotHasAttr(Foundation, 'NSZoneMalloc')
-        self.assertNotHasAttr(Foundation, 'NSZoneCalloc')
-        self.assertNotHasAttr(Foundation, 'NSZoneRealloc')
-        self.assertNotHasAttr(Foundation, 'NSZoneFree')
-        self.assertNotHasAttr(Foundation, 'NSZoneFromPointer')
-        self.assertNotHasAttr(Foundation, 'NSAllocateCollectable')
-        self.assertNotHasAttr(Foundation, 'NSReallocateCollectable')
-        self.assertNotHasAttr(Foundation, 'NSAllocateMemoryPages')
-        self.assertNotHasAttr(Foundation, 'NSDeallocateMemoryPages')
-        self.assertNotHasAttr(Foundation, 'NSCopyMemoryPages')
+
+        self.assertNotHasAttr(Foundation, "NSZoneMalloc")
+        self.assertNotHasAttr(Foundation, "NSZoneCalloc")
+        self.assertNotHasAttr(Foundation, "NSZoneRealloc")
+        self.assertNotHasAttr(Foundation, "NSZoneFree")
+        self.assertNotHasAttr(Foundation, "NSZoneFromPointer")
+        self.assertNotHasAttr(Foundation, "NSAllocateCollectable")
+        self.assertNotHasAttr(Foundation, "NSReallocateCollectable")
+        self.assertNotHasAttr(Foundation, "NSAllocateMemoryPages")
+        self.assertNotHasAttr(Foundation, "NSDeallocateMemoryPages")
+        self.assertNotHasAttr(Foundation, "NSCopyMemoryPages")
 
     def testConstants(self):
-        self.assertEqual(NSScannedOption, (1<<0))
-        self.assertEqual(NSCollectorDisabledOption, (1<<1))
+        self.assertEqual(NSScannedOption, (1 << 0))
+        self.assertEqual(NSCollectorDisabledOption, (1 << 1))
 
     def testMakeCollectable(self):
         v = NSMakeCollectable
@@ -67,11 +68,12 @@ class TestNSZone (TestCase):
             self.assertIsInstance(z, NSZonePtr)
         z = NSCreateZone(5000, 100, True)
         self.assertIsInstance(z, NSZonePtr)
-        NSSetZoneName(z, b"Hello World".decode('ascii'))
+        NSSetZoneName(z, b"Hello World".decode("ascii"))
         nm = NSZoneName(z)
-        self.assertEqual(nm, b"Hello World".decode('ascii'))
+        self.assertEqual(nm, b"Hello World".decode("ascii"))
 
-        NSRecycleZone(z); z = None
+        NSRecycleZone(z)
+        z = None
 
 
 if __name__ == "__main__":

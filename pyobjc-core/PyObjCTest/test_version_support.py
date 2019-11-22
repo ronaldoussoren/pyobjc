@@ -1,22 +1,23 @@
 from PyObjCTools.TestSupport import *
 import plistlib
 
-class TestVersionSupport (TestCase):
+
+class TestVersionSupport(TestCase):
     def test_macos_available(self):
         self.assertFalse(objc.macos_available(11, 20, 20))
         self.assertFalse(objc.macos_available(10, 99, 0))
 
-        with open('/System/Library/CoreServices/SystemVersion.plist', 'rb') as fp:
-            if hasattr(plistlib, 'load'):
+        with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
+            if hasattr(plistlib, "load"):
                 pl = plistlib.load(fp)
             else:
                 pl = plistlib.readPlist(fp)
 
-        version = (list(map(int, pl['ProductVersion'].split('.'))) + [0])[:3]
-        
+        version = (list(map(int, pl["ProductVersion"].split("."))) + [0])[:3]
+
         self.assertTrue(objc.macos_available(*version))
         self.assertTrue(objc.macos_available(*version[:2]))
-      
+
         self.assertFalse(objc.macos_available(version[0] + 1, version[1], version[2]))
         self.assertFalse(objc.macos_available(version[0], version[1] + 1, version[2]))
         self.assertFalse(objc.macos_available(version[0], version[1], version[2] + 1))
@@ -26,7 +27,8 @@ class TestVersionSupport (TestCase):
         self.assertTrue(objc.macos_available(version[0], version[1] - 1))
 
         if version[2]:
-           self.assertTrue(objc.macos_available(version[0], version[1], version[2]-1))
+            self.assertTrue(objc.macos_available(version[0], version[1], version[2] - 1))
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,9 @@
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTExportOptions (TestCase):
-    @min_os_level('10.7')
+
+class TestQTExportOptions(TestCase):
+    @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(QTExportOptionsAppleM4VCellular, unicode)
         self.assertIsInstance(QTExportOptionsAppleM4V480pSD, unicode)
@@ -14,6 +15,7 @@ class TestQTExportOptions (TestCase):
         self.assertIsInstance(QTExportOptionsQuickTimeMovie720p, unicode)
         self.assertIsInstance(QTExportOptionsQuickTimeMovie1080p, unicode)
         self.assertIsInstance(QTExportOptionsAppleM4A, unicode)
+
 
 if __name__ == "__main__":
     main()

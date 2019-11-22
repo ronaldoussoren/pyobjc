@@ -2,12 +2,13 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-SecureDownloadTrustSetupCallback = b'i@^v'
-SecureDownloadTrustEvaluateCallback = b'i@i^v'
+SecureDownloadTrustSetupCallback = b"i@^v"
+SecureDownloadTrustEvaluateCallback = b"i@i^v"
 
-SecKeyGeneratePairBlock = b'v@@@'
+SecKeyGeneratePairBlock = b"v@@@"
 
-class TestSecKey (TestCase):
+
+class TestSecKey(TestCase):
     def testTypes(self):
         self.assertIsCFType(Security.SecKeyRef)
 
@@ -74,39 +75,79 @@ class TestSecKey (TestCase):
         self.assertEqual(Security.kSecKeyOperationTypeDecrypt, 3)
         self.assertEqual(Security.kSecKeyOperationTypeKeyExchange, 4)
 
-
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def test_constants_10_8(self):
         self.assertIsInstance(Security.kSecPrivateKeyAttrs, unicode)
         self.assertIsInstance(Security.kSecPublicKeyAttrs, unicode)
 
-
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def test_constants_10_12(self):
         self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureRaw, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512, unicode
+        )
         self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureRFC4754, unicode)
         self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA512, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA512, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA1, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA512, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA1, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureMessageX962SHA512, unicode
+        )
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionRaw, unicode)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionPKCS1, unicode)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA1, unicode)
@@ -114,131 +155,251 @@ class TestSecKey (TestCase):
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA256, unicode)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA384, unicode)
         self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA512, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA1AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA224AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA256AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA384AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA512AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA1AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA224AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA256AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA384AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA512AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA1AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA224AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA256AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA384AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA512AESGCM, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA1AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA224AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA256AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA384AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSAEncryptionOAEPSHA512AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA1AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA224AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA256AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA384AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardX963SHA512AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA1AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA224AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA256AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA384AESGCM, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorX963SHA512AESGCM, unicode
+        )
         self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeStandard, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA512, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA1, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeStandardX963SHA512, unicode
+        )
         self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeCofactor, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA512, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA1, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA512, unicode
+        )
 
         self.assertIsInstance(Security.kSecKeyKeyExchangeParameterRequestedSize, unicode)
         self.assertIsInstance(Security.kSecKeyKeyExchangeParameterSharedInfo, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def test_constants_10_13(self):
         self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA512, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA1, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA224, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA256, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA384, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA512, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA224AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA256AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA384AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA512AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA224AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA256AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA384AESGCM, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA512AESGCM, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA512, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA1, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA224, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA256, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA384, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureMessagePSSSHA512, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA224AESGCM,
+            unicode,
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA256AESGCM,
+            unicode,
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA384AESGCM,
+            unicode,
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionStandardVariableIVX963SHA512AESGCM,
+            unicode,
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA224AESGCM,
+            unicode,
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA256AESGCM,
+            unicode,
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA384AESGCM,
+            unicode,
+        )
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECIESEncryptionCofactorVariableIVX963SHA512AESGCM,
+            unicode,
+        )
 
     def test_functions(self):
         self.assertIsInstance(Security.SecKeyGetTypeID(), (int, long))
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def test_functions_10_6(self):
         self.assertResultHasType(Security.SecKeyGetBlockSize, objc._C_ULNG)
         self.assertArgHasType(Security.SecKeyGetBlockSize, 0, objc._C_ID)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_functions_10_7(self):
         self.assertResultHasType(Security.SecKeyGenerateSymmetric, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyGenerateSymmetric)
         self.assertArgHasType(Security.SecKeyGenerateSymmetric, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyGenerateSymmetric, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyGenerateSymmetric, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyCreateFromData, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCreateFromData)
         self.assertArgHasType(Security.SecKeyCreateFromData, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateFromData, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateFromData, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCreateFromData, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyGeneratePairAsync, objc._C_VOID)
         self.assertArgHasType(Security.SecKeyGeneratePairAsync, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyGeneratePairAsync, 1, b'^{dispatch_queue_s=}')
-        self.assertArgIsBlock(Security.SecKeyGeneratePairAsync, 2, SecKeyGeneratePairBlock)
+        self.assertArgHasType(
+            Security.SecKeyGeneratePairAsync, 1, b"^{dispatch_queue_s=}"
+        )
+        self.assertArgIsBlock(
+            Security.SecKeyGeneratePairAsync, 2, SecKeyGeneratePairBlock
+        )
 
         self.assertResultHasType(Security.SecKeyDeriveFromPassword, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyDeriveFromPassword)
         self.assertArgHasType(Security.SecKeyDeriveFromPassword, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyDeriveFromPassword, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyDeriveFromPassword, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyDeriveFromPassword, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyWrapSymmetric, objc._C_ID)
         self.assertArgHasType(Security.SecKeyWrapSymmetric, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyWrapSymmetric, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyWrapSymmetric, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyWrapSymmetric, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyWrapSymmetric, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyUnwrapSymmetric, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyUnwrapSymmetric, 0, objc._C_IN + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyUnwrapSymmetric, 0, objc._C_IN + objc._C_PTR + objc._C_ID
+        )
         self.assertArgHasType(Security.SecKeyUnwrapSymmetric, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyWrapSymmetric, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyUnwrapSymmetric, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyUnwrapSymmetric, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyGeneratePair, objc._C_INT)
         self.assertArgHasType(Security.SecKeyGeneratePair, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyGeneratePair, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyGeneratePair, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecKeyGeneratePair, 1)
-        self.assertArgHasType(Security.SecKeyGeneratePair, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyGeneratePair, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
         self.assertArgIsCFRetained(Security.SecKeyGeneratePair, 2)
 
-        self.assertFalse(hasattr(Security, 'SecKeyRawSign'))
-        self.assertFalse(hasattr(Security, 'SecKeyRawVerify'))
-        self.assertFalse(hasattr(Security, 'SecKeyEncrypt'))
-        self.assertFalse(hasattr(Security, 'SecKeyDecrypt'))
+        self.assertFalse(hasattr(Security, "SecKeyRawSign"))
+        self.assertFalse(hasattr(Security, "SecKeyRawVerify"))
+        self.assertFalse(hasattr(Security, "SecKeyEncrypt"))
+        self.assertFalse(hasattr(Security, "SecKeyDecrypt"))
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def test_functions_10_12(self):
         self.assertResultHasType(Security.SecKeyCreateRandomKey, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCreateRandomKey)
         self.assertArgHasType(Security.SecKeyCreateRandomKey, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateRandomKey, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCreateRandomKey, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyCreateWithData, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCreateWithData)
         self.assertArgHasType(Security.SecKeyCreateWithData, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateWithData, 1, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateWithData, 2, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCreateWithData, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyCopyExternalRepresentation, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCopyExternalRepresentation)
         self.assertArgHasType(Security.SecKeyCopyExternalRepresentation, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCopyExternalRepresentation, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCopyExternalRepresentation,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
 
         self.assertResultHasType(Security.SecKeyCopyAttributes, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCopyAttributes)
@@ -253,28 +414,36 @@ class TestSecKey (TestCase):
         self.assertArgHasType(Security.SecKeyCreateSignature, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateSignature, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateSignature, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateSignature, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCreateSignature, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultIsBOOL(Security.SecKeyVerifySignature)
         self.assertArgHasType(Security.SecKeyVerifySignature, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyVerifySignature, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyVerifySignature, 2, objc._C_ID)
         self.assertArgHasType(Security.SecKeyVerifySignature, 3, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyVerifySignature, 4, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyVerifySignature, 4, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyCreateEncryptedData, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCreateEncryptedData)
         self.assertArgHasType(Security.SecKeyCreateEncryptedData, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateEncryptedData, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateEncryptedData, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateEncryptedData, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCreateEncryptedData, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyCreateDecryptedData, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCreateDecryptedData)
         self.assertArgHasType(Security.SecKeyCreateDecryptedData, 0, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateDecryptedData, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateDecryptedData, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCreateDecryptedData, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCreateDecryptedData, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecKeyCopyKeyExchangeResult, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecKeyCopyKeyExchangeResult)
@@ -282,7 +451,11 @@ class TestSecKey (TestCase):
         self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 2, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 3, objc._C_ID)
-        self.assertArgHasType(Security.SecKeyCopyKeyExchangeResult, 4, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecKeyCopyKeyExchangeResult,
+            4,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
 
         self.assertResultIsBOOL(Security.SecKeyIsAlgorithmSupported)
         self.assertArgHasType(Security.SecKeyIsAlgorithmSupported, 0, objc._C_ID)
@@ -290,13 +463,11 @@ class TestSecKey (TestCase):
         self.assertArgHasType(Security.SecKeyIsAlgorithmSupported, 2, objc._C_ID)
 
     def test_functions_deprecated(self):
-        self.assertFalse(hasattr(Security, 'SecKeyCreatePair'))
-        self.assertFalse(hasattr(Security, 'SecKeyGenerate'))
-        self.assertFalse(hasattr(Security, 'SecKeyGetCSSMKey'))
-        self.assertFalse(hasattr(Security, 'SecKeyGetCSPHandle'))
-        self.assertFalse(hasattr(Security, 'SecKeyGetCredentials'))
-
-
+        self.assertFalse(hasattr(Security, "SecKeyCreatePair"))
+        self.assertFalse(hasattr(Security, "SecKeyGenerate"))
+        self.assertFalse(hasattr(Security, "SecKeyGetCSSMKey"))
+        self.assertFalse(hasattr(Security, "SecKeyGetCSPHandle"))
+        self.assertFalse(hasattr(Security, "SecKeyGetCredentials"))
 
 
 if __name__ == "__main__":

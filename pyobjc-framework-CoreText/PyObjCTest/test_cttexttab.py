@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CoreText import *
 
-class TestCTTextTab (TestCase):
+
+class TestCTTextTab(TestCase):
     def testTypes(self):
         self.assertIsCFType(CTTextTabRef)
 
@@ -12,16 +12,22 @@ class TestCTTextTab (TestCase):
     def testFunctions(self):
         self.assertIsInstance(CTTextTabGetTypeID(), (int, long))
 
-        tab = CTTextTabCreate(kCTCenterTextAlignment, 10.5, {
-            kCTTabColumnTerminatorsAttributeName: CFCharacterSetCreateWithCharactersInString(None, b".".decode('latin1'))
-        })
+        tab = CTTextTabCreate(
+            kCTCenterTextAlignment,
+            10.5,
+            {
+                kCTTabColumnTerminatorsAttributeName: CFCharacterSetCreateWithCharactersInString(
+                    None, b".".decode("latin1")
+                )
+            },
+        )
         self.assertIsInstance(tab, CTTextTabRef)
 
         v = CTTextTabGetAlignment(tab)
-        self.assertEqual(v , kCTCenterTextAlignment)
+        self.assertEqual(v, kCTCenterTextAlignment)
 
         v = CTTextTabGetLocation(tab)
-        self.assertEqual(v , 10.5)
+        self.assertEqual(v, 10.5)
 
         v = CTTextTabGetOptions(tab)
         self.assertIsInstance(v, dict)

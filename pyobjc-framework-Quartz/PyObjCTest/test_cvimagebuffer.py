@@ -1,10 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVImageBuffer (TestCase):
 
-
+class TestCVImageBuffer(TestCase):
     @expectedFailure
     def testsMissing(self):
         # FIXME
@@ -38,7 +36,7 @@ class TestCVImageBuffer (TestCase):
         self.assertIsInstance(kCVImageBufferYCbCrMatrix_ITU_R_601_4, unicode)
         self.assertIsInstance(kCVImageBufferYCbCrMatrix_SMPTE_240M_1995, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCVImageBufferColorPrimaries_ITU_R_709_2, unicode)
         self.assertIsInstance(kCVImageBufferColorPrimaries_EBU_3213, unicode)
@@ -62,7 +60,7 @@ class TestCVImageBuffer (TestCase):
         self.assertIsInstance(kCVImageBufferChromaSubsampling_411, unicode)
         self.assertIsInstance(kCVImageBufferColorPrimariesKey, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCVImageBufferICCProfileKey, unicode)
         self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_240M_1995, unicode)
@@ -70,15 +68,15 @@ class TestCVImageBuffer (TestCase):
         self.assertIsInstance(kCVImageBufferTransferFunction_EBU_3213, unicode)
         self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_C, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(kCVImageBufferColorPrimaries_P22, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kCVImageBufferAlphaChannelIsOpaque, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCVImageBufferYCbCrMatrix_ITU_R_2020, unicode)
 
@@ -88,11 +86,11 @@ class TestCVImageBuffer (TestCase):
 
         self.assertIsInstance(kCVImageBufferTransferFunction_ITU_R_2020, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_ST_428_1, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ, unicode)
         self.assertIsInstance(kCVImageBufferTransferFunction_ITU_R_2100_HLG, unicode)
@@ -101,9 +99,15 @@ class TestCVImageBuffer (TestCase):
         self.assertIsInstance(kCVMetalTextureUsage, unicode)
         self.assertIsInstance(kCVImageBufferTransferFunction_sRGB, unicode)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(kCVImageBufferTransferFunction_Linear, unicode)
+
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertIsInstance(kCVImageBufferAlphaChannelModeKey, unicode)
+        self.assertIsInstance(kCVImageBufferAlphaChannelMode_StraightAlpha, unicode)
+        self.assertIsInstance(kCVImageBufferAlphaChannelMode_PremultipliedAlpha, unicode)
 
     def testFunctions(self):
         self.assertResultHasType(CVImageBufferGetEncodedSize, CGSize.__typestr__)
@@ -111,11 +115,11 @@ class TestCVImageBuffer (TestCase):
         self.assertResultHasType(CVImageBufferGetCleanRect, CGRect.__typestr__)
         self.assertResultHasType(CVImageBufferIsFlipped, objc._C_NSBOOL)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         self.assertResultIsCFRetained(CVImageBufferCreateColorSpaceFromAttachments)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testFunctions10_13(self):
         CVYCbCrMatrixGetIntegerCodePointForString
         CVColorPrimariesGetIntegerCodePointForString

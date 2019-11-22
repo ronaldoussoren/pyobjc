@@ -3,9 +3,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import GameKit
 
-class TestGKEventListener (TestCase):
+
+class TestGKEventListener(TestCase):
     def testProtocols(self):
-        objc.protocolNamed('GKChallengeListener')
+        objc.protocolNamed("GKChallengeListener")
 
 
 if __name__ == "__main__":

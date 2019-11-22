@@ -1,15 +1,15 @@
 import sys
 from PyObjCTools.TestSupport import *
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import EventKit
 
-    class TestEKSource (TestCase):
-        @min_os_level('10.8')
+    class TestEKSource(TestCase):
+        @min_os_level("10.8")
         def testBasic(self):
             self.assertTrue(hasattr(EventKit, "EKSource"))
 
-        @min_os_level('10.8')
+        @min_os_level("10.8")
         def testConstants10_8(self):
             self.assertEqual(EventKit.EKSourceTypeLocal, 0)
             self.assertEqual(EventKit.EKSourceTypeExchange, 1)
@@ -21,8 +21,13 @@ if sys.maxsize > 2**32:
             self.assertEqual(EventKit.EKEntityTypeEvent, 0)
             self.assertEqual(EventKit.EKEntityTypeReminder, 1)
 
-            self.assertEqual(EventKit.EKEntityMaskEvent, (1 << EventKit.EKEntityTypeEvent))
-            self.assertEqual(EventKit.EKEntityMaskReminder, (1 << EventKit.EKEntityTypeReminder))
+            self.assertEqual(
+                EventKit.EKEntityMaskEvent, (1 << EventKit.EKEntityTypeEvent)
+            )
+            self.assertEqual(
+                EventKit.EKEntityMaskReminder, (1 << EventKit.EKEntityTypeReminder)
+            )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

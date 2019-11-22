@@ -28,46 +28,46 @@ from GameController import *
 from iTunesLibrary import *
 from CoreServices import *
 
-if sys_version >= LooseVersion('10.5'):
+if sys_version >= LooseVersion("10.5"):
     from CalendarStore import *
     from Collaboration import *
     from CoreText import *
     from DictionaryServices import *
     from FSEvents import *
 
-if sys_version >= LooseVersion('10.6'):
+if sys_version >= LooseVersion("10.6"):
     from CoreLocation import *
     from CoreWLAN import *
 
     from iTunesLibrary import *
 
 
-if sys_version >= LooseVersion('10.7'):
+if sys_version >= LooseVersion("10.7"):
     from AVFoundation import *
 
-if sys_version >= LooseVersion('10.8'):
+if sys_version >= LooseVersion("10.8"):
     from Accounts import *
     from EventKit import *
     from GameCenter import *
 
-if sys_version >= LooseVersion('10.9'):
+if sys_version >= LooseVersion("10.9"):
     from AVKit import *
 
-if sys_version >= LooseVersion('10.10'):
+if sys_version >= LooseVersion("10.10"):
     from CloudKit import *
     from CoreBluetooth import *
     from CryptoTokenKit import *
     from FinderSync import *
 
-if sys_version >= LooseVersion('10.11'):
+if sys_version >= LooseVersion("10.11"):
     from Contacts import *
     from ContactsUI import *
 
-if sys_version >= LooseVersion('10.12'):
+if sys_version >= LooseVersion("10.12"):
     from Intents import *
     from MediaPlayer import *
 
-if sys_version >= LooseVersion('10.13'):
+if sys_version >= LooseVersion("10.13"):
     from BusinessChat import *
     from ColorSync import *
     from CoreML import *

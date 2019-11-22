@@ -6,6 +6,7 @@ information.
 Original topological sort code written by Ofer Faigon (www.bitformation.com) and used with permission
 """
 
+
 def topological_sort(items, partial_order):
     """
     Perform topological sort.
@@ -19,7 +20,7 @@ def topological_sort(items, partial_order):
     def add_node(graph, node):
         """Add a node to the graph if not already exists."""
         if node not in graph:
-            graph[node] = [0] # 0 = number of arcs coming into this node.
+            graph[node] = [0]  # 0 = number of arcs coming into this node.
 
     def add_arc(graph, fromnode, tonode):
         """Add an arc to a graph. Can create multiple arcs.
@@ -43,11 +44,11 @@ def topological_sort(items, partial_order):
     graph = {}
     for v in items:
         add_node(graph, v)
-    for a,b in partial_order:
+    for a, b in partial_order:
         add_arc(graph, a, b)
 
     # Step 2 - find all roots (nodes with zero incoming arcs).
-    roots = [node for (node,nodeinfo) in graph.items() if nodeinfo[0] == 0]
+    roots = [node for (node, nodeinfo) in graph.items() if nodeinfo[0] == 0]
 
     # step 3 - repeatedly emit a root and remove it from the graph. Removing
     # a node may convert some of the node's direct children into roots.

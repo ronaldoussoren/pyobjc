@@ -1,18 +1,18 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGDirectPalette (TestCase):
+
+class TestCGDirectPalette(TestCase):
     def testStructs(self):
         v = CGDeviceByteColor()
-        self.assertTrue(hasattr(v, 'red'))
-        self.assertTrue(hasattr(v, 'green'))
-        self.assertTrue(hasattr(v, 'blue'))
+        self.assertTrue(hasattr(v, "red"))
+        self.assertTrue(hasattr(v, "green"))
+        self.assertTrue(hasattr(v, "blue"))
 
         v = CGDeviceColor()
-        self.assertTrue(hasattr(v, 'red'))
-        self.assertTrue(hasattr(v, 'green'))
-        self.assertTrue(hasattr(v, 'blue'))
+        self.assertTrue(hasattr(v, "red"))
+        self.assertTrue(hasattr(v, "green"))
+        self.assertTrue(hasattr(v, "blue"))
 
     def testTypes(self):
         self.assertIsOpaquePointer(CGDirectPaletteRef)
@@ -36,7 +36,9 @@ class TestCGDirectPalette (TestCase):
         self.assertIsInstance(v, CGDirectPaletteRef)
 
         self.assertResultIsCFRetained(CGPaletteCreateWithByteSamples)
-        v = CGPaletteCreateWithByteSamples([(0, 0, 0), (100, 100, 100), (255, 255, 255)], 3)
+        v = CGPaletteCreateWithByteSamples(
+            [(0, 0, 0), (100, 100, 100), (255, 255, 255)], 3
+        )
         self.assertIsInstance(v, CGDirectPaletteRef)
 
         CFRetain(v)
@@ -63,8 +65,7 @@ class TestCGDirectPalette (TestCase):
         self.assertTrue(v is True)
 
         self.assertResultIsCFRetained(CGPaletteCreateFromPaletteBlendedWithColor)
-        v = CGPaletteCreateFromPaletteBlendedWithColor(palette,
-                0.5, (0.3, 0.7, 0.1))
+        v = CGPaletteCreateFromPaletteBlendedWithColor(palette, 0.5, (0.3, 0.7, 0.1))
         self.assertIsInstance(v, CGDirectPaletteRef)
 
 

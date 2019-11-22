@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVHostTime (TestCase):
+
+class TestCVHostTime(TestCase):
     def testFunctions(self):
         v = CVGetCurrentHostTime()
         self.assertIsInstance(v, (int, long))
@@ -11,6 +12,7 @@ class TestCVHostTime (TestCase):
 
         v = CVGetHostClockMinimumTimeDelta()
         self.assertIsInstance(v, (int, long))
+
 
 if __name__ == "__main__":
     main()

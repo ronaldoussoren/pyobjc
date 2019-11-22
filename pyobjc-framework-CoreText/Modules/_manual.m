@@ -1,13 +1,11 @@
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <ApplicationServices/ApplicationServices.h>
 
-
 static PyObject*
-m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_font;
     PyObject* py_options;
@@ -28,21 +26,22 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    PyObjC_DURING
-        ref = CTFontCopyAvailableTables(font, options);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ref = CTFontCopyAvailableTables(font, options);
 
-    PyObjC_HANDLER
-        ref = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER;
+        } @catch (NSException* localException) {
+            ref = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (ref == NULL) {
         if (PyErr_Occurred()) {
             return NULL;
         }
 
-            Py_INCREF(Py_None);
+        Py_INCREF(Py_None);
         return Py_None;
     }
 
@@ -55,7 +54,7 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)),
 
     for (i = 0; i < len; i++) {
         CTFontTableTag tag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex(ref, i);
-        PyTuple_SET_ITEM(result, i, PyInt_FromLong(tag));
+        PyTuple_SET_ITEM(result, i, PyLong_FromLong(tag));
         if (PyTuple_GET_ITEM(result, i) == NULL) {
             Py_DECREF(result);
             CFRelease(ref);
@@ -67,8 +66,7 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)),
 }
 
 static PyObject*
-m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_style;
     CTParagraphStyleRef style;
@@ -84,18 +82,19 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    PyObjC_DURING
-        b = CTParagraphStyleGetValueForSpecifier(style, kCTParagraphStyleSpecifierTabStops,
-                sizeof(CFArrayRef), &output);
-    PyObjC_HANDLER
-        b = 0;
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            b = CTParagraphStyleGetValueForSpecifier(
+                style, kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &output);
+        } @catch (NSException* localException) {
+            b = 0;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         return NULL;
     }
-
 
     if (!b) {
         return Py_BuildValue("OO", Py_False, Py_None);
@@ -106,8 +105,7 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)),
 }
 
 static PyObject*
-m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_settings;
     PyObject* seq;
@@ -127,19 +125,21 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
             PyErr_SetString(PyExc_ValueError, "settings list is 'None', length is not 0");
             return NULL;
         }
-        PyObjC_DURING
-            style = CTParagraphStyleCreate(NULL, 0);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                style = CTParagraphStyleCreate(NULL, 0);
 
-        PyObjC_HANDLER
-            style = NULL;
-            PyObjCErr_FromObjC(localException);
-        PyObjC_ENDHANDLER
+            } @catch (NSException* localException) {
+                style = NULL;
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
         if (PyErr_Occurred()) {
             return NULL;
         }
         if (style == NULL) {
-                Py_INCREF(Py_None);
+            Py_INCREF(Py_None);
             return Py_None;
         }
 
@@ -155,7 +155,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 
     if (PySequence_Fast_GET_SIZE(seq) < len) {
         PyErr_Format(PyExc_ValueError, "need sequence of at least %ld arguments",
-                (long)len);
+                     (long)len);
         Py_DECREF(seq);
         return NULL;
     }
@@ -179,21 +179,22 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
             return NULL;
         }
         if (PySequence_Fast_GET_SIZE(s) != 3) {
-            PyErr_Format(PyExc_ValueError, "settings item has length %ld, not 3", (long)PySequence_Fast_GET_SIZE(s));
+            PyErr_Format(PyExc_ValueError, "settings item has length %ld, not 3",
+                         (long)PySequence_Fast_GET_SIZE(s));
             Py_DECREF(seq);
             free(settings);
             return NULL;
         }
 
         r = PyObjC_PythonToObjC(@encode(CTParagraphStyleSpecifier),
-                PySequence_Fast_GET_ITEM(s, 0), &cur->spec);
+                                PySequence_Fast_GET_ITEM(s, 0), &cur->spec);
         if (r == -1) {
             Py_DECREF(seq);
             free(settings);
             return NULL;
         }
-        r = PyObjC_PythonToObjC(@encode(size_t),
-                PySequence_Fast_GET_ITEM(s, 1), &cur->valueSize);
+        r = PyObjC_PythonToObjC(@encode(size_t), PySequence_Fast_GET_ITEM(s, 1),
+                                &cur->valueSize);
         if (r == -1) {
             Py_DECREF(seq);
             free(settings);
@@ -205,25 +206,24 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 
             if (aref != NULL) {
                 PyErr_SetString(PyExc_ValueError,
-                    "Multiple kCTParagraphStyleSpecifierTabStops settings");
+                                "Multiple kCTParagraphStyleSpecifierTabStops settings");
                 r = -1;
             } else {
 
                 r = PyObjC_PythonToObjC(@encode(CFArrayRef),
-                    PySequence_Fast_GET_ITEM(s, 2), &aref);
+                                        PySequence_Fast_GET_ITEM(s, 2), &aref);
                 cur->value = &aref;
             }
         } else {
             const void* buf;
             Py_ssize_t buflen;
 
-            r = PyObject_AsReadBuffer(
-                PySequence_Fast_GET_ITEM(s, 2), &buf, &buflen);
+            r = PyObject_AsReadBuffer(PySequence_Fast_GET_ITEM(s, 2), &buf, &buflen);
             if (r != -1) {
                 if ((size_t)buflen != cur->valueSize) {
                     PyErr_Format(PyExc_ValueError,
-                        "Got buffer of %ld bytes, need %ld bytes",
-                        (long)buflen, (long)cur->valueSize);
+                                 "Got buffer of %ld bytes, need %ld bytes", (long)buflen,
+                                 (long)cur->valueSize);
                     r = -1;
                 } else {
                     cur->value = (void*)buf;
@@ -239,14 +239,15 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
 
     CTParagraphStyleRef rv = NULL;
 
-    PyObjC_DURING
-        rv = CTParagraphStyleCreate(settings, len);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            rv = CTParagraphStyleCreate(settings, len);
 
-    PyObjC_HANDLER
-        rv = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            rv = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     free(settings);
 
@@ -266,7 +267,6 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)),
     CFRelease(rv);
     return result;
 }
-
 
 #if PyObjC_BUILD_RELEASE >= 1009
 
@@ -353,10 +353,8 @@ m_CTRunDelegateGetWidthCallback(void* refCon)
 }
 
 static CTRunDelegateCallbacks m_CTRunDelegateCallbacks = {
-    kCTRunDelegateCurrentVersion,
-    m_CTRunDelegateDeallocateCallback,
-    m_CTRunDelegateGetAscentCallback,
-    m_CTRunDelegateGetDescentCallback,
+    kCTRunDelegateCurrentVersion,     m_CTRunDelegateDeallocateCallback,
+    m_CTRunDelegateGetAscentCallback, m_CTRunDelegateGetDescentCallback,
     m_CTRunDelegateGetWidthCallback,
 };
 
@@ -366,7 +364,7 @@ m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* a
     PyObject* py_delegate;
     CTRunDelegateRef delegate;
     PyObject* py_refcon;
-    void*  refcon;
+    void* refcon;
 
     if (!PyArg_ParseTuple(args, "O", &py_delegate)) {
         return NULL;
@@ -386,7 +384,6 @@ m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* a
     return py_refcon;
 }
 
-
 static PyObject*
 m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
@@ -398,7 +395,8 @@ m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     PyObject* info;
     CTRunDelegateRef delegate;
 
-    if (!PyArg_ParseTuple(args, "(OOO)O", &py_getAscender, &py_getDescender, &py_getWidth, &py_refCon)) {
+    if (!PyArg_ParseTuple(args, "(OOO)O", &py_getAscender, &py_getDescender, &py_getWidth,
+                          &py_refCon)) {
         return NULL;
     }
     if (!PyCallable_Check(py_getAscender)) {
@@ -413,7 +411,8 @@ m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args
         PyErr_SetString(PyExc_TypeError, "getWidth is not callable");
         return NULL;
     }
-    info = Py_BuildValue("(OOOO)", py_getAscender, py_getDescender, py_getWidth, py_refCon);
+    info =
+        Py_BuildValue("(OOOO)", py_getAscender, py_getDescender, py_getWidth, py_refCon);
     if (info == NULL) {
         return NULL;
     }
@@ -429,21 +428,11 @@ m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args
 }
 #endif /* PyObjC_BUILD_RELEASE >= 1009 */
 
-
-
 static PyMethodDef mod_methods[] = {
-    {
-        "CTFontCopyAvailableTables",
-        (PyCFunction)m_CTFontCopyAvailableTables,
-        METH_VARARGS,
-        NULL
-    },
-    {
-        "CTParagraphStyleGetTabStops",
-        (PyCFunction)m_CTParagraphStyleGetTabStops,
-        METH_VARARGS,
-        "CTParagraphStyleGetTabStops(style) -> (stop, ...)"
-    },
+    {"CTFontCopyAvailableTables", (PyCFunction)m_CTFontCopyAvailableTables, METH_VARARGS,
+     NULL},
+    {"CTParagraphStyleGetTabStops", (PyCFunction)m_CTParagraphStyleGetTabStops,
+     METH_VARARGS, "CTParagraphStyleGetTabStops(style) -> (stop, ...)"},
     {
         "CTParagraphStyleCreate",
         (PyCFunction)m_CTParagraphStyleCreate,
@@ -465,21 +454,32 @@ static PyMethodDef mod_methods[] = {
     },
 #endif /* PyObjC_BUILD_RELEASE >= 1009 */
 
-    { 0, 0, 0, }
-};
+    {
+        0,
+        0,
+        0,
+    }};
 
 PyObjC_MODULE_INIT(_manual)
 {
     PyObject* m = PyObjC_MODULE_CREATE(_manual);
-    if (m == NULL) PyObjC_INITERROR();
+    if (m == NULL)
+        PyObjC_INITERROR();
 
-    if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
+    if (PyObjC_ImportAPI(m) < 0)
+        PyObjC_INITERROR();
 
-    if (PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat)) < 0) PyObjC_INITERROR();
-    if (PyModule_AddIntConstant(m, "sizeof_CTTextAlignment", sizeof(CTTextAlignment)) < 0) PyObjC_INITERROR();
-    if (PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode)) < 0) PyObjC_INITERROR();
-    if (PyModule_AddIntConstant(m, "sizeof_CTWritingDirection", sizeof(CTWritingDirection)) < 0) PyObjC_INITERROR();
-    if (PyModule_AddIntConstant(m, "sizeof_id", sizeof(id)) < 0) PyObjC_INITERROR();
+    if (PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat)) < 0)
+        PyObjC_INITERROR();
+    if (PyModule_AddIntConstant(m, "sizeof_CTTextAlignment", sizeof(CTTextAlignment)) < 0)
+        PyObjC_INITERROR();
+    if (PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode)) < 0)
+        PyObjC_INITERROR();
+    if (PyModule_AddIntConstant(m, "sizeof_CTWritingDirection",
+                                sizeof(CTWritingDirection)) < 0)
+        PyObjC_INITERROR();
+    if (PyModule_AddIntConstant(m, "sizeof_id", sizeof(id)) < 0)
+        PyObjC_INITERROR();
 
     PyObjC_INITDONE();
 }

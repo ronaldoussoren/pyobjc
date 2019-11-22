@@ -2,6 +2,7 @@ from Foundation import NSObject
 from objc import super
 import objc
 
+
 class RPCMethod(NSObject):
     def initWithDocument_name_(self, aDocument, aName):
         self = super(RPCMethod, self).init()

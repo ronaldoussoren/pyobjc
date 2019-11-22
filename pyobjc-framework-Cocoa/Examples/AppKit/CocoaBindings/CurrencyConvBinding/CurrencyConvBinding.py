@@ -4,5 +4,5 @@ from PyObjCTools import AppHelper
 import Converter
 import CurrencyConvBindingDocument
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     AppHelper.runEventLoop()

@@ -10,11 +10,13 @@
 
 from Cocoa import NSValueTransformer, NSString, NSFont
 
+
 class FontNameToDisplayNameTransformer(NSValueTransformer):
     """
     Takes as input the fontName of a font as stored in user defaults,
     returns the displayed font name of the font to show to the user.
     """
+
     @classmethod
     def transformedValueClass(cls):
         return NSString

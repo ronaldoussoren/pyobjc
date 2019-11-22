@@ -1,7 +1,7 @@
 """
 Backward compatibity with bridgesupport files
 """
-__all__ = ('initFrameworkWrapper', 'parseBridgeSupport')
+__all__ = ("initFrameworkWrapper", "parseBridgeSupport")
 
 import sys
 import xml.etree.ElementTree as ET
@@ -14,11 +14,16 @@ import pkg_resources
 import os
 
 
-for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCopyWithZone:'):
-    objc.registerMetaDataForSelector(b'NSObject', method,
-            {
-                'retval': { 'already_retained': True },
-            })
+for method in (
+    b"alloc",
+    b"copy",
+    b"copyWithZone:",
+    b"mutableCopy",
+    b"mutableCopyWithZone:",
+):
+    objc.registerMetaDataForSelector(
+        b"NSObject", method, {"retval": {"already_retained": True}}
+    )
 
 
 #
@@ -27,13 +32,11 @@ for method in (b'alloc', b'copy', b'copyWithZone:', b'mutableCopy', b'mutableCop
 
 # NOTE: This search path only contains system locations to
 # avoid accidently reiying on system-specific functionality.
-BRIDGESUPPORT_DIRECTORIES = [
-    '/System/Library/BridgeSupport',
-]
+BRIDGESUPPORT_DIRECTORIES = ["/System/Library/BridgeSupport"]
 
-_SENTINEL=object()
-_DEFAULT_SUGGESTION="don't use this method"
-_BOOLEAN_ATTRIBUTES=[
+_SENTINEL = object()
+_DEFAULT_SUGGESTION = "don't use this method"
+_BOOLEAN_ATTRIBUTES = [
     "already_retained",
     "already_cfretained",
     "c_array_length_in_result",
@@ -44,32 +47,27 @@ _BOOLEAN_ATTRIBUTES=[
 ]
 
 
-if sys.version_info[0] == 2: # pragma: no 3.x cover
-    def _as_bytes(value):
+
+def _as_bytes(value):
+    if isinstance(value, bytes):
         return value
+    return value.encode("ascii")
 
-    def _as_string(value):
-        return value
+def _as_string(value):
+    if isinstance(value, bytes):
+        return value.decode("ascii")
+    return value
 
-else: # pragma: no 2.x cover
-    def _as_bytes(value):
-        if isinstance(value, bytes):
-            return value
-        return value.encode('ascii')
 
-    def _as_string(value):
-        if isinstance(value, bytes):
-            return value.decode('ascii')
-        return value
-
-class _BridgeSupportParser (object):
+class _BridgeSupportParser(object):
     """
     Parser for the bridge support file format.
 
     Instances of this class will not update the bridge state,
     this makes it easier to test the class.
     """
-    TAG_MAP={}
+
+    TAG_MAP = {}
 
     def __init__(self, xmldata, frameworkName):
         self.frameworkName = frameworkName
@@ -89,11 +87,11 @@ class _BridgeSupportParser (object):
     def process_data(self, xmldata):
         root = ET.fromstring(xmldata.strip())
 
-        if root.tag != 'signatures':
+        if root.tag != "signatures":
             raise objc.error("invalid root node in bridgesupport file")
 
         for node in root:
-            method = getattr(self, 'do_%s'%(node.tag,), None)
+            method = getattr(self, "do_%s" % (node.tag,), None)
             if method is None:
                 continue
 
@@ -105,8 +103,8 @@ class _BridgeSupportParser (object):
         # As of macOS 10.13 metadata files may contain
         # typestring that end with property specific data;
         # first remove that junk.
-        if b',' in typestr:
-            typestr = typestr.split(b',', 1)[0]
+        if b"," in typestr:
+            typestr = typestr.split(b",", 1)[0]
 
         result = []
         for item in objc.splitSignature(typestr):
@@ -120,11 +118,13 @@ class _BridgeSupportParser (object):
                 # unions and structs have the same structure
                 start, stop = item[:1], item[-1:]
 
-                name, fields = objc.splitStructSignature(objc._C_STRUCT_B + _as_bytes(item[1:-1]) + objc._C_STRUCT_E)
+                name, fields = objc.splitStructSignature(
+                    objc._C_STRUCT_B + _as_bytes(item[1:-1]) + objc._C_STRUCT_E
+                )
                 result.append(start)
                 if name is not None:
                     result.append(_as_bytes(name))
-                    result.append(b'=')
+                    result.append(b"=")
                 for nm, tp in fields:
                     if nm is not None:
                         result.append(b'"')
@@ -134,9 +134,8 @@ class _BridgeSupportParser (object):
                     result.append(self.typestr2typestr(tp))
                 result.append(stop)
 
-
             elif item.startswith(objc._C_ARY_B):
-                m = re.match(br'^.(\d*)(.*).$', item)
+                m = re.match(br"^.(\d*)(.*).$", item)
                 result.append(objc._C_ARY_B)
                 result.append(m.group(1))
                 result.append(self.typestr2typestr(m.group(2)))
@@ -145,10 +144,10 @@ class _BridgeSupportParser (object):
             else:
                 result.append(item)
 
-        return b''.join(result)
+        return b"".join(result)
 
+    if sys.maxsize > 2 ** 32:
 
-    if sys.maxsize > 2**32:
         def attribute_string(self, node, name, name64):
             if name64 is not None:
                 value = node.get(name64)
@@ -158,6 +157,7 @@ class _BridgeSupportParser (object):
             return node.get(name)
 
     else:
+
         def attribute_string(self, node, name, name64):
             return node.get(name)
 
@@ -172,17 +172,16 @@ class _BridgeSupportParser (object):
         return False
 
     def import_name(self, name):
-        module, field = name.rsplit('.', 1)
+        module, field = name.rsplit(".", 1)
         m = __import__(module)
         try:
-            for nm in module.split('.')[1:]:
+            for nm in module.split(".")[1:]:
                 m = getattr(m, nm)
 
             return getattr(m, field)
 
         except AttributeError:
             raise ImportError(name)
-
 
     def xml_to_arg(self, node, is_method, is_arg):
         argIdx = None
@@ -212,7 +211,7 @@ class _BridgeSupportParser (object):
             result["c_array_of_fixed_length"] = int(s)
 
         for attr in _BOOLEAN_ATTRIBUTES:
-            if attr == 'c_array_length_in_result' and not is_arg:
+            if attr == "c_array_length_in_result" and not is_arg:
                 continue
             s = self.attribute_bool(node, attr, None, False)
             if s:
@@ -224,11 +223,11 @@ class _BridgeSupportParser (object):
 
         s = self.attribute_string(node, "c_array_length_in_arg", None)
         if s:
-            if ',' in s:
-                start, stop = map(int, s.split(','))
+            if "," in s:
+                start, stop = map(int, s.split(","))
                 if is_method:
                     start += 2
-                    stop  += 2
+                    stop += 2
 
                 result["c_array_length_in_arg"] = (start, stop)
 
@@ -239,8 +238,9 @@ class _BridgeSupportParser (object):
 
                 result["c_array_length_in_arg"] = s
 
-        if self.attribute_bool(node, "function_pointer", None, False) \
-           or self.attribute_bool(node, "block", None, False):
+        if self.attribute_bool(
+            node, "function_pointer", None, False
+        ) or self.attribute_bool(node, "block", None, False):
 
             v = self.attribute_bool(node, "function_pointer_retained", None, True)
             result["callable_retained"] = v
@@ -251,9 +251,7 @@ class _BridgeSupportParser (object):
 
             if self.attribute_bool(node, "block", None, False):
                 # Blocks have an implicit first argument
-                arguments[idx] = {
-                    "type": b"^v",
-                }
+                arguments[idx] = {"type": b"^v"}
                 idx += 1
 
             for al in node:
@@ -269,7 +267,7 @@ class _BridgeSupportParser (object):
         return argIdx, result
 
     def do_cftype(self, node):
-        name    = self.attribute_string(node, "name", None)
+        name = self.attribute_string(node, "name", None)
         typestr = self.attribute_string(node, "type", "type64")
         funcname = self.attribute_string(node, "gettypeid_func", None)
         tollfree = self.attribute_string(node, "tollfree", None)
@@ -284,7 +282,7 @@ class _BridgeSupportParser (object):
 
         else:
             if funcname is None:
-                funcname = name[:-3] + 'GetTypeID'
+                funcname = name[:-3] + "GetTypeID"
 
             try:
                 dll = ctypes.CDLL(None)
@@ -296,9 +294,8 @@ class _BridgeSupportParser (object):
 
             self.cftypes.append((name, typestr, gettypeid()))
 
-
     def do_constant(self, node):
-        name    = self.attribute_string(node, "name", None)
+        name = self.attribute_string(node, "name", None)
         typestr = self.attribute_string(node, "type", "type64")
 
         if name is None or not typestr:
@@ -313,9 +310,9 @@ class _BridgeSupportParser (object):
             def has_embedded_function(typestr):
                 nm, fields = objc.splitStructSignature(_as_bytes(typestr))
                 for nm, tp in fields:
-                    if tp == b'?':
+                    if tp == b"?":
                         return True
-                    elif tp == b'^?':
+                    elif tp == b"^?":
                         return True
                     elif tp.startswith(objc._C_STRUCT_B):
                         return has_embedded_function(tp)
@@ -327,7 +324,6 @@ class _BridgeSupportParser (object):
 
         magic = self.attribute_bool(node, "magic_cookie", None, False)
         self.constants.append((name, typestr, magic))
-
 
     def do_class(self, node):
         class_name = self.attribute_string(node, "name", None)
@@ -343,16 +339,17 @@ class _BridgeSupportParser (object):
                 continue
 
             sel_name = _as_bytes(sel_name)
-            variadic = self.attribute_bool(  method, "variadic", None, False)
-            c_array  = self.attribute_bool(  method, "c_array_delimited_by_null", None, False)
+            variadic = self.attribute_bool(method, "variadic", None, False)
+            c_array = self.attribute_bool(
+                method, "c_array_delimited_by_null", None, False
+            )
             c_length = self.attribute_string(method, "c_array_length_in_arg", None)
-            ignore   = self.attribute_bool(  method, "ignore", None, False)
+            ignore = self.attribute_bool(method, "ignore", None, False)
 
             is_class = self.attribute_bool(method, "classmethod", None, _SENTINEL)
             if is_class is _SENTINEL:
                 # Manpage says 'class_method', older PyObjC used 'classmethod'
                 is_class = self.attribute_bool(method, "class_method", None, False)
-
 
             metadata = {}
             if ignore:
@@ -360,47 +357,50 @@ class _BridgeSupportParser (object):
                 if not suggestion:
                     suggestion = _DEFAULT_SUGGESTION
 
-                metadata['suggestion'] = suggestion
+                metadata["suggestion"] = suggestion
 
                 # Force minimal metadata for ignored methods
-                self.meta[(_as_bytes(class_name), _as_bytes(sel_name), is_class)] = metadata
+                self.meta[
+                    (_as_bytes(class_name), _as_bytes(sel_name), is_class)
+                ] = metadata
                 continue
 
             if variadic:
-                metadata['variadic'] = True
+                metadata["variadic"] = True
                 if c_array:
-                    metadata['c_array_delimited_by_null'] = c_array
+                    metadata["c_array_delimited_by_null"] = c_array
 
                 if c_length:
-                    metadata['c_array_length_in_arg'] = int(c_length) + 2;
+                    metadata["c_array_length_in_arg"] = int(c_length) + 2
 
-            arguments = metadata['arguments'] = {}
+            arguments = metadata["arguments"] = {}
 
             for al in method:
                 if al.tag == "arg":
                     arg_idx, meta = self.xml_to_arg(al, True, True)
                     if arg_idx is not None and meta:
-                        arguments[arg_idx+2] = meta
+                        arguments[arg_idx + 2] = meta
 
                 elif al.tag == "retval":
                     _, meta = self.xml_to_arg(al, True, False)
                     if meta:
-                        metadata['retval'] = meta
+                        metadata["retval"] = meta
 
             if not arguments:
                 # No argument metadata after all.
-                del metadata['arguments']
+                del metadata["arguments"]
 
             if metadata:
-                self.meta[(_as_bytes(class_name), _as_bytes(sel_name), is_class)] = metadata
-
+                self.meta[
+                    (_as_bytes(class_name), _as_bytes(sel_name), is_class)
+                ] = metadata
 
     def do_enum(self, node):
-        name  = self.attribute_string(node, "name", None)
+        name = self.attribute_string(node, "name", None)
         value = self.attribute_string(node, "value", "value64")
 
         if value is None:
-            if sys.byteorder == 'little':
+            if sys.byteorder == "little":
                 value = self.attribute_string(node, "le_value", None)
 
             else:
@@ -409,28 +409,27 @@ class _BridgeSupportParser (object):
         if not name or not value:
             return
 
-        if value.lower() in ('+inf', '-inf', 'nan'):
+        if value.lower() in ("+inf", "-inf", "nan"):
             value = float(value)
 
-        elif '.' in value:
-            if value.endswith('f') or value.endswith('F'):
+        elif "." in value:
+            if value.endswith("f") or value.endswith("F"):
                 value = value[:-1]
-            if value.endswith('l') or value.endswith('L'):
+            if value.endswith("l") or value.endswith("L"):
                 value = value[:-1]
-            if value.startswith('0x') or value.startswith('0X'):
+            if value.startswith("0x") or value.startswith("0X"):
                 value = float.fromhex(value)
 
             else:
                 value = float(value)
 
-        elif 'inf' in value:
+        elif "inf" in value:
             value = float(value)
 
         else:
             value = int(value, 10)
 
         self.values[name] = value
-
 
     def do_function(self, node):
         name = self.attribute_string(node, "name", None)
@@ -463,7 +462,7 @@ class _BridgeSupportParser (object):
                     return
                 siglist.append(d["type"])
 
-                arguments[len(siglist)-2] = d
+                arguments[len(siglist) - 2] = d
 
             elif al.tag == "retval":
                 _, d = self.xml_to_arg(al, False, False)
@@ -473,12 +472,10 @@ class _BridgeSupportParser (object):
                 siglist[0] = d["type"]
                 meta["retval"] = d
 
-        if not meta['arguments']:
-            del meta['arguments']
+        if not meta["arguments"]:
+            del meta["arguments"]
 
         self.functions.append((name, b"".join(siglist), "", meta))
-
-
 
     def do_function_pointer(self, node):
         name = self.attribute_string(node, "name", None)
@@ -496,7 +493,7 @@ class _BridgeSupportParser (object):
         method_list = []
         for method in node:
             sel_name = self.attribute_string(method, "selector", None)
-            typestr  = self.attribute_string(method, "type", "type64")
+            typestr = self.attribute_string(method, "type", "type64")
             is_class = self.attribute_bool(method, "classmethod", None, _SENTINEL)
             if is_class is _SENTINEL:
                 # Manpage says 'class_method', older PyObjC used 'classmethod'
@@ -506,8 +503,12 @@ class _BridgeSupportParser (object):
                 continue
 
             typestr = self.typestr2typestr(typestr)
-            sel = objc.selector(None, selector=_as_bytes(sel_name),
-                    signature=_as_bytes(typestr), isClassMethod=is_class)
+            sel = objc.selector(
+                None,
+                selector=_as_bytes(sel_name),
+                signature=_as_bytes(typestr),
+                isClassMethod=is_class,
+            )
             method_list.append(sel)
 
         if method_list:
@@ -521,7 +522,7 @@ class _BridgeSupportParser (object):
         self.values[name] = None
 
     def do_opaque(self, node):
-        name    = self.attribute_string(node, "name", None)
+        name = self.attribute_string(node, "name", None)
         typestr = self.attribute_string(node, "type", "type64")
 
         if name is None or not typestr:
@@ -531,11 +532,10 @@ class _BridgeSupportParser (object):
 
         self.opaque.append((name, typestr))
 
-
     def do_struct(self, node):
-        name    = self.attribute_string(node, "name", None)
+        name = self.attribute_string(node, "name", None)
         typestr = self.attribute_string(node, "type", "type64")
-        alias   = self.attribute_string(node, "alias", None)
+        alias = self.attribute_string(node, "alias", None)
 
         if not name or not typestr:
             return
@@ -545,7 +545,7 @@ class _BridgeSupportParser (object):
         # but also class names. This is obviously completely undocumented,
         # and not backward compatible (and it is not easily possible to detect
         # if class names are present.
-        typestr = re.sub(r'@"[^"]*"', '@', typestr)
+        typestr = re.sub(r'@"[^"]*"', "@", typestr)
 
         typestr = self.typestr2typestr(typestr)
 
@@ -562,9 +562,8 @@ class _BridgeSupportParser (object):
 
         self.structs.append((name, typestr, None))
 
-
     def do_string_constant(self, node):
-        name  = self.attribute_string(node, "name", None)
+        name = self.attribute_string(node, "name", None)
         value = self.attribute_string(node, "value", "value64")
         nsstring = self.attribute_bool(node, "nsstring", None, False)
 
@@ -574,26 +573,35 @@ class _BridgeSupportParser (object):
         if sys.version_info[0] == 2:  # pragma: no 3.x cover
             if nsstring:
                 if not isinstance(value, unicode):
-                    value = value.decode('utf-8')
+                    value = value.decode("utf-8")
             else:
                 if not isinstance(value, bytes):
                     try:
-                        value = value.encode('latin1')
+                        value = value.encode("latin1")
                     except UnicodeError as e:
-                        warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
+                        warnings.warn(
+                            "Error parsing BridgeSupport data for constant %s: %s"
+                            % (name, e),
+                            RuntimeWarning,
+                        )
                         return
         else:  # pragma: no 2.x cover
             if not nsstring:
                 try:
-                    value = value.encode('latin1')
+                    value = value.encode("latin1")
                 except UnicodeError as e:
-                    warnings.warn("Error parsing BridgeSupport data for constant %s: %s" % (name, e), RuntimeWarning)
+                    warnings.warn(
+                        "Error parsing BridgeSupport data for constant %s: %s"
+                        % (name, e),
+                        RuntimeWarning,
+                    )
                     return
 
         self.values[name] = value
 
 
 _libraries = []
+
 
 def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineTab=None):
 
@@ -621,7 +629,6 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
             else:
                 globals[name] = value = objc.createStructType(name, typestr, None)
 
-
         for name, typestr, magic in prs.constants:
             try:
                 value = objc._loadConstant(name, _as_string(typestr), magic)
@@ -631,7 +638,9 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
             globals[name] = value
 
         for class_name, sel_name, is_class in prs.meta:
-            objc.registerMetaDataForSelector(class_name, sel_name, prs.meta[(class_name, sel_name, is_class)])
+            objc.registerMetaDataForSelector(
+                class_name, sel_name, prs.meta[(class_name, sel_name, is_class)]
+            )
 
         if prs.functions:
             objc.loadBundleFunctions(None, globals, prs.functions)
@@ -649,27 +658,36 @@ def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineT
         objc._updatingMetadata(False)
 
 
-
-
-
 def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):
     try:
         objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
     except objc.internal_error as e:
         import warnings
-        warnings.warn("Error parsing BridgeSupport data for %s: %s" % (frameworkName, e), RuntimeWarning)
+
+        warnings.warn(
+            "Error parsing BridgeSupport data for %s: %s" % (frameworkName, e),
+            RuntimeWarning,
+        )
+
 
 def safe_resource_exists(package, resource):
     try:
-        return  pkg_resources.resource_exists(package, resource)
+        return pkg_resources.resource_exists(package, resource)
     except ImportError:
         # resource_exists raises ImportError when it cannot find
         # the first argument.
         return False
 
-def initFrameworkWrapper(frameworkName,
-        frameworkPath, frameworkIdentifier, globals, inlineTab=None,
-        scan_classes=None, frameworkResourceName=None):
+
+def initFrameworkWrapper(
+    frameworkName,
+    frameworkPath,
+    frameworkIdentifier,
+    globals,
+    inlineTab=None,
+    scan_classes=None,
+    frameworkResourceName=None,
+):
     """
     Load the named framework, using the identifier if that has result otherwise
     using the path. Also loads the information in the bridgesupport file (
@@ -681,68 +699,70 @@ def initFrameworkWrapper(frameworkName,
 
     if frameworkIdentifier is None:
         if scan_classes is None:
-            bundle = objc.loadBundle(
-                frameworkName,
-                globals,
-                bundle_path=frameworkPath)
+            bundle = objc.loadBundle(frameworkName, globals, bundle_path=frameworkPath)
         else:
             bundle = objc.loadBundle(
                 frameworkName,
                 globals,
                 bundle_path=frameworkPath,
-                scan_classes=scan_classes)
+                scan_classes=scan_classes,
+            )
 
     else:
         try:
             if scan_classes is None:
                 bundle = objc.loadBundle(
-                    frameworkName,
-                    globals,
-                    bundle_identifier=frameworkIdentifier)
+                    frameworkName, globals, bundle_identifier=frameworkIdentifier
+                )
 
             else:
                 bundle = objc.loadBundle(
                     frameworkName,
                     globals,
                     bundle_identifier=frameworkIdentifier,
-                    scan_classes=scan_classes)
+                    scan_classes=scan_classes,
+                )
 
         except ImportError:
             if scan_classes is None:
                 bundle = objc.loadBundle(
-                    frameworkName,
-                    globals,
-                    bundle_path=frameworkPath)
+                    frameworkName, globals, bundle_path=frameworkPath
+                )
             else:
                 bundle = objc.loadBundle(
                     frameworkName,
                     globals,
                     bundle_path=frameworkPath,
-                    scan_classes=scan_classes)
-
+                    scan_classes=scan_classes,
+                )
 
     # Make the objc module available, because it contains a lot of useful
     # functionality.
-    globals['objc'] = objc
+    globals["objc"] = objc
 
     # Explicitly push objc.super into the globals dict, that way super
     # calls will behave as expected in all cases.
-    globals['super'] = objc.super
+    globals["super"] = objc.super
 
     # Look for metadata in the Python wrapper and prefer that over the
     # data in the framework or in system locations.
     # Needed because the system bridgesupport files are buggy.
     if safe_resource_exists(frameworkResourceName, "PyObjC.bridgesupport"):
-        data = pkg_resources.resource_string(frameworkResourceName,
-            "PyObjC.bridgesupport")
+        data = pkg_resources.resource_string(
+            frameworkResourceName, "PyObjC.bridgesupport"
+        )
         _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
         return bundle
 
     # Look for metadata in the framework bundle
-    path = bundle.pathForResource_ofType_inDirectory_(frameworkName, 'bridgesupport', 'BridgeSupport')
+    path = bundle.pathForResource_ofType_inDirectory_(
+        frameworkName, "bridgesupport", "BridgeSupport"
+    )
     if path is not None:
-        dylib_path = bundle.pathForResource_ofType_inDirectory_(frameworkName, 'dylib', 'BridgeSupport')
-        with open(path, 'rb') as fp:
+        dylib_path = bundle.pathForResource_ofType_inDirectory_(
+            frameworkName, "dylib", "BridgeSupport"
+        )
+        with open(path, "rb") as fp:
             data = fp.read()
         if dylib_path is not None:
             _parseBridgeSupport(data, globals, frameworkName, dylib_path=dylib_path)
@@ -751,49 +771,57 @@ def initFrameworkWrapper(frameworkName,
 
         # Check if we have additional metadata bundled with PyObjC
         if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
-            data = pkg_resources.resource_string(frameworkResourceName,
-                "PyObjCOverrides.bridgesupport")
+            data = pkg_resources.resource_string(
+                frameworkResourceName, "PyObjCOverrides.bridgesupport"
+            )
             _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
         return bundle
 
     # If there is no metadata there look for metadata in the standard Library
     # locations
-    fn = frameworkName + '.bridgesupport'
+    fn = frameworkName + ".bridgesupport"
     for dn in BRIDGESUPPORT_DIRECTORIES:
         path = os.path.join(dn, fn)
         if os.path.exists(path):
-            with open(path, 'rb') as fp:
+            with open(path, "rb") as fp:
                 data = fp.read()  # pragma: no branch
 
-            dylib_path = os.path.join(dn, frameworkName + '.dylib')
+            dylib_path = os.path.join(dn, frameworkName + ".dylib")
             if os.path.exists(dylib_path):
                 _parseBridgeSupport(data, globals, frameworkName, dylib_path=dylib_path)
             else:
                 _parseBridgeSupport(data, globals, frameworkName)
 
             # Check if we have additional metadata bundled with PyObjC
-            if safe_resource_exists(frameworkResourceName, "PyObjCOverrides.bridgesupport"):
-                data = pkg_resources.resource_string(frameworkResourceName,
-                    "PyObjCOverrides.bridgesupport")
+            if safe_resource_exists(
+                frameworkResourceName, "PyObjCOverrides.bridgesupport"
+            ):
+                data = pkg_resources.resource_string(
+                    frameworkResourceName, "PyObjCOverrides.bridgesupport"
+                )
                 _parseBridgeSupport(data, globals, frameworkName, inlineTab=inlineTab)
 
             return bundle
 
     return bundle
 
+
 _ivar_dict = objc._objc._ivar_dict()
-if hasattr(objc, '_ivar_dict'):
+if hasattr(objc, "_ivar_dict"):
     del objc._ivar_dict
+
+
 def _structConvenience(structname, structencoding):
-    def makevar(self, name=None):
+    def makevar(cls, name=None):
         if name is None:
             return objc.ivar(type=structencoding)
         else:
             return objc.ivar(name=name, type=structencoding)
+
     makevar.__name__ = structname
     makevar.__doc__ = "Create *ivar* for type encoding %r" % (structencoding,)
-    if hasattr(objc.ivar, '__qualname__'):
+    if hasattr(objc.ivar, "__qualname__"):
         makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
     _ivar_dict[structname] = classmethod(makevar)
 
@@ -819,27 +847,33 @@ _structConvenience("char_int", objc._C_CHAR_AS_INT)
 
 _orig_createStructType = objc.createStructType
 
+
 @functools.wraps(objc.createStructType)
 def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
     result = _orig_createStructType(name, typestr, fieldnames, doc, pack)
     _structConvenience(name, result.__typestr__)
     return result
 
+
 objc.createStructType = createStructType
 
 
 _orig_registerStructAlias = objc.registerStructAlias
+
+
 @functools.wraps(objc.registerStructAlias)
 def registerStructAlias(typestr, structType):
     # XXX: Disable deprecation warnings, this function is used by
     # the framework wrappers.
-    #warnings.warn("use createStructAlias instead", DeprecationWarning)
+    # warnings.warn("use createStructAlias instead", DeprecationWarning)
     return _orig_registerStructAlias(typestr, structType)
+
 
 def createStructAlias(name, typestr, structType):
     result = _orig_registerStructAlias(typestr, structType)
     _structConvenience(name, result.__typestr__)
     return result
+
 
 objc.createStructAlias = createStructAlias
 objc.registerStructAlias = registerStructAlias

@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSMetaData (TestCase):
+
+class TestNSMetaData(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSMetadataQueryDidStartGatheringNotification, unicode)
         self.assertIsInstance(NSMetadataQueryGatheringProgressNotification, unicode)
@@ -12,7 +13,7 @@ class TestNSMetaData (TestCase):
         self.assertIsInstance(NSMetadataQueryLocalComputerScope, unicode)
         self.assertIsInstance(NSMetadataQueryNetworkScope, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(NSMetadataQueryLocalDocumentsScope, unicode)
         self.assertIsInstance(NSMetadataQueryUbiquitousDocumentsScope, unicode)
@@ -34,7 +35,7 @@ class TestNSMetaData (TestCase):
         self.assertIsInstance(NSMetadataUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemPercentUploadedKey, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(NSMetadataQueryUpdateAddedItemsKey, unicode)
         self.assertIsInstance(NSMetadataQueryUpdateChangedItemsKey, unicode)
@@ -42,9 +43,11 @@ class TestNSMetaData (TestCase):
         self.assertIsInstance(NSMetadataQueryIndexedLocalComputerScope, unicode)
         self.assertIsInstance(NSMetadataQueryIndexedNetworkScope, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(NSMetadataQueryAccessibleUbiquitousExternalDocumentsScope, unicode)
+        self.assertIsInstance(
+            NSMetadataQueryAccessibleUbiquitousExternalDocumentsScope, unicode
+        )
 
     def testMethods(self):
         self.assertResultIsBOOL(NSMetadataQuery.startQuery)
@@ -52,14 +55,23 @@ class TestNSMetaData (TestCase):
         self.assertResultIsBOOL(NSMetadataQuery.isGathering)
         self.assertResultIsBOOL(NSMetadataQuery.isStopped)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertArgIsBlock(NSMetadataQuery.enumerateResultsUsingBlock_, 0, b'v@' + objc._C_NSUInteger + b'o^Z')
-        self.assertArgIsBlock(NSMetadataQuery.enumerateResultsWithOptions_usingBlock_, 1, b'v@' + objc._C_NSUInteger + b'o^Z')
+        self.assertArgIsBlock(
+            NSMetadataQuery.enumerateResultsUsingBlock_,
+            0,
+            b"v@" + objc._C_NSUInteger + b"o^Z",
+        )
+        self.assertArgIsBlock(
+            NSMetadataQuery.enumerateResultsWithOptions_usingBlock_,
+            1,
+            b"v@" + objc._C_NSUInteger + b"o^Z",
+        )
 
-    @min_sdk_level('10.10')
+    @min_sdk_level("10.10")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSMetadataQueryDelegate')
+        objc.protocolNamed("NSMetadataQueryDelegate")
+
 
 if __name__ == "__main__":
     main()

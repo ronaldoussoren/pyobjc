@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 from CFNetwork import *
 import os
 
-SCRIPT="""
+SCRIPT = """
 function FindProxyForURL(url, host) {
    if (shExpMatch(host, "*.apple.com")) {
       return "PROXY proxy.apple.com:8080";
@@ -11,9 +11,9 @@ function FindProxyForURL(url, host) {
 }
 """
 
-class TestCFProxySupport (TestCase):
 
-    @min_os_level('10.5')
+class TestCFProxySupport(TestCase):
+    @min_os_level("10.5")
     def testFunctions(self):
         self.assertResultIsCFRetained(CFNetworkCopyProxiesForURL)
         url = CFURLCreateWithString(None, "http://www.apple.com/", None)
@@ -22,8 +22,7 @@ class TestCFProxySupport (TestCase):
 
         self.assertResultIsCFRetained(CFNetworkCopyProxiesForAutoConfigurationScript)
         self.assertArgIsOut(CFNetworkCopyProxiesForAutoConfigurationScript, 2)
-        v, err  = CFNetworkCopyProxiesForAutoConfigurationScript(
-                SCRIPT, url, None)
+        v, err = CFNetworkCopyProxiesForAutoConfigurationScript(SCRIPT, url, None)
         self.assertTrue(err is None)
         self.assertIsInstance(v, CFArrayRef)
         x = v[0]
@@ -35,77 +34,70 @@ class TestCFProxySupport (TestCase):
         v = CFNetworkCopySystemProxySettings()
         self.assertIsInstance(v, CFDictionaryRef)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testManual(self):
         lst = []
         ctx = object()
+
         def callback(ctx, proxies, error):
             lst.append([ctx, proxies, error])
 
         url = CFURLCreateWithString(None, "http://www.apple.com/", None)
 
-        rls = CFNetworkExecuteProxyAutoConfigurationScript(
-                SCRIPT, url, callback, ctx)
+        rls = CFNetworkExecuteProxyAutoConfigurationScript(SCRIPT, url, callback, ctx)
         self.assertIsInstance(rls, CFRunLoopSourceRef)
 
         rl = CFRunLoopGetCurrent()
-        CFRunLoopAddSource(rl, rls,  kCFRunLoopCommonModes)
+        CFRunLoopAddSource(rl, rls, kCFRunLoopCommonModes)
 
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, False)
 
-        CFRunLoopRemoveSource(rl, rls,  kCFRunLoopCommonModes)
+        CFRunLoopRemoveSource(rl, rls, kCFRunLoopCommonModes)
 
         self.assertNotEqual(len(lst), 0)
         self.assertTrue(lst[0][0] is ctx)
         self.assertIsInstance(lst[0][1], CFArrayRef)
-        self.assertEqual(lst[0][2],  None)
+        self.assertEqual(lst[0][2], None)
 
         lst[:] = []
         path = os.path.join(os.path.dirname(__file__), "proxy.pac")
         cwd = os.getcwd()
         if path.startswith(cwd):
-            path = path[len(cwd)+1:]
-        scriptURL = CFURLCreateWithFileSystemPath(
-                None,
-                path,
-                kCFURLPOSIXPathStyle,
-                False)
+            path = path[len(cwd) + 1 :]
+        scriptURL = CFURLCreateWithFileSystemPath(None, path, kCFURLPOSIXPathStyle, False)
 
-        rls = CFNetworkExecuteProxyAutoConfigurationURL(
-                scriptURL, url, callback, ctx)
+        rls = CFNetworkExecuteProxyAutoConfigurationURL(scriptURL, url, callback, ctx)
         self.assertIsInstance(rls, CFRunLoopSourceRef)
 
-        CFRunLoopAddSource(rl, rls,  kCFRunLoopCommonModes)
+        CFRunLoopAddSource(rl, rls, kCFRunLoopCommonModes)
 
         CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, True)
 
-        CFRunLoopRemoveSource(rl, rls,  kCFRunLoopCommonModes)
+        CFRunLoopRemoveSource(rl, rls, kCFRunLoopCommonModes)
 
-        #print lst
+        # print lst
 
         self.assertNotEqual(len(lst), 0)
         self.assertTrue(lst[0][0] is ctx)
         if lst[0][2] is None:
             self.assertIsInstance(lst[0][1], CFArrayRef)
-            self.assertEqual(lst[0][2],  None)
+            self.assertEqual(lst[0][2], None)
 
         else:
-            self.assertEqual(lst[0][1],  None)
+            self.assertEqual(lst[0][1], None)
             self.assertIsInstance(lst[0][2], CFErrorRef)
 
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kCFProxyAutoConfigurationJavaScriptKey, unicode)
         self.assertIsInstance(kCFProxyTypeAutoConfigurationJavaScript, unicode)
 
     @expectedFailure
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7_failure(self):
         self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigJavaScript, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kCFProxyTypeKey, unicode)
         self.assertIsInstance(kCFProxyHostNameKey, unicode)
@@ -124,17 +116,17 @@ class TestCFProxySupport (TestCase):
         self.assertIsInstance(kCFNetworkProxiesHTTPProxy, unicode)
 
     @expectedFailure
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants_fail(self):
-        self.assertIsIn('kCFProxyAutoConfigurationHTTPResponseKey', globals())
+        self.assertIsIn("kCFProxyAutoConfigurationHTTPResponseKey", globals())
         self.assertIsInstance(kCFProxyAutoConfigurationHTTPResponseKey, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions10_6(self):
         r = CFNetworkCopySystemProxySettings()
         self.assertIsInstance(r, CFDictionaryRef)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCFNetworkProxiesExceptionsList, unicode)
         self.assertIsInstance(kCFNetworkProxiesExcludeSimpleHostnames, unicode)
@@ -157,7 +149,6 @@ class TestCFProxySupport (TestCase):
         self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigEnable, unicode)
         self.assertIsInstance(kCFNetworkProxiesProxyAutoConfigURLString, unicode)
         self.assertIsInstance(kCFNetworkProxiesProxyAutoDiscoveryEnable, unicode)
-
 
 
 if __name__ == "__main__":

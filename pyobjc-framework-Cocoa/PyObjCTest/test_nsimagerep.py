@@ -1,18 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSImageRep (TestCase):
+
+class TestNSImageRep(TestCase):
     def testConstants(self):
         self.assertEqual(NSImageRepMatchesDevice, 0)
 
-        self.assertEqual(NSImageRepRegistryChangedNotification, NSImageRepRegistryDidChangeNotification)
+        self.assertEqual(
+            NSImageRepRegistryChangedNotification, NSImageRepRegistryDidChangeNotification
+        )
         self.assertIsInstance(NSImageRepRegistryDidChangeNotification, unicode)
 
         self.assertEqual(NSImageLayoutDirectionUnspecified, -1)
         self.assertEqual(NSImageLayoutDirectionLeftToRight, 2)
         self.assertEqual(NSImageLayoutDirectionRightToLeft, 3)
-
 
     def testMethods(self):
         self.assertResultIsBOOL(NSImageRep.draw)
@@ -25,17 +26,31 @@ class TestNSImageRep (TestCase):
         self.assertResultIsBOOL(NSImageRep.canInitWithData_)
         self.assertResultIsBOOL(NSImageRep.canInitWithPasteboard_)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_)
-        self.assertArgHasType(NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
-              0, NSRect.__typestr__)
-        self.assertArgHasType(NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
-              1, NSRect.__typestr__)
-        self.assertArgIsBOOL(NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4)
+        self.assertResultIsBOOL(
+            NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_
+        )
+        self.assertArgHasType(
+            NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+            0,
+            NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+            1,
+            NSRect.__typestr__,
+        )
+        self.assertArgIsBOOL(
+            NSImageRep.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4
+        )
 
-        self.assertArgHasType(NSImageRep.CGImageForProposedRect_context_hints_, 0,
-                b'N^' + NSRect.__typestr__)
+        self.assertArgHasType(
+            NSImageRep.CGImageForProposedRect_context_hints_,
+            0,
+            b"N^" + NSRect.__typestr__,
+        )
+
 
 if __name__ == "__main__":
     main()

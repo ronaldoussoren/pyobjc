@@ -1,51 +1,97 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestIKImageBrowserViewHelper (NSObject):
+
+class TestIKImageBrowserViewHelper(NSObject):
     # IKImageBrowserDataSource
-    def numberOfItemsInImageBrowser_(self, b): return 1
-    def imageBrowser_itemAtIndex_(self, b, i): return None
-    def imageBrowser_moveItemsAtIndexes_toIndex_(self, b, st, i): return False
-    def imageBrowser_writeItemsAtIndexes_toPasteboard_(self, b, st, pb): return 44
-    def numberOfGroupsInImageBrowser_(self, b): return 1
-    def imageBrowser_groupAtIndex_(self, b, idx): return None
+    def numberOfItemsInImageBrowser_(self, b):
+        return 1
+
+    def imageBrowser_itemAtIndex_(self, b, i):
+        return None
+
+    def imageBrowser_moveItemsAtIndexes_toIndex_(self, b, st, i):
+        return False
+
+    def imageBrowser_writeItemsAtIndexes_toPasteboard_(self, b, st, pb):
+        return 44
+
+    def numberOfGroupsInImageBrowser_(self, b):
+        return 1
+
+    def imageBrowser_groupAtIndex_(self, b, idx):
+        return None
 
     # IKImageBrowserItem
-    def imageVersion(self): return 1
-    def isSelectable(self): return True
+    def imageVersion(self):
+        return 1
+
+    def isSelectable(self):
+        return True
 
     # IKImageBrowserDelegate
-    def imageBrowser_cellWasDoubleClickedAtIndex_(self, b, idx): pass
-    def imageBrowser_cellWasRightClickedAtIndex_withEvent_(self, b, idx, e): pass
+    def imageBrowser_cellWasDoubleClickedAtIndex_(self, b, idx):
+        pass
+
+    def imageBrowser_cellWasRightClickedAtIndex_withEvent_(self, b, idx, e):
+        pass
 
 
-class TestIKImageBrowserView (TestCase):
-    @min_os_level('10.5')
+class TestIKImageBrowserView(TestCase):
+    @min_os_level("10.5")
     def testProtocols(self):
-        #self.assertIsInstance(protocols.IKImageBrowserDataSource, objc.informal_protocol)
+        # self.assertIsInstance(protocols.IKImageBrowserDataSource, objc.informal_protocol)
 
-        self.assertResultHasType(TestIKImageBrowserViewHelper.numberOfItemsInImageBrowser_, objc._C_NSUInteger)
-        self.assertArgHasType(TestIKImageBrowserViewHelper.imageBrowser_itemAtIndex_, 1, objc._C_NSUInteger)
-        self.assertResultIsBOOL(TestIKImageBrowserViewHelper.imageBrowser_moveItemsAtIndexes_toIndex_)
-        self.assertArgHasType(TestIKImageBrowserViewHelper.imageBrowser_moveItemsAtIndexes_toIndex_, 2, objc._C_NSUInteger)
-        self.assertResultHasType(TestIKImageBrowserViewHelper.imageBrowser_writeItemsAtIndexes_toPasteboard_, objc._C_NSUInteger)
-        self.assertResultHasType(TestIKImageBrowserViewHelper.numberOfGroupsInImageBrowser_, objc._C_NSUInteger)
-        self.assertArgHasType(TestIKImageBrowserViewHelper.imageBrowser_groupAtIndex_, 1, objc._C_NSUInteger)
+        self.assertResultHasType(
+            TestIKImageBrowserViewHelper.numberOfItemsInImageBrowser_, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestIKImageBrowserViewHelper.imageBrowser_itemAtIndex_, 1, objc._C_NSUInteger
+        )
+        self.assertResultIsBOOL(
+            TestIKImageBrowserViewHelper.imageBrowser_moveItemsAtIndexes_toIndex_
+        )
+        self.assertArgHasType(
+            TestIKImageBrowserViewHelper.imageBrowser_moveItemsAtIndexes_toIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestIKImageBrowserViewHelper.imageBrowser_writeItemsAtIndexes_toPasteboard_,
+            objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestIKImageBrowserViewHelper.numberOfGroupsInImageBrowser_, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestIKImageBrowserViewHelper.imageBrowser_groupAtIndex_, 1, objc._C_NSUInteger
+        )
 
-        #self.assertIsInstance(protocols.IKImageBrowserItem, objc.informal_protocol)
-        self.assertResultHasType(TestIKImageBrowserViewHelper.imageVersion, objc._C_NSUInteger)
+        # self.assertIsInstance(protocols.IKImageBrowserItem, objc.informal_protocol)
+        self.assertResultHasType(
+            TestIKImageBrowserViewHelper.imageVersion, objc._C_NSUInteger
+        )
         self.assertResultIsBOOL(TestIKImageBrowserViewHelper.isSelectable)
 
-        #self.assertIsInstance(protocols.IKImageBrowserDelegate, objc.informal_protocol)
-        self.assertArgHasType(TestIKImageBrowserViewHelper.imageBrowser_cellWasDoubleClickedAtIndex_, 1, objc._C_NSUInteger)
-        self.assertArgHasType(TestIKImageBrowserViewHelper.imageBrowser_cellWasRightClickedAtIndex_withEvent_, 1, objc._C_NSUInteger)
+        # self.assertIsInstance(protocols.IKImageBrowserDelegate, objc.informal_protocol)
+        self.assertArgHasType(
+            TestIKImageBrowserViewHelper.imageBrowser_cellWasDoubleClickedAtIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestIKImageBrowserViewHelper.imageBrowser_cellWasRightClickedAtIndex_withEvent_,
+            1,
+            objc._C_NSUInteger,
+        )
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(IKImageBrowserView.constrainsToOriginalSize)
         self.assertArgIsBOOL(IKImageBrowserView.setConstrainsToOriginalSize_, 0)
-        self.assertArgIsBOOL(IKImageBrowserView.setSelectionIndexes_byExtendingSelection_, 1)
+        self.assertArgIsBOOL(
+            IKImageBrowserView.setSelectionIndexes_byExtendingSelection_, 1
+        )
         self.assertResultIsBOOL(IKImageBrowserView.allowsMultipleSelection)
         self.assertArgIsBOOL(IKImageBrowserView.setAllowsMultipleSelection_, 0)
         self.assertResultIsBOOL(IKImageBrowserView.allowsEmptySelection)
@@ -55,13 +101,13 @@ class TestIKImageBrowserView (TestCase):
         self.assertResultIsBOOL(IKImageBrowserView.animates)
         self.assertArgIsBOOL(IKImageBrowserView.setAnimates_, 0)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         # Method does not exist?
         view = IKImageBrowserView.alloc().init()
         self.assertResultIsBOOL(view.isGroupExpandedAtIndex_)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertEqual(IKCellsStyleNone, 0)
         self.assertEqual(IKCellsStyleShadowed, 1)
@@ -96,7 +142,7 @@ class TestIKImageBrowserView (TestCase):
         self.assertIsInstance(IKImageBrowserGroupTitleKey, unicode)
         self.assertIsInstance(IKImageBrowserGroupStyleKey, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(IKImageBrowserDropOn, 0)
         self.assertEqual(IKImageBrowserDropBefore, 1)
@@ -105,12 +151,13 @@ class TestIKImageBrowserView (TestCase):
         self.assertIsInstance(IKImageBrowserGroupHeaderLayer, unicode)
         self.assertIsInstance(IKImageBrowserGroupHeaderLayer, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(IKImageBrowserView.canControlQuickLookPanel)
         self.assertArgIsBOOL(IKImageBrowserView.setCanControlQuickLookPanel_, 0)
         self.assertResultIsBOOL(IKImageBrowserView.allowsDroppingOnItems)
         self.assertArgIsBOOL(IKImageBrowserView.setAllowsDroppingOnItems_, 0)
+
 
 if __name__ == "__main__":
     main()

@@ -7,46 +7,34 @@ from objc._convenience import addConvenienceForClass, container_wrap, container_
 from objc._objc import lookUpClass, registerMetaDataForSelector, _C_NSInteger, _C_ID
 from objc._objc import _NSNotFound as NSNotFound
 
-import sys
+import sys, collections.abc
 
-if sys.version_info[0] == 2:
-    import collections as collections_abc
-else:
-    import collections.abc as collections_abc
+NSArray = lookUpClass("NSArray")
+NSMutableArray = lookUpClass("NSMutableArray")
 
-NSArray = lookUpClass('NSArray')
-NSMutableArray = lookUpClass('NSMutableArray')
-
-collections_abc.Sequence.register(NSArray)
-collections_abc.MutableSequence.register(NSMutableArray)
-
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    INT_TYPES = (int, long)
-    STR_TYPES = (str, unicode)
-
-else:  # pragma: no 2.x cover
-    INT_TYPES = int
-    STR_TYPES = str
+collections.abc.Sequence.register(NSArray)
+collections.abc.MutableSequence.register(NSMutableArray)
 
 
 registerMetaDataForSelector(
-    b"NSObject", b"sortUsingFunction:context:",
+    b"NSObject",
+    b"sortUsingFunction:context:",
     dict(
         arguments={
-            2:  {
-                    'callable': {
-                        'retval': { 'type': _C_NSInteger },
-                        'arguments': {
-                            0: { 'type': _C_ID },
-                            1: { 'type': _C_ID },
-                            2: { 'type': _C_ID },
-                        }
+            2: {
+                "callable": {
+                    "retval": {"type": _C_NSInteger},
+                    "arguments": {
+                        0: {"type": _C_ID},
+                        1: {"type": _C_ID},
+                        2: {"type": _C_ID},
                     },
-                    'callable_retained': False,
+                },
+                "callable_retained": False,
             },
-            3:  { 'type': _C_ID },
-        },
-    )
+            3: {"type": _C_ID},
+        }
+    ),
 )
 
 
@@ -72,7 +60,9 @@ def nsarray_extend(self, anArray):
         self.addObject_(container_wrap(item))
 
 
-_index_sentinel=object()
+_index_sentinel = object()
+
+
 def nsarray_index(self, item, start=0, stop=_index_sentinel):
     if start == 0 and stop is _index_sentinel:
         res = self.indexOfObject_(container_wrap(item))
@@ -112,7 +102,7 @@ def nsarray_index(self, item, start=0, stop=_index_sentinel):
         if ln == 0:
             raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
 
-        if ln > sys.maxsize:   # pragma: no cover
+        if ln > sys.maxsize:  # pragma: no cover
             ln = sys.maxsize
 
         res = self.indexOfObject_inRange_(item, (start, ln))
@@ -135,7 +125,7 @@ def nsarray__getitem__(self, idx):
         start, stop, step = idx.indices(len(self))
         return [self[i] for i in range(start, stop, step)]
 
-    elif not isinstance(idx, INT_TYPES):
+    elif not isinstance(idx, int):
         raise TypeError("index must be a number")
 
     if idx < 0:
@@ -154,7 +144,7 @@ def nsarray__delitem__(self, idx):
                 # Nothing to remove
                 return
 
-            return self.removeObjectsInRange_((start, stop-start))
+            return self.removeObjectsInRange_((start, stop - start))
 
         r = reversed(range(start, stop, step))
         for i in r:
@@ -192,14 +182,15 @@ def nsarray_remove(self, obj):
     self.removeObjectAtIndex_(idx)
 
 
-index_error_message = 'index is not an integer'
+index_error_message = "index is not an integer"
 if sys.version_info[:2] >= (3, 5):
-    index_error_message='list indices must be integers or slices'
+    index_error_message = "list indices must be integers or slices"
+
 
 def nsarray__setitem__(self, idx, anObject):
     if isinstance(idx, slice):
         start, stop, step = idx.indices(self.count())
-        if step >=0:
+        if step >= 0:
             if stop <= start:
                 # Empty slice: insert values
                 stop = start
@@ -207,12 +198,16 @@ def nsarray__setitem__(self, idx, anObject):
         anObject = _ensure_array(anObject)
 
         if step == 1:
-            return self.replaceObjectsInRange_withObjectsFromArray_((start, stop - start), anObject)
+            return self.replaceObjectsInRange_withObjectsFromArray_(
+                (start, stop - start), anObject
+            )
 
         slice_len = len(range(start, stop, step))
         if slice_len != len(anObject):
-            raise ValueError("Replacing extended slice with %d elements by %d elements"%(
-                slice_len, len(anObject)))
+            raise ValueError(
+                "Replacing extended slice with %d elements by %d elements"
+                % (slice_len, len(anObject))
+            )
 
         if step > 0:
             # NOTE: 'anObject' cannot be 'self' because assigning to an extended
@@ -223,7 +218,7 @@ def nsarray__setitem__(self, idx, anObject):
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
         # slice.indexes already catches this:
-        #elif step == 0:
+        # elif step == 0:
         #    raise ValueError("Step 0")
 
         else:
@@ -235,7 +230,7 @@ def nsarray__setitem__(self, idx, anObject):
             for inIdx, outIdx in enumerate(range(start, stop, step)):
                 self.replaceObjectAtIndex_withObject_(outIdx, toAssign[inIdx])
 
-    elif not isinstance(idx, INT_TYPES):
+    elif not isinstance(idx, int):
         raise TypeError(index_error_message)
 
     else:
@@ -288,7 +283,7 @@ def nsarray_new(cls, sequence=None):
     if not sequence:
         return NSArray.array()
 
-    elif isinstance(sequence, STR_TYPES):
+    elif isinstance(sequence, str):
         return NSArray.arrayWithArray_(list(sequence))
 
     else:
@@ -302,7 +297,7 @@ def nsmutablearray_new(cls, sequence=None):
     if not sequence:
         return NSMutableArray.array()
 
-    elif isinstance(sequence, STR_TYPES):
+    elif isinstance(sequence, str):
         return NSMutableArray.arrayWithArray_(list(sequence))
 
     else:
@@ -328,28 +323,38 @@ def nsarray_clear(self):
 
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
+
     def nsarray_sort(self, cmp=cmp, key=None, reverse=False):
         if key is None:
             if reverse:
+
                 def sort_func(a, b, cmp):
                     return -cmp(a, b)
 
             else:
+
                 def sort_func(a, b, cmp):
                     return cmp(a, b)
+
         else:
             if reverse:
+
                 def sort_func(a, b, cmp):
                     return -cmp(key(a), key(b))
+
             else:
+
                 def sort_func(a, b, cmp):
                     return cmp(key(a), key(b))
 
         self.sortUsingFunction_context_(sort_func, cmp)
 
+
 else:  # pragma: no 2.x cover
+
     def nsarray_sort(self, key=lambda x: x, reverse=False):
         if reverse:
+
             def sort_func(a, b, _):
                 a = key(a)
                 b = key(b)
@@ -363,6 +368,7 @@ else:  # pragma: no 2.x cover
                     return 0
 
         else:
+
             def sort_func(a, b, _):
                 a = key(a)
                 b = key(b)
@@ -380,50 +386,63 @@ else:  # pragma: no 2.x cover
 def nsarray__len__(self):
     return self.count()
 
+
 # NOTE: 'no cover' because call of the system array
 # classes are subclasses of NSMutableArray.
 def nsarray__copy__(self):  # pragma: no cover
     return self.copy()
 
+
 def nsarray__iter__(self):
     return iter(self.objectEnumerator())
 
-addConvenienceForClass('NSArray', (
-    ('__new__', staticmethod(nsarray_new)),
-    ('__add__', nsarray_add),
-    ('__radd__', nsarray_radd),
-    ('__mul__', nsarray_mul),
-    ('__rmul__', nsarray_mul),
-    ('__len__', nsarray__len__),
-    ('__contains__', nsarray__contains__),
-    ('__getitem__', nsarray__getitem__),
-    ('__copy__', nsarray__copy__),
-    ('__iter__', nsarray__iter__),
-    ('index', nsarray_index),
-    ('remove', nsarray_remove),
-    ('pop', nsarray_pop),
-))
+
+addConvenienceForClass(
+    "NSArray",
+    (
+        ("__new__", staticmethod(nsarray_new)),
+        ("__add__", nsarray_add),
+        ("__radd__", nsarray_radd),
+        ("__mul__", nsarray_mul),
+        ("__rmul__", nsarray_mul),
+        ("__len__", nsarray__len__),
+        ("__contains__", nsarray__contains__),
+        ("__getitem__", nsarray__getitem__),
+        ("__copy__", nsarray__copy__),
+        ("__iter__", nsarray__iter__),
+        ("index", nsarray_index),
+        ("remove", nsarray_remove),
+        ("pop", nsarray_pop),
+    ),
+)
+
 
 def nsmutablearray__copy__(self):
     return self.mutableCopy()
 
-addConvenienceForClass('NSMutableArray', (
-    ('__new__', staticmethod(nsmutablearray_new)),
-    ('__copy__', nsmutablearray__copy__),
-    ('__setitem__', nsarray__setitem__),
-    ('__delitem__', nsarray__delitem__),
-    ('extend', nsarray_extend),
-    ('append', nsarray_append),
-    ('sort', nsarray_sort),
-    ('insert', nsarray_insert),
-    ('reverse', nsarray_reverse),
-    ('clear', nsarray_clear),
-))
+
+addConvenienceForClass(
+    "NSMutableArray",
+    (
+        ("__new__", staticmethod(nsmutablearray_new)),
+        ("__copy__", nsmutablearray__copy__),
+        ("__setitem__", nsarray__setitem__),
+        ("__delitem__", nsarray__delitem__),
+        ("extend", nsarray_extend),
+        ("append", nsarray_append),
+        ("sort", nsarray_sort),
+        ("insert", nsarray_insert),
+        ("reverse", nsarray_reverse),
+        ("clear", nsarray_clear),
+    ),
+)
 
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
+
     def nsarray__getslice__(self, i, j):
-        i = max(i, 0); j = max(j, 0)
+        i = max(i, 0)
+        j = max(j, 0)
         return nsarray__getitem__(self, slice(i, j))
 
     def nsarray__setslice__(self, i, j, seq):
@@ -434,11 +453,9 @@ if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
     def nsarray__delslice__(self, i, j):
         nsarray__delitem__(self, slice(i, j))
 
-    addConvenienceForClass('NSArray', (
-        ('__getslice__', nsarray__getslice__),
-    ))
+    addConvenienceForClass("NSArray", (("__getslice__", nsarray__getslice__),))
 
-    addConvenienceForClass('NSMutableArray', (
-        ('__setslice__', nsarray__setslice__),
-        ('__delslice__', nsarray__delslice__),
-    ))
+    addConvenienceForClass(
+        "NSMutableArray",
+        (("__setslice__", nsarray__setslice__), ("__delslice__", nsarray__delslice__)),
+    )

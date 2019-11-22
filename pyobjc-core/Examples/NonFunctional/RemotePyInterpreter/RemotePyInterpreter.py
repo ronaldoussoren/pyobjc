@@ -11,12 +11,14 @@ from AsyncPythonInterpreter import *
 from ConsoleReactor import *
 from netrepr import RemoteObjectReference
 
+
 def ensure_unicode(s):
     if not isinstance(s, unicode):
-        s = unicode(s, 'utf-8', 'replace')
+        s = unicode(s, "utf-8", "replace")
     return s
 
-class RemotePyInterpreterReactor (ConsoleReactor):
+
+class RemotePyInterpreterReactor(ConsoleReactor):
     delegate = objc.IBOutlet()
 
     def handleExpectCommand_(self, command):
@@ -27,52 +29,73 @@ class RemotePyInterpreterReactor (ConsoleReactor):
         netrepr = self.netReprCenter.netrepr
         rval = None
         code = None
-        if name == 'RemoteConsole.raw_input':
+        if name == "RemoteConsole.raw_input":
             prompt = ensure_unicode(args[0])
+
             def input_received(line):
                 self.sendResult_sequence_(line, seq)
+
             self.delegate.expectCodeInput_withPrompt_(input_received, prompt)
-        elif name == 'RemoteConsole.write':
-            args = [ensure_unicode(args[0]), u'code']
-            self.doCallback_sequence_args_(self.delegate.writeString_forOutput_, seq, args)
-        elif name == 'RemoteConsole.displayhook':
+        elif name == "RemoteConsole.write":
+            args = [ensure_unicode(args[0]), "code"]
+            self.doCallback_sequence_args_(
+                self.delegate.writeString_forOutput_, seq, args
+            )
+        elif name == "RemoteConsole.displayhook":
             obj = args[0]
+
             def displayhook_respond(reprobject):
-                self.delegate.writeString_forOutput_(ensure_unicode(reprobject) + u'\n', u'code')
+                self.delegate.writeString_forOutput_(
+                    ensure_unicode(reprobject) + "\n", "code"
+                )
+
             def displayhook_local(obj):
                 if obj is not None:
                     displayhook_respond(repr(obj))
+
             if isinstance(obj, RemoteObjectReference):
-                self.deferCallback_sequence_value_(displayhook_respond, seq, 'repr(%s)' % (netrepr(obj),))
+                self.deferCallback_sequence_value_(
+                    displayhook_respond, seq, "repr(%s)" % (netrepr(obj),)
+                )
             else:
                 self.doCallback_sequence_args_(displayhook_local, seq, args)
-        elif name.startswith('RemoteFileLike.'):
-            method = name[len('RemoteFileLike.'):]
-            if method == 'write':
+        elif name.startswith("RemoteFileLike."):
+            method = name[len("RemoteFileLike.") :]
+            if method == "write":
                 style, msg = map(ensure_unicode, args)
                 args = [msg, style]
-                self.doCallback_sequence_args_(self.delegate.writeString_forOutput_, seq, args)
+                self.doCallback_sequence_args_(
+                    self.delegate.writeString_forOutput_, seq, args
+                )
 
-            elif method == 'readline':
+            elif method == "readline":
+
                 def input_received(line):
                     self.sendResult_sequence_(line, seq)
-                self.delegate.expectCodeInput_withPrompt_(input_received, '')
+
+                self.delegate.expectCodeInput_withPrompt_(input_received, "")
 
             else:
-                self.doCallback_sequence_args_(NSLog, seq, [u'%s does not respond to expect %s', self, command])
-        elif name == 'RemoteConsole.initialize':
+                self.doCallback_sequence_args_(
+                    NSLog, seq, ["%s does not respond to expect %s", self, command]
+                )
+        elif name == "RemoteConsole.initialize":
+
             def gotTitle(repr_versioninfo, executable, pid):
                 self.delegate.setVersion_executable_pid_(
-                    u'.'.join(map(unicode, self.netEval_(repr_versioninfo)[:3])),
+                    ".".join(map(unicode, self.netEval_(repr_versioninfo)[:3])),
                     ensure_unicode(executable),
                     pid,
                 )
+
             self.doCallback_sequence_args_(gotTitle, seq, args)
         #    fh = getattr(sys, args[0])
         #    meth = getattr(fh, name[len('RemoteFileLike.'):])
         #    self.doCallback_sequence_args_(meth, seq, args[1:])
         else:
-            self.doCallback_sequence_args_(NSLog, seq, [u'%s does not respond to expect %s', self, command])
+            self.doCallback_sequence_args_(
+                NSLog, seq, ["%s does not respond to expect %s", self, command]
+            )
 
     def close(self):
         super(RemotePyInterpreterReactor, self).close()
@@ -81,50 +104,47 @@ class RemotePyInterpreterReactor (ConsoleReactor):
 
 class PseudoUTF8Input(object):
     softspace = 0
+
     def __init__(self, readlinemethod):
-        self._buffer = u''
+        self._buffer = ""
         self._readline = readlinemethod
 
     def read(self, chars=None):
         if chars is None:
             if self._buffer:
                 rval = self._buffer
-                self._buffer = u''
-                if rval.endswith(u'\r'):
-                    rval = rval[:-1]+u'\n'
-                return rval.encode('utf-8')
+                self._buffer = ""
+                if rval.endswith("\r"):
+                    rval = rval[:-1] + "\n"
+                return rval.encode("utf-8")
             else:
-                return self._readline(u'\x04')[:-1].encode('utf-8')
+                return self._readline("\x04")[:-1].encode("utf-8")
         else:
             while len(self._buffer) < chars:
-                self._buffer += self._readline(u'\x04\r')
-                if self._buffer.endswith('\x04'):
+                self._buffer += self._readline("\x04\r")
+                if self._buffer.endswith("\x04"):
                     self._buffer = self._buffer[:-1]
                     break
             rval, self._buffer = self._buffer[:chars], self._buffer[chars:]
-            return rval.encode('utf-8').replace('\r','\n')
+            return rval.encode("utf-8").replace("\r", "\n")
 
     def readline(self):
-        if u'\r' not in self._buffer:
-            self._buffer += self._readline(u'\x04\r')
-        if self._buffer.endswith('\x04'):
-            rval = self._buffer[:-1].encode('utf-8')
-        elif self._buffer.endswith('\r'):
-            rval = self._buffer[:-1].encode('utf-8')+'\n'
-        self._buffer = u''
+        if "\r" not in self._buffer:
+            self._buffer += self._readline("\x04\r")
+        if self._buffer.endswith("\x04"):
+            rval = self._buffer[:-1].encode("utf-8")
+        elif self._buffer.endswith("\r"):
+            rval = self._buffer[:-1].encode("utf-8") + "\n"
+        self._buffer = ""
 
         return rval
 
 
 DEBUG_DELEGATE = 0
-PASSTHROUGH = (
-   'deleteBackward:',
-   'complete:',
-   'moveRight:',
-   'moveLeft:',
-)
+PASSTHROUGH = ("deleteBackward:", "complete:", "moveRight:", "moveLeft:")
 
-class RemotePyInterpreterDocument (NSDocument):
+
+class RemotePyInterpreterDocument(NSDocument):
     """
     PyInterpreter is a delegate/controller for a NSTextView,
     turning it into a full featured interactive Python interpreter.
@@ -135,7 +155,7 @@ class RemotePyInterpreterDocument (NSDocument):
     textView = objc.IBOutlet()
 
     def expectCodeInput_withPrompt_(self, callback, prompt):
-        self.writeString_forOutput_(prompt, u'code')
+        self.writeString_forOutput_(prompt, "code")
         self.setCharacterIndexForInput_(self.lengthOfTextView())
         self.p_input_callbacks.append(callback)
         self.flushCallbacks()
@@ -157,9 +177,9 @@ class RemotePyInterpreterDocument (NSDocument):
         self.setFileName_(executable)
 
     def displayName(self):
-        if not hasattr(self, 'version'):
-            return u'Starting...'
-        return u'Python %s - %s - %s' % (self.version, self.executable, self.pid)
+        if not hasattr(self, "version"):
+            return "Starting..."
+        return "Python %s - %s - %s" % (self.version, self.executable, self.pid)
 
     def updateChangeCount_(self, val):
         return
@@ -173,7 +193,7 @@ class RemotePyInterpreterDocument (NSDocument):
             self.interpreter = None
 
     def windowNibName(self):
-        return u'RemotePyInterpreterDocument'
+        return "RemotePyInterpreterDocument"
 
     def isDocumentEdited(self):
         return False
@@ -182,16 +202,16 @@ class RemotePyInterpreterDocument (NSDocument):
         # XXX - should this be done later?
         self.setFont_(NSFont.userFixedPitchFontOfSize_(10))
         self.p_colors = {
-            u'stderr': NSColor.redColor(),
-            u'stdout': NSColor.blueColor(),
-            u'code': NSColor.blackColor(),
+            "stderr": NSColor.redColor(),
+            "stdout": NSColor.blueColor(),
+            "code": NSColor.blackColor(),
         }
         self.setHistoryLength_(50)
         self.setHistoryView_(0)
         self.setInteracting_(False)
         self.setAutoScroll_(True)
         self.setSingleLineInteraction_(False)
-        self.p_history = [u'']
+        self.p_history = [""]
         self.p_input_callbacks = []
         self.p_input_lines = []
         self.setupTextView()
@@ -201,7 +221,7 @@ class RemotePyInterpreterDocument (NSDocument):
     #  Modal input dialog support
     #
 
-    #def p_nestedRunLoopReaderUntilEOLchars_(self, eolchars):
+    # def p_nestedRunLoopReaderUntilEOLchars_(self, eolchars):
     #    """
     #    This makes the baby jesus cry.
 
@@ -236,7 +256,7 @@ class RemotePyInterpreterDocument (NSDocument):
         self.p_input_lines.append(line)
         self.flushCallbacks()
         self.p_history = filter(None, self.p_history)
-        self.p_history.append(u'')
+        self.p_history.append("")
         self.setHistoryView_(len(self.p_history) - 1)
 
     def executeInteractiveLine_(self, line):
@@ -249,10 +269,9 @@ class RemotePyInterpreterDocument (NSDocument):
     def replaceLineWithCode_(self, s):
         idx = self.characterIndexForInput()
         ts = self.textView.textStorage()
-        s = self.formatString_forOutput_(s, u'code')
+        s = self.formatString_forOutput_(s, "code")
         ts.replaceCharactersInRange_withAttributedString_(
-            (idx, len(ts.mutableString())-idx),
-            s,
+            (idx, len(ts.mutableString()) - idx), s
         )
 
     #
@@ -260,7 +279,7 @@ class RemotePyInterpreterDocument (NSDocument):
     #
 
     def addHistoryLine_(self, line):
-        line = line.rstrip(u'\n')
+        line = line.rstrip("\n")
         if self.p_history[-1] == line:
             return False
         if not line:
@@ -306,7 +325,7 @@ class RemotePyInterpreterDocument (NSDocument):
             self.textView.scrollRangeToVisible_((self.lengthOfTextView(), 0))
 
     def writeNewLine(self):
-        self.writeString_forOutput_(u'\n', u'code')
+        self.writeString_forOutput_("\n", "code")
 
     def colorForName_(self, name):
         return self.p_colors[name]
@@ -319,7 +338,9 @@ class RemotePyInterpreterDocument (NSDocument):
     #
 
     def currentLine(self):
-        return self.textView.textStorage().mutableString()[self.characterIndexForInput():]
+        return self.textView.textStorage().mutableString()[
+            self.characterIndexForInput() :
+        ]
 
     def moveAndScrollToIndex_(self, idx):
         self.textView.scrollRangeToVisible_((idx, 0))
@@ -332,7 +353,9 @@ class RemotePyInterpreterDocument (NSDocument):
     #  NSTextViewDelegate methods
     #
 
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, aTextView, completions, begin_length, index):
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(
+        self, aTextView, completions, begin_length, index
+    ):
         # XXX
         # this will probably have to be tricky in order to be asynchronous..
         # either by:
@@ -344,37 +367,45 @@ class RemotePyInterpreterDocument (NSDocument):
 
         if False:
             txt = self.textView.textStorage().mutableString()
-            end = begin+length
-            while (begin>0) and (txt[begin].isalnum() or txt[begin] in u'._'):
+            end = begin + length
+            while (begin > 0) and (txt[begin].isalnum() or txt[begin] in "._"):
                 begin -= 1
             while not txt[begin].isalnum():
                 begin += 1
             return self.p_console.recommendCompletionsFor(txt[begin:end])
 
-    def textView_shouldChangeTextInRange_replacementString_(self, aTextView, aRange, newString):
+    def textView_shouldChangeTextInRange_replacementString_(
+        self, aTextView, aRange, newString
+    ):
         begin, length = aRange
         lastLocation = self.characterIndexForInput()
         if begin < lastLocation:
             # no editing anywhere but the interactive line
             return False
-        newString = newString.replace(u'\r', u'\n')
-        if u'\n' in newString:
+        newString = newString.replace("\r", "\n")
+        if "\n" in newString:
             if begin != lastLocation:
                 # no pasting multiline unless you're at the end
                 # of the interactive line
                 return False
             # multiline paste support
-            #self.clearLine()
+            # self.clearLine()
             newString = self.currentLine() + newString
-            for s in newString.strip().split(u'\n'):
-                self.writeString_forOutput_(s + u'\n', u'code')
+            for s in newString.strip().split("\n"):
+                self.writeString_forOutput_(s + "\n", "code")
                 self.executeLine_(s)
             return False
         return True
 
-    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, aTextView, fromRange, toRange):
+    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(
+        self, aTextView, fromRange, toRange
+    ):
         begin, length = toRange
-        if self.singleLineInteraction() and length == 0 and begin < self.characterIndexForInput():
+        if (
+            self.singleLineInteraction()
+            and length == 0
+            and begin < self.characterIndexForInput()
+        ):
             # no cursor movement off the interactive line
             return fromRange
         else:
@@ -383,11 +414,11 @@ class RemotePyInterpreterDocument (NSDocument):
     def textView_doCommandBySelector_(self, aTextView, aSelector):
         # deleteForward: is ctrl-d
         if self.isInteracting():
-            if aSelector == 'insertNewline:':
+            if aSelector == "insertNewline:":
                 self.writeNewLine()
             return False
         # XXX - this is ugly
-        responder = getattr(self, aSelector.replace(':','_'), None)
+        responder = getattr(self, aSelector.replace(":", "_"), None)
         if responder is not None:
             responder(aTextView)
             return True
@@ -483,6 +514,5 @@ class RemotePyInterpreterDocument (NSDocument):
         self.p_singleLineInteraction = v
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     AppHelper.runEventLoop(installInterrupt=True)

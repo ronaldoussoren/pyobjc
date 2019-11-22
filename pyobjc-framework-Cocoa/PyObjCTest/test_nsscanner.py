@@ -3,9 +3,10 @@ import objc
 
 from Foundation import *
 
+
 class TestNSScannerUsage(TestCase):
     def testUsage(self):
-        obj = NSScanner.scannerWithString_(b"1.2 2.5".decode('ascii'))
+        obj = NSScanner.scannerWithString_(b"1.2 2.5".decode("ascii"))
 
         didConvert, value = obj.scanDouble_(None)
         self.assertTrue(didConvert)
@@ -15,32 +16,34 @@ class TestNSScannerUsage(TestCase):
         self.assertTrue(didConvert)
         self.assertAlmostEqual(value, 2.5)
 
-        obj = NSScanner.scannerWithString_(b"abcd1234 efgh".decode('ascii'))
+        obj = NSScanner.scannerWithString_(b"abcd1234 efgh".decode("ascii"))
 
         didConvert, value = obj.scanCharactersFromSet_intoString_(
-                NSCharacterSet.lowercaseLetterCharacterSet(), None)
+            NSCharacterSet.lowercaseLetterCharacterSet(), None
+        )
         self.assertTrue(didConvert)
-        self.assertEqual(value, b"abcd".decode('ascii'))
+        self.assertEqual(value, b"abcd".decode("ascii"))
 
         didConvert, value = obj.scanInt_(None)
         self.assertTrue(didConvert)
         self.assertEqual(value, 1234)
 
-        obj = NSScanner.scannerWithString_(b"1234 efgh".decode('ascii'))
+        obj = NSScanner.scannerWithString_(b"1234 efgh".decode("ascii"))
 
         didConvert, value = obj.scanLongLong_(None)
         self.assertTrue(didConvert)
         self.assertEqual(value, 1234)
 
-        didConvert, value = obj.scanString_intoString_(b"efgh".decode('ascii'), None)
+        didConvert, value = obj.scanString_intoString_(b"efgh".decode("ascii"), None)
         self.assertTrue(didConvert)
-        self.assertEqual(value, b"efgh".decode('ascii'))
+        self.assertEqual(value, b"efgh".decode("ascii"))
 
-        obj = NSScanner.scannerWithString_(b"1234 efgh".decode('ascii'))
+        obj = NSScanner.scannerWithString_(b"1234 efgh".decode("ascii"))
         didConvert, value = obj.scanUpToCharactersFromSet_intoString_(
-                NSCharacterSet.lowercaseLetterCharacterSet(), None)
+            NSCharacterSet.lowercaseLetterCharacterSet(), None
+        )
         self.assertTrue(didConvert)
-        self.assertEqual(value, b"1234 ".decode('ascii'))
+        self.assertEqual(value, b"1234 ".decode("ascii"))
 
     def testMethods(self):
         self.assertArgIsBOOL(NSScanner.setCaseSensitive_, 0)
@@ -73,10 +76,11 @@ class TestNSScannerUsage(TestCase):
         self.assertArgIsOut(NSScanner.scanUpToCharactersFromSet_intoString_, 1)
         self.assertResultIsBOOL(NSScanner.isAtEnd)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertResultIsBOOL(NSScanner.scanUnsignedLongLong_)
         self.assertArgIsOut(NSScanner.scanUnsignedLongLong_, 0)
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
-class TestXGResource (TestCase):
+
+class TestXGResource(TestCase):
     def testConstants(self):
         self.assertEqual(XGResourceStateUninitialized, 0)
         self.assertEqual(XGResourceStateOffline, 1)

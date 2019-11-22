@@ -1,366 +1,1102 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
 {
  "definitions": {
-  "enum": {
-   "SCNActionTimingModeLinear": { "value": 0 },
-   "SCNActionTimingModeEaseIn": { "value": 1 },
-   "SCNActionTimingModeEaseOut": { "value": 2 },
-   "SCNActionTimingModeEaseInEaseOut": { "value": 3 },
-   "SCNColorMaskNone": { "value": 0 },
-   "SCNColorMaskRed": { "value": 8 },
-   "SCNColorMaskGreen": { "value": 4 },
-   "SCNColorMaskBlue": { "value": 2 },
-   "SCNColorMaskAlpha": { "value": 1 },
-   "SCNColorMaskAll": { "value": 15 },
-   "SCNNodeFocusBehaviorNone": { "value": 0 },
-   "SCNNodeFocusBehaviorOccluding": { "value": 1 },
-   "SCNNodeFocusBehaviorFocusable": { "value": 2 },
-   "SCNBlendModeMax": { "value": 6 },
-   "SCNTransparencyModeSingleLayer": { "value": 2 },
-   "SCNTransparencyModeDualLayer": { "value": 3 },
-   "SCNTransparencyModeDefault": { "value": 0 },
-   "SCNFillModeFill": { "value": 0 },
-   "SCNFillModeLines": { "value": 1 },
-   "SCNHitTestSearchModeClosest": { "value": 0 },
-   "SCNHitTestSearchModeAll": { "value": 1 },
-   "SCNHitTestSearchModeAny": { "value": 2 },
-   "SCNTessellationSmoothingModeNone": { "value": 0 },
-   "SCNTessellationSmoothingModePNTriangles": { "value": 1 },
-   "SCNTessellationSmoothingModePhong": { "value": 2 },
-   "SCNInteractionModeFly": { "value": 0 },
-   "SCNInteractionModeOrbitTurntable": { "value": 1 },
-   "SCNInteractionModeOrbitAngleMapping": { "value": 2 },
-   "SCNInteractionModeOrbitCenteredArcball": { "value": 3 },
-   "SCNInteractionModeOrbitArcball": { "value": 4 },
-   "SCNInteractionModePan": { "value": 5 },
-   "SCNInteractionModeTruck": { "value": 6 },
-   "SCNCameraProjectionDirectionVertical": { "value": 0 },
-   "SCNCameraProjectionDirectionHorizontal": { "value": 1 },
-   "SCNMovabilityHintFixed": { "value": 0 },
-   "SCNMovabilityHintMovable": { "value": 1 },
-   "SCNGeometryPrimitiveTypePolygon": { "value": 4 },
-   "SCNBillboardAxisX": { "value": 1 },
-   "SCNBillboardAxisY": { "value": 2 },
-   "SCNBillboardAxisZ": { "value": 4 },
-   "SCNBillboardAxisAll": { "value": 7 },
-   "SCNReferenceLoadingPolicyImmediate": { "value": 0 },
-   "SCNReferenceLoadingPolicyOnDemand": { "value": 1 },
-   "SCNBufferFrequencyPerFrame": { "value": 0 },
-   "SCNBufferFrequencyPerNode": { "value": 1 },
-   "SCNBufferFrequencyPerShadable": { "value": 2 },
-   "SCNBlendModeAlpha": { "value": 0 },
-   "SCNBlendModeAdd": { "value": 1 },
-   "SCNBlendModeSubtract": { "value": 2 },
-   "SCNBlendModeMultiply": { "value": 3 },
-   "SCNBlendModeScreen": { "value": 4 },
-   "SCNBlendModeReplace": { "value": 5  },
-   "SCNRenderingAPIMetal": { "value": 0 },
-   "SCNRenderingAPIOpenGLLegacy": { "value": 1 },
-   "SCNRenderingAPIOpenGLCore32": { "value": 2 },
-   "SCNRenderingAPIOpenGLCore41": { "value": 3 },
-   "SCNDebugOptionNone": { "value": 0 },
-   "SCNDebugOptionShowPhysicsShapes": { "value": 1 },
-   "SCNDebugOptionShowBoundingBoxes": { "value": 2 },
-   "SCNDebugOptionShowLightInfluences": { "value": 4 },
-   "SCNDebugOptionShowLightExtents": { "value": 8 },
-   "SCNDebugOptionShowPhysicsFields": { "value": 16 },
-   "SCNDebugOptionShowWireframe": { "value": 32 },
-   "SCNDebugOptionRenderAsWireframe": { "value": 64 },
-   "SCNDebugOptionShowSkeletons": { "value": 128 },
-   "SCNDebugOptionShowCreases": { "value": 256 },
-   "SCNDebugOptionShowConstraints": { "value": 512 },
-   "SCNDebugOptionShowCameras": { "value": 1024 }
-  },
-  "structs": {
-   "SCNQuaternion": { "ignore": true },
-   "SCNMatrix4": { "ignore": true }
-  },
   "aliases": {
-   "SCNQuaternion": { "alias": "SCNVector4" },
-   "SCNMatrix4": { "alias": "CATransform3D" },
-   "SCNHitTestOptionFirstFoundOnly": { "alias": "SCNHitTestFirstFoundOnlyKey" },
-   "SCNHitTestOptionSortResults": { "alias": "SCNHitTestSortResultsKey" },
-   "SCNHitTestOptionClipToZRange": { "alias": "SCNHitTestClipToZRangeKey" },
-   "SCNHitTestOptionBackFaceCulling": { "alias": "SCNHitTestBackFaceCullingKey" },
-   "SCNHitTestOptionBoundingBoxOnly": { "alias": "SCNHitTestBoundingBoxOnlyKey" },
-   "SCNHitTestOptionIgnoreChildNodes": { "alias": "SCNHitTestIgnoreChildNodesKey" },
-   "SCNHitTestOptionRootNode": { "alias": "SCNHitTestRootNodeKey" },
-   "SCNHitTestOptionIgnoreHiddenNodes": { "alias": "SCNHitTestIgnoreHiddenNodesKey" },
-   "SCNPhysicsShapeOptionType": { "alias": "SCNPhysicsShapeTypeKey" },
-   "SCNPhysicsShapeOptionKeepAsCompound": { "alias": "SCNPhysicsShapeKeepAsCompoundKey" },
-   "SCNPhysicsShapeOptionScale": { "alias": "SCNPhysicsShapeScaleKey" },
-   "SCNPhysicsTestOptionCollisionBitMask": { "alias": "SCNPhysicsTestCollisionBitMaskKey" },
-   "SCNPhysicsTestOptionSearchMode": { "alias": "SCNPhysicsTestSearchModeKey" },
-   "SCNPhysicsTestOptionBackfaceCulling": { "alias": "SCNPhysicsTestBackfaceCullingKey" },
-   "SCNSceneAttributeStartTime": { "alias": "SCNSceneStartTimeAttributeKey" },
-   "SCNSceneAttributeEndTime": { "alias": "SCNSceneEndTimeAttributeKey" },
-   "SCNSceneAttributeFrameRate": { "alias": "SCNSceneFrameRateAttributeKey" },
-   "SCNSceneAttributeUpAxis": { "alias": "SCNSceneUpAxisAttributeKey" },
-   "SCNSceneSourceLoadingOptionCreateNormalsIfAbsent": { "alias": "SCNSceneSourceCreateNormalsIfAbsentKey" },
-   "SCNSceneSourceLoadingOptionCheckConsistency": { "alias": "SCNSceneSourceCheckConsistencyKey" },
-   "SCNSceneSourceLoadingOptionFlattenScene": { "alias": "SCNSceneSourceFlattenSceneKey" },
-   "SCNSceneSourceLoadingOptionUseSafeMode": { "alias": "SCNSceneSourceUseSafeModeKey" },
-   "SCNSceneSourceLoadingOptionAssetDirectoryURLs": { "alias": "SCNSceneSourceAssetDirectoryURLsKey" },
-   "SCNSceneSourceLoadingOptionOverrideAssetURLs": { "alias": "SCNSceneSourceOverrideAssetURLsKey" },
-   "SCNSceneSourceLoadingOptionStrictConformance": { "alias": "SCNSceneSourceStrictConformanceKey" },
-   "SCNSceneSourceLoadingOptionConvertUnitsToMeters": { "alias": "SCNSceneSourceConvertUnitsToMetersKey" },
-   "SCNSceneSourceLoadingOptionConvertToYUp": { "alias": "SCNSceneSourceConvertToYUpKey" },
-   "SCNSceneSourceLoadingOptionAnimationImportPolicy": { "alias": "SCNSceneSourceAnimationImportPolicyKey" },
-   "SCNViewOptionPreferredRenderingAPI": { "alias": "SCNPreferredRenderingAPIKey" },
-   "SCNViewOptionPreferredDevice": { "alias": "SCNPreferredDeviceKey" },
-   "SCNViewOptionPreferLowPowerDevice": { "alias": "SCNPreferLowPowerDeviceKey" }
-  },
-  "externs": {
-   "SCNHitTestOptionSearchMode": { "typestr": "@" },
-   "SCNSceneSourceLoadingOptionPreserveOriginalTopology": { "typestr": "@" },
-   "SCNLightingModelPhysicallyBased": { "typestr": "@" },
-   "SCNLightTypeIES": { "typestr": "@" },
-   "SCNLightTypeProbe": { "typestr": "@" },
-   "SCNGeometrySourceSemanticTangent": { "typestr": "@" },
-   "SCNPhysicsShapeTypeKey": { "typestr": "@" },
-   "SCNPreferredRenderingAPIKey": { "typestr": "@" },
-   "SCNPreferredDeviceKey": { "typestr": "@" },
-   "SCNPreferLowPowerDeviceKey": { "typestr": "@" },
-   "SCNHitTestOptionCategoryBitMask": { "typestr": "@" },
-   "SCNPhysicsShapeOptionCollisionMargin": { "typestr": "@" },
-   "SCNHitTestFirstFoundOnlyKey": { "typestr": "@" }
+   "SCNHitTestOptionBackFaceCulling": {
+    "alias": "SCNHitTestBackFaceCullingKey"
+   },
+   "SCNHitTestOptionBoundingBoxOnly": {
+    "alias": "SCNHitTestBoundingBoxOnlyKey"
+   },
+   "SCNHitTestOptionClipToZRange": {
+    "alias": "SCNHitTestClipToZRangeKey"
+   },
+   "SCNHitTestOptionFirstFoundOnly": {
+    "alias": "SCNHitTestFirstFoundOnlyKey"
+   },
+   "SCNHitTestOptionIgnoreChildNodes": {
+    "alias": "SCNHitTestIgnoreChildNodesKey"
+   },
+   "SCNHitTestOptionIgnoreHiddenNodes": {
+    "alias": "SCNHitTestIgnoreHiddenNodesKey"
+   },
+   "SCNHitTestOptionRootNode": {
+    "alias": "SCNHitTestRootNodeKey"
+   },
+   "SCNHitTestOptionSortResults": {
+    "alias": "SCNHitTestSortResultsKey"
+   },
+   "SCNMatrix4": {
+    "alias": "CATransform3D"
+   },
+   "SCNPhysicsShapeOptionKeepAsCompound": {
+    "alias": "SCNPhysicsShapeKeepAsCompoundKey"
+   },
+   "SCNPhysicsShapeOptionScale": {
+    "alias": "SCNPhysicsShapeScaleKey"
+   },
+   "SCNPhysicsShapeOptionType": {
+    "alias": "SCNPhysicsShapeTypeKey"
+   },
+   "SCNPhysicsTestOptionBackfaceCulling": {
+    "alias": "SCNPhysicsTestBackfaceCullingKey"
+   },
+   "SCNPhysicsTestOptionCollisionBitMask": {
+    "alias": "SCNPhysicsTestCollisionBitMaskKey"
+   },
+   "SCNPhysicsTestOptionSearchMode": {
+    "alias": "SCNPhysicsTestSearchModeKey"
+   },
+   "SCNQuaternion": {
+    "alias": "SCNVector4"
+   },
+   "SCNSceneAttributeEndTime": {
+    "alias": "SCNSceneEndTimeAttributeKey"
+   },
+   "SCNSceneAttributeFrameRate": {
+    "alias": "SCNSceneFrameRateAttributeKey"
+   },
+   "SCNSceneAttributeStartTime": {
+    "alias": "SCNSceneStartTimeAttributeKey"
+   },
+   "SCNSceneAttributeUpAxis": {
+    "alias": "SCNSceneUpAxisAttributeKey"
+   },
+   "SCNSceneSourceLoadingOptionAnimationImportPolicy": {
+    "alias": "SCNSceneSourceAnimationImportPolicyKey"
+   },
+   "SCNSceneSourceLoadingOptionAssetDirectoryURLs": {
+    "alias": "SCNSceneSourceAssetDirectoryURLsKey"
+   },
+   "SCNSceneSourceLoadingOptionCheckConsistency": {
+    "alias": "SCNSceneSourceCheckConsistencyKey"
+   },
+   "SCNSceneSourceLoadingOptionConvertToYUp": {
+    "alias": "SCNSceneSourceConvertToYUpKey"
+   },
+   "SCNSceneSourceLoadingOptionConvertUnitsToMeters": {
+    "alias": "SCNSceneSourceConvertUnitsToMetersKey"
+   },
+   "SCNSceneSourceLoadingOptionCreateNormalsIfAbsent": {
+    "alias": "SCNSceneSourceCreateNormalsIfAbsentKey"
+   },
+   "SCNSceneSourceLoadingOptionFlattenScene": {
+    "alias": "SCNSceneSourceFlattenSceneKey"
+   },
+   "SCNSceneSourceLoadingOptionOverrideAssetURLs": {
+    "alias": "SCNSceneSourceOverrideAssetURLsKey"
+   },
+   "SCNSceneSourceLoadingOptionStrictConformance": {
+    "alias": "SCNSceneSourceStrictConformanceKey"
+   },
+   "SCNSceneSourceLoadingOptionUseSafeMode": {
+    "alias": "SCNSceneSourceUseSafeModeKey"
+   },
+   "SCNViewOptionPreferLowPowerDevice": {
+    "alias": "SCNPreferLowPowerDeviceKey"
+   },
+   "SCNViewOptionPreferredDevice": {
+    "alias": "SCNPreferredDeviceKey"
+   },
+   "SCNViewOptionPreferredRenderingAPI": {
+    "alias": "SCNPreferredRenderingAPIKey"
+   }
   },
   "classes": {
-   "SCNMorpher": {
+   "NSObject": {
     "methods": [
      {
-      "selector": "unifiesNormals",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setUnifiesNormals:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNLight": {
-    "methods": [
-     {
-      "selector": "sampleDistributedShadowMaps",
+       "2": {
+        "type_override": "d"
+       }
+      },
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "selector": "renderer:didApplyConstraintsAtTime:atTime:"
      },
      {
-      "selector": "setSampleDistributedShadowMaps:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "2": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "renderer:willRenderScene:atTime:"
      },
      {
-      "selector": "forcesBackFaceCasters",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setForcesBackFaceCasters:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "2": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "renderer:didRenderScene:atTime:"
      },
      {
-      "selector": "automaticallyAdjustsShadowProjection",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAutomaticallyAdjustsShadowProjection:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNGeometryTessellator": {
-    "methods": [
-     {
-      "selector": "isAdaptive",
+       "0": {
+        "type_override": "Z"
+       }
+      },
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "selector": "setAutoSwitchToFreeCamera:"
      },
      {
-      "selector": "setAdaptive:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAllowsTranslation:"
      },
      {
-      "selector": "isScreenSpace",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setScreenSpace:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNConstraint": {
-    "methods": [
-     {
-      "selector": "isIncremental",
+       "0": {
+        "type_override": [
+         "f",
+         "d"
+        ]
+       }
+      },
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "selector": "setFlyModeVelocity:"
      },
      {
-      "selector": "setIncremental:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "type_override": [
+         "f",
+         "d"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setPanSensitivity:"
      },
      {
-      "selector": "isEnabled",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setEnabled:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNCameraController": {
-    "methods": [
-     {
-      "selector": "automaticTarget",
+       "0": {
+        "type_override": [
+         "f",
+         "d"
+        ]
+       }
+      },
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "selector": "setTruckSensitivity:"
      },
      {
-      "selector": "setAutomaticTarget:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "type_override": [
+         "f",
+         "d"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setRotationSensitivity:"
      },
      {
-      "selector": "isInertiaRunning",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "autoSwitchToFreeCamera"
      },
      {
-      "selector": "inertiaEnabled",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsTranslation"
      },
      {
-      "selector": "setInertiaEnabled:",
       "class_method": false,
+      "retval": {
+       "type_override": [
+        "f",
+        "d"
+       ]
+      },
+      "selector": "flyModeVelocity"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "f",
+        "d"
+       ]
+      },
+      "selector": "panSensitivity"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "f",
+        "d"
+       ]
+      },
+      "selector": "truckSensitivity"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "f",
+        "d"
+       ]
+      },
+      "selector": "rotationSensitivity"
+     },
+     {
       "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNTransformConstraint": {
-    "methods": [
+       "1": {
+        "type_override": [
+         "f",
+         "d"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "removeAnimationForKey:blendOutDuration:"
+     },
      {
-      "selector": "transformConstraintInWorldSpace:withBlock:",
-      "class_method": true,
+      "args": {
+       "1": {
+        "type_override": [
+         "f",
+         "d"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "removeAnimationForKey:fadeOutDuration:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "f",
+         "d"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setSpeed:forAnimationKey:"
+     },
+     {
       "args": {
        "1": {
         "callable": {
          "arguments": {
- 	  "0": { "typestr": "^v" },
- 	  "1": { "typestr": "@" },
- 	  "2": { "typestr": [ "{CATransform3D=ffffffffffffffff}", "{CATransform3D=dddddddddddddddd}" ] }
- 	 },
-	 "retval": { "typestr": [ "{CATransform3D=ffffffffffffffff}", "{CATransform3D=dddddddddddddddd}" ]  }
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "I"
+          },
+          "2": {
+           "typestr": "I"
+          },
+          "3": {
+           "typestr": "@"
+          },
+          "4": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
         }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "handleBindingOfSymbol:usingBlock:"
      },
      {
-      "selector": "positionConstraintInWorldSpace:withBlock:",
-      "class_method": true,
       "args": {
-       "0": { "type_override": "Z" },
+       "0": {
+        "type_modifier": "n"
+       },
+       "1": {
+        "type_modifier": "n"
+       }
+      },
+      "class_method": false,
+      "selector": "setBoundingBoxMin:max:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       },
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "getBoundingBoxMin:max:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       },
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "getBoundingSphereCenter:radius:"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_override": "n^v"
+       },
+       "1": {
+        "type_override": [
+         "I",
+         "Q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "writeBytes:length:"
+     },
+     {
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "presentScene:withTransition:incomingPointOfView:completionHandler:"
+     },
+     {
+      "args": {
        "1": {
         "callable": {
          "arguments": {
- 	  "0": { "typestr": "^v" },
- 	  "1": { "typestr": "@" },
- 	  "2": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  }
- 	 },
-	 "retval": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  }
-        }
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "Z"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "prepareObject:shouldAbortBlock:"
      },
      {
-      "selector": "orientationConstraintInWorldSpace:withBlock:",
-      "class_method": true,
       "args": {
-       "0": { "type_override": "Z" },
        "1": {
         "callable": {
          "arguments": {
- 	  "0": { "typestr": "^v" },
- 	  "1": { "typestr": "@" },
- 	  "2": { "typestr": ["{SCNVector4=ffff}", "{SCNVector4=dddd}"]  }
- 	 },
-	 "retval": { "typestr": ["{SCNVector4=ffff}", "{SCNVector4=dddd}"]  }
-        }
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "prepareObjects:withCompletionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "I",
+        "Q"
+       ]
+      },
+      "selector": "debugOptions"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I",
+         "Q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setDebugOptions:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "I",
+        "Q"
+       ]
+      },
+      "selector": "renderingAPI"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I",
+         "Q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setRenderingAPI:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "I",
+        "Q"
+       ]
+      },
+      "selector": "colorPixelFormat"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I",
+         "Q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setColorPixelFormat:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "I",
+        "Q"
+       ]
+      },
+      "selector": "depthPixelFormat"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I",
+         "Q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setDepthPixelFormat:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": [
+        "I",
+        "Q"
+       ]
+      },
+      "selector": "stencilPixelFormat"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": [
+         "I",
+         "Q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "setStencilPixelFormat:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "I"
+          },
+          "2": {
+           "typestr": "I"
+          },
+          "3": {
+           "typestr": "@"
+          },
+          "4": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "handleUnbindingOfSymbol:usingBlock:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "runAction:forKey:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "runAction:completionHandler:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "program:unbindValueForSymbol:atLocation:programID:renderer:"
      }
     ]
    },
-   "SCNReplicatorConstraint": {
+   "SCNAction": {
     "methods": [
      {
-      "selector": "replicatesOrientation",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setReplicatesOrientation:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "1": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "playAudioSource:waitForCompletion:"
      },
      {
-      "selector": "replicatesPosition",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setReplicatesPosition:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": [
+            "f",
+            "d"
+           ]
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "customActionWithDuration:actionBlock:"
      },
      {
-      "selector": "replicatesScale",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setReplicatesScale:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "runBlock:queue:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "runBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "f"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setTimingFunction:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "f"
+         }
+        },
+        "retval": {
+         "typestr": "f"
+        }
+       }
+      },
+      "selector": "timingFunction"
+     }
+    ]
+   },
+   "SCNAnimation": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isCumulative"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setCumulative:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAdditive"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAdditive:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "usesSceneTimeBase"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setUsesSceneTimeBase:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "fillsBackward"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setFillsBackward:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "fillsForward"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setFillsForward:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "autoreverses"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAutoreverses:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAppliedOnCompletion"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAppliedOnCompletion:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isRemovedOnCompletion"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setRemovedOnCompletion:"
+     }
+    ]
+   },
+   "SCNAnimationEvent": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "animationEventWithKeyTime:block:"
+     }
+    ]
+   },
+   "SCNAnimationPlayer": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "paused"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setPaused:"
+     }
+    ]
+   },
+   "SCNAudioPlayer": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "didFinishPlayback"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setDidFinishPlayback:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setWillStartPlayback:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "willStartPlayback"
+     }
+    ]
+   },
+   "SCNAudioSource": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "didFinishPlayback"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setDidFinishPlayback:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "willStartPlayback"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setWillStartPlayback:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "shouldStream"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setShouldStream:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isPositional"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setPositional:"
      }
     ]
    },
@@ -368,1001 +1104,150 @@
     "methods": [
      {
       "class_method": false,
-      "selector": "wantsExposureAdaptation",
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "class_method": false,
-      "selector": "setWantsExposureAdaptation:",
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "wantsHDR",
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "class_method": false,
-      "selector": "setWantsHDR:",
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "wantsDepthOfField",
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "class_method": false,
-      "selector": "setWantsDepthOfField:",
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "NSObject": {
-    "methods": [
-     {
-      "selector": "renderer:didApplyConstraintsAtTime:atTime:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "d" }
-      }
-     },
-     {
-      "selector": "renderer:willRenderScene:atTime:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "d" }
-      }
-     },
-     {
-      "selector": "renderer:didRenderScene:atTime:",
-      "class_method": false,
-      "args": {
-       "2": { "type_override": "d" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setAutoSwitchToFreeCamera:",
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setAllowsTranslation:",
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setFlyModeVelocity:",
-      "args": {
-       "0": { "type_override": [ "f", "d" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setPanSensitivity:",
-      "args": {
-       "0": { "type_override": [ "f", "d" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setTruckSensitivity:",
-      "args": {
-       "0": { "type_override": [ "f", "d" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setRotationSensitivity:",
-      "args": {
-       "0": { "type_override": [ "f", "d" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "autoSwitchToFreeCamera",
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "class_method": false,
-      "selector": "allowsTranslation",
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "class_method": false,
-      "selector": "flyModeVelocity",
-      "retval": { "type_override": [ "f", "d" ] }
-     },
-     {
-      "class_method": false,
-      "selector": "panSensitivity",
-      "retval": { "type_override": [ "f", "d" ] }
-     },
-     {
-      "class_method": false,
-      "selector": "truckSensitivity",
-      "retval": { "type_override": [ "f", "d" ] }
-     },
-     {
-      "class_method": false,
-      "selector": "rotationSensitivity",
-      "retval": { "type_override": [ "f", "d" ] }
-     },
-     {
-      "class_method": false,
-      "selector": "removeAnimationForKey:blendOutDuration:",
-      "args": {
-       "1": { "type_override": [ "f", "d" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "removeAnimationForKey:fadeOutDuration:",
-      "args": {
-       "1": { "type_override": [ "f", "d" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "setSpeed:forAnimationKey:",
-      "args": {
-       "0": { "type_override": [ "f", "d" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "handleBindingOfSymbol:usingBlock:",
-      "args": {
-       "1": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "I" },
-	  "2": { "typestr": "I" },
-	  "3": { "typestr": "@" },
-	  "4": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "n" },
-       "1": { "type_modifier": "n" }
-      },
-      "class_method": false,
-      "selector": "setBoundingBoxMin:max:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" },
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "getBoundingBoxMin:max:"
-     },
-     {
-      "args": {
-       "0": { "type_modifier": "o" },
-       "1": { "type_modifier": "o" }
-      },
-      "class_method": false,
-      "selector": "getBoundingSphereCenter:radius:"
-     },
-     {
-      "class_method": false,
-      "selector": "writeBytes:length:",
-      "args": {
-       "0": { "type_override": "n^v", "c_array_length_in_arg": 1 },
-       "1": { "type_override": ["I", "Q" ] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "presentScene:withTransition:incomingPointOfView:completionHandler:",
-      "args": {
-       "3": {
-        "type_override": "@?",
-	"callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "prepareObject:shouldAbortBlock:",
-      "args": {
-       "1": {
-        "type_override": "@?",
-	"callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "Z" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "prepareObjects:withCompletionHandler:",
-      "args": {
-       "1": {
-        "type_override": "@?",
-	"callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "debugOptions",
-      "retval": { "type_override": ["I", "Q"] }
-     },
-     {
-      "class_method": false,
-      "selector": "setDebugOptions:",
-      "args": {
-       "0": { "type_override": ["I", "Q"] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "renderingAPI",
-      "retval": { "type_override": ["I", "Q"] }
-     },
-     {
-      "class_method": false,
-      "selector": "setRenderingAPI:",
-      "args": {
-       "0": { "type_override": ["I", "Q"] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "colorPixelFormat",
-      "retval": { "type_override": ["I", "Q"] }
-     },
-     {
-      "class_method": false,
-      "selector": "setColorPixelFormat:",
-      "args": {
-       "0": { "type_override": ["I", "Q"] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "depthPixelFormat",
-      "retval": { "type_override": ["I", "Q"] }
-     },
-     {
-      "class_method": false,
-      "selector": "setDepthPixelFormat:",
-      "args": {
-       "0": { "type_override": ["I", "Q"] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "stencilPixelFormat",
-      "retval": { "type_override": ["I", "Q"] }
-     },
-     {
-      "class_method": false,
-      "selector": "setStencilPixelFormat:",
-      "args": {
-       "0": { "type_override": ["I", "Q"] }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "handleUnbindingOfSymbol:usingBlock:",
-      "args": {
-       "1": {
-        "type_override": "@?",
-	"callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "I" },
-	  "2": { "typestr": "I" },
-	  "3": { "typestr": "@" },
-	  "4": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "runAction:forKey:completionHandler:",
-      "args": {
-       "2": {
-        "type_override": "@?",
-	"callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "runAction:completionHandler:",
-      "args": {
-       "1": {
-        "type_override": "@?",
-	"callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "program:unbindValueForSymbol:atLocation:programID:renderer:",
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "SCNView": {
-    "methods": [
-     {
-      "selector": "rendersContinuously",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setRendersContinuously:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "allowsCameraControl",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAllowsCameraControl:",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "SCNAnimationPlayer": {
-    "methods": [
-     {
-      "selector": "paused",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setPaused:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNAnimation": {
-    "methods": [
-     {
-      "selector": "isCumulative",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setCumulative:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isAdditive",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAdditive:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "usesSceneTimeBase",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setUsesSceneTimeBase:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "fillsBackward",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setFillsBackward:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "fillsForward",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setFillsForward:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "autoreverses",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAutoreverses:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isAppliedOnCompletion",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAppliedOnCompletion:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isRemovedOnCompletion",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setRemovedOnCompletion:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNReferenceNode": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "isLoaded",
-      "retval": { "type_override": "Z" }
-     }
-    ]
-   },
-   "SCNNode": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "enumerateHierarchyUsingBlock:",
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "enumerateChildNodesUsingBlock:",
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     },
-     {
-      "class_method": false,
-      "selector": "childNodesPassingTest:",
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "Z" }
-	}
-       }
-      }
-     }
-    ]
-   },
-   "SCNProgram": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "handleBindingOfBufferNamed:frequency:usingBlock:",
-      "args": {
-       "2": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "@" },
-	  "4": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     }
-    ]
-   },
-   "SCNTechnique": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "handleBindingOfSymbol:usingBlock:",
-      "args": {
-       "1": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "I" },
-	  "2": { "typestr": "I" },
-	  "3": { "typestr": "@" },
-	  "4": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     }
-    ]
-   },
-   "SCNTransaction": {
-    "methods": [
-     {
-      "class_method": false,
-      "selector": "completionBlock",
       "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
+       "type_override": "Z"
+      },
+      "selector": "wantsExposureAdaptation"
      },
      {
-      "class_method": false,
-      "selector": "setCompletionBlock:",
       "args": {
        "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+        "type_override": "Z"
        }
-      }
-     }
-    ]
-   },
-   "SCNParticleSystem": {
-    "methods": [
-     {
-      "selector": "handleEvent:forProperties:withBlock:",
+      },
       "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "^^v" },
-	  "2": { "typestr": [ "^I", "^Q" ] },
-	  "3": { "typestr": [ "^I", "^Q" ] },
-	  "4": { "typestr": [ "i", "q" ] }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
+      "selector": "setWantsExposureAdaptation:"
      },
      {
-      "selector": "addModifierForProperties:atStage:withBlock:",
-      "class_method": false,
-      "args": {
-       "2": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "^^v" },
-	  "2": { "typestr": [ "^I", "^Q" ] },
-	  "3": { "typestr": [ "i", "q" ] },
-	  "4": { "typestr": [ "i", "q" ] },
-	  "5": { "typestr": "f" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     }
-    ]
-   },
-   "SCNPhysicsField": {
-    "methods": [
-     {
-      "selector": "customFieldWithEvaluationBlock:",
-      "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  },
-	  "2": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  },
-	  "3": { "typestr": "f" },
-	  "4": { "typestr": "f" },
-	  "5": { "typestr": "d" }
-	 },
-	 "retval": { "typestr": ["{SCNVector3=fff}", "{SCNVector3=ddd}"]  }
-	}
-       }
-      }
-     }
-    ]
-   },
-   "SCNPhysicsBody": {
-    "methods": [
-     {
-      "selector": "setResting:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "usesDefaultMomentOfInertia",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setUsesDefaultMomentOfInertia:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isAffectedByGravity",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setAffectedByGravity:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     }
-    ]
-   },
-   "SCNAudioPlayer": {
-    "methods": [
-     {
-      "selector": "didFinishPlayback",
       "class_method": false,
       "retval": {
-       "callable": {
-        "arguments": {
-         "0": { "typestr": "^v" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
+       "type_override": "Z"
+      },
+      "selector": "wantsHDR"
      },
      {
-      "selector": "setDidFinishPlayback:",
-      "class_method": false,
       "args": {
        "0": {
-        "callable": {
-         "arguments": {
-          "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-        }
+        "type_override": "Z"
        }
-      }
-     },
-     {
-      "selector": "setWillStartPlayback:",
+      },
       "class_method": false,
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-          "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-        }
-       }
-      }
+      "selector": "setWantsHDR:"
      },
      {
-      "selector": "willStartPlayback",
       "class_method": false,
       "retval": {
-       "callable": {
-        "arguments": {
-         "0": { "typestr": "^v" }
-	},
-	"retval": { "typestr": "v" }
+       "type_override": "Z"
+      },
+      "selector": "wantsDepthOfField"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "setWantsDepthOfField:"
      }
     ]
    },
-   "SCNAudioSource": {
+   "SCNCameraController": {
     "methods": [
      {
-      "selector": "didFinishPlayback",
       "class_method": false,
       "retval": {
-       "callable": {
-        "arguments": {
-         "0": { "typestr": "^v" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
+       "type_override": "Z"
+      },
+      "selector": "automaticTarget"
      },
      {
-      "selector": "setDidFinishPlayback:",
-      "class_method": false,
       "args": {
        "0": {
-        "callable": {
-         "arguments": {
-          "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-        }
+        "type_override": "Z"
        }
-      }
+      },
+      "class_method": false,
+      "selector": "setAutomaticTarget:"
      },
      {
-      "selector": "willStartPlayback",
       "class_method": false,
       "retval": {
-       "callable": {
-        "arguments": {
-         "0": { "typestr": "^v" }
-	},
-	"retval": { "typestr": "v" }
-       }
-      }
+       "type_override": "Z"
+      },
+      "selector": "isInertiaRunning"
      },
      {
-      "selector": "setWillStartPlayback:",
       "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "inertiaEnabled"
+     },
+     {
       "args": {
        "0": {
-        "callable": {
-         "arguments": {
-          "0": { "typestr": "^v" }
-	 },
-	 "retval": { "typestr": "v" }
-        }
+        "type_override": "Z"
        }
-      }
-     },
-     {
-      "selector": "shouldStream",
+      },
       "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setShouldStream:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
-     },
-     {
-      "selector": "isPositional",
-      "class_method": false,
-      "retval": { "type_override": "Z" }
-     },
-     {
-      "selector": "setPositional:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "Z" }
-      }
+      "selector": "setInertiaEnabled:"
      }
     ]
    },
-   "SCNAnimationEvent": {
+   "SCNConstraint": {
     "methods": [
      {
-      "selector": "animationEventWithKeyTime:block:",
       "class_method": false,
-      "args": {
-       "1": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      }
-     }
-    ]
-   },
-   "SCNAction": {
-    "methods": [
-     {
-      "selector": "playAudioSource:waitForCompletion:",
-      "class_method": false,
-      "args": {
-       "1": { "type_override": "Z" }
-      }
-     },
-     {
-      "args": {
-       "1": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": [ "f", "d" ] }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      },
-      "selector": "customActionWithDuration:actionBlock:",
-      "class_method": false
-     },
-     {
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      },
-      "selector": "runBlock:queue:",
-      "class_method": false
-     },
-     {
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
-       }
-      },
-      "selector": "runBlock:",
-      "class_method": false
-     },
-     {
-      "args": {
-       "0": {
-        "callable": {
-         "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "f" }
-	 },
-	 "retval": { "typestr": "f" }
-	}
-       }
-      },
-      "selector": "setTimingFunction:",
-      "class_method": false
-     },
-     {
       "retval": {
-       "callable": {
-        "arguments": {
-	 "0": { "typestr": "^v" },
-	 "1": { "typestr": "f" }
-	},
-	"retval": { "typestr": "f" }
+       "type_override": "Z"
+      },
+      "selector": "isIncremental"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
        }
       },
-      "selector": "timingFunction",
-      "class_method": false
+      "class_method": false,
+      "selector": "setIncremental:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isEnabled"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setEnabled:"
      }
     ]
    },
    "SCNGeometry": {
     "methods": [
      {
-      "selector": "wantsAdaptiveSubdivision",
       "class_method": false,
-      "retval": { "type_override": "Z" }
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "wantsAdaptiveSubdivision"
      },
      {
-      "selector": "setWantsAdaptiveSubdivision:",
-      "class_method": false,
       "args": {
-       "0": { "type_override": "Z" }
-      }
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setWantsAdaptiveSubdivision:"
      }
     ]
    },
@@ -1370,24 +1255,438 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n"
+       }
       },
       "class_method": true,
       "selector": "geometrySourceWithVertices:count:"
      },
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n"
+       }
       },
       "class_method": true,
       "selector": "geometrySourceWithNormals:count:"
      },
      {
       "args": {
-       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n"
+       }
       },
       "class_method": true,
       "selector": "geometrySourceWithTextureCoordinates:count:"
+     }
+    ]
+   },
+   "SCNGeometryTessellator": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAdaptive"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAdaptive:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isScreenSpace"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setScreenSpace:"
+     }
+    ]
+   },
+   "SCNLight": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "sampleDistributedShadowMaps"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setSampleDistributedShadowMaps:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "forcesBackFaceCasters"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setForcesBackFaceCasters:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "automaticallyAdjustsShadowProjection"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAutomaticallyAdjustsShadowProjection:"
+     }
+    ]
+   },
+   "SCNMorpher": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "unifiesNormals"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setUnifiesNormals:"
+     }
+    ]
+   },
+   "SCNNode": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateHierarchyUsingBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "enumerateChildNodesUsingBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "Z"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "childNodesPassingTest:"
+     }
+    ]
+   },
+   "SCNParticleSystem": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "^^v"
+          },
+          "2": {
+           "typestr": [
+            "^I",
+            "^Q"
+           ]
+          },
+          "3": {
+           "typestr": [
+            "^I",
+            "^Q"
+           ]
+          },
+          "4": {
+           "typestr": [
+            "i",
+            "q"
+           ]
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "handleEvent:forProperties:withBlock:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "^^v"
+          },
+          "2": {
+           "typestr": [
+            "^I",
+            "^Q"
+           ]
+          },
+          "3": {
+           "typestr": [
+            "i",
+            "q"
+           ]
+          },
+          "4": {
+           "typestr": [
+            "i",
+            "q"
+           ]
+          },
+          "5": {
+           "typestr": "f"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "addModifierForProperties:atStage:withBlock:"
+     }
+    ]
+   },
+   "SCNPhysicsBody": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setResting:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "usesDefaultMomentOfInertia"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setUsesDefaultMomentOfInertia:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAffectedByGravity"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setAffectedByGravity:"
+     }
+    ]
+   },
+   "SCNPhysicsField": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": [
+            "{SCNVector3=fff}",
+            "{SCNVector3=ddd}"
+           ]
+          },
+          "2": {
+           "typestr": [
+            "{SCNVector3=fff}",
+            "{SCNVector3=ddd}"
+           ]
+          },
+          "3": {
+           "typestr": "f"
+          },
+          "4": {
+           "typestr": "f"
+          },
+          "5": {
+           "typestr": "d"
+          }
+         },
+         "retval": {
+          "typestr": [
+           "{SCNVector3=fff}",
+           "{SCNVector3=ddd}"
+          ]
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "customFieldWithEvaluationBlock:"
+     }
+    ]
+   },
+   "SCNProgram": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "@"
+          },
+          "4": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "handleBindingOfBufferNamed:frequency:usingBlock:"
+     }
+    ]
+   },
+   "SCNReferenceNode": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isLoaded"
      }
     ]
    },
@@ -1402,28 +1701,92 @@
      }
     ]
    },
+   "SCNReplicatorConstraint": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "replicatesOrientation"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setReplicatesOrientation:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "replicatesPosition"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setReplicatesPosition:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "replicatesScale"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setReplicatesScale:"
+     }
+    ]
+   },
    "SCNScene": {
     "methods": [
      {
-      "selector": "writeToURL:options:delegate:progressHandler:",
-      "class_method": false,
       "args": {
        "3": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "f" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "writeToURL:options:delegate:progressHandler:"
      },
      {
       "args": {
-       "2": { "type_modifier": "o" }
+       "2": {
+        "type_modifier": "o"
+       }
       },
       "class_method": true,
       "selector": "sceneWithURL:options:error:"
@@ -1433,48 +1796,528 @@
    "SCNSceneSource": {
     "methods": [
      {
-      "selector": "entriesPassingTest:",
-      "class_method": false,
       "args": {
        "0": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "@" },
-	  "2": { "typestr": "@" },
-	  "3": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "Z" }
-	}
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "@"
+          },
+          "3": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "Z"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "entriesPassingTest:"
      },
      {
-      "selector": "sceneWithOptions:statusHandler:",
-      "class_method": false,
       "args": {
        "1": {
         "callable": {
          "arguments": {
-	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "f" },
-	  "2": { "typestr": ["i", "q"] },
-	  "3": { "typestr": "@" },
-	  "4": { "typestr": "o^Z" }
-	 },
-	 "retval": { "typestr": "v" }
-	}
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "f"
+          },
+          "2": {
+           "typestr": [
+            "i",
+            "q"
+           ]
+          },
+          "3": {
+           "typestr": "@"
+          },
+          "4": {
+           "typestr": "o^Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
        }
-      }
+      },
+      "class_method": false,
+      "selector": "sceneWithOptions:statusHandler:"
      },
      {
       "args": {
-       "1": { "type_modifier": "o" }
+       "1": {
+        "type_modifier": "o"
+       }
       },
       "class_method": false,
       "selector": "sceneWithOptions:error:"
      }
     ]
+   },
+   "SCNTechnique": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "I"
+          },
+          "2": {
+           "typestr": "I"
+          },
+          "3": {
+           "typestr": "@"
+          },
+          "4": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "handleBindingOfSymbol:usingBlock:"
+     }
+    ]
+   },
+   "SCNTransaction": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "completionBlock"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setCompletionBlock:"
+     }
+    ]
+   },
+   "SCNTransformConstraint": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": [
+            "{CATransform3D=ffffffffffffffff}",
+            "{CATransform3D=dddddddddddddddd}"
+           ]
+          }
+         },
+         "retval": {
+          "typestr": [
+           "{CATransform3D=ffffffffffffffff}",
+           "{CATransform3D=dddddddddddddddd}"
+          ]
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "transformConstraintInWorldSpace:withBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       },
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": [
+            "{SCNVector3=fff}",
+            "{SCNVector3=ddd}"
+           ]
+          }
+         },
+         "retval": {
+          "typestr": [
+           "{SCNVector3=fff}",
+           "{SCNVector3=ddd}"
+          ]
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "positionConstraintInWorldSpace:withBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       },
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": [
+            "{SCNVector4=ffff}",
+            "{SCNVector4=dddd}"
+           ]
+          }
+         },
+         "retval": {
+          "typestr": [
+           "{SCNVector4=ffff}",
+           "{SCNVector4=dddd}"
+          ]
+         }
+        }
+       }
+      },
+      "class_method": true,
+      "selector": "orientationConstraintInWorldSpace:withBlock:"
+     }
+    ]
+   },
+   "SCNView": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "rendersContinuously"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setRendersContinuously:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsCameraControl"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "setAllowsCameraControl:"
+     }
+    ]
+   }
+  },
+  "enum": {
+   "SCNActionTimingModeEaseIn": {
+    "value": 1
+   },
+   "SCNActionTimingModeEaseInEaseOut": {
+    "value": 3
+   },
+   "SCNActionTimingModeEaseOut": {
+    "value": 2
+   },
+   "SCNActionTimingModeLinear": {
+    "value": 0
+   },
+   "SCNBillboardAxisAll": {
+    "value": 7
+   },
+   "SCNBillboardAxisX": {
+    "value": 1
+   },
+   "SCNBillboardAxisY": {
+    "value": 2
+   },
+   "SCNBillboardAxisZ": {
+    "value": 4
+   },
+   "SCNBlendModeAdd": {
+    "value": 1
+   },
+   "SCNBlendModeAlpha": {
+    "value": 0
+   },
+   "SCNBlendModeMax": {
+    "value": 6
+   },
+   "SCNBlendModeMultiply": {
+    "value": 3
+   },
+   "SCNBlendModeReplace": {
+    "value": 5
+   },
+   "SCNBlendModeScreen": {
+    "value": 4
+   },
+   "SCNBlendModeSubtract": {
+    "value": 2
+   },
+   "SCNBufferFrequencyPerFrame": {
+    "value": 0
+   },
+   "SCNBufferFrequencyPerNode": {
+    "value": 1
+   },
+   "SCNBufferFrequencyPerShadable": {
+    "value": 2
+   },
+   "SCNCameraProjectionDirectionHorizontal": {
+    "value": 1
+   },
+   "SCNCameraProjectionDirectionVertical": {
+    "value": 0
+   },
+   "SCNColorMaskAll": {
+    "value": 15
+   },
+   "SCNColorMaskAlpha": {
+    "value": 1
+   },
+   "SCNColorMaskBlue": {
+    "value": 2
+   },
+   "SCNColorMaskGreen": {
+    "value": 4
+   },
+   "SCNColorMaskNone": {
+    "value": 0
+   },
+   "SCNColorMaskRed": {
+    "value": 8
+   },
+   "SCNDebugOptionNone": {
+    "value": 0
+   },
+   "SCNDebugOptionRenderAsWireframe": {
+    "value": 64
+   },
+   "SCNDebugOptionShowBoundingBoxes": {
+    "value": 2
+   },
+   "SCNDebugOptionShowCameras": {
+    "value": 1024
+   },
+   "SCNDebugOptionShowConstraints": {
+    "value": 512
+   },
+   "SCNDebugOptionShowCreases": {
+    "value": 256
+   },
+   "SCNDebugOptionShowLightExtents": {
+    "value": 8
+   },
+   "SCNDebugOptionShowLightInfluences": {
+    "value": 4
+   },
+   "SCNDebugOptionShowPhysicsFields": {
+    "value": 16
+   },
+   "SCNDebugOptionShowPhysicsShapes": {
+    "value": 1
+   },
+   "SCNDebugOptionShowSkeletons": {
+    "value": 128
+   },
+   "SCNDebugOptionShowWireframe": {
+    "value": 32
+   },
+   "SCNFillModeFill": {
+    "value": 0
+   },
+   "SCNFillModeLines": {
+    "value": 1
+   },
+   "SCNGeometryPrimitiveTypePolygon": {
+    "value": 4
+   },
+   "SCNHitTestSearchModeAll": {
+    "value": 1
+   },
+   "SCNHitTestSearchModeAny": {
+    "value": 2
+   },
+   "SCNHitTestSearchModeClosest": {
+    "value": 0
+   },
+   "SCNInteractionModeFly": {
+    "value": 0
+   },
+   "SCNInteractionModeOrbitAngleMapping": {
+    "value": 2
+   },
+   "SCNInteractionModeOrbitArcball": {
+    "value": 4
+   },
+   "SCNInteractionModeOrbitCenteredArcball": {
+    "value": 3
+   },
+   "SCNInteractionModeOrbitTurntable": {
+    "value": 1
+   },
+   "SCNInteractionModePan": {
+    "value": 5
+   },
+   "SCNInteractionModeTruck": {
+    "value": 6
+   },
+   "SCNMovabilityHintFixed": {
+    "value": 0
+   },
+   "SCNMovabilityHintMovable": {
+    "value": 1
+   },
+   "SCNNodeFocusBehaviorFocusable": {
+    "value": 2
+   },
+   "SCNNodeFocusBehaviorNone": {
+    "value": 0
+   },
+   "SCNNodeFocusBehaviorOccluding": {
+    "value": 1
+   },
+   "SCNReferenceLoadingPolicyImmediate": {
+    "value": 0
+   },
+   "SCNReferenceLoadingPolicyOnDemand": {
+    "value": 1
+   },
+   "SCNRenderingAPIMetal": {
+    "value": 0
+   },
+   "SCNRenderingAPIOpenGLCore32": {
+    "value": 2
+   },
+   "SCNRenderingAPIOpenGLCore41": {
+    "value": 3
+   },
+   "SCNRenderingAPIOpenGLLegacy": {
+    "value": 1
+   },
+   "SCNTessellationSmoothingModeNone": {
+    "value": 0
+   },
+   "SCNTessellationSmoothingModePNTriangles": {
+    "value": 1
+   },
+   "SCNTessellationSmoothingModePhong": {
+    "value": 2
+   },
+   "SCNTransparencyModeDefault": {
+    "value": 0
+   },
+   "SCNTransparencyModeDualLayer": {
+    "value": 3
+   },
+   "SCNTransparencyModeSingleLayer": {
+    "value": 2
+   }
+  },
+  "externs": {
+   "SCNGeometrySourceSemanticTangent": {
+    "typestr": "@"
+   },
+   "SCNHitTestFirstFoundOnlyKey": {
+    "typestr": "@"
+   },
+   "SCNHitTestOptionCategoryBitMask": {
+    "typestr": "@"
+   },
+   "SCNHitTestOptionSearchMode": {
+    "typestr": "@"
+   },
+   "SCNLightTypeIES": {
+    "typestr": "@"
+   },
+   "SCNLightTypeProbe": {
+    "typestr": "@"
+   },
+   "SCNLightingModelPhysicallyBased": {
+    "typestr": "@"
+   },
+   "SCNPhysicsShapeOptionCollisionMargin": {
+    "typestr": "@"
+   },
+   "SCNPhysicsShapeTypeKey": {
+    "typestr": "@"
+   },
+   "SCNPreferLowPowerDeviceKey": {
+    "typestr": "@"
+   },
+   "SCNPreferredDeviceKey": {
+    "typestr": "@"
+   },
+   "SCNPreferredRenderingAPIKey": {
+    "typestr": "@"
+   },
+   "SCNSceneSourceLoadingOptionPreserveOriginalTopology": {
+    "typestr": "@"
    }
   },
   "formal_protocols": {
@@ -1482,27 +2325,50 @@
     "methods": [
      {
       "args": {
-       "0": { "type_modifier": "o" },
-       "1": { "type_modifier": "o" }
+       "0": {
+        "type_modifier": "o"
+       },
+       "1": {
+        "type_modifier": "o"
+       }
       },
       "class_method": false,
       "selector": "getBoundingBoxMin:max:"
      },
      {
       "args": {
-       "0": { "type_modifier": "o" },
-       "1": { "type_modifier": "o" }
+       "0": {
+        "type_modifier": "o"
+       },
+       "1": {
+        "type_modifier": "o"
+       }
       },
       "class_method": false,
       "selector": "getBoundingSphereCenter:radius:"
      },
      {
       "args": {
-       "0": { "type_modifier": "n" },
-       "1": { "type_modifier": "n" }
+       "0": {
+        "type_modifier": "n"
+       },
+       "1": {
+        "type_modifier": "n"
+       }
       },
       "class_method": false,
       "selector": "setBoundingBoxMin:max:"
+     }
+    ]
+   },
+   "SCNBufferStream": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeBytes:length:"
      }
     ]
    },
@@ -1526,18 +2392,40 @@
    }
   },
   "functions": {
-   "SCNVector3ToFloat3": { "ignore": true },
-   "SCNVector3FromFloat3": { "ignore": true },
+   "SCNMatrix4FromMat4": {
+    "args": {
+     "0": { "type_override": "{_matrix_float4x4=[4$]}" }
+    }
+   },
+   "SCNMatrix4ToMat4": {
+    "retval": { "type_override": "{_matrix_float4x4=[4$]}" }
+   },
    "SCNExportJavaScriptModule": {
     "args": {
      "0": {
       "name": "context",
-       "typestr": "@"
+      "typestr": "@"
      }
     },
-    "retval": { "typestr": "v" }
+    "retval": {
+     "typestr": "v"
+    }
+   },
+   "SCNVector3FromFloat3": {
+    "ignore": true
+   },
+   "SCNVector3ToFloat3": {
+    "ignore": true
    }
   },
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "structs": {
+   "SCNMatrix4": {
+    "ignore": true
+   },
+   "SCNQuaternion": {
+    "ignore": true
+   }
+  }
  }
 }

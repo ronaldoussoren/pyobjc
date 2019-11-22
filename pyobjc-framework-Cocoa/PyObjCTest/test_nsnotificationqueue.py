@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 
-class TestNSNotificationQueue (TestCase):
+class TestNSNotificationQueue(TestCase):
     def testConstants(self):
         self.assertEqual(NSPostWhenIdle, 1)
         self.assertEqual(NSPostASAP, 2)

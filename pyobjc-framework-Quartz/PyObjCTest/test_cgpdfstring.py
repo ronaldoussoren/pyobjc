@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGPDFString (TestCase):
 
+class TestCGPDFString(TestCase):
     def test_types(self):
         self.assertIsOpaquePointer(CGPDFStringRef)
 

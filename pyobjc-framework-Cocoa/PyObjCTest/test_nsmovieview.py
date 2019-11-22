@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSMovieView (TestCase):
+
+class TestNSMovieView(TestCase):
     @onlyOn32Bit
     def testConstants(self):
         self.assertEqual(NSQTMovieNormalPlayback, 0)
@@ -22,8 +22,6 @@ class TestNSMovieView (TestCase):
         self.assertArgIsBOOL(NSMovieView.showController_adjustingSize_, 1)
         self.assertArgIsBOOL(NSMovieView.setEditable_, 0)
         self.assertResultIsBOOL(NSMovieView.isEditable)
-
-
 
 
 if __name__ == "__main__":

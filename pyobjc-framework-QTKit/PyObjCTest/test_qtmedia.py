@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTMedia (TestCase):
+
+class TestQTMedia(TestCase):
     def testConstants(self):
         self.assertIsInstance(QTMediaTypeVideo, unicode)
         self.assertIsInstance(QTMediaTypeSound, unicode)
@@ -40,7 +40,7 @@ class TestQTMedia (TestCase):
         self.assertIsInstance(QTMediaTimeScaleAttribute, unicode)
         self.assertIsInstance(QTMediaTypeAttribute, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(QTMediaTypeSubtitle, unicode)
         self.assertIsInstance(QTMediaTypeClosedCaption, unicode)
@@ -52,6 +52,7 @@ class TestQTMedia (TestCase):
     def testMethods32bit(self):
         self.assertArgIsOut(QTMedia.mediaWithQuickTimeMedia_error_, 1)
         self.assertArgIsOut(QTMedia.initWithQuickTimeMedia_error_, 1)
+
 
 if __name__ == "__main__":
     main()

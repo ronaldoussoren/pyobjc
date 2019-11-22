@@ -1,6 +1,7 @@
 import JavaScriptCore
 import contextlib
 
+
 @contextlib.contextmanager
 def autoreleasing(value):
     try:
@@ -21,5 +22,3 @@ def autoreleasing(value):
 
         elif isinstance(value, JavaScriptCore.JSStringRef):
             JavaScriptCore.JSStringRelease(value)
-
-

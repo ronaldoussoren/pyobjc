@@ -1,11 +1,11 @@
 import sys
 from PyObjCTools.TestSupport import *
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import EventKit
 
-    class TestEKTypes (TestCase):
-        @min_os_level('10.8')
+    class TestEKTypes(TestCase):
+        @min_os_level("10.8")
         def testConstacts(self):
             self.assertEqual(EventKit.EKAlarmProximityLeave, 2)
 
@@ -51,7 +51,9 @@ if sys.maxsize > 2**32:
             self.assertEqual(EventKit.EKParticipantScheduleStatusPending, 1)
             self.assertEqual(EventKit.EKParticipantScheduleStatusSent, 2)
             self.assertEqual(EventKit.EKParticipantScheduleStatusDelivered, 3)
-            self.assertEqual(EventKit.EKParticipantScheduleStatusRecipientNotRecognized, 4)
+            self.assertEqual(
+                EventKit.EKParticipantScheduleStatusRecipientNotRecognized, 4
+            )
             self.assertEqual(EventKit.EKParticipantScheduleStatusNoPrivileges, 5)
             self.assertEqual(EventKit.EKParticipantScheduleStatusDeliveryFailed, 6)
             self.assertEqual(EventKit.EKParticipantScheduleStatusCannotDeliver, 7)
@@ -88,8 +90,12 @@ if sys.maxsize > 2**32:
             self.assertEqual(EventKit.EKEntityTypeEvent, 0)
             self.assertEqual(EventKit.EKEntityTypeReminder, 1)
 
-            self.assertEqual(EventKit.EKEntityMaskEvent, (1 << EventKit.EKEntityTypeEvent))
-            self.assertEqual(EventKit.EKEntityMaskReminder, (1 << EventKit.EKEntityTypeReminder))
+            self.assertEqual(
+                EventKit.EKEntityMaskEvent, (1 << EventKit.EKEntityTypeEvent)
+            )
+            self.assertEqual(
+                EventKit.EKEntityMaskReminder, (1 << EventKit.EKEntityTypeReminder)
+            )
 
             self.assertEqual(EventKit.EKAlarmProximityNone, 0)
             self.assertEqual(EventKit.EKAlarmProximityEnter, 1)
@@ -105,5 +111,6 @@ if sys.maxsize > 2**32:
             self.assertEqual(EventKit.EKReminderPriorityMedium, 5)
             self.assertEqual(EventKit.EKReminderPriorityLow, 9)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

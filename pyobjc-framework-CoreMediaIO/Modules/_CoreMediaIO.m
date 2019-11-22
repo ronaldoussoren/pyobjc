@@ -5,9 +5,10 @@
 #import <CoreMediaIO/CMIOHardwareDevice.h>
 
 static PyObject*
-m_CMIODeviceProcessAVCCommand(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+m_CMIODeviceProcessAVCCommand(PyObject* self __attribute__((__unused__)), PyObject* args,
+                              PyObject* kwds)
 {
-static char* keywords[] = { "deviceID", "ioAVCCommand", NULL };
+    static char* keywords[] = {"deviceID", "ioAVCCommand", NULL};
 
     CMIODeviceID deviceID;
     CMIODeviceAVCCommand avcCommand;
@@ -15,11 +16,13 @@ static char* keywords[] = { "deviceID", "ioAVCCommand", NULL };
     PyObject* t;
     OSStatus r;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID, &py_avcCommand)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID,
+                                     &py_avcCommand)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CMIODeviceAVCCommand), py_avcCommand, &avcCommand) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CMIODeviceAVCCommand), py_avcCommand, &avcCommand) ==
+        -1) {
         return NULL;
     }
 
@@ -40,9 +43,10 @@ static char* keywords[] = { "deviceID", "ioAVCCommand", NULL };
 }
 
 static PyObject*
-m_CMIODeviceProcessRS422Command(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+m_CMIODeviceProcessRS422Command(PyObject* self __attribute__((__unused__)),
+                                PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "deviceID", "ioRS422Command", NULL };
+    static char* keywords[] = {"deviceID", "ioRS422Command", NULL};
 
     CMIODeviceID deviceID;
     CMIODeviceRS422Command rs422Command;
@@ -50,11 +54,13 @@ static char* keywords[] = { "deviceID", "ioRS422Command", NULL };
     PyObject* t;
     OSStatus r;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID, &py_rs422Command)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID,
+                                     &py_rs422Command)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CMIODeviceRS422Command), py_rs422Command, &rs422Command) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CMIODeviceRS422Command), py_rs422Command,
+                            &rs422Command) == -1) {
         return NULL;
     }
 
@@ -75,32 +81,21 @@ static char* keywords[] = { "deviceID", "ioRS422Command", NULL };
 }
 
 static PyMethodDef mod_methods[] = {
-    {
-        "CMIODeviceProcessAVCCommand",
-        (PyCFunction)m_CMIODeviceProcessAVCCommand,
-        METH_VARARGS|METH_KEYWORDS,
-        NULL
-    },
-    {
-        "CMIODeviceProcessRS422Command",
-        (PyCFunction)m_CMIODeviceProcessRS422Command,
-        METH_VARARGS|METH_KEYWORDS,
-        NULL
-    },
+    {"CMIODeviceProcessAVCCommand", (PyCFunction)m_CMIODeviceProcessAVCCommand,
+     METH_VARARGS | METH_KEYWORDS, NULL},
+    {"CMIODeviceProcessRS422Command", (PyCFunction)m_CMIODeviceProcessRS422Command,
+     METH_VARARGS | METH_KEYWORDS, NULL},
 
-    { NULL } /* Sentinel */
+    {NULL} /* Sentinel */
 };
-
 
 PyObjC_MODULE_INIT(_CoreMediaIO)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_CoreMediaIO)
-    if (!m) {
-        PyObjC_INITERROR();
-    }
+    m = PyObjC_MODULE_CREATE(_CoreMediaIO) if (!m) { PyObjC_INITERROR(); }
 
-    if (PyObjC_ImportAPI(m) == -1) PyObjC_INITERROR();
+    if (PyObjC_ImportAPI(m) == -1)
+        PyObjC_INITERROR();
 
     PyObjC_INITDONE();
 }

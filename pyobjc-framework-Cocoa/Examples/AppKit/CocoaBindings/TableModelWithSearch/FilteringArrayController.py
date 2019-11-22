@@ -11,8 +11,9 @@ import objc
 from Cocoa import NSArrayController
 import re
 
-kLiteralSearch = 'Literal Search'
-kRegularExpressionSearch = 'Regular Expression Search'
+kLiteralSearch = "Literal Search"
+kRegularExpressionSearch = "Regular Expression Search"
+
 
 def regexForSearchString(searchString, searchType):
     if not searchString:
@@ -20,8 +21,9 @@ def regexForSearchString(searchString, searchType):
 
     searchString = searchString.strip()
     if searchType == kLiteralSearch:
-        searchString = re.escape(searchString.strip()) + r'(?i)'
+        searchString = re.escape(searchString.strip()) + r"(?i)"
     return re.compile(searchString)
+
 
 def dictValueFilter(dicts, regex):
     for dct in dicts:
@@ -30,7 +32,8 @@ def dictValueFilter(dicts, regex):
                 yield dct
                 break
 
-class FilteringArrayController (NSArrayController):
+
+class FilteringArrayController(NSArrayController):
     searchString = None
     lastRegex = None
     searchType = kLiteralSearch

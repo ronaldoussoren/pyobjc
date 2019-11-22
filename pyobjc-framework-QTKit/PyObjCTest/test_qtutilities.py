@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from QTKit import *
 
-class TestQTUtilities (TestCase):
+
+class TestQTUtilities(TestCase):
     def testFunctions(self):
         v = QTStringForOSType(15490)
         self.assertIsInstance(v, unicode)

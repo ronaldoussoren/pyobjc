@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMXPathException (TestCase):
+
+class TestDOMXPathException(TestCase):
     def testConstants(self):
         self.assertIsInstance(DOMXPathException, unicode)
 

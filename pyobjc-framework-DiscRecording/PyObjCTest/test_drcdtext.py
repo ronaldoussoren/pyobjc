@@ -3,10 +3,16 @@ from PyObjCTools.TestSupport import *
 import DiscRecording
 import Foundation
 
-class TestDRCDText (TestCase):
+
+class TestDRCDText(TestCase):
     def testConstants(self):
-        self.assertEqual(DiscRecording.DRCDTextEncodingISOLatin1Modified, Foundation.NSISOLatin1StringEncoding)
-        self.assertEqual(DiscRecording.DRCDTextEncodingASCII, Foundation.NSASCIIStringEncoding)
+        self.assertEqual(
+            DiscRecording.DRCDTextEncodingISOLatin1Modified,
+            Foundation.NSISOLatin1StringEncoding,
+        )
+        self.assertEqual(
+            DiscRecording.DRCDTextEncodingASCII, Foundation.NSASCIIStringEncoding
+        )
 
         self.assertEqual(DiscRecording.DRCDTextGenreCodeUnknown, 0x0001)
         self.assertEqual(DiscRecording.DRCDTextGenreCodeAdultContemporary, 0x0002)
@@ -40,9 +46,13 @@ class TestDRCDText (TestCase):
         self.assertIsInstance(DiscRecording.DRCDTextLanguageKey, unicode)
         self.assertIsInstance(DiscRecording.DRCDTextCharacterCodeKey, unicode)
         self.assertIsInstance(DiscRecording.DRCDTextNSStringEncodingKey, unicode)
-        self.assertIsInstance(DiscRecording.DRCDTextCopyrightAssertedForSpecialMessagesKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRCDTextCopyrightAssertedForSpecialMessagesKey, unicode
+        )
         self.assertIsInstance(DiscRecording.DRCDTextCopyrightAssertedForNamesKey, unicode)
-        self.assertIsInstance(DiscRecording.DRCDTextCopyrightAssertedForTitlesKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRCDTextCopyrightAssertedForTitlesKey, unicode
+        )
         self.assertIsInstance(DiscRecording.DRCDTextTitleKey, unicode)
         self.assertIsInstance(DiscRecording.DRCDTextPerformerKey, unicode)
         self.assertIsInstance(DiscRecording.DRCDTextSongwriterKey, unicode)

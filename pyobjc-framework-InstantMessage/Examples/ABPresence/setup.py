@@ -14,6 +14,5 @@ setup(
         "py2app",
         "pyobjc-framework-Cocoa",
         "pyobjc-framework-InstantMessage",
-    ]
-
+    ],
 )

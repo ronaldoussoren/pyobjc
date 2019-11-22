@@ -10,4 +10,4 @@ import WSTApplicationDelegateClass
 import WSTConnectionWindowControllerClass
 
 # pass control to the AppKit
-sys.exit( AppKit.NSApplicationMain(sys.argv) )
+sys.exit(AppKit.NSApplicationMain(sys.argv))

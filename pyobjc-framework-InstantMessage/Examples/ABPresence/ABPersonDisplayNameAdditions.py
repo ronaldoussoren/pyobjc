@@ -2,7 +2,8 @@ import Cocoa
 import AddressBook
 import objc
 
-class ABPerson (objc.Category(AddressBook.ABPerson)):
+
+class ABPerson(objc.Category(AddressBook.ABPerson)):
     # Pull first and last name, organization, and record flags
     # If the entry is a company, display the organization name instead
     def displayName(self):
@@ -15,17 +16,19 @@ class ABPerson (objc.Category(AddressBook.ABPerson)):
 
         if (flags & AddressBook.kABShowAsMask) == AddressBook.kABShowAsCompany:
             if len(companyName):
-                return companyName;
+                return companyName
 
-        lastNameFirst = (flags & AddressBook.kABNameOrderingMask) == AddressBook.kABLastNameFirst
+        lastNameFirst = (
+            flags & AddressBook.kABNameOrderingMask
+        ) == AddressBook.kABLastNameFirst
         hasFirstName = firstName is not None
         hasLastName = lastName is not None
 
         if hasLastName and hasFirstName:
             if lastNameFirst:
-                return Cocoa.NSString.stringWithString_("%s %s"%(lastName, firstName))
+                return Cocoa.NSString.stringWithString_("%s %s" % (lastName, firstName))
             else:
-                return Cocoa.NSString.stringWithString_("%s %s"%(firstName, lastName))
+                return Cocoa.NSString.stringWithString_("%s %s" % (firstName, lastName))
 
         if hasLastName:
             return lastName
@@ -33,5 +36,4 @@ class ABPerson (objc.Category(AddressBook.ABPerson)):
         return firstName
 
     def compareDisplayNames_(self, person):
-        return self.displayName().localizedCaseInsensitiveCompare_(
-                person.displayName())
+        return self.displayName().localizedCaseInsensitiveCompare_(person.displayName())

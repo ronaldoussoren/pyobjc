@@ -22,18 +22,18 @@ class Circle(NSObject):
     Circle class, adopts Graphic protocol
     Adds radius and color, and support for drawing a shadow
     """
-    xLoc = objc.ivar('xLoc', objc._C_DBL)
-    yLoc = objc.ivar('yLoc', objc._C_DBL)
 
-    radius = objc.ivar('radius', objc._C_DBL)
-    color  = objc.ivar('color')
-    shadowOffset = objc.ivar('shadowOffset', objc._C_DBL)
-    shadowAngle  = objc.ivar('shadowAngle', objc._C_DBL) # in radians
+    xLoc = objc.ivar("xLoc", objc._C_DBL)
+    yLoc = objc.ivar("yLoc", objc._C_DBL)
+
+    radius = objc.ivar("radius", objc._C_DBL)
+    color = objc.ivar("color")
+    shadowOffset = objc.ivar("shadowOffset", objc._C_DBL)
+    shadowAngle = objc.ivar("shadowAngle", objc._C_DBL)  # in radians
 
     @classmethod
     def keysForNonBoundsProperties(cls):
         return ["xLoc", "yLoc", "shadowOffset", "shadowAngle", "color", "radius"]
-
 
     def init(self):
         self = super(Circle, self).init()
@@ -50,31 +50,43 @@ class Circle(NSObject):
         return "circle"
 
     def drawingBounds(self):
-        drawingBounds = NSMakeRect(self.xLoc - self.radius-1, self.yLoc - self.radius-1,
-                      self.radius*2+2, self.radius*2+2)
+        drawingBounds = NSMakeRect(
+            self.xLoc - self.radius - 1,
+            self.yLoc - self.radius - 1,
+            self.radius * 2 + 2,
+            self.radius * 2 + 2,
+        )
         if self.shadowOffset > 0.0:
-            shadowXOffset = sin(self.shadowAngle)*self.shadowOffset
-            shadowYOffset = cos(self.shadowAngle)*self.shadowOffset
+            shadowXOffset = sin(self.shadowAngle) * self.shadowOffset
+            shadowYOffset = cos(self.shadowAngle) * self.shadowOffset
             # allow for blur
-            shadowBounds = NSMakeRect(self.xLoc - self.radius + shadowXOffset - (self.shadowOffset/2),
-               self.yLoc - self.radius + shadowYOffset - (self.shadowOffset/2),
-               (self.radius*2)+self.shadowOffset,
-               (self.radius*2)+self.shadowOffset)
+            shadowBounds = NSMakeRect(
+                self.xLoc - self.radius + shadowXOffset - (self.shadowOffset / 2),
+                self.yLoc - self.radius + shadowYOffset - (self.shadowOffset / 2),
+                (self.radius * 2) + self.shadowOffset,
+                (self.radius * 2) + self.shadowOffset,
+            )
             drawingBounds = NSUnionRect(shadowBounds, drawingBounds)
         return drawingBounds
 
     def drawInView_(self, aView):
         # ignore aView here for simplicity...
-        (xLoc, yLoc, radius, shadowOffset, shadowAngle) = (self.xLoc, self.yLoc, self.radius, self.shadowOffset, self.shadowAngle)
+        (xLoc, yLoc, radius, shadowOffset, shadowAngle) = (
+            self.xLoc,
+            self.yLoc,
+            self.radius,
+            self.shadowOffset,
+            self.shadowAngle,
+        )
 
-        circleBounds = NSMakeRect(xLoc-radius, yLoc-radius, radius*2, radius*2)
+        circleBounds = NSMakeRect(xLoc - radius, yLoc - radius, radius * 2, radius * 2)
 
         # draw shadow if we'll see it
         shadow = NSShadow.alloc().init()
         if shadowOffset > 0.00001:
-            shadowXOffset = sin(shadowAngle)*shadowOffset
-            shadowYOffset = cos(shadowAngle)*shadowOffset
-            shadow.setShadowOffset_(NSMakeSize(shadowXOffset,shadowYOffset))
+            shadowXOffset = sin(shadowAngle) * shadowOffset
+            shadowYOffset = cos(shadowAngle) * shadowOffset
+            shadow.setShadowOffset_(NSMakeSize(shadowXOffset, shadowYOffset))
             shadow.setShadowBlurRadius_(shadowOffset)
             shadow.set()
 
@@ -94,7 +106,6 @@ class Circle(NSObject):
         # don't count shadow for selection
         hypotenuse2 = pow((self.xLoc - point.x), 2.0) + pow((self.yLoc - point.y), 2.0)
         return hypotenuse2 < (self.radius * self.radius)
-
 
     def initWithCoder_(self, coder):
         if not coder.allowsKeyedCoding():
@@ -119,9 +130,11 @@ class Circle(NSObject):
         coder.encodeFloat_forKey_(self.shadowAngle, "shadowAngle")
 
         colorData = NSArchiver.archivedDataWithRootObject_(self.color)
-        coder.encodeObject_forKey_(colorData, u"color")
+        coder.encodeObject_forKey_(colorData, "color")
 
 
 # if any of these properties changes, the bounds have changed
 boundsChangingKeys = ["xLoc", "yLoc", "shadowOffset", "shadowAngle", "radius"]
-Circle.setKeys_triggerChangeNotificationsForDependentKey_(boundsChangingKeys, u"drawingBounds")
+Circle.setKeys_triggerChangeNotificationsForDependentKey_(
+    boundsChangingKeys, "drawingBounds"
+)

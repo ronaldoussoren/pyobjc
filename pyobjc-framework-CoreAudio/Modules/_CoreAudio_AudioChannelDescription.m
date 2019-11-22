@@ -7,25 +7,24 @@
 
 static PyTypeObject audio_channel_description_type; /* Forward definition */
 
-#define audio_channel_description_check(obj) PyObject_TypeCheck(obj, &audio_channel_description_type)
+#define audio_channel_description_check(obj)                                             \
+    PyObject_TypeCheck(obj, &audio_channel_description_type)
 
 struct audio_channel_description {
     PyObject_HEAD
 
-    char         acd_owns_storage;
+        char acd_owns_storage;
     AudioChannelDescription* acd_description;
 };
 
 static PyMemberDef acd_members[] = {
-    {
-        .name = "_owns_storage",
-        .type = T_BOOL,
-        .offset = offsetof(struct audio_channel_description, acd_owns_storage),
-        .flags = READONLY,
-        .doc = "True iff this buffer owns storage for the AudioBufer"
-    },
+    {.name = "_owns_storage",
+     .type = T_BOOL,
+     .offset = offsetof(struct audio_channel_description, acd_owns_storage),
+     .flags = READONLY,
+     .doc = "True iff this buffer owns storage for the AudioBufer"},
 
-    { .name = NULL } /* Sentinel */
+    {.name = NULL} /* Sentinel */
 };
 
 static PyObject*
@@ -37,7 +36,8 @@ acd_get_mChannelLabel(PyObject* _self, void* closure __attribute__((__unused__))
 }
 
 static int
-acd_set_mChannelLabel(PyObject* _self, PyObject* value, void* closure __attribute__((__unused__)))
+acd_set_mChannelLabel(PyObject* _self, PyObject* value,
+                      void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
 
@@ -46,7 +46,8 @@ acd_set_mChannelLabel(PyObject* _self, PyObject* value, void* closure __attribut
         return -1;
     }
 
-    return PyObjC_PythonToObjC(@encode(unsigned int), value, &self->acd_description->mChannelLabel);
+    return PyObjC_PythonToObjC(@encode(unsigned int), value,
+                               &self->acd_description->mChannelLabel);
 }
 
 static PyObject*
@@ -58,7 +59,8 @@ acd_get_mChannelFlags(PyObject* _self, void* closure __attribute__((__unused__))
 }
 
 static int
-acd_set_mChannelFlags(PyObject* _self, PyObject* value, void* closure __attribute__((__unused__)))
+acd_set_mChannelFlags(PyObject* _self, PyObject* value,
+                      void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
 
@@ -67,7 +69,8 @@ acd_set_mChannelFlags(PyObject* _self, PyObject* value, void* closure __attribut
         return -1;
     }
 
-    return PyObjC_PythonToObjC(@encode(unsigned int), value, &self->acd_description->mChannelFlags);
+    return PyObjC_PythonToObjC(@encode(unsigned int), value,
+                               &self->acd_description->mChannelFlags);
 }
 
 static PyObject*
@@ -75,11 +78,14 @@ acd_get_mCoordinates(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
 
-    return Py_BuildValue("fff", self->acd_description->mCoordinates[0], self->acd_description->mCoordinates[1], self->acd_description->mCoordinates[2]);
+    return Py_BuildValue("fff", self->acd_description->mCoordinates[0],
+                         self->acd_description->mCoordinates[1],
+                         self->acd_description->mCoordinates[2]);
 }
 
 static int
-acd_set_mCoordinates(PyObject* _self, PyObject* value, void* closure __attribute__((__unused__)))
+acd_set_mCoordinates(PyObject* _self, PyObject* value,
+                     void* closure __attribute__((__unused__)))
 {
     struct audio_channel_description* self = (struct audio_channel_description*)_self;
 
@@ -88,56 +94,54 @@ acd_set_mCoordinates(PyObject* _self, PyObject* value, void* closure __attribute
         return -1;
     }
 
-    return PyArg_ParseTuple(value, "fff:mCoordinates", self->acd_description->mChannelFlags + 0, self->acd_description->mChannelFlags + 1, self->acd_description->mChannelFlags + 2);
+    return PyArg_ParseTuple(value, "fff:mCoordinates",
+                            self->acd_description->mChannelFlags + 0,
+                            self->acd_description->mChannelFlags + 1,
+                            self->acd_description->mChannelFlags + 2);
 }
 
-
 static PyGetSetDef acd_getset[] = {
-    {
-        .name = "mChannelLabel",
-        .get = acd_get_mChannelLabel,
-        .set = acd_set_mChannelLabel,
-        .doc = NULL,
-        .closure = NULL
-    },
-    {
-        .name = "mChannelFlags",
-        .get = acd_get_mChannelFlags,
-        .set = acd_set_mChannelFlags,
-        .doc = NULL,
-        .closure = NULL
-    },
-    {
-        .name = "mCoordinates",
-        .get = acd_get_mCoordinates,
-        .set = acd_set_mCoordinates,
-        .doc = NULL,
-        .closure = NULL
-    },
+    {.name = "mChannelLabel",
+     .get = acd_get_mChannelLabel,
+     .set = acd_set_mChannelLabel,
+     .doc = NULL,
+     .closure = NULL},
+    {.name = "mChannelFlags",
+     .get = acd_get_mChannelFlags,
+     .set = acd_set_mChannelFlags,
+     .doc = NULL,
+     .closure = NULL},
+    {.name = "mCoordinates",
+     .get = acd_get_mCoordinates,
+     .set = acd_set_mCoordinates,
+     .doc = NULL,
+     .closure = NULL},
 
-    { .name = NULL } /* Sentinel */
+    {.name = NULL} /* Sentinel */
 };
-
 
 static PyObject*
 acd_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = { "mChannelLabel", "mChannelFlags", "mCoordinates", NULL };
+    static char* keywords[] = {"mChannelLabel", "mChannelFlags", "mCoordinates", NULL};
     struct audio_channel_description* result;
     unsigned int channel_label = 0;
     unsigned int channel_flags = 0;
-    float coordinates[3] = { 0, 0, 0 };
+    float coordinates[3] = {0, 0, 0};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                "|"
+                                     "|"
 #if PY_MAJOR_VERSION == 3
-                "$"
+                                     "$"
 #endif
-                "II(fff)", keywords, &channel_label, &channel_flags, coordinates, coordinates + 1, coordinates + 2)) {
+                                     "II(fff)",
+                                     keywords, &channel_label, &channel_flags,
+                                     coordinates, coordinates + 1, coordinates + 2)) {
         return NULL;
     }
 
-    result = PyObject_New(struct audio_channel_description, &audio_channel_description_type);
+    result =
+        PyObject_New(struct audio_channel_description, &audio_channel_description_type);
     if (result == NULL) {
         return NULL;
     }
@@ -170,24 +174,22 @@ acd_dealloc(PyObject* object)
 }
 
 PyDoc_STRVAR(acd_doc,
-    "AudioChannelDescription(*, num_channels=1, buffer_size=-1)\n"
-    CLINIC_SEP
-    "Return an audiobuffer. If a buffer size is specified "
-    "this will allocate a buffer, otherwise no buffer is "
-    "allocated\n");
+             "AudioChannelDescription(*, num_channels=1, buffer_size=-1)\n" CLINIC_SEP
+             "Return an audiobuffer. If a buffer size is specified "
+             "this will allocate a buffer, otherwise no buffer is "
+             "allocated\n");
 
 static PyTypeObject audio_channel_description_type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "CoreAudio.AudioChannelDescription",
-    .tp_basicsize   = sizeof(struct audio_channel_description),
-    .tp_itemsize    = 0,
-    .tp_dealloc     = acd_dealloc,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_doc         = acd_doc,
-    .tp_getset      = acd_getset,
-    .tp_members     = acd_members,
-    .tp_new         = acd_new,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioChannelDescription",
+    .tp_basicsize = sizeof(struct audio_channel_description),
+    .tp_itemsize = 0,
+    .tp_dealloc = acd_dealloc,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_doc = acd_doc,
+    .tp_getset = acd_getset,
+    .tp_members = acd_members,
+    .tp_new = acd_new,
 };
 
 static PyObject*
@@ -195,7 +197,8 @@ acd_create(AudioChannelDescription* item)
 {
     struct audio_channel_description* result;
 
-    result = PyObject_New(struct audio_channel_description, &audio_channel_description_type);
+    result =
+        PyObject_New(struct audio_channel_description, &audio_channel_description_type);
     if (result == NULL) {
         return NULL;
     }
@@ -206,7 +209,8 @@ acd_create(AudioChannelDescription* item)
     return (PyObject*)result;
 }
 
-static PyObject* pythonify_audio_channel_description(void* pointer)
+static PyObject*
+pythonify_audio_channel_description(void* pointer)
 {
     AudioChannelDescription* buf_pointer = (AudioChannelDescription*)pointer;
 
@@ -218,7 +222,8 @@ static PyObject* pythonify_audio_channel_description(void* pointer)
     return acd_create(*(AudioChannelDescription**)pointer);
 }
 
-static int depythonify_audio_channel_description(PyObject* value, void* pointer)
+static int
+depythonify_audio_channel_description(PyObject* value, void* pointer)
 {
     if (value == Py_None) {
         *(AudioChannelDescription**)pointer = NULL;
@@ -227,11 +232,12 @@ static int depythonify_audio_channel_description(PyObject* value, void* pointer)
 
     if (!audio_channel_description_check(value)) {
         PyErr_Format(PyExc_TypeError, "Expecting 'AudioChannelDescription', got '%.100s'",
-            Py_TYPE(value)->tp_name);
+                     Py_TYPE(value)->tp_name);
         return -1;
     }
 
-    *(AudioChannelDescription**)pointer = ((struct audio_channel_description*)value)->acd_description;
+    *(AudioChannelDescription**)pointer =
+        ((struct audio_channel_description*)value)->acd_description;
     return 0;
 }
 
@@ -240,24 +246,25 @@ init_audio_channel_description(PyObject* module)
 {
     int r;
 
-    if (PyType_Ready(&audio_channel_description_type) == -1) return -1;
+    if (PyType_Ready(&audio_channel_description_type) == -1)
+        return -1;
 
     r = PyDict_SetItemString(audio_channel_description_type.tp_dict, "__typestr__",
-            PyBytes_FromString(@encode(AudioChannelDescription)));
-    if (r == -1) return -1;
+                             PyBytes_FromString(@encode(AudioChannelDescription)));
+    if (r == -1)
+        return -1;
 
     Py_INCREF(&audio_channel_description_type);
-    r = PyModule_AddObject(module, "AudioChannelDescription", (PyObject*)&audio_channel_description_type);
+    r = PyModule_AddObject(module, "AudioChannelDescription",
+                           (PyObject*)&audio_channel_description_type);
     if (r == -1) {
         Py_DECREF(&audio_channel_description_type);
         return -1;
     }
 
     r = PyObjCPointerWrapper_Register(
-        "AudioChannelDescription*",
-        @encode(AudioChannelDescription*),
-        pythonify_audio_channel_description,
-        depythonify_audio_channel_description);
+        "AudioChannelDescription*", @encode(AudioChannelDescription*),
+        pythonify_audio_channel_description, depythonify_audio_channel_description);
 
     return r;
 }

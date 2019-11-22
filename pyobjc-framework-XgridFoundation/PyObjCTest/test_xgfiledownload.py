@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
-class TestXGFileDownload (TestCase):
+
+class TestXGFileDownload(TestCase):
     def testMethods(self):
         self.assertArgIsBOOL(XGFileDownload.setDestination_allowOverwrite_, 1)
 

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from PyObjCTools import Signals
+
 Signals.dumpStackOnFatalSignal()
 
 import os
@@ -12,8 +13,10 @@ import signal
 ## Signals.dumpStackOnFatalSignal() line above and run
 ## the script again.
 
+
 def badness():
     os.kill(os.getpid(), signal.SIGQUIT)
+
 
 class Foo:
     def baz(self):
@@ -21,5 +24,6 @@ class Foo:
 
     def bar(self):
         self.baz()
+
 
 Foo().bar()

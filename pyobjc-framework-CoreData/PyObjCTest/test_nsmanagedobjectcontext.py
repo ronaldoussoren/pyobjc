@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from CoreData import *
 
-class TestNSManagedObjectContext (TestCase):
+
+class TestNSManagedObjectContext(TestCase):
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(NSManagedObjectContextQueryGenerationKey, unicode)
@@ -43,39 +43,47 @@ class TestNSManagedObjectContext (TestCase):
         self.assertResultIsBOOL(NSManagedObjectContext.retainsRegisteredObjects)
         self.assertArgIsBOOL(NSManagedObjectContext.setRetainsRegisteredObjects_, 0)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertArgIsOut(NSManagedObjectContext.countForFetchRequest_error_, 1)
-        self.assertResultIsBOOL(NSManagedObjectContext.obtainPermanentIDsForObjects_error_)
+        self.assertResultIsBOOL(
+            NSManagedObjectContext.obtainPermanentIDsForObjects_error_
+        )
         self.assertArgIsOut(NSManagedObjectContext.obtainPermanentIDsForObjects_error_, 1)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsOut(NSManagedObjectContext.existingObjectWithID_error_, 1)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertArgIsBlock(NSManagedObjectContext.performBlock_, 0, b'v')
-        self.assertArgIsBlock(NSManagedObjectContext.performBlockAndWait_, 0, b'v')
+        self.assertArgIsBlock(NSManagedObjectContext.performBlock_, 0, b"v")
+        self.assertArgIsBlock(NSManagedObjectContext.performBlockAndWait_, 0, b"v")
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsOut(NSManagedObjectContext.executeRequest_error_, 1)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSManagedObjectContext.shouldDeleteInaccessibleFaults)
         self.assertArgIsBOOL(NSManagedObjectContext.setShouldDeleteInaccessibleFaults_, 0)
 
-        self.assertResultIsBOOL(NSManagedObjectContext.shouldHandleInaccessibleFault_forObjectID_triggeredByProperty_)
+        self.assertResultIsBOOL(
+            NSManagedObjectContext.shouldHandleInaccessibleFault_forObjectID_triggeredByProperty_
+        )
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(NSManagedObjectContext.setQueryGenerationFromToken_error_)
         self.assertArgIsOut(NSManagedObjectContext.setQueryGenerationFromToken_error_, 1)
-        self.assertResultIsBOOL(NSManagedObjectContext.automaticallyMergesChangesFromParent)
-        self.assertArgIsBOOL(NSManagedObjectContext.setAutomaticallyMergesChangesFromParent_, 0)
+        self.assertResultIsBOOL(
+            NSManagedObjectContext.automaticallyMergesChangesFromParent
+        )
+        self.assertArgIsBOOL(
+            NSManagedObjectContext.setAutomaticallyMergesChangesFromParent_, 0
+        )
+
 
 if __name__ == "__main__":
     main()

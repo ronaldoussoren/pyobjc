@@ -2,9 +2,10 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-DRFileProc = b'i^v^{__DRFile=}I^v'
+DRFileProc = b"i^v^{__DRFile=}I^v"
 
-class TestDRContentFile (TestCase):
+
+class TestDRContentFile(TestCase):
     def testFunctions(self):
         self.assertIsInstance(DiscRecording.DRFileGetTypeID(), (int, long))
 
@@ -18,7 +19,9 @@ class TestDRContentFile (TestCase):
         self.assertArgSizeInArg(DiscRecording.DRFileCreateVirtualWithData, 1, 2)
 
         self.assertResultIsCFRetained(DiscRecording.DRFileCreateVirtualWithCallback)
-        self.assertArgIsFunction(DiscRecording.DRFileCreateVirtualWithCallback, 1, DRFileProc, True)
+        self.assertArgIsFunction(
+            DiscRecording.DRFileCreateVirtualWithCallback, 1, DRFileProc, True
+        )
 
         DiscRecording.DRFileCreateVirtualLink
 
@@ -27,12 +30,14 @@ class TestDRContentFile (TestCase):
         self.assertEqual(DiscRecording.kDRLinkTypeSymbolicLink, 2)
         self.assertEqual(DiscRecording.kDRLinkTypeFinderAlias, 3)
 
-        self.assertEqual(DiscRecording.kDRFileMessageForkSize, fourcc(b'fsiz'))
-        self.assertEqual(DiscRecording.kDRFileMessagePreBurn, fourcc(b'pre '))
-        self.assertEqual(DiscRecording.kDRFileMessageProduceData, fourcc(b'prod'))
-        self.assertEqual(DiscRecording.kDRFileMessageVerificationStarting, fourcc(b'vrfy'))
-        self.assertEqual(DiscRecording.kDRFileMessagePostBurn, fourcc(b'post'))
-        self.assertEqual(DiscRecording.kDRFileMessageRelease, fourcc(b'bye '))
+        self.assertEqual(DiscRecording.kDRFileMessageForkSize, fourcc(b"fsiz"))
+        self.assertEqual(DiscRecording.kDRFileMessagePreBurn, fourcc(b"pre "))
+        self.assertEqual(DiscRecording.kDRFileMessageProduceData, fourcc(b"prod"))
+        self.assertEqual(
+            DiscRecording.kDRFileMessageVerificationStarting, fourcc(b"vrfy")
+        )
+        self.assertEqual(DiscRecording.kDRFileMessagePostBurn, fourcc(b"post"))
+        self.assertEqual(DiscRecording.kDRFileMessageRelease, fourcc(b"bye "))
 
         self.assertEqual(DiscRecording.kDRFileForkData, 0)
         self.assertEqual(DiscRecording.kDRFileForkResource, 1)

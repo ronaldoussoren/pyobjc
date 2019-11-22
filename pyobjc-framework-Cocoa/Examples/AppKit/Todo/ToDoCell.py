@@ -1,13 +1,14 @@
 import objc
 import Cocoa
 
-NOT_DONE=0
-DONE=1
-DEFERRED=2
+NOT_DONE = 0
+DONE = 1
+DEFERRED = 2
 
-class ToDoCell (Cocoa.NSButtonCell):
 
-    __slots__ = ('_triState', '_doneImage', '_deferredImage', '_timeDue' )
+class ToDoCell(Cocoa.NSButtonCell):
+
+    __slots__ = ("_triState", "_doneImage", "_deferredImage", "_timeDue")
 
     def init(self):
         self._triState = NOT_DONE
@@ -40,7 +41,6 @@ class ToDoCell (Cocoa.NSButtonCell):
     def triState(self):
         return self._triState
 
-
     def setState_(self, val):
         pass
 
@@ -71,7 +71,11 @@ class ToDoCell (Cocoa.NSButtonCell):
     def setTimeDue_(self, newTime):
         if newTime:
             self._timeDue = newTime
-            self.setTitle_(self._timeDue.descriptionWithCalendarFormat_timeZone_locale_("%I:%M %p", Cocoa.NSTimeZone.localTimeZone(), None))
+            self.setTitle_(
+                self._timeDue.descriptionWithCalendarFormat_timeZone_locale_(
+                    "%I:%M %p", Cocoa.NSTimeZone.localTimeZone(), None
+                )
+            )
         else:
             self._timeDue = None
             self.setTitle_("-->")

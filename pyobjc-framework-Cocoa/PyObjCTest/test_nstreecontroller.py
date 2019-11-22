@@ -1,7 +1,8 @@
 from AppKit import *
 from PyObjCTools.TestSupport import *
 
-class TestNSTreeController (TestCase):
+
+class TestNSTreeController(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSTreeController.canInsert)
         self.assertResultIsBOOL(NSTreeController.canInsertChild)
@@ -18,6 +19,7 @@ class TestNSTreeController (TestCase):
         self.assertResultIsBOOL(NSTreeController.setSelectionIndexPath_)
         self.assertResultIsBOOL(NSTreeController.addSelectionIndexPaths_)
         self.assertResultIsBOOL(NSTreeController.removeSelectionIndexPaths_)
+
 
 if __name__ == "__main__":
     main()

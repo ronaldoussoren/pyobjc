@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Message import *
 
-class TestNSMailDelivery (TestCase):
 
+class TestNSMailDelivery(TestCase):
     @onlyOn32Bit
     def testClasses(self):
         self.assertResultIsBOOL(NSMailDelivery.hasDeliveryClassBeenConfigured)

@@ -41,9 +41,7 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
     }
 
     /* Handle 'isa' specially, due to Objective-C 2.0 weirdness */
-    v = Py_BuildValue(
-            "(s" Py_ARG_BYTES ")",
-            "isa", @encode(Class));
+    v = Py_BuildValue("(sy)", "isa", @encode(Class));
     if (v == NULL) {
         Py_DECREF(result);
         return result;
@@ -72,17 +70,15 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
             ivar = ivarList[i];
             const char* ivar_name = ivar_getName(ivar);
 
-            if (ivar == NULL) continue;
+            if (ivar == NULL)
+                continue;
 
             if (strcmp(ivar_name, "isa") == 0) {
                 /* See comment above */
                 continue;
             }
 
-            v = Py_BuildValue(
-                "(s"Py_ARG_BYTES")",
-                ivar_name,
-                ivar_getTypeEncoding(ivar));
+            v = Py_BuildValue("(sy)", ivar_name, ivar_getTypeEncoding(ivar));
 
             if (v == NULL) {
                 free(ivarList);
@@ -106,12 +102,10 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
     return result;
 }
 
-
 PyObject*
-PyObjCIvar_Get(PyObject* self __attribute__((__unused__)),
-        PyObject* args, PyObject* kwds)
+PyObjCIvar_Get(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = {"obj", "name", NULL };
+    static char* keywords[] = {"obj", "name", NULL};
 
     PyObject* anObject;
     char* name;
@@ -127,8 +121,8 @@ static char* keywords[] = {"obj", "name", NULL };
 
     if (!PyObjCObject_Check(anObject)) {
         PyErr_Format(PyExc_TypeError,
-            "Expecting an Objective-C object, got instance of %s",
-            Py_TYPE(anObject)->tp_name);
+                     "Expecting an Objective-C object, got instance of %s",
+                     Py_TYPE(anObject)->tp_name);
         return NULL;
     }
 
@@ -154,18 +148,16 @@ static char* keywords[] = {"obj", "name", NULL };
         Py_XINCREF(result);
 
     } else {
-        result = pythonify_c_value(ivar_type,
-            ((char*)(objcValue)) + ivar_offset);
+        result = pythonify_c_value(ivar_type, ((char*)(objcValue)) + ivar_offset);
     }
 
     return result;
 }
 
 PyObject*
-PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
-        PyObject* args, PyObject* kwds)
+PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
+    static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL};
 
     PyObject* anObject;
     char* name;
@@ -177,15 +169,15 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
     const char* ivar_type;
     ptrdiff_t ivar_offset;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OsO|O",
-            keywords, &anObject, &name, &value, &updateRefCounts)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "OsO|O", keywords, &anObject, &name,
+                                     &value, &updateRefCounts)) {
         return NULL;
     }
 
     if (!PyObjCObject_Check(anObject)) {
         PyErr_Format(PyExc_TypeError,
-            "Expecting an Objective-C object, got instance of %s",
-            Py_TYPE(anObject)->tp_name);
+                     "Expecting an Objective-C object, got instance of %s",
+                     Py_TYPE(anObject)->tp_name);
         return NULL;
     }
 
@@ -219,7 +211,6 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
         return Py_None;
     }
 
-
     ivar = find_ivar(objcValue, name);
     if (ivar == NULL) {
         PyErr_Format(PyExc_AttributeError, "%s", name);
@@ -243,9 +234,8 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
         NSObject* tmpValue;
 
         if (updateRefCounts == NULL) {
-            PyErr_SetString(PyExc_TypeError,
-                "Instance variable is an object, "
-                "updateRefCounts argument is required");
+            PyErr_SetString(PyExc_TypeError, "Instance variable is an object, "
+                                             "updateRefCounts argument is required");
             return NULL;
         }
 
@@ -273,8 +263,8 @@ static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL };
     } else {
         /* A simple value */
 
-        result = depythonify_c_value(ivar_type, value,
-            ((char*)(objcValue)) + ivar_offset);
+        result =
+            depythonify_c_value(ivar_type, value, ((char*)(objcValue)) + ivar_offset);
         if (result != 0) {
             return NULL;
         }

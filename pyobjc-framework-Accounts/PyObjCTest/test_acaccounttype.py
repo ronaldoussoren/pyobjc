@@ -1,10 +1,10 @@
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import Accounts
 
-    class TestACAccountType (TestCase):
+    class TestACAccountType(TestCase):
         @min_os_level("10.9")
         def testConstants10_9(self):
             self.assertIsInstance(Accounts.ACAccountTypeIdentifierLinkedIn, unicode)

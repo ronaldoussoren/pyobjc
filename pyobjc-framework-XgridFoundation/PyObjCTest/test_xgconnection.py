@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from XgridFoundation import *
 
-class TestXGConnection (TestCase):
+
+class TestXGConnection(TestCase):
     def testConstants(self):
         self.assertEqual(XGConnectionStateClosed, 0)
         self.assertEqual(XGConnectionStateOpening, 1)
@@ -16,6 +16,7 @@ class TestXGConnection (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(XGConnection.isOpened)
         self.assertResultIsBOOL(XGConnection.isClosed)
+
 
 if __name__ == "__main__":
     main()

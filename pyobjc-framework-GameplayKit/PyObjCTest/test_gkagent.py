@@ -4,9 +4,9 @@ import sys
 if sys.maxsize >= 2 ** 32:
     import GameplayKit
 
-    class TestGKAgent (TestCase):
+    class TestGKAgent(TestCase):
         def testProtocols(self):
-            objc.protocolNamed('GKAgentDelegate')
+            objc.protocolNamed("GKAgentDelegate")
 
         def testMethods(self):
             self.assertResultIsBOOL(GameplayKit.GKAgent3D.rightHanded)

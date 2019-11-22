@@ -2,13 +2,14 @@ from PyObjCTools.TestSupport import *
 
 import Quartz
 
-class TestCGImageMetadata (TestCase):
-    @min_os_level('10.8')
+
+class TestCGImageMetadata(TestCase):
+    @min_os_level("10.8")
     def testTypes10_8(self):
         self.assertIsCFType(Quartz.CGImageMetadataRef)
         self.assertIsCFType(Quartz.CGImageMetadataTagRef)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         self.assertIsInstance(Quartz.CGImageMetadataGetTypeID(), (int, long))
         self.assertIsInstance(Quartz.CGImageMetadataTagGetTypeID(), (int, long))
@@ -24,11 +25,12 @@ class TestCGImageMetadata (TestCase):
         self.assertResultIsCFRetained(Quartz.CGImageMetadataTagCreate)
         self.assertResultHasType(Quartz.CGImageMetadataTagCopyValue, objc._C_ID)
         t = Quartz.CGImageMetadataTagCreate(
-                Quartz.kCGImageMetadataNamespaceExif,
-                Quartz.kCGImageMetadataPrefixExif,
-                "name",
-                Quartz.kCGImageMetadataTypeString,
-                "value")
+            Quartz.kCGImageMetadataNamespaceExif,
+            Quartz.kCGImageMetadataPrefixExif,
+            "name",
+            Quartz.kCGImageMetadataTypeString,
+            "value",
+        )
         self.assertIsInstance(t, Quartz.CGImageMetadataTagRef)
 
         self.assertResultIsCFRetained(Quartz.CGImageMetadataTagCopyNamespace)
@@ -40,24 +42,31 @@ class TestCGImageMetadata (TestCase):
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCopyTags)
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCopyTagWithPath)
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCopyStringValueWithPath)
-        self.assertResultHasType(Quartz.CGImageMetadataRegisterNamespaceForPrefix, objc._C_BOOL)
+        self.assertResultHasType(
+            Quartz.CGImageMetadataRegisterNamespaceForPrefix, objc._C_BOOL
+        )
         self.assertArgIsOut(Quartz.CGImageMetadataRegisterNamespaceForPrefix, 3)
         self.assertResultHasType(Quartz.CGImageMetadataSetTagWithPath, objc._C_BOOL)
         self.assertResultHasType(Quartz.CGImageMetadataSetValueWithPath, objc._C_BOOL)
         self.assertArgHasType(Quartz.CGImageMetadataSetValueWithPath, 3, objc._C_ID)
         self.assertResultHasType(Quartz.CGImageMetadataRemoveTagWithPath, objc._C_BOOL)
 
-        CGImageMetadataTagBlock = objc._C_BOOL + b'@@'
-        self.assertArgIsBlock(Quartz.CGImageMetadataEnumerateTagsUsingBlock, 3, CGImageMetadataTagBlock)
+        CGImageMetadataTagBlock = objc._C_BOOL + b"@@"
+        self.assertArgIsBlock(
+            Quartz.CGImageMetadataEnumerateTagsUsingBlock, 3, CGImageMetadataTagBlock
+        )
 
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCopyTagMatchingImageProperty)
-        self.assertResultHasType(Quartz.CGImageMetadataSetValueMatchingImageProperty, objc._C_BOOL)
-        self.assertArgHasType(Quartz.CGImageMetadataSetValueMatchingImageProperty, 3, objc._C_ID)
+        self.assertResultHasType(
+            Quartz.CGImageMetadataSetValueMatchingImageProperty, objc._C_BOOL
+        )
+        self.assertArgHasType(
+            Quartz.CGImageMetadataSetValueMatchingImageProperty, 3, objc._C_ID
+        )
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCreateXMPData)
         self.assertResultIsCFRetained(Quartz.CGImageMetadataCreateFromXMPData)
 
-
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExif, unicode)
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExifAux, unicode)
@@ -94,12 +103,12 @@ class TestCGImageMetadata (TestCase):
         self.assertEqual(Quartz.kCGImageMetadataErrorConflictingArguments, 3)
         self.assertEqual(Quartz.kCGImageMetadataErrorPrefixConflict, 4)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceExifEX, unicode)
         self.assertIsInstance(Quartz.kCGImageMetadataPrefixExifEX, unicode)
 
-    @min_os_level('10.13.4')
+    @min_os_level("10.13.4")
     def testConstants10_13_4(self):
         self.assertIsInstance(Quartz.kCGImageMetadataNamespaceIPTCExtension, unicode)
         self.assertIsInstance(Quartz.kCGImageMetadataPrefixIPTCExtension, unicode)

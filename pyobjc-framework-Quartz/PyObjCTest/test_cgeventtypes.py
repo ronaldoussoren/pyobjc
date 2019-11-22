@@ -2,7 +2,8 @@ import sys
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGEventTypes (TestCase):
+
+class TestCGEventTypes(TestCase):
     def testTypes(self):
         self.assertIsCFType(CGEventRef)
         self.assertIsCFType(CGEventSourceRef)
@@ -121,6 +122,8 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGScrollWheelEventIsContinuous, 88)
         self.assertEqual(kCGMouseEventWindowUnderMousePointer, 91)
         self.assertEqual(kCGMouseEventWindowUnderMousePointerThatCanHandleThisEvent, 92)
+        self.assertEqual(kCGEventUnacceleratedPointerMovementX, 170)
+        self.assertEqual(kCGEventUnacceleratedPointerMovementY, 171)
 
         self.assertEqual(kCGEventMouseSubtypeDefault, 0)
         self.assertEqual(kCGEventMouseSubtypeTabletPoint, 1)
@@ -136,35 +139,36 @@ class TestCGEventTypes (TestCase):
         self.assertEqual(kCGEventTapOptionDefault, 0x00000000)
         self.assertEqual(kCGEventTapOptionListenOnly, 0x00000001)
 
-
         self.assertEqual(kCGNotifyEventTapAdded, b"com.apple.coregraphics.eventTapAdded")
-        self.assertEqual(kCGNotifyEventTapRemoved, b"com.apple.coregraphics.eventTapRemoved")
+        self.assertEqual(
+            kCGNotifyEventTapRemoved, b"com.apple.coregraphics.eventTapRemoved"
+        )
 
         self.assertEqual(kCGEventSourceStatePrivate, -1)
         self.assertEqual(kCGEventSourceStateCombinedSessionState, 0)
         self.assertEqual(kCGEventSourceStateHIDSystemState, 1)
 
-        self.assertEqual(kCGAnyInputEventType, 0xffffffff)
-        if sys.maxsize > 2**32:
-            self.assertEqual(kCGEventMaskForAllEvents, 0xffffffffffffffff)
+        self.assertEqual(kCGAnyInputEventType, 0xFFFFFFFF)
+        if sys.maxsize > 2 ** 32:
+            self.assertEqual(kCGEventMaskForAllEvents, 0xFFFFFFFFFFFFFFFF)
         else:
-            self.assertEqual(kCGEventMaskForAllEvents, 0xffffffff)
+            self.assertEqual(kCGEventMaskForAllEvents, 0xFFFFFFFF)
 
     def testStructs(self):
         v = CGEventTapInformation()
-        self.assertTrue(hasattr(v, 'eventTapID'))
-        self.assertTrue(hasattr(v, 'tapPoint'))
-        self.assertTrue(hasattr(v, 'options'))
-        self.assertTrue(hasattr(v, 'eventsOfInterest'))
-        self.assertTrue(hasattr(v, 'tappingProcess'))
-        self.assertTrue(hasattr(v, 'processBeingTapped'))
-        self.assertTrue(hasattr(v, 'enabled'))
-        self.assertTrue(hasattr(v, 'minUsecLatency'))
-        self.assertTrue(hasattr(v, 'avgUsecLatency'))
-        self.assertTrue(hasattr(v, 'maxUsecLatency'))
+        self.assertTrue(hasattr(v, "eventTapID"))
+        self.assertTrue(hasattr(v, "tapPoint"))
+        self.assertTrue(hasattr(v, "options"))
+        self.assertTrue(hasattr(v, "eventsOfInterest"))
+        self.assertTrue(hasattr(v, "tappingProcess"))
+        self.assertTrue(hasattr(v, "processBeingTapped"))
+        self.assertTrue(hasattr(v, "enabled"))
+        self.assertTrue(hasattr(v, "minUsecLatency"))
+        self.assertTrue(hasattr(v, "avgUsecLatency"))
+        self.assertTrue(hasattr(v, "maxUsecLatency"))
 
     def testInline(self):
-        self.assertEqual(CGEventMaskBit(10), 1<<10)
+        self.assertEqual(CGEventMaskBit(10), 1 << 10)
 
 
 if __name__ == "__main__":

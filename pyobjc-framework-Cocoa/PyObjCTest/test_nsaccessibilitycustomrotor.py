@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 import AppKit
 
-class TestNSAccessibilityCustomRotor (TestCase):
+
+class TestNSAccessibilityCustomRotor(TestCase):
     def testConstants(self):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionPrevious, 0)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorSearchDirectionNext, 1)
@@ -28,9 +29,10 @@ class TestNSAccessibilityCustomRotor (TestCase):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeUnderlinedText, 19)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeVisitedLink, 20)
 
-    @min_sdk_level('10.13')
+    @min_sdk_level("10.13")
     def testProtocols(self):
-        objc.protocolNamed('NSAccessibilityCustomRotorItemSearchDelegate')
+        objc.protocolNamed("NSAccessibilityCustomRotorItemSearchDelegate")
+
 
 if __name__ == "__main__":
     main()

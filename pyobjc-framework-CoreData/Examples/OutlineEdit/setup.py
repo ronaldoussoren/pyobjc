@@ -45,13 +45,6 @@ setup(
     name="PyOutlineEdit",
     app=["main.py"],
     data_files=["English.lproj"],
-    options=dict(py2app=dict(
-        plist=plist,
-        datamodels=["MyDocument"],
-    )),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-        "pyobjc-framework-CoreData",
-    ]
+    options=dict(py2app=dict(plist=plist, datamodels=["MyDocument"])),
+    setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-CoreData"],
 )

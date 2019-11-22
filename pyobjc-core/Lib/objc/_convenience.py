@@ -2,19 +2,29 @@
 This module implements a callback function that is used by the C code to
 add Python special methods to Objective-C classes with a suitable interface.
 """
-from objc._objc import selector, lookUpClass, currentBundle, repythonify, splitSignature, _block_call, options
+from objc._objc import (
+    selector,
+    lookUpClass,
+    currentBundle,
+    repythonify,
+    splitSignature,
+    _block_call,
+    options,
+)
 from objc._objc import registerMetaDataForSelector, _updatingMetadata, _rescanClass
 import sys
 import warnings
 import collections
 
-__all__ = ( 'addConvenienceForClass', 'registerABCForClass')
+__all__ = ("addConvenienceForClass", "registerABCForClass")
 
 CLASS_METHODS = {}
 CLASS_ABC = {}
 
+
 def register(f):
     options._class_extender = f
+
 
 # XXX: interface is too wide (super_class is not needed, can pass actual class)
 @register
@@ -38,15 +48,20 @@ def add_convenience_methods(cls, type_dict):
     except KeyError:
         pass
 
+
 def register(f):
     options._make_bundleForClass = f
+
 
 @register
 def makeBundleForClass():
     cb = currentBundle()
+
     def bundleForClass(cls):
         return cb
+
     return selector(bundleForClass, isClassMethod=True)
+
 
 def registerABCForClass(classname, *abc_class):
     """
@@ -89,12 +104,14 @@ def addConvenienceForClass(classname, methods):
 #   that's converted to an exception in Python.
 #
 
-_NULL = lookUpClass('NSNull').null()
+_NULL = lookUpClass("NSNull").null()
+
 
 def container_wrap(v):
     if v is None:
         return _NULL
     return v
+
 
 def container_unwrap(v, exc_type, *exc_args):
     if v is None:
@@ -103,37 +120,26 @@ def container_unwrap(v, exc_type, *exc_args):
         return None
     return v
 
+
 #
 #
 # Misc. small helpers
 #
 #
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    addConvenienceForClass('NSNull', (
-        ('__nonzero__',  lambda self: False ),
-    ))
+addConvenienceForClass("NSNull", (("__bool__", lambda self: False),))
 
-    addConvenienceForClass('NSEnumerator', (
-        ('__iter__', lambda self: self),
-        ('next',    lambda self: container_unwrap(self.nextObject(), StopIteration)),
-    ))
-
-else:  # pragma: no 2.x cover
-    addConvenienceForClass('NSNull', (
-        ('__bool__',  lambda self: False ),
-    ))
-
-    addConvenienceForClass('NSEnumerator', (
-        ('__iter__', lambda self: self),
-        ('__next__',    lambda self: container_unwrap(self.nextObject(), StopIteration)),
-    ))
+addConvenienceForClass(
+    "NSEnumerator",
+    (
+        ("__iter__", lambda self: self),
+        ("__next__", lambda self: container_unwrap(self.nextObject(), StopIteration)),
+    ),
+)
 
 
 def __call__(self, *args, **kwds):
     return _block_call(self, self.__block_signature__, args, kwds)
 
 
-addConvenienceForClass('NSBlock', (
-    ('__call__', __call__),
-))
+addConvenienceForClass("NSBlock", (("__call__", __call__),))

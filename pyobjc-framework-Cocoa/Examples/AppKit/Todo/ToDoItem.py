@@ -2,24 +2,25 @@ import Cocoa
 from objc import super
 
 # enum ToDoItemStatus
-INCOMPLETE=0
-COMPLETE=1
-DEFER_TO_NEXT_DAY=2
+INCOMPLETE = 0
+COMPLETE = 1
+DEFER_TO_NEXT_DAY = 2
 
-SECS_IN_MINUTE=60
-SECS_IN_HOUR=SECS_IN_MINUTE*60
-SECS_IN_DAY=SECS_IN_HOUR*24
-SECS_IN_WEEK=SECS_IN_DAY*7
+SECS_IN_MINUTE = 60
+SECS_IN_HOUR = SECS_IN_MINUTE * 60
+SECS_IN_DAY = SECS_IN_HOUR * 24
+SECS_IN_WEEK = SECS_IN_DAY * 7
 
-class ToDoItem (Cocoa.NSObject):
+
+class ToDoItem(Cocoa.NSObject):
     __slots__ = (
-        '_day',
-        '_itemName',
-        '_notes',
-        '_timer',
-        '_secsUntilDue',
-        '_secsUntilNotify',
-        '_status',
+        "_day",
+        "_itemName",
+        "_notes",
+        "_timer",
+        "_secsUntilDue",
+        "_secsUntilNotify",
+        "_status",
     )
 
     def init(self):
@@ -42,14 +43,15 @@ class ToDoItem (Cocoa.NSObject):
 \tCompleted: %s
 \tSecs Until Due: %d
 \tSecs Until Notify: %d
-"""%(
+""" % (
             super.description(),
             self.itemName(),
             self._day,
             self._notes,
-            ['No', 'YES'][self.status() == COMPLETE],
+            ["No", "YES"][self.status() == COMPLETE],
             self._secsUntilDue,
-            self._secsUntilNotify)
+            self._secsUntilNotify,
+        )
         return descr
 
     def initWithName_andDate_(self, aName, aDate):
@@ -77,8 +79,15 @@ class ToDoItem (Cocoa.NSObject):
 
             self.setDay_(
                 Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
-                now.yearOfCommonEra(), now.monthOfYear(), now.dayOfMonth(), 0, 0, 0,
-                Cocoa.NSTimeZone.localTimeZone()))
+                    now.yearOfCommonEra(),
+                    now.monthOfYear(),
+                    now.dayOfMonth(),
+                    0,
+                    0,
+                    0,
+                    Cocoa.NSTimeZone.localTimeZone(),
+                )
+            )
         self.setStatus_(INCOMPLETE)
         self.setNotes_("")
         return self
@@ -115,7 +124,7 @@ class ToDoItem (Cocoa.NSObject):
 
         return self
 
-    def __del__(self): # dealloc
+    def __del__(self):  # dealloc
         if self._notes:
             self._timer.invalidate()
 
@@ -161,7 +170,6 @@ class ToDoItem (Cocoa.NSObject):
     def secsUntilDue(self):
         return self._secsUntilDue
 
-
     def setSecsUntilNotify_(self, secs):
         self._secsUntilNotify = secs
 
@@ -177,6 +185,7 @@ def ConvertTimeToSeconds(hour, minute, pm):
         hour += 12
 
     return (hour * SECS_IN_HOUR) + (minute * SECS_IN_MINUTE)
+
 
 def ConvertSecondsToTime(secs):
     pm = 0

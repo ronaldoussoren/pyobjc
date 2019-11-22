@@ -17,3 +17,9 @@ The full API for the GameController framework is available from Python
 .. note::
 
    This framework is only available on OSX 10.9 and later and requires a 64-bit binary.
+
+GCRay
+.....
+
+This class is basically not usable from Python at the moment, because its public API uses
+type "simd_float3d" which isn't supported by PyObjC.

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGPDFPage (TestCase):
+
+class TestCGPDFPage(TestCase):
     def testConstants(self):
         self.assertEqual(kCGPDFMediaBox, 0)
         self.assertEqual(kCGPDFCropBox, 1)
@@ -20,7 +20,6 @@ class TestCGPDFPage (TestCase):
         self.assertArgHasType(CGPDFPageGetDrawingTransform, 4, objc._C_BOOL)
         CGPDFPageGetDictionary
         CGPDFPageGetTypeID
-
 
 
 if __name__ == "__main__":

@@ -14,29 +14,57 @@ class TestNSBitmapImageRep(TestCase):
         height = 256
         dataPlanes = (None, None, None, None, None)
         dataPlanes = None
-        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
+        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+            dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+        )
         self.assertTrue(i1)
 
-        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
+        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+            None, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+        )
         self.assertTrue(i2)
 
     def testPixelFormat(self):
         width = 16
         height = 16
 
-        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(None, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, NSAlphaFirstBitmapFormat, 0, 0)
+        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
+            None,
+            width,
+            height,
+            8,
+            3,
+            NO,
+            NO,
+            NSDeviceRGBColorSpace,
+            NSAlphaFirstBitmapFormat,
+            0,
+            0,
+        )
         self.assertIsInstance(i1, NSBitmapImageRep)
 
-        singlePlane = objc.allocateBuffer(width*height*4)
-        for i in range(0, width*height):
+        singlePlane = objc.allocateBuffer(width * height * 4)
+        for i in range(0, width * height):
             si = i * 4
             singlePlane[si] = 1
-            singlePlane[si+1] = 2
-            singlePlane[si+2] = 3
-            singlePlane[si+3] = 4
+            singlePlane[si + 1] = 2
+            singlePlane[si + 2] = 3
+            singlePlane[si + 3] = 4
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer
-        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, NSAlphaFirstBitmapFormat, 0, 0)
+        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
+            dataPlanes,
+            width,
+            height,
+            8,
+            3,
+            NO,
+            NO,
+            NSDeviceRGBColorSpace,
+            NSAlphaFirstBitmapFormat,
+            0,
+            0,
+        )
         self.assertIsInstance(i2, NSBitmapImageRep)
 
         bitmapData = i2.bitmapData()
@@ -47,59 +75,78 @@ class TestNSBitmapImageRep(TestCase):
         width = 256
         height = 256
 
-        rPlane = array.array('B')
-        rPlane.fromlist( [y%256 for y in range(0,height) for x in range(0,width)] )
+        rPlane = array.array("B")
+        rPlane.fromlist([y % 256 for y in range(0, height) for x in range(0, width)])
         if sys.version_info[0] == 3:
             buffer = memoryview
         else:
             from __builtin__ import buffer
         rPlane = buffer(rPlane)
 
-        gPlane = array.array('B')
-        gPlane.fromlist( [y%256 for y in range(0,height) for x in range(width,0,-1)] )
+        gPlane = array.array("B")
+        gPlane.fromlist([y % 256 for y in range(0, height) for x in range(width, 0, -1)])
         gPlane = buffer(gPlane)
 
-        bPlane = array.array('B')
-        bPlane.fromlist( [x%256 for y in range(0,height) for x in range(0,width)] )
+        bPlane = array.array("B")
+        bPlane.fromlist([x % 256 for y in range(0, height) for x in range(0, width)])
         bPlane = buffer(bPlane)
 
         dataPlanes = (rPlane, gPlane, bPlane, None, None)
 
         # test planar, pre-made buffer
-        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0)
+        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+            dataPlanes, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0
+        )
         self.assertTrue(i1)
 
-        singlePlane = objc.allocateBuffer(width*height*3)
-        for i in range(0, width*height):
+        singlePlane = objc.allocateBuffer(width * height * 3)
+        for i in range(0, width * height):
             si = i * 3
             if sys.version_info[0] == 2:
                 singlePlane[si] = rPlane[i]
-                singlePlane[si+1] = gPlane[i]
-                singlePlane[si+2] = bPlane[i]
+                singlePlane[si + 1] = gPlane[i]
+                singlePlane[si + 2] = bPlane[i]
             else:
+
                 def as_byte(v):
                     if isinstance(v, int):
                         return v
                     else:
                         return ord(v)
+
                 singlePlane[si] = as_byte(rPlane[i])
-                singlePlane[si+1] = as_byte(gPlane[i])
-                singlePlane[si+2] = as_byte(bPlane[i])
+                singlePlane[si + 1] = as_byte(gPlane[i])
+                singlePlane[si + 2] = as_byte(bPlane[i])
 
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer
-        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
+        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+            dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+        )
 
         # test grey scale
-        greyPlane = array.array('B')
-        greyPlane.fromlist( [x%256 for x in range(0,height) for x in range(0,width)] )
+        greyPlane = array.array("B")
+        greyPlane.fromlist([x % 256 for x in range(0, height) for x in range(0, width)])
         greyPlanes = (greyPlane, None, None, None, None)
-        greyImage = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(greyPlanes, width, height, 8, 1, NO, YES, NSCalibratedWhiteColorSpace, width, 8)
+        greyImage = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+            greyPlanes,
+            width,
+            height,
+            8,
+            1,
+            NO,
+            YES,
+            NSCalibratedWhiteColorSpace,
+            width,
+            8,
+        )
 
         # test planar, NSBIR allocated buffer
-        i3 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(None, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0)
+        i3 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+            None, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0
+        )
 
-        r,g,b,a,o = i3.getBitmapDataPlanes_()
+        r, g, b, a, o = i3.getBitmapDataPlanes_()
         self.assertTrue(r)
         self.assertTrue(g)
         self.assertTrue(b)
@@ -110,9 +157,9 @@ class TestNSBitmapImageRep(TestCase):
         self.assertEqual(len(g), len(gPlane))
         self.assertEqual(len(b), len(bPlane))
 
-        r[0:len(r)] = rPlane[0:len(rPlane)]
-        g[0:len(g)] = gPlane[0:len(gPlane)]
-        b[0:len(b)] = bPlane[0:len(bPlane)]
+        r[0 : len(r)] = rPlane[0 : len(rPlane)]
+        g[0 : len(g)] = gPlane[0 : len(gPlane)]
+        b[0 : len(b)] = bPlane[0 : len(bPlane)]
 
         bitmapData = i2.bitmapData()
 
@@ -122,13 +169,13 @@ class TestNSBitmapImageRep(TestCase):
         except NameError:
             self.assertEqual(bitmapData, singlePlane)
         else:
-            self.assertEqual(bitmapData.tobytes(),
-                singlePlane)
+            self.assertEqual(bitmapData.tobytes(), singlePlane)
 
-        a = array.array('L', [255]*4)
+        a = array.array("L", [255] * 4)
         self.assertArgIsOut(NSBitmapImageRep.getPixel_atX_y_, 0)
         d = i2.getPixel_atX_y_(a, 1, 1)
         self.assertIs(a, d)
+
 
 class TestBadCreation(TestCase):
 
@@ -137,16 +184,16 @@ class TestBadCreation(TestCase):
 
     def setUp(self):
         import os
+
         self.duppedStderr = os.dup(2)
-        fp = os.open('/dev/null', os.O_RDWR)
+        fp = os.open("/dev/null", os.O_RDWR)
         os.dup2(fp, 2)
         os.close(fp)
 
     def tearDown(self):
         import os
+
         os.dup2(self.duppedStderr, 2)
-
-
 
     def test_AllocInit(self):
         y = NSBitmapImageRep.alloc()
@@ -156,7 +203,9 @@ class TestBadCreation(TestCase):
             width = 256
             height = 256
             dataPlanes = (None, None, None, None, None)
-            y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0)
+            y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+                dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+            )
 
     def testConstants(self):
         self.assertEqual(NSTIFFCompressionNone, 1)
@@ -190,7 +239,6 @@ class TestBadCreation(TestCase):
         self.assertEqual(NSBitmapFormatSixteenBitBigEndian, 1 << 10)
         self.assertEqual(NSBitmapFormatThirtyTwoBitBigEndian, 1 << 11)
 
-
         self.assertEqual(NSImageRepLoadStatusUnknownType, -1)
         self.assertEqual(NSImageRepLoadStatusReadingHeader, -2)
         self.assertEqual(NSImageRepLoadStatusWillNeedAllData, -3)
@@ -217,13 +265,12 @@ class TestBadCreation(TestCase):
         self.assertIsInstance(NSImageEXIFData, unicode)
         self.assertIsInstance(NSImageFallbackBackgroundColor, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertEqual(NS16BitLittleEndianBitmapFormat, (1 << 8))
         self.assertEqual(NS32BitLittleEndianBitmapFormat, (1 << 9))
         self.assertEqual(NS16BitBigEndianBitmapFormat, (1 << 10))
         self.assertEqual(NS32BitBigEndianBitmapFormat, (1 << 11))
-
 
     def testTiffCompression(self):
         lst, nr = NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
@@ -242,5 +289,5 @@ class TestBadCreation(TestCase):
         self.assertArgIsOut(NSBitmapImageRep.getCompression_factor_, 1)
 
 
-if __name__ == '__main__':
-    main( )
+if __name__ == "__main__":
+    main()

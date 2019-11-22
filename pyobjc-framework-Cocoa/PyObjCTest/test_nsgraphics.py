@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
 
-class TestNSGraphics (TestCase):
+class TestNSGraphics(TestCase):
     def testConstants(self):
         self.assertEqual(NSCompositeClear, 0)
         self.assertEqual(NSCompositeCopy, 1)
@@ -69,9 +68,9 @@ class TestNSGraphics (TestCase):
         self.assertEqual(NSBackingStoreNonretained, 1)
         self.assertEqual(NSBackingStoreBuffered, 2)
 
-        self.assertEqual(NSWindowAbove,  1)
+        self.assertEqual(NSWindowAbove, 1)
         self.assertEqual(NSWindowBelow, -1)
-        self.assertEqual(NSWindowOut,  0)
+        self.assertEqual(NSWindowOut, 0)
 
         self.assertEqual(NSFocusRingOnly, 0)
         self.assertEqual(NSFocusRingBelow, 1)
@@ -108,12 +107,10 @@ class TestNSGraphics (TestCase):
         self.assertEqual(NSDisplayGamutSRGB, 1)
         self.assertEqual(NSDisplayGamutP3, 2)
 
-
-
     def testFunctions(self):
         app = NSApplication.sharedApplication()
 
-        self.assertArgHasType(NSBestDepth, 4, b'o^' + objc._C_NSBOOL)
+        self.assertArgHasType(NSBestDepth, 4, b"o^" + objc._C_NSBOOL)
         self.assertArgIsBOOL(NSBestDepth, 3)
         d, e = NSBestDepth(NSDeviceRGBColorSpace, 8, 32, False, None)
         self.assertIsInstance(d, (int, long))
@@ -125,7 +122,9 @@ class TestNSGraphics (TestCase):
         self.assertIsInstance(NSColorSpaceFromDepth(0), unicode)
         self.assertIsInstance(NSBitsPerSampleFromDepth(0), (int, long))
         self.assertIsInstance(NSBitsPerPixelFromDepth(0), (int, long))
-        self.assertIsInstance(NSNumberOfColorComponents(NSDeviceRGBColorSpace), (int, long))
+        self.assertIsInstance(
+            NSNumberOfColorComponents(NSDeviceRGBColorSpace), (int, long)
+        )
 
         v = NSAvailableWindowDepths()
         self.assertIsInstance(v, tuple)
@@ -133,7 +132,8 @@ class TestNSGraphics (TestCase):
         self.assertIsInstance(v[0], int)
 
         img = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
-                None, 255, 255, 8, 4, True, False, NSCalibratedRGBColorSpace, 0, 0, 0)
+            None, 255, 255, 8, 4, True, False, NSCalibratedRGBColorSpace, 0, 0, 0
+        )
         context = NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
         current = NSGraphicsContext.currentContext()
         try:
@@ -149,20 +149,33 @@ class TestNSGraphics (TestCase):
 
             self.assertArgSizeInArg(NSRectFillListWithColors, 0, 2)
             self.assertArgSizeInArg(NSRectFillListWithColors, 1, 2)
-            NSRectFillListWithColors([((0, 0), (1, 2)), ((10, 50), (9, 9))], (NSColor.blueColor(), NSColor.redColor()), 2)
+            NSRectFillListWithColors(
+                [((0, 0), (1, 2)), ((10, 50), (9, 9))],
+                (NSColor.blueColor(), NSColor.redColor()),
+                2,
+            )
 
             NSRectFillUsingOperation(((0, 0), (1, 2)), NSCompositeSourceOver)
 
             self.assertArgSizeInArg(NSRectFillListUsingOperation, 0, 1)
-            NSRectFillListUsingOperation([((0, 0), (1, 2)), ((10, 50), (9, 9))], 2, NSCompositeSourceOver)
+            NSRectFillListUsingOperation(
+                [((0, 0), (1, 2)), ((10, 50), (9, 9))], 2, NSCompositeSourceOver
+            )
 
             self.assertArgSizeInArg(NSRectFillListWithColorsUsingOperation, 0, 2)
             self.assertArgSizeInArg(NSRectFillListWithColorsUsingOperation, 1, 2)
-            NSRectFillListWithColorsUsingOperation([((0, 0), (1, 2)), ((10, 50), (9, 9))], (NSColor.blueColor(), NSColor.redColor()), 2, NSCompositeSourceOver)
+            NSRectFillListWithColorsUsingOperation(
+                [((0, 0), (1, 2)), ((10, 50), (9, 9))],
+                (NSColor.blueColor(), NSColor.redColor()),
+                2,
+                NSCompositeSourceOver,
+            )
 
             NSFrameRect(((5, 5), (20, 30)))
             NSFrameRectWithWidth(((5, 5), (20, 30)), 4)
-            NSFrameRectWithWidthUsingOperation(((5, 5), (20, 30)), 4, NSCompositeSourceOver)
+            NSFrameRectWithWidthUsingOperation(
+                ((5, 5), (20, 30)), 4, NSCompositeSourceOver
+            )
 
             NSRectClip(((5, 5), (200, 200)))
             self.assertArgSizeInArg(NSRectClipList, 0, 1)
@@ -175,7 +188,13 @@ class TestNSGraphics (TestCase):
             self.assertArgSizeInArg(NSDrawTiledRects, 3, 4)
             self.assertArgIsIn(NSDrawTiledRects, 2)
             self.assertArgIsIn(NSDrawTiledRects, 3)
-            NSDrawTiledRects(((10, 10), (50, 50)), ((15, 15), (10, 10)),  [NSMinXEdge, NSMaxXEdge], [0.8, 0.9], 2)
+            NSDrawTiledRects(
+                ((10, 10), (50, 50)),
+                ((15, 15), (10, 10)),
+                [NSMinXEdge, NSMaxXEdge],
+                [0.8, 0.9],
+                2,
+            )
 
             NSDrawGrayBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
             NSDrawGroove(((0, 0), (10, 10)), ((0, 0), (50, 50)))
@@ -206,11 +225,17 @@ class TestNSGraphics (TestCase):
             self.assertArgSizeInArg(NSDrawColorTiledRects, 3, 4)
             self.assertArgIsIn(NSDrawColorTiledRects, 2)
             self.assertArgIsIn(NSDrawColorTiledRects, 3)
-            NSDrawColorTiledRects(((10, 10), (50, 50)), ((15, 15), (10, 10)),  [NSMinXEdge, NSMaxXEdge], [NSColor.redColor(), NSColor.blueColor()], 2)
+            NSDrawColorTiledRects(
+                ((10, 10), (50, 50)),
+                ((15, 15), (10, 10)),
+                [NSMinXEdge, NSMaxXEdge],
+                [NSColor.redColor(), NSColor.blueColor()],
+                2,
+            )
 
-            #self.assertArgIsBOOL(NSDrawBitmap, 7)
-            #self.assertArgIsBOOL(NSDrawBitmap, 8)
-            #NSDrawBitmap(((0, 0), (10, 10)), 10, 20, 8, 4, 32, 40, False, True,
+            # self.assertArgIsBOOL(NSDrawBitmap, 7)
+            # self.assertArgIsBOOL(NSDrawBitmap, 8)
+            # NSDrawBitmap(((0, 0), (10, 10)), 10, 20, 8, 4, 32, 40, False, True,
             #        NSDeviceRGBColorSpace, [' '*4*10*20, '', '', '', ''])
 
             self.assertArgSizeInArg(NSWindowList, 1, 0)
@@ -231,9 +256,6 @@ class TestNSGraphics (TestCase):
             self.assertEqual(len(v), 5)
             self.assertIsInstance(v[0], (int, long))
 
-
-
-
         NSBeep()
         count = NSCountWindows(None)
         self.assertIsInstance(count, (int, long))
@@ -248,14 +270,16 @@ class TestNSGraphics (TestCase):
         except objc.error:
             pass
 
-        self.assertArgIsSEL(NSShowAnimationEffect, 4, b'v@:^v')
-        self.assertArgHasType(NSShowAnimationEffect, 5, b'^v')
+        self.assertArgIsSEL(NSShowAnimationEffect, 4, b"v@:^v")
+        self.assertArgHasType(NSShowAnimationEffect, 5, b"^v")
         try:
-            NSShowAnimationEffect(NSAnimationEffectPoof, (10, 10), (20, 30), None, None, None)
+            NSShowAnimationEffect(
+                NSAnimationEffectPoof, (10, 10), (20, 30), None, None, None
+            )
         except objc.error:
             pass
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertEqual(NSColorRenderingIntentDefault, 0)
         self.assertEqual(NSColorRenderingIntentAbsoluteColorimetric, 1)
@@ -268,7 +292,7 @@ class TestNSGraphics (TestCase):
         self.assertEqual(NSImageInterpolationLow, 2)
         self.assertEqual(NSImageInterpolationHigh, 3)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(NSWindowDepthTwentyfourBitRGB, 0x208)
         self.assertEqual(NSWindowDepthSixtyfourBitRGB, 0x210)

@@ -31,28 +31,30 @@ call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
         anObject = PyObjCObject_GetObject(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            result = anIMP(anObject, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                result = ((id(*)(id, SEL))anIMP)(anObject, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+                result = nil;
+            }
+        Py_END_ALLOW_THREADS
 
     } else {
         objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            result = objc_msgSendSuper(&spr, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                result = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+                result = nil;
+            }
+        Py_END_ALLOW_THREADS;
     }
 
     if (unlikely(result == nil && PyErr_Occurred())) {
@@ -63,11 +65,8 @@ call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static void
-imp_NSObject_description(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                         void** args __attribute__((__unused__)), void* callable)
 {
     int err;
     PyObject* arglist = NULL;
@@ -128,7 +127,8 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
     }
 
     if (unlikely(!PyObjCClass_Check(self))) {
-        PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'", Py_TYPE(self)->tp_name);
+        PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -137,28 +137,30 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            result = anIMP(aClass, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                result = ((id(*)(Class, SEL))anIMP)(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+                result = nil;
+            }
+        Py_END_ALLOW_THREADS
 
     } else {
         objc_superSetReceiver(spr, (id)PyObjCClass_GetClass(self));
         objc_superSetClass(spr, object_getClass(PyObjCSelector_GetClass(method)));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            result = objc_msgSendSuper(&spr, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                result = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-            result = nil;
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+                result = nil;
+            }
+        Py_END_ALLOW_THREADS
     }
 
     if (unlikely(result == nil && PyErr_Occurred())) {
@@ -169,11 +171,8 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static void
-imp_NSObject_alloc(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp,
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
+                   void** args __attribute__((__unused__)), void* callable)
 {
     int err;
     PyObject* arglist = NULL;
@@ -218,10 +217,8 @@ imp_NSObject_alloc(
     PyObjC_END_WITH_GIL
 }
 
-
 static PyObject*
-call_NSObject_dealloc(PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
     IMP anIMP;
@@ -234,8 +231,8 @@ call_NSObject_dealloc(PyObject* method,
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
-            "[dealloc] Expecting Objective-C instance, got instance of '%s'",
-            Py_TYPE(self)->tp_name);
+                     "[dealloc] Expecting Objective-C instance, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -244,26 +241,28 @@ call_NSObject_dealloc(PyObject* method,
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            (void)anIMP(aClass, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                ((void (*)(Class, SEL))anIMP)(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
     } else {
         objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            (void)objc_msgSendSuper(&spr, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
     }
 
     PyObjCObject_ClearObject(self);
@@ -272,17 +271,14 @@ call_NSObject_dealloc(PyObject* method,
         return NULL;
     }
 
-
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static void
-imp_NSObject_dealloc(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp __attribute__((__unused__)),
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
+                     void* resp __attribute__((__unused__)),
+                     void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
     PyObject* v = NULL;
@@ -314,8 +310,9 @@ imp_NSObject_dealloc(
 
         if (unlikely(result != Py_None)) {
             PyErr_Format(PyExc_TypeError,
-                "dealloc should return None, returned instance"
-                " of %s", Py_TYPE(result)->tp_name);
+                         "dealloc should return None, returned instance"
+                         " of %s",
+                         Py_TYPE(result)->tp_name);
             PyObjC_GIL_FORWARD_EXC();
         }
 
@@ -324,10 +321,8 @@ imp_NSObject_dealloc(
     PyObjC_END_WITH_GIL
 }
 
-
 static PyObject*
-call_NSObject_release(PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSObject_release(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
     IMP anIMP;
@@ -340,8 +335,8 @@ call_NSObject_release(PyObject* method,
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
-            "[release] Expecting Objective-C instance, got instance of '%s'",
-            Py_TYPE(self)->tp_name);
+                     "[release] Expecting Objective-C instance, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -350,40 +345,40 @@ call_NSObject_release(PyObject* method,
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            (void)anIMP(aClass, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                ((void (*)(Class, SEL))anIMP)(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
     } else {
         objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            (void)objc_msgSendSuper(&spr, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
     }
 
     if (unlikely(PyErr_Occurred())) {
         return NULL;
     }
 
-
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyObject*
-call_NSObject_retain(PyObject* method,
-    PyObject* self, PyObject* arguments)
+call_NSObject_retain(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
     IMP anIMP;
@@ -397,8 +392,8 @@ call_NSObject_retain(PyObject* method,
 
     if (!PyObjCObject_Check(self)) {
         PyErr_Format(PyExc_TypeError,
-            "[retain] Expecting Objective-C instance, got instance of '%s'",
-            Py_TYPE(self)->tp_name);
+                     "[retain] Expecting Objective-C instance, got instance of '%s'",
+                     Py_TYPE(self)->tp_name);
         return NULL;
     }
 
@@ -407,26 +402,28 @@ call_NSObject_retain(PyObject* method,
         aClass = PyObjCClass_GetClass(self);
         aSel = PyObjCIMP_GetSelector(method);
 
-        PyObjC_DURING
-            retval = anIMP(aClass, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                retval = ((id(*)(Class, SEL))anIMP)(aClass, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
 
     } else {
         objc_superSetReceiver(spr, PyObjCObject_GetObject(self));
         objc_superSetClass(spr, PyObjCSelector_GetClass(method));
         aSel = PyObjCSelector_GetSelector(method);
 
-        PyObjC_DURING
-            retval = objc_msgSendSuper(&spr, aSel);
+        Py_BEGIN_ALLOW_THREADS
+            @try {
+                retval = ((id(*)(struct objc_super*, SEL))objc_msgSendSuper)(&spr, aSel);
 
-        PyObjC_HANDLER
-            PyObjCErr_FromObjC(localException);
-
-        PyObjC_ENDHANDLER;
+            } @catch (NSObject* localException) {
+                PyObjCErr_FromObjC(localException);
+            }
+        Py_END_ALLOW_THREADS
     }
 
     if (PyErr_Occurred()) {
@@ -436,13 +433,10 @@ call_NSObject_retain(PyObject* method,
     return PyObjC_IdToPython(retval);
 }
 
-
 static void
-imp_NSObject_release(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp __attribute__((__unused__)),
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
+                     void* resp __attribute__((__unused__)),
+                     void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
     PyObject* result = NULL;
@@ -477,8 +471,9 @@ imp_NSObject_release(
 
         if (result != Py_None) {
             PyErr_Format(PyExc_TypeError,
-                "release should return None, returned instance"
-                " of %s", Py_TYPE(result)->tp_name);
+                         "release should return None, returned instance"
+                         " of %s",
+                         Py_TYPE(result)->tp_name);
             PyObjC_GIL_FORWARD_EXC();
         }
 
@@ -488,11 +483,9 @@ imp_NSObject_release(
 }
 
 static void
-imp_NSObject_retain(
-    ffi_cif* cif __attribute__((__unused__)),
-    void* resp __attribute__((__unused__)),
-    void** args __attribute__((__unused__)),
-    void* callable)
+imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
+                    void* resp __attribute__((__unused__)),
+                    void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
     PyObject* result = NULL;
@@ -535,48 +528,37 @@ imp_NSObject_retain(
     PyObjC_END_WITH_GIL
 }
 
-
 int
 PyObjC_setup_nsobject(void)
 {
     int r;
 
 #ifdef PyObjC_EXPLICT_DESCRIPTION_HELPER
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(description),
-        call_NSObject_description,
-        imp_NSObject_description);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(description),
+                                     call_NSObject_description, imp_NSObject_description);
+    if (r != 0)
+        return r;
 #endif /* PyObjC_EXPLICT_DESCRIPTION_HELPER */
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(alloc),
-        call_NSObject_alloc,
-        imp_NSObject_alloc);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(alloc),
+                                     call_NSObject_alloc, imp_NSObject_alloc);
+    if (r != 0)
+        return r;
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(dealloc),
-        call_NSObject_dealloc,
-        imp_NSObject_dealloc);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(dealloc),
+                                     call_NSObject_dealloc, imp_NSObject_dealloc);
+    if (r != 0)
+        return r;
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(retain),
-        call_NSObject_retain,
-        imp_NSObject_retain);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(retain),
+                                     call_NSObject_retain, imp_NSObject_retain);
+    if (r != 0)
+        return r;
 
-    r = PyObjC_RegisterMethodMapping(
-        objc_lookUpClass("NSObject"),
-        @selector(release),
-        call_NSObject_release,
-        imp_NSObject_release);
-    if (r != 0) return r;
+    r = PyObjC_RegisterMethodMapping(objc_lookUpClass("NSObject"), @selector(release),
+                                     call_NSObject_release, imp_NSObject_release);
+    if (r != 0)
+        return r;
 
     return r;
 }

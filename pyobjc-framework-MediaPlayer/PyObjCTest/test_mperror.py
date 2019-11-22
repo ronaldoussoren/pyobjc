@@ -1,11 +1,11 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import MediaPlayer
 
-    class TestMPError (TestCase):
-        @min_os_level('10.12')
+    class TestMPError(TestCase):
+        @min_os_level("10.12")
         def testConstants(self):
             self.assertIsInstance(MediaPlayer.MPErrorDomain, unicode)
 
@@ -17,6 +17,7 @@ if sys.maxsize > 2**32:
             self.assertEqual(MediaPlayer.MPErrorNotSupported, 5)
             self.assertEqual(MediaPlayer.MPErrorCancelled, 6)
             self.assertEqual(MediaPlayer.MPErrorRequestTimedOut, 7)
+
 
 if __name__ == "__main__":
     main()

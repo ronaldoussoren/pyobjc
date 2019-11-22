@@ -1,35 +1,84 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSTextViewHelper (NSObject):
-    def textView_URLForContentsOfTextAttachment_atIndex_(self, a, b, c): pass
-    def textView_clickedOnLink_atIndex_(self, tv, a, b): return 1
-    def textView_clickedOnCell_inRect_atIndex_(self, tv, a, b, c): return 1
-    def textView_doubleClickedOnCell_inRect_atIndex_(self, tv, a, b, c): return 1
-    def textView_draggedCell_inRect_event_atIndex_(elf, tv, a, b, c, d): return 1
-    def textView_writablePasteboardTypesForCell_atIndex_(self, tv, a, b): return 1
-    def textView_writeCell_atIndex_toPasteboard_type_(self, tv, a, b, c, d): return 1
-    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, tv, a, b): return 1
-    def textView_shouldChangeTextInRanges_replacementStrings_(self, tv, a, b): return 1
-    def textView_willDisplayToolTip_forCharacterAtIndex_(self, tv, a, b): return 1
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, tv, a, b, c): return 1
-    def textView_shouldChangeTextInRange_replacementString_(self, tv, a, b): return 1
-    def textView_doCommandBySelector_(self, tv, a): return 1
-    def textView_clickedOnLink_(self, tv, a): return 1
-    def textView_clickedOnCell_inRect_(self, tv, a, b): return 1
-    def textView_doubleClickedOnCell_inRect_(self, tv, a, b): return 1
-    def textView_draggedCell_inRect_event_(self, tv, a, b, c): return 1
-    def textView_shouldSetSpellingState_range_(self, tv, a, b): return 1
-    def textView_menu_forEvent_atIndex_(self, tv, a, b, c): return 1
-    def textView_willCheckTextInRange_options_types_(self, tv, a, b, c): return 1
-    def textView_didCheckTextInRange_types_options_results_orthography_wordCount_(self, tv, r, t, o, rs, ort, wc): return 1
 
-    def textView_candidatesForSelectedRange_(self, tv, r): return 1
-    def textView_candidates_forSelectedRange_(self, tv, c, r): return 1
-    def textView_shouldSelectCandidateAtIndex_(self, tv, i): return 1
+class TestNSTextViewHelper(NSObject):
+    def textView_URLForContentsOfTextAttachment_atIndex_(self, a, b, c):
+        pass
 
-class TestNSTextView (TestCase):
+    def textView_clickedOnLink_atIndex_(self, tv, a, b):
+        return 1
+
+    def textView_clickedOnCell_inRect_atIndex_(self, tv, a, b, c):
+        return 1
+
+    def textView_doubleClickedOnCell_inRect_atIndex_(self, tv, a, b, c):
+        return 1
+
+    def textView_draggedCell_inRect_event_atIndex_(elf, tv, a, b, c, d):
+        return 1
+
+    def textView_writablePasteboardTypesForCell_atIndex_(self, tv, a, b):
+        return 1
+
+    def textView_writeCell_atIndex_toPasteboard_type_(self, tv, a, b, c, d):
+        return 1
+
+    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, tv, a, b):
+        return 1
+
+    def textView_shouldChangeTextInRanges_replacementStrings_(self, tv, a, b):
+        return 1
+
+    def textView_willDisplayToolTip_forCharacterAtIndex_(self, tv, a, b):
+        return 1
+
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, tv, a, b, c):
+        return 1
+
+    def textView_shouldChangeTextInRange_replacementString_(self, tv, a, b):
+        return 1
+
+    def textView_doCommandBySelector_(self, tv, a):
+        return 1
+
+    def textView_clickedOnLink_(self, tv, a):
+        return 1
+
+    def textView_clickedOnCell_inRect_(self, tv, a, b):
+        return 1
+
+    def textView_doubleClickedOnCell_inRect_(self, tv, a, b):
+        return 1
+
+    def textView_draggedCell_inRect_event_(self, tv, a, b, c):
+        return 1
+
+    def textView_shouldSetSpellingState_range_(self, tv, a, b):
+        return 1
+
+    def textView_menu_forEvent_atIndex_(self, tv, a, b, c):
+        return 1
+
+    def textView_willCheckTextInRange_options_types_(self, tv, a, b, c):
+        return 1
+
+    def textView_didCheckTextInRange_types_options_results_orthography_wordCount_(
+        self, tv, r, t, o, rs, ort, wc
+    ):
+        return 1
+
+    def textView_candidatesForSelectedRange_(self, tv, r):
+        return 1
+
+    def textView_candidates_forSelectedRange_(self, tv, c, r):
+        return 1
+
+    def textView_shouldSelectCandidateAtIndex_(self, tv, i):
+        return 1
+
+
+class TestNSTextView(TestCase):
     def testConstants(self):
         self.assertEqual(NSSelectByCharacter, 0)
         self.assertEqual(NSSelectByWord, 1)
@@ -65,7 +114,7 @@ class TestNSTextView (TestCase):
         self.assertIsInstance(NSTextViewDidChangeSelectionNotification, unicode)
         self.assertIsInstance(NSTextViewDidChangeTypingAttributesNotification, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(NSTouchBarItemIdentifierCharacterPicker, unicode)
         self.assertIsInstance(NSTouchBarItemIdentifierTextColorPicker, unicode)
@@ -74,18 +123,20 @@ class TestNSTextView (TestCase):
         self.assertIsInstance(NSTouchBarItemIdentifierTextList, unicode)
         self.assertIsInstance(NSTouchBarItemIdentifierTextFormat, unicode)
 
-
-
     def testMethods(self):
         self.assertResultIsBOOL(NSTextView.shouldDrawInsertionPoint)
-        #self.assertArgIsBOOL(NSTextView.setShouldDrawInsertionPoint_, 0)
+        # self.assertArgIsBOOL(NSTextView.setShouldDrawInsertionPoint_, 0)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldMoveMarker_)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldAddMarker_)
         self.assertResultIsBOOL(NSTextView.rulerView_shouldRemoveMarker_)
         self.assertArgIsBOOL(NSTextView.setNeedsDisplayInRect_avoidAdditionalLayout_, 1)
         self.assertArgIsBOOL(NSTextView.drawInsertionPointInRect_color_turnedOn_, 2)
-        self.assertArgIsOut(NSTextView.completionsForPartialWordRange_indexOfSelectedItem_, 1)
-        self.assertArgIsBOOL(NSTextView.insertCompletion_forPartialWordRange_movement_isFinal_, 3)
+        self.assertArgIsOut(
+            NSTextView.completionsForPartialWordRange_indexOfSelectedItem_, 1
+        )
+        self.assertArgIsBOOL(
+            NSTextView.insertCompletion_forPartialWordRange_movement_isFinal_, 3
+        )
         self.assertResultIsBOOL(NSTextView.writeSelectionToPasteboard_type_)
         self.assertResultIsBOOL(NSTextView.writeSelectionToPasteboard_types_)
         self.assertResultIsBOOL(NSTextView.readSelectionFromPasteboard_type_)
@@ -134,15 +185,19 @@ class TestNSTextView (TestCase):
         self.assertArgIsBOOL(NSTextView.setSmartInsertDeleteEnabled_, 0)
 
         self.assertArgIsOut(NSTextView.dragImageForSelectionWithEvent_origin_, 1)
-        self.assertArgIsOut(NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 2)
-        self.assertArgIsOut(NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 3)
+        self.assertArgIsOut(
+            NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 2
+        )
+        self.assertArgIsOut(
+            NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 3
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSTextView.usesRolloverButtonForSelection)
         self.assertArgIsBOOL(NSTextView.setUsesRolloverButtonForSelection_, 0)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(NSTextView.usesInspectorBar)
         self.assertArgIsBOOL(NSTextView.setUsesInspectorBar_, 0)
@@ -151,7 +206,7 @@ class TestNSTextView (TestCase):
         self.assertResultIsBOOL(NSTextView.isIncrementalSearchingEnabled)
         self.assertArgIsBOOL(NSTextView.setIncrementalSearchingEnabled_, 0)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertResultIsBOOL(NSTextView.displaysLinkToolTips)
         self.assertArgIsBOOL(NSTextView.setDisplaysLinkToolTips_, 0)
@@ -160,45 +215,128 @@ class TestNSTextView (TestCase):
         self.assertResultIsBOOL(NSTextView.isAutomaticLinkDetectionEnabled)
         self.assertArgIsBOOL(NSTextView.setAutomaticLinkDetectionEnabled_, 0)
 
-
-    @min_sdk_level('10.6')
+    @min_sdk_level("10.6")
     def testProtocolObjects(self):
-        objc.protocolNamed('NSTextViewDelegate')
+        objc.protocolNamed("NSTextViewDelegate")
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_clickedOnLink_atIndex_)
-        self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnLink_atIndex_, 2, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_, 2, NSRect.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_, 3, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_atIndex_, 2, NSRect.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_atIndex_, 3, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_draggedCell_inRect_event_atIndex_, 2, NSRect.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_draggedCell_inRect_event_atIndex_, 4, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_writablePasteboardTypesForCell_atIndex_, 2, objc._C_NSUInteger)
-        self.assertResultIsBOOL(TestNSTextViewHelper.textView_writeCell_atIndex_toPasteboard_type_)
-        self.assertArgHasType(TestNSTextViewHelper.textView_writeCell_atIndex_toPasteboard_type_, 2, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_, 1, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_, 2, NSRange.__typestr__)
-        self.assertResultIsBOOL(TestNSTextViewHelper.textView_shouldChangeTextInRanges_replacementStrings_)
-        self.assertArgHasType(TestNSTextViewHelper.textView_willDisplayToolTip_forCharacterAtIndex_, 2, objc._C_NSUInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_, 2, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_, 3, b'N^'+objc._C_NSInteger)
-        self.assertResultIsBOOL(TestNSTextViewHelper.textView_shouldChangeTextInRange_replacementString_)
-        self.assertArgHasType(TestNSTextViewHelper.textView_shouldChangeTextInRange_replacementString_, 1, NSRange.__typestr__)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_clickedOnLink_atIndex_, 2, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_,
+            2,
+            NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_,
+            3,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_atIndex_,
+            2,
+            NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_atIndex_,
+            3,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_draggedCell_inRect_event_atIndex_,
+            2,
+            NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_draggedCell_inRect_event_atIndex_,
+            4,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_writablePasteboardTypesForCell_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertResultIsBOOL(
+            TestNSTextViewHelper.textView_writeCell_atIndex_toPasteboard_type_
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_writeCell_atIndex_toPasteboard_type_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_,
+            1,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_,
+            2,
+            NSRange.__typestr__,
+        )
+        self.assertResultIsBOOL(
+            TestNSTextViewHelper.textView_shouldChangeTextInRanges_replacementStrings_
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_willDisplayToolTip_forCharacterAtIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_,
+            2,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_,
+            3,
+            b"N^" + objc._C_NSInteger,
+        )
+        self.assertResultIsBOOL(
+            TestNSTextViewHelper.textView_shouldChangeTextInRange_replacementString_
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_shouldChangeTextInRange_replacementString_,
+            1,
+            NSRange.__typestr__,
+        )
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_doCommandBySelector_)
-        self.assertArgHasType(TestNSTextViewHelper.textView_doCommandBySelector_, 1, objc._C_SEL)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_doCommandBySelector_, 1, objc._C_SEL
+        )
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_clickedOnLink_)
-        self.assertArgHasType(TestNSTextViewHelper.textView_clickedOnCell_inRect_, 2, NSRect.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_, 2, NSRect.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_draggedCell_inRect_event_, 2, NSRect.__typestr__)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_clickedOnCell_inRect_, 2, NSRect.__typestr__
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_,
+            2,
+            NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_draggedCell_inRect_event_, 2, NSRect.__typestr__
+        )
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testProtocols10_5(self):
-        self.assertArgHasType(TestNSTextViewHelper.textView_shouldSetSpellingState_range_, 1, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_shouldSetSpellingState_range_, 2, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_menu_forEvent_atIndex_, 3, objc._C_NSUInteger)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_shouldSetSpellingState_range_,
+            1,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_shouldSetSpellingState_range_,
+            2,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_menu_forEvent_atIndex_, 3, objc._C_NSUInteger
+        )
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSTextView.isCoalescingUndo)
 
@@ -211,39 +349,91 @@ class TestNSTextView (TestCase):
         self.assertArgIsBOOL(NSTextView.setAutomaticSpellingCorrectionEnabled_, 0)
         self.assertResultIsBOOL(NSTextView.isAutomaticSpellingCorrectionEnabled)
 
-        self.assertArgHasType(NSTextView.checkTextInRange_types_options_, 0, NSRange.__typestr__)
-        self.assertArgHasType(NSTextView.handleTextCheckingResults_forRange_types_options_orthography_wordCount_, 1, NSRange.__typestr__)
+        self.assertArgHasType(
+            NSTextView.checkTextInRange_types_options_, 0, NSRange.__typestr__
+        )
+        self.assertArgHasType(
+            NSTextView.handleTextCheckingResults_forRange_types_options_orthography_wordCount_,
+            1,
+            NSRange.__typestr__,
+        )
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(NSTextView.stronglyReferencesTextStorage)
 
         self.assertResultIsBOOL(NSTextView.allowsCharacterPickerTouchBarItem)
         self.assertArgIsBOOL(NSTextView.setAllowsCharacterPickerTouchBarItem_, 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.14")
+    def testMethods10_14(self):
+        self.assertResultIsBOOL(
+            NSTextView.performValidatedReplacementInRange_withAttributedString_
+        )
+        self.assertResultIsBOOL(NSTextView.usesAdaptiveColorMappingForDarkAppearance)
+        self.assertArgIsBOOL(NSTextView.setUsesAdaptiveColorMappingForDarkAppearance_, 0)
+
+    @min_os_level("10.6")
     def testProtocols10_6(self):
-        self.assertArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 1, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_willCheckTextInRange_options_types_, 3, b'N^' + objc._C_NSInteger)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_willCheckTextInRange_options_types_,
+            1,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_willCheckTextInRange_options_types_,
+            3,
+            b"N^" + objc._C_NSInteger,
+        )
 
-        self.assertArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 1, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 2, objc._C_NSInteger)
-        self.assertArgHasType(TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_, 6, objc._C_NSInteger)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,
+            1,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,
+            2,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,
+            6,
+            objc._C_NSInteger,
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testProtocols10_7(self):
-        self.assertArgHasType(TestNSTextViewHelper.textView_URLForContentsOfTextAttachment_atIndex_, 2, objc._C_NSUInteger)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_URLForContentsOfTextAttachment_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testProtocols10_12(self):
-        self.assertArgHasType(TestNSTextViewHelper.textView_candidatesForSelectedRange_, 1, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_candidates_forSelectedRange_, 2, NSRange.__typestr__)
-        self.assertArgHasType(TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_, 1, objc._C_NSUInteger)
-        self.assertResultIsBOOL(TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_)
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_candidatesForSelectedRange_,
+            1,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_candidates_forSelectedRange_,
+            2,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertResultIsBOOL(
+            TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_
+        )
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testProtocols10_14(self):
-        objc.protocolNamed('NSUserActivityRestoring')
+        objc.protocolNamed("NSUserActivityRestoring")
 
 
 if __name__ == "__main__":

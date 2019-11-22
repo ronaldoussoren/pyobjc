@@ -5,8 +5,8 @@ import CoreFoundation as _CF
 # 'Emulation' for CFArray contructors
 #
 def _setup():
-    NSArray = _objc.lookUpClass('NSArray')
-    NSMutableArray = _objc.lookUpClass('NSMutableArray')
+    NSArray = _objc.lookUpClass("NSArray")
+    NSMutableArray = _objc.lookUpClass("NSMutableArray")
 
     def CFArrayCreate(allocator, values, numvalues, callbacks):
         assert callbacks is None
@@ -18,15 +18,19 @@ def _setup():
 
     return CFArrayCreate, CFArrayCreateMutable
 
+
 CFArrayCreate, CFArrayCreateMutable = _setup()
 
 # CFDictionary emulation functions
 
+
 def _setup():
-    NSDictionary = _objc.lookUpClass('NSDictionary')
-    NSMutableDictionary = _objc.lookUpClass('NSMutableDictionary')
-    def CFDictionaryCreate(allocator, keys, values, numValues,
-            keyCallbacks, valueCallbacks):
+    NSDictionary = _objc.lookUpClass("NSDictionary")
+    NSMutableDictionary = _objc.lookUpClass("NSMutableDictionary")
+
+    def CFDictionaryCreate(
+        allocator, keys, values, numValues, keyCallbacks, valueCallbacks
+    ):
         assert keyCallbacks is None
         assert valueCallbacks is None
 
@@ -43,15 +47,16 @@ def _setup():
 
     return CFDictionaryCreate, CFDictionaryCreateMutable
 
-CFDictionaryCreate, CFDictionaryCreateMutable = _setup()
 
+CFDictionaryCreate, CFDictionaryCreateMutable = _setup()
 
 
 # CFSet emulation functions
 
+
 def _setup():
-    NSSet = _objc.lookUpClass('NSSet')
-    NSMutableSet = _objc.lookUpClass('NSMutableSet')
+    NSSet = _objc.lookUpClass("NSSet")
+    NSMutableSet = _objc.lookUpClass("NSMutableSet")
 
     def CFSetCreate(allocator, values, numvalues, callbacks):
         assert callbacks is None
@@ -63,10 +68,11 @@ def _setup():
 
     return CFSetCreate, CFSetCreateMutable
 
+
 CFSetCreate, CFSetCreateMutable = _setup()
 
 kCFTypeArrayCallBacks = None
-kCFTypeDictionaryKeyCallBacks  = None
+kCFTypeDictionaryKeyCallBacks = None
 kCFTypeDictionaryValueCallBacks = None
 kCFTypeSetCallBacks = None
 
@@ -75,17 +81,26 @@ kCFTypeSetCallBacks = None
 # Implementation of a number of macro's in the CFBundle API
 #
 
+
 def CFCopyLocalizedString(key, comment):
-    return _CF.CFBundleCopyLocalizedString(_CF.CFBundleGetMainBundle(), (key), (key), None)
+    return _CF.CFBundleCopyLocalizedString(
+        _CF.CFBundleGetMainBundle(), (key), (key), None
+    )
+
 
 def CFCopyLocalizedStringFromTable(key, tbl, comment):
-    return _CF.CFBundleCopyLocalizedString(_CF.CFBundleGetMainBundle(), (key), (key), (tbl))
+    return _CF.CFBundleCopyLocalizedString(
+        _CF.CFBundleGetMainBundle(), (key), (key), (tbl)
+    )
+
 
 def CFCopyLocalizedStringFromTableInBundle(key, tbl, bundle, comment):
     return _CF.CFBundleCopyLocalizedString((bundle), (key), (key), (tbl))
 
+
 def CFCopyLocalizedStringWithDefaultValue(key, tbl, bundle, value, comment):
     return _CF.CFBundleCopyLocalizedString((bundle), (key), (value), (tbl))
 
+
 def CFSTR(strval):
-    return _objc.lookUpClass('NSString').stringWithString_(strval)
+    return _objc.lookUpClass("NSString").stringWithString_(strval)

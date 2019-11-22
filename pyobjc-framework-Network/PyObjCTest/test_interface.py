@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import Network
 
-    class TestInterface (TestCase):
+    class TestInterface(TestCase):
         def test_constants(self):
             self.assertEqual(Network.nw_interface_type_other, 0)
             self.assertEqual(Network.nw_interface_type_wifi, 1)
@@ -16,9 +16,10 @@ if sys.maxsize > 2 ** 32:
             Network.nw_interface_get_type
 
             self.assertResultIsNullTerminated(Network.nw_interface_get_name)
-            self.assertResultHasType(Network.nw_interface_get_name, b'^t')
+            self.assertResultHasType(Network.nw_interface_get_name, b"^t")
 
             Network.nw_interface_get_index
+
 
 if __name__ == "__main__":
     main()

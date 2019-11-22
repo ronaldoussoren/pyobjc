@@ -15,7 +15,8 @@ from PyObjCTools import AppHelper
 from RadiansToDegreesTransformer import RadiansToDegreesTransformer
 from Cocoa import NSDocument, NSValueTransformer, NSKeyedArchiver, NSKeyedUnarchiver
 
-class GraphicsBindingsDocument (NSDocument):
+
+class GraphicsBindingsDocument(NSDocument):
     graphicsView = objc.IBOutlet()
     shadowInspector = objc.IBOutlet()
     graphicsController = objc.IBOutlet()
@@ -25,14 +26,16 @@ class GraphicsBindingsDocument (NSDocument):
         self = super(GraphicsBindingsDocument, self).init()
         if self is None:
             return None
-        self.graphics = [] # NSMutableArray.array()
+        self.graphics = []  # NSMutableArray.array()
         self.bindings = []
         return self
 
     def windowNibName(self):
         return "GraphicsBindingsDocument"
 
-    def makeBinding_fromObject_toObject_withKeyPath_options_(self, key, fromObject, toObject, withKeyPath, options):
+    def makeBinding_fromObject_toObject_withKeyPath_options_(
+        self, key, fromObject, toObject, withKeyPath, options
+    ):
         self.bindings.append((fromObject, key))
         fromObject.bind_toObject_withKeyPath_options_(key, toObject, withKeyPath, options)
 
@@ -43,17 +46,41 @@ class GraphicsBindingsDocument (NSDocument):
         # we don't have palette items for them
 
         # allow the shadow inspector (joystick) to handle multiple selections
-        offsetOptions = { "NSAllowsEditingMultipleValuesSelection" : True }
+        offsetOptions = {"NSAllowsEditingMultipleValuesSelection": True}
         angleOptions = {
-            "NSValueTransformerName" :  "RadiansToDegreesTransformer",
-            "NSAllowsEditingMultipleValuesSelection" : True,
+            "NSValueTransformerName": "RadiansToDegreesTransformer",
+            "NSAllowsEditingMultipleValuesSelection": True,
         }
 
         BINDINGS = [
-            ('graphics',  self.graphicsView, self.graphicsController, 'arrangedObjects', None),
-            ('selectionIndexes', self.graphicsView, self.graphicsController, 'selectionIndexes', None),
-            ('offset', self.shadowInspector, self.graphicsController, 'selection.shadowOffset', offsetOptions),
-            ('angle', self.shadowInspector, self.graphicsController, 'selection.shadowAngle', angleOptions),
+            (
+                "graphics",
+                self.graphicsView,
+                self.graphicsController,
+                "arrangedObjects",
+                None,
+            ),
+            (
+                "selectionIndexes",
+                self.graphicsView,
+                self.graphicsController,
+                "selectionIndexes",
+                None,
+            ),
+            (
+                "offset",
+                self.shadowInspector,
+                self.graphicsController,
+                "selection.shadowOffset",
+                offsetOptions,
+            ),
+            (
+                "angle",
+                self.shadowInspector,
+                self.graphicsController,
+                "selection.shadowAngle",
+                angleOptions,
+            ),
         ]
         for binding in BINDINGS:
             self.makeBinding_fromObject_toObject_withKeyPath_options_(*binding)
@@ -73,6 +100,7 @@ class GraphicsBindingsDocument (NSDocument):
     def loadDataRepresentation_ofType_(self, data, aType):
         self.graphics = NSKeyedUnarchiver.unarchiveObjectWithData_(data)
         return True
+
 
 vt = RadiansToDegreesTransformer.alloc().init()
 NSValueTransformer.setValueTransformer_forName_(vt, "RadiansToDegreesTransformer")

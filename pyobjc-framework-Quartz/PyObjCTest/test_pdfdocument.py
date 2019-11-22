@@ -1,13 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFDocumentHelper (NSObject):
-    def classForPage(self): return 1
-    def classForAnnotationType_(self, a): return 1
-    def classForAnnotationClass_(self, a): return 1
 
-class TestPDFDocument (TestCase):
+class TestPDFDocumentHelper(NSObject):
+    def classForPage(self):
+        return 1
+
+    def classForAnnotationType_(self, a):
+        return 1
+
+    def classForAnnotationClass_(self, a):
+        return 1
+
+
+class TestPDFDocument(TestCase):
     def testConstants(self):
         self.assertEqual(kPDFPrintPageScaleNone, 0)
         self.assertEqual(kPDFPrintPageScaleToFit, 1)
@@ -35,6 +41,8 @@ class TestPDFDocument (TestCase):
         self.assertIsInstance(PDFDocumentCreationDateAttribute, unicode)
         self.assertIsInstance(PDFDocumentModificationDateAttribute, unicode)
         self.assertIsInstance(PDFDocumentKeywordsAttribute, unicode)
+        self.assertIsInstance(PDFDocumentOwnerPasswordOption, unicode)
+        self.assertIsInstance(PDFDocumentUserPasswordOption, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(PDFDocument.isEncrypted)
@@ -55,17 +63,21 @@ class TestPDFDocument (TestCase):
         self.assertResultIsBOOL(PDFDocument.allowsCommenting)
 
         self.assertResultHasType(TestPDFDocumentHelper.classForPage, objc._C_CLASS)
-        self.assertResultHasType(TestPDFDocumentHelper.classForAnnotationType_, objc._C_CLASS)
-        self.assertResultHasType(TestPDFDocumentHelper.classForAnnotationClass_, objc._C_CLASS)
+        self.assertResultHasType(
+            TestPDFDocumentHelper.classForAnnotationType_, objc._C_CLASS
+        )
+        self.assertResultHasType(
+            TestPDFDocumentHelper.classForAnnotationClass_, objc._C_CLASS
+        )
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods(self):
-        self.assertArgIsBOOL(PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2)
+        self.assertArgIsBOOL(
+            PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2
+        )
 
     def testProtocols(self):
-        #self.assertIsInstance(protocols.PDFDocumentNotifications, objc.informal_protocol)
-        #self.assertIsInstance(protocols.PDFDocumentDelegate, objc.informal_protocol)
-        pass
+        objc.protocolNamed("PDFDocumentDelegate")
 
 
 if __name__ == "__main__":

@@ -5,8 +5,9 @@ import objc
 
 if sys.maxsize > 2 ** 32:
     import SpriteKit
-    class TestSKNode (TestCase):
-        @min_os_level('10.9')
+
+    class TestSKNode(TestCase):
+        @min_os_level("10.9")
         def testConstants(self):
             self.assertEqual(SpriteKit.SKBlendModeAlpha, 0)
             self.assertEqual(SpriteKit.SKBlendModeAdd, 1)
@@ -31,12 +32,17 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(SpriteKit.SKNode.containsPoint_)
             self.assertResultIsBOOL(SpriteKit.SKNode.intersectsNode_)
 
-            self.assertArgIsBlock(SpriteKit.SKNode.enumerateChildNodesWithName_usingBlock_, 1, b'v@o^Z')
-            self.assertArgIsBlock(SpriteKit.SKNode.runAction_completion_, 1, b'v')
+            self.assertArgIsBlock(
+                SpriteKit.SKNode.enumerateChildNodesWithName_usingBlock_, 1, b"v@o^Z"
+            )
+            self.assertArgIsBlock(SpriteKit.SKNode.runAction_completion_, 1, b"v")
 
         @min_os_level("10.14")
         def testMethods10_14(self):
-            self.assertArgIsOut(SpriteKit.SKNode.nodeWithFileNamed_securelyWithClasses_andError_, 2)
+            self.assertArgIsOut(
+                SpriteKit.SKNode.nodeWithFileNamed_securelyWithClasses_andError_, 2
+            )
+
 
 if __name__ == "__main__":
     main()

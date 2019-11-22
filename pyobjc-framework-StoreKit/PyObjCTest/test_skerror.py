@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import StoreKit
 
-class TestSKError (TestCase):
 
+class TestSKError(TestCase):
     def test_constants(self):
         self.assertIsInstance(StoreKit.SKErrorDomain, unicode)
 
@@ -21,7 +21,8 @@ class TestSKError (TestCase):
         self.assertEqual(StoreKit.SKErrorMissingOfferParams, 13)
         self.assertEqual(StoreKit.SKErrorInvalidOfferPrice, 14)
 
+        self.assertEqual(StoreKit.SKErrorStoreProductNotAvailable, 5)
+
 
 if __name__ == "__main__":
     main()
-

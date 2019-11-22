@@ -29,6 +29,24 @@
    "TKSmartCardPINConfirmationNew": { "value": 1 }
   },
   "classes": {
+   "TKTokenConfiguration": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "certificateForObjectID:error:",
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "keyForObjectID:error:",
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "TKTokenAuthOperation": {
     "methods": [
      {
@@ -325,6 +343,13 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "class_method": false,
+      "selector": "tokenDriver:tokenForConfiguration:error:",
+      "args": {
+       "2": { "type_override": "o^@" }
+      }
+     },
      {
       "class_method": false,
       "selector": "tokenDriver:createTokenForSmartCard:AID:error:",

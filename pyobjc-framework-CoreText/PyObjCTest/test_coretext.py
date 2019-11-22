@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 
 from CoreText import *
 
-class TestCoreText (TestCase):
+
+class TestCoreText(TestCase):
     def testConstants(self):
         self.assertEqual(kCTVersionNumber10_5, 0x00020000)
         self.assertEqual(kCTVersionNumber10_5_2, 0x00020001)
@@ -18,10 +18,12 @@ class TestCoreText (TestCase):
         self.assertEqual(kCTVersionNumber10_12, 0x00090000)
         self.assertEqual(kCTVersionNumber10_13, 0x000A0000)
         self.assertEqual(kCTVersionNumber10_14, 0x000B0000)
+        self.assertEqual(kCTVersionNumber10_15, 0x000C0000)
 
     def testFunctions(self):
         v = CTGetCoreTextVersion()
         self.assertIsInstance(v, (int, long))
+
 
 if __name__ == "__main__":
     main()

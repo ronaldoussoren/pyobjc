@@ -10,9 +10,5 @@ setup(
     name="TLayer",
     app=["main.py"],
     data_files=["English.lproj"],
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-        "pyobjc-framework-Quartz",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-Quartz"],
 )

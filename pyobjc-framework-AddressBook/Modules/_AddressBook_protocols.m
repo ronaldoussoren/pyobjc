@@ -10,8 +10,10 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
-    p = PyObjC_IdToPython(@protocol(ABImageClient)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(ABImageClient));
+    Py_XDECREF(p);
 #if PyObjC_BUILD_RELEASE >= 1009
-    p = PyObjC_IdToPython(@protocol(ABPersonPickerDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(ABPersonPickerDelegate));
+    Py_XDECREF(p);
 #endif
 }

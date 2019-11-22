@@ -14,77 +14,140 @@ from PyObjCTools.TestSupport import *
 from PyObjCTest.specialtypecodes import *
 import array
 
+
 def setupMetaData():
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8Value",
-        dict(
-            retval=dict(type=objc._C_CHAR_AS_INT),
-        ))
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8Value",
+        dict(retval=dict(type=objc._C_CHAR_AS_INT)),
+    )
 
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8Array",
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8Array",
         dict(
-            retval=dict(type=objc._C_PTR+objc._C_CHAR_AS_INT, c_array_of_fixed_length=4),
-        ))
+            retval=dict(type=objc._C_PTR + objc._C_CHAR_AS_INT, c_array_of_fixed_length=4)
+        ),
+    )
 
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8String",
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8String",
         dict(
-            retval=dict(type=objc._C_PTR + objc._C_CHAR_AS_INT, c_array_delimited_by_null=True),
-        ))
+            retval=dict(
+                type=objc._C_PTR + objc._C_CHAR_AS_INT, c_array_delimited_by_null=True
+            )
+        ),
+    )
 
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8StringArg:",
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8StringArg:",
         dict(
             arguments={
-                2: dict(type=objc._C_PTR + objc._C_CHAR_AS_INT, c_array_delimited_by_null=True, type_modifier=objc._C_IN),
+                2: dict(
+                    type=objc._C_PTR + objc._C_CHAR_AS_INT,
+                    c_array_delimited_by_null=True,
+                    type_modifier=objc._C_IN,
+                )
             }
-        ))
+        ),
+    )
 
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8Arg:andint8Arg:",
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8Arg:andint8Arg:",
         dict(
             arguments={
                 2: dict(type=objc._C_CHAR_AS_INT),
                 3: dict(type=objc._C_CHAR_AS_INT),
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8ArrayOf4In:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8ArrayOf4In:",
         dict(
             arguments={
-                2: dict(type=objc._C_PTR+objc._C_CHAR_AS_INT, type_modifier=objc._C_IN, c_array_of_fixed_length=4),
+                2: dict(
+                    type=objc._C_PTR + objc._C_CHAR_AS_INT,
+                    type_modifier=objc._C_IN,
+                    c_array_of_fixed_length=4,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8ArrayOf4Out:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8ArrayOf4Out:",
         dict(
             arguments={
-                2: dict(type=objc._C_PTR+objc._C_CHAR_AS_INT, type_modifier=objc._C_OUT, c_array_of_fixed_length=4),
+                2: dict(
+                    type=objc._C_PTR + objc._C_CHAR_AS_INT,
+                    type_modifier=objc._C_OUT,
+                    c_array_of_fixed_length=4,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8ArrayOf4InOut:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8ArrayOf4InOut:",
         dict(
             arguments={
-                2: dict(type=objc._C_PTR+objc._C_CHAR_AS_INT, type_modifier=objc._C_INOUT, c_array_of_fixed_length=4),
+                2: dict(
+                    type=objc._C_PTR + objc._C_CHAR_AS_INT,
+                    type_modifier=objc._C_INOUT,
+                    c_array_of_fixed_length=4,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8ArrayOfCount:In:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8ArrayOfCount:In:",
         dict(
             arguments={
-                3: dict(type=objc._C_PTR+objc._C_CHAR_AS_INT, type_modifier=objc._C_IN, c_array_of_lenght_in_arg=2),
+                3: dict(
+                    type=objc._C_PTR + objc._C_CHAR_AS_INT,
+                    type_modifier=objc._C_IN,
+                    c_array_of_lenght_in_arg=2,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8ArrayOfCount:Out:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8ArrayOfCount:Out:",
         dict(
             arguments={
-                3: dict(type=objc._C_PTR+objc._C_CHAR_AS_INT, type_modifier=objc._C_OUT, c_array_of_lenght_in_arg=2),
+                3: dict(
+                    type=objc._C_PTR + objc._C_CHAR_AS_INT,
+                    type_modifier=objc._C_OUT,
+                    c_array_of_lenght_in_arg=2,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"int8ArrayOfCount:InOut:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"int8ArrayOfCount:InOut:",
         dict(
             arguments={
-                3: dict(type=objc._C_PTR+objc._C_CHAR_AS_INT, type_modifier=objc._C_INOUT, c_array_of_lenght_in_arg=2),
+                3: dict(
+                    type=objc._C_PTR + objc._C_CHAR_AS_INT,
+                    type_modifier=objc._C_INOUT,
+                    c_array_of_lenght_in_arg=2,
+                )
             }
-        ))
+        ),
+    )
 
 
 setupMetaData()
 
-class TestTypeCode_int8 (TestCase):
+
+class TestTypeCode_int8(TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
@@ -121,27 +184,27 @@ class TestTypeCode_int8 (TestCase):
         v = o.int8Arg_andint8Arg_(44, 127)
         self.assertEqual(v, (44, 127))
 
-        v = o.int8Arg_andint8Arg_(ord('a'), ord('b'))
-        self.assertEqual(v, (ord('a'), ord('b')))
+        v = o.int8Arg_andint8Arg_(ord("a"), ord("b"))
+        self.assertEqual(v, (ord("a"), ord("b")))
 
-        self.assertRaises(ValueError, o.int8Arg_andint8Arg_, 'a', 'b')
+        self.assertRaises(ValueError, o.int8Arg_andint8Arg_, "a", "b")
 
     def testStringArgument(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8StringArg_([1, 2, 3, 4])
-        self.assertEqual(v, [1,2,3,4])
+        self.assertEqual(v, [1, 2, 3, 4])
 
-        self.assertRaises(ValueError,  o.int8StringArg_, 'abc')
-        self.assertRaises(ValueError,  o.int8StringArg_, ['a', 'b'])
+        self.assertRaises(ValueError, o.int8StringArg_, "abc")
+        self.assertRaises(ValueError, o.int8StringArg_, ["a", "b"])
 
     def testFixedArrayIn(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        v = o.int8ArrayOf4In_([1,2,3,4])
-        self.assertEqual(v, [1,2,3,4])
+        v = o.int8ArrayOf4In_([1, 2, 3, 4])
+        self.assertEqual(v, [1, 2, 3, 4])
 
-        a = array.array('B', [200, 150, 80, 20])
+        a = array.array("B", [200, 150, 80, 20])
         v = o.int8ArrayOf4In_(a)
         self.assertEqual(v, (-56, -106, 80, 20))
 
@@ -149,23 +212,24 @@ class TestTypeCode_int8 (TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.int8ArrayOf4Out_(None)
-        self.assertEqual(v, (ord('b'), ord('o'), ord('a'), ord('t')))
+        self.assertEqual(v, (ord("b"), ord("o"), ord("a"), ord("t")))
 
         o = OC_TestSpecialTypeCode.alloc().init()
-        a = array.array('b', [0] * 4)
+        a = array.array("b", [0] * 4)
         v = o.int8ArrayOf4Out_(a)
         self.assertIs(v, a)
-        self.assertEqual(v[0], ord('b'))
-        self.assertEqual(v[1], ord('o'))
-        self.assertEqual(v[2], ord('a'))
-        self.assertEqual(v[3], ord('t'))
+        self.assertEqual(v[0], ord("b"))
+        self.assertEqual(v[1], ord("o"))
+        self.assertEqual(v[2], ord("a"))
+        self.assertEqual(v[3], ord("t"))
 
     def testFixedArrayInOut_(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        v, w = o.int8ArrayOf4InOut_([1,2,3,4])
-        self.assertEqual(v, [1,2,3,4])
-        self.assertEqual(w, (ord('h'), ord('a'), ord('n'), ord('d')))
+        v, w = o.int8ArrayOf4InOut_([1, 2, 3, 4])
+        self.assertEqual(v, [1, 2, 3, 4])
+        self.assertEqual(w, (ord("h"), ord("a"), ord("n"), ord("d")))
+
 
 if __name__ == "__main__":
     main()

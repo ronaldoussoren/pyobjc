@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGGeometry (TestCase):
+
+class TestCGGeometry(TestCase):
     def testStruct(self):
         v = CGPoint()
         self.assertIsInstance(v.x, float)
@@ -19,7 +19,6 @@ class TestCGGeometry (TestCase):
         v = CGVector()
         self.assertIsInstance(v.dx, float)
         self.assertIsInstance(v.dy, float)
-
 
     def testConstants(self):
         self.assertEqual(CGRectMinXEdge, 0)
@@ -64,7 +63,7 @@ class TestCGGeometry (TestCase):
         v = CGRectGetMinX(rect)
         self.assertEqual(v, min(rect.origin.x, rect.origin.x + rect.size.width))
         v = CGRectGetMidX(rect)
-        self.assertEqual(v, rect.origin.x + (rect.size.width/2))
+        self.assertEqual(v, rect.origin.x + (rect.size.width / 2))
 
         v = CGRectGetMaxX(rect)
         self.assertEqual(v, max(rect.origin.x, rect.origin.x + rect.size.width))
@@ -72,7 +71,7 @@ class TestCGGeometry (TestCase):
         v = CGRectGetMinY(rect)
         self.assertEqual(v, min(rect.origin.y, rect.origin.y + rect.size.height))
         v = CGRectGetMidY(rect)
-        self.assertEqual(v, rect.origin.y + (rect.size.height/2))
+        self.assertEqual(v, rect.origin.y + (rect.size.height / 2))
 
         v = CGRectGetMaxY(rect)
         self.assertEqual(v, max(rect.origin.y, rect.origin.y + rect.size.height))
@@ -89,8 +88,8 @@ class TestCGGeometry (TestCase):
         self.assertTrue(CGSizeEqualToSize((1, 1), (1, 1)) is True)
 
         self.assertResultHasType(CGRectEqualToRect, objc._C_BOOL)
-        self.assertTrue(CGRectEqualToRect(((1,1), (1,1)), ((2,2), (2,2))) is False)
-        self.assertTrue(CGRectEqualToRect(((1,1), (1,1)), ((1,1), (1,1))) is True)
+        self.assertTrue(CGRectEqualToRect(((1, 1), (1, 1)), ((2, 2), (2, 2))) is False)
+        self.assertTrue(CGRectEqualToRect(((1, 1), (1, 1)), ((1, 1), (1, 1))) is True)
 
         v = CGRectStandardize(((90, 90), (-4, -5)))
         self.assertIsInstance(v, CGRect)
@@ -119,10 +118,10 @@ class TestCGGeometry (TestCase):
         self.assertIsInstance(v, CGRect)
         self.assertEqual(v, ((1, 2), (4, 5)))
 
-        v = CGRectUnion(((1,1), (4,5)), ((99,5), (40, 40)))
+        v = CGRectUnion(((1, 1), (4, 5)), ((99, 5), (40, 40)))
         self.assertIsInstance(v, CGRect)
 
-        v = CGRectIntersection(((1,1), (4,5)), ((99,5), (40, 40)))
+        v = CGRectIntersection(((1, 1), (4, 5)), ((99, 5), (40, 40)))
         self.assertIsInstance(v, CGRect)
 
         r = CGRectOffset(rect, 9, -5)
@@ -141,7 +140,7 @@ class TestCGGeometry (TestCase):
         self.assertTrue(CGRectContainsRect(rect, rect) is True)
         self.assertTrue(CGRectIntersectsRect(rect, rect) is True)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testFunctions10_5(self):
         d = CGPointCreateDictionaryRepresentation((10, 5))
         self.assertIsInstance(d, CFDictionaryRef)
@@ -169,7 +168,7 @@ class TestCGGeometry (TestCase):
         self.assertIsInstance(p, CGRect)
         self.assertEqual(p, CGRectMake(0, 10, 20, 30))
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
         v = CGVectorMake(2.5, 3.5)
         self.assertIsInstance(v, CGVector)

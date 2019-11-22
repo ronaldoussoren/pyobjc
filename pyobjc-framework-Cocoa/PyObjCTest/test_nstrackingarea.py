@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSTrackingArea (TestCase):
 
+class TestNSTrackingArea(TestCase):
     @min_os_level("10.5")
     def testConstants(self):
         self.assertEqual(NSTrackingMouseEnteredAndExited, 0x01)

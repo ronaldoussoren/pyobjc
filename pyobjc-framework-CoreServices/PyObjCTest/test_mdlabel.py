@@ -2,13 +2,14 @@ from PyObjCTools.TestSupport import *
 
 import CoreServices
 
-class TestMDLabel (TestCase):
+
+class TestMDLabel(TestCase):
     @expectedFailure
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_types(self):
         self.assertIsCFType(CoreServices.MDLabelRef)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_functions(self):
         self.assertIsInstance(CoreServices.MDLabelGetTypeID(), (int, long))
 
@@ -29,8 +30,7 @@ class TestMDLabel (TestCase):
         self.assertEqual(CoreServices.kMDLabelUserDomain, 0)
         self.assertEqual(CoreServices.kMDLabelLocalDomain, 1)
 
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_constants10_7(self):
         self.assertIsInstance(CoreServices.kMDLabelBundleURL, unicode)
         self.assertIsInstance(CoreServices.kMDLabelContentChangeDate, unicode)

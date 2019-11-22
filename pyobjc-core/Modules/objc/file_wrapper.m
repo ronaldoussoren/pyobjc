@@ -1,6 +1,5 @@
 #include "pyobjc.h"
 
-#if PY_MAJOR_VERSION == 3
 /* A basic wrapper for C's "FILE*"
  * that implements a usable API.
  */
@@ -8,15 +7,13 @@
 struct file_object {
     PyObject_HEAD
 
-    FILE* fp;
+        FILE* fp;
 };
 
-
 static PyObject*
-file_new(
-    PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+file_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-    static char* keywords[] = { "path", "mode", NULL };
+    static char* keywords[] = {"path", "mode", NULL};
     FILE* fp;
     char* fname;
     char* mode;
@@ -24,7 +21,6 @@ file_new(
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "ss", keywords, &fname, &mode)) {
         return NULL;
     }
-
 
     fp = fopen(fname, mode);
 
@@ -44,7 +40,6 @@ file_dealloc(PyObject* self)
      */
     PyObject_Free(self);
 }
-
 
 static PyObject*
 file_close(PyObject* _self)
@@ -122,7 +117,7 @@ file_tell(PyObject* _self)
 static PyObject*
 file_seek(PyObject* _self, PyObject* args, PyObject* kwds)
 {
-    static char* keywords[] = { "offset", "whence", NULL };
+    static char* keywords[] = {"offset", "whence", NULL};
 
     struct file_object* self = (struct file_object*)_self;
     Py_ssize_t offset;
@@ -171,7 +166,7 @@ file_fileno(PyObject* _self)
 static PyObject*
 file_write(PyObject* _self, PyObject* args, PyObject* kwds)
 {
-    static char* keywords[] = { "buffer", NULL };
+    static char* keywords[] = {"buffer", NULL};
 
     struct file_object* self = (struct file_object*)_self;
     void* buffer;
@@ -209,7 +204,7 @@ file_readline(PyObject* _self)
 static PyObject*
 file_read(PyObject* _self, PyObject* args, PyObject* kwds)
 {
-    static char* keywords[] = { "size", NULL };
+    static char* keywords[] = {"size", NULL};
 
     struct file_object* self = (struct file_object*)_self;
     PyObject* buffer;
@@ -236,77 +231,61 @@ file_read(PyObject* _self, PyObject* args, PyObject* kwds)
     return buffer;
 }
 
-static PyMethodDef file_methods[] = {
-    {
-        .ml_name    = "readline",
-        .ml_meth    = (PyCFunction)file_readline,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "read a line from the file"
-    },
-    {
-        .ml_name    = "read",
-        .ml_meth    = (PyCFunction)file_read,
-        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
-        .ml_doc     = "read from the file"
-    },
-    {
-        .ml_name    = "write",
-        .ml_meth    = (PyCFunction)file_write,
-        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
-        .ml_doc     = "write to the file"
-    },
-    {
-        .ml_name    = "seek",
-        .ml_meth    = (PyCFunction)file_seek,
-        .ml_flags   = METH_VARARGS|METH_KEYWORDS,
-        .ml_doc     = "write to the file"
-    },
-    {
-        .ml_name    = "has_errors",
-        .ml_meth    = (PyCFunction)file_errors,
-        .ml_flags   = METH_NOARGS,
-    },
-    {
-        .ml_name    = "at_eof",
-        .ml_meth    = (PyCFunction)file_at_eof,
-        .ml_flags   = METH_NOARGS,
-    },
-    {
-        .ml_name    = "tell",
-        .ml_meth    = (PyCFunction)file_tell,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "write to the file"
-    },
-    {
-        .ml_name    = "fileno",
-        .ml_meth    = (PyCFunction)file_fileno,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "write to the file"
-    },
-    {
-        .ml_name    = "close",
-        .ml_meth    = (PyCFunction)file_close,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "close the file"
-    },
+static PyMethodDef file_methods[] = {{.ml_name = "readline",
+                                      .ml_meth = (PyCFunction)file_readline,
+                                      .ml_flags = METH_NOARGS,
+                                      .ml_doc = "read a line from the file"},
+                                     {.ml_name = "read",
+                                      .ml_meth = (PyCFunction)file_read,
+                                      .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                      .ml_doc = "read from the file"},
+                                     {.ml_name = "write",
+                                      .ml_meth = (PyCFunction)file_write,
+                                      .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                      .ml_doc = "write to the file"},
+                                     {.ml_name = "seek",
+                                      .ml_meth = (PyCFunction)file_seek,
+                                      .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                      .ml_doc = "write to the file"},
+                                     {
+                                         .ml_name = "has_errors",
+                                         .ml_meth = (PyCFunction)file_errors,
+                                         .ml_flags = METH_NOARGS,
+                                     },
+                                     {
+                                         .ml_name = "at_eof",
+                                         .ml_meth = (PyCFunction)file_at_eof,
+                                         .ml_flags = METH_NOARGS,
+                                     },
+                                     {.ml_name = "tell",
+                                      .ml_meth = (PyCFunction)file_tell,
+                                      .ml_flags = METH_NOARGS,
+                                      .ml_doc = "write to the file"},
+                                     {.ml_name = "fileno",
+                                      .ml_meth = (PyCFunction)file_fileno,
+                                      .ml_flags = METH_NOARGS,
+                                      .ml_doc = "write to the file"},
+                                     {.ml_name = "close",
+                                      .ml_meth = (PyCFunction)file_close,
+                                      .ml_flags = METH_NOARGS,
+                                      .ml_doc = "close the file"},
 
-    {   .ml_name = NULL, /* Sentinel */ }
-};
+                                     {.ml_name = NULL, /* Sentinel */}};
 
 PyTypeObject FILE_Type = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "objc.FILE",
-    .tp_basicsize   = sizeof (struct file_object),
-    .tp_itemsize    = 0,
-    .tp_new         = file_new,
-    .tp_dealloc     = file_dealloc,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_doc         = "Wrapper around a FILE* object",
-    .tp_methods     = file_methods,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.FILE",
+    .tp_basicsize = sizeof(struct file_object),
+    .tp_itemsize = 0,
+    .tp_new = file_new,
+    .tp_dealloc = file_dealloc,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_doc = "Wrapper around a FILE* object",
+    .tp_methods = file_methods,
 };
 
-PyObject* FILE_create(FILE* fp)
+PyObject*
+FILE_create(FILE* fp)
 {
     struct file_object* self;
     if (fp == NULL) {
@@ -319,8 +298,8 @@ PyObject* FILE_create(FILE* fp)
     return (PyObject*)self;
 }
 
-
-FILE* FILE_get(PyObject* fp)
+FILE*
+FILE_get(PyObject* fp)
 {
     if (!FILE_Check(fp)) {
         PyErr_SetString(PyExc_TypeError, "Not a FILE wrapper");
@@ -329,5 +308,3 @@ FILE* FILE_get(PyObject* fp)
 
     return ((struct file_object*)fp)->fp;
 }
-
-#endif

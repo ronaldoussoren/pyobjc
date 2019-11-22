@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 from Foundation import *
 
-class TestNSComparisonPredicate (TestCase):
+
+class TestNSComparisonPredicate(TestCase):
     def testConstants(self):
         self.assertEqual(NSCaseInsensitivePredicateOption, 1)
         self.assertEqual(NSDiacriticInsensitivePredicateOption, 2)
@@ -28,9 +29,18 @@ class TestNSComparisonPredicate (TestCase):
         self.assertEqual(NSBetweenPredicateOperatorType, 100)
 
     def testMethods(self):
-        self.assertArgIsSEL(NSComparisonPredicate.predicateWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + b'@:@')
-        self.assertArgIsSEL(NSComparisonPredicate.initWithLeftExpression_rightExpression_customSelector_, 2, objc._C_NSBOOL + b'@:@')
-        #self.assertResultIsSEL(NSComparisonPredicate.customSelector, objc._C_NSBOOL + b'@:@')
+        self.assertArgIsSEL(
+            NSComparisonPredicate.predicateWithLeftExpression_rightExpression_customSelector_,
+            2,
+            objc._C_NSBOOL + b"@:@",
+        )
+        self.assertArgIsSEL(
+            NSComparisonPredicate.initWithLeftExpression_rightExpression_customSelector_,
+            2,
+            objc._C_NSBOOL + b"@:@",
+        )
+        # self.assertResultIsSEL(NSComparisonPredicate.customSelector, objc._C_NSBOOL + b'@:@')
+
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Collaboration import *
 
-class TestCBIdentity (TestCase):
+
+class TestCBIdentity(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CBIdentity.isHidden)
         self.assertResultIsBOOL(CBIdentity.isMemberOfGroup_)

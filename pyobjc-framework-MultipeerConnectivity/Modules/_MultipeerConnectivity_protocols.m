@@ -8,10 +8,15 @@ static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
 #if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010
-    p = PyObjC_IdToPython(@protocol(MCAdvertiserAssistantDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MCBrowserViewControllerDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MCNearbyServiceAdvertiserDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MCNearbyServiceBrowserDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MCSessionDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MCAdvertiserAssistantDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MCBrowserViewControllerDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MCNearbyServiceAdvertiserDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MCNearbyServiceBrowserDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MCSessionDelegate));
+    Py_XDECREF(p);
 #endif /* defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010 */
 }

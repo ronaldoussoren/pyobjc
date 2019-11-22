@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRContentProperties (TestCase):
 
+class TestDRContentProperties(TestCase):
     def testConstants(self):
         self.assertIsInstance(DiscRecording.kDRISOLevel, unicode)
         self.assertIsInstance(DiscRecording.kDRVolumeSet, unicode)

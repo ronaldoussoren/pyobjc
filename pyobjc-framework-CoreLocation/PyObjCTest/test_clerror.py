@@ -1,10 +1,10 @@
-
 from PyObjCTools.TestSupport import *
 from CoreLocation import *
 import os
 
-class TestCLError (TestCase):
-    @min_os_level('10.6')
+
+class TestCLError(TestCase):
+    @min_os_level("10.6")
     def testConstants(self):
         self.assertIsInstance(kCLErrorDomain, unicode)
 
@@ -25,17 +25,18 @@ class TestCLError (TestCase):
         self.assertEqual(kCLErrorRangingUnavailable, 16)
         self.assertEqual(kCLErrorRangingFailure, 17)
 
-        if int(os.uname()[2].split('.')[0]) < 12:
+        if int(os.uname()[2].split(".")[0]) < 12:
             self.assertEqual(kCLErrorGeocodeFoundNoResult, 7)
             self.assertEqual(kCLErrorGeocodeCanceled, 8)
         else:
             self.assertEqual(kCLErrorGeocodeFoundNoResult, 8)
             self.assertEqual(kCLErrorGeocodeCanceled, 10)
 
-    @min_os_level('10.7')
-    @expectedFailureIf(os_level_key(os_release()) < os_level_key('10.13'))
+    @min_os_level("10.7")
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.13"))
     def testConstants10_7(self):
         self.assertIsInstance(kCLErrorUserInfoAlternateRegionKey, unicode)
+
 
 if __name__ == "__main__":
     main()

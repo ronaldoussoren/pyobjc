@@ -1,20 +1,22 @@
 from PyObjCTools.TestSupport import *
 from Foundation import *
 
-class TestNSStreamHelper (NSObject):
-    def stream_handleEvent_(self, a, b): pass
+
+class TestNSStreamHelper(NSObject):
+    def stream_handleEvent_(self, a, b):
+        pass
+
 
 class TestNSStreamUsage(TestCase):
-
     def testUsage(self):
         # Test the usage of methods that require extra work
 
         # Try to create a connection to the IPP port on the local host
         inputStream, outputStream = NSStream.getStreamsToHost_port_inputStream_outputStream_(
-                NSHost.hostWithAddress_(b"127.0.0.1".decode('ascii')),
-                631, # IPP port
-                None,
-                None
+            NSHost.hostWithAddress_(b"127.0.0.1".decode("ascii")),
+            631,  # IPP port
+            None,
+            None,
         )
 
         self.assertIsInstance(inputStream, NSInputStream)
@@ -59,7 +61,7 @@ class TestNSStreamUsage(TestCase):
         self.assertIsInstance(NSStreamSocketSSLErrorDomain, unicode)
         self.assertIsInstance(NSStreamSOCKSErrorDomain, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(NSStreamNetworkServiceType, unicode)
         self.assertIsInstance(NSStreamNetworkServiceTypeVoIP, unicode)
@@ -67,30 +69,32 @@ class TestNSStreamUsage(TestCase):
         self.assertIsInstance(NSStreamNetworkServiceTypeBackground, unicode)
         self.assertIsInstance(NSStreamNetworkServiceTypeVoice, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(NSStreamNetworkServiceTypeCallSignaling, unicode)
 
     def testMethods(self):
         self.assertResultIsBOOL(NSStream.setProperty_forKey_)
 
-        self.assertArgHasType(NSInputStream.read_maxLength_, 0, b'o^v')
+        self.assertArgHasType(NSInputStream.read_maxLength_, 0, b"o^v")
         self.assertArgSizeInArg(NSInputStream.read_maxLength_, 0, 1)
         self.assertArgSizeInResult(NSInputStream.read_maxLength_, 0)
 
         self.assertResultIsBOOL(NSInputStream.hasBytesAvailable)
 
-        self.assertArgHasType(NSOutputStream.write_maxLength_, 0, b'n^v')
+        self.assertArgHasType(NSOutputStream.write_maxLength_, 0, b"n^v")
         self.assertArgSizeInArg(NSOutputStream.write_maxLength_, 0, 1)
         self.assertResultIsBOOL(NSOutputStream.hasSpaceAvailable)
 
         b = NSOutputStream.alloc().initToMemory()
         self.assertArgHasType(b.initToFileAtPath_append_, 1, objc._C_NSBOOL)
-        self.assertArgHasType(NSOutputStream.outputStreamToFileAtPath_append_, 1, objc._C_NSBOOL)
+        self.assertArgHasType(
+            NSOutputStream.outputStreamToFileAtPath_append_, 1, objc._C_NSBOOL
+        )
 
-        self.assertArgHasType(b.initToBuffer_capacity_, 0, b'o^v')
+        self.assertArgHasType(b.initToBuffer_capacity_, 0, b"o^v")
         self.assertArgSizeInArg(b.initToBuffer_capacity_, 0, 1)
-        self.assertArgHasType(NSOutputStream.outputStreamToBuffer_capacity_, 0, b'o^v')
+        self.assertArgHasType(NSOutputStream.outputStreamToBuffer_capacity_, 0, b"o^v")
         self.assertArgSizeInArg(NSOutputStream.outputStreamToBuffer_capacity_, 0, 1)
 
         self.assertArgIsOut(NSInputStream.getBuffer_length_, 0)
@@ -98,9 +102,11 @@ class TestNSStreamUsage(TestCase):
         self.assertArgSizeInArg(NSInputStream.getBuffer_length_, 0, 1)
 
     def testDelegate(self):
-        self.assertArgHasType(TestNSStreamHelper.stream_handleEvent_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(
+            TestNSStreamHelper.stream_handleEvent_, 1, objc._C_NSUInteger
+        )
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         b = NSOutputStream.alloc()
         try:
@@ -109,18 +115,26 @@ class TestNSStreamUsage(TestCase):
             b = b.initToMemory()
         self.assertArgIsBOOL(NSOutputStream.outputStreamWithURL_append_, 1)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertArgIsOut(NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 2)
-        self.assertArgIsOut(NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 3)
+        self.assertArgIsOut(
+            NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 2
+        )
+        self.assertArgIsOut(
+            NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 3
+        )
 
-        self.assertArgIsOut(NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 1)
-        self.assertArgIsOut(NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 2)
+        self.assertArgIsOut(
+            NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 1
+        )
+        self.assertArgIsOut(
+            NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 2
+        )
 
-
-    @min_sdk_level('10.7')
+    @min_sdk_level("10.7")
     def testProtocols(self):
-        objc.protocolNamed('NSStreamDelegate')
+        objc.protocolNamed("NSStreamDelegate")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

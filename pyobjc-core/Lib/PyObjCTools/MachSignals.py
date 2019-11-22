@@ -14,7 +14,9 @@ reliably when not running Python code, but this does.
 """
 
 from objc import _machsignals
-__all__ = ['getsignal', 'signal']
+
+__all__ = ["getsignal", "signal"]
+
 
 def getsignal(signum):
     """
@@ -22,6 +24,7 @@ def getsignal(signum):
     there is no signal handler for the signal.
     """
     return _machsignals._signalmapping.get(signum)
+
 
 def signal(signum, handler):
     """

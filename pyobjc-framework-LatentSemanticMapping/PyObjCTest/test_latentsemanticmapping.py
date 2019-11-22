@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from LatentSemanticMapping import *
 import os
 
-class TestLatentSemanticMapping (TestCase):
+
+class TestLatentSemanticMapping(TestCase):
     def testConstants(self):
         self.assertEqual(kLSMMapOutOfState, -6640)
         self.assertEqual(kLSMMapNoSuchCategory, -6641)
@@ -36,12 +36,11 @@ class TestLatentSemanticMapping (TestCase):
         self.assertEqual(kLSMResultBestWords, 1)
 
         self.assertEqual(kLSMMapDiscardCounts, 1)
-        self.assertEqual(kLSMMapLoadMutable,  2)
+        self.assertEqual(kLSMMapLoadMutable, 2)
 
         self.assertEqual(kLSMTextPreserveCase, 1)
         self.assertEqual(kLSMTextPreserveAcronyms, 2)
         self.assertEqual(kLSMTextApplySpamHeuristics, 4)
-
 
     def testTypes(self):
         self.assertIsInstance(LSMMapRef, objc.objc_class)
@@ -60,7 +59,7 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMMapGetProperties(map)
         self.assertIsInstance(v, CFDictionaryRef)
 
-        LSMMapSetProperties(map, {b"key".decode('latin1'): b"value".decode('latin1')})
+        LSMMapSetProperties(map, {b"key".decode("latin1"): b"value".decode("latin1")})
         v = LSMMapGetProperties(map)
         self.assertIsInstance(v, (CFDictionaryRef, dict))
 
@@ -89,11 +88,11 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMTextAddWord(words, "and")
         self.assertIsInstance(v, (int, long))
 
-        v = LSMTextAddWords(text, "the world goes on and on",
-                CFLocaleCopyCurrent(), 0)
+        v = LSMTextAddWords(text, "the world goes on and on", CFLocaleCopyCurrent(), 0)
         self.assertIsInstance(v, (int, long))
-        v = LSMTextAddWords(text2, "on a bright and sunny morning",
-                CFLocaleCopyCurrent(), 0)
+        v = LSMTextAddWords(
+            text2, "on a bright and sunny morning", CFLocaleCopyCurrent(), 0
+        )
         self.assertIsInstance(v, (int, long))
 
         v = LSMMapSetStopWords(map, words)
@@ -102,15 +101,14 @@ class TestLatentSemanticMapping (TestCase):
         v = LSMMapAddText(map, text, cat)
         self.assertIsInstance(v, (int, long))
 
-        #fn = __file__
-        #fn = os.path.splitext(fn)[0] + ".py"
-        fn = '/usr/share/dict/README'
-        with open(fn, 'r') as fp:
+        # fn = __file__
+        # fn = os.path.splitext(fn)[0] + ".py"
+        fn = "/usr/share/dict/README"
+        with open(fn, "r") as fp:
             for line in fp:
                 t = LSMTextCreate(None, map)
                 LSMTextAddWords(t, line, CFLocaleCopyCurrent(), 0)
                 LSMMapAddText(map, t, cat)
-
 
         v = LSMMapAddTextWithWeight(map, text2, cat2, 2.0)
         self.assertIsInstance(v, (int, long))
@@ -120,22 +118,22 @@ class TestLatentSemanticMapping (TestCase):
 
         text3 = LSMTextCreate(None, map)
         self.assertIsInstance(text2, LSMTextRef)
-        v = LSMTextAddWords(text3, "foo the bar and worlds away",
-                CFLocaleCopyCurrent(), 0)
+        v = LSMTextAddWords(
+            text3, "foo the bar and worlds away", CFLocaleCopyCurrent(), 0
+        )
 
         if 1:
             self.assertResultIsCFRetained(LSMMapCreateClusters)
-            clusters = LSMMapCreateClusters(None, map, None, 2,  0)
+            clusters = LSMMapCreateClusters(None, map, None, 2, 0)
             self.assertIsInstance(clusters, (CFArrayRef, type(None)))
 
-            v = LSMMapApplyClusters(map, clusters);
+            v = LSMMapApplyClusters(map, clusters)
             self.assertIsInstance(v, (int, long))
 
         v = LSMMapStartTraining(map)
 
         mytext = LSMTextCreate(None, map)
-        v = LSMTextAddWords(mytext, "the world goes on and on",
-                                CFLocaleCopyCurrent(), 0)
+        v = LSMTextAddWords(mytext, "the world goes on and on", CFLocaleCopyCurrent(), 0)
         self.assertIsInstance(v, (int, long))
 
         v = LSMMapCompile(map)
@@ -143,36 +141,32 @@ class TestLatentSemanticMapping (TestCase):
         # FIXME: Tests crash, probably due to misuse of the
         # APIs. I haven't found usable API docs for this
         # framework :-(
-        #return
-
-
+        # return
 
         self.assertResultIsCFRetained(LSMResultCreate)
-        #res = LSMResultCreate(None, map, mytext, 2, 0)
-        #self.assertIsInstance(res, LSMResultRef)
+        # res = LSMResultCreate(None, map, mytext, 2, 0)
+        # self.assertIsInstance(res, LSMResultRef)
 
         LSMResultGetCount
-        #v = LSMResultGetCount(res);
-        #self.assertIsInstance(v, (int, long))
-        #self.assertTrue(v)
-
+        # v = LSMResultGetCount(res);
+        # self.assertIsInstance(v, (int, long))
+        # self.assertTrue(v)
 
         LSMResultGetCategory
-        #v = LSMResultGetCategory(res, 0)
-        #self.assertIsInstance(v, (int, long))
+        # v = LSMResultGetCategory(res, 0)
+        # self.assertIsInstance(v, (int, long))
 
         LSMResultGetScore
-        #v = LSMResultGetScore(res, 0)
-        #self.assertIsInstance(v, float)
-
+        # v = LSMResultGetScore(res, 0)
+        # self.assertIsInstance(v, float)
 
         self.assertResultIsCFRetained(LSMResultCopyWord)
-        #v = LSMResultCopyWord(res, 0)
-        #self.assertIsInstance(v, unicode)
+        # v = LSMResultCopyWord(res, 0)
+        # self.assertIsInstance(v, unicode)
 
         self.assertResultIsCFRetained(LSMResultCopyToken)
-        #v = LSMResultCopyToken(res, 0)
-        #self.assertIsInstance(v, CFDataRef)
+        # v = LSMResultCopyToken(res, 0)
+        # self.assertIsInstance(v, CFDataRef)
 
         v = LSMMapStartTraining(map)
         mytext = LSMTextCreate(None, map)
@@ -181,34 +175,35 @@ class TestLatentSemanticMapping (TestCase):
         self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(LSMResultCopyWordCluster)
-        #v = LSMResultCopyWordCluster(res, 0)
-        #self.assertIsInstance(v, CFArrayRef)
+        # v = LSMResultCopyWordCluster(res, 0)
+        # self.assertIsInstance(v, CFArrayRef)
 
         self.assertResultIsCFRetained(LSMResultCopyTokenCluster)
-        #v = LSMResultCopyTokenCluster(res, 0)
-        #self.assertIsInstance(v, CFArrayRef)
+        # v = LSMResultCopyTokenCluster(res, 0)
+        # self.assertIsInstance(v, CFArrayRef)
 
         LSMMapWriteToURL
-        #fn = '/tmp/pyobjc.test'
-        #url = CFURLCreateWithFileSystemPath(None, fn, kCFURLPOSIXPathStyle, False)
-        #self.assertIsInstance(url, CFURLRef)
-        #v = LSMMapWriteToURL(map, url, 0)
-        #self.assertIsInstance(v, (int, long))
+        # fn = '/tmp/pyobjc.test'
+        # url = CFURLCreateWithFileSystemPath(None, fn, kCFURLPOSIXPathStyle, False)
+        # self.assertIsInstance(url, CFURLRef)
+        # v = LSMMapWriteToURL(map, url, 0)
+        # self.assertIsInstance(v, (int, long))
 
         self.assertResultIsCFRetained(LSMMapCreateFromURL)
-        #map2 = LSMMapCreateFromURL(None, url, 0)
-        #self.assertIsInstance(map2, LSMMapRef)
+        # map2 = LSMMapCreateFromURL(None, url, 0)
+        # self.assertIsInstance(map2, LSMMapRef)
 
-        #if os.path.exists(fn):
+        # if os.path.exists(fn):
         #    os.unlink(fn)
 
-        #fp = CFWriteStreamCreateWithAllocatedBuffers(None, None)
-        #self.assertIsInstance(fp, CFWriteStreamRef)
-        #CFWriteStreamOpen(fp)
+        # fp = CFWriteStreamCreateWithAllocatedBuffers(None, None)
+        # self.assertIsInstance(fp, CFWriteStreamRef)
+        # CFWriteStreamOpen(fp)
 
         LSMMapWriteToStream
-        #v = LSMMapWriteToStream(map, text, fp, 0)
-        #sel.assertIsInstance(v, (int, long))
+        # v = LSMMapWriteToStream(map, text, fp, 0)
+        # sel.assertIsInstance(v, (int, long))
+
 
 if __name__ == "__main__":
     main()

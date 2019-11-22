@@ -1,9 +1,12 @@
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
 
-typedef struct s { int i; char b; } struct_s;
+typedef struct s {
+    int i;
+    char b;
+} struct_s;
 @interface OCPropertyDefinitions : NSObject {
     int _prop1;
     float _prop2;
@@ -33,9 +36,9 @@ typedef struct s { int i; char b; } struct_s;
 @property(retain) id prop8;
 @property(copy) id prop9;
 @property(nonatomic) struct_s prop10;
-@property(getter=propGetter,setter=propSetter:) id prop11;
-@property(nonatomic,readwrite,retain) id prop12;
-@property(readwrite,copy) id prop13;
+@property(getter=propGetter, setter=propSetter:) id prop11;
+@property(nonatomic, readwrite, retain) id prop12;
+@property(readwrite, copy) id prop13;
 
 #pragma clang diagnostic pop
 #endif
@@ -44,7 +47,7 @@ typedef struct s { int i; char b; } struct_s;
 
 @implementation OCPropertyDefinitions
 
-#if (PyObjC_BUILD_RELEASE >= 1005 )
+#if (PyObjC_BUILD_RELEASE >= 1005)
 
 @synthesize prop1 = _prop1;
 @synthesize prop2 = _prop2;
@@ -60,68 +63,43 @@ typedef struct s { int i; char b; } struct_s;
 @synthesize prop12 = _prop12;
 @dynamic prop13;
 
+-(void)dealloc
+{
+    [self->_prop8 release];
+    [self->_prop9 release];
+    [self->_prop12 release];
+
+    [super dealloc];
+}
+
 #endif
 
 @end
 
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
-
-#if PY_VERSION_HEX >= 0x03000000
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "properties",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+    PyModuleDef_HEAD_INIT, "properties", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_properties(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_properties(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initproperties(void);
-
-void __attribute__((__visibility__("default")))
-initproperties(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_properties(void)
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("properties", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "OCPropertyDefinitions",
-        PyObjC_IdToPython([OCPropertyDefinitions class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([OCPropertyDefinitions class])) < 0) {
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

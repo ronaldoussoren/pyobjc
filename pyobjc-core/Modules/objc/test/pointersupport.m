@@ -20,71 +20,44 @@ make_object_capsule(PyObject* mod __attribute__((__unused__)))
     return PyCapsule_New(object, "objc.__object__", NULL);
 }
 
+static PyMethodDef mod_methods[] = {{
+                                        "opaque_capsule",
+                                        (PyCFunction)make_opaque_capsule,
+                                        METH_NOARGS,
+                                        0,
+                                    },
+                                    {
+                                        "object_capsule",
+                                        (PyCFunction)make_object_capsule,
+                                        METH_NOARGS,
+                                        0,
+                                    },
+                                    {0, 0, 0, 0}};
 
-static PyMethodDef mod_methods[] = {
-    {
-        "opaque_capsule",
-        (PyCFunction)make_opaque_capsule,
-        METH_NOARGS,
-        0,
-    },
-    {
-        "object_capsule",
-        (PyCFunction)make_object_capsule,
-        METH_NOARGS,
-        0,
-    },
-    { 0, 0, 0, 0 }
-};
-
-#if PY_MAJOR_VERSION == 3
-
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "pointersupport",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "pointersupport",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit_pointersupport(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_pointersupport(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initpointersupport(void);
-
-void __attribute__((__visibility__("default")))
-initpointersupport(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_pointersupport(void)
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("pointersupport", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

@@ -40,55 +40,55 @@ import warnings
 
 # Can't set the right signatures in plain Objective-C.
 for method, argmeta in [
-        ( b"passInOutChar:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutChar:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInChar:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutUChar:", { 2: dict(type_modifier=b'N', type='^C')}),
-        ( b"passOutUChar:", { 2: dict(type_modifier=b'o', type='^C')}),
-        ( b"passInUChar:", { 2: dict(type_modifier=b'n', type='^C')}),
-        ( b"passInOutShort:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutShort:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInShort:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutUShort:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutUShort:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInUShort:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutInt:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutInt:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInInt:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutUInt:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutUInt:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInUInt:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutLong:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutLong:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInLong:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutULong:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutULong:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInULong:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutLongLong:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutLongLong:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInLongLong:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutULongLong:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutULongLong:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInULongLong:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutFloat:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutFloat:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInFloat:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutDouble:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutDouble:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInDouble:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutCharp:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutCharp:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInCharp:", { 2: dict(type_modifier=b'n')}),
-        ( b"passInOutID:", { 2: dict(type_modifier=b'N')}),
-        ( b"passOutID:", { 2: dict(type_modifier=b'o')}),
-        ( b"passInID:", { 2: dict(type_modifier=b'n')}),
-    ]:
+    (b"passInOutChar:", {2: dict(type_modifier=b"N")}),
+    (b"passOutChar:", {2: dict(type_modifier=b"o")}),
+    (b"passInChar:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutUChar:", {2: dict(type_modifier=b"N", type="^C")}),
+    (b"passOutUChar:", {2: dict(type_modifier=b"o", type="^C")}),
+    (b"passInUChar:", {2: dict(type_modifier=b"n", type="^C")}),
+    (b"passInOutShort:", {2: dict(type_modifier=b"N")}),
+    (b"passOutShort:", {2: dict(type_modifier=b"o")}),
+    (b"passInShort:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutUShort:", {2: dict(type_modifier=b"N")}),
+    (b"passOutUShort:", {2: dict(type_modifier=b"o")}),
+    (b"passInUShort:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutInt:", {2: dict(type_modifier=b"N")}),
+    (b"passOutInt:", {2: dict(type_modifier=b"o")}),
+    (b"passInInt:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutUInt:", {2: dict(type_modifier=b"N")}),
+    (b"passOutUInt:", {2: dict(type_modifier=b"o")}),
+    (b"passInUInt:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutLong:", {2: dict(type_modifier=b"N")}),
+    (b"passOutLong:", {2: dict(type_modifier=b"o")}),
+    (b"passInLong:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutULong:", {2: dict(type_modifier=b"N")}),
+    (b"passOutULong:", {2: dict(type_modifier=b"o")}),
+    (b"passInULong:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutLongLong:", {2: dict(type_modifier=b"N")}),
+    (b"passOutLongLong:", {2: dict(type_modifier=b"o")}),
+    (b"passInLongLong:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutULongLong:", {2: dict(type_modifier=b"N")}),
+    (b"passOutULongLong:", {2: dict(type_modifier=b"o")}),
+    (b"passInULongLong:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutFloat:", {2: dict(type_modifier=b"N")}),
+    (b"passOutFloat:", {2: dict(type_modifier=b"o")}),
+    (b"passInFloat:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutDouble:", {2: dict(type_modifier=b"N")}),
+    (b"passOutDouble:", {2: dict(type_modifier=b"o")}),
+    (b"passInDouble:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutCharp:", {2: dict(type_modifier=b"N")}),
+    (b"passOutCharp:", {2: dict(type_modifier=b"o")}),
+    (b"passInCharp:", {2: dict(type_modifier=b"n")}),
+    (b"passInOutID:", {2: dict(type_modifier=b"N")}),
+    (b"passOutID:", {2: dict(type_modifier=b"o")}),
+    (b"passInID:", {2: dict(type_modifier=b"n")}),
+]:
 
-    objc.registerMetaDataForSelector(b"OC_TestClass1", method,
-                    dict(arguments=argmeta))
+    objc.registerMetaDataForSelector(b"OC_TestClass1", method, dict(arguments=argmeta))
 
 
 from PyObjCTest.testbndl import *
+
 
 def makeCFloat(value):
     """
@@ -96,11 +96,11 @@ def makeCFloat(value):
     the result of converting a python float (== C double) to a C float and back.
     """
     if sys.version_info[0] == 2:
-        struct_fmt = b'f'
+        struct_fmt = b"f"
     else:
-        struct_fmt = 'f'
+        struct_fmt = "f"
 
-    return struct.unpack(struct_fmt,struct.pack(struct_fmt, value))[0]
+    return struct.unpack(struct_fmt, struct.pack(struct_fmt, value))[0]
 
 
 class PyOCTestSimpleReturns(TestCase):
@@ -193,15 +193,15 @@ class PyOCTestSimpleReturns(TestCase):
 
     def testClsCharp(self):
         OC_TestClass1.clsReset()
-        self.assertEqual(OC_TestClass1.charpClsFunc(), b'hello')
-        self.assertEqual(OC_TestClass1.charpClsFunc(), b'world')
-        self.assertEqual(OC_TestClass1.charpClsFunc(), b'foobar')
+        self.assertEqual(OC_TestClass1.charpClsFunc(), b"hello")
+        self.assertEqual(OC_TestClass1.charpClsFunc(), b"world")
+        self.assertEqual(OC_TestClass1.charpClsFunc(), b"foobar")
 
     def testClsID(self):
         OC_TestClass1.clsReset()
         self.assertEqual(len(OC_TestClass1.idClsFunc()), 0)
-        self.assertEqual(type(OC_TestClass1.idClsFunc()).__name__, 'NSHost')
-        self.assertIn(str(OC_TestClass1.idClsFunc()), ('{}', '{\n}'))
+        self.assertEqual(type(OC_TestClass1.idClsFunc()).__name__, "NSHost")
+        self.assertIn(str(OC_TestClass1.idClsFunc()), ("{}", "{\n}"))
         self.assertEqual(OC_TestClass1.idClsFunc(), None)
 
     # testCls* ends here
@@ -305,16 +305,16 @@ class PyOCTestSimpleReturns(TestCase):
     def testCharp(self):
         obj = OC_TestClass1.new()
         obj.reset()
-        self.assertEqual(obj.charpFunc(), b'hello')
-        self.assertEqual(obj.charpFunc(), b'world')
-        self.assertEqual(obj.charpFunc(), b'foobar')
+        self.assertEqual(obj.charpFunc(), b"hello")
+        self.assertEqual(obj.charpFunc(), b"world")
+        self.assertEqual(obj.charpFunc(), b"foobar")
 
     def testID(self):
         obj = OC_TestClass1.new()
         obj.reset()
         self.assertEqual(len(obj.idFunc()), 0)
-        self.assertEqual(type(obj.idFunc()).__name__, 'NSHost')
-        self.assertIn(str(obj.idFunc()), ('{}', '{\n}'))
+        self.assertEqual(type(obj.idFunc()).__name__, "NSHost")
+        self.assertIn(str(obj.idFunc()), ("{}", "{\n}"))
         self.assertEqual(obj.idFunc(), None)
 
     def testStruct1(self):
@@ -325,7 +325,7 @@ class PyOCTestSimpleReturns(TestCase):
     def testStruct2(self):
         obj = OC_TestClass1.new()
 
-        self.assertEqual(obj.dummy2Func(), ((1,2,3,4),))
+        self.assertEqual(obj.dummy2Func(), ((1, 2, 3, 4),))
 
 
 class PyOCTestSimpleArguments(TestCase):
@@ -384,9 +384,9 @@ class PyOCTestSimpleArguments(TestCase):
 
         self.assertEqual(self.obj.intArg_(10.0), 5)
 
-        self.assertRaises(ValueError, self.obj.intArg_, sys.maxsize+1)
-        self.assertRaises(ValueError, self.obj.intArg_, -sys.maxsize-2)
-        self.assertRaises(ValueError, self.obj.intArg_, -float(sys.maxsize)-2)
+        self.assertRaises(ValueError, self.obj.intArg_, sys.maxsize + 1)
+        self.assertRaises(ValueError, self.obj.intArg_, -sys.maxsize - 2)
+        self.assertRaises(ValueError, self.obj.intArg_, -float(sys.maxsize) - 2)
 
     def testUInt(self):
         self.assertEqual(self.obj.uintArg_(0), 0)
@@ -401,8 +401,7 @@ class PyOCTestSimpleArguments(TestCase):
 
             self.assertRaises(ValueError, self.obj.uintArg_, -5)
             self.assertRaises(ValueError, self.obj.uintArg_, -5)
-            self.assertRaises(ValueError, self.obj.uintArg_, 1+2*(sys.maxsize+1))
-
+            self.assertRaises(ValueError, self.obj.uintArg_, 1 + 2 * (sys.maxsize + 1))
 
     def testShort(self):
         self.assertEqual(self.obj.shortArg_(0), 0)
@@ -416,10 +415,10 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertEqual(self.obj.shortArg_(10.0), 5)
 
         # Out of range arguments, assumes a short is 16 bits
-        self.assertRaises(ValueError, self.obj.shortArg_, -(1<<16)-1)
-        self.assertRaises(ValueError, self.obj.shortArg_, 1<<16)
-        self.assertRaises(ValueError, self.obj.shortArg_, -(1<<16)-1)
-        self.assertRaises(ValueError, self.obj.shortArg_, 1<<16)
+        self.assertRaises(ValueError, self.obj.shortArg_, -(1 << 16) - 1)
+        self.assertRaises(ValueError, self.obj.shortArg_, 1 << 16)
+        self.assertRaises(ValueError, self.obj.shortArg_, -(1 << 16) - 1)
+        self.assertRaises(ValueError, self.obj.shortArg_, 1 << 16)
 
     def testUShort(self):
         self.assertEqual(self.obj.ushortArg_(0), 0)
@@ -434,20 +433,19 @@ class PyOCTestSimpleArguments(TestCase):
             warnings.filterwarnings("ignore", category=DeprecationWarning)
 
             self.assertRaises(ValueError, self.obj.ushortArg_, -5)
-            self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
-            self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
+            self.assertRaises(ValueError, self.obj.ushortArg_, -(1 << 16) - 1)
+            self.assertRaises(ValueError, self.obj.ushortArg_, 1 << 16)
             self.assertRaises(ValueError, self.obj.ushortArg_, -5)
-            self.assertRaises(ValueError, self.obj.ushortArg_, -(1<<16)-1)
-            self.assertRaises(ValueError, self.obj.ushortArg_, 1<<16)
-
+            self.assertRaises(ValueError, self.obj.ushortArg_, -(1 << 16) - 1)
+            self.assertRaises(ValueError, self.obj.ushortArg_, 1 << 16)
 
     def testChar(self):
         self.assertEqual(self.obj.charArg_(0), (0))
         self.assertEqual(self.obj.charArg_(10), (5))
         self.assertEqual(self.obj.charArg_(10), (5))
         self.assertEqual(self.obj.charArg_(1 << 6), (1 << 5))
-        self.assertEqual(self.obj.charArg_(b'\x00'), 0x00)
-        self.assertEqual(self.obj.charArg_(b'\x10'), int(ord(b'\x10')/2))
+        self.assertEqual(self.obj.charArg_(b"\x00"), 0x00)
+        self.assertEqual(self.obj.charArg_(b"\x10"), int(ord(b"\x10") / 2))
 
         # TODO: Out of range arguments
 
@@ -456,8 +454,8 @@ class PyOCTestSimpleArguments(TestCase):
         self.assertEqual(self.obj.ucharArg_(10), 5)
         self.assertEqual(self.obj.ucharArg_(10), 5)
         self.assertEqual(self.obj.ucharArg_(1 << 7), (1 << 6))
-        self.assertEqual(self.obj.ucharArg_(b'\x00'), 0)
-        self.assertEqual(self.obj.ucharArg_(b'\x10'), int(ord(b'\x10')/2))
+        self.assertEqual(self.obj.ucharArg_(b"\x00"), 0)
+        self.assertEqual(self.obj.ucharArg_(b"\x10"), int(ord(b"\x10") / 2))
 
         self.assertEqual(self.obj.ucharArg_(10.0), 5)
 
@@ -473,7 +471,7 @@ class PyOCTestSimpleArguments(TestCase):
             self.assertRaises(ValueError, self.obj.ucharArg_, 256)
 
     def testCharp(self):
-        self.assertEqual(self.obj.charpArg_(b"hello world"), b'dlrow olleh')
+        self.assertEqual(self.obj.charpArg_(b"hello world"), b"dlrow olleh")
 
         self.assertRaises(ValueError, self.obj.charpArg_, 256)
         self.assertRaises(ValueError, self.obj.charpArg_, "hello world")
@@ -489,8 +487,8 @@ class PyOCTestSimpleArguments(TestCase):
 
         # NSHost gives problems on GNUstep, better check those problems
         # seperately in the Foundation test suite.
-        #c = objc.lookUpClass("NSHost")
-        #o = c.hostWithAddress_('127.0.0.1')
+        # c = objc.lookUpClass("NSHost")
+        # o = c.hostWithAddress_('127.0.0.1')
 
         c = objc.lookUpClass("NSScanner")
         o = c.scannerWithString_("hello world")
@@ -503,14 +501,14 @@ class PyOCTestSimpleArguments(TestCase):
 
         self.assertRaises(TypeError, self.obj.dummyArg_, 256)
         self.assertRaises(ValueError, self.obj.dummyArg_, (-1,))
-        self.assertRaises(ValueError, self.obj.dummyArg_, (-1,1,2))
+        self.assertRaises(ValueError, self.obj.dummyArg_, (-1, 1, 2))
 
     def testStruct2(self):
-        self.assertEqual(self.obj.dummy2Arg_(((1,2,3,4),)), ((8,6,4,2),))
+        self.assertEqual(self.obj.dummy2Arg_(((1, 2, 3, 4),)), ((8, 6, 4, 2),))
 
-        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8,6,4,2),1))
-        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8,6,4,),))
-        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8,6,4,2,1),))
+        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8, 6, 4, 2), 1))
+        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8, 6, 4),))
+        self.assertRaises(ValueError, self.obj.dummy2Arg_, ((8, 6, 4, 2, 1),))
 
 
 class PyOCTestByReferenceArguments(TestCase):
@@ -521,7 +519,7 @@ class PyOCTestByReferenceArguments(TestCase):
         self.obj = OC_TestClass1.new()
 
     def testCharIn(self):
-        self.assertEqual(self.obj.passInChar_(b'\x10'), 0x19)
+        self.assertEqual(self.obj.passInChar_(b"\x10"), 0x19)
 
     def testCharOut(self):
         self.obj.reset()
@@ -530,7 +528,7 @@ class PyOCTestByReferenceArguments(TestCase):
         self.assertEqual(self.obj.passOutChar_(None), 127)
 
     def testCharInOut(self):
-        self.assertEqual(self.obj.passInOutChar_(b'\x10'), 0x3a)
+        self.assertEqual(self.obj.passInOutChar_(b"\x10"), 0x3A)
 
     def testUCharIn(self):
         self.assertEqual(self.obj.passInUChar_(10), 19)
@@ -713,7 +711,6 @@ class PyOCTestByReferenceArguments(TestCase):
     # TODO: structs (including Objective-C part)
 
 
-
 #
 # Below this point only TestCases that test calling Python from Objective-C
 #
@@ -734,23 +731,40 @@ class PyOCTestByReferenceArguments(TestCase):
 # - 64-bit long long
 # Values are: max-negative, -42, 0, 42, max-positive, out-of-range, bad-type, None
 #
-CHAR_NUMBERS=[ -128, -42, 0, 42, 127, b'a', 128, "hello", None ]
-UCHAR_NUMBERS=[ 0, 42, 255, b'a', 256, "hello", None ]
-SHORT_NUMBERS=[ -32768, -42, 0, 32767, 32768, "hello", None ]
-USHORT_NUMBERS=[ 0, 42, 65535, 65536, "hello", None ]
-INT_NUMBERS=[ -2147483648, -42, 0, 2147483647, 2147483648, "hello", None ]
-UINT_NUMBERS=[ 0, 42, 4294967295, 4294967296, "hello", None ]
-LONG_NUMBERS=[ -2147483648, -42, 0, 2147483647, sys.maxsize+1, "hello", None ]
-ULONG_NUMBERS=[ 0, 42, 4294967295, 2*(sys.maxsize+1), "hello", None ]
-LONGLONG_NUMBERS=[ -9223372036854775808, -42, 0, 42, 9223372036854775807, 9223372036854775808, "hello", None ]
-ULONGLONG_NUMBERS=[0, 42, 18446744073709551615, 18446744073709551616, "hello", None ]
+CHAR_NUMBERS = [-128, -42, 0, 42, 127, b"a", 128, "hello", None]
+UCHAR_NUMBERS = [0, 42, 255, b"a", 256, "hello", None]
+SHORT_NUMBERS = [-32768, -42, 0, 32767, 32768, "hello", None]
+USHORT_NUMBERS = [0, 42, 65535, 65536, "hello", None]
+INT_NUMBERS = [-2_147_483_648, -42, 0, 2_147_483_647, 2_147_483_648, "hello", None]
+UINT_NUMBERS = [0, 42, 4_294_967_295, 4_294_967_296, "hello", None]
+LONG_NUMBERS = [-2_147_483_648, -42, 0, 2_147_483_647, sys.maxsize + 1, "hello", None]
+ULONG_NUMBERS = [0, 42, 4_294_967_295, 2 * (sys.maxsize + 1), "hello", None]
+LONGLONG_NUMBERS = [
+    -9_223_372_036_854_775_808,
+    -42,
+    0,
+    42,
+    9_223_372_036_854_775_807,
+    9_223_372_036_854_775_808,
+    "hello",
+    None,
+]
+ULONGLONG_NUMBERS = [
+    0,
+    42,
+    18_446_744_073_709_551_615,
+    18_446_744_073_709_551_616,
+    "hello",
+    None,
+]
 
-FLOAT_NUMBERS = [ makeCFloat(0.1), makeCFloat(100.0) ]
-DOUBLE_NUMBERS = [ 1.5, 3.5, 1e10, 1.99e10 ]
-OBJECTS = [ "hello", 1.0, range(4), lambda x: 10 ]
-DUMMY_OBJECTS = [ (1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20) ]
-DUMMY2_OBJECTS = [ ((1, 2, 3, 4),), ((-9, -8, -7, -6),)]
-POINTS=[ (1.0, 2.0), (1e10, 2e10), (-0.5, 0.5) ]
+FLOAT_NUMBERS = [makeCFloat(0.1), makeCFloat(100.0)]
+DOUBLE_NUMBERS = [1.5, 3.5, 1e10, 1.99e10]
+OBJECTS = ["hello", 1.0, range(4), lambda x: 10]
+DUMMY_OBJECTS = [(1, 1), (-10, -10), (-4, -5), (0, 0), (10, 20)]
+DUMMY2_OBJECTS = [((1, 2, 3, 4),), ((-9, -8, -7, -6),)]
+POINTS = [(1.0, 2.0), (1e10, 2e10), (-0.5, 0.5)]
+
 
 class MyPyClass:
     def __init__(self):
@@ -764,7 +778,8 @@ class MyPyClass:
         self.idx += 1
         return OBJECTS[i]
 
-class MyOCClass (objc.lookUpClass('NSObject')):
+
+class MyOCClass(objc.lookUpClass("NSObject")):
     def __init__(self):
         self.idx = 0
 
@@ -775,72 +790,88 @@ class MyOCClass (objc.lookUpClass('NSObject')):
         i = self.idx
         self.idx += 1
         return CHAR_NUMBERS[i]
+
     charFunc = objc.selector(charFunc, signature=OC_TestClass1.charFunc.signature)
 
     def ucharFunc(self):
         i = self.idx
         self.idx += 1
         return UCHAR_NUMBERS[i]
+
     ucharFunc = objc.selector(ucharFunc, signature=OC_TestClass1.ucharFunc.signature)
 
     def shortFunc(self):
         i = self.idx
         self.idx += 1
         return SHORT_NUMBERS[i]
+
     shortFunc = objc.selector(shortFunc, signature=OC_TestClass1.shortFunc.signature)
 
     def ushortFunc(self):
         i = self.idx
         self.idx += 1
         return USHORT_NUMBERS[i]
+
     ushortFunc = objc.selector(ushortFunc, signature=OC_TestClass1.ushortFunc.signature)
 
     def intFunc(self):
         i = self.idx
         self.idx += 1
         return INT_NUMBERS[i]
+
     intFunc = objc.selector(intFunc, signature=OC_TestClass1.intFunc.signature)
 
     def uintFunc(self):
         i = self.idx
         self.idx += 1
         return UINT_NUMBERS[i]
+
     uintFunc = objc.selector(uintFunc, signature=OC_TestClass1.uintFunc.signature)
 
     def longFunc(self):
         i = self.idx
         self.idx += 1
         return LONG_NUMBERS[i]
+
     longFunc = objc.selector(longFunc, signature=OC_TestClass1.longFunc.signature)
 
     def ulongFunc(self):
         i = self.idx
         self.idx += 1
         return ULONG_NUMBERS[i]
+
     ulongFunc = objc.selector(ulongFunc, signature=OC_TestClass1.ulongFunc.signature)
 
     def longlongFunc(self):
         i = self.idx
         self.idx += 1
         return LONGLONG_NUMBERS[i]
-    longlongFunc = objc.selector(longlongFunc, signature=OC_TestClass1.longlongFunc.signature)
+
+    longlongFunc = objc.selector(
+        longlongFunc, signature=OC_TestClass1.longlongFunc.signature
+    )
 
     def ulonglongFunc(self):
         i = self.idx
         self.idx += 1
         return ULONGLONG_NUMBERS[i]
-    ulonglongFunc = objc.selector(ulonglongFunc, signature=OC_TestClass1.ulonglongFunc.signature)
+
+    ulonglongFunc = objc.selector(
+        ulonglongFunc, signature=OC_TestClass1.ulonglongFunc.signature
+    )
 
     def floatFunc(self):
         i = self.idx
         self.idx += 1
         return FLOAT_NUMBERS[i]
+
     floatFunc = objc.selector(floatFunc, signature=OC_TestClass1.floatFunc.signature)
 
     def doubleFunc(self):
         i = self.idx
         self.idx += 1
         return DOUBLE_NUMBERS[i]
+
     doubleFunc = objc.selector(doubleFunc, signature=OC_TestClass1.doubleFunc.signature)
 
     def idFunc(self):
@@ -852,65 +883,87 @@ class MyOCClass (objc.lookUpClass('NSObject')):
         i = self.idx
         self.idx += 1
         return DUMMY_OBJECTS[i]
+
     dummyFunc = objc.selector(dummyFunc, signature=OC_TestClass1.dummyFunc.signature)
 
     def dummy2Func(self):
         i = self.idx
         self.idx += 1
         return DUMMY2_OBJECTS[i]
+
     dummy2Func = objc.selector(dummy2Func, signature=OC_TestClass1.dummy2Func.signature)
 
     def nspointFunc(self):
         i = self.idx
         self.idx += 1
         return POINTS[i]
-    nspointFunc = objc.selector(nspointFunc, signature=OC_TestClass1.nspointFunc.signature)
+
+    nspointFunc = objc.selector(
+        nspointFunc, signature=OC_TestClass1.nspointFunc.signature
+    )
 
     def charArg_(self, arg):
         return arg * 2
+
     charArg_ = objc.selector(charArg_, signature=OC_TestClass1.charArg_.signature)
+
     def ucharArg_(self, arg):
         return arg * 2
+
     ucharArg_ = objc.selector(ucharArg_, signature=OC_TestClass1.ucharArg_.signature)
 
     def shortArg_(self, arg):
         return arg * 2
+
     shortArg_ = objc.selector(shortArg_, signature=OC_TestClass1.shortArg_.signature)
 
     def ushortArg_(self, arg):
         return arg * 2
+
     ushortArg_ = objc.selector(ushortArg_, signature=OC_TestClass1.ushortArg_.signature)
 
     def intArg_(self, arg):
         return arg * 2
+
     intArg_ = objc.selector(intArg_, signature=OC_TestClass1.intArg_.signature)
 
     def uintArg_(self, arg):
         return arg * 2
+
     uintArg_ = objc.selector(uintArg_, signature=OC_TestClass1.uintArg_.signature)
 
     def longArg_(self, arg):
         return arg * 2
+
     longArg_ = objc.selector(longArg_, signature=OC_TestClass1.longArg_.signature)
 
     def ulongArg_(self, arg):
         return arg * 2
+
     ulongArg_ = objc.selector(ulongArg_, signature=OC_TestClass1.ulongArg_.signature)
 
     def longlongArg_(self, arg):
         return arg * 2
-    longlongArg_ = objc.selector(longlongArg_, signature=OC_TestClass1.longlongArg_.signature)
+
+    longlongArg_ = objc.selector(
+        longlongArg_, signature=OC_TestClass1.longlongArg_.signature
+    )
 
     def ulonglongArg_(self, arg):
         return arg * 2
-    ulonglongArg_ = objc.selector(ulonglongArg_, signature=OC_TestClass1.ulonglongArg_.signature)
+
+    ulonglongArg_ = objc.selector(
+        ulonglongArg_, signature=OC_TestClass1.ulonglongArg_.signature
+    )
 
     def floatArg_(self, arg):
         return arg * 2
+
     floatArg_ = objc.selector(floatArg_, signature=OC_TestClass1.floatArg_.signature)
 
     def doubleArg_(self, arg):
         return arg * 2
+
     doubleArg_ = objc.selector(doubleArg_, signature=OC_TestClass1.doubleArg_.signature)
 
 
@@ -958,9 +1011,15 @@ class OCPyTestSimpleCalls(TestCase):
                 o = ord(o)
             self.assertEqual(self.obj.callInstanceUnsignedCharFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedCharFuncOf_, self.ocobj
+        )
 
     def testIUChar(self):
         self.pyobj.reset()
@@ -971,9 +1030,15 @@ class OCPyTestSimpleCalls(TestCase):
                 o = ord(o)
             self.assertEqual(self.obj.invokeInstanceUnsignedCharFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedCharFuncOf_, self.ocobj
+        )
 
     def testCShort(self):
         self.pyobj.reset()
@@ -1004,9 +1069,15 @@ class OCPyTestSimpleCalls(TestCase):
         for o in USHORT_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedShortFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedShortFuncOf_, self.ocobj
+        )
 
     def testIUShort(self):
         self.pyobj.reset()
@@ -1015,9 +1086,15 @@ class OCPyTestSimpleCalls(TestCase):
         for o in USHORT_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceUnsignedShortFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedShortFuncOf_, self.ocobj
+        )
 
     def testCInt(self):
         self.pyobj.reset()
@@ -1059,9 +1136,15 @@ class OCPyTestSimpleCalls(TestCase):
         for o in UINT_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceUnsignedIntFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedIntFuncOf_, self.ocobj
+        )
 
     def testCLong(self):
         self.pyobj.reset()
@@ -1092,9 +1175,15 @@ class OCPyTestSimpleCalls(TestCase):
         for o in ULONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedLongFuncOf_, self.ocobj
+        )
 
     def testIULong(self):
         self.pyobj.reset()
@@ -1103,9 +1192,15 @@ class OCPyTestSimpleCalls(TestCase):
         for o in ULONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceUnsignedLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedLongFuncOf_, self.ocobj
+        )
 
     def testCLongLong(self):
         self.pyobj.reset()
@@ -1136,20 +1231,34 @@ class OCPyTestSimpleCalls(TestCase):
         for o in ULONGLONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj
+        )
 
     def testIULongLong(self):
         self.pyobj.reset()
         self.ocobj.reset()
 
         for o in ULONGLONG_NUMBERS[:-3]:
-            self.assertEqual(self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
+            self.assertEqual(
+                self.obj.invokeInstanceUnsignedLongLongFuncOf_(self.ocobj), o
+            )
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceUnsignedLongLongFuncOf_, self.ocobj
+        )
 
     def testCFloat(self):
         self.pyobj.reset()
@@ -1249,6 +1358,7 @@ class OCPyTestSimpleCalls(TestCase):
         for o in POINTS:
             self.assertEqual(self.obj.invokeInstanceNSPointFuncOf_(self.ocobj), o)
 
+
 class OCPyTestSimpleArguments(TestCase):
     #
     # Test argument passing of single basic values.
@@ -1263,16 +1373,25 @@ class OCPyTestSimpleArguments(TestCase):
     def testCLongLong(self):
         self.assertEqual(self.obj.callInstanceLongLongArg_on_(0, self.ocobj), 0)
         self.assertEqual(self.obj.callInstanceLongLongArg_on_(10, self.ocobj), 20)
-        self.assertEqual(self.obj.callInstanceLongLongArg_on_(1 << 60, self.ocobj), 1 << 61)
+        self.assertEqual(
+            self.obj.callInstanceLongLongArg_on_(1 << 60, self.ocobj), 1 << 61
+        )
         self.assertEqual(self.obj.callInstanceLongLongArg_on_(-10, self.ocobj), -20)
-        self.assertEqual(self.obj.callInstanceLongLongArg_on_(-(1 << 60), self.ocobj), -(1 << 61))
+        self.assertEqual(
+            self.obj.callInstanceLongLongArg_on_(-(1 << 60), self.ocobj), -(1 << 61)
+        )
 
     def testILongLong(self):
         self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(0, self.ocobj), 0)
         self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(10, self.ocobj), 20)
-        self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(1 << 60, self.ocobj), 1 << 61)
+        self.assertEqual(
+            self.obj.invokeInstanceLongLongArg_on_(1 << 60, self.ocobj), 1 << 61
+        )
         self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(-10, self.ocobj), -20)
-        self.assertEqual(self.obj.invokeInstanceLongLongArg_on_(-(1 << 60), self.ocobj), -(1 << 61))
+        self.assertEqual(
+            self.obj.invokeInstanceLongLongArg_on_(-(1 << 60), self.ocobj), -(1 << 61)
+        )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

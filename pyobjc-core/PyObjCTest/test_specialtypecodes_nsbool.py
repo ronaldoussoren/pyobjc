@@ -24,69 +24,111 @@ from PyObjCTest.fnd import NSObject
 from PyObjCTest.specialtypecodes import *
 import array
 
+
 def setupMetaData():
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLValue",
-        dict(
-            retval=dict(type=objc._C_NSBOOL),
-        ))
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode", b"BOOLValue", dict(retval=dict(type=objc._C_NSBOOL))
+    )
 
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArray",
-        dict(
-            retval=dict(type=objc._C_PTR+objc._C_NSBOOL, c_array_of_fixed_length=4),
-        ))
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArray",
+        dict(retval=dict(type=objc._C_PTR + objc._C_NSBOOL, c_array_of_fixed_length=4)),
+    )
 
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArg:andBOOLArg:",
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArg:andBOOLArg:",
+        dict(arguments={2: dict(type=objc._C_NSBOOL), 3: dict(type=objc._C_NSBOOL)}),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArrayOf4In:",
         dict(
             arguments={
-                2: dict(type=objc._C_NSBOOL),
-                3: dict(type=objc._C_NSBOOL),
+                2: dict(
+                    type=objc._C_PTR + objc._C_NSBOOL,
+                    type_modifier=objc._C_IN,
+                    c_array_of_fixed_length=4,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOf4In:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArrayOf4Out:",
         dict(
             arguments={
-                2: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_IN, c_array_of_fixed_length=4),
+                2: dict(
+                    type=objc._C_PTR + objc._C_NSBOOL,
+                    type_modifier=objc._C_OUT,
+                    c_array_of_fixed_length=4,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOf4Out:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArrayOf4InOut:",
         dict(
             arguments={
-                2: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_OUT, c_array_of_fixed_length=4),
+                2: dict(
+                    type=objc._C_PTR + objc._C_NSBOOL,
+                    type_modifier=objc._C_INOUT,
+                    c_array_of_fixed_length=4,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOf4InOut:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArrayOfCount:In:",
         dict(
             arguments={
-                2: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_INOUT, c_array_of_fixed_length=4),
+                3: dict(
+                    type=objc._C_PTR + objc._C_NSBOOL,
+                    type_modifier=objc._C_IN,
+                    c_array_of_lenght_in_arg=2,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOfCount:In:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArrayOfCount:Out:",
         dict(
             arguments={
-                3: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_IN, c_array_of_lenght_in_arg=2),
+                3: dict(
+                    type=objc._C_PTR + objc._C_NSBOOL,
+                    type_modifier=objc._C_OUT,
+                    c_array_of_lenght_in_arg=2,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOfCount:Out:",
+        ),
+    )
+    objc.registerMetaDataForSelector(
+        b"OC_TestSpecialTypeCode",
+        b"BOOLArrayOfCount:InOut:",
         dict(
             arguments={
-                3: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_OUT, c_array_of_lenght_in_arg=2),
+                3: dict(
+                    type=objc._C_PTR + objc._C_NSBOOL,
+                    type_modifier=objc._C_INOUT,
+                    c_array_of_lenght_in_arg=2,
+                )
             }
-        ))
-    objc.registerMetaDataForSelector(b"OC_TestSpecialTypeCode", b"BOOLArrayOfCount:InOut:",
-        dict(
-            arguments={
-                3: dict(type=objc._C_PTR+objc._C_NSBOOL, type_modifier=objc._C_INOUT, c_array_of_lenght_in_arg=2),
-            }
-        ))
+        ),
+    )
 
 
 setupMetaData()
 
-class TestTypeCode_BOOL (TestCase):
+
+class TestTypeCode_BOOL(TestCase):
     def testReturnValue(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        self.assertIs(o.BOOLValue(),True)
+        self.assertIs(o.BOOLValue(), True)
         self.assertIs(o.BOOLValue(), False)
 
     def testReturnValueArray(self):
@@ -117,7 +159,7 @@ class TestTypeCode_BOOL (TestCase):
         v = o.BOOLArrayOf4In_([False, True, False, True])
         self.assertEqual(v, (0, 1, 0, 1))
 
-        a = array.array('b', [1, 0, 1, 0])
+        a = array.array("b", [1, 0, 1, 0])
         v = o.BOOLArrayOf4In_(a)
         self.assertEqual(v, (1, 0, 1, 0))
 
@@ -140,7 +182,7 @@ class TestTypeCode_BOOL (TestCase):
         self.assertEqual(v, (False, False, False, False))
 
         o = OC_TestSpecialTypeCode.alloc().init()
-        a = array.array('b', [0] * 4)
+        a = array.array("b", [0] * 4)
         v = o.BOOLArrayOf4Out_(a)
         self.assertIs(v, a)
         self.assertEqual(v[0], 1)
@@ -161,6 +203,7 @@ class TestTypeCode_BOOL (TestCase):
 
         # It should not be possible to use a string as an array of booleans
         self.assertRaises(ValueError, o.BOOLArrayOf4InOut_, b"\x00\x01\x00\x01")
+
 
 if __name__ == "__main__":
     main()

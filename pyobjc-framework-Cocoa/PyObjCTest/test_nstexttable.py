@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSTextTable (TestCase):
+
+class TestNSTextTable(TestCase):
     def testConstants(self):
         self.assertEqual(NSTextBlockAbsoluteValueType, 0)
         self.assertEqual(NSTextBlockPercentageValueType, 1)
@@ -15,8 +15,8 @@ class TestNSTextTable (TestCase):
         self.assertEqual(NSTextBlockMaximumHeight, 6)
 
         self.assertEqual(NSTextBlockPadding, -1)
-        self.assertEqual(NSTextBlockBorder,  0)
-        self.assertEqual(NSTextBlockMargin,  1)
+        self.assertEqual(NSTextBlockBorder, 0)
+        self.assertEqual(NSTextBlockMargin, 1)
 
         self.assertEqual(NSTextBlockTopAlignment, 0)
         self.assertEqual(NSTextBlockMiddleAlignment, 1)

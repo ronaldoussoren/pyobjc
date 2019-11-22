@@ -5,17 +5,17 @@ import math
 
 searchIndex = 0
 
-class MyWindowController (Cocoa.NSWindowController):
+
+class MyWindowController(Cocoa.NSWindowController):
     query = objc.ivar()
     previousRowCount = objc.ivar(type=objc._C_INT)
 
     myTableView = objc.IBOutlet()
     mySearchResults = objc.IBOutlet()
     predicateEditor = objc.IBOutlet()
-    progressView = objc.IBOutlet()        # the progress search view
-    progressSearch = objc.IBOutlet()      # spinning gear
-    progressSearchLabel = objc.IBOutlet() # search result #
-
+    progressView = objc.IBOutlet()  # the progress search view
+    progressSearch = objc.IBOutlet()  # spinning gear
+    progressSearchLabel = objc.IBOutlet()  # search result #
 
     def dealloc(self):
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
@@ -29,7 +29,7 @@ class MyWindowController (Cocoa.NSWindowController):
 
         # put the focus in the first text field
         displayValue = self.predicateEditor.displayValuesForRow_(1).lastObject()
-        if isinstance(displayValue,  Cocoa.NSControl):
+        if isinstance(displayValue, Cocoa.NSControl):
             self.window().makeFirstResponder_(displayValue)
 
         # create and initalize our query
@@ -37,12 +37,17 @@ class MyWindowController (Cocoa.NSWindowController):
 
         # setup our Spotlight notifications
         nf = Cocoa.NSNotificationCenter.defaultCenter()
-        nf.addObserver_selector_name_object_(self, 'queryNotification:', None, self.query)
+        nf.addObserver_selector_name_object_(self, "queryNotification:", None, self.query)
 
         # initialize our Spotlight query, sort by contact name
 
-        self.query.setSortDescriptors_([Cocoa.NSSortDescriptor.alloc().initWithKey_ascending_(
-            'kMDItemContactKeywords', True)])
+        self.query.setSortDescriptors_(
+            [
+                Cocoa.NSSortDescriptor.alloc().initWithKey_ascending_(
+                    "kMDItemContactKeywords", True
+                )
+            ]
+        )
         self.query.setDelegate_(self)
 
         # start with our progress search label empty
@@ -57,7 +62,7 @@ class MyWindowController (Cocoa.NSWindowController):
         results = notif.object().results()
 
         Cocoa.NSLog("search count = %d", len(results))
-        foundResultsStr = "Results found: %d"%(len(results),)
+        foundResultsStr = "Results found: %d" % (len(results),)
         self.progressSearchLabel.setStringValue_(foundResultsStr)
 
         if len(results) == 0:
@@ -65,24 +70,26 @@ class MyWindowController (Cocoa.NSWindowController):
 
         # iterate through the array of results, and match to the existing stores
         for item in results:
-            cityStr = item.valueForAttribute_('kMDItemCity')
-            nameStr = item.valueForAttribute_('kMDItemDisplayName')
-            stateStr = item.valueForAttribute_('kMDItemStateOrProvince')
-            phoneNumbers = item.valueForAttribute_('kMDItemPhoneNumbers')
+            cityStr = item.valueForAttribute_("kMDItemCity")
+            nameStr = item.valueForAttribute_("kMDItemDisplayName")
+            stateStr = item.valueForAttribute_("kMDItemStateOrProvince")
+            phoneNumbers = item.valueForAttribute_("kMDItemPhoneNumbers")
             phoneStr = None
             if phoneNumbers:
                 phoneStr = phoneNumbers[0]
 
-            storePath = item.valueForAttribute_('kMDItemPath').stringByResolvingSymlinksInPath()
+            storePath = item.valueForAttribute_(
+                "kMDItemPath"
+            ).stringByResolvingSymlinksInPath()
 
             # create a dictionary entry to be added to our search results array
             emptyStr = ""
             dict = {
-                    'name': nameStr or "",
-                    'phone': phoneStr or "",
-                    'city': cityStr or "",
-                    'state': stateStr or "",
-                    'url': Cocoa.NSURL.fileURLWithPath_(storePath),
+                "name": nameStr or "",
+                "phone": phoneStr or "",
+                "city": cityStr or "",
+                "state": stateStr or "",
+                "url": Cocoa.NSURL.fileURLWithPath_(storePath),
             }
             self.mySearchResults.append(dict)
 
@@ -101,7 +108,7 @@ class MyWindowController (Cocoa.NSWindowController):
         elif note.name() == Cocoa.NSMetadataQueryDidFinishGatheringNotification:
             # at this point, the query will be done. You may recieve an update
             # later on.
-            Cocoa.NSLog("search: finished gathering");
+            Cocoa.NSLog("search: finished gathering")
 
             self.progressSearch.setHidden_(True)
             self.progressSearch.stopAnimation_(self)
@@ -128,7 +135,7 @@ class MyWindowController (Cocoa.NSWindowController):
     def inspect_(self, selectedObjects):
         objectDict = selectedObjects[0]
         if objectDict is not None:
-            url = objectDict['url']
+            url = objectDict["url"]
             Cocoa.NSWorkspace.sharedWorkspace().openURL_(url)
 
     # ------------------------------------------------------------------------
@@ -141,7 +148,9 @@ class MyWindowController (Cocoa.NSWindowController):
     #           - Any compound predicate (other than NOT) must have at least two subpredicates
     # -------------------------------------------------------------------------
     def spotlightFriendlyPredicate_(self, predicate):
-        if predicate == Cocoa.NSPredicate.predicateWithValue_(True) or predicate == Cocoa.NSPredicate.predicateWithValue_(False):
+        if predicate == Cocoa.NSPredicate.predicateWithValue_(
+            True
+        ) or predicate == Cocoa.NSPredicate.predicateWithValue_(False):
             return False
 
         elif isinstance(predicate, Cocoa.NSCompoundPredicate):
@@ -149,8 +158,7 @@ class MyWindowController (Cocoa.NSWindowController):
             type = predicate.compoundPredicateType()
             cleanSubpredicates = []
             for dirtySubpredicate in predicate.subpredicates():
-                cleanSubpredicate = self.spotlightFriendlyPredicate_(
-                    dirtySubpredicate)
+                cleanSubpredicate = self.spotlightFriendlyPredicate_(dirtySubpredicate)
                 if cleanSubpredicate:
                     cleanSubpredicates.append(cleanSubpredicate)
 
@@ -162,7 +170,9 @@ class MyWindowController (Cocoa.NSWindowController):
                     return cleanSubpredicates[0]
 
                 else:
-                    return Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(type, cleanSubpredicates)
+                    return Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(
+                        type, cleanSubpredicates
+                    )
 
         else:
             return predicate
@@ -173,14 +183,16 @@ class MyWindowController (Cocoa.NSWindowController):
     # -------------------------------------------------------------------------
     def createNewSearchForPredicate_withTitle_(self, predicate, title):
         if predicate is not None:
-            self.mySearchResults.removeObjects_(
-                self.mySearchResults.arrangedObjects());        # remove the old search results
+            self.mySearchResults.removeObjects_(self.mySearchResults.arrangedObjects())
+            # remove the old search results
 
             # always search for items in the Address Book
             addrBookPredicate = Cocoa.NSPredicate.predicateWithFormat_(
-                "(kMDItemKind = 'Address Book Person Data')")
+                "(kMDItemKind = 'Address Book Person Data')"
+            )
             predicate = Cocoa.NSCompoundPredicate.andPredicateWithSubpredicates_(
-                [addrBookPredicate, predicate])
+                [addrBookPredicate, predicate]
+            )
 
             self.query.setPredicate_(predicate)
             self.query.startQuery()
@@ -205,7 +217,7 @@ class MyWindowController (Cocoa.NSWindowController):
 
         if event.type() == Cocoa.NSKeyDown:
             characters = event.characters()
-            if len(characters) > 0 and characters[0] == u'\r':
+            if len(characters) > 0 and characters[0] == "\r":
                 # get the predicat, which is the object value of our view
                 predicate = self.predicateEditor.objectValue()
 
@@ -213,9 +225,10 @@ class MyWindowController (Cocoa.NSWindowController):
                 predicate = self.spotlightFriendlyPredicate_(predicate)
                 if predicate is not None:
                     global searchIndex
-                    title = Cocoa.NSLocalizedString("Search #%ld", "Search title");
+                    title = Cocoa.NSLocalizedString("Search #%ld", "Search title")
                     self.createNewSearchForPredicate_withTitle_(
-                            predicate, title % searchIndex)
+                        predicate, title % searchIndex
+                    )
                     searchIndex += 1
 
         # if the user deleted the first row, then add it again - no sense leaving the user with no rows
@@ -242,28 +255,38 @@ class MyWindowController (Cocoa.NSWindowController):
         oldPredicateEditorViewMask = predicateEditorScrollView.autoresizingMask()
 
         tableScrollView.setAutoresizingMask_(
-                Cocoa.NSViewWidthSizable | Cocoa.NSViewMaxYMargin)
+            Cocoa.NSViewWidthSizable | Cocoa.NSViewMaxYMargin
+        )
         predicateEditorScrollView.setAutoresizingMask_(
-                Cocoa.NSViewWidthSizable | Cocoa.NSViewHeightSizable)
+            Cocoa.NSViewWidthSizable | Cocoa.NSViewHeightSizable
+        )
 
         # determine if we need to grow or shrink the window
-        growing = (newRowCount > self.previousRowCount)
+        growing = newRowCount > self.previousRowCount
 
         # if growing, figure out by how much.  Sizes must contain nonnegative values, which is why we avoid negative floats here.
-        heightDifference = abs(self.predicateEditor.rowHeight() * (newRowCount - self.previousRowCount))
+        heightDifference = abs(
+            self.predicateEditor.rowHeight() * (newRowCount - self.previousRowCount)
+        )
 
         # convert the size to window coordinates -
         # if we didn't do this, we would break under scale factors other than 1.
         # We don't care about the horizontal dimension, so leave that as 0.
         #
         sizeChange = self.predicateEditor.convertSize_toView_(
-                Cocoa.NSMakeSize(0, heightDifference), None)
+            Cocoa.NSMakeSize(0, heightDifference), None
+        )
 
         # offset our status view
         frame = self.progressView.frame()
-        self.progressView.setFrameOrigin_(Cocoa.NSMakePoint(
-            frame.origin.x,
-            frame.origin.y - self.predicateEditor.rowHeight() * (newRowCount - self.previousRowCount)))
+        self.progressView.setFrameOrigin_(
+            Cocoa.NSMakePoint(
+                frame.origin.x,
+                frame.origin.y
+                - self.predicateEditor.rowHeight()
+                * (newRowCount - self.previousRowCount),
+            )
+        )
 
         # change the window frame size:
         # - if we're growing, the height goes up and the origin goes down (corresponding to growing down).
@@ -282,4 +305,4 @@ class MyWindowController (Cocoa.NSWindowController):
         tableScrollView.setAutoresizingMask_(oldOutlineViewMask)
         predicateEditorScrollView.setAutoresizingMask_(oldPredicateEditorViewMask)
 
-        self.previousRowCount = newRowCount     # save our new row count
+        self.previousRowCount = newRowCount  # save our new row count

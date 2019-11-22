@@ -47,9 +47,17 @@
     "NSRectEdgeMinX": { "alias": "NSMinXEdge" },
     "NSRectEdgeMinY": { "alias": "NSMinYEdge" },
     "NSRectEdgeMaxX": { "alias": "NSMaxXEdge" },
-    "NSRectEdgeMaxY": { "alias": "NSMaxYEdge" }
+    "NSRectEdgeMaxY": { "alias": "NSMaxYEdge" },
+    "NSMinXEdge": { "ignore": true },
+    "NSMinYEdge": { "ignore": true },
+    "NSMaxXEdge": { "ignore": true },
+    "NSMaxYEdge": { "ignore": true }
   },
   "enum": {
+   "NSMinXEdge": { "value": 0 },
+   "NSMinYEdge": { "value": 1 },
+   "NSMaxXEdge": { "value": 2 },
+   "NSMaxYEdge": { "value": 3 },
    "NSCoderInvalidValueError": { "value": 4866 },
    "NSURLSessionDelayedRequestContinueLoading": { "value": 0 },
    "NSURLSessionDelayedRequestUseNewRequest": { "value": 1 },
@@ -479,6 +487,56 @@
       "class_method": false,
       "args": {
        "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "NSURLSessionWebSocketTask": {
+    "methods": [
+     {
+      "selector": "sendPingWithPongReceiveHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "receiveMessageWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "sendMessage:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -1061,6 +1119,24 @@
        "type_override": "v"
       },
       "selector": "getObjects:range:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" }
+         },
+         "retval": {
+          "typestr": "b"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "differenceFromArray:withOptions:usingEquivalenceTest:"
      },
      {
       "args": {
@@ -3174,6 +3250,7 @@
       "selector": "dictionaryWithObjects:forKeys:count:"
      },
      {
+      "c_array_delimited_by_null": true,
       "class_method": true,
       "selector": "dictionaryWithObjectsAndKeys:",
       "variadic": true
@@ -6625,6 +6702,20 @@
    "NSMutableData": {
     "methods": [
      {
+      "selector": "compressUsingAlgorithm:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "decompressUsingAlgorithm:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
       "class_method": false,
       "retval": {
        "type_override": "^v"
@@ -9681,6 +9772,24 @@
        }
       },
       "class_method": false,
+      "selector": "addBarrierBlock:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
       "selector": "addOperationWithBlock:"
      },
      {
@@ -9703,6 +9812,22 @@
    },
    "NSOrderedSet": {
     "methods": [
+     {
+      "selector": "differenceFromOrderedSet:withOptions:usingEquivalenceTest:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" },
+          "2": { "typestr": "@" }
+         },
+         "retval": { "typestr": "Z" }
+        }
+       }
+      }
+     },
      {
       "args": {
        "0": {}
@@ -13411,14 +13536,32 @@
      }
     ]
    },
+   "NSOrderedCollectionDifference": {
+    "methods": [
+     {
+      "selector": "differenceByTransformingChangesWithBlock:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "@" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "NSTimer": {
     "methods": [
      {
-      "selector": "initWithFireDate:interval:repeats:block:",
-      "class_method": false,
+      "selector": "scheduledTimerWithTimeInterval:repeats:block:",
+      "class_method": true,
       "args": {
-       "2": { "type_override": "Z" },
-       "3": {
+       "2": {
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
@@ -13430,11 +13573,11 @@
       }
      },
      {
-      "selector": "scheduledTimerWithTimeInterval:repeats:block:",
+      "selector": "initWithFireDate:interval:repeats:block:",
       "class_method": false,
       "args": {
-       "1": { "type_override": "Z" },
-       "2": {
+       "2": { "type_override": "Z" },
+       "3": {
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },

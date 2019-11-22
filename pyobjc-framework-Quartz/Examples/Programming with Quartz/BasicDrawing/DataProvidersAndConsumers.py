@@ -4,9 +4,12 @@ import Quartz
 import Cocoa
 import objc
 
-def createDataProviderFromPathName (path):
+
+def createDataProviderFromPathName(path):
     # Create a CFURL for the supplied file system path.
-    url = Cocoa.CFURLCreateWithFileSystemPath(None, path, Cocoa.kCFURLPOSIXPathStyle, False)
+    url = Cocoa.CFURLCreateWithFileSystemPath(
+        None, path, Cocoa.kCFURLPOSIXPathStyle, False
+    )
     if url is None:
         print("Couldn't create url!")
         return None
@@ -19,10 +22,11 @@ def createDataProviderFromPathName (path):
 
     return dataProvider
 
+
 def createRGBRampDataProvider():
     width = 256
     height = 256
-    imageDataSize = width*height*3
+    imageDataSize = width * height * 3
 
     dataP = objc.allocateBuffer(imageDataSize)
 
@@ -30,32 +34,34 @@ def createRGBRampDataProvider():
     #    where the red component value increases in red from left to
     #    right and the green component increases from top to bottom.
     #
-    idx=0
+    idx = 0
     for g in range(height):
         for r in range(width):
             dataP[idx] = chr(r) if sys.version_info[0] == 2 else r
-            dataP[idx+1] = chr(g) if sys.version_info[0] == 2 else g
-            dataP[idx+2] = '\0' if sys.version_info[0] == 2 else 0
+            dataP[idx + 1] = chr(g) if sys.version_info[0] == 2 else g
+            dataP[idx + 2] = "\0" if sys.version_info[0] == 2 else 0
             idx += 3
 
     # Once this data provider is created, the data associated
     # with dataP MUST be available until Quartz calls the data
     # releaser function 'rgbReleaseRampData'.
-    dataProvider = Quartz.CGDataProviderCreateWithData(
-            None, dataP, imageDataSize, None)
+    dataProvider = Quartz.CGDataProviderCreateWithData(None, dataP, imageDataSize, None)
     return dataProvider
 
-class MyImageDataInfo (object):
+
+class MyImageDataInfo(object):
     fp = None
     totalBytesRead = 0
     skippedBytes = 0
     numRewinds = 0
 
+
 def getBytesSequentialAccessDP(data, buffer, count):
     buf = data.fp.read(count)
-    buffer[:len(buf)] = buf
+    buffer[: len(buf)] = buf
     data.totalBytesRead += len(buf)
     return len(buf), buffer
+
 
 def skipBytesSequentialAccessDP(data, count):
     try:
@@ -63,7 +69,7 @@ def skipBytesSequentialAccessDP(data, count):
         data.skippedBytes += count
 
     except IOError as msg:
-        print("Couldn't seek %d bytes because of %s"%(count, msg))
+        print("Couldn't seek %d bytes because of %s" % (count, msg))
 
 
 def rewindSequentialAccessDP(data):
@@ -71,33 +77,40 @@ def rewindSequentialAccessDP(data):
     data.fp.seek(0, 0)
     data.numRewinds += 1
 
+
 def releaseSequentialAccessDP(data):
     if data is not None:
-        print("read %d bytes, skipped %d bytes, rewind called %d times"%(
-                    data.totalBytesRead, data.skippedBytes,
-                    data.numRewinds))
+        print(
+            "read %d bytes, skipped %d bytes, rewind called %d times"
+            % (data.totalBytesRead, data.skippedBytes, data.numRewinds)
+        )
         data.fp.close()
+
 
 def createSequentialAccessDPForURL(url):
     success, pathString = Cocoa.CFURLGetFileSystemRepresentation(url, True, None, 1024)
-    pathString = pathString.rstrip(b'\0')
+    pathString = pathString.rstrip(b"\0")
     if not success:
         print("Couldn't get the path name C string!")
         return None
 
     fp = open(pathString, "rb")
     if fp is None:
-        print("Couldn't open path to file %s!"%(pathString,))
+        print("Couldn't open path to file %s!" % (pathString,))
         return None
 
     imageDataInfoP = MyImageDataInfo()
     imageDataInfoP.fp = fp
 
-    provider = Quartz.CGDataProviderCreate(imageDataInfoP, (
-        getBytesSequentialAccessDP,
-        skipBytesSequentialAccessDP,
-        rewindSequentialAccessDP,
-        releaseSequentialAccessDP))
+    provider = Quartz.CGDataProviderCreate(
+        imageDataInfoP,
+        (
+            getBytesSequentialAccessDP,
+            skipBytesSequentialAccessDP,
+            rewindSequentialAccessDP,
+            releaseSequentialAccessDP,
+        ),
+    )
     if provider is None:
         print("Couldn't create data provider!")
         # Release the info data and cleanup.
@@ -108,10 +121,10 @@ def createSequentialAccessDPForURL(url):
 
 
 def getBytesGrayRampDirectAccess(info, buffer, offset, count):
-        # This computes a linear gray ramp that is 256 samples wide and
-        # 1 sample high. The ith byte in the image is the sample
-        # value i. This produces a gray ramp that goes from 0 (black) to
-        # FF (white).
+    # This computes a linear gray ramp that is 256 samples wide and
+    # 1 sample high. The ith byte in the image is the sample
+    # value i. This produces a gray ramp that goes from 0 (black) to
+    # FF (white).
     idx = 0
 
     # This data provider provides 256 bytes total. If Quartz
@@ -120,23 +133,23 @@ def getBytesGrayRampDirectAccess(info, buffer, offset, count):
     if (offset + count) > 256:
         count = 256 - offset
 
-    for i in range(offset, offset+count):
+    for i in range(offset, offset + count):
         buffer[idx] = chr(i) if sys.version_info[0] == 2 else i
-        idx+=1
+        idx += 1
 
     return count, buffer
 
-def  createGrayRampDirectAccessDP():
-    provider = Quartz.CGDataProviderCreateDirectAccess(None, 256, (
-        None,
-        None,
-        getBytesGrayRampDirectAccess,
-        None))
+
+def createGrayRampDirectAccessDP():
+    provider = Quartz.CGDataProviderCreateDirectAccess(
+        None, 256, (None, None, getBytesGrayRampDirectAccess, None)
+    )
     if provider is None:
         print("Couldn't create data provider!")
         return None
 
     return provider
+
 
 # This only builds on Tiger and later.
 def myCGDataProviderCreateWithCFData(data):
@@ -147,17 +160,20 @@ def myCGDataProviderCreateWithCFData(data):
 
     # Test to see if the Quartz version is available and if so, use it.
 
-    #XXX: force the replacment code to be used
-    #if hasattr(Quartz, 'CGDataProviderCreateWithCFData'):
+    # XXX: force the replacment code to be used
+    # if hasattr(Quartz, 'CGDataProviderCreateWithCFData'):
     #    return CGDataProviderCreateWithCFData(data)
 
     dataSize = Cocoa.CFDataGetLength(data)
     provider = Quartz.CGDataProviderCreateWithData(data, buffer(data), dataSize, None)
     return provider
 
+
 def createDataConsumerFromPathName(path):
     # Create a CFURL for the supplied file system path.
-    url = Cocoa.CFURLCreateWithFileSystemPath (None, path, Cocoa.kCFURLPOSIXPathStyle, False)
+    url = Cocoa.CFURLCreateWithFileSystemPath(
+        None, path, Cocoa.kCFURLPOSIXPathStyle, False
+    )
     if url is None:
         print("Couldn't create url!")
         return None
@@ -169,11 +185,13 @@ def createDataConsumerFromPathName(path):
 
     return dataConsumer
 
+
 def myCFDataConsumerPutBytes(data, buffer, count):
     # Append 'count' bytes from 'buffer' to the CFData
     # object 'data'.
     Cocoa.CFDataAppendBytes(data, buffer, count)
     return count
+
 
 # This only builds on Tiger and later.
 def myCGDataConsumerCreateWithCFData(data):
@@ -185,9 +203,8 @@ def myCGDataConsumerCreateWithCFData(data):
     # Test to see if the Quartz version is available.
 
     # XXX: force the replacement code to be used:
-    #if hasattr(Quartz, 'CGDataConsumerCreateWithCFData'):
+    # if hasattr(Quartz, 'CGDataConsumerCreateWithCFData'):
     #    return CGDataConsumerCreateWithCFData(data)
 
-    consumer = Quartz.CGDataConsumerCreate(data, (
-        myCFDataConsumerPutBytes, None))
+    consumer = Quartz.CGDataConsumerCreate(data, (myCFDataConsumerPutBytes, None))
     return consumer

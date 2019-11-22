@@ -4,9 +4,44 @@
  "definitions": {
   "enum": {
    "CWEventTypeVirtualInterfaceStateChanged": { "value": 9 },
-   "CWEventTypeRangingReportEvent": { "value": 10 }
+   "CWEventTypeRangingReportEvent": { "value": 10 },
+   "kCWSecurityWPA3Personal": { "value": 11 },
+   "kCWSecurityWPA3Enterprise": { "value": 12 },
+   "kCWSecurityWPA3Transition": { "value": 13 }
   },
   "classes": {
+   "CWConfiguration": {
+    "methods": [
+     {
+      "selector": "setRememberJoinedNetworks:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setRequireAdministratorForIBSSMode:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setRequireAdministratorForPower:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "setRequireAdministratorForAssociation:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "CWInterface": {
     "methods": [
      {

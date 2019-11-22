@@ -33,27 +33,32 @@ try:
 except ImportError:
     pass
 
+
 def _sortClasses(classList):
     classes = [(cls.__name__, cls) for cls in classList]
     classes.sort()
     return [cls for name, cls in classes]
 
+
 if sys.version_info[0] == 2:
+
     def formatSelector(selector):
         if selector.isClassMethod:
-            return '+' + selector.selector
+            return "+" + selector.selector
         else:
-            return '-' + selector.selector
+            return "-" + selector.selector
+
 
 else:
+
     def formatSelector(selector):
         if selector.isClassMethod:
-            return '+' + selector.selector.decode('ascii')
+            return "+" + selector.selector.decode("ascii")
         else:
-            return '-' + selector.selector.decode('ascii')
+            return "-" + selector.selector.decode("ascii")
 
 
-class ClassBrowserDelegate (NSObject):
+class ClassBrowserDelegate(NSObject):
     browser = objc.IBOutlet()
     pathLabel = objc.IBOutlet()
     table = objc.IBOutlet()
@@ -100,15 +105,16 @@ class ClassBrowserDelegate (NSObject):
                 break
             row = self.browser.selectedRowInColumn_(col)
 
-
         if row >= 0:
             self.selectedClass = self.columns[col][row]
             self.selectedClassMethods = [
-                formatSelector(obj) for obj in self.selectedClass.pyobjc_instanceMethods.__dict__.values()
-                 if hasattr(obj, "selector")
+                formatSelector(obj)
+                for obj in self.selectedClass.pyobjc_instanceMethods.__dict__.values()
+                if hasattr(obj, "selector")
             ]
             self.selectedClassMethods += [
-                formatSelector(obj) for obj in self.selectedClass.pyobjc_classMethods.__dict__.values()
+                formatSelector(obj)
+                for obj in self.selectedClass.pyobjc_classMethods.__dict__.values()
                 if hasattr(obj, "selector")
             ]
             self.selectedClassMethods.sort()
@@ -126,6 +132,7 @@ class ClassBrowserDelegate (NSObject):
 
     def tableView_shouldEditTableColumn_row_(self, tableView, col, row):
         return 0
+
 
 if __name__ == "__main__":
     AppHelper.runEventLoop()

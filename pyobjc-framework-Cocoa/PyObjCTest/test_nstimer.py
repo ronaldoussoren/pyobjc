@@ -4,7 +4,8 @@ import gc
 from objc import *
 from Foundation import *
 
-class PythonClass (object):
+
+class PythonClass(object):
     def __init__(self):
         self.fireCount = 0
 
@@ -13,17 +14,19 @@ class PythonClass (object):
 
 
 class TestNSTimer(TestCase):
-
     def _testHelp(self):
         obj = PythonClass()
         pool = NSAutoreleasePool.alloc().init()
-        self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4)
+        self.assertArgIsBOOL(
+            NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4
+        )
         timer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(
-                0.1, obj, 'fire:', None, False)
-        NSRunLoop.currentRunLoop().addTimer_forMode_(
-                timer, NSDefaultRunLoopMode)
+            0.1, obj, "fire:", None, False
+        )
+        NSRunLoop.currentRunLoop().addTimer_forMode_(timer, NSDefaultRunLoopMode)
         NSRunLoop.currentRunLoop().runUntilDate_(
-                NSDate.dateWithTimeIntervalSinceNow_(0.5))
+            NSDate.dateWithTimeIntervalSinceNow_(0.5)
+        )
         timer.invalidate()
         self.assertEqual(obj.fireCount, 1)
 
@@ -52,31 +55,52 @@ class TestNSTimer(TestCase):
         gc.collect()
         after2 = len(gc.get_objects())
 
-        self.assertEqual(after, before, "%d - %d - %d"%(before, after, after2))
+        self.assertEqual(after, before, "%d - %d - %d" % (before, after, after2))
 
     def testMethods(self):
         self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_invocation_repeats_, 2)
-        self.assertArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_invocation_repeats_, 2)
-        self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4)
-        self.assertArgIsSEL(NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 2, b'v@:@')
-        self.assertArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 4)
-        self.assertArgIsSEL(NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 2, b'v@:@')
+        self.assertArgIsBOOL(
+            NSTimer.scheduledTimerWithTimeInterval_invocation_repeats_, 2
+        )
+        self.assertArgIsBOOL(
+            NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4
+        )
+        self.assertArgIsSEL(
+            NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 2, b"v@:@"
+        )
+        self.assertArgIsBOOL(
+            NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 4
+        )
+        self.assertArgIsSEL(
+            NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_,
+            2,
+            b"v@:@",
+        )
 
-        self.assertArgIsBOOL(NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 5)
-        self.assertArgIsSEL(NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 3, b'v@:@')
+        self.assertArgIsBOOL(
+            NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 5
+        )
+        self.assertArgIsSEL(
+            NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_,
+            3,
+            b"v@:@",
+        )
 
         self.assertResultIsBOOL(NSTimer.isValid)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_repeats_block_, 1)
-        self.assertArgIsBlock(NSTimer.timerWithTimeInterval_repeats_block_, 2, b'v@')
+        self.assertArgIsBlock(NSTimer.timerWithTimeInterval_repeats_block_, 2, b"v@")
 
         self.assertArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 1)
-        self.assertArgIsBlock(NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 2, b'v@')
+        self.assertArgIsBlock(
+            NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 2, b"v@"
+        )
 
         self.assertArgIsBOOL(NSTimer.initWithFireDate_interval_repeats_block_, 2)
-        self.assertArgIsBlock(NSTimer.initWithFireDate_interval_repeats_block_, 3, b'v@')
+        self.assertArgIsBlock(NSTimer.initWithFireDate_interval_repeats_block_, 3, b"v@")
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

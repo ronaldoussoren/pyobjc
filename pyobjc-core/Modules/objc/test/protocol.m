@@ -7,90 +7,57 @@
 #import <Foundation/Foundation.h>
 
 @protocol OC_TestProtocol
--(int)method1;
--(void)method2:(int)v;
+- (int)method1;
+- (void)method2:(int)v;
 @end
 
 @protocol OC_TestProtocol2
--(id)description;
--(void)method;
-+(id)alloc;
-+(id)classMethod;
+- (id)description;
+- (void)method;
++ (id)alloc;
++ (id)classMethod;
 @end
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wprotocol"
 #pragma clang diagnostic ignored "-Wincomplete-implementation"
-@interface OC_TestProtocolClass : NSObject <OC_TestProtocol, OC_TestProtocol2>
-{}
+@interface OC_TestProtocolClass : NSObject <OC_TestProtocol, OC_TestProtocol2> {
+}
 @end
 
 @implementation OC_TestProtocolClass
 @end
 #pragma clang diagnostic pop
 
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
-
-#if PY_VERSION_HEX >= 0x03000000
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "protocols",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+    PyModuleDef_HEAD_INIT, "protocols", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_protocol(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_protocol(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initprotocol(void);
-
-void __attribute__((__visibility__("default")))
-initprotocol(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_protocol(void)
 {
     PyObject* m;
     Protocol* p;
 
-
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("protocol", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     p = @protocol(OC_TestProtocol);
     PyObject* prot = PyObjC_ObjCToPython("@", &p);
     if (!prot) {
-        INITERROR();
-    }
-    if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-    INITDONE();
+    if (PyModule_AddObject(m, "OC_TestProtocol", prot) < 0) {
+        return NULL;
+    }
+
+    return m;
 }

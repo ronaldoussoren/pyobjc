@@ -6,10 +6,9 @@ extern PyTypeObject PyObjCZoneWrapper_Type;
 typedef PyObject* (*PyObjCPointerWrapper_ToPythonFunc)(void*);
 typedef int (*PyObjCPointerWrapper_FromPythonFunc)(PyObject*, void*);
 
-extern int PyObjCPointerWrapper_Register(
-    const char* type_name,
-    const char*, PyObjCPointerWrapper_ToPythonFunc pythonify,
-    PyObjCPointerWrapper_FromPythonFunc depythonify);
+extern int PyObjCPointerWrapper_Register(const char* type_name, const char*,
+                                         PyObjCPointerWrapper_ToPythonFunc pythonify,
+                                         PyObjCPointerWrapper_FromPythonFunc depythonify);
 
 extern int PyObjCPointerWrapper_RegisterID(const char* name, const char*);
 

@@ -2,8 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Security
 
-class TestSecTransform (TestCase):
 
+class TestSecTransform(TestCase):
     def test_constants(self):
         self.assertIsInstance(Security.kSecTransformErrorDomain, unicode)
         self.assertIsInstance(Security.kSecTransformPreviousErrorKey, unicode)
@@ -30,7 +30,7 @@ class TestSecTransform (TestCase):
         self.assertEqual(Security.kSecTransformErrorAborted, 20)
         self.assertEqual(Security.kSecTransformInvalidArgument, 21)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_constants10_7(self):
         self.assertIsInstance(Security.kSecTransformInputAttributeName, unicode)
         self.assertIsInstance(Security.kSecTransformOutputAttributeName, unicode)
@@ -38,16 +38,30 @@ class TestSecTransform (TestCase):
         self.assertIsInstance(Security.kSecTransformTransformName, unicode)
         self.assertIsInstance(Security.kSecTransformAbortAttributeName, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_functions10_7(self):
-        self.assertResultHasType(Security.SecTransformCreateFromExternalRepresentation, objc._C_ID)
-        self.assertResultIsCFRetained(Security.SecTransformCreateFromExternalRepresentation)
-        self.assertArgHasType(Security.SecTransformCreateFromExternalRepresentation, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformCreateFromExternalRepresentation, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertResultHasType(
+            Security.SecTransformCreateFromExternalRepresentation, objc._C_ID
+        )
+        self.assertResultIsCFRetained(
+            Security.SecTransformCreateFromExternalRepresentation
+        )
+        self.assertArgHasType(
+            Security.SecTransformCreateFromExternalRepresentation, 0, objc._C_ID
+        )
+        self.assertArgHasType(
+            Security.SecTransformCreateFromExternalRepresentation,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
 
-        self.assertResultHasType(Security.SecTransformCopyExternalRepresentation, objc._C_ID)
+        self.assertResultHasType(
+            Security.SecTransformCopyExternalRepresentation, objc._C_ID
+        )
         self.assertResultIsCFRetained(Security.SecTransformCopyExternalRepresentation)
-        self.assertArgHasType(Security.SecTransformCopyExternalRepresentation, 0, objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTransformCopyExternalRepresentation, 0, objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecTransformCreateGroupTransform, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTransformCreateGroupTransform)
@@ -58,13 +72,19 @@ class TestSecTransform (TestCase):
         self.assertArgHasType(Security.SecTransformConnectTransforms, 2, objc._C_ID)
         self.assertArgHasType(Security.SecTransformConnectTransforms, 3, objc._C_ID)
         self.assertArgHasType(Security.SecTransformConnectTransforms, 4, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformConnectTransforms, 5, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTransformConnectTransforms,
+            5,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
+        )
 
         self.assertResultHasType(Security.SecTransformSetAttribute, objc._C_NSBOOL)
         self.assertArgHasType(Security.SecTransformSetAttribute, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTransformSetAttribute, 1, objc._C_ID)
         self.assertArgHasType(Security.SecTransformSetAttribute, 2, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformSetAttribute, 3, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTransformSetAttribute, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
         self.assertResultHasType(Security.SecTransformGetAttribute, objc._C_ID)
         self.assertArgHasType(Security.SecTransformGetAttribute, 0, objc._C_ID)
@@ -77,12 +97,16 @@ class TestSecTransform (TestCase):
         self.assertResultHasType(Security.SecTransformExecute, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTransformExecute)
         self.assertArgHasType(Security.SecTransformExecute, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformExecute, 1, objc._C_OUT + objc._C_PTR + objc._C_ID)
+        self.assertArgHasType(
+            Security.SecTransformExecute, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+        )
 
-        SecMessageBlock = b'v@@Z'
+        SecMessageBlock = b"v@@Z"
         self.assertResultHasType(Security.SecTransformExecuteAsync, objc._C_VOID)
         self.assertArgHasType(Security.SecTransformExecuteAsync, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTransformExecuteAsync, 1, b'^{dispatch_queue_s=}')
+        self.assertArgHasType(
+            Security.SecTransformExecuteAsync, 1, b"^{dispatch_queue_s=}"
+        )
         self.assertArgIsBlock(Security.SecTransformExecuteAsync, 2, SecMessageBlock)
 
 

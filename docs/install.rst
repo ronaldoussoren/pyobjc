@@ -4,18 +4,14 @@ Installing PyObjC
 Supported versions
 ------------------
 
-PyObjC is regularly tested with Python 2.7, 3.4, 3.5, 3.6 and 3.7.
+PyObjC supports Python 3.6 or later and does not support Python 2.
+
 PyObjC does not support other python implementation such as PyPy and Jython.
 
-PyObjC is regularly tested on macOS 10.12 and should work on macOS
-10.5 or later for the i386, x86_64 and ppc architectures. PPC64 (64-bit
-on PowerMac G5 or iMac G5 systems) is not supported.
+PyObjC is regularly tested on macOS 10.14 and should work on macOS
+10.9 or later for the i386 and x86_64 architectures.
 
-.. note::
-
-   PPC support, and support for versions of macOS before 10.9 is
-   no longer actively developed and may be removed in future versions
-   of PyObjC.
+PyObjC only supports macOS and does not support other platform (iOS, Linux, ...)
 
 Installation
 ------------
@@ -35,6 +31,12 @@ Installing or upgrading PyObjC using `pip`_ is easy:
 
 For most users this will install PyObjC using `wheel <https://pypi.org/project/wheel>`_ binary
 archives, which means you don't have to have a compiler on your machine.
+
+.. note::
+
+   Pip will install PyObjC 5 for users of Python 2.7, but only when using
+   pip 9 or later.
+
 
 Manual installation
 ...................

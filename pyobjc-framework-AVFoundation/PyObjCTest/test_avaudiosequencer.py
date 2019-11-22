@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-class TestAVAudioSequencer (TestCase):
+
+class TestAVAudioSequencer(TestCase):
     def testConstants(self):
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_PreserveTracks, 0)
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_ChannelsToTracks, 1)
@@ -14,14 +15,14 @@ class TestAVAudioSequencer (TestCase):
         self.assertIsInstance(v.start, float)
         self.assertIsInstance(v.length, float)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions(self):
         v = AVFoundation.AVMakeBeatRange(1.5, 2.5)
         self.assertIsInstance(v, AVFoundation.AVBeatRange)
         self.assertEqual(v.start, 1.5)
         self.assertEqual(v.length, 2.5)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.loadFromURL_options_error_)
         self.assertArgIsOut(AVFoundation.AVAudioSequencer.loadFromURL_options_error_, 2)
@@ -29,11 +30,21 @@ class TestAVAudioSequencer (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.loadFromData_options_error_)
         self.assertArgIsOut(AVFoundation.AVAudioSequencer.loadFromData_options_error_, 2)
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_)
-        self.assertArgIsBOOL(AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_, 2)
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_, 3)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_,
+            2,
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_,
+            3,
+        )
 
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.dataWithSMPTEResolution_error_, 1)
+        self.assertArgIsOut(
+            AVFoundation.AVAudioSequencer.dataWithSMPTEResolution_error_, 1
+        )
 
         self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.isPlaying)
 
@@ -51,6 +62,7 @@ class TestAVAudioSequencer (TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVMusicTrack.isSoloed)
         self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setSoloed_, 0)
+
 
 if __name__ == "__main__":
     main()

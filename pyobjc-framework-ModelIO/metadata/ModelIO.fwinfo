@@ -284,8 +284,9 @@
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
-      },
-      {
+      }
+     },
+     {
       "selector": "getFloatArray:maxCount:",
       "class_method": false,
       "args": {

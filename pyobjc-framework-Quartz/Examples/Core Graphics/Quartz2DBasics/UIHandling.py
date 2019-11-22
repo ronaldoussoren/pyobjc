@@ -1,4 +1,3 @@
-
 kCommandStrokedAndFilledRects = 1000
 kCommandAlphaRects = 1001
 kCommandSimpleClip = 1002

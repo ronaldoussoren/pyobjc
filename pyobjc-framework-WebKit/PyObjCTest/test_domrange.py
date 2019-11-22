@@ -1,7 +1,8 @@
 from WebKit import *
 from PyObjCTools.TestSupport import *
 
-class TestDOMRange (TestCase):
+
+class TestDOMRange(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_START_TO_START, 0)
         self.assertEqual(DOM_START_TO_END, 1)
@@ -18,6 +19,7 @@ class TestDOMRange (TestCase):
 
         self.assertResultIsBOOL(DOMRange.intersectsNode_)
         self.assertResultIsBOOL(DOMRange.isPointInRange_offset_)
+
 
 if __name__ == "__main__":
     main()

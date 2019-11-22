@@ -3,13 +3,12 @@ from CoreFoundation import *
 from PyObjCTools.TestSupport import *
 
 
-class TestCFBinaryHeap (TestCase):
+class TestCFBinaryHeap(TestCase):
     def testTypes(self):
         self.assertIsCFType(CFBinaryHeapRef)
 
     def testCreation(self):
-        heap = CFBinaryHeapCreate(
-                None, 0)
+        heap = CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CFBinaryHeapRef)
 
         CFBinaryHeapAddValue(heap, "hello")
@@ -23,8 +22,7 @@ class TestCFBinaryHeap (TestCase):
         def compare(l, r, info):
             return cmp(l, r)
 
-        heap = CFBinaryHeapCreate(
-                None, 0)
+        heap = CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CFBinaryHeapRef)
 
         CFBinaryHeapAddValue(heap, "hello")
@@ -42,19 +40,20 @@ class TestCFBinaryHeap (TestCase):
         self.assertEqual(contexts, [None, None, None])
         self.assertEqual(items, ["aapjesaapjes", "hellohello", "worldworld"])
 
-        ctx = ['']
+        ctx = [""]
+
         def function(item, context):
             context[0] += item
-        CFBinaryHeapApplyFunction(heap, function, ctx)
-        self.assertEqual(ctx[0], 'aapjeshelloworld')
 
+        CFBinaryHeapApplyFunction(heap, function, ctx)
+        self.assertEqual(ctx[0], "aapjeshelloworld")
 
     def testTypeID(self):
         v = CFBinaryHeapGetTypeID()
         self.assertIsInstance(v, (int, long))
+
     def testCopy(self):
-        heap = CFBinaryHeapCreate(
-                None, 0)
+        heap = CFBinaryHeapCreate(None, 0)
         self.assertIsInstance(heap, CFBinaryHeapRef)
 
         CFBinaryHeapAddValue(heap, "hello")
@@ -66,19 +65,18 @@ class TestCFBinaryHeap (TestCase):
 
     def testInspect(self):
         from Foundation import NSString, NSLog
-        heap = CFBinaryHeapCreate(
-                None, 0)
-        self.assertIsInstance(heap, CFBinaryHeapRef)
 
+        heap = CFBinaryHeapCreate(None, 0)
+        self.assertIsInstance(heap, CFBinaryHeapRef)
 
         CFBinaryHeapAddValue(heap, "hello")
         CFBinaryHeapAddValue(heap, "world")
         CFBinaryHeapAddValue(heap, "aapjes")
 
-        #ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
-        #self.assertTrue(ok)
-        #self.assertEqual(min, "aapjes")
-        #self.fail()
+        # ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
+        # self.assertTrue(ok)
+        # self.assertEqual(min, "aapjes")
+        # self.fail()
 
         count = CFBinaryHeapGetCount(heap)
         self.assertEqual(count, 3)
@@ -97,10 +95,10 @@ class TestCFBinaryHeap (TestCase):
         count = CFBinaryHeapGetCount(heap)
         self.assertEqual(count, 3)
 
-        #ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
-        #self.assertTrue(ok)
-        #self.assertEqual(min, "aapjes")
-        #self.fail()
+        # ok, min = CFBinaryHeapGetMinimumIfPresent(heap, None)
+        # self.assertTrue(ok)
+        # self.assertEqual(min, "aapjes")
+        # self.fail()
 
         values = CFBinaryHeapGetValues(heap)
         self.assertEqual(values, ("aapjes", "hello", "world"))
@@ -114,14 +112,15 @@ class TestCFBinaryHeap (TestCase):
         self.assertEqual(values, ())
 
     def testFunctions(self):
-        self.assertArgHasType(CFBinaryHeapGetCountOfValue, 1, b'@')
-        self.assertArgHasType(CFBinaryHeapContainsValue, 1, b'@')
-        self.assertResultHasType(CFBinaryHeapGetMinimum, b'@')
+        self.assertArgHasType(CFBinaryHeapGetCountOfValue, 1, b"@")
+        self.assertArgHasType(CFBinaryHeapContainsValue, 1, b"@")
+        self.assertResultHasType(CFBinaryHeapGetMinimum, b"@")
         self.assertResultHasType(CFBinaryHeapGetMinimumIfPresent, objc._C_NSBOOL)
-        self.assertArgHasType(CFBinaryHeapGetMinimumIfPresent, 1, b'o^@')
-        self.assertArgIsFunction(CFBinaryHeapApplyFunction, 1, b'v@@', False)
-        self.assertArgHasType(CFBinaryHeapApplyFunction, 2, b'@')
-        self.assertArgHasType(CFBinaryHeapAddValue, 1, b'@')
+        self.assertArgHasType(CFBinaryHeapGetMinimumIfPresent, 1, b"o^@")
+        self.assertArgIsFunction(CFBinaryHeapApplyFunction, 1, b"v@@", False)
+        self.assertArgHasType(CFBinaryHeapApplyFunction, 2, b"@")
+        self.assertArgHasType(CFBinaryHeapAddValue, 1, b"@")
+
 
 if __name__ == "__main__":
     main()

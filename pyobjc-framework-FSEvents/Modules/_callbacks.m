@@ -2,7 +2,7 @@
  * Support for callback functions/structs in the FSEvents frameework.
  */
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <CoreServices/CoreServices.h>
@@ -59,21 +59,13 @@ m_copyDescription_python(const void* value)
 }
 
 static FSEventStreamContext m_python_context_template = {
-    0,
-    NULL,
-    m_retain_python,
-    m_release_python,
-    m_copyDescription_python
-};
+    0, NULL, m_retain_python, m_release_python, m_copyDescription_python};
 
 static void
-m_FSEVentStreamCallback(
-    ConstFSEventStreamRef streamRef,
-    void* clientCallbackInfo,
-    size_t numEvents,
-    void* eventPaths,
-    const FSEventStreamEventFlags eventFlags[],
-    const FSEventStreamEventId eventIds[])
+m_FSEVentStreamCallback(ConstFSEventStreamRef streamRef, void* clientCallbackInfo,
+                        size_t numEvents, void* eventPaths,
+                        const FSEventStreamEventFlags eventFlags[],
+                        const FSEventStreamEventId eventIds[])
 {
     PyGILState_STATE state = PyGILState_Ensure();
     FSEventStreamCreateFlags flags;
@@ -83,8 +75,7 @@ m_FSEVentStreamCallback(
     PyObject* paths;
 
     v = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 0);
-    if (PyObjC_PythonToObjC(
-            @encode(FSEventStreamCreateFlags), v, &flags) < 0) {
+    if (PyObjC_PythonToObjC(@encode(FSEventStreamCreateFlags), v, &flags) < 0) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
@@ -99,31 +90,27 @@ m_FSEVentStreamCallback(
         }
     } else {
         /* The evenPaths are a CArray of C strings */
-        paths = PyObjC_CArrayToPython(@encode(char*),
-                eventPaths, numEvents);
+        paths = PyObjC_CArrayToPython(@encode(char*), eventPaths, numEvents);
         if (paths == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
     }
 
-    PyObject* py_streamRef = PyObjC_ObjCToPython(
-            @encode(ConstFSEventStreamRef),
-            &streamRef);
+    PyObject* py_streamRef =
+        PyObjC_ObjCToPython(@encode(ConstFSEventStreamRef), &streamRef);
     if (py_streamRef == NULL) {
         Py_DECREF(paths);
         PyObjCErr_ToObjCWithGILState(&state);
     }
-    PyObject* py_eventFlags = PyObjC_CArrayToPython(
-            @encode(FSEventStreamCreateFlags),
-            (void*)eventFlags, numEvents);
+    PyObject* py_eventFlags = PyObjC_CArrayToPython(@encode(FSEventStreamCreateFlags),
+                                                    (void*)eventFlags, numEvents);
     if (py_eventFlags == NULL) {
         Py_DECREF(paths);
         Py_DECREF(py_streamRef);
         PyObjCErr_ToObjCWithGILState(&state);
     }
-    PyObject* py_eventIds = PyObjC_CArrayToPython(
-            @encode(FSEventStreamEventId),
-            (void*)eventIds, numEvents);
+    PyObject* py_eventIds =
+        PyObjC_CArrayToPython(@encode(FSEventStreamEventId), (void*)eventIds, numEvents);
     if (py_eventIds == NULL) {
         Py_DECREF(paths);
         Py_DECREF(py_streamRef);
@@ -131,11 +118,9 @@ m_FSEVentStreamCallback(
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(callback,
-            "OOnOOO",
-            py_streamRef, info, numEvents, paths,
-            py_eventFlags,
-            py_eventIds);
+    PyObject* result =
+        PyObject_CallFunction(callback, "OOnOOO", py_streamRef, info, numEvents, paths,
+                              py_eventFlags, py_eventIds);
     Py_DECREF(paths);
     Py_DECREF(py_streamRef);
     Py_DECREF(py_eventFlags);
@@ -149,11 +134,11 @@ m_FSEVentStreamCallback(
 }
 
 PyDoc_STRVAR(m_FSEventStreamCreate_doc,
-    "FSEventStreamCreate(allocator, callback, callback_info, \n"
-    "   pathsToWatch, sinceWhen, latency, flags) -> stream\n"
-    "\n"
-    "NOTE: the callback info is passed directly, it is not a structure as\n"
-    "it is in C");
+             "FSEventStreamCreate(allocator, callback, callback_info, \n"
+             "   pathsToWatch, sinceWhen, latency, flags) -> stream\n"
+             "\n"
+             "NOTE: the callback info is passed directly, it is not a structure as\n"
+             "it is in C");
 static PyObject*
 m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
@@ -165,9 +150,8 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     PyObject* py_latency;
     PyObject* py_flags;
 
-    if (!PyArg_ParseTuple(args, "OOOOOOO",
-        &py_allocator, &py_callback, &py_callback_info,
-        &py_pathsToWatch, &py_sinceWhen, &py_latency, &py_flags)) {
+    if (!PyArg_ParseTuple(args, "OOOOOOO", &py_allocator, &py_callback, &py_callback_info,
+                          &py_pathsToWatch, &py_sinceWhen, &py_latency, &py_flags)) {
 
         return NULL;
     }
@@ -183,7 +167,8 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     }
 
     FSEventStreamEventId sinceWhen;
-    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen) < 0) {
+    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen) <
+        0) {
         return NULL;
     }
 
@@ -202,8 +187,7 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args
      * the arguments passed to the callback vary based on the value of
      * flags.
      */
-    PyObject* info = Py_BuildValue("OOO",
-            py_flags, py_callback_info, py_callback);
+    PyObject* info = Py_BuildValue("OOO", py_flags, py_callback_info, py_callback);
     if (info == NULL) {
         return NULL;
     }
@@ -213,21 +197,16 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args
 
     FSEventStreamRef stream = NULL;
 
-    PyObjC_DURING
-        stream = FSEventStreamCreate(
-            allocator,
-            m_FSEVentStreamCallback,
-            &context,
-            pathsToWatch,
-            sinceWhen,
-            latency,
-            flags);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            stream = FSEventStreamCreate(allocator, m_FSEVentStreamCallback, &context,
+                                         pathsToWatch, sinceWhen, latency, flags);
 
-    PyObjC_HANDLER
-        stream = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            stream = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(info);
 
@@ -243,21 +222,20 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     PyObject* result = PyObjC_ObjCToPython(@encode(FSEventStreamRef), &stream);
     // FSEventStreamRef is not a CF type (AFAIK), hence the user is
     // responsible for maintaining the refcount.
-    //FSEventStreamRelease(stream);
+    // FSEventStreamRelease(stream);
     return result;
 }
 
-
 PyDoc_STRVAR(m_FSEventStreamCreateRelativeToDevice_doc,
-    "FSEventStreamCreate(allocator, callback, callback_info, \n"
-    "    deviceToWatch, pathsToWatchRelativeToDevice, sinceWhen, \n"
-    "    latency, flags) -> stream\n"
-    "\n"
-    "NOTE: the callback info is passed directly, it is not a structure as\n"
-    "it is in C");
+             "FSEventStreamCreate(allocator, callback, callback_info, \n"
+             "    deviceToWatch, pathsToWatchRelativeToDevice, sinceWhen, \n"
+             "    latency, flags) -> stream\n"
+             "\n"
+             "NOTE: the callback info is passed directly, it is not a structure as\n"
+             "it is in C");
 static PyObject*
 m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+                                      PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_callback;
@@ -268,10 +246,9 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
     PyObject* py_flags;
     PyObject* py_deviceToWatch;
 
-    if (!PyArg_ParseTuple(args, "OOOOOOOO",
-        &py_allocator, &py_callback, &py_callback_info,
-        &py_deviceToWatch, &py_pathsToWatch, &py_sinceWhen,
-        &py_latency, &py_flags)) {
+    if (!PyArg_ParseTuple(args, "OOOOOOOO", &py_allocator, &py_callback,
+                          &py_callback_info, &py_deviceToWatch, &py_pathsToWatch,
+                          &py_sinceWhen, &py_latency, &py_flags)) {
 
         return NULL;
     }
@@ -292,7 +269,8 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
     }
 
     FSEventStreamEventId sinceWhen;
-    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen) < 0) {
+    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen) <
+        0) {
         return NULL;
     }
 
@@ -311,8 +289,7 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
      * the arguments passed to the callback vary based on the value of
      * flags.
      */
-    PyObject* info = Py_BuildValue("OOO",
-        py_flags, py_callback_info, py_callback);
+    PyObject* info = Py_BuildValue("OOO", py_flags, py_callback_info, py_callback);
     if (info == NULL) {
         return NULL;
     }
@@ -322,21 +299,16 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
 
     FSEventStreamRef stream = NULL;
 
-    PyObjC_DURING
-        stream = FSEventStreamCreateRelativeToDevice(
-                allocator,
-                m_FSEVentStreamCallback,
-                &context,
-                deviceToWatch,
-                pathsToWatch,
-                sinceWhen,
-                latency,
-                flags);
-    PyObjC_HANDLER
-        stream = NULL;
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            stream = FSEventStreamCreateRelativeToDevice(
+                allocator, m_FSEVentStreamCallback, &context, deviceToWatch, pathsToWatch,
+                sinceWhen, latency, flags);
+        } @catch (NSException* localException) {
+            stream = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     Py_DECREF(info);
 
@@ -349,33 +321,26 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
         return Py_None;
     }
 
-    PyObject* result = PyObjC_ObjCToPython(
-                @encode(FSEventStreamRef), &stream);
+    PyObject* result = PyObjC_ObjCToPython(@encode(FSEventStreamRef), &stream);
     // FSEventStreamRef is not a CF type (AFAIK), hence the user is
     // responsible for maintaining the refcount.
-    //FSEventStreamRelease(stream);
+    // FSEventStreamRelease(stream);
     return result;
 }
 
-
 static PyMethodDef mod_methods[] = {
-    {
-        "FSEventStreamCreate",
-        (PyCFunction)m_FSEventStreamCreate,
-        METH_VARARGS,
-        m_FSEventStreamCreate_doc
-    },
+    {"FSEventStreamCreate", (PyCFunction)m_FSEventStreamCreate, METH_VARARGS,
+     m_FSEventStreamCreate_doc},
+
+    {"FSEventStreamCreateRelativeToDevice",
+     (PyCFunction)m_FSEventStreamCreateRelativeToDevice, METH_VARARGS,
+     m_FSEventStreamCreateRelativeToDevice_doc},
 
     {
-        "FSEventStreamCreateRelativeToDevice",
-        (PyCFunction)m_FSEventStreamCreateRelativeToDevice,
-        METH_VARARGS,
-        m_FSEventStreamCreateRelativeToDevice_doc
-    },
-
-
-    { 0, 0, 0, }
-};
+        0,
+        0,
+        0,
+    }};
 
 PyObjC_MODULE_INIT(_callbacks)
 {

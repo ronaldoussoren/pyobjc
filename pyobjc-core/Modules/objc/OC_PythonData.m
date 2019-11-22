@@ -12,17 +12,13 @@
     return res;
 }
 
-
 - (OC_PythonData*)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil)) return nil;
+    if (unlikely(self == nil))
+        return nil;
 
-    if (!PyObject_CheckBuffer(v)
-#if PY_MAJOR_VERSION == 2
-        && !PyObject_CheckReadBuffer(v)
-#endif
-            ) {
+    if (!PyObject_CheckBuffer(v)) {
         PyErr_SetString(PyExc_TypeError, "not a buffer");
         [self release];
         return nil;
@@ -32,28 +28,30 @@
     return self;
 }
 
--(PyObject*)__pyobjc_PythonObject__
+- (PyObject*)__pyobjc_PythonObject__
 {
     Py_INCREF(value);
     return value;
 }
 
--(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
 
--(BOOL)supportsWeakPointers {
+- (BOOL)supportsWeakPointers
+{
     return YES;
 }
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return NO;
 }
 
--(oneway void)release
+- (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
     if (unlikely(!Py_IsInitialized())) {
@@ -67,9 +65,7 @@
     PyObjC_END_WITH_GIL
 }
 
-
-
--(void)dealloc
+- (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) {
         [super dealloc];
@@ -84,116 +80,76 @@
     [super dealloc];
 }
 
--(NSUInteger)length
+- (NSUInteger)length
 {
     NSUInteger rval;
 
     PyObjC_BEGIN_WITH_GIL
-#if PY_MAJOR_VERSION == 2
-      if (PyObject_CheckBuffer(value)) {
-#endif
-        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value writable:NO];
+        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value
+                                                                       writable:NO];
         if (temp == nil) {
             [self release];
             PyErr_Clear();
             return 0;
         }
-        [temp release];
         rval = [temp length];
-#if PY_MAJOR_VERSION == 2
-      } else {
-        Py_ssize_t buffer_len;
-        const void *buffer;
-
-        if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
-            [self release];
-            PyErr_Clear();
-            return 0;
-        }
-        rval = buffer_len;
-      }
-#endif
+        [temp release];
 
     PyObjC_END_WITH_GIL
     return rval;
 }
 
--(const void *)bytes
+- (const void*)bytes
 {
     void* rval;
 
     PyObjC_BEGIN_WITH_GIL
-#if PY_MAJOR_VERSION == 2
-      if (PyObject_CheckBuffer(value)) {
-#endif
-        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value writable:NO];
+        OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value
+                                                                       writable:NO];
         if (temp == nil) {
             [self release];
             PyErr_Clear();
             return nil;
         }
-        [temp autorelease];
         rval = [temp buffer];
-
-#if PY_MAJOR_VERSION == 2
-      } else {
-        Py_ssize_t buffer_len;
-        const void *buffer;
-
-        if (unlikely(PyObject_AsReadBuffer(value, &buffer, &buffer_len) == -1)) {
-            [self release];
-            PyErr_Clear();
-            return 0;
-        }
-        rval = (void*)buffer;
-      }
-#endif
+        [temp autorelease];
 
     PyObjC_END_WITH_GIL
     return rval;
 }
 
--(Class)classForCoder
+- (Class)classForCoder
 {
     if (PyBytes_CheckExact(value)) {
         return [NSData class];
 
-#if PY_VERSION_HEX >= 0x02060000
     } else if (PyByteArray_CheckExact(value)) {
         return [NSMutableData class];
-#endif /* PY_VERSION_HEX >= 0x02060000 */
 
     } else {
         return [OC_PythonData class];
     }
 }
 
--(Class)classForKeyedArchiver
+- (Class)classForKeyedArchiver
 {
     return [OC_PythonData class];
 }
 
-
--(void)encodeWithCoder:(NSCoder*)coder
+- (void)encodeWithCoder:(NSCoder*)coder
 {
 
     PyObjC_BEGIN_WITH_GIL
         if (PyBytes_CheckExact(value)) {
             if ([coder allowsKeyedCoding]) {
                 [coder encodeInt32:3 forKey:@"pytype"];
-
             }
             [super encodeWithCoder:coder];
-
-#if PY_VERSION_HEX >= 0x02060000
         } else if (PyByteArray_CheckExact(value)) {
             if ([coder allowsKeyedCoding]) {
                 [coder encodeInt32:4 forKey:@"pytype"];
-
             }
             [super encodeWithCoder:coder];
-#endif /* PY_VERSION_HEX >= 0x02060000 */
-
         } else {
             if ([coder allowsKeyedCoding]) {
                 [coder encodeInt32:2 forKey:@"pytype"];
@@ -211,7 +167,7 @@
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
--(void)pyobjcSetValue:(NSObject*)other
+- (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
@@ -229,16 +185,16 @@
 
     } else {
         [coder decodeValueOfObjCType:@encode(int) at:&v];
-
     }
     if (v == 1) {
         /* Backward compatibility:
          * PyObjC upto version 3 used this type to archive instances of bytes
          */
         self = [super init];
-        if (unlikely(self == nil)) return nil;
+        if (unlikely(self == nil))
+            return nil;
 
-        const void *bytes;
+        const void* bytes;
         NSUInteger length;
 
         if ([coder allowsKeyedCoding]) {
@@ -246,7 +202,6 @@
 
         } else {
             bytes = [coder decodeBytesWithReturnedLength:&length];
-
         }
 
         PyObjC_BEGIN_WITH_GIL
@@ -271,7 +226,6 @@
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-
                 selfAsPython = PyObjCObject_New(self, 0, YES);
                 setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
@@ -294,16 +248,14 @@
 
         } else {
             [NSException raise:NSInvalidArgumentException
-                    format:@"decoding Python objects is not supported"];
+                        format:@"decoding Python objects is not supported"];
             return nil;
-
         }
 
     } else if (v == 3) {
         return [super initWithCoder:coder];
 
     } else if (v == 4) {
-#if PY_VERSION_HEX >= 0x02060000
         PyObjC_BEGIN_WITH_GIL
             value = PyByteArray_FromStringAndSize(NULL, 0);
             if (value == NULL) {
@@ -311,13 +263,11 @@
             }
 
         PyObjC_END_WITH_GIL
-#endif /* PY_VERSION_HEX >= 0x02060000 */
         return [super initWithCoder:coder];
 
     } else {
         [NSException raise:NSInvalidArgumentException
-                format:@"encoding Python data objects is not supported"];
-
+                    format:@"encoding Python data objects is not supported"];
     }
     return self;
 }
@@ -327,7 +277,7 @@
     return [self initWithBytes:[data bytes] length:[data length]];
 }
 
-- (id)initWithBytes:(const void*) bytes length:(NSUInteger)length
+- (id)initWithBytes:(const void*)bytes length:(NSUInteger)length
 {
     PyObjC_BEGIN_WITH_GIL
         if (length > PY_SSIZE_T_MAX) {
@@ -335,22 +285,17 @@
             PyObjC_GIL_FORWARD_EXC();
         }
 
-#if PY_VERSION_HEX >= 0x02060000
         if (value != NULL && PyByteArray_CheckExact(value)) {
             if (PyByteArray_Resize(value, length) < 0) {
                 PyObjC_GIL_FORWARD_EXC();
             }
             memcmp(PyByteArray_AS_STRING(value), bytes, length);
         } else {
-#endif /* PY_VERSION_HEX >= 0x02060000 */
             value = PyBytes_FromStringAndSize(bytes, length);
             if (value == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
-
-#if PY_VERSION_HEX >= 0x02060000
         }
-#endif /* PY_VERSION_HEX >= 0x02060000 */
     PyObjC_END_WITH_GIL
 
     return self;
@@ -359,10 +304,9 @@
 /* Ensure that we can be unarchived as a generic string by pure ObjC
  * code.
  */
-+(NSArray*)classFallbacksForKeyedArchiver
++ (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObject:@"NSData"];
 }
-
 
 @end /* implementation OC_PythonData */

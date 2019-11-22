@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRStatus (TestCase):
+
+class TestDRStatus(TestCase):
     def testConstants(self):
         self.assertIsInstance(DiscRecording.DRStatusStateKey, unicode)
         self.assertIsInstance(DiscRecording.DRStatusPercentCompleteKey, unicode)
@@ -33,7 +34,10 @@ class TestDRStatus (TestCase):
         self.assertIsInstance(DiscRecording.DRErrorStatusErrorInfoStringKey, unicode)
         self.assertIsInstance(DiscRecording.DRErrorStatusSenseKey, unicode)
         self.assertIsInstance(DiscRecording.DRErrorStatusSenseCodeStringKey, unicode)
-        self.assertIsInstance(DiscRecording.DRErrorStatusAdditionalSenseStringKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRErrorStatusAdditionalSenseStringKey, unicode
+        )
+
 
 if __name__ == "__main__":
     main()

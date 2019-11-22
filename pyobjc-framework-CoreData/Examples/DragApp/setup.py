@@ -10,12 +10,6 @@ setup(
     name="DragApp",
     app=["main.py"],
     data_files=["English.lproj"],
-    options=dict(py2app=dict(
-        datamodels=["DragApp_DataModel.xcdatamodel"],
-    )),
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-Cocoa",
-        "pyobjc-framework-CoreData",
-    ]
+    options=dict(py2app=dict(datamodels=["DragApp_DataModel.xcdatamodel"])),
+    setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-CoreData"],
 )

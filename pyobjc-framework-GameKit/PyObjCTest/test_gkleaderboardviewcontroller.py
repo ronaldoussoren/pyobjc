@@ -3,9 +3,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import GameKit
 
-class TestGKLeaderboardViewController (TestCase):
+
+class TestGKLeaderboardViewController(TestCase):
     def testProtocols(self):
-        objc.protocolNamed('GKLeaderboardViewControllerDelegate')
+        objc.protocolNamed("GKLeaderboardViewControllerDelegate")
 
 
 if __name__ == "__main__":

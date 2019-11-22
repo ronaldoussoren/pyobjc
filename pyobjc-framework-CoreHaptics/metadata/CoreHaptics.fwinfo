@@ -1,0 +1,397 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "enum": {
+   "CHHapticTimeImmediate": { "value": 0.0 }
+  },
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "completionHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" },
+	 "1": { "type": "@" }
+	},
+	"retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "seekToOffset:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "resumeAtTime:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "pauseAtTime:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "attributesForEventParameter:eventType:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "attributesForDynamicParameter:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "startAtTime:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "stopAtTime:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "sendParameters:atTime:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "scheduleParameterCurve:atTime:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "cancelAndReturnError:"
+     }
+    ]
+   },
+   "CHHapticEngine": {
+    "methods": [
+     {
+      "selector": "resetHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" }
+	},
+        "retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setResetHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "stoppedHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "type": "^v" },
+	 "1": { "type": "q" }
+	},
+        "retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setStoppedHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "q" }
+	 },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "startWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "stopWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "notifyWhenPlayersFinished:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+         "retval": { "type": "q" }
+        }
+       }
+      }
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initAndReturnError:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithAudioSession:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "startAndReturnError:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "createPlayerWithPattern:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "createAdvancedPlayerWithPattern:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "registerAudioResource:options:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "unregisterAudioResource:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "playPatternFromURL:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "playPatternFromData:error:"
+     }
+    ]
+   },
+   "CHHapticPattern": {
+    "methods": [
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithEvents:parameters:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithEvents:parameterCurves:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "initWithDictionary:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "exportDictionaryAndReturnError:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {
+   "CHHapticAdvancedPatternPlayer": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "pauseAtTime:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "resumeAtTime:error:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "seekToOffset:error:"
+     }
+    ]
+   },
+   "CHHapticDeviceCapability": {
+    "methods": [
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "attributesForEventParameter:eventType:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "attributesForDynamicParameter:error:"
+     }
+    ]
+   },
+   "CHHapticPatternPlayer": {
+    "methods": [
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "startAtTime:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "stopAtTime:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "sendParameters:atTime:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "scheduleParameterCurve:atTime:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "cancelAndReturnError:"
+     }
+    ]
+   }
+  },
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

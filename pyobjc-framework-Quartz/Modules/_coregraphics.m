@@ -2,7 +2,7 @@
  * Manual wrappers for CoreGraphics
  */
 #define PY_SSIZE_T_CLEAN
-#include <Python.h>
+#include "Python.h"
 #include "pyobjc-api.h"
 
 #import <ApplicationServices/ApplicationServices.h>
@@ -24,13 +24,15 @@ m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), PyObject* args
     }
 
     tags = NULL;
-    PyObjC_DURING
-        tags = CGFontCopyTableTags(font);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            tags = CGFontCopyTableTags(font);
 
-    PyObjC_HANDLER
-        tags = NULL;
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            tags = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (tags == NULL && PyErr_Occurred()) {
         return NULL;
@@ -63,8 +65,7 @@ m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), PyObject* args
 }
 
 static PyObject*
-m_CGWindowListCreate(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+m_CGWindowListCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_option;
     PyObject* py_relativeToWindow;
@@ -80,18 +81,21 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CGWindowID), py_relativeToWindow, &relativeToWindow) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CGWindowID), py_relativeToWindow,
+                            &relativeToWindow) == -1) {
         return NULL;
     }
 
     windowList = NULL;
-    PyObjC_DURING
-        windowList = CGWindowListCreate(option, relativeToWindow);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            windowList = CGWindowListCreate(option, relativeToWindow);
 
-    PyObjC_HANDLER
-        windowList = NULL;
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            windowList = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (windowList == NULL && PyErr_Occurred()) {
         return NULL;
@@ -123,8 +127,6 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)),
     return result;
 }
 
-
-
 static CFArrayRef
 createWindowList(PyObject* items)
 {
@@ -133,7 +135,8 @@ createWindowList(PyObject* items)
         return NULL;
     }
 
-    CFMutableArrayRef array = CFArrayCreateMutable(NULL, PySequence_Fast_GET_SIZE(seq), NULL);
+    CFMutableArrayRef array =
+        CFArrayCreateMutable(NULL, PySequence_Fast_GET_SIZE(seq), NULL);
     if (array == NULL) {
         Py_DECREF(seq);
         PyErr_SetString(PyExc_ValueError, "Cannot create CFArray");
@@ -145,7 +148,8 @@ createWindowList(PyObject* items)
     for (i = 0; i < len; i++) {
         CGWindowID windowID;
 
-        if (PyObjC_PythonToObjC(@encode(CGWindowID), PySequence_Fast_GET_ITEM(seq, i), &windowID) == -1) {
+        if (PyObjC_PythonToObjC(@encode(CGWindowID), PySequence_Fast_GET_ITEM(seq, i),
+                                &windowID) == -1) {
             Py_DECREF(seq);
             CFRelease(array);
             return NULL;
@@ -158,7 +162,7 @@ createWindowList(PyObject* items)
 
 static PyObject*
 m_CGWindowListCreateDescriptionFromArray(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+                                         PyObject* args)
 {
     PyObject* py_windowArray;
     CFArrayRef windowArray;
@@ -173,13 +177,15 @@ m_CGWindowListCreateDescriptionFromArray(PyObject* self __attribute__((__unused_
     }
 
     CFArrayRef descriptions = NULL;
-    PyObjC_DURING
-        descriptions = CGWindowListCreateDescriptionFromArray(windowArray);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            descriptions = CGWindowListCreateDescriptionFromArray(windowArray);
 
-    PyObjC_HANDLER
-        descriptions = NULL;
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            descriptions = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     CFRelease(windowArray);
 
@@ -199,7 +205,7 @@ m_CGWindowListCreateDescriptionFromArray(PyObject* self __attribute__((__unused_
 
 static PyObject*
 m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
-            PyObject* args)
+                                   PyObject* args)
 {
     PyObject* py_screenBounds;
     PyObject* py_windowArray;
@@ -208,7 +214,8 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
     CFArrayRef windowArray;
     CGWindowImageOption imageOption;
 
-    if (!PyArg_ParseTuple(args, "OOO", &py_screenBounds, &py_windowArray, &py_imageOption)) {
+    if (!PyArg_ParseTuple(args, "OOO", &py_screenBounds, &py_windowArray,
+                          &py_imageOption)) {
         return NULL;
     }
 
@@ -216,10 +223,10 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CGWindowImageOption), py_imageOption, &imageOption) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CGWindowImageOption), py_imageOption, &imageOption) ==
+        -1) {
         return NULL;
     }
-
 
     windowArray = createWindowList(py_windowArray);
     if (windowArray == NULL) {
@@ -227,13 +234,16 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
     }
 
     CGImageRef image = NULL;
-    PyObjC_DURING
-        image = CGWindowListCreateImageFromArray(screenBounds, windowArray, imageOption);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            image =
+                CGWindowListCreateImageFromArray(screenBounds, windowArray, imageOption);
 
-    PyObjC_HANDLER
-        image = NULL;
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            image = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     CFRelease(windowArray);
 
@@ -253,8 +263,7 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
 #endif /* PyObjC_BUILD_RELEASE >= 1005*/
 
 static PyObject*
-m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_data;
     PyObject* py_width;
@@ -272,7 +281,9 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
     CGColorSpaceRef colorSpace;
     CGBitmapInfo bitmapInfo;
 
-    if (!PyArg_ParseTuple(args, "OOOOOOO", &py_data, &py_width, &py_height, &py_bitsPerComponent, &py_bytesPerRow, &py_colorSpace, &py_bitmapInfo)) {
+    if (!PyArg_ParseTuple(args, "OOOOOOO", &py_data, &py_width, &py_height,
+                          &py_bitsPerComponent, &py_bytesPerRow, &py_colorSpace,
+                          &py_bitmapInfo)) {
         return NULL;
     }
 
@@ -282,7 +293,8 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
     if (PyObjC_PythonToObjC(@encode(size_t), py_height, &height) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) == -1) {
+    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) ==
+        -1) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(size_t), py_bytesPerRow, &bytesPerRow) == -1) {
@@ -310,15 +322,17 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)),
         }
     }
 
-
     CGContextRef ctx = NULL;
-    PyObjC_DURING
-        ctx = CGBitmapContextCreate(data, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ctx = CGBitmapContextCreate(data, width, height, bitsPerComponent,
+                                        bytesPerRow, colorSpace, bitmapInfo);
 
-    PyObjC_HANDLER
-        ctx = NULL;
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            ctx = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (ctx == NULL && PyErr_Occurred()) {
         return NULL;
@@ -343,10 +357,9 @@ m_releasecallback(void* releaseInfo, void* data)
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (PyTuple_GET_ITEM(releaseInfo, 0) != Py_None) {
-        PyObject* r = PyObject_CallFunction(
-            PyTuple_GET_ITEM(py_data, 0), "OO",
-            PyTuple_GET_ITEM(py_data, 1),
-            PyTuple_GET_ITEM(py_data, 2));
+        PyObject* r = PyObject_CallFunction(PyTuple_GET_ITEM(py_data, 0), "OO",
+                                            PyTuple_GET_ITEM(py_data, 1),
+                                            PyTuple_GET_ITEM(py_data, 2));
         Py_XDECREF(r);
     }
 
@@ -356,13 +369,12 @@ m_releasecallback(void* releaseInfo, void* data)
         PyObjCErr_ToObjCWithGILState(&state);
     }
     PyGILState_Release(state);
-
 }
 
 WEAK_LINKED_NAME_10_6(CGBitmapContextCreateWithData)
 static PyObject*
 m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+                                PyObject* args)
 {
     PyObject* py_data;
     PyObject* py_width;
@@ -382,11 +394,9 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     CGColorSpaceRef colorSpace;
     CGBitmapInfo bitmapInfo;
 
-    if (!PyArg_ParseTuple(args, "OOOOOOOOO",
-        &py_data, &py_width, &py_height, &py_bitsPerComponent,
-        &py_bytesPerRow, &py_colorSpace, &py_bitmapInfo,
-        &py_releaseCallback, &py_releaseInfo
-        )) {
+    if (!PyArg_ParseTuple(args, "OOOOOOOOO", &py_data, &py_width, &py_height,
+                          &py_bitsPerComponent, &py_bytesPerRow, &py_colorSpace,
+                          &py_bitmapInfo, &py_releaseCallback, &py_releaseInfo)) {
         return NULL;
     }
 
@@ -396,7 +406,8 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     if (PyObjC_PythonToObjC(@encode(size_t), py_height, &height) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) == -1) {
+    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) ==
+        -1) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(size_t), py_bytesPerRow, &bytesPerRow) == -1) {
@@ -435,15 +446,18 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     PyTuple_SET_ITEM(releaseInfo, 2, py_data);
     Py_INCREF(py_data);
 
-
     CGContextRef ctx = NULL;
-    PyObjC_DURING
-        ctx = USE_10_6(CGBitmapContextCreateWithData)(data, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo, m_releasecallback, releaseInfo);
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ctx = USE_10_6(CGBitmapContextCreateWithData)(
+                data, width, height, bitsPerComponent, bytesPerRow, colorSpace,
+                bitmapInfo, m_releasecallback, releaseInfo);
 
-    PyObjC_HANDLER
-        ctx = NULL;
-        PyObjCErr_FromObjC(localException);
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            ctx = NULL;
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (ctx == NULL && PyErr_Occurred()) {
         Py_DECREF(releaseInfo);
@@ -463,8 +477,7 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
 #endif
 
 static PyObject*
-m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     bool res;
     CGPDFObjectRef obj;
@@ -488,152 +501,96 @@ m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)),
     }
 
     switch (type) {
-    case kCGPDFObjectTypeNull:
-        {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-        }
-        break;
+    case kCGPDFObjectTypeNull: {
+        res = CGPDFObjectGetValue(obj, type, NULL);
+        return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
+    } break;
 
-    case kCGPDFObjectTypeBoolean:
-        {
-            if (p_val == Py_None) {
-                CGPDFBoolean val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyBool_FromLong(val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    case kCGPDFObjectTypeBoolean: {
+        if (p_val == Py_None) {
+            CGPDFBoolean val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res), PyBool_FromLong(val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
+    } break;
 
-    case kCGPDFObjectTypeInteger:
-        {
-            if (p_val == Py_None) {
-                CGPDFInteger val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyLong_FromLong(val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    case kCGPDFObjectTypeInteger: {
+        if (p_val == Py_None) {
+            CGPDFInteger val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res), PyLong_FromLong(val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
-    case kCGPDFObjectTypeReal:
-        {
-            if (p_val == Py_None) {
-                CGPDFReal val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyFloat_FromDouble(val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    } break;
+    case kCGPDFObjectTypeReal: {
+        if (p_val == Py_None) {
+            CGPDFReal val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res), PyFloat_FromDouble(val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
-    case kCGPDFObjectTypeName:
-        {
-            if (p_val == Py_None) {
-                char* val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyText_FromString(val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    } break;
+    case kCGPDFObjectTypeName: {
+        if (p_val == Py_None) {
+            char* val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res), PyUnicode_FromString(val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
-    case kCGPDFObjectTypeString:
-        {
-            if (p_val == Py_None) {
-                CGPDFStringRef val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyObjC_ObjCToPython(@encode(CGPDFStringRef), &val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    } break;
+    case kCGPDFObjectTypeString: {
+        if (p_val == Py_None) {
+            CGPDFStringRef val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res),
+                                 PyObjC_ObjCToPython(@encode(CGPDFStringRef), &val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
-    case kCGPDFObjectTypeArray:
-        {
-            if (p_val == Py_None) {
-                CGPDFArrayRef val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyObjC_ObjCToPython(@encode(CGPDFArrayRef), &val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    } break;
+    case kCGPDFObjectTypeArray: {
+        if (p_val == Py_None) {
+            CGPDFArrayRef val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res),
+                                 PyObjC_ObjCToPython(@encode(CGPDFArrayRef), &val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
-    case kCGPDFObjectTypeDictionary:
-        {
-            if (p_val == Py_None) {
-                CGPDFDictionaryRef val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyObjC_ObjCToPython(@encode(CGPDFDictionaryRef), &val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    } break;
+    case kCGPDFObjectTypeDictionary: {
+        if (p_val == Py_None) {
+            CGPDFDictionaryRef val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res),
+                                 PyObjC_ObjCToPython(@encode(CGPDFDictionaryRef), &val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
-    case kCGPDFObjectTypeStream:
-        {
-            if (p_val == Py_None) {
-                CGPDFStreamRef val;
-                res = CGPDFObjectGetValue(obj, type, &val);
-                return Py_BuildValue("NN",
-                        PyBool_FromLong(res),
-                        PyObjC_ObjCToPython(@encode(CGPDFStreamRef), &val)
-                    );
-            } else {
-                res = CGPDFObjectGetValue(obj, type, NULL);
-                return Py_BuildValue("NO",
-                        PyBool_FromLong(res),
-                        Py_None);
-            }
+    } break;
+    case kCGPDFObjectTypeStream: {
+        if (p_val == Py_None) {
+            CGPDFStreamRef val;
+            res = CGPDFObjectGetValue(obj, type, &val);
+            return Py_BuildValue("NN", PyBool_FromLong(res),
+                                 PyObjC_ObjCToPython(@encode(CGPDFStreamRef), &val));
+        } else {
+            res = CGPDFObjectGetValue(obj, type, NULL);
+            return Py_BuildValue("NO", PyBool_FromLong(res), Py_None);
         }
-        break;
+    } break;
 
     default:
         PyErr_SetString(PyExc_ValueError, "Invalid object type");
@@ -641,71 +598,45 @@ m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)),
     }
 }
 
-
 static PyMethodDef mod_methods[] = {
 #if PyObjC_BUILD_RELEASE >= 1005
-    {
-        "CGFontCopyTableTags",
-        (PyCFunction)m_CGFontCopyTableTags,
-        METH_VARARGS,
-        NULL
-    },
-    {
-        "CGWindowListCreate",
-        (PyCFunction)m_CGWindowListCreate,
-        METH_VARARGS,
-        NULL
-    },
-    {
-        "CGWindowListCreateDescriptionFromArray",
-        (PyCFunction)m_CGWindowListCreateDescriptionFromArray,
-        METH_VARARGS,
-        NULL
-    },
-    {
-        "CGWindowListCreateImageFromArray",
-        (PyCFunction)m_CGWindowListCreateImageFromArray,
-        METH_VARARGS,
-        NULL
-    },
+    {"CGFontCopyTableTags", (PyCFunction)m_CGFontCopyTableTags, METH_VARARGS, NULL},
+    {"CGWindowListCreate", (PyCFunction)m_CGWindowListCreate, METH_VARARGS, NULL},
+    {"CGWindowListCreateDescriptionFromArray",
+     (PyCFunction)m_CGWindowListCreateDescriptionFromArray, METH_VARARGS, NULL},
+    {"CGWindowListCreateImageFromArray", (PyCFunction)m_CGWindowListCreateImageFromArray,
+     METH_VARARGS, NULL},
 #endif /* PyObjC_BUILD_RELEASE >= 1005 */
-    {
-        "CGBitmapContextCreate",
-        (PyCFunction)m_CGBitmapContextCreate,
-        METH_VARARGS,
-        NULL
-    },
+    {"CGBitmapContextCreate", (PyCFunction)m_CGBitmapContextCreate, METH_VARARGS, NULL},
 #if PyObjC_BUILD_RELEASE >= 1006
-    {
-        "CGBitmapContextCreateWithData",
-        (PyCFunction)m_CGBitmapContextCreateWithData,
-        METH_VARARGS,
-        NULL
-    },
+    {"CGBitmapContextCreateWithData", (PyCFunction)m_CGBitmapContextCreateWithData,
+     METH_VARARGS, NULL},
 #endif
-    {
-        "CGPDFObjectGetValue",
-        (PyCFunction)m_CGPDFObjectGetValue,
-        METH_VARARGS,
-        NULL
-    },
+    {"CGPDFObjectGetValue", (PyCFunction)m_CGPDFObjectGetValue, METH_VARARGS, NULL},
 
-    { 0, 0, 0, }
-};
+    {
+        0,
+        0,
+        0,
+    }};
 
 PyObjC_MODULE_INIT(_coregraphics)
 {
     PyObject* m = PyObjC_MODULE_CREATE(_coregraphics);
-    if (!m) PyObjC_INITERROR();
+    if (!m)
+        PyObjC_INITERROR();
 
 #if PyObjC_BUILD_RELEASE >= 1005
     PyObject* d = PyModule_GetDict(m);
-    if (!d) PyObjC_INITERROR();
+    if (!d)
+        PyObjC_INITERROR();
 #endif
 
-    if (PyObjC_ImportAPI(m) < 0) PyObjC_INITERROR();
+    if (PyObjC_ImportAPI(m) < 0)
+        PyObjC_INITERROR();
 
-#if PyObjC_BUILD_RELEASE >= 1005 && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
+#if PyObjC_BUILD_RELEASE >= 1005 &&                                                      \
+    (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
     if (CGFontCopyTableTags == NULL) {
         if (PyDict_DelItemString(d, "CGFontCopyTableTags") < 0) {
             PyObjC_INITERROR();
@@ -714,7 +645,7 @@ PyObjC_MODULE_INIT(_coregraphics)
 
     if (CGWindowListCreate == NULL) {
         if (PyDict_DelItemString(d, "CGWindowListCreate") < 0) {
-                PyObjC_INITERROR();
+            PyObjC_INITERROR();
         }
     }
 
@@ -731,8 +662,8 @@ PyObjC_MODULE_INIT(_coregraphics)
     }
 #endif
 
-
-#if (PyObjC_BUILD_RELEASE >= 1006) && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6)
+#if (PyObjC_BUILD_RELEASE >= 1006) &&                                                    \
+    (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6)
     CHECK_WEAK_LINK_10_6(m, CGBitmapContextCreateWithData);
 #endif
 

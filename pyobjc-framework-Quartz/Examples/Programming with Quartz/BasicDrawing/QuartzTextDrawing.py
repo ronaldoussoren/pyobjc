@@ -4,18 +4,18 @@ import Utilities
 
 import sys
 
+
 def drawQuartzRomanText(context):
     text = b"Quartz"
     textlen = len(text)
     fontSize = 60
 
     opaqueBlack = [0.0, 0.0, 0.0, 1.0]
-    opaqueRed   = [0.663, 0.0, 0.031, 1.0]
+    opaqueRed = [0.663, 0.0, 0.031, 1.0]
 
     # Set the fill color space. This sets the
     # fill painting color to opaque black.
-    Quartz.CGContextSetFillColorSpace(context,
-        Utilities.getTheCalibratedRGBColorSpace())
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
 
     # The Cocoa framework calls the draw method with an undefined
     # value of the text matrix. It's best to set it to what is needed by
@@ -24,7 +24,9 @@ def drawQuartzRomanText(context):
 
     # Set the font with the PostScript name "Times-Roman", at
     # fontSize points, with the MacRoman encoding.
-    Quartz.CGContextSelectFont(context, b"Times-Roman", fontSize, Quartz.kCGEncodingMacRoman)
+    Quartz.CGContextSelectFont(
+        context, b"Times-Roman", fontSize, Quartz.kCGEncodingMacRoman
+    )
 
     # The default text drawing mode is fill. Draw the text at (70, 400).
     Quartz.CGContextShowTextAtPoint(context, 70, 400, text, textlen)
@@ -59,34 +61,38 @@ def myCGContextStrokeLineSegments(context, s, count):
     # CGContextStrokeLineSegments. It is better to use the
     # built-in CGContextStrokeLineSegments since it has significant
     # performance optimizations on some hardware.
-    if hasattr(Quartz, 'CGContextStrokeLineSegments'):
+    if hasattr(Quartz, "CGContextStrokeLineSegments"):
         Quartz.CGContextStrokeLineSegments(context, s, count)
     else:
         Quartz.CGContextBeginPath(context)
         for k in range(0, count, 2):
             Quartz.CGContextMoveToPoint(context, s[k].x, s[k].y)
-            Quartz.CGContextAddLineToPoint(context, s[k+1].x, s[k+1].y)
+            Quartz.CGContextAddLineToPoint(context, s[k + 1].x, s[k + 1].y)
         Quartz.CGContextStrokePath(context)
 
+
 _gridLines = []
+
+
 def drawGridLines(context):
     numlines = 60
 
     if not _gridLines:
         stepsize = 4.0
         val = 0
-        for i in range(0, 2*numlines, 2):
+        for i in range(0, 2 * numlines, 2):
             _gridLines.append(Quartz.CGPointMake(val, -60))
             _gridLines.append(Quartz.CGPointMake(val, 200))
             val += stepsize
 
         val = -20
-        for i in range(2*numlines, 4*numlines, 2):
+        for i in range(2 * numlines, 4 * numlines, 2):
             _gridLines.append(Quartz.CGPointMake(0, val))
             _gridLines.append(Quartz.CGPointMake(400, val))
             val += stepsize
 
-    myCGContextStrokeLineSegments(context, _gridLines,  len(_gridLines))
+    myCGContextStrokeLineSegments(context, _gridLines, len(_gridLines))
+
 
 def drawQuartzTextWithTextModes(context):
     fillText = b"Fill "
@@ -97,15 +103,15 @@ def drawQuartzTextWithTextModes(context):
     fillStrokeClipText = b"FillStrokeClip "
     fontSize = 40.0
     extraLeading = 5.0
-    dash = (1,1)
+    dash = (1, 1)
     opaqueRed = (1.0, 0.0, 0.0, 1.0)
 
     # Set the fill and stroke color space. This sets the
     # fill and stroke painting color to opaque black.
-    Quartz.CGContextSetFillColorSpace(context,
-            Utilities.getTheCalibratedRGBColorSpace())
-    Quartz.CGContextSetStrokeColorSpace(context,
-            Utilities.getTheCalibratedRGBColorSpace())
+    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
+    Quartz.CGContextSetStrokeColorSpace(
+        context, Utilities.getTheCalibratedRGBColorSpace()
+    )
 
     # The Cocoa framework calls the draw method with an undefined
     # value of the text matrix. It's best to set it to what is needed by
@@ -114,7 +120,9 @@ def drawQuartzTextWithTextModes(context):
 
     # Set the font with the PostScript name "Times-Roman", at
     # fontSize points, with the MacRoman encoding.
-    Quartz.CGContextSelectFont(context, b"Times-Roman", fontSize, Quartz.kCGEncodingMacRoman)
+    Quartz.CGContextSelectFont(
+        context, b"Times-Roman", fontSize, Quartz.kCGEncodingMacRoman
+    )
 
     # ----  Text Line 1 ----
 
@@ -159,8 +167,9 @@ def drawQuartzTextWithTextModes(context):
     # stroked. This produces text that is filled with the fill
     # color and stroked with the stroke color.
     Quartz.CGContextSetTextDrawingMode(context, Quartz.kCGTextFillStroke)
-    Quartz.CGContextShowTextAtPoint(context, 10, 400,
-            fillAndStrokeText, len(fillAndStrokeText))
+    Quartz.CGContextShowTextAtPoint(
+        context, 10, 400, fillAndStrokeText, len(fillAndStrokeText)
+    )
 
     # Now draw again with a thicker stroke width.
     Quartz.CGContextSetLineWidth(context, 2)
@@ -176,8 +185,7 @@ def drawQuartzTextWithTextModes(context):
     # text does not appear. Quartz updates the text position as
     # if it had been drawn.
     Quartz.CGContextSetTextDrawingMode(context, Quartz.kCGTextInvisible)
-    Quartz.CGContextShowTextAtPoint(context, 10, 400,
-            invisibleText, len(invisibleText))
+    Quartz.CGContextShowTextAtPoint(context, 10, 400, invisibleText, len(invisibleText))
 
     Quartz.CGContextSetTextDrawingMode(context, Quartz.kCGTextFill)
 
@@ -225,6 +233,7 @@ def drawQuartzTextWithTextModes(context):
         drawGridLines(context)
     Quartz.CGContextRestoreGState(context)
 
+
 # showFlippedTextAtPoint is a cover routine for Quartz.CGContextShowText
 # that is useful for drawing text in a coordinate system where the y axis
 # is flipped relative to the default Quartz coordinate system.
@@ -253,7 +262,8 @@ def showFlippedTextAtPoint(c, x, y, text, textLen):
     p = Quartz.CGContextGetTextPosition(c)
     # Update the saved text matrix to reflect the updated
     # text position.
-    s.tx = p.x ; s.ty = p.y
+    s.tx = p.x
+    s.ty = p.y
     # Reset to the text matrix in effect when this
     # routine was called but with the text position updated.
     Quartz.CGContextSetTextMatrix(c, s)
@@ -272,7 +282,9 @@ def drawQuartzTextWithTextMatrix(context):
 
     # Set the font with the PostScript name "Times-Roman", at
     # fontSize points, with the MacRoman encoding.
-    Quartz.CGContextSelectFont(context, b"Times-Roman", fontSize, Quartz.kCGEncodingMacRoman)
+    Quartz.CGContextSelectFont(
+        context, b"Times-Roman", fontSize, Quartz.kCGEncodingMacRoman
+    )
 
     # ----  Text Line 1 ----
 
@@ -298,7 +310,7 @@ def drawQuartzTextWithTextMatrix(context):
     # ----  Text Line 2 ----
 
     # Translate down for the next piece of text.
-    Quartz.CGContextTranslateCTM(context, 0, -(3*fontSize + extraLeading))
+    Quartz.CGContextTranslateCTM(context, 0, -(3 * fontSize + extraLeading))
 
     Quartz.CGContextSaveGState(context)
     if 1:
@@ -340,7 +352,9 @@ def drawQuartzTextWithTextMatrix(context):
         # at the top-left corner of a window. The new origin is at 600 units in
         # +y from the old origin and the y axis now increases with positive y
         # going down the window.
-        Quartz.CGContextConcatCTM(context, Quartz.CGAffineTransformMake(1, 0, 0, -1, 0, 600))
+        Quartz.CGContextConcatCTM(
+            context, Quartz.CGAffineTransformMake(1, 0, 0, -1, 0, 600)
+        )
         # This text will be flipped along with the CTM.
         Quartz.CGContextShowTextAtPoint(context, 10, 10, text, textlen)
         # Obtain the user space coordinates of the current text position.

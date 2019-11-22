@@ -9,8 +9,8 @@
 
 from Cocoa import NSValueTransformer, NSColor
 
-class PriorityToColourTransformer(NSValueTransformer):
 
+class PriorityToColourTransformer(NSValueTransformer):
     @classmethod
     def transformedValueClass(cls):
         return NSColor

@@ -1,10 +1,10 @@
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import Accounts
 
-    class TestACError (TestCase):
+    class TestACError(TestCase):
         @min_os_level("10.9")
         def testConstants10_9(self):
             self.assertEqual(Accounts.ACErrorAccessDeniedByProtectionPolicy, 10)

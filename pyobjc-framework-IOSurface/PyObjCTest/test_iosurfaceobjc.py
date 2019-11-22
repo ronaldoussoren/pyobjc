@@ -2,11 +2,12 @@ from PyObjCTools.TestSupport import *
 
 import IOSurface
 
-class TestIOSurfaceObjC (TestCase):
+
+class TestIOSurfaceObjC(TestCase):
     def testCFTypes(self):
         self.assertIsCFType(IOSurface.IOSurfaceRef)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants(self):
         self.assertIsInstance(IOSurface.IOSurfacePropertyAllocSizeKey, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyWidth, unicode)
@@ -28,13 +29,15 @@ class TestIOSurfaceObjC (TestCase):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneElementHeight, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyCacheMode, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPixelFormat, unicode)
-        self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPixelSizeCastingAllowed, unicode)
+        self.assertIsInstance(
+            IOSurface.IOSurfacePropertyKeyPixelSizeCastingAllowed, unicode
+        )
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyAllocSize, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods(self):
         self.assertArgIsOut(IOSurface.IOSurface.lockWithOptions_seed_, 1)
         self.assertArgIsOut(IOSurface.IOSurface.unlockWithOptions_seed_, 1)
@@ -42,15 +45,15 @@ class TestIOSurfaceObjC (TestCase):
         self.assertResultIsBOOL(IOSurface.IOSurface.allowsPixelSizeCasting)
         self.assertResultIsVariableSize(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsOut(IOSurface.IOSurface.setPurgeable_oldState_, 1)
 
-
     @expectedFailure
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods_unsupported(self):
-        self.fail(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_) # Buffer
+        self.fail(IOSurface.IOSurface.baseAddressOfPlaneAtIndex_)  # Buffer
+
 
 if __name__ == "__main__":
     main()

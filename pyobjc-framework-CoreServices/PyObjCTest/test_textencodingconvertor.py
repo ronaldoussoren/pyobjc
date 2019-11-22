@@ -2,16 +2,19 @@ from PyObjCTools.TestSupport import *
 
 import CoreServices
 
-class TestTextEncodingConvertor (TestCase):
+
+class TestTextEncodingConvertor(TestCase):
     def assert_not_wrapped(self, name):
-        self.assertTrue(not hasattr(CoreServices, name), "%r exposed in bindings"%(name,))
+        self.assertTrue(
+            not hasattr(CoreServices, name), "%r exposed in bindings" % (name,)
+        )
 
     def test_constants(self):
-        self.assertEqual(CoreServices.kTECSignature, fourcc(b'encv'))
-        self.assertEqual(CoreServices.kTECUnicodePluginSignature, fourcc(b'puni'))
-        self.assertEqual(CoreServices.kTECJapanesePluginSignature, fourcc(b'pjpn'))
-        self.assertEqual(CoreServices.kTECChinesePluginSignature, fourcc(b'pzho'))
-        self.assertEqual(CoreServices.kTECKoreanPluginSignature, fourcc(b'pkor'))
+        self.assertEqual(CoreServices.kTECSignature, fourcc(b"encv"))
+        self.assertEqual(CoreServices.kTECUnicodePluginSignature, fourcc(b"puni"))
+        self.assertEqual(CoreServices.kTECJapanesePluginSignature, fourcc(b"pjpn"))
+        self.assertEqual(CoreServices.kTECChinesePluginSignature, fourcc(b"pzho"))
+        self.assertEqual(CoreServices.kTECKoreanPluginSignature, fourcc(b"pkor"))
 
         self.assertEqual(CoreServices.kTECInternetNameDefaultUsageMask, 0)
         self.assertEqual(CoreServices.kTECInternetNameStrictUsageMask, 1)
@@ -22,13 +25,18 @@ class TestTextEncodingConvertor (TestCase):
         self.assertEqual(CoreServices.kTECDisableFallbacksBit, 16)
         self.assertEqual(CoreServices.kTECDisableLooseMappingsBit, 17)
 
-        self.assertEqual(CoreServices.kTECDisableFallbacksMask, 1 << CoreServices.kTECDisableFallbacksBit)
-        self.assertEqual(CoreServices.kTECDisableLooseMappingsMask, 1 << CoreServices.kTECDisableLooseMappingsBit)
+        self.assertEqual(
+            CoreServices.kTECDisableFallbacksMask,
+            1 << CoreServices.kTECDisableFallbacksBit,
+        )
+        self.assertEqual(
+            CoreServices.kTECDisableLooseMappingsMask,
+            1 << CoreServices.kTECDisableLooseMappingsBit,
+        )
 
     def test_types(self):
         self.assertIsOpaquePointer(CoreServices.TECObjectRef)
         self.assertIsOpaquePointer(CoreServices.TECSnifferObjectRef)
-
 
     def test_structs(self):
         v = CoreServices.TECConversionInfo()
@@ -41,24 +49,26 @@ class TestTextEncodingConvertor (TestCase):
         self.assertArgIsOut(CoreServices.TECCountAvailableTextEncodings, 0)
 
         self.assertArgIsOut(CoreServices.TECGetAvailableTextEncodings, 0)
-        self.assertArgSizeInArg(CoreServices.TECGetAvailableTextEncodings, 0, (1,2))
+        self.assertArgSizeInArg(CoreServices.TECGetAvailableTextEncodings, 0, (1, 2))
         self.assertArgIsOut(CoreServices.TECGetAvailableTextEncodings, 2)
 
         self.assertArgIsOut(CoreServices.TECCountDirectTextEncodingConversions, 0)
 
         self.assertArgIsOut(CoreServices.TECGetDirectTextEncodingConversions, 0)
-        self.assertArgSizeInArg(CoreServices.TECGetDirectTextEncodingConversions, 0, (1,2))
+        self.assertArgSizeInArg(
+            CoreServices.TECGetDirectTextEncodingConversions, 0, (1, 2)
+        )
         self.assertArgIsOut(CoreServices.TECGetDirectTextEncodingConversions, 2)
 
         self.assertArgIsOut(CoreServices.TECCountDestinationTextEncodings, 1)
 
         self.assertArgIsOut(CoreServices.TECGetDestinationTextEncodings, 1)
-        self.assertArgSizeInArg(CoreServices.TECGetDestinationTextEncodings, 1, (2,3))
+        self.assertArgSizeInArg(CoreServices.TECGetDestinationTextEncodings, 1, (2, 3))
         self.assertArgIsOut(CoreServices.TECGetDestinationTextEncodings, 3)
 
         self.assertArgIsOut(CoreServices.TECGetTextEncodingInternetName, 1)
 
-        #self.assertArgIsIn(CoreServices.TECGetTextEncodingFromInternetName, 0)
+        # self.assertArgIsIn(CoreServices.TECGetTextEncodingFromInternetName, 0)
         CoreServices.TECGetTextEncodingFromInternetName
 
         self.assertArgIsOut(CoreServices.TECCreateConverter, 0)
@@ -74,20 +84,20 @@ class TestTextEncodingConvertor (TestCase):
         self.assertArgSizeInArg(CoreServices.TECConvertText, 1, 2)
         self.assertArgIsOut(CoreServices.TECConvertText, 3)
         self.assertArgIsOut(CoreServices.TECConvertText, 4)
-        self.assertArgSizeInArg(CoreServices.TECConvertText, 4, (5,6))
+        self.assertArgSizeInArg(CoreServices.TECConvertText, 4, (5, 6))
         self.assertArgIsOut(CoreServices.TECConvertText, 6)
 
         self.assertArgIsOut(CoreServices.TECFlushText, 1)
-        self.assertArgSizeInArg(CoreServices.TECFlushText, 1, (2,3))
+        self.assertArgSizeInArg(CoreServices.TECFlushText, 1, (2, 3))
         self.assertArgIsOut(CoreServices.TECFlushText, 3)
 
         self.assertArgIsOut(CoreServices.TECCountSubTextEncodings, 1)
 
         self.assertArgIsOut(CoreServices.TECGetSubTextEncodings, 1)
-        self.assertArgSizeInArg(CoreServices.TECGetSubTextEncodings, 1, (2,3))
+        self.assertArgSizeInArg(CoreServices.TECGetSubTextEncodings, 1, (2, 3))
         self.assertArgIsOut(CoreServices.TECGetSubTextEncodings, 3)
 
-        self.assert_not_wrapped('TECGetEncodingList')
+        self.assert_not_wrapped("TECGetEncodingList")
 
         self.assertArgIsOut(CoreServices.TECCreateOneToManyConverter, 0)
         self.assertArgIsIn(CoreServices.TECCreateOneToManyConverter, 3)
@@ -150,6 +160,7 @@ class TestTextEncodingConvertor (TestCase):
         self.assertArgIsOut(CoreServices.TECCopyTextEncodingInternetNameAndMIB, 3)
 
         self.assertArgIsOut(CoreServices.TECGetTextEncodingFromInternetNameOrMIB, 0)
+
 
 if __name__ == "__main__":
     main()

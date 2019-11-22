@@ -1,5 +1,7 @@
 from PyObjCTools import AppHelper
-import objc; objc.setVerbose(True)
+import objc
+
+objc.setVerbose(True)
 
 import CGImageView
 import Controller

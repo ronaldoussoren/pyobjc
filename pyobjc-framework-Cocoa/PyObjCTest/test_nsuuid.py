@@ -3,8 +3,9 @@ from PyObjCTools.TestSupport import *
 import Foundation
 import uuid
 
-class TestNSUUID (TestCase):
-    @min_os_level('10.8')
+
+class TestNSUUID(TestCase):
+    @min_os_level("10.8")
     def testMethods10_8(self):
         val = Foundation.NSUUID.UUID()
 

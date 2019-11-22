@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMedia
 
-class TestCMBlockBuffer (TestCase):
+
+class TestCMBlockBuffer(TestCase):
     def test_constants(self):
         self.assertEqual(CoreMedia.kCMBlockBufferNoErr, 0)
         self.assertEqual(CoreMedia.kCMBlockBufferStructureAllocationFailedErr, -12700)
@@ -15,13 +16,12 @@ class TestCMBlockBuffer (TestCase):
         self.assertEqual(CoreMedia.kCMBlockBufferUnallocatedBlockErr, -12707)
         self.assertEqual(CoreMedia.kCMBlockBufferInsufficientSpaceErr, -12708)
 
-        self.assertEqual(CoreMedia.kCMBlockBufferAssureMemoryNowFlag, 1<<0)
-        self.assertEqual(CoreMedia.kCMBlockBufferAlwaysCopyDataFlag, 1<<1)
-        self.assertEqual(CoreMedia.kCMBlockBufferDontOptimizeDepthFlag, 1<<2)
-        self.assertEqual(CoreMedia.kCMBlockBufferPermitEmptyReferenceFlag, 1<<3)
+        self.assertEqual(CoreMedia.kCMBlockBufferAssureMemoryNowFlag, 1 << 0)
+        self.assertEqual(CoreMedia.kCMBlockBufferAlwaysCopyDataFlag, 1 << 1)
+        self.assertEqual(CoreMedia.kCMBlockBufferDontOptimizeDepthFlag, 1 << 2)
+        self.assertEqual(CoreMedia.kCMBlockBufferPermitEmptyReferenceFlag, 1 << 3)
 
         self.assertEqual(CoreMedia.kCMBlockBufferCustomBlockSourceVersion, 0)
-
 
     def test_cftypes(self):
         self.assertIsCFType(CoreMedia.CMBlockBufferRef)
@@ -35,7 +35,6 @@ class TestCMBlockBuffer (TestCase):
         self.assertArgIsIn(CoreMedia.CMBlockBufferCreateWithMemoryBlock, 4)
         self.assertArgIsOut(CoreMedia.CMBlockBufferCreateWithMemoryBlock, 8)
         self.assertArgIsCFRetained(CoreMedia.CMBlockBufferCreateWithMemoryBlock, 8)
-
 
         self.assertArgIsOut(CoreMedia.CMBlockBufferCreateWithBufferReference, 5)
         self.assertArgIsCFRetained(CoreMedia.CMBlockBufferCreateWithBufferReference, 5)
@@ -66,14 +65,15 @@ class TestCMBlockBuffer (TestCase):
     @expectedFailure
     def test_functions_manual(self):
         # XXX: Need manual wrappers for these to support custom block sources:
-        self.assertIsNotInstance(CoreMedia.CMBlockBufferCreateWithMemoryBlock, objc.function)
+        self.assertIsNotInstance(
+            CoreMedia.CMBlockBufferCreateWithMemoryBlock, objc.function
+        )
         self.assertIsNotInstance(CoreMedia.CMBlockBufferCreateContiguous, objc.function)
         self.assertIsNotInstance(CoreMedia.CMBlockBufferAppendMemoryBlock, objc.function)
 
         # XXX: Need manual wrapper to expose this function
         self.assertIsNotInstance(CoreMedia.CMBlockBufferAccessDataBytes, objc.function)
         self.assertIsNotInstance(CoreMedia.CMBlockBufferGetDataPointer, objc.function)
-
 
 
 if __name__ == "__main__":

@@ -1,7 +1,5 @@
 static PyObject*
-mod_CFSetGetValues(
-    PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFSetGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* pySet;
     PyObject* pyValues;
@@ -21,7 +19,7 @@ mod_CFSetGetValues(
     if (pyValues == PyObjC_NULL) {
         values = NULL;
         count = 0;
-    } else if (pyValues == Py_None){
+    } else if (pyValues == Py_None) {
         count = CFSetGetCount(set);
         values = malloc(sizeof(void*) * count);
         if (values == NULL) {
@@ -33,14 +31,14 @@ mod_CFSetGetValues(
         return NULL;
     }
 
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            CFSetGetValues(set, values);
 
-    PyObjC_DURING
-        CFSetGetValues( set, values);
-
-    PyObjC_HANDLER
-        PyObjCErr_FromObjC(localException);
-
-    PyObjC_ENDHANDLER
+        } @catch (NSException* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
         if (values != NULL) {
@@ -60,10 +58,5 @@ mod_CFSetGetValues(
     return pyValues;
 }
 
-#define COREFOUNDATION_SET_METHODS \
-    { \
-        "CFSetGetValues", \
-        (PyCFunction)mod_CFSetGetValues, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_SET_METHODS                                                       \
+    {"CFSetGetValues", (PyCFunction)mod_CFSetGetValues, METH_VARARGS, NULL},

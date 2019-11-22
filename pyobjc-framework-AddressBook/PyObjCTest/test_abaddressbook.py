@@ -1,20 +1,20 @@
-
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-class TestABAddressBook (TestCase):
+
+class TestABAddressBook(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(ABAddressBook.save)
         self.assertResultIsBOOL(ABAddressBook.hasUnsavedChanges)
         self.assertResultIsBOOL(ABAddressBook.addRecord_)
         self.assertResultIsBOOL(ABAddressBook.removeRecord_)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertResultIsBOOL(ABAddressBook.saveAndReturnError_)
         self.assertArgIsOut(ABAddressBook.saveAndReturnError_, 0)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_5(self):
         self.assertResultIsBOOL(ABAddressBook.addRecord_error_)
         self.assertArgIsOut(ABAddressBook.addRecord_error_, 1)
@@ -28,11 +28,10 @@ class TestABAddressBook (TestCase):
         self.assertEqual(ABPropertyUnsupportedBySourceError, 1013)
         self.assertEqual(ABPropertyReadOnlyError, 1014)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(ABAddressBookErrorDomain, unicode)
         self.assertIsInstance(ABMultiValueIdentifiersErrorKey, unicode)
-
 
 
 if __name__ == "__main__":

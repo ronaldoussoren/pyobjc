@@ -2,17 +2,22 @@ import objc
 import Cocoa
 import AppDrawing
 
+
 def getURLToExport(suffix):
     savePanel = Cocoa.NSSavePanel.savePanel()
 
-    initialFileName = u"Quartz2DBasics.%s"%(suffix,)
+    initialFileName = "Quartz2DBasics.%s" % (suffix,)
 
-    if savePanel.runModalForDirectory_file_(None, initialFileName) == Cocoa.NSFileHandlingPanelOKButton:
+    if (
+        savePanel.runModalForDirectory_file_(None, initialFileName)
+        == Cocoa.NSFileHandlingPanelOKButton
+    ):
         return savePanel.URL()
 
     return None
 
-class MyAppController (Cocoa.NSObject):
+
+class MyAppController(Cocoa.NSObject):
     theView = objc.IBOutlet()
 
     @objc.IBAction

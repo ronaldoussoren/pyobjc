@@ -3,7 +3,8 @@ from AppKit import *
 import array
 import sys
 
-class TestRegressions (TestCase):
+
+class TestRegressions(TestCase):
     def testQualifiersInSignature(self):
         NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)
 
@@ -12,7 +13,9 @@ class TestRegressions (TestCase):
         self.assertArgIsBOOL(NSColor.setIgnoresAlpha_, 0)
 
         space = NSColorSpace.adobeRGB1998ColorSpace()
-        color = NSColor.colorWithColorSpace_components_count_(space, (0.1, 0.2, 0.3, 0.4), 4)
+        color = NSColor.colorWithColorSpace_components_count_(
+            space, (0.1, 0.2, 0.3, 0.4), 4
+        )
         self.assertIsInstance(color, NSColor)
 
         color = NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 0)
@@ -22,7 +25,9 @@ class TestRegressions (TestCase):
         self.assertIsInstance(b, float)
         self.assertIsInstance(a, float)
 
-        color = NSColor.colorWithCalibratedHue_saturation_brightness_alpha_(0.1, 0.2, 0.3, 0.4)
+        color = NSColor.colorWithCalibratedHue_saturation_brightness_alpha_(
+            0.1, 0.2, 0.3, 0.4
+        )
         h, s, b, a = color.getHue_saturation_brightness_alpha_(None, None, None, None)
         self.assertIsInstance(h, float)
         self.assertIsInstance(s, float)
@@ -35,17 +40,19 @@ class TestRegressions (TestCase):
         self.assertIsInstance(a, float)
 
         color = NSColor.colorWithDeviceCyan_magenta_yellow_black_alpha_(1, 1, 1, 1, 1)
-        c, m, y, b, a  = color.getCyan_magenta_yellow_black_alpha_(None, None, None, None, None)
+        c, m, y, b, a = color.getCyan_magenta_yellow_black_alpha_(
+            None, None, None, None, None
+        )
         self.assertIsInstance(c, float)
         self.assertIsInstance(m, float)
         self.assertIsInstance(y, float)
         self.assertIsInstance(b, float)
         self.assertIsInstance(a, float)
 
-        if sys.maxsize > 2**32:
-            a = array.array('d', [0] * 6)
+        if sys.maxsize > 2 ** 32:
+            a = array.array("d", [0] * 6)
         else:
-            a = array.array('f', [0] * 6)
+            a = array.array("f", [0] * 6)
         v = color.getComponents_(a)
         self.assertEqual(a[0], 1.0)
 
@@ -63,6 +70,7 @@ class TestRegressions (TestCase):
         self.assertEqual(NSColorSystemEffectDeepPressed, 2)
         self.assertEqual(NSColorSystemEffectDisabled, 3)
         self.assertEqual(NSColorSystemEffectRollover, 4)
+
 
 if __name__ == "__main__":
     main()

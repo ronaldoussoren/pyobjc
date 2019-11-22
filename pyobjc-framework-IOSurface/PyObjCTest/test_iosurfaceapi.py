@@ -2,15 +2,16 @@ from PyObjCTools.TestSupport import *
 
 import IOSurface
 
-class TestIOSurfaceAPI (TestCase):
+
+class TestIOSurfaceAPI(TestCase):
     def testCFTypes(self):
         self.assertIsCFType(IOSurface.IOSurfaceRef)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(IOSurface.kIOSurfacePixelSizeCastingAllowed, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants(self):
         self.assertIsInstance(IOSurface.kIOSurfaceAllocSize, unicode)
         self.assertIsInstance(IOSurface.kIOSurfaceWidth, unicode)
@@ -75,14 +76,32 @@ class TestIOSurfaceAPI (TestCase):
         self.assertEqual(IOSurface.kIOSurfaceCopybackInnerCache, 5)
 
         self.assertEqual(IOSurface.kIOSurfaceMapCacheShift, 8)
-        self.assertEqual(IOSurface.kIOSurfaceMapDefaultCache, IOSurface.kIOSurfaceDefaultCache       << IOSurface.kIOSurfaceMapCacheShift)
-        self.assertEqual(IOSurface.kIOSurfaceMapInhibitCache, IOSurface.kIOSurfaceInhibitCache       << IOSurface.kIOSurfaceMapCacheShift)
-        self.assertEqual(IOSurface.kIOSurfaceMapWriteThruCache, IOSurface.kIOSurfaceWriteThruCache     << IOSurface.kIOSurfaceMapCacheShift)
-        self.assertEqual(IOSurface.kIOSurfaceMapCopybackCache, IOSurface.kIOSurfaceCopybackCache      << IOSurface.kIOSurfaceMapCacheShift)
-        self.assertEqual(IOSurface.kIOSurfaceMapWriteCombineCache, IOSurface.kIOSurfaceWriteCombineCache  << IOSurface.kIOSurfaceMapCacheShift)
-        self.assertEqual(IOSurface.kIOSurfaceMapCopybackInnerCache, IOSurface.kIOSurfaceCopybackInnerCache << IOSurface.kIOSurfaceMapCacheShift)
+        self.assertEqual(
+            IOSurface.kIOSurfaceMapDefaultCache,
+            IOSurface.kIOSurfaceDefaultCache << IOSurface.kIOSurfaceMapCacheShift,
+        )
+        self.assertEqual(
+            IOSurface.kIOSurfaceMapInhibitCache,
+            IOSurface.kIOSurfaceInhibitCache << IOSurface.kIOSurfaceMapCacheShift,
+        )
+        self.assertEqual(
+            IOSurface.kIOSurfaceMapWriteThruCache,
+            IOSurface.kIOSurfaceWriteThruCache << IOSurface.kIOSurfaceMapCacheShift,
+        )
+        self.assertEqual(
+            IOSurface.kIOSurfaceMapCopybackCache,
+            IOSurface.kIOSurfaceCopybackCache << IOSurface.kIOSurfaceMapCacheShift,
+        )
+        self.assertEqual(
+            IOSurface.kIOSurfaceMapWriteCombineCache,
+            IOSurface.kIOSurfaceWriteCombineCache << IOSurface.kIOSurfaceMapCacheShift,
+        )
+        self.assertEqual(
+            IOSurface.kIOSurfaceMapCopybackInnerCache,
+            IOSurface.kIOSurfaceCopybackInnerCache << IOSurface.kIOSurfaceMapCacheShift,
+        )
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(IOSurface.kIOSurfacePlaneBitsPerElement, unicode)
         self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentBitDepths, unicode)
@@ -90,7 +109,7 @@ class TestIOSurfaceAPI (TestCase):
         self.assertIsInstance(IOSurface.kIOSurfacePlaneComponentNames, unicode)
         self.assertIsInstance(IOSurface.kIOSurfaceSubsampling, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions(self):
         self.assertIsInstance(IOSurface.IOSurfaceGetTypeID(), (int, long))
 
@@ -109,7 +128,7 @@ class TestIOSurfaceAPI (TestCase):
         IOSurface.IOSurfaceGetBytesPerElement
         IOSurface.IOSurfaceGetBytesPerRow
 
-        self.assertResultHasType(IOSurface.IOSurfaceGetBaseAddress, b'^v')
+        self.assertResultHasType(IOSurface.IOSurfaceGetBaseAddress, b"^v")
         self.assertResultIsVariableSize(IOSurface.IOSurfaceGetBaseAddress)
 
         IOSurface.IOSurfaceGetElementWidth
@@ -124,7 +143,7 @@ class TestIOSurfaceAPI (TestCase):
         IOSurface.IOSurfaceGetBytesPerElementOfPlane
         IOSurface.IOSurfaceGetBytesPerRowOfPlane
 
-        self.assertResultHasType(IOSurface.IOSurfaceGetBaseAddressOfPlane, b'^v')
+        self.assertResultHasType(IOSurface.IOSurfaceGetBaseAddressOfPlane, b"^v")
         self.assertResultIsVariableSize(IOSurface.IOSurfaceGetBaseAddressOfPlane)
 
         IOSurface.IOSurfaceGetElementWidthOfPlane
@@ -154,17 +173,17 @@ class TestIOSurfaceAPI (TestCase):
 
         self.assertResultIsBOOL(IOSurface.IOSurfaceIsInUse)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testFunctions10_7(self):
         IOSurface.IOSurfaceCreateXPCObject
 
         self.assertResultIsCFRetained(IOSurface.IOSurfaceLookupFromXPCObject)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testFunctions10_12(self):
         self.assertResultIsBOOL(IOSurface.IOSurfaceAllowsPixelSizeCasting)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testFunctions10_13(self):
         IOSurface.IOSurfaceGetNumberOfComponentsOfPlane
         IOSurface.IOSurfaceGetNameOfComponentOfPlane

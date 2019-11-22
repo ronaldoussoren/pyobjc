@@ -5,40 +5,42 @@ from PyObjCTools.TestSupport import *
 from PyObjCTest.fnd import NSObject
 import objc
 
-class TestSynthesizeCopier (NSObject):
+
+class TestSynthesizeCopier(NSObject):
     def copy(self):
         return 42
 
-class TestSynthesizeHelper (NSObject):
-    objc.synthesize('someTitle', copy=True)
-    objc.synthesize('stringValue', copy=False)
-    objc.synthesize('read', readwrite=False)
-    objc.synthesize('write', ivarName='_do_write')
+
+class TestSynthesizeHelper(NSObject):
+    objc.synthesize("someTitle", copy=True)
+    objc.synthesize("stringValue", copy=False)
+    objc.synthesize("read", readwrite=False)
+    objc.synthesize("write", ivarName="_do_write")
 
 
-class TestSynthesize (TestCase):
+class TestSynthesize(TestCase):
     def testNames(self):
-        self.assertHasAttr(TestSynthesizeHelper, 'someTitle')
-        self.assertHasAttr(TestSynthesizeHelper, 'setSomeTitle_')
+        self.assertHasAttr(TestSynthesizeHelper, "someTitle")
+        self.assertHasAttr(TestSynthesizeHelper, "setSomeTitle_")
 
-        self.assertHasAttr(TestSynthesizeHelper, 'stringValue')
-        self.assertHasAttr(TestSynthesizeHelper, 'setStringValue_')
+        self.assertHasAttr(TestSynthesizeHelper, "stringValue")
+        self.assertHasAttr(TestSynthesizeHelper, "setStringValue_")
 
-        self.assertHasAttr(TestSynthesizeHelper, 'read')
-        self.assertNotHasAttr(TestSynthesizeHelper, 'setRead_')
+        self.assertHasAttr(TestSynthesizeHelper, "read")
+        self.assertNotHasAttr(TestSynthesizeHelper, "setRead_")
 
-        self.assertHasAttr(TestSynthesizeHelper, 'write')
-        self.assertHasAttr(TestSynthesizeHelper, 'setWrite_')
+        self.assertHasAttr(TestSynthesizeHelper, "write")
+        self.assertHasAttr(TestSynthesizeHelper, "setWrite_")
 
     def testAttributes(self):
         o = TestSynthesizeHelper.alloc().init()
-        o.setWrite_('42')
-        self.assertEqual(o._do_write, '42')
-        self.assertEqual(o.write(), '42')
+        o.setWrite_("42")
+        self.assertEqual(o._do_write, "42")
+        self.assertEqual(o.write(), "42")
 
-        o.setStringValue_('hello')
-        self.assertEqual(o._stringValue, 'hello')
-        self.assertEqual(o.stringValue(), 'hello')
+        o.setStringValue_("hello")
+        self.assertEqual(o._stringValue, "hello")
+        self.assertEqual(o.stringValue(), "hello")
 
         o._read = 1
         self.assertEqual(o.read(), 1)
@@ -57,8 +59,9 @@ class TestSynthesize (TestCase):
         self.assertEqual(obj.someTitle(), 42)
 
     def testFailures(self):
-        self.assertRaises(ValueError, objc.synthesize, '')
+        self.assertRaises(ValueError, objc.synthesize, "")
         self.assertRaises(ValueError, objc.synthesize, None)
+
 
 if __name__ == "__main__":
     main()

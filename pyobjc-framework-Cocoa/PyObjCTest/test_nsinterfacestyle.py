@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
 
-class TestNSInterfaceStyle (TestCase):
+class TestNSInterfaceStyle(TestCase):
     def testConstants(self):
         self.assertEqual(NSNoInterfaceStyle, 0)
         self.assertEqual(NSNextStepInterfaceStyle, 1)

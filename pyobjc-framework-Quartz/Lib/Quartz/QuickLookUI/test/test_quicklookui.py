@@ -1,11 +1,12 @@
-'''
+"""
 Some simple tests to check that the framework is properly wrapped.
-'''
+"""
 import objc
 import unittest
 import QuickLookUI
 
-class TestQuickLookUI (unittest.TestCase):
+
+class TestQuickLookUI(unittest.TestCase):
     def testClasses(self):
         pass
         # self.assert_( hasattr(QuickLookUI, 'CLASSNAME') )
@@ -68,7 +69,6 @@ class TestQuickLookUI (unittest.TestCase):
         # self.assert_( hasattr(QuickLookUI, 'STRUCT') )
         # o = QuickLookUI.STRUCT()
         # self.assert_( hasattr(o, 'FIELD_NAME') )
-
 
 
 if __name__ == "__main__":

@@ -6,13 +6,12 @@ from objc import super
 import ShadowOffsetView
 
 
-class TLayerDemo (Cocoa.NSObject):
+class TLayerDemo(Cocoa.NSObject):
     colorWell = objc.IBOutlet()
     shadowOffsetView = objc.IBOutlet()
     shadowRadiusSlider = objc.IBOutlet()
     tlayerView = objc.IBOutlet()
     transparencyLayerButton = objc.IBOutlet()
-
 
     @classmethod
     def initialize(self):
@@ -34,10 +33,9 @@ class TLayerDemo (Cocoa.NSObject):
         self.shadowRadiusChanged_(self.shadowRadiusSlider)
 
         # Better to do this as a subclass of NSControl....
-        Cocoa.NSNotificationCenter.defaultCenter(
-                ).addObserver_selector_name_object_(
-                        self, b'shadowOffsetChanged:',
-                        ShadowOffsetView.ShadowOffsetChanged, None)
+        Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
+            self, b"shadowOffsetChanged:", ShadowOffsetView.ShadowOffsetChanged, None
+        )
         return self
 
     def dealloc(self):

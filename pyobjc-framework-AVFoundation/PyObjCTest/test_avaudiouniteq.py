@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import AVFoundation
 
-class TestAVAudioUnitEQ (TestCase):
-    @min_os_level('10.7')
+
+class TestAVAudioUnitEQ(TestCase):
+    @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeParametric, 0)
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeLowPass, 1)
@@ -17,7 +18,7 @@ class TestAVAudioUnitEQ (TestCase):
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeResonantLowShelf, 9)
         self.assertEqual(AVFoundation.AVAudioUnitEQFilterTypeResonantHighShelf, 10)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitEQFilterParameters.bypass)
         self.assertArgIsBOOL(AVFoundation.AVAudioUnitEQFilterParameters.setBypass_, 0)

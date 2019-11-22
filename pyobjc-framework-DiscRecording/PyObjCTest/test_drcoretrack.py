@@ -2,9 +2,10 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-DRTrackCallbackProc = b'i^{__DRTrack=}I^v'
+DRTrackCallbackProc = b"i^{__DRTrack=}I^v"
 
-class TestDRCoreTrack (TestCase):
+
+class TestDRCoreTrack(TestCase):
     @expectedFailure
     def testCFTypes(self):
         self.assertIsCFType(DiscRecording.DRTrackRef)
@@ -93,15 +94,17 @@ class TestDRCoreTrack (TestCase):
         self.assertEqual(DiscRecording.kDRFlagSubchannelDataRequested, 1 << 1)
         self.assertEqual(DiscRecording.kDRFlagNoMoreData, 1 << 0)
 
-        self.assertEqual(DiscRecording.kDRTrackMessagePreBurn, fourcc(b'pre '))
-        self.assertEqual(DiscRecording.kDRTrackMessageProduceData, fourcc(b'prod'))
-        self.assertEqual(DiscRecording.kDRTrackMessageVerificationStarting, fourcc(b'vstr'))
-        self.assertEqual(DiscRecording.kDRTrackMessageVerifyData, fourcc(b'vrfy'))
-        self.assertEqual(DiscRecording.kDRTrackMessageVerificationDone, fourcc(b'vdon'))
-        self.assertEqual(DiscRecording.kDRTrackMessagePostBurn, fourcc(b'post'))
-        self.assertEqual(DiscRecording.kDRTrackMessageEstimateLength, fourcc(b'esti'))
-        self.assertEqual(DiscRecording.kDRTrackMessageProducePreGap, fourcc(b'prpr'))
-        self.assertEqual(DiscRecording.kDRTrackMessageVerifyPreGap, fourcc(b'vrpr'))
+        self.assertEqual(DiscRecording.kDRTrackMessagePreBurn, fourcc(b"pre "))
+        self.assertEqual(DiscRecording.kDRTrackMessageProduceData, fourcc(b"prod"))
+        self.assertEqual(
+            DiscRecording.kDRTrackMessageVerificationStarting, fourcc(b"vstr")
+        )
+        self.assertEqual(DiscRecording.kDRTrackMessageVerifyData, fourcc(b"vrfy"))
+        self.assertEqual(DiscRecording.kDRTrackMessageVerificationDone, fourcc(b"vdon"))
+        self.assertEqual(DiscRecording.kDRTrackMessagePostBurn, fourcc(b"post"))
+        self.assertEqual(DiscRecording.kDRTrackMessageEstimateLength, fourcc(b"esti"))
+        self.assertEqual(DiscRecording.kDRTrackMessageProducePreGap, fourcc(b"prpr"))
+        self.assertEqual(DiscRecording.kDRTrackMessageVerifyPreGap, fourcc(b"vrpr"))
 
     def testStructs(self):
         # XXX: Needs manual work
@@ -117,16 +120,14 @@ class TestDRCoreTrack (TestCase):
         self.assertIsInstance(DiscRecording.DRTrackGetTypeID(), (int, long))
 
         self.assertResultIsCFRetained(DiscRecording.DRTrackCreate)
-        self.assertArgIsFunction(DiscRecording.DRTrackCreate, 1, DRTrackCallbackProc, True)
+        self.assertArgIsFunction(
+            DiscRecording.DRTrackCreate, 1, DRTrackCallbackProc, True
+        )
 
         DiscRecording.DRTrackSetProperties
         DiscRecording.DRTrackGetProperties
         DiscRecording.DRTrackSpeedTest
         DiscRecording.DRTrackEstimateLength
-
-
-
-
 
 
 if __name__ == "__main__":

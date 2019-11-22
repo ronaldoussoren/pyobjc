@@ -17,5 +17,6 @@ import GraphicsView
 
 # start the event loop
 import objc
+
 objc.setVerbose(1)
 AppHelper.runEventLoop(argv=[])

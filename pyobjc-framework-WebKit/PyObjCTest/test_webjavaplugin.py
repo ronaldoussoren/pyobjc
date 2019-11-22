@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestWebJavaPlugIn (TestCase):
+
+class TestWebJavaPlugIn(TestCase):
     def testConstants(self):
         self.assertEqual(WebJNIReturnTypeInvalid, 0)
         self.assertEqual(WebJNIReturnTypeVoid, 1)

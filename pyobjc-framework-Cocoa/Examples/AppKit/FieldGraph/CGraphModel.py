@@ -5,12 +5,11 @@ from AppKit import NSBezierPath
 from fieldMath import bessel, degToRad, polarToRect
 from math import cos, sin, sqrt, hypot, pi
 
-#____________________________________________________________
+# ____________________________________________________________
 class CGraphModel(NSObject):
-
     def init(self):
         self.field = [1.0, 1.12, 0.567]
-        self.phase = [degToRad(0), degToRad(152.6), degToRad(312.9-360)]
+        self.phase = [degToRad(0), degToRad(152.6), degToRad(312.9 - 360)]
         self.RMSGain = 0
         self.spacing = degToRad(90)
         return self
@@ -24,25 +23,30 @@ class CGraphModel(NSObject):
         maxMag = max(maxMag, mag)
         path.moveToPoint_(polarToRect((mag, 0)))
         for deg in range(1, 359, 1):
-            r = (deg/180.0)*pi
+            r = (deg / 180.0) * pi
             mag = self.fieldValue(r)
             maxMag = max(maxMag, mag)
             path.lineToPoint_(polarToRect((mag, r)))
         path.closePath()
 
-        return path, maxMag;
+        return path, maxMag
 
     @objc.python_method
     def fieldGain(self):
         gain = 0
         Et = self.field[0] + self.field[1] + self.field[2]
-        if Et:          # Don't want to divide by zero in the pathological case
-            spacing = [0, self.spacing, 2*self.spacing]
+        if Et:  # Don't want to divide by zero in the pathological case
+            spacing = [0, self.spacing, 2 * self.spacing]
 
             # This could easily be optimized--but this is just anexample :-)
             for i in range(3):
                 for j in range(3):
-                    gain += self.field[i]*self.field[j] * cos(self.phase[j]-self.phase[i]) * bessel(spacing[j]-spacing[i])
+                    gain += (
+                        self.field[i]
+                        * self.field[j]
+                        * cos(self.phase[j] - self.phase[i])
+                        * bessel(spacing[j] - spacing[i])
+                    )
             gain = sqrt(gain) / Et
 
         self.RMSGain = gain
@@ -58,12 +62,11 @@ class CGraphModel(NSObject):
         B1 = self.phase[1] + self.spacing * cos(a)
         B2 = self.phase[2] + 2 * self.spacing * cos(a)
 
-        phix = sin(B0) * E0  + sin(B1) * E1 + sin(B2) * E2
+        phix = sin(B0) * E0 + sin(B1) * E1 + sin(B2) * E2
         phiy = cos(B0) * E0 + cos(B1) * E1 + cos(B2) * E2
         mag = hypot(phix, phiy)
 
         return mag
-
 
     @objc.python_method
     def setField(self, tower, field):

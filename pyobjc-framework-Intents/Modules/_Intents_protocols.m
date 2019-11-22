@@ -6,13 +6,19 @@
 
 static void __attribute__((__used__)) use_protocols(void)
 {
-#if PyObjC_BUILD_RELEASE >= 1012 && defined(__LP64__)  
+#if PyObjC_BUILD_RELEASE >= 1012 && defined(__LP64__)
     PyObject* p;
-    p = PyObjC_IdToPython(@protocol(INSearchCallHistoryIntentHandling)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(INSearchForMessagesIntentHandling)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(INSendMessageIntentHandling)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(INSpeakable)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(INStartAudioCallIntentHandling)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(INStartVideoCallIntentHandling)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INSearchCallHistoryIntentHandling));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INSearchForMessagesIntentHandling));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INSendMessageIntentHandling));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INSpeakable));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INStartAudioCallIntentHandling));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(INStartVideoCallIntentHandling));
+    Py_XDECREF(p);
 #endif
 }

@@ -3,8 +3,8 @@
  *      from Python but ends up in some fun places like NSWindow
  */
 
-#include <Python.h>
-#include <pyobjc-api.h>
+#include "Python.h"
+#include "pyobjc-api.h"
 
 #import <Foundation/Foundation.h>
 
@@ -12,21 +12,19 @@
 #include <objc/objc-runtime.h>
 #endif
 
-@interface PyObjC_TestUnallocatable : NSObject
-{
+@interface PyObjC_TestUnallocatable : NSObject {
 }
 @end
 
 @implementation PyObjC_TestUnallocatable
-+ (id)allocWithZone:(NSZone *)zone
++ (id)allocWithZone:(NSZone*)zone
 {
     (void)&zone; /* Force use */
     return nil;
 }
 @end
 
-@interface PyObjC_TestClassAndInstance: NSObject
-{
+@interface PyObjC_TestClassAndInstance : NSObject {
 }
 
 + (BOOL)isInstance;
@@ -34,79 +32,53 @@
 @end
 
 @implementation PyObjC_TestClassAndInstance
-+(BOOL)isInstance
++ (BOOL)isInstance
 {
     return NO;
 }
--(BOOL)isInstance
+- (BOOL)isInstance
 {
     return YES;
 }
 @end
 
 /* Python glue */
-static PyMethodDef mod_methods[] = {
-    { 0, 0, 0, 0 }
-};
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
-#if PY_VERSION_HEX >= 0x03000000
-
-static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "testclassandinst",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "testclassandinst",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit_testclassandinst(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_testclassandinst(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void inittestclassandinst(void);
-
-void __attribute__((__visibility__("default")))
-inittestclassandinst(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_testclassandinst(void)
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("testclassandinst", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestClassAndInstance",
-        PyObjC_IdToPython([PyObjC_TestClassAndInstance class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([PyObjC_TestClassAndInstance class])) < 0) {
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestUnallocatable",
-        PyObjC_IdToPython([PyObjC_TestUnallocatable class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([PyObjC_TestUnallocatable class])) < 0) {
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

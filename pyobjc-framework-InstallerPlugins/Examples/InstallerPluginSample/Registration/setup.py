@@ -17,14 +17,10 @@ setup(
     name="Registration",
     plugin=["RegistrationPane.py"],
     data_files=["English.lproj"],
-    options=dict(py2app=dict(
-        extension=".bundle",
-        plist=plist,
-    )),
+    options=dict(py2app=dict(extension=".bundle", plist=plist)),
     setup_requires=[
         "py2app",
         "pyobjc-framework-Cocoa",
         "pyobjc-framework-InstallerPlugins",
-    ]
-
+    ],
 )

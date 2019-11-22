@@ -4,8 +4,8 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import Intents
 
-    class TestINRecurrenceFrequency (TestCase):
-        @min_os_level('10.12')
+    class TestINRecurrenceFrequency(TestCase):
+        @min_os_level("10.12")
         def testConstants(self):
             self.assertEqual(Intents.INRecurrenceFrequencyUnknown, 0)
             self.assertEqual(Intents.INRecurrenceFrequencyMinute, 1)

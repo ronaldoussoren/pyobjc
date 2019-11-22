@@ -3,7 +3,7 @@
 
 @implementation OC_PythonUnicode
 
-+(instancetype)unicodeWithPythonObject:(PyObject*)v
++ (instancetype)unicodeWithPythonObject:(PyObject*)v
 {
     OC_PythonUnicode* res;
 
@@ -11,17 +11,17 @@
     return [res autorelease];
 }
 
--(id)initWithPythonObject:(PyObject*)v
+- (id)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil)) return nil;
+    if (unlikely(self == nil))
+        return nil;
 
     SET_FIELD_INCREF(value, v);
     return self;
 }
 
-
--(PyObject*)__pyobjc_PythonObject__
+- (PyObject*)__pyobjc_PythonObject__
 {
     if (value == NULL) {
         Py_INCREF(Py_None);
@@ -31,23 +31,24 @@
     return value;
 }
 
--(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_INCREF(value);
     return value;
 }
 
-
--(BOOL)supportsWeakPointers {
+- (BOOL)supportsWeakPointers
+{
     return YES;
 }
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return NO;
 }
 
--(oneway void)release
+- (oneway void)release
 {
     /* There is small race condition when an object is almost deallocated
      * in one thread and fetched from the registration mapping in another
@@ -74,7 +75,7 @@
     PyObjC_END_WITH_GIL
 }
 
--(void)dealloc
+- (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) {
         [super dealloc];
@@ -97,18 +98,16 @@
     [super dealloc];
 }
 
-#if PY_VERSION_HEX >= 0x03030000
-
--(id)__realObject__
+- (id)__realObject__
 {
 #ifdef Py_DEBUG
     if (!PyUnicode_IS_READY(value)) {
-            /* Object should be ready, ensure we crash with the GIL
-             * held when it's not.
-             */
-            PyObjC_BEGIN_WITH_GIL
-                PyUnicode_GET_LENGTH(value);
-            PyObjC_END_WITH_GIL
+        /* Object should be ready, ensure we crash with the GIL
+         * held when it's not.
+         */
+        PyObjC_BEGIN_WITH_GIL
+            PyUnicode_GET_LENGTH(value);
+        PyObjC_END_WITH_GIL
     }
 #endif
 
@@ -118,24 +117,23 @@
             if (PyUnicode_IS_ASCII(value)) {
                 realObject = [[NSString alloc]
                     initWithBytesNoCopy:PyUnicode_1BYTE_DATA(value)
-                           length:(NSUInteger)PyUnicode_GET_LENGTH(value)
-                         encoding:NSASCIIStringEncoding
-                     freeWhenDone:NO];
+                                 length:(NSUInteger)PyUnicode_GET_LENGTH(value)
+                               encoding:NSASCIIStringEncoding
+                           freeWhenDone:NO];
             } else {
                 realObject = [[NSString alloc]
                     initWithBytesNoCopy:PyUnicode_1BYTE_DATA(value)
-                           length:(NSUInteger)PyUnicode_GET_LENGTH(value)
-                         encoding:NSISOLatin1StringEncoding
-                     freeWhenDone:NO];
-
+                                 length:(NSUInteger)PyUnicode_GET_LENGTH(value)
+                               encoding:NSISOLatin1StringEncoding
+                           freeWhenDone:NO];
             }
             break;
 
         case PyUnicode_2BYTE_KIND:
             realObject = [[NSString alloc]
                 initWithCharactersNoCopy:PyUnicode_2BYTE_DATA(value)
-                       length:(NSUInteger)PyUnicode_GET_LENGTH(value)
-                 freeWhenDone:NO];
+                                  length:(NSUInteger)PyUnicode_GET_LENGTH(value)
+                            freeWhenDone:NO];
             break;
 
         case PyUnicode_WCHAR_KIND:
@@ -149,10 +147,10 @@
                     NSLog(@"failed to encode unicode string to byte string");
                     PyErr_Clear();
                 } else {
-                    realObject = [[NSString alloc]
-                        initWithBytes:PyBytes_AS_STRING(utf8)
-                               length:(NSUInteger)PyBytes_GET_SIZE(utf8)
-                             encoding:NSUTF8StringEncoding];
+                    realObject =
+                        [[NSString alloc] initWithBytes:PyBytes_AS_STRING(utf8)
+                                                 length:(NSUInteger)PyBytes_GET_SIZE(utf8)
+                                               encoding:NSUTF8StringEncoding];
                     Py_DECREF(utf8);
                 }
             PyObjC_END_WITH_GIL
@@ -161,58 +159,22 @@
     return realObject;
 }
 
-#elif defined(PyObjC_UNICODE_FAST_PATH)
-
--(id)__realObject__
-{
-    if (!realObject) {
-        realObject = [[NSString alloc]
-            initWithCharactersNoCopy:PyUnicode_AS_UNICODE(value)
-                   length:(NSUInteger)PyUnicode_GET_SIZE(value)
-             freeWhenDone:NO];
-    }
-    return realObject;
-}
-
-#else // !PyObjC_UNICODE_FAST_PATH */
-
--(id)__realObject__
-{
-    if (!realObject) {
-        PyObjC_BEGIN_WITH_GIL
-            PyObject* utf8 = PyUnicode_AsUTF8String(value);
-            if (!utf8) {
-                NSLog(@"failed to encode unicode string to byte string");
-                PyErr_Clear();
-            } else {
-                realObject = [[NSString alloc]
-                    initWithBytes:PyBytes_AS_STRING(utf8)
-                           length:(NSUInteger)PyBytes_GET_SIZE(utf8)
-                         encoding:NSUTF8StringEncoding];
-                Py_DECREF(utf8);
-            }
-        PyObjC_END_WITH_GIL
-    }
-    return realObject;
-}
-#endif
-
--(NSUInteger)length
+- (NSUInteger)length
 {
     return [[self __realObject__] length];
 }
 
--(unichar)characterAtIndex:(NSUInteger)anIndex
+- (unichar)characterAtIndex:(NSUInteger)anIndex
 {
     return [[self __realObject__] characterAtIndex:anIndex];
 }
 
--(void)getCharacters:(unichar *)buffer range:(NSRange)aRange
+- (void)getCharacters:(unichar*)buffer range:(NSRange)aRange
 {
     return [[self __realObject__] getCharacters:buffer range:aRange];
 }
 
--(void)getCharacters:(unichar*)buffer
+- (void)getCharacters:(unichar*)buffer
 {
     return [[self __realObject__] getCharacters:buffer];
 }
@@ -220,18 +182,15 @@
 /*
  * NSCoding support
  */
-- (id)initWithCharactersNoCopy:(unichar *)characters
-            length:(NSUInteger)length
-          freeWhenDone:(BOOL)flag
+- (id)initWithCharactersNoCopy:(unichar*)characters
+                        length:(NSUInteger)length
+                  freeWhenDone:(BOOL)flag
 {
     int byteorder = 0;
     PyObjC_BEGIN_WITH_GIL
         /* Decode as a UTF-16 string in native byteorder */
-        value = PyUnicode_DecodeUTF16(
-                (const char*)characters,
-                length * 2,
-                NULL,
-                &byteorder);
+        value =
+            PyUnicode_DecodeUTF16((const char*)characters, length * 2, NULL, &byteorder);
         if (value == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -243,19 +202,34 @@
     return self;
 }
 
--(id)initWithBytes:(const void*)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
+- (id)initWithBytes:(const void*)bytes
+             length:(NSUInteger)length
+           encoding:(NSStringEncoding)encoding
 {
     char* py_encoding = NULL;
     int byteorder = 0;
 
+    /*
+     * Call the super initializer first.
+     */
+    self = [super init];
+    if (self == nil) {
+        return nil;
+    }
+
     /* Detect some often used single-byte encodings that can be created in Python without
      * creating an intermediate object.
      */
-
     switch (encoding) {
-    case NSASCIIStringEncoding: py_encoding = "ascii"; break;
-    case NSUTF8StringEncoding: py_encoding = "UTF-8"; break;
-    case NSISOLatin1StringEncoding: py_encoding = "latin1"; break;
+    case NSASCIIStringEncoding:
+        py_encoding = "ascii";
+        break;
+    case NSUTF8StringEncoding:
+        py_encoding = "UTF-8";
+        break;
+    case NSISOLatin1StringEncoding:
+        py_encoding = "latin1";
+        break;
     }
 
     if (py_encoding != NULL) {
@@ -271,18 +245,20 @@
     /* UTF-16 encodings can also be decoded without an intermediate object */
     byteorder = 2;
     switch (encoding) {
-    case NSASCIIStringEncoding: byteorder = 0; break;
-    case NSUTF8StringEncoding: byteorder = -1; break;
-    case NSISOLatin1StringEncoding: byteorder = 1; break;
+    case NSASCIIStringEncoding:
+        byteorder = 0;
+        break;
+    case NSUTF8StringEncoding:
+        byteorder = -1;
+        break;
+    case NSISOLatin1StringEncoding:
+        byteorder = 1;
+        break;
     }
     if (byteorder != 2) {
         PyObjC_BEGIN_WITH_GIL
             /* Decode as a UTF-16 string in native byteorder */
-            value = PyUnicode_DecodeUTF16(
-                    bytes,
-                    length,
-                    NULL,
-                    &byteorder);
+            value = PyUnicode_DecodeUTF16(bytes, length, NULL, &byteorder);
             if (value == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -291,22 +267,27 @@
         return self;
     }
 
-    /* And finally: first use the Cocoa decoder to create an NSString, copy the unichars into
-     * a temporary buffer and use that to create a Python unicode string using the UTF16 decoder.
+    /* And finally: first use the Cocoa decoder to create an NSString, copy the unichars
+     * into a temporary buffer and use that to create a Python unicode string using the
+     * UTF16 decoder.
      *
-     * This can be slightly optimized on systems where sizeof(Py_UNICODE) == sizeof(unichar), but
-     * that's not worth the additional complexity and won't work on Python 3.3 or later anyway.
+     * This can be slightly optimized on systems where sizeof(Py_UNICODE) ==
+     * sizeof(unichar), but that's not worth the additional complexity and won't work on
+     * Python 3.3 or later anyway.
      */
 
-    NSString* tmpval = [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
+    NSString* tmpval = [[NSString alloc] initWithBytes:bytes
+                                                length:length
+                                              encoding:encoding];
     Py_ssize_t charcount = [tmpval length];
 
-    /* NOTE: the malloc() call can be avoided when sizeof(unichar) == sizeof(Py_UNICODE) and
-     * we're on python 3.2 or earlier. That's not worth the added complexity.
+    /* NOTE: the malloc() call can be avoided when sizeof(unichar) == sizeof(Py_UNICODE)
+     * and we're on python 3.2 or earlier. That's not worth the added complexity.
      */
-    unichar* chars = malloc(charcount*2);
+    unichar* chars = malloc(charcount * 2);
 
     if (chars == NULL) {
+        [tmpval release];
         [self release];
         return nil;
     }
@@ -316,11 +297,7 @@
     PyObjC_BEGIN_WITH_GIL
         /* Decode as a UTF-16 string in native byteorder */
         byteorder = 0;
-        value = PyUnicode_DecodeUTF16(
-                (const char*)chars,
-                length * 2,
-                NULL,
-                &byteorder);
+        value = PyUnicode_DecodeUTF16((const char*)chars, length * 2, NULL, &byteorder);
         free(chars);
         if (value == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -334,7 +311,7 @@
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
--(void)pyobjcSetValue:(NSObject*)other
+- (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
@@ -343,7 +320,7 @@
     PyObjC_END_WITH_GIL
 }
 
--(id)initWithCoder:(NSCoder*)coder
+- (id)initWithCoder:(NSCoder*)coder
 {
     int ver;
     if ([coder allowsKeyedCoding]) {
@@ -392,18 +369,17 @@
 
         } else {
             [NSException raise:NSInvalidArgumentException
-                    format:@"decoding Python objects is not supported"];
+                        format:@"decoding Python objects is not supported"];
             return nil;
-
         }
     } else {
         [NSException raise:NSInvalidArgumentException
-            format:@"encoding Python unicode objects is not supported"];
+                    format:@"encoding Python unicode objects is not supported"];
         return nil;
     }
 }
 
--(void)encodeWithCoder:(NSCoder*)coder
+- (void)encodeWithCoder:(NSCoder*)coder
 {
     int is_exact_unicode;
     PyObjC_BEGIN_WITH_GIL
@@ -427,25 +403,25 @@
     }
 }
 
--(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
+- (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
 {
     (void)(archiver);
     return self;
 }
 
--(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+- (NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
 {
     (void)(archiver);
     return self;
 }
 
--(NSObject*)replacementObjectForCoder:(NSCoder*)archiver
+- (NSObject*)replacementObjectForCoder:(NSCoder*)archiver
 {
     (void)(archiver);
     return self;
 }
 
--(NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
+- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
 {
     (void)(archiver);
     return self;
@@ -457,7 +433,7 @@
  * when reading them back, but does allow for better interop with code
  * that uses a non-keyed archiver.
  */
--(Class)classForCoder
+- (Class)classForCoder
 {
     Class result;
     PyObjC_BEGIN_WITH_GIL
@@ -470,19 +446,17 @@
     return result;
 }
 
--(Class)classForKeyedArchiver
+- (Class)classForKeyedArchiver
 {
     return [OC_PythonUnicode class];
 }
 
-
 /* Ensure that we can be unarchived as a generic string by pure ObjC
  * code.
  */
-+(NSArray*)classFallbacksForKeyedArchiver
++ (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObject:@"NSString"];
 }
-
 
 @end /* implementation OC_PythonUnicode */

@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMEvent (TestCase):
 
+class TestDOMEvent(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_NONE, 0)
         self.assertEqual(DOM_CAPTURING_PHASE, 1)
@@ -18,13 +17,12 @@ class TestDOMEvent (TestCase):
         self.assertArgIsBOOL(DOMEvent.initEvent___, 1)
         self.assertArgIsBOOL(DOMEvent.initEvent___, 2)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(DOMEvent.returnValue)
         self.assertArgIsBOOL(DOMEvent.setReturnValue_, 0)
         self.assertResultIsBOOL(DOMEvent.cancelBubble)
         self.assertArgIsBOOL(DOMEvent.setCancelBubble_, 0)
-
 
 
 if __name__ == "__main__":

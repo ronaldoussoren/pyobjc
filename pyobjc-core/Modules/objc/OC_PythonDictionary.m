@@ -11,31 +11,30 @@
  *
  * This class implements an NSEnumerator for proxied Python dictionaries.
  */
-@interface OC_PythonDictionaryEnumerator : NSEnumerator
-{
+@interface OC_PythonDictionaryEnumerator : NSEnumerator {
     OC_PythonDictionary* value;
     Py_ssize_t pos;
     BOOL valid;
 }
-+(instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
--(id)initWithWrappedDictionary:(OC_PythonDictionary*)value;
--(void)dealloc;
--(id)nextObject;
++ (instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
+- (id)initWithWrappedDictionary:(OC_PythonDictionary*)value;
+- (void)dealloc;
+- (id)nextObject;
 
 @end /* interface OC_PythonDictionaryEnumerator */
 
-
 @implementation OC_PythonDictionaryEnumerator
 
-+(instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
++ (instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
 {
     return [[[self alloc] initWithWrappedDictionary:v] autorelease];
 }
 
--(id)initWithWrappedDictionary:(OC_PythonDictionary*)v
+- (id)initWithWrappedDictionary:(OC_PythonDictionary*)v
 {
     self = [super init];
-    if (unlikely(self == nil)) return nil;
+    if (unlikely(self == nil))
+        return nil;
 
     value = [v retain];
     valid = YES;
@@ -43,13 +42,13 @@
     return self;
 }
 
--(void)dealloc
+- (void)dealloc
 {
     [value release];
     [super dealloc];
 }
 
--(id)nextObject
+- (id)nextObject
 {
     id key = nil;
     PyObject* pykey = NULL;
@@ -79,34 +78,36 @@
 
 @end // implementation OC_PythonDictionaryEnumerator
 
-
 @implementation OC_PythonDictionary
 
-+(OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)v
++ (OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)v
 {
     OC_PythonDictionary* res = [[self alloc] initWithPythonObject:v];
     [res autorelease];
     return res;
 }
 
--(OC_PythonDictionary*)initWithPythonObject:(PyObject*)v
+- (OC_PythonDictionary*)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil)) return nil;
+    if (unlikely(self == nil))
+        return nil;
 
     SET_FIELD_INCREF(value, v);
     return self;
 }
 
--(BOOL)supportsWeakPointers {
+- (BOOL)supportsWeakPointers
+{
     return YES;
 }
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return NO;
 }
 
--(oneway void)release
+- (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
     if (unlikely(!Py_IsInitialized())) {
@@ -120,7 +121,7 @@
     PyObjC_END_WITH_GIL
 }
 
--(void)dealloc
+- (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) {
         [super dealloc];
@@ -136,20 +137,20 @@
     [super dealloc];
 }
 
--(PyObject*)__pyobjc_PythonObject__
+- (PyObject*)__pyobjc_PythonObject__
 {
     Py_XINCREF(value);
     return value;
 }
 
--(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_XINCREF(value);
     return value;
 }
 
--(NSUInteger)count
+- (NSUInteger)count
 {
     Py_ssize_t result;
     if (value == NULL) {
@@ -159,7 +160,6 @@
     PyObjC_BEGIN_WITH_GIL
         if (likely(PyDict_CheckExact(value))) {
             result = PyDict_Size(value);
-
         } else {
             result = PyObject_Length(value);
         }
@@ -175,7 +175,7 @@
     return result;
 }
 
--(id)objectForKey:key
+- (id)objectForKey:key
 {
     PyObject* v;
     PyObject* k;
@@ -190,7 +190,6 @@
         if (unlikely(key == [NSNull null])) {
             Py_INCREF(Py_None);
             k = Py_None;
-
         } else {
             k = PyObjC_IdToPython(key);
             if (k == NULL) {
@@ -199,15 +198,10 @@
         }
 
         if (likely(PyDict_CheckExact(value))) {
-#if PY_MAJOR_VERSION == 3
             v = PyDict_GetItemWithError(value, k);
             if (v == NULL && PyErr_Occurred()) {
                 PyObjC_GIL_FORWARD_EXC();
             }
-#else
-
-            v = PyDict_GetItem(value, k);
-#endif
             Py_XINCREF(v);
 
         } else {
@@ -235,8 +229,7 @@
     return result;
 }
 
-
--(void)setObject:val forKey:key
+- (void)setObject:val forKey:key
 {
     PyObject* v = NULL;
     PyObject* k = NULL;
@@ -246,7 +239,6 @@
         if (unlikely(val == null)) {
             Py_INCREF(Py_None);
             v = Py_None;
-
         } else {
             v = PyObjC_IdToPython(val);
             if (unlikely(v == NULL)) {
@@ -287,8 +279,7 @@
     PyObjC_END_WITH_GIL
 }
 
-
--(void)removeObjectForKey:key
+- (void)removeObjectForKey:key
 {
     PyObject* k;
 
@@ -296,7 +287,6 @@
         if (unlikely(key == [NSNull null])) {
             Py_INCREF(Py_None);
             k = Py_None;
-
         } else {
             k = PyObjC_IdToPython(key);
             if (unlikely(k == NULL)) {
@@ -321,10 +311,10 @@
     PyObjC_END_WITH_GIL
 }
 
--(NSEnumerator *)keyEnumerator
+- (NSEnumerator*)keyEnumerator
 {
     if (value == NULL) {
-            return nil;
+        return nil;
     }
 
     if (PyDict_CheckExact(value)) {
@@ -350,10 +340,9 @@
     }
 }
 
-
 - (id)initWithObjects:(const id[])objects
-      forKeys:(const id <NSCopying>[])keys
-        count:(NSUInteger)count
+              forKeys:(const id<NSCopying>[])keys
+                count:(NSUInteger)count
 {
     /* This implementation is needed for our support for the NSCoding
      * protocol, NSDictionary's initWithCoder: will call this method.
@@ -386,7 +375,6 @@
                 if (k == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
-#if PY_MAJOR_VERSION == 3
                 if (PyObjCUnicode_Check(k)) {
                     PyObject* k2 = PyObject_Str(k);
                     if (k2 == NULL) {
@@ -397,11 +385,11 @@
                     Py_DECREF(k);
                     k = k2;
                 }
-#endif
             }
 
             r = PyDict_SetItem(value, k, v);
-            Py_DECREF(k); Py_DECREF(v);
+            Py_DECREF(k);
+            Py_DECREF(v);
 
             if (r == -1) {
                 PyObjC_GIL_FORWARD_EXC();
@@ -415,7 +403,7 @@
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
--(void)pyobjcSetValue:(NSObject*)other
+- (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
@@ -481,16 +469,15 @@
             [NSException raise:NSInvalidArgumentException
                         format:@"decoding Python objects is not supported"];
             return nil;
-
         }
     }
     [NSException raise:NSInvalidArgumentException
-                    format:@"decoding Python objects is not supported"];
+                format:@"decoding Python objects is not supported"];
     [self release];
     return nil;
 }
 
--(Class)classForCoder
+- (Class)classForCoder
 {
     if (PyDict_CheckExact(value)) {
         return [NSMutableDictionary class];
@@ -499,12 +486,12 @@
     }
 }
 
--(Class)classForKeyedArchiver
+- (Class)classForKeyedArchiver
 {
     return [OC_PythonDictionary class];
 }
 
-+(NSArray*)classFallbacksForKeyedArchiver
++ (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObject:@"NSDictionary"];
 }
@@ -514,7 +501,6 @@
     if (PyDict_CheckExact(value)) {
         if ([coder allowsKeyedCoding]) {
             [coder encodeInt32:1 forKey:@"pytype"];
-
         }
         [super encodeWithCoder:coder];
 
@@ -527,11 +513,10 @@
             [coder encodeValueOfObjCType:@encode(int) at:&v];
         }
         PyObjC_encodeWithCoder(value, coder);
-
     }
 }
 
--(id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone*)zone
 {
     if (PyObjC_CopyFunc) {
         NSObject* result;
@@ -555,11 +540,11 @@
         return result;
 
     } else {
-            return [super copyWithZone:zone];
+        return [super copyWithZone:zone];
     }
 }
 
--(id)mutableCopyWithZone:(NSZone*)zone
+- (id)mutableCopyWithZone:(NSZone*)zone
 {
     if (PyObjC_CopyFunc) {
         NSObject* result;
@@ -584,12 +569,12 @@
 
             [result retain];
 
-            PyObjC_END_WITH_GIL
+        PyObjC_END_WITH_GIL
 
         return result;
 
     } else {
-            return [super mutableCopyWithZone:zone];
+        return [super mutableCopyWithZone:zone];
     }
 }
 

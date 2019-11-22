@@ -1,7 +1,8 @@
 from PyObjCTools.TestSupport import *
 import CFOpenDirectory
 
-class TestCFODSession (TestCase):
+
+class TestCFODSession(TestCase):
     def testMethods(self):
         self.assertIsInstance(CFOpenDirectory.ODSessionGetTypeID(), (int, long))
 
@@ -12,7 +13,10 @@ class TestCFODSession (TestCase):
         self.assertArgIsOut(CFOpenDirectory.ODSessionCopyNodeNames, 2)
 
     def testConstants(self):
-        self.assertIsInstance(CFOpenDirectory.kODSessionDefault, (CFOpenDirectory.ODSessionRef, type(None)))
+        self.assertIsInstance(
+            CFOpenDirectory.kODSessionDefault, (CFOpenDirectory.ODSessionRef, type(None))
+        )
+
 
 if __name__ == "__main__":
     main()

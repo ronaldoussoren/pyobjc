@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMedia
 
-class TestCMMemoryPool (TestCase):
+
+class TestCMMemoryPool(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMMemoryPoolRef)
 

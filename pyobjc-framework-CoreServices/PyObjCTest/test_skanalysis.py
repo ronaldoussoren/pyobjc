@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 import CoreServices
 
-class TestSKAnalysis (TestCase):
+
+class TestSKAnalysis(TestCase):
     def testConstants(self):
         self.assertIsInstance(CoreServices.kSKLanguageTypes, unicode)
         self.assertIsInstance(CoreServices.kSKMinTermLength, unicode)
@@ -13,6 +13,7 @@ class TestSKAnalysis (TestCase):
         self.assertIsInstance(CoreServices.kSKTermChars, unicode)
         self.assertIsInstance(CoreServices.kSKStartTermChars, unicode)
         self.assertIsInstance(CoreServices.kSKEndTermChars, unicode)
+
 
 if __name__ == "__main__":
     main()

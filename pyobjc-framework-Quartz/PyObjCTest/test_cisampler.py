@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCISampler (TestCase):
+
+class TestCISampler(TestCase):
     def testMethods(self):
         self.assertIsNullTerminated(CISampler.samplerWithImage_keysAndValues_)
         self.assertIsNullTerminated(CISampler.initWithImage_keysAndValues_)

@@ -1,9 +1,9 @@
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSVisualEffectView (TestCase):
 
-    @min_os_level('10.10')
+class TestNSVisualEffectView(TestCase):
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertEqual(NSVisualEffectMaterialAppearanceBased, 0)
         self.assertEqual(NSVisualEffectMaterialLight, 1)
@@ -32,10 +32,11 @@ class TestNSVisualEffectView (TestCase):
         self.assertEqual(NSVisualEffectStateActive, 1)
         self.assertEqual(NSVisualEffectStateInactive, 2)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(NSVisualEffectView.isEmphasized)
         self.assertArgIsBOOL(NSVisualEffectView.setEmphasized_, 0)
+
 
 if __name__ == "__main__":
     main()

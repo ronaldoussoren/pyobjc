@@ -14,8 +14,7 @@
  * @discussion  Instances of this class are used as proxies for Python
  *              unicode when these are passed to Objective-C code.
  */
-@interface OC_PythonUnicode : NSString
-{
+@interface OC_PythonUnicode : NSString {
     PyObject* value;
     id realObject;
 }
@@ -28,7 +27,7 @@
  *
  * Caller must own the GIL.
  */
-+(id)unicodeWithPythonObject:(PyObject*)value;
++ (id)unicodeWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -38,26 +37,26 @@
  *
  * Caller must own the GIL.
  */
--(id)initWithPythonObject:(PyObject*)value;
+- (id)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc
  * @abstract Deallocate the object
  */
--(void)dealloc;
+- (void)dealloc;
 
 /*!
  * @abstract Access the wrapped Python unicode
  * @result Returns a new reference to the wrapped Python unicode.
  */
--(PyObject*)__pyobjc_PythonObject__;
+- (PyObject*)__pyobjc_PythonObject__;
 
 /*
  * Primitive NSString methods
  *
  */
--(NSUInteger)length;
--(unichar)characterAtIndex:(NSUInteger)index;
--(void)getCharacters:(unichar *)buffer range:(NSRange)aRange;
+- (NSUInteger)length;
+- (unichar)characterAtIndex:(NSUInteger)index;
+- (void)getCharacters:(unichar*)buffer range:(NSRange)aRange;
 
 @end

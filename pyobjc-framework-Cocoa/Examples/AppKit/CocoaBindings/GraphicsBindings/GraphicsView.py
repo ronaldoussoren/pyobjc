@@ -21,14 +21,17 @@ from Cocoa import NSDrawLightBezel, NSBezierPath, NSNotFound, NSIntersectsRect, 
 from Cocoa import NSShiftKeyMask, NSIndexSet, NSInsetRect
 from Circle import Circle
 
-class GraphicsView (NSView):
-    graphicsContainer = objc.ivar('graphicsContainer')
-    graphicsKeyPath   = objc.ivar('graphicsKeyPath')
 
-    selectionIndexesContainer = objc.ivar('selectionIndexesContainer') # GraphicsArrayController
-    selectionIndexesKeyPath   = objc.ivar('selectionIndexesKeyPath')
+class GraphicsView(NSView):
+    graphicsContainer = objc.ivar("graphicsContainer")
+    graphicsKeyPath = objc.ivar("graphicsKeyPath")
 
-    oldGraphics = objc.ivar('oldGraphics')
+    selectionIndexesContainer = objc.ivar(
+        "selectionIndexesContainer"
+    )  # GraphicsArrayController
+    selectionIndexesKeyPath = objc.ivar("selectionIndexesKeyPath")
+
+    oldGraphics = objc.ivar("oldGraphics")
 
     def exposedBindings(self):
         return ["graphics", "selectedObjects"]
@@ -37,49 +40,65 @@ class GraphicsView (NSView):
         return super(GraphicsView, self).initWithFrame_(frameRect)
 
     def graphics(self):
-        if not self.graphicsContainer: return None
+        if not self.graphicsContainer:
+            return None
         return self.graphicsContainer.valueForKeyPath_(self.graphicsKeyPath)
 
     def selectionIndexes(self):
-        if not self.selectionIndexesContainer: return None
-        return self.selectionIndexesContainer.valueForKeyPath_(self.selectionIndexesKeyPath)
+        if not self.selectionIndexesContainer:
+            return None
+        return self.selectionIndexesContainer.valueForKeyPath_(
+            self.selectionIndexesKeyPath
+        )
 
     def startObservingGraphics_(self, graphics):
-        if not graphics: return
+        if not graphics:
+            return
         # Register to observe each of the new graphics, and
         # each of their observable properties -- we need old and new
         # values for drawingBounds to figure out what our dirty rect
         for newGraphic in graphics:
             # Register as observer for all the drawing-related properties
             newGraphic.addObserver_forKeyPath_options_context_(
-                self, "drawingBounds", (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
-                PropertyObservationContext)
+                self,
+                "drawingBounds",
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
+                PropertyObservationContext,
+            )
             keys = Circle.keysForNonBoundsProperties()
             for key in keys:
                 newGraphic.addObserver_forKeyPath_options_context_(
-                    self, key, 0, PropertyObservationContext)
+                    self, key, 0, PropertyObservationContext
+                )
 
     def stopObservingGraphics_(self, graphics):
-        if graphics is None: return
+        if graphics is None:
+            return
         for graphic in graphics:
             for key in graphic.class__().keysForNonBoundsProperties():
                 graphic.removeObserver_forKeyPath_(self, key)
             graphic.removeObserver_forKeyPath_(self, "drawingBounds")
 
-    def bind_toObject_withKeyPath_options_(self, bindingName, observableObject, observableKeyPath, options):
+    def bind_toObject_withKeyPath_options_(
+        self, bindingName, observableObject, observableKeyPath, options
+    ):
         if bindingName == "graphics":
             self.graphicsContainer = observableObject
             self.graphicsKeyPath = observableKeyPath
             self.graphicsContainer.addObserver_forKeyPath_options_context_(
-                    self, self.graphicsKeyPath, (NSKeyValueObservingOptionNew |
-                    NSKeyValueObservingOptionOld), GraphicsObservationContext)
+                self,
+                self.graphicsKeyPath,
+                (NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld),
+                GraphicsObservationContext,
+            )
             self.startObservingGraphics_(self.graphics())
 
         elif bindingName == "selectionIndexes":
             self.selectionIndexesContainer = observableObject
             self.selectionIndexesKeyPath = observableKeyPath
             self.selectionIndexesContainer.addObserver_forKeyPath_options_context_(
-                self, self.selectionIndexesKeyPath, 0, SelectionIndexesObservationContext)
+                self, self.selectionIndexesKeyPath, 0, SelectionIndexesObservationContext
+            )
         self.setNeedsDisplay_(True)
 
     def unbind_(self, bindingName):
@@ -88,12 +107,16 @@ class GraphicsView (NSView):
             self.graphicsContainer = None
             self.graphicsKeyPath = None
         if bindingName == "selectionIndexes":
-            self.selectionIndexesContainer.removeObserver_forKeyPath_(self, self.selectionIndexesKeyPath)
+            self.selectionIndexesContainer.removeObserver_forKeyPath_(
+                self, self.selectionIndexesKeyPath
+            )
             self.seletionIndexesContainer = None
             self.selectionIndexesKeyPath = None
         self.setNeedsDisplay_(True)
 
-    def observeValueForKeyPath_ofObject_change_context_(self, keyPath, object, change, context):
+    def observeValueForKeyPath_ofObject_change_context_(
+        self, keyPath, object, change, context
+    ):
         if context == GraphicsObservationContext:
             # Should be able to use
             # NSArray *oldGraphics = [change objectForKey:NSKeyValueChangeOldKey];
@@ -122,10 +145,12 @@ class GraphicsView (NSView):
                 updateRect = NSUnionRect(newBounds, oldBounds)
             else:
                 updateRect = object.drawingBounds()
-            updateRect = NSMakeRect(updateRect.origin.x-1.0,
-                                updateRect.origin.y-1.0,
-                                updateRect.size.width+2.0,
-                                updateRect.size.height+2.0)
+            updateRect = NSMakeRect(
+                updateRect.origin.x - 1.0,
+                updateRect.origin.y - 1.0,
+                updateRect.size.width + 2.0,
+                updateRect.size.height + 2.0,
+            )
             self.setNeedsDisplay_(True)
             return
 
@@ -135,7 +160,7 @@ class GraphicsView (NSView):
 
     def drawRect_(self, rect):
         myBounds = self.bounds()
-        NSDrawLightBezel(myBounds, myBounds) # AppKit Function
+        NSDrawLightBezel(myBounds, myBounds)  # AppKit Function
         clipRect = NSBezierPath.bezierPathWithRect_(NSInsetRect(myBounds, 2.0, 2.0))
         clipRect.addClip()
 
@@ -151,7 +176,9 @@ class GraphicsView (NSView):
         # Selection should be handled by the graphic, but this is a
         # shortcut simply for display.
 
-        currentSelectionIndexes = self.selectionIndexes() # ist das wir ein Array im Indezes?
+        currentSelectionIndexes = (
+            self.selectionIndexes()
+        )  # ist das wir ein Array im Indezes?
         if currentSelectionIndexes != None:
             path = NSBezierPath.bezierPath()
             index = currentSelectionIndexes.firstIndex()
@@ -165,14 +192,15 @@ class GraphicsView (NSView):
             path.setLineWidth_(1.5)
             path.stroke()
 
-
         # Fairly simple just to illustrate the point
+
     def mouseDown_(self, event):
         # find out if we hit anything
         p = self.convertPoint_fromView_(event.locationInWindow(), None)
         for aGraphic in self.graphics():
             if aGraphic.hitTest_isSelected_(p, False):
-                break; # aGraphic soll spaeter einen Wert haben, falls es getroffene gibt!
+                break
+                # aGraphic soll spaeter einen Wert haben, falls es getroffene gibt!
         else:
             aGraphic = None
 
@@ -180,7 +208,9 @@ class GraphicsView (NSView):
         # else set selection to nil
         if aGraphic is None:
             if not event.modifierFlags() & NSShiftKeyMask:
-                self.selectionIndexesContainer.setValue_forKeyPath_(None, self.selectionIndexesKeyPath)
+                self.selectionIndexesContainer.setValue_forKeyPath_(
+                    None, self.selectionIndexesKeyPath
+                )
             return
 
         # graphic hit
@@ -193,14 +223,16 @@ class GraphicsView (NSView):
         if not event.modifierFlags() & NSShiftKeyMask:
             selection = NSIndexSet.indexSetWithIndex_(graphicIndex)
         else:
-            if  self.selectionIndexes().containsIndex_(graphicIndex):
+            if self.selectionIndexes().containsIndex_(graphicIndex):
                 selection = self.selectionIndexes().mutableCopy()
                 selection.removeIndex_(graphicIndex)
             else:
                 selection = self.selectionIndexes().mutableCopy()
                 selection.addIndex_(graphicIndex)
 
-        self.selectionIndexesContainer.setValue_forKeyPath_(selection, self.selectionIndexesKeyPath)
+        self.selectionIndexesContainer.setValue_forKeyPath_(
+            selection, self.selectionIndexesKeyPath
+        )
 
 
 GraphicsView.exposeBinding_("graphics")

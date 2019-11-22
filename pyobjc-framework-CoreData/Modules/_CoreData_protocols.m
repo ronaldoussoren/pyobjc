@@ -8,6 +8,7 @@ static void __attribute__((__used__)) use_protocols(void)
 {
 #if PyObjC_BUILD_RELEASE >= 1012
     PyObject* p;
-    p = PyObjC_IdToPython(@protocol(NSFetchedResultsControllerDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFetchedResultsControllerDelegate));
+    Py_XDECREF(p);
 #endif
 }

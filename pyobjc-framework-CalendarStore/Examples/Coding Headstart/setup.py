@@ -10,9 +10,5 @@ setup(
     name="PyCalendarStore",
     app=["main.py"],
     data_files=["English.lproj"],
-    setup_requires=[
-        "py2app",
-        "pyobjc-framework-CalendarStore",
-        "pyobjc-framework-Cocoa",
-    ]
+    setup_requires=["py2app", "pyobjc-framework-CalendarStore", "pyobjc-framework-Cocoa"],
 )

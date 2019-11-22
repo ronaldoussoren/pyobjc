@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit
 
-    class TestCKOperationGroup (TestCase):
+    class TestCKOperationGroup(TestCase):
         def testConstants(self):
             self.assertEqual(CloudKit.CKOperationGroupTransferSizeUnknown, 0)
             self.assertEqual(CloudKit.CKOperationGroupTransferSizeKilobytes, 1)
@@ -14,6 +14,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKOperationGroupTransferSizeGigabytes, 5)
             self.assertEqual(CloudKit.CKOperationGroupTransferSizeTensOfGigabytes, 6)
             self.assertEqual(CloudKit.CKOperationGroupTransferSizeHundredsOfGigabytes, 7)
+
 
 if __name__ == "__main__":
     main()

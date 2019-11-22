@@ -2,15 +2,13 @@
  * Manual wrappers for CFBitVector
  */
 static PyObject*
-mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)),
-    PyObject* args)
+mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_allocator;
     PyObject* py_bytes;
     Py_ssize_t count;
     CFAllocatorRef allocator;
     CFBitVectorRef vector;
-
 
     if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_bytes, &count)) {
         return NULL;
@@ -53,8 +51,7 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)),
 }
 
 static PyObject*
-mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)),
-        PyObject* args)
+mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_vector;
     PyObject* py_range;
@@ -66,7 +63,6 @@ mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-
     if (PyObjC_PythonToObjC(@encode(CFBitVectorRef), py_vector, &vector) < 0) {
         return NULL;
     }
@@ -75,34 +71,20 @@ mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)),
     }
     if (py_bytes != Py_None) {
         PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got instance of %s",
-                Py_TYPE(py_bytes)->tp_name);
+                     Py_TYPE(py_bytes)->tp_name);
         return NULL;
     }
 
-    PyObject* buffer = PyBytes_FromStringAndSize(NULL, (range.length+7)/8);
+    PyObject* buffer = PyBytes_FromStringAndSize(NULL, (range.length + 7) / 8);
     if (buffer == NULL) {
         return NULL;
     }
-    memset(PyBytes_AsString(buffer), 0, (range.length+7)/8);
+    memset(PyBytes_AsString(buffer), 0, (range.length + 7) / 8);
 
     CFBitVectorGetBits(vector, range, (unsigned char*)PyBytes_AsString(buffer));
     return buffer;
 }
 
-
-
-
-
-#define COREFOUNDATION_BITVECTOR_METHODS \
-    { \
-        "CFBitVectorCreate", \
-        (PyCFunction)mod_CFBitVectorCreate, \
-        METH_VARARGS, \
-        NULL \
-    }, \
-    { \
-        "CFBitVectorGetBits", \
-        (PyCFunction)mod_CFBitVectorGetBits, \
-        METH_VARARGS, \
-        NULL \
-    },
+#define COREFOUNDATION_BITVECTOR_METHODS                                                 \
+    {"CFBitVectorCreate", (PyCFunction)mod_CFBitVectorCreate, METH_VARARGS, NULL},       \
+        {"CFBitVectorGetBits", (PyCFunction)mod_CFBitVectorGetBits, METH_VARARGS, NULL},

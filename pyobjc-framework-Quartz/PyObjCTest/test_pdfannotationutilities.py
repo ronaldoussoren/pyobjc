@@ -1,8 +1,38 @@
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFAnnotationUtilities (TestCase):
-    @min_os_level('10.13')
+
+class TestPDFAnnotationUtilities(TestCase):
+    def test_constants(self):
+        self.assertEqual(kPDFLineStyleNone, 0)
+        self.assertEqual(kPDFLineStyleSquare, 1)
+        self.assertEqual(kPDFLineStyleCircle, 2)
+        self.assertEqual(kPDFLineStyleDiamond, 3)
+        self.assertEqual(kPDFLineStyleOpenArrow, 4)
+        self.assertEqual(kPDFLineStyleClosedArrow, 5)
+
+        self.assertEqual(kPDFTextAnnotationIconComment, 0)
+        self.assertEqual(kPDFTextAnnotationIconKey, 1)
+        self.assertEqual(kPDFTextAnnotationIconNote, 2)
+        self.assertEqual(kPDFTextAnnotationIconHelp, 3)
+        self.assertEqual(kPDFTextAnnotationIconNewParagraph, 4)
+        self.assertEqual(kPDFTextAnnotationIconParagraph, 5)
+        self.assertEqual(kPDFTextAnnotationIconInsert, 6)
+
+        self.assertEqual(kPDFMarkupTypeHighlight, 0)
+        self.assertEqual(kPDFMarkupTypeStrikeOut, 1)
+        self.assertEqual(kPDFMarkupTypeUnderline, 2)
+
+        self.assertEqual(kPDFWidgetUnknownControl, -1)
+        self.assertEqual(kPDFWidgetPushButtonControl, 0)
+        self.assertEqual(kPDFWidgetRadioButtonControl, 1)
+        self.assertEqual(kPDFWidgetCheckBoxControl, 2)
+
+        self.assertEqual(kPDFWidgetMixedState, -1)
+        self.assertEqual(kPDFWidgetOffState, 0)
+        self.assertEqual(kPDFWidgetOnState, 1)
+
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(PDFAnnotationSubtypeText, unicode)
         self.assertIsInstance(PDFAnnotationSubtypeLink, unicode)
@@ -39,7 +69,7 @@ class TestPDFAnnotationUtilities (TestCase):
         self.assertIsInstance(PDFAnnotationHighlightingModeOutline, unicode)
         self.assertIsInstance(PDFAnnotationHighlightingModePush, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods(self):
         self.assertResultIsBOOL(PDFAnnotation.isMultiline)
         self.assertArgIsBOOL(PDFAnnotation.setMultiline_, 0)
@@ -63,6 +93,7 @@ class TestPDFAnnotationUtilities (TestCase):
 
         self.assertResultIsBOOL(PDFAnnotation.isOpen)
         self.assertArgIsBOOL(PDFAnnotation.setOpen_, 0)
+
 
 if __name__ == "__main__":
     main()

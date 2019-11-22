@@ -1,15 +1,14 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Quartz import CoreGraphics
 
-class TestCGDirectDisplay (TestCase):
 
-    @min_os_level('10.8')
+class TestCGDirectDisplay(TestCase):
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(kCGDisplayShowDuplicateLowResolutionModes, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         mainID = CGMainDisplayID()
         mode = CGDisplayCopyDisplayMode(mainID)
@@ -36,15 +35,19 @@ class TestCGDirectDisplay (TestCase):
         self.assertEqual(kCGDisplayBytesPerRow, "kCGDisplayBytesPerRow")
         self.assertEqual(kCGIODisplayModeID, "IODisplayModeID")
 
-        self.assertEqual(kCGDisplayModeIsSafeForHardware, "kCGDisplayModeIsSafeForHardware")
+        self.assertEqual(
+            kCGDisplayModeIsSafeForHardware, "kCGDisplayModeIsSafeForHardware"
+        )
         self.assertEqual(kCGDisplayModeIsInterlaced, "kCGDisplayModeIsInterlaced")
         self.assertEqual(kCGDisplayModeIsStretched, "kCGDisplayModeIsStretched")
-        self.assertEqual(kCGDisplayModeIsTelevisionOutput, "kCGDisplayModeIsTelevisionOutput" )
+        self.assertEqual(
+            kCGDisplayModeIsTelevisionOutput, "kCGDisplayModeIsTelevisionOutput"
+        )
 
         self.assertEqual(kCGCaptureNoOptions, 0)
         self.assertEqual(kCGCaptureNoFill, 1)
 
-        self.assertNotHasAttr(CoreGraphics, 'kCGDirectMainDisplay')
+        self.assertNotHasAttr(CoreGraphics, "kCGDirectMainDisplay")
 
         self.assertEqual(CGDisplayNoErr, kCGErrorSuccess)
 
@@ -62,19 +65,16 @@ class TestCGDirectDisplay (TestCase):
 
         self.assertArgIsOut(CGGetDisplaysWithRect, 2)
         self.assertArgIsOut(CGGetDisplaysWithRect, 3)
-        v, ids, cnt = CGGetDisplaysWithRect(((0, 0), (400, 500)),
-                10, None, None)
+        v, ids, cnt = CGGetDisplaysWithRect(((0, 0), (400, 500)), 10, None, None)
         self.assertIsInstance(v, (int, long))
         self.assertIsInstance(cnt, (int, long))
         self.assertTrue(cnt)
         self.assertEqual(len(ids), cnt)
         self.assertIsInstance(ids[0], (int, long))
 
-
         self.assertArgIsOut(CGGetDisplaysWithOpenGLDisplayMask, 2)
         self.assertArgIsOut(CGGetDisplaysWithOpenGLDisplayMask, 3)
-        v, ids, cnt = CGGetDisplaysWithOpenGLDisplayMask(0xff,
-                10, None, None)
+        v, ids, cnt = CGGetDisplaysWithOpenGLDisplayMask(0xFF, 10, None, None)
         self.assertIsInstance(v, (int, long))
         self.assertIsInstance(cnt, (int, long))
         self.assertTrue(cnt)
@@ -86,7 +86,7 @@ class TestCGDirectDisplay (TestCase):
         v, ids, cnt = CGGetActiveDisplayList(10, None, None)
         self.assertIsInstance(v, (int, long))
         self.assertIsInstance(cnt, (int, long))
-        #self.assertTrue(cnt)
+        # self.assertTrue(cnt)
         self.assertEqual(len(ids), cnt)
         self.assertIsInstance(ids[0], (int, long))
 
@@ -120,19 +120,19 @@ class TestCGDirectDisplay (TestCase):
         self.assertTrue(len(modes) > 0)
         self.assertIsInstance(modes[0], CFDictionaryRef)
 
-        v, exact = CGDisplayBestModeForParameters(CGMainDisplayID(),
-                32, 800, 600, None)
+        v, exact = CGDisplayBestModeForParameters(CGMainDisplayID(), 32, 800, 600, None)
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertIsInstance(exact, (int, long))
 
         v, exact = CGDisplayBestModeForParametersAndRefreshRate(
-                CGMainDisplayID(), 32, 800, 600, 70, None)
+            CGMainDisplayID(), 32, 800, 600, 70, None
+        )
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertIsInstance(exact, (int, long))
 
         v, exact = CGDisplayBestModeForParametersAndRefreshRateWithProperty(
-                CGMainDisplayID(), 32, 800, 600, 70,
-                kCGDisplayModeIsSafeForHardware, None)
+            CGMainDisplayID(), 32, 800, 600, 70, kCGDisplayModeIsSafeForHardware, None
+        )
         self.assertIsInstance(v, CFDictionaryRef)
         self.assertIsInstance(exact, (int, long))
 
@@ -165,41 +165,39 @@ class TestCGDirectDisplay (TestCase):
         self.assertArgIsOut(CGGetDisplayTransferByFormula, 7)
         self.assertArgIsOut(CGGetDisplayTransferByFormula, 8)
         self.assertArgIsOut(CGGetDisplayTransferByFormula, 9)
-        v = CGGetDisplayTransferByFormula(CGMainDisplayID(),
-                None, None, None, None, None, None, None, None, None)
+        v = CGGetDisplayTransferByFormula(
+            CGMainDisplayID(), None, None, None, None, None, None, None, None, None
+        )
         self.assertIsInstance(v[0], (int, long))
         for i in range(9):
-            self.assertIsInstance(v[i+1], float)
-
+            self.assertIsInstance(v[i + 1], float)
 
         v = CGSetDisplayTransferByFormula(CGMainDisplayID(), *v[1:])
         self.assertEqual(v, 0)
-
 
         tablen = CGDisplayGammaTableCapacity(CGMainDisplayID())
         self.assertIsInstance(tablen, (int, long))
 
         err, red, green, blue, count = CGGetDisplayTransferByTable(
-                CGMainDisplayID(), tablen, None, None, None, None)
+            CGMainDisplayID(), tablen, None, None, None, None
+        )
         self.assertIsInstance(err, (int, long))
         self.assertIsInstance(count, (int, long))
         self.assertEqual(err, 0)
         self.assertNotEqual(count, 0)
 
-
-        err = CGSetDisplayTransferByTable(CGMainDisplayID(), count,
-                red, green, blue)
+        err = CGSetDisplayTransferByTable(CGMainDisplayID(), count, red, green, blue)
         self.assertEqual(err, 0)
 
         err, red, green, blue, count = CGGetDisplayTransferByTable(
-                CGMainDisplayID(), tablen, None, None, None, None)
+            CGMainDisplayID(), tablen, None, None, None, None
+        )
         self.assertIsInstance(err, (int, long))
         self.assertIsInstance(count, (int, long))
         self.assertEqual(err, 0)
         self.assertNotEqual(count, 0)
 
-        err = CGSetDisplayTransferByTable(CGMainDisplayID(), count,
-                red, green, blue)
+        err = CGSetDisplayTransferByTable(CGMainDisplayID(), count, red, green, blue)
         self.assertEqual(err, 0)
 
         CGDisplayRestoreColorSyncSettings()
@@ -290,18 +288,24 @@ class TestCGDirectDisplay (TestCase):
         self.assertResultHasType(CGSetDisplayTransferByByteTable, objc._C_INT)
         self.assertArgHasType(CGSetDisplayTransferByByteTable, 0, objc._C_UINT)
         self.assertArgHasType(CGSetDisplayTransferByByteTable, 1, objc._C_UINT)
-        self.assertArgHasType(CGSetDisplayTransferByByteTable, 2, b'n^' + objc._C_CHAR_AS_INT)
+        self.assertArgHasType(
+            CGSetDisplayTransferByByteTable, 2, b"n^" + objc._C_CHAR_AS_INT
+        )
         self.assertArgSizeInArg(CGSetDisplayTransferByByteTable, 2, 1)
-        self.assertArgHasType(CGSetDisplayTransferByByteTable, 3, b'n^' + objc._C_CHAR_AS_INT)
+        self.assertArgHasType(
+            CGSetDisplayTransferByByteTable, 3, b"n^" + objc._C_CHAR_AS_INT
+        )
         self.assertArgSizeInArg(CGSetDisplayTransferByByteTable, 3, 1)
-        self.assertArgHasType(CGSetDisplayTransferByByteTable, 4, b'n^' + objc._C_CHAR_AS_INT)
+        self.assertArgHasType(
+            CGSetDisplayTransferByByteTable, 4, b"n^" + objc._C_CHAR_AS_INT
+        )
         self.assertArgSizeInArg(CGSetDisplayTransferByByteTable, 4, 1)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testTypes10_6(self):
         self.assertIsCFType(CGDisplayModeRef)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunction10_6(self):
         mainID = CGMainDisplayID()
 
@@ -338,13 +342,11 @@ class TestCGDirectDisplay (TestCase):
 
         self.assertResultIsCFRetained(CGDisplayCreateImage)
         # FIXME: Crashes on an OSX 10.6  test VM
-        #v = CGDisplayCreateImage(mainID)
-        #self.assertIsInstance(v, CGImageRef)
+        # v = CGDisplayCreateImage(mainID)
+        # self.assertIsInstance(v, CGImageRef)
         self.assertResultIsCFRetained(CGDisplayCreateImageForRect)
-        #v = CGDisplayCreateImageForRect(mainID, ((0, 0), (100, 100)))
-        #self.assertIsInstance(v, CGImageRef)
-
-
+        # v = CGDisplayCreateImageForRect(mainID, ((0, 0), (100, 100)))
+        # self.assertIsInstance(v, CGImageRef)
 
 
 if __name__ == "__main__":

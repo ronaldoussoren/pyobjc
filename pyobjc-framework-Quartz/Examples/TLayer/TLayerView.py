@@ -8,11 +8,13 @@ from Circle import Circle
 
 gCircleCount = 3
 
-class NSEvent (objc.Category(Cocoa.NSEvent)):
+
+class NSEvent(objc.Category(Cocoa.NSEvent)):
     def locationInView_(self, view):
         return view.convertPoint_fromView_(self.locationInWindow(), None)
 
-class TLayerView (Cocoa.NSView):
+
+class TLayerView(Cocoa.NSView):
     circles = objc.ivar()
     shadowRadius = objc.ivar(type=objc._C_FLT)
     shadowOffset = objc.ivar(type=Quartz.CGSize.__typestr__)
@@ -20,20 +22,16 @@ class TLayerView (Cocoa.NSView):
 
     def initWithFrame_(self, frame):
         circleRadius = 100
-        colors = [
-            ( 0.5, 0.0, 0.5, 1 ),
-            ( 1.0, 0.7, 0.0, 1 ),
-            ( 0.0, 0.5, 0.0, 1 ),
-        ]
+        colors = [(0.5, 0.0, 0.5, 1), (1.0, 0.7, 0.0, 1), (0.0, 0.5, 0.0, 1)]
 
         self = super(TLayerView, self).initWithFrame_(frame)
         if self is None:
             return None
 
-        self.useTLayer = False;
+        self.useTLayer = False
         self.circles = []
 
-        for c in  colors:
+        for c in colors:
             color = Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(*c)
             circle = Circle.alloc().init()
             circle.color = color
@@ -67,8 +65,8 @@ class TLayerView (Cocoa.NSView):
         return True
 
     def boundsForCircle_(self, circle):
-        dx = 2 * abs(self.shadowOffset.width) + 2 * self.shadowRadius;
-        dy = 2 * abs(self.shadowOffset.height) + 2 * self.shadowRadius;
+        dx = 2 * abs(self.shadowOffset.width) + 2 * self.shadowRadius
+        dy = 2 * abs(self.shadowOffset.height) + 2 * self.shadowRadius
         return Cocoa.NSInsetRect(circle.bounds(), -dx, -dy)
 
     def dragCircleAtIndex_withEvent_(self, index, event):
@@ -78,11 +76,11 @@ class TLayerView (Cocoa.NSView):
 
         self.setNeedsDisplayInRect_(self.boundsForCircle_(circle))
 
-        mask = Cocoa.NSLeftMouseDraggedMask | Cocoa.NSLeftMouseUpMask;
+        mask = Cocoa.NSLeftMouseDraggedMask | Cocoa.NSLeftMouseUpMask
 
         start = event.locationInView_(self)
 
-        while (1):
+        while 1:
             event = self.window().nextEventMatchingMask_(mask)
             if event.type() == Cocoa.NSLeftMouseUp:
                 break
@@ -91,13 +89,13 @@ class TLayerView (Cocoa.NSView):
 
             center = circle.center
             point = event.locationInView_(self)
-            center.x += point.x - start.x;
-            center.y += point.y - start.y;
+            center.x += point.x - start.x
+            center.y += point.y - start.y
             circle.center = center
 
             self.setNeedsDisplayInRect_(self.boundsForCircle_(circle))
 
-            start = point;
+            start = point
 
     def indexOfCircleAtPoint_(self, point):
         for idx, circle in reversed(list(enumerate(self.circles))):

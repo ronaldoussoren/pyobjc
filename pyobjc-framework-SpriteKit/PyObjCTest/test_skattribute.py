@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import SpriteKit
 
-    class TestSKAttribute (TestCase):
+    class TestSKAttribute(TestCase):
         @min_os_level("10.11")
         def testConstants(self):
             self.assertEqual(SpriteKit.SKAttributeTypeNone, 0)
@@ -17,7 +17,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(SpriteKit.SKAttributeTypeVectorHalfFloat2, 6)
             self.assertEqual(SpriteKit.SKAttributeTypeVectorHalfFloat3, 7)
             self.assertEqual(SpriteKit.SKAttributeTypeVectorHalfFloat4, 8)
-
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGPDFDocument (TestCase):
+
+class TestCGPDFDocument(TestCase):
     @expectedFailure
     def testIncomplete(self):
         self.fail("Add header tests for <CoreGraphics/CGPDFDocument.h>")
@@ -40,7 +40,7 @@ class TestCGPDFDocument (TestCase):
         CGPDFDocumentGetArtBox
         CGPDFDocumentGetRotationAngle
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testFunctions(self):
         CGPDFDocumentGetOutline
         CGPDFDocumentGetAccessPermissions
@@ -55,12 +55,13 @@ class TestCGPDFDocument (TestCase):
         self.assertEqual(kCGPDFAllowsCommenting, 1 << 6)
         self.assertEqual(kCGPDFAllowsFormFieldEntry, 1 << 7)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCGPDFOutlineTitle, unicode)
         self.assertIsInstance(kCGPDFOutlineChildren, unicode)
         self.assertIsInstance(kCGPDFOutlineDestination, unicode)
         self.assertIsInstance(kCGPDFOutlineDestinationRect, unicode)
+
 
 if __name__ == "__main__":
     main()

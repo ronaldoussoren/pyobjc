@@ -115,6 +115,46 @@
    "NLTagOrganizationName": { "typestr": "@" }
   },
   "classes": {
+   "NLGazetteer": {
+    "methods": [
+     {
+      "selector": "gazetteerWithContentsOfURL:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "writeGazetteerForDictionary:language:toURL:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "initWithDictionary:language:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "initWithContentsOfURL:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "initWithData:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "NLModel": {
     "methods": [
      {
@@ -133,8 +173,110 @@
      }
     ]
    },
+   "NLEmbedding": {
+    "methods": [
+     {
+      "selector": "getVector:forString:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
+      }
+     },
+     {
+      "selector": "writeEmbeddingForDictionary:language:revision:toURL:error:",
+      "class_method": true,
+      "args": {
+       "4": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "enumerateNeighborsForVector:maximumCount:maximumDistance:distanceType:usingBlock:",
+      "class_method": true,
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "d" },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "enumerateNeighborsForVector:maximumCount:distanceType:usingBlock:",
+      "class_method": true,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "d" },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "enumerateNeighborsForString:maximumCount:maximumDistance:distanceType:usingBlock:",
+      "class_method": true,
+      "args": {
+       "4": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "d" },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "enumerateNeighborsForString:maximumCount:distanceType:usingBlock:",
+      "class_method": true,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "d" },
+	  "3": { "typestr": "o^Z" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "NLTagger": {
     "methods": [
+     {
+      "selector": "requestAssetsForLanguage:tagScheme:completionHandler:",
+      "class_method": true,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "enumerateTagsInRange:unit:scheme:options:usingBlock:",
       "class_method": true,

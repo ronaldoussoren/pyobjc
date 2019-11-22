@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPopUpButton (TestCase):
+
+class TestNSPopUpButton(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSPopUpButtonWillPopUpNotification, unicode)
 
@@ -13,6 +13,7 @@ class TestNSPopUpButton (TestCase):
         self.assertResultIsBOOL(NSPopUpButton.autoenablesItems)
         self.assertArgIsBOOL(NSPopUpButton.setAutoenablesItems_, 0)
         self.assertResultIsBOOL(NSPopUpButton.selectItemWithTag_)
+
 
 if __name__ == "__main__":
     main()

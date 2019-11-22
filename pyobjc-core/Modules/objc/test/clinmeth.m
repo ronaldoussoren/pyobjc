@@ -7,134 +7,96 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PyObjC_ClsInst1 : NSObject
-{
+@interface PyObjC_ClsInst1 : NSObject {
 }
--(int)instance;
--(int)both;
-+(int)both;
-+(int)clsmeth;
+- (int)instance;
+- (int)both;
++ (int)both;
++ (int)clsmeth;
 @end
 
 @implementation PyObjC_ClsInst1
 
--(int)instance
+- (int)instance
 {
     return 1;
 }
 
--(int)both
+- (int)both
 {
     return 2;
 }
 
-+(int)both
++ (int)both
 {
     return 3;
 }
 
-+(int)clsmeth
++ (int)clsmeth
 {
     return 4;
 }
 @end
 
-
-@interface PyObjC_ClsInst2 : PyObjC_ClsInst1
-{
+@interface PyObjC_ClsInst2 : PyObjC_ClsInst1 {
 }
--(int)instance;
--(int)both;
-+(int)both;
-+(int)clsmeth;
+- (int)instance;
+- (int)both;
++ (int)both;
++ (int)clsmeth;
 @end
 
 @implementation PyObjC_ClsInst2
 
--(int)instance
+- (int)instance
 {
     return 10;
 }
 
--(int)both
+- (int)both
 {
     return 20;
 }
 
-+(int)both
++ (int)both
 {
     return 30;
 }
 
-+(int)clsmeth
++ (int)clsmeth
 {
     return 40;
 }
 @end
 
-
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
-
-#if PY_VERSION_HEX >= 0x03000000
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "clinmeth",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+    PyModuleDef_HEAD_INIT, "clinmeth", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_clinmeth(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_clinmeth(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initclinmeth(void);
-
-void __attribute__((__visibility__("default")))
-initclinmeth(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_clinmeth(void)
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("clinmeth", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "PyObjC_ClsInst1",
-        PyObjC_IdToPython([PyObjC_ClsInst1 class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([PyObjC_ClsInst1 class])) < 0) {
+        return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_ClsInst2",
-        PyObjC_IdToPython([PyObjC_ClsInst2 class])) < 0) {
-        INITERROR();
+                           PyObjC_IdToPython([PyObjC_ClsInst2 class])) < 0) {
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

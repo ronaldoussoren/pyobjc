@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSMatrix (TestCase):
+
+class TestNSMatrix(TestCase):
     def testConstants(self):
         self.assertEqual(NSRadioModeMatrix, 0)
         self.assertEqual(NSHighlightModeMatrix, 1)
@@ -13,8 +13,10 @@ class TestNSMatrix (TestCase):
         self.assertResultIsBOOL(NSMatrix.allowsEmptySelection)
         self.assertArgIsBOOL(NSMatrix.setAllowsEmptySelection_, 0)
         self.assertArgIsBOOL(NSMatrix.sendAction_to_forAllCells_, 2)
-        self.assertArgIsSEL(NSMatrix.sendAction_to_forAllCells_, 0, objc._C_NSBOOL + b'@:@')
-        self.assertArgIsSEL(NSMatrix.sortUsingSelector_, 0, objc._C_NSInteger + b'@:@')
+        self.assertArgIsSEL(
+            NSMatrix.sendAction_to_forAllCells_, 0, objc._C_NSBOOL + b"@:@"
+        )
+        self.assertArgIsSEL(NSMatrix.sortUsingSelector_, 0, objc._C_NSInteger + b"@:@")
         self.assertArgIsOut(NSMatrix.getNumberOfRows_columns_, 0)
         self.assertArgIsOut(NSMatrix.getNumberOfRows_columns_, 1)
         self.assertArgIsOut(NSMatrix.getRow_column_ofCell_, 0)
@@ -22,9 +24,10 @@ class TestNSMatrix (TestCase):
         self.assertArgIsOut(NSMatrix.getRow_column_forPoint_, 0)
         self.assertArgIsOut(NSMatrix.getRow_column_forPoint_, 1)
 
-        self.assertArgIsFunction(NSMatrix.sortUsingFunction_context_, 0, objc._C_NSInteger + b'@@@', False)
+        self.assertArgIsFunction(
+            NSMatrix.sortUsingFunction_context_, 0, objc._C_NSInteger + b"@@@", False
+        )
         self.assertArgHasType(NSMatrix.sortUsingFunction_context_, 1, objc._C_ID)
-
 
         self.assertResultIsBOOL(NSMatrix.isSelectionByRect)
         self.assertArgIsBOOL(NSMatrix.setSelectionByRect_, 0)
@@ -57,15 +60,15 @@ class TestNSMatrix (TestCase):
         self.assertArgIsBOOL(NSMatrix.setTabKeyTraversesCells_, 0)
         self.assertResultIsBOOL(NSMatrix.tabKeyTraversesCells)
 
-
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertArgIsBOOL(NSMatrix.setAutorecalculatesCellSize_, 0)
         self.assertResultIsBOOL(NSMatrix.autorecalculatesCellSize)
-    
-    @min_sdk_level('10.6')
+
+    @min_sdk_level("10.6")
     def testProtocols(self):
-        objc.protocolNamed('NSMatrixDelegate')
+        objc.protocolNamed("NSMatrixDelegate")
+
 
 if __name__ == "__main__":
     main()

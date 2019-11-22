@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMedia
 
-class TestCMSync (TestCase):
+
+class TestCMSync(TestCase):
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMClockRef)
         self.assertIsCFType(CoreMedia.CMTimebaseRef)
@@ -24,19 +25,27 @@ class TestCMSync (TestCase):
         self.assertEqual(CoreMedia.kCMSyncError_AllocationFailed, -12754)
         self.assertEqual(CoreMedia.kCMSyncError_RateMustBeNonZero, -12755)
 
-        self.assertEqual(CoreMedia.kCMTimebaseVeryLongCFTimeInterval, 256.0 * 365.0 * 24.0 * 60.0 * 60.0)
-        self.assertEqual(CoreMedia.kCMTimebaseFarFutureCFAbsoluteTime, CoreMedia.kCMTimebaseVeryLongCFTimeInterval)
+        self.assertEqual(
+            CoreMedia.kCMTimebaseVeryLongCFTimeInterval,
+            256.0 * 365.0 * 24.0 * 60.0 * 60.0,
+        )
+        self.assertEqual(
+            CoreMedia.kCMTimebaseFarFutureCFAbsoluteTime,
+            CoreMedia.kCMTimebaseVeryLongCFTimeInterval,
+        )
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def test_constants10_8(self):
-        self.assertIsInstance(CoreMedia.kCMTimebaseNotification_EffectiveRateChanged, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMTimebaseNotification_EffectiveRateChanged, unicode
+        )
         self.assertIsInstance(CoreMedia.kCMTimebaseNotification_TimeJumped, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def test_constants10_9(self):
         self.assertIsInstance(CoreMedia.kCMTimebaseNotificationKey_EventTime, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def test_functions(self):
         CoreMedia.CMClockGetTypeID
         CoreMedia.CMClockGetHostTimeClock
@@ -56,7 +65,6 @@ class TestCMSync (TestCase):
 
         self.assertArgIsOut(CoreMedia.CMTimebaseCreateWithMasterTimebase, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTimebaseCreateWithMasterTimebase, 2)
-
 
         CoreMedia.CMTimebaseGetMasterTimebase
         CoreMedia.CMTimebaseGetMasterClock
@@ -90,12 +98,16 @@ class TestCMSync (TestCase):
         CoreMedia.CMSyncGetTime
         CoreMedia.CMTimebaseNotificationBarrier
 
-    @min_os_level('10.11')
+        CoreMedia.CMTimebaseSetMasterClock
+        CoreMedia.CMTimebaseSetMasterTimebase
+
+    @min_os_level("10.11")
     def test_functions10_11(self):
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterTimebase)
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterClock)
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMaster)
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyUltimateMasterClock)
+
 
 if __name__ == "__main__":
     main()

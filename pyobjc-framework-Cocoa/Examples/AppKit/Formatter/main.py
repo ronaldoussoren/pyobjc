@@ -6,6 +6,7 @@ try:
 except NameError:
     unicode = str
 
+
 class MyFormatter(NSFormatter):
     def stringForObjectValue_(self, product):
         if isinstance(product, (str, unicode)):
@@ -20,6 +21,7 @@ class MyFormatter(NSFormatter):
             return True, None, None
 
         print("Have data")
-        return False, None, NSString.stringWithString_("Foo the %s"%("bar",))
+        return False, None, NSString.stringWithString_("Foo the %s" % ("bar",))
+
 
 AppHelper.runEventLoop()

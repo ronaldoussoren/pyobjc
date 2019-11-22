@@ -5,16 +5,16 @@
 #import <CoreServices/CoreServices.h>
 
 #if USE_TOOLBOX_OBJECT_GLUE
-  /* As of the 10.12 SDK it is no longer safe to inlcude pymactoolbox.h
-   * (due to an include that can no longer be resolved). Therefore provide
-   * local declarations.
-   */
+/* As of the 10.12 SDK it is no longer safe to inlcude pymactoolbox.h
+ * (due to an include that can no longer be resolved). Therefore provide
+ * local declarations.
+ */
 
-  /* #include "pymactoolbox.h" */
+/* #include "pymactoolbox.h" */
 
-extern PyObject *PyMac_Error(OSErr);                   /* Uses PyMac_GetOSErrException */
-extern int PyMac_GetFSSpec(PyObject *, FSSpec *);      /* argument parser for FSSpec */
-extern PyObject *PyMac_BuildFSSpec(FSSpec *);          /* Convert FSSpec to PyObject */
+extern PyObject* PyMac_Error(OSErr);            /* Uses PyMac_GetOSErrException */
+extern int PyMac_GetFSSpec(PyObject*, FSSpec*); /* argument parser for FSSpec */
+extern PyObject* PyMac_BuildFSSpec(FSSpec*);    /* Convert FSSpec to PyObject */
 
 #endif
 
@@ -41,27 +41,29 @@ extern PyObject *PyMac_BuildFSSpec(FSSpec *);          /* Convert FSSpec to PyOb
 typedef struct {
     PyObject_HEAD
 
-    FSSpec ref;
+        FSSpec ref;
 } PyObjC_FSSpecObject;
 
-static PyObject* fsspec_as_bytes(PyObject* ref, void* closure __attribute__((__unused__)))
+static PyObject*
+fsspec_as_bytes(PyObject* ref, void* closure __attribute__((__unused__)))
 {
     if (!PyObjC_FSSpecCheck(ref)) {
         PyErr_SetString(PyExc_TypeError, "self is not a FSSpec");
     }
 
-    return PyBytes_FromStringAndSize(
-            (char*)&((PyObjC_FSSpecObject*)ref)->ref,
-            sizeof(FSSpec));
+    return PyBytes_FromStringAndSize((char*)&((PyObjC_FSSpecObject*)ref)->ref,
+                                     sizeof(FSSpec));
 }
 
-static PyObject* fsspec_sizeof(PyObject* ref)
+static PyObject*
+fsspec_sizeof(PyObject* ref)
 {
     return PyLong_FromSsize_t(Py_TYPE(ref)->tp_basicsize);
 }
 
 #if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
-static PyObject* fsspec_as_carbon(PyObject* ref)
+static PyObject*
+fsspec_as_carbon(PyObject* ref)
 {
     if (!PyObjC_FSSpecCheck(ref)) {
         PyErr_SetString(PyExc_TypeError, "self is not a FSSpec");
@@ -71,52 +73,45 @@ static PyObject* fsspec_as_carbon(PyObject* ref)
 }
 #endif /* defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__) */
 
-static PyGetSetDef fsspec_getset[] = {
-    {
-        .name   = "data",
-        .get    = fsspec_as_bytes,
-        .doc    = "bytes in the FSSpec",
-    },
-    {
-        .name   = NULL /* SENTINEL */
-    }
-};
-
+static PyGetSetDef fsspec_getset[] = {{
+                                          .name = "data",
+                                          .get = fsspec_as_bytes,
+                                          .doc = "bytes in the FSSpec",
+                                      },
+                                      {
+                                          .name = NULL /* SENTINEL */
+                                      }};
 
 static PyMethodDef fsspec_methods[] = {
 #if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
-    {
-        .ml_name    = "as_carbon",
-        .ml_meth    = (PyCFunction)fsspec_as_carbon,
-        .ml_flags   = METH_NOARGS,
-        .ml_doc     = "as_carbon()\n" CLINIC_SEP "\nReturn Carbon.File.FSSpec instance for this object"
-    },
+    {.ml_name = "as_carbon",
+     .ml_meth = (PyCFunction)fsspec_as_carbon,
+     .ml_flags = METH_NOARGS,
+     .ml_doc = "as_carbon()\n" CLINIC_SEP
+               "\nReturn Carbon.File.FSSpec instance for this object"},
 #endif /* defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__) */
     {
-        .ml_name    = "__sizeof__",
-        .ml_meth    = (PyCFunction)fsspec_sizeof,
-        .ml_flags   = METH_NOARGS,
+        .ml_name = "__sizeof__",
+        .ml_meth = (PyCFunction)fsspec_sizeof,
+        .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name    = NULL /* SENTINEL */
-    }
-};
-
+        .ml_name = NULL /* SENTINEL */
+    }};
 
 PyTypeObject PyObjC_FSSpecType = {
-    PyVarObject_HEAD_INIT(&PyType_Type, 0)
-    .tp_name        = "objc.FSSpec",
-    .tp_basicsize   = sizeof(PyObjC_FSSpecObject),
-    .tp_itemsize    = 0,
-    .tp_getattro    = PyObject_GenericGetAttr,
-    .tp_setattro    = PyObject_GenericSetAttr,
-    .tp_flags       = Py_TPFLAGS_DEFAULT,
-    .tp_methods     = fsspec_methods,
-    .tp_getset      = fsspec_getset,
+    PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.FSSpec",
+    .tp_basicsize = sizeof(PyObjC_FSSpecObject),
+    .tp_itemsize = 0,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_setattro = PyObject_GenericSetAttr,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_methods = fsspec_methods,
+    .tp_getset = fsspec_getset,
 };
 
-
-int PyObjC_encode_fsspec(PyObject* value, void* buffer)
+int
+PyObjC_encode_fsspec(PyObject* value, void* buffer)
 {
 #if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
     /* We cannot test if 'arg' is an instance of Carbon.File.FSSpec... */
@@ -135,11 +130,10 @@ int PyObjC_encode_fsspec(PyObject* value, void* buffer)
     return -1;
 }
 
-
-PyObject* PyObjC_decode_fsspec(void* buffer)
+PyObject*
+PyObjC_decode_fsspec(void* buffer)
 {
-    PyObjC_FSSpecObject* result = PyObject_New(
-            PyObjC_FSSpecObject, &PyObjC_FSSpecType);
+    PyObjC_FSSpecObject* result = PyObject_New(PyObjC_FSSpecObject, &PyObjC_FSSpecType);
 
     if (result == NULL) {
         return NULL;

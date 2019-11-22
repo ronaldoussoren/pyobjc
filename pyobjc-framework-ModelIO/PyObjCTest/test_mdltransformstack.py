@@ -1,10 +1,10 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize > 2**32:
+if sys.maxsize > 2 ** 32:
     import ModelIO
 
-    class TestMDLTransformStack (TestCase):
+    class TestMDLTransformStack(TestCase):
         def testConstants(self):
             self.assertEqual(ModelIO.MDLTransformOpRotationOrderXYZ, 1)
             self.assertEqual(ModelIO.MDLTransformOpRotationOrderXZY, 2)
@@ -13,9 +13,9 @@ if sys.maxsize > 2**32:
             self.assertEqual(ModelIO.MDLTransformOpRotationOrderZXY, 5)
             self.assertEqual(ModelIO.MDLTransformOpRotationOrderZYX, 6)
 
-        @min_sdk_level('10.13')
+        @min_sdk_level("10.13")
         def testProtocols(self):
-            objc.protocolNamed('MDLTransformOp')
+            objc.protocolNamed("MDLTransformOp")
 
             # XXX: Protocol contains matrix types, needs more work
 

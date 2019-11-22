@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVOpenGLBufferPool (TestCase):
+
+class TestCVOpenGLBufferPool(TestCase):
     def testTypes(self):
         self.assertIsCFType(CVOpenGLBufferPoolRef)
 
@@ -16,10 +16,15 @@ class TestCVOpenGLBufferPool (TestCase):
         # FIXME: find some good creation parameters
         self.assertArgIsOut(CVOpenGLBufferPoolCreate, 3)
         self.assertArgIsCFRetained(CVOpenGLBufferPoolCreate, 3)
-        rv, pool = CVOpenGLBufferPoolCreate(None, {
-            kCVOpenGLBufferPoolMinimumBufferCountKey: 1,
-            kCVOpenGLBufferPoolMaximumBufferAgeKey: 42.0,
-            }, {}, None)
+        rv, pool = CVOpenGLBufferPoolCreate(
+            None,
+            {
+                kCVOpenGLBufferPoolMinimumBufferCountKey: 1,
+                kCVOpenGLBufferPoolMaximumBufferAgeKey: 42.0,
+            },
+            {},
+            None,
+        )
         self.assertEqual(rv, 0)
         self.assertIsInstance(pool, CVOpenGLBufferPoolRef)
 
@@ -41,6 +46,7 @@ class TestCVOpenGLBufferPool (TestCase):
             self.assertIsInstance(buf, CVOpenGLBufferRef)
         else:
             self.assertTrue(buf is None)
+
 
 if __name__ == "__main__":
     main()

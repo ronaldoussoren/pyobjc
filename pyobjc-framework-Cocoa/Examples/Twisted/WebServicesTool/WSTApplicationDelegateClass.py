@@ -10,8 +10,8 @@ from twisted.internet import reactor
 
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
-class WSTApplicationDelegate (Cocoa.NSObject):
 
+class WSTApplicationDelegate(Cocoa.NSObject):
     def newConnectionAction_(self, sender):
         """Action method fired when the user selects the 'new connection'
         menu item.  Note that the WSTConnectionWindowControllerClass is
@@ -24,8 +24,7 @@ class WSTApplicationDelegate (Cocoa.NSObject):
         (In this case, it is largely moot due to the implementation of
         applicationDidFinishLaunching_().
         """
-        WSTConnectionWindowController.connectionWindowController().showWindow_(
-            sender)
+        WSTConnectionWindowController.connectionWindowController().showWindow_(sender)
 
     def applicationShouldTerminate_(self, sender):
         if reactor.running:
@@ -37,6 +36,5 @@ class WSTApplicationDelegate (Cocoa.NSObject):
         """Create and display a new connection window
         """
         reactor.interleave(AppHelper.callAfter)
-        reactor.addSystemEventTrigger(
-            'after', 'shutdown', AppHelper.stopEventLoop)
+        reactor.addSystemEventTrigger("after", "shutdown", AppHelper.stopEventLoop)
         self.newConnectionAction_(None)

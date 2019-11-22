@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 from WebKit import *
 
-class TestDOMCSSStyleDeclaration (TestCase):
+
+class TestDOMCSSStyleDeclaration(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(DOMCSSStyleDeclaration.isPropertyImplicit_)
 

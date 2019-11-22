@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGPDFObject (TestCase):
 
+class TestCGPDFObject(TestCase):
     @expectedFailure
     def testIncomplete(self):
         self.fail("Add header tests for <CoreGraphics/CGPDFObject.h>")
@@ -24,7 +23,6 @@ class TestCGPDFObject (TestCase):
 
         self.assertIsNotInstance(CGPDFObjectGetValue, objc.function)
         # XXX: Actual tests for ^^^^ (with manual wrapper)
-
 
 
 if __name__ == "__main__":

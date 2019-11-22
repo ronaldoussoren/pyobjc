@@ -4,7 +4,7 @@ import sys
 if sys.maxsize > 2 ** 32:
     import BusinessChat
 
-    class TestBCChatAction (TestCase):
+    class TestBCChatAction(TestCase):
         def test_constants(self):
             self.assertIsInstance(BusinessChat.BCParameterNameIntent, unicode)
             self.assertIsInstance(BusinessChat.BCParameterNameGroup, unicode)
@@ -12,7 +12,6 @@ if sys.maxsize > 2 ** 32:
 
         def test_classes(self):
             BusinessChat.BCChatAction
-
 
 
 if __name__ == "__main__":

@@ -1,13 +1,15 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Quartz.QuartzCore import *
 
-class TestCALayerHelper (NSObject):
-    def preferredSizeOfLayer_(self, layer): return 1
 
-class TestCALayer (TestCase):
-    @min_os_level('10.5')
+class TestCALayerHelper(NSObject):
+    def preferredSizeOfLayer_(self, layer):
+        return 1
+
+
+class TestCALayer(TestCase):
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertEqual(kCALayerNotSizable, 0)
         self.assertEqual(kCALayerMinXMargin, 1)
@@ -39,13 +41,12 @@ class TestCALayer (TestCase):
         self.assertIsInstance(kCAOnOrderOut, unicode)
         self.assertIsInstance(kCATransition, unicode)
 
-        self.assertEqual(kCALayerMinXMinYCorner, 1<<0)
-        self.assertEqual(kCALayerMaxXMinYCorner, 1<<1)
-        self.assertEqual(kCALayerMinXMaxYCorner, 1<<2)
-        self.assertEqual(kCALayerMaxXMaxYCorner, 1<<3)
+        self.assertEqual(kCALayerMinXMinYCorner, 1 << 0)
+        self.assertEqual(kCALayerMaxXMinYCorner, 1 << 1)
+        self.assertEqual(kCALayerMinXMaxYCorner, 1 << 2)
+        self.assertEqual(kCALayerMaxXMaxYCorner, 1 << 3)
 
-
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(CALayer.shouldArchiveValueForKey_)
         self.assertResultIsBOOL(CALayer.isHidden)
@@ -60,10 +61,11 @@ class TestCALayer (TestCase):
         self.assertResultIsBOOL(CALayer.needsDisplayOnBoundsChange)
         self.assertArgIsBOOL(CALayer.setNeedsDisplayOnBoundsChange_, 0)
 
-        self.assertResultHasType(TestCALayerHelper.preferredSizeOfLayer_, CGSize.__typestr__)
+        self.assertResultHasType(
+            TestCALayerHelper.preferredSizeOfLayer_, CGSize.__typestr__
+        )
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(CALayer.needsDisplayForKey_)
         self.assertResultIsBOOL(CALayer.isGeometryFlipped)
@@ -75,42 +77,46 @@ class TestCALayer (TestCase):
         self.assertResultIsBOOL(CALayer.needsDisplay)
         self.assertResultIsBOOL(CALayer.needsLayout)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(CALayer.shouldRasterize)
         self.assertArgIsBOOL(CALayer.setShouldRasterize_, 0)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(CALayer.drawsAsynchronously)
         self.assertArgIsBOOL(CALayer.setDrawsAsynchronously_, 0)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(CALayer.allowsEdgeAntialiasing)
         self.assertArgIsBOOL(CALayer.setAllowsEdgeAntialiasing_, 0)
         self.assertResultIsBOOL(CALayer.allowsGroupOpacity)
         self.assertArgIsBOOL(CALayer.setAllowsGroupOpacity_, 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCAFilterTrilinear, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCAContentsFormatRGBA8Uint, unicode)
         self.assertIsInstance(kCAContentsFormatRGBA16Float, unicode)
         self.assertIsInstance(kCAContentsFormatGray8Uint, unicode)
 
-    @min_sdk_level('10.6')
-    def testProtocols(self):
-        objc.protocolNamed('CAAction')
+    @min_os_level("10.15")
+    def testConstants10_15(self):
+        self.assertIsInstance(kCACornerCurveCircular, unicode)
+        self.assertIsInstance(kCACornerCurveContinuous, unicode)
 
-    @min_sdk_level('10.12')
+    @min_sdk_level("10.6")
+    def testProtocols(self):
+        objc.protocolNamed("CAAction")
+
+    @min_sdk_level("10.12")
     def testProtocols(self):
         objc.protocolNamed("CALayerDelegate")
         objc.protocolNamed("CALayoutManager")
-
 
 
 if __name__ == "__main__":

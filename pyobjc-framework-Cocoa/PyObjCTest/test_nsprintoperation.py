@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPrintOperation (TestCase):
+
+class TestNSPrintOperation(TestCase):
     def testConstants(self):
         self.assertEqual(NSDescendingPageOrder, -1)
         self.assertEqual(NSSpecialPageOrder, 0)
@@ -11,7 +11,7 @@ class TestNSPrintOperation (TestCase):
 
         self.assertIsInstance(NSPrintOperationExistsException, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(NSPrintRenderingQualityBest, 0)
         self.assertEqual(NSPrintRenderingQualityResponsive, 1)
@@ -25,8 +25,16 @@ class TestNSPrintOperation (TestCase):
         self.assertResultIsBOOL(NSPrintOperation.canSpawnSeparateThread)
         self.assertArgIsBOOL(NSPrintOperation.setCanSpawnSeparateThread_, 0)
 
-        self.assertArgIsSEL(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 2, b'v@:@' + objc._C_NSBOOL + b'^v')
-        self.assertArgHasType(NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_, 3, b'^v')
+        self.assertArgIsSEL(
+            NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_,
+            2,
+            b"v@:@" + objc._C_NSBOOL + b"^v",
+        )
+        self.assertArgHasType(
+            NSPrintOperation.runOperationModalForWindow_delegate_didRunSelector_contextInfo_,
+            3,
+            b"^v",
+        )
 
         self.assertResultIsBOOL(NSPrintOperation.runOperation)
         self.assertResultIsBOOL(NSPrintOperation.deliverResult)

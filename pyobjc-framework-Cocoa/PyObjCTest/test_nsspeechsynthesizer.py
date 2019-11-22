@@ -1,14 +1,22 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSpeechSynthesizerHelper (NSObject):
-    def speechSynthesizer_didFinishSpeaking_(self, ss, b): pass
-    def speechSynthesizer_willSpeakWord_ofString_(self, ss, w, s): pass
-    def speechSynthesizer_willSpeakPhoneme_(self, ss, i): pass
-    def speechSynthesizer_didEncounterErrorAtIndex_ofString_message_(self, ss, i, s, m): pass
 
-class TestNSSpeechSynthesizer (TestCase):
+class TestNSSpeechSynthesizerHelper(NSObject):
+    def speechSynthesizer_didFinishSpeaking_(self, ss, b):
+        pass
+
+    def speechSynthesizer_willSpeakWord_ofString_(self, ss, w, s):
+        pass
+
+    def speechSynthesizer_willSpeakPhoneme_(self, ss, i):
+        pass
+
+    def speechSynthesizer_didEncounterErrorAtIndex_ofString_message_(self, ss, i, s, m):
+        pass
+
+
+class TestNSSpeechSynthesizer(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSVoiceName, unicode)
         self.assertIsInstance(NSVoiceIdentifier, unicode)
@@ -21,10 +29,9 @@ class TestNSSpeechSynthesizer (TestCase):
         self.assertIsInstance(NSVoiceGenderFemale, unicode)
         self.assertIsInstance(NSVoiceLanguage, unicode)
 
-
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertEqual(NSSpeechImmediateBoundary,  0)
+        self.assertEqual(NSSpeechImmediateBoundary, 0)
         self.assertEqual(NSSpeechWordBoundary, 1)
         self.assertEqual(NSSpeechSentenceBoundary, 2)
 
@@ -98,17 +105,31 @@ class TestNSSpeechSynthesizer (TestCase):
         self.assertResultIsBOOL(NSSpeechSynthesizer.isAnyApplicationSpeaking)
 
     def testProtocol(self):
-        self.assertArgIsBOOL(TestNSSpeechSynthesizerHelper.speechSynthesizer_didFinishSpeaking_, 1)
-        self.assertArgHasType(TestNSSpeechSynthesizerHelper.speechSynthesizer_willSpeakWord_ofString_, 1, NSRange.__typestr__)
-        self.assertArgHasType(TestNSSpeechSynthesizerHelper.speechSynthesizer_willSpeakPhoneme_, 1, objc._C_SHT)
+        self.assertArgIsBOOL(
+            TestNSSpeechSynthesizerHelper.speechSynthesizer_didFinishSpeaking_, 1
+        )
+        self.assertArgHasType(
+            TestNSSpeechSynthesizerHelper.speechSynthesizer_willSpeakWord_ofString_,
+            1,
+            NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSSpeechSynthesizerHelper.speechSynthesizer_willSpeakPhoneme_,
+            1,
+            objc._C_SHT,
+        )
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testProtocol10_5(self):
-        self.assertArgHasType(TestNSSpeechSynthesizerHelper.speechSynthesizer_didEncounterErrorAtIndex_ofString_message_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(
+            TestNSSpeechSynthesizerHelper.speechSynthesizer_didEncounterErrorAtIndex_ofString_message_,
+            1,
+            objc._C_NSUInteger,
+        )
 
-    @min_sdk_level('10.9')
+    @min_sdk_level("10.9")
     def testProtocol10_9(self):
-        objc.protocolNamed('NSSpeechSynthesizerDelegate')
+        objc.protocolNamed("NSSpeechSynthesizerDelegate")
 
 
 if __name__ == "__main__":

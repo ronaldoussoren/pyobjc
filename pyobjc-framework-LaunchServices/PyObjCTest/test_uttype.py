@@ -1,12 +1,13 @@
-
 from PyObjCTools.TestSupport import *
 
 import warnings
+
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore")
     import LaunchServices
 
-class TestUTType (TestCase):
+
+class TestUTType(TestCase):
     def testConstants(self):
         self.assertIsInstance(LaunchServices.kUTExportedTypeDeclarationsKey, unicode)
         self.assertIsInstance(LaunchServices.kUTImportedTypeDeclarationsKey, unicode)
@@ -23,18 +24,30 @@ class TestUTType (TestCase):
         self.assertIsInstance(LaunchServices.kUTTagClassOSType, unicode)
 
     def testFunctions(self):
-        self.assertResultIsCFRetained(LaunchServices.UTTypeCreatePreferredIdentifierForTag)
-        v = LaunchServices.UTTypeCreatePreferredIdentifierForTag(LaunchServices.kUTTagClassFilenameExtension, "py", LaunchServices.kUTTypePlainText)
+        self.assertResultIsCFRetained(
+            LaunchServices.UTTypeCreatePreferredIdentifierForTag
+        )
+        v = LaunchServices.UTTypeCreatePreferredIdentifierForTag(
+            LaunchServices.kUTTagClassFilenameExtension,
+            "py",
+            LaunchServices.kUTTypePlainText,
+        )
         self.assertIsInstance(v, unicode)
 
         self.assertResultIsCFRetained(LaunchServices.UTTypeCreateAllIdentifiersForTag)
-        v = LaunchServices.UTTypeCreateAllIdentifiersForTag(LaunchServices.kUTTagClassFilenameExtension, "py", LaunchServices.kUTTypePlainText)
+        v = LaunchServices.UTTypeCreateAllIdentifiersForTag(
+            LaunchServices.kUTTagClassFilenameExtension,
+            "py",
+            LaunchServices.kUTTypePlainText,
+        )
         self.assertIsInstance(v, LaunchServices.CFArrayRef)
         self.assertGreaterEqual(len(v), 1)
         self.assertIsInstance(v[0], unicode)
 
         self.assertResultIsCFRetained(LaunchServices.UTTypeCopyPreferredTagWithClass)
-        v = LaunchServices.UTTypeCopyPreferredTagWithClass("public.python-script", LaunchServices.kUTTagClassFilenameExtension)
+        v = LaunchServices.UTTypeCopyPreferredTagWithClass(
+            "public.python-script", LaunchServices.kUTTagClassFilenameExtension
+        )
         self.assertIsInstance(v, unicode)
 
         self.assertResultIsBOOL(LaunchServices.UTTypeEqual)
@@ -42,7 +55,9 @@ class TestUTType (TestCase):
         self.assertIs(v, True)
 
         self.assertResultIsBOOL(LaunchServices.UTTypeConformsTo)
-        v = LaunchServices.UTTypeConformsTo("public.python-script", LaunchServices.kUTTypePlainText)
+        v = LaunchServices.UTTypeConformsTo(
+            "public.python-script", LaunchServices.kUTTypePlainText
+        )
         self.assertIs(v, True)
 
         self.assertResultIsCFRetained(LaunchServices.UTTypeCopyDescription)
@@ -64,10 +79,12 @@ class TestUTType (TestCase):
         v = LaunchServices.UTGetOSTypeFromString(v)
         self.assertEqual(v, 24353)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testFunctions10_10(self):
         self.assertResultIsCFRetained(LaunchServices.UTTypeCopyAllTagsWithClass)
-        v = LaunchServices.UTTypeCopyAllTagsWithClass(LaunchServices.kUTTypeArchive, LaunchServices.kUTTagClassFilenameExtension)
+        v = LaunchServices.UTTypeCopyAllTagsWithClass(
+            LaunchServices.kUTTypeArchive, LaunchServices.kUTTagClassFilenameExtension
+        )
         self.assertIsInstance(v, (LaunchServices.CFArrayRef, type(None)))
 
         self.assertResultIsBOOL(LaunchServices.UTTypeConformsTo)

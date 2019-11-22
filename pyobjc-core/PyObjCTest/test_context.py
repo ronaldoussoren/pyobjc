@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import objc
 
-class TestContext (TestCase):
+
+class TestContext(TestCase):
     def test_context(self):
         self.assertEqual(objc.context._registry, {})
 

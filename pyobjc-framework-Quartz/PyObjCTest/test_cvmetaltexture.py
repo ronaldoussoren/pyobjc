@@ -1,10 +1,9 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVMetalTexture (TestCase):
 
-
-    @min_os_level('10.11')
+class TestCVMetalTexture(TestCase):
+    @min_os_level("10.11")
     def testFunctions10_11(self):
         self.assertIsInstance(CVMetalTextureGetTypeID(), (int, long))
 
@@ -20,6 +19,10 @@ class TestCVMetalTexture (TestCase):
         self.assertArgIsFixedSize(CVMetalTextureGetCleanTexCoords, 2, 2)
         self.assertArgIsFixedSize(CVMetalTextureGetCleanTexCoords, 3, 2)
         self.assertArgIsFixedSize(CVMetalTextureGetCleanTexCoords, 4, 2)
+
+    @min_os_level("10.15")
+    def test_constants10_15(self):
+        self.assertIsInstance(kCVMetalTextureStorageMode, unicode)
 
 
 if __name__ == "__main__":

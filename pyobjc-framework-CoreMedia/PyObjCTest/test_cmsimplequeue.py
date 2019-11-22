@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreMedia
 
-class TestCMSimpleQueue (TestCase):
+
+class TestCMSimpleQueue(TestCase):
     def test_constants(self):
         self.assertEqual(CoreMedia.kCMSimpleQueueError_AllocationFailed, -12770)
         self.assertEqual(CoreMedia.kCMSimpleQueueError_RequiredParameterMissing, -12771)
@@ -18,7 +19,7 @@ class TestCMSimpleQueue (TestCase):
         self.assertArgIsOut(CoreMedia.CMSimpleQueueCreate, 2)
         self.assertArgIsCFRetained(CoreMedia.CMSimpleQueueCreate, 2)
 
-        self.assertArgHasType(CoreMedia.CMSimpleQueueEnqueue, 1, b'@')
+        self.assertArgHasType(CoreMedia.CMSimpleQueueEnqueue, 1, b"@")
 
         CoreMedia.CMSimpleQueueDequeue
         CoreMedia.CMSimpleQueueGetHead
@@ -27,10 +28,6 @@ class TestCMSimpleQueue (TestCase):
         CoreMedia.CMSimpleQueueGetCount
 
         CoreMedia.CMSimpleQueueGetFullness
-
-
-
-
 
 
 if __name__ == "__main__":

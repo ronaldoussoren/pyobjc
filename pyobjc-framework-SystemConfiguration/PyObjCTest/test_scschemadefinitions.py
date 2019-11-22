@@ -1,8 +1,9 @@
 from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 
-class TestSCSchemaDefinitions (TestCase):
-    @min_os_level('10.5')
+
+class TestSCSchemaDefinitions(TestCase):
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kSCEntNetIPSec, unicode)
         self.assertIsInstance(kSCEntNetSMB, unicode)
@@ -32,7 +33,7 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCValNetSMBNetBIOSNodeTypeMixed, unicode)
         self.assertIsInstance(kSCValNetSMBNetBIOSNodeTypeHybrid, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_5_missing(self):
         self.assertIsInstance(kSCValNetIPSecAuthenticationMethodHybrid, unicode)
 
@@ -266,7 +267,7 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCPropUsersConsoleUserUID, unicode)
         self.assertIsInstance(kSCPropUsersConsoleUserGID, unicode)
 
-    @max_os_level('10.11')
+    @max_os_level("10.11")
     def testConstantsUpto10_12(self):
         self.assertIsInstance(kSCPropNetAppleTalkComputerName, unicode)
         self.assertIsInstance(kSCPropNetAppleTalkComputerNameEncoding, unicode)
@@ -289,7 +290,7 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCValNetNetInfoBindingMethodsManual, unicode)
         self.assertIsInstance(kSCValNetNetInfoDefaultServerTag, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kSCValNetInterfaceTypeIPSec, unicode)
         self.assertIsInstance(kSCPropNetIPSecConnectTime, unicode)
@@ -303,10 +304,11 @@ class TestSCSchemaDefinitions (TestCase):
         self.assertIsInstance(kSCValNetIPSecXAuthPasswordEncryptionPrompt, unicode)
         self.assertIsInstance(kSCValNetIPv4ConfigMethodAutomatic, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kSCValNetIPv6ConfigMethodLinkLocal, unicode)
         self.assertIsInstance(kSCPropNetProxiesProxyAutoConfigJavaScript, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Foundation
 
-class TestNSDebug (TestCase):
+
+class TestNSDebug(TestCase):
     def testFunctions(self):
         self.assertResultIsBOOL(Foundation.NSIsFreedObject)
         Foundation.NSRecordAllocationEvent

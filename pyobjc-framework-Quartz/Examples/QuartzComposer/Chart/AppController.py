@@ -61,15 +61,16 @@ import Quartz
 #
 
 # Keys for the entries in the data storage
-kDataKey_Label = "label" # NSString
-kDataKey_Value = "value" # NSNumber
+kDataKey_Label = "label"  # NSString
+kDataKey_Value = "value"  # NSNumber
 
 # Keys for the composition input parameters
-kParameterKey_Data      = "Data"    # NSArray of NSDictionaries
-kParameterKey_Scale     = "Scale"   # NSNumber
-kParameterKey_Spacing   = "Spacing" # NSNumber
+kParameterKey_Data = "Data"  # NSArray of NSDictionaries
+kParameterKey_Scale = "Scale"  # NSNumber
+kParameterKey_Spacing = "Spacing"  # NSNumber
 
-class AppController (Cocoa.NSObject):
+
+class AppController(Cocoa.NSObject):
     tableView = objc.IBOutlet()
     view = objc.IBOutlet()
 
@@ -90,48 +91,34 @@ class AppController (Cocoa.NSObject):
         # QCView is bound to a QCPatchController in the nib file, this
         # will actually update the QCPatchController along with all the
         # bindings)
-        if not self.view.loadCompositionFromFile_(Cocoa.NSBundle.mainBundle().pathForResource_ofType_("Chart", "qtz")):
+        if not self.view.loadCompositionFromFile_(
+            Cocoa.NSBundle.mainBundle().pathForResource_ofType_("Chart", "qtz")
+        ):
             Cocoa.NSLog("Composition loading failed")
             Cocoa.NSApp.terminate_(None)
 
         # Populate data storage
-        self._data.extend([
-            {
-                kDataKey_Label:"Palo Alto",
-                kDataKey_Value: 2,
-            },
-            {
-                kDataKey_Label: "Cupertino",
-                kDataKey_Value: 1,
-            },
-            {
-                kDataKey_Label: "Menlo Park",
-                kDataKey_Value: 4,
-            },
-            {
-                kDataKey_Label: "Mountain View",
-                kDataKey_Value: 8,
-            },
-            {
-                kDataKey_Label: "San Francisco",
-                kDataKey_Value: 7,
-            },
-            {
-                kDataKey_Label: "Los Altos",
-                kDataKey_Value: 3,
-            },
-        ])
+        self._data.extend(
+            [
+                {kDataKey_Label: "Palo Alto", kDataKey_Value: 2},
+                {kDataKey_Label: "Cupertino", kDataKey_Value: 1},
+                {kDataKey_Label: "Menlo Park", kDataKey_Value: 4},
+                {kDataKey_Label: "Mountain View", kDataKey_Value: 8},
+                {kDataKey_Label: "San Francisco", kDataKey_Value: 7},
+                {kDataKey_Label: "Los Altos", kDataKey_Value: 3},
+            ]
+        )
 
-        #Initialize the views
+        # Initialize the views
         self.tableView.reloadData()
         self.updateChart()
 
     def updateChart(self):
-        #Update the data displayed by the chart - it will be converted to a
+        # Update the data displayed by the chart - it will be converted to a
         # Structure of Structures by Quartz Composer
         self.view.setValue_forInputKey_(self._data, kParameterKey_Data)
 
-        #Compute the maximum value and set the chart scale accordingly
+        # Compute the maximum value and set the chart scale accordingly
         max = 0.0
         for obj in self._data:
             value = obj[kDataKey_Value]
@@ -141,53 +128,55 @@ class AppController (Cocoa.NSObject):
         if max == 0.0:
             scale = 1.0
         else:
-            scale = 1/max
+            scale = 1 / max
         self.view.setValue_forInputKey_(scale, kParameterKey_Scale)
 
     @objc.IBAction
     def addEntry_(self, sender):
-        #Add a new entry to the data storage
-        self._data.append({
-            kDataKey_Label: "Untitled",
-            kDataKey_Value: 0,
-        })
+        # Add a new entry to the data storage
+        self._data.append({kDataKey_Label: "Untitled", kDataKey_Value: 0})
 
-        #Notify the NSTableView and update the chart
+        # Notify the NSTableView and update the chart
         self.tableView.reloadData()
         self.updateChart()
 
-        #Automatically select and edit the new entry
-        self.tableView.selectRow_byExtendingSelection_(len(self._data)-1, False)
+        # Automatically select and edit the new entry
+        self.tableView.selectRow_byExtendingSelection_(len(self._data) - 1, False)
         self.tableView.editColumn_row_withEvent_select_(
-                self.tableView.columnWithIdentifier_(kDataKey_Label),
-                len(self._data)-1, None, True)
+            self.tableView.columnWithIdentifier_(kDataKey_Label),
+            len(self._data) - 1,
+            None,
+            True,
+        )
 
     @objc.IBAction
     def removeEntry_(self, sender):
-        #Make sure we have a valid selected row
+        # Make sure we have a valid selected row
         selectedRow = self.tableView.selectedRow()
         if selectedRow < 0 or self.tableView.editedRow() == selectedRow:
             return
 
-        #Remove the currently selected entry from the data storage
+        # Remove the currently selected entry from the data storage
         del self._data[selectedRow]
 
-        #Notify the NSTableView and update the chart
+        # Notify the NSTableView and update the chart
         self.tableView.reloadData()
         self.updateChart()
-
 
     def numberOfRowsInTableView_(self, aTableView):
         # Return the number of entries in the data storage
         return len(self._data)
 
-    def tableView_objectValueForTableColumn_row_(self, aTableView, aTableColumn, rowIndex):
+    def tableView_objectValueForTableColumn_row_(
+        self, aTableView, aTableColumn, rowIndex
+    ):
         # Get the "label" or "value" attribute of the entry from the data
         # storage at index "rowIndex"
         return self._data[rowIndex][aTableColumn.identifier()]
 
     def tableView_setObjectValue_forTableColumn_row_(
-            self, aTableView, anObject, aTableColumn, rowIndex):
+        self, aTableView, anObject, aTableColumn, rowIndex
+    ):
 
         # Set the "label" or "value" attribute of the entry from the data
         # storage at index "rowIndex"

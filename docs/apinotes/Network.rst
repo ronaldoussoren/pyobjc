@@ -16,7 +16,12 @@ API Notes
 
    This framework is only available on OSX 10.14 and later and requires a 64-bit binary.
 
-``nw_connection_copy_description``
-..................................
+``nw_framer_parse_input``
+.........................
 
-This function currently causes a memory leak.
+The buffer must by ``objc.NULL``.
+
+``nw_framer_parse_output``
+..........................
+
+The buffer must by ``objc.NULL``.

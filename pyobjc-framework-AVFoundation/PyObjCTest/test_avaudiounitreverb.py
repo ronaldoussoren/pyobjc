@@ -3,8 +3,8 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 
-class TestAVAudioUnitReverb (TestCase):
-    @min_os_level('10.7')
+class TestAVAudioUnitReverb(TestCase):
+    @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetSmallRoom, 0)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumRoom, 1)

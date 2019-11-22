@@ -9,22 +9,22 @@ import sys
 
 # We're using a function that isn't made available through a wrapper, just
 # load it manually:
-if not hasattr(Quartz, 'PMCGImageCreateWithEPSDataProvider'):
-    functions = [
-        ('PMCGImageCreateWithEPSDataProvider', b'@@@'),
-    ]
+if not hasattr(Quartz, "PMCGImageCreateWithEPSDataProvider"):
+    functions = [("PMCGImageCreateWithEPSDataProvider", b"@@@")]
     import AppKit
+
     d = {}
     objc.loadBundleFunctions(AppKit.__bundle__, d, functions)
 
-    if 'PMCGImageCreateWithEPSDataProvider' in d:
-        PMCGImageCreateWithEPSDataProvider=d['PMCGImageCreateWithEPSDataProvider']
+    if "PMCGImageCreateWithEPSDataProvider" in d:
+        PMCGImageCreateWithEPSDataProvider = d["PMCGImageCreateWithEPSDataProvider"]
     else:
         print("PMCGImageCreateWithEPSDataProvider doesn't exist")
 
+
 def getEPSBBox(epspath):
     try:
-        fp = open(epspath, 'rU')
+        fp = open(epspath, "rU")
     except IOError as msg:
         return Quartz.CGRectZero
 
@@ -52,6 +52,7 @@ def getEPSBBox(epspath):
 
     return Quartz.CGRectZero
 
+
 def createEPSPreviewImage(url):
     # The CGImage used as the preview needs to have the
     # same width and height as the EPS data it will
@@ -66,7 +67,7 @@ def createEPSPreviewImage(url):
         print("Couldn't get the path for EPS file!")
         return None
 
-    path = path.rstrip(b'\0')
+    path = path.rstrip(b"\0")
 
     epsRect = getEPSBBox(path)
     # Check whether the EPS bounding box is empty.
@@ -80,10 +81,11 @@ def createEPSPreviewImage(url):
     # create the preview image. Use the routine
     # createRGBBitmapContext from the earlier chapter.
     bitmapContext = BitmapContext.createRGBBitmapContext(
-                                    epsRect.size.width,
-                                    epsRect.size.height,
-                                    wantDisplayColorSpace,
-                                    needsTransparentBitmap)
+        epsRect.size.width,
+        epsRect.size.height,
+        wantDisplayColorSpace,
+        needsTransparentBitmap,
+    )
     if bitmapContext is None:
         print("Couldn't create bitmap context")
         return None
@@ -118,6 +120,7 @@ def createEPSPreviewImage(url):
 
     return epsPreviewImage
 
+
 # This technique of handling EPS data is available in
 # macOS v10.1 and later and is one alternative method
 # of supporting EPS data during printing as compared to
@@ -145,7 +148,6 @@ def createCGEPSImage(url):
     # and the EPS data. Note that the data provider isn't
     # called during image creation but at some later point in time.
 
-
     epsImage = PMCGImageCreateWithEPSDataProvider(epsDataProvider, previewImage)
     # The preview image and data provider are no longer needed
     # because Quartz retains them and this code doesn't
@@ -159,6 +161,7 @@ def createCGEPSImage(url):
 
     return epsImage
 
+
 def drawEPSDataImage(context, url):
     # Create the a CGImage that has EPS data associated with it.
     epsDataImage = createCGEPSImage(url)
@@ -168,9 +171,12 @@ def drawEPSDataImage(context, url):
     # Create a destination rectangle at the location
     # to draw the EPS document. The size of the rect is scaled
     # down to 1/2 the size of the EPS graphic.
-    destinationRect = Quartz.CGRectMake(100, 100,
-                        Quartz.CGImageGetWidth(epsDataImage),
-                        Quartz.CGImageGetHeight(epsDataImage))
+    destinationRect = Quartz.CGRectMake(
+        100,
+        100,
+        Quartz.CGImageGetWidth(epsDataImage),
+        Quartz.CGImageGetHeight(epsDataImage),
+    )
     # Draw the image to the destination. When the EPS
     # data associated with the image is sent to a PostScript
     # printer, the EPS bounding box is mapped to this
@@ -181,12 +187,16 @@ def drawEPSDataImage(context, url):
     # rotated by 45 degrees and scaled by an additional scaling factor
     # of 0.5 in the x dimension. The center point of this image coincides
     # with the center point of the earlier drawing.
-    Quartz.CGContextTranslateCTM(context,
-            destinationRect.origin.x + destinationRect.size.width/2,
-            destinationRect.origin.y + destinationRect.size.height/2)
+    Quartz.CGContextTranslateCTM(
+        context,
+        destinationRect.origin.x + destinationRect.size.width / 2,
+        destinationRect.origin.y + destinationRect.size.height / 2,
+    )
     Quartz.CGContextRotateCTM(context, Utilities.DEGREES_TO_RADIANS(45))
     Quartz.CGContextScaleCTM(context, 0.5, 1)
-    Quartz.CGContextTranslateCTM(context,
-            -(destinationRect.origin.x + destinationRect.size.width/2),
-            -(destinationRect.origin.y + destinationRect.size.height/2) )
+    Quartz.CGContextTranslateCTM(
+        context,
+        -(destinationRect.origin.x + destinationRect.size.width / 2),
+        -(destinationRect.origin.y + destinationRect.size.height / 2),
+    )
     Quartz.CGContextDrawImage(context, destinationRect, epsDataImage)

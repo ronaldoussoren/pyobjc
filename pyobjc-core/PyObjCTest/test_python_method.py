@@ -1,9 +1,10 @@
 from PyObjCTools.TestSupport import *
 import objc
 
-NSObject = objc.lookUpClass('NSObject')
+NSObject = objc.lookUpClass("NSObject")
 
-class TestPythonMethod (TestCase):
+
+class TestPythonMethod(TestCase):
     def test_creation(self):
         self.assertRaises(TypeError, objc.python_method)
         self.assertRaises(TypeError, objc.python_method, 1, 2)
@@ -11,8 +12,7 @@ class TestPythonMethod (TestCase):
         self.assertEqual(o.callable, 1)
 
     def test_usage_basic(self):
-
-        class MyClass (object):
+        class MyClass(object):
             @objc.python_method
             def my_method(self, a):
                 return a * 2
@@ -31,7 +31,7 @@ class TestPythonMethod (TestCase):
         self.assertEqual(MyClass.my_class(), str(MyClass))
 
     def test_usage_objc(self):
-        class OC_PythonMethod_Class (NSObject):
+        class OC_PythonMethod_Class(NSObject):
             @objc.python_method
             def my_method(self, a):
                 return a * 2
@@ -47,6 +47,7 @@ class TestPythonMethod (TestCase):
 
         self.assertEqual(o.my_method(4), 8)
         self.assertEqual(o.b, 2)
+
 
 if __name__ == "__main__":
     main()

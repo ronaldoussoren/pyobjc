@@ -99,6 +99,75 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "kCMSCertificateChainWithRootOrFail": { "value": 4 },
+   "errSSLATSViolation": { "value": -9880 },
+   "errSSLATSMinimumVersionViolation": { "value": -9881 },
+   "errSSLATSCiphersuiteViolation": { "value": -9882 },
+   "errSSLATSMinimumKeySizeViolation": { "value": -9883 },
+   "errSSLATSLeafCertificateHashAlgorithmViolation": { "value": -9884 },
+   "errSSLATSCertificateHashAlgorithmViolation": { "value": -9885 },
+   "errSSLATSCertificateTrustViolation": { "value": -9886 },
+   "kSecAccessControlUserPresence": { "value": 1 },
+   "kSecAccessControlBiometryAny": { "value": 2 },
+   "kSecAccessControlTouchIDAny": { "value": 2 },
+   "kSecAccessControlBiometryCurrentSet": { "value": 8 },
+   "kSecAccessControlTouchIDCurrentSet": { "value": 8 },
+   "kSecAccessControlDevicePasscode": { "value": 16 },
+   "kSecAccessControlWatch": { "value": 32 },
+   "kSecAccessControlOr": { "value": 16384 },
+   "kSecAccessControlAnd": { "value": 32768 },
+   "kSecAccessControlPrivateKeyUsage": { "value": 1073741824 },
+   "kSecAccessControlApplicationPassword": { "value": 2147483648 },
+   "tls_ciphersuite_group_default": { "value": 0 },
+   "tls_ciphersuite_group_compatibility": { "value": 1 },
+   "tls_ciphersuite_group_legacy": { "value": 2 },
+   "tls_ciphersuite_group_ats": { "value": 3 },
+   "tls_ciphersuite_group_ats_compatibility": { "value": 4 },
+   "kSSLProtocolUnknown": { "value": 0 },
+   "kTLSProtocol1": { "value": 4 },
+   "kTLSProtocol11": { "value": 7 },
+   "kTLSProtocol12": { "value": 8 },
+   "kDTLSProtocol1": { "value": 9 },
+   "kTLSProtocol13": { "value": 10 },
+   "kDTLSProtocol12": { "value": 11 },
+   "kTLSProtocolMaxSupported": { "value": 999 },
+   "kSSLProtocol2": { "value": 1 },
+   "kSSLProtocol3": { "value": 2 },
+   "kSSLProtocol3Only": { "value": 3 },
+   "kTLSProtocol1Only": { "value": 5 },
+   "kSSLProtocolAll": { "value": 6 },
+   "tls_ciphersuite_RSA_WITH_3DES_EDE_CBC_SHA": { "value": 10 },
+   "tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA": { "value": 47 },
+   "tls_ciphersuite_RSA_WITH_AES_256_CBC_SHA": { "value": 53 },
+   "tls_ciphersuite_RSA_WITH_AES_128_GCM_SHA256": { "value": 156 },
+   "tls_ciphersuite_RSA_WITH_AES_256_GCM_SHA384": { "value": 157 },
+   "tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA256": { "value": 60 },
+   "tls_ciphersuite_RSA_WITH_AES_256_CBC_SHA256": { "value": 61 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA": { "value": 49160 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": { "value": 49161 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA": { "value": 49162 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA": { "value": 49170 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA": { "value": 49171 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA": { "value": 49172 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256": { "value": 49187 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384": { "value": 49188 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA256": { "value": 49191 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA384": { "value": 49192 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256": { "value": 49195 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384": { "value": 49196 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_128_GCM_SHA256": { "value": 49199 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_AES_256_GCM_SHA384": { "value": 49200 },
+   "tls_ciphersuite_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256": { "value": 52392 },
+   "tls_ciphersuite_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256": { "value": 52393 },
+   "tls_ciphersuite_AES_128_GCM_SHA256": { "value": 4865 },
+   "tls_ciphersuite_AES_256_GCM_SHA384": { "value": 4866 },
+   "tls_ciphersuite_CHACHA20_POLY1305_SHA256": { "value": 4867 },
+   "tls_protocol_version_TLSv10": { "value": 769 },
+   "tls_protocol_version_TLSv11": { "value": 770 },
+   "tls_protocol_version_TLSv12": { "value": 771 },
+   "tls_protocol_version_TLSv13": { "value": 772 },
+   "tls_protocol_version_DTLSv10": { "value": 65279 },
+   "tls_protocol_version_DTLSv12": { "value": 65277 },
    "kSecCSCalculateCMSDigest": { "value": 64 },
    "kSecCSSingleThreaded": { "value": 4096 },
    "kSSLCiphersuiteGroupDefault": { "value": 0 },
@@ -500,6 +569,9 @@
    "TLS_DH_anon_WITH_AES_256_CBC_SHA256": { "value":  109  },
    "TLS_DH_anon_WITH_AES_256_GCM_SHA384": { "value":  167  },
    "TLS_DH_anon_WITH_RC4_128_MD5": { "value":  24  },
+   "TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA": { "value": 49205  },
+   "TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA": { "value": 49206  },
+   "TLS_PSK_WITH_CHACHA20_POLY1305_SHA256": { "value": 52395 },
    "TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA": { "value":  49160  },
    "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA": { "value":  49161  },
    "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256": { "value":  49187  },
@@ -706,6 +778,9 @@
    "errSecCertificateExpired": { "value": -67818 },
    "errSecCertificateNotValidYet": { "value": -67819 },
    "errSecCertificateRevoked": { "value": -67820 },
+   "errSecCertificatePolicyNotAllowed": { "value": -67899 },
+   "errSecCertificateNameNotAllowed": { "value": -67900 },
+   "errSecCertificateValidityPeriodTooLong": { "value": -67901 },
    "errSecCertificateSuspended": { "value": -67821 },
    "errSecCodeSigningBadCertChainLength": { "value": -67647 },
    "errSecCodeSigningBadPathLengthConstraint": { "value": -67649 },
@@ -1255,6 +1330,7 @@
    "kAuthorizationRightExecute": { "value": "system.privilege.admin", "unicode": false },
    "kAuthorizationEnvironmentPrompt": { "value": "prompt", "unicode": false },
    "kAuthorizationEnvironmentIcon": { "value": "icon", "unicode": false },
+   "kAuthorizationPamResult": { "value": "pam_result", "unicode": false },
    "kAuthorizationComment": { "value": "comment", "unicode": false },
    "kAuthorizationRightRule": { "value": "rule", "unicode": false },
    "kAuthorizationRuleAuthenticateAsAdmin": { "value": "authenticate-admin", "unicode": false },
@@ -1267,6 +1343,7 @@
    "kAuthorizationEmptyEnvironment": { "value": "None" }
   },
   "externs": {
+   "kSecUseDataProtectionKeychain": { "typestr": "@" },
    "kSecTransformActionCanExecute": { "typestr": "@" },
    "kSecTransformActionStartingExecution": { "typestr": "@" },
    "kSecTransformActionFinalize": { "typestr": "@" },
@@ -1320,6 +1397,8 @@
    "kSecPropertyTypeString": { "typestr": "@" },
    "kSecPropertyTypeURL": { "typestr": "@" },
    "kSecPropertyTypeDate": { "typestr": "@" },
+   "kSecPropertyTypeArray": { "typestr": "@" },
+   "kSecPropertyTypeNumber": { "typestr": "@" },
    "kSecOIDADC_CERT_POLICY": { "typestr": "@" },
    "kSecOIDAPPLE_CERT_POLICY": { "typestr": "@" },
    "kSecOIDAPPLE_EKU_CODE_SIGNING": { "typestr": "@" },
@@ -1853,6 +1932,34 @@
   "classes": {
   },
   "functions": {
+   "sec_protocol_metadata_get_negotiated_tls_protocol_version":  {
+    "retval": { "type_override": "S" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_identity_access_certificates": {
+    "retval": { "type_override": "@", "already_cfretained": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_identity_access_certificates": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?" ,
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
    "AuthorizationFree": {
     "retval": { "type_override": "i" },
     "args": {
@@ -3158,6 +3265,68 @@
      "2": { "type_override": "o^@" }
     },
     "retval": { "type_override": "Z" }
+   },
+   "sec_protocol_options_are_equal":  {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_metadata_get_server_name": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_set_local_identity":  {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_append_tls_ciphersuite_group": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "S" }
+    }
+   },
+   "sec_protocol_options_append_tls_ciphersuite":  {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_set_local_identity":  {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "SecTrustEvaluateAsyncWithError": {
+    "args":  {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^{dispatch_queue_s}" },
+     "2": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "B" },
+        "3": { "type": "@" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "i" }
    },
    "SecTrustEvaluateAsync": {
     "args":  {
@@ -4709,6 +4878,14 @@
      "type_override": "B"
     }
    },
+   "sec_protocol_metadata_get_negotiated_tls_ciphersuite": {
+    "args": {
+     "0": { "type_override": "@" }
+    },
+    "retval": {
+     "type_override": "I"
+    }
+   },
    "sec_protocol_metadata_get_negotiated_ciphersuite": {
     "args": {
      "0": { "type_override": "@" }
@@ -4786,6 +4963,287 @@
     },
     "retval": {
      "type_override": "B"
+    }
+   },
+   "sec_protocol_options_set_min_tls_protocol_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_max_tls_protocol_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_tls_min_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_tls_max_version": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_tls_diffie_hellman_parameters": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_min_tls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_max_tls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_min_dtls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_get_default_max_dtls_protocol_version": {
+    "retval": { "type_override": "i" },
+    "args": {
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_add_tls_ciphersuite_group": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "S" }
+    }
+   },
+   "sec_protocol_options_set_tls_pre_shared_key_identity_hint": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_add_tls_ciphersuite": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "i" }
+    }
+   },
+   "sec_protocol_options_set_pre_shared_key_selection_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": {
+	 "type": "@?",
+	 "callable": {
+          "arguments": {
+	   "0": { "type": "^v" },
+	   "1": { "type": "@" }
+          },
+          "retval": { "type": "v" }
+	 }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_metadata_access_pre_shared_keys": {
+    "retval": { "type_override": "B" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "sec_protocol_options_set_key_update_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": {
+	 "type": "@?",
+         "callable": {
+          "arguments": {
+	   "0": { "type": "^v" }
+          },
+          "retval": { "type": "v" }
+         }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_options_set_verify_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": { "type": "@" },
+	"3": {
+	 "type": "@?",
+         "callable": {
+          "arguments": {
+	   "0": { "type": "^v" }
+          },
+          "retval": { "type": "v" }
+         }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_options_set_challenge_block": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+	"0": { "type": "^v" },
+	"1": { "type": "@" },
+	"2": {
+	 "type": "@?",
+         "callable": {
+          "arguments": {
+	   "0": { "type": "^v" }
+          },
+          "retval": { "type": "v" }
+         }
+	}
+       },
+       "retval": { "type": "v" }
+      }
+     },
+     "2": { "type_override": "^{dispatch_queue_s}" }
+    }
+   },
+   "sec_protocol_options_set_peer_authentication_required": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_renegotiation_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_sct_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_ocsp_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_false_start_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_resumption_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_is_fallback_attempt": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_set_tls_tickets_enabled": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "B" }
+    }
+   },
+   "sec_protocol_options_add_pre_shared_key": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "0": { "type_override": "@" }
+    }
+   },
+   "sec_protocol_options_add_tls_application_protocol": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "sec_protocol_options_set_tls_server_name": {
+    "retval": { "type_override": "v" },
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
     }
    },
    "sec_protocol_metadata_create_secret_with_context": {

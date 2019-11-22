@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from WebKit import *
 
-class TestDOMXPathResult (TestCase):
+
+class TestDOMXPathResult(TestCase):
     def testConstants(self):
         self.assertEqual(DOM_ANY_TYPE, 0)
         self.assertEqual(DOM_NUMBER_TYPE, 1)
@@ -18,6 +18,7 @@ class TestDOMXPathResult (TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(DOMXPathResult.booleanValue)
         self.assertResultIsBOOL(DOMXPathResult.invalidIteratorState)
+
 
 if __name__ == "__main__":
     main()

@@ -3,14 +3,20 @@ from PyObjCTools.TestSupport import *
 import DiscRecording
 import CoreFoundation
 
-class TestDRCoreCDText (TestCase):
+
+class TestDRCoreCDText(TestCase):
     @expectedFailure
     def testCFTypes(self):
         self.assertIsCFType(DiscRecording.DRCDTextBlockRef)
 
     def testConstants(self):
-        self.assertEqual(DiscRecording.kDRCDTextEncodingISOLatin1Modified, CoreFoundation.kCFStringEncodingISOLatin1)
-        self.assertEqual(DiscRecording.kDRCDTextEncodingASCII, CoreFoundation.kCFStringEncodingASCII)
+        self.assertEqual(
+            DiscRecording.kDRCDTextEncodingISOLatin1Modified,
+            CoreFoundation.kCFStringEncodingISOLatin1,
+        )
+        self.assertEqual(
+            DiscRecording.kDRCDTextEncodingASCII, CoreFoundation.kCFStringEncodingASCII
+        )
 
         self.assertEqual(DiscRecording.kDRCDTextGenreCodeUnknown, 0x0001)
         self.assertEqual(DiscRecording.kDRCDTextGenreCodeAdultContemporary, 0x0002)
@@ -44,9 +50,15 @@ class TestDRCoreCDText (TestCase):
         self.assertIsInstance(DiscRecording.kDRCDTextLanguageKey, unicode)
         self.assertIsInstance(DiscRecording.kDRCDTextCharacterCodeKey, unicode)
         self.assertIsInstance(DiscRecording.kDRCDTextCFStringEncodingKey, unicode)
-        self.assertIsInstance(DiscRecording.kDRCDTextCopyrightAssertedForSpecialMessagesKey, unicode)
-        self.assertIsInstance(DiscRecording.kDRCDTextCopyrightAssertedForNamesKey, unicode)
-        self.assertIsInstance(DiscRecording.kDRCDTextCopyrightAssertedForTitlesKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.kDRCDTextCopyrightAssertedForSpecialMessagesKey, unicode
+        )
+        self.assertIsInstance(
+            DiscRecording.kDRCDTextCopyrightAssertedForNamesKey, unicode
+        )
+        self.assertIsInstance(
+            DiscRecording.kDRCDTextCopyrightAssertedForTitlesKey, unicode
+        )
         self.assertIsInstance(DiscRecording.kDRCDTextTitleKey, unicode)
         self.assertIsInstance(DiscRecording.kDRCDTextPerformerKey, unicode)
         self.assertIsInstance(DiscRecording.kDRCDTextSongwriterKey, unicode)
@@ -62,7 +74,6 @@ class TestDRCoreCDText (TestCase):
         self.assertIsInstance(DiscRecording.kDRCDTextTOC2Key, unicode)
         self.assertIsInstance(DiscRecording.kDRCDTextSizeKey, unicode)
 
-
     def testFunctions(self):
         self.assertResultIsCFRetained(DiscRecording.DRCDTextBlockCreateArrayFromPackList)
 
@@ -76,11 +87,6 @@ class TestDRCoreCDText (TestCase):
         DiscRecording.DRCDTextBlockGetValue
         DiscRecording.DRCDTextBlockSetValue
         DiscRecording.DRCDTextBlockFlatten
-
-
-
-
-
 
 
 if __name__ == "__main__":

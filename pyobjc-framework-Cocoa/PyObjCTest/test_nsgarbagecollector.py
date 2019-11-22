@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSGarbageCollector (TestCase):
+
+class TestNSGarbageCollector(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSGarbageCollector.isCollecting)
         self.assertResultIsBOOL(NSGarbageCollector.isEnabled)

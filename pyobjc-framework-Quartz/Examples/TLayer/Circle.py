@@ -4,16 +4,19 @@ import Quartz
 import objc
 import math
 
-class Circle (Cocoa.NSObject):
+
+class Circle(Cocoa.NSObject):
     radius = objc.ivar(type=objc._C_FLT)
     center = objc.ivar(type=Cocoa.NSPoint.__typestr__)
     color = objc.ivar()
 
     def bounds(self):
         return Cocoa.NSMakeRect(
-                self.center.x - self.radius,
-                self.center.y - self.radius,
-                2 * self.radius, 2 * self.radius)
+            self.center.x - self.radius,
+            self.center.y - self.radius,
+            2 * self.radius,
+            2 * self.radius,
+        )
 
     def draw(self):
         context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()

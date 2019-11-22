@@ -5,8 +5,8 @@ if sys.maxsize >= 2 ** 32:
 
     import NetworkExtension
 
-    class TestNEAppProxyFlow (TestCase):
-        @min_os_level('10.11')
+    class TestNEAppProxyFlow(TestCase):
+        @min_os_level("10.11")
         def testConstants(self):
             self.assertEqual(NetworkExtension.NEOnDemandRuleActionConnect, 1)
             self.assertEqual(NetworkExtension.NEOnDemandRuleActionDisconnect, 2)
@@ -17,8 +17,12 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEOnDemandRuleInterfaceTypeEthernet, 1)
             self.assertEqual(NetworkExtension.NEOnDemandRuleInterfaceTypeWiFi, 2)
 
-            self.assertEqual(NetworkExtension.NEEvaluateConnectionRuleActionConnectIfNeeded, 1)
-            self.assertEqual(NetworkExtension.NEEvaluateConnectionRuleActionNeverConnect, 2)
+            self.assertEqual(
+                NetworkExtension.NEEvaluateConnectionRuleActionConnectIfNeeded, 1
+            )
+            self.assertEqual(
+                NetworkExtension.NEEvaluateConnectionRuleActionNeverConnect, 2
+            )
 
 
 if __name__ == "__main__":

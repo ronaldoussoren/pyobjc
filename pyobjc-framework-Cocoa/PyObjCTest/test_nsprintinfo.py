@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSPrintInfo (TestCase):
+
+class TestNSPrintInfo(TestCase):
     def testConstants(self):
         self.assertEqual(NSPortraitOrientation, 0)
         self.assertEqual(NSLandscapeOrientation, 1)
@@ -57,12 +57,11 @@ class TestNSPrintInfo (TestCase):
         self.assertIsInstance(NSPrintPagesPerSheet, unicode)
         self.assertIsInstance(NSPrintPaperFeed, unicode)
 
-
         self.assertEqual(NSPrintingPaginationModeAutomatic, 0)
         self.assertEqual(NSPrintingPaginationModeFit, 1)
         self.assertEqual(NSPrintingPaginationModeClip, 2)
 
-    @max_os_level('10.13')
+    @max_os_level("10.13")
     def testConstants_not10_14(self):
         self.assertIsInstance(NSPrintFaxCoverSheetName, unicode)
         self.assertIsInstance(NSPrintFaxHighResolution, unicode)
@@ -81,13 +80,13 @@ class TestNSPrintInfo (TestCase):
         self.assertArgIsBOOL(NSPrintInfo.setHorizontallyCentered_, 0)
         self.assertArgIsBOOL(NSPrintInfo.setVerticallyCentered_, 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(NSPrintSelectionOnly, unicode)
         self.assertIsInstance(NSPrintJobSavingURL, unicode)
         self.assertIsInstance(NSPrintJobSavingFileNameExtensionHidden, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(NSPrintInfo.isSelectionOnly)
         self.assertArgIsBOOL(NSPrintInfo.setSelectionOnly_, 0)

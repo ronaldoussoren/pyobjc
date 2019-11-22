@@ -3,7 +3,8 @@ from Cocoa import NSObject, NSURL, NSMutableArray, NSBundle
 from Cocoa import NSIndexSet, NSBeginInformationalAlertSheet
 from Automator import AMWorkflow
 
-class Controller (NSObject):
+
+class Controller(NSObject):
     # interface builder variables
     myWindow = objc.IBOutlet()
     workflowView = objc.IBOutlet()
@@ -40,13 +41,13 @@ class Controller (NSObject):
             selectedEntry = self.tableContent.arrangedObjects()[theRow]
 
             # retrieve the selected application from our list of applications.
-            selectedWorkflow = selectedEntry['workflow']
+            selectedWorkflow = selectedEntry["workflow"]
 
             # ask the AMWorkflowController to display the selected workflow
             self.workflowController.setWorkflow_(selectedWorkflow)
 
             # set the window title
-            self.myWindow.setTitle_(selectedEntry['name'])
+            self.myWindow.setTitle_(selectedEntry["name"])
 
             return True
 
@@ -71,7 +72,8 @@ class Controller (NSObject):
         # retrieve a list of all of the workflows stored in the application's
         # resourced folder.
         workflowPaths = NSBundle.mainBundle().pathsForResourcesOfType_inDirectory_(
-                "workflow", "workflows")
+            "workflow", "workflows"
+        )
 
         # iterate through the paths, adding them to our table information
         # as we go.
@@ -82,7 +84,9 @@ class Controller (NSObject):
             nthWorkflowURL = NSURL.fileURLWithPath_isDirectory_(nthWorkflowPath, False)
 
             # allocate and initialize the workflow
-            nthWorkflow, wfError = AMWorkflow.alloc().initWithContentsOfURL_error_(nthWorkflowURL, None)
+            nthWorkflow, wfError = AMWorkflow.alloc().initWithContentsOfURL_error_(
+                nthWorkflowURL, None
+            )
 
             if nthWorkflow:
                 # calculate the file name without path or extension
@@ -90,11 +94,9 @@ class Controller (NSObject):
                 nthDisplayName = nthFileName[:-9]
 
                 # add the workflow to the list
-                theWorkflows.append(dict(
-                        name=nthDisplayName,
-                        path=nthWorkflowPath,
-                        workflow=nthWorkflow,
-                    ))
+                theWorkflows.append(
+                    dict(name=nthDisplayName, path=nthWorkflowPath, workflow=nthWorkflow)
+                )
 
         # set the workflows
         self._.workflows = theWorkflows
@@ -102,9 +104,9 @@ class Controller (NSObject):
         # if there are any workflows in the list, then select and display the first one */
         if len(self._.workflows):
             self.workflowTable.selectRowIndexes_byExtendingSelection_(
-                NSIndexSet.indexSetWithIndex_(0), False)
+                NSIndexSet.indexSetWithIndex_(0), False
+            )
             self.displaySelectedWorkflow()
-
 
     # NSApplication delegate method - for convenience. We have set the
     # File's Owner's delegate to our Controller object in the MainMenu.nib file.
@@ -125,18 +127,27 @@ class Controller (NSObject):
             # display an alert explaining why the selection cannot be changed.
 
             # get the name of the action that is running now.
-            selectedWorkflow = self.tableContent.arrangedObjects()[self.workflowTable.selectedRow()]['name']
+            selectedWorkflow = self.tableContent.arrangedObjects()[
+                self.workflowTable.selectedRow()
+            ]["name"]
 
             # display a modal sheet explaining why the selection cannot be changed.
             NSBeginInformationalAlertSheet(
-                u"The '%s' action is running."%(selectedWorkflow,),
-                u"OK", None, None, self.myWindow, None, None, None, None,
-                u"You cannot select another action until the '%s' action has finished running."%(
-                    selectedWorkflow)
+                "The '%s' action is running." % (selectedWorkflow,),
+                "OK",
+                None,
+                None,
+                self.myWindow,
+                None,
+                None,
+                None,
+                None,
+                "You cannot select another action until the '%s' action has finished running."
+                % (selectedWorkflow),
             )
 
         # return true only if we are not in the middle of running an action.
-        return not self._.runningWorkflow;
+        return not self._.runningWorkflow
 
     # tableViewSelectionIsChanging: is called after the selection has changed.  All there
     # is to do here is update the workflow displayed in the AMWorkflowView to show the newly

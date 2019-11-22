@@ -3,18 +3,23 @@ import objc
 from PyObjCTools.TestSupport import *
 from PyObjCTest.initialize import OC_TestInitialize
 
-class OC_TestInitializePython (OC_TestInitialize):
+
+class OC_TestInitializePython(OC_TestInitialize):
     def init(self):
         return objc.super(OC_TestInitializePython, self).init()
 
-OBJECT_LIST=[]
-class OC_TestInitializePython2 (OC_TestInitialize):
+
+OBJECT_LIST = []
+
+
+class OC_TestInitializePython2(OC_TestInitialize):
     def init(self):
         self = objc.super(OC_TestInitializePython2, self).init()
         OBJECT_LIST.append(self)
         return self
 
-class TestInitializing (TestCase):
+
+class TestInitializing(TestCase):
     #
     # These tests make sure that we don't call retain/release on objects
     # that are not yet initialized.
@@ -80,6 +85,7 @@ class TestInitializing (TestCase):
         self.assertEqual(s, "hello")
         v = OC_TestInitialize.numUninitialized()
         self.assertEqual(v, start)
+
 
 if __name__ == "__main__":
     main()

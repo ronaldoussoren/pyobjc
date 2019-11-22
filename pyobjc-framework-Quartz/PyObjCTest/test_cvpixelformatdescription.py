@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVPixelFormatDescription (TestCase):
+
+class TestCVPixelFormatDescription(TestCase):
     def testConstants(self):
         self.assertIsInstance(kCVPixelFormatName, unicode)
         self.assertIsInstance(kCVPixelFormatConstant, unicode)
@@ -27,13 +27,16 @@ class TestCVPixelFormatDescription (TestCase):
         self.assertIsInstance(kCVPixelFormatOpenGLCompatibility, unicode)
         self.assertIsInstance(kCVPixelFormatFillExtendedPixelsCallback, unicode)
 
-
     def testFunctions(self):
         self.assertResultIsCFRetained(CVPixelFormatDescriptionCreateWithPixelFormatType)
-        v = CVPixelFormatDescriptionCreateWithPixelFormatType(None, kCVPixelFormatType_32ARGB)
+        v = CVPixelFormatDescriptionCreateWithPixelFormatType(
+            None, kCVPixelFormatType_32ARGB
+        )
         self.assertIsInstance(v, CFDictionaryRef)
 
-        self.assertResultIsCFRetained(CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes)
+        self.assertResultIsCFRetained(
+            CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes
+        )
         v = CVPixelFormatDescriptionArrayCreateWithAllPixelFormatTypes(None)
         self.assertIsInstance(v, CFArrayRef)
         self.assertNotEqual(len(v), 0)
@@ -45,28 +48,27 @@ class TestCVPixelFormatDescription (TestCase):
 
         CVPixelFormatDescriptionRegisterDescriptionWithPixelFormatType({}, tp)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCVPixelFormatBlackBlock, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kCVPixelFormatContainsAlpha, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kCVPixelFormatContainsYCbCr, unicode)
         self.assertIsInstance(kCVPixelFormatContainsRGB, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCVPixelFormatComponentRange, unicode)
         self.assertIsInstance(kCVPixelFormatComponentRange_VideoRange, unicode)
         self.assertIsInstance(kCVPixelFormatComponentRange_FullRange, unicode)
         self.assertIsInstance(kCVPixelFormatComponentRange_WideRange, unicode)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(kCVPixelFormatContainsGrayscale, unicode)
 

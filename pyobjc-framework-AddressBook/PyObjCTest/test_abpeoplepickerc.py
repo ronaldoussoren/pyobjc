@@ -1,22 +1,21 @@
-
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-class TestABPeoplePickerC (TestCase):
+
+class TestABPeoplePickerC(TestCase):
     def testConstants(self):
         self.assertEqual(kABPickerSingleValueSelection, 1 << 0)
         self.assertEqual(kABPickerMultipleValueSelection, 1 << 1)
         self.assertEqual(kABPickerAllowGroupSelection, 1 << 2)
         self.assertEqual(kABPickerAllowMultipleSelection, 1 << 3)
-        self.assertEqual(kEventClassABPeoplePicker, fourcc(b'abpp'))
-        self.assertEqual(kEventParamABPickerRef,  fourcc(b'abpp'))
+        self.assertEqual(kEventClassABPeoplePicker, fourcc(b"abpp"))
+        self.assertEqual(kEventParamABPickerRef, fourcc(b"abpp"))
         self.assertEqual(kEventABPeoplePickerGroupSelectionChanged, 1)
         self.assertEqual(kEventABPeoplePickerNameSelectionChanged, 2)
         self.assertEqual(kEventABPeoplePickerValueSelectionChanged, 3)
         self.assertEqual(kEventABPeoplePickerDisplayedPropertyChanged, 4)
         self.assertEqual(kEventABPeoplePickerGroupDoubleClicked, 5)
         self.assertEqual(kEventABPeoplePickerNameDoubleClicked, 6)
-
 
     def testType(self):
         self.assertIsInstance(ABPickerRef, objc.objc_class)
@@ -28,11 +27,12 @@ class TestABPeoplePickerC (TestCase):
         ref = ABPickerCreate()
 
         try:
-            self.assertIsInstance(ref, (ABPickerRef, objc.lookUpClass('ABPeoplePickerCAdapter')))
+            self.assertIsInstance(
+                ref, (ABPickerRef, objc.lookUpClass("ABPeoplePickerCAdapter"))
+            )
 
         except objc.error:
             self.assertIsInstance(ref, ABPickerRef)
-
 
         ABPickerSetFrame(ref, ((90, 100), (200, 400)))
         r = ABPickerGetFrame(ref, None)
@@ -70,7 +70,7 @@ class TestABPeoplePickerC (TestCase):
 
         # Disable detailed testing, the RemoveProperties function
         # doesn't actually remove. See radar #7999195.
-        #self.assertEqual(tuple(v), (kABLastNameProperty,))
+        # self.assertEqual(tuple(v), (kABLastNameProperty,))
 
         ABPickerSetColumnTitle(ref, "Achternaam", kABLastNameProperty)
         v = ABPickerCopyColumnTitle(ref, kABLastNameProperty)
@@ -104,7 +104,9 @@ class TestABPeoplePickerC (TestCase):
         ABPickerSelectRecord(ref, usr, False)
         self.assertArgHasType(ABPickerSelectRecord, 2, objc._C_BOOL)
 
-        ABPickerSelectIdentifier(ref, usr, "Last", False) #ABRecordCopyUniqueId(usr), False)
+        ABPickerSelectIdentifier(
+            ref, usr, "Last", False
+        )  # ABRecordCopyUniqueId(usr), False)
         self.assertArgHasType(ABPickerSelectIdentifier, 3, objc._C_BOOL)
 
         ABPickerDeselectIdentifier(ref, usr, "Last")
@@ -127,6 +129,7 @@ class TestABPeoplePickerC (TestCase):
         r = ABPickerGetDelegate(ref)
 
         ABPickerSetDelegate
+
 
 if __name__ == "__main__":
     main()

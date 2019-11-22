@@ -7,10 +7,6 @@ extern BOOL PyObjCPointer_RaiseException;
 extern BOOL PyObjC_StructsIndexable;
 extern BOOL PyObjC_StructsWritable;
 
-#if PY_MAJOR_VERSION == 2
-extern BOOL PyObjC_StrBridgeEnabled;
-#endif
-
 extern int PyObjC_DeprecationVersion;
 extern Py_ssize_t PyObjC_MappingCount;
 extern int PyObjC_NSCoding_Version;
@@ -21,9 +17,7 @@ extern PyObject* PyObjC_ClassExtender;
 extern PyObject* PyObjC_MakeBundleForClass;
 extern PyObject* PyObjC_NSNumberWrapper;
 extern PyObject* PyObjC_CallableDocFunction;
-#if PY_VERSION_HEX >= 0x03030000
 extern PyObject* PyObjC_CallableSignatureFunction;
-#endif /* PY_VERSION_HEX >= 0x03030000 */
 
 extern PyObject* PyObjC_DictLikeTypes;
 extern PyObject* PyObjC_ListLikeTypes;

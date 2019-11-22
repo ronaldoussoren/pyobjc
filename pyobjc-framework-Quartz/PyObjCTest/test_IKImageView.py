@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestIKImageView (TestCase):
-    @min_os_level('10.5')
+
+class TestIKImageView(TestCase):
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(IKToolModeNone, unicode)
         self.assertIsInstance(IKToolModeMove, unicode)
@@ -14,12 +14,11 @@ class TestIKImageView (TestCase):
         self.assertIsInstance(IKOverlayTypeBackground, unicode)
         self.assertIsInstance(IKOverlayTypeImage, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(IKToolModeSelectRect, unicode)
         self.assertIsInstance(IKToolModeSelectEllipse, unicode)
         self.assertIsInstance(IKToolModeSelectLasso, unicode)
-
 
     def testMethods(self):
         self.assertResultIsBOOL(IKImageView.autoresizes)
@@ -42,7 +41,6 @@ class TestIKImageView (TestCase):
 
         self.assertResultIsBOOL(IKImageView.doubleClickOpensImageEditPanel)
         self.assertArgIsBOOL(IKImageView.setDoubleClickOpensImageEditPanel_, 0)
-
 
 
 if __name__ == "__main__":

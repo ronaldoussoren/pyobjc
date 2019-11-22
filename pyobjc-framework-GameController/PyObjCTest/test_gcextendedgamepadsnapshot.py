@@ -5,30 +5,41 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import GameController
 
-    class TestGCExtendedGamepadSnapshot (TestCase):
+    class TestGCExtendedGamepadSnapshot(TestCase):
         def test_constants(self):
             self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion1, 0x0100)
             self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion2, 0x0101)
 
-        @min_os_level('10.14.4')
+        @min_os_level("10.14.4")
         def test_constants_10_14_4(self):
-            self.assertIsInstance(GameController.GCCurrentExtendedGamepadSnapshotDataVersion, (int, long))
-
+            self.assertIsInstance(
+                GameController.GCCurrentExtendedGamepadSnapshotDataVersion, (int, long)
+            )
 
         @min_os_level("10.9")
         def testClasses(self):
-            self.assertIsInstance(GameController.GCExtendedGamepadSnapshot, objc.objc_class)
+            self.assertIsInstance(
+                GameController.GCExtendedGamepadSnapshot, objc.objc_class
+            )
 
         @min_os_level("10.9")
         def testFunctions(self):
-            self.assertResultIsBOOL(GameController.GCExtendedGamepadSnapShotDataV100FromNSData)
-            self.assertArgIsOut(GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0)
+            self.assertResultIsBOOL(
+                GameController.GCExtendedGamepadSnapShotDataV100FromNSData
+            )
+            self.assertArgIsOut(
+                GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0
+            )
 
-            self.assertArgIsOut(GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0)
+            self.assertArgIsOut(
+                GameController.GCExtendedGamepadSnapShotDataV100FromNSData, 0
+            )
 
         @min_os_level("10.9")
         def test_structs(self):
-            self.assertEqual(GameController.GCExtendedGamepadSnapShotDataV100.__struct_pack__, 1)
+            self.assertEqual(
+                GameController.GCExtendedGamepadSnapShotDataV100.__struct_pack__, 1
+            )
 
             v = GameController.GCExtendedGamepadSnapShotDataV100()
             self.assertIsInstance(v.version, int)
@@ -48,10 +59,12 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(v.leftTrigger, float)
             self.assertIsInstance(v.rightTrigger, float)
 
-        @min_os_level("10.14")
-        def test_structs_10_14_4(self):
+        @min_os_level("10.14.1")
+        def test_structs_10_14_1(self):
             # XXX: Introduced in the 10.14.4 SDK
-            self.assertEqual(GameController.GCExtendedGamepadSnapshotData.__struct_pack__, 1)
+            self.assertEqual(
+                GameController.GCExtendedGamepadSnapshotData.__struct_pack__, 1
+            )
 
             v = GameController.GCExtendedGamepadSnapshotData()
             self.assertIsInstance(v.version, int)
@@ -71,15 +84,19 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(v.leftTrigger, float)
             self.assertIsInstance(v.rightTrigger, float)
 
+            self.assertEqual(v.supportsClickableThumbsticks, False)
             self.assertEqual(v.leftThumbstickButton, False)
             self.assertEqual(v.rightThumbstickButton, False)
 
-        @min_os_level('10.14.4')
+        @min_os_level("10.14.4")
         def test_functions_10_14_4(self):
             self.assertArgIsOut(GameController.GCExtendedGamepadSnapshotDataFromNSData, 0)
-            self.assertResultIsBOOL(GameController.GCExtendedGamepadSnapshotDataFromNSData)
+            self.assertResultIsBOOL(
+                GameController.GCExtendedGamepadSnapshotDataFromNSData
+            )
 
             self.assertArgIsIn(GameController.NSDataFromGCExtendedGamepadSnapshotData, 0)
+
 
 if __name__ == "__main__":
     main()

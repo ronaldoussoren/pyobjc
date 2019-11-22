@@ -13,7 +13,7 @@
 typedef struct {
     PyObject_HEAD
 
-    __strong id objc_object;
+        __strong id objc_object;
 #if Py_HAVE_LOCAL_LOOKUP
     PyObject* objc_dict;
 #endif /* Py_HAVE_LOCAL_LOOKUP */
@@ -24,7 +24,6 @@ typedef struct {
     PyObjCObject base;
     PyObjCMethodSignature* signature;
 } PyObjCBlockObject;
-
 
 extern PyObjCClassObject PyObjCObject_Type;
 #define PyObjCObject_Check(obj) PyObject_TypeCheck(obj, (PyTypeObject*)&PyObjCObject_Type)
@@ -37,11 +36,14 @@ void PyObjCObject_ClearObject(PyObject* object);
 void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
 PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
 #define PyObjCObject_GetFlags(object) (((PyObjCObject*)(object))->flags)
-#define PyObjCObject_IsClassic(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kCLASSIC)
+#define PyObjCObject_IsClassic(object)                                                   \
+    (PyObjCObject_GetFlags(object) & PyObjCObject_kCLASSIC)
 #define PyObjCObject_IsBlock(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kBLOCK)
-#define PyObjCObject_IsMagic(object) (PyObjCObject_GetFlags(object) & PyObjCObject_kMAGIC_COOKIE)
+#define PyObjCObject_IsMagic(object)                                                     \
+    (PyObjCObject_GetFlags(object) & PyObjCObject_kMAGIC_COOKIE)
 #define PyObjCObject_GetBlock(object) (((PyObjCBlockObject*)(object))->signature)
-#define PyObjCObject_SET_BLOCK(object, value) (((PyObjCBlockObject*)(object))->signature = (value))
+#define PyObjCObject_SET_BLOCK(object, value)                                            \
+    (((PyObjCBlockObject*)(object))->signature = (value))
 
 PyObject* PyObjCObject_GetAttr(PyObject* object, PyObject* key);
 PyObject* PyObjCObject_GetAttrString(PyObject* object, char* key);

@@ -2,16 +2,17 @@ from Quartz import *
 from PyObjCTools.TestSupport import *
 
 
-class TestIKCameraDeviceView (TestCase):
-    @min_os_level('10.6')
+class TestIKCameraDeviceView(TestCase):
+    @min_os_level("10.6")
     def testConstants10_6(self):
+        self.assertEqual(IKCameraDeviceViewDisplayModeNone, -1)
         self.assertEqual(IKCameraDeviceViewDisplayModeTable, 0)
         self.assertEqual(IKCameraDeviceViewDisplayModeIcon, 1)
 
         self.assertEqual(IKCameraDeviceViewTransferModeFileBased, 0)
         self.assertEqual(IKCameraDeviceViewTransferModeMemoryBased, 1)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(IKCameraDeviceView.hasDisplayModeTable)
         self.assertArgIsBOOL(IKCameraDeviceView.setHasDisplayModeTable_, 0)
@@ -23,7 +24,9 @@ class TestIKCameraDeviceView (TestCase):
         self.assertArgIsBOOL(IKCameraDeviceView.setDisplaysDownloadsDirectoryControl_, 0)
 
         self.assertResultIsBOOL(IKCameraDeviceView.displaysPostProcessApplicationControl)
-        self.assertArgIsBOOL(IKCameraDeviceView.setDisplaysPostProcessApplicationControl_, 0)
+        self.assertArgIsBOOL(
+            IKCameraDeviceView.setDisplaysPostProcessApplicationControl_, 0
+        )
 
         self.assertResultIsBOOL(IKCameraDeviceView.canRotateSelectedItemsLeft)
         self.assertResultIsBOOL(IKCameraDeviceView.canRotateSelectedItemsRight)
@@ -31,11 +34,12 @@ class TestIKCameraDeviceView (TestCase):
         self.assertResultIsBOOL(IKCameraDeviceView.canDownloadSelectedItems)
 
         self.assertArgIsBOOL(IKCameraDeviceView.selectIndexes_byExtendingSelection_, 1)
-    
-    @min_sdk_level('10.10')
+
+    @min_sdk_level("10.10")
     def testProtocols(self):
-	# XXX: Require minimal deployment target of 10.6
-        objc.protocolNamed('IKCameraDeviceViewDelegate')
+        # XXX: Require minimal deployment target of 10.6
+        objc.protocolNamed("IKCameraDeviceViewDelegate")
+
 
 if __name__ == "__main__":
     main()

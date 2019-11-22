@@ -3,17 +3,20 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 
-class TestAVCaptureDevice (TestCase):
-
+class TestAVCaptureDevice(TestCase):
     @expectedFailure
     def testMissingConstants(self):
         # Present in header files, but not actually exposed
         self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants(self):
-        self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureDeviceWasDisconnectedNotification, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVCaptureDeviceWasConnectedNotification, unicode
+        )
+        self.assertIsInstance(
+            AVFoundation.AVCaptureDeviceWasDisconnectedNotification, unicode
+        )
 
         self.assertEqual(AVFoundation.AVCaptureDevicePositionUnspecified, 0)
         self.assertEqual(AVFoundation.AVCaptureDevicePositionBack, 1)
@@ -27,7 +30,6 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVCaptureTorchModeOn, 1)
         self.assertEqual(AVFoundation.AVCaptureTorchModeAuto, 2)
 
-
         self.assertEqual(AVFoundation.AVCaptureFocusModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureFocusModeAutoFocus, 1)
         self.assertEqual(AVFoundation.AVCaptureFocusModeContinuousAutoFocus, 2)
@@ -39,10 +41,13 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVCaptureExposureModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureExposureModeAutoExpose, 1)
         self.assertEqual(AVFoundation.AVCaptureExposureModeContinuousAutoExposure, 2)
+        self.assertEqual(AVFoundation.AVCaptureExposureModeCustom, 3)
 
         self.assertEqual(AVFoundation.AVCaptureWhiteBalanceModeLocked, 0)
         self.assertEqual(AVFoundation.AVCaptureWhiteBalanceModeAutoWhiteBalance, 1)
-        self.assertEqual(AVFoundation.AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance, 2)
+        self.assertEqual(
+            AVFoundation.AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance, 2
+        )
 
         self.assertEqual(AVFoundation.AVCaptureDeviceTransportControlsNotPlayingMode, 0)
         self.assertEqual(AVFoundation.AVCaptureDeviceTransportControlsPlayingMode, 1)
@@ -52,15 +57,26 @@ class TestAVCaptureDevice (TestCase):
         self.assertEqual(AVFoundation.AVAuthorizationStatusDenied, 2)
         self.assertEqual(AVFoundation.AVAuthorizationStatusAuthorized, 3)
 
+    @min_os_level("10.15")
+    def test_constants10_15(self):
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, unicode)
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, unicode
+        )
 
-    @min_os_level('10.7')
+        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
+
+    @min_os_level("10.7")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasMediaType_)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.lockForConfiguration_)
         self.assertArgIsOut(AVFoundation.AVCaptureDevice.lockForConfiguration_, 0)
 
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.supportsAVCaptureSessionPreset_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.supportsAVCaptureSessionPreset_
+        )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isConnected)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isInUseByAnotherApplication)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isSuspended)
@@ -69,18 +85,40 @@ class TestAVCaptureDevice (TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasTorch)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchModeSupported_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isFocusModeSupported_)
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isFocusPointOfInterestSupported)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isFocusPointOfInterestSupported
+        )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingFocus)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isExposureModeSupported_)
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isExposurePointOfInterestSupported)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isExposurePointOfInterestSupported
+        )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingExposure)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isWhiteBalanceModeSupported_)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.transportControlsSupported)
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testMethods10_14(self):
-        self.assertArgIsBlock(AVFoundation.AVCaptureDevice.requestAccessForMediaType_completionHandler_, 1, b'vZ')
+        self.assertArgIsBlock(
+            AVFoundation.AVCaptureDevice.requestAccessForMediaType_completionHandler_,
+            1,
+            b"vZ",
+        )
+
+    @min_os_level("10.15")
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isFlashAvailable)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchAvailable)
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isTorchActive)
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.setTorchModeOnWithLevel_error_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVCaptureDevice.setTorchModeOnWithLevel_error_, 1
+        )
+
 
 if __name__ == "__main__":
     main()

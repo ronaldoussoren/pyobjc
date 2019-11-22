@@ -3,14 +3,22 @@ from PyObjCTools.TestSupport import *
 import AVFoundation
 
 
-class TestAVSampleCursor (TestCase):
-    @min_os_level('10.10')
+class TestAVSampleCursor(TestCase):
+    @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertArgHasType(AVFoundation.AVSampleCursor.stepByDecodeTime_wasPinned_, 1, b'o^Z')
-        self.assertArgHasType(AVFoundation.AVSampleCursor.stepByPresentationTime_wasPinned_, 1, b'o^Z')
+        self.assertArgHasType(
+            AVFoundation.AVSampleCursor.stepByDecodeTime_wasPinned_, 1, b"o^Z"
+        )
+        self.assertArgHasType(
+            AVFoundation.AVSampleCursor.stepByPresentationTime_wasPinned_, 1, b"o^Z"
+        )
 
-        self.assertResultIsBOOL(AVFoundation.AVSampleCursor.samplesWithEarlierDecodeTimeStampsMayHaveLaterPresentationTimeStampsThanCursor_)
-        self.assertResultIsBOOL(AVFoundation.AVSampleCursor.samplesWithLaterDecodeTimeStampsMayHaveEarlierPresentationTimeStampsThanCursor_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVSampleCursor.samplesWithEarlierDecodeTimeStampsMayHaveLaterPresentationTimeStampsThanCursor_
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVSampleCursor.samplesWithLaterDecodeTimeStampsMayHaveEarlierPresentationTimeStampsThanCursor_
+        )
 
     def testStructs(self):
         v = AVFoundation.AVSampleCursorSyncInfo()
@@ -35,6 +43,11 @@ class TestAVSampleCursor (TestCase):
         self.assertIsInstance(v.chunkHasUniformSampleSizes, bool)
         self.assertIsInstance(v.chunkHasUniformSampleDurations, bool)
         self.assertIsInstance(v.chunkHasUniformFormatDescriptions, bool)
+
+        v = AVFoundation.AVSampleCursorAudioDependencyInfo()
+        self.assertIsInstance(v.audioSampleIsIndependentlyDecodable, bool)
+        self.assertIsInstance(v.audioSamplePacketRefreshCount, int)
+
 
 if __name__ == "__main__":
     main()

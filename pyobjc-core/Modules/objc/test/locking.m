@@ -11,17 +11,17 @@ typedef struct _Foo* FooHandle;
 typedef struct _Bar* BarHandle;
 
 @interface NSObject (OC_LockingTest)
--(void)setLocked:(NSObject*)value;
--(NSObject*)isLocked;
--(void)appendToList:(NSObject*)value;
+- (void)setLocked:(NSObject*)value;
+- (NSObject*)isLocked;
+- (void)appendToList:(NSObject*)value;
 @end
 
 @interface OC_LockTest : NSObject
--(void)threadFunc:(NSObject*)object;
+- (void)threadFunc:(NSObject*)object;
 @end
 
 @implementation OC_LockTest
--(void)threadFunc:(NSObject*)object
+- (void)threadFunc:(NSObject*)object
 {
     int i;
     for (i = 0; i < 6; i++) {
@@ -41,64 +41,30 @@ typedef struct _Bar* BarHandle;
 }
 @end
 
-
-static PyMethodDef mod_methods[] = {
-            { 0, 0, 0, 0 }
-};
-
-#if PY_VERSION_HEX >= 0x03000000
+static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 
 static struct PyModuleDef mod_module = {
-    PyModuleDef_HEAD_INIT,
-    "locking",
-    NULL,
-    0,
-    mod_methods,
-    NULL,
-    NULL,
-    NULL,
-    NULL
-};
-
-#define INITERROR() return NULL
-#define INITDONE() return m
+    PyModuleDef_HEAD_INIT, "locking", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit_locking(void);
 
-PyObject* __attribute__((__visibility__("default")))
-PyInit_locking(void)
-
-#else
-
-#define INITERROR() return
-#define INITDONE() return
-
-void initlocking(void);
-
-void __attribute__((__visibility__("default")))
-initlocking(void)
-#endif
+PyObject* __attribute__((__visibility__("default"))) PyInit_locking(void)
 {
     PyObject* m;
 
-#if PY_VERSION_HEX >= 0x03000000
     m = PyModule_Create(&mod_module);
-#else
-    m = Py_InitModule4("locking", mod_methods,
-        NULL, NULL, PYTHON_API_VERSION);
-#endif
     if (!m) {
-        INITERROR();
+        return NULL;
     }
 
     if (PyObjC_ImportAPI(m) < 0) {
-        INITERROR();
+        return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_LockTest",
-        PyObjC_IdToPython([OC_LockTest class])) < 0) {
-        INITERROR();
+    if (PyModule_AddObject(m, "OC_LockTest", PyObjC_IdToPython([OC_LockTest class])) <
+        0) {
+        return NULL;
     }
 
-    INITDONE();
+    return m;
 }

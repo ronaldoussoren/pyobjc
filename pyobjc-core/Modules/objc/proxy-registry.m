@@ -13,20 +13,17 @@ int PyObjC_weakref_proxy_registry = 0;
 int
 PyObjC_InitProxyRegistry(void)
 {
-    python_proxies = NSCreateMapTable(
-            PyObjCUtil_PointerKeyCallBacks,
-            PyObjCUtil_PointerValueCallBacks,
-            0);
+    python_proxies = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
+                                      PyObjCUtil_PointerValueCallBacks, 0);
 
     if (python_proxies == NULL) {
-        PyErr_SetString(PyExc_RuntimeError, "Cannot create NSMapTable for python_proxies");
+        PyErr_SetString(PyExc_RuntimeError,
+                        "Cannot create NSMapTable for python_proxies");
         return -1;
     }
 
-    objc_proxies = NSCreateMapTable(
-            PyObjCUtil_PointerKeyCallBacks,
-            PyObjCUtil_PointerValueCallBacks,
-            0);
+    objc_proxies = NSCreateMapTable(PyObjCUtil_PointerKeyCallBacks,
+                                    PyObjCUtil_PointerValueCallBacks, 0);
     if (objc_proxies == NULL) {
         PyErr_SetString(PyExc_RuntimeError, "Cannot create NSMapTable for objc_proxies");
         return -1;
@@ -53,7 +50,8 @@ PyObjC_UnregisterPythonProxy(id original, PyObject* proxy)
 {
     PyObject* v;
 
-    if (original == nil) return;
+    if (original == nil)
+        return;
 
     v = NSMapGet(python_proxies, original);
     if (v == proxy) {
@@ -66,7 +64,8 @@ PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
 {
     id v;
 
-    if (original == NULL) return;
+    if (original == NULL)
+        return;
 
     v = NSMapGet(objc_proxies, original);
     if (v == proxy) {

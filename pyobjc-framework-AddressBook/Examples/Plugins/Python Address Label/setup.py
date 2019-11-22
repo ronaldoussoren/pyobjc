@@ -22,15 +22,6 @@ setup(
     name="PyAddressLabel",
     plugin=["plugin.py"],
     data_files=[],
-    setup_request=[
-        "py2app",
-        "pyobjc-framework-AddressBook",
-        "pyobjc-framework-Cocoa",
-    ],
-    options=dict(
-        py2app=dict(
-            extension=".bundle",
-            plist=infoPlist,
-        )
-    ),
+    setup_request=["py2app", "pyobjc-framework-AddressBook", "pyobjc-framework-Cocoa"],
+    options=dict(py2app=dict(extension=".bundle", plist=infoPlist)),
 )

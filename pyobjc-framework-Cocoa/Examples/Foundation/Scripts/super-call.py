@@ -7,7 +7,8 @@ from Foundation import NSObject
 
 N = 1
 
-class MyObject (NSObject):
+
+class MyObject(NSObject):
     def init(self):
         global N
         if N == 1:

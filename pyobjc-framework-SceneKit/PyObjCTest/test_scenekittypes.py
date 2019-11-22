@@ -2,10 +2,10 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
+if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
     import SceneKit
 
-    class TestSceneKitTypes (TestCase):
+    class TestSceneKitTypes(TestCase):
         def testTypes(self):
             v = SceneKit.SCNVector3()
             self.assertIsInstance(v.x, float)
@@ -34,21 +34,20 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertEqual(SceneKit.SCNColorMaskGreen, 0x1 << 2)
             self.assertEqual(SceneKit.SCNColorMaskBlue, 0x1 << 1)
             self.assertEqual(SceneKit.SCNColorMaskAlpha, 0x1 << 0)
-            self.assertEqual(SceneKit.SCNColorMaskAll, 0xf)
+            self.assertEqual(SceneKit.SCNColorMaskAll, 0xF)
 
-
-        @expectedFailureIf(os_release().rsplit('.', 1)[0] == '10.10')
-        @min_os_level('10.10')
+        @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.10")
+        @min_os_level("10.10")
         def testConstantsFail10_10(self):
             self.assertIsInstance(SceneKit.SCNErrorDomain, unicode)
 
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         def testConstants10_10(self):
             self.assertIsInstance(SceneKit.SCNMatrix4Identity, SceneKit.SCNMatrix4)
             self.assertIsInstance(SceneKit.SCNVector3Zero, SceneKit.SCNVector3)
             self.assertIsInstance(SceneKit.SCNVector4Zero, SceneKit.SCNVector4)
 
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         def testFunctions(self):
             self.assertResultHasType(SceneKit.SCNVector3EqualToVector3, objc._C_BOOL)
             self.assertResultHasType(SceneKit.SCNVector4EqualToVector4, objc._C_BOOL)
@@ -82,9 +81,8 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
                 w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
                 self.assertIsInstance(w, SceneKit.SCNMatrix4)
             else:
-                self.assertFalse(hasattr(SceneKit, 'SCNMatrix4MakeTranslation'))
-                self.assertFalse(hasattr(SceneKit, 'SCNMatrix4MakeScale'))
-
+                self.assertFalse(hasattr(SceneKit, "SCNMatrix4MakeTranslation"))
+                self.assertFalse(hasattr(SceneKit, "SCNMatrix4MakeScale"))
 
         @expectedFailure
         def testFunctions_unsupported(self):
@@ -94,8 +92,7 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             SceneKit.SCNVector4FromGLKVector4
             SceneKit.SCNVector4ToGLKVector4
 
-
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         def testFunctions10_10(self):
             v = SceneKit.SCNMatrix4MakeRotation(1, 2, 3, 4)
             self.assertIsInstance(v, SceneKit.SCNMatrix4)
@@ -115,15 +112,20 @@ if os_level_key(os_release()) < os_level_key('10.12') or sys.maxsize >= 2**32:
             self.assertResultHasType(SceneKit.SCNMatrix4IsIdentity, objc._C_BOOL)
             self.assertResultHasType(SceneKit.SCNMatrix4EqualToMatrix4, objc._C_BOOL)
 
-        @min_os_level('10.10')
+        @min_os_level("10.10")
         @expectedFailure
         def testFunctions10_10_unsup(self):
             # vector types
             SceneKit.SCNMatrix4ToGLKMatrix4
             SceneKit.SCNMatrix4FromGLKMatrix4
 
-            self.assertTrue(SceneKit.GLKMatrix4FromCATransform3D is SCNMatrix4ToGLKMatrix4)
-            self.assertTrue(SceneKit.GLKMatrix4ToCATransform3D is SCNMatrix4FromGLKMatrix4)
+            self.assertTrue(
+                SceneKit.GLKMatrix4FromCATransform3D is SCNMatrix4ToGLKMatrix4
+            )
+            self.assertTrue(
+                SceneKit.GLKMatrix4ToCATransform3D is SCNMatrix4FromGLKMatrix4
+            )
+
 
 if __name__ == "__main__":
     main()

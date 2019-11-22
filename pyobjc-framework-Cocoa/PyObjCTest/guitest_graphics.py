@@ -16,6 +16,7 @@ class SimpleImage:
     Helper class that makes it easier to access individual pixels in
     a bitmap image
     """
+
     def __init__(self, image):
         data = image.TIFFRepresentation()
         bitmap = NSBitmapImageRep.imageRepWithData_(data)
@@ -25,7 +26,6 @@ class SimpleImage:
         self.rowbytes = bitmap.bytesPerRow()
         self.pixbytes = bitmap.bitsPerPixel() // 8
         self.rowCount = bitmap.pixelsHigh()
-
 
         if bitmap.isPlanar():
             raise ValueError("Planar image!")
@@ -44,40 +44,39 @@ class SimpleImage:
         pixelOffset = y * self.pixbytes
         offset = rowOffset + pixelOffset
 
-        pixel = self.data[offset:offset + self.pixbytes]
+        pixel = self.data[offset : offset + self.pixbytes]
         return pixel
 
-class RectTest (TestCase):
+
+class RectTest(TestCase):
     def setUp(self):
 
         # Force NSApp initialisation, needed for some of the tests
         NSApplication.sharedApplication().activateIgnoringOtherApps_(0)
 
-
-
         self.points = (
-            ((10,  0), ( 1,  1)),
-            ((10, 10), ( 1,  1)),
-            (( 0, 10), ( 1,  1)),
-            (( 0,  0), ( 1,  1)),
-            ((70, 70), (10, 10))
+            ((10, 0), (1, 1)),
+            ((10, 10), (1, 1)),
+            ((0, 10), (1, 1)),
+            ((0, 0), (1, 1)),
+            ((70, 70), (10, 10)),
         )
 
         self.image = NSImage.alloc().initWithSize_((100, 100))
 
     def makeArray(self, points):
         if sys.maxsize > 2 ** 32:
-            code = 'd'
+            code = "d"
         else:
-            code = 'f'
+            code = "f"
 
         a = array.array(code, len(points) * [0, 0, 0, 0])
         for i in range(len(points)):
             p = points[i]
-            a[(i*4) + 0] = p[0][0]
-            a[(i*4) + 1] = p[0][1]
-            a[(i*4) + 2] = p[1][0]
-            a[(i*4) + 3] = p[1][1]
+            a[(i * 4) + 0] = p[0][0]
+            a[(i * 4) + 1] = p[0][1]
+            a[(i * 4) + 2] = p[1][0]
+            a[(i * 4) + 3] = p[1][1]
 
         return a
 
@@ -92,18 +91,16 @@ class RectTest (TestCase):
         if img.bitmap.pixelsWide() != img.bitmap.size()[0]:
             raise unittest.SkipTest("Test doesn't work with retina")
 
-
-        allpoints = [ (x, y)
-                for x in range(img.width())
-                for y in range(img.height())
-        ]
+        allpoints = [(x, y) for x in range(img.width()) for y in range(img.height())]
 
         # Check black points
         if sys.version_info[0] == 2:
+
             def getPixel(img, x, y):
                 return img.getPixel(x, y)
 
         else:
+
             def getPixel(img, x, y):
                 value = img.getPixel(x, y)
                 return bytes(value)
@@ -111,23 +108,21 @@ class RectTest (TestCase):
         for ((x, y), (h, w)) in points:
             for ox in range(w):
                 for oy in range(h):
-                    allpoints.remove((x+ox, y+oy))
+                    allpoints.remove((x + ox, y + oy))
                     self.assertEqual(
-                        getPixel(img, x+ox, y+oy),
-                        b'\x00\x00\x00\xff',
-                        'Black pixel at %d,%d'%(x+ox, y+oy))
+                        getPixel(img, x + ox, y + oy),
+                        b"\x00\x00\x00\xff",
+                        "Black pixel at %d,%d" % (x + ox, y + oy),
+                    )
 
         # And white points
         for x, y in allpoints:
             self.assertEqual(
-                getPixel(img, x, y),
-                b'\x00\x00\x00\x00',
-                'White pixel at %d,%d'%(x, y))
-
+                getPixel(img, x, y), b"\x00\x00\x00\x00", "White pixel at %d,%d" % (x, y)
+            )
 
     def tearDown(self):
         pass
-
 
     def test_NSRectFillList_tuple(self):
         """

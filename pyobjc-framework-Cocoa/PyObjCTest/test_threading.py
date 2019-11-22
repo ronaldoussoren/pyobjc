@@ -7,13 +7,14 @@ from PyObjCTest.testhelper import PyObjC_TestClass4
 
 from Foundation import *
 
-class ThreadingTest (TestCase):
+
+class ThreadingTest(TestCase):
     def setUp(self):
         # Set a very small check interval, this will make it more likely
         # that the interpreter crashes when threading is done incorrectly.
         if sys.version_info[:2] >= (3, 2):
             self._int = sys.getswitchinterval()
-            sys.setswitchinterval(0.0000001)
+            sys.setswitchinterval(0.000_000_1)
         else:
             self._int = sys.getcheckinterval()
             sys.setcheckinterval(1)
@@ -25,11 +26,11 @@ class ThreadingTest (TestCase):
             sys.setcheckinterval(self._int)
 
     def testNSObjectString(self):
-
-        class PyObjCTestThreadRunnerString (NSObject):
+        class PyObjCTestThreadRunnerString(NSObject):
             def init(self):
                 self = objc.super(PyObjCTestThreadRunnerString, self).init()
-                if self is None: return None
+                if self is None:
+                    return None
 
                 self.storage = []
                 return self
@@ -41,14 +42,14 @@ class ThreadingTest (TestCase):
         myObj = PyObjCTestThreadRunnerString.alloc().init()
 
         NSThread.detachNewThreadSelector_toTarget_withObject_(
-                'run:', myObj, b"hello world".decode('ascii'))
+            "run:", myObj, b"hello world".decode("ascii")
+        )
 
         time.sleep(2)
-        self.assertEqual(myObj.storage[0], b"hello world".decode('ascii'))
+        self.assertEqual(myObj.storage[0], b"hello world".decode("ascii"))
 
     def testNSObject(self):
-
-        class PyObjCTestThreadRunner (NSObject):
+        class PyObjCTestThreadRunner(NSObject):
             def run_(self, argument):
                 NSAutoreleasePool.alloc().init()
                 for i in range(100):
@@ -57,12 +58,11 @@ class ThreadingTest (TestCase):
         myObj = PyObjCTestThreadRunner.alloc().init()
         lst = []
 
-        NSThread.detachNewThreadSelector_toTarget_withObject_(
-                'run:', myObj, lst)
+        NSThread.detachNewThreadSelector_toTarget_withObject_("run:", myObj, lst)
 
         lst2 = []
         for i in range(100):
-            lst2.append(i*2)
+            lst2.append(i * 2)
 
         time.sleep(2)
         self.assertEqual(lst, list(range(100)))
@@ -70,7 +70,7 @@ class ThreadingTest (TestCase):
     def testPyObject(self):
         import os
 
-        class TestThreadRunner :
+        class TestThreadRunner:
             def run_(self, argument):
                 for i in range(100):
                     argument.append(i)
@@ -81,17 +81,16 @@ class ThreadingTest (TestCase):
         # Redirect stderr to avoid spurious messages when running the
         # tests.
         dupped = os.dup(2)
-        fp = os.open('/dev/null', os.O_RDWR)
+        fp = os.open("/dev/null", os.O_RDWR)
         os.dup2(fp, 2)
         os.close(fp)
 
         try:
-            NSThread.detachNewThreadSelector_toTarget_withObject_(
-                'run:', myObj, lst)
+            NSThread.detachNewThreadSelector_toTarget_withObject_("run:", myObj, lst)
 
             lst2 = []
             for i in range(100):
-                lst2.append(i*2)
+                lst2.append(i * 2)
 
             time.sleep(2)
             self.assertEqual(lst, list(range(100)))
@@ -102,20 +101,21 @@ class ThreadingTest (TestCase):
     def testCalling(self):
         class Dummy:
             pass
-        class PyObjCTestCalling (NSObject) :
+
+        class PyObjCTestCalling(NSObject):
             def call(self):
                 return Dummy()
 
         my = PyObjC_TestClass4.alloc().init()
         cb = PyObjCTestCalling.alloc().init()
 
-        NSThread.detachNewThreadSelector_toTarget_withObject_(
-                'runThread:', my,  cb)
+        NSThread.detachNewThreadSelector_toTarget_withObject_("runThread:", my, cb)
 
         time.sleep(2)
 
         retval = my.returnObject()
         self.assertIsInstance(retval, Dummy)
+
 
 if __name__ == "__main__":
     main()

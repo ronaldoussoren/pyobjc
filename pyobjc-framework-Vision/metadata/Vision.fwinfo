@@ -1,6 +1,8 @@
 {
  "definitions": {
   "externs": {
+   "VNAnimalDetectorDog": { "typestr": "@" },
+   "VNAnimalDetectorCat": { "typestr": "@" },
    "VNVisionVersionNumber": { "typestr": "d" },
    "VNNormalizedIdentityRect": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" },
    "VNBarcodeSymbologyAztec": { "typestr": "@" },
@@ -24,6 +26,26 @@
    "VNImageOptionCameraIntrinsics": { "typestr": "@" }
   },
   "enum": {
+   "VNElementTypeUnknown": { "value": 0 },
+   "VNElementTypeFloat": { "value": 1 },
+   "VNElementTypeDouble": { "value": 2 },
+   "VNRecognizeAnimalsRequestRevision1": { "value": 1 },
+   "VNRecognizeTextRequestRevision1": { "value": 1 },
+   "VNTrackObjectRequestRevision2": { "value": 2 },
+   "VNRequestTextRecognitionLevelAccurate": { "value": 0 },
+   "VNRequestTextRecognitionLevelFast": { "value": 1 },
+   "VNGenerateObjectnessBasedSaliencyImageRequestRevision1": { "value": 1 },
+   "VNGenerateImageFeaturePrintRequestRevision1": { "value": 1 },
+   "VNGenerateAttentionBasedSaliencyImageRequestRevision1": { "value": 1 },
+   "VNErrorDataUnavailable": { "value": 17 },
+   "VNDetectHumanRectanglesRequestRevision1": { "value": 1 },
+   "VNRequestFaceLandmarksConstellationNotDefined": { "value": 0 },
+   "VNRequestFaceLandmarksConstellation65Points": { "value": 1 },
+   "VNRequestFaceLandmarksConstellation76Points": { "value": 2 },
+   "VNDetectFaceCaptureQualityRequestRevision1": { "value": 1 },
+   "VNDetectFaceQualityRequestRevision1": { "value": 1 },
+   "VNDetectAnimalRectanglesRequestRevision1": { "value": 1 },
+   "VNClassifyImageRequestRevision1": { "value": 1 },
    "VNTrackRectangleRequestRevision1": { "value": 1 },
    "VNTrackObjectRequestRevision1": { "value": 1 },
    "VNRequestRevisionUnspecified": { "value": 0 },
@@ -36,6 +58,7 @@
    "VNDetectFaceRectanglesRequestRevision2": { "value": 2 },
    "VNDetectFaceLandmarksRequestRevision1": { "value": 1 },
    "VNDetectFaceLandmarksRequestRevision2": { "value": 2 },
+   "VNDetectFaceLandmarksRequestRevision3": { "value": 3 },
    "VNCoreMLRequestRevision1": { "value": 1 },
    "VNDetectBarcodesRequestRevision1": { "value": 1 },
    "VNImageCropAndScaleOptionCenterCrop": { "value": 0 },
@@ -68,6 +91,127 @@
       "selector": "requestRevision",
       "class_method": false,
       "retval": { "type_override": "Q" }
+     },
+     {
+      "selector": "indeterminate",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "progressHandler",
+      "class_method": false,
+      "retval": {
+       "type_override": "@?",
+       "callable": {
+	"arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "d" },
+	 "3": { "typestr": "@" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setProgressHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "d" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
+   "VNRecognizeAnimalsRequest": {
+    "methods": [
+     {
+      "selector": "knownAnimalIdentifiersForRevision:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "VNFeaturePrintObservation": {
+    "methods": [
+     {
+      "selector": "computeDistance:toFeaturePrintObservation:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "VNRecognizeTextRequest": {
+    "methods": [
+     {
+      "selector": "supportedRecognitionLanguagesForTextRecognitionLevel:revision:error:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "usesLanguageCorrection",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setUsesLanguageCorrection:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "VNRecognizedText": {
+    "methods": [
+     {
+      "selector": "boundingBoxForRange:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "VNClassificationObservation": {
+    "methods": [
+     {
+      "selector": "hasMinimumRecall:forPrecision:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "hasMinimumPrecision:forRecall:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "VNClassifyImageRequest": {
+    "methods": [
+     {
+      "selector": "knownClassificationsForRevision:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
      }
     ]
    },
@@ -634,6 +778,15 @@
      }
     ]
    },
+   "VNDetectFaceLandmarksRequest": {
+    "methods": [
+     {
+      "selector": "revision:supportsConstellation:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "VNCoreMLRequest": {
     "methods": [
      {
@@ -672,6 +825,12 @@
    }
   },
   "functions": {
+   "VNElementTypeSize": {
+    "args": {
+     "0": { "type_override": "Q" }
+    },
+    "retval": { "type_override": "Q" }
+   },
    "VNNormalizedRectIsIdentityRect": {
     "args": {
      "0": { "typestr": "{CGRect={CGPoint=dd}{CGSize=dd}}" }

@@ -2,8 +2,9 @@ from PyObjCTools.TestSupport import *
 
 import Foundation
 
-class TestNSByteCountFormatter (TestCase):
-    @min_os_level('10.8')
+
+class TestNSByteCountFormatter(TestCase):
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertEqual(Foundation.NSByteCountFormatterUseDefault, 0)
         self.assertEqual(Foundation.NSByteCountFormatterUseBytes, 1 << 0)
@@ -21,10 +22,14 @@ class TestNSByteCountFormatter (TestCase):
         self.assertEqual(Foundation.NSByteCountFormatterCountStyleDecimal, 2)
         self.assertEqual(Foundation.NSByteCountFormatterCountStyleBinary, 3)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(Foundation.NSByteCountFormatter.allowsNonnumericFormatting)
-        self.assertArgIsBOOL(Foundation.NSByteCountFormatter.setAllowsNonnumericFormatting_, 0)
+        self.assertResultIsBOOL(
+            Foundation.NSByteCountFormatter.allowsNonnumericFormatting
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSByteCountFormatter.setAllowsNonnumericFormatting_, 0
+        )
 
         self.assertResultIsBOOL(Foundation.NSByteCountFormatter.includesUnit)
         self.assertArgIsBOOL(Foundation.NSByteCountFormatter.setIncludesUnit_, 0)
@@ -33,13 +38,18 @@ class TestNSByteCountFormatter (TestCase):
         self.assertArgIsBOOL(Foundation.NSByteCountFormatter.setIncludesCount_, 0)
 
         self.assertResultIsBOOL(Foundation.NSByteCountFormatter.includesActualByteCount)
-        self.assertArgIsBOOL(Foundation.NSByteCountFormatter.setIncludesActualByteCount_, 0)
+        self.assertArgIsBOOL(
+            Foundation.NSByteCountFormatter.setIncludesActualByteCount_, 0
+        )
 
         self.assertResultIsBOOL(Foundation.NSByteCountFormatter.isAdaptive)
         self.assertArgIsBOOL(Foundation.NSByteCountFormatter.setAdaptive_, 0)
 
         self.assertResultIsBOOL(Foundation.NSByteCountFormatter.zeroPadsFractionDigits)
-        self.assertArgIsBOOL(Foundation.NSByteCountFormatter.setZeroPadsFractionDigits_, 0)
+        self.assertArgIsBOOL(
+            Foundation.NSByteCountFormatter.setZeroPadsFractionDigits_, 0
+        )
+
 
 if __name__ == "__main__":
     main()

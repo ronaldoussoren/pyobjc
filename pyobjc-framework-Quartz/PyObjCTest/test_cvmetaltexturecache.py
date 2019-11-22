@@ -1,14 +1,13 @@
 from PyObjCTools.TestSupport import *
 from Quartz import *
 
-class TestCVMetalTextureCache (TestCase):
 
-    @min_os_level('10.11')
+class TestCVMetalTextureCache(TestCase):
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCVMetalTextureCacheMaximumTextureAgeKey, unicode)
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testFunctions10_11(self):
         self.assertIsInstance(CVMetalTextureCacheGetTypeID(), (int, long))
 

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import DiscRecording
 
-class TestDRCoreErrors (TestCase):
+
+class TestDRCoreErrors(TestCase):
     def testConstants(self):
         self.assertEqual(DiscRecording.kDRFirstErr, 0x80020000)
         self.assertEqual(DiscRecording.kDRInternalErr, DiscRecording.kDRFirstErr)
@@ -52,15 +53,18 @@ class TestDRCoreErrors (TestCase):
         self.assertIsInstance(DiscRecording.kDRErrorStatusErrorInfoStringKey, unicode)
         self.assertIsInstance(DiscRecording.kDRErrorStatusSenseKey, unicode)
         self.assertIsInstance(DiscRecording.kDRErrorStatusSenseCodeStringKey, unicode)
-        self.assertIsInstance(DiscRecording.kDRErrorStatusAdditionalSenseStringKey, unicode)
-
-
-
+        self.assertIsInstance(
+            DiscRecording.kDRErrorStatusAdditionalSenseStringKey, unicode
+        )
 
     def testFunctions(self):
-        self.assertResultIsCFRetained(DiscRecording.DRCopyLocalizedStringForDiscRecordingError)
+        self.assertResultIsCFRetained(
+            DiscRecording.DRCopyLocalizedStringForDiscRecordingError
+        )
         self.assertResultIsCFRetained(DiscRecording.DRCopyLocalizedStringForSenseCode)
-        self.assertResultIsCFRetained(DiscRecording.DRCopyLocalizedStringForAdditionalSense)
+        self.assertResultIsCFRetained(
+            DiscRecording.DRCopyLocalizedStringForAdditionalSense
+        )
 
 
 if __name__ == "__main__":

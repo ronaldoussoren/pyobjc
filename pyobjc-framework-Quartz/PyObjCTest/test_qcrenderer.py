@@ -1,17 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzComposer import *
 
-class TestQCRendererHelper (NSObject):
-    def setValue_forInputKey_(self, v, k): return 1
 
-class TestQCRenderer (TestCase):
+class TestQCRendererHelper(NSObject):
+    def setValue_forInputKey_(self, v, k):
+        return 1
+
+
+class TestQCRenderer(TestCase):
     def testConstants(self):
         self.assertIsInstance(QCRendererEventKey, unicode)
         self.assertIsInstance(QCRendererMouseLocationKey, unicode)
 
     def testProtocols(self):
-        objc.protocolNamed('QCCompositionRenderer')
+        objc.protocolNamed("QCCompositionRenderer")
 
     def testMethods(self):
         self.assertResultIsBOOL(TestQCRendererHelper.setValue_forInputKey_)

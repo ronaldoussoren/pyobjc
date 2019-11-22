@@ -4,7 +4,107 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "aliases": {
+   "NW_ALL_PATHS": { "alias": "_nw_data_transfer_report_all_paths" }
+  },
+  "enum": {
+   "NW_FRAMER_WAKEUP_TIME_FOREVER": { "value": 18446744073709551615 },
+   "NW_LISTENER_INFINITE_CONNECTION_LIMIT": { "value": 4294967295 }
+  },
   "functions": {
+   "nw_txt_record_create_dictionary": {
+    "retval": { "already_retained": true }
+   },
+   "nw_ws_response_add_additional_header": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "nw_ws_response_get_selected_subprotocol": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_ws_response_create": {
+    "retval": { "already_retained": true },
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "nw_establishment_report_copy_proxy_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_txt_record_remove_key": {
+    "args": {
+     "1": { "type_modifier": "n", "type_override": "^t", "c_array_delimited_by_null": true }
+    }
+   },
+   "nw_txt_record_set_key": {
+    "args": {
+     "1": { "type_modifier": "n", "type_override": "^t", "c_array_delimited_by_null": true },
+     "2": { "type_modifier": "n", "type_override": "^v", "c_array_length_in_arg": 3 }
+    }
+   },
+   "nw_ws_response_enumerate_additional_headers": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^t", "c_array_delimited_by_null": true },
+        "2": { "type": "n^t", "c_array_delimited_by_null": true }
+       }
+      }
+     }
+    }
+   },
+   "nw_txt_record_access_key": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^t", "c_array_delimited_by_null": true },
+        "2": { "type": "@" },
+        "3": { "type": "n^v", "c_array_length_in_arg": 4 },
+	"4": { "type": "L" }
+       }
+      }
+     }
+    }
+   },
+   "nw_txt_record_apply": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^t", "c_array_delimited_by_null": true },
+	"2": { "type": "@" },
+        "3": { "type": "n^v", "c_array_length_in_arg": 4 },
+	"4": { "type": "L" }
+       }
+      }
+     }
+    }
+   },
+   "nw_txt_record_access_bytes": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^v", "c_array_length_in_arg": 2 },
+	"2": { "type": "L" }
+       }
+      }
+     }
+    }
+   },
    "nw_advertise_descriptor_create_bonjour_service": {
     "args": {
      "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
@@ -20,8 +120,21 @@
      "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
     }
    },
+   "nw_connection_access_establishment_report": {
+    "args": {
+     "2": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
    "nw_connection_copy_description": {
-    "retval": {}
+    "retval": { "free_result": true, "c_array_delimited_by_null": true, "type_override": "^t" }
    },
    "nw_content_context_create": {
     "retval": { "already_retained": true },
@@ -64,6 +177,51 @@
    },
    "nw_tcp_create_options": {
     "retval": { "already_retained": true }
+   },
+   "nw_establishment_report_enumerate_protocols": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "Q" },
+        "3": { "type": "Q" }
+       }
+      }
+     }
+    }
+   },
+   "nw_establishment_report_enumerate_resolutions": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "Q" },
+        "3": { "type": "I" },
+        "4": { "type": "@" },
+        "5": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_path_enumerate_gateways": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
    },
    "nw_path_monitor_create_with_type": {
     "retval": { "already_retained": true }
@@ -179,6 +337,15 @@
     "free_result": true,
     "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
    },
+   "nw_browser_copy_parameters": {
+    "retval": { "already_retained": true }
+   },
+   "nw_browser_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_endpoint_create_url": {
+    "retval": { "already_retained": true }
+   },
    "nw_endpoint_create_address": {
     "retval": { "already_retained": true },
     "args": {
@@ -193,6 +360,330 @@
      "2": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
     }
    },
+   "nw_browser_set_browse_results_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" },
+        "3": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_browse_result_copy_txt_record_object": {
+    "retval": { "already_retained": true }
+   },
+   "nw_advertise_descriptor_copy_txt_record_object": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_set_output_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" },
+        "3": { "type": "L" },
+        "4": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_set_input_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "L" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_set_wakeup_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_set_stop_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_set_cleanup_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_parse_input": {
+    "args": {
+     "3": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 },
+     "4": {
+      "callable": {
+       "retval": { "type": "L" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 },
+	"2": { "type": "L" },
+	"3": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_async": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_parse_output": {
+    "args": {
+     "3": { "type_override": "^v", "type_modifier": "o", "c_array_length_in_arg": 2 },
+     "4": {
+      "callable": {
+       "retval": { "type": "L" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 },
+	"2": { "type": "L" },
+	"3": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_deliver_input": {
+    "args": {
+     "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "nw_framer_write_output": {
+    "args": {
+     "1": { "type_override": "^v", "type_modifier": "n", "c_array_length_in_arg": 2 }
+    }
+   },
+   "nw_framer_copy_remote_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_copy_local_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_copy_parameters": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_create_definition": {
+    "retval": { "already_retained": true },
+    "args": {
+     "2": {
+      "callable": {
+       "retval": { "type": "i" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_ws_metadata_copy_server_response": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_message_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_message_access_value": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^v" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_message_set_object_value": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "nw_framer_message_set_value": {
+    "args": {
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "2": { "type_override": "^v" },
+     "3": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "^v" }
+       }
+      }
+     }
+    }
+   },
+   "nw_framer_message_copy_object_value": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_protocol_create_message": {
+    "retval": { "already_retained": true }
+   },
+   "nw_ethernet_channel_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_browse_description_create_bonjour_service": {
+    "retval": { "already_retained": true }
+   },
+   "nw_protocol_copy_ws_definition": {
+    "retval": { "already_retained": true }
+   },
+   "nw_browse_description_create_bonjour_service": {
+    "retval": { "already_retained": true }
+   },
+   "nw_ws_create_options": {
+    "retval": { "already_retained": true }
+   },
+   "nw_framer_create_options": {
+    "retval": { "already_retained": true }
+   },
+   "nw_data_transfer_report_copy_path_interface": {
+    "retval": { "already_retained": true }
+   },
+   "nw_ws_options_set_client_request_handler": {
+    "args": {
+     "2": {
+      "callable": {
+       "retval": { "type": "@" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_data_transfer_report_collect": {
+    "args": {
+     "2": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_ws_metadata_set_pong_handler": {
+    "args": {
+     "2": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_ethernet_channel_set_receive_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "S" },
+        "3": { "type": "n[6t]" },
+        "4": { "type": "n[6t]" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_create_new_data_transfer_report": {
+    "retval": { "already_retained": true }
+   },
+   "nw_browse_descriptor_create_bonjour_service": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true },
+     "1": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
+   "nw_ws_create_metadata": {
+    "retval": { "already_retained": true }
+   },
+   "nw_txt_record_find_key": {
+    "args": {
+     "1": { "type_override": "^t", "c_array_delimited_by_null": 1, "type_modifier": "n" }
+    }
+   },
+   "nw_txt_record_create_with_bytes": {
+    "args": {
+     "0": { "type_override": "^v", "c_array_length_in_arg": 1, "type_modifier": "n" }
+    },
+    "retval": { "already_retained": true }
+   },
+   "nw_txt_record_copy": {
+    "retval": { "already_retained": true }
+   },
+   "nw_browse_result_copy_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_browser_copy_browse_descriptor": {
+    "retval": { "already_retained": true }
+   },
+   "nw_parameters_create_custom_ip": {
+    "retval": { "already_retained": true }
+   },
    "nw_endpoint_create_host": {
     "retval": { "already_retained": true },
     "args": {
@@ -200,10 +691,22 @@
      "1": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n" }
     }
    },
+   "nw_endpoint_get_url": {
+    "retval": { "c_array_delimited_by_null": true, "type_override": "^t" }
+   },
    "nw_endpoint_get_address": {
     "retval": {}
    },
    "nw_endpoint_get_bonjour_service_domain": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_endpoint_get_bonjour_service_type": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_browse_descriptor_get_bonjour_service_type": {
+    "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
+   },
+   "nw_browse_descriptor_get_bonjour_service_domain": {
     "retval": { "type_override": "^t", "c_array_delimited_by_null": true }
    },
    "nw_endpoint_get_bonjour_service_name": {
@@ -225,6 +728,33 @@
     "retval": { "already_retained": true },
     "args": {
      "0": { "type_override": "^t", "c_array_delimited_by_null": true, "type_modifier": "n"}
+    }
+   },
+   "nw_ws_request_enumerate_additional_headers": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^t", "c_array_delimited_by_null": true },
+        "2": { "type": "n^t", "c_array_delimited_by_null": true }
+       }
+      }
+     }
+    }
+   },
+   "nw_ws_request_enumerate_subprotocols": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "n^t", "c_array_delimited_by_null": true }
+       }
+      }
+     }
     }
    },
    "nw_connection_set_better_path_available_handler": {
@@ -305,6 +835,47 @@
      }
     }
    },
+   "nw_browser_set_state_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_ethernet_channel_send": {
+    "args": {
+     "4": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_ethernet_channel_set_state_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
    "nw_connection_set_state_changed_handler": {
     "args": {
      "1": {
@@ -328,6 +899,19 @@
         "0": { "type": "^v" },
         "1": { "type": "i" },
         "2": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_browse_result_enumerate_interfaces": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
        }
       }
      }

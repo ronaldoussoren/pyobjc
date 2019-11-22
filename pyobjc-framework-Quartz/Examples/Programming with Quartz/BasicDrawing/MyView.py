@@ -11,7 +11,8 @@ import FrameworkTextDrawing
 _drawingCommand = UIHandling.kHICommandSimpleRect
 _pdfDocument = None
 
-class MyView (Cocoa.NSView):
+
+class MyView(Cocoa.NSView):
     currentMenuItem = objc.IBOutlet()
 
     def initWithFrame_(self, frameRect):
@@ -23,18 +24,20 @@ class MyView (Cocoa.NSView):
         _pdfDocument = None
         return self
 
-
     if False:
+
         def isFlipped(self):
             return True
-
 
     def drawRect_(self, rect):
         context = Cocoa.NSGraphicsContext.currentContext().graphicsPort()
 
         if _pdfDocument is None:
-            if  _drawingCommand in (UIHandling.kHICommandDrawNSString,
-                    UIHandling.kHICommandDrawNSLayoutMgr, UIHandling.kHICommandDrawCustomNSLayoutMgr):
+            if _drawingCommand in (
+                UIHandling.kHICommandDrawNSString,
+                UIHandling.kHICommandDrawNSLayoutMgr,
+                UIHandling.kHICommandDrawCustomNSLayoutMgr,
+            ):
 
                 if _drawingCommand == UIHandling.kHICommandDrawNSString:
                     FrameworkTextDrawing.drawNSStringWithAttributes()
@@ -80,12 +83,13 @@ class MyView (Cocoa.NSView):
         # The best representation for printing or exporting
         # when the current command caches using a bitmap context
         # or a layer is to not do any caching.
-        if _drawingCommand in (UIHandling.kHICommandDrawOffScreenImage,
-                UIHandling.kHICommandDrawWithLayer):
+        if _drawingCommand in (
+            UIHandling.kHICommandDrawOffScreenImage,
+            UIHandling.kHICommandDrawWithLayer,
+        ):
             return UIHandling.kHICommandDrawNoOffScreenImage
 
         return _drawingCommand
-
 
     def print_(self, sender):
         global _drawingCommand
@@ -101,7 +105,6 @@ class MyView (Cocoa.NSView):
     def acceptsFirstResponder(self):
         return True
 
-
     @objc.IBAction
     def copy_(self, sender):
         addPDFDataToPasteBoard(_drawingCommand)
@@ -116,7 +119,6 @@ class MyView (Cocoa.NSView):
             # The view needs to be redisplayed since there is
             # a new PDF document.
             self.setNeedsDisplay_(True)
-
 
     # Return the number of pages available for printing. For this
     # application it is always 1.

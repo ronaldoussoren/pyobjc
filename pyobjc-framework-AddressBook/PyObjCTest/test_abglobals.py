@@ -1,26 +1,26 @@
-
 from PyObjCTools.TestSupport import *
 from AddressBook import *
 
-class TestABGlobals (TestCase):
-    @min_os_level('10.12')
+
+class TestABGlobals(TestCase):
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kABOrganizationPhoneticProperty, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(kABSocialProfileServiceTencentWeibo, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kABSocialProfileServiceYelp, unicode)
         self.assertIsInstance(kABAlternateBirthdayComponentsProperty, unicode)
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(kABSocialProfileServiceSinaWeibo, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(kABMobileMeLabel, unicode)
         self.assertIsInstance(kABBirthdayComponentsProperty, unicode)
@@ -49,17 +49,17 @@ class TestABGlobals (TestCase):
         self.assertIsInstance(kABSocialProfileServiceFlickr, unicode)
         self.assertIsInstance(kABSocialProfileServiceMySpace, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kABPhoneiPhoneLabel, unicode)
         self.assertEqual(kABShowAsResource, 2)
         self.assertEqual(kABShowAsRoom, 3)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(kABCalendarURIsProperty, unicode)
 
-    @expectedFailureIf(os_level_key(os_release()) < os_level_key('10.14'))
+    @expectedFailureIf(os_level_key(os_release()) < os_level_key("10.14"))
     def testConstants_10_7_broken(self):
         self.assertIsInstance(kABEmailMobileMeLabel, unicode)
         self.assertIsInstance(kABAIMMobileMeLabel, unicode)
@@ -72,7 +72,6 @@ class TestABGlobals (TestCase):
         self.assertEqual(kABDefaultNameOrdering, 0o0)
         self.assertEqual(kABFirstNameFirst, 0o40)
         self.assertEqual(kABLastNameFirst, 0o20)
-
 
         self.assertIsInstance(kABUIDProperty, unicode)
         self.assertIsInstance(kABCreationDateProperty, unicode)
@@ -159,6 +158,7 @@ class TestABGlobals (TestCase):
     def testFunctions(self):
         v = ABLocalizedPropertyOrLabel(kABAssistantLabel)
         self.assertIsInstance(v, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -1,10 +1,10 @@
 from PyObjCTools.TestSupport import *
 import sys
 
-if sys.maxsize >= 2**32:
+if sys.maxsize >= 2 ** 32:
     import Vision
 
-    class TestVNError (TestCase):
+    class TestVNError(TestCase):
         def testConstants(self):
             self.assertEqual(Vision.VNErrorOK, 0)
             self.assertEqual(Vision.VNErrorRequestCancelled, 1)
@@ -23,6 +23,7 @@ if sys.maxsize >= 2**32:
             self.assertEqual(Vision.VNErrorInvalidArgument, 14)
             self.assertEqual(Vision.VNErrorInvalidModel, 15)
             self.assertEqual(Vision.VNErrorUnsupportedRevision, 16)
+            self.assertEqual(Vision.VNErrorDataUnavailable, 17)
 
 
 if __name__ == "__main__":

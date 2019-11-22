@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import *
 from Foundation import *
 
 
-class TestNSHashTable (TestCase):
+class TestNSHashTable(TestCase):
     def testConvenience(self):
         v = NSHashTable.hashTableWithOptions_(NSPointerFunctionsObjectPersonality)
         self.assertEqual(len(v), 0)
@@ -29,9 +29,9 @@ class TestNSHashTable (TestCase):
         v.add(3)
 
         self.assertEqual(len(v), 3)
-        self.assertIn(v.pop(), {1,2,3})
-        self.assertIn(v.pop(), {1,2,3})
-        self.assertIn(v.pop(), {1,2,3})
+        self.assertIn(v.pop(), {1, 2, 3})
+        self.assertIn(v.pop(), {1, 2, 3})
+        self.assertIn(v.pop(), {1, 2, 3})
         self.assertEqual(len(v), 0)
 
         v.add(None)
@@ -45,14 +45,18 @@ class TestNSHashTable (TestCase):
         self.assertEqual(o, None)
         self.assertEqual(len(v), 0)
 
-
     def testConstants(self):
         self.assertEqual(NSHashTableStrongMemory, 0)
-        self.assertEqual(NSHashTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory)
+        self.assertEqual(
+            NSHashTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory
+        )
         self.assertEqual(NSHashTableCopyIn, NSPointerFunctionsCopyIn)
-        self.assertEqual(NSHashTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality)
+        self.assertEqual(
+            NSHashTableObjectPointerPersonality,
+            NSPointerFunctionsObjectPointerPersonality,
+        )
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants(self):
         self.assertEqual(NSHashTableWeakMemory, NSPointerFunctionsWeakMemory)
 
@@ -60,12 +64,12 @@ class TestNSHashTable (TestCase):
     def testFunctions(self):
         self.fail("NSHasTable functions")
 
-
     def testMethods(self):
         self.assertResultIsBOOL(NSHashTable.containsObject_)
         self.assertResultIsBOOL(NSHashTable.intersectsHashTable_)
         self.assertResultIsBOOL(NSHashTable.isEqualToHashTable_)
         self.assertResultIsBOOL(NSHashTable.isSubsetOfHashTable_)
+
 
 if __name__ == "__main__":
     main()

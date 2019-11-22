@@ -10,10 +10,9 @@
  * declarations we use instead of using the pymactoolbox.h
  * header file.
  */
-extern PyObject *WinObj_New(WindowPtr);
-extern int WinObj_Convert(PyObject *, WindowPtr *);
-extern PyObject *WinObj_WhichWindow(WindowPtr);
-
+extern PyObject* WinObj_New(WindowPtr);
+extern int WinObj_Convert(PyObject*, WindowPtr*);
+extern PyObject* WinObj_WhichWindow(WindowPtr);
 
 static int
 py2window(PyObject* obj, void* output)
@@ -29,11 +28,12 @@ window2py(void* value)
 
 #endif /* PY_MAJOR_VERSION == 2 */
 
-static int setup_carbon(PyObject* m __attribute__((__unused__)))
+static int
+setup_carbon(PyObject* m __attribute__((__unused__)))
 {
 #if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
-    if (PyObjCPointerWrapper_Register("WindowRef", @encode(WindowRef),
-                    &window2py, &py2window) < 0) {
+    if (PyObjCPointerWrapper_Register("WindowRef", @encode(WindowRef), &window2py,
+                                      &py2window) < 0) {
         return -1;
     }
 #endif

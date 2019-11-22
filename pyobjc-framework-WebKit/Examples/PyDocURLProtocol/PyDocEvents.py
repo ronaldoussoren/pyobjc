@@ -10,19 +10,20 @@ from Cocoa import NSObject, NSAppleEventManager
 import struct
 import objc
 
-def fourCharToInt(code):
-    return struct.unpack('>l', code)[0]
 
-class PyDocEventHandler (NSObject):
-    webview = objc.IBOutlet('webview')
-    urlfield = objc.IBOutlet('urlfield')
+def fourCharToInt(code):
+    return struct.unpack(">l", code)[0]
+
+
+class PyDocEventHandler(NSObject):
+    webview = objc.IBOutlet("webview")
+    urlfield = objc.IBOutlet("urlfield")
 
     def handleEvent_withReplyEvent_(self, event, replyEvent):
-        theURL = event.descriptorForKeyword_(fourCharToInt(b'----'))
+        theURL = event.descriptorForKeyword_(fourCharToInt(b"----"))
 
         self.urlfield.setStringValue_(theURL.stringValue())
         self.webview.takeStringURLFrom_(theURL)
-
 
     def awakeFromNib(self):
         manager = NSAppleEventManager.sharedAppleEventManager()
@@ -32,6 +33,8 @@ class PyDocEventHandler (NSObject):
         # but the system headers (and hence the Python wrapper for those)
         # are wrong.
         manager.setEventHandler_andSelector_forEventClass_andEventID_(
-            self, 'handleEvent:withReplyEvent:',
-                fourCharToInt(b'GURL'),
-                fourCharToInt(b'GURL'))
+            self,
+            "handleEvent:withReplyEvent:",
+            fourCharToInt(b"GURL"),
+            fourCharToInt(b"GURL"),
+        )

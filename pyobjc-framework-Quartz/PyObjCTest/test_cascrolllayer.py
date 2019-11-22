@@ -1,9 +1,9 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
 
-class TestCAScrollLayer (TestCase):
-    @min_os_level('10.5')
+
+class TestCAScrollLayer(TestCase):
+    @min_os_level("10.5")
     def testConstants(self):
         self.assertIsInstance(kCAScrollNone, unicode)
         self.assertIsInstance(kCAScrollVertically, unicode)

@@ -5,12 +5,13 @@ from __future__ import unicode_literals, absolute_import
 from PyObjCTest.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
 import objc
 
-NSObject = objc.lookUpClass('NSObject')
+NSObject = objc.lookUpClass("NSObject")
 
-DirectString = 'Direct String'
-IndirectString = 'Indirect String'
+DirectString = "Direct String"
+IndirectString = "Indirect String"
 DirectNumber = 42
 IndirectNumber = 84
+
 
 class KVPyBase:
     def __init__(self):
@@ -31,6 +32,7 @@ class KVPyBase:
     def setIndirectNumber(self, aNumber):
         self._indirectNumber = aNumber
 
+
 class KVPyPath:
     def __init__(self):
         self.directHead = KVPyBase()
@@ -42,13 +44,16 @@ class KVPyPath:
     def setIndirectHead(self, aHead):
         self._indirectHead = aHead
 
-class KVPySubObjCBase (PyObjCTest_KVBaseClass):
+
+class KVPySubObjCBase(PyObjCTest_KVBaseClass):
     pass
 
-class KVPySubObjCPath (PyObjCTest_KVPathClass):
+
+class KVPySubObjCPath(PyObjCTest_KVPathClass):
     pass
 
-class KVPySubOverObjCBase (PyObjCTest_KVBaseClass):
+
+class KVPySubOverObjCBase(PyObjCTest_KVBaseClass):
     def init(self):
         self = objc.super(KVPySubOverObjCBase, self).init()
         if not self:
@@ -64,6 +69,7 @@ class KVPySubOverObjCBase (PyObjCTest_KVBaseClass):
     def setOverIndirectString_(self, aString):
         self._overIndirectString = aString
 
+
 class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
     def init(self):
         self = objc.super(KVPySubOverObjCPath, self).init()
@@ -77,7 +83,8 @@ class KVPySubOverObjCPath(PyObjCTest_KVPathClass):
     def setOverIndirectHead_(self, aHead):
         self._overIndirectHead = aHead
 
-class PyObjCTestObserver (NSObject):
+
+class PyObjCTestObserver(NSObject):
     def init(self):
         self = objc.super(PyObjCTestObserver, self).init()
         if self is not None:
@@ -85,8 +92,10 @@ class PyObjCTestObserver (NSObject):
             self.willChange = []
         return self
 
-    def observeValueForKeyPath_ofObject_change_context_(self, keyPath, obj, change, context):
-        self.observed.append( (keyPath, obj, change, context) )
+    def observeValueForKeyPath_ofObject_change_context_(
+        self, keyPath, obj, change, context
+    ):
+        self.observed.append((keyPath, obj, change, context))
 
     def willChangeValueForKey_(self, key):
         try:

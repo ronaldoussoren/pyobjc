@@ -1,11 +1,12 @@
-'''
+"""
 Some simple tests to check that the framework is properly wrapped.
-'''
+"""
 import objc
 import unittest
 import QuartzComposer
 
-class TestQuartzComposer (unittest.TestCase):
+
+class TestQuartzComposer(unittest.TestCase):
     def testClasses(self):
         pass
         # self.assert_( hasattr(QuartzComposer, 'CLASSNAME') )
@@ -68,7 +69,6 @@ class TestQuartzComposer (unittest.TestCase):
         # self.assert_( hasattr(QuartzComposer, 'STRUCT') )
         # o = QuartzComposer.STRUCT()
         # self.assert_( hasattr(o, 'FIELD_NAME') )
-
 
 
 if __name__ == "__main__":

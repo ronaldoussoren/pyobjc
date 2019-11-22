@@ -2,15 +2,17 @@ from Foundation import *
 from PyObjCTools.TestSupport import *
 import Foundation
 
-class TestHelper (NSObject):
+
+class TestHelper(NSObject):
     def incFoo_(self, foo):
         foo[0] += 1
+
 
 class TestNSUndoManager(TestCase):
     def testUndoManager(self):
         x = TestHelper.new()
         m = NSUndoManager.new()
-        l = [ 0 ]
+        l = [0]
 
         m.prepareWithInvocationTarget_(x).incFoo_(l)
         m.undo()
@@ -19,6 +21,7 @@ class TestNSUndoManager(TestCase):
 
     def __del__(self, objc=objc):
         objc.recycleAutoreleasePool()
+
 
 ## Undo Integer test
 ## From David Eppstein
@@ -29,14 +32,15 @@ class TestNSUndoManager(TestCase):
 # NSTableView.editColumn_row_withEvent_select_
 # but that involves setting up a UI; instead use NSIndexSpecifier
 
-if hasattr(Foundation, 'NSIndexSpecifier'):
+if hasattr(Foundation, "NSIndexSpecifier"):
+
     class TestUndoInt(TestCase):
         class UndoInt(NSObject):
             undo = NSUndoManager.alloc().init()
             idx = NSIndexSpecifier.alloc().init()
             idx.setIndex_(0)
 
-            def test_(self,i):
+            def test_(self, i):
                 self.undo.prepareWithInvocationTarget_(self).test_(self.idx.index())
                 self.idx.setIndex_(i)
 
@@ -44,9 +48,11 @@ if hasattr(Foundation, 'NSIndexSpecifier'):
             # test that undo works
             x = TestUndoInt.UndoInt.alloc().init()
             x.test_(3)
-            assert(x.idx.index() == 3)
+            assert x.idx.index() == 3
             x.undo.undo()
-            assert(x.idx.index() == 0)
+            assert x.idx.index() == 0
+
+
 ## end Undo Integer test
 
 
@@ -54,12 +60,12 @@ class TestSubclassingUndo(TestCase):
     # Bugreport: 678759 Subclassing NSUndoManager fails
 
     def testSubclass(self):
-        class UndoSubclass (NSUndoManager):
+        class UndoSubclass(NSUndoManager):
             pass
 
         x = TestHelper.new()
         m = UndoSubclass.new()
-        l = [ 0 ]
+        l = [0]
 
         m.prepareWithInvocationTarget_(x).incFoo_(l)
         m.undo()
@@ -74,9 +80,9 @@ class TestSubclassingUndo(TestCase):
         self.assertIsInstance(NSUndoManagerDidRedoChangeNotification, unicode)
         self.assertIsInstance(NSUndoManagerDidOpenUndoGroupNotification, unicode)
         self.assertIsInstance(NSUndoManagerWillCloseUndoGroupNotification, unicode)
-        self.assertEqual(NSUndoCloseGroupingRunLoopOrdering, 350000)
+        self.assertEqual(NSUndoCloseGroupingRunLoopOrdering, 350_000)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(NSUndoManagerGroupIsDiscardableKey, unicode)
         self.assertIsInstance(NSUndoManagerDidCloseUndoGroupNotification, unicode)
@@ -89,18 +95,20 @@ class TestSubclassingUndo(TestCase):
         self.assertResultIsBOOL(NSUndoManager.canRedo)
         self.assertResultIsBOOL(NSUndoManager.isUndoing)
         self.assertResultIsBOOL(NSUndoManager.isRedoing)
-        self.assertArgIsSEL(NSUndoManager.registerUndoWithTarget_selector_object_, 1, b'v@:@')
+        self.assertArgIsSEL(
+            NSUndoManager.registerUndoWithTarget_selector_object_, 1, b"v@:@"
+        )
 
-
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertArgIsBOOL(NSUndoManager.setActionIsDiscardable_, 0)
         self.assertResultIsBOOL(NSUndoManager.undoActionIsDiscardable)
         self.assertResultIsBOOL(NSUndoManager.redoActionIsDiscardable)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertArgIsBlock(NSUndoManager.registerUndoWithTarget_handler_, 1, b'v@')
+        self.assertArgIsBlock(NSUndoManager.registerUndoWithTarget_handler_, 1, b"v@")
 
-if __name__ == '__main__':
-    main( )
+
+if __name__ == "__main__":
+    main()

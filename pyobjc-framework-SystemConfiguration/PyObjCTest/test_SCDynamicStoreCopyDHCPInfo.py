@@ -4,7 +4,8 @@ from SystemConfiguration import *
 from Foundation import NSData, NSDate
 import os
 
-class TestSCDynamicStoreCopyDHCPInfo (TestCase):
+
+class TestSCDynamicStoreCopyDHCPInfo(TestCase):
     def testFunctions(self):
         def callback(st, keys, info):
             pass
@@ -29,18 +30,19 @@ class TestSCDynamicStoreCopyDHCPInfo (TestCase):
         else:
             self.assertIsInstance(info, CFDictionaryRef)
 
-            r = DHCPInfoGetOptionData(info,  1)
+            r = DHCPInfoGetOptionData(info, 1)
             self.assertTrue(r is None or isinstance(r, NSData))
 
             r = DHCPInfoGetLeaseStartTime(info)
             self.assertTrue(r is None or isinstance(r, NSDate))
 
-        if os_level_key(os_release()) >= os_level_key('10.8'):
+        if os_level_key(os_release()) >= os_level_key("10.8"):
             DHCPInfoGetLeaseExpirationTime
 
             if info:
                 r = DHCPInfoGetLeaseExpirationTime(info)
                 self.assertTrue(r is None or isinstance(r, NSDate))
+
 
 if __name__ == "__main__":
     main()

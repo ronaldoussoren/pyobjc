@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGRemoteOperation (TestCase):
+
+class TestCGRemoteOperation(TestCase):
     def testConstants(self):
         self.assertEqual(CGEventNoErr, kCGErrorSuccess)
 
@@ -21,21 +21,27 @@ class TestCGRemoteOperation (TestCase):
 
         self.assertEqual(kCGMouseDownEventMaskingDeadSwitchTimeout, 60.0)
 
-        self.assertEqual(kCGEventSupressionStateSupressionInterval, kCGEventSuppressionStateSuppressionInterval)
-        self.assertEqual(kCGEventSupressionStateRemoteMouseDrag, kCGEventSuppressionStateRemoteMouseDrag)
-        self.assertEqual(kCGNumberOfEventSupressionStates, kCGNumberOfEventSuppressionStates)
+        self.assertEqual(
+            kCGEventSupressionStateSupressionInterval,
+            kCGEventSuppressionStateSuppressionInterval,
+        )
+        self.assertEqual(
+            kCGEventSupressionStateRemoteMouseDrag,
+            kCGEventSuppressionStateRemoteMouseDrag,
+        )
+        self.assertEqual(
+            kCGNumberOfEventSupressionStates, kCGNumberOfEventSuppressionStates
+        )
 
     def testStructs(self):
         v = CGScreenUpdateMoveDelta()
-        self.assertTrue(hasattr(v, 'dX'))
-        self.assertTrue(hasattr(v, 'dY'))
-
-
-
+        self.assertTrue(hasattr(v, "dX"))
+        self.assertTrue(hasattr(v, "dY"))
 
     def testFunctions(self):
         myInfo = object()
         callcount = [0]
+
         def callbackRefresh(count, rects, info):
             self.assertTrue(info is myInfo)
             self.assertIsInstance(rects, tuple)
@@ -55,11 +61,11 @@ class TestCGRemoteOperation (TestCase):
         # time to investigate this.
         #
         CGWaitForScreenRefreshRects
-        #err, rects, count = CGWaitForScreenRefreshRects(None, None)
-        #self.assertEqual(err, 0)
-        #self.assertIsInstance(rects, tuple)
-        #self.assertIsInstance(count, (int, long))
-        #for i in rects:
+        # err, rects, count = CGWaitForScreenRefreshRects(None, None)
+        # self.assertEqual(err, 0)
+        # self.assertIsInstance(rects, tuple)
+        # self.assertIsInstance(count, (int, long))
+        # for i in rects:
         #    self.assertIsInstance(i, CGRect)
 
         v = CGCursorIsVisible()
@@ -89,21 +95,28 @@ class TestCGRemoteOperation (TestCase):
         v = CGEnableEventStateCombining(0)
         self.assertEqual(v, 0)
 
-        v  = CGSetLocalEventsFilterDuringSuppressionState(kCGEventFilterMaskPermitAllEvents, kCGEventSuppressionStateSuppressionInterval)
+        v = CGSetLocalEventsFilterDuringSuppressionState(
+            kCGEventFilterMaskPermitAllEvents, kCGEventSuppressionStateSuppressionInterval
+        )
         self.assertEqual(v, 0)
 
         v = CGAssociateMouseAndMouseCursorPosition(0)
         self.assertEqual(v, 0)
 
         # For some reason there are 2 NSMachPort classes on OSX 10.8
-        classes = tuple([cls for cls in objc.getClassList() if cls.__name__ == 'NSMachPort'])
+        classes = tuple(
+            [cls for cls in objc.getClassList() if cls.__name__ == "NSMachPort"]
+        )
 
         v = CGWindowServerCFMachPort()
         self.assertIsInstance(v, classes)
 
-        self.assertTrue(CGSetLocalEventsFilterDuringSupressionState is CGSetLocalEventsFilterDuringSuppressionState)
+        self.assertTrue(
+            CGSetLocalEventsFilterDuringSupressionState
+            is CGSetLocalEventsFilterDuringSuppressionState
+        )
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         self.assertResultIsCFRetained(CGWindowServerCreateServerPort)
 
@@ -115,6 +128,7 @@ class TestCGRemoteOperation (TestCase):
         self.fail("CGReleaseScreenRefreshRects")
         self.fail("CGWaitForScreenUpdateRects")
         self.fail("CGWaitForScreenRefreshRects")
+
 
 if __name__ == "__main__":
     main()

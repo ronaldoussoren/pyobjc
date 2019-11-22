@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 
 
-class TestUserNotification (TestCase):
+class TestUserNotification(TestCase):
     def testTypes(self):
         self.assertIsCFType(CFUserNotificationRef)
 
@@ -12,28 +12,33 @@ class TestUserNotification (TestCase):
 
     def testCreation(self):
         runloop_mode = kCFRunLoopDefaultMode
-        runloop_mode = b"pyobjctest.cfusernotificaton".decode('ascii')
+        runloop_mode = b"pyobjctest.cfusernotificaton".decode("ascii")
 
         rl = CFRunLoopGetCurrent()
 
         infoDict = {
-                kCFUserNotificationAlertHeaderKey: b"Alert Header".decode('ascii'),
-                kCFUserNotificationProgressIndicatorValueKey: True,
-                kCFUserNotificationDefaultButtonTitleKey: "Cancel"
+            kCFUserNotificationAlertHeaderKey: b"Alert Header".decode("ascii"),
+            kCFUserNotificationProgressIndicatorValueKey: True,
+            kCFUserNotificationDefaultButtonTitleKey: "Cancel",
         }
 
         self.assertArgIsOut(CFUserNotificationCreate, 3)
-        ref, error = CFUserNotificationCreate(None,
-                3.0, 0, None, infoDict)
-        self.assertEqual(error , 0 )
+        ref, error = CFUserNotificationCreate(None, 3.0, 0, None, infoDict)
+        self.assertEqual(error, 0)
         self.assertIsInstance(ref, CFUserNotificationRef)
         values = []
+
         @objc.callbackFor(CFUserNotificationCreateRunLoopSource)
         def callout(notification, flags):
             values.append((notification, flags))
             CFRunLoopStop(rl)
 
-        self.assertArgIsFunction(CFUserNotificationCreateRunLoopSource, 2, b'v^{__CFUserNotification=}' + objc._C_NSInteger, True)
+        self.assertArgIsFunction(
+            CFUserNotificationCreateRunLoopSource,
+            2,
+            b"v^{__CFUserNotification=}" + objc._C_NSInteger,
+            True,
+        )
         rls = CFUserNotificationCreateRunLoopSource(None, ref, callout, 1)
         self.assertIsInstance(rls, CFRunLoopSourceRef)
         CFRunLoopAddSource(rl, rls, runloop_mode)
@@ -55,45 +60,53 @@ class TestUserNotification (TestCase):
         if v is not None:
             self.assertIsInstance(v, CFDictionaryRef)
         error = CFUserNotificationUpdate(ref, 2.0, 0, infoDict)
-        self.assertEqual(error , 0)
+        self.assertEqual(error, 0)
         error = CFUserNotificationCancel(ref)
         self.assertEqual(error, 0)
 
-        v = CFUserNotificationGetResponseValue(ref, kCFUserNotificationTextFieldValuesKey, 0)
+        v = CFUserNotificationGetResponseValue(
+            ref, kCFUserNotificationTextFieldValuesKey, 0
+        )
         if v is not None:
             self.assertIsInstance(v, unicode)
 
     def testAlert(self):
-        err, flags = CFUserNotificationDisplayAlert(0.1, 0, None, None, None, "Header", "Message", "Cancel", None, None, None)
-        self.assertEqual(err , 0)
+        err, flags = CFUserNotificationDisplayAlert(
+            0.1, 0, None, None, None, "Header", "Message", "Cancel", None, None, None
+        )
+        self.assertEqual(err, 0)
         self.assertIsInstance(flags, (int, long))
-        err, flags = CFUserNotificationDisplayAlert(0.1, 0, None, None, None, "Header", "Message", "Cancel", "OK", "Rest", None)
-        self.assertEqual(err , 0)
+        err, flags = CFUserNotificationDisplayAlert(
+            0.1, 0, None, None, None, "Header", "Message", "Cancel", "OK", "Rest", None
+        )
+        self.assertEqual(err, 0)
         self.assertIsInstance(flags, (int, long))
 
     def testNotice(self):
-        err = CFUserNotificationDisplayNotice(0.1, 0, None, None, None, "Header", "Message", "Cancel")
-        self.assertEqual(err , 0)
+        err = CFUserNotificationDisplayNotice(
+            0.1, 0, None, None, None, "Header", "Message", "Cancel"
+        )
+        self.assertEqual(err, 0)
 
     def testInlines(self):
         flag = CFUserNotificationCheckBoxChecked(2)
-        self.assertEqual(flag , 1 << 10 )
+        self.assertEqual(flag, 1 << 10)
         flag = CFUserNotificationSecureTextField(2)
-        self.assertEqual(flag , 1 << 18 )
+        self.assertEqual(flag, 1 << 18)
         flag = CFUserNotificationPopUpSelection(2)
-        self.assertEqual(flag , 2 << 24 )
+        self.assertEqual(flag, 2 << 24)
 
     def testConstants(self):
-        self.assertEqual(kCFUserNotificationStopAlertLevel       , 0)
-        self.assertEqual(kCFUserNotificationNoteAlertLevel       , 1)
-        self.assertEqual(kCFUserNotificationCautionAlertLevel    , 2)
-        self.assertEqual(kCFUserNotificationPlainAlertLevel      , 3)
-        self.assertEqual(kCFUserNotificationDefaultResponse      , 0)
-        self.assertEqual(kCFUserNotificationAlternateResponse    , 1)
-        self.assertEqual(kCFUserNotificationOtherResponse        , 2)
-        self.assertEqual(kCFUserNotificationCancelResponse       , 3)
-        self.assertEqual(kCFUserNotificationNoDefaultButtonFlag  , (1 << 5))
-        self.assertEqual(kCFUserNotificationUseRadioButtonsFlag  , (1 << 6))
+        self.assertEqual(kCFUserNotificationStopAlertLevel, 0)
+        self.assertEqual(kCFUserNotificationNoteAlertLevel, 1)
+        self.assertEqual(kCFUserNotificationCautionAlertLevel, 2)
+        self.assertEqual(kCFUserNotificationPlainAlertLevel, 3)
+        self.assertEqual(kCFUserNotificationDefaultResponse, 0)
+        self.assertEqual(kCFUserNotificationAlternateResponse, 1)
+        self.assertEqual(kCFUserNotificationOtherResponse, 2)
+        self.assertEqual(kCFUserNotificationCancelResponse, 3)
+        self.assertEqual(kCFUserNotificationNoDefaultButtonFlag, (1 << 5))
+        self.assertEqual(kCFUserNotificationUseRadioButtonsFlag, (1 << 6))
         self.assertIsInstance(kCFUserNotificationIconURLKey, unicode)
         self.assertIsInstance(kCFUserNotificationSoundURLKey, unicode)
         self.assertIsInstance(kCFUserNotificationLocalizationURLKey, unicode)

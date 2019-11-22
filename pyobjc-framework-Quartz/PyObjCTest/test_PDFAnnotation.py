@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.PDFKit import *
 
-class TestPDFAnnotation (TestCase):
+
+class TestPDFAnnotation(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(PDFAnnotation.shouldDisplay)
         self.assertArgIsBOOL(PDFAnnotation.setShouldDisplay_, 0)
@@ -10,19 +10,36 @@ class TestPDFAnnotation (TestCase):
         self.assertArgIsBOOL(PDFAnnotation.setShouldPrint_, 0)
         self.assertResultIsBOOL(PDFAnnotation.hasAppearanceStream)
 
-    @min_os_level('10.12')
+        self.assertResultIsBOOL(PDFAnnotation.isMultiline)
+        self.assertArgIsBOOL(PDFAnnotation.setMultiline_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isPasswordField)
+        # self.assertArgIsBOOL(PDFAnnotation.setIsPasswordField_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.hasComb)
+        self.assertArgIsBOOL(PDFAnnotation.setComb_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.allowsToggleToOff)
+        self.assertArgIsBOOL(PDFAnnotation.setAllowsToggleToOff_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.radiosInUnison)
+        self.assertArgIsBOOL(PDFAnnotation.setRadiosInUnison_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isReadOnly)
+        self.assertArgIsBOOL(PDFAnnotation.setReadOnly_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isListChoice)
+        self.assertArgIsBOOL(PDFAnnotation.setListChoice_, 0)
+        self.assertResultIsBOOL(PDFAnnotation.isOpen)
+        self.assertArgIsBOOL(PDFAnnotation.setOpen_, 0)
+
+    @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(PDFAnnotation.setValue_forAnnotationKey_)
         self.assertResultIsBOOL(PDFAnnotation.setBoolean_forAnnotationKey_)
         self.assertArgIsBOOL(PDFAnnotation.setBoolean_forAnnotationKey_, 0)
         self.assertResultIsBOOL(PDFAnnotation.setRect_forAnnotationKey_)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(PDFAnnotation.isHighlighted)
         self.assertArgIsBOOL(PDFAnnotation.setHighlighted_, 0)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants(self):
         self.assertIsInstance(kPDFAnnotationKey_AppearanceDictionary, unicode)
         self.assertIsInstance(kPDFAnnotationKey_AppearanceState, unicode)
@@ -61,11 +78,10 @@ class TestPDFAnnotation (TestCase):
         self.assertIsInstance(kPDFAnnotationKey_WidgetTextLabelUI, unicode)
         self.assertIsInstance(kPDFAnnotationKey_WidgetValue, unicode)
 
-
         # Not present in most recent SDK:
-        #self.assertIsInstance(kPDFAnnotationKey_AppleExtras, unicode)
+        # self.assertIsInstance(kPDFAnnotationKey_AppleExtras, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(PDFAnnotationKeyAppearanceDictionary, unicode)
         self.assertIsInstance(PDFAnnotationKeyAppearanceState, unicode)

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import OSAKit
 
-class TestOSAScriptController (TestCase):
+
+class TestOSAScriptController(TestCase):
     def testConstants(self):
         self.assertEqual(OSAKit.OSAScriptStopped, 0)
         self.assertEqual(OSAKit.OSAScriptRunning, 1)
@@ -10,6 +11,7 @@ class TestOSAScriptController (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(OSAKit.OSAScriptController.isCompiling)
+
 
 if __name__ == "__main__":
     main()

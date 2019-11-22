@@ -1,9 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 
-class TestCGPDFDictionary (TestCase):
 
+class TestCGPDFDictionary(TestCase):
     def testTypes(self):
         self.assertIsOpaquePointer(CGPDFDictionaryRef)
 
@@ -23,15 +22,16 @@ class TestCGPDFDictionary (TestCase):
         self.assertIsPDFGetter(CGPDFDictionaryGetDictionary)
         self.assertIsPDFGetter(CGPDFDictionaryGetStream)
 
-        #self.assertArgIsFunction(CGPDFDictionaryApplyFunction, 1, b"vn^t^{CGPDFObject=}^v", False)
+        # self.assertArgIsFunction(CGPDFDictionaryApplyFunction, 1, b"vn^t^{CGPDFObject=}^v", False)
         self.assertFalse(isinstance(CGPDFDictionaryApplyFunction, objc.function))
 
     def testFunctions(self):
         CGPDFDictionaryGetCount
 
-    @min_os_level('10.14')
+    @min_os_level("10.14")
     def testFunctions10_14(self):
         self.assertArgIsBlock(CGPDFDictionaryApplyBlock, 1, b"vn^t^{CGPDFObject=}^v")
+
 
 if __name__ == "__main__":
     main()

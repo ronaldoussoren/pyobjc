@@ -8,11 +8,19 @@ static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
 #if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1009
-    p = PyObjC_IdToPython(@protocol(MKAnnotation)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MKMapViewDelegate)); Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MKOverlay)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MKAnnotation));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MKMapViewDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MKOverlay));
+    Py_XDECREF(p);
 #endif /* defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1009 */
 #if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1012
-    p = PyObjC_IdToPython(@protocol(MKLocalSearchCompleterDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MKLocalSearchCompleterDelegate));
+    Py_XDECREF(p);
+#endif
+#if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1015
+    p = PyObjC_IdToPython(@protocol(MKGeoJSONObject));
+    Py_XDECREF(p);
 #endif
 }

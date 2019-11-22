@@ -4,7 +4,7 @@ if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CryptoTokenKit
 
-    class TestTKError (TestCase):
+    class TestTKError(TestCase):
         def testConstants(self):
             self.assertIsInstance(CryptoTokenKit.TKErrorDomain, unicode)
 

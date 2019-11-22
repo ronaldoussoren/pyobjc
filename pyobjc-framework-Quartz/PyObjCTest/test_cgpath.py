@@ -1,12 +1,12 @@
-
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 from Quartz import CoreGraphics
 
-class TestCGPath (TestCase):
+
+class TestCGPath(TestCase):
     def testTypes(self):
         self.assertIsCFType(CGPathRef)
-        self.assertFalse(hasattr(CoreGraphics, 'CGMutablePathRef'))
+        self.assertFalse(hasattr(CoreGraphics, "CGMutablePathRef"))
 
     def testFunctions(self):
         self.assertIsInstance(CGPathGetTypeID(), (int, long))
@@ -15,7 +15,7 @@ class TestCGPath (TestCase):
         path = CGPathCreateMutable()
         self.assertIsInstance(path, CGPathRef)
 
-        path = CGPathCreateWithRect(CGRectMake(1,2,3,4), CGAffineTransformIdentity)
+        path = CGPathCreateWithRect(CGRectMake(1, 2, 3, 4), CGAffineTransformIdentity)
         self.assertIsInstance(path, CGPathRef)
 
         self.assertResultIsCFRetained(CGPathCreateCopy)
@@ -54,14 +54,29 @@ class TestCGPath (TestCase):
 
         self.assertArgIsIn(CGPathAddRects, 1)
         self.assertArgIsIn(CGPathAddRects, 2)
-        CGPathAddRects(path, transform, [ CGRectMake(50, 60, 90, 10), CGRectMake(90, 50, 10, 10)], 2)
-        self.assertRaises(ValueError, CGPathAddRects, path, transform, [ CGRectMake(50, 60, 90, 10), CGRectMake(90, 50, 10, 10)], 3)
-
+        CGPathAddRects(
+            path, transform, [CGRectMake(50, 60, 90, 10), CGRectMake(90, 50, 10, 10)], 2
+        )
+        self.assertRaises(
+            ValueError,
+            CGPathAddRects,
+            path,
+            transform,
+            [CGRectMake(50, 60, 90, 10), CGRectMake(90, 50, 10, 10)],
+            3,
+        )
 
         self.assertArgIsIn(CGPathAddLines, 1)
         self.assertArgIsIn(CGPathAddLines, 2)
-        CGPathAddLines(path, transform, [ CGPoint(50, 60), CGPoint(90, 50)], 2)
-        self.assertRaises(ValueError, CGPathAddLines, path, transform, [ CGPoint(50, 60), CGPoint(90, 50)], 3)
+        CGPathAddLines(path, transform, [CGPoint(50, 60), CGPoint(90, 50)], 2)
+        self.assertRaises(
+            ValueError,
+            CGPathAddLines,
+            path,
+            transform,
+            [CGPoint(50, 60), CGPoint(90, 50)],
+            3,
+        )
 
         self.assertArgIsIn(CGPathAddEllipseInRect, 1)
         CGPathAddEllipseInRect(path, transform, CGRectMake(50, 60, 20, 20))
@@ -98,20 +113,19 @@ class TestCGPath (TestCase):
         self.assertResultHasType(CGPathContainsPoint, objc._C_BOOL)
         self.assertArgHasType(CGPathContainsPoint, 3, objc._C_BOOL)
         self.assertArgIsIn(CGPathContainsPoint, 1)
-        v = CGPathContainsPoint(path, transform, (
-            CGRectGetMidX(box),
-            CGRectGetMidY(box)), True)
+        v = CGPathContainsPoint(
+            path, transform, (CGRectGetMidX(box), CGRectGetMidY(box)), True
+        )
         self.assertTrue(v is True or v is False)
 
-        v = CGPathContainsPoint(path, transform, (
-            box.origin.x - 1,
-            box.origin.y - 1), True)
+        v = CGPathContainsPoint(
+            path, transform, (box.origin.x - 1, box.origin.y - 1), True
+        )
         self.assertTrue(v is False)
-
-
 
         l = [0]
         info = object()
+
         def applier(ctx, element):
             l[0] += 1
             self.assertTrue(ctx is info)
@@ -123,7 +137,7 @@ class TestCGPath (TestCase):
         CGPathApply(path, info, applier)
         self.assertNotEqual(l[0], 0)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions10_6(self):
         path = CGPathCreateMutable()
         self.assertIsInstance(path, CGPathRef)
@@ -135,7 +149,7 @@ class TestCGPath (TestCase):
         r = CGPathGetPathBoundingBox(path)
         self.assertIsInstance(r, CGRect)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testFunctions10_7(self):
         path = CGPathCreateMutable()
         self.assertIsInstance(path, CGPathRef)
@@ -153,7 +167,9 @@ class TestCGPath (TestCase):
         self.assertIsInstance(path3, CGPathRef)
 
         self.assertResultIsCFRetained(CGPathCreateWithEllipseInRect)
-        path = CGPathCreateWithEllipseInRect(CGRect(CGPoint(0, 0), CGSize(10, 20)), transform)
+        path = CGPathCreateWithEllipseInRect(
+            CGRect(CGPoint(0, 0), CGSize(10, 20)), transform
+        )
         self.assertIsInstance(path, CGPathRef)
 
         self.assertResultIsCFRetained(CGPathCreateCopyByDashingPath)
@@ -162,7 +178,9 @@ class TestCGPath (TestCase):
         self.assertIsInstance(path2, CGPathRef)
 
         self.assertResultIsCFRetained(CGPathCreateCopyByStrokingPath)
-        path2 = CGPathCreateCopyByStrokingPath(path, transform, 4, kCGLineCapButt, kCGLineJoinRound, 1.0)
+        path2 = CGPathCreateCopyByStrokingPath(
+            path, transform, 4, kCGLineCapButt, kCGLineJoinRound, 1.0
+        )
         self.assertIsInstance(path2, CGPathRef)
 
         path = CGPathCreateMutable()
@@ -172,7 +190,7 @@ class TestCGPath (TestCase):
         CGPathMoveToPoint(path, transform, 10, 30)
         CGPathAddRelativeArc(path, transform, 80, 90, 22.5, 33.0, 5.0)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
 
         path = CGPathCreateMutable()
@@ -185,7 +203,6 @@ class TestCGPath (TestCase):
         self.assertIsInstance(v, CGPathRef)
 
         CGPathAddRoundedRect(path, transform, CGRectMake(100, 200, 300, 400), 2, 3)
-
 
     def testConstants(self):
         self.assertEqual(kCGLineJoinMiter, 0)
@@ -204,10 +221,8 @@ class TestCGPath (TestCase):
 
     def testStructs(self):
         v = CGPathElement()
-        self.assertTrue(hasattr(CGPathElement, 'type'))
-        self.assertTrue(hasattr(CGPathElement, 'points'))
-
-
+        self.assertTrue(hasattr(CGPathElement, "type"))
+        self.assertTrue(hasattr(CGPathElement, "points"))
 
 
 if __name__ == "__main__":

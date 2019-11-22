@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import *
 if sys.maxsize > 2 ** 32:
     import MapKit
 
-    class TestMKGeometry (TestCase):
+    class TestMKGeometry(TestCase):
         @min_os_level("10.9")
         def testStructs(self):
             s = MapKit.MKCoordinateSpan()
@@ -42,12 +42,16 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(c.latitudeDelta, 0.5)
             self.assertEqual(c.longitudeDelta, 2.5)
 
-            c = MapKit.MKCoordinateRegionMake(MapKit.CLLocationCoordinate2D(), MapKit.MKCoordinateSpan())
+            c = MapKit.MKCoordinateRegionMake(
+                MapKit.CLLocationCoordinate2D(), MapKit.MKCoordinateSpan()
+            )
             self.assertIsInstance(c, MapKit.MKCoordinateRegion)
             self.assertIsInstance(c.center, MapKit.CLLocationCoordinate2D)
             self.assertIsInstance(c.span, MapKit.MKCoordinateSpan)
 
-            c = MapKit.MKCoordinateRegionMakeWithDistance(MapKit.CLLocationCoordinate2D(), 1000, 1500)
+            c = MapKit.MKCoordinateRegionMakeWithDistance(
+                MapKit.CLLocationCoordinate2D(), 1000, 1500
+            )
             self.assertIsInstance(c, MapKit.MKCoordinateRegion)
             self.assertIsInstance(c.center, MapKit.CLLocationCoordinate2D)
             self.assertIsInstance(c.span, MapKit.MKCoordinateSpan)
@@ -64,8 +68,12 @@ if sys.maxsize > 2 ** 32:
             self.assertArgHasType(MapKit.MKMapPointsPerMeterAtLatitude, 0, objc._C_DBL)
             self.assertResultHasType(MapKit.MKMapPointsPerMeterAtLatitude, objc._C_DBL)
 
-            self.assertArgHasType(MapKit.MKMetersBetweenMapPoints, 0, MapKit.MKMapPoint.__typestr__)
-            self.assertArgHasType(MapKit.MKMetersBetweenMapPoints, 1, MapKit.MKMapPoint.__typestr__)
+            self.assertArgHasType(
+                MapKit.MKMetersBetweenMapPoints, 0, MapKit.MKMapPoint.__typestr__
+            )
+            self.assertArgHasType(
+                MapKit.MKMetersBetweenMapPoints, 1, MapKit.MKMapPoint.__typestr__
+            )
             self.assertResultHasType(MapKit.MKMetersBetweenMapPoints, objc._C_DBL)
 
             c = MapKit.MKMapPointMake(1.5, 2.5)
@@ -92,18 +100,37 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKMapRectGetWidth(c), float)
             self.assertIsInstance(MapKit.MKMapRectGetHeight(c), float)
 
-            self.assertIsInstance(MapKit.MKMapPointEqualToPoint(MapKit.MKMapPoint(), MapKit.MKMapPoint()), bool)
-            self.assertIsInstance(MapKit.MKMapSizeEqualToSize(MapKit.MKMapSize(), MapKit.MKMapSize()), bool)
-            self.assertIsInstance(MapKit.MKMapRectEqualToRect(MapKit.MKMapRect(), MapKit.MKMapRect()), bool)
+            self.assertIsInstance(
+                MapKit.MKMapPointEqualToPoint(MapKit.MKMapPoint(), MapKit.MKMapPoint()),
+                bool,
+            )
+            self.assertIsInstance(
+                MapKit.MKMapSizeEqualToSize(MapKit.MKMapSize(), MapKit.MKMapSize()), bool
+            )
+            self.assertIsInstance(
+                MapKit.MKMapRectEqualToRect(MapKit.MKMapRect(), MapKit.MKMapRect()), bool
+            )
             self.assertIsInstance(MapKit.MKMapRectIsNull(MapKit.MKMapRect()), bool)
             self.assertIsInstance(MapKit.MKMapRectIsEmpty(MapKit.MKMapRect()), bool)
-            self.assertIsInstance(MapKit.MKStringFromMapPoint(MapKit.MKMapPoint()), unicode)
+            self.assertIsInstance(
+                MapKit.MKStringFromMapPoint(MapKit.MKMapPoint()), unicode
+            )
             self.assertIsInstance(MapKit.MKStringFromMapSize(MapKit.MKMapSize()), unicode)
             self.assertIsInstance(MapKit.MKStringFromMapRect(MapKit.MKMapRect()), unicode)
-            self.assertIsInstance(MapKit.MKMapRectUnion(MapKit.MKMapRect(), MapKit.MKMapRect()), MapKit.MKMapRect)
-            self.assertIsInstance(MapKit.MKMapRectIntersection(MapKit.MKMapRect(), MapKit.MKMapRect()), MapKit.MKMapRect)
-            self.assertIsInstance(MapKit.MKMapRectInset(MapKit.MKMapRect(), 0.0, 0.0), MapKit.MKMapRect)
-            self.assertIsInstance(MapKit.MKMapRectOffset(MapKit.MKMapRect(), 0.0, 0.0), MapKit.MKMapRect)
+            self.assertIsInstance(
+                MapKit.MKMapRectUnion(MapKit.MKMapRect(), MapKit.MKMapRect()),
+                MapKit.MKMapRect,
+            )
+            self.assertIsInstance(
+                MapKit.MKMapRectIntersection(MapKit.MKMapRect(), MapKit.MKMapRect()),
+                MapKit.MKMapRect,
+            )
+            self.assertIsInstance(
+                MapKit.MKMapRectInset(MapKit.MKMapRect(), 0.0, 0.0), MapKit.MKMapRect
+            )
+            self.assertIsInstance(
+                MapKit.MKMapRectOffset(MapKit.MKMapRect(), 0.0, 0.0), MapKit.MKMapRect
+            )
 
             self.assertArgIsOut(MapKit.MKMapRectDivide, 1)
             self.assertArgIsOut(MapKit.MKMapRectDivide, 2)
@@ -111,10 +138,11 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(MapKit.MKMapRectContainsRect)
             self.assertResultIsBOOL(MapKit.MKMapRectIntersectsRect)
 
-            MapKit.MKCoordinateRegionForMapRect # XXX: Nothing to test beyond existance
-            MapKit.MKMapRectRemainder # XXX: Nothing to test beyond existance
+            MapKit.MKCoordinateRegionForMapRect  # XXX: Nothing to test beyond existance
+            MapKit.MKMapRectRemainder  # XXX: Nothing to test beyond existance
 
             self.assertResultIsBOOL(MapKit.MKMapRectSpans180thMeridian)
+
 
 if __name__ == "__main__":
     main()

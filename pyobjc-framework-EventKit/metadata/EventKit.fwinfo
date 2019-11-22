@@ -123,6 +123,13 @@
      },
      {
       "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "saveEvent:span:error:"
+     },
+     {
+      "args": {
        "3": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -134,6 +141,13 @@
       },
       "class_method": false,
       "selector": "removeEvent:span:commit:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "removeEvent:span:error:"
      },
      {
       "args": {

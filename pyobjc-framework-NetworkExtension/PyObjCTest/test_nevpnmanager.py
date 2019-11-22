@@ -5,8 +5,8 @@ if sys.maxsize >= 2 ** 32:
 
     import NetworkExtension
 
-    class TestNEVPNConnection (TestCase):
-        @min_os_level('10.11')
+    class TestNEVPNConnection(TestCase):
+        @min_os_level("10.11")
         def testConstants(self):
             self.assertEqual(NetworkExtension.NEVPNErrorConfigurationInvalid, 1)
             self.assertEqual(NetworkExtension.NEVPNErrorConfigurationDisabled, 2)
@@ -16,13 +16,27 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEVPNErrorConfigurationUnknown, 6)
 
             self.assertIsInstance(NetworkExtension.NEVPNErrorDomain, unicode)
-            self.assertIsInstance(NetworkExtension.NEVPNConfigurationChangeNotification, unicode)
+            self.assertIsInstance(
+                NetworkExtension.NEVPNConfigurationChangeNotification, unicode
+            )
 
-        @min_os_level('10.11')
+        @min_os_level("10.11")
         def testMethods(self):
-            self.assertArgIsBlock(NetworkExtension.NEVPNManager.loadFromPreferencesWithCompletionHandler_, 0, b'v@')
-            self.assertArgIsBlock(NetworkExtension.NEVPNManager.removeFromPreferencesWithCompletionHandler_, 0, b'v@')
-            self.assertArgIsBlock(NetworkExtension.NEVPNManager.saveToPreferencesWithCompletionHandler_, 0, b'v@')
+            self.assertArgIsBlock(
+                NetworkExtension.NEVPNManager.loadFromPreferencesWithCompletionHandler_,
+                0,
+                b"v@",
+            )
+            self.assertArgIsBlock(
+                NetworkExtension.NEVPNManager.removeFromPreferencesWithCompletionHandler_,
+                0,
+                b"v@",
+            )
+            self.assertArgIsBlock(
+                NetworkExtension.NEVPNManager.saveToPreferencesWithCompletionHandler_,
+                0,
+                b"v@",
+            )
 
             self.assertResultIsBOOL(NetworkExtension.NEVPNManager.isOnDemandEnabled)
             self.assertArgIsBOOL(NetworkExtension.NEVPNManager.setOnDemandEnabled_, 0)

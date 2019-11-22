@@ -7,7 +7,8 @@ import math
 _drawingCommand = UIHandling.kCommandStrokedAndFilledRects
 _pdfDocument = None
 
-class MyView (Cocoa.NSView):
+
+class MyView(Cocoa.NSView):
     currentMenuItem = objc.IBOutlet()
 
     def drawRect_(self, rect):
@@ -25,7 +26,7 @@ class MyView (Cocoa.NSView):
             self.setNeedsDisplay_(True)
 
             self.currentMenuItem.setState_(Cocoa.NSOffState)
-            self.currentMenuItem = sender;
+            self.currentMenuItem = sender
             self.currentMenuItem.setState_(Cocoa.NSOnState)
 
     def currentPrintableCommand(self):

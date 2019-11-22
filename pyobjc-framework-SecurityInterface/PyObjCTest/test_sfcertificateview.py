@@ -2,12 +2,15 @@ from PyObjCTools.TestSupport import *
 
 import SecurityInterface
 
-class TestSFCertificateView (TestCase):
+
+class TestSFCertificateView(TestCase):
     @expectedFailure
     def test_constants(self):
         # Constant is not present on 10.12
-        self.assertHasAttr(SecurityInterface, 'SFCertificateViewDisclosureStateDidChange')
-        self.assertIsInstance(SecurityInterface.SFCertificateViewDisclosureStateDidChange, unicode)
+        self.assertHasAttr(SecurityInterface, "SFCertificateViewDisclosureStateDidChange")
+        self.assertIsInstance(
+            SecurityInterface.SFCertificateViewDisclosureStateDidChange, unicode
+        )
 
     def test_classes(self):
         SecurityInterface.SFCertificateView
@@ -23,6 +26,7 @@ class TestSFCertificateView (TestCase):
         self.assertResultIsBOOL(SecurityInterface.SFCertificateView.detailsDisclosed)
         self.assertArgIsBOOL(SecurityInterface.SFCertificateView.setPoliciesDisclosed_, 0)
         self.assertResultIsBOOL(SecurityInterface.SFCertificateView.policiesDisclosed)
+
 
 if __name__ == "__main__":
     main()

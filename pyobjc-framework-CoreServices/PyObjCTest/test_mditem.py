@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import CoreServices
 
-class TestMDImport (TestCase):
+
+class TestMDImport(TestCase):
     @expectedFailure
     def test_types(self):
         self.assertIsCFType(CoreServices.MDItemRef)
@@ -16,10 +17,9 @@ class TestMDImport (TestCase):
         self.assertResultIsCFRetained(CoreServices.MDItemCopyAttribute)
         self.assertResultIsCFRetained(CoreServices.MDItemCopyAttributes)
 
-
         self.assertResultIsCFRetained(CoreServices.MDItemCopyAttributeNames)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def test_functions10_10(self):
         # Documented on 10.9, but not available there
         self.assertResultIsCFRetained(CoreServices.MDItemsCopyAttributes)
@@ -149,7 +149,7 @@ class TestMDImport (TestCase):
         self.assertIsInstance(CoreServices.kMDItemMusicalInstrumentCategory, unicode)
         self.assertIsInstance(CoreServices.kMDItemMusicalInstrumentName, unicode)
 
-    @min_os_level('10.5')
+    @min_os_level("10.5")
     def test_constants10_5(self):
         self.assertIsInstance(CoreServices.kMDItemContentTypeTree, unicode)
         self.assertIsInstance(CoreServices.kMDItemEditors, unicode)
@@ -174,7 +174,7 @@ class TestMDImport (TestCase):
         self.assertIsInstance(CoreServices.kMDItemRecipientEmailAddresses, unicode)
         self.assertIsInstance(CoreServices.kMDItemURL, unicode)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def test_constants10_6(self):
         self.assertIsInstance(CoreServices.kMDItemParticipants, unicode)
         self.assertIsInstance(CoreServices.kMDItemPixelCount, unicode)
@@ -182,7 +182,7 @@ class TestMDImport (TestCase):
         self.assertIsInstance(CoreServices.kMDItemAuthorAddresses, unicode)
         self.assertIsInstance(CoreServices.kMDItemRecipientAddresses, unicode)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def test_constants10_7(self):
         self.assertIsInstance(CoreServices.kMDItemDownloadedDate, unicode)
         self.assertIsInstance(CoreServices.kMDItemDateAdded, unicode)
@@ -211,9 +211,10 @@ class TestMDImport (TestCase):
         self.assertIsInstance(CoreServices.kMDItemApplicationCategories, unicode)
         self.assertIsInstance(CoreServices.kMDItemIsApplicationManaged, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(CoreServices.kMDItemHTMLContent, unicode)
+
 
 if __name__ == "__main__":
     main()

@@ -24,9 +24,10 @@ def openFiles():
 
     return []
 
-#==============================================================================
+
+# ==============================================================================
 # This is the data source object.
-class myImageObject (Cocoa.NSObject):
+class myImageObject(Cocoa.NSObject):
     _path = objc.ivar()
 
     # -------------------------------------------------------------------------
@@ -63,12 +64,12 @@ class myImageObject (Cocoa.NSObject):
     def imageUID(self):
         return self._path
 
-class ImageBrowserController (Cocoa.NSWindowController):
+
+class ImageBrowserController(Cocoa.NSWindowController):
     imageBrowser = objc.IBOutlet()
 
     images = objc.ivar()
     importedImages = objc.ivar()
-
 
     # -------------------------------------------------------------------------
     #   awakeFromNib:
@@ -101,7 +102,6 @@ class ImageBrowserController (Cocoa.NSWindowController):
         # Reload the image browser, which triggers setNeedsDisplay.
         self.imageBrowser.reloadData()
 
-
     # -------------------------------------------------------------------------
     #   isImageFile:filePath
     #
@@ -114,22 +114,36 @@ class ImageBrowserController (Cocoa.NSWindowController):
         isImageFile = False
         uti = None
 
-        url = Cocoa.CFURLCreateWithFileSystemPath(None, filePath, Cocoa.kCFURLPOSIXPathStyle, False)
+        url = Cocoa.CFURLCreateWithFileSystemPath(
+            None, filePath, Cocoa.kCFURLPOSIXPathStyle, False
+        )
 
-        res, info =  LaunchServices.LSCopyItemInfoForURL(url, LaunchServices.kLSRequestExtension | LaunchServices.kLSRequestTypeCreator, None)
+        res, info = LaunchServices.LSCopyItemInfoForURL(
+            url,
+            LaunchServices.kLSRequestExtension | LaunchServices.kLSRequestTypeCreator,
+            None,
+        )
         if res == 0:
             # Obtain the UTI using the file information.
 
             # If there is a file extension, get the UTI.
             if info[3] != None:
-                uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(LaunchServices.kUTTagClassFilenameExtension, info[3], LaunchServices.kUTTypeData)
+                uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(
+                    LaunchServices.kUTTagClassFilenameExtension,
+                    info[3],
+                    LaunchServices.kUTTypeData,
+                )
 
             # No UTI yet
             if uti is None:
                 # If there is an OSType, get the UTI.
                 typeString = LaunchServices.UTCreateStringForOSType(info.filetype)
                 if typeString != None:
-                    uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(LaunchServices.kUTTagClassOSType, typeString, LaunchServices.kUTTypeData)
+                    uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(
+                        LaunchServices.kUTTagClassOSType,
+                        typeString,
+                        LaunchServices.kUTTypeData,
+                    )
 
             # Verify that this is a file that the ImageIO framework supports.
             if uti is not None:
@@ -148,15 +162,17 @@ class ImageBrowserController (Cocoa.NSWindowController):
     def addAnImageWithPath_(self, path):
         addObject = False
 
-        fileAttribs = Cocoa.NSFileManager.defaultManager().fileAttributesAtPath_traverseLink_(path, True)
+        fileAttribs = Cocoa.NSFileManager.defaultManager().fileAttributesAtPath_traverseLink_(
+            path, True
+        )
         if fileAttribs is not None:
             # Check for packages.
             if Cocoa.NSFileTypeDirectory == fileAttribs[Cocoa.NSFileType]:
                 if not Cocoa.NSWorkspace.sharedWorkspace().isFilePackageAtPath_(path):
-                    addObject = True    # If it is a file, it's OK to add.
+                    addObject = True  # If it is a file, it's OK to add.
 
             else:
-                addObject = True    # It is a file, so it's OK to add.
+                addObject = True  # It is a file, so it's OK to add.
 
         if addObject and self.isImageFile_(path):
             # Add a path to the temporary images array.
@@ -174,8 +190,7 @@ class ImageBrowserController (Cocoa.NSWindowController):
             # Parse the directory content.
             for fn in content:
                 if recursive:
-                    self.addImagesWithPath_recursive_(
-                            os.path.join(path, fn), True)
+                    self.addImagesWithPath_recursive_(os.path.join(path, fn), True)
                 else:
                     self.addAnImageWithPath_(os.path.join(path, fn))
 
@@ -197,13 +212,13 @@ class ImageBrowserController (Cocoa.NSWindowController):
 
         # Update the data source in the main thread.
         self.performSelectorOnMainThread_withObject_waitUntilDone_(
-                b'updateDatasource', None, True)
+            b"updateDatasource", None, True
+        )
 
         del pool
 
-
-    #pragma mark -
-    #pragma mark actions
+    # pragma mark -
+    # pragma mark actions
 
     # -------------------------------------------------------------------------
     #   addImageButtonClicked:sender
@@ -216,7 +231,8 @@ class ImageBrowserController (Cocoa.NSWindowController):
         if path:
             # launch import in an independent thread
             Cocoa.NSThread.detachNewThreadSelector_toTarget_withObject_(
-                    b'addImagesWithPaths:', self, path)
+                b"addImagesWithPaths:", self, path
+            )
 
     # -------------------------------------------------------------------------
     #   addImageButtonClicked:sender
@@ -247,7 +263,6 @@ class ImageBrowserController (Cocoa.NSWindowController):
     def imageBrowser_itemAtIndex_(self, view, index):
         return self.images[index]
 
-
     # Implement some optional methods of the image browser  datasource protocol to allow for removing and reodering items.
 
     # -------------------------------------------------------------------------
@@ -264,7 +279,9 @@ class ImageBrowserController (Cocoa.NSWindowController):
     #   The user wants to reorder images, update the datadsource and the browser
     #   will reflect our changes.
     # -------------------------------------------------------------------------
-    def imageBrowser_moveItemsAtIndexes_toIndex_(self, browser, indexes, destinationIndex):
+    def imageBrowser_moveItemsAtIndexes_toIndex_(
+        self, browser, indexes, destinationIndex
+    ):
         temporaryArray = []
 
         # First remove items from the data source and keep them in a
@@ -282,7 +299,6 @@ class ImageBrowserController (Cocoa.NSWindowController):
             self.images.insertObject_atIndex_(item, destinationIndex)
 
         return True
-
 
     # -------------------------------------------------------------------------
     #   draggingEntered:sender
@@ -310,7 +326,8 @@ class ImageBrowserController (Cocoa.NSWindowController):
         if data is not None:
             # Retrieve  paths.
             filenames, format, errorDescription = Cocoa.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
-                    data , Cocoa.kCFPropertyListImmutable, None, None)
+                data, Cocoa.kCFPropertyListImmutable, None, None
+            )
 
             # Add paths to the data source.
             for fn in filenames:

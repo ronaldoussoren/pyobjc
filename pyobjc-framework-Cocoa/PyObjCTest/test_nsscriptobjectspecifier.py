@@ -1,7 +1,8 @@
 from Foundation import *
 from PyObjCTools.TestSupport import *
 
-class TestNSScriptObjectSpecifiers (TestCase):
+
+class TestNSScriptObjectSpecifiers(TestCase):
     def testConstants(self):
         self.assertEqual(NSNoSpecifierError, 0)
         self.assertEqual(NSNoTopLevelContainersSpecifierError, 1)
@@ -31,12 +32,19 @@ class TestNSScriptObjectSpecifiers (TestCase):
         self.assertArgIsBOOL(NSScriptObjectSpecifier.setContainerIsObjectBeingTested_, 0)
 
         self.assertResultIsBOOL(NSScriptObjectSpecifier.containerIsRangeContainerObject)
-        self.assertArgIsBOOL(NSScriptObjectSpecifier.setContainerIsRangeContainerObject_, 0)
+        self.assertArgIsBOOL(
+            NSScriptObjectSpecifier.setContainerIsRangeContainerObject_, 0
+        )
 
-        self.assertArgIsOut(NSScriptObjectSpecifier.indicesOfObjectsByEvaluatingWithContainer_count_, 1)
-        self.assertResultSizeInArg(NSScriptObjectSpecifier.indicesOfObjectsByEvaluatingWithContainer_count_, 1)
+        self.assertArgIsOut(
+            NSScriptObjectSpecifier.indicesOfObjectsByEvaluatingWithContainer_count_, 1
+        )
+        self.assertResultSizeInArg(
+            NSScriptObjectSpecifier.indicesOfObjectsByEvaluatingWithContainer_count_, 1
+        )
 
         self.assertResultIsBOOL(NSPositionalSpecifier.insertionReplaces)
+
 
 if __name__ == "__main__":
     main()

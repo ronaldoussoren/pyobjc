@@ -3,19 +3,20 @@ import Cocoa
 import objc
 from ToDoDocument import ToDoDocument
 
-NOTIFY_TAG     = 0
+NOTIFY_TAG = 0
 RESCHEDULE_TAG = 1
-NOTES_TAG      = 2
+NOTES_TAG = 2
 
-NotifyLengthNone    = 0
+NotifyLengthNone = 0
 NotifyLengthQuarter = 1
-NotifyLengthHour    = 2
-NotifyLengthDay     = 3
-NotifyLengthOther   = 4
+NotifyLengthHour = 2
+NotifyLengthDay = 3
+NotifyLengthOther = 4
 
 _sharedInfoWindowController = None
 
-class InfoWindowController (Cocoa.NSWindowController):
+
+class InfoWindowController(Cocoa.NSWindowController):
     dummyView = objc.IBOutlet()
     infoDate = objc.IBOutlet()
     infoItem = objc.IBOutlet()
@@ -34,8 +35,7 @@ class InfoWindowController (Cocoa.NSWindowController):
     notifyView = objc.IBOutlet()
     reschedView = objc.IBOutlet()
 
-
-    __slots__ = ('_inspectingDocument', )
+    __slots__ = ("_inspectingDocument",)
 
     @objc.IBAction
     def switchClicked_(self, sender):
@@ -47,11 +47,12 @@ class InfoWindowController (Cocoa.NSWindowController):
 
         if sender is self.infoNotifyAMPM:
             if self.infoNotifyHour.intValue():
-                pmFlag = (self.infoNotifyAMPM.selectedRow() == 1)
+                pmFlag = self.infoNotifyAMPM.selectedRow() == 1
                 dueSecs = ConvertTimeToSeconds(
                     self.infoNotifyHour.intValue(),
                     self.infoNotifyMinute.intValue(),
-                    pmFlag)
+                    pmFlag,
+                )
                 theItem.setSecsUntilDue_(dueSecs)
         elif sender is self.infoNotifySwitchMatrix:
             idx = self.infoNotifySwitchMatrix.selectedRow()
@@ -61,15 +62,15 @@ class InfoWindowController (Cocoa.NSWindowController):
             elif idx == NotifyLengthNone:
                 theItem.setSecsUntilNotify_(0)
             elif idx == NotifyLengthQuarter:
-                theItem.setSecsUntilNotify_(SECS_IN_HOUR/4)
+                theItem.setSecsUntilNotify_(SECS_IN_HOUR / 4)
             elif idx == NotifyLengthHour:
                 theItem.setSecsUntilNotify_(SECS_IN_HOUR)
             elif idx == NotifyLengthDay:
                 theItem.setSecsUntilNotify_(SECS_IN_DAY)
             elif idx == NotifyLengthOther:
                 theItem.setSecsUntilNotify_(
-                    infoNotifyOtherHours.intValue() *
-                    SECS_IN_HOUR)
+                    infoNotifyOtherHours.intValue() * SECS_IN_HOUR
+                )
             else:
                 Cocoa.NSLog("Error in selectedRow")
         elif sender is self.infoSchedComplete:
@@ -92,24 +93,26 @@ class InfoWindowController (Cocoa.NSWindowController):
             self._inspectingDocument.selectedItem().setNotes_(infoNotes.string())
             self._inspectingDocument.selectedItemModified()
 
-
-
     def controlTextDidEndEditing_(self, notification):
         dueSecs = 0
         theItem = self._inspectingDocument.selectedItem()
         if theItem is None:
             return
 
-        if (notification.object() is self.infoNotifyHour) or \
-           (notification.object() is self.infoNotifyMinute):
+        if (notification.object() is self.infoNotifyHour) or (
+            notification.object() is self.infoNotifyMinute
+        ):
 
             dueSecs = ConvertTimeToSeconds(
-                 self.infoNotifyHour.intValue(),
+                self.infoNotifyHour.intValue(),
                 self.infoNotifyMinute.intValue(),
-                self.infoNotifyAMPM.cellAtRow_column_(1,0).state())
+                self.infoNotifyAMPM.cellAtRow_column_(1, 0).state(),
+            )
         elif notification.object() is self.infoNotifyOtherHours:
             if self.infoNotifySwitchMatrix.selectedRow() == NotifyLengthOther:
-                theItem.setSecsUntilNotify_(self.infoNotifyOtherHours.intValue() * SECS_IN_HOUR)
+                theItem.setSecsUntilNotify_(
+                    self.infoNotifyOtherHours.intValue() * SECS_IN_HOUR
+                )
             else:
                 return
         elif notification.object() is self.infoSchedDate:
@@ -117,7 +120,6 @@ class InfoWindowController (Cocoa.NSWindowController):
             pass
 
         self._inspectingDocument.selectedItemModified()
-
 
     @classmethod
     def sharedInfoWindowController(self):
@@ -127,7 +129,6 @@ class InfoWindowController (Cocoa.NSWindowController):
             _sharedInfoWindowController = InfoWindowController.alloc().init()
 
         return _sharedInfoWindowController
-
 
     def init(self):
         # XXX: Not sure if the native code works correctly if the return value
@@ -139,23 +140,23 @@ class InfoWindowController (Cocoa.NSWindowController):
         return self
 
     def dump_outlets(self):
-        print('dummyView', self.dummyView)
-        print('infoDate', self.infoDate)
-        print('infoItem', self.infoItem)
-        print('infoNotes', self.infoNotes)
-        print('infoNotifyAMPM', self.infoNotifyAMPM)
-        print('infoNotifyHour', self.infoNotifyHour)
-        print('infoNotifyMinute', self.infoNotifyMinute)
-        print('infoNotifyOtherHours', self.infoNotifyOtherHours)
-        print('infoNotifySwitchMatrix', self.infoNotifySwitchMatrix)
-        print('infoPopUp', self.infoPopUp)
-        print('infoSchedComplet', self.infoSchedComplete)
-        print('infoSchedDate', self.infoSchedDate)
-        print('infoSchedMatrix', self.infoSchedMatrix)
-        print('infoWindowViews', self.infoWindowViews)
-        print('notesView', self.notesView)
-        print('notifyView', self.notifyView)
-        print('reschedView', self.reschedView)
+        print("dummyView", self.dummyView)
+        print("infoDate", self.infoDate)
+        print("infoItem", self.infoItem)
+        print("infoNotes", self.infoNotes)
+        print("infoNotifyAMPM", self.infoNotifyAMPM)
+        print("infoNotifyHour", self.infoNotifyHour)
+        print("infoNotifyMinute", self.infoNotifyMinute)
+        print("infoNotifyOtherHours", self.infoNotifyOtherHours)
+        print("infoNotifySwitchMatrix", self.infoNotifySwitchMatrix)
+        print("infoPopUp", self.infoPopUp)
+        print("infoSchedComplet", self.infoSchedComplete)
+        print("infoSchedDate", self.infoSchedDate)
+        print("infoSchedMatrix", self.infoSchedMatrix)
+        print("infoWindowViews", self.infoWindowViews)
+        print("notesView", self.notesView)
+        print("notifyView", self.notifyView)
+        print("reschedView", self.reschedView)
 
     def windowDidLoad(self):
         Cocoa.NSWindowController.windowDidLoad(self)
@@ -178,23 +179,18 @@ class InfoWindowController (Cocoa.NSWindowController):
         self.updateInfoWindow()
 
         Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-            self, "mainWindowChanged:",
-            Cocoa.NSWindowDidBecomeMainNotification,
-            None)
+            self, "mainWindowChanged:", Cocoa.NSWindowDidBecomeMainNotification, None
+        )
 
         Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-            self, "mainWindowResigned:",
-            Cocoa.NSWindowDidResignMainNotification,
-            None)
+            self, "mainWindowResigned:", Cocoa.NSWindowDidResignMainNotification, None
+        )
 
         Cocoa.NSNotificationCenter.defaultCenter().addObserver_selector_name_object_(
-            self, "selectedItemChanged:",
-            ToDoItemChangedNotification,
-            None)
+            self, "selectedItemChanged:", ToDoItemChangedNotification, None
+        )
 
-
-
-    def __del__(self): # dealloc
+    def __del__(self):  # dealloc
 
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
 
@@ -211,7 +207,10 @@ class InfoWindowController (Cocoa.NSWindowController):
         if isinstance(selectedItem, ToDoItem):
             self.infoItem.setStringValue_(selectedItem.itemName())
             self.infoDate.setStringValue_(
-                selectedItem.day().descriptionWithCalendarFormat_timeZone_locale_("%a, %b %d %Y", Cocoa.NSTimeZone.localTimeZone(), None))
+                selectedItem.day().descriptionWithCalendarFormat_timeZone_locale_(
+                    "%a, %b %d %Y", Cocoa.NSTimeZone.localTimeZone(), None
+                )
+            )
 
             if selected == NOTIFY_TAG:
                 dueSecs = selectedItem.secsUntilDue()
@@ -225,15 +224,25 @@ class InfoWindowController (Cocoa.NSWindowController):
                 clearButtonMatrix(self.infoNotifySwitchMatrix)
 
                 if notifySecs == 0:
-                    self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthNone, 0).setState_(Cocoa.NSOnState)
+                    self.infoNotifySwitchMatrix.cellAtRow_column_(
+                        NotifyLengthNone, 0
+                    ).setState_(Cocoa.NSOnState)
                 elif notifySecs == SECS_IN_HOUR / 4:
-                    self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthQuarter, 0).setState_(Cocoa.NSOnState)
+                    self.infoNotifySwitchMatrix.cellAtRow_column_(
+                        NotifyLengthQuarter, 0
+                    ).setState_(Cocoa.NSOnState)
                 elif notifySecs == SECS_IN_HOUR:
-                    self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthHour, 0).setState_(Cocoa.NSOnState)
+                    self.infoNotifySwitchMatrix.cellAtRow_column_(
+                        NotifyLengthHour, 0
+                    ).setState_(Cocoa.NSOnState)
                 elif notifySecs == SECS_IN_DAY:
-                    self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthDay, 0).setState_(Cocoa.NSOnState)
+                    self.infoNotifySwitchMatrix.cellAtRow_column_(
+                        NotifyLengthDay, 0
+                    ).setState_(Cocoa.NSOnState)
                 else:
-                    self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthOther, 0).setState_(Cocoa.NSOnState)
+                    self.infoNotifySwitchMatrix.cellAtRow_column_(
+                        NotifyLengthOther, 0
+                    ).setState_(Cocoa.NSOnState)
                     self.infoNotifyOtherHours.setIntValue_(notifySecs / SECS_IN_HOUR)
             elif selected == RESCHEDULE_TAG:
                 # left as an exercise
@@ -248,7 +257,9 @@ class InfoWindowController (Cocoa.NSWindowController):
             self.infoNotifyAMPM.cellAtRow_column_(0, 0).setState_(Cocoa.NSOnState)
             self.infoNotifyAMPM.cellAtRow_column_(1, 0).setState_(Cocoa.NSOffState)
             clearButtonMatrix(self.infoNotifySwitchMatrix)
-            self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthNone, 0).setState_(Cocoa.NSOnState)
+            self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthNone, 0).setState_(
+                Cocoa.NSOnState
+            )
             self.infoNotifyOtherHours.setStringValue_("")
             self.infoNotes.setString_("")
 
@@ -264,7 +275,6 @@ class InfoWindowController (Cocoa.NSWindowController):
             self._inspectingDocument = None
 
         self.updateInfoWindow()
-
 
     def mainWindowChanged_(self, notification):
         self.setMainWindow_(notification.object())
@@ -295,4 +305,5 @@ def clearButtonMatrix(matrix):
 
     for i in range(rows):
         cell = matrix.cellAtRow_column_(i, 0)
-        if cell: cell.setState_(False)
+        if cell:
+            cell.setState_(False)

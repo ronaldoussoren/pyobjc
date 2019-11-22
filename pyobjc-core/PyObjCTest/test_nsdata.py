@@ -2,10 +2,11 @@ from PyObjCTools.TestSupport import *
 import objc
 import sys
 
-class TestNSDataSupport (TestCase):
+
+class TestNSDataSupport(TestCase):
     # XXX: migrate test cases from Cocoa bindings!
     def testEmptyRoBuffer(self):
-        cls = objc.lookUpClass('NSData')
+        cls = objc.lookUpClass("NSData")
         buf = cls.alloc().init()
         self.assertEqual(len(buf), 0)
 
@@ -24,11 +25,8 @@ class TestNSDataSupport (TestCase):
         self.assertEqual(buf[0:1], b"h")
         self.assertEqual(buf[0:2], b"he")
 
-
-
-
     def testEmptyRwBuffer(self):
-        cls = objc.lookUpClass('NSMutableData')
+        cls = objc.lookUpClass("NSMutableData")
         buf = cls.alloc().init()
         self.assertEqual(len(buf), 0)
 

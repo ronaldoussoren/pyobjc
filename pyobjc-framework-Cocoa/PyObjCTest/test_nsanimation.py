@@ -1,13 +1,19 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSAnimationHelper (NSObject):
-    def animationShouldStart_(self, animation): return 1
-    def animation_valueForProgress_(self, a, b): return 1
-    def animation_didReachProgressMark_(self, a, b): return 1
 
-class TestNSAnimation (TestCase):
+class TestNSAnimationHelper(NSObject):
+    def animationShouldStart_(self, animation):
+        return 1
+
+    def animation_valueForProgress_(self, a, b):
+        return 1
+
+    def animation_didReachProgressMark_(self, a, b):
+        return 1
+
+
+class TestNSAnimation(TestCase):
     def testConstants(self):
         self.assertEqual(NSAnimationEaseInOut, 0)
         self.assertEqual(NSAnimationEaseIn, 1)
@@ -33,19 +39,25 @@ class TestNSAnimation (TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(NSAnimation.isAnimating)
- 
 
-    @min_sdk_level('10.6')
+    @min_sdk_level("10.6")
     def testProtocol(self):
-        objc.protocolNamed('NSAnimationDelegate')
-        objc.protocolNamed('NSAnimatablePropertyContainer')
+        objc.protocolNamed("NSAnimationDelegate")
+        objc.protocolNamed("NSAnimatablePropertyContainer")
 
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
 
-        self.assertResultHasType(TestNSAnimationHelper.animation_valueForProgress_, objc._C_FLT)
-        self.assertArgHasType(TestNSAnimationHelper.animation_valueForProgress_, 1, objc._C_FLT)
-        self.assertArgHasType(TestNSAnimationHelper.animation_didReachProgressMark_, 1, objc._C_FLT)
+        self.assertResultHasType(
+            TestNSAnimationHelper.animation_valueForProgress_, objc._C_FLT
+        )
+        self.assertArgHasType(
+            TestNSAnimationHelper.animation_valueForProgress_, 1, objc._C_FLT
+        )
+        self.assertArgHasType(
+            TestNSAnimationHelper.animation_didReachProgressMark_, 1, objc._C_FLT
+        )
+
 
 if __name__ == "__main__":
     main()

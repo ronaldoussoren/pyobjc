@@ -1,8 +1,8 @@
-
 from PyObjCTools.TestSupport import *
 from AppKit import *
 
-class TestNSSegmentedCell (TestCase):
+
+class TestNSSegmentedCell(TestCase):
     def testConstants(self):
         self.assertEqual(NSSegmentSwitchTrackingSelectOne, 0)
         self.assertEqual(NSSegmentSwitchTrackingSelectAny, 1)

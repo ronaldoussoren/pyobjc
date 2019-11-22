@@ -20,21 +20,25 @@ PyObject* PyObjCExc_ObjCPointerWarning = NULL;
 int
 PyObjCUtil_Init(PyObject* module)
 {
-#define NEW_EXC(identifier, name, base_class) \
-    identifier = PyErr_NewException("objc."name, base_class, NULL); \
-    if (identifier == NULL) return -1; \
-    Py_INCREF(identifier); \
-    if (PyModule_AddObject(module, name, identifier) < 0) return -1;
+#define NEW_EXC(identifier, name, base_class)                                            \
+    identifier = PyErr_NewException("objc." name, base_class, NULL);                     \
+    if (identifier == NULL)                                                              \
+        return -1;                                                                       \
+    Py_INCREF(identifier);                                                               \
+    if (PyModule_AddObject(module, name, identifier) < 0)                                \
+        return -1;
 
     NEW_EXC(PyObjCExc_Error, "error", NULL);
     NEW_EXC(PyObjCExc_NoSuchClassError, "nosuchclass_error", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_InternalError, "internal_error", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_UnInitDeallocWarning, "UninitializedDeallocWarning", PyExc_Warning);
-    NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning", PyExc_Warning);
+    NEW_EXC(PyObjCExc_ObjCRevivalWarning, "RevivedObjectiveCObjectWarning",
+            PyExc_Warning);
     NEW_EXC(PyObjCExc_LockError, "LockError", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_BadPrototypeError, "BadPrototypeError", PyObjCExc_Error);
     NEW_EXC(PyObjCExc_UnknownPointerError, "UnknownPointerError", PyObjCExc_Error);
-    NEW_EXC(PyObjCExc_DeprecationWarning, "ApiDeprecationWarning", PyExc_DeprecationWarning);
+    NEW_EXC(PyObjCExc_DeprecationWarning, "ApiDeprecationWarning",
+            PyExc_DeprecationWarning);
     NEW_EXC(PyObjCExc_ObjCPointerWarning, "ObjCPointerWarning", PyExc_Warning);
 
 #undef NEW_EXC
@@ -60,9 +64,8 @@ ObjCErr_PyExcForName(const char* value)
     return PyObjCExc_Error;
 }
 
-
 void
-PyObjCErr_FromObjC(NSException* localException)
+PyObjCErr_FromObjC(NSObject* localException)
 {
     NSDictionary* userInfo;
     PyObject* dict;
@@ -95,19 +98,21 @@ PyObjCErr_FromObjC(NSException* localException)
             }
             Py_CLEAR(exc);
             PyErr_Restore(exc_type, exc_value, exc_traceback);
-
         } else {
-            exception = ObjCErr_PyExcForName([[localException name] UTF8String]);
+            exception =
+                ObjCErr_PyExcForName([[(NSException*)localException name] UTF8String]);
 
-            userInfo = [localException userInfo];
+            userInfo = [(NSException*)localException userInfo];
             if (userInfo) {
                 id val;
 
                 val = [userInfo objectForKey:@"__pyobjc_exc_type__"];
                 if (val) {
                     exc_type = [val pyObject];
-                    exc_value = [[userInfo objectForKey:@"__pyobjc_exc_value__"] pyObject];
-                    exc_traceback = [[userInfo objectForKey:@"__pyobjc_exc_traceback__"] pyObject];
+                    exc_value =
+                        [[userInfo objectForKey:@"__pyobjc_exc_value__"] pyObject];
+                    exc_traceback =
+                        [[userInfo objectForKey:@"__pyobjc_exc_traceback__"] pyObject];
 
                     /* -pyObject returns a borrowed reference and
                      * PyErr_Restore steals one from us.
@@ -122,13 +127,13 @@ PyObjCErr_FromObjC(NSException* localException)
                 }
             }
 
-            t = [localException name];
+            t = [(NSException*)localException name];
             c_localException_name = pythonify_c_value(@encode(NSObject*), &t);
             if (c_localException_name == NULL) {
                 PyObjC_GIL_RETURNVOID;
             }
 
-            t = [localException reason];
+            t = [(NSException*)localException reason];
             c_localException_reason = pythonify_c_value(@encode(NSObject*), &t);
             if (c_localException_reason == NULL) {
                 Py_DECREF(c_localException_name);
@@ -158,13 +163,13 @@ PyObjCErr_FromObjC(NSException* localException)
                 PyDict_SetItemString(dict, "userInfo", Py_None);
             }
 
-            if ([[localException reason] UTF8String]) {
-                 buf = PyText_FromFormat("%s - %s",
-                       [[localException name] UTF8String],
-                       [[localException reason] UTF8String]);
+            if ([[(NSException*)localException reason] UTF8String]) {
+                buf = PyUnicode_FromFormat(
+                    "%s - %s", [[(NSException*)localException name] UTF8String],
+                    [[(NSException*)localException reason] UTF8String]);
             } else {
-                 buf = PyText_FromFormat("%s",
-                       [[localException name] UTF8String]);
+                buf = PyUnicode_FromFormat(
+                    "%s", [[(NSException*)localException name] UTF8String]);
             }
             PyErr_SetObject(exception, buf);
             PyErr_Fetch(&exc_type, &exc_value, &exc_traceback);
@@ -185,7 +190,6 @@ PyObjCErr_ToObjC(void)
 {
     PyObjCErr_ToObjCWithGILState(NULL);
 }
-
 
 NSException*
 PyObjCErr_AsExc(void)
@@ -215,8 +219,8 @@ PyObjCErr_AsExc(void)
         if (depythonify_c_value(@encode(id), args, &result) == -1) {
             PyErr_Clear();
             result = [[NSException alloc] initWithName:NSInternalInconsistencyException
-                                       reason:@"Cannot convert Python exception"
-                                     userInfo: nil];
+                                                reason:@"Cannot convert Python exception"
+                                              userInfo:nil];
         }
         return result;
     }
@@ -257,9 +261,7 @@ PyObjCErr_AsExc(void)
         }
 
         if (name && reason) {
-            val = [NSException exceptionWithName:name
-                                          reason:reason
-                                        userInfo:userInfo];
+            val = [NSException exceptionWithName:name reason:reason userInfo:userInfo];
             Py_DECREF(args);
             Py_XDECREF(exc_type);
             Py_XDECREF(exc_value);
@@ -271,34 +273,36 @@ PyObjCErr_AsExc(void)
 
     repr = PyObject_Str(exc_value);
     typerepr = PyObject_Str(exc_type);
-    userInfo = [NSMutableDictionary dictionaryWithCapacity: 3];
-    [userInfo setObject: [[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
+    userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
+    [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_type] autorelease]
                  forKey:@"__pyobjc_exc_type__"];
 
     if (exc_value != NULL) {
-        [userInfo setObject: [[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
-                     forKey:@"__pyobjc_exc_value__"];
+        [userInfo
+            setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_value] autorelease]
+               forKey:@"__pyobjc_exc_value__"];
     }
 
     if (exc_traceback != NULL) {
-        [userInfo setObject: [[[OC_PythonObject alloc] initWithPyObject:exc_traceback] autorelease]
+        [userInfo setObject:[[[OC_PythonObject alloc] initWithPyObject:exc_traceback]
+                                autorelease]
                      forKey:@"__pyobjc_exc_traceback__"];
     }
 
     val = [NSException
-                exceptionWithName:@"OC_PythonException"
-                           reason:[NSString
-                                        stringWithFormat:@"%@: %@",
-                                                typerepr?PyObjC_PythonToId(typerepr):NULL,
-                                                repr?PyObjC_PythonToId(repr):NULL
-                                  ]
-                         userInfo:userInfo];
+        exceptionWithName:@"OC_PythonException"
+                   reason:[NSString
+                              stringWithFormat:@"%@: %@",
+                                               typerepr ? PyObjC_PythonToId(typerepr)
+                                                        : NULL,
+                                               repr ? PyObjC_PythonToId(repr) : NULL]
+                 userInfo:userInfo];
 
     Py_XDECREF(typerepr);
     Py_XDECREF(repr);
 
     if (PyObjC_Verbose) {
-        PyErr_Restore(exc_type, exc_value , exc_traceback);
+        PyErr_Restore(exc_type, exc_value, exc_traceback);
         NSLog(@"PyObjC: Converting exception to Objective-C:");
         PyErr_Print();
 
@@ -327,7 +331,6 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
     abort();
 }
 
-
 char*
 PyObjCUtil_Strdup(const char* value)
 {
@@ -335,22 +338,17 @@ PyObjCUtil_Strdup(const char* value)
     char* result;
 
     len = strlen(value);
-    result = PyMem_Malloc(len+1);
-    if (result == NULL) return NULL;
+    result = PyMem_Malloc(len + 1);
+    if (result == NULL)
+        return NULL;
 
     memcpy(result, value, len);
     result[len] = 0;
     return result;
 }
 
-
 NSMapTableKeyCallBacks PyObjCUtil_PointerKeyCallBacks = {
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    NULL, NULL, NULL, NULL, NULL, NULL,
 };
 
 NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks = {
@@ -360,30 +358,25 @@ NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks = {
 };
 
 static void
-nsmaptable_objc_retain(NSMapTable *table __attribute__((__unused__)), const void *datum) {
+nsmaptable_objc_retain(NSMapTable* table __attribute__((__unused__)), const void* datum)
+{
     CFRetain((id)datum);
 }
 
 static void
-nsmaptable_objc_release(NSMapTable *table __attribute__((__unused__)), void *datum) {
+nsmaptable_objc_release(NSMapTable* table __attribute__((__unused__)), void* datum)
+{
     CFRelease((id)datum);
 }
 
 NSMapTableKeyCallBacks PyObjCUtil_ObjCIdentityKeyCallBacks = {
-    NULL,
-    NULL,
-    &nsmaptable_objc_retain,
-    &nsmaptable_objc_release,
-    NULL,
-    NULL,
+    NULL, NULL, &nsmaptable_objc_retain, &nsmaptable_objc_release, NULL, NULL,
 };
 
 NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks = {
-    &nsmaptable_objc_retain,
-    &nsmaptable_objc_release,
+    &nsmaptable_objc_retain, &nsmaptable_objc_release,
     NULL // generic description
 };
-
 
 #define SHOULD_FREE 1
 #define SHOULD_IGNORE 2
@@ -396,11 +389,10 @@ PyObjC_FreeCArray(int code, void* array)
     }
 }
 
-
 static inline PyTypeObject*
 fetch_array_type(void)
 {
-static PyTypeObject* array_type = NULL;
+    static PyTypeObject* array_type = NULL;
 
     if (array_type != NULL) {
         return array_type;
@@ -431,29 +423,48 @@ array_typestr(PyObject* array)
             return '\0';
         }
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(typecode)) {
-        bytes = typecode; Py_INCREF(bytes);
-#endif
-
     } else {
         PyErr_SetString(PyExc_TypeError, "typecode not a string");
         return '\0';
     }
 
     switch (*PyBytes_AS_STRING(bytes)) {
-    case 'c': res = _C_CHR; break;
-    case 'b': res = _C_CHR; break;
-    case 'B': res = _C_UCHR; break;
-    case 'u': res = _C_SHT; break;
-    case 'h': res = _C_SHT; break;
-    case 'H': res = _C_USHT; break;
-    case 'i': res = _C_INT; break;
-    case 'I': res = _C_UINT; break;
-    case 'l': res = _C_LNG; break;
-    case 'L': res = _C_ULNG; break;
-    case 'f': res = _C_FLT; break;
-    case 'd': res = _C_DBL; break;
+    case 'c':
+        res = _C_CHR;
+        break;
+    case 'b':
+        res = _C_CHR;
+        break;
+    case 'B':
+        res = _C_UCHR;
+        break;
+    case 'u':
+        res = _C_SHT;
+        break;
+    case 'h':
+        res = _C_SHT;
+        break;
+    case 'H':
+        res = _C_USHT;
+        break;
+    case 'i':
+        res = _C_INT;
+        break;
+    case 'I':
+        res = _C_UINT;
+        break;
+    case 'l':
+        res = _C_LNG;
+        break;
+    case 'L':
+        res = _C_ULNG;
+        break;
+    case 'f':
+        res = _C_FLT;
+        break;
+    case 'd':
+        res = _C_DBL;
+        break;
     default:
         PyErr_SetString(PyExc_TypeError, "unsupported typecode");
         res = '\0';
@@ -485,14 +496,15 @@ array_elem_code(const char* typestr)
     if (*typestr++ != _C_ARY_B) {
         return '\0';
     }
-    while (isdigit(*typestr)) typestr++;
+    while (isdigit(*typestr))
+        typestr++;
 
     if (*typestr == _C_ARY_E) {
         return '\0';
     }
 
     while (typestr && *typestr != _C_ARY_E) {
-        switch(*typestr) {
+        switch (*typestr) {
         case _C_ARY_B:
             tmp = array_elem_code(typestr);
             if (tmp == '\0') {
@@ -553,7 +565,7 @@ struct_elem_code(const char* typestr)
     typestr++;
 
     while (typestr && *typestr != _C_STRUCT_E) {
-        switch(*typestr) {
+        switch (*typestr) {
         case _C_ARY_B:
             tmp = array_elem_code(typestr);
             if (tmp == '\0') {
@@ -614,9 +626,9 @@ code_compatible(char array_code, char type_code)
     case _C_LNG:
         return (array_code == 'l')
 #ifndef __LP64__
-            || (array_code == 'i')
+               || (array_code == 'i')
 #endif
-        ;
+            ;
 
     case _C_ULNG_LNG:
 #ifdef __LP64__
@@ -628,23 +640,23 @@ code_compatible(char array_code, char type_code)
     case _C_ULNG:
         return (array_code == 'L')
 #ifndef __LP64__
-            || (array_code == 'I')
+               || (array_code == 'I')
 #endif
-        ;
+            ;
 
     case _C_INT:
         return (array_code == 'i')
 #ifndef __LP64__
-            || (array_code == 'l')
+               || (array_code == 'l')
 #endif
-        ;
+            ;
 
     case _C_UINT:
         return (array_code == 'I')
 #ifndef __LP64__
-            || (array_code == 'L')
+               || (array_code == 'L')
 #endif
-        ;
+            ;
 
     case _C_NSBOOL:
         return (array_code == _C_CHR) || (array_code == _C_UCHR);
@@ -662,7 +674,6 @@ code_compatible(char array_code, char type_code)
     return NO;
 }
 
-
 /*
  * Convert a Python object to an array of 'elementType'. The array should
  * contain 'pythonCount' elements, Py_None or NULL is accepted and will result
@@ -673,25 +684,21 @@ code_compatible(char array_code, char type_code)
  * 'elementType' or an appropriatly typed and shaped numeric array.
  */
 int
-PyObjC_PythonToCArray(
-    BOOL writable, BOOL exactSize,
-    const char* elementType,
-    PyObject*  pythonList,
-    void** array,
-    Py_ssize_t*  size,
-    PyObject** bufobj)
+PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
+                      PyObject* pythonList, void** array, Py_ssize_t* size,
+                      PyObject** bufobj)
 {
     Py_ssize_t eltsize = PyObjCRT_SizeOfType(elementType);
     Py_ssize_t i;
     int r;
-
 
     if (eltsize == -1) {
         return -1;
     }
 
     if ((eltsize == 1 || eltsize == 0) &&
-        !(*elementType == _C_NSBOOL || *elementType == _C_BOOL || *elementType == _C_CHAR_AS_INT)) {
+        !(*elementType == _C_NSBOOL || *elementType == _C_BOOL ||
+          *elementType == _C_CHAR_AS_INT)) {
         /* A simple byte-array */
 
         /* NOTE: PyUnicode is explicitly excluded because it
@@ -705,12 +712,10 @@ PyObjC_PythonToCArray(
         int have_buffer;
 
         if (PyUnicode_Check(pythonList)) {
-            PyErr_Format(PyExc_TypeError,
-                "Expecting byte-buffer, got %s",
-                Py_TYPE(pythonList)->tp_name);
+            PyErr_Format(PyExc_TypeError, "Expecting byte-buffer, got %s",
+                         Py_TYPE(pythonList)->tp_name);
             return -1;
         }
-
 
         have_buffer = buffer_get(writable, pythonList, (void**)&buf, &bufsize);
         if (have_buffer == -1) {
@@ -730,10 +735,13 @@ PyObjC_PythonToCArray(
                     memcpy(*array, buf, bufsize);
 
                 } else {
-                    if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
+                    if ((exactSize && *size != bufsize) ||
+                        (!exactSize && *size > bufsize)) {
                         PyErr_Format(PyExc_ValueError,
-                            "Requesting buffer of %"PY_FORMAT_SIZE_T"d, have buffer "
-                            "of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
+                                     "Requesting buffer of %" PY_FORMAT_SIZE_T
+                                     "d, have buffer "
+                                     "of %" PY_FORMAT_SIZE_T "d",
+                                     *size, bufsize);
                         return -1;
                     }
 
@@ -763,8 +771,10 @@ PyObjC_PythonToCArray(
             } else {
                 if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
                     PyErr_Format(PyExc_ValueError,
-                        "Requesting buffer of %"PY_FORMAT_SIZE_T"d, have buffer "
-                        "of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
+                                 "Requesting buffer of %" PY_FORMAT_SIZE_T
+                                 "d, have buffer "
+                                 "of %" PY_FORMAT_SIZE_T "d",
+                                 *size, bufsize);
                     return -1;
                 }
 
@@ -780,15 +790,7 @@ PyObjC_PythonToCArray(
 
     if (*elementType == _C_UNICHAR && PyUnicode_Check(pythonList)) {
 
-#if PY_VERSION_HEX >= 0x03030000
-        *bufobj = _PyUnicode_EncodeUTF16(
-            pythonList, NULL,
-#ifdef WORDS_BIGENDIAN
-            1
-#else
-            -1
-#endif
-        );
+        *bufobj = _PyUnicode_EncodeUTF16(pythonList, NULL, -1);
 
         if (*bufobj == NULL) {
             return -1;
@@ -804,8 +806,10 @@ PyObjC_PythonToCArray(
              * problems with characters outside of the BMP.
              */
             PyErr_Format(PyExc_ValueError,
-                "Requesting unicode buffer of %"PY_FORMAT_SIZE_T"d, have unicode buffer "
-                "of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
+                         "Requesting unicode buffer of %" PY_FORMAT_SIZE_T
+                         "d, have unicode buffer "
+                         "of %" PY_FORMAT_SIZE_T "d",
+                         *size, bufsize);
             return -1;
         }
 
@@ -820,61 +824,10 @@ PyObjC_PythonToCArray(
         return SHOULD_FREE;
 
         /* *array = PyBytes_AsString(*bufobj); return SHOULD_IGNORE*/
-
-#else /* Python before 3.3 */
-        if (writable) {
-            *array = PyMem_Malloc(*size * sizeof(UniChar));
-            memcpy(*array, PyUnicode_AsUnicode(pythonList), *size * sizeof(UniChar));
-            return SHOULD_FREE;
-
-        } else {
-            *array = PyUnicode_AsUnicode(pythonList);
-            *bufobj = pythonList;
-            Py_INCREF(pythonList);
-            return SHOULD_IGNORE;
-        }
-#endif /* Python before 3.3 */
-
-#if PY_MAJOR_VERSION == 2
-    } else if (*elementType == _C_UNICHAR && PyString_Check(pythonList)) {
-        PyObject* u = PyUnicode_Decode(
-                PyString_AsString(pythonList),
-                PyString_Size(pythonList),
-                NULL, NULL);
-        if (u == NULL) {
-            return -1;
-        }
-
-        Py_ssize_t bufsize = PyUnicode_GetSize(u);
-
-        if (*size == -1) {
-            *size = bufsize;
-
-        } else if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
-            PyErr_Format(PyExc_ValueError,
-                "Requesting unicode buffer of %"PY_FORMAT_SIZE_T"d, have unicode buffer "
-                "of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
-            Py_DECREF(u);
-            return -1;
-        }
-
-        if (writable) {
-            *array = PyMem_Malloc(*size * sizeof(UniChar));
-            memcpy(*array, PyUnicode_AsUnicode(u), *size * sizeof(UniChar));
-            Py_DECREF(u);
-            return SHOULD_FREE;
-
-        } else {
-            *array = PyUnicode_AsUnicode(u);
-            *bufobj = u;
-            return SHOULD_IGNORE;
-        }
-#endif
     }
 
     /* A more complex array */
 
-#if PY_VERSION_HEX >= 0x02060000
     if (PyObject_CheckBuffer(pythonList)) {
         /* An object that implements the new-style buffer interface.
          * Use the buffer interface description to check if the buffer
@@ -895,8 +848,6 @@ PyObjC_PythonToCArray(
          */
     }
 
-#endif
-
     if (array_check(pythonList)) {
         /* An array.array. Only convert if the typestr describes an
          * simple type of the same type as the array, or a struct/array
@@ -914,9 +865,9 @@ PyObjC_PythonToCArray(
              */
             if (!code_compatible(code, array_elem_code(elementType))) {
                 PyErr_Format(PyExc_ValueError,
-                    "type mismatch between array.array "
-                    "of %c and and C array of %s",
-                    code, elementType);
+                             "type mismatch between array.array "
+                             "of %c and and C array of %s",
+                             code, elementType);
                 return -1;
             }
 
@@ -927,17 +878,17 @@ PyObjC_PythonToCArray(
              */
             if (!code_compatible(code, struct_elem_code(elementType))) {
                 PyErr_Format(PyExc_ValueError,
-                    "type mismatch between array.array "
-                    "of %c and and C array of %s",
-                    code, elementType);
+                             "type mismatch between array.array "
+                             "of %c and and C array of %s",
+                             code, elementType);
                 return -1;
             }
 
         } else {
             PyErr_Format(PyExc_ValueError,
-                "type mismatch between array.array "
-                "of %c and and C array of %s",
-                code, elementType);
+                         "type mismatch between array.array "
+                         "of %c and and C array of %s",
+                         code, elementType);
             return -1;
         }
 
@@ -951,8 +902,7 @@ PyObjC_PythonToCArray(
         }
 
         if ((bufsize % eltsize) != 0) {
-            PyErr_SetString(PyExc_ValueError,
-                    "Badly shaped array.array");
+            PyErr_SetString(PyExc_ValueError, "Badly shaped array.array");
             return -1;
         }
 
@@ -969,8 +919,9 @@ PyObjC_PythonToCArray(
 
             if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
                 PyErr_Format(PyExc_ValueError,
-                    "Requesting buffer of %"PY_FORMAT_SIZE_T"d, have buffer "
-                    "of %"PY_FORMAT_SIZE_T"d", *size, bufsize);
+                             "Requesting buffer of %" PY_FORMAT_SIZE_T "d, have buffer "
+                             "of %" PY_FORMAT_SIZE_T "d",
+                             *size, bufsize);
                 return -1;
             }
             *array = buf;
@@ -992,7 +943,8 @@ PyObjC_PythonToCArray(
 
         } else if (*elementType == _C_CHAR_AS_INT) {
             if (PyBytes_Check(pythonList)) {
-                PyErr_Format(PyExc_ValueError, "Need array of small integers, got byte string");
+                PyErr_Format(PyExc_ValueError,
+                             "Need array of small integers, got byte string");
                 return -1;
             }
         }
@@ -1013,8 +965,9 @@ PyObjC_PythonToCArray(
         if ((exactSize && seqlen != pycount) || (!exactSize && seqlen < pycount)) {
             Py_DECREF(seq);
             PyErr_Format(PyExc_ValueError,
-                    "too few values (%"PY_FORMAT_SIZE_T"d) expecting at "
-                    "least %"PY_FORMAT_SIZE_T"d", seqlen, pycount);
+                         "too few values (%" PY_FORMAT_SIZE_T "d) expecting at "
+                         "least %" PY_FORMAT_SIZE_T "d",
+                         seqlen, pycount);
             return -1;
         }
 
@@ -1034,11 +987,11 @@ PyObjC_PythonToCArray(
         for (i = 0; i < pycount; i++) {
             PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
 
-            r = depythonify_c_value(elementType, item,
-                    ((char*)*array)+(i*eltsize));
+            r = depythonify_c_value(elementType, item, ((char*)*array) + (i * eltsize));
             if (r == -1) {
                 Py_DECREF(seq);
-                PyMem_Free(*array); *array = NULL;
+                PyMem_Free(*array);
+                *array = NULL;
                 return -1;
             }
         }
@@ -1046,12 +999,8 @@ PyObjC_PythonToCArray(
     }
 }
 
-
 PyObject*
-PyObjC_CArrayToPython(
-    const char* elementType,
-    void* array,
-    Py_ssize_t size)
+PyObjC_CArrayToPython(const char* elementType, void* array, Py_ssize_t size)
 {
     PyObject* result;
     Py_ssize_t i;
@@ -1067,7 +1016,8 @@ PyObjC_CArrayToPython(
             return PyBytes_FromStringAndSize(array, size);
         }
 
-        if (*elementType != _C_NSBOOL && *elementType != _C_BOOL && *elementType != _C_CHAR_AS_INT) {
+        if (*elementType != _C_NSBOOL && *elementType != _C_BOOL &&
+            *elementType != _C_CHAR_AS_INT) {
             /* Special case for buffer-like objects */
             return PyBytes_FromStringAndSize(array, size);
         }
@@ -1075,7 +1025,7 @@ PyObjC_CArrayToPython(
 
     if (*elementType == _C_UNICHAR) {
         int byteorder = 0;
-        result = PyUnicode_DecodeUTF16(array, size*2, NULL, &byteorder);
+        result = PyUnicode_DecodeUTF16(array, size * 2, NULL, &byteorder);
         return result;
     }
 
@@ -1105,12 +1055,7 @@ PyObjC_IsPythonKeyword(const char* word)
      * We cheat a little: this list only contains those keywords that
      * are actually used in Cocoa.
      */
-    static const char* keywords[] = {
-        "class",
-        "raise",
-        "from",
-        NULL
-    };
+    static const char* keywords[] = {"class", "raise", "from", NULL};
     const char** cur;
 
     for (cur = keywords; *cur != NULL; cur++) {
@@ -1135,7 +1080,7 @@ PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
         next = end = PyObjCRT_SkipTypeSpec(cur);
         end -= 1;
         while (end != cur && isdigit(*end)) {
-            end --;
+            end--;
         }
         end++;
 
@@ -1143,23 +1088,18 @@ PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
             return -1;
         }
 
-        memcpy(buf, cur, end-cur);
-        buflen -= (end-cur);
-        buf += (end-cur);
+        memcpy(buf, cur, end - cur);
+        buflen -= (end - cur);
+        buf += (end - cur);
         *buf = '\0';
         cur = next;
     }
     return 0;
 }
 
-
 PyObject*
-PyObjC_CArrayToPython2(
-    const char* elementType,
-    void* array,
-    Py_ssize_t size,
-    bool alreadyRetained,
-    bool alreadyCFRetained)
+PyObjC_CArrayToPython2(const char* elementType, void* array, Py_ssize_t size,
+                       bool alreadyRetained, bool alreadyCFRetained)
 {
     PyObject* result;
     Py_ssize_t i;
@@ -1178,7 +1118,8 @@ PyObjC_CArrayToPython2(
         if (*elementType == _C_CHAR_AS_TEXT) {
             return PyBytes_FromStringAndSize(array, size);
         }
-        if (*elementType != _C_NSBOOL && *elementType != _C_BOOL && *elementType != _C_CHAR_AS_INT) {
+        if (*elementType != _C_NSBOOL && *elementType != _C_BOOL &&
+            *elementType != _C_CHAR_AS_INT) {
             /* Special case for buffer-like objects */
             return PyBytes_FromStringAndSize(array, size);
         }
@@ -1186,7 +1127,7 @@ PyObjC_CArrayToPython2(
 
     if (*elementType == _C_UNICHAR) {
         int byteorder = 0;
-        result = PyUnicode_DecodeUTF16(array, size*2, NULL, &byteorder);
+        result = PyUnicode_DecodeUTF16(array, size * 2, NULL, &byteorder);
         return result;
     }
 
@@ -1237,63 +1178,26 @@ PyObjCClass_Convert(PyObject* object, void* pvar)
     }
 
     *(Class*)pvar = PyObjCClass_GetClass(object);
-    if (*(Class*)pvar == NULL) return 0;
+    if (*(Class*)pvar == NULL)
+        return 0;
     return 1;
 }
 
-int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
+int
+PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_string)
 {
-#if PY_MAJOR_VERSION == 2
-    if (PyString_Check(unicode_string)) {
-        return strcmp(PyString_AsString(unicode_string), ascii_string) == 0;
-
-    } else {
-#endif
-
-#ifdef PyObjC_FAST_UNICODE_ASCII
     if (!PyUnicode_IS_ASCII(unicode_string)) {
         return 0;
 
     } else {
-        return strcmp(
-                (const char*)(PyUnicode_DATA(unicode_string)),
-                ascii_string) == 0;
+        return strcmp((const char*)(PyUnicode_DATA(unicode_string)), ascii_string) == 0;
     }
-
-#else /* !PyObjC_FAST_UNICODE_ASCII */
-
-    size_t uni_sz = PyUnicode_GetSize(unicode_string);
-    size_t i;
-    Py_UNICODE* code_points = PyUnicode_AsUnicode(unicode_string);
-
-    if (code_points == NULL) {
-        PyErr_Clear();
-        return 0;
-    }
-
-    for (i = 0; i < uni_sz; i++) {
-        if (code_points[i] != (Py_UNICODE)ascii_string[i]) {
-            return 0;
-
-        } else if (ascii_string[i] == '\0') {
-            return 0;
-        }
-    }
-    if (ascii_string[i] != '\0') {
-        return 0;
-    }
-    return 1;
-#endif /* !PyObjC_FAST_UNICODE_ASCII */
-
-#if PY_MAJOR_VERSION == 2
-    }
-#endif
 }
 
-int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n)
+int
+PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_t n)
 {
 
-#ifdef PyObjC_FAST_UNICODE_ASCII
     size_t uni_sz = PyUnicode_GetLength(unicode_string);
 
     if (uni_sz < n) {
@@ -1305,32 +1209,6 @@ int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, s
     }
 
     return strncmp((const char*)(PyUnicode_DATA(unicode_string)), ascii_string, n) == 0;
-
-#else /* !PyObjC_FAST_UNICODE_ASCII */
-
-    size_t uni_sz = PyUnicode_GetSize(unicode_string);
-    size_t i;
-    Py_UNICODE* code_points = PyUnicode_AsUnicode(unicode_string);
-
-    if (code_points == NULL) {
-        PyErr_Clear();
-        return 0;
-    }
-
-    for (i = 0; i < uni_sz && i < n; i++) {
-        if (code_points[i] != (Py_UNICODE)ascii_string[i]) {
-            return 0;
-
-        } else if (ascii_string[i] == '\0') {
-            return 0;
-        }
-    }
-    if (i != n) {
-        return 0;
-    }
-    return 1;
-
-#endif /* !PyObjC_FAST_UNICODE_ASCII */
 }
 
 PyObject*
@@ -1342,13 +1220,13 @@ PyObjC_ImportName(const char* name)
 
     if (c == NULL) {
         /* Toplevel module */
-        py_name = PyText_FromString(name);
+        py_name = PyUnicode_FromString(name);
         mod = PyImport_Import(py_name);
         Py_DECREF(py_name);
         return mod;
 
     } else {
-        py_name = PyText_FromStringAndSize(name, c - name);
+        py_name = PyUnicode_FromStringAndSize(name, c - name);
         mod = PyImport_Import(py_name);
         Py_DECREF(py_name);
         if (mod == NULL) {
@@ -1364,7 +1242,8 @@ PyObjC_ImportName(const char* name)
 PyObject*
 PyObjC_AdjustSelf(PyObject* object)
 {
-    if (PyType_Check(object) && PyType_IsSubtype((PyTypeObject*)object, &PyObjCClass_Type)) {
+    if (PyType_Check(object) &&
+        PyType_IsSubtype((PyTypeObject*)object, &PyObjCClass_Type)) {
         PyObject* temp = PyObjCClass_ClassForMetaClass(object);
         Py_INCREF(temp);
         Py_DECREF(object);
@@ -1372,7 +1251,6 @@ PyObjC_AdjustSelf(PyObject* object)
     }
     return object;
 }
-
 
 int
 PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
@@ -1382,7 +1260,8 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
     int r;
 
     /* Return 0 if the two signatures are not equal */
-    if (strcmp(sig1, sig2) == 0) return 1;
+    if (strcmp(sig1, sig2) == 0)
+        return 1;
 
     /* For some reason compiler-generated signatures contain numbers that
      * are not used by the runtime. These are irrelevant for our comparison
@@ -1398,7 +1277,6 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
     }
     return strcmp(buf1, buf2) == 0;
 }
-
 
 PyObject*
 PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
@@ -1421,7 +1299,8 @@ PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
     for (i = 0; i < len; i++) {
         PyObject* v = PySequence_Fast_GET_ITEM(seq, i);
 
-        if (!PyObjCSelector_Check(v)) continue;
+        if (!PyObjCSelector_Check(v))
+            continue;
 
         if (PyObjCSelector_GetSelector(v) == selector) {
             Py_DECREF(seq);
@@ -1448,7 +1327,7 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 
     if (PyObjC_IsPythonKeyword(buf)) {
         res = snprintf(buf, buflen, "%s__", sel_getName(sel));
-        if (res != 2+strlen(sel_getName(sel))) {
+        if (res != 2 + strlen(sel_getName(sel))) {
             return NULL;
         }
         return buf;
@@ -1462,8 +1341,6 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
     return buf;
 }
 
-
-#if PY_MAJOR_VERSION == 3
 PyObject*
 PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
 {
@@ -1478,4 +1355,3 @@ PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
 
     return result;
 }
-#endif

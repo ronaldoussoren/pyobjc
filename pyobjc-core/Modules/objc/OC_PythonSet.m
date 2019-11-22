@@ -1,6 +1,5 @@
 #include "pyobjc.h"
 
-
 @implementation OC_PythonSet
 
 + (instancetype)setWithPythonObject:(PyObject*)v
@@ -15,13 +14,14 @@
 - (id)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
-    if (unlikely(self == nil)) return nil;
+    if (unlikely(self == nil))
+        return nil;
 
     SET_FIELD_INCREF(value, v);
     return self;
 }
 
--(PyObject*)__pyobjc_PythonObject__
+- (PyObject*)__pyobjc_PythonObject__
 {
     if (unlikely(value == NULL)) {
         PyErr_SetString(PyObjCExc_InternalError, "NULL OC_PythonSet");
@@ -31,22 +31,24 @@
     return value;
 }
 
--(PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     Py_XINCREF(value);
     return value;
 }
 
--(BOOL)supportsWeakPointers {
+- (BOOL)supportsWeakPointers
+{
     return YES;
 }
 
-+ (BOOL)supportsSecureCoding {
++ (BOOL)supportsSecureCoding
+{
     return NO;
 }
 
--(oneway void)release
+- (oneway void)release
 {
     /* See comment in OC_PythonUnicode */
     if (unlikely(!Py_IsInitialized())) {
@@ -60,7 +62,7 @@
     PyObjC_END_WITH_GIL
 }
 
--(void)dealloc
+- (void)dealloc
 {
     if (unlikely(!Py_IsInitialized())) {
         [super dealloc];
@@ -76,10 +78,9 @@
     [super dealloc];
 }
 
-
 /* NSCoding support */
 
--(Class)classForCoder
+- (Class)classForCoder
 {
     if (PyFrozenSet_CheckExact(value)) {
         return [NSSet class];
@@ -90,7 +91,7 @@
     }
 }
 
--(Class)classForKeyedArchiver
+- (Class)classForKeyedArchiver
 {
     return [OC_PythonSet class];
 }
@@ -124,12 +125,11 @@
     }
 }
 
-
 /*
  * Helper method for initWithCoder, needed to deal with
  * recursive objects (e.g. o.value = o)
  */
--(void)pyobjcSetValue:(NSObject*)other
+- (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* v = PyObjC_IdToPython(other);
@@ -149,7 +149,7 @@
                 cur = Py_None;
                 Py_INCREF(Py_None);
             } else {
-                    cur = PyObjC_IdToPython(objects[i]);
+                cur = PyObjC_IdToPython(objects[i]);
                 if (cur == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
@@ -179,16 +179,18 @@
     }
 
     if (code == 1) {
-        //value = PyFrozenSet_New(NULL);
+        // value = PyFrozenSet_New(NULL);
         PyObjC_BEGIN_WITH_GIL
             value = PySet_New(NULL);
         PyObjC_END_WITH_GIL
 
         result = [super initWithCoder:coder];
-        if (result != nil) {
+        PyObjC_Assert(result == self, nil);
+        self = result;
+        if (self != nil) {
             Py_TYPE(value) = &PyFrozenSet_Type;
         }
-        return result;
+        return self;
     } else if (code == 2) {
         PyObjC_BEGIN_WITH_GIL
             value = PySet_New(NULL);
@@ -230,17 +232,15 @@
 
     } else {
         [NSException raise:NSInvalidArgumentException
-                format:@"decoding Python objects is not supported"];
+                    format:@"decoding Python objects is not supported"];
         return nil;
-
     }
 }
-
 
 /*
  * Implementation of the NSMutableSet interface
  */
--(id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone*)zone
 {
     NSObject* result;
 
@@ -265,13 +265,12 @@
         return result;
 
     } else {
-        [NSException raise:NSInvalidArgumentException
-                    format:@"cannot copy python set"];
+        [NSException raise:NSInvalidArgumentException format:@"cannot copy python set"];
         return nil;
     }
 }
 
--(id)mutableCopyWithZone:(NSZone*)zone
+- (id)mutableCopyWithZone:(NSZone*)zone
 {
     NSObject* result;
 
@@ -296,7 +295,7 @@
     return result;
 }
 
--(NSArray*)allObjects
+- (NSArray*)allObjects
 {
     NSArray* result;
 
@@ -317,7 +316,7 @@
     return result;
 }
 
--(NSObject*)anyObject
+- (NSObject*)anyObject
 {
     NSObject* result;
 
@@ -352,7 +351,7 @@
     return result;
 }
 
--(BOOL)containsObject:(id)anObject
+- (BOOL)containsObject:(id)anObject
 {
     int r;
     PyObjC_BEGIN_WITH_GIL
@@ -376,10 +375,10 @@
 
     PyObjC_END_WITH_GIL
 
-    return r?YES:NO;
+    return r ? YES : NO;
 }
 
--(NSUInteger)count
+- (NSUInteger)count
 {
     Py_ssize_t result;
 
@@ -394,7 +393,7 @@
     return (NSUInteger)result;
 }
 
--(NSEnumerator*)objectEnumerator
+- (NSEnumerator*)objectEnumerator
 {
     NSEnumerator* result;
     PyObjC_BEGIN_WITH_GIL
@@ -414,7 +413,7 @@
 /* It seems impossible to create an efficient implementation of this method,
  * iteration is basicly the only way to fetch the requested object
  */
--(id)member:(id)anObject
+- (id)member:(id)anObject
 {
     NSObject* result = nil;
 
@@ -454,7 +453,6 @@
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-
             while ((v = PyIter_Next(tmp)) != NULL) {
                 r = PyObject_RichCompareBool(v, tmpMember, Py_EQ);
                 if (r == -1) {
@@ -487,17 +485,16 @@
     return result;
 }
 
--(void)removeAllObjects
+- (void)removeAllObjects
 {
     PyObjC_BEGIN_WITH_GIL
         if (PyFrozenSet_CheckExact(value)) {
-            PyErr_SetString(PyExc_TypeError,
-                "Cannot mutate a frozenstring");
+            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenstring");
             PyObjC_GIL_FORWARD_EXC();
         }
 
         if (PyAnySet_Check(value)) {
-            int r = PySet_Clear(value);\
+            int r = PySet_Clear(value);
             if (r == -1) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -505,18 +502,18 @@
             /* Assume an object that conforms to
              * the set interface
              */
-             PyObject* r;
+            PyObject* r;
 
-             r = PyObject_CallMethod(value, "clear", NULL);
-             if (r == NULL) {
-                 PyObjC_GIL_FORWARD_EXC();
-             }
-             Py_DECREF(r);
+            r = PyObject_CallMethod(value, "clear", NULL);
+            if (r == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            Py_DECREF(r);
         }
     PyObjC_END_WITH_GIL
 }
 
--(void)removeObject:(id)anObject
+- (void)removeObject:(id)anObject
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* tmp = PyObjC_IdToPython(anObject);
@@ -525,8 +522,7 @@
         }
 
         if (PyFrozenSet_CheckExact(value)) {
-            PyErr_SetString(PyExc_TypeError,
-                "Cannot mutate a frozenstring");
+            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenstring");
             PyObjC_GIL_FORWARD_EXC();
         }
 
@@ -538,20 +534,20 @@
             }
 
         } else {
-             PyObject* r;
+            PyObject* r;
 
-             r = PyObject_CallMethod(value, "discard", "O", tmp);
-             Py_DECREF(tmp);
-             if (r == NULL) {
-                 PyObjC_GIL_FORWARD_EXC();
-             }
-             Py_DECREF(r);
+            r = PyObject_CallMethod(value, "discard", "O", tmp);
+            Py_DECREF(tmp);
+            if (r == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            Py_DECREF(r);
         }
 
     PyObjC_END_WITH_GIL
 }
 
--(void)addObject:(id)anObject
+- (void)addObject:(id)anObject
 {
     PyObjC_BEGIN_WITH_GIL
         PyObject* tmp = PyObjC_IdToPython(anObject);
@@ -560,8 +556,7 @@
         }
 
         if (PyFrozenSet_CheckExact(value)) {
-            PyErr_SetString(PyExc_TypeError,
-                "Cannot mutate a frozenstring");
+            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenstring");
             PyObjC_GIL_FORWARD_EXC();
         }
 
@@ -573,20 +568,20 @@
             }
 
         } else {
-             PyObject* r;
+            PyObject* r;
 
-             r = PyObject_CallMethod(value, "add", "O", tmp);
-             Py_DECREF(tmp);
-             if (r == NULL) {
-                 PyObjC_GIL_FORWARD_EXC();
-             }
-             Py_DECREF(r);
+            r = PyObject_CallMethod(value, "add", "O", tmp);
+            Py_DECREF(tmp);
+            if (r == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            Py_DECREF(r);
         }
 
     PyObjC_END_WITH_GIL
 }
 
-+(NSArray*)classFallbacksForKeyedArchiver
++ (NSArray*)classFallbacksForKeyedArchiver
 {
     return [NSArray arrayWithObject:@"NSSet"];
 }

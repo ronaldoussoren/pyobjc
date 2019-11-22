@@ -5,8 +5,7 @@ import os
 from Foundation import NSURL
 
 
-
-class TestURL (TestCase):
+class TestURL(TestCase):
     def testTypes(self):
         self.assertIs(CFURLRef, NSURL)
 
@@ -20,18 +19,26 @@ class TestURL (TestCase):
         ref = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, None)
         self.assertIsInstance(ref, CFURLRef)
 
-        strval =  CFURLGetString(ref)
+        strval = CFURLGetString(ref)
         self.assertEqual(strval, unicode(url, "utf-8"))
 
         ref2 = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, ref)
         self.assertIsInstance(ref2, CFURLRef)
 
-        a = array.array('b', b'http://www.nu.nl/')
+        a = array.array("b", b"http://www.nu.nl/")
         ref3 = CFURLCreateWithBytes(None, a, len(a), kCFStringEncodingUTF8, None)
         self.assertIsInstance(ref3, CFURLRef)
 
         # Explictely test for unicode's buffer madness.
-        self.assertRaises((ValueError, TypeError), CFURLCreateWithBytes, None, unicode(url), len(url), kCFStringEncodingUTF8, None)
+        self.assertRaises(
+            (ValueError, TypeError),
+            CFURLCreateWithBytes,
+            None,
+            unicode(url),
+            len(url),
+            kCFStringEncodingUTF8,
+            None,
+        )
 
     def testCreateData(self):
         url = b"http://www.omroep.nl/ blank"
@@ -42,157 +49,178 @@ class TestURL (TestCase):
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, False)
         self.assertIsInstance(data, CFDataRef)
         val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
-        self.assertEqual(val, url.replace(b' ', b'%20'))
+        self.assertEqual(val, url.replace(b" ", b"%20"))
 
         data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, True)
         self.assertIsInstance(data, CFDataRef)
         val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
-        self.assertEqual(val, url.replace(b' ', b'%20'))
+        self.assertEqual(val, url.replace(b" ", b"%20"))
 
     def testCreateWithString(self):
-        url = b"http://www.omroep.nl/".decode('ascii')
+        url = b"http://www.omroep.nl/".decode("ascii")
 
         ref = CFURLCreateWithString(None, url, None)
         self.assertIsInstance(ref, CFURLRef)
 
-        strval =  CFURLGetString(ref)
+        strval = CFURLGetString(ref)
         self.assertEqual(strval, url)
 
         ref2 = CFURLCreateWithString(None, url, ref)
         self.assertIsInstance(ref2, CFURLRef)
 
     def testCreateAbsolute(self):
-        url = b"http://www.omroep.nl/sport/".decode('ascii')
+        url = b"http://www.omroep.nl/sport/".decode("ascii")
         baseref = CFURLCreateWithString(None, url, None)
 
-        self.assertArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, b'n^v')
+        self.assertArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, b"n^v")
         self.assertArgSizeInArg(CFURLCreateAbsoluteURLWithBytes, 1, 2)
-        ref = CFURLCreateAbsoluteURLWithBytes(None, b"socker", len(b"socker"), kCFStringEncodingUTF8, baseref, True)
+        ref = CFURLCreateAbsoluteURLWithBytes(
+            None, b"socker", len(b"socker"), kCFStringEncodingUTF8, baseref, True
+        )
         self.assertIsInstance(ref, CFURLRef)
 
-        strval =  CFURLGetString(ref)
-        self.assertEqual(strval, b"http://www.omroep.nl/sport/socker".decode('ascii'))
+        strval = CFURLGetString(ref)
+        self.assertEqual(strval, b"http://www.omroep.nl/sport/socker".decode("ascii"))
 
         relpath = b"../../../dummy"
-        ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, True)
+        ref = CFURLCreateAbsoluteURLWithBytes(
+            None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, True
+        )
         self.assertIsInstance(ref, CFURLRef)
-        strval =  CFURLGetString(ref)
-        self.assertEqual(strval, b"http://www.omroep.nl/dummy".decode('ascii'))
+        strval = CFURLGetString(ref)
+        self.assertEqual(strval, b"http://www.omroep.nl/dummy".decode("ascii"))
 
         relpath = b"../../../dummy"
-        ref = CFURLCreateAbsoluteURLWithBytes(None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, False)
+        ref = CFURLCreateAbsoluteURLWithBytes(
+            None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, False
+        )
         self.assertIsInstance(ref, CFURLRef)
-        strval =  CFURLGetString(ref)
-        self.assertEqual(strval, b"http://www.omroep.nl/../../dummy".decode('ascii'))
-
+        strval = CFURLGetString(ref)
+        self.assertEqual(strval, b"http://www.omroep.nl/../../dummy".decode("ascii"))
 
     def testCopyAbs(self):
         # CFURLCopyAbsoluteURL
-        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode('ascii'), None)
+        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode("ascii"), None)
         self.assertIsInstance(base, CFURLRef)
 
-        ref = CFURLCreateWithString(None, b"/sport".decode('ascii'), base)
+        ref = CFURLCreateWithString(None, b"/sport".decode("ascii"), base)
         self.assertIsInstance(ref, CFURLRef)
 
-        self.assertEqual(CFURLGetString(ref) , b"/sport".decode('ascii') )
+        self.assertEqual(CFURLGetString(ref), b"/sport".decode("ascii"))
         abs = CFURLCopyAbsoluteURL(ref)
         self.assertIsInstance(abs, CFURLRef)
-        self.assertEqual(CFURLGetString(abs) , b"http://www.omroep.nl/sport".decode('ascii') )
+        self.assertEqual(
+            CFURLGetString(abs), b"http://www.omroep.nl/sport".decode("ascii")
+        )
 
     def testPaths(self):
-        url = CFURLCreateWithFileSystemPath(None,
-                b"/tmp/".decode('ascii'), kCFURLPOSIXPathStyle, True)
+        url = CFURLCreateWithFileSystemPath(
+            None, b"/tmp/".decode("ascii"), kCFURLPOSIXPathStyle, True
+        )
         self.assertIsInstance(url, CFURLRef)
         self.assertTrue(CFURLHasDirectoryPath(url))
 
-        url = CFURLCreateWithFileSystemPath(None,
-                b"/etc/hosts".decode('ascii'), kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, b"/etc/hosts".decode("ascii"), kCFURLPOSIXPathStyle, False
+        )
         self.assertIsInstance(url, CFURLRef)
         self.assertFalse(CFURLHasDirectoryPath(url))
 
-        p = os.path.expanduser('~')
-        p = p.encode('utf-8')
-        self.assertArgHasType(CFURLCreateFromFileSystemRepresentation, 1, b'n^t')
+        p = os.path.expanduser("~")
+        p = p.encode("utf-8")
+        self.assertArgHasType(CFURLCreateFromFileSystemRepresentation, 1, b"n^t")
         self.assertArgIsNullTerminated(CFURLCreateFromFileSystemRepresentation, 1)
-        url = CFURLCreateFromFileSystemRepresentation(None,
-                p, len(p), True)
+        url = CFURLCreateFromFileSystemRepresentation(None, p, len(p), True)
         self.assertIsInstance(url, CFURLRef)
-        self.assertRaises((ValueError, TypeError),
-            CFURLCreateFromFileSystemRepresentation, None,
-                b"/tmp/".decode('ascii'), 4, True)
+        self.assertRaises(
+            (ValueError, TypeError),
+            CFURLCreateFromFileSystemRepresentation,
+            None,
+            b"/tmp/".decode("ascii"),
+            4,
+            True,
+        )
 
-        base = CFURLCreateWithFileSystemPath(None,
-                b"/tmp".decode('ascii'), kCFURLPOSIXPathStyle, True)
+        base = CFURLCreateWithFileSystemPath(
+            None, b"/tmp".decode("ascii"), kCFURLPOSIXPathStyle, True
+        )
         self.assertIsInstance(base, CFURLRef)
 
         self.assertArgIsBOOL(CFURLCreateWithFileSystemPathRelativeToBase, 3)
-        url = CFURLCreateWithFileSystemPathRelativeToBase(None,
-                b"filename".decode('ascii'), kCFURLPOSIXPathStyle, True, base)
+        url = CFURLCreateWithFileSystemPathRelativeToBase(
+            None, b"filename".decode("ascii"), kCFURLPOSIXPathStyle, True, base
+        )
         self.assertIsInstance(url, CFURLRef)
 
-        strval =  CFURLGetString(url)
-        self.assertEqual(strval, b"filename/".decode('ascii'))
-
+        strval = CFURLGetString(url)
+        self.assertEqual(strval, b"filename/".decode("ascii"))
 
         self.assertArgIsBOOL(CFURLCreateFromFileSystemRepresentationRelativeToBase, 3)
-        url = CFURLCreateFromFileSystemRepresentationRelativeToBase(None,
-                b"filename2", 9, False, base)
+        url = CFURLCreateFromFileSystemRepresentationRelativeToBase(
+            None, b"filename2", 9, False, base
+        )
         self.assertIsInstance(url, CFURLRef)
-        strval =  CFURLGetString(url)
-        self.assertEqual(strval, b"filename2".decode('ascii'))
+        strval = CFURLGetString(url)
+        self.assertEqual(strval, b"filename2".decode("ascii"))
 
         ok, strval = CFURLGetFileSystemRepresentation(url, True, None, 100)
         self.assertTrue(ok)
 
         # Unfortunately metadata doesn't allow describing what we actually need
-        if b'\0' in strval:
-            strval = strval[:strval.index(b'\0')]
+        if b"\0" in strval:
+            strval = strval[: strval.index(b"\0")]
         self.assertEqual(strval, b"/tmp/filename2")
 
     def testParts(self):
-        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode('ascii'), None)
+        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode("ascii"), None)
         self.assertIsInstance(base, CFURLRef)
 
-        ref = CFURLCreateWithString(None, b"/sport".decode('ascii'), base)
+        ref = CFURLCreateWithString(None, b"/sport".decode("ascii"), base)
         self.assertIsInstance(ref, CFURLRef)
 
         self.assertEqual(CFURLGetBaseURL(base), None)
         self.assertEqual(CFURLGetBaseURL(ref), base)
         self.assertTrue(CFURLCanBeDecomposed(ref) is True)
 
-        self.assertEqual(CFURLCopyScheme(ref), b"http".decode('ascii'))
-        self.assertEqual(CFURLCopyNetLocation(ref), b"www.omroep.nl".decode('ascii'))
-        self.assertEqual(CFURLCopyPath(ref), b"/sport".decode('ascii'))
+        self.assertEqual(CFURLCopyScheme(ref), b"http".decode("ascii"))
+        self.assertEqual(CFURLCopyNetLocation(ref), b"www.omroep.nl".decode("ascii"))
+        self.assertEqual(CFURLCopyPath(ref), b"/sport".decode("ascii"))
 
         path, isDir = CFURLCopyStrictPath(ref, None)
-        self.assertEqual(path, b"sport".decode('ascii'))
+        self.assertEqual(path, b"sport".decode("ascii"))
         self.assertEqual(isDir, True)
 
         path = CFURLCopyFileSystemPath(ref, kCFURLPOSIXPathStyle)
-        self.assertEqual(path, b"/sport".decode('ascii'))
+        self.assertEqual(path, b"/sport".decode("ascii"))
 
         path = CFURLCopyFileSystemPath(ref, kCFURLPOSIXPathStyle)
-        self.assertEqual(path, b"/sport".decode('ascii'))
+        self.assertEqual(path, b"/sport".decode("ascii"))
         path = CFURLCopyFileSystemPath(ref, kCFURLWindowsPathStyle)
-        self.assertEqual(path, b"\\sport".decode('ascii'))
+        self.assertEqual(path, b"\\sport".decode("ascii"))
 
         self.assertFalse(CFURLHasDirectoryPath(ref))
 
-        v =  CFURLCopyResourceSpecifier(ref)
+        v = CFURLCopyResourceSpecifier(ref)
         self.assertEqual(v, None)
 
-        v =  CFURLCopyHostName(ref)
+        v = CFURLCopyHostName(ref)
         self.assertEqual(v, "www.omroep.nl")
 
-        v =  CFURLGetPortNumber(ref)
+        v = CFURLGetPortNumber(ref)
         self.assertEqual(v, -1)
 
-        ref = CFURLCreateWithString(None, b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor".decode('ascii'), None)
-        v =  CFURLGetPortNumber(ref)
+        ref = CFURLCreateWithString(
+            None,
+            b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor".decode(
+                "ascii"
+            ),
+            None,
+        )
+        v = CFURLGetPortNumber(ref)
         self.assertEqual(v, 42)
 
         v = CFURLCopyResourceSpecifier(ref)
-        self.assertEqual(v, b"?qs=1#anchor".decode('ascii'))
+        self.assertEqual(v, b"?qs=1#anchor".decode("ascii"))
 
         v = CFURLCopyUserName(ref)
         self.assertEqual(v, "ronald")
@@ -214,8 +242,9 @@ class TestURL (TestCase):
 
         cnt, bytes = CFURLGetBytes(ref, None, 100)
         self.assertEqual(cnt, 62)
-        self.assertEqual(bytes,
-                b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor")
+        self.assertEqual(
+            bytes, b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor"
+        )
 
         cnt, bytes = CFURLGetBytes(ref, objc.NULL, 0)
         self.assertEqual(cnt, 62)
@@ -225,34 +254,35 @@ class TestURL (TestCase):
         self.assertIsInstance(rng1, CFRange)
         self.assertIsInstance(rng2, CFRange)
 
-
     def testUpdating(self):
-        base = CFURLCreateWithString(None, b"http://www.omroep.nl/sport".decode('ascii'), None)
+        base = CFURLCreateWithString(
+            None, b"http://www.omroep.nl/sport".decode("ascii"), None
+        )
         self.assertIsInstance(base, CFURLRef)
 
         url = CFURLCreateCopyAppendingPathComponent(None, base, "soccer", True)
         self.assertIsInstance(url, CFURLRef)
 
-        strval =  CFURLGetString(url)
+        strval = CFURLGetString(url)
         self.assertEqual(strval, "http://www.omroep.nl/sport/soccer/")
 
         url = CFURLCreateCopyDeletingLastPathComponent(None, base)
         self.assertIsInstance(url, CFURLRef)
-        strval =  CFURLGetString(url)
+        strval = CFURLGetString(url)
         self.assertEqual(strval, "http://www.omroep.nl/")
 
         url = CFURLCreateCopyAppendingPathExtension(None, base, "cgi")
         self.assertIsInstance(url, CFURLRef)
-        strval =  CFURLGetString(url)
+        strval = CFURLGetString(url)
         self.assertEqual(strval, "http://www.omroep.nl/sport.cgi")
 
         url2 = CFURLCreateCopyDeletingPathExtension(None, base)
         self.assertIsInstance(url2, CFURLRef)
-        strval =  CFURLGetString(url2)
+        strval = CFURLGetString(url2)
         self.assertEqual(strval, "http://www.omroep.nl/sport")
 
     def testStringEncoding(self):
-        base = b"http://www.omroep.nl/sport%20en%20%73%70el".decode('ascii')
+        base = b"http://www.omroep.nl/sport%20en%20%73%70el".decode("ascii")
 
         strval = CFURLCreateStringByReplacingPercentEscapes(None, base, objc.NULL)
         self.assertEqual(strval, "http://www.omroep.nl/sport%20en%20%73%70el")
@@ -263,17 +293,24 @@ class TestURL (TestCase):
         strval = CFURLCreateStringByReplacingPercentEscapes(None, base, " ")
         self.assertEqual(strval, "http://www.omroep.nl/sport%20en%20spel")
 
-        strval = CFURLCreateStringByReplacingPercentEscapesUsingEncoding(None, base, "", kCFStringEncodingISOLatin1)
+        strval = CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
+            None, base, "", kCFStringEncodingISOLatin1
+        )
         self.assertEqual(strval, "http://www.omroep.nl/sport en spel")
 
-
-        base = b"http://www.omroep.nl/sport en spel".decode('ascii')
-        strval = CFURLCreateStringByAddingPercentEscapes(None, base, "", "",
-                kCFStringEncodingISOLatin1)
-        self.assertEqual(strval, b"http://www.omroep.nl/sport%20en%20spel".decode('ascii'))
-        strval = CFURLCreateStringByAddingPercentEscapes(None, base, " ", "s",
-                kCFStringEncodingISOLatin1)
-        self.assertEqual(strval, b"http://www.omroep.nl/%73port en %73pel".decode('ascii'))
+        base = b"http://www.omroep.nl/sport en spel".decode("ascii")
+        strval = CFURLCreateStringByAddingPercentEscapes(
+            None, base, "", "", kCFStringEncodingISOLatin1
+        )
+        self.assertEqual(
+            strval, b"http://www.omroep.nl/sport%20en%20spel".decode("ascii")
+        )
+        strval = CFURLCreateStringByAddingPercentEscapes(
+            None, base, " ", "s", kCFStringEncodingISOLatin1
+        )
+        self.assertEqual(
+            strval, b"http://www.omroep.nl/%73port en %73pel".decode("ascii")
+        )
 
     def testFSRef(self):
         ref = CFURLCreateWithFileSystemPath(None, os.getcwd(), kCFURLPOSIXPathStyle, True)
@@ -305,14 +342,17 @@ class TestURL (TestCase):
         self.assertEqual(kCFURLComponentQuery, 11)
         self.assertEqual(kCFURLComponentFragment, 12)
 
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testFunctions10_6(self):
         fp = open("/tmp/pyobjc.test", "w")
         fp.close()
         try:
-            baseURL = CFURLCreateWithFileSystemPath(None,
-                os.path.realpath(b"/tmp/pyobjc.test".decode('ascii')),
-                kCFURLPOSIXPathStyle, False)
+            baseURL = CFURLCreateWithFileSystemPath(
+                None,
+                os.path.realpath(b"/tmp/pyobjc.test".decode("ascii")),
+                kCFURLPOSIXPathStyle,
+                False,
+            )
             self.assertIsInstance(baseURL, CFURLRef)
 
             self.assertResultIsCFRetained(CFURLCreateFileReferenceURL)
@@ -329,100 +369,139 @@ class TestURL (TestCase):
             self.assertArgIsCFRetained(CFURLCopyResourcePropertyForKey, 2)
             self.assertArgIsOut(CFURLCopyResourcePropertyForKey, 2)
             self.assertArgIsOut(CFURLCopyResourcePropertyForKey, 3)
-            ok, value, error = CFURLCopyResourcePropertyForKey(url, kCFURLNameKey, None, None)
+            ok, value, error = CFURLCopyResourcePropertyForKey(
+                url, kCFURLNameKey, None, None
+            )
             self.assertTrue(ok)
             self.assertIsInstance(value, unicode)
             self.assertEqual(error, None)
 
-            ok, value, error = CFURLCopyResourcePropertyForKey(url, kCFURLIsRegularFileKey, None, None)
+            ok, value, error = CFURLCopyResourcePropertyForKey(
+                url, kCFURLIsRegularFileKey, None, None
+            )
             self.assertTrue(ok)
             self.assertIsInstance(value, bool)
             self.assertEqual(error, None)
 
-
             self.assertResultIsCFRetained(CFURLCreateFilePathURL)
             self.assertArgIsOut(CFURLCopyResourcePropertyForKey, 2)
-            values, error = CFURLCopyResourcePropertiesForKeys(url, [kCFURLNameKey, kCFURLIsRegularFileKey], None)
+            values, error = CFURLCopyResourcePropertiesForKeys(
+                url, [kCFURLNameKey, kCFURLIsRegularFileKey], None
+            )
             self.assertIsInstance(values, CFDictionaryRef)
             self.assertEqual(error, None)
 
             CFURLClearResourcePropertyCacheForKey(url, kCFURLIsRegularFileKey)
             CFURLClearResourcePropertyCache(url)
             self.assertResultIsBOOL(CFURLResourceIsReachable)
-            v, err= CFURLResourceIsReachable(url, None)
+            v, err = CFURLResourceIsReachable(url, None)
             self.assertIsInstance(v, bool)
             self.assertEqual(err, None)
 
-            CFURLSetTemporaryResourcePropertyForKey(url, "pyobjc.test", b"hello".decode('ascii'))
+            CFURLSetTemporaryResourcePropertyForKey(
+                url, "pyobjc.test", b"hello".decode("ascii")
+            )
             ok, v, err = CFURLCopyResourcePropertyForKey(url, "pyobjc.test", None, None)
             self.assertTrue(ok)
-            self.assertEqual(v, b"hello".decode('ascii'))
+            self.assertEqual(v, b"hello".decode("ascii"))
 
-            ok, cur, err = CFURLCopyResourcePropertyForKey(url, kCFURLIsHiddenKey, None, None)
+            ok, cur, err = CFURLCopyResourcePropertyForKey(
+                url, kCFURLIsHiddenKey, None, None
+            )
             self.assertTrue(ok)
 
-            ok, err = CFURLSetResourcePropertyForKey(url, kCFURLIsHiddenKey, not cur, None)
+            ok, err = CFURLSetResourcePropertyForKey(
+                url, kCFURLIsHiddenKey, not cur, None
+            )
             self.assertTrue(ok)
 
-            ok, new, err = CFURLCopyResourcePropertyForKey(url, kCFURLIsHiddenKey, None, None)
+            ok, new, err = CFURLCopyResourcePropertyForKey(
+                url, kCFURLIsHiddenKey, None, None
+            )
             self.assertTrue(ok)
             self.assertEqual(new, not cur)
             self.assertEqual(err, None)
 
-            ok, err = CFURLSetResourcePropertiesForKeys(url, {kCFURLIsHiddenKey:cur}, None)
+            ok, err = CFURLSetResourcePropertiesForKeys(
+                url, {kCFURLIsHiddenKey: cur}, None
+            )
             self.assertTrue(ok)
             self.assertEqual(err, None)
 
-            ok, new, err = CFURLCopyResourcePropertyForKey(url, kCFURLIsHiddenKey, None, None)
+            ok, new, err = CFURLCopyResourcePropertyForKey(
+                url, kCFURLIsHiddenKey, None, None
+            )
             self.assertTrue(ok)
             self.assertEqual(new, cur)
             self.assertEqual(err, None)
 
             self.assertResultIsCFRetained(CFURLCreateBookmarkData)
-            data, err = CFURLCreateBookmarkData(None, url, kCFURLBookmarkCreationSuitableForBookmarkFile, [kCFURLNameKey, kCFURLIsHiddenKey], None, None)
+            data, err = CFURLCreateBookmarkData(
+                None,
+                url,
+                kCFURLBookmarkCreationSuitableForBookmarkFile,
+                [kCFURLNameKey, kCFURLIsHiddenKey],
+                None,
+                None,
+            )
             self.assertIs(err, None)
             self.assertIsInstance(data, CFDataRef)
 
             self.assertResultIsCFRetained(CFURLCreateByResolvingBookmarkData)
-            u, stale, err = CFURLCreateByResolvingBookmarkData(None, data, 0, None, None, None, None)
+            u, stale, err = CFURLCreateByResolvingBookmarkData(
+                None, data, 0, None, None, None, None
+            )
             self.assertEqual(u, url)
             self.assertIsInstance(stale, bool)
             self.assertFalse(stale)
             self.assertIs(err, None)
-            self.assertResultIsCFRetained(CFURLCreateResourcePropertiesForKeysFromBookmarkData)
-            v = CFURLCreateResourcePropertiesForKeysFromBookmarkData(None, [kCFURLNameKey], data)
+            self.assertResultIsCFRetained(
+                CFURLCreateResourcePropertiesForKeysFromBookmarkData
+            )
+            v = CFURLCreateResourcePropertiesForKeysFromBookmarkData(
+                None, [kCFURLNameKey], data
+            )
             self.assertIsInstance(v, CFDictionaryRef)
 
-            self.assertResultIsCFRetained(CFURLCreateResourcePropertyForKeyFromBookmarkData)
-            v = CFURLCreateResourcePropertyForKeyFromBookmarkData(None, kCFURLNameKey, data)
+            self.assertResultIsCFRetained(
+                CFURLCreateResourcePropertyForKeyFromBookmarkData
+            )
+            v = CFURLCreateResourcePropertyForKeyFromBookmarkData(
+                None, kCFURLNameKey, data
+            )
             self.assertIsInstance(v, unicode)
 
-            refURL = CFURLCreateWithFileSystemPath(None,
-                b"/tmp/pyobjc.test.2".decode('ascii'), kCFURLPOSIXPathStyle, False)
+            refURL = CFURLCreateWithFileSystemPath(
+                None, b"/tmp/pyobjc.test.2".decode("ascii"), kCFURLPOSIXPathStyle, False
+            )
             ok, err = CFURLWriteBookmarkDataToFile(data, refURL, 0, None)
             self.assertTrue(ok)
             self.assertIs(err, None)
-            self.assertTrue(os.path.exists('/tmp/pyobjc.test.2'))
+            self.assertTrue(os.path.exists("/tmp/pyobjc.test.2"))
 
             self.assertResultIsCFRetained(CFURLCreateBookmarkDataFromFile)
             n, err = CFURLCreateBookmarkDataFromFile(None, refURL, None)
             self.assertIsInstance(n, CFDataRef)
             self.assertIs(err, None)
             self.assertResultIsCFRetained(CFURLCreateBookmarkDataFromAliasRecord)
-            self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 0, b'^{__CFAllocator=}')
-            self.assertArgHasType(CFURLCreateBookmarkDataFromAliasRecord, 1, b'^{__CFData=}')
+            self.assertArgHasType(
+                CFURLCreateBookmarkDataFromAliasRecord, 0, b"^{__CFAllocator=}"
+            )
+            self.assertArgHasType(
+                CFURLCreateBookmarkDataFromAliasRecord, 1, b"^{__CFData=}"
+            )
 
         finally:
-            os.unlink('/tmp/pyobjc.test')
-            if os.path.exists('/tmp/pyobjc.test.2'):
-                os.unlink('/tmp/pyobjc.test.2')
+            os.unlink("/tmp/pyobjc.test")
+            if os.path.exists("/tmp/pyobjc.test.2"):
+                os.unlink("/tmp/pyobjc.test.2")
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testFunctions10_8(self):
         self.assertResultIsBOOL(CFURLStartAccessingSecurityScopedResource)
         CFURLStopAccessingSecurityScopedResource
 
-    @min_os_level('10.8')
+    @min_os_level("10.8")
     def testConstants10_8(self):
         self.assertIsInstance(kCFURLIsExcludedFromBackupKey, unicode)
 
@@ -432,7 +511,7 @@ class TestURL (TestCase):
         self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
         self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1 << 10)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(kCFURLTagNamesKey, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusKey, unicode)
@@ -442,20 +521,19 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusDownloaded, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusCurrent, unicode)
 
-    @min_os_level('10.10')
+    @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(kCFURLGenerationIdentifierKey, unicode)
         self.assertIsInstance(kCFURLDocumentIdentifierKey, unicode)
         self.assertIsInstance(kCFURLAddedToDirectoryDateKey, unicode)
         self.assertIsInstance(kCFURLQuarantinePropertiesKey, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(kCFURLIsApplicationKey, unicode)
         self.assertIsInstance(kCFURLApplicationIsScriptableKey, unicode)
 
-
-    @min_os_level('10.6')
+    @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(kCFURLNameKey, unicode)
         self.assertIsInstance(kCFURLLocalizedNameKey, unicode)
@@ -499,20 +577,20 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLVolumeSupportsCaseSensitiveNamesKey, unicode)
         self.assertIsInstance(kCFURLVolumeSupportsCasePreservedNamesKey, unicode)
 
-        self.assertEqual(kCFURLBookmarkCreationPreferFileIDResolutionMask, 1<<8)
-        self.assertEqual(kCFURLBookmarkCreationMinimalBookmarkMask, 1<<9)
-        self.assertEqual(kCFURLBookmarkCreationSuitableForBookmarkFile, 1<<10)
-        self.assertEqual(kCFBookmarkResolutionWithoutUIMask, 1<<8)
-        self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1<<9)
+        self.assertEqual(kCFURLBookmarkCreationPreferFileIDResolutionMask, 1 << 8)
+        self.assertEqual(kCFURLBookmarkCreationMinimalBookmarkMask, 1 << 9)
+        self.assertEqual(kCFURLBookmarkCreationSuitableForBookmarkFile, 1 << 10)
+        self.assertEqual(kCFBookmarkResolutionWithoutUIMask, 1 << 8)
+        self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
 
-        self.assertEqual(kCFURLBookmarkResolutionWithoutUIMask, 1<<8)
-        self.assertEqual(kCFURLBookmarkResolutionWithoutMountingMask, 1<<9)
+        self.assertEqual(kCFURLBookmarkResolutionWithoutUIMask, 1 << 8)
+        self.assertEqual(kCFURLBookmarkResolutionWithoutMountingMask, 1 << 9)
 
-    @min_os_level('10.7')
+    @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(kCFURLBookmarkCreationWithSecurityScope, 1<<11)
-        self.assertEqual(kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, 1<<12)
-        self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1<<10)
+        self.assertEqual(kCFURLBookmarkCreationWithSecurityScope, 1 << 11)
+        self.assertEqual(kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, 1 << 12)
+        self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1 << 10)
 
         self.assertIsInstance(kCFURLKeysOfUnsetValuesKey, unicode)
         self.assertIsInstance(kCFURLFileResourceIdentifierKey, unicode)
@@ -561,7 +639,7 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLUbiquitousItemPercentDownloadedKey, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemPercentUploadedKey, unicode)
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(kCFURLVolumeLocalizedNameKey, unicode)
         self.assertIsInstance(kCFURLVolumeIsEncryptedKey, unicode)
@@ -571,17 +649,18 @@ class TestURL (TestCase):
         self.assertIsInstance(kCFURLVolumeSupportsSwapRenamingKey, unicode)
         self.assertIsInstance(kCFURLVolumeSupportsExclusiveRenamingKey, unicode)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(kCFURLVolumeAvailableCapacityForImportantUsageKey, unicode)
-        self.assertIsInstance(kCFURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode)
+        self.assertIsInstance(
+            kCFURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode
+        )
         self.assertIsInstance(kCFURLVolumeSupportsImmutableFilesKey, unicode)
         self.assertIsInstance(kCFURLVolumeSupportsAccessPermissionsKey, unicode)
 
-    @min_os_level('10.9')
+    @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsBOOL(CFURLIsFileReferenceURL)
-
 
 
 if __name__ == "__main__":
