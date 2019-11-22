@@ -95,6 +95,7 @@ FRAMEWORK_WRAPPERS = [
     ("MediaPlayer", "10.12", None),
     ("MediaToolbox", "10.9", None),
     ("Message", None, "10.9"),
+    ("Metal", "10.11", None),
     ("MetalKit", "10.11", None),
     ("ModelIO", "10.11", None),
     ("MultipeerConnectivity", "10.10", None),

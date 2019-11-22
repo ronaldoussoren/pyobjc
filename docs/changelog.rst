@@ -3,6 +3,11 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.2
+-----------
+
+* #264: Added bindings for the Metal framework (new in macOS 10.11)
+
 Version 6.1
 -----------
 

@@ -1,5 +1,5 @@
 """
-Python mapping for the MetalKit framework.
+Python mapping for the Metal framework.
 
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
@@ -8,16 +8,15 @@ documentation for details on how to use these functions and classes.
 import objc
 import sys
 import Foundation
-import Metal
 
-from MetalKit import _metadata
-from MetalKit import _MetalKit
+from Metal import _metadata
+from Metal import _Metal
 
 
-sys.modules["MetalKit"] = mod = objc.ObjCLazyModule(
-    "MetalKit",
-    "com.apple.MetalKit",
-    objc.pathForFramework("/System/Library/Frameworks/MetalKit.framework"),
+sys.modules["Metal"] = mod = objc.ObjCLazyModule(
+    "Metal",
+    "com.apple.Metal",
+    objc.pathForFramework("/System/Library/Frameworks/Metal.framework"),
     _metadata.__dict__,
     None,
     {
@@ -26,9 +25,9 @@ sys.modules["MetalKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Metal, Foundation,),
+    (Foundation,),
 )
 
 import sys
 
-del sys.modules["MetalKit._metadata"]
+del sys.modules["Metal._metadata"]
