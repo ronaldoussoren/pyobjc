@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup, Extension
 
-VERSION = '6.1'
+VERSION = '6.2b1'
 
 setup(
     name="pyobjc-framework-CoreMediaIO",
