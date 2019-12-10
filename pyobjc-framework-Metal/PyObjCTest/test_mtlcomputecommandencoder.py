@@ -2,7 +2,7 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLComputeCommandEncoderHelp (Metal.NSObject):
+class TestMTLComputeCommandEncoderHelper (Metal.NSObject):
     def dispatchType(self): return 1
     def setBytes_length_atIndex_(self, a, b, c): pass
     def setBuffer_offset_atIndex_(self, a, b, c): pass
@@ -28,7 +28,7 @@ class TestMTLComputeCommandEncoder (TestCase):
         objc.protocolNamed('MTLComputeCommandEncoder')
 
     def test_methods(self):
-        self.assertResultHasType(TestMTLComputeCommandEncoderHelper.dispatchType, objc._C_NSUinteger)
+        self.assertResultHasType(TestMTLComputeCommandEncoderHelper.dispatchType, objc._C_NSUInteger)
 
         self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setBytes_length_atIndex_, 0, objc._C_IN + objc._C_PTR + objc._C_VOID)
         self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.setBytes_length_atIndex_, 0, 1)

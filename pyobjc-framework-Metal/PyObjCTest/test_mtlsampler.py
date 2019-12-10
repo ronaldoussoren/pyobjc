@@ -21,7 +21,7 @@ class TestMTLSampler (TestCase):
 
     @min_sdk_level('10.11')
     def test_protocols(self):
-        objc.protocolNameed('MTLSamplerState')
+        objc.protocolNamed('MTLSamplerState')
 
 
     @min_os_level('10.11')

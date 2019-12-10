@@ -43,7 +43,7 @@ class TestMTLHeap (TestCase):
         self.assertResultHasType(TestMTLHeapHelper.setPurgeableState_, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLHeapHelper.setPurgeableState_, 0, objc._C_NSUInteger)
 
-        self.assertResultHasType(TestMTLHeapHelper.type, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLHeapHelper.type, objc._C_NSInteger)
 
         self.assertArgHasType(TestMTLHeapHelper.newBufferWithLength_options_offset_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLHeapHelper.newBufferWithLength_options_offset_, 1, objc._C_NSUInteger)

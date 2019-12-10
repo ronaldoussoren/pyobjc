@@ -42,10 +42,10 @@ class TestMTLRenderPass (TestCase):
 
     @min_os_level('10.11')
     def test_methods10_11(self):
-        self.assertArgIsIn(MTLRenderPassDescriptor.setSamplePositions_count_, 0)
-        self.assertArgSizeInArg(MTLRenderPassDescriptor.setSamplePositions_count_, 0, 1)
+        self.assertArgIsIn(Metal.MTLRenderPassDescriptor.setSamplePositions_count_, 0)
+        self.assertArgSizeInArg(Metal.MTLRenderPassDescriptor.setSamplePositions_count_, 0, 1)
 
-        self.assertArgIsOut(MTLRenderPassDescriptor.getSamplePositions_count_, 0)
-        self.assertArgSizeInArg(MTLRenderPassDescriptor.getSamplePositions_count_, 0, 1)
-        self.assertArgSizeInResult(MTLRenderPassDescriptor.getSamplePositions_count_, 0)
+        self.assertArgIsOut(Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0)
+        self.assertArgSizeInArg(Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0, 1)
+        self.assertArgSizeInResult(Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0)
 

@@ -51,7 +51,7 @@ class TestMTLLibrary (TestCase):
     def test_methods(self):
         self.assertResultHasType(TestMTLLibraryHelper.functionType, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLLibraryHelper.patchType, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLLibraryHelper.patchControlPointCount, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLLibraryHelper.patchControlPointCount, objc._C_NSInteger)
 
         self.assertArgHasType(TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_reflection_, 0, objc._C_NSUInteger)

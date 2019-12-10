@@ -47,8 +47,8 @@ class TestMTLCommandBuffer (TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(TestMTLCommandBufferHelper.retainedReferences)
 
-        self.assertResultHasType(TestMTLCommandBufferHelper.kernelStartTime, Metal.CFTimeInterval.__typestr__)
-        self.assertResultHasType(TestMTLCommandBufferHelper.kernelEndTime, Metal.CFTimeInterval.__typestr__)
+        self.assertResultHasType(TestMTLCommandBufferHelper.kernelStartTime, objc._C_DBL)
+        self.assertResultHasType(TestMTLCommandBufferHelper.kernelEndTime, objc._C_DBL)
 
         self.assertResultHasType(TestMTLCommandBufferHelper.GPUStartTime, objc._C_DBL)
         self.assertResultHasType(TestMTLCommandBufferHelper.GPUEndTime, objc._C_DBL)
