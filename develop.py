@@ -99,7 +99,8 @@ def topological_sort(items, partial_order):
 
 
 def get_os_level():
-    pl = plistlib.readPlist("/System/Library/CoreServices/SystemVersion.plist")
+    with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
+        pl = plistlib.load(fp)
     v = pl["ProductVersion"]
     return ".".join(v.split(".")[:2])
 
