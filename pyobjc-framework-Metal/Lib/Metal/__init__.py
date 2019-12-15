@@ -11,6 +11,7 @@ import Foundation
 
 from Metal import _metadata
 from Metal import _Metal
+from Metal._inlines import _inline_list_
 
 
 sys.modules["Metal"] = mod = objc.ObjCLazyModule(
@@ -18,7 +19,7 @@ sys.modules["Metal"] = mod = objc.ObjCLazyModule(
     "com.apple.Metal",
     objc.pathForFramework("/System/Library/Frameworks/Metal.framework"),
     _metadata.__dict__,
-    None,
+    _inline_list_,
     {
         "__doc__": __doc__,
         "objc": objc,

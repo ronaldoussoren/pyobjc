@@ -14,8 +14,8 @@ class TestMTLComputePipeline (TestCase):
 
     @min_os_level('10.11')
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLComputePipelineDescriptor.threadGroupSizeIsMultipleOfThreadExecutionWidth)
-        self.assertArgIsBOOL(Metal.MTLComputePipelineDescriptor.setThreadGroupSizeIsMultipleOfThreadExecutionWidth_, 0)
+        self.assertResultIsBOOL(Metal.MTLComputePipelineDescriptor.alloc().init().threadGroupSizeIsMultipleOfThreadExecutionWidth)
+        self.assertArgIsBOOL(Metal.MTLComputePipelineDescriptor.alloc().init().setThreadGroupSizeIsMultipleOfThreadExecutionWidth_, 0)
 
     def test_methods(self):
         self.assertResultHasType(TestMTLComputePipelineHelper.maxTotalThreadsPerThreadgroup, objc._C_NSUInteger)

@@ -78,8 +78,8 @@ class TestMTLDevice (TestCase):
         self.assertEqual(Metal.MTLGPUFamilyCommon2, 3002)
         self.assertEqual(Metal.MTLGPUFamilyCommon3, 3003)
 
-        self.assertEqual(Metal.MTLGPUFamilyiOSMac1, 4001)
-        self.assertEqual(Metal.MTLGPUFamilyiOSMac2, 4002)
+        self.assertEqual(Metal.MTLGPUFamilyMacCatalyst1, 4001)
+        self.assertEqual(Metal.MTLGPUFamilyMacCatalyst2, 4002)
 
         self.assertEqual(Metal.MTLDeviceLocationBuiltIn, 0)
         self.assertEqual(Metal.MTLDeviceLocationSlot, 1)

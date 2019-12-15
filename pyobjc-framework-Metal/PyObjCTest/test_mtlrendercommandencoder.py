@@ -58,7 +58,7 @@ class TestMTLRenderCommandEncoder (TestCase):
 
         v = Metal.MTLDrawIndexedPrimitivesIndirectArguments()
         self.assertEqual(v.indexCount, 0)
-        self.assertEqual(v.insetanceCount, 0)
+        self.assertEqual(v.instanceCount, 0)
         self.assertEqual(v.indexStart, 0)
         self.assertEqual(v.baseVertex, 0)
         self.assertEqual(v.baseInstance, 0)

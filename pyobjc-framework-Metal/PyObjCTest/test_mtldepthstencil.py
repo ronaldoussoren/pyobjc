@@ -24,8 +24,8 @@ class TestMTLDepthStencil (TestCase):
 
     @min_os_level('10.11')
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLDepthStencilDescriptor.depthWriteEnabled)
-        self.assertArgIsBOOL(Metal.MTLDepthStencilDescriptor.setDepthWriteEnabled_, 0)
+        self.assertResultIsBOOL(Metal.MTLDepthStencilDescriptor.alloc().init().isDepthWriteEnabled)
+        self.assertArgIsBOOL(Metal.MTLDepthStencilDescriptor.alloc().init().setDepthWriteEnabled_, 0)
 
     @min_sdk_level('10.11')
     def test_protocols(self):

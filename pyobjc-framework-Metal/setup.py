@@ -19,6 +19,11 @@ setup(
     packages=["Metal"],
     ext_modules=[
         Extension(
+            "Metal._inlines",
+            ["Modules/_Metal_inlines.m"],
+            extra_link_args=["-framework", "Metal"],
+        ),
+        Extension(
             "Metal._Metal",
             ["Modules/_Metal.m"],
             extra_link_args=["-framework", "Metal"],

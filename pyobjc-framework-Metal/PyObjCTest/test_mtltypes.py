@@ -18,7 +18,7 @@ class TestMTLTypes (TestCase):
         self.assertIsInstance(v.origin, Metal.MTLOrigin)
         self.assertIsInstance(v.size, Metal.MTLSize)
 
-        v = Metal.MTLSize()
+        v = Metal.MTLSamplePosition()
         self.assertEqual(v.x, 0.0)
         self.assertEqual(v.y, 0.0)
 

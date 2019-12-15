@@ -26,10 +26,10 @@ class TestMTLSampler (TestCase):
 
     @min_os_level('10.11')
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLSamplerDescriptor.normalizedCoordinates)
-        self.assertArgIsBOOL(Metal.MTLSamplerDescriptor.setNormalizedCoordinates_, 0)
+        self.assertResultIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().normalizedCoordinates)
+        self.assertArgIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().setNormalizedCoordinates_, 0)
 
     @min_os_level('10.13')
     def test_methods10_13(self):
-        self.assertResultIsBOOL(Metal.MTLSamplerDescriptor.supportArgumentBuffers)
-        self.assertArgIsBOOL(Metal.MTLSamplerDescriptor.setSupportArgumentBuffers_, 0)
+        self.assertResultIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().supportArgumentBuffers)
+        self.assertArgIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().setSupportArgumentBuffers_, 0)
