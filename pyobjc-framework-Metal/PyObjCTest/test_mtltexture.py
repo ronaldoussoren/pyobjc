@@ -135,5 +135,5 @@ class TestMTLArgument (TestCase):
 
     @min_os_level('10.14')
     def test_methods10_14(self):
-        self.assertResultIsBOOL(Metal.MTLTextureDescriptor.allowGPUOptimizedContents)
-        self.assertArgIsBOOL(Metal.MTLTextureDescriptor.setAllowGPUOptimizedContents_, 0)
+        self.assertResultIsBOOL(Metal.MTLTextureDescriptor.alloc().init().allowGPUOptimizedContents)
+        self.assertArgIsBOOL(Metal.MTLTextureDescriptor.alloc().init().setAllowGPUOptimizedContents_, 0)

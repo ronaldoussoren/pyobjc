@@ -62,17 +62,17 @@ class TestMTLLibrary (TestCase):
 
     @min_os_level('10.11')
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLCompileOptions.fastMathEnabled)
-        self.assertArgIsBOOL(Metal.MTLCompileOptions.setFastMathEnabled_, 0)
+        self.assertResultIsBOOL(Metal.MTLCompileOptions.alloc().init().fastMathEnabled)
+        self.assertArgIsBOOL(Metal.MTLCompileOptions.alloc().init().setFastMathEnabled_, 0)
 
     @min_os_level('10.12')
     def test_methods10_12(self):
-        self.assertResultIsBOOL(Metal.MTLVertexAttribute.isPatchData)
-        self.assertResultIsBOOL(Metal.MTLVertexAttribute.isPatchControlPointData)
+        self.assertResultIsBOOL(Metal.MTLVertexAttribute.alloc().init().isPatchData)
+        self.assertResultIsBOOL(Metal.MTLVertexAttribute.alloc().init().isPatchControlPointData)
 
-        self.assertResultIsBOOL(Metal.MTLAttribute.isActive)
-        self.assertResultIsBOOL(Metal.MTLAttribute.isPatchData)
-        self.assertResultIsBOOL(Metal.MTLAttribute.isPatchControlPointData)
+        self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isActive)
+        self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isPatchData)
+        self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isPatchControlPointData)
 
-        self.assertResultIsBOOL(Metal.MTLFunctionConstant.required)
+        self.assertResultIsBOOL(Metal.MTLFunctionConstant.alloc().init().required)
 

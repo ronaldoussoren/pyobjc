@@ -78,13 +78,14 @@ class TestMTLArgument (TestCase):
 
     @min_os_level('10.11')
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLArgument.isActive)
+        self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isActive)
 
+    @expectedFailure # Documented, but not actually working..
     @min_os_level('10.12')
-    def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLArgument.isDepthTexture)
+    def test_methods10_12(self):
+        self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isDepthTexture)
 
     @min_os_level('10.13')
     def test_methods10_13(self):
-        self.assertResultIsBOOL(Metal.MTLPointerType.elementIsArgumentBuffer)
-        self.assertResultIsBOOL(Metal.MTLTextureReferenceType.isDepthTexture)
+        self.assertResultIsBOOL(Metal.MTLPointerType.alloc().init().elementIsArgumentBuffer)
+        self.assertResultIsBOOL(Metal.MTLTextureReferenceType.alloc().init().isDepthTexture)

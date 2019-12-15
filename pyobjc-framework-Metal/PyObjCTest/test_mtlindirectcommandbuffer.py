@@ -19,9 +19,9 @@ class TestMTLIndirectCommandBuffer (TestCase):
         self.assertEqual(v.length, 0)
 
     def test_functions(self):
-        v = MTLIndirectCommandBufferExecutionRangeMake(1, 2)
+        v = Metal.MTLIndirectCommandBufferExecutionRangeMake(1, 2)
         self.assertIsInstance(v, Metal.MTLIndirectCommandBufferExecutionRange)
-        self.assertEqual(v, MTLIndirectCommandBufferExecutionRange(1, 2))
+        self.assertEqual(v, Metal.MTLIndirectCommandBufferExecutionRange(1, 2))
 
     @min_sdk_level('10.14')
     def test_protocols(self):
@@ -29,13 +29,13 @@ class TestMTLIndirectCommandBuffer (TestCase):
 
     def test_methods(self):
         self.assertArgHasType(TestMTLIndirectCommandBufferHelper.resetWithRange_, 0, Metal.NSRange.__typestr__)
-        self.assertArgHasType(TestMTLIndirectCommandBufferHelper.indirectRenderCommandAtIndex, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLIndirectCommandBufferHelper.indirectRenderCommandAtIndex_, 0, objc._C_NSUInteger)
 
     @min_os_level('10.14')
     def test_methods10_14(self):
-        self.assertResultIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.inheritPipelineState)
-        self.assertArgIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.setInheritPipelineState_, 0)
+        self.assertResultIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.alloc().init().inheritPipelineState)
+        self.assertArgIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.alloc().init().setInheritPipelineState_, 0)
 
-        self.assertResultIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.inheritBuffers)
-        self.assertArgIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.setInheritBuffers_, 0)
+        self.assertResultIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.alloc().init().inheritBuffers)
+        self.assertArgIsBOOL(Metal.MTLIndirectCommandBufferDescriptor.alloc().init().setInheritBuffers_, 0)
 

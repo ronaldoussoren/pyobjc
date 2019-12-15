@@ -19,7 +19,7 @@ class TestMTLBuffer (TestCase):
         self.assertResultHasType(TestMTLBufferHelper.length, objc._C_NSUInteger)
 
         self.assertResultHasType(TestMTLBufferHelper.contents, objc._C_PTR + objc._C_VOID)
-        self.assertResultHasVariableSize(TestMTLBufferHelper.contents)
+        self.assertResultIsVariableSize(TestMTLBufferHelper.contents)
 
         self.assertArgHasType(TestMTLBufferHelper.didModifyRange_, 0, Metal.NSRange.__typestr__)
 

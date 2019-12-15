@@ -6,6 +6,7 @@ MTLCommandBufferHandler = b'v@'
 
 
 class TestMTLCommandBufferHelper (Metal.NSObject):
+    def addScheduledHandler_(self, a): pass
     def retainedReferences(self): return 1
     def kernelStartTime(self): pass
     def kernelEndTime(self): pass

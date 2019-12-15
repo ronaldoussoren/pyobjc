@@ -2,7 +2,28 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "expressions": {
+   "MTLTextureSwizzleChannelsDefault": { "value": "MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)" },
+   "MTLResourceCPUCacheModeMask": { "value": "0xf << MTLResourceCPUCacheModeShift" },
+   "MTLResourceStorageModeMask": { "value": "0xf << MTLResourceStorageModeShift" },
+   "MTLResourceHazardTrackingModeMask": { "value": "0x3 << MTLResourceHazardTrackingModeShift" }
+  },
+  "enum": {
+   "MTLCounterErrorValue": { "value": 18446744073709551615 },
+   "MTLCounterDontSample": { "value": 18446744073709551615 }
+  },
   "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newFunctionWithName:constantValues:error:"
+     }
+    ]
+   },
    "MTLCaptureManager": {
     "methods": [
      {
@@ -43,14 +64,14 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setSamplePositions:count:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "getSamplePositions:count:"
@@ -322,118 +343,118 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setVertexBytes:length:atIndex:"
      },
      {
       "args": {
-       "0": {},
-       "1": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "setVertexBuffers:offsets:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setVertexTextures:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setVertexSamplerStates:withRange:"
      },
      {
       "args": {
-       "0": {},
-       "1": {},
-       "2": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
       },
       "class_method": false,
       "selector": "setVertexSamplerStates:lodMinClamps:lodMaxClamps:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setViewports:count:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setScissorRects:count:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setFragmentBytes:length:atIndex:"
      },
      {
       "args": {
-       "0": {},
-       "1": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "setFragmentBuffers:offsets:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setFragmentTextures:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setFragmentSamplerStates:withRange:"
      },
      {
       "args": {
-       "0": {},
-       "1": {},
-       "2": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
       },
       "class_method": false,
       "selector": "setFragmentSamplerStates:lodMinClamps:lodMaxClamps:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "useResources:count:usage:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "useResources:count:usage:stages:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "useHeaps:count:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "useHeaps:count:stages:"
