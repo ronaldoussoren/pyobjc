@@ -17,6 +17,403 @@
     "methods": [
      {
       "args": {
+       "0": { "type_modifier": "o" },
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "sampleTimestamps:gpuTimestamp:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newCounterSampleBufferWithDescriptor:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "getDefaultSamplePositions:count:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
+      },
+      "class_method": false,
+      "selector": "memoryBarrierWithResources:count:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
+      },
+      "class_method": false,
+      "selector": "useHeaps:count:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
+      },
+      "class_method": false,
+      "selector": "useResources:count:usage:"
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      },
+      "selector": "newComputePipelineStateWithDescriptor:options:completionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      },
+      "selector": "newComputePipelineStateWithFunction:options:completionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      },
+      "selector": "newComputePipelineStateWithFunction:completionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      },
+      "selector": "newRenderPipelineStateWithDescriptor:options:completionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      },
+      "selector": "newRenderPipelineStateWithDescriptor:completionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      },
+      "selector": "newLibraryWithSource:options:completionHandler:",
+      "class_method": false
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newDefaultLibraryWithBundle:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newLibraryWithFile:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newLibraryWithURL:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newLibraryWithData:error:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newLibraryWithSource:options:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newRenderPipelineStateWithDescriptor:error:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newRenderPipelineStateWithDescriptor:options:reflection:error:"
+     },
+     {
+      "args": {
+       "1": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newComputePipelineStateWithFunction:error:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newComputePipelineStateWithFunction:options:reflection:error:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": { "type_modifier": "o" }
+      },
+      "class_method": false,
+      "selector": "newComputePipelineStateWithDescriptor:options:reflection:error:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "n^v" },
+          "2": { "type": "Q" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "newBufferWithBytesNoCopy:length:options:deallocator:"
+     },
+     {
+      "args": {
+       "2": { "type_override": "z" }
+      },
+      "class_method": false,
+      "selector": "fillBuffer:range:value:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
+      },
+      "class_method": false,
+      "selector": "setSamplerStates:lodMinClamps:lodMaxClamps:withRange:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
+      },
+      "class_method": false,
+      "selector": "newBufferWithBytes:length:options:"
+     },
+     {
+      "args": {
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true }
+      },
+      "class_method": false,
+      "selector": "replaceRegion:mipmapLevel:withBytes:bytesPerRow:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
+      },
+      "class_method": false,
+      "selector": "getBytes:bytesPerRow:fromRegion:mipmapLevel:"
+     },
+     {
+      "args": {
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
+      },
+      "class_method": false,
+      "selector": "replaceRegion:mipmapLevel:slice:withBytes:bytesPerRow:bytesPerImage:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
+      },
+      "class_method": false,
+      "selector": "getBytes:bytesPerRow:bytesPerImage:fromRegion:mipmapLevel:slice:"
+     },
+     {
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true },
+      "selector": "contents"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "setIndirectCommandBuffers:withRange:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "setRenderPipelineStates:withRange:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "setSamplerStates:withRange:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "setTextures:withRange:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+      },
+      "class_method": false,
+      "selector": "setBuffers:offsets:withRange:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "setBytes:length:atIndex:"
+     },
+     {
+      "class_method": false,
+      "selector": "addCompletedHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "addScheduledHandler:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "notifyListener:atValue:block:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "Q" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
+      "selector": "newFunctionWithName:constantValues:completionHandler:",
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": false,
+      "selector": "setVertexBytes:length:atIndex:"
+     },
+     {
+      "args": {
        "2": { "type_modifier": "o" }
       },
       "class_method": false,
@@ -71,7 +468,7 @@
      },
      {
       "args": {
-       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 }
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1, "c_array_length_in_result": true }
       },
       "class_method": false,
       "selector": "getSamplePositions:count:"
@@ -84,22 +481,22 @@
     "methods": [
      {
       "args": {
-       "0": {},
-       "1": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "setBuffers:offsets:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setTextures:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setSamplerStates:withRange:"
@@ -111,14 +508,14 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setRenderPipelineStates:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setIndirectCommandBuffers:withRange:"
@@ -129,7 +526,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_length": true },
       "selector": "contents"
      }
     ]
@@ -138,59 +535,59 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setBytes:length:atIndex:"
      },
      {
       "args": {
-       "0": {},
-       "1": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 2 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
       },
       "class_method": false,
       "selector": "setBuffers:offsets:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setTextures:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "setSamplerStates:withRange:"
      },
      {
       "args": {
-       "0": {},
-       "1": {},
-       "2": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 3 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 3 }
       },
       "class_method": false,
       "selector": "setSamplerStates:lodMinClamps:lodMaxClamps:withRange:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
       },
       "class_method": false,
       "selector": "useResources:count:usage:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
       },
       "class_method": false,
       "selector": "useHeaps:count:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
       },
       "class_method": false,
       "selector": "memoryBarrierWithResources:count:"
@@ -201,14 +598,24 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1  }
       },
       "class_method": false,
       "selector": "newBufferWithBytes:length:options:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "n^v" },
+          "2": { "type": "Q" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
       },
       "class_method": false,
       "selector": "newBufferWithBytesNoCopy:length:options:deallocator:"
@@ -295,7 +702,7 @@
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o", "c_array_length_in_arg": 1 }
       },
       "class_method": false,
       "selector": "getDefaultSamplePositions:count:"
@@ -309,8 +716,8 @@
      },
      {
       "args": {
-       "0": {},
-       "1": {}
+       "0": { "type_modifier": "o" },
+       "1": { "type_modifier": "o" }
       },
       "class_method": false,
       "selector": "sampleTimestamps:gpuTimestamp:"
@@ -472,28 +879,28 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "getBytes:bytesPerRow:bytesPerImage:fromRegion:mipmapLevel:slice:"
      },
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "replaceRegion:mipmapLevel:slice:withBytes:bytesPerRow:bytesPerImage:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "getBytes:bytesPerRow:fromRegion:mipmapLevel:"
      },
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "replaceRegion:mipmapLevel:withBytes:bytesPerRow:"
@@ -524,7 +931,17 @@
    "MTLCopyAllDevicesWithObserver": {
     "retval": { "already_retained": true },
     "args": {
-     "0": { "type_modifier": "o" }
+     "0": { "type_modifier": "o" },
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
     }
    }
   },

@@ -12,6 +12,12 @@ class TestMTLCommandBufferHelper (Metal.NSObject):
     def kernelEndTime(self): pass
     def GPUStartTime(self): pass
     def GPUEndTime(self): pass
+    def presentDrawable_atTime_(self, a, b): pass
+    def addCompletedHandler_(self, a): pass
+    def status(self): return 1
+    def computeCommandEncoderWithDispatchType_(self, a): pass
+    def encodeWaitForEvent_value_(self, a, b): pass
+    def encodeSignalEvent_value_(self, a, b): pass
 
 class TestMTLCommandBuffer (TestCase):
     def test_constants(self):
@@ -60,9 +66,9 @@ class TestMTLCommandBuffer (TestCase):
 
         self.assertArgIsBlock(TestMTLCommandBufferHelper.addCompletedHandler_, 0, MTLCommandBufferHandler)
 
-        self.assertResultHasType(TestMTLCommandBufferHelper.status, objc._C_NSInteger)
+        self.assertResultHasType(TestMTLCommandBufferHelper.status, objc._C_NSUInteger)
 
-        self.assertArgHasType(TestMTLCommandBufferHelper.computeCommandEncoderWithDispatchType_, 0, objc._C_NSInteger)
+        self.assertArgHasType(TestMTLCommandBufferHelper.computeCommandEncoderWithDispatchType_, 0, objc._C_NSUInteger)
 
         self.assertArgHasType(TestMTLCommandBufferHelper.encodeWaitForEvent_value_, 1, objc._C_ULNGLNG)
         self.assertArgHasType(TestMTLCommandBufferHelper.encodeSignalEvent_value_, 1, objc._C_ULNGLNG)

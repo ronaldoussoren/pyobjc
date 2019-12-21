@@ -11,6 +11,12 @@ MTLNewComputePipelineStateWithReflectionCompletionHandler = b'v@@@'
 
 
 class TestMTLDeviceHelper (Metal.NSObject):
+    def supportsFeatureSet_(self, a): return 1
+    def supportsFamily_(self, a): return 1
+    def minimumTextureBufferAlignmentForPixelFormat_(self, a): return 1
+    def supportsTextureSampleCount_(self, a): return 1
+    def getDefaultSamplePositions_count_(self, a, b): return 1
+    def minimumLinearTextureAlignmentForPixelFormat_(self, a): return 1
     def registryID(self): return 1
     def maxThreadsPerThreadgroup(self): return 1
     def isLowPower(self): return 1
@@ -31,6 +37,35 @@ class TestMTLDeviceHelper (Metal.NSObject):
     def newCommandQueueWithMaxCommandBufferCount_(self, a): return 1
     def heapBufferSizeAndAlignWithLength_options_(self, a, b): return 1
     def newBufferWithLength_options_(self, a, b): return 1
+    def newBufferWithBytes_length_options_(self, a, b, c): return 1
+    def newBufferWithBytesNoCopy_length_options_deallocator_(self, a, b, c, d): return 1
+    def newDefaultLibraryWithBundle_error_(self, a, b): return 1
+    def newLibraryWithFile_error_(self, a, b): return 1
+    def newLibraryWithURL_error_(self, a, b): return 1
+    def newLibraryWithData_error_(self, a, b): return 1
+    def newLibraryWithSource_options_error_(self, a, b, c): return 1
+    def maxThreadgroupMemoryLength(self): return 1
+    def maxArgumentBufferSamplerCount(self): return 1
+    def areProgrammableSamplePositionsSupported(self): return 1
+    def peerGroupID(self): return 1
+    def peerIndex(self): return 1
+    def peerCount(self): return 1
+    def maxBufferLength(self): return 1
+    def newCounterSampleBufferWithDescriptor_error_(self, a, b): pass
+    def sampleTimestamps_gpuTimestamp_(self, a, b): pass
+    def newTextureWithDescriptor_iosurface_plane_(self, a, b, c): return 1
+    def newLibraryWithSource_options_completionHandler_(self, a, b, c): return 1
+    def newRenderPipelineStateWithDescriptor_error_(self, a, b): return 1
+    def newRenderPipelineStateWithDescriptor_options_reflection_error_(self, a, b, c, d): return 1
+    def newRenderPipelineStateWithDescriptor_completionHandler_(self, a, b): return 1
+    def newRenderPipelineStateWithDescriptor_options_completionHandler_(self, a, b, c): return 1
+    def newComputePipelineStateWithFunction_error_(self, a, b): return 1
+    def newComputePipelineStateWithFunction_options_reflection_error_(self, a, b, c, d): return 1
+    def newComputePipelineStateWithFunction_completionHandler_(self, a, b): return 1
+    def newComputePipelineStateWithFunction_options_completionHandler_(self, a, b, c): return 1
+    def newComputePipelineStateWithDescriptor_options_reflection_error_(self, a, b, c, d): return 1
+    def newComputePipelineStateWithDescriptor_options_completionHandler_(self, a, b, c): return 1
+    def newIndirectCommandBufferWithDescriptor_maxCommandCount_options_(self, a, b, c): return 1
 
 class TestMTLDevice (TestCase):
     def test_constants(self):
@@ -148,50 +183,83 @@ class TestMTLDevice (TestCase):
         self.assertArgHasType(TestMTLDeviceHelper.heapBufferSizeAndAlignWithLength_options_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLDeviceHelper.heapBufferSizeAndAlignWithLength_options_, 1, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLDeviceHelper.newBufferWithLength_options_, 0, objc._C_NSUInteger)
-"""
-- (nullable id <MTLBuffer>)newBufferWithBytes:(const void *)pointer length:(NSUInteger)length options:(MTLResourceOptions)options;
-- (nullable id <MTLBuffer>)newBufferWithBytesNoCopy:(void *)pointer length:(NSUInteger)length options:(MTLResourceOptions)options deallocator:(void (^ __nullable)(void *pointer, NSUInteger length))deallocator;
-- (nullable id <MTLDepthStencilState>)newDepthStencilStateWithDescriptor:(MTLDepthStencilDescriptor *)descriptor;
-- (nullable id <MTLTexture>)newTextureWithDescriptor:(MTLTextureDescriptor *)descriptor iosurface:(IOSurfaceRef)iosurface plane:(NSUInteger)plane API_AVAILABLE(macos(10.11), ios(11.0));
-- (nullable id <MTLLibrary>)newDefaultLibraryWithBundle:(NSBundle *)bundle error:(__autoreleasing NSError **)error API_AVAILABLE(macos(10.12), ios(10.0));
-- (nullable id <MTLLibrary>)newLibraryWithFile:(NSString *)filepath error:(__autoreleasing NSError **)error;
-- (nullable id <MTLLibrary>)newLibraryWithURL:(NSURL *)url error:(__autoreleasing NSError **)error API_AVAILABLE(macos(10.13), ios(11.0));
-- (nullable id <MTLLibrary>)newLibraryWithData:(dispatch_data_t)data error:(__autoreleasing NSError **)error;
-- (nullable id <MTLLibrary>)newLibraryWithSource:(NSString *)source options:(nullable MTLCompileOptions *)options error:(__autoreleasing NSError **)error;
-- (void)newLibraryWithSource:(NSString *)source options:(nullable MTLCompileOptions *)options completionHandler:(MTLNewLibraryCompletionHandler)completionHandler;
-- (nullable id <MTLRenderPipelineState>)newRenderPipelineStateWithDescriptor:(MTLRenderPipelineDescriptor *)descriptor error:(__autoreleasing NSError **)error;
-- (nullable id <MTLRenderPipelineState>)newRenderPipelineStateWithDescriptor:(MTLRenderPipelineDescriptor *)descriptor options:(MTLPipelineOption)options reflection:(MTLAutoreleasedRenderPipelineReflection * __nullable)reflection error:(__autoreleasing NSError **)error;
-- (void)newRenderPipelineStateWithDescriptor:(MTLRenderPipelineDescriptor *)descriptor completionHandler:(MTLNewRenderPipelineStateCompletionHandler)completionHandler;
-- (void)newRenderPipelineStateWithDescriptor:(MTLRenderPipelineDescriptor *)descriptor options:(MTLPipelineOption)options completionHandler:(MTLNewRenderPipelineStateWithReflectionCompletionHandler)completionHandler;
-- (nullable id <MTLComputePipelineState>)newComputePipelineStateWithFunction:(id <MTLFunction>)computeFunction error:(__autoreleasing NSError **)error;
-- (nullable id <MTLComputePipelineState>)newComputePipelineStateWithFunction:(id <MTLFunction>)computeFunction options:(MTLPipelineOption)options reflection:(MTLAutoreleasedComputePipelineReflection * __nullable)reflection error:(__autoreleasing NSError **)error;
-- (void)newComputePipelineStateWithFunction:(id <MTLFunction>)computeFunction completionHandler:(MTLNewComputePipelineStateCompletionHandler)completionHandler;
-- (void)newComputePipelineStateWithFunction:(id <MTLFunction>)computeFunction options:(MTLPipelineOption)options completionHandler:(MTLNewComputePipelineStateWithReflectionCompletionHandler)completionHandler;
-- (nullable id <MTLComputePipelineState>)newComputePipelineStateWithDescriptor:(MTLComputePipelineDescriptor *)descriptor options:(MTLPipelineOption)options reflection:(MTLAutoreleasedComputePipelineReflection * __nullable)reflection error:(__autoreleasing NSError **)error API_AVAILABLE(macos(10.11), ios(9.0));
-- (void)newComputePipelineStateWithDescriptor:(MTLComputePipelineDescriptor *)descriptor options:(MTLPipelineOption)options completionHandler:(MTLNewComputePipelineStateWithReflectionCompletionHandler)completionHandler API_AVAILABLE(macos(10.11), ios(9.0));
-- (nullable id <MTLFence>)newFence API_AVAILABLE(macos(10.13), ios(10.0));
-- (BOOL)supportsFeatureSet:(MTLFeatureSet)featureSet;
-- (BOOL)supportsFamily:(MTLGPUFamily)gpuFamily API_AVAILABLE(macos(10.15), ios(13.0));
-- (BOOL)supportsTextureSampleCount:(NSUInteger)sampleCount API_AVAILABLE(macos(10.11), ios(9.0));
-- (NSUInteger)minimumLinearTextureAlignmentForPixelFormat:(MTLPixelFormat)format API_AVAILABLE(macos(10.13), ios(11.0));
-- (NSUInteger)minimumTextureBufferAlignmentForPixelFormat:(MTLPixelFormat)format API_AVAILABLE(macos(10.14), ios(12.0));
-@property (readonly) NSUInteger maxThreadgroupMemoryLength API_AVAILABLE(macos(10.13), ios(11.0));
-@property (readonly) NSUInteger maxArgumentBufferSamplerCount API_AVAILABLE(macos(10.14), ios(12.0));
-@property (readonly, getter=areProgrammableSamplePositionsSupported) BOOL programmableSamplePositionsSupported API_AVAILABLE(macos(10.13), ios(11.0));
-- (void)getDefaultSamplePositions:(MTLSamplePosition *)positions count:(NSUInteger)count API_AVAILABLE(macos(10.13), ios(11.0));
-- (nullable id <MTLArgumentEncoder>)newArgumentEncoderWithArguments:(NSArray <MTLArgumentDescriptor *> *)arguments API_AVAILABLE(macos(10.13), ios(11.0));
-- (nullable id <MTLIndirectCommandBuffer>)newIndirectCommandBufferWithDescriptor:(MTLIndirectCommandBufferDescriptor*)descriptor maxCommandCount:(NSUInteger)maxCount options:(MTLResourceOptions)options API_AVAILABLE(macos(10.14), ios(12.0));
-- (nullable id <MTLEvent>)newEvent API_AVAILABLE(macos(10.14), ios(12.0));
-- (nullable id <MTLSharedEvent>)newSharedEvent API_AVAILABLE(macos(10.14), ios(12.0));
-- (nullable id <MTLSharedEvent>)newSharedEventWithHandle:(MTLSharedEventHandle *)sharedEventHandle API_AVAILABLE(macos(10.14), ios(12.0));
-@property (readonly) uint64_t peerGroupID API_AVAILABLE(macos(10.14.6)) API_UNAVAILABLE(ios);
-@property (readonly) uint32_t peerIndex API_AVAILABLE(macos(10.14.6)) API_UNAVAILABLE(ios);
-@property (readonly) uint32_t peerCount API_AVAILABLE(macos(10.14.6)) API_UNAVAILABLE(ios);
-@property (readonly) NSUInteger maxBufferLength API_AVAILABLE(macos(10.14), ios(12.0));
-- (nullable id<MTLCounterSampleBuffer>) newCounterSampleBufferWithDescriptor:(MTLCounterSampleBufferDescriptor*)descriptor
-                                                              error:(NSError**)error
-    API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios);
--(void)sampleTimestamps:(NSUInteger *)cpuTimestamp
-       gpuTimestamp:(NSUInteger *)gpuTimestamp
-API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios);
-"""
+
+        self.assertArgHasType(TestMTLDeviceHelper.newBufferWithBytes_length_options_, 0, b'n^v')
+        self.assertArgSizeInArg(TestMTLDeviceHelper.newBufferWithBytes_length_options_, 0, 1)
+        self.assertArgHasType(TestMTLDeviceHelper.newBufferWithBytes_length_options_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.newBufferWithBytes_length_options_, 2, objc._C_NSUInteger)
+
+        self.assertArgHasType(TestMTLDeviceHelper.newBufferWithBytesNoCopy_length_options_deallocator_, 0, b'n^v')
+        self.assertArgSizeInArg(TestMTLDeviceHelper.newBufferWithBytesNoCopy_length_options_deallocator_, 0, 1)
+        self.assertArgHasType(TestMTLDeviceHelper.newBufferWithBytesNoCopy_length_options_deallocator_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.newBufferWithBytesNoCopy_length_options_deallocator_, 2, objc._C_NSUInteger)
+        self.assertArgIsBlock(TestMTLDeviceHelper.newBufferWithBytesNoCopy_length_options_deallocator_, 3, b'vn^v' + objc._C_NSUInteger)
+
+        self.assertArgHasType(TestMTLDeviceHelper.newDefaultLibraryWithBundle_error_, 1, b'o^@')
+        self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithFile_error_, 1, b'o^@')
+        self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithURL_error_, 1, b'o^@')
+        self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithData_error_, 1, b'o^@')
+        self.assertArgHasType(TestMTLDeviceHelper.newLibraryWithSource_options_error_, 2, b'o^@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newTextureWithDescriptor_iosurface_plane_, 1, b'^{__IOSurface=}')
+        self.assertArgHasType(TestMTLDeviceHelper.newTextureWithDescriptor_iosurface_plane_, 2, objc._C_NSUInteger)
+
+        self.assertArgIsBlock(TestMTLDeviceHelper.newLibraryWithSource_options_completionHandler_, 2, b'v@@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_error_, 1, b'o^@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_reflection_error_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_reflection_error_, 3, b'o^@')
+
+        self.assertArgIsBlock(TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_completionHandler_, 1, b'v@@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_completionHandler_, 1, objc._C_NSUInteger)
+        self.assertArgIsBlock(TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_completionHandler_, 2, b'v@@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newComputePipelineStateWithFunction_error_, 1, b'o^@')
+        self.assertArgHasType(TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_reflection_error_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_reflection_error_, 3, b'o^@')
+
+        self.assertArgIsBlock(TestMTLDeviceHelper.newComputePipelineStateWithFunction_completionHandler_, 1, b'v@@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_completionHandler_, 1, objc._C_NSUInteger)
+        self.assertArgIsBlock(TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_completionHandler_, 2, b'v@@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_, 3, b'o^@')
+
+        self.assertArgHasType(TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_completionHandler_, 1, objc._C_NSUInteger)
+        self.assertArgIsBlock(TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_completionHandler_, 2, b'v@@')
+
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFeatureSet_)
+        self.assertArgHasType(TestMTLDeviceHelper.supportsFeatureSet_, 0, objc._C_NSUInteger)
+
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFamily_)
+        self.assertArgHasType(TestMTLDeviceHelper.supportsFamily_, 0, objc._C_NSInteger)
+
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsTextureSampleCount_)
+        self.assertArgHasType(TestMTLDeviceHelper.supportsTextureSampleCount_, 0, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestMTLDeviceHelper.minimumLinearTextureAlignmentForPixelFormat_, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.minimumLinearTextureAlignmentForPixelFormat_, 0, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestMTLDeviceHelper.minimumTextureBufferAlignmentForPixelFormat_, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.minimumTextureBufferAlignmentForPixelFormat_, 0, objc._C_NSUInteger)
+
+        self.assertResultHasType(TestMTLDeviceHelper.maxThreadgroupMemoryLength, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLDeviceHelper.maxArgumentBufferSamplerCount, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLDeviceHelper.areProgrammableSamplePositionsSupported, objc._C_NSBOOL)
+
+        self.assertArgHasType(TestMTLDeviceHelper.getDefaultSamplePositions_count_, 0, b'o^{_MTLSamplePosition=ff}')
+        self.assertArgSizeInArg(TestMTLDeviceHelper.getDefaultSamplePositions_count_, 0, 1)
+        self.assertArgHasType(TestMTLDeviceHelper.getDefaultSamplePositions_count_, 1, objc._C_NSUInteger)
+
+        self.assertArgHasType(TestMTLDeviceHelper.newIndirectCommandBufferWithDescriptor_maxCommandCount_options_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.newIndirectCommandBufferWithDescriptor_maxCommandCount_options_, 2, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLDeviceHelper.peerGroupID, objc._C_ULNGLNG)
+        self.assertResultHasType(TestMTLDeviceHelper.peerIndex, objc._C_UINT)
+        self.assertResultHasType(TestMTLDeviceHelper.peerCount, objc._C_UINT)
+        self.assertResultHasType(TestMTLDeviceHelper.maxBufferLength, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.newCounterSampleBufferWithDescriptor_error_, 1, b'o^@')
+        self.assertArgHasType(TestMTLDeviceHelper.sampleTimestamps_gpuTimestamp_, 0, b'o^' + objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLDeviceHelper.sampleTimestamps_gpuTimestamp_, 1, b'o^' + objc._C_NSUInteger)

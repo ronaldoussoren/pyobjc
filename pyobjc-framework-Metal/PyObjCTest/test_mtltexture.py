@@ -24,6 +24,9 @@ class TestMTLArgumentHelper (Metal.NSObject):
     def replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_(self, a, b, c, d, e, f): pass
     def getBytes_bytesPerRow_fromRegion_mipmapLevel_(self, a, b, c, d): pass
     def replaceRegion_mipmapLevel_withBytes_bytesPerRow_(self, a, b, c, d): pass
+    def newTextureViewWithPixelFormat_(self, a): pass
+    def newTextureViewWithPixelFormat_textureType_levels_slices_(self, a, b, c, d): pass
+    def swizzle(self): return 1
 
 
 class TestMTLArgument (TestCase):
@@ -122,15 +125,15 @@ class TestMTLArgument (TestCase):
 
         self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 1, objc._C_NSUInteger)
-        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 2, objc._C_NSUInteger)
-        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 3, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 2, Metal.NSRange.__typestr__)
+        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 3, Metal.NSRange.__typestr__)
 
         self.assertResultHasType(TestMTLArgumentHelper.swizzle, Metal.MTLTextureSwizzleChannels.__typestr__)
 
         self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 1, objc._C_NSUInteger)
-        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 2, Metal.NSRange.__typsetr__)
-        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 3, Metal.NSRange.__typsetr__)
+        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 2, Metal.NSRange.__typestr__)
+        self.assertArgHasType(TestMTLArgumentHelper.newTextureViewWithPixelFormat_textureType_levels_slices_, 3, Metal.NSRange.__typestr__)
 
 
     @min_os_level('10.14')

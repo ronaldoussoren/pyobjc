@@ -55,4 +55,3 @@ class TestMTLIndirectCommandEncoder (TestCase):
         self.assertArgHasType(TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_, 6, objc._C_NSInteger)
 
 
-    def drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_(self, a, b, c, d, e, f, g, h): pass

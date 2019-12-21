@@ -12,7 +12,19 @@ class TestMTLComputeCommandEncoderHelper (Metal.NSObject):
     def setTextures_withRange_(self, a, b): pass
     def setSamplerState_atIndex_(self, a, b): pass
     def setSamplerStates_withRange_(self, a, b): pass
-
+    def setSamplerStates_lodMinClamps_lodMaxClamps_withRange_(self, a, b, c, d): pass
+    def setThreadgroupMemoryLength_atIndex_(self, a, b): pass
+    def setStageInRegion_(self, a): pass
+    def setStageInRegionWithIndirectBuffer_indirectBufferOffset_(self, a, b): pass
+    def dispatchThreadgroups_threadsPerThreadgroup_(self, a, b): pass
+    def dispatchThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerThreadgroup_(self, a, b, c): pass
+    def dispatchThreads_threadsPerThreadgroup_(self, a, b): pass
+    def useResource_usage_(self, a, b): pass
+    def useResources_count_usage_(self, a, b, c): pass
+    def useHeaps_count_(self, a, b): pass
+    def memoryBarrierWithScope_(self, a): pass
+    def memoryBarrierWithResources_count_(self, a, b): pass
+    def sampleCountersInBuffer_atSampleIndex_withBarrier_(self, a, b, c): pass
 
 class TestMTLComputeCommandEncoder (TestCase):
     def test_structs(self):
@@ -38,8 +50,8 @@ class TestMTLComputeCommandEncoder (TestCase):
         self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setBuffer_offset_atIndex_, 1, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setBuffer_offset_atIndex_, 2, objc._C_NSUInteger)
 
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setBufferOffset_atIndex_, 0, objc._C_NSUInteger)
         self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setBufferOffset_atIndex_, 1, objc._C_NSUInteger)
-        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setBufferOffset_atIndex_, 2, objc._C_NSUInteger)
 
         self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setBuffers_offsets_withRange_, 0, b'n^@')
         self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.setBuffers_offsets_withRange_, 0, 2)
@@ -59,35 +71,45 @@ class TestMTLComputeCommandEncoder (TestCase):
         self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.setSamplerStates_withRange_, 0, 1)
         self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setSamplerStates_withRange_, 1, Metal.NSRange.__typestr__)
 
-"""
-- (void)setSamplerStates:(const id <MTLSamplerState> __nullable [__nonnull])samplers lodMinClamps:(const float [__nonnull])lodMinClamps lodMaxClamps:(const float [__nonnull])lodMaxClamps withRange:(NSRange)range;
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_, 0, b'n^@')
+        self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_, 0, 3)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_, 1, b'n^f')
+        self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_, 1, 3)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_, 2, b'n^f')
+        self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_, 2, 3)
 
-- (void)setThreadgroupMemoryLength:(NSUInteger)length atIndex:(NSUInteger)index;
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setThreadgroupMemoryLength_atIndex_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setThreadgroupMemoryLength_atIndex_, 1, objc._C_NSUInteger)
 
-- (void)setStageInRegion:(MTLRegion)region API_AVAILABLE(macos(10.12), ios(10.0));
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setStageInRegion_, 0, Metal.MTLRegion.__typestr__)
 
-- (void)setStageInRegionWithIndirectBuffer:(id <MTLBuffer>)indirectBuffer indirectBufferOffset:(NSUInteger)indirectBufferOffset API_AVAILABLE(macos(10.14), ios(12.0));
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.setStageInRegionWithIndirectBuffer_indirectBufferOffset_, 1, objc._C_NSUInteger)
 
-- (void)dispatchThreadgroups:(MTLSize)threadgroupsPerGrid threadsPerThreadgroup:(MTLSize)threadsPerThreadgroup;
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.dispatchThreadgroups_threadsPerThreadgroup_, 0, Metal.MTLSize.__typestr__)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.dispatchThreadgroups_threadsPerThreadgroup_, 1, Metal.MTLSize.__typestr__)
 
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.dispatchThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerThreadgroup_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.dispatchThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerThreadgroup_, 2, Metal.MTLSize.__typestr__)
 
-- (void)dispatchThreadgroupsWithIndirectBuffer:(id <MTLBuffer>)indirectBuffer indirectBufferOffset:(NSUInteger)indirectBufferOffset threadsPerThreadgroup:(MTLSize)threadsPerThreadgroup API_AVAILABLE(macos(10.11), ios(9.0));
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.dispatchThreads_threadsPerThreadgroup_, 0, Metal.MTLSize.__typestr__)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.dispatchThreads_threadsPerThreadgroup_, 1, Metal.MTLSize.__typestr__)
 
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.useResource_usage_, 1, objc._C_NSUInteger)
 
-- (void)dispatchThreads:(MTLSize)threadsPerGrid threadsPerThreadgroup:(MTLSize)threadsPerThreadgroup API_AVAILABLE(macos(10.13), ios(11.0)) API_UNAVAILABLE(tvos);
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.useResources_count_usage_, 0, b'n^@')
+        self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.useResources_count_usage_, 0, 1)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.useResources_count_usage_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.useResources_count_usage_, 2, objc._C_NSUInteger)
 
-- (void)useResource:(id <MTLResource>)resource usage:(MTLResourceUsage)usage API_AVAILABLE(macos(10.13), ios(11.0));
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.useHeaps_count_, 0, b'n^@')
+        self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.useHeaps_count_, 0, 1)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.useHeaps_count_, 1, objc._C_NSUInteger)
 
-- (void)useResources:(const id <MTLResource> __nonnull[__nonnull])resources count:(NSUInteger)count usage:(MTLResourceUsage)usage API_AVAILABLE(macos(10.13), ios(11.0));
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.memoryBarrierWithScope_, 0, objc._C_NSUInteger)
 
-- (void)useHeaps:(const id <MTLHeap> __nonnull[__nonnull])heaps count:(NSUInteger)count API_AVAILABLE(macos(10.13), ios(11.0));
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.memoryBarrierWithResources_count_, 0, b'n^@')
+        self.assertArgSizeInArg(TestMTLComputeCommandEncoderHelper.memoryBarrierWithResources_count_, 0, 1)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.memoryBarrierWithResources_count_, 1, objc._C_NSUInteger)
 
--(void)memoryBarrierWithScope:(MTLBarrierScope)scope API_AVAILABLE(macos(10.14), ios(12.0));
-
-- (void)memoryBarrierWithResources:(const id<MTLResource> __nonnull [__nonnull])resources count:(NSUInteger)count API_AVAILABLE(macos(10.14), ios(12.0));
-
--(void)sampleCountersInBuffer:(id<MTLCounterSampleBuffer>)sampleBuffer
-                atSampleIndex:(NSUInteger)sampleIndex
-                  withBarrier:(BOOL)barrier API_AVAILABLE(macos(10.15)) API_UNAVAILABLE(ios);
-
-"""
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLComputeCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_, 2, objc._C_NSBOOL)
