@@ -116,7 +116,7 @@ mod_CFRunLoopSourceCreate(PyObject* self __attribute__((__unused__)), PyObject* 
         return NULL;
     }
 
-    if (!PyTuple_Check(py_context) || PyTuple_GET_SIZE(py_context) != 5) {
+    if (!PyTuple_Check(py_context) || PyTuple_Size(py_context) != 5) {
         PyErr_SetString(PyExc_ValueError, "context must be tuple of length 5");
         return NULL;
     }

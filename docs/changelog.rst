@@ -8,6 +8,16 @@ Version 6.2
 
 * #264: Added bindings for the Metal framework (new in macOS 10.11)
 
+* Most framework bindings now use the limited ABI for the included C extensions,
+  reducing the number of wheels that are needed. The exception are
+  the bindings for Cocoa, Quartz and libdispatch, those use functionality not
+  available in the limited ABI.
+
+  The bridge itself (pyobjc-core) still uses the full CPython API.
+
+  The CoreAudio bindings also don't use the limited ABI for now, those
+  need more work to work with that ABI.
+
 Version 6.1
 -----------
 

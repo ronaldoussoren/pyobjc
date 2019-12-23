@@ -70,8 +70,8 @@ mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)), PyObject* arg
         return NULL;
     }
     if (py_bytes != Py_None) {
-        PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got instance of %s",
-                     Py_TYPE(py_bytes)->tp_name);
+        PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got %R",
+                py_bytes);
         return NULL;
     }
 

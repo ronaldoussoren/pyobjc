@@ -22,11 +22,13 @@ setup(
             "Metal._inlines",
             ["Modules/_Metal_inlines.m"],
             extra_link_args=["-framework", "Metal"],
+            py_limited_api=True,
         ),
         Extension(
             "Metal._Metal",
             ["Modules/_Metal.m"],
             extra_link_args=["-framework", "Metal"],
+            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -37,4 +39,9 @@ setup(
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
+    options=dict(
+        bdist_wheel=dict(
+            py_limited_api="cp36"
+        )
+    ),
 )

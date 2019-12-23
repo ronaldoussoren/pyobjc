@@ -22,6 +22,7 @@ setup(
             "CoreText._manual",
             ["Modules/_manual.m"],
             extra_link_args=["-framework", "CoreServices"],
+            py_limited_api=True,
         )
     ],
     version=VERSION,
@@ -31,4 +32,9 @@ setup(
         "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
+    options=dict(
+        bdist_wheel=dict(
+            py_limited_api="cp36"
+        )
+    ),
 )

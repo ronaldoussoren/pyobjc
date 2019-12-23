@@ -26,6 +26,7 @@ setup(
             "QTKit._QTKit",
             ["Modules/_QTKit.m"],
             extra_link_args=["-framework", "QTKit"],
+            py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -40,4 +41,9 @@ setup(
         "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
+    options=dict(
+        bdist_wheel=dict(
+            py_limited_api="cp36"
+        )
+    ),
 )

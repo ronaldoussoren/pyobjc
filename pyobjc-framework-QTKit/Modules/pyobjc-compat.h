@@ -389,6 +389,8 @@ extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
 
 #ifdef __clang__
 
+#ifndef Py_LIMITED_API
+
 /* This is a crude hack to disable a otherwise useful warning in the context of
  * PyTuple_SET_ITEM, without disabling it everywhere
  */
@@ -411,6 +413,8 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyTuple_GET_ITEM(a, b) _PyObjCTuple_GetItem(a, b)
 
 #pragma clang diagnostic pop
+
+#endif /* !Py_LIMITED_API */
 
 #endif /* __clang__ */
 

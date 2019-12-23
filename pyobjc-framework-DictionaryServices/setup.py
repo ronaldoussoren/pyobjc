@@ -3,7 +3,7 @@ Deprecated wrappers for the "DictionaryServices" framework on macOS 10.5 or late
 
 Use package "CoreServices" instead.
 """
-from pyobjc_setup import setup, Extension
+from pyobjc_setup import setup
 import os
 
 VERSION = '6.2b1'

@@ -1,3 +1,4 @@
+#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -46,15 +47,15 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
         Py_ssize_t size;
         long expected_size;
 
-        if (PyLong_Check(PyTuple_GET_ITEM(py_parameterSetSizes, i))) {
-            expected_size = PyLong_AsLong(PyTuple_GET_ITEM(py_parameterSetSizes, i));
+        if (PyLong_Check(PyTuple_GetItem(py_parameterSetSizes, i))) {
+            expected_size = PyLong_AsLong(PyTuple_GetItem(py_parameterSetSizes, i));
             if (expected_size == -1 && PyErr_Occurred()) {
                 goto error;
             }
 
 #if PY_MAJOR_VERSION == 2
-        } else if (PyInt_Check(PyTuple_GET_ITEM(py_parameterSetSizes, i))) {
-            expected_size = PyInt_AsLong(PyTuple_GET_ITEM(py_parameterSetSizes, i));
+        } else if (PyInt_Check(PyTuple_GetItem(py_parameterSetSizes, i))) {
+            expected_size = PyInt_AsLong(PyTuple_GetItem(py_parameterSetSizes, i));
 #endif
         } else {
             PyErr_Format(PyExc_TypeError,
@@ -68,7 +69,7 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
             goto error;
         }
 
-        if (PyUnicode_Check(PyTuple_GET_ITEM(py_parameterSetPointers, i))) {
+        if (PyUnicode_Check(PyTuple_GetItem(py_parameterSetPointers, i))) {
             /* Explictly reject unicode objects, those implement the buffer protocol but
              * are not usable here.
              */
@@ -77,10 +78,13 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
             goto error;
         }
 
-        if (PyObject_AsReadBuffer(PyTuple_GET_ITEM(py_parameterSetPointers, i), &buf,
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        if (PyObject_AsReadBuffer(PyTuple_GetItem(py_parameterSetPointers, i), &buf,
                                   &size) == -1) {
             goto error;
         }
+#pragma clang diagnostic pop
         if (size < expected_size) {
             PyErr_Format(PyExc_TypeError,
                          "Element %d of parameterSetPointers is too small", i);

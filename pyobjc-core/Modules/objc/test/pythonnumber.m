@@ -22,7 +22,7 @@
 + (double)numberAsDouble:(NSNumber*)number;
 
 + (const char*)objCTypeOf:(NSNumber*)number;
-+ (int)compareA:(NSNumber*)a andB:(NSNumber*)b;
++ (NSComparisonResult)compareA:(NSNumber*)a andB:(NSNumber*)b;
 + (BOOL)number:(NSNumber*)a isEqualTo:(NSNumber*)b;
 + (NSString*)numberDescription:(NSNumber*)number;
 + (NSString*)numberDescription:(NSNumber*)number withLocale:(id)aLocale;

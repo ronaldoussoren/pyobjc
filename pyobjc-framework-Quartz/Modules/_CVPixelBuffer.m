@@ -16,9 +16,9 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
     PyObject* info = (PyObject*)releaseRefCon;
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (PyTuple_GET_ITEM(info, 0) != Py_None) {
-        PyObject* r = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "O",
-                                            PyTuple_GET_ITEM(info, 1));
+    if (PyTuple_GetItem(info, 0) != Py_None) {
+        PyObject* r = PyObject_CallFunction(PyTuple_GetItem(info, 0), "O",
+                                            PyTuple_GetItem(info, 1));
         if (r == NULL) {
             Py_XDECREF(info);
             PyObjCErr_ToObjCWithGILState(&state);
@@ -90,9 +90,12 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if (PyObject_AsWriteBuffer(py_buffer, &baseAddress, &buflen) < 0) {
         return NULL;
     }
+#pragma clang diagnostic pop
 
     PyObject* real_info = Py_BuildValue("OOO", releaseCallback, info, py_buffer);
     if (real_info == NULL) {

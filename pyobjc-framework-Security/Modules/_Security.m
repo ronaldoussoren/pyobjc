@@ -1,6 +1,15 @@
+#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
+
+#undef PySequence_Fast_GET_ITEM
+#define PySequence_Fast_GET_ITEM(o, i)\
+     (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
+
+#undef PySequence_Fast_GET_SIZE
+#define PySequence_Fast_GET_SIZE(o) \
+     (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
 
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
@@ -396,7 +405,7 @@ build_itemset(AuthorizationItemSet* itemset)
                 Py_DECREF(result);
                 return NULL;
             }
-            PyTuple_SET_ITEM(result, i, t);
+            PyTuple_SetItem(result, i, t);
         }
     }
     return result;

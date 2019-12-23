@@ -1,8 +1,17 @@
+#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
 
 #import <ApplicationServices/ApplicationServices.h>
+
+#undef PySequence_Fast_GET_ITEM
+#define PySequence_Fast_GET_ITEM(o, i)\
+     (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
+
+#undef PySequence_Fast_GET_SIZE
+#define PySequence_Fast_GET_SIZE(o) \
+     (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
 
 static PyObject*
 m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject* args)
@@ -54,8 +63,8 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject
 
     for (i = 0; i < len; i++) {
         CTFontTableTag tag = (CTFontTableTag)(uintptr_t)CFArrayGetValueAtIndex(ref, i);
-        PyTuple_SET_ITEM(result, i, PyLong_FromLong(tag));
-        if (PyTuple_GET_ITEM(result, i) == NULL) {
+        PyTuple_SetItem(result, i, PyLong_FromLong(tag));
+        if (PyTuple_GetItem(result, i) == NULL) {
             Py_DECREF(result);
             CFRelease(ref);
             return NULL;
@@ -218,7 +227,10 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
             const void* buf;
             Py_ssize_t buflen;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             r = PyObject_AsReadBuffer(PySequence_Fast_GET_ITEM(s, 2), &buf, &buflen);
+#pragma clang diagnostic pop
             if (r != -1) {
                 if ((size_t)buflen != cur->valueSize) {
                     PyErr_Format(PyExc_ValueError,
@@ -284,8 +296,8 @@ static CGFloat
 m_CTRunDelegateGetAscentCallback(void* refCon)
 {
     PyObject* info = (PyObject*)refCon;
-    PyObject* cb = PyTuple_GET_ITEM(info, 0);
-    PyObject* rc = PyTuple_GET_ITEM(info, 3);
+    PyObject* cb = PyTuple_GetItem(info, 0);
+    PyObject* rc = PyTuple_GetItem(info, 3);
     CGFloat value;
 
     PyGILState_STATE state = PyGILState_Ensure();
@@ -308,8 +320,8 @@ static CGFloat
 m_CTRunDelegateGetDescentCallback(void* refCon)
 {
     PyObject* info = (PyObject*)refCon;
-    PyObject* cb = PyTuple_GET_ITEM(info, 1);
-    PyObject* rc = PyTuple_GET_ITEM(info, 3);
+    PyObject* cb = PyTuple_GetItem(info, 1);
+    PyObject* rc = PyTuple_GetItem(info, 3);
     CGFloat value;
 
     PyGILState_STATE state = PyGILState_Ensure();
@@ -332,8 +344,8 @@ static CGFloat
 m_CTRunDelegateGetWidthCallback(void* refCon)
 {
     PyObject* info = (PyObject*)refCon;
-    PyObject* cb = PyTuple_GET_ITEM(info, 2);
-    PyObject* rc = PyTuple_GET_ITEM(info, 3);
+    PyObject* cb = PyTuple_GetItem(info, 2);
+    PyObject* rc = PyTuple_GetItem(info, 3);
     CGFloat value;
 
     PyGILState_STATE state = PyGILState_Ensure();
@@ -379,7 +391,7 @@ m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* a
         return Py_None;
     }
 
-    py_refcon = PyTuple_GET_ITEM((PyObject*)refcon, 3);
+    py_refcon = PyTuple_GetItem((PyObject*)refcon, 3);
     Py_INCREF(py_refcon);
     return py_refcon;
 }

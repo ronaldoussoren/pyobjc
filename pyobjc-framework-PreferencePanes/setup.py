@@ -7,7 +7,7 @@ for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
-from pyobjc_setup import *
+from pyobjc_setup import setup
 
 VERSION = '6.2b1'
 

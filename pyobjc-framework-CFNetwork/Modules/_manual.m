@@ -1,3 +1,4 @@
+#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -39,8 +40,8 @@ m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_func = PyTuple_GET_ITEM(context, 0);
-    PyObject* py_ctx = PyTuple_GET_ITEM(context, 1);
+    PyObject* py_func = PyTuple_GetItem(context, 0);
+    PyObject* py_ctx = PyTuple_GetItem(context, 1);
 
     PyObject* py_list = PyObjC_IdToPython((NSObject*)proxyList);
     if (py_list == NULL) {
@@ -74,8 +75,8 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_func = PyTuple_GET_ITEM(context, 0);
-    PyObject* py_ctx = PyTuple_GET_ITEM(context, 1);
+    PyObject* py_func = PyTuple_GetItem(context, 0);
+    PyObject* py_ctx = PyTuple_GetItem(context, 1);
 
     PyObject* py_host = PyObjC_IdToPython((NSObject*)host);
     if (py_host == NULL) {

@@ -23,11 +23,13 @@ setup(
             "CoreFoundation._inlines",
             ["Modules/_CoreFoundation_inlines.m"],
             extra_link_args=["-framework", "CoreFoundation"],
+            #py_limited_api=True,
         ),
         Extension(
             "CoreFoundation._CoreFoundation",
             ["Modules/_CoreFoundation.m"],
             extra_link_args=["-framework", "CoreFoundation"],
+            #py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -39,11 +41,13 @@ setup(
             "Foundation._inlines",
             ["Modules/_Foundation_inlines.m"],
             extra_link_args=["-framework", "Foundation"],
+            #py_limited_api=True,
         ),
         Extension(
             "Foundation._Foundation",
             ["Modules/_Foundation.m"],
             extra_link_args=["-framework", "Foundation"],
+            #py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -55,11 +59,13 @@ setup(
             "AppKit._inlines",
             ["Modules/_AppKit_inlines.m"],
             extra_link_args=["-framework", "AppKit"],
+            #py_limited_api=True,
         ),
         Extension(
             "AppKit._AppKit",
             ["Modules/_AppKit.m"],
             extra_link_args=["-framework", "AppKit"],
+            #py_limited_api=True,
             depends=[
                 os.path.join("Modules", fn)
                 for fn in os.listdir("Modules")
@@ -73,9 +79,15 @@ setup(
             "PyObjCTest.testhelper",
             ["Modules/testhelper.m"],
             extra_link_args=["-framework", "Foundation"],
+            py_limited_api=True,
         ),
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION],
     long_description=__doc__,
+    #options=dict(
+    #    bdist_wheel=dict(
+    #        py_limited_api="cp36"
+    #    )
+    #),
 )

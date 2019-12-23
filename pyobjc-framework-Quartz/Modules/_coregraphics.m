@@ -1,6 +1,7 @@
 /*
  * Manual wrappers for CoreGraphics
  */
+/*#define Py_LIMITED_API 0x03060000*/
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -317,9 +318,14 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     } else {
         Py_ssize_t size;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
         if (PyObject_AsWriteBuffer(py_data, &data, &size) == -1) {
             return NULL;
         }
+
+#pragma clang diagnostic pop
     }
 
     CGContextRef ctx = NULL;
@@ -356,10 +362,10 @@ m_releasecallback(void* releaseInfo, void* data)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (PyTuple_GET_ITEM(releaseInfo, 0) != Py_None) {
-        PyObject* r = PyObject_CallFunction(PyTuple_GET_ITEM(py_data, 0), "OO",
-                                            PyTuple_GET_ITEM(py_data, 1),
-                                            PyTuple_GET_ITEM(py_data, 2));
+    if (PyTuple_GetItem(releaseInfo, 0) != Py_None) {
+        PyObject* r = PyObject_CallFunction(PyTuple_GetItem(py_data, 0), "OO",
+                                            PyTuple_GetItem(py_data, 1),
+                                            PyTuple_GetItem(py_data, 2));
         Py_XDECREF(r);
     }
 
@@ -430,9 +436,12 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     } else {
         Py_ssize_t size;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         if (PyObject_AsWriteBuffer(py_data, &data, &size) == -1) {
             return NULL;
         }
+#pragma clang diagnostic pop
     }
 
     PyObject* releaseInfo = PyTuple_New(3);

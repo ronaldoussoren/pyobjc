@@ -1,6 +1,7 @@
 /*
  * Functions with a callback argument that isn't "retained"
  */
+#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -19,22 +20,22 @@ m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _i
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyTuple_SET_ITEM(args, 0, PyBytes_FromString(key));
-    if (PyTuple_GET_ITEM(args, 0) == NULL) {
+    PyTuple_SetItem(args, 0, PyBytes_FromString(key));
+    if (PyTuple_GetItem(args, 0) == NULL) {
         Py_DECREF(args);
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyTuple_SET_ITEM(args, 1, PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value));
-    if (PyTuple_GET_ITEM(args, 1) == NULL) {
+    PyTuple_SetItem(args, 1, PyObjC_ObjCToPython(@encode(CGPDFObjectRef), value));
+    if (PyTuple_GetItem(args, 1) == NULL) {
         Py_DECREF(args);
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyTuple_SET_ITEM(args, 2, PyTuple_GET_ITEM(info, 1));
-    Py_INCREF(PyTuple_GET_ITEM(args, 2));
+    PyTuple_SetItem(args, 2, PyTuple_GetItem(info, 1));
+    Py_INCREF(PyTuple_GetItem(args, 2));
 
-    PyObject* result = PyObject_Call(PyTuple_GET_ITEM(info, 0), args, NULL);
+    PyObject* result = PyObject_Call(PyTuple_GetItem(info, 0), args, NULL);
     Py_DECREF(args);
 
     if (result == NULL) {
@@ -106,8 +107,8 @@ m_CGPathApplierFunction(void* _info, const CGPathElement* element)
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GET_ITEM(info, 0), "ON",
-                                             PyTuple_GET_ITEM(info, 1), py_element);
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "ON",
+                                             PyTuple_GetItem(info, 1), py_element);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }

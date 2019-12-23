@@ -18,10 +18,17 @@ setup(
     min_os_level="10.8",
     packages=["libdispatch"],
     ext_modules=[
-        Extension("libdispatch._inlines", ["Modules/_libdispatch_inlines.m"]),
-        Extension("libdispatch._libdispatch", ["Modules/_libdispatch.m"]),
+        Extension("libdispatch._inlines", ["Modules/_libdispatch_inlines.m"], py_limited_api=True),
+        Extension("libdispatch._libdispatch", ["Modules/_libdispatch.m"],
+            #py_limited_api=True
+        ),
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION],
     long_description=__doc__,
+    #options=dict(
+    #    bdist_wheel=dict(
+    #        py_limited_api="cp36"
+    #    )
+    #),
 )

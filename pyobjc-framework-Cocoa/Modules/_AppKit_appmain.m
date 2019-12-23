@@ -1,10 +1,6 @@
 /*
  * Workaround to make NSAppicationMain more usable from Python.
  */
-#include "Python.h"
-#include "pyobjc-api.h"
-
-#import <AppKit/AppKit.h>
 
 static PyObject*
 objc_NSApplicationMain(PyObject* self __attribute__((__unused__)), PyObject* args,

@@ -437,6 +437,9 @@ def Extension(*args, **kwds):
     if os_level == "10.4":
         cflags.append("-DNO_OBJC2_RUNTIME")
 
+    if "-Werror" not in cflags:
+        cflags.append("-Werror")
+
     if "extra_compile_args" in kwds:
         kwds["extra_compile_args"] = kwds["extra_compile_args"] + cflags
     else:

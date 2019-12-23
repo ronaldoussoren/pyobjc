@@ -217,7 +217,7 @@ Project links
 * `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_
 """
 
-from setuptools import setup, Extension, find_packages
+from setuptools import setup
 import os
 
 

@@ -1,6 +1,7 @@
 /*
  * Support for callback functions/structs in the FSEvents frameework.
  */
+#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -74,13 +75,13 @@ m_FSEVentStreamCallback(ConstFSEventStreamRef streamRef, void* clientCallbackInf
     PyObject* v;
     PyObject* paths;
 
-    v = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 0);
+    v = PyTuple_GetItem((PyObject*)clientCallbackInfo, 0);
     if (PyObjC_PythonToObjC(@encode(FSEventStreamCreateFlags), v, &flags) < 0) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    info = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 1);
-    callback = PyTuple_GET_ITEM((PyObject*)clientCallbackInfo, 2);
+    info = PyTuple_GetItem((PyObject*)clientCallbackInfo, 1);
+    callback = PyTuple_GetItem((PyObject*)clientCallbackInfo, 2);
 
     if (flags & kFSEventStreamCreateFlagUseCFTypes) {
         /* The evenPaths are an CFArray */

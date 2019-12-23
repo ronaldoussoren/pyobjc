@@ -2,6 +2,7 @@
  * Functions that return arrays by indirection, something that cannot be
  * described by the metadata.
  */
+#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -15,12 +16,12 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObje
     CGRectCount count = 0;
     CGError err;
 
-    if (PyTuple_GET_SIZE(args) == 2) {
-        if (PyTuple_GET_ITEM(args, 0) != Py_None) {
+    if (PyTuple_Size(args) == 2) {
+        if (PyTuple_GetItem(args, 0) != Py_None) {
             PyErr_SetString(PyExc_ValueError, "pRectArray");
             return NULL;
         }
-        if (PyTuple_GET_ITEM(args, 1) != Py_None) {
+        if (PyTuple_GetItem(args, 1) != Py_None) {
             PyErr_SetString(PyExc_ValueError, "pCount");
             return NULL;
         }
