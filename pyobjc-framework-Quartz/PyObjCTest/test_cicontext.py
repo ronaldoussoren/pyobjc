@@ -35,7 +35,9 @@ class TestCIContext(TestCase):
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(kCIImageRepresentationAVSemanticSegmentationMattes, unicode)
+        self.assertIsInstance(
+            kCIImageRepresentationAVSemanticSegmentationMattes, unicode
+        )
         self.assertIsInstance(
             kCIImageRepresentationSemanticSegmentationSkinMatteImage, unicode
         )

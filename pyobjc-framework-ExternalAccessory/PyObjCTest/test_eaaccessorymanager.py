@@ -17,7 +17,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(
                 ExternalAccessory.EABluetoothAccessoryPickerResultCancelled, 2
             )
-            self.assertEqual(ExternalAccessory.EABluetoothAccessoryPickerResultFailed, 3)
+            self.assertEqual(
+                ExternalAccessory.EABluetoothAccessoryPickerResultFailed, 3
+            )
 
             self.assertIsInstance(
                 ExternalAccessory.EABluetoothAccessoryPickerErrorDomain, unicode

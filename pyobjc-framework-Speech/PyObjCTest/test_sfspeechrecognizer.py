@@ -33,5 +33,7 @@ class TestSFSpeechRecognizer(TestCase):
         self.assertResultIsBOOL(Speech.SFSpeechRecognizer.isAvailable)
 
         self.assertArgIsBlock(
-            Speech.SFSpeechRecognizer.recognitionTaskWithRequest_resultHandler_, 1, b"v@@"
+            Speech.SFSpeechRecognizer.recognitionTaskWithRequest_resultHandler_,
+            1,
+            b"v@@",
         )

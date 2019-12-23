@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLSampler (TestCase):
+
+class TestMTLSampler(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLSamplerMinMagFilterNearest, 0)
         self.assertEqual(Metal.MTLSamplerMinMagFilterLinear, 1)
@@ -19,17 +20,24 @@ class TestMTLSampler (TestCase):
         self.assertEqual(Metal.MTLSamplerBorderColorOpaqueBlack, 1)
         self.assertEqual(Metal.MTLSamplerBorderColorOpaqueWhite, 2)
 
-    @min_sdk_level('10.11')
+    @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed('MTLSamplerState')
+        objc.protocolNamed("MTLSamplerState")
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().normalizedCoordinates)
-        self.assertArgIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().setNormalizedCoordinates_, 0)
+        self.assertResultIsBOOL(
+            Metal.MTLSamplerDescriptor.alloc().init().normalizedCoordinates
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLSamplerDescriptor.alloc().init().setNormalizedCoordinates_, 0
+        )
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def test_methods10_13(self):
-        self.assertResultIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().supportArgumentBuffers)
-        self.assertArgIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().setSupportArgumentBuffers_, 0)
+        self.assertResultIsBOOL(
+            Metal.MTLSamplerDescriptor.alloc().init().supportArgumentBuffers
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLSamplerDescriptor.alloc().init().setSupportArgumentBuffers_, 0
+        )

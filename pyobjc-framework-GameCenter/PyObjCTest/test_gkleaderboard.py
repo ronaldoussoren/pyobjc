@@ -23,10 +23,14 @@ if sys.maxsize > 2 ** 32:
                 GameCenter.GKLeaderboard.loadScoresWithCompletionHandler_, 0, b"v@@"
             )
             self.assertArgIsBlock(
-                GameCenter.GKLeaderboard.loadLeaderboardsWithCompletionHandler_, 0, b"v@@"
+                GameCenter.GKLeaderboard.loadLeaderboardsWithCompletionHandler_,
+                0,
+                b"v@@",
             )
             self.assertArgIsBlock(
-                GameCenter.GKLeaderboard.loadCategoriesWithCompletionHandler_, 0, b"v@@@"
+                GameCenter.GKLeaderboard.loadCategoriesWithCompletionHandler_,
+                0,
+                b"v@@@",
             )
             self.assertArgIsBlock(
                 GameCenter.GKLeaderboard.setDefaultLeaderboard_withCompletionHandler_,

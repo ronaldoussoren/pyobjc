@@ -16,7 +16,7 @@ import ast
 import glob
 import contextlib
 
-VERSION = '6.2b1'
+VERSION = "6.2b1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -363,7 +363,9 @@ class oc_test(Command):
                 failures += 1
 
             if not os.path.exists(os.path.join(subdir, "pyobjc_setup.py")):
-                print("Framework wrapper for %s does not contain pyobjc_setup.py" % (nm))
+                print(
+                    "Framework wrapper for %s does not contain pyobjc_setup.py" % (nm)
+                )
                 failures += 1
 
             else:
@@ -480,7 +482,9 @@ class oc_test(Command):
                     ):
 
                         if p in fn:
-                            print("Unwanted pattern %r in sdist for %s: %s" % (p, nm, fn))
+                            print(
+                                "Unwanted pattern %r in sdist for %s: %s" % (p, nm, fn)
+                            )
                             failures += 1
 
         print("  validating long description...")

@@ -37,7 +37,9 @@ if sys.maxsize > 2 ** 32:
         @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
         @min_os_level("10.9")
         def testMethods10_9(self):
-            self.assertResultIsBlock(GameCenter.GKLocalPlayer.authenticateHandler, b"v@@")
+            self.assertResultIsBlock(
+                GameCenter.GKLocalPlayer.authenticateHandler, b"v@@"
+            )
             self.assertArgIsBlock(
                 GameCenter.GKLocalPlayer.setAuthenticateHandler_, 0, b"v@@"
             )

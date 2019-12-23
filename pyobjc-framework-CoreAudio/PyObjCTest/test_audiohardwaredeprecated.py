@@ -88,7 +88,8 @@ class TestAudioHardwareDeprecated(TestCase):
             CoreAudio.kAudioHardwarePropertyBootChimeVolumeDecibels, fourcc(b"bbvd")
         )
         self.assertEqual(
-            CoreAudio.kAudioHardwarePropertyBootChimeVolumeRangeDecibels, fourcc(b"bbd#")
+            CoreAudio.kAudioHardwarePropertyBootChimeVolumeRangeDecibels,
+            fourcc(b"bbd#"),
         )
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyBootChimeVolumeScalarToDecibels,
@@ -154,7 +155,9 @@ class TestAudioHardwareDeprecated(TestCase):
             CoreAudio.kAudioDevicePropertyChannelCategoryNameCFString,
             CoreAudio.kAudioObjectPropertyElementCategoryName,
         )
-        self.assertEqual(CoreAudio.kAudioDevicePropertyChannelNumberName, fourcc(b"cnnm"))
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyChannelNumberName, fourcc(b"cnnm")
+        )
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyChannelNumberNameCFString,
             CoreAudio.kAudioObjectPropertyElementNumberName,
@@ -165,7 +168,9 @@ class TestAudioHardwareDeprecated(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyStreamFormatSupported, fourcc(b"sfm?")
         )
-        self.assertEqual(CoreAudio.kAudioDevicePropertyStreamFormatMatch, fourcc(b"sfmm"))
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyStreamFormatMatch, fourcc(b"sfmm")
+        )
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyDataSourceNameForID, fourcc(b"sscn")
         )
@@ -180,7 +185,8 @@ class TestAudioHardwareDeprecated(TestCase):
             fourcc(b"cnlv"),
         )
         self.assertEqual(
-            CoreAudio.kAudioDevicePropertyHighPassFilterSettingNameForID, fourcc(b"chip")
+            CoreAudio.kAudioDevicePropertyHighPassFilterSettingNameForID,
+            fourcc(b"chip"),
         )
 
         self.assertEqual(CoreAudio.kAudioStreamUnknown, CoreAudio.kAudioObjectUnknown)

@@ -69,7 +69,9 @@ class TestGKLocalPlayer(TestCase):
     def testMethods10_15(self):
         self.assertResultIsBOOL(GameKit.GKLocalPlayer.isMultiplayerGamingRestricted)
         self.assertArgIsBlock(
-            GameKit.GKLocalPlayer.loadChallengableFriendsWithCompletionHandler_, 0, b"v@@"
+            GameKit.GKLocalPlayer.loadChallengableFriendsWithCompletionHandler_,
+            0,
+            b"v@@",
         )
 
     def testProtocols(self):

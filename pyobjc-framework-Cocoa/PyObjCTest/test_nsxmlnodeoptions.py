@@ -42,7 +42,8 @@ class TestNSXMLNodeOptions(TestCase):
             (NSXMLNodeExpandEmptyElement | NSXMLNodeCompactEmptyElement),
         )
         self.assertEqual(
-            NSXMLNodePreserveQuotes, (NSXMLNodeUseSingleQuotes | NSXMLNodeUseDoubleQuotes)
+            NSXMLNodePreserveQuotes,
+            (NSXMLNodeUseSingleQuotes | NSXMLNodeUseDoubleQuotes),
         )
         self.assertEqual(
             NSXMLNodePreserveAll & 0xFFFFFFFF,

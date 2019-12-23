@@ -128,7 +128,11 @@ try:
     r(b"MKAnnotationView", b"isHighlighted", {"retval": {"type": b"Z"}})
     r(b"MKAnnotationView", b"isSelected", {"retval": {"type": b"Z"}})
     r(b"MKAnnotationView", b"setCanShowCallout:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"MKAnnotationView", b"setDragState:animated:", {"arguments": {3: {"type": b"Z"}}})
+    r(
+        b"MKAnnotationView",
+        b"setDragState:animated:",
+        {"arguments": {3: {"type": b"Z"}}},
+    )
     r(b"MKAnnotationView", b"setDraggable:", {"arguments": {2: {"type": b"Z"}}})
     r(b"MKAnnotationView", b"setEnabled:", {"arguments": {2: {"type": b"Z"}}})
     r(b"MKAnnotationView", b"setHighlighted:", {"arguments": {2: {"type": b"Z"}}})
@@ -397,7 +401,11 @@ try:
             }
         },
     )
-    r(b"MKMapSnapshotOptions", b"setShowsBuildings:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"MKMapSnapshotOptions",
+        b"setShowsBuildings:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(
         b"MKMapSnapshotOptions",
         b"setShowsPointsOfInterest:",
@@ -818,7 +826,11 @@ try:
             "retval": {"type": b"{_MKMapRect={_MKMapPoint=dd}{_MKMapSize=dd}}"},
         },
     )
-    r(b"NSObject", b"canReplaceMapContent", {"required": False, "retval": {"type": b"Z"}})
+    r(
+        b"NSObject",
+        b"canReplaceMapContent",
+        {"required": False, "retval": {"type": b"Z"}},
+    )
     r(
         b"NSObject",
         b"completer:didFailWithError:",

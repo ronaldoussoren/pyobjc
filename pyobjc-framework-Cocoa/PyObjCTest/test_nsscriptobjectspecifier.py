@@ -29,7 +29,9 @@ class TestNSScriptObjectSpecifiers(TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(NSScriptObjectSpecifier.containerIsObjectBeingTested)
-        self.assertArgIsBOOL(NSScriptObjectSpecifier.setContainerIsObjectBeingTested_, 0)
+        self.assertArgIsBOOL(
+            NSScriptObjectSpecifier.setContainerIsObjectBeingTested_, 0
+        )
 
         self.assertResultIsBOOL(NSScriptObjectSpecifier.containerIsRangeContainerObject)
         self.assertArgIsBOOL(

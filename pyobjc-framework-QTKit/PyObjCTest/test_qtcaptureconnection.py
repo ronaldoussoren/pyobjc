@@ -11,8 +11,12 @@ class TestQTCaptureConnection(TestCase):
         self.assertIsInstance(
             QTCaptureConnectionFormatDescriptionDidChangeNotification, unicode
         )
-        self.assertIsInstance(QTCaptureConnectionAttributeWillChangeNotification, unicode)
-        self.assertIsInstance(QTCaptureConnectionAttributeDidChangeNotification, unicode)
+        self.assertIsInstance(
+            QTCaptureConnectionAttributeWillChangeNotification, unicode
+        )
+        self.assertIsInstance(
+            QTCaptureConnectionAttributeDidChangeNotification, unicode
+        )
         self.assertIsInstance(QTCaptureConnectionChangedAttributeKey, unicode)
         self.assertIsInstance(
             QTCaptureConnectionAudioAveragePowerLevelsAttribute, unicode

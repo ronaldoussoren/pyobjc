@@ -67,7 +67,9 @@ class TestCMBufferQueue(TestCase):
         CoreMedia.CMBufferQueueEnqueue
 
         self.assertResultIsCFRetained(CoreMedia.CMBufferQueueDequeueAndRetain)
-        self.assertResultIsCFRetained(CoreMedia.CMBufferQueueDequeueIfDataReadyAndRetain)
+        self.assertResultIsCFRetained(
+            CoreMedia.CMBufferQueueDequeueIfDataReadyAndRetain
+        )
 
         CoreMedia.CMBufferQueueGetHead
 
@@ -107,7 +109,9 @@ class TestCMBufferQueue(TestCase):
             b"v^v^{opaqueCMBufferQueueTriggerToken=}",
             True,
         )
-        self.assertArgIsOut(CoreMedia.CMBufferQueueInstallTriggerWithIntegerThreshold, 5)
+        self.assertArgIsOut(
+            CoreMedia.CMBufferQueueInstallTriggerWithIntegerThreshold, 5
+        )
 
         CoreMedia.CMBufferQueueRemoveTrigger
 

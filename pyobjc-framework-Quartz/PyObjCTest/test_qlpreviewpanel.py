@@ -18,7 +18,9 @@ class TestQLPreviewPanelHelper(NSObject):
     def previewPanel_sourceFrameOnScreenForPreviewItem_(self, panel, item):
         return 1
 
-    def previewPanel_transitionImageForPreviewItem_contentRect_(self, panel, item, rect):
+    def previewPanel_transitionImageForPreviewItem_contentRect_(
+        self, panel, item, rect
+    ):
         return 1
 
 

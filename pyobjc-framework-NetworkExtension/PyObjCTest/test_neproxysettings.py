@@ -8,7 +8,9 @@ if sys.maxsize >= 2 ** 32:
     class TestNEProxySettings(TestCase):
         @min_os_level("10.11")
         def testMethods(self):
-            self.assertResultIsBOOL(NetworkExtension.NEProxyServer.authenticationRequired)
+            self.assertResultIsBOOL(
+                NetworkExtension.NEProxyServer.authenticationRequired
+            )
             self.assertArgIsBOOL(
                 NetworkExtension.NEProxyServer.setAuthenticationRequired_, 0
             )

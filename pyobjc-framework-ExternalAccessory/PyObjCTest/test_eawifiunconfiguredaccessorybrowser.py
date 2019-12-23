@@ -26,14 +26,16 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertEqual(
-                ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusSuccess, 0
+                ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusSuccess,
+                0,
             )
             self.assertEqual(
                 ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusUserCancelledConfiguration,
                 1,
             )
             self.assertEqual(
-                ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusFailed, 2
+                ExternalAccessory.EAWiFiUnconfiguredAccessoryConfigurationStatusFailed,
+                2,
             )
 
         def testMethods(self):

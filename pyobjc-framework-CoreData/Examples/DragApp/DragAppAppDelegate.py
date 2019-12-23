@@ -35,7 +35,9 @@ class DragAppAppDelegate(Cocoa.NSObject):
             )
             Cocoa.NSApplication.sharedApplication().terminate_(self)
         else:
-            applicationSupportFolder = paths[0].stringByAppendingPathComponent_("DragApp")
+            applicationSupportFolder = paths[0].stringByAppendingPathComponent_(
+                "DragApp"
+            )
 
         return applicationSupportFolder
 
@@ -58,7 +60,10 @@ class DragAppAppDelegate(Cocoa.NSObject):
             coordinator = CoreData.NSPersistentStoreCoordinator.alloc().initWithManagedObjectModel_(
                 self.managedObjectModel()
             )
-            result, error = coordinator.addPersistentStoreWithType_configuration_URL_options_error_(
+            (
+                result,
+                error,
+            ) = coordinator.addPersistentStoreWithType_configuration_URL_options_error_(
                 CoreData.NSXMLStoreType, None, url, None, None
             )
             if result:

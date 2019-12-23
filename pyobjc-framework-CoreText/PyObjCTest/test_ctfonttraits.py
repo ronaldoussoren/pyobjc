@@ -26,7 +26,9 @@ class TestCTFontTraits(TestCase):
             kCTFontOldStyleSerifsClass, cast_uint(1 << kCTFontClassMaskShift)
         )
         self.assertEqual(kCTFontTransitionalSerifsClass, (2 << kCTFontClassMaskShift))
-        self.assertEqual(kCTFontModernSerifsClass, cast_uint(3 << kCTFontClassMaskShift))
+        self.assertEqual(
+            kCTFontModernSerifsClass, cast_uint(3 << kCTFontClassMaskShift)
+        )
         self.assertEqual(
             kCTFontClarendonSerifsClass, cast_uint(4 << kCTFontClassMaskShift)
         )

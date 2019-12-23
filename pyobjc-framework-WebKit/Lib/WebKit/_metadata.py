@@ -162,7 +162,11 @@ try:
     r(b"DOMHTMLOptionElement", b"defaultSelected", {"retval": {"type": "Z"}})
     r(b"DOMHTMLOptionElement", b"disabled", {"retval": {"type": "Z"}})
     r(b"DOMHTMLOptionElement", b"selected", {"retval": {"type": "Z"}})
-    r(b"DOMHTMLOptionElement", b"setDefaultSelected:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"DOMHTMLOptionElement",
+        b"setDefaultSelected:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"DOMHTMLOptionElement", b"setDisabled:", {"arguments": {2: {"type": "Z"}}})
     r(b"DOMHTMLOptionElement", b"setSelected:", {"arguments": {2: {"type": "Z"}}})
     r(b"DOMHTMLPreElement", b"setWrap:", {"arguments": {2: {"type": "Z"}}})
@@ -1923,7 +1927,11 @@ try:
     r(b"WKNavigationResponse", b"isForMainFrame", {"retval": {"type": b"Z"}})
     r(b"WKOpenPanelParameters", b"allowsDirectories", {"retval": {"type": "Z"}})
     r(b"WKOpenPanelParameters", b"allowsMultipleSelection", {"retval": {"type": "Z"}})
-    r(b"WKPreferences", b"isFraudulentWebsiteWarningEnabled", {"retval": {"type": b"Z"}})
+    r(
+        b"WKPreferences",
+        b"isFraudulentWebsiteWarningEnabled",
+        {"retval": {"type": b"Z"}},
+    )
     r(b"WKPreferences", b"isSafeBrowsingEnabled", {"retval": {"type": b"Z"}})
     r(b"WKPreferences", b"javaEnabled", {"retval": {"type": b"Z"}})
     r(
@@ -2141,15 +2149,27 @@ try:
         {"arguments": {2: {"type": "Z"}}},
     )
     r(b"WebPreferences", b"setPlugInsEnabled:", {"arguments": {2: {"type": "Z"}}})
-    r(b"WebPreferences", b"setPrivateBrowsingEnabled:", {"arguments": {2: {"type": "Z"}}})
-    r(b"WebPreferences", b"setShouldPrintBackgrounds:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"WebPreferences",
+        b"setPrivateBrowsingEnabled:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
+    r(
+        b"WebPreferences",
+        b"setShouldPrintBackgrounds:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(
         b"WebPreferences",
         b"setSuppressesIncrementalRendering:",
         {"arguments": {2: {"type": b"Z"}}},
     )
     r(b"WebPreferences", b"setTabsToLinks:", {"arguments": {2: {"type": "Z"}}})
-    r(b"WebPreferences", b"setUserStyleSheetEnabled:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"WebPreferences",
+        b"setUserStyleSheetEnabled:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"WebPreferences", b"setUsesPageCache:", {"arguments": {2: {"type": "Z"}}})
     r(b"WebPreferences", b"shouldPrintBackgrounds", {"retval": {"type": "Z"}})
     r(b"WebPreferences", b"suppressesIncrementalRendering", {"retval": {"type": b"Z"}})
@@ -2238,7 +2258,9 @@ protocols = {
                 isRequired=False,
             ),
             objc.selector(None, b"webViewRunModal:", b"v@:@", isRequired=False),
-            objc.selector(None, b"webViewIsStatusBarVisible:", b"Z@:@", isRequired=False),
+            objc.selector(
+                None, b"webViewIsStatusBarVisible:", b"Z@:@", isRequired=False
+            ),
             objc.selector(
                 None,
                 b"webView:runOpenPanelForFileButtonWithResultListener:allowMultipleFiles:",
@@ -2315,7 +2337,9 @@ protocols = {
                 sel32or64(b"I@:@{_NSPoint=ff}", b"Q@:@{CGPoint=dd}"),
                 isRequired=False,
             ),
-            objc.selector(None, b"webViewAreToolbarsVisible:", b"Z@:@", isRequired=False),
+            objc.selector(
+                None, b"webViewAreToolbarsVisible:", b"Z@:@", isRequired=False
+            ),
             objc.selector(
                 None,
                 b"webView:setFrame:",
@@ -2397,7 +2421,9 @@ protocols = {
         "WebViewEditingDelegate",
         [
             objc.selector(None, b"webViewDidBeginEditing:", b"v@:@", isRequired=False),
-            objc.selector(None, b"webViewDidChangeSelection:", b"v@:@", isRequired=False),
+            objc.selector(
+                None, b"webViewDidChangeSelection:", b"v@:@", isRequired=False
+            ),
             objc.selector(
                 None, b"webView:shouldDeleteDOMRange:", b"Z@:@@", isRequired=False
             ),
@@ -2438,7 +2464,10 @@ protocols = {
                 None, b"webView:shouldEndEditingInDOMRange:", b"Z@:@@", isRequired=False
             ),
             objc.selector(
-                None, b"webView:shouldBeginEditingInDOMRange:", b"Z@:@@", isRequired=False
+                None,
+                b"webView:shouldBeginEditingInDOMRange:",
+                b"Z@:@@",
+                isRequired=False,
             ),
             objc.selector(
                 None,
@@ -2481,7 +2510,10 @@ protocols = {
         "WebDownloadDelegate",
         [
             objc.selector(
-                None, b"downloadWindowForAuthenticationSheet:", b"@@:@", isRequired=False
+                None,
+                b"downloadWindowForAuthenticationSheet:",
+                b"@@:@",
+                isRequired=False,
             )
         ],
     ),
@@ -2499,7 +2531,10 @@ protocols = {
                 None, b"webPlugInMainResourceDidFinishLoading", b"v@:", isRequired=False
             ),
             objc.selector(
-                None, b"webPlugInMainResourceDidFailWithError:", b"v@:@", isRequired=False
+                None,
+                b"webPlugInMainResourceDidFailWithError:",
+                b"v@:@",
+                isRequired=False,
             ),
             objc.selector(
                 None, b"webPlugInMainResourceDidReceiveData:", b"v@:@", isRequired=False
@@ -2645,7 +2680,10 @@ protocols = {
                 isRequired=False,
             ),
             objc.selector(
-                None, b"webView:windowScriptObjectAvailable:", b"v@:@@", isRequired=False
+                None,
+                b"webView:windowScriptObjectAvailable:",
+                b"v@:@@",
+                isRequired=False,
             ),
             objc.selector(
                 None,
@@ -2685,7 +2723,9 @@ protocols = {
                 isRequired=False,
             ),
             objc.selector(None, b"webScriptNameForKey:", b"@@:^c", isRequired=False),
-            objc.selector(None, b"webScriptNameForSelector:", b"@@::", isRequired=False),
+            objc.selector(
+                None, b"webScriptNameForSelector:", b"@@::", isRequired=False
+            ),
             objc.selector(
                 None, b"invokeDefaultMethodWithArguments:", b"@@:@", isRequired=False
             ),

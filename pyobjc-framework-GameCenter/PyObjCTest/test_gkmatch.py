@@ -32,8 +32,12 @@ if sys.maxsize > 2 ** 32:
         @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")
         @min_os_level("10.8")
         def testMethods10_8(self):
-            self.assertResultIsBOOL(GameCenter.GKMatch.sendData_toPlayers_dataMode_error_)
-            self.assertArgIsOut(GameCenter.GKMatch.sendData_toPlayers_dataMode_error_, 3)
+            self.assertResultIsBOOL(
+                GameCenter.GKMatch.sendData_toPlayers_dataMode_error_
+            )
+            self.assertArgIsOut(
+                GameCenter.GKMatch.sendData_toPlayers_dataMode_error_, 3
+            )
 
             self.assertResultIsBOOL(
                 GameCenter.GKMatch.sendDataToAllPlayers_withDataMode_error_
@@ -43,7 +47,9 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                GameCenter.GKMatch.chooseBestHostingPlayerWithCompletionHandler_, 0, b"v@"
+                GameCenter.GKMatch.chooseBestHostingPlayerWithCompletionHandler_,
+                0,
+                b"v@",
             )
             self.assertArgIsBlock(
                 GameCenter.GKMatch.rematchWithCompletionHandler_, 0, b"v@@"
@@ -73,7 +79,9 @@ if sys.maxsize > 2 ** 32:
                 objc._C_NSUInteger,
             )
             self.assertArgHasType(
-                GKMatchDelegateHelper.match_player_didChangeState_, 2, objc._C_NSUInteger
+                GKMatchDelegateHelper.match_player_didChangeState_,
+                2,
+                objc._C_NSUInteger,
             )
             self.assertResultIsBOOL(
                 GKMatchDelegateHelper.match_shouldReinviteDisconnectedPlayer_

@@ -29,7 +29,8 @@ if sys.maxsize > 2 ** 32:
             )
             self.assertResultIsBOOL(TestMKOverlayHelper.canReplaceMapContent)
             self.assertResultHasType(
-                TestMKOverlayHelper.coordinate, MapKit.CLLocationCoordinate2D.__typestr__
+                TestMKOverlayHelper.coordinate,
+                MapKit.CLLocationCoordinate2D.__typestr__,
             )
             self.assertResultHasType(
                 TestMKOverlayHelper.boundingMapRect, MapKit.MKMapRect.__typestr__

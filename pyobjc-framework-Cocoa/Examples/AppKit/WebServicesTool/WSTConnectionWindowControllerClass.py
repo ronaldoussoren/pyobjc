@@ -478,7 +478,9 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         selectedMethod = self._methods[selectedRow]
 
         if not self._methodDescriptions.has_key(selectedMethod):
-            self._methodDescriptions[selectedMethod] = "<description is being retrieved>"
+            self._methodDescriptions[
+                selectedMethod
+            ] = "<description is being retrieved>"
             self.startWorking()
 
             def work():

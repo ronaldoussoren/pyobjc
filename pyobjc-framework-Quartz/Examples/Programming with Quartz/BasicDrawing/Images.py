@@ -379,7 +379,9 @@ def myCreateThumbnailFromImageSource(url):
 
 def imageHasFloatingPointSamples(image):
     if hasattr(Quartz, "CGImageGetBitmapInfo"):
-        return (Quartz.kCGBitmapFloatComponents & Quartz.CGImageGetBitmapInfo(image)) != 0
+        return (
+            Quartz.kCGBitmapFloatComponents & Quartz.CGImageGetBitmapInfo(image)
+        ) != 0
     return False
 
 

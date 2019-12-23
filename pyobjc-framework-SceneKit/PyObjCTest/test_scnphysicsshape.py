@@ -13,7 +13,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
             self.assertIsInstance(SceneKit.SCNPhysicsShapeTypeBoundingBox, unicode)
             self.assertIsInstance(SceneKit.SCNPhysicsShapeTypeConvexHull, unicode)
-            self.assertIsInstance(SceneKit.SCNPhysicsShapeTypeConcavePolyhedron, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNPhysicsShapeTypeConcavePolyhedron, unicode
+            )
 
             self.assertIsInstance(SceneKit.SCNPhysicsShapeKeepAsCompoundKey, unicode)
 
@@ -21,7 +23,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
         @min_os_level("10.12")
         def test_constants10_12(self):
-            self.assertIsInstance(SceneKit.SCNPhysicsShapeOptionCollisionMargin, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNPhysicsShapeOptionCollisionMargin, unicode
+            )
 
             self.assertIs(
                 SceneKit.SCNPhysicsShapeOptionType, SceneKit.SCNPhysicsShapeTypeKey

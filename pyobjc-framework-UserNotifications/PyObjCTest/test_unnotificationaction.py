@@ -8,7 +8,8 @@ if sys.maxsize > 2 ** 32:
         def test_constants(self):
             self.assertEqual(UserNotifications.UNNotificationActionOptionNone, 0)
             self.assertEqual(
-                UserNotifications.UNNotificationActionOptionAuthenticationRequired, 1 << 0
+                UserNotifications.UNNotificationActionOptionAuthenticationRequired,
+                1 << 0,
             )
             self.assertEqual(
                 UserNotifications.UNNotificationActionOptionDestructive, 1 << 1

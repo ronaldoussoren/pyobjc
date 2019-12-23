@@ -24,7 +24,9 @@ class TestNSTextViewHelper(NSObject):
     def textView_writeCell_atIndex_toPasteboard_type_(self, tv, a, b, c, d):
         return 1
 
-    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(self, tv, a, b):
+    def textView_willChangeSelectionFromCharacterRange_toCharacterRange_(
+        self, tv, a, b
+    ):
         return 1
 
     def textView_shouldChangeTextInRanges_replacementStrings_(self, tv, a, b):
@@ -33,7 +35,9 @@ class TestNSTextViewHelper(NSObject):
     def textView_willDisplayToolTip_forCharacterAtIndex_(self, tv, a, b):
         return 1
 
-    def textView_completions_forPartialWordRange_indexOfSelectedItem_(self, tv, a, b, c):
+    def textView_completions_forPartialWordRange_indexOfSelectedItem_(
+        self, tv, a, b, c
+    ):
         return 1
 
     def textView_shouldChangeTextInRange_replacementString_(self, tv, a, b):
@@ -110,7 +114,9 @@ class TestNSTextView(TestCase):
 
         self.assertIsInstance(NSAllRomanInputSourcesLocaleIdentifier, unicode)
 
-        self.assertIsInstance(NSTextViewWillChangeNotifyingTextViewNotification, unicode)
+        self.assertIsInstance(
+            NSTextViewWillChangeNotifyingTextViewNotification, unicode
+        )
         self.assertIsInstance(NSTextViewDidChangeSelectionNotification, unicode)
         self.assertIsInstance(NSTextViewDidChangeTypingAttributesNotification, unicode)
 
@@ -317,7 +323,9 @@ class TestNSTextView(TestCase):
             NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTextViewHelper.textView_draggedCell_inRect_event_, 2, NSRect.__typestr__
+            TestNSTextViewHelper.textView_draggedCell_inRect_event_,
+            2,
+            NSRect.__typestr__,
         )
 
     @min_os_level("10.5")
@@ -371,7 +379,9 @@ class TestNSTextView(TestCase):
             NSTextView.performValidatedReplacementInRange_withAttributedString_
         )
         self.assertResultIsBOOL(NSTextView.usesAdaptiveColorMappingForDarkAppearance)
-        self.assertArgIsBOOL(NSTextView.setUsesAdaptiveColorMappingForDarkAppearance_, 0)
+        self.assertArgIsBOOL(
+            NSTextView.setUsesAdaptiveColorMappingForDarkAppearance_, 0
+        )
 
     @min_os_level("10.6")
     def testProtocols10_6(self):

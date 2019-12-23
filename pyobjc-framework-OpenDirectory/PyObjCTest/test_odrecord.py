@@ -5,8 +5,12 @@ import OpenDirectory
 
 class TestODRecord(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(OpenDirectory.ODRecord.setNodeCredentials_password_error_)
-        self.assertArgIsOut(OpenDirectory.ODRecord.setNodeCredentials_password_error_, 2)
+        self.assertResultIsBOOL(
+            OpenDirectory.ODRecord.setNodeCredentials_password_error_
+        )
+        self.assertArgIsOut(
+            OpenDirectory.ODRecord.setNodeCredentials_password_error_, 2
+        )
 
         self.assertResultIsBOOL(
             OpenDirectory.ODRecord.setNodeCredentialsWithRecordType_authenticationType_authenticationItems_continueItems_context_error_
@@ -117,8 +121,12 @@ class TestODRecord(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(OpenDirectory.ODRecord.addAccountPolicy_toCategory_error_)
-        self.assertArgIsOut(OpenDirectory.ODRecord.addAccountPolicy_toCategory_error_, 2)
+        self.assertResultIsBOOL(
+            OpenDirectory.ODRecord.addAccountPolicy_toCategory_error_
+        )
+        self.assertArgIsOut(
+            OpenDirectory.ODRecord.addAccountPolicy_toCategory_error_, 2
+        )
 
         self.assertResultIsBOOL(
             OpenDirectory.ODRecord.removeAccountPolicy_fromCategory_error_

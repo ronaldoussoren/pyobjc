@@ -30,7 +30,9 @@ class TestAVAsynchronousKeyValueLoading(TestCase):
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestAVAsynchronousKeyValueLoadingHelper.statusOfValueForKey_error_, 1, b"o^@"
+            TestAVAsynchronousKeyValueLoadingHelper.statusOfValueForKey_error_,
+            1,
+            b"o^@",
         )
         self.assertArgIsBlock(
             TestAVAsynchronousKeyValueLoadingHelper.loadValuesAsynchronouslyForKeys_completionHandler_,

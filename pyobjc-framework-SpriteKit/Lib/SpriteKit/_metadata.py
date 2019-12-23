@@ -88,7 +88,11 @@ try:
         b"projectPoint:",
         {"retval": {"type": b"%"}, "arguments": {2: {"type": b"%"}}},
     )
-    r(b"SK3DNode", b"setAutoenablesDefaultLighting:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SK3DNode",
+        b"setAutoenablesDefaultLighting:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"SK3DNode", b"setLoops:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SK3DNode", b"setPlaying:", {"arguments": {2: {"type": b"Z"}}})
     r(
@@ -304,7 +308,11 @@ try:
         {"arguments": {2: {"type": b"Z"}}},
     )
     r(b"SKPhysicsBody", b"usesPreciseCollisionDetection", {"retval": {"type": b"Z"}})
-    r(b"SKPhysicsJointPin", b"setShouldEnableLimits:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SKPhysicsJointPin",
+        b"setShouldEnableLimits:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"SKPhysicsJointPin", b"shouldEnableLimits", {"retval": {"type": b"Z"}})
     r(
         b"SKPhysicsJointSliding",
@@ -376,7 +384,11 @@ try:
     r(b"SKRegion", b"containsPoint:", {"retval": {"type": b"Z"}})
     r(b"SKRenderer", b"ignoresSiblingOrder", {"retval": {"type": "Z"}})
     r(b"SKRenderer", b"setIgnoresSiblingOrder:", {"arguments": {2: {"type": "Z"}}})
-    r(b"SKRenderer", b"setShouldCullNonVisibleNodes:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"SKRenderer",
+        b"setShouldCullNonVisibleNodes:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"SKRenderer", b"setShowsDrawCount:", {"arguments": {2: {"type": "Z"}}})
     r(b"SKRenderer", b"setShowsFields:", {"arguments": {2: {"type": "Z"}}})
     r(b"SKRenderer", b"setShowsNodeCount:", {"arguments": {2: {"type": "Z"}}})
@@ -390,7 +402,11 @@ try:
     r(b"SKRenderer", b"showsQuadCount", {"retval": {"type": "Z"}})
     r(b"SKShapeNode", b"isAntialiased", {"retval": {"type": b"Z"}})
     r(b"SKShapeNode", b"setAntialiased:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"SKShapeNode", b"shapeNodeWithPath:centered:", {"arguments": {3: {"type": b"Z"}}})
+    r(
+        b"SKShapeNode",
+        b"shapeNodeWithPath:centered:",
+        {"arguments": {3: {"type": b"Z"}}},
+    )
     r(
         b"SKShapeNode",
         b"shapeNodeWithPoints:count:",
@@ -440,7 +456,11 @@ try:
         b"textureNoiseWithSmoothness:size:grayscale:",
         {"arguments": {4: {"type": b"Z"}}},
     )
-    r(b"SKTexture", b"textureWithData:size:flipped:", {"arguments": {4: {"type": b"Z"}}})
+    r(
+        b"SKTexture",
+        b"textureWithData:size:flipped:",
+        {"arguments": {4: {"type": b"Z"}}},
+    )
     r(b"SKTexture", b"usesMipmaps", {"retval": {"type": b"Z"}})
     r(
         b"SKTextureAtlas",

@@ -15,7 +15,9 @@ if sys.maxsize > 2 ** 32:
         def mapViewDidFinishRenderingMap_fullyRendered_(self, v, a):
             pass
 
-        def mapView_annotationView_didChangeDragState_fromOldState_(self, v, av, s1, s2):
+        def mapView_annotationView_didChangeDragState_fromOldState_(
+            self, v, av, s1, s2
+        ):
             pass
 
     class TestMKMapView(TestCase):
@@ -34,8 +36,12 @@ if sys.maxsize > 2 ** 32:
                 objc.protocolNamed("MKMapViewDelegate"), objc.formal_protocol
             )
 
-            self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionWillChangeAnimated_, 1)
-            self.assertArgIsBOOL(TestMKMapViewHelper.mapView_regionDidChangeAnimated_, 1)
+            self.assertArgIsBOOL(
+                TestMKMapViewHelper.mapView_regionWillChangeAnimated_, 1
+            )
+            self.assertArgIsBOOL(
+                TestMKMapViewHelper.mapView_regionDidChangeAnimated_, 1
+            )
             self.assertArgIsBOOL(
                 TestMKMapViewHelper.mapViewDidFinishRenderingMap_fullyRendered_, 1
             )

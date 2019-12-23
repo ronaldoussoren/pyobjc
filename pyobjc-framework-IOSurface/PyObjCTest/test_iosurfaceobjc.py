@@ -24,7 +24,9 @@ class TestIOSurfaceObjC(TestCase):
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneOffset, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneSize, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneBase, unicode)
-        self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneBytesPerElement, unicode)
+        self.assertIsInstance(
+            IOSurface.IOSurfacePropertyKeyPlaneBytesPerElement, unicode
+        )
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneElementWidth, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyPlaneElementHeight, unicode)
         self.assertIsInstance(IOSurface.IOSurfacePropertyKeyCacheMode, unicode)

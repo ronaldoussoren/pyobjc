@@ -94,13 +94,16 @@ class TestNSPathUtilities(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(NSString.isAbsolutePath)
         self.assertArgIsOut(
-            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 0
+            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,
+            0,
         )
         self.assertArgIsBOOL(
-            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 1
+            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,
+            1,
         )
         self.assertArgIsOut(
-            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_, 2
+            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,
+            2,
         )
         self.assertResultIsBOOL(NSString.getFileSystemRepresentation_maxLength_)
         self.assertArgHasType(

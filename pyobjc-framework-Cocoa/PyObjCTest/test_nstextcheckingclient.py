@@ -140,7 +140,9 @@ class TestNSTextCheckingClient(TestCase):
             TestNSTextCheckingClientHelper.setSmartDashesType_, 0, objc._C_NSInteger
         )
         self.assertArgHasType(
-            TestNSTextCheckingClientHelper.setSmartInsertDeleteType_, 0, objc._C_NSInteger
+            TestNSTextCheckingClientHelper.setSmartInsertDeleteType_,
+            0,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.setTextReplacementType_, 0, objc._C_NSInteger
@@ -172,7 +174,9 @@ class TestNSTextCheckingClient(TestCase):
             TestNSTextCheckingClientHelper.addAnnotations_range_, 1, NSRange.__typestr__
         )
         self.assertArgHasType(
-            TestNSTextCheckingClientHelper.removeAnnotation_range_, 1, NSRange.__typestr__
+            TestNSTextCheckingClientHelper.removeAnnotation_range_,
+            1,
+            NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.replaceCharactersInRange_withAnnotatedString_,

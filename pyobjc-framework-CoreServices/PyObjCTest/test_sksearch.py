@@ -112,7 +112,9 @@ class TestSKSearch(TestCase):
         v = CoreServices.SKSearchResultsCopyMatchingTerms(res, 1)
         self.assertIsInstance(v, CoreServices.CFArrayRef)
 
-        src = CoreServices.SKSearchCreate(index, "copyright", kSKSearchOptionFindSimilar)
+        src = CoreServices.SKSearchCreate(
+            index, "copyright", kSKSearchOptionFindSimilar
+        )
         self.assertIsInstance(src, CoreServices.SKSearchRef)
 
         v, o1, o2, o3 = CoreServices.SKSearchFindMatches(src, 10, None, None, 1.0, None)

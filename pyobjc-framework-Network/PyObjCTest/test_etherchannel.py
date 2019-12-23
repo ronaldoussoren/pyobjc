@@ -38,7 +38,9 @@ if sys.maxsize > 2 ** 32:
                 nw_ethernet_channel_receive_handler_t,
             )
             self.assertArgIsBlock(
-                Network.nw_ethernet_channel_send, 4, nw_ethernet_channel_send_completion_t
+                Network.nw_ethernet_channel_send,
+                4,
+                nw_ethernet_channel_send_completion_t,
             )
 
 

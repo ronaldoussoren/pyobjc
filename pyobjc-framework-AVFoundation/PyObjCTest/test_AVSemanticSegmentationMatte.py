@@ -8,7 +8,9 @@ class TestAVSemanticSegmentationMatte(TestCase):
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeSkin, unicode)
         self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeHair, unicode)
-        self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeTeeth, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVSemanticSegmentationMatteTypeTeeth, unicode
+        )
 
     @min_os_level("10.15")
     def test_methods(self):

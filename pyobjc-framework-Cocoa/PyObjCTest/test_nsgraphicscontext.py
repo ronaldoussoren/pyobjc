@@ -10,7 +10,9 @@ except ImportError:
 class TestNSGraphicsContext(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSGraphicsContextDestinationAttributeName, unicode)
-        self.assertIsInstance(NSGraphicsContextRepresentationFormatAttributeName, unicode)
+        self.assertIsInstance(
+            NSGraphicsContextRepresentationFormatAttributeName, unicode
+        )
         self.assertIsInstance(NSGraphicsContextPSFormat, unicode)
         self.assertIsInstance(NSGraphicsContextPDFFormat, unicode)
 

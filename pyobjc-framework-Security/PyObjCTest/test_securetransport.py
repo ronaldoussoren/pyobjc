@@ -237,7 +237,9 @@ class TestSecureTransport(TestCase):
         )
         self.assertArgSizeInArg(Security.SSLGetSupportedCiphers, 1, 2)
         self.assertArgHasType(
-            Security.SSLGetSupportedCiphers, 2, objc._C_INOUT + objc._C_PTR + objc._C_ULNG
+            Security.SSLGetSupportedCiphers,
+            2,
+            objc._C_INOUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.SSLSetEnabledCiphers, objc._C_INT)
@@ -335,7 +337,9 @@ class TestSecureTransport(TestCase):
         self.assertResultHasType(Security.SSLCopyDistinguishedNames, objc._C_INT)
         self.assertArgHasType(Security.SSLCopyDistinguishedNames, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SSLCopyDistinguishedNames, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SSLCopyDistinguishedNames,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SSLCopyDistinguishedNames, 1)
 
@@ -350,7 +354,9 @@ class TestSecureTransport(TestCase):
         self.assertResultHasType(Security.SSLSetDiffieHellmanParams, objc._C_INT)
         self.assertArgHasType(Security.SSLSetDiffieHellmanParams, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SSLSetDiffieHellmanParams, 1, objc._C_IN + objc._C_PTR + objc._C_VOID
+            Security.SSLSetDiffieHellmanParams,
+            1,
+            objc._C_IN + objc._C_PTR + objc._C_VOID,
         )
         self.assertArgSizeInArg(Security.SSLSetDiffieHellmanParams, 1, 2)
         self.assertArgHasType(Security.SSLSetDiffieHellmanParams, 2, objc._C_ULNG)
@@ -442,7 +448,9 @@ class TestSecureTransport(TestCase):
         self.assertResultHasType(Security.SSLGetProtocolVersionMin, objc._C_INT)
         self.assertArgHasType(Security.SSLGetProtocolVersionMin, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SSLGetProtocolVersionMin, 1, objc._C_OUT + objc._C_PTR + objc._C_INT
+            Security.SSLGetProtocolVersionMin,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_INT,
         )
 
         self.assertResultHasType(Security.SSLSetProtocolVersionMax, objc._C_INT)
@@ -452,13 +460,17 @@ class TestSecureTransport(TestCase):
         self.assertResultHasType(Security.SSLGetProtocolVersionMax, objc._C_INT)
         self.assertArgHasType(Security.SSLGetProtocolVersionMax, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SSLGetProtocolVersionMax, 1, objc._C_OUT + objc._C_PTR + objc._C_INT
+            Security.SSLGetProtocolVersionMax,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_INT,
         )
 
         self.assertResultHasType(Security.SSLSetDatagramHelloCookie, objc._C_INT)
         self.assertArgHasType(Security.SSLSetDatagramHelloCookie, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SSLSetDatagramHelloCookie, 1, objc._C_IN + objc._C_PTR + objc._C_VOID
+            Security.SSLSetDatagramHelloCookie,
+            1,
+            objc._C_IN + objc._C_PTR + objc._C_VOID,
         )
         self.assertArgSizeInArg(Security.SSLSetDatagramHelloCookie, 1, 2)
         self.assertArgHasType(Security.SSLSetDatagramHelloCookie, 2, objc._C_ULNG)
@@ -478,7 +490,9 @@ class TestSecureTransport(TestCase):
         self.assertResultHasType(Security.SSLGetDatagramWriteSize, objc._C_INT)
         self.assertArgHasType(Security.SSLGetDatagramWriteSize, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SSLGetDatagramWriteSize, 1, objc._C_OUT + objc._C_PTR + objc._C_ULNG
+            Security.SSLGetDatagramWriteSize,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
     @min_os_level("10.11")

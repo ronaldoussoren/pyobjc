@@ -9,7 +9,9 @@ class TestNSRunLoop(TestCase):
         self.assertArgIsSEL(
             NSRunLoop.performSelector_withObject_afterDelay_inModes_, 0, b"v@:@"
         )
-        self.assertArgIsSEL(NSRunLoop.performSelector_withObject_afterDelay_, 0, b"v@:@")
+        self.assertArgIsSEL(
+            NSRunLoop.performSelector_withObject_afterDelay_, 0, b"v@:@"
+        )
         self.assertArgIsSEL(
             NSRunLoop.performSelector_target_argument_order_modes_, 0, b"v@:@"
         )

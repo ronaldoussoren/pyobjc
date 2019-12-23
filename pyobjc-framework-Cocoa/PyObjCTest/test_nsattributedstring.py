@@ -147,7 +147,9 @@ class TestNSAttributedString(TestCase):
             NSAttributedString.initWithRTFDFileWrapper_documentAttributes_, 1
         )
 
-        self.assertArgIsOut(NSAttributedString.dataFromRange_documentAttributes_error_, 2)
+        self.assertArgIsOut(
+            NSAttributedString.dataFromRange_documentAttributes_error_, 2
+        )
         self.assertArgIsOut(
             NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2
         )

@@ -39,8 +39,12 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(kCVPixelFormatType_420YpCbCr8Planar, fourcc(b"y420"))
         self.assertEqual(kCVPixelFormatType_420YpCbCr8PlanarFullRange, fourcc(b"f420"))
         self.assertEqual(kCVPixelFormatType_422YpCbCr_4A_8BiPlanar, fourcc(b"a2vy"))
-        self.assertEqual(kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, fourcc(b"420v"))
-        self.assertEqual(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, fourcc(b"420f"))
+        self.assertEqual(
+            kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange, fourcc(b"420v")
+        )
+        self.assertEqual(
+            kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, fourcc(b"420f")
+        )
         self.assertEqual(kCVPixelFormatType_422YpCbCr8_yuvs, fourcc(b"yuvs"))
         self.assertEqual(kCVPixelFormatType_422YpCbCr8FullRange, fourcc(b"yuvf"))
         self.assertEqual(kCVPixelFormatType_OneComponent8, fourcc(b"L008"))
@@ -84,9 +88,15 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(
             kCVPixelFormatType_444YpCbCr10BiPlanarVideoRange, fourcc(b"x444")
         )
-        self.assertEqual(kCVPixelFormatType_420YpCbCr10BiPlanarFullRange, fourcc(b"xf20"))
-        self.assertEqual(kCVPixelFormatType_422YpCbCr10BiPlanarFullRange, fourcc(b"xf22"))
-        self.assertEqual(kCVPixelFormatType_444YpCbCr10BiPlanarFullRange, fourcc(b"xf44"))
+        self.assertEqual(
+            kCVPixelFormatType_420YpCbCr10BiPlanarFullRange, fourcc(b"xf20")
+        )
+        self.assertEqual(
+            kCVPixelFormatType_422YpCbCr10BiPlanarFullRange, fourcc(b"xf22")
+        )
+        self.assertEqual(
+            kCVPixelFormatType_444YpCbCr10BiPlanarFullRange, fourcc(b"xf44")
+        )
         self.assertEqual(
             kCVPixelFormatType_420YpCbCr8VideoRange_8A_TriPlanar, fourcc(b"v0a8")
         )

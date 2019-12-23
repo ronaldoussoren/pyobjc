@@ -24,7 +24,9 @@ class TestCBUUID(TestCase):
             CoreBluetooth.CBUUIDCharacteristicAggregateFormatString, unicode
         )
         self.assertIsInstance(CoreBluetooth.CBUUIDGenericAccessProfileString, unicode)
-        self.assertIsInstance(CoreBluetooth.CBUUIDGenericAttributeProfileString, unicode)
+        self.assertIsInstance(
+            CoreBluetooth.CBUUIDGenericAttributeProfileString, unicode
+        )
         self.assertIsInstance(CoreBluetooth.CBUUIDDeviceNameString, unicode)
         self.assertIsInstance(CoreBluetooth.CBUUIDAppearanceString, unicode)
         self.assertIsInstance(CoreBluetooth.CBUUIDPeripheralPrivacyFlagString, unicode)
@@ -36,7 +38,9 @@ class TestCBUUID(TestCase):
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(CoreBluetooth.CBUUIDCharacteristicValidRangeString, unicode)
+        self.assertIsInstance(
+            CoreBluetooth.CBUUIDCharacteristicValidRangeString, unicode
+        )
         self.assertIsInstance(CoreBluetooth.CBUUIDL2CAPPSMCharacteristicString, unicode)
 
     @min_os_level("10.9")

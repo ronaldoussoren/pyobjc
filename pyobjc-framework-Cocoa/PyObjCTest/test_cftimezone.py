@@ -91,11 +91,15 @@ class TestTimeZone(TestCase):
         self.assertIsInstance(abbrev, unicode)
         dt = CFGregorianDate(year=2008, month=7, day=1, hour=12, minute=0, second=0)
 
-        r = CFTimeZoneIsDaylightSavingTime(zone, CFGregorianDateGetAbsoluteTime(dt, zone))
+        r = CFTimeZoneIsDaylightSavingTime(
+            zone, CFGregorianDateGetAbsoluteTime(dt, zone)
+        )
         self.assertIs(r, True)
         dt = CFGregorianDate(year=2008, month=11, day=1, hour=12, minute=0, second=0)
 
-        r = CFTimeZoneIsDaylightSavingTime(zone, CFGregorianDateGetAbsoluteTime(dt, zone))
+        r = CFTimeZoneIsDaylightSavingTime(
+            zone, CFGregorianDateGetAbsoluteTime(dt, zone)
+        )
         self.assertIn(r, (False, True))
         offset = CFTimeZoneGetDaylightSavingTimeOffset(
             zone, CFGregorianDateGetAbsoluteTime(dt, zone)

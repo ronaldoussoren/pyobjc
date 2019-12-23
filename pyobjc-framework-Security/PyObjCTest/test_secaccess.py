@@ -77,13 +77,19 @@ class TestSecAccess(TestCase):
         self.assertResultHasType(Security.SecAccessCopyOwnerAndACL, objc._C_INT)
         self.assertArgHasType(Security.SecAccessCopyOwnerAndACL, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SecAccessCopyOwnerAndACL, 1, objc._C_OUT + objc._C_PTR + objc._C_UINT
+            Security.SecAccessCopyOwnerAndACL,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_UINT,
         )
         self.assertArgHasType(
-            Security.SecAccessCopyOwnerAndACL, 2, objc._C_OUT + objc._C_PTR + objc._C_UINT
+            Security.SecAccessCopyOwnerAndACL,
+            2,
+            objc._C_OUT + objc._C_PTR + objc._C_UINT,
         )
         self.assertArgHasType(
-            Security.SecAccessCopyOwnerAndACL, 3, objc._C_OUT + objc._C_PTR + objc._C_UINT
+            Security.SecAccessCopyOwnerAndACL,
+            3,
+            objc._C_OUT + objc._C_PTR + objc._C_UINT,
         )
         self.assertArgHasType(
             Security.SecAccessCopyOwnerAndACL, 4, objc._C_OUT + objc._C_PTR + objc._C_ID

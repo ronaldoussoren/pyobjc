@@ -39,26 +39,36 @@ class TestAttributedString(TestCase):
         l = CFAttributedStringGetLength(val)
         self.assertEqual(l, 5)
         v, rng = CFAttributedStringGetAttributes(val, 1, None)
-        self.assertEqual(v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"})
+        self.assertEqual(
+            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
+        )
         self.assertEqual(rng, (0, 5))
         v, rng = CFAttributedStringGetAttributes(val, 1, objc.NULL)
-        self.assertEqual(v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"})
+        self.assertEqual(
+            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
+        )
         self.assertEqual(rng, objc.NULL)
         v, rng = CFAttributedStringGetAttribute(val, 1, b"foo".decode("ascii"), None)
         self.assertEqual(v, 42)
         self.assertEqual(rng, (0, 5))
-        v, rng = CFAttributedStringGetAttribute(val, 1, b"foo".decode("ascii"), objc.NULL)
+        v, rng = CFAttributedStringGetAttribute(
+            val, 1, b"foo".decode("ascii"), objc.NULL
+        )
         self.assertEqual(v, 42)
         self.assertEqual(rng, objc.NULL)
         v, rng = CFAttributedStringGetAttributesAndLongestEffectiveRange(
             val, 1, (0, 5), None
         )
-        self.assertEqual(v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"})
+        self.assertEqual(
+            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
+        )
         self.assertEqual(rng, (0, 5))
         v, rng = CFAttributedStringGetAttributesAndLongestEffectiveRange(
             val, 1, (0, 5), objc.NULL
         )
-        self.assertEqual(v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"})
+        self.assertEqual(
+            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
+        )
         self.assertEqual(rng, objc.NULL)
         v, rng = CFAttributedStringGetAttributeAndLongestEffectiveRange(
             val, 1, b"bar".decode("ascii"), (0, 5), None

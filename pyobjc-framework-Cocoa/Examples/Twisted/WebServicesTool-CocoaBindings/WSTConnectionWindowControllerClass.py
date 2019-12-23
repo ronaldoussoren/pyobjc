@@ -251,7 +251,9 @@ class WSTConnectionWindowController(AppKit.NSWindowController):
         forces the fileld's contents to be redisplayed.
         """
         if not aMessage:
-            aMessage = "Displaying information about %d methods." % (len(self.k_methods),)
+            aMessage = "Displaying information about %d methods." % (
+                len(self.k_methods),
+            )
         self.statusTextField.setStringValue_(aMessage)
 
     setStatusTextFieldMessage_ = objc.accessor(setStatusTextFieldMessage_)

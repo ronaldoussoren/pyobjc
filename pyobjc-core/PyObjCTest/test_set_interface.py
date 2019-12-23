@@ -175,7 +175,9 @@ class TestSet(test.test_set.TestJointOps, TestCase):
             self.assertEqual(self.thetype("abcba").union(C("efgfe")), set("abcefg"))
             self.assertEqual(self.thetype("abcba").union(C("ccb")), set("abc"))
             self.assertEqual(self.thetype("abcba").union(C("ef")), set("abcef"))
-            self.assertEqual(self.thetype("abcba").union(C("ef"), C("fg")), set("abcefg"))
+            self.assertEqual(
+                self.thetype("abcba").union(C("ef"), C("fg")), set("abcefg")
+            )
 
         # Issue #6573
         x = self.thetype()

@@ -25,11 +25,15 @@ class TestAVPlayer(TestCase):
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(AVFoundation.AVPlayerWaitingToMinimizeStallsReason, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVPlayerWaitingToMinimizeStallsReason, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVPlayerWaitingWhileEvaluatingBufferingRateReason, unicode
         )
-        self.assertIsInstance(AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, unicode
+        )
 
     @min_os_level("10.15")
     def testConstants10_15(self):

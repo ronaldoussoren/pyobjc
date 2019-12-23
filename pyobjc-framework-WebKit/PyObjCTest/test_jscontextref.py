@@ -28,10 +28,13 @@ class TestJSContextRef(TestCase):
         )
 
         self.assertResultHasType(
-            JavaScriptCore.JSGlobalContextCreate, JavaScriptCore.JSContextRef.__typestr__
+            JavaScriptCore.JSGlobalContextCreate,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSGlobalContextCreate, 0, JavaScriptCore.JSClassRef.__typestr__
+            JavaScriptCore.JSGlobalContextCreate,
+            0,
+            JavaScriptCore.JSClassRef.__typestr__,
         )
 
         self.assertResultHasType(
@@ -50,7 +53,8 @@ class TestJSContextRef(TestCase):
         )
 
         self.assertResultHasType(
-            JavaScriptCore.JSGlobalContextRetain, JavaScriptCore.JSContextRef.__typestr__
+            JavaScriptCore.JSGlobalContextRetain,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSGlobalContextRetain,
@@ -65,7 +69,8 @@ class TestJSContextRef(TestCase):
         )
 
         self.assertResultHasType(
-            JavaScriptCore.JSContextGetGlobalObject, JavaScriptCore.JSValueRef.__typestr__
+            JavaScriptCore.JSContextGetGlobalObject,
+            JavaScriptCore.JSValueRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSContextGetGlobalObject,
@@ -74,7 +79,8 @@ class TestJSContextRef(TestCase):
         )
 
         self.assertResultHasType(
-            JavaScriptCore.JSContextGetGroup, JavaScriptCore.JSContextGroupRef.__typestr__
+            JavaScriptCore.JSContextGetGroup,
+            JavaScriptCore.JSContextGroupRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSContextGetGroup, 0, JavaScriptCore.JSContextRef.__typestr__
@@ -95,7 +101,8 @@ class TestJSContextRef(TestCase):
     @min_os_level("10.10")
     def test_functions10_10(self):
         self.assertResultHasType(
-            JavaScriptCore.JSGlobalContextCopyName, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSGlobalContextCopyName,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSGlobalContextCopyName,

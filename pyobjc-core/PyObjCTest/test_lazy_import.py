@@ -222,7 +222,9 @@ class TestLazyImport(TestCase):
         self.assertEqual(mod.mysum, mod.NSAWTEventType + mod.NSAboveBottom + 3)
         self.assertRaises(AttributeError, getattr, mod, "ABPersonSetImageData")
         self.assertRaises(AttributeError, getattr, mod, "ABAddressBookErrorDomain")
-        self.assertRaises(AttributeError, getattr, mod, "ABMultiValueIdentifiersErrorKey")
+        self.assertRaises(
+            AttributeError, getattr, mod, "ABMultiValueIdentifiersErrorKey"
+        )
 
     def test_with_parents(self):
         mod = objc.ObjCLazyModule("RootLess", None, None, None, None, None, (sys, os))

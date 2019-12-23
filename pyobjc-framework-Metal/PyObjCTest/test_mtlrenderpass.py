@@ -2,9 +2,10 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLRenderPass (TestCase):
+
+class TestMTLRenderPass(TestCase):
     def test_constants(self):
-        self.assertEqual(Metal.MTLCounterDontSample, 0xffffffffffffffff)
+        self.assertEqual(Metal.MTLCounterDontSample, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(Metal.MTLMaxRenderPassSampleBuffers, 4)
 
         self.assertEqual(Metal.MTLLoadActionDontCare, 0)
@@ -36,16 +37,21 @@ class TestMTLRenderPass (TestCase):
         self.assertEqual(v.alpha, 0.0)
 
     def test_functions(self):
-         v = Metal.MTLClearColorMake(1, 2, 3, 4)
-         self.assertIsInstance(v, Metal.MTLClearColor)
-         self.assertEqual(v, (1.0, 2.0, 3.0, 4.0))
+        v = Metal.MTLClearColorMake(1, 2, 3, 4)
+        self.assertIsInstance(v, Metal.MTLClearColor)
+        self.assertEqual(v, (1.0, 2.0, 3.0, 4.0))
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertArgIsIn(Metal.MTLRenderPassDescriptor.setSamplePositions_count_, 0)
-        self.assertArgSizeInArg(Metal.MTLRenderPassDescriptor.setSamplePositions_count_, 0, 1)
+        self.assertArgSizeInArg(
+            Metal.MTLRenderPassDescriptor.setSamplePositions_count_, 0, 1
+        )
 
         self.assertArgIsOut(Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0)
-        self.assertArgSizeInArg(Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0, 1)
-        self.assertArgSizeInResult(Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0)
-
+        self.assertArgSizeInArg(
+            Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0, 1
+        )
+        self.assertArgSizeInResult(
+            Metal.MTLRenderPassDescriptor.getSamplePositions_count_, 0
+        )

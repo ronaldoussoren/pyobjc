@@ -58,7 +58,9 @@ class TestDRContentProperties(TestCase):
         self.assertIsInstance(DiscRecording.kDRUDFWriteVersion, unicode)
         self.assertIsInstance(DiscRecording.kDRUDFVersion102, unicode)
         self.assertIsInstance(DiscRecording.kDRUDFVersion150, unicode)
-        self.assertIsInstance(DiscRecording.kDRUDFPrimaryVolumeDescriptorNumber, unicode)
+        self.assertIsInstance(
+            DiscRecording.kDRUDFPrimaryVolumeDescriptorNumber, unicode
+        )
         self.assertIsInstance(DiscRecording.kDRUDFVolumeSequenceNumber, unicode)
         self.assertIsInstance(DiscRecording.kDRUDFMaxVolumeSequenceNumber, unicode)
         self.assertIsInstance(DiscRecording.kDRUDFInterchangeLevel, unicode)

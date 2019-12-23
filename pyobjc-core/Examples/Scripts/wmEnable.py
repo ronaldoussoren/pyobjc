@@ -37,7 +37,9 @@ def WMEnable(name="Python"):
     if mainBundle.bundlePath() == bPath:
         return True
     bndl = NSBundle.bundleWithPath_(
-        objc.pathForFramework("/System/Library/Frameworks/ApplicationServices.framework")
+        objc.pathForFramework(
+            "/System/Library/Frameworks/ApplicationServices.framework"
+        )
     )
     if bndl is None:
         print >>sys.stderr, "ApplicationServices missing"

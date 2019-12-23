@@ -189,7 +189,9 @@ class object_property(object):
                     # Use dynamic setter to avoid problems when subclassing
                     self.__setprop = _dynamic_setter(_str(setterName))
             else:
-                setprop = selector(self._setter, selector=setterName, signature=signature)
+                setprop = selector(
+                    self._setter, selector=setterName, signature=signature
+                )
                 setprop.isHidden = True
                 instance_methods.add(setprop)
 
@@ -333,7 +335,9 @@ class bool_property(object_property):
         ivar=None,
         typestr=_C_NSBOOL,
     ):
-        super(bool_property, self).__init__(name, read_only, copy, dynamic, ivar, typestr)
+        super(bool_property, self).__init__(
+            name, read_only, copy, dynamic, ivar, typestr
+        )
 
 
 NSIndexSet = lookUpClass("NSIndexSet")
@@ -390,7 +394,9 @@ class array_proxy(collections_abc.MutableSequence):
             raise TypeError(index)
 
     def __repr__(self):
-        return "<array proxy for property " + self._name + " " + repr(self._wrapped) + ">"
+        return (
+            "<array proxy for property " + self._name + " " + repr(self._wrapped) + ">"
+        )
 
     def __reduce__(self):
         # Ensure that the proxy itself doesn't get stored
@@ -595,7 +601,9 @@ class array_proxy(collections_abc.MutableSequence):
             if self._ro:
                 raise ValueError("Property '%s' is read-only" % (self._name,))
 
-            indexes = NSIndexSet.alloc().initWithIndexesInRange_((0, len(self._wrapped)))
+            indexes = NSIndexSet.alloc().initWithIndexesInRange_(
+                (0, len(self._wrapped))
+            )
             self._parent.willChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeReplacement, indexes, self._name
             )
@@ -612,7 +620,9 @@ class array_proxy(collections_abc.MutableSequence):
             if self._ro:
                 raise ValueError("Property '%s' is read-only" % (self._name,))
 
-            indexes = NSIndexSet.alloc().initWithIndexesInRange_((0, len(self._wrapped)))
+            indexes = NSIndexSet.alloc().initWithIndexesInRange_(
+                (0, len(self._wrapped))
+            )
             self._parent.willChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeReplacement, indexes, self._name
             )
@@ -724,7 +734,9 @@ class array_property(object_property):
 
         replace = selector(
             replace,
-            selector=("replaceObjectIn%sAtIndex:withObject:" % (Name,)).encode("latin1"),
+            selector=("replaceObjectIn%sAtIndex:withObject:" % (Name,)).encode(
+                "latin1"
+            ),
             signature=b"v@:" + _C_NSUInteger + b"@",
         )
         replace.isHidden = True

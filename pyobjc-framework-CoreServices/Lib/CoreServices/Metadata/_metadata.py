@@ -304,7 +304,11 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "MDQueryGetResultCount": (sel32or64(b"l^{__MDQuery=}", b"q^{__MDQuery=}"),),
-    "MDCopyLabelKinds": (b"^{__CFArray=}", "", {"retval": {"already_cfretained": True}}),
+    "MDCopyLabelKinds": (
+        b"^{__CFArray=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
     "MDItemRemoveLabel": (b"Z^{__MDItem=}^{__MDLabel=}",),
     "MDQueryGetResultAtIndex": (sel32or64(b"@^{__MDQuery=}l", b"@^{__MDQuery=}q"),),
     "MDSchemaCopyMetaAttributesForAttribute": (

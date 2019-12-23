@@ -112,7 +112,8 @@ class TestNSTextInputClient(TestCase):
             NSPoint.__typestr__,
         )
         self.assertResultHasType(
-            TestNSTextInputClientHelper.baselineDeltaForCharacterAtIndex_, objc._C_CGFloat
+            TestNSTextInputClientHelper.baselineDeltaForCharacterAtIndex_,
+            objc._C_CGFloat,
         )
         self.assertArgHasType(
             TestNSTextInputClientHelper.baselineDeltaForCharacterAtIndex_,

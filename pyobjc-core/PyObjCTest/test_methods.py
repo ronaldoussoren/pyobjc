@@ -1125,9 +1125,15 @@ class OCPyTestSimpleCalls(TestCase):
         for o in UINT_NUMBERS[:-3]:
             self.assertEqual(self.obj.callInstanceUnsignedIntFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.callInstanceUnsignedIntFuncOf_, self.ocobj
+        )
 
     def testIUInt(self):
         self.pyobj.reset()
@@ -1220,16 +1226,24 @@ class OCPyTestSimpleCalls(TestCase):
         for o in LONGLONG_NUMBERS[:-3]:
             self.assertEqual(self.obj.invokeInstanceLongLongFuncOf_(self.ocobj), o)
 
-        self.assertRaises(ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj)
-        self.assertRaises(ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj)
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
+        )
+        self.assertRaises(
+            ValueError, self.obj.invokeInstanceLongLongFuncOf_, self.ocobj
+        )
 
     def testCULongLong(self):
         self.pyobj.reset()
         self.ocobj.reset()
 
         for o in ULONGLONG_NUMBERS[:-3]:
-            self.assertEqual(self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o)
+            self.assertEqual(
+                self.obj.callInstanceUnsignedLongLongFuncOf_(self.ocobj), o
+            )
 
         self.assertRaises(
             ValueError, self.obj.callInstanceUnsignedLongLongFuncOf_, self.ocobj

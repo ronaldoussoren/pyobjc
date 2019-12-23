@@ -182,7 +182,11 @@ try:
         {"arguments": {4: {"type": b"Z"}}},
     )
     r(b"GKVoronoiNoiseSource", b"isDistanceEnabled", {"retval": {"type": b"Z"}})
-    r(b"GKVoronoiNoiseSource", b"setDistanceEnabled:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"GKVoronoiNoiseSource",
+        b"setDistanceEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(
         b"GKVoronoiNoiseSource",
         b"voronoiNoiseWithFrequency:displacement:distanceEnabled:seed:",

@@ -319,7 +319,9 @@ class AbstractKVCodingTest:
         self.assertEquals(IndirectNumber, getKey(self.base, "indirectNumber"))
 
     def testPathValueForKey(self):
-        self.assertEquals(DirectString, getKeyPath(self.path, "directHead.directString"))
+        self.assertEquals(
+            DirectString, getKeyPath(self.path, "directHead.directString")
+        )
         self.assertEquals(
             DirectString, getKeyPath(self.path, "indirectHead.directString")
         )
@@ -329,7 +331,9 @@ class AbstractKVCodingTest:
         self.assertEquals(
             IndirectString, getKeyPath(self.path, "indirectHead.indirectString")
         )
-        self.assertEquals(DirectNumber, getKeyPath(self.path, "directHead.directNumber"))
+        self.assertEquals(
+            DirectNumber, getKeyPath(self.path, "directHead.directNumber")
+        )
         self.assertEquals(
             DirectNumber, getKeyPath(self.path, "indirectHead.directNumber")
         )
@@ -556,7 +560,9 @@ class TestArrayOperators(unittest.TestCase):
 
     def testSum(self):
         alice = self.accounts[0]
-        self.assertEquals(getKeyPath(alice, "transactions.@sum.amount"), 20 + 14.50 + 250)
+        self.assertEquals(
+            getKeyPath(alice, "transactions.@sum.amount"), 20 + 14.50 + 250
+        )
         bob = self.accounts[1]
         self.assertEquals(getKeyPath(bob, "transactions.@sum.amount"), 25 + 60 + 250)
 

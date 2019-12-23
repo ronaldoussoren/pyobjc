@@ -36,7 +36,9 @@ class TestJSObjectRef(TestCase):
         self.assertArgHasType(
             JavaScriptCore.JSObjectMake, 1, JavaScriptCore.JSClassRef.__typestr__
         )
-        self.assertArgHasType(JavaScriptCore.JSObjectMake, 2, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            JavaScriptCore.JSObjectMake, 2, objc._C_PTR + objc._C_VOID
+        )
 
         self.assertResultHasType(
             JavaScriptCore.JSObjectMakeArray, JavaScriptCore.JSObjectRef.__typestr__
@@ -96,7 +98,9 @@ class TestJSObjectRef(TestCase):
             JavaScriptCore.JSObjectMakeRegExp, JavaScriptCore.JSObjectRef.__typestr__
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectMakeRegExp, 0, JavaScriptCore.JSContextRef.__typestr__
+            JavaScriptCore.JSObjectMakeRegExp,
+            0,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectMakeRegExp,
@@ -119,7 +123,9 @@ class TestJSObjectRef(TestCase):
             JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectMakeFunction, 1, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSObjectMakeFunction,
+            1,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectMakeFunction,
@@ -128,10 +134,14 @@ class TestJSObjectRef(TestCase):
         )
         self.assertArgSizeInArg(JavaScriptCore.JSObjectMakeFunction, 3, 2)
         self.assertArgHasType(
-            JavaScriptCore.JSObjectMakeFunction, 4, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSObjectMakeFunction,
+            4,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectMakeFunction, 5, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSObjectMakeFunction,
+            5,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectMakeFunction,
@@ -148,7 +158,9 @@ class TestJSObjectRef(TestCase):
             JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectGetPrototype, 1, JavaScriptCore.JSObjectRef.__typestr__
+            JavaScriptCore.JSObjectGetPrototype,
+            1,
+            JavaScriptCore.JSObjectRef.__typestr__,
         )
 
         self.assertArgHasType(
@@ -157,34 +169,50 @@ class TestJSObjectRef(TestCase):
             JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectSetPrototype, 1, JavaScriptCore.JSObjectRef.__typestr__
+            JavaScriptCore.JSObjectSetPrototype,
+            1,
+            JavaScriptCore.JSObjectRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectSetPrototype, 2, JavaScriptCore.JSValueRef.__typestr__
+            JavaScriptCore.JSObjectSetPrototype,
+            2,
+            JavaScriptCore.JSValueRef.__typestr__,
         )
 
         self.assertResultHasType(JavaScriptCore.JSObjectHasProperty, objc._C_BOOL)
         self.assertArgHasType(
-            JavaScriptCore.JSObjectHasProperty, 0, JavaScriptCore.JSContextRef.__typestr__
+            JavaScriptCore.JSObjectHasProperty,
+            0,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectHasProperty, 1, JavaScriptCore.JSObjectRef.__typestr__
+            JavaScriptCore.JSObjectHasProperty,
+            1,
+            JavaScriptCore.JSObjectRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectHasProperty, 2, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSObjectHasProperty,
+            2,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
 
         self.assertResultHasType(
             JavaScriptCore.JSObjectGetProperty, JavaScriptCore.JSValueRef.__typestr__
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectGetProperty, 0, JavaScriptCore.JSContextRef.__typestr__
+            JavaScriptCore.JSObjectGetProperty,
+            0,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectGetProperty, 1, JavaScriptCore.JSObjectRef.__typestr__
+            JavaScriptCore.JSObjectGetProperty,
+            1,
+            JavaScriptCore.JSObjectRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectGetProperty, 2, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSObjectGetProperty,
+            2,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectGetProperty,
@@ -194,13 +222,19 @@ class TestJSObjectRef(TestCase):
 
         self.assertResultHasType(JavaScriptCore.JSObjectSetProperty, objc._C_VOID)
         self.assertArgHasType(
-            JavaScriptCore.JSObjectSetProperty, 0, JavaScriptCore.JSContextRef.__typestr__
+            JavaScriptCore.JSObjectSetProperty,
+            0,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectSetProperty, 1, JavaScriptCore.JSObjectRef.__typestr__
+            JavaScriptCore.JSObjectSetProperty,
+            1,
+            JavaScriptCore.JSObjectRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectSetProperty, 2, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSObjectSetProperty,
+            2,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectSetProperty, 3, JavaScriptCore.JSValueRef.__typestr__
@@ -248,14 +282,18 @@ class TestJSObjectRef(TestCase):
             1,
             JavaScriptCore.JSObjectRef.__typestr__,
         )
-        self.assertArgHasType(JavaScriptCore.JSObjectGetPropertyAtIndex, 2, objc._C_UINT)
+        self.assertArgHasType(
+            JavaScriptCore.JSObjectGetPropertyAtIndex, 2, objc._C_UINT
+        )
         self.assertArgHasType(
             JavaScriptCore.JSObjectGetPropertyAtIndex,
             3,
             b"o^" + JavaScriptCore.JSObjectRef.__typestr__,
         )
 
-        self.assertResultHasType(JavaScriptCore.JSObjectSetPropertyAtIndex, objc._C_VOID)
+        self.assertResultHasType(
+            JavaScriptCore.JSObjectSetPropertyAtIndex, objc._C_VOID
+        )
         self.assertArgHasType(
             JavaScriptCore.JSObjectSetPropertyAtIndex,
             0,
@@ -266,7 +304,9 @@ class TestJSObjectRef(TestCase):
             1,
             JavaScriptCore.JSObjectRef.__typestr__,
         )
-        self.assertArgHasType(JavaScriptCore.JSObjectSetPropertyAtIndex, 2, objc._C_UINT)
+        self.assertArgHasType(
+            JavaScriptCore.JSObjectSetPropertyAtIndex, 2, objc._C_UINT
+        )
         self.assertArgHasType(
             JavaScriptCore.JSObjectSetPropertyAtIndex,
             3,
@@ -295,7 +335,9 @@ class TestJSObjectRef(TestCase):
 
         self.assertResultHasType(JavaScriptCore.JSObjectIsFunction, objc._C_BOOL)
         self.assertArgHasType(
-            JavaScriptCore.JSObjectIsFunction, 0, JavaScriptCore.JSContextRef.__typestr__
+            JavaScriptCore.JSObjectIsFunction,
+            0,
+            JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectIsFunction, 1, JavaScriptCore.JSObjectRef.__typestr__
@@ -366,7 +408,9 @@ class TestJSObjectRef(TestCase):
             0,
             JavaScriptCore.JSPropertyNameArrayRef.__typestr__,
         )
-        self.assertArgHasType(JavaScriptCore.JSPropertyNameArrayGetNameAtIndex, 1, SIZE_T)
+        self.assertArgHasType(
+            JavaScriptCore.JSPropertyNameArrayGetNameAtIndex, 1, SIZE_T
+        )
 
         self.assertArgHasType(
             JavaScriptCore.JSPropertyNameAccumulatorAddName,
@@ -440,7 +484,8 @@ class TestJSObjectRef(TestCase):
     def test_functions(self):
 
         self.assertResultHasType(
-            JavaScriptCore.JSObjectMakeConstructor, JavaScriptCore.JSObjectRef.__typestr__
+            JavaScriptCore.JSObjectMakeConstructor,
+            JavaScriptCore.JSObjectRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectMakeConstructor,

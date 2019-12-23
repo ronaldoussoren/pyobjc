@@ -63,7 +63,9 @@ class TestAVAudioEngine(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioEngineManualRenderingErrorInitialized, -80801
         )
-        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingErrorNotRunning, -80802)
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingErrorNotRunning, -80802
+        )
 
         self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusError, -1)
         self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0)

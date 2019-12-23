@@ -133,7 +133,9 @@ class TestLatentSemanticMapping(TestCase):
         v = LSMMapStartTraining(map)
 
         mytext = LSMTextCreate(None, map)
-        v = LSMTextAddWords(mytext, "the world goes on and on", CFLocaleCopyCurrent(), 0)
+        v = LSMTextAddWords(
+            mytext, "the world goes on and on", CFLocaleCopyCurrent(), 0
+        )
         self.assertIsInstance(v, (int, long))
 
         v = LSMMapCompile(map)

@@ -43,7 +43,11 @@ try:
         b"selectionKeysKeylayout",
         {"retval": {"type": "^{__TISInputSource=}"}},
     )
-    r(b"IMKCandidates", b"setDismissesAutomatically:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"IMKCandidates",
+        b"setDismissesAutomatically:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(
         b"IMKCandidates",
         b"setSelectionKeysKeylayout:",

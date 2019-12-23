@@ -72,7 +72,9 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVFileType3GPP, unicode)
         self.assertIsInstance(AVFoundation.AVFileType3GPP2, unicode)
         self.assertIsInstance(AVFoundation.AVFileTypeEnhancedAC3, unicode)
-        self.assertIsInstance(AVFoundation.AVStreamingKeyDeliveryContentKeyType, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVStreamingKeyDeliveryContentKeyType, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVStreamingKeyDeliveryPersistentContentKeyType, unicode
         )
@@ -93,8 +95,7 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(AVFoundation.AVFileTypeHEIF, unicode)
         self.assertIsInstance(AVFoundation.AVFileTypeTIFF, unicode)
 
-   
-    #@min_os_level("10.14") # Not actually present on 10.14...
+    # @min_os_level("10.14") # Not actually present on 10.14...
     @min_os_level("10.15")
     def testConstants10_14(self):
         self.assertIsInstance(

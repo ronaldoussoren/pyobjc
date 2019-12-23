@@ -7,7 +7,8 @@ if sys.maxsize > 2 ** 32:
     class TestUNNotificationCategory(TestCase):
         def test_constants(self):
             self.assertEqual(
-                UserNotifications.UNNotificationCategoryOptionCustomDismissAction, 1 << 0
+                UserNotifications.UNNotificationCategoryOptionCustomDismissAction,
+                1 << 0,
             )
             self.assertEqual(
                 UserNotifications.UNNotificationCategoryOptionAllowInCarPlay, 1 << 1

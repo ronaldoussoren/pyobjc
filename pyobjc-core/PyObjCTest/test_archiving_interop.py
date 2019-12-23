@@ -86,7 +86,7 @@ class TestNSKeyedArchivingInterop(TestCase):
             self.assertEqual(converted, [testval])
 
     def test_interop_int(self):
-        for testval in (-42, 0, 42, -2 ** 62, 2 ** 62):
+        for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62):
             v = NSArray.arrayWithObject_(testval)
             data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
@@ -232,7 +232,7 @@ class TestNSArchivingInterop(TestCase):
             self.assertEqual(converted, [testval])
 
     def test_interop_int(self):
-        for testval in (-42, 0, 42, -2 ** 62, 2 ** 62):
+        for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62):
             v = NSArray.arrayWithObject_(testval)
             data = NSArchiver.archivedDataWithRootObject_(v)
 

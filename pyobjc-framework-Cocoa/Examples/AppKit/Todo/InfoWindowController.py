@@ -257,9 +257,9 @@ class InfoWindowController(Cocoa.NSWindowController):
             self.infoNotifyAMPM.cellAtRow_column_(0, 0).setState_(Cocoa.NSOnState)
             self.infoNotifyAMPM.cellAtRow_column_(1, 0).setState_(Cocoa.NSOffState)
             clearButtonMatrix(self.infoNotifySwitchMatrix)
-            self.infoNotifySwitchMatrix.cellAtRow_column_(NotifyLengthNone, 0).setState_(
-                Cocoa.NSOnState
-            )
+            self.infoNotifySwitchMatrix.cellAtRow_column_(
+                NotifyLengthNone, 0
+            ).setState_(Cocoa.NSOnState)
             self.infoNotifyOtherHours.setStringValue_("")
             self.infoNotes.setString_("")
 

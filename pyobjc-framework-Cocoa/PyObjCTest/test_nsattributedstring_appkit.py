@@ -144,7 +144,9 @@ class TestNSAttributedString(TestCase):
             NSAttributedString.initWithData_options_documentAttributes_error_, 3
         )
 
-        self.assertArgIsOut(NSAttributedString.dataFromRange_documentAttributes_error_, 2)
+        self.assertArgIsOut(
+            NSAttributedString.dataFromRange_documentAttributes_error_, 2
+        )
         self.assertArgIsOut(
             NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2
         )
@@ -199,7 +201,9 @@ class TestNSAttributedString(TestCase):
         )
 
         self.assertArgHasType(
-            NSAttributedString.URLAtIndex_effectiveRange_, 1, b"o^" + NSRange.__typestr__
+            NSAttributedString.URLAtIndex_effectiveRange_,
+            1,
+            b"o^" + NSRange.__typestr__,
         )
 
         self.assertArgIsBOOL(NSMutableAttributedString.nextWordFromIndex_forward_, 1)

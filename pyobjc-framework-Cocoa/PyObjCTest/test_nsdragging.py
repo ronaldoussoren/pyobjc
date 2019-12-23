@@ -187,9 +187,12 @@ class TestNSDragging(TestCase):
         self.assertResultIsBOOL(TestNSDraggingHelper.wantsPeriodicDraggingUpdates)
 
         self.assertResultHasType(
-            TestNSDraggingHelper.draggingSourceOperationMaskForLocal_, objc._C_NSUInteger
+            TestNSDraggingHelper.draggingSourceOperationMaskForLocal_,
+            objc._C_NSUInteger,
         )
-        self.assertArgIsBOOL(TestNSDraggingHelper.draggingSourceOperationMaskForLocal_, 0)
+        self.assertArgIsBOOL(
+            TestNSDraggingHelper.draggingSourceOperationMaskForLocal_, 0
+        )
         self.assertArgHasType(
             TestNSDraggingHelper.draggedImage_beganAt_, 1, NSPoint.__typestr__
         )
@@ -245,7 +248,9 @@ class TestNSDragging(TestCase):
         )
 
         self.assertArgHasType(
-            TestNSDraggingHelper.draggingSession_willBeginAtPoint_, 1, NSPoint.__typestr__
+            TestNSDraggingHelper.draggingSession_willBeginAtPoint_,
+            1,
+            NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSDraggingHelper.draggingSession_movedToPoint_, 1, NSPoint.__typestr__
@@ -267,7 +272,9 @@ class TestNSDragging(TestCase):
 
     @min_os_level("10.11")
     def testProtocols10_11(self):
-        self.assertArgIsBOOL(TestNSDraggingHelper.springLoadingActivated_draggingInfo_, 0)
+        self.assertArgIsBOOL(
+            TestNSDraggingHelper.springLoadingActivated_draggingInfo_, 0
+        )
         self.assertResultHasType(
             TestNSDraggingHelper.springLoadingEntered_, objc._C_NSUInteger
         )

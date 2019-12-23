@@ -9,7 +9,8 @@ class TestPMPrintingDialogExtensions(TestCase):
             PrintCore.kPMPageAttributesKindID, "com.apple.print.pde.PageAttributesKind"
         )
         self.assertEqual(
-            PrintCore.kPMCopiesAndPagesPDEKindID, "com.apple.print.pde.CopiesAndPagesKind"
+            PrintCore.kPMCopiesAndPagesPDEKindID,
+            "com.apple.print.pde.CopiesAndPagesKind",
         )
         self.assertEqual(
             PrintCore.kPMLayoutPDEKindID, "com.apple.print.pde.LayoutUserOptionKind"
@@ -32,7 +33,8 @@ class TestPMPrintingDialogExtensions(TestCase):
             PrintCore.kPMSchedulerPDEKindID, "com.apple.print.pde.SchedulerKind"
         )
         self.assertEqual(
-            PrintCore.kPMImagingOptionsPDEKindID, "com.apple.print.pde.ImagingOptionsKind"
+            PrintCore.kPMImagingOptionsPDEKindID,
+            "com.apple.print.pde.ImagingOptionsKind",
         )
         self.assertEqual(
             PrintCore.kPMFaxCoverPagePDEKindID, "com.apple.print.pde.FaxCoverPageKind"
@@ -82,7 +84,8 @@ class TestPMPrintingDialogExtensions(TestCase):
         self.assertEqual(PrintCore.kPMInkPDEKindID, "com.apple.print.pde.InkKind")
         self.assertEqual(PrintCore.kPMColorPDEKindID, "com.apple.print.pde.ColorKind")
         self.assertEqual(
-            PrintCore.kPMMediaQualityPDEKindID, "com.apple.print.pde.MediaQualityPDEKind"
+            PrintCore.kPMMediaQualityPDEKindID,
+            "com.apple.print.pde.MediaQualityPDEKind",
         )
         self.assertEqual(PrintCore.SUMMARY_DISPLAY_ORDER, "Summary, Display, Order")
         self.assertEqual(PrintCore.kPMSandboxCompatiblePDEs, "PMSandboxCompatiblePDEs")
@@ -94,16 +97,19 @@ class TestPMPrintingDialogExtensions(TestCase):
             "6E6ED964-B738-11D3-952F-0050E4603277",
         )
         self.assertEqual(
-            PrintCore.kGeneralPrintDialogTypeIDStr, "C1BF838E-B72A-11D3-9644-0050E4603277"
+            PrintCore.kGeneralPrintDialogTypeIDStr,
+            "C1BF838E-B72A-11D3-9644-0050E4603277",
         )
         self.assertEqual(
-            PrintCore.kAppPageSetupDialogTypeIDStr, "B9A0DA98-E57F-11D3-9E83-0050E4603277"
+            PrintCore.kAppPageSetupDialogTypeIDStr,
+            "B9A0DA98-E57F-11D3-9E83-0050E4603277",
         )
         self.assertEqual(
             PrintCore.kAppPrintDialogTypeIDStr, "BCB07250-E57F-11D3-8CA6-0050E4603277"
         )
         self.assertEqual(
-            PrintCore.kAppPrintThumbnailTypeIDStr, "9320FE03-B5D5-11D5-84D1-003065D6135E"
+            PrintCore.kAppPrintThumbnailTypeIDStr,
+            "9320FE03-B5D5-11D5-84D1-003065D6135E",
         )
         self.assertEqual(
             PrintCore.kPrinterModuleTypeIDStr, "BDB091F4-E57F-11D3-B5CC-0050E4603277"

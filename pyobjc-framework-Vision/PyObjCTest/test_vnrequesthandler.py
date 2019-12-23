@@ -19,7 +19,8 @@ if sys.maxsize >= 2 ** 32:
                 Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_error_
             )
             self.assertArgIsOut(
-                Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_error_, 2
+                Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_error_,
+                2,
             )
             self.assertResultIsBOOL(
                 Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_orientation_error_

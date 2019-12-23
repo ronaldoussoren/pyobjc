@@ -137,7 +137,8 @@ class TestNSLinguisticTagger(TestCase):
             NSLinguisticTagger.tagsInRange_unit_scheme_options_tokenRanges_, 4
         )
         self.assertArgIsOut(
-            NSLinguisticTagger.tagForString_atIndex_unit_scheme_orthography_tokenRange_, 5
+            NSLinguisticTagger.tagForString_atIndex_unit_scheme_orthography_tokenRange_,
+            5,
         )
         self.assertArgHasType(
             NSLinguisticTagger.tagsForString_range_unit_scheme_options_orthography_tokenRanges_,

@@ -268,8 +268,12 @@ protocols = {
             objc.selector(
                 None, b"ibIsChildInitiallySelectable:", b"Z@:@", isRequired=False
             ),
-            objc.selector(None, b"ibIsChildViewUserMovable:", b"Z@:@", isRequired=False),
-            objc.selector(None, b"ibIsChildViewUserSizable:", b"Z@:@", isRequired=False),
+            objc.selector(
+                None, b"ibIsChildViewUserMovable:", b"Z@:@", isRequired=False
+            ),
+            objc.selector(
+                None, b"ibIsChildViewUserSizable:", b"Z@:@", isRequired=False
+            ),
             objc.selector(
                 None,
                 b"ibObjectAtLocation:inWindowController:",

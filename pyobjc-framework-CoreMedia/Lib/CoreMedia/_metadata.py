@@ -274,7 +274,8 @@ functions = {
     ),
     "CMSyncGetRelativeRateAndAnchorTime": (
         sel32or64(
-            b"l@@^d^{_CMTime=qiIq}^{_CMTime=qiIq}", b"i@@^d^{_CMTime=qiIq}^{_CMTime=qiIq}"
+            b"l@@^d^{_CMTime=qiIq}^{_CMTime=qiIq}",
+            b"i@@^d^{_CMTime=qiIq}^{_CMTime=qiIq}",
         ),
         "",
         {
@@ -642,7 +643,9 @@ functions = {
     ),
     "CMTimebaseGetMasterTimebase": (b"^{OpaqueCMTimebase=}^{OpaqueCMTimebase=}",),
     "CMTimeMakeWithSeconds": (b"{_CMTime=qiIq}di",),
-    "CMVideoFormatDescriptionGetExtensionKeysCommonWithImageBuffers": (b"^{__CFArray=}",),
+    "CMVideoFormatDescriptionGetExtensionKeysCommonWithImageBuffers": (
+        b"^{__CFArray=}",
+    ),
     "CMClockGetTypeID": (sel32or64(b"L", b"Q"),),
     "CMTextFormatDescriptionGetJustification": (
         sel32or64(
@@ -694,7 +697,9 @@ functions = {
     "CMTimeFoldIntoRange": (
         b"{_CMTime=qiIq}{_CMTime=qiIq}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
     ),
-    "CMFormatDescriptionGetExtension": (b"@^{opaqueCMFormatDescription=}^{__CFString=}",),
+    "CMFormatDescriptionGetExtension": (
+        b"@^{opaqueCMFormatDescription=}^{__CFString=}",
+    ),
     "CMAudioFormatDescriptionGetRichestDecodableFormat": (
         sel32or64(
             b"^{AudioFormatListItem={AudioStreamBasicDescription=dLLLLLLLL}L}^{opaqueCMFormatDescription=}",
@@ -721,7 +726,9 @@ functions = {
     "CMBufferQueueGetCallbacksForUnsortedSampleBuffers": (
         b"^{_CMBufferCallbacks=I^v^?^?^?^?^?^{__CFString=}^?}",
     ),
-    "CMSampleBufferGetDataBuffer": (b"^{OpaqueCMBlockBuffer=}^{opaqueCMSampleBuffer=}",),
+    "CMSampleBufferGetDataBuffer": (
+        b"^{OpaqueCMBlockBuffer=}^{opaqueCMSampleBuffer=}",
+    ),
     "CMSampleBufferInvalidate": (
         sel32or64(b"l^{opaqueCMSampleBuffer=}", b"i^{opaqueCMSampleBuffer=}"),
     ),
@@ -1234,7 +1241,9 @@ functions = {
         "",
         {"arguments": {3: {"type_modifier": "o"}}},
     ),
-    "CMTimeRangeGetEnd": (b"{_CMTime=qiIq}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",),
+    "CMTimeRangeGetEnd": (
+        b"{_CMTime=qiIq}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+    ),
     "CMBufferQueueSetValidationHandler": (
         b"i@@?",
         "",
@@ -1361,7 +1370,8 @@ functions = {
     ),
     "CMTimebaseSetTime": (
         sel32or64(
-            b"l^{OpaqueCMTimebase=}{_CMTime=qiIq}", b"i^{OpaqueCMTimebase=}{_CMTime=qiIq}"
+            b"l^{OpaqueCMTimebase=}{_CMTime=qiIq}",
+            b"i^{OpaqueCMTimebase=}{_CMTime=qiIq}",
         ),
     ),
     "CMVideoFormatDescriptionGetH264ParameterSetAtIndex": (
@@ -1370,7 +1380,9 @@ functions = {
             b"i^{opaqueCMFormatDescription=}Q^^C^Q^Q^i",
         ),
     ),
-    "CMMetadataDataTypeRegistryGetConformingDataTypes": (b"^{__CFArray=}^{__CFString=}",),
+    "CMMetadataDataTypeRegistryGetConformingDataTypes": (
+        b"^{__CFArray=}^{__CFString=}",
+    ),
     "CMBufferQueueCreate": (
         sel32or64(
             b"l^{__CFAllocator=}l^{_CMBufferCallbacks=I^v^?^?^?^?^?^{__CFString=}^?}^^{opaqueCMBufferQueue=}",
@@ -1491,7 +1503,9 @@ functions = {
         },
     ),
     "CMBlockBufferAccessDataBytes": (
-        sel32or64(b"l^{OpaqueCMBlockBuffer=}LL^v^^c", b"i^{OpaqueCMBlockBuffer=}QQ^v^^c"),
+        sel32or64(
+            b"l^{OpaqueCMBlockBuffer=}LL^v^^c", b"i^{OpaqueCMBlockBuffer=}QQ^v^^c"
+        ),
         "",
         {"suggestion": "Use CMBlockBufferCopyDataBytes"},
     ),

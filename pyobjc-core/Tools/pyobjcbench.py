@@ -43,7 +43,8 @@ print(
     ),
 )
 print(
-    "object description call:  ", timeit.timeit(setup="m = object().__repr__", stmt="m()")
+    "object description call:  ",
+    timeit.timeit(setup="m = object().__repr__", stmt="m()"),
 )
 print(
     "NSObject description call:  ",

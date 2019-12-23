@@ -33,7 +33,9 @@ class TestWebScriptObject(TestCase):
             0,
             b"n^" + objc._C_CHAR_AS_TEXT,
         )
-        self.assertArgIsNullTerminated(TestWebScriptObjectHelper.webScriptNameForKey_, 0)
+        self.assertArgIsNullTerminated(
+            TestWebScriptObjectHelper.webScriptNameForKey_, 0
+        )
         self.assertArgHasType(
             TestWebScriptObjectHelper.isKeyExcludedFromWebScript_,
             0,

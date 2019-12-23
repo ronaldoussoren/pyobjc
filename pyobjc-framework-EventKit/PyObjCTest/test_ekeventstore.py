@@ -29,8 +29,12 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(EventKit.EKEventStore.removeCalendar_commit_error_, 1)
             self.assertArgIsOut(EventKit.EKEventStore.removeCalendar_commit_error_, 2)
 
-            self.assertResultIsBOOL(EventKit.EKEventStore.removeEvent_span_commit_error_)
-            self.assertArgIsBOOL(EventKit.EKEventStore.removeEvent_span_commit_error_, 2)
+            self.assertResultIsBOOL(
+                EventKit.EKEventStore.removeEvent_span_commit_error_
+            )
+            self.assertArgIsBOOL(
+                EventKit.EKEventStore.removeEvent_span_commit_error_, 2
+            )
             self.assertArgIsOut(EventKit.EKEventStore.removeEvent_span_commit_error_, 3)
 
             self.assertResultIsBOOL(EventKit.EKEventStore.removeReminder_commit_error_)

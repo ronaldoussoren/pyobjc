@@ -75,7 +75,9 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(
             ICReturnConnectionClosedSessionSuddenly, ICReturnCodeDeviceOffset - 1
         )
-        self.assertEqual(ICReturnConnectionEjectedSuddenly, ICReturnCodeDeviceOffset - 2)
+        self.assertEqual(
+            ICReturnConnectionEjectedSuddenly, ICReturnCodeDeviceOffset - 2
+        )
         self.assertEqual(
             ICReturnConnectionSessionAlreadyOpen, ICReturnCodeDeviceOffset - 3
         )
@@ -84,7 +86,9 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(
             ICReturnConnectionFailedToOpenDevice, ICReturnCodeDeviceOffset - 6
         )
-        self.assertEqual(ICReturnMetadataAlreadyFetching, ICReturnCodeMetadataOffset - 1)
+        self.assertEqual(
+            ICReturnMetadataAlreadyFetching, ICReturnCodeMetadataOffset - 1
+        )
         self.assertEqual(ICReturnMetadataCanceled, ICReturnCodeMetadataOffset - 2)
         self.assertEqual(ICReturnMetadataInvalid, ICReturnCodeMetadataOffset - 3)
         self.assertEqual(ICReturnMultiErrorDictionary, -30000)
@@ -155,9 +159,11 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(ICReturnDownloadPathInvalid, ICReturnCodeDownloadOffset)
         self.assertEqual(ICReturnDownloadFileWritable, ICReturnCodeDownloadOffset - 1)
         self.assertEqual(ICReturnCodeObjectDoesNotExist, ICReturnCodeObjectOffset)
-        self.assertEqual(ICReturnCodeObjectDataOffsetInvalid, ICReturnCodeObjectOffset-1)
-        self.assertEqual(ICReturnCodeObjectCouldNotBeRead, ICReturnCodeObjectOffset-2)
-        self.assertEqual(ICReturnCodeObjectDataEmpty, ICReturnCodeObjectOffset-3)
+        self.assertEqual(
+            ICReturnCodeObjectDataOffsetInvalid, ICReturnCodeObjectOffset - 1
+        )
+        self.assertEqual(ICReturnCodeObjectCouldNotBeRead, ICReturnCodeObjectOffset - 2)
+        self.assertEqual(ICReturnCodeObjectDataEmpty, ICReturnCodeObjectOffset - 3)
 
 
 if __name__ == "__main__":

@@ -34,7 +34,9 @@ class TestObjCPointer(TestCase):
 
     def test_objc_pointer_raises(self):
         objc.options.unknown_pointer_raises = True
-        self.assertRaises(objc.UnknownPointerError, OC_TestStructPointer.returnUnwrapped)
+        self.assertRaises(
+            objc.UnknownPointerError, OC_TestStructPointer.returnUnwrapped
+        )
 
 
 if __name__ == "__main__":

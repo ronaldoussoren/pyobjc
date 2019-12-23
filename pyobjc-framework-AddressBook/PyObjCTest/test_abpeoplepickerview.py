@@ -8,9 +8,13 @@ class TestABPeoplePickerView(TestCase):
         self.assertEqual(ABSingleValueSelection, 1)
         self.assertEqual(ABMultipleValueSelection, 2)
 
-        self.assertIsInstance(ABPeoplePickerGroupSelectionDidChangeNotification, unicode)
+        self.assertIsInstance(
+            ABPeoplePickerGroupSelectionDidChangeNotification, unicode
+        )
         self.assertIsInstance(ABPeoplePickerNameSelectionDidChangeNotification, unicode)
-        self.assertIsInstance(ABPeoplePickerValueSelectionDidChangeNotification, unicode)
+        self.assertIsInstance(
+            ABPeoplePickerValueSelectionDidChangeNotification, unicode
+        )
         self.assertIsInstance(
             ABPeoplePickerDisplayedPropertyDidChangeNotification, unicode
         )

@@ -37,7 +37,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.15")
         def test_constants(self):
-            self.assertIsInstance(Photos.PHContentEditingInputResultIsInCloudKey, unicode)
+            self.assertIsInstance(
+                Photos.PHContentEditingInputResultIsInCloudKey, unicode
+            )
             self.assertIsInstance(Photos.PHContentEditingInputCancelledKey, unicode)
             self.assertIsInstance(Photos.PHContentEditingInputErrorKey, unicode)
 

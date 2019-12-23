@@ -26,7 +26,9 @@ class TestIMKInputControllerHelper(NSObject):
     def mouseUpOnCharacterIndex_coordinate_withModifier_client_(self, v1, v2, v3, v4):
         return True
 
-    def mouseMovedOnCharacterIndex_coordinate_withModifier_client_(self, v1, v2, v3, v4):
+    def mouseMovedOnCharacterIndex_coordinate_withModifier_client_(
+        self, v1, v2, v3, v4
+    ):
         return True
 
 
@@ -49,7 +51,9 @@ class TestIMKInputController(TestCase):
 
         self.assertResultIsBOOL(TestIMKInputControllerHelper.inputText_client_)
         self.assertResultIsBOOL(TestIMKInputControllerHelper.handleEvent_client_)
-        self.assertResultIsBOOL(TestIMKInputControllerHelper.didCommandBySelector_client_)
+        self.assertResultIsBOOL(
+            TestIMKInputControllerHelper.didCommandBySelector_client_
+        )
         self.assertArgHasType(
             TestIMKInputControllerHelper.didCommandBySelector_client_, 0, objc._C_SEL
         )

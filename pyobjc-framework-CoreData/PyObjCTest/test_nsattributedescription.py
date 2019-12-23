@@ -35,7 +35,9 @@ class TestNSAttributeDescription(TestCase):
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertResultIsBOOL(NSAttributeDescription.preservesValueInHistoryOnDeletion)
+        self.assertResultIsBOOL(
+            NSAttributeDescription.preservesValueInHistoryOnDeletion
+        )
         self.assertArgIsBOOL(
             NSAttributeDescription.setPreservesValueInHistoryOnDeletion_, 0
         )

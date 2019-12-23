@@ -137,7 +137,9 @@ class TestNSApplication(TestCase):
         self.assertIsInstance(NSApplicationWillUnhideNotification, unicode)
         self.assertIsInstance(NSApplicationWillUpdateNotification, unicode)
         self.assertIsInstance(NSApplicationWillTerminateNotification, unicode)
-        self.assertIsInstance(NSApplicationDidChangeScreenParametersNotification, unicode)
+        self.assertIsInstance(
+            NSApplicationDidChangeScreenParametersNotification, unicode
+        )
 
         self.assertEqual(NSWindowListOrderedFrontToBack, 1 << 0)
 
@@ -240,7 +242,9 @@ class TestNSApplication(TestCase):
             TestNSApplicationHelper.applicationShouldHandleReopen_hasVisibleWindows_, 1
         )
 
-        self.assertResultIsBOOL(TestNSApplicationHelper.writeSelectionToPasteboard_types_)
+        self.assertResultIsBOOL(
+            TestNSApplicationHelper.writeSelectionToPasteboard_types_
+        )
         self.assertResultIsBOOL(TestNSApplicationHelper.readSelectionFromPasteboard_)
 
         self.assertResultIsBOOL(

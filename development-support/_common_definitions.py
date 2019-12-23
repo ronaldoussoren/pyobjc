@@ -111,7 +111,9 @@ def virtualenv(interpreter):
 
 
 def variants(ver, permitted_variants={"64bit"}):
-    if os.path.islink(os.path.join("/Library/Frameworks/Python.framework/Versions", ver)):
+    if os.path.islink(
+        os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+    ):
 
         result = []
         for nm in os.listdir("/Library/Frameworks/Python.framework/Versions"):

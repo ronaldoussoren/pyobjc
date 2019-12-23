@@ -57,7 +57,9 @@ class TestDate(TestCase):
     def testAbsoluteTime(self):
         v = CFAbsoluteTimeGetCurrent()
         self.assertIsInstance(v, float)
-        self.assertLessThan(abs(v - time.time() + kCFAbsoluteTimeIntervalSince1970), 1.0)
+        self.assertLessThan(
+            abs(v - time.time() + kCFAbsoluteTimeIntervalSince1970), 1.0
+        )
 
     def testCreation(self):
         now = CFAbsoluteTimeGetCurrent()

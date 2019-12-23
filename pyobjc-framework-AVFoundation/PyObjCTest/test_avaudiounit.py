@@ -12,7 +12,9 @@ class TestAVAudioUnit(TestCase):
             b"v@@",
         )
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioUnit.loadAudioUnitPresetAtURL_error_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioUnit.loadAudioUnitPresetAtURL_error_
+        )
         self.assertArgIsOut(AVFoundation.AVAudioUnit.loadAudioUnitPresetAtURL_error_, 1)
 
 

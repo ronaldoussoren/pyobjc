@@ -31,7 +31,8 @@ def printPageResults(outFile, myData, pageNum):
 
     if myData.numImageMasksThisPage:
         print(
-            "Found %d image masks on page %d." % (myData.numImageMasksThisPage, pageNum),
+            "Found %d image masks on page %d."
+            % (myData.numImageMasksThisPage, pageNum),
             file=outFile,
         )
 
@@ -129,7 +130,9 @@ def myOperator_Do(s, info):
 
     # An XObject must be a stream so obtain the value from the xobject
     # as if it were a stream. If this fails, the PDF is malformed.
-    res, stream = Quartz.CGPDFObjectGetValue(xobject, Quartz.kCGPDFObjectTypeStream, None)
+    res, stream = Quartz.CGPDFObjectGetValue(
+        xobject, Quartz.kCGPDFObjectTypeStream, None
+    )
     if not res:
         print("XObject '%s' is not a stream" % (name,))
         return

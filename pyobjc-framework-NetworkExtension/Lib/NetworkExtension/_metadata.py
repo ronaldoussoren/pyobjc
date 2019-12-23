@@ -26,7 +26,9 @@ misc.update(
             "utf-8"
         ),
         "NEFilterProviderRemediationURLUsername": b"NE_USERNAME".decode("utf-8"),
-        "NEFilterProviderRemediationURLOrganization": b"NE_ORGANIZATION".decode("utf-8"),
+        "NEFilterProviderRemediationURLOrganization": b"NE_ORGANIZATION".decode(
+            "utf-8"
+        ),
     }
 )
 aliases = {"NEFilterFlowBytesMax": "UINT64_MAX"}
@@ -449,7 +451,11 @@ try:
         {"arguments": {3: {"type": b"Z"}}},
     )
     r(b"NEHotspotHS20Settings", b"isRoamingEnabled", {"retval": {"type": b"Z"}})
-    r(b"NEHotspotHS20Settings", b"setRoamingEnabled:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"NEHotspotHS20Settings",
+        b"setRoamingEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"NEHotspotHelper", b"logoff:", {"retval": {"type": b"Z"}})
     r(
         b"NEHotspotHelper",
@@ -568,7 +574,11 @@ try:
         },
     )
     r(b"NEProxyServer", b"authenticationRequired", {"retval": {"type": "Z"}})
-    r(b"NEProxyServer", b"setAuthenticationRequired:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"NEProxyServer",
+        b"setAuthenticationRequired:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"NEProxySettings", b"HTTPEnabled", {"retval": {"type": "Z"}})
     r(b"NEProxySettings", b"HTTPSEnabled", {"retval": {"type": "Z"}})
     r(b"NEProxySettings", b"autoProxyConfigurationEnabled", {"retval": {"type": "Z"}})

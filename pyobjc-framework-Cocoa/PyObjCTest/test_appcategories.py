@@ -11,7 +11,9 @@ class TestAppKitCategories(TestCase):
         with Cocoa.NSGraphicsContext.savedGraphicsState():
             pass
 
-    @onlyIf(hasattr(Cocoa, "NSAnimationContext"), "Test for NSAnimationContext category")
+    @onlyIf(
+        hasattr(Cocoa, "NSAnimationContext"), "Test for NSAnimationContext category"
+    )
     def testAnimationContext(self):
         with Cocoa.NSAnimationContext:
             pass

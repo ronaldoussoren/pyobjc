@@ -24,11 +24,17 @@ class TestAVAudioSequencer(TestCase):
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.loadFromURL_options_error_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioSequencer.loadFromURL_options_error_
+        )
         self.assertArgIsOut(AVFoundation.AVAudioSequencer.loadFromURL_options_error_, 2)
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.loadFromData_options_error_)
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.loadFromData_options_error_, 2)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioSequencer.loadFromData_options_error_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVAudioSequencer.loadFromData_options_error_, 2
+        )
 
         self.assertResultIsBOOL(
             AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_

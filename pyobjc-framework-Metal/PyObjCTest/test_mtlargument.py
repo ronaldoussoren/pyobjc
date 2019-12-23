@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLArgument (TestCase):
+
+class TestMTLArgument(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLDataTypeNone, 0)
         self.assertEqual(Metal.MTLDataTypeStruct, 1)
@@ -76,16 +77,20 @@ class TestMTLArgument (TestCase):
         self.assertEqual(Metal.MTLArgumentAccessReadWrite, 1)
         self.assertEqual(Metal.MTLArgumentAccessWriteOnly, 2)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isActive)
 
-    @expectedFailure # Documented, but not actually working..
-    @min_os_level('10.12')
+    @expectedFailure  # Documented, but not actually working..
+    @min_os_level("10.12")
     def test_methods10_12(self):
         self.assertResultIsBOOL(Metal.MTLArgument.alloc().init().isDepthTexture)
 
-    @min_os_level('10.13')
+    @min_os_level("10.13")
     def test_methods10_13(self):
-        self.assertResultIsBOOL(Metal.MTLPointerType.alloc().init().elementIsArgumentBuffer)
-        self.assertResultIsBOOL(Metal.MTLTextureReferenceType.alloc().init().isDepthTexture)
+        self.assertResultIsBOOL(
+            Metal.MTLPointerType.alloc().init().elementIsArgumentBuffer
+        )
+        self.assertResultIsBOOL(
+            Metal.MTLTextureReferenceType.alloc().init().isDepthTexture
+        )

@@ -25,7 +25,9 @@ class TestNSPersistentDocument(TestCase):
         self.assertResultIsBOOL(NSPersistentDocument.readFromURL_ofType_error_)
         self.assertArgIsOut(NSPersistentDocument.readFromURL_ofType_error_, 2)
 
-        self.assertResultIsBOOL(NSPersistentDocument.revertToContentsOfURL_ofType_error_)
+        self.assertResultIsBOOL(
+            NSPersistentDocument.revertToContentsOfURL_ofType_error_
+        )
         self.assertArgIsOut(NSPersistentDocument.revertToContentsOfURL_ofType_error_, 2)
 
         self.assertResultIsBOOL(

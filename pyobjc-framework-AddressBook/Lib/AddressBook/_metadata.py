@@ -106,7 +106,9 @@ functions = {
         "",
         {"retval": {"already_cfretained": True}},
     ),
-    "ABPickerGetAttributes": (sel32or64(b"L^{OpaqueABPicker=}", b"I^{OpaqueABPicker=}"),),
+    "ABPickerGetAttributes": (
+        sel32or64(b"L^{OpaqueABPicker=}", b"I^{OpaqueABPicker=}"),
+    ),
     "ABSave": (b"B^{__ABAddressBookRef=}",),
     "ABPersonCreateWithVCardRepresentation": (
         b"^{__ABPerson=}^{__CFData=}",
@@ -122,7 +124,9 @@ functions = {
         "",
         {"retval": {"already_cfretained": True}},
     ),
-    "ABMultiValueRemove": (sel32or64(b"B^{__ABMultiValue=}l", b"B^{__ABMultiValue=}q"),),
+    "ABMultiValueRemove": (
+        sel32or64(b"B^{__ABMultiValue=}l", b"B^{__ABMultiValue=}q"),
+    ),
     "ABSearchElementMatchesRecord": (b"B^{__ABSearchElementRef=}@",),
     "ABRecordCopyRecordType": (
         b"^{__CFString=}@",
@@ -525,7 +529,11 @@ try:
     r(b"ABPerson", b"setImageData:", {"retval": {"type": "Z"}})
     r(b"ABPersonView", b"editing", {"retval": {"type": "Z"}})
     r(b"ABPersonView", b"setEditing:", {"arguments": {2: {"type": "Z"}}})
-    r(b"ABPersonView", b"setShouldShowLinkedPeople:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"ABPersonView",
+        b"setShouldShowLinkedPeople:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"ABPersonView", b"shouldShowLinkedPeople", {"retval": {"type": b"Z"}})
     r(b"ABRecord", b"isReadOnly", {"retval": {"type": "Z"}})
     r(b"ABRecord", b"removeValueForProperty:", {"retval": {"type": "Z"}})

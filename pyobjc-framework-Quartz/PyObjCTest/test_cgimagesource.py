@@ -22,7 +22,9 @@ class TestCGImageSource(TestCase):
             Quartz.kCGImageSourceCreateThumbnailFromImageAlways, unicode
         )
         self.assertIsInstance(Quartz.kCGImageSourceThumbnailMaxPixelSize, unicode)
-        self.assertIsInstance(Quartz.kCGImageSourceCreateThumbnailWithTransform, unicode)
+        self.assertIsInstance(
+            Quartz.kCGImageSourceCreateThumbnailWithTransform, unicode
+        )
 
     @min_os_level("10.9")
     def testConstants10_9(self):

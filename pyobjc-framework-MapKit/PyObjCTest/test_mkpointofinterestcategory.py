@@ -9,7 +9,9 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.15")
         def test_constants(self):
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryAirport, unicode)
-            self.assertIsInstance(MapKit.MKPointOfInterestCategoryAmusementPark, unicode)
+            self.assertIsInstance(
+                MapKit.MKPointOfInterestCategoryAmusementPark, unicode
+            )
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryAquarium, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryATM, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryBakery, unicode)
@@ -21,7 +23,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryCarRental, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryEVCharger, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryFireStation, unicode)
-            self.assertIsInstance(MapKit.MKPointOfInterestCategoryFitnessCenter, unicode)
+            self.assertIsInstance(
+                MapKit.MKPointOfInterestCategoryFitnessCenter, unicode
+            )
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryFoodMarket, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryGasStation, unicode)
             self.assertIsInstance(MapKit.MKPointOfInterestCategoryHospital, unicode)

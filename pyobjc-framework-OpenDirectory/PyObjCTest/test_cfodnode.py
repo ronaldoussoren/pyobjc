@@ -77,7 +77,9 @@ class TestCFODNode(TestCase):
         self.assertResultHasType(CFOpenDirectory.ODNodeAddAccountPolicy, objc._C_BOOL)
         self.assertArgIsOut(CFOpenDirectory.ODNodeAddAccountPolicy, 3)
 
-        self.assertResultHasType(CFOpenDirectory.ODNodeRemoveAccountPolicy, objc._C_BOOL)
+        self.assertResultHasType(
+            CFOpenDirectory.ODNodeRemoveAccountPolicy, objc._C_BOOL
+        )
         self.assertArgIsOut(CFOpenDirectory.ODNodeRemoveAccountPolicy, 3)
 
         self.assertResultHasType(CFOpenDirectory.ODNodeSetAccountPolicies, objc._C_BOOL)
@@ -86,7 +88,9 @@ class TestCFODNode(TestCase):
         self.assertResultIsCFRetained(CFOpenDirectory.ODNodeCopyAccountPolicies)
         self.assertArgIsOut(CFOpenDirectory.ODNodeCopyAccountPolicies, 1)
 
-        self.assertResultHasType(CFOpenDirectory.ODNodePasswordContentCheck, objc._C_BOOL)
+        self.assertResultHasType(
+            CFOpenDirectory.ODNodePasswordContentCheck, objc._C_BOOL
+        )
         self.assertArgIsOut(CFOpenDirectory.ODNodePasswordContentCheck, 3)
 
 

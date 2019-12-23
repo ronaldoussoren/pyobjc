@@ -109,7 +109,11 @@ try:
         {"retval": {"type": "Z"}},
     )
     r(b"ISyncSessionDriver", b"handlesSyncAlerts", {"retval": {"type": "Z"}})
-    r(b"ISyncSessionDriver", b"setHandlesSyncAlerts:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"ISyncSessionDriver",
+        b"setHandlesSyncAlerts:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(
         b"ISyncSessionDriver",
         b"startAsynchronousSync:",
@@ -263,7 +267,11 @@ try:
             "arguments": {3: {"type": "^@", "type_modifier": b"o"}},
         },
     )
-    r(b"NSObject", b"shouldApplyRecord:withRecordIdentifier:", {"retval": {"type": "Z"}})
+    r(
+        b"NSObject",
+        b"shouldApplyRecord:withRecordIdentifier:",
+        {"retval": {"type": "Z"}},
+    )
     r(
         b"NSPersistentStoreCoordinator",
         b"syncWithClient:inBackground:handler:error:",
@@ -318,7 +326,11 @@ try:
             },
         },
     )
-    r(b"NSObject", b"clientDescriptionURL", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"clientDescriptionURL",
+        {"required": True, "retval": {"type": b"@"}},
+    )
     r(b"NSObject", b"clientIdentifier", {"required": True, "retval": {"type": b"@"}})
     r(
         b"NSObject",
@@ -507,7 +519,11 @@ try:
         },
     )
     r(b"NSObject", b"schemaBundleURLs", {"required": True, "retval": {"type": b"@"}})
-    r(b"NSObject", b"sessionBeginTimeout", {"required": False, "retval": {"type": b"d"}})
+    r(
+        b"NSObject",
+        b"sessionBeginTimeout",
+        {"required": False, "retval": {"type": b"d"}},
+    )
     r(
         b"NSObject",
         b"sessionPullChangesTimeout",
@@ -522,7 +538,11 @@ try:
             "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
         },
     )
-    r(b"NSObject", b"supportedEntityNames", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"supportedEntityNames",
+        {"required": True, "retval": {"type": b"@"}},
+    )
 finally:
     objc._updatingMetadata(False)
 r = objc.registerMetaDataForSelector
@@ -729,7 +749,10 @@ protocols = {
                 isRequired=False,
             ),
             objc.selector(
-                None, b"sessionDriver:didPullAndReturnError:", b"Z@:@^@", isRequired=False
+                None,
+                b"sessionDriver:didPullAndReturnError:",
+                b"Z@:@^@",
+                isRequired=False,
             ),
             objc.selector(
                 None, b"sessionDriverDidFinishSession:", b"v@:@", isRequired=False
@@ -741,7 +764,10 @@ protocols = {
                 isRequired=False,
             ),
             objc.selector(
-                None, b"sessionDriver:didPushAndReturnError:", b"Z@:@^@", isRequired=False
+                None,
+                b"sessionDriver:didPushAndReturnError:",
+                b"Z@:@^@",
+                isRequired=False,
             ),
             objc.selector(
                 None,

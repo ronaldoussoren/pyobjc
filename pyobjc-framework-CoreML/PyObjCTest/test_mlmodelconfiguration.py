@@ -10,7 +10,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CoreML.MLComputeUnitsCPUAndGPU, 1)
             self.assertEqual(CoreML.MLComputeUnitsAll, 2)
 
-        @min_os_level('10.15')
+        @min_os_level("10.15")
         def test_methods10_15(self):
             self.assertResultIsBOOL(
                 CoreML.MLModelConfiguration.allowLowPrecisionAccumulationOnGPU

@@ -170,7 +170,11 @@ try:
     r(b"SFCertificateView", b"setDisplayDetails:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SFCertificateView", b"setDisplayTrust:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SFCertificateView", b"setEditableTrust:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"SFCertificateView", b"setPoliciesDisclosed:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SFCertificateView",
+        b"setPoliciesDisclosed:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(
         b"SFChooseIdentityPanel",
         b"beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:identities:message:",
@@ -215,7 +219,11 @@ finally:
 protocols = {
     "SFChooseIdentityPanelDelegate": objc.informal_protocol(
         "SFChooseIdentityPanelDelegate",
-        [objc.selector(None, b"chooseIdentityPanelShowHelp:", b"Z@:@", isRequired=False)],
+        [
+            objc.selector(
+                None, b"chooseIdentityPanelShowHelp:", b"Z@:@", isRequired=False
+            )
+        ],
     ),
     "SFCertificatePanelDelegate": objc.informal_protocol(
         "SFCertificatePanelDelegate",
@@ -225,9 +233,14 @@ protocols = {
         "SFAuthorizationViewDelegate",
         [
             objc.selector(
-                None, b"authorizationViewCreatedAuthorization:", b"v@:@", isRequired=False
+                None,
+                b"authorizationViewCreatedAuthorization:",
+                b"v@:@",
+                isRequired=False,
             ),
-            objc.selector(None, b"authorizationViewDidHide:", b"v@:@", isRequired=False),
+            objc.selector(
+                None, b"authorizationViewDidHide:", b"v@:@", isRequired=False
+            ),
             objc.selector(
                 None, b"authorizationViewDidAuthorize:", b"v@:@", isRequired=False
             ),

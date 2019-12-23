@@ -97,11 +97,17 @@ class TestClosure(TestCase):
         self.assertIn(' "objc.__imp__" ', repr(cl))
         cl = objc._makeClosure(function, OC_CallbackTest.selWithCallback2_, -1)
         self.assertIn(' "objc.__imp__" ', repr(cl))
-        cl = objc._makeClosure(function, OC_CallbackTest.selWithCallback_andCallback_, -1)
+        cl = objc._makeClosure(
+            function, OC_CallbackTest.selWithCallback_andCallback_, -1
+        )
         self.assertIn(' "objc.__imp__" ', repr(cl))
-        cl = objc._makeClosure(function, OC_CallbackTest.selWithCallback_andCallback_, 2)
+        cl = objc._makeClosure(
+            function, OC_CallbackTest.selWithCallback_andCallback_, 2
+        )
         self.assertIn(' "objc.__imp__" ', repr(cl))
-        cl = objc._makeClosure(function, OC_CallbackTest.selWithCallback_andCallback_, 3)
+        cl = objc._makeClosure(
+            function, OC_CallbackTest.selWithCallback_andCallback_, 3
+        )
         self.assertIn(' "objc.__imp__" ', repr(cl))
 
         self.assertRaises(

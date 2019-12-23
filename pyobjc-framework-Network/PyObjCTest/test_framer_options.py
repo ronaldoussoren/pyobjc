@@ -34,7 +34,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsIn(Network.nw_framer_message_set_value, 1)
             self.assertArgIsNullTerminated(Network.nw_framer_message_set_value, 1)
             self.assertArgIsBlock(
-                Network.nw_framer_message_set_value, 3, nw_framer_message_dispose_value_t
+                Network.nw_framer_message_set_value,
+                3,
+                nw_framer_message_dispose_value_t,
             )
 
             self.assertArgIsIn(Network.nw_framer_message_access_value, 1)
@@ -42,7 +44,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(Network.nw_framer_message_access_value, 2, b"B^v")
 
             self.assertArgIsIn(Network.nw_framer_message_set_object_value, 1)
-            self.assertArgIsNullTerminated(Network.nw_framer_message_set_object_value, 1)
+            self.assertArgIsNullTerminated(
+                Network.nw_framer_message_set_object_value, 1
+            )
 
             self.assertResultIsRetained(Network.nw_framer_message_copy_object_value)
 

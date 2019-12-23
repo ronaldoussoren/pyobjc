@@ -85,7 +85,9 @@ class TestHeader(TestCase):
 
         self.assertIsInstance(NSDefinitionPresentationTypeKey, unicode)
         self.assertIsInstance(NSDefinitionPresentationTypeOverlay, unicode)
-        self.assertIsInstance(NSDefinitionPresentationTypeDictionaryApplication, unicode)
+        self.assertIsInstance(
+            NSDefinitionPresentationTypeDictionaryApplication, unicode
+        )
 
     @min_os_level("10.9")
     def testConstants10_9(self):
@@ -229,7 +231,9 @@ class TestHeader(TestCase):
 
     def testProtocol(self):
         self.assertArgHasType(
-            TestNSViewHelper.view_stringForToolTip_point_userData_, 2, NSPoint.__typestr__
+            TestNSViewHelper.view_stringForToolTip_point_userData_,
+            2,
+            NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b"^v"

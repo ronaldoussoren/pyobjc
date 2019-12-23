@@ -7,7 +7,9 @@ class TestNSFileHandle(TestCase):
     def testConstants(self):
         self.assertIsInstance(NSFileHandleOperationException, unicode)
         self.assertIsInstance(NSFileHandleReadCompletionNotification, unicode)
-        self.assertIsInstance(NSFileHandleReadToEndOfFileCompletionNotification, unicode)
+        self.assertIsInstance(
+            NSFileHandleReadToEndOfFileCompletionNotification, unicode
+        )
         self.assertIsInstance(NSFileHandleConnectionAcceptedNotification, unicode)
         self.assertIsInstance(NSFileHandleDataAvailableNotification, unicode)
         self.assertIsInstance(NSFileHandleNotificationDataItem, unicode)

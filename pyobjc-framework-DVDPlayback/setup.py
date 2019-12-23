@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup
 import os
 
-VERSION = '6.2b1'
+VERSION = "6.2b1"
 
 setup(
     name="pyobjc-framework-DVDPlayback",

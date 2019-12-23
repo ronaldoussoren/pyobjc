@@ -23,9 +23,7 @@ def CFSocketStreamSOCKSGetErrorSubdomain(err):
 
 frameworkPath = "/System/Library/Frameworks/CFNetwork.framework"
 if not os.path.exists(frameworkPath):
-    frameworkPath = (
-        "/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework"
-    )
+    frameworkPath = "/System/Library/Frameworks/CoreServices.framework/Frameworks/CFNetwork.framework"
 
 
 sys.modules["CFNetwork"] = mod = objc.ObjCLazyModule(

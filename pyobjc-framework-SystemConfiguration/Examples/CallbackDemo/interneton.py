@@ -77,7 +77,9 @@ def main():
         resultAvailable(target, flags, addr)
 
     else:
-        ok = SCNetworkReachabilityScheduleWithRunLoop(target, loop, kCFRunLoopCommonModes)
+        ok = SCNetworkReachabilityScheduleWithRunLoop(
+            target, loop, kCFRunLoopCommonModes
+        )
 
         CFRunLoopRun()
 

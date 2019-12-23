@@ -23,7 +23,9 @@ class TestISyncClient(TestCase):
         self.assertResultIsBOOL(ISyncClient.isEnabledForEntityName_)
         self.assertArgIsBOOL(ISyncClient.setEnabled_forEntityNames_, 0)
         self.assertResultIsBOOL(ISyncClient.shouldReplaceClientRecordsForEntityName_)
-        self.assertArgIsBOOL(ISyncClient.setShouldReplaceClientRecords_forEntityNames_, 0)
+        self.assertArgIsBOOL(
+            ISyncClient.setShouldReplaceClientRecords_forEntityNames_, 0
+        )
         self.assertResultIsBOOL(ISyncClient.shouldSynchronizeWithClientsOfType_)
         self.assertArgIsBOOL(ISyncClient.setShouldSynchronize_withClientsOfType_, 0)
 

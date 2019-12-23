@@ -36,11 +36,17 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsRetained(Network.nw_endpoint_create_bonjour_service)
             self.assertArgIsIn(Network.nw_endpoint_create_bonjour_service, 0)
-            self.assertArgIsNullTerminated(Network.nw_endpoint_create_bonjour_service, 0)
+            self.assertArgIsNullTerminated(
+                Network.nw_endpoint_create_bonjour_service, 0
+            )
             self.assertArgIsIn(Network.nw_endpoint_create_bonjour_service, 1)
-            self.assertArgIsNullTerminated(Network.nw_endpoint_create_bonjour_service, 1)
+            self.assertArgIsNullTerminated(
+                Network.nw_endpoint_create_bonjour_service, 1
+            )
             self.assertArgIsIn(Network.nw_endpoint_create_bonjour_service, 2)
-            self.assertArgIsNullTerminated(Network.nw_endpoint_create_bonjour_service, 2)
+            self.assertArgIsNullTerminated(
+                Network.nw_endpoint_create_bonjour_service, 2
+            )
 
             self.assertResultIsNullTerminated(
                 Network.nw_endpoint_get_bonjour_service_name

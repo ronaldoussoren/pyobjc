@@ -59,9 +59,15 @@ class TestQTMetadaItem(TestCase):
         self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyKeywords, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyMake, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyModel, unicode)
-        self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyOriginalArtist, unicode)
-        self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyOriginalFormat, unicode)
-        self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyOriginalSource, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataQuickTimeUserDataKeyOriginalArtist, unicode
+        )
+        self.assertIsInstance(
+            QTKit.QTMetadataQuickTimeUserDataKeyOriginalFormat, unicode
+        )
+        self.assertIsInstance(
+            QTKit.QTMetadataQuickTimeUserDataKeyOriginalSource, unicode
+        )
         self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyPerformers, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyProducer, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeUserDataKeyPublisher, unicode)
@@ -116,7 +122,9 @@ class TestQTMetadaItem(TestCase):
         self.assertIsInstance(QTKit.QTMetadataQuickTimeMetadataKeyModel, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeMetadataKeyArranger, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeMetadataKeyEncodedBy, unicode)
-        self.assertIsInstance(QTKit.QTMetadataQuickTimeMetadataKeyOriginalArtist, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataQuickTimeMetadataKeyOriginalArtist, unicode
+        )
         self.assertIsInstance(QTKit.QTMetadataQuickTimeMetadataKeyPerformer, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeMetadataKeyComposer, unicode)
         self.assertIsInstance(QTKit.QTMetadataQuickTimeMetadataKeyCredits, unicode)
@@ -177,7 +185,9 @@ class TestQTMetadaItem(TestCase):
     def testConstants10_7_missing(self):
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyAudioEncryption, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyAttachedPicture, unicode)
-        self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyAudioSeekPointIndex, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataID3MetadataKeyAudioSeekPointIndex, unicode
+        )
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyComments, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyCommerical, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyEncryption, unicode)
@@ -227,7 +237,9 @@ class TestQTMetadaItem(TestCase):
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyDate, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyEncodingTime, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyPlaylistDelay, unicode)
-        self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyOriginalReleaseTime, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataID3MetadataKeyOriginalReleaseTime, unicode
+        )
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyRecordingTime, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyReleaseTime, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyTaggingTime, unicode)
@@ -246,14 +258,18 @@ class TestQTMetadaItem(TestCase):
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyInitialKey, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyLanguage, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyLength, unicode)
-        self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyMusicianCreditsList, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataID3MetadataKeyMusicianCreditsList, unicode
+        )
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyMediaType, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyMood, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyOriginalAlbumTitle, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyOriginalFilename, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyOriginalLyricist, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyOriginalArtist, unicode)
-        self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyOriginalReleaseYear, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataID3MetadataKeyOriginalReleaseYear, unicode
+        )
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyFileOwner, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyLeadPerformer, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyBand, unicode)
@@ -281,13 +297,19 @@ class TestQTMetadaItem(TestCase):
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeySetSubtitle, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyYear, unicode)
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyUserText, unicode)
-        self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyUniqueFileIdentifier, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataID3MetadataKeyUniqueFileIdentifier, unicode
+        )
         self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyTermsOfUse, unicode)
-        self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyUnsynchronizedLyric, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataID3MetadataKeyUnsynchronizedLyric, unicode
+        )
         self.assertIsInstance(
             QTKit.QTMetadataID3MetadataKeyCommercialInformation, unicode
         )
-        self.assertIsInstance(QTKit.QTMetadataID3MetadataKeyCopyrightInformation, unicode)
+        self.assertIsInstance(
+            QTKit.QTMetadataID3MetadataKeyCopyrightInformation, unicode
+        )
         self.assertIsInstance(
             QTKit.QTMetadataID3MetadataKeyOfficialAudioFileWebpage, unicode
         )

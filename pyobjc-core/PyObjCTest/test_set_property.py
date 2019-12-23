@@ -285,7 +285,9 @@ class TestSetProperty(TestCase):
         # Check that the right ObjC array accessors are defined and work properly
         self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"setASet:"))
         self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"aSet"))
-        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"countOfASet"))
+        self.assertTrue(
+            TestSetPropertyHelper.instancesRespondToSelector_(b"countOfASet")
+        )
         self.assertTrue(
             TestSetPropertyHelper.instancesRespondToSelector_(b"enumeratorOfASet")
         )
@@ -296,7 +298,9 @@ class TestSetProperty(TestCase):
         self.assertTrue(
             TestSetPropertyHelper.instancesRespondToSelector_(b"addASetObject:")
         )
-        self.assertTrue(TestSetPropertyHelper.instancesRespondToSelector_(b"removeASet:"))
+        self.assertTrue(
+            TestSetPropertyHelper.instancesRespondToSelector_(b"removeASet:")
+        )
         self.assertTrue(
             TestSetPropertyHelper.instancesRespondToSelector_(b"removeASetObject:")
         )

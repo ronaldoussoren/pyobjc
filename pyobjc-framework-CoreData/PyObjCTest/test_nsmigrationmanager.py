@@ -15,7 +15,9 @@ class TestNSMigrationManager(TestCase):
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertArgIsBOOL(NSMigrationManager.setUsesStoreSpecificMigrationManager_, 0)
+        self.assertArgIsBOOL(
+            NSMigrationManager.setUsesStoreSpecificMigrationManager_, 0
+        )
         self.assertResultIsBOOL(NSMigrationManager.usesStoreSpecificMigrationManager)
 
 

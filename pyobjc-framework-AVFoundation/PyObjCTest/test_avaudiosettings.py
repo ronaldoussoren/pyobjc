@@ -19,7 +19,9 @@ class TestAVAudioSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVEncoderAudioQualityKey, unicode)
         self.assertIsInstance(AVFoundation.AVEncoderBitRateKey, unicode)
         self.assertIsInstance(AVFoundation.AVEncoderBitDepthHintKey, unicode)
-        self.assertIsInstance(AVFoundation.AVSampleRateConverterAudioQualityKey, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVSampleRateConverterAudioQualityKey, unicode
+        )
 
     @min_os_level("10.7")
     def testConstants10_7(self):
@@ -44,7 +46,9 @@ class TestAVAudioSettings(TestCase):
             AVFoundation.AVAudioBitRateStrategy_VariableConstrained, unicode
         )
         self.assertIsInstance(AVFoundation.AVAudioBitRateStrategy_Variable, unicode)
-        self.assertIsInstance(AVFoundation.AVSampleRateConverterAlgorithm_Normal, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVSampleRateConverterAlgorithm_Normal, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVSampleRateConverterAlgorithm_Mastering, unicode
         )

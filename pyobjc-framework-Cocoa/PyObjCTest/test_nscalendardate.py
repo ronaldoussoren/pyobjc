@@ -19,7 +19,14 @@ class TestNSCalendarDate(TestCase):
         self.assertArgIsOut(m, 4)
         self.assertArgIsOut(m, 5)
 
-        years, months, days, hours, minutes, seconds = obj.years_months_days_hours_minutes_seconds_sinceDate_(
+        (
+            years,
+            months,
+            days,
+            hours,
+            minutes,
+            seconds,
+        ) = obj.years_months_days_hours_minutes_seconds_sinceDate_(
             None, None, None, None, None, None, obj2
         )
         self.assertEqual(years, 1)

@@ -79,7 +79,11 @@ try:
         b"magneticField",
         {"retval": {"type": b"{_CMCalibratedMagneticField={_CMMagneticField=ddd}i}"}},
     )
-    r(b"CMDeviceMotion", b"rotationRate", {"retval": {"type": b"{_CMRotationRate=ddd}"}})
+    r(
+        b"CMDeviceMotion",
+        b"rotationRate",
+        {"retval": {"type": b"{_CMRotationRate=ddd}"}},
+    )
     r(
         b"CMDeviceMotion",
         b"userAcceleration",

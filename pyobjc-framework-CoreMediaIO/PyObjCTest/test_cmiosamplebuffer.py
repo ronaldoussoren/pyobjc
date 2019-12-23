@@ -12,7 +12,9 @@ class TestCMIOSampleBuffer(TestCase):
         self.assertEqual(CoreMediaIO.CMIOGetNextSequenceNumber(0), 1)
         self.assertEqual(CoreMediaIO.CMIOGetNextSequenceNumber(42), 43)
         self.assertEqual(
-            CoreMediaIO.CMIOGetNextSequenceNumber(CoreMediaIO.kCMIOInvalidSequenceNumber),
+            CoreMediaIO.CMIOGetNextSequenceNumber(
+                CoreMediaIO.kCMIOInvalidSequenceNumber
+            ),
             0,
         )
 
@@ -63,7 +65,8 @@ class TestCMIOSampleBuffer(TestCase):
             CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_DiscontinuityInDTS, 1 << 8
         )
         self.assertEqual(
-            CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_RelatedToDiscontinuity, 1 << 9
+            CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_RelatedToDiscontinuity,
+            1 << 9,
         )
         self.assertEqual(
             CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_ClientSyncDiscontinuity,
@@ -79,7 +82,8 @@ class TestCMIOSampleBuffer(TestCase):
             CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_DataFormatChanged, 1 << 13
         )
         self.assertEqual(
-            CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_TimingReferenceJumped, 1 << 14
+            CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_TimingReferenceJumped,
+            1 << 14,
         )
         self.assertEqual(
             CoreMediaIO.kCMIOSampleBufferDiscontinuityFlag_DurationWasExtended, 1 << 15
@@ -146,7 +150,8 @@ class TestCMIOSampleBuffer(TestCase):
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_PulldownCadenceInfo, unicode
         )
         self.assertIsInstance(
-            CoreMediaIO.kCMIOSampleBufferAttachmentKey_ClosedCaptionSampleBuffer, unicode
+            CoreMediaIO.kCMIOSampleBufferAttachmentKey_ClosedCaptionSampleBuffer,
+            unicode,
         )
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_NoDataMarker, unicode
@@ -161,7 +166,8 @@ class TestCMIOSampleBuffer(TestCase):
             CoreMediaIO.kCMIOSampleBufferAttachmentKey_ClientSequenceID, unicode
         )
         self.assertIsInstance(
-            CoreMediaIO.kCMIOSampleBufferAttachmentKey_MouseAndKeyboardModifiers, unicode
+            CoreMediaIO.kCMIOSampleBufferAttachmentKey_MouseAndKeyboardModifiers,
+            unicode,
         )
         self.assertIsInstance(
             CoreMediaIO.kCMIOSampleBufferAttachment_MouseAndKeyboardModifiersKey_CursorPositionX,

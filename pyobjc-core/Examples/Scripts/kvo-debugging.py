@@ -48,7 +48,11 @@ class FooClass(NSObject):
         self, observer, keyPath, options, context
     ):
         print(
-            "addObserver_forKeyPath_options_context_", observer, keyPath, options, context
+            "addObserver_forKeyPath_options_context_",
+            observer,
+            keyPath,
+            options,
+            context,
         )
         orig = FooClass  # type(self)
         super(orig, self).addObserver_forKeyPath_options_context_(

@@ -32,7 +32,9 @@ class TestCMIOHardwareDevice(TestCase):
     def testConstants(self):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopeInput, fourcc(b"inpt"))
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopeOutput, fourcc(b"outp"))
-        self.assertEqual(CoreMediaIO.kCMIODevicePropertyScopePlayThrough, fourcc(b"ptru"))
+        self.assertEqual(
+            CoreMediaIO.kCMIODevicePropertyScopePlayThrough, fourcc(b"ptru")
+        )
         self.assertEqual(CoreMediaIO.kCMIODeviceClassID, fourcc(b"adev"))
         self.assertEqual(CoreMediaIO.kCMIODeviceUnknown, CoreMediaIO.kCMIOObjectUnknown)
 
@@ -46,8 +48,12 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(CoreMediaIO.kCMIOAVCDeviceType_DVCPro100_NTSC, fourcc(b"dv1n"))
         self.assertEqual(CoreMediaIO.kCMIOAVCDeviceType_DVCPro100_PAL, fourcc(b"dv1p"))
         self.assertEqual(CoreMediaIO.kCMIOAVCDeviceType_DVCPro100_720p, fourcc(b"dvhp"))
-        self.assertEqual(CoreMediaIO.kCMIOAVCDeviceType_DVCProHD_1080i50, fourcc(b"dvh5"))
-        self.assertEqual(CoreMediaIO.kCMIOAVCDeviceType_DVCProHD_1080i60, fourcc(b"dvh6"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOAVCDeviceType_DVCProHD_1080i50, fourcc(b"dvh5")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOAVCDeviceType_DVCProHD_1080i60, fourcc(b"dvh6")
+        )
         self.assertEqual(CoreMediaIO.kCMIOAVCDeviceType_MPEG2, fourcc(b"mpg2"))
 
         self.assertEqual(CoreMediaIO.kCMIODeviceAVCSignalModeSD525_60, 0x00)
@@ -96,8 +102,12 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyModelUID, fourcc(b"muid"))
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyTransportType, fourcc(b"tran"))
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyDeviceIsAlive, fourcc(b"livn"))
-        self.assertEqual(CoreMediaIO.kCMIODevicePropertyDeviceHasChanged, fourcc(b"diff"))
-        self.assertEqual(CoreMediaIO.kCMIODevicePropertyDeviceIsRunning, fourcc(b"goin"))
+        self.assertEqual(
+            CoreMediaIO.kCMIODevicePropertyDeviceHasChanged, fourcc(b"diff")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIODevicePropertyDeviceIsRunning, fourcc(b"goin")
+        )
         self.assertEqual(
             CoreMediaIO.kCMIODevicePropertyDeviceIsRunningSomewhere, fourcc(b"gone")
         )
@@ -136,7 +146,9 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(
             CoreMediaIO.kCMIODevicePropertyVideoDigitizerComponents, fourcc(b"vdig")
         )
-        self.assertEqual(CoreMediaIO.kCMIODevicePropertySuspendedByUser, fourcc(b"sbyu"))
+        self.assertEqual(
+            CoreMediaIO.kCMIODevicePropertySuspendedByUser, fourcc(b"sbyu")
+        )
         self.assertEqual(
             CoreMediaIO.kCMIODevicePropertyLinkedAndSyncedCoreAudioDeviceUID,
             fourcc(b"plsd"),
@@ -158,7 +170,9 @@ class TestCMIOHardwareDevice(TestCase):
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationBuiltInDisplay, 1)
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationExternalDisplay, 2)
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationExternalDevice, 3)
-        self.assertEqual(CoreMediaIO.kCMIODevicePropertyLocationExternalWirelessDevice, 4)
+        self.assertEqual(
+            CoreMediaIO.kCMIODevicePropertyLocationExternalWirelessDevice, 4
+        )
 
     @min_os_level("10.7")
     def testFunctions(self):
@@ -166,4 +180,6 @@ class TestCMIOHardwareDevice(TestCase):
         CoreMediaIO.CMIODeviceStopStream
 
         self.assertIsNotInstance(CoreMediaIO.CMIODeviceProcessAVCCommand, objc.function)
-        self.assertIsNotInstance(CoreMediaIO.CMIODeviceProcessRS422Command, objc.function)
+        self.assertIsNotInstance(
+            CoreMediaIO.CMIODeviceProcessRS422Command, objc.function
+        )

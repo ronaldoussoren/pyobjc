@@ -242,7 +242,9 @@ class ObjCLazyModule(ModuleType):
         if self.__varmap:
             varmap = []
             specials = []
-            for nm, tp in re.findall(r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap):
+            for nm, tp in re.findall(
+                r"\$([A-Z0-9a-z_]*)(@[^$]*)?(?=\$)", self.__varmap
+            ):
                 if tp and tp.startswith("@="):
                     specials.append((nm, tp[2:]))
                 else:
@@ -267,7 +269,9 @@ class ObjCLazyModule(ModuleType):
             self.__varmap = ""
 
         if self.__enummap:
-            for nm, val in re.findall(r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", self.__enummap):
+            for nm, val in re.findall(
+                r"\$([A-Z0-9a-z_]*)@([^$]*)(?=\$)", self.__enummap
+            ):
                 if nm not in self.__dict__:
                     self.__dict__[nm] = self.__prs_enum(val)
 
@@ -330,9 +334,9 @@ class ObjCLazyModule(ModuleType):
     def __prs_enum(self, val):
         if val.startswith("'"):
             if isinstance(val, bytes):  # pragma: no 3.x cover
-                val, = struct.unpack(">l", val[1:-1])
+                (val,) = struct.unpack(">l", val[1:-1])
             else:  # pragma: no 2.x cover
-                val, = struct.unpack(">l", val[1:-1].encode("latin1"))
+                (val,) = struct.unpack(">l", val[1:-1].encode("latin1"))
 
         elif "." in val or "e" in val:
             val = float(val)

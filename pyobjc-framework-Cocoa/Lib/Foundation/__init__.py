@@ -113,7 +113,9 @@ def _setup_conveniences():
     # objc.addConvenienceForClass('NSMutableCharacterSet', (
 
     # XXX: add __new__, __getitem__ and __iter__ as well
-    objc.addConvenienceForClass("NSIndexPath", (("__len__", lambda self: self.count()),))
+    objc.addConvenienceForClass(
+        "NSIndexPath", (("__len__", lambda self: self.count()),)
+    )
 
     if sys.maxsize > 2 ** 32:
         NSNotFound = 0x7FFFFFFFFFFFFFFF

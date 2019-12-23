@@ -30,7 +30,9 @@ class TestNSInputServerHelper(NSObject):
     def mouseDownOnCharacterIndex_atCoordinate_withModifier_client_(self, i, p, f, s):
         return 1
 
-    def mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_(self, i, p, f, s):
+    def mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_(
+        self, i, p, f, s
+    ):
         return 1
 
     def mouseUpOnCharacterIndex_atCoordinate_withModifier_client_(self, i, p, f, s):

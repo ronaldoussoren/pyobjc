@@ -118,7 +118,8 @@ class AsyncPythonInterpreter(NSObject):
             if k.startswith("PYTHON"):
                 del os.environ[k]
         self.childTask = NSTask.launchedTaskWithLaunchPath_arguments_(
-            self.interpreterPath, [self.scriptPath, repr(self.serverSocket.getsockname())]
+            self.interpreterPath,
+            [self.scriptPath, repr(self.serverSocket.getsockname())],
         )
         nc.addObserver_selector_name_object_(
             self, "childTaskTerminated:", NSTaskDidTerminateNotification, self.childTask

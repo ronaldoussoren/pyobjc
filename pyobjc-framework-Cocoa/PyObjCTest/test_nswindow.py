@@ -49,7 +49,9 @@ class TestNSWindowHelper(NSObject):
     def window_shouldDragDocumentWithEvent_from_withPasteboard_(self, w, a, b, c):
         return 1
 
-    def window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_(self, w, a, d):
+    def window_startCustomAnimationToEnterFullScreenOnScreen_withDuration_(
+        self, w, a, d
+    ):
         pass
 
 
@@ -212,7 +214,9 @@ class TestNSWindow(TestCase):
         self.assertEqual(NSScreenSaverWindowLevel, kCGScreenSaverWindowLevel)
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSWindow.nextEventMatchingMask_untilDate_inMode_dequeue_, 3)
+        self.assertArgIsBOOL(
+            NSWindow.nextEventMatchingMask_untilDate_inMode_dequeue_, 3
+        )
         self.assertArgIsBOOL(NSWindow.initWithContentRect_styleMask_backing_defer_, 3)
         self.assertArgIsBOOL(
             NSWindow.initWithContentRect_styleMask_backing_defer_screen_, 3
@@ -367,7 +371,9 @@ class TestNSWindow(TestCase):
             TestNSWindowHelper.window_willPositionSheet_usingRect_, NSRect.__typestr__
         )
         self.assertArgHasType(
-            TestNSWindowHelper.window_willPositionSheet_usingRect_, 2, NSRect.__typestr__
+            TestNSWindowHelper.window_willPositionSheet_usingRect_,
+            2,
+            NSRect.__typestr__,
         )
         self.assertResultIsBOOL(TestNSWindowHelper.window_shouldPopUpDocumentPathMenu_)
         self.assertResultIsBOOL(
@@ -382,7 +388,9 @@ class TestNSWindow(TestCase):
     @min_os_level("10.7")
     def testProtocols10_7(self):
         self.assertArgHasType(
-            TestNSWindowHelper.window_willUseFullScreenContentSize_, 1, NSSize.__typestr__
+            TestNSWindowHelper.window_willUseFullScreenContentSize_,
+            1,
+            NSSize.__typestr__,
         )
         self.assertArgHasType(
             TestNSWindowHelper.window_willUseFullScreenPresentationOptions_,

@@ -14,7 +14,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testMethods(self):
-            self.assertArgIsBlock(CryptoTokenKit.TKSmartCardATR.initWithSource_, 0, b"i@")
+            self.assertArgIsBlock(
+                CryptoTokenKit.TKSmartCardATR.initWithSource_, 0, b"i@"
+            )
 
         @min_os_level("10.10")
         def testConstants(self):

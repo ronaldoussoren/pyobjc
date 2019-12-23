@@ -73,7 +73,9 @@ class TestNotificationCenter(TestCase):
         self.assertEqual(info[4], {b"name2".decode("ascii"): b"value2".decode("ascii")})
         self.assertArgHasType(CFNotificationCenterRemoveObserver, 1, b"@")
         self.assertArgHasType(CFNotificationCenterRemoveObserver, 3, b"@")
-        CFNotificationCenterRemoveObserver(ref, args["object"], args["pyobjc.test"], ref)
+        CFNotificationCenterRemoveObserver(
+            ref, args["object"], args["pyobjc.test"], ref
+        )
 
         self.assertArgHasType(CFNotificationCenterPostNotificationWithOptions, 2, b"@")
         CFNotificationCenterPostNotificationWithOptions(

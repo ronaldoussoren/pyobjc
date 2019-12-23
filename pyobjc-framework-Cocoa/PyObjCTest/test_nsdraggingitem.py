@@ -11,7 +11,9 @@ class TestNSDraggingItem(TestCase):
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertArgIsBlock(AppKit.NSDraggingItem.setImageComponentsProvider_, 0, b"@")
+        self.assertArgIsBlock(
+            AppKit.NSDraggingItem.setImageComponentsProvider_, 0, b"@"
+        )
         self.assertResultIsBlock(AppKit.NSDraggingItem.imageComponentsProvider, b"@")
 
 

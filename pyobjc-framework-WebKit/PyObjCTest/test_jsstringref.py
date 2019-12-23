@@ -20,7 +20,9 @@ class TestJSBase(TestCase):
             JavaScriptCore.JSStringRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSStringCreateWithUTF8CString, 0, b"n^" + objc._C_CHAR_AS_TEXT
+            JavaScriptCore.JSStringCreateWithUTF8CString,
+            0,
+            b"n^" + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgIsNullTerminated(JavaScriptCore.JSStringCreateWithUTF8CString, 0)
 

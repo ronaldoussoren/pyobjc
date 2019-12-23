@@ -52,8 +52,12 @@ if sys.maxsize > 2 ** 32:
             )
             self.assertResultHasType(TestMDLMeshBufferHelper.length, objc._C_NSUInteger)
             self.assertResultHasType(TestMDLMeshBufferHelper.type, objc._C_NSUInteger)
-            self.assertResultHasType(TestMDLMeshBufferHelper.capacity, objc._C_NSUInteger)
-            self.assertArgHasType(TestMDLMeshBufferHelper.newZone_, 0, objc._C_NSUInteger)
+            self.assertResultHasType(
+                TestMDLMeshBufferHelper.capacity, objc._C_NSUInteger
+            )
+            self.assertArgHasType(
+                TestMDLMeshBufferHelper.newZone_, 0, objc._C_NSUInteger
+            )
             self.assertArgHasType(
                 TestMDLMeshBufferHelper.newBuffer_type_, 0, objc._C_NSUInteger
             )

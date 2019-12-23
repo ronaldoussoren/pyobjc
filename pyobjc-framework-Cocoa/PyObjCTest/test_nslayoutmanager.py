@@ -285,7 +285,8 @@ class TestNSLayoutManager(TestCase):
             1,
         )
         self.assertArgIsIn(
-            NSLayoutManager.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_, 0
+            NSLayoutManager.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
+            0,
         )
 
         self.assertArgIsOut(
@@ -486,7 +487,9 @@ class TestNSLayoutManager(TestCase):
         )
 
         self.assertResultIsBOOL(NSLayoutManager.notShownAttributeForGlyphAtIndex_)
-        self.assertResultIsBOOL(NSLayoutManager.drawsOutsideLineFragmentForGlyphAtIndex_)
+        self.assertResultIsBOOL(
+            NSLayoutManager.drawsOutsideLineFragmentForGlyphAtIndex_
+        )
 
     @min_os_level("10.11")
     def testMethods_missing_10_10(self):
@@ -572,9 +575,12 @@ class TestNSLayoutManager(TestCase):
         )
 
         self.assertArgIsBOOL(
-            NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_, 3
+            NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_,
+            3,
         )
-        self.assertResultIsBOOL(NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_)
+        self.assertResultIsBOOL(
+            NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_
+        )
 
     @expectedFailureIf(
         os_release().rsplit(".", 1)[0] in ("10.5", "10.6", "10.7", "10.8", "10.9")

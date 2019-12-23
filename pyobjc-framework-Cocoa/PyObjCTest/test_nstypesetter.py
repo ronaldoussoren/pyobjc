@@ -3,7 +3,9 @@ from AppKit import *
 
 
 class TestNSTypesetterHelper(NSTypesetter):
-    def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(self, a, b, c, d):
+    def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
+        self, a, b, c, d
+    ):
         return 1
 
     def getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_(
@@ -110,7 +112,9 @@ class TestNSTypesetter(TestCase):
             TestNSTypesetterHelper.hyphenCharacterForGlyphAtIndex_, objc._C_INT
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.hyphenCharacterForGlyphAtIndex_, 0, objc._C_NSUInteger
+            TestNSTypesetterHelper.hyphenCharacterForGlyphAtIndex_,
+            0,
+            objc._C_NSUInteger,
         )
 
         self.assertArgIsBOOL(NSTypesetter.setHardInvalidation_forGlyphRange_, 0)
@@ -119,7 +123,9 @@ class TestNSTypesetter(TestCase):
         self.assertResultIsBOOL(NSTypesetter.bidiProcessingEnabled)
         self.assertArgIsBOOL(NSTypesetter.setBidiProcessingEnabled_, 0)
         self.assertArgIsInOut(NSTypesetter.layoutParagraphAtPoint_, 0)
-        self.assertArgIsOut(NSTypesetter.characterRangeForGlyphRange_actualGlyphRange_, 1)
+        self.assertArgIsOut(
+            NSTypesetter.characterRangeForGlyphRange_actualGlyphRange_, 1
+        )
         self.assertArgIsOut(
             NSTypesetter.glyphRangeForCharacterRange_actualCharacterRange_, 1
         )

@@ -14,7 +14,9 @@ class TestAED(TestCase):
         self.assertArgSizeInArg(
             NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1, 2
         )
-        self.assertArgIsIn(NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1)
+        self.assertArgIsIn(
+            NSAppleEventDescriptor.initWithDescriptorType_bytes_length_, 1
+        )
 
         self.assertResultIsBOOL(NSAppleEventDescriptor.booleanValue)
 

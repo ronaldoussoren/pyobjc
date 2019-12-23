@@ -491,7 +491,8 @@ functions = {
     "AddIconToSuite": (b"s^^c^^cL",),
     "AXUIElementCopyParameterizedAttributeValue": (
         sel32or64(
-            b"l^{__AXUIElement=}^{__CFString=}@^@", b"i^{__AXUIElement=}^{__CFString=}@^@"
+            b"l^{__AXUIElement=}^{__CFString=}@^@",
+            b"i^{__AXUIElement=}^{__CFString=}@^@",
         ),
         "",
         {
@@ -1076,7 +1077,8 @@ functions = {
     ),
     "PasteboardSetPasteLocation": (
         sel32or64(
-            b"l^{OpaquePasteboardRef=}^{__CFURL=}", b"i^{OpaquePasteboardRef=}^{__CFURL=}"
+            b"l^{OpaquePasteboardRef=}^{__CFURL=}",
+            b"i^{OpaquePasteboardRef=}^{__CFURL=}",
         ),
     ),
     "HIShapeXor": (
@@ -1137,7 +1139,11 @@ functions = {
             "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
         },
     ),
-    "AXValueCreate": (b"^{__AXValue=}I^v", "", {"retval": {"already_cfretained": True}}),
+    "AXValueCreate": (
+        b"^{__AXValue=}I^v",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
     "HIShapeSetEmpty": (sel32or64(b"l^{__HIShape=}", b"i^{__HIShape=}"),),
     "HIShapeReplacePathInCGContext": (
         sel32or64(b"l^{__HIShape=}^{CGContext=}", b"i^{__HIShape=}^{CGContext=}"),

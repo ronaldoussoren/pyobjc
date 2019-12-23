@@ -14,7 +14,9 @@ class TestSecCertificateOIDs(TestCase):
         self.assertIsInstance(Security.kSecOIDAPPLE_EKU_RESOURCE_SIGNING, unicode)
         self.assertIsInstance(Security.kSecOIDAPPLE_EKU_SYSTEM_IDENTITY, unicode)
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION, unicode)
-        self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_ADC_APPLE_SIGNING, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDAPPLE_EXTENSION_ADC_APPLE_SIGNING, unicode
+        )
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_ADC_DEV_SIGNING, unicode)
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_APPLE_SIGNING, unicode)
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_CODE_SIGNING, unicode)
@@ -93,7 +95,9 @@ class TestSecCertificateOIDs(TestCase):
         self.assertIsInstance(Security.kSecOIDX509V1SerialNumber, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1Signature, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1SignatureAlgorithm, unicode)
-        self.assertIsInstance(Security.kSecOIDX509V1SignatureAlgorithmParameters, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDX509V1SignatureAlgorithmParameters, unicode
+        )
         self.assertIsInstance(Security.kSecOIDX509V1SignatureAlgorithmTBS, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1SignatureCStruct, unicode)
         self.assertIsInstance(Security.kSecOIDX509V1SignatureStruct, unicode)
@@ -112,14 +116,22 @@ class TestSecCertificateOIDs(TestCase):
         self.assertIsInstance(Security.kSecOIDX509V1Version, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3Certificate, unicode, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3CertificateCStruct, unicode)
-        self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionCStruct, unicode)
-        self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionCritical, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDX509V3CertificateExtensionCStruct, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecOIDX509V3CertificateExtensionCritical, unicode
+        )
         self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionId, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionStruct, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionType, unicode)
         self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionValue, unicode)
-        self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionsCStruct, unicode)
-        self.assertIsInstance(Security.kSecOIDX509V3CertificateExtensionsStruct, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDX509V3CertificateExtensionsCStruct, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecOIDX509V3CertificateExtensionsStruct, unicode
+        )
         self.assertIsInstance(
             Security.kSecOIDX509V3CertificateNumberOfExtensions, unicode
         )
@@ -132,8 +144,12 @@ class TestSecCertificateOIDs(TestCase):
         self.assertIsInstance(
             Security.kSecOIDAPPLE_EXTENSION_INTERMEDIATE_MARKER, unicode
         )
-        self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_WWDR_INTERMEDIATE, unicode)
-        self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_ITMS_INTERMEDIATE, unicode)
+        self.assertIsInstance(
+            Security.kSecOIDAPPLE_EXTENSION_WWDR_INTERMEDIATE, unicode
+        )
+        self.assertIsInstance(
+            Security.kSecOIDAPPLE_EXTENSION_ITMS_INTERMEDIATE, unicode
+        )
         self.assertIsInstance(Security.kSecOIDAPPLE_EXTENSION_AAI_INTERMEDIATE, unicode)
         self.assertIsInstance(
             Security.kSecOIDAPPLE_EXTENSION_APPLEID_INTERMEDIATE, unicode

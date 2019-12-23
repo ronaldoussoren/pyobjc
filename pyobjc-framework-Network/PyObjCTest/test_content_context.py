@@ -24,7 +24,9 @@ if sys.maxsize > 2 ** 32:
 
             Network.nw_content_context_set_metadata_for_protocol
 
-            self.assertResultIsRetained(Network.nw_content_context_copy_protocol_metadata)
+            self.assertResultIsRetained(
+                Network.nw_content_context_copy_protocol_metadata
+            )
 
             self.assertArgIsBlock(
                 Network.nw_content_context_foreach_protocol_metadata, 1, b"v@@"

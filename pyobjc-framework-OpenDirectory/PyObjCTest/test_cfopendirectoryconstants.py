@@ -44,7 +44,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeNetworks, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypePeople, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypePresetComputers, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODRecordTypePresetComputerGroups, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODRecordTypePresetComputerGroups, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODRecordTypePresetComputerLists, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypePresetGroups, unicode)
         self.assertIsInstance(CFOpenDirectory.kODRecordTypePresetUsers, unicode)
@@ -69,7 +71,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeAltSecurityIdentities, unicode
         )
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAuthenticationHint, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeAuthenticationHint, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAllTypes, unicode)
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeAuthorityRevocationList, unicode
@@ -83,7 +87,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeComment, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeContactGUID, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeContactPerson, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeCreationTimestamp, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeCreationTimestamp, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeCrossCertificatePair, unicode
         )
@@ -96,7 +102,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeFirstName, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeGUID, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeHardwareUUID, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeHomeDirectoryQuota, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeHomeDirectoryQuota, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeHomeDirectorySoftQuota, unicode
         )
@@ -130,13 +138,17 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypePasswordPolicyOptions, unicode
         )
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypePasswordServerList, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypePasswordServerList, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypePasswordServerLocation, unicode
         )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypePicture, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypePort, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypePresetUserIsAdmin, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypePresetUserIsAdmin, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypePrimaryComputerGUID, unicode
         )
@@ -175,7 +187,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSMBKickoffTime, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSMBLogoffTime, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSMBLogonTime, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSMBPrimaryGroupSID, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeSMBPrimaryGroupSID, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSMBPWDLastSet, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSMBProfilePath, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSMBRID, unicode)
@@ -186,7 +200,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeServiceType, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSetupAdvertising, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSetupAutoRegister, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeSetupAutoRegister, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSetupLocation, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeSetupOccupation, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeTimeToLive, unicode)
@@ -206,7 +222,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeProtocolNumber, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeRPCNumber, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNetworkNumber, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAccessControlEntry, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeAccessControlEntry, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAddressLine1, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAddressLine2, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAddressLine3, unicode)
@@ -236,7 +254,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeHomePhoneNumber, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeHTML, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeHomeDirectory, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeIMHandle, unicode, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeIMHandle, unicode, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeIPAddress, unicode)
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeIPAddressAndENetAddress, unicode
@@ -247,7 +267,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeKDCAuthKey, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeKeywords, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLDAPReadReplicas, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLDAPWriteReplicas, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeLDAPWriteReplicas, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMapCoordinates, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMapURI, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMIME, unicode)
@@ -280,7 +302,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAlias, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAuthCredential, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeCopyTimestamp, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeDateRecordCreated, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeDateRecordCreated, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeKerberosRealm, unicode)
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeNTDomainComputerAccount, unicode
@@ -337,14 +361,18 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNodeRefs, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeRecRefs, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAttrListRefs, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAttrListValueRefs, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeAttrListValueRefs, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationType2WayRandom, unicode)
         self.assertIsInstance(
             CFOpenDirectory.kODAuthenticationType2WayRandomChangePasswd, unicode
         )
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeAPOP, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeCRAM_MD5, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeChangePasswd, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAuthenticationTypeChangePasswd, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeClearText, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeCrypt, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeDIGEST_MD5, unicode)
@@ -492,7 +520,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         )
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsAccountLocked, 5305)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordExpired, 5400)
-        self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordChangeRequired, 5401)
+        self.assertEqual(
+            CFOpenDirectory.kODErrorCredentialsPasswordChangeRequired, 5401
+        )
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordQualityFailed, 5402)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordTooShort, 5403)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsPasswordTooLong, 5404)
@@ -512,7 +542,9 @@ class TestCFOpenDirectoryConstants(TestCase):
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeMetaAmbiguousName, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeMetaAmbiguousName, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODAttributeTypeMetaAugmentedAttributes, unicode
         )
@@ -521,10 +553,14 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeTrustInformation, unicode)
 
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNodeOptions, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeAdvertisedServices, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeAdvertisedServices, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLocaleRelay, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeLocaleSubnets, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeNetworkInterfaces, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeNetworkInterfaces, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeParentLocales, unicode)
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypePrimaryLocale, unicode)
 
@@ -537,22 +573,30 @@ class TestCFOpenDirectoryConstants(TestCase):
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(CFOpenDirectory.kODNodeOptionsQuerySkippedSubnode, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODNodeOptionsQuerySkippedSubnode, unicode
+        )
         self.assertIsInstance(CFOpenDirectory.kODRecordTypeQueryInformation, unicode)
 
     @min_os_level("10.11")
     def testConstants10_9_missing(self):
         # Constants declared in headers, but missing on the system. Radar #19360668
         # Available on OSX 10.11
-        self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionQueryTimeout, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODModuleConfigOptionQueryTimeout, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODModuleConfigOptionConnectionSetupTimeout, unicode
         )
         self.assertIsInstance(
             CFOpenDirectory.kODModuleConfigOptionConnectionIdleDisconnect, unicode
         )
-        self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionPacketSigning, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODModuleConfigOptionPacketSigning, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODModuleConfigOptionPacketSigning, unicode
+        )
+        self.assertIsInstance(
+            CFOpenDirectory.kODModuleConfigOptionPacketSigning, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODModuleConfigOptionPacketEncryption, unicode
         )
@@ -564,7 +608,9 @@ class TestCFOpenDirectoryConstants(TestCase):
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(CFOpenDirectory.kODAttributeTypeProfiles, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODAttributeTypeProfilesTimestamp, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODAttributeTypeProfilesTimestamp, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyTypePasswordCannotBeAccountName, unicode
         )
@@ -581,7 +627,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyTypePasswordMaximumAgeInMinutes, unicode
         )
-        self.assertIsInstance(CFOpenDirectory.kODPolicyTypePasswordRequiresAlpha, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODPolicyTypePasswordRequiresAlpha, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyTypePasswordRequiresMixedCase, unicode
         )
@@ -594,7 +642,9 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyTypePasswordSelfModification, unicode
         )
-        self.assertIsInstance(CFOpenDirectory.kODPolicyTypeAccountExpiresOnDate, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODPolicyTypeAccountExpiresOnDate, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyTypeAccountMaximumFailedLogins, unicode
         )
@@ -627,14 +677,20 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeRecordType, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributePassword, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributePasswordHashes, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODPolicyAttributePasswordHistory, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODPolicyAttributePasswordHistory, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyAttributePasswordHistoryDepth, unicode
         )
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeCurrentDate, unicode)
         self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeCurrentTime, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeCurrentTimeOfDay, unicode)
-        self.assertIsInstance(CFOpenDirectory.kODPolicyAttributeCurrentDayOfWeek, unicode)
+        self.assertIsInstance(
+            CFOpenDirectory.kODPolicyAttributeCurrentTimeOfDay, unicode
+        )
+        self.assertIsInstance(
+            CFOpenDirectory.kODPolicyAttributeCurrentDayOfWeek, unicode
+        )
         self.assertIsInstance(
             CFOpenDirectory.kODPolicyAttributeFailedAuthentications, unicode
         )

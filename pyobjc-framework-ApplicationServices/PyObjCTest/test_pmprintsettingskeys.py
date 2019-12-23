@@ -23,7 +23,9 @@ class TestPMPrintSettingsKeys(TestCase):
         )
 
         self.assertEqual(PrintCore.kPMPageSetStr, b"page-set")
-        self.assertEqual(PrintCore.kPMPageSetKey, PrintCore.kPMPageSetStr.decode("utf-8"))
+        self.assertEqual(
+            PrintCore.kPMPageSetKey, PrintCore.kPMPageSetStr.decode("utf-8")
+        )
 
         self.assertEqual(PrintCore.kPMMirrorStr, b"mirror")
         self.assertEqual(PrintCore.kPMMirrorKey, PrintCore.kPMMirrorStr.decode("utf-8"))
@@ -151,11 +153,13 @@ class TestPMPrintSettingsKeys(TestCase):
             b"com.apple.print.PrintSettings.PMPSErrorHandler",
         )
         self.assertEqual(
-            PrintCore.kPMPSErrorHandlerKey, PrintCore.kPMPSErrorHandlerStr.decode("utf-8")
+            PrintCore.kPMPSErrorHandlerKey,
+            PrintCore.kPMPSErrorHandlerStr.decode("utf-8"),
         )
 
         self.assertEqual(
-            PrintCore.kPMPSTraySwitchStr, b"com.apple.print.PrintSettings.PMPSTraySwitch"
+            PrintCore.kPMPSTraySwitchStr,
+            b"com.apple.print.PrintSettings.PMPSTraySwitch",
         )
         self.assertEqual(
             PrintCore.kPMPSTraySwitchKey, PrintCore.kPMPSTraySwitchStr.decode("utf-8")
@@ -189,7 +193,8 @@ class TestPMPrintSettingsKeys(TestCase):
             b"com.apple.print.PrintSettings.PMUseOptionalPIN",
         )
         self.assertEqual(
-            PrintCore.kPMUseOptionalPINKey, PrintCore.kPMUseOptionalPINStr.decode("utf-8")
+            PrintCore.kPMUseOptionalPINKey,
+            PrintCore.kPMUseOptionalPINStr.decode("utf-8"),
         )
 
         self.assertEqual(
@@ -232,7 +237,8 @@ class TestPMPrintSettingsKeys(TestCase):
 
         self.assertEqual(PrintCore.kPMFaxToneDialingStr, b"faxToneDialing")
         self.assertEqual(
-            PrintCore.kPMFaxToneDialingKey, PrintCore.kPMFaxToneDialingStr.decode("utf-8")
+            PrintCore.kPMFaxToneDialingKey,
+            PrintCore.kPMFaxToneDialingStr.decode("utf-8"),
         )
 
         self.assertEqual(PrintCore.kPMFaxUseSoundStr, b"faxUseSound")
@@ -269,7 +275,8 @@ class TestPMPrintSettingsKeys(TestCase):
 
         self.assertEqual(PrintCore.kPMFaxSheetsLabelStr, b"faxSheetsLabel")
         self.assertEqual(
-            PrintCore.kPMFaxSheetsLabelKey, PrintCore.kPMFaxSheetsLabelStr.decode("utf-8")
+            PrintCore.kPMFaxSheetsLabelKey,
+            PrintCore.kPMFaxSheetsLabelStr.decode("utf-8"),
         )
 
         self.assertEqual(
@@ -301,7 +308,8 @@ class TestPMPrintSettingsKeys(TestCase):
 
         self.assertEqual(PrintCore.kPMInlineWorkflowStr, b"inlineWorkflow")
         self.assertEqual(
-            PrintCore.kPMInlineWorkflowKey, PrintCore.kPMInlineWorkflowStr.decode("utf-8")
+            PrintCore.kPMInlineWorkflowKey,
+            PrintCore.kPMInlineWorkflowStr.decode("utf-8"),
         )
 
         self.assertEqual(
@@ -372,7 +380,8 @@ class TestPMPrintSettingsKeys(TestCase):
             b"com.apple.print.PrintSettings.PMOutputFilename",
         )
         self.assertEqual(
-            PrintCore.kPMOutputFilenameKey, PrintCore.kPMOutputFilenameStr.decode("utf-8")
+            PrintCore.kPMOutputFilenameKey,
+            PrintCore.kPMOutputFilenameStr.decode("utf-8"),
         )
 
 

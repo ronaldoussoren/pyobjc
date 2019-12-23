@@ -11,17 +11,29 @@ class TestDADisk(TestCase):
             DiskArbitration.kDADiskDescriptionVolumeMountableKey, unicode
         )
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionVolumeNameKey, unicode)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionVolumeNetworkKey, unicode)
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionVolumeNetworkKey, unicode
+        )
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionVolumePathKey, unicode)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionVolumeUUIDKey, unicode)
         self.assertIsInstance(
             DiskArbitration.kDADiskDescriptionMediaBlockSizeKey, unicode
         )
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaBSDMajorKey, unicode)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaBSDMinorKey, unicode)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaBSDNameKey, unicode)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaBSDUnitKey, unicode)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaContentKey, unicode)
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionMediaBSDMajorKey, unicode
+        )
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionMediaBSDMinorKey, unicode
+        )
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionMediaBSDNameKey, unicode
+        )
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionMediaBSDUnitKey, unicode
+        )
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionMediaContentKey, unicode
+        )
         self.assertIsInstance(
             DiskArbitration.kDADiskDescriptionMediaEjectableKey, unicode
         )
@@ -37,7 +49,9 @@ class TestDADisk(TestCase):
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaTypeKey, unicode)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaUUIDKey, unicode)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaWholeKey, unicode)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionMediaWritableKey, unicode)
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionMediaWritableKey, unicode
+        )
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionDeviceGUIDKey, unicode)
         self.assertIsInstance(
             DiskArbitration.kDADiskDescriptionDeviceInternalKey, unicode
@@ -51,7 +65,9 @@ class TestDADisk(TestCase):
             DiskArbitration.kDADiskDescriptionDeviceRevisionKey, unicode
         )
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionDeviceUnitKey, unicode)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionDeviceVendorKey, unicode)
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionDeviceVendorKey, unicode
+        )
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionBusNameKey, unicode)
         self.assertIsInstance(DiskArbitration.kDADiskDescriptionBusPathKey, unicode)
 

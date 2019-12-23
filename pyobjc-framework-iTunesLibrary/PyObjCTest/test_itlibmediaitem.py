@@ -50,7 +50,9 @@ class TestITMediaItem(TestCase):
         self.assertEqual(iTunesLibrary.ITLibMediaItemPlayStatusUnplayed, 2)
 
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumTitle, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertySortAlbumTitle, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertySortAlbumTitle, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumArtist, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumRating, unicode)
         self.assertIsInstance(
@@ -59,11 +61,15 @@ class TestITMediaItem(TestCase):
         self.assertIsInstance(
             iTunesLibrary.ITLibMediaItemPropertySortAlbumArtist, unicode
         )
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumIsGapless, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyAlbumIsGapless, unicode
+        )
         self.assertIsInstance(
             iTunesLibrary.ITLibMediaItemPropertyAlbumIsCompilation, unicode
         )
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAlbumDiscCount, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyAlbumDiscCount, unicode
+        )
         self.assertIsInstance(
             iTunesLibrary.ITLibMediaItemPropertyAlbumDiscNumber, unicode
         )
@@ -71,7 +77,9 @@ class TestITMediaItem(TestCase):
             iTunesLibrary.ITLibMediaItemPropertyAlbumTrackCount, unicode
         )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyArtistName, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertySortArtistName, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertySortArtistName, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVideoIsHD, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVideoWidth, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyVideoHeight, unicode)
@@ -86,19 +94,25 @@ class TestITMediaItem(TestCase):
         )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyHasArtwork, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyBitRate, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyBeatsPerMinute, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyBeatsPerMinute, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyCategory, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyComments, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyComposer, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertySortComposer, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyContentRating, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyContentRating, unicode
+        )
         self.assertIsInstance(
             iTunesLibrary.ITLibMediaItemPropertyLyricsContentRating, unicode
         )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyAddedDate, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyModifiedDate, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyDescription, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyIsUserDisabled, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyIsUserDisabled, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyGenre, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyGrouping, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyIsVideo, unicode)
@@ -110,15 +124,21 @@ class TestITMediaItem(TestCase):
         )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyPlayCount, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyLastPlayDate, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyIsDRMProtected, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyIsDRMProtected, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyIsPurchased, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyRating, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyRatingComputed, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyRatingComputed, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyReleaseDate, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertySampleRate, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertySize, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyFileSize, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyUserSkipCount, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyUserSkipCount, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertySkipDate, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyStartTime, unicode)
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyStopTime, unicode)
@@ -139,9 +159,13 @@ class TestITMediaItem(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyPlayStatus, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementCount, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyMovementCount, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementName, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyMovementNumber, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaItemPropertyMovementNumber, unicode
+        )
         self.assertIsInstance(iTunesLibrary.ITLibMediaItemPropertyWork, unicode)
 
     @expectedFailure

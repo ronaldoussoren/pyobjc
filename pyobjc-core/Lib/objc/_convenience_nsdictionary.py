@@ -316,14 +316,18 @@ def nsdict__ne__(self, other):
 def nsdict__lt__(self, other):
     return NotImplemented
 
+
 def nsdict__le__(self, other):
     return NotImplemented
+
 
 def nsdict__ge__(self, other):
     return NotImplemented
 
+
 def nsdict__gt__(self, other):
     return NotImplemented
+
 
 addConvenienceForClass(
     "NSDictionary",

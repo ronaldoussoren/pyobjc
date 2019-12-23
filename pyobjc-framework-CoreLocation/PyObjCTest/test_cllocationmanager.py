@@ -5,7 +5,9 @@ from CoreLocation import *
 class TestCLLocationManager(TestCase):
     @min_os_level("10.6")
     def testMethods(self):
-        self.assertResultIsBOOL(CLLocationManager.alloc().init().locationServicesEnabled)
+        self.assertResultIsBOOL(
+            CLLocationManager.alloc().init().locationServicesEnabled
+        )
 
     @min_os_level("10.7")
     def testConstants10_7(self):

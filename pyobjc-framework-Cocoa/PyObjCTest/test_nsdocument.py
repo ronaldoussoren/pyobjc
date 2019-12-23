@@ -45,7 +45,9 @@ class TestNSDocument(TestCase):
         self.assertResultIsBOOL(
             NSDocument.writeSafelyToURL_ofType_forSaveOperation_error_
         )
-        self.assertArgIsOut(NSDocument.writeSafelyToURL_ofType_forSaveOperation_error_, 3)
+        self.assertArgIsOut(
+            NSDocument.writeSafelyToURL_ofType_forSaveOperation_error_, 3
+        )
         self.assertResultIsBOOL(
             NSDocument.writeToURL_ofType_forSaveOperation_originalContentsURL_error_
         )
@@ -177,7 +179,9 @@ class TestNSDocument(TestCase):
         self.assertResultIsBOOL(NSDocument.revertToSavedFromFile_ofType_)
         self.assertResultIsBOOL(NSDocument.revertToSavedFromURL_ofType_)
         self.assertResultIsBOOL(NSDocument.writeToFile_ofType_)
-        self.assertResultIsBOOL(NSDocument.writeToFile_ofType_originalFile_saveOperation_)
+        self.assertResultIsBOOL(
+            NSDocument.writeToFile_ofType_originalFile_saveOperation_
+        )
         self.assertResultIsBOOL(NSDocument.writeToURL_ofType_)
         self.assertResultIsBOOL(NSDocument.writeWithBackupToFile_ofType_saveOperation_)
         self.assertArgIsSEL(
@@ -207,7 +211,9 @@ class TestNSDocument(TestCase):
         self.assertArgIsBlock(
             NSDocument.continueAsynchronousWorkOnMainThreadUsingBlock_, 0, b"v"
         )
-        self.assertArgIsBlock(NSDocument.performSynchronousFileAccessUsingBlock_, 0, b"v")
+        self.assertArgIsBlock(
+            NSDocument.performSynchronousFileAccessUsingBlock_, 0, b"v"
+        )
 
         self.assertArgIsBlock(
             NSDocument.performAsynchronousFileAccessUsingBlock_, 0, b"v@?"

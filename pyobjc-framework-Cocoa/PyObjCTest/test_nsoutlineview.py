@@ -174,7 +174,8 @@ class TestNSOutlineView(TestCase):
         )
         self.assertResultIsBOOL(TestNSOutlineViewHelper.outlineView_isItemExpandable_)
         self.assertResultHasType(
-            TestNSOutlineViewHelper.outlineView_numberOfChildrenOfItem_, objc._C_NSInteger
+            TestNSOutlineViewHelper.outlineView_numberOfChildrenOfItem_,
+            objc._C_NSInteger,
         )
         self.assertResultIsBOOL(
             TestNSOutlineViewHelper.outlineView_writeItems_toPasteboard_

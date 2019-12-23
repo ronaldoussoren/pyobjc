@@ -64,7 +64,9 @@ class TestCFProxySupport(TestCase):
         cwd = os.getcwd()
         if path.startswith(cwd):
             path = path[len(cwd) + 1 :]
-        scriptURL = CFURLCreateWithFileSystemPath(None, path, kCFURLPOSIXPathStyle, False)
+        scriptURL = CFURLCreateWithFileSystemPath(
+            None, path, kCFURLPOSIXPathStyle, False
+        )
 
         rls = CFNetworkExecuteProxyAutoConfigurationURL(scriptURL, url, callback, ctx)
         self.assertIsInstance(rls, CFRunLoopSourceRef)

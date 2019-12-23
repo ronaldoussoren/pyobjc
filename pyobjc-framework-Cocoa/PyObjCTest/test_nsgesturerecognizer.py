@@ -6,7 +6,9 @@ class TestNSGestureRecognizerHelper(NSObject):
     def gestureRecognizerShouldBegin_(self, g):
         return 1
 
-    def gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_(self, g, a):
+    def gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_(
+        self, g, a
+    ):
         return 1
 
     def gestureRecognizer_shouldRequireFailureOfGestureRecognizer_(self, g, a):
@@ -49,7 +51,9 @@ class TestNSGestureRecognizer(TestCase):
         self.assertResultIsBOOL(NSGestureRecognizer.delaysRotationEvents)
 
         self.assertArgIsBOOL(NSGestureRecognizer.setDelaysPrimaryMouseButtonEvents_, 0)
-        self.assertArgIsBOOL(NSGestureRecognizer.setDelaysSecondaryMouseButtonEvents_, 0)
+        self.assertArgIsBOOL(
+            NSGestureRecognizer.setDelaysSecondaryMouseButtonEvents_, 0
+        )
         self.assertArgIsBOOL(NSGestureRecognizer.setDelaysOtherMouseButtonEvents_, 0)
         self.assertArgIsBOOL(NSGestureRecognizer.setDelaysKeyEvents_, 0)
         self.assertArgIsBOOL(NSGestureRecognizer.setDelaysMagnificationEvents_, 0)

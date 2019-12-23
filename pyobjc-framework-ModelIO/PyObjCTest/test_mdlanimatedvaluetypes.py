@@ -61,7 +61,9 @@ if sys.maxsize > 2 ** 32:
                 ModelIO.MDLAnimatedScalarArray.getDoubleArray_maxCount_atTime_, 0
             )
 
-            self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_, 0)
+            self.assertArgIsOut(
+                ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_, 0
+            )
             self.assertArgSizeInArg(
                 ModelIO.MDLAnimatedScalarArray.getFloatArray_maxCount_, 0, 1
             )
@@ -88,7 +90,8 @@ if sys.maxsize > 2 ** 32:
             # self.assertArgIsOut(ModelIO.MDLAnimatedScalarArray.copyDoubleArrayInto_maxCount_atTime_, 0)
 
             self.assertArgIsIn(
-                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_, 0
+                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_,
+                0,
             )
             self.assertArgSizeInArg(
                 ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_,
@@ -96,10 +99,12 @@ if sys.maxsize > 2 ** 32:
                 1,
             )
             self.assertArgIsIn(
-                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_, 0
+                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_,
+                0,
             )
             self.assertArgIsIn(
-                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_, 2
+                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_,
+                2,
             )
             self.assertArgSizeInArg(
                 ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_,
@@ -107,7 +112,8 @@ if sys.maxsize > 2 ** 32:
                 3,
             )
             self.assertArgIsIn(
-                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_, 2
+                ModelIO.MDLAnimatedScalarArray.resetWithFloatArray_count_atTimes_count_,
+                2,
             )
 
             self.assertArgIsIn(
@@ -373,7 +379,9 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgSizeInArg(
-                ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_, 0, 1
+                ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_,
+                0,
+                1,
             )
             self.assertArgSizeInResult(
                 ModelIO.MDLAnimatedQuaternionArray.getFloatQuaternionArray_maxCount_, 0
@@ -537,10 +545,14 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgSizeInArg(
-                ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 0, 2
+                ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_,
+                0,
+                2,
             )
             self.assertArgSizeInArg(
-                ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 1, 2
+                ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_,
+                1,
+                2,
             )
             self.assertArgIsIn(
                 ModelIO.MDLAnimatedVector4x4.resetWithDouble4x4Array_atTimes_count_, 0

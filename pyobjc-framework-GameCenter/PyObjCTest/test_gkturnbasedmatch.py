@@ -86,16 +86,22 @@ if sys.maxsize > 2 ** 32:
                 b"v@@",
             )
             self.assertArgIsBlock(
-                GameCenter.GKTurnBasedMatch.acceptInviteWithCompletionHandler_, 0, b"v@@"
+                GameCenter.GKTurnBasedMatch.acceptInviteWithCompletionHandler_,
+                0,
+                b"v@@",
             )
             self.assertArgIsBlock(
-                GameCenter.GKTurnBasedMatch.declineInviteWithCompletionHandler_, 0, b"v@"
+                GameCenter.GKTurnBasedMatch.declineInviteWithCompletionHandler_,
+                0,
+                b"v@",
             )
             self.assertArgIsBlock(
                 GameCenter.GKTurnBasedMatch.removeWithCompletionHandler_, 0, b"v@"
             )
             self.assertArgIsBlock(
-                GameCenter.GKTurnBasedMatch.loadMatchDataWithCompletionHandler_, 0, b"v@@"
+                GameCenter.GKTurnBasedMatch.loadMatchDataWithCompletionHandler_,
+                0,
+                b"v@@",
             )
             self.assertArgIsBlock(
                 GameCenter.GKTurnBasedMatch.participantQuitOutOfTurnWithOutcome_withCompletionHandler_,

@@ -48,7 +48,9 @@ class TestCMTextMarkup(TestCase):
             CoreMedia.kCMTextMarkupAttribute_BaseFontSizePercentageRelativeToVideoHeight,
             unicode,
         )
-        self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_RelativeFontSize, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMTextMarkupAttribute_RelativeFontSize, unicode
+        )
         self.assertIsInstance(CoreMedia.kCMTextMarkupAttribute_VerticalLayout, unicode)
         self.assertIsInstance(CoreMedia.kCMTextVerticalLayout_LeftToRight, unicode)
         self.assertIsInstance(CoreMedia.kCMTextVerticalLayout_RightToLeft, unicode)
@@ -77,7 +79,9 @@ class TestCMTextMarkup(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMTextMarkupCharacterEdgeStyle_Depressed, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMTextMarkupCharacterEdgeStyle_Uniform, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMTextMarkupCharacterEdgeStyle_Uniform, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMTextMarkupCharacterEdgeStyle_DropShadow, unicode
         )

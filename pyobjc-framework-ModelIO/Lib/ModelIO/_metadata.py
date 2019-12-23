@@ -758,7 +758,11 @@ try:
         b"initWithURL:vertexDescriptor:bufferAllocator:preserveTopology:error:",
         {"arguments": {5: {"type": "Z"}, 6: {"type_modifier": b"o"}}},
     )
-    r(b"MDLCamera", b"frameBoundingBox:setNearAndFar:", {"arguments": {3: {"type": "Z"}}})
+    r(
+        b"MDLCamera",
+        b"frameBoundingBox:setNearAndFar:",
+        {"arguments": {3: {"type": "Z"}}},
+    )
     r(
         b"MDLMaterialPropertyNode",
         b"evaluationFunction",
@@ -1085,7 +1089,11 @@ try:
         {"arguments": {2: {"c_array_of_variable_length": True}}},
     )
     r(b"MDLVoxelArray", b"isValidSignedShellField", {"retval": {"type": "Z"}})
-    r(b"MDLVoxelArray", b"setIsValidSignedShellField:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"MDLVoxelArray",
+        b"setIsValidSignedShellField:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(
         b"MDLVoxelArray",
         b"voxelExistsAtIndex:allowAnyX:allowAnyY:allowAnyZ:allowAnyShell:",
@@ -1117,7 +1125,11 @@ try:
         b"fillData:offset:",
         {"arguments": {3: {"type": sel32or64(b"I", b"Q")}}},
     )
-    r(b"NSObject", b"globalTransformWithObject:atTime", {"arguments": {3: {"type": "d"}}})
+    r(
+        b"NSObject",
+        b"globalTransformWithObject:atTime",
+        {"arguments": {3: {"type": "d"}}},
+    )
     r(b"NSObject", b"length", {"retval": {"type": sel32or64(b"I", b"Q")}})
     r(b"NSObject", b"localTransformAtTime:", {"arguments": {2: {"type": "d"}}})
     r(b"NSObject", b"maximumTime", {"retval": {"type": "d"}})

@@ -758,7 +758,8 @@ class TestBridgeSupportParser(TestCase):
             },
             (b"MyClass3", b"method14", False): {
                 "arguments": {
-                    2 + 1: {"sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d"}
+                    2
+                    + 1: {"sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d"}
                 }
             },
             (b"MyClass3", b"method15", False): {
@@ -1057,7 +1058,9 @@ class TestBridgeSupportParser(TestCase):
                     "arguments": {
                         0: {
                             "type": b":",
-                            "sel_of_type": b"v@:f" if sys.maxsize < 2 ** 32 else b"v@:d",
+                            "sel_of_type": b"v@:f"
+                            if sys.maxsize < 2 ** 32
+                            else b"v@:d",
                         }
                     }
                 },
@@ -1816,7 +1819,9 @@ class TestParseBridgeSupport(TestCase):
                 metadata_registry,
                 {
                     (b"class1", b"sel1:"): {
-                        "arguments": {2: {"null_accepted": False, "type_modifier": b"o"}}
+                        "arguments": {
+                            2: {"null_accepted": False, "type_modifier": b"o"}
+                        }
                     }
                 },
             )
@@ -1903,7 +1908,10 @@ class TestParseBridgeSupport(TestCase):
             </signatures>
             """
             objc.parseBridgeSupport(
-                xml, module_globals, "TestFramework2", dylib_path="/usr/lib/libxml2.dylib"
+                xml,
+                module_globals,
+                "TestFramework2",
+                dylib_path="/usr/lib/libxml2.dylib",
             )
 
             self.assertEqual(_meta_updates, [True, False])
@@ -1919,7 +1927,9 @@ class TestParseBridgeSupport(TestCase):
             )
             self.assertEqual(len(orig_libraries) + 1, len(bridgesupport._libraries))
             self.assertIsInstance(bridgesupport._libraries[-1], ctypes.CDLL)
-            self.assertEqual(bridgesupport._libraries[-1]._name, "/usr/lib/libxml2.dylib")
+            self.assertEqual(
+                bridgesupport._libraries[-1]._name, "/usr/lib/libxml2.dylib"
+            )
 
 
 class TestInitFrameworkWrapper(TestCase):
@@ -2109,7 +2119,10 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             objc.initFrameworkWrapper(
-                "TestFramework", "/Library/Framework/Test.framework", "com.apple.Test", g
+                "TestFramework",
+                "/Library/Framework/Test.framework",
+                "com.apple.Test",
+                g,
             )
             basic_verify(g)
             self.assertEqual(len(g), 2)
@@ -2476,7 +2489,9 @@ class TestInitFrameworkWrapper(TestCase):
                 ("Test", "bridgesupport"): os.path.join(
                     helper_dir, "bundle_data", "Test.bridgesupport"
                 ),
-                ("Test", "dylib"): os.path.join(helper_dir, "bundle_data", "Test.dylib"),
+                ("Test", "dylib"): os.path.join(
+                    helper_dir, "bundle_data", "Test.dylib"
+                ),
             }
             TEST_BRIDGESUPPORT_DIRECTORIES[:] = [os.path.join(helper_dir, "with_data")]
 

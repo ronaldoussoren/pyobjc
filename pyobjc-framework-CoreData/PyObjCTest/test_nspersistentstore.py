@@ -5,7 +5,9 @@ from CoreData import *
 class TestNSPersistentStore(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
-        self.assertArgIsOut(NSPersistentStore.metadataForPersistentStoreWithURL_error_, 1)
+        self.assertArgIsOut(
+            NSPersistentStore.metadataForPersistentStoreWithURL_error_, 1
+        )
         self.assertResultIsBOOL(
             NSPersistentStore.setMetadata_forPersistentStoreWithURL_error_
         )

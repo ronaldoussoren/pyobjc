@@ -24,7 +24,9 @@ def COMPUTE_BEST_BYTES_PER_ROW(bpr):
 _rasterDataForContext = {}
 
 
-def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparentBitmap):
+def createRGBBitmapContext(
+    width, height, wantDisplayColorSpace, needsTransparentBitmap
+):
     # This routine allocates data for a pixel array that contains width*height
     # pixels where each pixel is 4 bytes. The format is 8-bit ARGB or XRGB, depending on
     # whether needsTransparentBitmap is true. In order to get the recommended
@@ -76,7 +78,9 @@ def createRGBBitmapContext(width, height, wantDisplayColorSpace, needsTransparen
         # Since the drawing destination is opaque, first paint
         # the context bits to white.
         Quartz.CGContextSaveGState(context)
-        Quartz.CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueWhiteColor())
+        Quartz.CGContextSetFillColorWithColor(
+            context, Utilities.getRGBOpaqueWhiteColor()
+        )
         Quartz.CGContextFillRect(context, Quartz.CGRectMake(0, 0, width, height))
         Quartz.CGContextRestoreGState(context)
 
@@ -192,7 +196,9 @@ def exportCGImageToFileWithDestination(image, url, outputFormat, dpi):
     # Create an image destination at the supplied URL that
     # corresponds to the output image format. The destination will
     # only contain 1 image.
-    imageDestination = Quartz.CGImageDestinationCreateWithURL(url, outputFormat, 1, None)
+    imageDestination = Quartz.CGImageDestinationCreateWithURL(
+        url, outputFormat, 1, None
+    )
 
     if imageDestination is None:
         print("Couldn't create image destination!")
@@ -225,7 +231,9 @@ def MakeImageDocument(url, imageType, exportInfo):
     # Create an RGB Bitmap context using the generic calibrated RGB color space
     # instead of the display color space.
     useDisplayColorSpace = False
-    c = createRGBBitmapContext(width, height, useDisplayColorSpace, needTransparentBitmap)
+    c = createRGBBitmapContext(
+        width, height, useDisplayColorSpace, needTransparentBitmap
+    )
 
     if c is None:
         print("Couldn't make destination bitmap context")
@@ -465,7 +473,9 @@ def doAlphaOnlyContext(context):
         return
 
     # Set the fill color space.
-    Quartz.CGContextSetFillColorSpace(context, Utilities.getTheCalibratedRGBColorSpace())
+    Quartz.CGContextSetFillColorSpace(
+        context, Utilities.getTheCalibratedRGBColorSpace()
+    )
     opaqueBlue = (0.11, 0.208, 0.451, 1.0)
     # Set the painting color to opaque blue.
     Quartz.CGContextSetFillColor(context, opaqueBlue)

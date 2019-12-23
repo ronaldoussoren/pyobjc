@@ -137,7 +137,8 @@ class TestISyncSessionDriver(TestCase):
             objc._C_OUT + objc._C_PTR + objc._C_NSBOOL,
         )
         self.assertArgIsOut(
-            TestISyncSessionDriverHelper.changedRecordsForEntityName_moreComing_error_, 2
+            TestISyncSessionDriverHelper.changedRecordsForEntityName_moreComing_error_,
+            2,
         )
         self.assertArgHasType(
             TestISyncSessionDriverHelper.changesForEntityName_moreComing_error_,
@@ -163,7 +164,8 @@ class TestISyncSessionDriver(TestCase):
             TestISyncSessionDriverHelper.sessionDriver_didRegisterClientAndReturnError_
         )
         self.assertArgIsOut(
-            TestISyncSessionDriverHelper.sessionDriver_didRegisterClientAndReturnError_, 1
+            TestISyncSessionDriverHelper.sessionDriver_didRegisterClientAndReturnError_,
+            1,
         )
         self.assertResultIsBOOL(
             TestISyncSessionDriverHelper.sessionDriver_willPushAndReturnError_
@@ -193,7 +195,8 @@ class TestISyncSessionDriver(TestCase):
             TestISyncSessionDriverHelper.sessionDriver_willFinishSessionAndReturnError_
         )
         self.assertArgIsOut(
-            TestISyncSessionDriverHelper.sessionDriver_willFinishSessionAndReturnError_, 1
+            TestISyncSessionDriverHelper.sessionDriver_willFinishSessionAndReturnError_,
+            1,
         )
 
         self.assertResultIsBOOL(

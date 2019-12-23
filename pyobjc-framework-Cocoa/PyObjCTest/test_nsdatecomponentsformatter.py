@@ -43,9 +43,13 @@ class TestNSDateComponentsFormatter(TestCase):
         self.assertResultIsBOOL(NSDateComponentsFormatter.collapsesLargestUnit)
         self.assertArgIsBOOL(NSDateComponentsFormatter.setCollapsesLargestUnit_, 0)
         self.assertResultIsBOOL(NSDateComponentsFormatter.includesApproximationPhrase)
-        self.assertArgIsBOOL(NSDateComponentsFormatter.setIncludesApproximationPhrase_, 0)
+        self.assertArgIsBOOL(
+            NSDateComponentsFormatter.setIncludesApproximationPhrase_, 0
+        )
         self.assertResultIsBOOL(NSDateComponentsFormatter.includesTimeRemainingPhrase)
-        self.assertArgIsBOOL(NSDateComponentsFormatter.setIncludesTimeRemainingPhrase_, 0)
+        self.assertArgIsBOOL(
+            NSDateComponentsFormatter.setIncludesTimeRemainingPhrase_, 0
+        )
 
         self.assertResultIsBOOL(
             NSDateComponentsFormatter.getObjectValue_forString_errorDescription_

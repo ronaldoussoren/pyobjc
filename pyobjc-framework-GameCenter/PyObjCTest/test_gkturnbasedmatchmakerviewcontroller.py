@@ -17,7 +17,8 @@ if sys.maxsize > 2 ** 32:
                 GameCenter.GKTurnBasedMatchmakerViewController.showExistingMatches
             )
             self.assertArgIsBOOL(
-                GameCenter.GKTurnBasedMatchmakerViewController.setShowExistingMatches_, 0
+                GameCenter.GKTurnBasedMatchmakerViewController.setShowExistingMatches_,
+                0,
             )
 
         @min_os_level("10.8")

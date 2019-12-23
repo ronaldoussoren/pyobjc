@@ -15,7 +15,9 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                GameCenter.GKLocalPlayer.fetchSavedGamesWithCompletionHandler_, 0, b"v@@"
+                GameCenter.GKLocalPlayer.fetchSavedGamesWithCompletionHandler_,
+                0,
+                b"v@@",
             )
             self.assertArgIsBlock(
                 GameCenter.GKLocalPlayer.saveGameData_withName_completionHandler_,

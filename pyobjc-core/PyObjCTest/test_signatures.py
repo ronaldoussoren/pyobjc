@@ -7,7 +7,9 @@ import objc
 
 class PyOCTestTypeStr(TestCase):
     def testSelectorSignatures(self):
-        self.assertRaises(ValueError, objc.selector, lambda x, y: 1, signature=b"FOOBAR")
+        self.assertRaises(
+            ValueError, objc.selector, lambda x, y: 1, signature=b"FOOBAR"
+        )
 
     def testAll(self):
         self.assertEqual(objc._C_BOOL, b"B")

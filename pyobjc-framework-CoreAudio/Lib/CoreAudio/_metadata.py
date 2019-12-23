@@ -240,7 +240,11 @@ functions = {
             }
         },
     ),
-    "AudioGetHostClockMinimumTimeDelta": (sel32or64(b"L", b"I"), "", {"variadic": True}),
+    "AudioGetHostClockMinimumTimeDelta": (
+        sel32or64(b"L", b"I"),
+        "",
+        {"variadic": True},
+    ),
     "AudioHardwareGetProperty": (
         sel32or64(b"lL^L^v", b"iI^I^v"),
         "",
@@ -701,7 +705,8 @@ functions = {
     ),
     "AudioObjectHasProperty": (
         sel32or64(
-            b"ZL^{AudioObjectPropertyAddress=LLL}", b"ZI^{AudioObjectPropertyAddress=III}"
+            b"ZL^{AudioObjectPropertyAddress=LLL}",
+            b"ZI^{AudioObjectPropertyAddress=III}",
         ),
         "",
         {"arguments": {1: {"type_modifier": "n"}}},

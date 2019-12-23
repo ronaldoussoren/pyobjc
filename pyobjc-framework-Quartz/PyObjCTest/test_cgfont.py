@@ -102,7 +102,9 @@ class TestCGFont(TestCase):
         # PyObjC doesn't wrap ATSUI, therefore we cannot actually call
         # the function.
         # self.fail('CGFontCreateWithPlatformFont')
-        self.assertArgHasType(CGFontCreateWithPlatformFont, 0, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            CGFontCreateWithPlatformFont, 0, objc._C_PTR + objc._C_VOID
+        )
         self.assertResultIsCFRetained(CGFontCreateWithPlatformFont)
 
         # data = open('/Library/Fonts/Webdings.ttf', 'rb').read()
@@ -111,7 +113,9 @@ class TestCGFont(TestCase):
         with open("/System/Library/Fonts/Symbol.ttf", "rb") as fp:
             data = fp.read()
         self.assertResultIsCFRetained(CGFontCreateWithDataProvider)
-        font = CGFontCreateWithDataProvider(CGDataProviderCreateWithCFData(buffer(data)))
+        font = CGFontCreateWithDataProvider(
+            CGDataProviderCreateWithCFData(buffer(data))
+        )
         self.assertIsInstance(font, CGFontRef)
 
         tags = CGFontCopyTableTags(font)

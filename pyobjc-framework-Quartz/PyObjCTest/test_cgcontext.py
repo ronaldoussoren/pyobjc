@@ -111,7 +111,9 @@ class TestCGContext(TestCase):
             self.assertIsInstance(font, CGFontRef)
             CGContextSetFont(context, font)
 
-            CGContextBeginTransparencyLayerWithRect(context, ((10, 10), (500, 100)), None)
+            CGContextBeginTransparencyLayerWithRect(
+                context, ((10, 10), (500, 100)), None
+            )
             CGContextEndTransparencyLayer(context)
 
             color = CGColorCreateGenericRGB(1.0, 0.5, 0.5, 1.0)
@@ -297,7 +299,9 @@ class TestCGContext(TestCase):
             CGContextFillEllipseInRect(context, ((10, 10), (50, 30)))
             CGContextStrokeEllipseInRect(context, ((10, 10), (50, 30)))
 
-            CGContextStrokeLineSegments(context, [(0, 0), (10, 15), (15, 10), (0, 0)], 4)
+            CGContextStrokeLineSegments(
+                context, [(0, 0), (10, 15), (15, 10), (0, 0)], 4
+            )
             self.assertRaises(
                 ValueError,
                 CGContextStrokeLineSegments,
@@ -316,7 +320,9 @@ class TestCGContext(TestCase):
             self.assertIsInstance(box, CGRect)
 
             CGContextClipToRect(context, ((0, 0), (40, 50)))
-            CGContextClipToRects(context, [((0, 0), (40, 50)), ((60, 50), (90, 100))], 2)
+            CGContextClipToRects(
+                context, [((0, 0), (40, 50)), ((60, 50), (90, 100))], 2
+            )
             self.assertRaises(
                 ValueError,
                 CGContextClipToRects,
@@ -415,7 +421,9 @@ class TestCGContext(TestCase):
             sz = CGContextConvertSizeToUserSpace(context, (10.5, 11.9))
             self.assertIsInstance(sz, CGSize)
 
-            box = CGContextConvertRectToDeviceSpace(context, ((10.5, 11.9), (55.6, 39.3)))
+            box = CGContextConvertRectToDeviceSpace(
+                context, ((10.5, 11.9), (55.6, 39.3))
+            )
             self.assertIsInstance(box, CGRect)
             box = CGContextConvertRectToUserSpace(context, ((10.5, 11.9), (55.6, 39.3)))
             self.assertIsInstance(box, CGRect)

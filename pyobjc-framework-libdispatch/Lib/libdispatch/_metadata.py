@@ -221,7 +221,11 @@ functions = {
     ),
     "dispatch_get_context": (b"^v@",),
     "dispatch_set_target_queue": (b"v@@",),
-    "dispatch_data_copy_region": (b"@@Lo^L", "", {"retval": {"already_retained": True}}),
+    "dispatch_data_copy_region": (
+        b"@@Lo^L",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "dispatch_notify": (
         b"v@?@@?",
         "",

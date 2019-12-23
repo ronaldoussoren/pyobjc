@@ -14,7 +14,9 @@ class TestNSSplitViewController(TestCase):
         self.assertResultIsBOOL(
             NSSplitViewController.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_
         )
-        self.assertResultIsBOOL(NSSplitViewController.splitView_shouldHideDividerAtIndex_)
+        self.assertResultIsBOOL(
+            NSSplitViewController.splitView_shouldHideDividerAtIndex_
+        )
 
     @min_os_level("10.11")
     def testMethods10_11(self):

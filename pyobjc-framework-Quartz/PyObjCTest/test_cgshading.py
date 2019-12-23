@@ -18,7 +18,9 @@ class TestCGShading(TestCase):
         self.assertIsInstance(CGFunctionGetTypeID(), (int, long))
 
         myInfo = object()
-        func = CGFunctionCreate(myInfo, 1, [0, 1], 4, [0, 1, 0, 1, 0, 1, 0, 1], evaluate)
+        func = CGFunctionCreate(
+            myInfo, 1, [0, 1], 4, [0, 1, 0, 1, 0, 1, 0, 1], evaluate
+        )
         self.assertIsInstance(func, CGFunctionRef)
 
         self.assertResultIsCFRetained(CGShadingCreateAxial)

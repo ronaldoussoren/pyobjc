@@ -34,7 +34,9 @@ class TestGKVoiceChat(TestCase):
         self.assertResultIsBOOL(GameKit.GKVoiceChat.isVoIPAllowed)
 
         self.assertArgIsBlock(
-            GameKit.GKVoiceChat.setPlayerStateUpdateHandler_, 0, b"v@" + objc._C_NSInteger
+            GameKit.GKVoiceChat.setPlayerStateUpdateHandler_,
+            0,
+            b"v@" + objc._C_NSInteger,
         )
         self.assertResultIsBlock(
             GameKit.GKVoiceChat.playerStateUpdateHandler, b"v@" + objc._C_NSInteger

@@ -2,10 +2,13 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLRenderPipelineHelper (Metal.NSObject):
-    def supportIndirectCommandBuffers(self): return 1
 
-class TestMTLRenderPipeline (TestCase):
+class TestMTLRenderPipelineHelper(Metal.NSObject):
+    def supportIndirectCommandBuffers(self):
+        return 1
+
+
+class TestMTLRenderPipeline(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLBlendFactorZero, 0)
         self.assertEqual(Metal.MTLBlendFactorOne, 1)
@@ -38,7 +41,7 @@ class TestMTLRenderPipeline (TestCase):
         self.assertEqual(Metal.MTLColorWriteMaskGreen, 0x1 << 2)
         self.assertEqual(Metal.MTLColorWriteMaskBlue, 0x1 << 1)
         self.assertEqual(Metal.MTLColorWriteMaskAlpha, 0x1 << 0)
-        self.assertEqual(Metal.MTLColorWriteMaskAll, 0xf)
+        self.assertEqual(Metal.MTLColorWriteMaskAll, 0xF)
 
         self.assertEqual(Metal.MTLPrimitiveTopologyClassUnspecified, 0)
         self.assertEqual(Metal.MTLPrimitiveTopologyClassPoint, 1)
@@ -53,7 +56,9 @@ class TestMTLRenderPipeline (TestCase):
         self.assertEqual(Metal.MTLTessellationFactorStepFunctionConstant, 0)
         self.assertEqual(Metal.MTLTessellationFactorStepFunctionPerPatch, 1)
         self.assertEqual(Metal.MTLTessellationFactorStepFunctionPerInstance, 2)
-        self.assertEqual(Metal.MTLTessellationFactorStepFunctionPerPatchAndPerInstance, 3)
+        self.assertEqual(
+            Metal.MTLTessellationFactorStepFunctionPerPatchAndPerInstance, 3
+        )
 
         self.assertEqual(Metal.MTLTessellationFactorFormatHalf, 0)
 
@@ -61,27 +66,67 @@ class TestMTLRenderPipeline (TestCase):
         self.assertEqual(Metal.MTLTessellationControlPointIndexTypeUInt16, 1)
         self.assertEqual(Metal.MTLTessellationControlPointIndexTypeUInt32, 2)
 
-    @min_sdk_level('10.11')
+    @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed('MTLRenderPipelineState')
+        objc.protocolNamed("MTLRenderPipelineState")
 
     def test_methods(self):
-        self.assertResultIsBOOL(TestMTLRenderPipelineHelper.supportIndirectCommandBuffers)
+        self.assertResultIsBOOL(
+            TestMTLRenderPipelineHelper.supportIndirectCommandBuffers
+        )
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLRenderPipelineColorAttachmentDescriptor.alloc().init().isBlendingEnabled)
-        self.assertArgIsBOOL(Metal.MTLRenderPipelineColorAttachmentDescriptor.alloc().init().setBlendingEnabled_, 0)
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineColorAttachmentDescriptor.alloc()
+            .init()
+            .isBlendingEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineColorAttachmentDescriptor.alloc()
+            .init()
+            .setBlendingEnabled_,
+            0,
+        )
 
-        self.assertResultIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().isAlphaToCoverageEnabled)
-        self.assertArgIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().setAlphaToCoverageEnabled_, 0)
-        self.assertResultIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().isAlphaToOneEnabled)
-        self.assertArgIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().setAlphaToOneEnabled_, 0)
-        self.assertResultIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().isRasterizationEnabled)
-        self.assertArgIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().setRasterizationEnabled_, 0)
-        self.assertResultIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().isTessellationFactorScaleEnabled)
-        self.assertArgIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().setTessellationFactorScaleEnabled_, 0)
-        self.assertResultIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().supportIndirectCommandBuffers)
-        self.assertArgIsBOOL(Metal.MTLRenderPipelineDescriptor.alloc().init().setSupportIndirectCommandBuffers_, 0)
-
-
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc().init().isAlphaToCoverageEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc().init().setAlphaToCoverageEnabled_,
+            0,
+        )
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc().init().isAlphaToOneEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc().init().setAlphaToOneEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc().init().isRasterizationEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc().init().setRasterizationEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .isTessellationFactorScaleEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .setTessellationFactorScaleEnabled_,
+            0,
+        )
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .supportIndirectCommandBuffers
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .setSupportIndirectCommandBuffers_,
+            0,
+        )

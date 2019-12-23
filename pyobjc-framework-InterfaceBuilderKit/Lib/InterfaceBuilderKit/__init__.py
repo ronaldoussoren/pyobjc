@@ -13,7 +13,9 @@ from InterfaceBuilderKit import _metadata
 sys.modules["InterfaceBuilderKit"] = mod = objc.ObjCLazyModule(
     "InterfaceBuilderKit",
     "com.apple.InterfaceBuilderKit",
-    objc.pathForFramework("/Developer//Library/Frameworks/InterfaceBuilderKit.framework"),
+    objc.pathForFramework(
+        "/Developer//Library/Frameworks/InterfaceBuilderKit.framework"
+    ),
     _metadata.__dict__,
     None,
     {

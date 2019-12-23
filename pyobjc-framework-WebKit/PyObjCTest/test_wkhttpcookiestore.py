@@ -14,7 +14,9 @@ class TestWKError(TestCase):
     def test_methods(self):
         self.assertArgIsBlock(WKHTTPCookieStore.getAllCookies_, 0, b"v@")
         self.assertArgIsBlock(WKHTTPCookieStore.setCookie_completionHandler_, 1, b"v")
-        self.assertArgIsBlock(WKHTTPCookieStore.deleteCookie_completionHandler_, 1, b"v")
+        self.assertArgIsBlock(
+            WKHTTPCookieStore.deleteCookie_completionHandler_, 1, b"v"
+        )
 
 
 if __name__ == "__main__":

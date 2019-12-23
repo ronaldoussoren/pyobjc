@@ -139,7 +139,9 @@ class TestCGEventTypes(TestCase):
         self.assertEqual(kCGEventTapOptionDefault, 0x00000000)
         self.assertEqual(kCGEventTapOptionListenOnly, 0x00000001)
 
-        self.assertEqual(kCGNotifyEventTapAdded, b"com.apple.coregraphics.eventTapAdded")
+        self.assertEqual(
+            kCGNotifyEventTapAdded, b"com.apple.coregraphics.eventTapAdded"
+        )
         self.assertEqual(
             kCGNotifyEventTapRemoved, b"com.apple.coregraphics.eventTapRemoved"
         )

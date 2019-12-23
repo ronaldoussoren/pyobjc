@@ -14,7 +14,9 @@ class TestQTSampleBuffer(TestCase):
         self.assertEqual(QTSampleBufferAudioBufferListOptionAssure16ByteAlignment, 1)
 
     def testMethods(self):
-        self.assertResultIsBOOL(QTSampleBuffer.getAudioStreamPacketDescriptions_inRange_)
+        self.assertResultIsBOOL(
+            QTSampleBuffer.getAudioStreamPacketDescriptions_inRange_
+        )
 
 
 if __name__ == "__main__":

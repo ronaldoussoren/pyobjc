@@ -33,10 +33,14 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(CoreAudio.kAudioObjectPropertyScopeGlobal, fourcc(b"glob"))
         self.assertEqual(CoreAudio.kAudioObjectPropertyScopeInput, fourcc(b"inpt"))
         self.assertEqual(CoreAudio.kAudioObjectPropertyScopeOutput, fourcc(b"outp"))
-        self.assertEqual(CoreAudio.kAudioObjectPropertyScopePlayThrough, fourcc(b"ptru"))
+        self.assertEqual(
+            CoreAudio.kAudioObjectPropertyScopePlayThrough, fourcc(b"ptru")
+        )
         self.assertEqual(CoreAudio.kAudioObjectPropertyElementMaster, 0)
 
-        self.assertEqual(CoreAudio.kAudioObjectPropertySelectorWildcard, fourcc(b"****"))
+        self.assertEqual(
+            CoreAudio.kAudioObjectPropertySelectorWildcard, fourcc(b"****")
+        )
 
         self.assertEqual(CoreAudio.kAudioObjectPropertyScopeWildcard, fourcc(b"****"))
 
@@ -56,7 +60,9 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioObjectPropertyElementCategoryName, fourcc(b"lccn")
         )
-        self.assertEqual(CoreAudio.kAudioObjectPropertyElementNumberName, fourcc(b"lcnn"))
+        self.assertEqual(
+            CoreAudio.kAudioObjectPropertyElementNumberName, fourcc(b"lcnn")
+        )
         self.assertEqual(CoreAudio.kAudioObjectPropertyOwnedObjects, fourcc(b"ownd"))
         self.assertEqual(CoreAudio.kAudioObjectPropertyIdentify, fourcc(b"iden"))
         self.assertEqual(CoreAudio.kAudioObjectPropertySerialNumber, fourcc(b"snum"))
@@ -70,7 +76,9 @@ class TestAudioHardwareBase(TestCase):
             CoreAudio.kAudioPlugInPropertyTranslateUIDToDevice, fourcc(b"uidd")
         )
         self.assertEqual(CoreAudio.kAudioPlugInPropertyBoxList, fourcc(b"box#"))
-        self.assertEqual(CoreAudio.kAudioPlugInPropertyTranslateUIDToBox, fourcc(b"uidb"))
+        self.assertEqual(
+            CoreAudio.kAudioPlugInPropertyTranslateUIDToBox, fourcc(b"uidb")
+        )
         self.assertEqual(CoreAudio.kAudioPlugInPropertyClockDeviceList, fourcc(b"clk#"))
         self.assertEqual(
             CoreAudio.kAudioPlugInPropertyTranslateUIDToClockDevice, fourcc(b"uidc")
@@ -110,12 +118,18 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(CoreAudio.kAudioDeviceTransportTypeUSB, fourcc(b"usb "))
         self.assertEqual(CoreAudio.kAudioDeviceTransportTypeFireWire, fourcc(b"1394"))
         self.assertEqual(CoreAudio.kAudioDeviceTransportTypeBluetooth, fourcc(b"blue"))
-        self.assertEqual(CoreAudio.kAudioDeviceTransportTypeBluetoothLE, fourcc(b"blea"))
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeBluetoothLE, fourcc(b"blea")
+        )
         self.assertEqual(CoreAudio.kAudioDeviceTransportTypeHDMI, fourcc(b"hdmi"))
-        self.assertEqual(CoreAudio.kAudioDeviceTransportTypeDisplayPort, fourcc(b"dprt"))
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeDisplayPort, fourcc(b"dprt")
+        )
         self.assertEqual(CoreAudio.kAudioDeviceTransportTypeAirPlay, fourcc(b"airp"))
         self.assertEqual(CoreAudio.kAudioDeviceTransportTypeAVB, fourcc(b"eavb"))
-        self.assertEqual(CoreAudio.kAudioDeviceTransportTypeThunderbolt, fourcc(b"thun"))
+        self.assertEqual(
+            CoreAudio.kAudioDeviceTransportTypeThunderbolt, fourcc(b"thun")
+        )
 
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyConfigurationApplication, fourcc(b"capp")
@@ -131,13 +145,16 @@ class TestAudioHardwareBase(TestCase):
             CoreAudio.kAudioDevicePropertyDeviceCanBeDefaultDevice, fourcc(b"dflt")
         )
         self.assertEqual(
-            CoreAudio.kAudioDevicePropertyDeviceCanBeDefaultSystemDevice, fourcc(b"sflt")
+            CoreAudio.kAudioDevicePropertyDeviceCanBeDefaultSystemDevice,
+            fourcc(b"sflt"),
         )
         self.assertEqual(CoreAudio.kAudioDevicePropertyLatency, fourcc(b"ltnc"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyStreams, fourcc(b"stm#"))
         self.assertEqual(CoreAudio.kAudioObjectPropertyControlList, fourcc(b"ctrl"))
         self.assertEqual(CoreAudio.kAudioDevicePropertySafetyOffset, fourcc(b"saft"))
-        self.assertEqual(CoreAudio.kAudioDevicePropertyNominalSampleRate, fourcc(b"nsrt"))
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyNominalSampleRate, fourcc(b"nsrt")
+        )
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyAvailableNominalSampleRates, fourcc(b"nsr#")
         )
@@ -156,7 +173,9 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioClockDevicePropertyTransportType, fourcc(b"tran")
         )
-        self.assertEqual(CoreAudio.kAudioClockDevicePropertyClockDomain, fourcc(b"clkd"))
+        self.assertEqual(
+            CoreAudio.kAudioClockDevicePropertyClockDomain, fourcc(b"clkd")
+        )
         self.assertEqual(
             CoreAudio.kAudioClockDevicePropertyDeviceIsAlive, fourcc(b"livn")
         )
@@ -164,7 +183,9 @@ class TestAudioHardwareBase(TestCase):
             CoreAudio.kAudioClockDevicePropertyDeviceIsRunning, fourcc(b"goin")
         )
         self.assertEqual(CoreAudio.kAudioClockDevicePropertyLatency, fourcc(b"ltnc"))
-        self.assertEqual(CoreAudio.kAudioClockDevicePropertyControlList, fourcc(b"ctrl"))
+        self.assertEqual(
+            CoreAudio.kAudioClockDevicePropertyControlList, fourcc(b"ctrl")
+        )
         self.assertEqual(
             CoreAudio.kAudioClockDevicePropertyNominalSampleRate, fourcc(b"nsrt")
         )
@@ -187,7 +208,9 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioEndPointDevicePropertyEndPointList, fourcc(b"agrp")
         )
-        self.assertEqual(CoreAudio.kAudioEndPointDevicePropertyIsPrivate, fourcc(b"priv"))
+        self.assertEqual(
+            CoreAudio.kAudioEndPointDevicePropertyIsPrivate, fourcc(b"priv")
+        )
 
         self.assertEqual(CoreAudio.kAudioEndPointClassID, fourcc(b"endp"))
 
@@ -250,7 +273,9 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(CoreAudio.kAudioVolumeControlClassID, fourcc(b"vlme"))
         self.assertEqual(CoreAudio.kAudioLFEVolumeControlClassID, fourcc(b"subv"))
 
-        self.assertEqual(CoreAudio.kAudioLevelControlPropertyScalarValue, fourcc(b"lcsv"))
+        self.assertEqual(
+            CoreAudio.kAudioLevelControlPropertyScalarValue, fourcc(b"lcsv")
+        )
         self.assertEqual(
             CoreAudio.kAudioLevelControlPropertyDecibelValue, fourcc(b"lcdv")
         )
@@ -290,8 +315,12 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioSelectorControlPropertyAvailableItems, fourcc(b"scai")
         )
-        self.assertEqual(CoreAudio.kAudioSelectorControlPropertyItemName, fourcc(b"scin"))
-        self.assertEqual(CoreAudio.kAudioSelectorControlPropertyItemKind, fourcc(b"clkk"))
+        self.assertEqual(
+            CoreAudio.kAudioSelectorControlPropertyItemName, fourcc(b"scin")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioSelectorControlPropertyItemKind, fourcc(b"clkk")
+        )
 
         self.assertEqual(CoreAudio.kAudioSelectorControlItemKindSpacer, fourcc(b"spcr"))
 

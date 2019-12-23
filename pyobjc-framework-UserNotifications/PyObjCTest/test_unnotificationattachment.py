@@ -18,7 +18,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                UserNotifications.UNNotificationAttachmentOptionsThumbnailTimeKey, unicode
+                UserNotifications.UNNotificationAttachmentOptionsThumbnailTimeKey,
+                unicode,
             )
 
         def test_methods(self):

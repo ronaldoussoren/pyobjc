@@ -7,7 +7,9 @@ if sys.maxsize >= 2 ** 32:
     class TestGKNoiseSource(TestCase):
         def testMethods(self):
             self.assertResultIsBOOL(GameplayKit.GKVoronoiNoiseSource.isDistanceEnabled)
-            self.assertArgIsBOOL(GameplayKit.GKVoronoiNoiseSource.setDistanceEnabled_, 0)
+            self.assertArgIsBOOL(
+                GameplayKit.GKVoronoiNoiseSource.setDistanceEnabled_, 0
+            )
 
 
 if __name__ == "__main__":

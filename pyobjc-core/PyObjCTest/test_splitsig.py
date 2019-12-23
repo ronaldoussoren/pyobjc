@@ -70,7 +70,9 @@ class SplitSignatureTest(TestCase):
             objc.splitSignature(
                 b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}'
             ),
-            (b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}',),
+            (
+                b'{_NSRect="origin"{_NSPoint="x"f"y"f}"size"{_NSSize="width"f"height"f}}',
+            ),
         )
 
     def testSignatureCount(self):

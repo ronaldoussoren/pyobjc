@@ -33,7 +33,8 @@ class TestNSSimpleHorizontalTypesetter(TestCase):
             3,
         )
         self.assertArgIsInOut(
-            NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_, 1
+            NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_,
+            1,
         )
         self.assertArgIsBOOL(
             NSSimpleHorizontalTypesetter.growGlyphCaches_fillGlyphInfo_, 1

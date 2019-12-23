@@ -23,7 +23,9 @@ class TestSubclassing(TestCase):
         self.assertEqual(subclassInstance.someRandomMethod(), 42)
 
         self.assertIs(subclassInstance, subclassInstance, "Identity check failed.")
-        self.assertIs(subclassInstance, subclassInstance.self(), "Identity check failed.")
+        self.assertIs(
+            subclassInstance, subclassInstance.self(), "Identity check failed."
+        )
 
 
 if __name__ == "__main__":

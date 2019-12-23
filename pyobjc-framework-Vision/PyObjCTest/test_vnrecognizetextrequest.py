@@ -18,7 +18,9 @@ if sys.maxsize >= 2 ** 32:
                 2,
             )
 
-            self.assertResultIsBOOL(Vision.VNRecognizeTextRequest.usesLanguageCorrection)
+            self.assertResultIsBOOL(
+                Vision.VNRecognizeTextRequest.usesLanguageCorrection
+            )
             self.assertArgIsBOOL(
                 Vision.VNRecognizeTextRequest.setUsesLanguageCorrection_, 0
             )

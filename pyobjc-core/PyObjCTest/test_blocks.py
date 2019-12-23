@@ -271,8 +271,12 @@ class TestBlocks(TestCase):
         def callback(a, b):
             return a * b
 
-        self.assertEqual(obj.callDoubleBlock_withValue_andValue_(callback, 2.0, 3.5), 7.0)
-        self.assertEqual(obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10), 25.0)
+        self.assertEqual(
+            obj.callDoubleBlock_withValue_andValue_(callback, 2.0, 3.5), 7.0
+        )
+        self.assertEqual(
+            obj.callDoubleBlock_withValue_andValue_(callback, 2.5, 10), 25.0
+        )
 
     @min_os_level("10.6")
     @onlyIf(blocksEnabled, "no blocks")
@@ -327,7 +331,9 @@ class TestBlocks(TestCase):
 
         block = obj.getFloatBlock()
         sig = objc.splitSignature(objc._block_signature(block))
-        self.assertEqual(sig, (objc._C_DBL, objc._C_ID + b"?", objc._C_DBL, objc._C_DBL))
+        self.assertEqual(
+            sig, (objc._C_DBL, objc._C_ID + b"?", objc._C_DBL, objc._C_DBL)
+        )
 
         block = obj.getStructBlock()
         sig = objc.splitSignature(objc._block_signature(block))

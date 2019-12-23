@@ -96,7 +96,9 @@ functions = {
     ),
     "VTIsHardwareDecodeSupported": (sel32or64(b"ZL", b"ZI"),),
     "VTCompressionSessionPrepareToEncodeFrames": (
-        sel32or64(b"l^{OpaqueVTCompressionSession=}", b"i^{OpaqueVTCompressionSession=}"),
+        sel32or64(
+            b"l^{OpaqueVTCompressionSession=}", b"i^{OpaqueVTCompressionSession=}"
+        ),
     ),
     "VTCompressionSessionInvalidate": (b"v^{OpaqueVTCompressionSession=}",),
     "VTCompressionSessionCompleteFrames": (
@@ -131,7 +133,8 @@ functions = {
     ),
     "VTSessionCopyProperty": (
         sel32or64(
-            b"l@^{__CFString=}^{__CFAllocator=}^@", b"i@^{__CFString=}^{__CFAllocator=}^@"
+            b"l@^{__CFString=}^{__CFAllocator=}^@",
+            b"i@^{__CFString=}^{__CFAllocator=}^@",
         ),
         "",
         {
@@ -289,7 +292,8 @@ functions = {
     ),
     "VTCompressionSessionEndPass": (
         sel32or64(
-            b"l^{OpaqueVTCompressionSession=}^Z^I", b"i^{OpaqueVTCompressionSession=}^Z^I"
+            b"l^{OpaqueVTCompressionSession=}^Z^I",
+            b"i^{OpaqueVTCompressionSession=}^Z^I",
         ),
         "",
         {"arguments": {1: {"type_modifier": "o"}}},

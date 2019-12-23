@@ -6,7 +6,9 @@ class TestCAEmitterLayer(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultHasType(CAEmitterLayer.emitterPosition, CGPoint.__typestr__)
-        self.assertArgHasType(CAEmitterLayer.setEmitterPosition_, 0, CGPoint.__typestr__)
+        self.assertArgHasType(
+            CAEmitterLayer.setEmitterPosition_, 0, CGPoint.__typestr__
+        )
         self.assertResultHasType(CAEmitterLayer.emitterSize, CGSize.__typestr__)
         self.assertArgHasType(CAEmitterLayer.setEmitterSize_, 0, CGSize.__typestr__)
 

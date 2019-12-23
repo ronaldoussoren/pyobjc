@@ -31,7 +31,6 @@ class TestAVMetadataObject(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeITF14Code, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDataMatrixCode, unicode)
 
-
     @min_os_level("10.15")
     @expectedFailure
     def testConstants10_15_missing(self):
@@ -42,7 +41,10 @@ class TestAVMetadataObject(TestCase):
         with self.subTest("dogbody"):
             self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogBody, unicode)
         with self.subTest("salientobject"):
-            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeSalientObject, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataObjectTypeSalientObject, unicode
+            )
+
 
 if __name__ == "__main__":
     main()

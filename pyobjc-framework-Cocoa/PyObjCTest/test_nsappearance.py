@@ -22,7 +22,9 @@ class TestNSAppearance(TestCase):
         self.assertIsInstance(NSAppearanceNameDarkAqua, unicode)
 
         self.assertIsInstance(NSAppearanceNameAccessibilityHighContrastAqua, unicode)
-        self.assertIsInstance(NSAppearanceNameAccessibilityHighContrastDarkAqua, unicode)
+        self.assertIsInstance(
+            NSAppearanceNameAccessibilityHighContrastDarkAqua, unicode
+        )
         self.assertIsInstance(
             NSAppearanceNameAccessibilityHighContrastVibrantLight, unicode
         )

@@ -69,7 +69,9 @@ class TestCMBlockBuffer(TestCase):
             CoreMedia.CMBlockBufferCreateWithMemoryBlock, objc.function
         )
         self.assertIsNotInstance(CoreMedia.CMBlockBufferCreateContiguous, objc.function)
-        self.assertIsNotInstance(CoreMedia.CMBlockBufferAppendMemoryBlock, objc.function)
+        self.assertIsNotInstance(
+            CoreMedia.CMBlockBufferAppendMemoryBlock, objc.function
+        )
 
         # XXX: Need manual wrapper to expose this function
         self.assertIsNotInstance(CoreMedia.CMBlockBufferAccessDataBytes, objc.function)

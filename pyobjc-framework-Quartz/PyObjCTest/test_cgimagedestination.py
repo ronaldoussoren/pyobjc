@@ -73,7 +73,9 @@ class TestCGImageDestination(TestCase):
 
         self.assertTrue(os.path.exists(image_path))
 
-        url = CFURLCreateWithFileSystemPath(None, image_path, kCFURLPOSIXPathStyle, False)
+        url = CFURLCreateWithFileSystemPath(
+            None, image_path, kCFURLPOSIXPathStyle, False
+        )
 
         isrc = CGImageSourceCreateWithURL(url, None)
         CGImageDestinationAddImageFromSource(dest, isrc, 0, None)

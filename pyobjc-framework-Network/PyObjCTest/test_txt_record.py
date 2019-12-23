@@ -48,7 +48,9 @@ if sys.maxsize > 2 ** 32:
                 Network.nw_txt_record_access_bytes, 1, nw_txt_record_access_bytes_t
             )
 
-            self.assertArgIsBlock(Network.nw_txt_record_apply, 1, nw_txt_record_applier_t)
+            self.assertArgIsBlock(
+                Network.nw_txt_record_apply, 1, nw_txt_record_applier_t
+            )
 
             Network.nw_txt_record_is_equal
             Network.nw_txt_record_is_dictionary

@@ -29,7 +29,9 @@ if sys.maxsize > 2 ** 32:
             )
             self.assertEqual(GameCenter.GKVoiceChatServiceInvalidCallIDError, 32004)
             self.assertEqual(GameCenter.GKVoiceChatServiceAudioUnavailableError, 32005)
-            self.assertEqual(GameCenter.GKVoiceChatServiceUninitializedClientError, 32006)
+            self.assertEqual(
+                GameCenter.GKVoiceChatServiceUninitializedClientError, 32006
+            )
             self.assertEqual(
                 GameCenter.GKVoiceChatServiceClientMissingRequiredMethodsError, 32007
             )
@@ -40,7 +42,8 @@ if sys.maxsize > 2 ** 32:
                 GameCenter.GKVoiceChatServiceRemoteParticipantCancelledError, 32009
             )
             self.assertEqual(
-                GameCenter.GKVoiceChatServiceRemoteParticipantResponseInvalidError, 32010
+                GameCenter.GKVoiceChatServiceRemoteParticipantResponseInvalidError,
+                32010,
             )
             self.assertEqual(
                 GameCenter.GKVoiceChatServiceRemoteParticipantDeclinedInviteError, 32011

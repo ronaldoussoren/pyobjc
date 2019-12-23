@@ -103,9 +103,15 @@ def accessor(func, typeSignature=b"@"):
     and key-value observing.
     """
     if getfullargspec is not None:
-        args, varargs, varkw, defaults, kwonlyargs, kwonlydefaults, annotations = getfullargspec(
-            func
-        )
+        (
+            args,
+            varargs,
+            varkw,
+            defaults,
+            kwonlyargs,
+            kwonlydefaults,
+            annotations,
+        ) = getfullargspec(func)
     else:
         args, varargs, varkw, defaults = getargspec(func)
         kwonlyargs = kwonlydefaults = annotations = None

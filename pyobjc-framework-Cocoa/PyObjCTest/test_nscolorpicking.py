@@ -19,7 +19,9 @@ class TestNSColorPicking(TestCase):
         self.assertArgIsBOOL(TestNSColorPickingHelper.provideNewView_, 0)
 
         self.assertArgHasType(
-            TestNSColorPickingHelper.initWithPickerMask_colorPanel_, 0, objc._C_NSUInteger
+            TestNSColorPickingHelper.initWithPickerMask_colorPanel_,
+            0,
+            objc._C_NSUInteger,
         )
 
     def testProtocols(self):

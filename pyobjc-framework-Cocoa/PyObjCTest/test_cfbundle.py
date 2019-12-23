@@ -135,12 +135,16 @@ class TestCFBundle(TestCase):
         self.assertIsInstance(bundle2, CFBundleRef)
         url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", None)
         self.assertIsInstance(url, CFURLRef)
-        url = CFBundleCopyResourceURL(bundle, "Formatter", "strings", "helloworld.lproj")
+        url = CFBundleCopyResourceURL(
+            bundle, "Formatter", "strings", "helloworld.lproj"
+        )
         self.assertIs(url, None)
         array = CFBundleCopyResourceURLsOfType(bundle, "strings", None)
         self.assertIsNot(array, None)
         self.assertIsInstance(array, CFArrayRef)
-        val = CFBundleCopyLocalizedString(bundle, "Err640.f", "value", "FoundationErrors")
+        val = CFBundleCopyLocalizedString(
+            bundle, "Err640.f", "value", "FoundationErrors"
+        )
         self.assertIsInstance(val, unicode)
         self.assertNotEqual(val, "value")
         CFCopyLocalizedString("python", "error")

@@ -15,7 +15,9 @@ class TestCMMetadata(TestCase):
         self.assertEqual(CoreMedia.kCMMetadataIdentifierError_BadNumberKey, -16305)
         self.assertEqual(CoreMedia.kCMMetadataIdentifierError_BadKeySpace, -16306)
         self.assertEqual(CoreMedia.kCMMetadataIdentifierError_BadIdentifier, -16307)
-        self.assertEqual(CoreMedia.kCMMetadataIdentifierError_NoKeyValueAvailable, -16308)
+        self.assertEqual(
+            CoreMedia.kCMMetadataIdentifierError_NoKeyValueAvailable, -16308
+        )
 
         self.assertEqual(
             CoreMedia.kCMMetadataDataTypeRegistryError_AllocationFailed, -16310
@@ -30,10 +32,12 @@ class TestCMMetadata(TestCase):
             CoreMedia.kCMMetadataDataTypeRegistryError_DataTypeAlreadyRegistered, -16313
         )
         self.assertEqual(
-            CoreMedia.kCMMetadataDataTypeRegistryError_RequiresConformingBaseType, -16314
+            CoreMedia.kCMMetadataDataTypeRegistryError_RequiresConformingBaseType,
+            -16314,
         )
         self.assertEqual(
-            CoreMedia.kCMMetadataDataTypeRegistryError_MultipleConformingBaseTypes, -16315
+            CoreMedia.kCMMetadataDataTypeRegistryError_MultipleConformingBaseTypes,
+            -16315,
         )
 
     @min_os_level("10.10")
@@ -126,14 +130,18 @@ class TestCMMetadata(TestCase):
         self.assertArgIsCFRetained(CoreMedia.CMMetadataCreateKeyFromIdentifier, 2)
 
         self.assertArgIsOut(CoreMedia.CMMetadataCreateKeyFromIdentifierAsCFData, 2)
-        self.assertArgIsCFRetained(CoreMedia.CMMetadataCreateKeyFromIdentifierAsCFData, 2)
+        self.assertArgIsCFRetained(
+            CoreMedia.CMMetadataCreateKeyFromIdentifierAsCFData, 2
+        )
 
         self.assertArgIsOut(CoreMedia.CMMetadataCreateKeySpaceFromIdentifier, 2)
         self.assertArgIsCFRetained(CoreMedia.CMMetadataCreateKeySpaceFromIdentifier, 2)
 
         CoreMedia.CMMetadataDataTypeRegistryRegisterDataType
 
-        self.assertResultIsBOOL(CoreMedia.CMMetadataDataTypeRegistryDataTypeIsRegistered)
+        self.assertResultIsBOOL(
+            CoreMedia.CMMetadataDataTypeRegistryDataTypeIsRegistered
+        )
 
         CoreMedia.CMMetadataDataTypeRegistryGetDataTypeDescription
         CoreMedia.CMMetadataDataTypeRegistryGetConformingDataTypes

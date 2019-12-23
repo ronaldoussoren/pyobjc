@@ -6,7 +6,9 @@ if sys.maxsize > 2 ** 32:
 
     class TestINIntentErrors(TestCase):
         def testConstants(self):
-            self.assertEqual(Intents.INIntentErrorInteractionOperationNotSupported, 1900)
+            self.assertEqual(
+                Intents.INIntentErrorInteractionOperationNotSupported, 1900
+            )
             self.assertEqual(Intents.INIntentErrorDonatingInteraction, 1901)
             self.assertEqual(Intents.INIntentErrorDeletingAllInteractions, 1902)
             self.assertEqual(
@@ -25,7 +27,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Intents.INIntentErrorInvalidIntentName, 2004)
             self.assertEqual(Intents.INIntentErrorRequestTimedOut, 3001)
             self.assertEqual(Intents.INIntentErrorMissingInformation, 3002)
-            self.assertEqual(Intents.INIntentErrorInvalidUserVocabularyFileLocation, 4000)
+            self.assertEqual(
+                Intents.INIntentErrorInvalidUserVocabularyFileLocation, 4000
+            )
 
             self.assertEqual(Intents.INIntentErrorExtensionLaunchingTimeout, 5000)
             self.assertEqual(Intents.INIntentErrorExtensionBringUpFailed, 5001)

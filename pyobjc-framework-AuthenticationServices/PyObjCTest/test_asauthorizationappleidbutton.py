@@ -5,7 +5,9 @@ import AuthenticationServices
 
 class TestASAuthorizationAppleIDButton(TestCase):
     def test_constants(self):
-        self.assertEqual(AuthenticationServices.ASAuthorizationAppleIDButtonTypeSignIn, 0)
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationAppleIDButtonTypeSignIn, 0
+        )
         self.assertEqual(
             AuthenticationServices.ASAuthorizationAppleIDButtonTypeContinue, 1
         )
@@ -17,8 +19,12 @@ class TestASAuthorizationAppleIDButton(TestCase):
             AuthenticationServices.ASAuthorizationAppleIDButtonTypeSignIn,
         )
 
-        self.assertEqual(AuthenticationServices.ASAuthorizationAppleIDButtonStyleWhite, 0)
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationAppleIDButtonStyleWhite, 0
+        )
         self.assertEqual(
             AuthenticationServices.ASAuthorizationAppleIDButtonStyleWhiteOutline, 1
         )
-        self.assertEqual(AuthenticationServices.ASAuthorizationAppleIDButtonStyleBlack, 2)
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationAppleIDButtonStyleBlack, 2
+        )

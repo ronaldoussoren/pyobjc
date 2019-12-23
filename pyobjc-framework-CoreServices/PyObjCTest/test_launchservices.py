@@ -30,7 +30,9 @@ class TestLaunchServices(TestCase):
         self.assertTrue(isinstance(CoreServices.kUTTypeApplication, unicode))
 
         self.assertTrue(hasattr(CoreServices, "kUTExportedTypeDeclarationsKey"))
-        self.assertTrue(isinstance(CoreServices.kUTExportedTypeDeclarationsKey, unicode))
+        self.assertTrue(
+            isinstance(CoreServices.kUTExportedTypeDeclarationsKey, unicode)
+        )
 
     def testFunctions(self):
         self.assertTrue(hasattr(CoreServices, "UTTypeEqual"))
@@ -45,7 +47,9 @@ class TestLaunchServices(TestCase):
         )
 
         self.assertTrue(hasattr(CoreServices, "_LSCopyAllApplicationURLs"))
-        self.assertTrue(isinstance(CoreServices._LSCopyAllApplicationURLs, objc.function))
+        self.assertTrue(
+            isinstance(CoreServices._LSCopyAllApplicationURLs, objc.function)
+        )
 
         fn = CoreServices.LSGetExtensionInfo
         self.assertEqual(fn(10, b"hello.text".decode("latin1"), None), (0, 6))

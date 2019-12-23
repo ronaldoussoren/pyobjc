@@ -310,7 +310,9 @@ class TestNSTableView(TestCase):
         )
         self.assertResultIsBOOL(TestNSTableViewHelper.selectionShouldChangeInTableView_)
         self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldSelectRow_)
-        self.assertResultIsBOOL(TestNSTableViewHelper.tableView_shouldSelectTableColumn_)
+        self.assertResultIsBOOL(
+            TestNSTableViewHelper.tableView_shouldSelectTableColumn_
+        )
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_,
             2,
@@ -386,7 +388,9 @@ class TestNSTableView(TestCase):
             TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, objc._C_CGFloat
         )
         self.assertArgHasType(
-            TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_, 1, objc._C_NSInteger
+            TestNSTableViewHelper.tableView_sizeToFitWidthOfColumn_,
+            1,
+            objc._C_NSInteger,
         )
 
         self.assertResultIsBOOL(
@@ -406,10 +410,14 @@ class TestNSTableView(TestCase):
     @min_os_level("10.7")
     def testProtocols10_7(self):
         self.assertArgHasType(
-            TestNSTableViewHelper.tableView_pasteboardWriterForRow_, 1, objc._C_NSInteger
+            TestNSTableViewHelper.tableView_pasteboardWriterForRow_,
+            1,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSTableViewHelper.tableView_viewForTableColumn_row_, 2, objc._C_NSInteger
+            TestNSTableViewHelper.tableView_viewForTableColumn_row_,
+            2,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_rowViewForRow_, 1, objc._C_NSInteger
@@ -418,7 +426,9 @@ class TestNSTableView(TestCase):
             TestNSTableViewHelper.tableView_didAddRowView_forRow_, 2, objc._C_NSInteger
         )
         self.assertArgHasType(
-            TestNSTableViewHelper.tableView_didRemoveRowView_forRow_, 2, objc._C_NSInteger
+            TestNSTableViewHelper.tableView_didRemoveRowView_forRow_,
+            2,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_draggingSession_willBeginAtPoint_forRowIndexes_,

@@ -125,7 +125,10 @@ def serializePropertyList(aPropertyList, format="xml"):
         formatOption = FORMATS[format]
     except KeyError:
         raise ValueError("Invalid format: %s" % (format,))
-    data, err = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+    (
+        data,
+        err,
+    ) = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
         aPropertyList, formatOption, None
     )
     if err is not None:
@@ -146,7 +149,11 @@ def deserializePropertyList(propertyListData):
         propertyListData = buffer(propertyListData)
     elif isinstance(propertyListData, unicode):
         propertyListData = buffer(propertyListData.encode("utf-8"))
-    plist, fmt, err = Foundation.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
+    (
+        plist,
+        fmt,
+        err,
+    ) = Foundation.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
         propertyListData, Foundation.NSPropertyListMutableContainers, None, None
     )
     if err is not None:

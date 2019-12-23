@@ -23,15 +23,23 @@ class TestAudioServerPlugIn(TestCase):
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationThread"))
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationCycle"))
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationReadInput"))
-        self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationConvertInput"))
-        self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationProcessInput"))
-        self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationProcessOutput"))
+        self.assertFalse(
+            hasattr(CoreAudio, "kAudioServerPlugInIOOperationConvertInput")
+        )
+        self.assertFalse(
+            hasattr(CoreAudio, "kAudioServerPlugInIOOperationProcessInput")
+        )
+        self.assertFalse(
+            hasattr(CoreAudio, "kAudioServerPlugInIOOperationProcessOutput")
+        )
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationMixOutput"))
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationProcessMix"))
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationConvertMix"))
         self.assertFalse(hasattr(CoreAudio, "kAudioServerPlugInIOOperationWriteMix"))
 
-        self.assertFalse(hasattr(CoreAudio, "kAudioObjectPropertyCustomPropertyInfoList"))
+        self.assertFalse(
+            hasattr(CoreAudio, "kAudioObjectPropertyCustomPropertyInfoList")
+        )
 
         self.assertFalse(hasattr(CoreAudio, "kAudioPlugInPropertyResourceBundle"))
 

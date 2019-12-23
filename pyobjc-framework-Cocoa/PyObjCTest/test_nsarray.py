@@ -369,7 +369,13 @@ class TestNSMutableArrayInteraction(TestCase):
 
             self.assertEqual(
                 a,
-                (0, b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"), 3),
+                (
+                    0,
+                    b"a".decode("ascii"),
+                    b"b".decode("ascii"),
+                    b"c".decode("ascii"),
+                    3,
+                ),
             )
 
     def testSortInvalid(self):
@@ -558,7 +564,9 @@ class TestNSArray(TestCase):
         self.assertArgSizeInArg(NSArray.initWithObjects_count_, 0, 1)
 
         self.assertArgIsIn(NSMutableArray.removeObjectsFromIndices_numIndices_, 0)
-        self.assertArgSizeInArg(NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1)
+        self.assertArgSizeInArg(
+            NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1
+        )
 
         self.assertArgIsFunction(
             NSArray.sortedArrayUsingFunction_context_, 0, b"l@@@", False
@@ -631,7 +639,9 @@ class TestNSArray(TestCase):
         )
 
         self.assertArgIsBlock(NSArray.sortedArrayUsingComparator_, 0, b"l@@")
-        self.assertArgIsBlock(NSArray.sortedArrayWithOptions_usingComparator_, 1, b"l@@")
+        self.assertArgIsBlock(
+            NSArray.sortedArrayWithOptions_usingComparator_, 1, b"l@@"
+        )
         self.assertArgIsBlock(
             NSArray.indexOfObject_inSortedRange_options_usingComparator_, 3, b"l@@"
         )
@@ -645,7 +655,9 @@ class TestNSArray(TestCase):
             NSMutableArray.sortUsingComparator_, 0, objc._C_NSInteger + b"@@"
         )
         self.assertArgIsBlock(
-            NSMutableArray.sortWithOptions_usingComparator_, 1, objc._C_NSInteger + b"@@"
+            NSMutableArray.sortWithOptions_usingComparator_,
+            1,
+            objc._C_NSInteger + b"@@",
         )
 
     @min_os_level("10.13")

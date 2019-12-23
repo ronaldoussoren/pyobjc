@@ -24,7 +24,9 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(
                 NetworkExtension.NETunnelProviderRoutingMethodSourceApplication, 2
             )
-            self.assertEqual(NetworkExtension.NETunnelProviderRoutingMethodNetworkRule, 3)
+            self.assertEqual(
+                NetworkExtension.NETunnelProviderRoutingMethodNetworkRule, 3
+            )
 
             self.assertIsInstance(NetworkExtension.NETunnelProviderErrorDomain, unicode)
 

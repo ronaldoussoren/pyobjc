@@ -9,7 +9,9 @@ if sys.maxsize > 2 ** 32:
         def testConstants(self):
             self.assertIsInstance(CloudKit.CKErrorDomain, unicode)
             self.assertIsInstance(CloudKit.CKPartialErrorsByItemIDKey, unicode)
-            self.assertIsInstance(CloudKit.CKRecordChangedErrorAncestorRecordKey, unicode)
+            self.assertIsInstance(
+                CloudKit.CKRecordChangedErrorAncestorRecordKey, unicode
+            )
             self.assertIsInstance(CloudKit.CKRecordChangedErrorServerRecordKey, unicode)
             self.assertIsInstance(CloudKit.CKRecordChangedErrorClientRecordKey, unicode)
             self.assertIsInstance(CloudKit.CKErrorRetryAfterKey, unicode)

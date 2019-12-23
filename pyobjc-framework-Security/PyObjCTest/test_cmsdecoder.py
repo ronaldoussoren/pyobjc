@@ -55,7 +55,9 @@ class TestCMSDecoder(TestCase):
         self.assertResultHasType(Security.CMSDecoderGetNumSigners, objc._C_INT)
         self.assertArgHasType(Security.CMSDecoderGetNumSigners, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.CMSDecoderGetNumSigners, 1, objc._C_OUT + objc._C_PTR + objc._C_ULNG
+            Security.CMSDecoderGetNumSigners,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.CMSDecoderCopySignerStatus, objc._C_INT)
@@ -77,7 +79,9 @@ class TestCMSDecoder(TestCase):
         self.assertResultHasType(Security.CMSDecoderGetNumSigners, objc._C_INT)
         self.assertArgHasType(Security.CMSDecoderGetNumSigners, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.CMSDecoderGetNumSigners, 1, objc._C_OUT + objc._C_PTR + objc._C_ULNG
+            Security.CMSDecoderGetNumSigners,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ULNG,
         )
 
         self.assertResultHasType(Security.CMSDecoderCopySignerCert, objc._C_INT)
@@ -157,7 +161,9 @@ class TestCMSDecoder(TestCase):
             2,
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
-        self.assertArgIsCFRetained(Security.CMSDecoderCopySignerTimestampCertificates, 2)
+        self.assertArgIsCFRetained(
+            Security.CMSDecoderCopySignerTimestampCertificates, 2
+        )
 
     @min_os_level("10.10")
     def test_functions_10_10(self):

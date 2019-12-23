@@ -313,7 +313,8 @@ functions = {
     ),
     "RegisterIconRefFromFSRef": (
         sel32or64(
-            b"lLL^{FSRef=[80C]}^^{OpaqueIconRef=}", b"iII^{FSRef=[80C]}^^{OpaqueIconRef=}"
+            b"lLL^{FSRef=[80C]}^^{OpaqueIconRef=}",
+            b"iII^{FSRef=[80C]}^^{OpaqueIconRef=}",
         ),
         "",
         {"arguments": {2: {"type_modifier": "n"}}},
@@ -536,7 +537,9 @@ functions = {
         {"arguments": {0: {"type_modifier": "n"}}},
     ),
     "LSSetItemAttribute": (
-        sel32or64(b"l^{FSRef=[80C]}L^{__CFString=}@", b"i^{FSRef=[80C]}I^{__CFString=}@"),
+        sel32or64(
+            b"l^{FSRef=[80C]}L^{__CFString=}@", b"i^{FSRef=[80C]}I^{__CFString=}@"
+        ),
         "",
         {"arguments": {0: {"type_modifier": "n"}}},
     ),

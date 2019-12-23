@@ -11,7 +11,9 @@ if sys.maxsize > 2 ** 32:
         def confirmSearchCallHistory_completion_(self, intent, completion):
             pass
 
-        def resolveCallTypeForSearchCallHistory_withCompletion_(self, intent, completion):
+        def resolveCallTypeForSearchCallHistory_withCompletion_(
+            self, intent, completion
+        ):
             pass
 
         def resolveRecipientForSearchCallHistory_withCompletion_(

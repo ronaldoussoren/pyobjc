@@ -83,7 +83,9 @@ class TestNSEvent(TestCase):
         self.assertEqual(NSEventMaskRightMouseUp, 1 << NSEventTypeRightMouseUp)
         self.assertEqual(NSEventMaskMouseMoved, 1 << NSEventTypeMouseMoved)
         self.assertEqual(NSEventMaskLeftMouseDragged, 1 << NSEventTypeLeftMouseDragged)
-        self.assertEqual(NSEventMaskRightMouseDragged, 1 << NSEventTypeRightMouseDragged)
+        self.assertEqual(
+            NSEventMaskRightMouseDragged, 1 << NSEventTypeRightMouseDragged
+        )
         self.assertEqual(NSEventMaskMouseEntered, 1 << NSEventTypeMouseEntered)
         self.assertEqual(NSEventMaskMouseExited, 1 << NSEventTypeMouseExited)
         self.assertEqual(NSEventMaskKeyDown, 1 << NSEventTypeKeyDown)
@@ -101,7 +103,9 @@ class TestNSEvent(TestCase):
         self.assertEqual(NSEventMaskTabletProximity, 1 << NSEventTypeTabletProximity)
         self.assertEqual(NSEventMaskOtherMouseDown, 1 << NSEventTypeOtherMouseDown)
         self.assertEqual(NSEventMaskOtherMouseUp, 1 << NSEventTypeOtherMouseUp)
-        self.assertEqual(NSEventMaskOtherMouseDragged, 1 << NSEventTypeOtherMouseDragged)
+        self.assertEqual(
+            NSEventMaskOtherMouseDragged, 1 << NSEventTypeOtherMouseDragged
+        )
 
         self.assertEqual(NSAlphaShiftKeyMask, 1 << 16)
         self.assertEqual(NSShiftKeyMask, 1 << 17)

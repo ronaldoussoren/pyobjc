@@ -52,7 +52,9 @@ class TestNSKeyValueCoding(TestCase):
         self.assertArgIsInOut(
             TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 0
         )
-        self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 2)
+        self.assertArgIsOut(
+            TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 2
+        )
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.useStoredAccessor)
 
 

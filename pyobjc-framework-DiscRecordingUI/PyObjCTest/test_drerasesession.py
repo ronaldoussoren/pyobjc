@@ -12,7 +12,9 @@ class TestDREraseSession(TestCase):
         self.assertEqual(DiscRecordingUI.kDREraseSessionOK, 1)
         self.assertEqual(DiscRecordingUI.kDREraseSessionCancel, 0)
 
-        self.assertEqual(DiscRecordingUI.kEraseSessionSetupDialogOptionsCurrentVersion, 1)
+        self.assertEqual(
+            DiscRecordingUI.kEraseSessionSetupDialogOptionsCurrentVersion, 1
+        )
 
         self.assertEqual(
             DiscRecordingUI.kEraseSessionSetupDialogDefaultOptions, 0x00000000
@@ -23,7 +25,9 @@ class TestDREraseSession(TestCase):
 
         self.assertEqual(DiscRecordingUI.kDREraseSessionSetupCallbacksCurrentVersion, 1)
 
-        self.assertEqual(DiscRecordingUI.kDREraseProgressSetupCallbacksCurrentVersion, 1)
+        self.assertEqual(
+            DiscRecordingUI.kDREraseProgressSetupCallbacksCurrentVersion, 1
+        )
 
         self.assertEqual(
             DiscRecordingUI.kEraseSessionProgressDialogOptionsCurrentVersion, 1

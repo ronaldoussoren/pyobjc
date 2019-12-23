@@ -92,12 +92,19 @@ class TestRegr(TestCase):
 
     @min_os_level("10.6")
     def testBinaryPlist(self):
-        for pl in ( {"key": 2 ** 64 - 1}, {"key": 2 ** 16 - 1} ):
+        for pl in ({"key": 2 ** 64 - 1}, {"key": 2 ** 16 - 1}):
             with self.subTest(pl):
-                data, error = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
-                pl, Foundation.NSPropertyListBinaryFormat_v1_0, 0, None
-            )
-            restored, format, error = Foundation.NSPropertyListSerialization.propertyListWithData_options_format_error_(
+                (
+                    data,
+                    error,
+                ) = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
+                    pl, Foundation.NSPropertyListBinaryFormat_v1_0, 0, None
+                )
+            (
+                restored,
+                format,
+                error,
+            ) = Foundation.NSPropertyListSerialization.propertyListWithData_options_format_error_(
                 data, 0, None, None
             )
             self.assertEqual(pl, restored)

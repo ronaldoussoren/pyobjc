@@ -34,7 +34,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 ColorSync.kColorSyncDeviceUnregisteredNotification, unicode
             )
-            self.assertIsInstance(ColorSync.kColorSyncDeviceProfilesNotification, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncDeviceProfilesNotification, unicode
+            )
             self.assertIsInstance(
                 ColorSync.kColorSyncDisplayDeviceProfilesNotification, unicode
             )

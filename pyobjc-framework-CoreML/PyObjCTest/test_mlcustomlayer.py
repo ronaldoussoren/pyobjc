@@ -30,7 +30,9 @@ if sys.maxsize > 2 ** 32:
                 TestMLCustomLayerHelper.initWithParameterDictionary_error_, 1, b"o^@"
             )
 
-            self.assertArgHasType(TestMLCustomLayerHelper.setWeightData_error_, 1, b"o^@")
+            self.assertArgHasType(
+                TestMLCustomLayerHelper.setWeightData_error_, 1, b"o^@"
+            )
             self.assertResultIsBOOL(TestMLCustomLayerHelper.setWeightData_error_)
 
             self.assertArgHasType(
@@ -38,7 +40,9 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgHasType(
-                TestMLCustomLayerHelper.evaluateOnCPUWithInputs_outputs_error_, 2, b"o^@"
+                TestMLCustomLayerHelper.evaluateOnCPUWithInputs_outputs_error_,
+                2,
+                b"o^@",
             )
             self.assertResultIsBOOL(
                 TestMLCustomLayerHelper.evaluateOnCPUWithInputs_outputs_error_

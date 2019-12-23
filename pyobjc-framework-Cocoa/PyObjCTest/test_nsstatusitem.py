@@ -18,7 +18,9 @@ class TestNSStatusItem(TestCase):
         self.assertArgIsBOOL(NSStatusItem.setEnabled_, 0)
         self.assertResultIsBOOL(NSStatusItem.highlightMode)
         self.assertArgIsBOOL(NSStatusItem.setHighlightMode_, 0)
-        self.assertArgIsBOOL(NSStatusItem.drawStatusBarBackgroundInRect_withHighlight_, 1)
+        self.assertArgIsBOOL(
+            NSStatusItem.drawStatusBarBackgroundInRect_withHighlight_, 1
+        )
 
     @min_os_level("10.12")
     def testMethods10_12(self):

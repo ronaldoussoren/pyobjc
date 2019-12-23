@@ -10,7 +10,9 @@ if sys.maxsize > 2 ** 32:
             self.assertHasAttr(CloudKit, "CKServerChangeToken")
             self.assertIsInstance(CloudKit.CKServerChangeToken, objc.objc_class)
             self.assertHasAttr(CloudKit, "CKFetchRecordChangesOperation")
-            self.assertIsInstance(CloudKit.CKFetchRecordChangesOperation, objc.objc_class)
+            self.assertIsInstance(
+                CloudKit.CKFetchRecordChangesOperation, objc.objc_class
+            )
 
         @min_os_level("10.10")
         def testMethods10_10(self):
@@ -26,7 +28,8 @@ if sys.maxsize > 2 ** 32:
                 b"v@",
             )
             self.assertResultIsBlock(
-                CloudKit.CKFetchRecordChangesOperation.recordWithIDWasDeletedBlock, b"v@"
+                CloudKit.CKFetchRecordChangesOperation.recordWithIDWasDeletedBlock,
+                b"v@",
             )
             self.assertResultIsBOOL(CloudKit.CKFetchRecordChangesOperation.moreComing)
             self.assertArgIsBlock(

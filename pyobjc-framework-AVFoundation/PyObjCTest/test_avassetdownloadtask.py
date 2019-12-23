@@ -21,9 +21,12 @@ class TestAVAssetDownloadTask(TestCase):
         self.assertIsInstance(
             AVFoundation.AVAssetDownloadTaskMinimumRequiredMediaBitrateKey, unicode
         )
-        self.assertIsInstance(AVFoundation.AVAssetDownloadTaskMediaSelectionKey, unicode)
         self.assertIsInstance(
-            AVFoundation.AVAssetDownloadTaskMediaSelectionPrefersMultichannelKey, unicode
+            AVFoundation.AVAssetDownloadTaskMediaSelectionKey, unicode
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAssetDownloadTaskMediaSelectionPrefersMultichannelKey,
+            unicode,
         )
 
     def test_methods(self):

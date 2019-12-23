@@ -35,7 +35,9 @@ class TestCode(TestCase):
         self.assertIsInstance(Security.kSecCodeInfoFormat, unicode)
         self.assertIsInstance(Security.kSecCodeInfoDigestAlgorithm, unicode)
         self.assertIsInstance(Security.kSecCodeInfoIdentifier, unicode)
-        self.assertIsInstance(Security.kSecCodeInfoImplicitDesignatedRequirement, unicode)
+        self.assertIsInstance(
+            Security.kSecCodeInfoImplicitDesignatedRequirement, unicode
+        )
         self.assertIsInstance(Security.kSecCodeInfoMainExecutable, unicode)
         self.assertIsInstance(Security.kSecCodeInfoPList, unicode)
         self.assertIsInstance(Security.kSecCodeInfoRequirements, unicode)
@@ -125,7 +127,9 @@ class TestCode(TestCase):
 
         self.assertResultHasType(Security.SecCodeCopyDesignatedRequirement, objc._C_INT)
         self.assertArgHasType(Security.SecCodeCopyDesignatedRequirement, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecCodeCopyDesignatedRequirement, 1, objc._C_UINT)
+        self.assertArgHasType(
+            Security.SecCodeCopyDesignatedRequirement, 1, objc._C_UINT
+        )
         self.assertArgHasType(
             Security.SecCodeCopyDesignatedRequirement,
             2,

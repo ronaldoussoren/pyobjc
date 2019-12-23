@@ -18,7 +18,9 @@ class TestAVAssetExportSession(TestCase):
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4VAppleTV, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4VWiFi, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleM4V720pHD, unicode)
-        self.assertIsInstance(AVFoundation.AVAssetExportPresetAppleProRes422LPCM, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVAssetExportPresetAppleProRes422LPCM, unicode
+        )
 
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVAssetExportSessionStatusWaiting, 1)
@@ -43,7 +45,9 @@ class TestAVAssetExportSession(TestCase):
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVCHighestQuality, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVAssetExportPresetHEVCHighestQuality, unicode
+        )
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC1920x1080, unicode)
         self.assertIsInstance(AVFoundation.AVAssetExportPresetHEVC3840x2160, unicode)
 

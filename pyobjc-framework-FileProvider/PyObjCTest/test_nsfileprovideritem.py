@@ -46,8 +46,12 @@ class TestNSFileProviderItemHelper(FileProvider.NSObject):
 
 class TestNSFileProviderItem(TestCase):
     def test_constants(self):
-        self.assertEqual(FileProvider.NSFileProviderItemCapabilitiesAllowsReading, 1 << 0)
-        self.assertEqual(FileProvider.NSFileProviderItemCapabilitiesAllowsWriting, 1 << 1)
+        self.assertEqual(
+            FileProvider.NSFileProviderItemCapabilitiesAllowsReading, 1 << 0
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderItemCapabilitiesAllowsWriting, 1 << 1
+        )
         self.assertEqual(
             FileProvider.NSFileProviderItemCapabilitiesAllowsReparenting, 1 << 2
         )

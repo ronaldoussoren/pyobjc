@@ -22,7 +22,9 @@ class TestQTError(TestCase):
         self.assertResultIsBOOL(QTMovieModernizer.requiresModernization_error_)
         self.assertArgIsOut(QTMovieModernizer.requiresModernization_error_, 1)
 
-        self.assertArgIsBlock(QTMovieModernizer.modernizeWithCompletionHandler_, 0, b"v")
+        self.assertArgIsBlock(
+            QTMovieModernizer.modernizeWithCompletionHandler_, 0, b"v"
+        )
 
 
 if __name__ == "__main__":

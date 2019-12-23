@@ -54,7 +54,9 @@ class TestPropertyList(TestCase):
         self.assertIn(b"<integer>42</integer>", buf)
         self.assertIn(b"<key>key2</key>", buf)
         self.assertIn(b"<integer>1</integer>", buf)
-        stream = CFReadStreamCreateWithBytesNoCopy(None, buf, len(buf), kCFAllocatorNull)
+        stream = CFReadStreamCreateWithBytesNoCopy(
+            None, buf, len(buf), kCFAllocatorNull
+        )
         r = CFReadStreamOpen(stream)
         self.assertTrue(r)
 

@@ -119,7 +119,9 @@ class TestNSURL(TestCase):
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(NSURLBookmarkCreationWithSecurityScope, (1 << 11))
-        self.assertEqual(NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, (1 << 12))
+        self.assertEqual(
+            NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, (1 << 12)
+        )
         self.assertEqual(NSURLBookmarkResolutionWithSecurityScope, (1 << 10))
 
         self.assertIsInstance(NSURLKeysOfUnsetValuesKey, unicode)
@@ -181,7 +183,9 @@ class TestNSURL(TestCase):
         self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusKey, unicode)
         self.assertIsInstance(NSURLUbiquitousItemDownloadingErrorKey, unicode)
         self.assertIsInstance(NSURLUbiquitousItemUploadingErrorKey, unicode)
-        self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusNotDownloaded, unicode)
+        self.assertIsInstance(
+            NSURLUbiquitousItemDownloadingStatusNotDownloaded, unicode
+        )
         self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusDownloaded, unicode)
         self.assertIsInstance(NSURLUbiquitousItemDownloadingStatusCurrent, unicode)
 
@@ -213,7 +217,9 @@ class TestNSURL(TestCase):
         self.assertIsInstance(NSURLCanonicalPathKey, unicode)
         self.assertIsInstance(NSURLUbiquitousItemIsSharedKey, unicode)
         self.assertIsInstance(NSURLUbiquitousSharedItemCurrentUserRoleKey, unicode)
-        self.assertIsInstance(NSURLUbiquitousSharedItemCurrentUserPermissionsKey, unicode)
+        self.assertIsInstance(
+            NSURLUbiquitousSharedItemCurrentUserPermissionsKey, unicode
+        )
         self.assertIsInstance(NSURLUbiquitousSharedItemOwnerNameComponentsKey, unicode)
         self.assertIsInstance(
             NSURLUbiquitousSharedItemMostRecentEditorNameComponentsKey, unicode

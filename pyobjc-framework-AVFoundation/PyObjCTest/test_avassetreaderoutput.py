@@ -14,7 +14,9 @@ class TestAVAssetReaderOutput(TestCase):
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetReaderOutput.supportsRandomAccess)
-        self.assertArgIsBOOL(AVFoundation.AVAssetReaderOutput.setSupportsRandomAccess_, 0)
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetReaderOutput.setSupportsRandomAccess_, 0
+        )
 
 
 if __name__ == "__main__":

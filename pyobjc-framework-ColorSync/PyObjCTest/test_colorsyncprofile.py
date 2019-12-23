@@ -44,7 +44,9 @@ if sys.maxsize > 2 ** 32:
 
             ColorSync.ColorSyncProfileSetHeader
 
-            self.assertResultIsCFRetained(ColorSync.ColorSyncProfileCopyDescriptionString)
+            self.assertResultIsCFRetained(
+                ColorSync.ColorSyncProfileCopyDescriptionString
+            )
             self.assertResultIsCFRetained(ColorSync.ColorSyncProfileCopyTagSignatures)
 
             ColorSync.ColorSyncProfileContainsTag
@@ -101,7 +103,9 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.13")
         def testConstants(self):
             self.assertIsInstance(ColorSync.kColorSyncGenericGrayProfile, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncGenericGrayGamma22Profile, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncGenericGrayGamma22Profile, unicode
+            )
             self.assertIsInstance(ColorSync.kColorSyncGenericRGBProfile, unicode)
             self.assertIsInstance(ColorSync.kColorSyncGenericCMYKProfile, unicode)
             self.assertIsInstance(ColorSync.kColorSyncDisplayP3Profile, unicode)
@@ -152,7 +156,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncSigPreview1Tag, unicode)
             self.assertIsInstance(ColorSync.kColorSyncSigPreview2Tag, unicode)
             self.assertIsInstance(ColorSync.kColorSyncSigOutputClass, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncSigProfileSequenceDescTag, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncSigProfileSequenceDescTag, unicode
+            )
             self.assertIsInstance(ColorSync.kColorSyncSigRedTRCTag, unicode)
             self.assertIsInstance(ColorSync.kColorSyncSigRedColorantTag, unicode)
             self.assertIsInstance(ColorSync.kColorSyncSigInputClass, unicode)

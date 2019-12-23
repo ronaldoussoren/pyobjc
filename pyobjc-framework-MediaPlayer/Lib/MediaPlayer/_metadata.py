@@ -166,7 +166,11 @@ try:
         b"contentLimitsEnforced",
         {"retval": {"type": "Z"}},
     )
-    r(b"MPPlayableContentManagerContext", b"endpointAvailable", {"retval": {"type": "Z"}})
+    r(
+        b"MPPlayableContentManagerContext",
+        b"endpointAvailable",
+        {"retval": {"type": "Z"}},
+    )
     r(
         b"MPPlayableContentManagerContext",
         b"setContentLimitsEnabled:",

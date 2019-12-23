@@ -58,7 +58,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
         @min_os_level("10.11")
         def testMethods10_11(self):
-            self.assertArgIsBOOL(SceneKit.SCNAction.playAudioSource_waitForCompletion_, 1)
+            self.assertArgIsBOOL(
+                SceneKit.SCNAction.playAudioSource_waitForCompletion_, 1
+            )
 
 
 if __name__ == "__main__":

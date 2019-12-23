@@ -68,7 +68,9 @@ def CMTIME_IS_NEGATIVE_INFINITY(time):
 
 
 def CMTIME_IS_INDEFINITE(time):
-    return CMTIME_IS_VALID(time) and (time.flags & CoreMedia.kCMTimeFlags_Indefinite) != 0
+    return (
+        CMTIME_IS_VALID(time) and (time.flags & CoreMedia.kCMTimeFlags_Indefinite) != 0
+    )
 
 
 def CMTIME_IS_NUMERIC(time):

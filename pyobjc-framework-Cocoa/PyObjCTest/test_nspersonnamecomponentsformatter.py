@@ -29,10 +29,12 @@ class TestNSPersonNameComponentsFormatter(TestCase):
             NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_
         )
         self.assertArgIsOut(
-            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_, 0
+            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_,
+            0,
         )
         self.assertArgIsOut(
-            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_, 2
+            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_,
+            2,
         )
 
         self.assertResultIsBOOL(NSPersonNameComponentsFormatter.isPhonetic)

@@ -83,7 +83,9 @@ class TestString(TestCase):
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertEqual(s, b"hello foo = 52".decode("ascii"))
 
-        self.assertFalse(hasattr(CoreFoundation, "CFStringCreateWithFormatAndArguments"))
+        self.assertFalse(
+            hasattr(CoreFoundation, "CFStringCreateWithFormatAndArguments")
+        )
 
     def testCreateMutable(self):
         s = CFStringCreateMutable(None, 0)

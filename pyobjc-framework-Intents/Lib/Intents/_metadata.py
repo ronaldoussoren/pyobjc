@@ -113,7 +113,11 @@ try:
         b"emailAddressFieldShouldBeDisplayed",
         {"retval": {"type": b"Z"}},
     )
-    r(b"INRestaurantGuestDisplayPreferences", b"nameEditable", {"retval": {"type": b"Z"}})
+    r(
+        b"INRestaurantGuestDisplayPreferences",
+        b"nameEditable",
+        {"retval": {"type": b"Z"}},
+    )
     r(
         b"INRestaurantGuestDisplayPreferences",
         b"nameFieldFirstNameOptional",
@@ -3168,9 +3172,17 @@ try:
         b"stopSendingUpdatesForGetRideStatus:",
         {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
     )
-    r(b"NSObject", b"vocabularyIdentifier", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"vocabularyIdentifier",
+        {"required": True, "retval": {"type": b"@"}},
+    )
     r(b"null", b"deferredLocalizedIntentsStringWithFormat:", {"variadic": True})
-    r(b"null", b"deferredLocalizedIntentsStringWithFormat:fromTable:", {"variadic": True})
+    r(
+        b"null",
+        b"deferredLocalizedIntentsStringWithFormat:fromTable:",
+        {"variadic": True},
+    )
 finally:
     objc._updatingMetadata(False)
 expressions = {}

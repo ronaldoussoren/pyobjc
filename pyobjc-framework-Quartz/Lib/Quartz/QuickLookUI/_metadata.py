@@ -156,12 +156,20 @@ try:
         b"setPreviewItemURL:",
         {"retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
     )
-    r(b"QLPreviewPanel", b"enterFullScreenMode:withOptions:", {"retval": {"type": b"Z"}})
+    r(
+        b"QLPreviewPanel",
+        b"enterFullScreenMode:withOptions:",
+        {"retval": {"type": b"Z"}},
+    )
     r(b"QLPreviewPanel", b"isInFullScreenMode", {"retval": {"type": b"Z"}})
     r(b"QLPreviewPanel", b"sharedPreviewPanelExists", {"retval": {"type": b"Z"}})
     r(b"QLPreviewView", b"autostarts", {"retval": {"type": b"Z"}})
     r(b"QLPreviewView", b"setAutostarts:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"QLPreviewView", b"setShouldCloseWithWindow:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"QLPreviewView",
+        b"setShouldCloseWithWindow:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"QLPreviewView", b"shouldCloseWithWindow", {"retval": {"type": b"Z"}})
 finally:
     objc._updatingMetadata(False)
@@ -169,7 +177,9 @@ protocols = {
     "QLPreviewPanelController": objc.informal_protocol(
         "QLPreviewPanelController",
         [
-            objc.selector(None, b"beginPreviewPanelControl:", b"v@:@", isRequired=False),
+            objc.selector(
+                None, b"beginPreviewPanelControl:", b"v@:@", isRequired=False
+            ),
             objc.selector(
                 None, b"acceptsPreviewPanelControl:", b"Z@:@", isRequired=False
             ),

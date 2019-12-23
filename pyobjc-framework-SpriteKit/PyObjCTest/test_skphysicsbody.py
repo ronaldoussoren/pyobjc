@@ -16,7 +16,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(
                 SpriteKit.SKPhysicsBody.setUsesPreciseCollisionDetection_, 0
             )
-            self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.usesPreciseCollisionDetection)
+            self.assertResultIsBOOL(
+                SpriteKit.SKPhysicsBody.usesPreciseCollisionDetection
+            )
             self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setAllowsRotation_, 0)
             self.assertResultIsBOOL(SpriteKit.SKPhysicsBody.allowsRotation)
             self.assertArgIsBOOL(SpriteKit.SKPhysicsBody.setResting_, 0)

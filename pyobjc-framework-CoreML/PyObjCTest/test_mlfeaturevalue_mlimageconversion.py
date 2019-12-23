@@ -25,7 +25,8 @@ if sys.maxsize > 2 ** 32:
                 5,
             )
             self.assertArgIsOut(
-                CoreML.MLFeatureValue.featureValueWithCGImage_constraint_options_error_, 3
+                CoreML.MLFeatureValue.featureValueWithCGImage_constraint_options_error_,
+                3,
             )
             self.assertArgIsOut(
                 CoreML.MLFeatureValue.featureValueWithImageAtURL_orientation_pixelsWide_pixelsHigh_pixelFormatType_options_error_,

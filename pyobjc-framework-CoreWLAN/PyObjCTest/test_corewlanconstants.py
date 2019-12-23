@@ -10,7 +10,9 @@ class TestCoreWLANConstants(TestCase):
         self.assertIsInstance(CoreWLAN.CWScanCacheDidUpdateNotification, unicode)
         self.assertIsInstance(CoreWLAN.CWLinkQualityDidChangeNotification, unicode)
         self.assertIsInstance(CoreWLAN.CWLinkQualityNotificationRSSIKey, unicode)
-        self.assertIsInstance(CoreWLAN.CWLinkQualityNotificationTransmitRateKey, unicode)
+        self.assertIsInstance(
+            CoreWLAN.CWLinkQualityNotificationTransmitRateKey, unicode
+        )
         self.assertIsInstance(CoreWLAN.CWServiceDidChangeNotification, unicode)
 
     @min_os_level("10.6")

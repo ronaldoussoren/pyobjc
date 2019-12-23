@@ -15,7 +15,9 @@ class TestQTFormatDescription(TestCase):
         self.assertIsInstance(
             QTFormatDescriptionVideoProductionApertureDisplaySizeAttribute, unicode
         )
-        self.assertIsInstance(QTFormatDescriptionVideoEncodedPixelsSizeAttribute, unicode)
+        self.assertIsInstance(
+            QTFormatDescriptionVideoEncodedPixelsSizeAttribute, unicode
+        )
 
     def testMethods(self):
         self.assertResultIsBOOL(QTFormatDescription.isEqualToFormatDescription_)

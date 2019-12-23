@@ -21,9 +21,13 @@ class TestIKCameraDeviceView(TestCase):
         self.assertArgIsBOOL(IKCameraDeviceView.setHasDisplayModeIcon_, 0)
 
         self.assertResultIsBOOL(IKCameraDeviceView.displaysDownloadsDirectoryControl)
-        self.assertArgIsBOOL(IKCameraDeviceView.setDisplaysDownloadsDirectoryControl_, 0)
+        self.assertArgIsBOOL(
+            IKCameraDeviceView.setDisplaysDownloadsDirectoryControl_, 0
+        )
 
-        self.assertResultIsBOOL(IKCameraDeviceView.displaysPostProcessApplicationControl)
+        self.assertResultIsBOOL(
+            IKCameraDeviceView.displaysPostProcessApplicationControl
+        )
         self.assertArgIsBOOL(
             IKCameraDeviceView.setDisplaysPostProcessApplicationControl_, 0
         )

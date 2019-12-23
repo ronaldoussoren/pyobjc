@@ -11,7 +11,9 @@ class TestGKLeaderboardSet(TestCase):
                 pass
 
         self.assertArgIsBlock(
-            GameKit.GKLeaderboardSet.loadLeaderboardSetsWithCompletionHandler_, 0, b"v@@"
+            GameKit.GKLeaderboardSet.loadLeaderboardSetsWithCompletionHandler_,
+            0,
+            b"v@@",
         )
         self.assertArgIsBlock(
             GameKit.GKLeaderboardSet.loadLeaderboardsWithCompletionHandler_, 0, b"v@@"

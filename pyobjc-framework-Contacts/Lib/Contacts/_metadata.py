@@ -23,7 +23,11 @@ misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b"CNChangeHistoryFetchRequest", b"includeGroupChanges", {"retval": {"type": b"Z"}})
+    r(
+        b"CNChangeHistoryFetchRequest",
+        b"includeGroupChanges",
+        {"retval": {"type": b"Z"}},
+    )
     r(b"CNChangeHistoryFetchRequest", b"mutableObjects", {"retval": {"type": b"Z"}})
     r(
         b"CNChangeHistoryFetchRequest",
@@ -46,7 +50,11 @@ try:
     r(b"CNContact", b"isKeyAvailable:", {"retval": {"type": "Z"}})
     r(b"CNContact", b"isUnifiedWithContactWithIdentifier:", {"retval": {"type": "Z"}})
     r(b"CNContactFetchRequest", b"mutableObjects", {"retval": {"type": "Z"}})
-    r(b"CNContactFetchRequest", b"setMutableObjects:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"CNContactFetchRequest",
+        b"setMutableObjects:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"CNContactFetchRequest", b"setUnifyResults:", {"arguments": {2: {"type": "Z"}}})
     r(b"CNContactFetchRequest", b"unifyResults", {"retval": {"type": "Z"}})
     r(

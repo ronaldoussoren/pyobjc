@@ -164,7 +164,9 @@ class PyObjCDebuggingDelegate(NSObject):
             else:
                 return False
         except:
-            print("*** Exception occurred during exception handler ***", file=sys.stderr)
+            print(
+                "*** Exception occurred during exception handler ***", file=sys.stderr
+            )
             traceback.print_exc(sys.stderr)
             return True
 

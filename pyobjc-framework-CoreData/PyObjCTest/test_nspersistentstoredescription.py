@@ -11,7 +11,9 @@ class TestNSPersistentStoreDescription(TestCase):
         self.assertArgIsBOOL(
             NSPersistentStoreDescription.setShouldAddStoreAsynchronously_, 0
         )
-        self.assertResultIsBOOL(NSPersistentStoreDescription.shouldAddStoreAsynchronously)
+        self.assertResultIsBOOL(
+            NSPersistentStoreDescription.shouldAddStoreAsynchronously
+        )
 
         self.assertArgIsBOOL(
             NSPersistentStoreDescription.setShouldMigrateStoreAutomatically_, 0

@@ -38,7 +38,9 @@ class TestNSKeyedArchiver(TestCase):
         self.assertResultHasType(
             NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, b"^v"
         )
-        self.assertResultSizeInArg(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1)
+        self.assertResultSizeInArg(
+            NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1
+        )
         self.assertArgIsOut(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1)
 
         self.assertArgHasType(NSCoder.encodePoint_forKey_, 0, NSPoint.__typestr__)
@@ -66,7 +68,9 @@ class TestNSKeyedArchiver(TestCase):
         )
 
         self.assertArgIsOut(NSKeyedUnarchiver.initForReadingFromData_error_, 1)
-        self.assertArgIsOut(NSKeyedUnarchiver.unarchivedObjectOfClass_fromData_error_, 2)
+        self.assertArgIsOut(
+            NSKeyedUnarchiver.unarchivedObjectOfClass_fromData_error_, 2
+        )
         self.assertArgIsOut(
             NSKeyedUnarchiver.unarchivedObjectOfClasses_fromData_error_, 2
         )

@@ -76,7 +76,9 @@ class TestNSPersistentStoreCoordinator(TestCase):
         self.assertIsInstance(NSPersistentStoreUbiquitousTransitionTypeKey, unicode)
         self.assertIsInstance(NSPersistentStoreUbiquitousPeerTokenOption, unicode)
         self.assertIsInstance(NSPersistentStoreRemoveUbiquitousMetadataOption, unicode)
-        self.assertIsInstance(NSPersistentStoreUbiquitousContainerIdentifierKey, unicode)
+        self.assertIsInstance(
+            NSPersistentStoreUbiquitousContainerIdentifierKey, unicode
+        )
         self.assertIsInstance(
             NSPersistentStoreRebuildFromUbiquitousContentOption, unicode
         )
@@ -108,8 +110,12 @@ class TestNSPersistentStoreCoordinator(TestCase):
             NSPersistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_,
             4,
         )
-        self.assertResultIsBOOL(NSPersistentStoreCoordinator.removePersistentStore_error_)
-        self.assertArgIsOut(NSPersistentStoreCoordinator.removePersistentStore_error_, 1)
+        self.assertResultIsBOOL(
+            NSPersistentStoreCoordinator.removePersistentStore_error_
+        )
+        self.assertArgIsOut(
+            NSPersistentStoreCoordinator.removePersistentStore_error_, 1
+        )
         self.assertArgIsOut(
             NSPersistentStoreCoordinator.migratePersistentStore_toURL_options_withType_error_,
             4,
@@ -167,7 +173,9 @@ class TestNSPersistentStoreCoordinator(TestCase):
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlock_, 0, b"v")
-        self.assertArgIsBlock(NSPersistentStoreCoordinator.performBlockAndWait_, 0, b"v")
+        self.assertArgIsBlock(
+            NSPersistentStoreCoordinator.performBlockAndWait_, 0, b"v"
+        )
 
     @min_os_level("10.11")
     def testMethods10_11(self):

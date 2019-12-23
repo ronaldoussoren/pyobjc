@@ -51,7 +51,9 @@ class TestNSIndexSet(TestCase):
             b"v" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgHasType(
-            NSIndexSet.enumerateIndexesInRange_options_usingBlock_, 0, NSRange.__typestr__
+            NSIndexSet.enumerateIndexesInRange_options_usingBlock_,
+            0,
+            NSRange.__typestr__,
         )
         self.assertArgIsBlock(
             NSIndexSet.enumerateIndexesInRange_options_usingBlock_,

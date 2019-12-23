@@ -12,7 +12,8 @@ if sys.maxsize > 2 ** 32:
                 2,
             )
             self.assertArgIsOut(
-                Contacts.CNContactStore.unifiedContactWithIdentifier_keysToFetch_error_, 2
+                Contacts.CNContactStore.unifiedContactWithIdentifier_keysToFetch_error_,
+                2,
             )
             self.assertArgIsOut(
                 Contacts.CNContactStore.unifiedMeContactWithKeysToFetch_error_, 1
@@ -31,7 +32,9 @@ if sys.maxsize > 2 ** 32:
                 b"v@o^Z",
             )
 
-            self.assertArgIsOut(Contacts.CNContactStore.groupsMatchingPredicate_error_, 1)
+            self.assertArgIsOut(
+                Contacts.CNContactStore.groupsMatchingPredicate_error_, 1
+            )
             self.assertArgIsOut(
                 Contacts.CNContactStore.containersMatchingPredicate_error_, 1
             )

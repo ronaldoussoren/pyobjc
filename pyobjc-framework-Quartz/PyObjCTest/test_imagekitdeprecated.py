@@ -63,10 +63,13 @@ class TestImageKitDeprecated(TestCase):
         # self.assertIsInstance(protocols.IKImageBrowserDataSourceDeprecated, objc.informal_protocol)
 
         self.assertResultHasType(
-            TestImageKitDeprecatedHelper.numberOfCellsInImageBrowser_, objc._C_NSUInteger
+            TestImageKitDeprecatedHelper.numberOfCellsInImageBrowser_,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestImageKitDeprecatedHelper.imageBrowser_cellAtIndex_, 1, objc._C_NSUInteger
+            TestImageKitDeprecatedHelper.imageBrowser_cellAtIndex_,
+            1,
+            objc._C_NSUInteger,
         )
         self.assertResultIsBOOL(
             TestImageKitDeprecatedHelper.imageBrowser_moveCellsAtIndexes_toIndex_

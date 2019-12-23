@@ -21,7 +21,9 @@ class TestNSPredicate(TestCase):
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgIsBlock(NSPredicate.predicateWithBlock_, 0, objc._C_NSBOOL + b"@@")
+        self.assertArgIsBlock(
+            NSPredicate.predicateWithBlock_, 0, objc._C_NSBOOL + b"@@"
+        )
 
 
 if __name__ == "__main__":

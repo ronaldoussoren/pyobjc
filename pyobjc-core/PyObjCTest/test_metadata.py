@@ -1158,7 +1158,9 @@ class TestPrintfFormat(TestCase):
 
         for fmt, args in TEST_TAB:
             v = o.makeArrayWithCFormat_(fmt, *args)
-            self.assertEqual(list(v), [fmt.decode("latin1"), fmt.decode("latin1") % args])
+            self.assertEqual(
+                list(v), [fmt.decode("latin1"), fmt.decode("latin1") % args]
+            )
 
 
 class TestVariadic(TestCase):

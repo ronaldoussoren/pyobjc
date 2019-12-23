@@ -21,7 +21,9 @@ class TestWebPreferences(TestCase):
         self.assertArgIsBOOL(WebPreferences.setJavaScriptEnabled_, 0)
 
         self.assertResultIsBOOL(WebPreferences.javaScriptCanOpenWindowsAutomatically)
-        self.assertArgIsBOOL(WebPreferences.setJavaScriptCanOpenWindowsAutomatically_, 0)
+        self.assertArgIsBOOL(
+            WebPreferences.setJavaScriptCanOpenWindowsAutomatically_, 0
+        )
 
         self.assertResultIsBOOL(WebPreferences.arePlugInsEnabled)
         self.assertArgIsBOOL(WebPreferences.setPlugInsEnabled_, 0)

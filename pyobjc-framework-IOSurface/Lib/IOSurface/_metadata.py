@@ -102,7 +102,9 @@ functions = {
     "IOSurfaceGetNumberOfComponentsOfPlane": (b"I^{__IOSurface=}I",),
     "IOSurfaceGetWidth": (sel32or64(b"L^{__IOSurface=}", b"Q^{__IOSurface=}"),),
     "IOSurfaceRemoveValue": (b"v^{__IOSurface=}^{__CFString=}",),
-    "IOSurfaceGetHeightOfPlane": (sel32or64(b"L^{__IOSurface=}L", b"Q^{__IOSurface=}Q"),),
+    "IOSurfaceGetHeightOfPlane": (
+        sel32or64(b"L^{__IOSurface=}L", b"Q^{__IOSurface=}Q"),
+    ),
     "IOSurfaceGetHeight": (sel32or64(b"L^{__IOSurface=}", b"Q^{__IOSurface=}"),),
     "IOSurfaceGetBaseAddress": (
         b"^v^{__IOSurface=}",
@@ -121,8 +123,12 @@ functions = {
     "IOSurfaceGetElementHeightOfPlane": (
         sel32or64(b"L^{__IOSurface=}L", b"Q^{__IOSurface=}Q"),
     ),
-    "IOSurfaceGetBytesPerElement": (sel32or64(b"L^{__IOSurface=}", b"Q^{__IOSurface=}"),),
-    "IOSurfaceGetPropertyAlignment": (sel32or64(b"L^{__CFString=}", b"Q^{__CFString=}"),),
+    "IOSurfaceGetBytesPerElement": (
+        sel32or64(b"L^{__IOSurface=}", b"Q^{__IOSurface=}"),
+    ),
+    "IOSurfaceGetPropertyAlignment": (
+        sel32or64(b"L^{__CFString=}", b"Q^{__CFString=}"),
+    ),
     "IOSurfaceGetNameOfComponentOfPlane": (b"i^{__IOSurface=}II",),
     "IOSurfaceUnlock": (
         b"i^{__IOSurface=}I^I",
@@ -130,7 +136,9 @@ functions = {
         {"arguments": {2: {"type_modifier": "N"}}},
     ),
     "IOSurfaceGetPropertyMaximum": (sel32or64(b"L^{__CFString=}", b"Q^{__CFString=}"),),
-    "IOSurfaceGetWidthOfPlane": (sel32or64(b"L^{__IOSurface=}L", b"Q^{__IOSurface=}Q"),),
+    "IOSurfaceGetWidthOfPlane": (
+        sel32or64(b"L^{__IOSurface=}L", b"Q^{__IOSurface=}Q"),
+    ),
     "IOSurfaceIsInUse": (b"Z^{__IOSurface=}",),
     "IOSurfaceAllowsPixelSizeCasting": (b"Z^{__IOSurface=}",),
     "IOSurfaceCopyAllValues": (
@@ -155,7 +163,11 @@ try:
         {"retval": {"c_array_of_variable_length": True}},
     )
     r(b"IOSurface", b"isInUse", {"retval": {"type": "Z"}})
-    r(b"IOSurface", b"lockWithOptions:seed:", {"arguments": {3: {"type_modifier": b"o"}}})
+    r(
+        b"IOSurface",
+        b"lockWithOptions:seed:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
     r(
         b"IOSurface",
         b"setPurgeable:oldState:",

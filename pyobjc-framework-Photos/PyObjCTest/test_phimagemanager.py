@@ -16,7 +16,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHImageRequestOptionsVersionOriginal, 2)
 
             self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeOpportunistic, 0)
-            self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeHighQualityFormat, 1)
+            self.assertEqual(
+                Photos.PHImageRequestOptionsDeliveryModeHighQualityFormat, 1
+            )
             self.assertEqual(Photos.PHImageRequestOptionsDeliveryModeFastFormat, 2)
 
             self.assertEqual(Photos.PHImageRequestOptionsResizeModeNone, 0)
@@ -34,7 +36,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(Photos.PHImageErrorKey, unicode)
 
             self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeAutomatic, 0)
-            self.assertEqual(Photos.PHVideoRequestOptionsDeliveryModeHighQualityFormat, 1)
+            self.assertEqual(
+                Photos.PHVideoRequestOptionsDeliveryModeHighQualityFormat, 1
+            )
             self.assertEqual(
                 Photos.PHVideoRequestOptionsDeliveryModeMediumQualityFormat, 2
             )
@@ -43,13 +47,16 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.13")
         def testMethods10_13(self):
             self.assertResultIsBOOL(Photos.PHImageRequestOptions.isNetworkAccessAllowed)
-            self.assertArgIsBOOL(Photos.PHImageRequestOptions.setNetworkAccessAllowed_, 0)
+            self.assertArgIsBOOL(
+                Photos.PHImageRequestOptions.setNetworkAccessAllowed_, 0
+            )
 
             self.assertResultIsBOOL(Photos.PHImageRequestOptions.isSynchronous)
             self.assertArgIsBOOL(Photos.PHImageRequestOptions.setSynchronous_, 0)
 
             self.assertResultIsBlock(
-                Photos.PHImageRequestOptions.progressHandler, PHAssetImageProgressHandler
+                Photos.PHImageRequestOptions.progressHandler,
+                PHAssetImageProgressHandler,
             )
             self.assertArgIsBlock(
                 Photos.PHImageRequestOptions.setProgressHandler_,
@@ -88,10 +95,13 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertResultIsBOOL(Photos.PHVideoRequestOptions.isNetworkAccessAllowed)
-            self.assertArgIsBOOL(Photos.PHVideoRequestOptions.setNetworkAccessAllowed_, 0)
+            self.assertArgIsBOOL(
+                Photos.PHVideoRequestOptions.setNetworkAccessAllowed_, 0
+            )
 
             self.assertResultIsBlock(
-                Photos.PHVideoRequestOptions.progressHandler, PHAssetVideoProgressHandler
+                Photos.PHVideoRequestOptions.progressHandler,
+                PHAssetVideoProgressHandler,
             )
             self.assertArgIsBlock(
                 Photos.PHVideoRequestOptions.setProgressHandler_,

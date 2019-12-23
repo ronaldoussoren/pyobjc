@@ -177,7 +177,8 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
             TestNSCollectionViewCompositionalLayoutHelper.isHidden, objc._C_NSBOOL
         )
         self.assertResultHasType(
-            TestNSCollectionViewCompositionalLayoutHelper.frame, AppKit.NSRect.__typestr__
+            TestNSCollectionViewCompositionalLayoutHelper.frame,
+            AppKit.NSRect.__typestr__,
         )
         self.assertResultHasType(
             TestNSCollectionViewCompositionalLayoutHelper.bounds,

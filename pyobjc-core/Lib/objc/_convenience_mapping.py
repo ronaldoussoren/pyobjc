@@ -37,6 +37,7 @@ _CONVENIENCES_MAPPING_RO = (
     ("__contains__", contains_objectForKey_),
 )
 
+
 def __delitem__removeObjectForKey_(self, key):
     self.removeObjectForKey_(container_wrap(key))
 
@@ -46,7 +47,9 @@ def update_setObject_forKey_(self, *args, **kwds):
     if len(args) == 0:
         pass
     elif len(args) != 1:
-        raise TypeError("update expected at most 1 arguments, got {0}".format(len(args)))
+        raise TypeError(
+            "update expected at most 1 arguments, got {0}".format(len(args))
+        )
 
     else:
         other = args[0]

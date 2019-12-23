@@ -161,7 +161,8 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
                 SceneKit.SCNHitTestOptionSortResults, SceneKit.SCNHitTestSortResultsKey
             )
             self.assertIs(
-                SceneKit.SCNHitTestOptionClipToZRange, SceneKit.SCNHitTestClipToZRangeKey
+                SceneKit.SCNHitTestOptionClipToZRange,
+                SceneKit.SCNHitTestClipToZRangeKey,
             )
             self.assertIs(
                 SceneKit.SCNHitTestOptionBackFaceCulling,
@@ -212,7 +213,8 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
                 TestSCNSceneRendererHelper.isNodeInsideFrustum_withPointOfView_
             )
             self.assertResultHasType(
-                TestSCNSceneRendererHelper.projectPoint_, SceneKit.SCNVector3.__typestr__
+                TestSCNSceneRendererHelper.projectPoint_,
+                SceneKit.SCNVector3.__typestr__,
             )
             self.assertArgHasType(
                 TestSCNSceneRendererHelper.projectPoint_,
@@ -232,7 +234,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
             self.assertArgIsBOOL(TestSCNSceneRendererHelper.setPlaying_, 0)
             self.assertResultIsBOOL(TestSCNSceneRendererHelper.loops)
             self.assertArgIsBOOL(TestSCNSceneRendererHelper.setLoops_, 0)
-            self.assertResultIsBOOL(TestSCNSceneRendererHelper.autoenablesDefaultLighting)
+            self.assertResultIsBOOL(
+                TestSCNSceneRendererHelper.autoenablesDefaultLighting
+            )
             self.assertArgIsBOOL(
                 TestSCNSceneRendererHelper.setAutoenablesDefaultLighting_, 0
             )
@@ -245,7 +249,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
                 TestSCNSceneRendererHelper.prepareObject_shouldAbortBlock_, 1, b"Z"
             )
             self.assertArgIsBlock(
-                TestSCNSceneRendererHelper.prepareObjects_withCompletionHandler_, 1, b"vZ"
+                TestSCNSceneRendererHelper.prepareObjects_withCompletionHandler_,
+                1,
+                b"vZ",
             )
             self.assertResultIsBOOL(TestSCNSceneRendererHelper.showsStatistics)
             self.assertArgIsBOOL(TestSCNSceneRendererHelper.setShowsStatistics_, 0)
@@ -273,7 +279,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
                 TestSCNSceneRendererHelper.stencilPixelFormat, objc._C_NSUInteger
             )
             # self.assertArgHasType(TestSCNSceneRendererHelper.setStencilPixelFormat_, 0, objc._C_NSUInteger)
-            self.assertResultHasType(TestSCNSceneRendererHelper.currentTime, objc._C_DBL)
+            self.assertResultHasType(
+                TestSCNSceneRendererHelper.currentTime, objc._C_DBL
+            )
             self.assertArgHasType(
                 TestSCNSceneRendererHelper.setCurrentTime_, 0, objc._C_DBL
             )
@@ -302,7 +310,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
                 objc._C_DBL,
             )
             self.assertArgHasType(
-                TestSCNSceneRendererHelper.renderer_didRenderScene_atTime_, 2, objc._C_DBL
+                TestSCNSceneRendererHelper.renderer_didRenderScene_atTime_,
+                2,
+                objc._C_DBL,
             )
 
         @min_os_level("10.15")

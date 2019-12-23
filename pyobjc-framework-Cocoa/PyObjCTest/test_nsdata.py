@@ -167,7 +167,9 @@ class TestNSData(TestCase):
 
     def testreplaceBytesInRange_withBytes_length_(self):
         self.assertArgIsIn(NSMutableData.replaceBytesInRange_withBytes_length_, 1)
-        self.assertArgSizeInArg(NSMutableData.replaceBytesInRange_withBytes_length_, 1, 2)
+        self.assertArgSizeInArg(
+            NSMutableData.replaceBytesInRange_withBytes_length_, 1, 2
+        )
 
     def testDataWithBytesNoCopy_length_freeWhenDone_(self):
         data = NSData.dataWithBytesNoCopy_length_freeWhenDone_(
@@ -181,7 +183,9 @@ class TestNSData(TestCase):
     def testInitWithBytes_length_(self):
         # Test -initWithBytes:length:
         data = NSData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
-        mutableData = NSMutableData.alloc().initWithBytes_length_(rawBytes, len(rawBytes))
+        mutableData = NSMutableData.alloc().initWithBytes_length_(
+            rawBytes, len(rawBytes)
+        )
         self.assertDataContents(data, mutableData, rawBytes)
 
     def testInitWithBytesNoCopy_length_freeWhenDone_(self):
@@ -238,8 +242,9 @@ class TestNSData(TestCase):
                 pass
             elif "cannot modify size of memoryview object" in str(r):
                 pass
-            elif "ndarray assignment: lvalue and rvalue have different structures" in str(
-                r
+            elif (
+                "ndarray assignment: lvalue and rvalue have different structures"
+                in str(r)
             ):
                 pass
             else:

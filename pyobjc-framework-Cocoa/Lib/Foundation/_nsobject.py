@@ -57,7 +57,9 @@ class NSObject(objc.Category(NSObject)):
 
     if hasattr(NSObject, "performSelector_onThread_withObject_waitUntilDone_"):
 
-        @objc.namedSelector(b"pyobjc_performSelector:onThread:withObject:waitUntilDone:")
+        @objc.namedSelector(
+            b"pyobjc_performSelector:onThread:withObject:waitUntilDone:"
+        )
         def pyobjc_performSelector_onThread_withObject_waitUntilDone_(
             self, aSelector, thread, arg, wait
         ):
@@ -153,7 +155,9 @@ class NSObject(objc.Category(NSObject)):
     # And some a some versions that return results
 
     @objc.namedSelector(b"pyobjc_performSelectorOnMainThread:withObject:modes:")
-    def pyobjc_performSelectorOnMainThread_withObject_modes_(self, aSelector, arg, modes):
+    def pyobjc_performSelectorOnMainThread_withObject_modes_(
+        self, aSelector, arg, modes
+    ):
         """
         Simular to performSelectorOnMainThread:withObject:waitUntilDone:modes:,
         but:

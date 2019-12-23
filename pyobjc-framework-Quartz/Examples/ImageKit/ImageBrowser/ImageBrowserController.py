@@ -19,7 +19,10 @@ def openFiles():
     panel.setCanChooseFiles_(True)
     panel.setAllowsMultipleSelection_(True)
 
-    if panel.runModalForTypes_(Cocoa.NSImage.imageUnfilteredTypes()) == Cocoa.NSOKButton:
+    if (
+        panel.runModalForTypes_(Cocoa.NSImage.imageUnfilteredTypes())
+        == Cocoa.NSOKButton
+    ):
         return panel.filenames()
 
     return []
@@ -325,7 +328,11 @@ class ImageBrowserController(Cocoa.NSWindowController):
 
         if data is not None:
             # Retrieve  paths.
-            filenames, format, errorDescription = Cocoa.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
+            (
+                filenames,
+                format,
+                errorDescription,
+            ) = Cocoa.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
                 data, Cocoa.kCFPropertyListImmutable, None, None
             )
 

@@ -58,7 +58,8 @@ class TestCoreFoundation(TestCase):
         self.assertIsInstance(formatted, unicode)
         self.assertTrue(
             re.match(
-                r"[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}", formatted
+                r"[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}",
+                formatted,
             )
         )
 
@@ -75,7 +76,8 @@ class TestCoreFoundation(TestCase):
         self.assertIsInstance(formatted, unicode)
         self.assertTrue(
             re.match(
-                r"[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}", formatted
+                r"[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}",
+                formatted,
             )
         )
 

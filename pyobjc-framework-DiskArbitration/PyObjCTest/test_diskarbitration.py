@@ -35,8 +35,12 @@ class TestDiskArbitration(TestCase):
         self.assertIsInstance(
             DiskArbitration.kDADiskDescriptionMatchVolumeUnrecognized, NSDictionary
         )
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionWatchVolumeName, NSArray)
-        self.assertIsInstance(DiskArbitration.kDADiskDescriptionWatchVolumePath, NSArray)
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionWatchVolumeName, NSArray
+        )
+        self.assertIsInstance(
+            DiskArbitration.kDADiskDescriptionWatchVolumePath, NSArray
+        )
 
     def test_functions(self):
         # Callbacks, need manual metadata (but from what I've seen so far no C code)
@@ -131,7 +135,10 @@ class TestDiskArbitration(TestCase):
         DiskArbitration.DADiskUnclaim
 
         self.assertArgIsFunction(
-            DiskArbitration.DARegisterDiskPeekCallback, 3, b"v" + DADiskRef + b"^v", True
+            DiskArbitration.DARegisterDiskPeekCallback,
+            3,
+            b"v" + DADiskRef + b"^v",
+            True,
         )
 
         DiskArbitration.DADiskGetOptions

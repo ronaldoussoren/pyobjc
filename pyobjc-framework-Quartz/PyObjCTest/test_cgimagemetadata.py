@@ -56,7 +56,9 @@ class TestCGImageMetadata(TestCase):
             Quartz.CGImageMetadataEnumerateTagsUsingBlock, 3, CGImageMetadataTagBlock
         )
 
-        self.assertResultIsCFRetained(Quartz.CGImageMetadataCopyTagMatchingImageProperty)
+        self.assertResultIsCFRetained(
+            Quartz.CGImageMetadataCopyTagMatchingImageProperty
+        )
         self.assertResultHasType(
             Quartz.CGImageMetadataSetValueMatchingImageProperty, objc._C_BOOL
         )

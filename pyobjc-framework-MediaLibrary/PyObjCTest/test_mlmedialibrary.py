@@ -21,9 +21,13 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLMediaSourceApertureIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLMediaSourceiMovieIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLMediaSourceFinalCutIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLMediaSourceGarageBandIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLMediaSourceGarageBandIdentifier, unicode
+            )
             self.assertIsInstance(MediaLibrary.MLMediaSourceLogicIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLMediaSourcePhotoBoothIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLMediaSourcePhotoBoothIdentifier, unicode
+            )
 
             self.assertIsInstance(
                 MediaLibrary.MLMediaSourceCustomFoldersIdentifier, unicode

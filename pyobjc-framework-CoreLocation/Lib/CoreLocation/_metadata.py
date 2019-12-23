@@ -240,7 +240,11 @@ try:
         {"retval": {"type": b"Z"}},
     )
     r(b"CLLocationManager", b"headingAvailable", {"retval": {"type": b"Z"}})
-    r(b"CLLocationManager", b"isMonitoringAvailableForClass:", {"retval": {"type": b"Z"}})
+    r(
+        b"CLLocationManager",
+        b"isMonitoringAvailableForClass:",
+        {"retval": {"type": b"Z"}},
+    )
     r(b"CLLocationManager", b"isRangingAvailable", {"retval": {"type": b"Z"}})
     r(b"CLLocationManager", b"locationServicesEnabled", {"retval": {"type": "Z"}})
     r(

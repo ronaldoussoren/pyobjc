@@ -10,12 +10,18 @@ class TestNSScrubberLayoutHelper(NSObject):
 class TestNSScrubberLayout(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
-        self.assertResultIsBOOL(NSScrubberLayout.shouldInvalidateLayoutForSelectionChange)
-        self.assertResultIsBOOL(NSScrubberLayout.shouldInvalidateLayoutForHighlightChange)
+        self.assertResultIsBOOL(
+            NSScrubberLayout.shouldInvalidateLayoutForSelectionChange
+        )
+        self.assertResultIsBOOL(
+            NSScrubberLayout.shouldInvalidateLayoutForHighlightChange
+        )
         self.assertResultIsBOOL(
             NSScrubberLayout.shouldInvalidateLayoutForChangeFromVisibleRect_toVisibleRect_
         )
-        self.assertResultIsBOOL(NSScrubberLayout.automaticallyMirrorsInRightToLeftLayout)
+        self.assertResultIsBOOL(
+            NSScrubberLayout.automaticallyMirrorsInRightToLeftLayout
+        )
 
         self.assertResultHasType(
             TestNSScrubberLayoutHelper.scrubber_layout_sizeForItemAtIndex_,

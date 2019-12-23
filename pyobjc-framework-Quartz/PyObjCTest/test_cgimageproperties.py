@@ -207,7 +207,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCProvinceState, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCCountryPrimaryLocationCode, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCCountryPrimaryLocationName, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCOriginalTransmissionReference, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCOriginalTransmissionReference, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCHeadline, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCCredit, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCSource, unicode)
@@ -446,7 +448,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkLicensorID, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkLicensorName, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkDateCreated, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtArtworkPhysicalDescription, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtArtworkPhysicalDescription, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkSource, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkSourceInventoryNo, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtArtworkSourceInvURL, unicode)
@@ -484,7 +488,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtDopesheet, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtDopesheetLink, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtDopesheetLinkLink, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtDopesheetLinkLinkQualifier, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtDopesheetLinkLinkQualifier, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtEmbdEncRightsExpr, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtEmbeddedEncodedRightsExpr, unicode)
         self.assertIsInstance(
@@ -512,7 +518,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtIPTCLastEdited, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtLinkedEncRightsExpr, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtLinkedEncodedRightsExpr, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtLinkedEncodedRightsExprType, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtLinkedEncodedRightsExprType, unicode
+        )
         self.assertIsInstance(
             kCGImagePropertyIPTCExtLinkedEncodedRightsExprLangID, unicode
         )
@@ -540,7 +548,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonHeardName, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImage, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageWDetails, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCharacteristic, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtPersonInImageCharacteristic, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCvTermCvId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCvTermId, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPersonInImageCvTermName, unicode)
@@ -556,7 +566,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtProductInImageName, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPublicationEvent, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtPublicationEventDate, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtPublicationEventIdentifier, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtPublicationEventIdentifier, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtPublicationEventName, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtRating, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtRatingRatingRegion, unicode)
@@ -593,7 +605,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtStreamReady, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtStylePeriod, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtSupplyChainSource, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtSupplyChainSourceIdentifier, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtSupplyChainSourceIdentifier, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtSupplyChainSourceName, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtTemporalCoverage, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtTemporalCoverageFrom, unicode)
@@ -601,7 +615,9 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(kCGImagePropertyIPTCExtTranscript, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtTranscriptLink, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtTranscriptLinkLink, unicode)
-        self.assertIsInstance(kCGImagePropertyIPTCExtTranscriptLinkLinkQualifier, unicode)
+        self.assertIsInstance(
+            kCGImagePropertyIPTCExtTranscriptLinkLinkQualifier, unicode
+        )
         self.assertIsInstance(kCGImagePropertyIPTCExtVideoBitrate, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtVideoBitrateMode, unicode)
         self.assertIsInstance(kCGImagePropertyIPTCExtVideoDisplayAspectRatio, unicode)
@@ -725,15 +741,14 @@ class TestCGImageProperties(TestCase):
 
     @min_os_level("10.15.1")
     def testConstants10_15_1(self):
-        self.assertIsInstance(
-            kCGImagePropertyExifCompositeImage, unicode
-        )
+        self.assertIsInstance(kCGImagePropertyExifCompositeImage, unicode)
         self.assertIsInstance(
             kCGImagePropertyExifSourceImageNumberOfCompositeImage, unicode
         )
         self.assertIsInstance(
             kCGImagePropertyExifSourceExposureTimesOfCompositeImage, unicode
         )
+
 
 if __name__ == "__main__":
     main()

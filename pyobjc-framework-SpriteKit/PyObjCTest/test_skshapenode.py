@@ -15,7 +15,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgSizeInArg(
                 SpriteKit.SKShapeNode.shapeNodeWithPoints_count_, 0, 1
             )
-            self.assertArgIsIn(SpriteKit.SKShapeNode.shapeNodeWithSplinePoints_count_, 0)
+            self.assertArgIsIn(
+                SpriteKit.SKShapeNode.shapeNodeWithSplinePoints_count_, 0
+            )
             self.assertArgSizeInArg(
                 SpriteKit.SKShapeNode.shapeNodeWithSplinePoints_count_, 0, 1
             )

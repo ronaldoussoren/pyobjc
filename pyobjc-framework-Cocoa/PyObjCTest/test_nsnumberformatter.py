@@ -7,12 +7,16 @@ class TestNSNumberFormatter(TestCase):
     def testConstants(self):
         self.assertEqual(NSNumberFormatterNoStyle, kCFNumberFormatterNoStyle)
         self.assertEqual(NSNumberFormatterDecimalStyle, kCFNumberFormatterDecimalStyle)
-        self.assertEqual(NSNumberFormatterCurrencyStyle, kCFNumberFormatterCurrencyStyle)
+        self.assertEqual(
+            NSNumberFormatterCurrencyStyle, kCFNumberFormatterCurrencyStyle
+        )
         self.assertEqual(NSNumberFormatterPercentStyle, kCFNumberFormatterPercentStyle)
         self.assertEqual(
             NSNumberFormatterScientificStyle, kCFNumberFormatterScientificStyle
         )
-        self.assertEqual(NSNumberFormatterSpellOutStyle, kCFNumberFormatterSpellOutStyle)
+        self.assertEqual(
+            NSNumberFormatterSpellOutStyle, kCFNumberFormatterSpellOutStyle
+        )
 
         self.assertEqual(NSNumberFormatterBehaviorDefault, 0)
         self.assertEqual(NSNumberFormatterBehavior10_0, 1000)
@@ -35,15 +39,20 @@ class TestNSNumberFormatter(TestCase):
         self.assertEqual(NSNumberFormatterRoundFloor, kCFNumberFormatterRoundFloor)
         self.assertEqual(NSNumberFormatterRoundDown, kCFNumberFormatterRoundDown)
         self.assertEqual(NSNumberFormatterRoundUp, kCFNumberFormatterRoundUp)
-        self.assertEqual(NSNumberFormatterRoundHalfEven, kCFNumberFormatterRoundHalfEven)
-        self.assertEqual(NSNumberFormatterRoundHalfDown, kCFNumberFormatterRoundHalfDown)
+        self.assertEqual(
+            NSNumberFormatterRoundHalfEven, kCFNumberFormatterRoundHalfEven
+        )
+        self.assertEqual(
+            NSNumberFormatterRoundHalfDown, kCFNumberFormatterRoundHalfDown
+        )
         self.assertEqual(NSNumberFormatterRoundHalfUp, kCFNumberFormatterRoundHalfUp)
 
     @min_os_level("10.11")
     def testConstants(self):
         self.assertEqual(NSNumberFormatterOrdinalStyle, kCFNumberFormatterOrdinalStyle)
         self.assertEqual(
-            NSNumberFormatterCurrencyISOCodeStyle, kCFNumberFormatterCurrencyISOCodeStyle
+            NSNumberFormatterCurrencyISOCodeStyle,
+            kCFNumberFormatterCurrencyISOCodeStyle,
         )
         self.assertEqual(
             NSNumberFormatterCurrencyPluralStyle, kCFNumberFormatterCurrencyPluralStyle
@@ -56,7 +65,9 @@ class TestNSNumberFormatter(TestCase):
     def testOutput(self):
         self.assertResultIsBOOL(NSNumberFormatter.getObjectValue_forString_range_error_)
         self.assertArgIsOut(NSNumberFormatter.getObjectValue_forString_range_error_, 0)
-        self.assertArgIsInOut(NSNumberFormatter.getObjectValue_forString_range_error_, 2)
+        self.assertArgIsInOut(
+            NSNumberFormatter.getObjectValue_forString_range_error_, 2
+        )
         self.assertArgIsOut(NSNumberFormatter.getObjectValue_forString_range_error_, 3)
 
         self.assertResultIsBOOL(NSNumberFormatter.generatesDecimalNumbers)

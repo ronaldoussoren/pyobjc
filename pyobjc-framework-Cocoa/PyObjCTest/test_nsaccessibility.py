@@ -71,7 +71,9 @@ class TestNSAccessibility(TestCase):
         self.assertResultIsBOOL(
             NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor
         )
-        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldReduceTransparency)
+        self.assertResultIsBOOL(
+            NSWorkspace.accessibilityDisplayShouldReduceTransparency
+        )
 
     @min_os_level("10.12")
     def testMethods10_12(self):
@@ -101,7 +103,11 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(v, unicode)
 
         self.assertRaises(
-            objc.error, NSAccessibilityRaiseBadArgumentException, b, "attribute", "value"
+            objc.error,
+            NSAccessibilityRaiseBadArgumentException,
+            b,
+            "attribute",
+            "value",
         )
 
         v = NSAccessibilityUnignoredAncestor(b)
@@ -167,7 +173,9 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(NSAccessibilityColumnCountAttribute, unicode)
         self.assertIsInstance(NSAccessibilityOrderedByRowAttribute, unicode)
         self.assertIsInstance(NSAccessibilityTitleUIElementAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityServesAsTitleForUIElementsAttribute, unicode)
+        self.assertIsInstance(
+            NSAccessibilityServesAsTitleForUIElementsAttribute, unicode
+        )
         self.assertIsInstance(NSAccessibilityLinkedUIElementsAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySelectedTextAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySelectedTextRangeAttribute, unicode)
@@ -177,15 +185,21 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(NSAccessibilitySharedCharacterRangeAttribute, unicode)
         self.assertIsInstance(NSAccessibilityInsertionPointLineNumberAttribute, unicode)
         self.assertIsInstance(NSAccessibilitySelectedTextRangesAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityLineForIndexParameterizedAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityRangeForLineParameterizedAttribute, unicode)
+        self.assertIsInstance(
+            NSAccessibilityLineForIndexParameterizedAttribute, unicode
+        )
+        self.assertIsInstance(
+            NSAccessibilityRangeForLineParameterizedAttribute, unicode
+        )
         self.assertIsInstance(
             NSAccessibilityStringForRangeParameterizedAttribute, unicode
         )
         self.assertIsInstance(
             NSAccessibilityRangeForPositionParameterizedAttribute, unicode
         )
-        self.assertIsInstance(NSAccessibilityRangeForIndexParameterizedAttribute, unicode)
+        self.assertIsInstance(
+            NSAccessibilityRangeForIndexParameterizedAttribute, unicode
+        )
         self.assertIsInstance(
             NSAccessibilityBoundsForRangeParameterizedAttribute, unicode
         )
@@ -288,9 +302,13 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(NSAccessibilityDeleteAction, unicode)
         self.assertIsInstance(NSAccessibilityMainWindowChangedNotification, unicode)
         self.assertIsInstance(NSAccessibilityFocusedWindowChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityFocusedUIElementChangedNotification, unicode)
+        self.assertIsInstance(
+            NSAccessibilityFocusedUIElementChangedNotification, unicode
+        )
         self.assertIsInstance(NSAccessibilityApplicationActivatedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityApplicationDeactivatedNotification, unicode)
+        self.assertIsInstance(
+            NSAccessibilityApplicationDeactivatedNotification, unicode
+        )
         self.assertIsInstance(NSAccessibilityApplicationHiddenNotification, unicode)
         self.assertIsInstance(NSAccessibilityApplicationShownNotification, unicode)
         self.assertIsInstance(NSAccessibilityWindowCreatedNotification, unicode)
@@ -309,9 +327,13 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(NSAccessibilityHelpTagCreatedNotification, unicode)
         self.assertIsInstance(NSAccessibilitySelectedTextChangedNotification, unicode)
         self.assertIsInstance(NSAccessibilityRowCountChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedChildrenChangedNotification, unicode)
+        self.assertIsInstance(
+            NSAccessibilitySelectedChildrenChangedNotification, unicode
+        )
         self.assertIsInstance(NSAccessibilitySelectedRowsChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedColumnsChangedNotification, unicode)
+        self.assertIsInstance(
+            NSAccessibilitySelectedColumnsChangedNotification, unicode
+        )
         self.assertIsInstance(NSAccessibilityUnknownRole, unicode)
         self.assertIsInstance(NSAccessibilityButtonRole, unicode)
         self.assertIsInstance(NSAccessibilityRadioButtonRole, unicode)
@@ -400,7 +422,9 @@ class TestNSAccessibility(TestCase):
         self.assertIsInstance(NSAccessibilityColumnIndexRangeAttribute, unicode)
         self.assertIsInstance(NSAccessibilityHorizontalUnitsAttribute, unicode)
         self.assertIsInstance(NSAccessibilityVerticalUnitsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityHorizontalUnitDescriptionAttribute, unicode)
+        self.assertIsInstance(
+            NSAccessibilityHorizontalUnitDescriptionAttribute, unicode
+        )
         self.assertIsInstance(NSAccessibilityVerticalUnitDescriptionAttribute, unicode)
         self.assertIsInstance(
             NSAccessibilityLayoutPointForScreenPointParameterizedAttribute, unicode
@@ -519,7 +543,9 @@ class TestNSAccessibility(TestCase):
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
-        self.assertIsInstance(NSAccessibilityPostNotificationWithUserInfo, objc.function)
+        self.assertIsInstance(
+            NSAccessibilityPostNotificationWithUserInfo, objc.function
+        )
 
     @min_os_level("10.9")
     def testFunctions10_9(self):

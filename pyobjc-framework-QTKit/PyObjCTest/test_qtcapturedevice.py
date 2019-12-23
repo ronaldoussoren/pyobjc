@@ -21,17 +21,25 @@ class TestQTCaptureDevice(TestCase):
         self.assertIsInstance(QTCaptureDeviceAvailableInputSourcesAttribute, unicode)
         self.assertIsInstance(QTCaptureDeviceInputSourceIdentifierAttribute, unicode)
         self.assertIsInstance(QTCaptureDeviceInputSourceIdentifierKey, unicode)
-        self.assertIsInstance(QTCaptureDeviceInputSourceLocalizedDisplayNameKey, unicode)
-        self.assertIsInstance(QTCaptureDeviceInputSourceLocalizedDisplayNameKey, unicode)
+        self.assertIsInstance(
+            QTCaptureDeviceInputSourceLocalizedDisplayNameKey, unicode
+        )
+        self.assertIsInstance(
+            QTCaptureDeviceInputSourceLocalizedDisplayNameKey, unicode
+        )
         self.assertIsInstance(QTCaptureDeviceAVCTransportControlsAttribute, unicode)
-        self.assertIsInstance(QTCaptureDeviceAVCTransportControlsPlaybackModeKey, unicode)
+        self.assertIsInstance(
+            QTCaptureDeviceAVCTransportControlsPlaybackModeKey, unicode
+        )
         self.assertIsInstance(QTCaptureDeviceAVCTransportControlsSpeedKey, unicode)
 
         self.assertEqual(QTCaptureDeviceAVCTransportControlsNotPlayingMode, 0)
         self.assertEqual(QTCaptureDeviceAVCTransportControlsPlayingMode, 1)
 
         self.assertEqual(QTCaptureDeviceAVCTransportControlsFastestReverseSpeed, -19000)
-        self.assertEqual(QTCaptureDeviceAVCTransportControlsVeryFastReverseSpeed, -16000)
+        self.assertEqual(
+            QTCaptureDeviceAVCTransportControlsVeryFastReverseSpeed, -16000
+        )
         self.assertEqual(QTCaptureDeviceAVCTransportControlsFastReverseSpeed, -13000)
         self.assertEqual(QTCaptureDeviceAVCTransportControlsNormalReverseSpeed, -10000)
         self.assertEqual(QTCaptureDeviceAVCTransportControlsSlowReverseSpeed, -7000)

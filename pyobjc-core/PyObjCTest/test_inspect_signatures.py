@@ -58,7 +58,7 @@ class TestInspectSignatures(TestCase):
                         value = None
 
                     if value is None and cls is objc.pyobjc_unicode:
-                        if obj == getattr(str, nm): 
+                        if obj == getattr(str, nm):
                             # Don't fail for inherited methods
                             continue
 

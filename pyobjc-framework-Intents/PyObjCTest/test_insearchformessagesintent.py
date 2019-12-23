@@ -16,7 +16,9 @@ if sys.maxsize > 2 ** 32:
         ):
             pass
 
-        def resolveSendersForSearchForMessages_withCompletion_(self, intent, completion):
+        def resolveSendersForSearchForMessages_withCompletion_(
+            self, intent, completion
+        ):
             pass
 
         def resolveSearchTermsForSearchForMessages_withCompletion_(

@@ -96,7 +96,8 @@ class TestCGRemoteOperation(TestCase):
         self.assertEqual(v, 0)
 
         v = CGSetLocalEventsFilterDuringSuppressionState(
-            kCGEventFilterMaskPermitAllEvents, kCGEventSuppressionStateSuppressionInterval
+            kCGEventFilterMaskPermitAllEvents,
+            kCGEventSuppressionStateSuppressionInterval,
         )
         self.assertEqual(v, 0)
 

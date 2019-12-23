@@ -24,7 +24,8 @@ class TestAVContentKeySession(TestCase):
             unicode,
         )
         self.assertIsInstance(
-            AVFoundation.AVContentKeyRequestRetryReasonReceivedObsoleteContentKey, unicode
+            AVFoundation.AVContentKeyRequestRetryReasonReceivedObsoleteContentKey,
+            unicode,
         )
 
         self.assertEqual(AVFoundation.AVContentKeyRequestStatusRequestingResponse, 0)
@@ -44,7 +45,9 @@ class TestAVContentKeySession(TestCase):
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(AVFoundation.AVContentKeySystemAuthorizationToken, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVContentKeySystemAuthorizationToken, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVContentKeySessionServerPlaybackContextOptionProtocolVersions,
             unicode,

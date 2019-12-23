@@ -135,7 +135,8 @@ class TestStream(TestCase):
 
         self.assertResultIsCFRetained(CFReadStreamCreateWithFile)
         stream = CFReadStreamCreateWithFile(
-            None, CFURLCreateWithString(None, b"file:///etc/shells".decode("ascii"), None)
+            None,
+            CFURLCreateWithString(None, b"file:///etc/shells".decode("ascii"), None),
         )
         self.assertIsInstance(stream, CFReadStreamRef)
         r = CFReadStreamOpen(stream)
@@ -296,7 +297,9 @@ class TestStream(TestCase):
 
     @onlyIf(onTheNetwork(), "Test requires a working Internet connection")
     def testSockets(self):
-        with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sd:
+        with contextlib.closing(
+            socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ) as sd:
             sd.connect(("www.apple.com", 80))
 
             self.assertArgIsOut(CFStreamCreatePairWithSocket, 2)

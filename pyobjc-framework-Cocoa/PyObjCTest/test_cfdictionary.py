@@ -130,11 +130,15 @@ class TestCFDictionary(TestCase):
         self.assertEqual(CFDictionaryGetCount(dct), 2)
         self.assertTrue(CFDictionaryContainsKey(dct, b"key2".decode("ascii")))
 
-        CFDictionaryReplaceValue(dct, b"key2".decode("ascii"), b"value2b".decode("ascii"))
+        CFDictionaryReplaceValue(
+            dct, b"key2".decode("ascii"), b"value2b".decode("ascii")
+        )
         self.assertEqual(CFDictionaryGetCount(dct), 2)
         self.assertTrue(CFDictionaryContainsKey(dct, b"key2".decode("ascii")))
         self.assertEqual(CFDictionaryGetValue(dct, "key2"), b"value2b".decode("ascii"))
-        CFDictionaryReplaceValue(dct, b"key3".decode("ascii"), b"value2b".decode("ascii"))
+        CFDictionaryReplaceValue(
+            dct, b"key3".decode("ascii"), b"value2b".decode("ascii")
+        )
         self.assertEqual(CFDictionaryGetCount(dct), 2)
         self.assertFalse(CFDictionaryContainsKey(dct, b"key3".decode("ascii")))
 

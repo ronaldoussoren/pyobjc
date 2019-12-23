@@ -25,10 +25,16 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants(self):
-            self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticVertexCrease, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNGeometrySourceSemanticVertexCrease, unicode
+            )
             self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticEdgeCrease, unicode)
-            self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticBoneWeights, unicode)
-            self.assertIsInstance(SceneKit.SCNGeometrySourceSemanticBoneIndices, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNGeometrySourceSemanticBoneWeights, unicode
+            )
+            self.assertIsInstance(
+                SceneKit.SCNGeometrySourceSemanticBoneIndices, unicode
+            )
 
         @min_os_level("10.12")
         def testConstants(self):
@@ -55,7 +61,8 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
             )
 
             self.assertArgIsIn(
-                SceneKit.SCNGeometrySource.geometrySourceWithTextureCoordinates_count_, 0
+                SceneKit.SCNGeometrySource.geometrySourceWithTextureCoordinates_count_,
+                0,
             )
             self.assertArgSizeInArg(
                 SceneKit.SCNGeometrySource.geometrySourceWithTextureCoordinates_count_,

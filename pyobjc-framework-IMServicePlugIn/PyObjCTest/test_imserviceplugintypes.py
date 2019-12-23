@@ -33,12 +33,16 @@ class TestIMServicePlugInChatRoomSupport(TestCase):
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyFirstName, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyLastName, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyEmailAddress, unicode)
-        self.assertIsInstance(IMServicePlugIn.IMHandlePropertyPictureIdentifier, unicode)
+        self.assertIsInstance(
+            IMServicePlugIn.IMHandlePropertyPictureIdentifier, unicode
+        )
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyPictureData, unicode)
 
         self.assertIsInstance(IMServicePlugIn.IMHandlePropertyCapabilities, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandleCapabilityMessaging, unicode)
-        self.assertIsInstance(IMServicePlugIn.IMHandleCapabilityOfflineMessaging, unicode)
+        self.assertIsInstance(
+            IMServicePlugIn.IMHandleCapabilityOfflineMessaging, unicode
+        )
         self.assertIsInstance(IMServicePlugIn.IMHandleCapabilityChatRoom, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandleCapabilityHandlePicture, unicode)
         self.assertIsInstance(IMServicePlugIn.IMHandleCapabilityFileTransfer, unicode)
@@ -55,7 +59,9 @@ class TestIMServicePlugInChatRoomSupport(TestCase):
 
         self.assertIsInstance(IMServicePlugIn.IMAttributeForegroundColor, unicode)
         self.assertIsInstance(IMServicePlugIn.IMAttributeBackgroundColor, unicode)
-        self.assertIsInstance(IMServicePlugIn.IMAttributeMessageBackgroundColor, unicode)
+        self.assertIsInstance(
+            IMServicePlugIn.IMAttributeMessageBackgroundColor, unicode
+        )
 
     def testConstantsNum(self):
         self.assertEqual(IMServicePlugIn.IMSessionAvailabilityAway, 0)

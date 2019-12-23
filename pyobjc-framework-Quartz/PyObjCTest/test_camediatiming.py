@@ -76,9 +76,13 @@ class TestCAMediaTiming(TestCase):
         self.assertResultHasType(TestCAMediaTimingHelper.repeatCount, objc._C_FLT)
         self.assertArgHasType(TestCAMediaTimingHelper.setRepeatCount_, 0, objc._C_FLT)
         self.assertResultHasType(TestCAMediaTimingHelper.repeatDuration, objc._C_DBL)
-        self.assertArgHasType(TestCAMediaTimingHelper.setRepeatDuration_, 0, objc._C_DBL)
+        self.assertArgHasType(
+            TestCAMediaTimingHelper.setRepeatDuration_, 0, objc._C_DBL
+        )
         self.assertResultHasType(TestCAMediaTimingHelper.autoreverses, objc._C_NSBOOL)
-        self.assertArgHasType(TestCAMediaTimingHelper.setAutoreverses_, 0, objc._C_NSBOOL)
+        self.assertArgHasType(
+            TestCAMediaTimingHelper.setAutoreverses_, 0, objc._C_NSBOOL
+        )
         self.assertResultHasType(TestCAMediaTimingHelper.fillMode, objc._C_ID)
         self.assertArgHasType(TestCAMediaTimingHelper.setFillMode_, 0, objc._C_ID)
 

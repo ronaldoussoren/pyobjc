@@ -10,7 +10,9 @@ if sys.maxsize > 2 ** 32:
         def session_peer_didChangeState_(self, s, p, st):
             pass
 
-        def voiceChatService_didReceiveInvitationFromParticipantID_callID_(self, v, p, c):
+        def voiceChatService_didReceiveInvitationFromParticipantID_callID_(
+            self, v, p, c
+        ):
             pass
 
     class TestGCAchievement(TestCase):

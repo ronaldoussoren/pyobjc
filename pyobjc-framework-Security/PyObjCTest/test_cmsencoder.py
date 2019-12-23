@@ -62,7 +62,9 @@ class TestCMSEncoder(TestCase):
 
         self.assertResultHasType(Security.CMSEncoderSetHasDetachedContent, objc._C_INT)
         self.assertArgHasType(Security.CMSEncoderSetHasDetachedContent, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderSetHasDetachedContent, 1, objc._C_NSBOOL)
+        self.assertArgHasType(
+            Security.CMSEncoderSetHasDetachedContent, 1, objc._C_NSBOOL
+        )
 
         self.assertResultHasType(Security.CMSEncoderGetHasDetachedContent, objc._C_INT)
         self.assertArgHasType(Security.CMSEncoderGetHasDetachedContent, 0, objc._C_ID)
@@ -114,11 +116,17 @@ class TestCMSEncoder(TestCase):
         self.assertArgHasType(Security.CMSEncoderAddSignedAttributes, 0, objc._C_ID)
         self.assertArgHasType(Security.CMSEncoderAddSignedAttributes, 1, objc._C_UINT)
 
-        self.assertResultHasType(Security.CMSEncoderSetCertificateChainMode, objc._C_INT)
+        self.assertResultHasType(
+            Security.CMSEncoderSetCertificateChainMode, objc._C_INT
+        )
         self.assertArgHasType(Security.CMSEncoderSetCertificateChainMode, 0, objc._C_ID)
-        self.assertArgHasType(Security.CMSEncoderSetCertificateChainMode, 1, objc._C_UINT)
+        self.assertArgHasType(
+            Security.CMSEncoderSetCertificateChainMode, 1, objc._C_UINT
+        )
 
-        self.assertResultHasType(Security.CMSEncoderGetCertificateChainMode, objc._C_INT)
+        self.assertResultHasType(
+            Security.CMSEncoderGetCertificateChainMode, objc._C_INT
+        )
         self.assertArgHasType(Security.CMSEncoderGetCertificateChainMode, 0, objc._C_ID)
         self.assertArgHasType(
             Security.CMSEncoderGetCertificateChainMode,

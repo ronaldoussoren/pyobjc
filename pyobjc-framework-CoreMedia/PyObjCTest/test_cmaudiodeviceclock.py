@@ -10,7 +10,9 @@ class TestCMAudioDeviceClock(TestCase):
         self.assertArgIsCFRetained(CoreMedia.CMAudioDeviceClockCreate, 2)
 
         self.assertArgIsOut(CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 2)
-        self.assertArgIsCFRetained(CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 2)
+        self.assertArgIsCFRetained(
+            CoreMedia.CMAudioDeviceClockCreateFromAudioDeviceID, 2
+        )
 
         CoreMedia.CMAudioDeviceClockSetAudioDeviceUID
         CoreMedia.CMAudioDeviceClockSetAudioDeviceID

@@ -45,7 +45,11 @@ try:
         {"required": True, "retval": {"type": sel32or64(b"f", b"d")}},
     )
     r(b"NSObject", b"time", {"required": True, "retval": {"type": "{_CMTime=qiIq}"}})
-    r(b"NSObject", b"type", {"required": True, "retval": {"type": sel32or64(b"i", b"q")}})
+    r(
+        b"NSObject",
+        b"type",
+        {"required": True, "retval": {"type": sel32or64(b"i", b"q")}},
+    )
     r(b"PHAsset", b"canPerformEditOperation:", {"retval": {"type": "Z"}})
     r(b"PHAsset", b"isFavorite", {"retval": {"type": "Z"}})
     r(b"PHAsset", b"isHidden", {"retval": {"type": "Z"}})
@@ -187,7 +191,11 @@ try:
     )
     r(b"PHFetchOptions", b"includeAllBurstAssets", {"retval": {"type": b"Z"}})
     r(b"PHFetchOptions", b"includeHiddenAssets", {"retval": {"type": "Z"}})
-    r(b"PHFetchOptions", b"setIncludeAllBurstAssets:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"PHFetchOptions",
+        b"setIncludeAllBurstAssets:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"PHFetchOptions", b"setIncludeHiddenAssets:", {"arguments": {2: {"type": "Z"}}})
     r(
         b"PHFetchOptions",
@@ -253,7 +261,11 @@ try:
             }
         },
     )
-    r(b"PHFetchResultChangeDetails", b"hasIncrementalChanges", {"retval": {"type": "Z"}})
+    r(
+        b"PHFetchResultChangeDetails",
+        b"hasIncrementalChanges",
+        {"retval": {"type": "Z"}},
+    )
     r(b"PHFetchResultChangeDetails", b"hasMoves", {"retval": {"type": "Z"}})
     r(
         b"PHImageManager",
@@ -450,7 +462,11 @@ try:
             }
         },
     )
-    r(b"PHLivePhotoEditingContext", b"duration", {"retval": {"type": b"{_CMTime=qiIq}"}})
+    r(
+        b"PHLivePhotoEditingContext",
+        b"duration",
+        {"retval": {"type": b"{_CMTime=qiIq}"}},
+    )
     r(
         b"PHLivePhotoEditingContext",
         b"frameProcessor",
@@ -467,7 +483,11 @@ try:
             }
         },
     )
-    r(b"PHLivePhotoEditingContext", b"photoTime", {"retval": {"type": b"{_CMTime=qiIq}"}})
+    r(
+        b"PHLivePhotoEditingContext",
+        b"photoTime",
+        {"retval": {"type": b"{_CMTime=qiIq}"}},
+    )
     r(
         b"PHLivePhotoEditingContext",
         b"prepareLivePhotoForPlaybackWithTargetSize:options:completionHandler:",
@@ -522,7 +542,11 @@ try:
             }
         },
     )
-    r(b"PHLivePhotoRequestOptions", b"isNetworkAccessAllowed", {"retval": {"type": b"Z"}})
+    r(
+        b"PHLivePhotoRequestOptions",
+        b"isNetworkAccessAllowed",
+        {"retval": {"type": b"Z"}},
+    )
     r(
         b"PHLivePhotoRequestOptions",
         b"progressHandler",

@@ -290,11 +290,11 @@ class TestArraysIn_AllArgs(TestCase):
     def testFixedSize(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        v, = o.make4Tuple_((1.0, 4.0, 8.0, 12.5))
+        (v,) = o.make4Tuple_((1.0, 4.0, 8.0, 12.5))
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1.0, 4.0, 8.0, 12.5])
 
-        v, = o.make4Tuple_((1, 2, 3, 4))
+        (v,) = o.make4Tuple_((1, 2, 3, 4))
         self.assertEqual(len(v), 4)
         self.assertEqual(list(v), [1.0, 2.0, 3.0, 4.0])
 
@@ -304,30 +304,30 @@ class TestArraysIn_AllArgs(TestCase):
         # self.assertRaises(ValueError, o.make4Tuple_, (1, 2, 3, 4, 5))
         # self.assertRaises(ValueError, o.make4Tuple_, objc.NULL)
 
-        v, = o.null4Tuple_(objc.NULL)
+        (v,) = o.null4Tuple_(objc.NULL)
         self.assertIs(v, objc.NULL)
 
     def testNullTerminated(self):
         o = Py_MetaDataTest_AllArgs.new()
 
-        v, = OC_MetaDataTest.makeStringArray_on_((b"hello", b"world", b"there"), o)
+        (v,) = OC_MetaDataTest.makeStringArray_on_((b"hello", b"world", b"there"), o)
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), ["hello", "world", "there"])
 
         NSObject = objc.lookUpClass("NSObject")
         p, q = NSObject.new(), NSObject.new()
-        v, = o.makeObjectArray_((p, q))
+        (v,) = o.makeObjectArray_((p, q))
         self.assertEqual(len(v), 2)
         self.assertIs(v[0], p)
         self.assertIs(v[1], q)
 
-        v, = OC_MetaDataTest.makeStringArray_on_((), o)
+        (v,) = OC_MetaDataTest.makeStringArray_on_((), o)
         self.assertEqual(len(v), 0)
 
         self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, [1, 2], o)
         self.assertRaises(ValueError, OC_MetaDataTest.makeStringArray_on_, objc.NULL, o)
 
-        v, = OC_MetaDataTest.nullStringArray_on_(objc.NULL, o)
+        (v,) = OC_MetaDataTest.nullStringArray_on_(objc.NULL, o)
         self.assertEqual(v, objc.NULL)
 
     def testWithCount(self):

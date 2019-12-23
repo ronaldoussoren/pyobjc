@@ -5,7 +5,9 @@ import libdispatch
 
 class TestIntrospectionAPI(TestCase):
     def test_function(self):
-        self.assertFalse(hasattr(libdispatch, "dispatch_introspection_hook_queue_create"))
+        self.assertFalse(
+            hasattr(libdispatch, "dispatch_introspection_hook_queue_create")
+        )
         self.assertFalse(
             hasattr(libdispatch, "dispatch_introspection_hook_queue_destroy")
         )

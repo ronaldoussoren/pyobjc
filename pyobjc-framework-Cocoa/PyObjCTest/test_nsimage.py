@@ -218,7 +218,9 @@ class TestNSImage(TestCase):
         self.assertIsInstance(NSImageNameTouchBarAudioOutputMuteTemplate, unicode)
         self.assertIsInstance(NSImageNameTouchBarAudioOutputVolumeHighTemplate, unicode)
         self.assertIsInstance(NSImageNameTouchBarAudioOutputVolumeLowTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAudioOutputVolumeMediumTemplate, unicode)
+        self.assertIsInstance(
+            NSImageNameTouchBarAudioOutputVolumeMediumTemplate, unicode
+        )
         self.assertIsInstance(NSImageNameTouchBarAudioOutputVolumeOffTemplate, unicode)
         self.assertIsInstance(NSImageNameTouchBarBookmarksTemplate, unicode)
         self.assertIsInstance(NSImageNameTouchBarColorPickerFill, unicode)

@@ -93,7 +93,9 @@ misc.update(
         "kPMPSErrorHandlerStr": b"com.apple.print.PrintSettings.PMPSErrorHandler",
         "kPMTotalBeginPagesStr": b"com.apple.print.PrintSettings.PMTotalBeginPages",
         "kPMBorderStr": b"com.apple.print.PrintSettings.PMBorder",
-        "kPMGraphicsContextDefault": b"com.apple.graphicscontext.default".decode("utf-8"),
+        "kPMGraphicsContextDefault": b"com.apple.graphicscontext.default".decode(
+            "utf-8"
+        ),
         "kPMPrintSelectionTitleKey": b"com.apple.printSelection.title".decode("utf-8"),
         "kDialogExtensionIntfIDStr": b"A996FD7E-B738-11D3-8519-0050E4603277".decode(
             "utf-8"
@@ -107,7 +109,9 @@ misc.update(
             "utf-8"
         ),
         "kPMLayoutNUpStr": b"com.apple.print.PrintSettings.PMLayoutNUp",
-        "kPMLayoutPDEKindID": b"com.apple.print.pde.LayoutUserOptionKind".decode("utf-8"),
+        "kPMLayoutPDEKindID": b"com.apple.print.pde.LayoutUserOptionKind".decode(
+            "utf-8"
+        ),
         "kAppPrintDialogTypeIDStr": b"BCB07250-E57F-11D3-8CA6-0050E4603277".decode(
             "utf-8"
         ),
@@ -171,7 +175,9 @@ misc.update(
         "kPMFaxPrefixStr": b"faxPrefix",
         "kPMVendorColorMatchingStr": b"AP_VendorColorMatching",
         "kPMPriorityPDEKindID": b"com.apple.print.pde.PriorityKind".decode("utf-8"),
-        "kPMPaperSourcePDEKindID": b"com.apple.print.pde.PaperSourceKind".decode("utf-8"),
+        "kPMPaperSourcePDEKindID": b"com.apple.print.pde.PaperSourceKind".decode(
+            "utf-8"
+        ),
         "kPMPaperFeedPDEKindID": b"com.apple.print.pde.PaperFeedKind".decode("utf-8"),
         "kPMUniPrinterPDEKindID": b"com.apple.print.pde.UniPrinterKind".decode("utf-8"),
         "kPMColorMatchingPDEKindID": b"com.apple.print.pde.ColorMatchingKind".decode(

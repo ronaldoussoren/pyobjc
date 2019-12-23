@@ -24,7 +24,9 @@ class TestNSDistributedNotificationCenter(TestCase):
             b"v@:@",
         )
         self.assertArgIsSEL(
-            NSDistributedNotificationCenter.addObserver_selector_name_object_, 1, b"v@:@"
+            NSDistributedNotificationCenter.addObserver_selector_name_object_,
+            1,
+            b"v@:@",
         )
 
         self.assertArgIsBOOL(

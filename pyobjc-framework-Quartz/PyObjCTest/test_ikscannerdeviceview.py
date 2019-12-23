@@ -22,8 +22,12 @@ class TestIKScannerDeviceView(TestCase):
         self.assertResultIsBOOL(IKScannerDeviceView.hasDisplayModeAdvanced)
         self.assertArgIsBOOL(IKScannerDeviceView.setHasDisplayModeAdvanced_, 0)
         self.assertResultIsBOOL(IKScannerDeviceView.displaysDownloadsDirectoryControl)
-        self.assertArgIsBOOL(IKScannerDeviceView.setDisplaysDownloadsDirectoryControl_, 0)
-        self.assertResultIsBOOL(IKScannerDeviceView.displaysPostProcessApplicationControl)
+        self.assertArgIsBOOL(
+            IKScannerDeviceView.setDisplaysDownloadsDirectoryControl_, 0
+        )
+        self.assertResultIsBOOL(
+            IKScannerDeviceView.displaysPostProcessApplicationControl
+        )
         self.assertArgIsBOOL(
             IKScannerDeviceView.setDisplaysPostProcessApplicationControl_, 0
         )

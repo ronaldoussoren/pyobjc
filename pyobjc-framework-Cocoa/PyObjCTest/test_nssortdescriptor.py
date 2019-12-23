@@ -6,7 +6,9 @@ class TestNSSortDescriptor(TestCase):
     def testMethods(self):
         self.assertArgIsBOOL(NSSortDescriptor.initWithKey_ascending_, 1)
         self.assertArgIsBOOL(NSSortDescriptor.initWithKey_ascending_selector_, 1)
-        self.assertArgIsSEL(NSSortDescriptor.initWithKey_ascending_selector_, 2, b"i@:@")
+        self.assertArgIsSEL(
+            NSSortDescriptor.initWithKey_ascending_selector_, 2, b"i@:@"
+        )
 
         self.assertResultIsBOOL(NSSortDescriptor.ascending)
 

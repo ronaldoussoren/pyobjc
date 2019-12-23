@@ -11,10 +11,14 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(GameCenter.GKAchievement, objc.objc_class)
 
             self.assertArgIsBlock(
-                GameCenter.GKAchievement.loadAchievementsWithCompletionHandler_, 0, b"v@@"
+                GameCenter.GKAchievement.loadAchievementsWithCompletionHandler_,
+                0,
+                b"v@@",
             )
             self.assertArgIsBlock(
-                GameCenter.GKAchievement.resetAchievementsWithCompletionHandler_, 0, b"v@"
+                GameCenter.GKAchievement.resetAchievementsWithCompletionHandler_,
+                0,
+                b"v@",
             )
             self.assertArgIsBlock(
                 GameCenter.GKAchievement.reportAchievements_withCompletionHandler_,
@@ -24,7 +28,9 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(GameCenter.GKAchievement.isCompleted)
 
             self.assertArgIsBlock(
-                GameCenter.GKAchievement.reportAchievementWithCompletionHandler_, 0, b"v@"
+                GameCenter.GKAchievement.reportAchievementWithCompletionHandler_,
+                0,
+                b"v@",
             )
 
         @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.9")

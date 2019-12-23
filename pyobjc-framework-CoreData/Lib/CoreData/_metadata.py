@@ -204,11 +204,27 @@ try:
     r(b"NSFetchRequest", b"includesSubentities", {"retval": {"type": "Z"}})
     r(b"NSFetchRequest", b"returnsDistinctResults", {"retval": {"type": "Z"}})
     r(b"NSFetchRequest", b"returnsObjectsAsFaults", {"retval": {"type": "Z"}})
-    r(b"NSFetchRequest", b"setIncludesPendingChanges:", {"arguments": {2: {"type": "Z"}}})
-    r(b"NSFetchRequest", b"setIncludesPropertyValues:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"NSFetchRequest",
+        b"setIncludesPendingChanges:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
+    r(
+        b"NSFetchRequest",
+        b"setIncludesPropertyValues:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"NSFetchRequest", b"setIncludesSubentities:", {"arguments": {2: {"type": "Z"}}})
-    r(b"NSFetchRequest", b"setReturnsDistinctResults:", {"arguments": {2: {"type": "Z"}}})
-    r(b"NSFetchRequest", b"setReturnsObjectsAsFaults:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"NSFetchRequest",
+        b"setReturnsDistinctResults:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
+    r(
+        b"NSFetchRequest",
+        b"setReturnsObjectsAsFaults:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(
         b"NSFetchRequest",
         b"setShouldRefreshRefetchedObjects:",
@@ -564,7 +580,11 @@ try:
         b"metadataForPersistentStoreWithURL:error:",
         {"arguments": {3: {"type_modifier": b"o"}}},
     )
-    r(b"NSPersistentStore", b"migrationManagerClass", {"retval": {"type_modifier": b"o"}})
+    r(
+        b"NSPersistentStore",
+        b"migrationManagerClass",
+        {"retval": {"type_modifier": b"o"}},
+    )
     r(
         b"NSPersistentStore",
         b"setMetadata:forPersistentStoreWithURL:error:",
@@ -684,7 +704,11 @@ try:
     )
     r(b"NSPersistentStoreCoordinator", b"tryLock", {"retval": {"type": "Z"}})
     r(b"NSPersistentStoreDescription", b"isReadOnly", {"retval": {"type": "Z"}})
-    r(b"NSPersistentStoreDescription", b"setReadOnly:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"NSPersistentStoreDescription",
+        b"setReadOnly:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(
         b"NSPersistentStoreDescription",
         b"setShouldAddStoreAsynchronously:",

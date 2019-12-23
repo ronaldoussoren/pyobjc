@@ -63,7 +63,9 @@ class TestNSRulerView(TestCase):
             TestNSRulerViewHelper.rulerView_willMoveMarker_toLocation_, objc._C_CGFloat
         )
         self.assertArgHasType(
-            TestNSRulerViewHelper.rulerView_willMoveMarker_toLocation_, 2, objc._C_CGFloat
+            TestNSRulerViewHelper.rulerView_willMoveMarker_toLocation_,
+            2,
+            objc._C_CGFloat,
         )
 
         self.assertResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldRemoveMarker_)
@@ -72,7 +74,9 @@ class TestNSRulerView(TestCase):
             TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, objc._C_CGFloat
         )
         self.assertArgHasType(
-            TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_, 2, objc._C_CGFloat
+            TestNSRulerViewHelper.rulerView_willAddMarker_atLocation_,
+            2,
+            objc._C_CGFloat,
         )
 
         self.assertResultHasType(

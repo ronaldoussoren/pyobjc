@@ -155,7 +155,9 @@ class TestBase(TestCase):
 
         v = CFCopyTypeIDDescription(CFAllocatorGetTypeID())
         self.assertIsInstance(v, unicode)
-        obj = CFURLCreateWithString(None, b"http://www.apple.com/".decode("ascii"), None)
+        obj = CFURLCreateWithString(
+            None, b"http://www.apple.com/".decode("ascii"), None
+        )
         i = CFGetTypeID(obj)
         self.assertIsInstance(i, (int, long))
         i = CFGetRetainCount(obj)
@@ -195,7 +197,9 @@ class TestBase(TestCase):
 
     @min_os_level("10.9")
     def testFunctions10_9(self):
-        obj = CFURLCreateWithString(None, b"http://www.apple.com/".decode("ascii"), None)
+        obj = CFURLCreateWithString(
+            None, b"http://www.apple.com/".decode("ascii"), None
+        )
         CFRetain(obj)
         CFAutorelease(obj)
         del obj

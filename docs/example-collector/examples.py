@@ -45,7 +45,9 @@ def zip_directory(input_dir, output_file, verbose):
                 continue
 
             zf.write(
-                os.path.join(dirpath, fn), os.path.join(relpath, fn), zipfile.ZIP_DEFLATED
+                os.path.join(dirpath, fn),
+                os.path.join(relpath, fn),
+                zipfile.ZIP_DEFLATED,
             )
     zf.close()
 
@@ -58,7 +60,9 @@ def convert_script_example(name, input_file, output_dir, verbose):
         os.makedirs(output_dir)
 
     with open(input_file) as fp_in:
-        with open(os.path.join(output_dir, os.path.basename(input_file)), "w") as fp_out:
+        with open(
+            os.path.join(output_dir, os.path.basename(input_file)), "w"
+        ) as fp_out:
             fp_out.write(fp_in.read())
 
     readme = "..."

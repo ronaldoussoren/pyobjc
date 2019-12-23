@@ -10,7 +10,8 @@ class TestNSOpenGLLayer(TestCase):
             NSOpenGLLayer.canDrawInOpenGLContext_pixelFormat_forLayerTime_displayTime_
         )
         self.assertArgIsIn(
-            NSOpenGLLayer.canDrawInOpenGLContext_pixelFormat_forLayerTime_displayTime_, 3
+            NSOpenGLLayer.canDrawInOpenGLContext_pixelFormat_forLayerTime_displayTime_,
+            3,
         )
 
         self.assertArgIsIn(

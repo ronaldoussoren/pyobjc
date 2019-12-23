@@ -7,7 +7,9 @@ class TestNSDocumentController(TestCase):
         self.assertArgIsBOOL(
             NSDocumentController.openUntitledDocumentAndDisplay_error_, 0
         )
-        self.assertArgIsOut(NSDocumentController.openUntitledDocumentAndDisplay_error_, 1)
+        self.assertArgIsOut(
+            NSDocumentController.openUntitledDocumentAndDisplay_error_, 1
+        )
         self.assertArgIsOut(NSDocumentController.makeUntitledDocumentOfType_error_, 1)
         self.assertArgIsBOOL(
             NSDocumentController.openDocumentWithContentsOfURL_display_error_, 1
@@ -71,7 +73,9 @@ class TestNSDocumentController(TestCase):
         self.assertArgIsBOOL(
             NSDocumentController.openDocumentWithContentsOfURL_display_, 1
         )
-        self.assertArgIsBOOL(NSDocumentController.openUntitledDocumentOfType_display_, 1)
+        self.assertArgIsBOOL(
+            NSDocumentController.openUntitledDocumentOfType_display_, 1
+        )
         self.assertArgIsBOOL(NSDocumentController.setShouldCreateUI_, 0)
         self.assertResultIsBOOL(NSDocumentController.shouldCreateUI)
 

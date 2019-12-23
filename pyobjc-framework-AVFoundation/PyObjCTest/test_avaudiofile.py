@@ -29,8 +29,12 @@ class TestAVAudioFile(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioFile.readIntoBuffer_error_)
         self.assertArgIsOut(AVFoundation.AVAudioFile.readIntoBuffer_error_, 1)
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_)
-        self.assertArgIsOut(AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_, 2)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_
+        )
+        self.assertArgIsOut(
+            AVFoundation.AVAudioFile.readIntoBuffer_frameCount_error_, 2
+        )
 
         self.assertResultIsBOOL(AVFoundation.AVAudioFile.writeFromBuffer_error_)
         self.assertArgIsOut(AVFoundation.AVAudioFile.writeFromBuffer_error_, 1)

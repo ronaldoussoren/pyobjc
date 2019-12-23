@@ -16,7 +16,9 @@ class TestOnceAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_once_f, 0, objc._C_INOUT + objc._C_PTR + objc._C_LNG
         )
-        self.assertArgHasType(libdispatch.dispatch_once_f, 1, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            libdispatch.dispatch_once_f, 1, objc._C_PTR + objc._C_VOID
+        )
         self.assertArgIsFunction(libdispatch.dispatch_once_f, 2, b"v^v", 0)
 
 

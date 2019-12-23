@@ -16,7 +16,9 @@ class TestNSManagedObjectContext(TestCase):
 
     def testConstants(self):
         self.assertIsInstance(NSManagedObjectContextDidSaveNotification, unicode)
-        self.assertIsInstance(NSManagedObjectContextObjectsDidChangeNotification, unicode)
+        self.assertIsInstance(
+            NSManagedObjectContextObjectsDidChangeNotification, unicode
+        )
         self.assertIsInstance(NSInsertedObjectsKey, unicode)
         self.assertIsInstance(NSUpdatedObjectsKey, unicode)
         self.assertIsInstance(NSDeletedObjectsKey, unicode)
@@ -39,7 +41,9 @@ class TestNSManagedObjectContext(TestCase):
         self.assertArgIsOut(NSManagedObjectContext.save_, 0)
         self.assertResultIsBOOL(NSManagedObjectContext.tryLock)
         self.assertResultIsBOOL(NSManagedObjectContext.propagatesDeletesAtEndOfEvent)
-        self.assertArgIsBOOL(NSManagedObjectContext.setPropagatesDeletesAtEndOfEvent_, 0)
+        self.assertArgIsBOOL(
+            NSManagedObjectContext.setPropagatesDeletesAtEndOfEvent_, 0
+        )
         self.assertResultIsBOOL(NSManagedObjectContext.retainsRegisteredObjects)
         self.assertArgIsBOOL(NSManagedObjectContext.setRetainsRegisteredObjects_, 0)
 
@@ -49,7 +53,9 @@ class TestNSManagedObjectContext(TestCase):
         self.assertResultIsBOOL(
             NSManagedObjectContext.obtainPermanentIDsForObjects_error_
         )
-        self.assertArgIsOut(NSManagedObjectContext.obtainPermanentIDsForObjects_error_, 1)
+        self.assertArgIsOut(
+            NSManagedObjectContext.obtainPermanentIDsForObjects_error_, 1
+        )
 
     @min_os_level("10.6")
     def testMethods10_6(self):
@@ -67,7 +73,9 @@ class TestNSManagedObjectContext(TestCase):
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(NSManagedObjectContext.shouldDeleteInaccessibleFaults)
-        self.assertArgIsBOOL(NSManagedObjectContext.setShouldDeleteInaccessibleFaults_, 0)
+        self.assertArgIsBOOL(
+            NSManagedObjectContext.setShouldDeleteInaccessibleFaults_, 0
+        )
 
         self.assertResultIsBOOL(
             NSManagedObjectContext.shouldHandleInaccessibleFault_forObjectID_triggeredByProperty_
@@ -75,8 +83,12 @@ class TestNSManagedObjectContext(TestCase):
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(NSManagedObjectContext.setQueryGenerationFromToken_error_)
-        self.assertArgIsOut(NSManagedObjectContext.setQueryGenerationFromToken_error_, 1)
+        self.assertResultIsBOOL(
+            NSManagedObjectContext.setQueryGenerationFromToken_error_
+        )
+        self.assertArgIsOut(
+            NSManagedObjectContext.setQueryGenerationFromToken_error_, 1
+        )
         self.assertResultIsBOOL(
             NSManagedObjectContext.automaticallyMergesChangesFromParent
         )

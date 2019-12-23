@@ -80,9 +80,15 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTProfileLevel_MP4V_AdvancedSimple_L4, unicode
         )
-        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H263_Profile0_Level10, unicode)
-        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H263_Profile0_Level45, unicode)
-        self.assertIsInstance(VideoToolbox.kVTProfileLevel_H263_Profile3_Level45, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_H263_Profile0_Level10, unicode
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_H263_Profile0_Level45, unicode
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_H263_Profile3_Level45, unicode
+        )
         self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_Depth, unicode)
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_MaxFrameDelayCount, unicode
@@ -99,15 +105,21 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_ExpectedDuration, unicode
         )
-        self.assertIsInstance(VideoToolbox.kVTEncodeFrameOptionKey_ForceKeyFrame, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTEncodeFrameOptionKey_ForceKeyFrame, unicode
+        )
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_CleanAperture, unicode
         )
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_PixelAspectRatio, unicode
         )
-        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_FieldCount, unicode)
-        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_FieldDetail, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_FieldCount, unicode
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_FieldDetail, unicode
+        )
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_AspectRatio16x9, unicode
         )
@@ -120,8 +132,12 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_TransferFunction, unicode
         )
-        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_YCbCrMatrix, unicode)
-        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_ICCProfile, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_YCbCrMatrix, unicode
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_ICCProfile, unicode
+        )
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_PixelTransferProperties, unicode
         )
@@ -171,7 +187,9 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_UsingHardwareAcceleratedVideoEncoder,
             unicode,
         )
-        self.assertIsInstance(VideoToolbox.kVTCompressionPropertyKey_GammaLevel, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_GammaLevel, unicode
+        )
 
     @min_os_level("10.10")
     def test_constants10_10(self):
@@ -182,7 +200,9 @@ class TestVTCompressionProperties(TestCase):
     @min_os_level("10.13")
     def test_constants10_13(self):
         self.assertIsInstance(VideoToolbox.kVTProfileLevel_HEVC_Main_AutoLevel, unicode)
-        self.assertIsInstance(VideoToolbox.kVTProfileLevel_HEVC_Main10_AutoLevel, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_HEVC_Main10_AutoLevel, unicode
+        )
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_BaseLayerFrameRate, unicode
         )

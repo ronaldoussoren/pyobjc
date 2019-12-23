@@ -145,7 +145,9 @@ class TestNSGraphics(TestCase):
 
             self.assertArgSizeInArg(NSRectFillListWithGrays, 0, 2)
             self.assertArgSizeInArg(NSRectFillListWithGrays, 1, 2)
-            NSRectFillListWithGrays([((0, 0), (1, 2)), ((10, 50), (9, 9))], (0.5, 0.6), 2)
+            NSRectFillListWithGrays(
+                [((0, 0), (1, 2)), ((10, 50), (9, 9))], (0.5, 0.6), 2
+            )
 
             self.assertArgSizeInArg(NSRectFillListWithColors, 0, 2)
             self.assertArgSizeInArg(NSRectFillListWithColors, 1, 2)

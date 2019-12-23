@@ -16,7 +16,12 @@ SelectionIndexesObservationContext = 1093
 import objc
 from objc import super
 from Cocoa import NSView, NSKeyValueObservingOptionNew, NSKeyValueObservingOptionOld
-from Cocoa import NSKeyValueChangeNewKey, NSKeyValueChangeOldKey, NSUnionRect, NSMakeRect
+from Cocoa import (
+    NSKeyValueChangeNewKey,
+    NSKeyValueChangeOldKey,
+    NSUnionRect,
+    NSMakeRect,
+)
 from Cocoa import NSDrawLightBezel, NSBezierPath, NSNotFound, NSIntersectsRect, NSColor
 from Cocoa import NSShiftKeyMask, NSIndexSet, NSInsetRect
 from Circle import Circle
@@ -97,13 +102,18 @@ class GraphicsView(NSView):
             self.selectionIndexesContainer = observableObject
             self.selectionIndexesKeyPath = observableKeyPath
             self.selectionIndexesContainer.addObserver_forKeyPath_options_context_(
-                self, self.selectionIndexesKeyPath, 0, SelectionIndexesObservationContext
+                self,
+                self.selectionIndexesKeyPath,
+                0,
+                SelectionIndexesObservationContext,
             )
         self.setNeedsDisplay_(True)
 
     def unbind_(self, bindingName):
         if bindingName == "graphics":
-            self.graphicsContainer.removeObserver_forKeyPath_(self, self.graphicsKeyPath)
+            self.graphicsContainer.removeObserver_forKeyPath_(
+                self, self.graphicsKeyPath
+            )
             self.graphicsContainer = None
             self.graphicsKeyPath = None
         if bindingName == "selectionIndexes":

@@ -12,7 +12,8 @@ class TestDRFSObject(TestCase):
             2,
         )
         self.assertArgIsBOOL(
-            DiscRecording.DRFSObject.propertiesForFilesystem_mergeWithOtherFilesystems_, 1
+            DiscRecording.DRFSObject.propertiesForFilesystem_mergeWithOtherFilesystems_,
+            1,
         )
 
     def testConstants(self):

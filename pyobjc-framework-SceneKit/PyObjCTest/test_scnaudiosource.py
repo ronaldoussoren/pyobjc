@@ -18,10 +18,14 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
             self.assertArgIsBOOL(SceneKit.SCNAudioSource.setShouldStream_, 0)
 
             self.assertResultIsBlock(SceneKit.SCNAudioPlayer.willStartPlayback, b"v")
-            self.assertArgIsBlock(SceneKit.SCNAudioPlayer.setWillStartPlayback_, 0, b"v")
+            self.assertArgIsBlock(
+                SceneKit.SCNAudioPlayer.setWillStartPlayback_, 0, b"v"
+            )
 
             self.assertResultIsBlock(SceneKit.SCNAudioPlayer.didFinishPlayback, b"v")
-            self.assertArgIsBlock(SceneKit.SCNAudioPlayer.setDidFinishPlayback_, 0, b"v")
+            self.assertArgIsBlock(
+                SceneKit.SCNAudioPlayer.setDidFinishPlayback_, 0, b"v"
+            )
 
 
 if __name__ == "__main__":

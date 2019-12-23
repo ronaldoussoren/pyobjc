@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLTypes (TestCase):
+
+class TestMTLTypes(TestCase):
     def test_structs(self):
         v = Metal.MTLOrigin()
         self.assertEqual(v.x, 0)
@@ -43,5 +44,3 @@ class TestMTLTypes (TestCase):
         v = Metal.MTLSamplePositionMake(0.5, 1.5)
         self.assertIsInstance(v, Metal.MTLSamplePosition)
         self.assertEqual(v, (0.5, 1.5))
-
-

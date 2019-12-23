@@ -28,5 +28,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.12")
         def test_functions10_12(self):
-            self.assertArgIsOut(MetalKit.MTKModelIOVertexDescriptorFromMetalWithError, 1)
-            self.assertArgIsOut(MetalKit.MTKMetalVertexDescriptorFromModelIOWithError, 1)
+            self.assertArgIsOut(
+                MetalKit.MTKModelIOVertexDescriptorFromMetalWithError, 1
+            )
+            self.assertArgIsOut(
+                MetalKit.MTKMetalVertexDescriptorFromModelIOWithError, 1
+            )

@@ -93,7 +93,10 @@ try:
         b"resetHandler",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )

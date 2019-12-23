@@ -1638,7 +1638,11 @@ try:
         b"match:player:didChangeState:",
         {"arguments": {4: {"type": sel32or64(b"I", b"Q")}}},
     )
-    r(b"NSObject", b"match:shouldReinviteDisconnectedPlayer:", {"retval": {"type": "Z"}})
+    r(
+        b"NSObject",
+        b"match:shouldReinviteDisconnectedPlayer:",
+        {"retval": {"type": "Z"}},
+    )
     r(b"NSObject", b"match:shouldReinvitePlayer:", {"retval": {"type": "Z"}})
     r(
         b"NSObject",

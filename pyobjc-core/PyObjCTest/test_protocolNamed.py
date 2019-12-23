@@ -11,7 +11,9 @@ class TestProtocols(TestCase):
         self.assertIsInstance(p, objc.formal_protocol)
 
     def testNoProtocol(self):
-        self.assertRaises(objc.ProtocolError, objc.protocolNamed, "PyObjCFooBarProtocol")
+        self.assertRaises(
+            objc.ProtocolError, objc.protocolNamed, "PyObjCFooBarProtocol"
+        )
 
     def testBasic2(self):
         orig_protocolsForProcess = objc._objc.protocolsForProcess

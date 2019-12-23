@@ -34,7 +34,9 @@ class TestDateFormatter(TestCase):
         self.assertIsInstance(kCFDateFormatterVeryShortWeekdaySymbols, unicode)
         self.assertIsInstance(kCFDateFormatterStandaloneWeekdaySymbols, unicode)
         self.assertIsInstance(kCFDateFormatterShortStandaloneWeekdaySymbols, unicode)
-        self.assertIsInstance(kCFDateFormatterVeryShortStandaloneWeekdaySymbols, unicode)
+        self.assertIsInstance(
+            kCFDateFormatterVeryShortStandaloneWeekdaySymbols, unicode
+        )
         self.assertIsInstance(kCFDateFormatterQuarterSymbols, unicode)
         self.assertIsInstance(kCFDateFormatterShortQuarterSymbols, unicode)
         self.assertIsInstance(kCFDateFormatterStandaloneQuarterSymbols, unicode)

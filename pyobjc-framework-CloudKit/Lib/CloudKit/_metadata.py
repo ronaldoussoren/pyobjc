@@ -1103,7 +1103,11 @@ try:
             }
         },
     )
-    r(b"CKFetchRecordZoneChangesOperation", b"fetchAllChanges", {"retval": {"type": "Z"}})
+    r(
+        b"CKFetchRecordZoneChangesOperation",
+        b"fetchAllChanges",
+        {"retval": {"type": "Z"}},
+    )
     r(
         b"CKFetchRecordZoneChangesOperation",
         b"fetchRecordZoneChangesCompletionBlock",
@@ -1853,7 +1857,10 @@ try:
         b"longLivedOperationWasPersistedBlock",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )

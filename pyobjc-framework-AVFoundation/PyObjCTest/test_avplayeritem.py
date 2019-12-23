@@ -98,7 +98,9 @@ class TestAVPlayerItem(TestCase):
         )
 
         self.assertResultIsBOOL(AVFoundation.AVPlayerItem.isAudioSpatializationAllowed)
-        self.assertArgIsBOOL(AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0)
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0
+        )
 
 
 if __name__ == "__main__":

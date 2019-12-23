@@ -184,7 +184,9 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
         elif name == "value":
             return self.environ[envname]
 
-    def tableView_setObjectValue_forTableColumn_row_(self, aView, value, aCol, rowIndex):
+    def tableView_setObjectValue_forTableColumn_row_(
+        self, aView, value, aCol, rowIndex
+    ):
         """ Change the name or value of an environment variable """
         if self.environ is None:
             aView.reloadData()

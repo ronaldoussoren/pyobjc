@@ -26,7 +26,9 @@ if sys.maxsize > 2 ** 32:
                 GameCenter.GKSession.sendDataToAllPeers_withDataMode_error_, 2
             )
 
-            self.assertResultIsBOOL(GameCenter.GKSession.acceptConnectionFromPeer_error_)
+            self.assertResultIsBOOL(
+                GameCenter.GKSession.acceptConnectionFromPeer_error_
+            )
             self.assertArgIsOut(GameCenter.GKSession.acceptConnectionFromPeer_error_, 1)
 
 

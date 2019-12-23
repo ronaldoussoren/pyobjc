@@ -17,7 +17,9 @@ class TestSCNetworkReachability(TestCase):
             None, ("0.0.0.0", 20990), ("www.python.org", 80)
         )
 
-        with contextlib.closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sd:
+        with contextlib.closing(
+            socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ) as sd:
             sd.listen(5)
 
             self.assertResultIsCFRetained(SCNetworkReachabilityCreateWithAddress)
@@ -52,7 +54,9 @@ class TestSCNetworkReachability(TestCase):
             CFRunLoopRunInMode(kCFRunLoopDefaultMode, 1.0, False)
 
             self.assertResultIsBOOL(SCNetworkReachabilityUnscheduleFromRunLoop)
-            r = SCNetworkReachabilityUnscheduleFromRunLoop(ref, rl, kCFRunLoopCommonModes)
+            r = SCNetworkReachabilityUnscheduleFromRunLoop(
+                ref, rl, kCFRunLoopCommonModes
+            )
 
         @min_os_level("10.6")
         def testFunctions10_6(self):

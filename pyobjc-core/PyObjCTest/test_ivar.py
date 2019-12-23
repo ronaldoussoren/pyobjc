@@ -66,7 +66,9 @@ class TestInstanceVariables(TestCase):
 
         # Can't rely on this for doubles...
         # self.assertEqual(self.object.doubleVar, 0.0)
-        self.assertRaises(ValueError, lambda x: setattr(self.object, "doubleVar", x), "h")
+        self.assertRaises(
+            ValueError, lambda x: setattr(self.object, "doubleVar", x), "h"
+        )
         self.object.doubleVar = 42.0
         self.assertAlmostEqual(self.object.doubleVar, 42.0)
 

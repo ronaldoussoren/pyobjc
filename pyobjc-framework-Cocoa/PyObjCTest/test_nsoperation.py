@@ -15,7 +15,8 @@ class TestNSOperation(TestCase):
         self.assertEqual(NSOperationQueueDefaultMaxConcurrentOperationCount, -1)
 
         self.assertEqual(
-            NSOperationQualityOfServiceUserInteractive, NSQualityOfServiceUserInteractive
+            NSOperationQualityOfServiceUserInteractive,
+            NSQualityOfServiceUserInteractive,
         )
         self.assertEqual(
             NSOperationQualityOfServiceUserInitiated, NSQualityOfServiceUserInitiated

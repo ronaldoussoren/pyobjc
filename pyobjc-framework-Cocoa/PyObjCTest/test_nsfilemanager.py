@@ -202,7 +202,9 @@ class TestNSFileManager(TestCase):
         )
         self.assertResultIsBOOL(NSFileManager.isUbiquitousItemAtURL_)
 
-        self.assertResultIsBOOL(NSFileManager.startDownloadingUbiquitousItemAtURL_error_)
+        self.assertResultIsBOOL(
+            NSFileManager.startDownloadingUbiquitousItemAtURL_error_
+        )
         self.assertArgIsOut(NSFileManager.startDownloadingUbiquitousItemAtURL_error_, 1)
 
         self.assertResultIsBOOL(NSFileManager.evictUbiquitousItemAtURL_error_)
@@ -410,7 +412,9 @@ class TestNSFileManager(TestCase):
         self.assertResultHasType(
             NSFileManager.fileSystemRepresentationWithPath_, b"^" + objc._C_CHAR_AS_TEXT
         )
-        self.assertResultIsNullTerminated(NSFileManager.fileSystemRepresentationWithPath_)
+        self.assertResultIsNullTerminated(
+            NSFileManager.fileSystemRepresentationWithPath_
+        )
         self.assertArgHasType(
             NSFileManager.stringWithFileSystemRepresentation_length_,
             0,

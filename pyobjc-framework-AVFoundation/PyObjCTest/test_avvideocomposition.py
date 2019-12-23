@@ -9,7 +9,9 @@ class TestAVVideoCompositionHelper(AVFoundation.NSObject):
     ):
         return 1
 
-    def videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_(self, a, b):
+    def videoComposition_shouldContinueValidatingAfterFindingEmptyTimeRange_(
+        self, a, b
+    ):
         return 1
 
     def videoComposition_shouldContinueValidatingAfterFindingInvalidTimeRangeInInstruction_(
@@ -33,7 +35,8 @@ class TestAVVideoComposition(TestCase):
             AVFoundation.AVMutableVideoCompositionInstruction.enablePostProcessing
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVMutableVideoCompositionInstruction.setEnablePostProcessing_, 0
+            AVFoundation.AVMutableVideoCompositionInstruction.setEnablePostProcessing_,
+            0,
         )
 
         self.assertResultIsBOOL(

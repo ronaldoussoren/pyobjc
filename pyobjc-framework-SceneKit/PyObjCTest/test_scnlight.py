@@ -20,7 +20,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
             self.assertIsInstance(SceneKit.SCNLightAttenuationStartKey, unicode)
             self.assertIsInstance(SceneKit.SCNLightAttenuationEndKey, unicode)
-            self.assertIsInstance(SceneKit.SCNLightAttenuationFalloffExponentKey, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNLightAttenuationFalloffExponentKey, unicode
+            )
             self.assertIsInstance(SceneKit.SCNLightSpotInnerAngleKey, unicode)
             self.assertIsInstance(SceneKit.SCNLightSpotOuterAngleKey, unicode)
             self.assertIsInstance(SceneKit.SCNLightShadowNearClippingKey, unicode)

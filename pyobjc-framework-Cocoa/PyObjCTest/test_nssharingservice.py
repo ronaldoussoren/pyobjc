@@ -38,7 +38,9 @@ class TestNSSharingService(TestCase):
         self.assertIsInstance(AppKit.NSSharingServiceNameComposeEmail, unicode)
         self.assertIsInstance(AppKit.NSSharingServiceNameComposeMessage, unicode)
         self.assertIsInstance(AppKit.NSSharingServiceNameSendViaAirDrop, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNameAddToSafariReadingList, unicode)
+        self.assertIsInstance(
+            AppKit.NSSharingServiceNameAddToSafariReadingList, unicode
+        )
         self.assertIsInstance(AppKit.NSSharingServiceNameAddToIPhoto, unicode)
         self.assertIsInstance(AppKit.NSSharingServiceNameAddToAperture, unicode)
         self.assertIsInstance(

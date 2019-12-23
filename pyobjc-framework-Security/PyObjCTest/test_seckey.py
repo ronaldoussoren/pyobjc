@@ -117,7 +117,9 @@ class TestSecKey(TestCase):
             Security.kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512, unicode
         )
         self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureRFC4754, unicode)
-        self.assertIsInstance(Security.kSecKeyAlgorithmECDSASignatureDigestX962, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmECDSASignatureDigestX962, unicode
+        )
         self.assertIsInstance(
             Security.kSecKeyAlgorithmECDSASignatureDigestX962SHA1, unicode
         )
@@ -233,12 +235,16 @@ class TestSecKey(TestCase):
             Security.kSecKeyAlgorithmECDHKeyExchangeCofactorX963SHA512, unicode
         )
 
-        self.assertIsInstance(Security.kSecKeyKeyExchangeParameterRequestedSize, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyKeyExchangeParameterRequestedSize, unicode
+        )
         self.assertIsInstance(Security.kSecKeyKeyExchangeParameterSharedInfo, unicode)
 
     @min_os_level("10.13")
     def test_constants_10_13(self):
-        self.assertIsInstance(Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA1, unicode)
+        self.assertIsInstance(
+            Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA1, unicode
+        )
         self.assertIsInstance(
             Security.kSecKeyAlgorithmRSASignatureDigestPSSSHA224, unicode
         )
@@ -433,7 +439,9 @@ class TestSecKey(TestCase):
         self.assertArgHasType(Security.SecKeyCreateEncryptedData, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateEncryptedData, 2, objc._C_ID)
         self.assertArgHasType(
-            Security.SecKeyCreateEncryptedData, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecKeyCreateEncryptedData,
+            3,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
         self.assertResultHasType(Security.SecKeyCreateDecryptedData, objc._C_ID)
@@ -442,7 +450,9 @@ class TestSecKey(TestCase):
         self.assertArgHasType(Security.SecKeyCreateDecryptedData, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeyCreateDecryptedData, 2, objc._C_ID)
         self.assertArgHasType(
-            Security.SecKeyCreateDecryptedData, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecKeyCreateDecryptedData,
+            3,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
         self.assertResultHasType(Security.SecKeyCopyKeyExchangeResult, objc._C_ID)

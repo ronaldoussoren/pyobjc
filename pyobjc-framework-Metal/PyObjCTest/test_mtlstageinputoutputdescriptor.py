@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class MTLStageInputOutputDescriptor (TestCase):
+
+class MTLStageInputOutputDescriptor(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLAttributeFormatInvalid, 0)
         self.assertEqual(Metal.MTLAttributeFormatUChar2, 1)

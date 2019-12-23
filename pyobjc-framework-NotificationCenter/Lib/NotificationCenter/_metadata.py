@@ -81,7 +81,11 @@ try:
         b"widgetList:shouldReorderRow:",
         {"retval": {"type": "Z"}, "arguments": {3: {"type": "Q"}}},
     )
-    r(b"NSObject", b"widgetList:viewControllerForRow:", {"arguments": {3: {"type": "Q"}}})
+    r(
+        b"NSObject",
+        b"widgetList:viewControllerForRow:",
+        {"arguments": {3: {"type": "Q"}}},
+    )
     r(
         b"NSObject",
         b"widgetMarginInsetsForProposedMarginInsets:",

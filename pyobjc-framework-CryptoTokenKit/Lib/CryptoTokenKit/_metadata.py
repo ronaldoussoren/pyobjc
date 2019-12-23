@@ -322,7 +322,11 @@ try:
             }
         },
     )
-    r(b"TKSmartCardUserInteractionForConfirmation", b"result", {"retval": {"type": "Z"}})
+    r(
+        b"TKSmartCardUserInteractionForConfirmation",
+        b"result",
+        {"retval": {"type": "Z"}},
+    )
     r(
         b"TKSmartCardUserInteractionForConfirmation",
         b"setResult:",

@@ -143,7 +143,9 @@ class TestCFSocketStream(TestCase):
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertIsInstance(kCFStreamPropertySocketExtendedBackgroundIdleMode, unicode)
+        self.assertIsInstance(
+            kCFStreamPropertySocketExtendedBackgroundIdleMode, unicode
+        )
 
 
 if __name__ == "__main__":

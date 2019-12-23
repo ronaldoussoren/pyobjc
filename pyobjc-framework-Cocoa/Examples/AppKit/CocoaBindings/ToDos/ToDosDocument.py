@@ -49,4 +49,6 @@ NSValueTransformer.setValueTransformer_forName_(
 )
 
 overdueTransformer = OverdueTransformer.alloc().init()
-NSValueTransformer.setValueTransformer_forName_(overdueTransformer, "OverdueTransformer")
+NSValueTransformer.setValueTransformer_forName_(
+    overdueTransformer, "OverdueTransformer"
+)

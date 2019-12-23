@@ -48,7 +48,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.13")
         def testMethods10_13(self):
-            self.assertResultIsBOOL(CloudKit.CKNotificationInfo.shouldSendMutableContent)
+            self.assertResultIsBOOL(
+                CloudKit.CKNotificationInfo.shouldSendMutableContent
+            )
             self.assertArgIsBOOL(
                 CloudKit.CKNotificationInfo.setShouldSendMutableContent_, 0
             )

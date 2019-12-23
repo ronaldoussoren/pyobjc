@@ -120,7 +120,9 @@ def _load(mod):
     mod.kCGModalPanelWindowLevel = mod.CGWindowLevelForKey(
         mod.kCGModalPanelWindowLevelKey
     )
-    mod.kCGPopUpMenuWindowLevel = mod.CGWindowLevelForKey(mod.kCGPopUpMenuWindowLevelKey)
+    mod.kCGPopUpMenuWindowLevel = mod.CGWindowLevelForKey(
+        mod.kCGPopUpMenuWindowLevelKey
+    )
     mod.kCGDraggingWindowLevel = mod.CGWindowLevelForKey(mod.kCGDraggingWindowLevelKey)
     mod.kCGScreenSaverWindowLevel = mod.CGWindowLevelForKey(
         mod.kCGScreenSaverWindowLevelKey

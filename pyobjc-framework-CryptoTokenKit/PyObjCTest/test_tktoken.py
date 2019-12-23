@@ -40,9 +40,13 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.12")
         def testMethods(self):
             self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeyAlgorithm.isAlgorithm_)
-            self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeyAlgorithm.supportsAlgorithm_)
+            self.assertResultIsBOOL(
+                CryptoTokenKit.TKTokenKeyAlgorithm.supportsAlgorithm_
+            )
 
-            self.assertResultIsBOOL(CryptoTokenKit.TKTokenAuthOperation.finishWithError_)
+            self.assertResultIsBOOL(
+                CryptoTokenKit.TKTokenAuthOperation.finishWithError_
+            )
             self.assertArgIsOut(CryptoTokenKit.TKTokenAuthOperation.finishWithError_, 0)
 
         @min_sdk_level("10.12")

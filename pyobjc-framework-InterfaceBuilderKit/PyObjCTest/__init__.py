@@ -8,4 +8,6 @@ if (
     # Check for:
     # DYLD_FRAMEWORK_PATH='/Developer/Library/PrivateFrameworks/'
 
-    raise ImportError("Please define DYLD_FRAMEWORK_PATH, otherwise the tests will fail")
+    raise ImportError(
+        "Please define DYLD_FRAMEWORK_PATH, otherwise the tests will fail"
+    )

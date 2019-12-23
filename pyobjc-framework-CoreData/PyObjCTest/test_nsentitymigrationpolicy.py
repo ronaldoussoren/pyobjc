@@ -14,8 +14,12 @@ class TestNSEntityMigrationPolicy(TestCase):
 
     @min_os_level("10.5")
     def testMethods(self):
-        self.assertResultIsBOOL(NSEntityMigrationPolicy.beginEntityMapping_manager_error_)
-        self.assertArgIsOut(NSEntityMigrationPolicy.beginEntityMapping_manager_error_, 2)
+        self.assertResultIsBOOL(
+            NSEntityMigrationPolicy.beginEntityMapping_manager_error_
+        )
+        self.assertArgIsOut(
+            NSEntityMigrationPolicy.beginEntityMapping_manager_error_, 2
+        )
 
         self.assertResultIsBOOL(
             NSEntityMigrationPolicy.createDestinationInstancesForSourceInstance_entityMapping_manager_error_
@@ -29,7 +33,8 @@ class TestNSEntityMigrationPolicy(TestCase):
             NSEntityMigrationPolicy.endInstanceCreationForEntityMapping_manager_error_
         )
         self.assertArgIsOut(
-            NSEntityMigrationPolicy.endInstanceCreationForEntityMapping_manager_error_, 2
+            NSEntityMigrationPolicy.endInstanceCreationForEntityMapping_manager_error_,
+            2,
         )
 
         self.assertResultIsBOOL(

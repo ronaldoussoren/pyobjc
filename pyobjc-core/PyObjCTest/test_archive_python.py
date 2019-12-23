@@ -102,7 +102,11 @@ reduce_global = reduce_global()
 # Quick hack to add a proper __repr__ to class C in
 # pickletester, makes it a lot easier to debug.
 def C__repr__(self):
-    return "<%s instance at %#x: %r>" % (self.__class__.__name__, id(self), self.__dict__)
+    return "<%s instance at %#x: %r>" % (
+        self.__class__.__name__,
+        id(self),
+        self.__dict__,
+    )
 
 
 test.pickletester.C.__repr__ = C__repr__
@@ -514,7 +518,9 @@ class TestKeyedArchiveSimple(TestCase):
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(
             v,
-            bytes if self.isKeyed else (NSData if sys.version_info[0] == 3 else unicode),
+            bytes
+            if self.isKeyed
+            else (NSData if sys.version_info[0] == 3 else unicode),
         )
         self.assertEqual(o, v)
 
@@ -1105,15 +1111,21 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
 
     @expectedFailure
     def test_recursive_list_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_dict_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_set_subclass_and_inst(self):
@@ -1363,15 +1375,21 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
 
     @expectedFailure
     def test_recursive_list_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_list_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_tuple_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_dict_subclass_and_inst(self):
-        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(self)
+        test.pickletester.AbstractPickleTests.test_recursive_dict_subclass_and_inst(
+            self
+        )
 
     @expectedFailure
     def test_recursive_set_subclass_and_inst(self):

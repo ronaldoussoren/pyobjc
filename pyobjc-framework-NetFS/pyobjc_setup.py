@@ -364,7 +364,7 @@ class pyobjc_build_ext(build_ext.build_ext):
         # in 2.3 and later the headers are in the egg,
         # before that we ship a copy.
         if not os.path.isfile("Modules/pyobjc-api.h"):
-            dist, = pkg_resources.require("pyobjc-core")
+            (dist,) = pkg_resources.require("pyobjc-core")
 
             include_root = os.path.join(self.build_temp, "pyobjc-include")
             if os.path.exists(include_root):
@@ -417,9 +417,9 @@ def Extension(*args, **kwds):
         # We're likely on a system with de Xcode Command Line Tools.
         # Explicitly use the most recent problems to avoid compile problems.
         data = subprocess.check_output(
-                ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
-                universal_newlines=True,
-            ).strip()
+            ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
+            universal_newlines=True,
+        ).strip()
         data = data.strip()
         if data:
             cflags.append("-isysroot")
@@ -500,7 +500,9 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
                     min_os_level,
                 )
         elif max_os_level != None:
-            msg = "This distribution is only supported on MacOSX <= %s" % (max_os_level,)
+            msg = "This distribution is only supported on MacOSX <= %s" % (
+                max_os_level,
+            )
         else:
             msg = "This distribution is only supported on MacOSX"
 
@@ -554,7 +556,8 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         k["long_description"] += "-------------\n"
         k["long_description"] += "\n"
         k["long_description"] += (
-            "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n" % (REPO_NAME,)
+            "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n"
+            % (REPO_NAME,)
         )
         k["long_description"] += (
             "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/%s/issues?status=new&status=open>`_\n\n"

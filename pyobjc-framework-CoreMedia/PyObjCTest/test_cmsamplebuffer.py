@@ -10,7 +10,9 @@ CMSampleBufferInvalidateCallback = b"v^{opaqueCMSampleBuffer=}Q"
 class TestCMSampleBuffer(TestCase):
     def test_constants(self):
         self.assertEqual(CoreMedia.kCMSampleBufferError_AllocationFailed, -12730)
-        self.assertEqual(CoreMedia.kCMSampleBufferError_RequiredParameterMissing, -12731)
+        self.assertEqual(
+            CoreMedia.kCMSampleBufferError_RequiredParameterMissing, -12731
+        )
         self.assertEqual(CoreMedia.kCMSampleBufferError_AlreadyHasDataBuffer, -12732)
         self.assertEqual(CoreMedia.kCMSampleBufferError_BufferNotReady, -12733)
         self.assertEqual(CoreMedia.kCMSampleBufferError_SampleIndexOutOfRange, -12734)
@@ -109,9 +111,12 @@ class TestCMSampleBuffer(TestCase):
         )
         self.assertIsInstance(CoreMedia.kCMSampleBufferAttachmentKey_Reverse, unicode)
         self.assertIsInstance(
-            CoreMedia.kCMSampleBufferAttachmentKey_FillDiscontinuitiesWithSilence, unicode
+            CoreMedia.kCMSampleBufferAttachmentKey_FillDiscontinuitiesWithSilence,
+            unicode,
         )
-        self.assertIsInstance(CoreMedia.kCMSampleBufferAttachmentKey_EmptyMedia, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMSampleBufferAttachmentKey_EmptyMedia, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMSampleBufferAttachmentKey_PermanentEmptyMedia, unicode
         )
@@ -156,9 +161,13 @@ class TestCMSampleBuffer(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMHEVCTemporalLevelInfoKey_TemporalLevel, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMHEVCTemporalLevelInfoKey_ProfileSpace, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMHEVCTemporalLevelInfoKey_ProfileSpace, unicode
+        )
         self.assertIsInstance(CoreMedia.kCMHEVCTemporalLevelInfoKey_TierFlag, unicode)
-        self.assertIsInstance(CoreMedia.kCMHEVCTemporalLevelInfoKey_ProfileIndex, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMHEVCTemporalLevelInfoKey_ProfileIndex, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMHEVCTemporalLevelInfoKey_ProfileCompatibilityFlags, unicode
         )
@@ -204,7 +213,9 @@ class TestCMSampleBuffer(TestCase):
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreate, 11)
         self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreate, 11)
 
-        self.assertArgIsBOOL(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 2)
+        self.assertArgIsBOOL(
+            CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 2
+        )
         self.assertArgIsFunction(
             CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions,
             3,
@@ -215,7 +226,9 @@ class TestCMSampleBuffer(TestCase):
         self.assertArgSizeInArg(
             CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 8, 6
         )
-        self.assertArgIsOut(CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9)
+        self.assertArgIsOut(
+            CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9
+        )
         self.assertArgIsCFRetained(
             CoreMedia.CMAudioSampleBufferCreateWithPacketDescriptions, 9
         )
@@ -348,7 +361,9 @@ class TestCMSampleBuffer(TestCase):
 
         self.assertArgIsIn(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 3)
         self.assertArgIsOut(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
-        self.assertArgIsCFRetained(CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4)
+        self.assertArgIsCFRetained(
+            CoreMedia.CMSampleBufferCreateReadyWithImageBuffer, 4
+        )
 
         CoreMedia.CMSampleBufferSetDataFailed
 

@@ -15,7 +15,9 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                CloudKit.CKAcceptSharesOperation.setAcceptSharesCompletionBlock_, 0, b"v@"
+                CloudKit.CKAcceptSharesOperation.setAcceptSharesCompletionBlock_,
+                0,
+                b"v@",
             )
             self.assertResultIsBlock(
                 CloudKit.CKAcceptSharesOperation.acceptSharesCompletionBlock, b"v@"

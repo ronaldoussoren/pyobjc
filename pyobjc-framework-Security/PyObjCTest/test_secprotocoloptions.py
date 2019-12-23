@@ -57,7 +57,9 @@ class TestSecProtocolOptions(TestCase):
             sec_protocol_key_update_t,
         )
         self.assertArgIsBlock(
-            Security.sec_protocol_options_set_challenge_block, 1, sec_protocol_challenge_t
+            Security.sec_protocol_options_set_challenge_block,
+            1,
+            sec_protocol_challenge_t,
         )
         self.assertArgIsBlock(
             Security.sec_protocol_options_set_verify_block, 1, sec_protocol_verify_t

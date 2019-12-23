@@ -66,7 +66,9 @@ if sys.maxsize >= 2 ** 32:
             )
 
             self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.disableMOBIKE)
-            self.assertArgIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.setDisableMOBIKE_, 0)
+            self.assertArgIsBOOL(
+                NetworkExtension.NEVPNProtocolIKEv2.setDisableMOBIKE_, 0
+            )
 
             self.assertResultIsBOOL(NetworkExtension.NEVPNProtocolIKEv2.disableRedirect)
             self.assertArgIsBOOL(

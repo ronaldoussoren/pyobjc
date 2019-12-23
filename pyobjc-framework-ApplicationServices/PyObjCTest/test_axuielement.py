@@ -70,7 +70,9 @@ class TestAXUIElement(TestCase):
 
         self.assertIsInstance(HIServices.AXObserverGetTypeID(), (int, long))
 
-        self.assertArgIsFunction(HIServices.AXObserverCreate, 1, AXObserverCallback, True)
+        self.assertArgIsFunction(
+            HIServices.AXObserverCreate, 1, AXObserverCallback, True
+        )
         self.assertArgIsOut(HIServices.AXObserverCreate, 2)
         self.assertArgIsCFRetained(HIServices.AXObserverCreate, 2)
 

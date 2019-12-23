@@ -32,7 +32,9 @@ class TestGKMatch(TestCase):
         self.assertResultIsBOOL(GameKit.GKMatch.sendData_toPlayers_dataMode_error_)
         self.assertArgIsOut(GameKit.GKMatch.sendData_toPlayers_dataMode_error_, 3)
 
-        self.assertResultIsBOOL(GameKit.GKMatch.sendDataToAllPlayers_withDataMode_error_)
+        self.assertResultIsBOOL(
+            GameKit.GKMatch.sendDataToAllPlayers_withDataMode_error_
+        )
         self.assertArgIsOut(GameKit.GKMatch.sendDataToAllPlayers_withDataMode_error_, 2)
 
     def testProtocolMethods(self):

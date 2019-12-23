@@ -94,7 +94,9 @@ class TestNSBrowser(TestCase):
         self.assertEqual(NSBrowserDropOn, 0)
         self.assertEqual(NSBrowserDropAbove, 1)
 
-        self.assertIsInstance(NSBrowserColumnConfigurationDidChangeNotification, unicode)
+        self.assertIsInstance(
+            NSBrowserColumnConfigurationDidChangeNotification, unicode
+        )
         self.assertEqual(NSAppKitVersionNumberWithContinuousScrollingBrowser, 680.0)
         self.assertEqual(NSAppKitVersionNumberWithColumnResizingBrowser, 685.0)
 

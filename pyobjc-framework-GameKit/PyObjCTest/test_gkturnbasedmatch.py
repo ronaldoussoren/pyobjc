@@ -68,7 +68,9 @@ class TestGKTurnBasedMatch(TestCase):
         )
 
         self.assertArgIsBlock(
-            GameKit.GKTurnBasedMatch.findMatchForRequest_withCompletionHandler_, 1, b"v@@"
+            GameKit.GKTurnBasedMatch.findMatchForRequest_withCompletionHandler_,
+            1,
+            b"v@@",
         )
         self.assertArgIsBlock(
             GameKit.GKTurnBasedMatch.loadMatchesWithCompletionHandler_, 0, b"v@@"

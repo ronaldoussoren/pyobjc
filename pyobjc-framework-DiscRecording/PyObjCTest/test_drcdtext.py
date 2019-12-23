@@ -49,7 +49,9 @@ class TestDRCDText(TestCase):
         self.assertIsInstance(
             DiscRecording.DRCDTextCopyrightAssertedForSpecialMessagesKey, unicode
         )
-        self.assertIsInstance(DiscRecording.DRCDTextCopyrightAssertedForNamesKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRCDTextCopyrightAssertedForNamesKey, unicode
+        )
         self.assertIsInstance(
             DiscRecording.DRCDTextCopyrightAssertedForTitlesKey, unicode
         )

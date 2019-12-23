@@ -5,7 +5,9 @@ import CoreServices
 class TestLSQuarantine(TestCase):
     def testConstants(self):
         self.assertIsInstance(CoreServices.kLSQuarantineAgentNameKey, unicode)
-        self.assertIsInstance(CoreServices.kLSQuarantineAgentBundleIdentifierKey, unicode)
+        self.assertIsInstance(
+            CoreServices.kLSQuarantineAgentBundleIdentifierKey, unicode
+        )
         self.assertIsInstance(CoreServices.kLSQuarantineTimeStampKey, unicode)
         self.assertIsInstance(CoreServices.kLSQuarantineTypeKey, unicode)
         self.assertIsInstance(CoreServices.kLSQuarantineTypeWebDownload, unicode)

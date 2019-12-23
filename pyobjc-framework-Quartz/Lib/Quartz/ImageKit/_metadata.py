@@ -136,7 +136,11 @@ try:
         b"setAllowsMultipleSelection:",
         {"arguments": {2: {"type": b"Z"}}},
     )
-    r(b"IKImageBrowserView", b"setAllowsReordering:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"IKImageBrowserView",
+        b"setAllowsReordering:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"IKImageBrowserView", b"setAnimates:", {"arguments": {2: {"type": b"Z"}}})
     r(
         b"IKImageBrowserView",

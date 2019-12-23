@@ -84,7 +84,9 @@ class TestNSBitmapImageRep(TestCase):
         rPlane = buffer(rPlane)
 
         gPlane = array.array("B")
-        gPlane.fromlist([y % 256 for y in range(0, height) for x in range(width, 0, -1)])
+        gPlane.fromlist(
+            [y % 256 for y in range(0, height) for x in range(width, 0, -1)]
+        )
         gPlane = buffer(gPlane)
 
         bPlane = array.array("B")

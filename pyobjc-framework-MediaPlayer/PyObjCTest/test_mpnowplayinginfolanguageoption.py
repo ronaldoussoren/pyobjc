@@ -18,10 +18,12 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicTranscribesSpokenDialog, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicTranscribesSpokenDialog,
+                unicode,
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicDescribesMusicAndSound, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicDescribesMusicAndSound,
+                unicode,
             )
             self.assertIsInstance(
                 MediaPlayer.MPLanguageOptionCharacteristicEasyToRead, unicode

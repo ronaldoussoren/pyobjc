@@ -7,7 +7,8 @@ class TestAVCaptureInput(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(
-            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, unicode
+            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification,
+            unicode,
         )
 
     def testMethods(self):
@@ -20,14 +21,18 @@ class TestAVCaptureInput(TestCase):
         self.assertArgIsOut(AVFoundation.AVCaptureDeviceInput.initWithDevice_error_, 1)
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesMouseClicks)
-        self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesMouseClicks_, 0)
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureScreenInput.setCapturesMouseClicks_, 0
+        )
 
     @min_os_level("10.8")
     def testMethods10_8(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.capturesCursor)
         self.assertArgIsBOOL(AVFoundation.AVCaptureScreenInput.setCapturesCursor_, 0)
 
-        self.assertResultIsBOOL(AVFoundation.AVCaptureScreenInput.removesDuplicateFrames)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureScreenInput.removesDuplicateFrames
+        )
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
         )

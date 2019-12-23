@@ -97,7 +97,8 @@ functions = {
     ),
     "CWKeychainCopyEAPIdentity": (
         sel32or64(
-            b"l^{__CFData=}^^{OpaqueSecIdentityRef=}", b"i^{__CFData=}^^{__SecIdentity=}"
+            b"l^{__CFData=}^^{OpaqueSecIdentityRef=}",
+            b"i^{__CFData=}^^{__SecIdentity=}",
         ),
         "",
         {
@@ -135,7 +136,11 @@ try:
         b"requireAdministratorForAssociation",
         {"retval": {"type": b"Z"}},
     )
-    r(b"CWConfiguration", b"requireAdministratorForIBSSMode", {"retval": {"type": b"Z"}})
+    r(
+        b"CWConfiguration",
+        b"requireAdministratorForIBSSMode",
+        {"retval": {"type": b"Z"}},
+    )
     r(b"CWConfiguration", b"requireAdministratorForPower", {"retval": {"type": b"Z"}})
     r(
         b"CWConfiguration",
@@ -328,13 +333,21 @@ try:
     r(b"CWNetwork", b"supportsPHYMode:", {"retval": {"type": b"Z"}})
     r(b"CWNetwork", b"supportsSecurity:", {"retval": {"type": b"Z"}})
     r(b"CWNetworkProfile", b"isEqualToNetworkProfile:", {"retval": {"type": b"Z"}})
-    r(b"CWWiFiClient", b"startMonitoringEventWithType:error:", {"retval": {"type": b"Z"}})
+    r(
+        b"CWWiFiClient",
+        b"startMonitoringEventWithType:error:",
+        {"retval": {"type": b"Z"}},
+    )
     r(
         b"CWWiFiClient",
         b"stopMonitoringAllEventsAndReturnError:",
         {"retval": {"type": b"Z"}},
     )
-    r(b"CWWiFiClient", b"stopMonitoringEventWithType:error:", {"retval": {"type": b"Z"}})
+    r(
+        b"CWWiFiClient",
+        b"stopMonitoringEventWithType:error:",
+        {"retval": {"type": b"Z"}},
+    )
     r(b"CWWirelessProfile", b"isEqualToProfile:", {"retval": {"type": b"Z"}})
     r(
         b"NSObject",

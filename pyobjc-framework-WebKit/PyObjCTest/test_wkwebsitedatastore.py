@@ -17,7 +17,9 @@ class TestWKWebsiteDataStore(TestCase):
             b"v",
         )
         self.assertArgIsBlock(
-            WKWebsiteDataStore.removeDataOfTypes_modifiedSince_completionHandler_, 2, b"v"
+            WKWebsiteDataStore.removeDataOfTypes_modifiedSince_completionHandler_,
+            2,
+            b"v",
         )
 
 

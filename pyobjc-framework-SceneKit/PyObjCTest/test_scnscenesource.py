@@ -77,7 +77,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
         @min_os_level("10.10")
         def test_constants10_10(self):
-            self.assertIsInstance(SceneKit.SCNSceneSourceConvertUnitsToMetersKey, unicode)
+            self.assertIsInstance(
+                SceneKit.SCNSceneSourceConvertUnitsToMetersKey, unicode
+            )
             self.assertIsInstance(SceneKit.SCNSceneSourceConvertToYUpKey, unicode)
             self.assertIsInstance(
                 SceneKit.SCNSceneSourceAnimationImportPolicyKey, unicode

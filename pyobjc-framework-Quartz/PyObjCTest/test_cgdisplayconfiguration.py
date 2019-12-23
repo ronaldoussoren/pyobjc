@@ -155,8 +155,12 @@ class TestCGDisplayConfiguration(TestCase):
             CGConfigureDisplayWithDisplayMode, 0, b"^{_CGDisplayConfigRef=}"
         )
         self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 1, b"I")
-        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 2, b"^{CGDisplayMode=}")
-        self.assertArgHasType(CGConfigureDisplayWithDisplayMode, 3, b"^{__CFDictionary=}")
+        self.assertArgHasType(
+            CGConfigureDisplayWithDisplayMode, 2, b"^{CGDisplayMode=}"
+        )
+        self.assertArgHasType(
+            CGConfigureDisplayWithDisplayMode, 3, b"^{__CFDictionary=}"
+        )
 
 
 if __name__ == "__main__":

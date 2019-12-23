@@ -19,7 +19,10 @@ class TestCFODNode(TestCase):
         CFOpenDirectory.ODQuerySynchronize
 
         self.assertArgIsFunction(
-            CFOpenDirectory.ODQuerySetCallback, 1, b"v^{__ODQuery=}@^{__CFError=}^v", True
+            CFOpenDirectory.ODQuerySetCallback,
+            1,
+            b"v^{__ODQuery=}@^{__CFError=}^v",
+            True,
         )
 
         CFOpenDirectory.ODQueryScheduleWithRunLoop

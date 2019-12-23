@@ -105,7 +105,9 @@ class TestCoreWLANTypes(TestCase):
         )
         self.assertEqual(CoreWLAN.kCWRefNotBoundErr, CoreWLAN.kCWReferenceNotBoundErr)
         self.assertEqual(CoreWLAN.kCWIPCError, CoreWLAN.kCWIPCFailureErr)
-        self.assertEqual(CoreWLAN.kCWOpNotPermitted, CoreWLAN.kCWOperationNotPermittedErr)
+        self.assertEqual(
+            CoreWLAN.kCWOpNotPermitted, CoreWLAN.kCWOperationNotPermittedErr
+        )
         self.assertEqual(CoreWLAN.kCWError, CoreWLAN.kCWErr)
         self.assertEqual(CoreWLAN.kCWPHYMode11A, 0)
         self.assertEqual(CoreWLAN.kCWPHYMode11B, 1)

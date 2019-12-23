@@ -46,7 +46,9 @@ class TestAVAudioSession(TestCase):
         self.assertEqual(AVFoundation.AVAudioSessionInterruptionTypeBegan, 1)
         self.assertEqual(AVFoundation.AVAudioSessionInterruptionTypeEnded, 0)
 
-        self.assertEqual(AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeBegin, 1)
+        self.assertEqual(
+            AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeBegin, 1
+        )
         self.assertEqual(AVFoundation.AVAudioSessionSilenceSecondaryAudioHintTypeEnd, 0)
 
         self.assertEqual(

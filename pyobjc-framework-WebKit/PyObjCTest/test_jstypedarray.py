@@ -8,7 +8,8 @@ class TestJSTypedArray(TestCase):
     @min_os_level("10.12")
     def test_functions(self):
         self.assertResultHasType(
-            JavaScriptCore.JSObjectMakeTypedArray, JavaScriptCore.JSObjectRef.__typestr__
+            JavaScriptCore.JSObjectMakeTypedArray,
+            JavaScriptCore.JSObjectRef.__typestr__,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectMakeTypedArray,
@@ -88,7 +89,9 @@ class TestJSTypedArray(TestCase):
             JavaScriptCore.JSContextRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 1, objc._C_UINT
+            JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset,
+            1,
+            objc._C_UINT,
         )
         self.assertArgHasType(
             JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset,
@@ -96,10 +99,14 @@ class TestJSTypedArray(TestCase):
             JavaScriptCore.JSObjectRef.__typestr__,
         )
         self.assertArgHasType(
-            JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 3, objc._C_ULNG
+            JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset,
+            3,
+            objc._C_ULNG,
         )  # size_t
         self.assertArgHasType(
-            JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset, 4, objc._C_ULNG
+            JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset,
+            4,
+            objc._C_ULNG,
         )  # size_t
         self.assertArgHasType(
             JavaScriptCore.JSObjectMakeTypedArrayWithArrayBufferAndOffset,

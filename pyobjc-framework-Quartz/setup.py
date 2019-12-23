@@ -53,7 +53,7 @@ subpackages = [
     if os.path.exists(os.path.join("Lib/Quartz", fn, "__init__.py"))
 ]
 
-VERSION = '6.2b1'
+VERSION = "6.2b1"
 
 setup(
     name="pyobjc-framework-Quartz",
@@ -61,17 +61,33 @@ setup(
     packages=["Quartz"] + subpackages,
     ext_modules=[
         # CoreVideo
-        Extension("Quartz.CoreVideo._CVPixelBuffer", ["Modules/_CVPixelBuffer.m"], py_limited_api=True),
+        Extension(
+            "Quartz.CoreVideo._CVPixelBuffer",
+            ["Modules/_CVPixelBuffer.m"],
+            py_limited_api=True,
+        ),
         # CoreGraphics
-        Extension("Quartz.CoreGraphics._inlines", ["Modules/_CoreGraphics_inlines.m"], py_limited_api=True),
+        Extension(
+            "Quartz.CoreGraphics._inlines",
+            ["Modules/_CoreGraphics_inlines.m"],
+            py_limited_api=True,
+        ),
         Extension(
             "Quartz.CoreGraphics._callbacks",
             ["Modules/_callbacks.m"],
             extra_compile_args=["-Wno-deprecated-declarations"],
-            #py_limited_api=True,
+            # py_limited_api=True,
         ),
-        Extension("Quartz.CoreGraphics._doubleindirect", ["Modules/_doubleindirect.m"], py_limited_api=True),
-        Extension("Quartz.CoreGraphics._sortandmap", ["Modules/_sortandmap.m"], py_limited_api=True),
+        Extension(
+            "Quartz.CoreGraphics._doubleindirect",
+            ["Modules/_doubleindirect.m"],
+            py_limited_api=True,
+        ),
+        Extension(
+            "Quartz.CoreGraphics._sortandmap",
+            ["Modules/_sortandmap.m"],
+            py_limited_api=True,
+        ),
         Extension(
             "Quartz.CoreGraphics._coregraphics",
             ["Modules/_coregraphics.m"],
@@ -81,30 +97,34 @@ setup(
         Extension(
             "Quartz.ImageKit._imagekit",
             ["Modules/_imagekit.m"],
-            extra_link_args=["-framework", "Quartz"], py_limited_api=True,
+            extra_link_args=["-framework", "Quartz"],
+            py_limited_api=True,
         ),
         Extension(
             "Quartz.PDFKit._PDFKit",
             ["Modules/_PDFKit.m"],
-            extra_link_args=["-framework", "Quartz"], py_limited_api=True,
+            extra_link_args=["-framework", "Quartz"],
+            py_limited_api=True,
         ),
         Extension(
             "Quartz.QuartzCore._quartzcore",
             ["Modules/_quartzcore.m"],
-            extra_link_args=["-framework", "QuartzCore"], py_limited_api=True,
+            extra_link_args=["-framework", "QuartzCore"],
+            py_limited_api=True,
         ),
         Extension(
             "Quartz.QuickLookUI._QuickLookUI",
             ["Modules/_QuickLookUI.m"],
-            extra_link_args=["-framework", "Quartz"], py_limited_api=True,
+            extra_link_args=["-framework", "Quartz"],
+            py_limited_api=True,
         ),
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
-    #options=dict(
+    # options=dict(
     #    bdist_wheel=dict(
     #        py_limited_api="cp36"
     #    )
-    #),
+    # ),
 )

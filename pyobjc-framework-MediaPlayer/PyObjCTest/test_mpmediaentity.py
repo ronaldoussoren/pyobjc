@@ -17,7 +17,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.12")
         def testConstants(self):
-            self.assertIsInstance(MediaPlayer.MPMediaEntityPropertyPersistentID, unicode)
+            self.assertIsInstance(
+                MediaPlayer.MPMediaEntityPropertyPersistentID, unicode
+            )
 
 
 if __name__ == "__main__":

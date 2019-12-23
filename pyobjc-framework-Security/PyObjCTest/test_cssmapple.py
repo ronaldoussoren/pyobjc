@@ -66,7 +66,9 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSM_ACL_PROCESS_SELECTOR_CURRENT_VERSION"))
         self.assertFalse(hasattr(Security, "CSSM_ACL_PROCESS_SUBJECT_SELECTOR"))
         self.assertFalse(hasattr(Security, "CSSM_ACL_KEYCHAIN_PROMPT_CURRENT_VERSION"))
-        self.assertFalse(hasattr(Security, "CSSM_ACL_KEYCHAIN_PROMPT_REQUIRE_PASSPHRASE"))
+        self.assertFalse(
+            hasattr(Security, "CSSM_ACL_KEYCHAIN_PROMPT_REQUIRE_PASSPHRASE")
+        )
         self.assertFalse(hasattr(Security, "CSSM_ACL_KEYCHAIN_PROMPT_UNSIGNED"))
         self.assertFalse(hasattr(Security, "CSSM_ACL_KEYCHAIN_PROMPT_UNSIGNED_ACT"))
         self.assertFalse(hasattr(Security, "CSSM_ACL_KEYCHAIN_PROMPT_INVALID"))
@@ -212,7 +214,9 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_APPLEDL_FILE_TOO_BIG"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLEDL_INVALID_DATABASE_BLOB"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLEDL_INVALID_KEY_BLOB"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLEDL_INCOMPATIBLE_DATABASE_BLOB"))
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLEDL_INCOMPATIBLE_DATABASE_BLOB")
+        )
         self.assertFalse(hasattr(Security, "CSSMERR_APPLEDL_INCOMPATIBLE_KEY_BLOB"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_HOSTNAME_MISMATCH"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_UNKNOWN_CRITICAL_EXTEN"))
@@ -221,7 +225,9 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INVALID_AUTHORITY_ID"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INVALID_SUBJECT_ID"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INVALID_KEY_USAGE"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INVALID_EXTENDED_KEY_USAGE"))
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLETP_INVALID_EXTENDED_KEY_USAGE")
+        )
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INVALID_ID_LINKAGE"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_PATH_LEN_CONSTRAINT"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INVALID_ROOT"))
@@ -235,12 +241,18 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_CRL_INVALID_ANCHOR_CERT"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_CRL_POLICY_FAIL"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_IDP_FAIL"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_CERT_NOT_FOUND_FROM_ISSUER"))
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLETP_CERT_NOT_FOUND_FROM_ISSUER")
+        )
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_BAD_CERT_FROM_ISSUER"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_SMIME_EMAIL_ADDRS_NOT_FOUND"))
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLETP_SMIME_EMAIL_ADDRS_NOT_FOUND")
+        )
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_SMIME_BAD_EXT_KEY_USE"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_SMIME_BAD_KEY_USE"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_SMIME_KEYUSAGE_NOT_CRITICAL"))
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLETP_SMIME_KEYUSAGE_NOT_CRITICAL")
+        )
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_SMIME_NO_EMAIL_ADDRS"))
         self.assertFalse(
             hasattr(Security, "CSSMERR_APPLETP_SMIME_SUBJ_ALT_NAME_NOT_CRIT")
@@ -250,7 +262,9 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_OCSP_BAD_REQUEST"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_OCSP_UNAVAILABLE"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_OCSP_STATUS_UNRECOGNIZED"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INCOMPLETE_REVOCATION_CHECK"))
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLETP_INCOMPLETE_REVOCATION_CHECK")
+        )
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_NETWORK_FAILURE"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_OCSP_NOT_TRUSTED"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_OCSP_INVALID_ANCHOR_CERT"))
@@ -271,8 +285,12 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_RS_BAD_EXTENDED_KEY_USAGE"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_TRUST_SETTING_DENY"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_INVALID_EMPTY_SUBJECT"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_UNKNOWN_QUAL_CERT_STATEMENT"))
-        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_MISSING_REQUIRED_EXTENSION"))
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLETP_UNKNOWN_QUAL_CERT_STATEMENT")
+        )
+        self.assertFalse(
+            hasattr(Security, "CSSMERR_APPLETP_MISSING_REQUIRED_EXTENSION")
+        )
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_EXT_KEYUSAGE_NOT_CRITICAL"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_IDENTIFIER_MISSING"))
         self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_CA_PIN_MISMATCH"))
@@ -389,8 +407,12 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "CSSM_CERT_STATUS_IS_IN_ANCHORS"))
         self.assertFalse(hasattr(Security, "CSSM_CERT_STATUS_IS_ROOT"))
         self.assertFalse(hasattr(Security, "CSSM_CERT_STATUS_IS_FROM_NET"))
-        self.assertFalse(hasattr(Security, "CSSM_CERT_STATUS_TRUST_SETTINGS_FOUND_USER"))
-        self.assertFalse(hasattr(Security, "CSSM_CERT_STATUS_TRUST_SETTINGS_FOUND_ADMIN"))
+        self.assertFalse(
+            hasattr(Security, "CSSM_CERT_STATUS_TRUST_SETTINGS_FOUND_USER")
+        )
+        self.assertFalse(
+            hasattr(Security, "CSSM_CERT_STATUS_TRUST_SETTINGS_FOUND_ADMIN")
+        )
         self.assertFalse(
             hasattr(Security, "CSSM_CERT_STATUS_TRUST_SETTINGS_FOUND_SYSTEM")
         )

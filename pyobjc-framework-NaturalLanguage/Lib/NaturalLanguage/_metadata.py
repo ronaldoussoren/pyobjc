@@ -117,7 +117,9 @@ try:
         b"getVector:forString:",
         {
             "retval": {"type": b"Z"},
-            "arguments": {2: {"type_modifier": b"o", "c_array_of_variable_length": True}},
+            "arguments": {
+                2: {"type_modifier": b"o", "c_array_of_variable_length": True}
+            },
         },
     )
     r(
@@ -135,7 +137,11 @@ try:
         b"initWithContentsOfURL:error:",
         {"arguments": {3: {"type_modifier": b"o"}}},
     )
-    r(b"NLGazetteer", b"initWithData:error:", {"arguments": {3: {"type_modifier": b"o"}}})
+    r(
+        b"NLGazetteer",
+        b"initWithData:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
     r(
         b"NLGazetteer",
         b"initWithDictionary:language:error:",
@@ -151,7 +157,11 @@ try:
         b"modelWithContentsOfURL:error:",
         {"arguments": {3: {"type_modifier": b"o"}}},
     )
-    r(b"NLModel", b"modelWithMLModel:error:", {"arguments": {3: {"type_modifier": b"o"}}})
+    r(
+        b"NLModel",
+        b"modelWithMLModel:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
     r(
         b"NLTagger",
         b"enumerateTagsInRange:unit:scheme:options:usingBlock:",

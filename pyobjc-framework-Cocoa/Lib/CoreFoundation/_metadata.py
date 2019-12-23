@@ -112,7 +112,9 @@ misc.update(
         ),
         "CFXMLEntityReferenceInfo": objc.createStructType(
             "CFXMLEntityReferenceInfo",
-            sel32or64(b"{_CFXMLEntityReferenceInfo=l}", b"{_CFXMLEntityReferenceInfo=q}"),
+            sel32or64(
+                b"{_CFXMLEntityReferenceInfo=l}", b"{_CFXMLEntityReferenceInfo=q}"
+            ),
             ["entityType"],
         ),
         "CFXMLProcessingInstructionInfo": objc.createStructType(
@@ -136,7 +138,8 @@ misc.update(
         "CFXMLDocumentInfo": objc.createStructType(
             "CFXMLDocumentInfo",
             sel32or64(
-                b"{_CFXMLDocumentInfo=^{__CFURL=}L}", b"{_CFXMLDocumentInfo=^{__CFURL=}I}"
+                b"{_CFXMLDocumentInfo=^{__CFURL=}L}",
+                b"{_CFXMLDocumentInfo=^{__CFURL=}I}",
             ),
             ["sourceURL", "encoding"],
         ),
@@ -322,7 +325,8 @@ functions = {
     ),
     "CFBitVectorCreateMutable": (
         sel32or64(
-            b"^{__CFBitVector=}^{__CFAllocator=}l", b"^{__CFBitVector=}^{__CFAllocator=}q"
+            b"^{__CFBitVector=}^{__CFAllocator=}l",
+            b"^{__CFBitVector=}^{__CFAllocator=}q",
         ),
         "",
         {"retval": {"already_cfretained": True}},
@@ -699,7 +703,9 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "CFWriteStreamSetDispatchQueue": (
-        sel32or64(b"v^{__CFWriteStream=}^{dispatch_queue_s=}", b"v^{__CFWriteStream=}@"),
+        sel32or64(
+            b"v^{__CFWriteStream=}^{dispatch_queue_s=}", b"v^{__CFWriteStream=}@"
+        ),
     ),
     "CFStringCreateMutableCopy": (
         sel32or64(
@@ -729,13 +735,18 @@ functions = {
                         "retval": {"type": b"v"},
                         "arguments": {0: {"type": b"^v"}},
                     },
-                    "block": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"v"}}},
+                    "block": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"v"}},
+                    },
                 }
             }
         },
     ),
     "CFStringPad": (
-        sel32or64(b"v^{__CFString=}^{__CFString=}ll", b"v^{__CFString=}^{__CFString=}qq"),
+        sel32or64(
+            b"v^{__CFString=}^{__CFString=}ll", b"v^{__CFString=}^{__CFString=}qq"
+        ),
     ),
     "CFLocaleGetValue": (b"@^{__CFLocale=}^{__CFString=}",),
     "CFLocaleCopyISOLanguageCodes": (
@@ -888,7 +899,9 @@ functions = {
     ),
     "CFSocketGetNative": (b"i^{__CFSocket=}",),
     "CFConvertFloatSwappedToHost": (b"f{_CFSwappedFloat32=I}",),
-    "CFBundleOpenBundleResourceMap": (sel32or64(b"s^{__CFBundle=}", b"i^{__CFBundle=}"),),
+    "CFBundleOpenBundleResourceMap": (
+        sel32or64(b"s^{__CFBundle=}", b"i^{__CFBundle=}"),
+    ),
     "CFDataFind": (
         sel32or64(
             b"{_CFRange=ll}^{__CFData=}^{__CFData=}{_CFRange=ll}L",
@@ -988,7 +1001,9 @@ functions = {
         "",
         {"arguments": {1: {"c_array_length_in_arg": 2, "type_modifier": "n"}}},
     ),
-    "CFDictionaryGetCount": (sel32or64(b"l^{__CFDictionary=}", b"q^{__CFDictionary=}"),),
+    "CFDictionaryGetCount": (
+        sel32or64(b"l^{__CFDictionary=}", b"q^{__CFDictionary=}"),
+    ),
     "CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode": (
         b"^{__CFString=}^{__CFAllocator=}I",
         "",
@@ -1357,7 +1372,9 @@ functions = {
         "",
         {
             "retval": {"already_cfretained": True},
-            "arguments": {1: {"c_array_of_variable_length": True, "type_modifier": "n"}},
+            "arguments": {
+                1: {"c_array_of_variable_length": True, "type_modifier": "n"}
+            },
         },
     ),
     "CFCharacterSetRemoveCharactersInRange": (
@@ -1603,7 +1620,9 @@ functions = {
         },
     ),
     "CFBitVectorFlipBits": (
-        sel32or64(b"v^{__CFBitVector=}{_CFRange=ll}", b"v^{__CFBitVector=}{_CFRange=qq}"),
+        sel32or64(
+            b"v^{__CFBitVector=}{_CFRange=ll}", b"v^{__CFBitVector=}{_CFRange=qq}"
+        ),
     ),
     "CFCalendarCopyCurrent": (
         b"^{__CFCalendar=}",
@@ -1668,7 +1687,9 @@ functions = {
         "",
         {"arguments": {2: {"type_modifier": "o"}}},
     ),
-    "CFBinaryHeapGetCount": (sel32or64(b"l^{__CFBinaryHeap=}", b"q^{__CFBinaryHeap=}"),),
+    "CFBinaryHeapGetCount": (
+        sel32or64(b"l^{__CFBinaryHeap=}", b"q^{__CFBinaryHeap=}"),
+    ),
     "CFRunLoopContainsObserver": (
         b"Z^{__CFRunLoop=}^{__CFRunLoopObserver=}^{__CFString=}",
     ),
@@ -1897,7 +1918,9 @@ functions = {
         "",
         {"arguments": {6: {"type_modifier": "o"}}},
     ),
-    "CFUUIDGetConstantUUIDWithBytes": (b"^{__CFUUID=}^{__CFAllocator=}CCCCCCCCCCCCCCCC",),
+    "CFUUIDGetConstantUUIDWithBytes": (
+        b"^{__CFUUID=}^{__CFAllocator=}CCCCCCCCCCCCCCCC",
+    ),
     "CFSocketCreateRunLoopSource": (
         sel32or64(
             b"^{__CFRunLoopSource=}^{__CFAllocator=}^{__CFSocket=}l",
@@ -2186,7 +2209,9 @@ functions = {
     "CFDictionaryGetCountOfKey": (
         sel32or64(b"l^{__CFDictionary=}@", b"q^{__CFDictionary=}@"),
     ),
-    "CFStringGetCharacterAtIndex": (sel32or64(b"T^{__CFString=}l", b"T^{__CFString=}q"),),
+    "CFStringGetCharacterAtIndex": (
+        sel32or64(b"T^{__CFString=}l", b"T^{__CFString=}q"),
+    ),
     "CFStringCreateWithCString": (
         sel32or64(
             b"^{__CFString=}^{__CFAllocator=}^tL", b"^{__CFString=}^{__CFAllocator=}^tI"
@@ -2236,7 +2261,9 @@ functions = {
             }
         },
     ),
-    "CFCalendarGetFirstWeekday": (sel32or64(b"l^{__CFCalendar=}", b"q^{__CFCalendar=}"),),
+    "CFCalendarGetFirstWeekday": (
+        sel32or64(b"l^{__CFCalendar=}", b"q^{__CFCalendar=}"),
+    ),
     "CFStreamCreatePairWithPeerSocketSignature": (
         sel32or64(
             b"v^{__CFAllocator=}^{_CFSocketSignature=lll^{__CFData=}}^^{__CFReadStream=}^^{__CFWriteStream=}",
@@ -2265,7 +2292,9 @@ functions = {
             }
         },
     ),
-    "CFXMLParserGetLocation": (sel32or64(b"l^{__CFXMLParser=}", b"q^{__CFXMLParser=}"),),
+    "CFXMLParserGetLocation": (
+        sel32or64(b"l^{__CFXMLParser=}", b"q^{__CFXMLParser=}"),
+    ),
     "CFStringTokenizerGetCurrentTokenRange": (
         sel32or64(
             b"{_CFRange=ll}^{__CFStringTokenizer=}",
@@ -2447,14 +2476,20 @@ functions = {
     "CFPreferencesSetValue": (
         b"v^{__CFString=}@^{__CFString=}^{__CFString=}^{__CFString=}",
     ),
-    "CFReadStreamGetStatus": (sel32or64(b"l^{__CFReadStream=}", b"q^{__CFReadStream=}"),),
+    "CFReadStreamGetStatus": (
+        sel32or64(b"l^{__CFReadStream=}", b"q^{__CFReadStream=}"),
+    ),
     "CFCopyTypeIDDescription": (
         sel32or64(b"^{__CFString=}L", b"^{__CFString=}Q"),
         "",
         {"retval": {"already_cfretained": True}},
     ),
     "CFConvertFloatHostToSwapped": (b"{_CFSwappedFloat32=I}f",),
-    "CFCalendarDecomposeAbsoluteTime": (b"Z^{__CFCalendar=}d^c", "", {"variadic": True}),
+    "CFCalendarDecomposeAbsoluteTime": (
+        b"Z^{__CFCalendar=}d^c",
+        "",
+        {"variadic": True},
+    ),
     "CFBinaryHeapCreate": (
         sel32or64(
             b"^{__CFBinaryHeap=}^{__CFAllocator=}l^{_CFBinaryHeapCallBacks=l^?^?^?^?}^{_CFBinaryHeapCompareContext=l^v^?^?^?}",
@@ -3016,7 +3051,9 @@ functions = {
     ),
     "CFTimeZoneResetSystem": (b"v",),
     "CFStringNormalize": (sel32or64(b"v^{__CFString=}l", b"v^{__CFString=}q"),),
-    "CFRunLoopContainsSource": (b"Z^{__CFRunLoop=}^{__CFRunLoopSource=}^{__CFString=}",),
+    "CFRunLoopContainsSource": (
+        b"Z^{__CFRunLoop=}^{__CFRunLoopSource=}^{__CFString=}",
+    ),
     "CFLocaleCreateCanonicalLanguageIdentifierFromString": (
         b"^{__CFString=}^{__CFAllocator=}^{__CFString=}",
         "",
@@ -3094,7 +3131,9 @@ functions = {
     ),
     "CFRunLoopRun": (b"v",),
     "CFPreferencesGetAppIntegerValue": (
-        sel32or64(b"l^{__CFString=}^{__CFString=}^Z", b"q^{__CFString=}^{__CFString=}^Z"),
+        sel32or64(
+            b"l^{__CFString=}^{__CFString=}^Z", b"q^{__CFString=}^{__CFString=}^Z"
+        ),
         "",
         {"arguments": {2: {"type_modifier": "o"}}},
     ),
@@ -3362,10 +3401,14 @@ functions = {
         sel32or64(b"v^{__CFReadStream=}^{dispatch_queue_s=}", b"v^{__CFReadStream=}@"),
     ),
     "CFMessagePortSetDispatchQueue": (
-        sel32or64(b"v^{__CFMessagePort=}^{dispatch_queue_s=}", b"v^{__CFMessagePort=}@"),
+        sel32or64(
+            b"v^{__CFMessagePort=}^{dispatch_queue_s=}", b"v^{__CFMessagePort=}@"
+        ),
     ),
     "CFStringGetNameOfEncoding": (sel32or64(b"^{__CFString=}L", b"^{__CFString=}I"),),
-    "CFBitVectorSetAllBits": (sel32or64(b"v^{__CFBitVector=}L", b"v^{__CFBitVector=}I"),),
+    "CFBitVectorSetAllBits": (
+        sel32or64(b"v^{__CFBitVector=}L", b"v^{__CFBitVector=}I"),
+    ),
     "CFSocketGetContext": (
         sel32or64(
             b"v^{__CFSocket=}^{_CFSocketContext=l^v^?^?^?}",
@@ -3472,7 +3515,9 @@ functions = {
         },
     ),
     "CFNumberCompare": (
-        sel32or64(b"l^{__CFNumber=}^{__CFNumber=}^v", b"q^{__CFNumber=}^{__CFNumber=}^v"),
+        sel32or64(
+            b"l^{__CFNumber=}^{__CFNumber=}^v", b"q^{__CFNumber=}^{__CFNumber=}^v"
+        ),
     ),
     "CFURLHasDirectoryPath": (b"Z^{__CFURL=}",),
     "CFSwapInt16HostToBig": (b"SS",),
@@ -3759,7 +3804,9 @@ functions = {
     ),
     "CFBundleGetLocalInfoDictionary": (b"^{__CFDictionary=}^{__CFBundle=}",),
     "CFArrayBSearchValues": (
-        sel32or64(b"l^{__CFArray=}{_CFRange=ll}@^?@", b"q^{__CFArray=}{_CFRange=qq}@^?@"),
+        sel32or64(
+            b"l^{__CFArray=}{_CFRange=ll}@^?@", b"q^{__CFArray=}{_CFRange=qq}@^?@"
+        ),
         "",
         {
             "arguments": {
@@ -3923,7 +3970,12 @@ cftypes = [
     ("CFDateRef", b"^{__CFDate=}", "CFDateGetTypeID", "__NSCFDate,NSCFDate,__NSDate"),
     ("CFDictionaryRef", b"^{__CFDictionary=}", "CFDictionaryGetTypeID", "NSDictionary"),
     ("CFErrorRef", b"^{__CFError=}", "CFErrorGetTypeID", "__NSCFError,NSCFError"),
-    ("CFFileDescriptorRef", b"^{__CFFileDescriptor=}", "CFFileDescriptorGetTypeID", None),
+    (
+        "CFFileDescriptorRef",
+        b"^{__CFFileDescriptor=}",
+        "CFFileDescriptorGetTypeID",
+        None,
+    ),
     (
         "CFFileSecurityRef",
         b"^{__CFFileSecurity=}",
@@ -3971,7 +4023,12 @@ cftypes = [
         None,
     ),
     ("CFNumberRef", b"^{__CFNumber=}", "CFNumberGetTypeID", "__NSCFNumber,NSCFNumber"),
-    ("CFPlugInInstanceRef", b"^{__CFPlugInInstance=}", "CFPlugInInstanceGetTypeID", None),
+    (
+        "CFPlugInInstanceRef",
+        b"^{__CFPlugInInstance=}",
+        "CFPlugInInstanceGetTypeID",
+        None,
+    ),
     (
         "CFReadStreamRef",
         b"^{__CFReadStream=}",

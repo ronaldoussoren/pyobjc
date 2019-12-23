@@ -8,7 +8,9 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.10")
         def testClasses(self):
             self.assertHasAttr(CloudKit, "CKDiscoverUserInfosOperation")
-            self.assertIsInstance(CloudKit.CKDiscoverUserInfosOperation, objc.objc_class)
+            self.assertIsInstance(
+                CloudKit.CKDiscoverUserInfosOperation, objc.objc_class
+            )
 
         @min_os_level("10.10")
         def testMethods10_10(self):

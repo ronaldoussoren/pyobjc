@@ -70,7 +70,8 @@ functions = {
     ),
     "CATransform3DMakeScale": (
         sel32or64(
-            b"{CATransform3D=ffffffffffffffff}fff", b"{CATransform3D=dddddddddddddddd}ddd"
+            b"{CATransform3D=ffffffffffffffff}fff",
+            b"{CATransform3D=dddddddddddddddd}ddd",
         ),
     ),
     "CATransform3DTranslate": (
@@ -112,7 +113,8 @@ functions = {
     ),
     "CATransform3DMakeTranslation": (
         sel32or64(
-            b"{CATransform3D=ffffffffffffffff}fff", b"{CATransform3D=dddddddddddddddd}ddd"
+            b"{CATransform3D=ffffffffffffffff}fff",
+            b"{CATransform3D=dddddddddddddddd}ddd",
         ),
     ),
     "CATransform3DGetAffineTransform": (
@@ -193,7 +195,11 @@ try:
     )
     r(b"CAMetalLayer", b"setDisplaySyncEnabled:", {"arguments": {2: {"type": "Z"}}})
     r(b"CAMetalLayer", b"setFramebufferOnly:", {"arguments": {2: {"type": "Z"}}})
-    r(b"CAMetalLayer", b"setPresentsWithTransaction:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"CAMetalLayer",
+        b"setPresentsWithTransaction:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(
         b"CAMetalLayer",
         b"setWantsExtendedDynamicRangeContent:",
@@ -280,7 +286,10 @@ try:
         b"completionBlock",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )
@@ -483,9 +492,21 @@ try:
         },
     )
     r(b"CIPDF417CodeDescriptor", b"isCompact", {"retval": {"type": "Z"}})
-    r(b"CIPlugIn", b"loadPlugIn:allowExecutableCode:", {"arguments": {3: {"type": b"Z"}}})
-    r(b"CIPlugIn", b"loadPlugIn:allowNonExecutable:", {"arguments": {3: {"type": b"Z"}}})
-    r(b"CIRenderDestination", b"blendsInDestinationColorSpace", {"retval": {"type": "Z"}})
+    r(
+        b"CIPlugIn",
+        b"loadPlugIn:allowExecutableCode:",
+        {"arguments": {3: {"type": b"Z"}}},
+    )
+    r(
+        b"CIPlugIn",
+        b"loadPlugIn:allowNonExecutable:",
+        {"arguments": {3: {"type": b"Z"}}},
+    )
+    r(
+        b"CIRenderDestination",
+        b"blendsInDestinationColorSpace",
+        {"retval": {"type": "Z"}},
+    )
     r(
         b"CIRenderDestination",
         b"initWithWidth:height:pixelFormat:commandBuffer:mtlTextureProvider:",

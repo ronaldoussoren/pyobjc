@@ -32,7 +32,9 @@ class TestNSCollectionViewHelper(NSObject):
     def collectionView_writeItemsAtIndexes_toPasteboard_(self, v, i, p):
         return 1
 
-    def collectionView_draggingImageForItemsAtIndexes_withEvent_offset_(self, v, i, e, o):
+    def collectionView_draggingImageForItemsAtIndexes_withEvent_offset_(
+        self, v, i, e, o
+    ):
         return 1
 
     def collectionView_validateDrop_proposedIndex_dropOperation_(self, v, d, i, o):
@@ -54,7 +56,9 @@ class TestNSCollectionViewHelper(NSObject):
     ):
         pass
 
-    def collectionView_draggingSession_endedAtPoint_draggingOperation_(self, a, b, c, d):
+    def collectionView_draggingSession_endedAtPoint_draggingOperation_(
+        self, a, b, c, d
+    ):
         pass
 
     def collectionView_shouldChangeItemsAtIndexPaths_toHighlightState_(self, a, b, c):
@@ -81,7 +85,9 @@ class TestNSCollectionView(TestCase):
         self.assertResultHasType(
             NSCollectionView.frameForItemAtIndex_, NSRect.__typestr__
         )
-        self.assertArgIsBOOL(NSCollectionView.setDraggingSourceOperationMask_forLocal_, 1)
+        self.assertArgIsBOOL(
+            NSCollectionView.setDraggingSourceOperationMask_forLocal_, 1
+        )
         self.assertArgHasType(
             NSCollectionView.draggingImageForItemsAtIndexes_withEvent_offset_,
             2,

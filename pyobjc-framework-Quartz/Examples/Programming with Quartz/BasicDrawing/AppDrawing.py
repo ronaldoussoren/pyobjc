@@ -93,7 +93,9 @@ def doRawImageFileWithURL(context):
     url = GetURL(kRawColorImage)
 
     if url is not None:
-        Images.drawImageFromURL(context, url, RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT, 8, True)
+        Images.drawImageFromURL(
+            context, url, RAW_IMAGE_WIDTH, RAW_IMAGE_HEIGHT, 8, True
+        )
         # 8 bits per component, isColor = True
 
 
@@ -279,7 +281,9 @@ def DispatchDrawing(context, drawingType):
         ColorAndGState.drawWithGlobalAlpha(context)
 
     elif drawingType == UIHandling.kHICommandDrawWithBlendMode:
-        callPDFDrawProc(context, ColorAndGState.drawWithColorBlendMode, kPDFForBlendMode)
+        callPDFDrawProc(
+            context, ColorAndGState.drawWithColorBlendMode, kPDFForBlendMode
+        )
 
     elif drawingType == UIHandling.kHICommandDrawWithColorRefs:
         ColorAndGState.drawWithColorRefs(context)
@@ -396,7 +400,9 @@ def DispatchDrawing(context, drawingType):
         ShadowsAndTransparencyLayers.drawFillAndStrokeWithShadow(context)
 
     elif drawingType == UIHandling.kHICommandPDFDocumentShadow:
-        callPDFDrawProc(context, ShadowsAndTransparencyLayers.shadowPDFDocument, kCatPDF)
+        callPDFDrawProc(
+            context, ShadowsAndTransparencyLayers.shadowPDFDocument, kCatPDF
+        )
 
     elif drawingType == UIHandling.kHICommandSimpleAxialShading:
         Shadings.doSimpleAxialShading(context)

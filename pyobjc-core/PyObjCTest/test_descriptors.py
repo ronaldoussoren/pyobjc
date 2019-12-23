@@ -114,7 +114,9 @@ class TestBasicDescriptors(TestCase):
             self.assertEqual(mymethod.signature, b"q@:qq")
             self.assertEqual(mymethod.selector, b"foo:bar:")
 
-            self.assertRaises(TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), None)
+            self.assertRaises(
+                TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), None
+            )
             self.assertRaises(TypeError, objc.namedselector(b"foo:bar:", b"q@:qq"), 42)
 
     # synthesize is tested in test_synthesize
@@ -314,7 +316,9 @@ class TestBasicDescriptors(TestCase):
         def countOfFoo_withBar_withBaz_withNone_(self, foo, bar, baz, none):
             pass
 
-        self.assertRaises(TypeError, objc.accessor, countOfFoo_withBar_withBaz_withNone_)
+        self.assertRaises(
+            TypeError, objc.accessor, countOfFoo_withBar_withBaz_withNone_
+        )
 
     def test_typedAccessor(self):
         # NOTE: the optional type argument is tested through the typedAccessor function
@@ -409,7 +413,8 @@ class TestBasicDescriptors(TestCase):
         self.assertIsInstance(replaceFlavorsAtIndexes_withFlavors_, objc.selector)
 
         self.assertEqual(
-            insertObject_inFlavorsAtIndex_.signature, b"v@:" + mytype + objc._C_NSUInteger
+            insertObject_inFlavorsAtIndex_.signature,
+            b"v@:" + mytype + objc._C_NSUInteger,
         )
         self.assertEqual(
             insertFlavors_atIndexes_.signature, b"v@:@@"
@@ -634,7 +639,9 @@ class TestBasicDescriptors(TestCase):
                 return (False, None)
 
             self.assertIsInstance(validateColor_error_, objc.selector)
-            self.assertEqual(validateColor_error_.signature, objc._C_NSBOOL + b"@:N^@o^@")
+            self.assertEqual(
+                validateColor_error_.signature, objc._C_NSBOOL + b"@:N^@o^@"
+            )
 
             # Keyword arguments (**kwds) and varargs (*args) are
             # not supported:

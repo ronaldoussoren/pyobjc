@@ -34,7 +34,9 @@ class TestNSThread(TestCase):
         self.assertResultIsBOOL(NSThread.isMainThread)
         self.assertResultIsBOOL(NSThread.mainThread().isMainThread)
         self.assertArgIsSEL(
-            NSThread.performSelector_onThread_withObject_waitUntilDone_modes_, 0, b"v@:@"
+            NSThread.performSelector_onThread_withObject_waitUntilDone_modes_,
+            0,
+            b"v@:@",
         )
         self.assertArgIsBOOL(
             NSThread.performSelector_onThread_withObject_waitUntilDone_modes_, 3
@@ -45,7 +47,9 @@ class TestNSThread(TestCase):
         self.assertArgIsBOOL(
             NSThread.performSelector_onThread_withObject_waitUntilDone_, 3
         )
-        self.assertArgIsSEL(NSThread.performSelectorInBackground_withObject_, 0, b"v@:@")
+        self.assertArgIsSEL(
+            NSThread.performSelectorInBackground_withObject_, 0, b"v@:@"
+        )
 
     @min_os_level("10.12")
     def testMethods10_12(self):

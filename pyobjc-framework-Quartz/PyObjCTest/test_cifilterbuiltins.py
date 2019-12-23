@@ -865,7 +865,9 @@ class TestCIFilterBuiltins(TestCase):
     @onlyOn64Bit
     def test_methods(self):
         with self.subTest("CIGaussianGradient"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
 
         with self.subTest("CIHueSaturationValueGradient"):
@@ -875,17 +877,27 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "dither", objc._C_FLT)
 
         with self.subTest("CILinearGradient"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__
+            )
 
         with self.subTest("CIRadialGradient"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius0", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius1", objc._C_FLT)
 
         with self.subTest("CISmoothLinearGradient"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__
+            )
 
         with self.subTest("CISharpenLuminance"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
@@ -900,7 +912,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
 
         with self.subTest("CICMYKHalftone"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
@@ -912,25 +926,33 @@ class TestCIFilterBuiltins(TestCase):
             )
 
         with self.subTest("CIDotScreen"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
 
         with self.subTest("CIHatchedScreen"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
 
         with self.subTest("CILineScreen"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
 
         with self.subTest("CIFourCoordinateGeometryFilter"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "topLeft", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "topLeft", CGPoint.__typestr__
+            )
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "topRight", CGPoint.__typestr__
             )
@@ -944,7 +966,7 @@ class TestCIFilterBuiltins(TestCase):
         with self.subTest("CIBicubicScaleTransform"):
             # XXX: Disabled this auto-detection because it conflicts with an older
             # binding for Foundation.
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "aspectRatio", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "parameterB", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "parameterC", objc._C_FLT)
@@ -965,7 +987,7 @@ class TestCIFilterBuiltins(TestCase):
         with self.subTest("CILanczosScaleTransform"):
             # XXX: Disabled this auto-detection because it conflicts with an older
             # binding for Foundation.
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "aspectRatio", objc._C_FLT)
 
         with self.subTest("CIPerspectiveCorrection"):
@@ -987,7 +1009,7 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
 
         with self.subTest("CITransitionFilter"):
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
             pass
 
         with self.subTest("CIAccordionFoldTransition"):
@@ -1019,7 +1041,9 @@ class TestCIFilterBuiltins(TestCase):
             pass
 
         with self.subTest("CIFlashTransition"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "extent", CGRect.__typestr__)
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "maxStriationRadius", objc._C_FLT
@@ -1033,7 +1057,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "fadeThreshold", objc._C_FLT)
 
         with self.subTest("CIModTransition"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "compression", objc._C_FLT)
@@ -1054,12 +1080,14 @@ class TestCIFilterBuiltins(TestCase):
             )
 
         with self.subTest("CIRippleTransition"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "extent", CGRect.__typestr__)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             # XXX: Disabled this auto-detection because it conflicts with an older
             # binding for Foundation.
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
 
         with self.subTest("CISwipeTransition"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "extent", CGRect.__typestr__)
@@ -1106,17 +1134,29 @@ class TestCIFilterBuiltins(TestCase):
             pass
 
         with self.subTest("CITemperatureAndTint"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "neutral", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "neutral", CGPoint.__typestr__
+            )
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "targetNeutral", CGPoint.__typestr__
             )
 
         with self.subTest("CIToneCurve"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point2", CGPoint.__typestr__)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point3", CGPoint.__typestr__)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point4", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point2", CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point3", CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point4", CGPoint.__typestr__
+            )
 
         with self.subTest("CIVibrance"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "amount", objc._C_FLT)
@@ -1192,7 +1232,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
 
         with self.subTest("CIVignetteEffect"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "intensity", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "falloff", objc._C_FLT)
@@ -1211,53 +1253,71 @@ class TestCIFilterBuiltins(TestCase):
             )
 
         with self.subTest("CIEightfoldReflectedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
         with self.subTest("CIFourfoldReflectedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "acuteAngle", objc._C_FLT)
 
         with self.subTest("CIFourfoldRotatedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
         with self.subTest("CIFourfoldTranslatedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "acuteAngle", objc._C_FLT)
 
         with self.subTest("CIGlideReflectedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
         with self.subTest("CIKaleidoscope"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "count", objc._C_NSInteger)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
 
         with self.subTest("CIOpTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             # XXX: Disabled this auto-detection because it conflicts with an older
             # binding for Foundation.
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
         with self.subTest("CIParallelogramTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "acuteAngle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
         with self.subTest("CIPerspectiveTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "topLeft", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "topLeft", CGPoint.__typestr__
+            )
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "topRight", CGPoint.__typestr__
             )
@@ -1269,12 +1329,16 @@ class TestCIFilterBuiltins(TestCase):
             )
 
         with self.subTest("CISixfoldReflectedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
         with self.subTest("CISixfoldRotatedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
@@ -1285,12 +1349,16 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "decay", objc._C_FLT)
 
         with self.subTest("CITriangleTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
         with self.subTest("CITwelvefoldReflectedTile"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
 
@@ -1298,7 +1366,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "scaleFactor", objc._C_FLT)
 
         with self.subTest("CIAztecCodeGenerator"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "layers", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "compactStyle", objc._C_FLT)
 
@@ -1306,7 +1376,9 @@ class TestCIFilterBuiltins(TestCase):
             pass
 
         with self.subTest("CICheckerboardGenerator"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
 
@@ -1315,7 +1387,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "barcodeHeight", objc._C_FLT)
 
         with self.subTest("CILenticularHaloGenerator"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "haloRadius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "haloWidth", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "haloOverlap", objc._C_FLT)
@@ -1325,7 +1399,7 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "striationContrast", objc._C_FLT
             )
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
 
         with self.subTest("CIMeshGenerator"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
@@ -1340,9 +1414,13 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "preferredAspectRatio", objc._C_FLT
             )
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "compactionMode", objc._C_FLT)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "compactionMode", objc._C_FLT
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "compactStyle", objc._C_FLT)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "correctionLevel", objc._C_FLT
+            )
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "alwaysSpecifyCompaction", objc._C_FLT
             )
@@ -1358,7 +1436,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
 
         with self.subTest("CIStarShineGenerator"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "crossScale", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "crossAngle", objc._C_FLT)
@@ -1367,12 +1447,16 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "epsilon", objc._C_FLT)
 
         with self.subTest("CIStripesGenerator"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
 
         with self.subTest("CISunbeamsGenerator"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sunRadius", objc._C_FLT)
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "maxStriationRadius", objc._C_FLT
@@ -1383,7 +1467,7 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "striationContrast", objc._C_FLT
             )
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "time", objc._C_FLT)
 
         with self.subTest("CITextImageGenerator"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "fontSize", objc._C_FLT)
@@ -1410,11 +1494,17 @@ class TestCIFilterBuiltins(TestCase):
 
         with self.subTest("CICrystallize"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
 
         with self.subTest("CIDepthOfField"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point0", CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point1", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "saturation", objc._C_FLT)
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "unsharpMaskRadius", objc._C_FLT
@@ -1441,15 +1531,19 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
 
         with self.subTest("CIHexagonalPixellate"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             # XXX: Disabled this auto-detection because it conflicts with an older
             # binding for Foundation.
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
 
         with self.subTest("CIHighlightShadowAdjust"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "shadowAmount", objc._C_FLT)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "highlightAmount", objc._C_FLT)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "highlightAmount", objc._C_FLT
+            )
 
         with self.subTest("CILineOverlay"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "NRNoiseLevel", objc._C_FLT)
@@ -1462,14 +1556,18 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "amount", objc._C_FLT)
 
         with self.subTest("CIPixellate"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             # XXX: Disabled this auto-detection because it conflicts with an older
             # binding for Foundation.
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
 
         with self.subTest("CIPointillize"):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
 
         with self.subTest("CISaliencyMap"):
             pass
@@ -1477,7 +1575,7 @@ class TestCIFilterBuiltins(TestCase):
         with self.subTest("CIShadedMaterial"):
             # XXX: Disabled this auto-detection because it conflicts with an older
             # binding for Foundation.
-            #self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
             pass
 
         with self.subTest("CISpotColor"):
@@ -1539,7 +1637,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "sharpness", objc._C_FLT)
 
         with self.subTest("CIZoomBlur"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", CGPoint.__typestr__
+            )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "amount", objc._C_FLT)
 
 

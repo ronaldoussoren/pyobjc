@@ -66,7 +66,11 @@ try:
     r(b"PSFeedSettings", b"downloadsEnclosures", {"retval": {"type": "Z"}})
     r(b"PSFeedSettings", b"refreshesInBackground", {"retval": {"type": "Z"}})
     r(b"PSFeedSettings", b"setDownloadsEnclosures:", {"arguments": {2: {"type": "Z"}}})
-    r(b"PSFeedSettings", b"setRefreshesInBackground:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"PSFeedSettings",
+        b"setRefreshesInBackground:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
 finally:
     objc._updatingMetadata(False)
 r = objc.registerMetaDataForSelector
@@ -119,7 +123,10 @@ protocols = {
                 None, b"enclosure:downloadStateDidChange:", b"v@:@i", isRequired=False
             ),
             objc.selector(
-                None, b"feed:didRemoveEntriesWithIdentifiers:", b"v@:@@", isRequired=False
+                None,
+                b"feed:didRemoveEntriesWithIdentifiers:",
+                b"v@:@@",
+                isRequired=False,
             ),
             objc.selector(None, b"feedDidEndRefresh:", b"v@:@", isRequired=False),
             objc.selector(None, b"feed:didAddEntries:", b"v@:@@", isRequired=False),

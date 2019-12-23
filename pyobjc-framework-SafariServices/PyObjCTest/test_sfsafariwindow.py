@@ -8,7 +8,9 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.12")
         def testMethods(self):
             self.assertArgIsBlock(
-                SafariServices.SFSafariWindow.getActiveTabWithCompletionHandler_, 0, b"v@"
+                SafariServices.SFSafariWindow.getActiveTabWithCompletionHandler_,
+                0,
+                b"v@",
             )
 
             self.assertArgIsBOOL(

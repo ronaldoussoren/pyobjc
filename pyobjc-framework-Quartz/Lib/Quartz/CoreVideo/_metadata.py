@@ -48,7 +48,9 @@ misc.update(
             ["componentInfoY", "componentInfoCb", "componentInfoCr"],
         ),
         "CVPlanarComponentInfo": objc.createStructType(
-            "CVPlanarComponentInfo", b"{CVPlanarComponentInfo=iI}", ["offset", "rowBytes"]
+            "CVPlanarComponentInfo",
+            b"{CVPlanarComponentInfo=iI}",
+            ["offset", "rowBytes"],
         ),
         "CVTime": objc.createStructType(
             "CVTime", b"{_CVTime=qii}", ["timeValue", "timeScale", "flags"]

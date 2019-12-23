@@ -7,7 +7,8 @@ class TestNSImageRep(TestCase):
         self.assertEqual(NSImageRepMatchesDevice, 0)
 
         self.assertEqual(
-            NSImageRepRegistryChangedNotification, NSImageRepRegistryDidChangeNotification
+            NSImageRepRegistryChangedNotification,
+            NSImageRepRegistryDidChangeNotification,
         )
         self.assertIsInstance(NSImageRepRegistryDidChangeNotification, unicode)
 

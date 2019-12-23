@@ -42,7 +42,9 @@ class Testoidsattr(TestCase):
         self.assertFalse(hasattr(Security, "CSSMOID_TelexTerminalIdentifier"))
         self.assertFalse(hasattr(Security, "CSSMOID_CollectiveTelexTerminalIdentifier"))
         self.assertFalse(hasattr(Security, "CSSMOID_FacsimileTelephoneNumber"))
-        self.assertFalse(hasattr(Security, "CSSMOID_CollectiveFacsimileTelephoneNumber"))
+        self.assertFalse(
+            hasattr(Security, "CSSMOID_CollectiveFacsimileTelephoneNumber")
+        )
         self.assertFalse(hasattr(Security, "CSSMOID_X_121Address"))
         self.assertFalse(hasattr(Security, "CSSMOID_InternationalISDNNumber"))
         self.assertFalse(hasattr(Security, "CSSMOID_CollectiveInternationalISDNNumber"))

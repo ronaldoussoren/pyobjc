@@ -5,7 +5,9 @@ if sys.maxsize > 2 ** 32:
     import MultipeerConnectivity
 
     class TestMCSessionHelper(MultipeerConnectivity.NSObject):
-        def session_didReceiveCertificate_fromPeer_certificateHandler_(self, s, c, p, h):
+        def session_didReceiveCertificate_fromPeer_certificateHandler_(
+            self, s, c, p, h
+        ):
             pass
 
         def session_peer_didChangeState_(self, session, peer, state):

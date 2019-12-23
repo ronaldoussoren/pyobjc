@@ -15,7 +15,9 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.15")
         def test_methods(self):
             self.assertResultIsBOOL(AVKit.AVRoutePickerView.isRoutePickerButtonBordered)
-            self.assertArgIsBOOL(AVKit.AVRoutePickerView.setRoutePickerButtonBordered_, 0)
+            self.assertArgIsBOOL(
+                AVKit.AVRoutePickerView.setRoutePickerButtonBordered_, 0
+            )
 
         @min_sdk_level("10.15")
         def test_protocols(self):

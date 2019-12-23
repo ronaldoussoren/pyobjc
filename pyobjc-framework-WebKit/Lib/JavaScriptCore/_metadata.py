@@ -118,7 +118,9 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "JSValueIsNumber": (b"B^{OpaqueJSContext=}^{OpaqueJSValue=}",),
-    "JSObjectHasProperty": (b"B^{OpaqueJSContext=}^{OpaqueJSValue=}^{OpaqueJSString=}",),
+    "JSObjectHasProperty": (
+        b"B^{OpaqueJSContext=}^{OpaqueJSValue=}^{OpaqueJSString=}",
+    ),
     "JSValueIsEqual": (
         b"B^{OpaqueJSContext=}^{OpaqueJSValue=}^{OpaqueJSValue=}^^{OpaqueJSValue=}",
     ),
@@ -473,9 +475,13 @@ functions = {
         {"arguments": {3: {"type_modifier": "o"}}},
     ),
     "JSStringIsEqual": (b"B^{OpaqueJSString=}^{OpaqueJSString=}",),
-    "JSObjectSetPrototype": (b"v^{OpaqueJSContext=}^{OpaqueJSValue=}^{OpaqueJSValue=}",),
+    "JSObjectSetPrototype": (
+        b"v^{OpaqueJSContext=}^{OpaqueJSValue=}^{OpaqueJSValue=}",
+    ),
     "JSContextGroupRelease": (b"v^{OpaqueJSContextGroup=}",),
-    "JSValueIsStrictEqual": (b"B^{OpaqueJSContext=}^{OpaqueJSValue=}^{OpaqueJSValue=}",),
+    "JSValueIsStrictEqual": (
+        b"B^{OpaqueJSContext=}^{OpaqueJSValue=}^{OpaqueJSValue=}",
+    ),
     "JSGlobalContextCreateInGroup": (
         b"^{OpaqueJSContext=}^{OpaqueJSContextGroup=}^{OpaqueJSClass=}",
         "",
@@ -507,7 +513,9 @@ aliases = {"JSObjectRef": "JSValueRef", "JSGlobalContextRef": "JSContextRef"}
 misc.update(
     {
         "JSValueRef": objc.createOpaquePointerType("JSValueRef", b"^{OpaqueJSValue=}"),
-        "JSStringRef": objc.createOpaquePointerType("JSStringRef", b"^{OpaqueJSString=}"),
+        "JSStringRef": objc.createOpaquePointerType(
+            "JSStringRef", b"^{OpaqueJSString=}"
+        ),
         "JSContextRef": objc.createOpaquePointerType(
             "JSContextRef", b"^{OpaqueJSContext=}"
         ),

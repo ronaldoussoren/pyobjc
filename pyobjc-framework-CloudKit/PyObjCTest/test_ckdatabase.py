@@ -39,16 +39,22 @@ if sys.maxsize > 2 ** 32:
                 CloudKit.CKDatabase.deleteRecordZoneWithID_completionHandler_, 1, b"v@@"
             )
             self.assertArgIsBlock(
-                CloudKit.CKDatabase.fetchSubscriptionWithID_completionHandler_, 1, b"v@@"
+                CloudKit.CKDatabase.fetchSubscriptionWithID_completionHandler_,
+                1,
+                b"v@@",
             )
             self.assertArgIsBlock(
-                CloudKit.CKDatabase.fetchAllSubscriptionsWithCompletionHandler_, 0, b"v@@"
+                CloudKit.CKDatabase.fetchAllSubscriptionsWithCompletionHandler_,
+                0,
+                b"v@@",
             )
             self.assertArgIsBlock(
                 CloudKit.CKDatabase.saveSubscription_completionHandler_, 1, b"v@@"
             )
             self.assertArgIsBlock(
-                CloudKit.CKDatabase.deleteSubscriptionWithID_completionHandler_, 1, b"v@@"
+                CloudKit.CKDatabase.deleteSubscriptionWithID_completionHandler_,
+                1,
+                b"v@@",
             )
 
         def testConstants(self):

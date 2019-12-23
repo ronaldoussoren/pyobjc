@@ -28,7 +28,9 @@ class TestSecEncryptTransform(TestCase):
     @min_os_level("10.8")
     def test_constants10_8_missing(self):
         self.assertIsInstance(Security.kSecOAEPMessageLengthAttributeName, unicode)
-        self.assertIsInstance(Security.kSecOAEPMGF1DigestAlgorithmAttributeName, unicode)
+        self.assertIsInstance(
+            Security.kSecOAEPMGF1DigestAlgorithmAttributeName, unicode
+        )
 
     @min_os_level("10.7")
     def test_functions(self):
@@ -36,14 +38,18 @@ class TestSecEncryptTransform(TestCase):
         self.assertResultIsCFRetained(Security.SecEncryptTransformCreate)
         self.assertArgHasType(Security.SecEncryptTransformCreate, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SecEncryptTransformCreate, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecEncryptTransformCreate,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
         self.assertResultHasType(Security.SecDecryptTransformCreate, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecDecryptTransformCreate)
         self.assertArgHasType(Security.SecDecryptTransformCreate, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SecDecryptTransformCreate, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecDecryptTransformCreate,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
     @expectedFailure

@@ -127,9 +127,15 @@ functions = {
             }
         },
     ),
-    "DASessionUnscheduleFromRunLoop": (b"v^{__DASession=}^{__CFRunLoop=}^{__CFString=}",),
+    "DASessionUnscheduleFromRunLoop": (
+        b"v^{__DASession=}^{__CFRunLoop=}^{__CFString=}",
+    ),
     "DADiskGetTypeID": (sel32or64(b"L", b"Q"),),
-    "DADiskCopyIOMedia": (b"I^{__DADisk=}", "", {"retval": {"already_cfretained": True}}),
+    "DADiskCopyIOMedia": (
+        b"I^{__DADisk=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
     "DADissenterCreate": (
         b"^{__DADissenter=}^{__CFAllocator=}i^{__CFString=}",
         "",

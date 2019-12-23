@@ -162,7 +162,9 @@ class TestCGColorSpace(TestCase):
         dta = CGColorSpaceCopyICCProfile(csp)
         self.assertIsInstance(dta, CFDataRef)
 
-        spc = CGColorSpaceCreateIndexed(CGColorSpaceCreateDeviceRGB(), 10, (0, 1, 2) * 11)
+        spc = CGColorSpaceCreateIndexed(
+            CGColorSpaceCreateDeviceRGB(), 10, (0, 1, 2) * 11
+        )
         self.assertIsInstance(spc, CGColorSpaceRef)
 
         self.assertEqual(CGColorSpaceGetModel(spc), kCGColorSpaceModelIndexed)

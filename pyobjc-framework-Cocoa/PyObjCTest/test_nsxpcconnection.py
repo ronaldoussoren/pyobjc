@@ -32,9 +32,13 @@ class TestNSXPCConnection(TestCase):
             Foundation.NSXPCConnection.remoteObjectProxyWithErrorHandler_, 0, b"v@"
         )
         self.assertResultIsBlock(Foundation.NSXPCConnection.interruptionHandler, b"v")
-        self.assertArgIsBlock(Foundation.NSXPCConnection.setInterruptionHandler_, 0, b"v")
+        self.assertArgIsBlock(
+            Foundation.NSXPCConnection.setInterruptionHandler_, 0, b"v"
+        )
         self.assertResultIsBlock(Foundation.NSXPCConnection.invalidationHandler, b"v")
-        self.assertArgIsBlock(Foundation.NSXPCConnection.setInvalidationHandler_, 0, b"v")
+        self.assertArgIsBlock(
+            Foundation.NSXPCConnection.setInvalidationHandler_, 0, b"v"
+        )
 
         self.assertArgIsBOOL(
             Foundation.NSXPCInterface.setClasses_forSelector_argumentIndex_ofReply_, 3
@@ -57,7 +61,7 @@ class TestNSXPCConnection(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.15") # Not actually on 10.14...
+    @min_os_level("10.15")  # Not actually on 10.14...
     def testMethods10_14(self):
         self.assertArgIsBOOL(
             Foundation.NSXPCInterface.setXPCType_forSelector_argumentIndex_ofReply_, 3

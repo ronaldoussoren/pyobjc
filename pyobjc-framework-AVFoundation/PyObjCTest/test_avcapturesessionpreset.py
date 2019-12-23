@@ -19,7 +19,9 @@ class TestAVCaptureSessionPreset(TestCase):
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame1280x720, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVCaptureSessionPresetiFrame1280x720, unicode
+        )
 
 
 if __name__ == "__main__":

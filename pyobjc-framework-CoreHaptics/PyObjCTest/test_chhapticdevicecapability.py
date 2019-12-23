@@ -34,8 +34,12 @@ class TestCHHapticDeviceCapability(TestCase):
 
     def test_methods(self):
         # CHHapticParameterAttributes
-        self.assertResultHasType(TestCHHapticDeviceCapabilityHelper.minValue, objc._C_FLT)
-        self.assertResultHasType(TestCHHapticDeviceCapabilityHelper.maxValue, objc._C_FLT)
+        self.assertResultHasType(
+            TestCHHapticDeviceCapabilityHelper.minValue, objc._C_FLT
+        )
+        self.assertResultHasType(
+            TestCHHapticDeviceCapabilityHelper.maxValue, objc._C_FLT
+        )
         self.assertResultHasType(
             TestCHHapticDeviceCapabilityHelper.defaultValue, objc._C_FLT
         )

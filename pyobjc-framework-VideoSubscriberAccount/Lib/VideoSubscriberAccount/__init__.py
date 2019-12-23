@@ -14,7 +14,9 @@ from VideoSubscriberAccount import _metadata
 sys.modules["VideoSubscriberAccount"] = mod = objc.ObjCLazyModule(
     "VideoSubscriberAccount",
     "com.apple.VideoSubscriberAccountFramework",
-    objc.pathForFramework("/System/Library/Frameworks/VideoSubscriberAccount.framework"),
+    objc.pathForFramework(
+        "/System/Library/Frameworks/VideoSubscriberAccount.framework"
+    ),
     _metadata.__dict__,
     None,
     {

@@ -8,7 +8,9 @@ if sys.maxsize > 2 ** 32:
     class TestGCControllerButtonInput(TestCase):
         @min_os_level("10.9")
         def testClasses(self):
-            self.assertIsInstance(GameController.GCControllerButtonInput, objc.objc_class)
+            self.assertIsInstance(
+                GameController.GCControllerButtonInput, objc.objc_class
+            )
 
         @min_os_level("10.9")
         def testMethods(self):

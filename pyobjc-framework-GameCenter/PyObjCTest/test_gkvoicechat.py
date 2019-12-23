@@ -23,7 +23,9 @@ if sys.maxsize > 2 ** 32:
                 GameCenter.GKVoiceChat.playerVoiceChatStateDidChangeHandler, b"v@@"
             )
             self.assertArgIsBlock(
-                GameCenter.GKVoiceChat.setPlayerVoiceChatStateDidChangeHandler_, 0, b"v@@"
+                GameCenter.GKVoiceChat.setPlayerVoiceChatStateDidChangeHandler_,
+                0,
+                b"v@@",
             )
 
             self.assertResultIsBOOL(GameCenter.GKVoiceChat.isActive)

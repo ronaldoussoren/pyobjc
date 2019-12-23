@@ -100,7 +100,11 @@ class TestDescribeType(TestCase):
         )
         self.assertEqual(
             mod.describe_type(
-                objc._C_STRUCT_B + b"name=" + objc._C_ID + objc._C_INT + objc._C_STRUCT_E
+                objc._C_STRUCT_B
+                + b"name="
+                + objc._C_ID
+                + objc._C_INT
+                + objc._C_STRUCT_E
             ),
             "struct name",
         )
@@ -158,7 +162,10 @@ class TestDescribeCallable(TestCase):
                 ("NSTemporaryDirectory", objc._C_ID),
                 (
                     "NSSearchPathForDirectoriesInDomains",
-                    objc._C_ID + objc._C_NSUInteger + objc._C_NSUInteger + objc._C_NSBOOL,
+                    objc._C_ID
+                    + objc._C_NSUInteger
+                    + objc._C_NSUInteger
+                    + objc._C_NSBOOL,
                 ),
             ],
         )
@@ -219,7 +226,10 @@ class TestDescribeCallable(TestCase):
         self.assertEqual(
             mod.describe_callable_metadata(
                 "array",
-                {"arguments": [{"type": b"i"}, {"type": b"f"}], "retval": {"type": b"v"}},
+                {
+                    "arguments": [{"type": b"i"}, {"type": b"f"}],
+                    "retval": {"type": b"v"},
+                },
                 ismethod=False,
             ),
             "void array(int arg0, float arg1);",
@@ -791,7 +801,11 @@ class TestDescribeCallable(TestCase):
         self.assertEqual(
             mod.describe_callable_metadata(
                 "array",
-                {"arguments": [], "retval": {"type": b"v"}, "suggestion": "Please don't"},
+                {
+                    "arguments": [],
+                    "retval": {"type": b"v"},
+                    "suggestion": "Please don't",
+                },
                 ismethod=False,
             ),
             "void array(void);\n\nWARNING: Please don't",

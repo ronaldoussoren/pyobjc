@@ -6,7 +6,9 @@ class TestCFODRecord(TestCase):
     def testMethods(self):
         self.assertIsInstance(CFOpenDirectory.ODRecordGetTypeID(), (int, long))
 
-        self.assertResultHasType(CFOpenDirectory.ODRecordSetNodeCredentials, objc._C_BOOL)
+        self.assertResultHasType(
+            CFOpenDirectory.ODRecordSetNodeCredentials, objc._C_BOOL
+        )
         self.assertArgIsOut(CFOpenDirectory.ODRecordSetNodeCredentials, 3)
 
         self.assertResultHasType(
@@ -102,7 +104,9 @@ class TestCFODRecord(TestCase):
         )
         self.assertArgIsOut(CFOpenDirectory.ODRecordRemoveAccountPolicy, 3)
 
-        self.assertResultHasType(CFOpenDirectory.ODRecordSetAccountPolicies, objc._C_BOOL)
+        self.assertResultHasType(
+            CFOpenDirectory.ODRecordSetAccountPolicies, objc._C_BOOL
+        )
         self.assertArgIsOut(CFOpenDirectory.ODRecordSetAccountPolicies, 2)
 
         self.assertResultIsCFRetained(CFOpenDirectory.ODRecordCopyAccountPolicies)
@@ -118,7 +122,9 @@ class TestCFODRecord(TestCase):
         )
         self.assertArgIsOut(CFOpenDirectory.ODRecordPasswordChangeAllowed, 2)
 
-        self.assertResultHasType(CFOpenDirectory.ODRecordWillPasswordExpire, objc._C_BOOL)
+        self.assertResultHasType(
+            CFOpenDirectory.ODRecordWillPasswordExpire, objc._C_BOOL
+        )
         self.assertResultHasType(
             CFOpenDirectory.ODRecordWillAuthenticationsExpire, objc._C_BOOL
         )

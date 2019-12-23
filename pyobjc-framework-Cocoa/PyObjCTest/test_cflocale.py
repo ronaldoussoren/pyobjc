@@ -37,7 +37,9 @@ class TestLocale(TestCase):
         self.assertIsInstance(val, unicode)
         self.assertEqual(val, "de_DE")
 
-        val = CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes(None, 55, 75)
+        val = CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes(
+            None, 55, 75
+        )
         self.assertIsInstance(val, unicode)
         dct = CFLocaleCreateComponentsFromLocaleIdentifier(None, "nl_NL")
         try:
@@ -60,7 +62,9 @@ class TestLocale(TestCase):
         self.assertEqual(ident, "nl_NL")
         v = CFLocaleGetValue(locale, kCFLocaleDecimalSeparator)
         self.assertEqual(v, ",")
-        v = CFLocaleCopyDisplayNameForPropertyValue(locale, kCFLocaleIdentifier, "nl_NL")
+        v = CFLocaleCopyDisplayNameForPropertyValue(
+            locale, kCFLocaleIdentifier, "nl_NL"
+        )
         if v is not None:
             self.assertIsInstance(v, unicode)
         self.assertEqual(v, b"Nederlands (Nederland)".decode("ascii"))
@@ -128,7 +132,9 @@ class TestLocale(TestCase):
         v = CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier("nl_NL")
         self.assertIsInstance(v, (int, long))
 
-        self.assertResultIsCFRetained(CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode)
+        self.assertResultIsCFRetained(
+            CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode
+        )
         v = CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode(None, 1043)
         self.assertIsInstance(v, unicode)
 

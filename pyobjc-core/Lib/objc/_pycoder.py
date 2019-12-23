@@ -148,7 +148,9 @@ encode_dispatch = {}
 # serializer.
 
 
-def save_reduce(coder, func, args, state=None, listitems=None, dictitems=None, obj=None):
+def save_reduce(
+    coder, func, args, state=None, listitems=None, dictitems=None, obj=None
+):
 
     if not isinstance(args, tuple):
         raise PicklingError("args from reduce() should be a tuple")
@@ -466,7 +468,8 @@ def load_inst(coder, setValue):
             value = cls(*initargs)
         except TypeError as err:
             raise TypeError(
-                "in constructor for %s: %s" % (cls.__name__, str(err)), sys.exc_info()[2]
+                "in constructor for %s: %s" % (cls.__name__, str(err)),
+                sys.exc_info()[2],
             )
 
     # We now have the object, but haven't set the correct

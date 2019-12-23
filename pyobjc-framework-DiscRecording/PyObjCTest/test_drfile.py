@@ -44,7 +44,9 @@ class TestDRFile(TestCase):
             b"o^v",
         )
         self.assertArgSizeInArg(
-            TestDRFileHelper.produceFile_fork_intoBuffer_length_atAddress_blockSize_, 2, 3
+            TestDRFileHelper.produceFile_fork_intoBuffer_length_atAddress_blockSize_,
+            2,
+            3,
         )
         self.assertArgHasType(
             TestDRFileHelper.produceFile_fork_intoBuffer_length_atAddress_blockSize_,

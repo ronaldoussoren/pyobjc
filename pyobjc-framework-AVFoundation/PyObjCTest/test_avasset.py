@@ -60,7 +60,9 @@ class TestAVAsset(TestCase):
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertIsInstance(AVFoundation.AVAssetDurationDidChangeNotification, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVAssetDurationDidChangeNotification, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVAssetContainsFragmentsDidChangeNotification, unicode
         )

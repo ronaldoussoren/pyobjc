@@ -2,16 +2,31 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLLibraryHelper (Metal.NSObject):
-    def functionType(self): return 1
-    def patchType(self): return 1
-    def patchControlPointCount(self): return 1
-    def newArgumentEncoderWithBufferIndex_(self, a): return 1
-    def newArgumentEncoderWithBufferIndex_reflection_(self, a, b): return 1
-    def newFunctionWithName_constantValues_error_(self, a, b, c): return 1
-    def newFunctionWithName_constantValues_completionHandler_(self, a, b, c): pass
 
-class TestMTLLibrary (TestCase):
+class TestMTLLibraryHelper(Metal.NSObject):
+    def functionType(self):
+        return 1
+
+    def patchType(self):
+        return 1
+
+    def patchControlPointCount(self):
+        return 1
+
+    def newArgumentEncoderWithBufferIndex_(self, a):
+        return 1
+
+    def newArgumentEncoderWithBufferIndex_reflection_(self, a, b):
+        return 1
+
+    def newFunctionWithName_constantValues_error_(self, a, b, c):
+        return 1
+
+    def newFunctionWithName_constantValues_completionHandler_(self, a, b, c):
+        pass
+
+
+class TestMTLLibrary(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLPatchTypeNone, 0)
         self.assertEqual(Metal.MTLPatchTypeTriangle, 1)
@@ -35,44 +50,64 @@ class TestMTLLibrary (TestCase):
         self.assertEqual(Metal.MTLLibraryErrorFunctionNotFound, 5)
         self.assertEqual(Metal.MTLLibraryErrorFileNotFound, 6)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_constants10_11(self):
         self.assertIsInstance(Metal.MTLLibraryErrorDomain, unicode)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(Metal.MTLVertexAttribute.isActive)
 
-    @min_sdk_level('10.11')
+    @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed('MTLFunction')
-        objc.protocolNamed('MTLLibrary')
+        objc.protocolNamed("MTLFunction")
+        objc.protocolNamed("MTLLibrary")
 
     def test_methods(self):
         self.assertResultHasType(TestMTLLibraryHelper.functionType, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLLibraryHelper.patchType, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLLibraryHelper.patchControlPointCount, objc._C_NSInteger)
+        self.assertResultHasType(
+            TestMTLLibraryHelper.patchControlPointCount, objc._C_NSInteger
+        )
 
-        self.assertArgHasType(TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_, 0, objc._C_NSUInteger)
-        self.assertArgHasType(TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_reflection_, 0, objc._C_NSUInteger)
+        self.assertArgHasType(
+            TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLLibraryHelper.newArgumentEncoderWithBufferIndex_reflection_,
+            0,
+            objc._C_NSUInteger,
+        )
 
-        self.assertArgIsOut(TestMTLLibraryHelper.newFunctionWithName_constantValues_error_, 2)
-        self.assertArgIsBlock(TestMTLLibraryHelper.newFunctionWithName_constantValues_completionHandler_, 2, b'v@@')
+        self.assertArgIsOut(
+            TestMTLLibraryHelper.newFunctionWithName_constantValues_error_, 2
+        )
+        self.assertArgIsBlock(
+            TestMTLLibraryHelper.newFunctionWithName_constantValues_completionHandler_,
+            2,
+            b"v@@",
+        )
 
-
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(Metal.MTLCompileOptions.alloc().init().fastMathEnabled)
-        self.assertArgIsBOOL(Metal.MTLCompileOptions.alloc().init().setFastMathEnabled_, 0)
+        self.assertArgIsBOOL(
+            Metal.MTLCompileOptions.alloc().init().setFastMathEnabled_, 0
+        )
 
-    @min_os_level('10.12')
+    @min_os_level("10.12")
     def test_methods10_12(self):
         self.assertResultIsBOOL(Metal.MTLVertexAttribute.alloc().init().isPatchData)
-        self.assertResultIsBOOL(Metal.MTLVertexAttribute.alloc().init().isPatchControlPointData)
+        self.assertResultIsBOOL(
+            Metal.MTLVertexAttribute.alloc().init().isPatchControlPointData
+        )
 
         self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isActive)
         self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isPatchData)
-        self.assertResultIsBOOL(Metal.MTLAttribute.alloc().init().isPatchControlPointData)
+        self.assertResultIsBOOL(
+            Metal.MTLAttribute.alloc().init().isPatchControlPointData
+        )
 
         self.assertResultIsBOOL(Metal.MTLFunctionConstant.alloc().init().required)
-

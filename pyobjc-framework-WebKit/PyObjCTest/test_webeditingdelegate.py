@@ -72,7 +72,9 @@ class TestWebEditingDelegate(TestCase):
         self.assertResultIsBOOL(
             TestWebEditingDelegateHelper.webView_shouldChangeTypingStyle_toStyle_
         )
-        self.assertResultIsBOOL(TestWebEditingDelegateHelper.webView_doCommandBySelector_)
+        self.assertResultIsBOOL(
+            TestWebEditingDelegateHelper.webView_doCommandBySelector_
+        )
 
 
 if __name__ == "__main__":

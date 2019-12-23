@@ -17,7 +17,9 @@ class TestABTypedefs(TestCase):
         self.assertEqual(kABDateComponentsProperty, 0x8)
 
         self.assertEqual(kABMultiStringProperty, kABMultiValueMask | kABStringProperty)
-        self.assertEqual(kABMultiIntegerProperty, kABMultiValueMask | kABIntegerProperty)
+        self.assertEqual(
+            kABMultiIntegerProperty, kABMultiValueMask | kABIntegerProperty
+        )
         self.assertEqual(kABMultiRealProperty, kABMultiValueMask | kABRealProperty)
         self.assertEqual(kABMultiDateProperty, kABMultiValueMask | kABDateProperty)
         self.assertEqual(kABMultiArrayProperty, kABMultiValueMask | kABArrayProperty)
@@ -26,7 +28,8 @@ class TestABTypedefs(TestCase):
         )
         self.assertEqual(kABMultiDataProperty, kABMultiValueMask | kABDataProperty)
         self.assertEqual(
-            kABMultiDateComponentsProperty, kABMultiValueMask | kABDateComponentsProperty
+            kABMultiDateComponentsProperty,
+            kABMultiValueMask | kABDateComponentsProperty,
         )
 
         self.assertEqual(kABEqual, 0)

@@ -12,7 +12,9 @@ if sys.maxsize >= 2 ** 32:
 
         @min_os_level("10.13")
         def testFunctions(self):
-            self.assertResultHasType(Vision.VNNormalizedRectIsIdentityRect, objc._C_BOOL)
+            self.assertResultHasType(
+                Vision.VNNormalizedRectIsIdentityRect, objc._C_BOOL
+            )
             self.assertArgHasType(
                 Vision.VNNormalizedRectIsIdentityRect, 0, Quartz.CGRect.__typestr__
             )
@@ -23,8 +25,12 @@ if sys.maxsize >= 2 ** 32:
             self.assertArgHasType(
                 Vision.VNImagePointForNormalizedPoint, 0, Quartz.CGPoint.__typestr__
             )
-            self.assertArgHasType(Vision.VNImagePointForNormalizedPoint, 1, objc._C_ULNG)
-            self.assertArgHasType(Vision.VNImagePointForNormalizedPoint, 2, objc._C_ULNG)
+            self.assertArgHasType(
+                Vision.VNImagePointForNormalizedPoint, 1, objc._C_ULNG
+            )
+            self.assertArgHasType(
+                Vision.VNImagePointForNormalizedPoint, 2, objc._C_ULNG
+            )
 
             self.assertResultHasType(
                 Vision.VNImageRectForNormalizedRect, Quartz.CGRect.__typestr__

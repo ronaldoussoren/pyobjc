@@ -63,7 +63,8 @@ class TestJSValueRef(TestCase):
             JavaScriptCore.JSValueRef.__typestr__,
         )
         self.assertResultHasType(
-            JavaScriptCore.JSValueCreateJSONString, JavaScriptCore.JSStringRef.__typestr__
+            JavaScriptCore.JSValueCreateJSONString,
+            JavaScriptCore.JSStringRef.__typestr__,
         )
 
         self.assertResultHasType(JavaScriptCore.JSValueToBoolean, objc._C_BOOL)

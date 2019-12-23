@@ -265,7 +265,9 @@ class TestDVDPlayback(TestCase):
         self.assertEqual(
             DVDPlayback.kDVDSubpictureExtensionCodeClosedCaptionBiggerSize, 6
         )
-        self.assertEqual(DVDPlayback.kDVDSubpictureExtensionCodeClosedCaption4Children, 7)
+        self.assertEqual(
+            DVDPlayback.kDVDSubpictureExtensionCodeClosedCaption4Children, 7
+        )
         self.assertEqual(DVDPlayback.kDVDSubpictureExtensionCodeForcedCaption, 9)
         self.assertEqual(
             DVDPlayback.kDVDSubpictureExtensionDirectorsCommentNormalSize, 13
@@ -273,7 +275,9 @@ class TestDVDPlayback(TestCase):
         self.assertEqual(
             DVDPlayback.kDVDSubpictureExtensionDirectorsCommentBiggerSize, 14
         )
-        self.assertEqual(DVDPlayback.kDVDSubpictureExtensionDirectorsComment4Children, 15)
+        self.assertEqual(
+            DVDPlayback.kDVDSubpictureExtensionDirectorsComment4Children, 15
+        )
 
         self.assertEqual(DVDPlayback.kDVDRegionCodeUninitialized, 0xFF)
         self.assertEqual(DVDPlayback.kDVDRegionCode1, 0xFE)
@@ -592,7 +596,10 @@ class TestDVDPlayback(TestCase):
         self.assertArgIsOut(DVDPlayback.DVDGetGPRMValue, 1)
 
         self.assertArgIsFunction(
-            DVDPlayback.DVDSetFatalErrorCallBack, 0, DVDFatalErrCallBackFunctionPtr, True
+            DVDPlayback.DVDSetFatalErrorCallBack,
+            0,
+            DVDFatalErrCallBackFunctionPtr,
+            True,
         )
 
         self.assertArgIsFunction(

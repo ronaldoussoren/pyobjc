@@ -26,7 +26,9 @@ class TestNSMenu(TestCase):
 
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSMenuHelper.validateMenuItem_)
-        self.assertResultHasType(TestNSMenuHelper.numberOfItemsInMenu_, objc._C_NSInteger)
+        self.assertResultHasType(
+            TestNSMenuHelper.numberOfItemsInMenu_, objc._C_NSInteger
+        )
         self.assertResultIsBOOL(TestNSMenuHelper.menu_updateItem_atIndex_shouldCancel_)
         self.assertArgHasType(
             TestNSMenuHelper.menu_updateItem_atIndex_shouldCancel_, 2, objc._C_NSInteger

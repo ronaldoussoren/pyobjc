@@ -10,7 +10,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(NaturalLanguage.NLModelTypeSequence, 1)
 
         def test_methods(self):
-            self.assertArgIsOut(NaturalLanguage.NLModel.modelWithContentsOfURL_error_, 1)
+            self.assertArgIsOut(
+                NaturalLanguage.NLModel.modelWithContentsOfURL_error_, 1
+            )
             self.assertArgIsOut(NaturalLanguage.NLModel.modelWithMLModel_error_, 1)
 
 

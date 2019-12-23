@@ -173,7 +173,9 @@ class TestCFCalendarVariadic(TestCase):
         CFCalendarSetTimeZone(cal, tz)
         new_zone = CFCalendarCopyTimeZone(cal)
         self.assertIsInstance(new_zone, CFTimeZoneRef)
-        self.assertEqual(CFTimeZoneGetName(new_zone), b"Pacific/Wallis".decode("latin1"))
+        self.assertEqual(
+            CFTimeZoneGetName(new_zone), b"Pacific/Wallis".decode("latin1")
+        )
         weekday = CFCalendarGetFirstWeekday(cal)
         weekday = weekday + 2 % 7
         CFCalendarSetFirstWeekday(cal, weekday)

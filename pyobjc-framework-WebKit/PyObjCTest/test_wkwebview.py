@@ -14,7 +14,9 @@ class TestWKWebView(TestCase):
         self.assertArgIsBOOL(WKWebView.setAllowsBackForwardNavigationGestures_, 0)
         self.assertResultIsBOOL(WKWebView.allowsMagnification)
         self.assertArgIsBOOL(WKWebView.setAllowsMagnification_, 0)
-        self.assertArgIsBlock(WKWebView.evaluateJavaScript_completionHandler_, 1, b"v@@")
+        self.assertArgIsBlock(
+            WKWebView.evaluateJavaScript_completionHandler_, 1, b"v@@"
+        )
 
     @onlyOn64Bit
     @min_os_level("10.11")

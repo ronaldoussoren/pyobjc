@@ -418,7 +418,11 @@ try:
         b"passwordContentCheck:forRecordName:error:",
         {"retval": {"type": "Z"}, "arguments": {4: {"type_modifier": b"o"}}},
     )
-    r(b"ODNode", b"policiesAndReturnError:", {"arguments": {2: {"type_modifier": b"o"}}})
+    r(
+        b"ODNode",
+        b"policiesAndReturnError:",
+        {"arguments": {2: {"type_modifier": b"o"}}},
+    )
     r(
         b"ODNode",
         b"recordWithRecordType:name:attributes:error:",

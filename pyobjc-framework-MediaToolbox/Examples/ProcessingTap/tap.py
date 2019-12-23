@@ -33,7 +33,12 @@ def prepare(tap, maxFrames, processingFormat):
 def process(tap, numberFrames, flags, bufferList, framesOut, flagsOut):
     # print("process", bufferList)
 
-    res, flagsOut, timeRangeOut, framesOut = MediaToolbox.MTAudioProcessingTapGetSourceAudio(
+    (
+        res,
+        flagsOut,
+        timeRangeOut,
+        framesOut,
+    ) = MediaToolbox.MTAudioProcessingTapGetSourceAudio(
         tap, numberFrames, bufferList, None, objc.NULL, None
     )
 
@@ -65,7 +70,10 @@ def main():
     )
     # callbacks = (MediaToolbox.kMTAudioProcessingTapCallbacksVersion_0, 42, None, None, None, None, process)
     err, tap = MediaToolbox.MTAudioProcessingTapCreate(
-        None, callbacks, MediaToolbox.kMTAudioProcessingTapCreationFlag_PostEffects, None
+        None,
+        callbacks,
+        MediaToolbox.kMTAudioProcessingTapCreationFlag_PostEffects,
+        None,
     )
 
     print("Creating tap", err, tap)

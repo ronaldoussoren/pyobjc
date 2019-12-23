@@ -52,14 +52,18 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 MediaPlayer.MPMediaItemPropertyAlbumTrackNumber, unicode
             )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumTrackCount, unicode)
+            self.assertIsInstance(
+                MediaPlayer.MPMediaItemPropertyAlbumTrackCount, unicode
+            )
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDiscNumber, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDiscCount, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyArtwork, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsExplicit, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyLyrics, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyReleaseDate, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyBeatsPerMinute, unicode)
+            self.assertIsInstance(
+                MediaPlayer.MPMediaItemPropertyBeatsPerMinute, unicode
+            )
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyComments, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAssetURL, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsCloudItem, unicode)
@@ -73,7 +77,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPlayCount, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertySkipCount, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyRating, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyLastPlayedDate, unicode)
+            self.assertIsInstance(
+                MediaPlayer.MPMediaItemPropertyLastPlayedDate, unicode
+            )
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyUserGrouping, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyBookmarkTime, unicode)
             self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDateAdded, unicode)

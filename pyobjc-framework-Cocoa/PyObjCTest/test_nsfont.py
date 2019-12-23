@@ -136,8 +136,12 @@ class TestNSFont(TestCase):
         self.assertResultIsBOOL(NSFont.isBaseFont)
         self.assertResultIsBOOL(NSFont.glyphIsEncoded_)
         self.assertArgHasType(NSFont.glyphIsEncoded_, 0, b"I")
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, b"I")
-        self.assertArgHasType(NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, b"I")
+        self.assertArgHasType(
+            NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, b"I"
+        )
+        self.assertArgHasType(
+            NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, b"I"
+        )
         self.assertArgHasType(
             NSFont.positionOfGlyph_precededByGlyph_isNominal_, 2, b"o^" + objc._C_NSBOOL
         )
@@ -163,7 +167,9 @@ class TestNSFont(TestCase):
             b"o^" + objc._C_NSBOOL,
         )
         self.assertArgHasType(
-            NSFont.positionOfGlyph_struckOverRect_metricsExist_, 2, b"o^" + objc._C_NSBOOL
+            NSFont.positionOfGlyph_struckOverRect_metricsExist_,
+            2,
+            b"o^" + objc._C_NSBOOL,
         )
 
         if os_level_key(os_release()) < os_level_key("10.10"):

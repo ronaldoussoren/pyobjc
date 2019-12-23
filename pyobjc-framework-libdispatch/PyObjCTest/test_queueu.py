@@ -16,7 +16,7 @@ class TestQueueAPI(TestCase):
         self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_HIGH, 2)
         self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_LOW, -2)
-        self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_BACKGROUND, -2 ** 15)
+        self.assertEqual(libdispatch.DISPATCH_QUEUE_PRIORITY_BACKGROUND, -(2 ** 15))
 
         self.assertEqual(libdispatch.DISPATCH_AUTORELEASE_FREQUENCY_INHERIT, 0)
         self.assertEqual(libdispatch.DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM, 1)
@@ -51,7 +51,9 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_async_f, 0, objc._C_ID
         )  # dispatch_queue_t
-        self.assertArgHasType(libdispatch.dispatch_async_f, 1, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            libdispatch.dispatch_async_f, 1, objc._C_PTR + objc._C_VOID
+        )
         self.assertArgIsFunction(libdispatch.dispatch_async_f, 2, b"v^v", 1)
 
         self.assertResultHasType(libdispatch.dispatch_sync, objc._C_VOID)
@@ -64,7 +66,9 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_sync_f, 0, objc._C_ID
         )  # dispatch_queue_t
-        self.assertArgHasType(libdispatch.dispatch_sync_f, 1, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            libdispatch.dispatch_sync_f, 1, objc._C_PTR + objc._C_VOID
+        )
         self.assertArgIsFunction(libdispatch.dispatch_sync_f, 2, b"v^v", 0)
 
         self.assertResultHasType(libdispatch.dispatch_apply, objc._C_VOID)
@@ -79,7 +83,9 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_apply_f, 1, objc._C_ID
         )  # dispatch_queue_t
-        self.assertArgHasType(libdispatch.dispatch_apply_f, 2, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            libdispatch.dispatch_apply_f, 2, objc._C_PTR + objc._C_VOID
+        )
         self.assertArgIsFunction(libdispatch.dispatch_apply_f, 3, b"v^vL", 1)
 
         self.assertResultHasType(libdispatch.dispatch_get_current_queue, objc._C_ID)
@@ -123,7 +129,9 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_after_f, 1, objc._C_ID
         )  # dispatch_queue_t
-        self.assertArgHasType(libdispatch.dispatch_after_f, 2, objc._C_PTR + objc._C_VOID)
+        self.assertArgHasType(
+            libdispatch.dispatch_after_f, 2, objc._C_PTR + objc._C_VOID
+        )
         self.assertArgIsFunction(libdispatch.dispatch_after_f, 3, b"v^v", 1)
 
     @min_os_level("10.7")
@@ -223,7 +231,9 @@ class TestQueueAPI(TestCase):
             libdispatch.dispatch_queue_attr_make_with_autorelease_frequency, objc._C_ID
         )
         self.assertArgHasType(
-            libdispatch.dispatch_queue_attr_make_with_autorelease_frequency, 0, objc._C_ID
+            libdispatch.dispatch_queue_attr_make_with_autorelease_frequency,
+            0,
+            objc._C_ID,
         )
         self.assertArgHasType(
             libdispatch.dispatch_queue_attr_make_with_autorelease_frequency,
@@ -250,7 +260,9 @@ class TestQueueAPI(TestCase):
         self.assertResultHasType(libdispatch.dispatch_assert_queue, objc._C_VOID)
         self.assertArgHasType(libdispatch.dispatch_assert_queue, 0, objc._C_ID)
 
-        self.assertResultHasType(libdispatch.dispatch_assert_queue_barrier, objc._C_VOID)
+        self.assertResultHasType(
+            libdispatch.dispatch_assert_queue_barrier, objc._C_VOID
+        )
         self.assertArgHasType(libdispatch.dispatch_assert_queue_barrier, 0, objc._C_ID)
 
         self.assertResultHasType(libdispatch.dispatch_assert_queue_not, objc._C_VOID)

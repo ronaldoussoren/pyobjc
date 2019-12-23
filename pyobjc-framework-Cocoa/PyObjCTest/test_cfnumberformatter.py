@@ -60,7 +60,9 @@ class TestNumberFormatter(TestCase):
         self.assertEqual(v, b"HFL".decode("ascii"))
         self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 1)
         self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 2)
-        ok, frac, rnd = CFNumberFormatterGetDecimalInfoForCurrencyCode("EUR", None, None)
+        ok, frac, rnd = CFNumberFormatterGetDecimalInfoForCurrencyCode(
+            "EUR", None, None
+        )
         self.assertEqual(ok, True)
         self.assertEqual(frac, 2)
         self.assertEqual(rnd, 0.0)

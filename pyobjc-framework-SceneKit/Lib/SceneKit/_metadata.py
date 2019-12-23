@@ -65,7 +65,8 @@ functions = {
     ),
     "SCNMatrix4MakeTranslation": (
         sel32or64(
-            b"{CATransform3D=ffffffffffffffff}fff", b"{CATransform3D=dddddddddddddddd}ddd"
+            b"{CATransform3D=ffffffffffffffff}fff",
+            b"{CATransform3D=dddddddddddddddd}ddd",
         ),
     ),
     "SCNMatrix4FromMat4": (
@@ -113,12 +114,14 @@ functions = {
     ),
     "SCNVector4EqualToVector4": (
         sel32or64(
-            b"B{SCNVector4=ffff}{SCNVector4=ffff}", b"B{SCNVector4=dddd}{SCNVector4=dddd}"
+            b"B{SCNVector4=ffff}{SCNVector4=ffff}",
+            b"B{SCNVector4=dddd}{SCNVector4=dddd}",
         ),
     ),
     "SCNMatrix4MakeScale": (
         sel32or64(
-            b"{CATransform3D=ffffffffffffffff}fff", b"{CATransform3D=dddddddddddddddd}ddd"
+            b"{CATransform3D=ffffffffffffffff}fff",
+            b"{CATransform3D=dddddddddddddddd}ddd",
         ),
     ),
     "SCNMatrix4FromGLKMatrix4": (
@@ -261,9 +264,17 @@ try:
         {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
     )
     r(b"NSObject", b"audioEngine", {"required": True, "retval": {"type": b"@"}})
-    r(b"NSObject", b"audioEnvironmentNode", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"audioEnvironmentNode",
+        {"required": True, "retval": {"type": b"@"}},
+    )
     r(b"NSObject", b"audioListener", {"required": True, "retval": {"type": b"@"}})
-    r(b"NSObject", b"autoSwitchToFreeCamera", {"required": True, "retval": {"type": "Z"}})
+    r(
+        b"NSObject",
+        b"autoSwitchToFreeCamera",
+        {"required": True, "retval": {"type": "Z"}},
+    )
     r(
         b"NSObject",
         b"autoenablesDefaultLighting",
@@ -1127,7 +1138,10 @@ try:
         b"didFinishPlayback",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )
@@ -1164,7 +1178,10 @@ try:
         b"willStartPlayback",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )
@@ -1173,7 +1190,10 @@ try:
         b"didFinishPlayback",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )
@@ -1216,15 +1236,26 @@ try:
         b"willStartPlayback",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )
     r(b"SCNCamera", b"automaticallyAdjustsZRange", {"retval": {"type": b"Z"}})
     r(b"SCNCamera", b"grainIsColored", {"retval": {"type": b"Z"}})
-    r(b"SCNCamera", b"setAutomaticallyAdjustsZRange:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SCNCamera",
+        b"setAutomaticallyAdjustsZRange:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"SCNCamera", b"setGrainIsColored:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"SCNCamera", b"setUsesOrthographicProjection:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SCNCamera",
+        b"setUsesOrthographicProjection:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"SCNCamera", b"setWantsDepthOfField:", {"arguments": {2: {"type": "Z"}}})
     r(b"SCNCamera", b"setWantsExposureAdaptation:", {"arguments": {2: {"type": "Z"}}})
     r(b"SCNCamera", b"setWantsHDR:", {"arguments": {2: {"type": "Z"}}})
@@ -1241,7 +1272,11 @@ try:
     r(b"SCNConstraint", b"isIncremental", {"retval": {"type": "Z"}})
     r(b"SCNConstraint", b"setEnabled:", {"arguments": {2: {"type": "Z"}}})
     r(b"SCNConstraint", b"setIncremental:", {"arguments": {2: {"type": "Z"}}})
-    r(b"SCNGeometry", b"setWantsAdaptiveSubdivision:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"SCNGeometry",
+        b"setWantsAdaptiveSubdivision:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"SCNGeometry", b"wantsAdaptiveSubdivision", {"retval": {"type": "Z"}})
     r(b"SCNGeometrySource", b"floatComponents", {"retval": {"type": b"Z"}})
     r(
@@ -1290,7 +1325,11 @@ try:
     r(b"SCNLight", b"setDrawsArea:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SCNLight", b"setForcesBackFaceCasters:", {"arguments": {2: {"type": "Z"}}})
     r(b"SCNLight", b"setParallaxCorrectionEnabled:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"SCNLight", b"setSampleDistributedShadowMaps:", {"arguments": {2: {"type": "Z"}}})
+    r(
+        b"SCNLight",
+        b"setSampleDistributedShadowMaps:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
     r(b"SCNLookAtConstraint", b"gimbalLockEnabled", {"retval": {"type": b"Z"}})
     r(
         b"SCNLookAtConstraint",
@@ -1303,7 +1342,11 @@ try:
     r(b"SCNMaterial", b"readsFromDepthBuffer", {"retval": {"type": b"Z"}})
     r(b"SCNMaterial", b"setDoubleSided:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SCNMaterial", b"setLitPerPixel:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"SCNMaterial", b"setLocksAmbientWithDiffuse:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SCNMaterial",
+        b"setLocksAmbientWithDiffuse:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"SCNMaterial", b"setReadsFromDepthBuffer:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SCNMaterial", b"setWritesToDepthBuffer:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SCNMaterial", b"writesToDepthBuffer", {"retval": {"type": b"Z"}})
@@ -1370,7 +1413,11 @@ try:
     r(b"SCNNode", b"setCastsShadow:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SCNNode", b"setHidden:", {"arguments": {2: {"type": b"Z"}}})
     r(b"SCNNode", b"setPaused:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"SCNNode", b"setSimdOrientation:", {"arguments": {2: {"type": b"{_simd_quatf=}"}}})
+    r(
+        b"SCNNode",
+        b"setSimdOrientation:",
+        {"arguments": {2: {"type": b"{_simd_quatf=}"}}},
+    )
     r(b"SCNNode", b"setSimdPivot:", {"arguments": {2: {"type": b"{_simd_float4x4=?}"}}})
     r(
         b"SCNNode",
@@ -1403,7 +1450,11 @@ try:
             "arguments": {2: {"type": b"{_simd_float4x4=?}"}},
         },
     )
-    r(b"SCNNode", b"simdLocalRotateBy:", {"arguments": {2: {"type": b"{_simd_quatf=}"}}})
+    r(
+        b"SCNNode",
+        b"simdLocalRotateBy:",
+        {"arguments": {2: {"type": b"{_simd_quatf=}"}}},
+    )
     r(b"SCNNode", b"simdOrientation", {"retval": {"type": b"{_simd_quatf=}"}})
     r(b"SCNNode", b"simdPivot", {"retval": {"type": b"{_simd_float4x4=?}"}})
     r(
@@ -1462,7 +1513,11 @@ try:
     r(b"SCNParticleSystem", b"isLocal", {"retval": {"type": b"Z"}})
     r(b"SCNParticleSystem", b"loops", {"retval": {"type": b"Z"}})
     r(b"SCNParticleSystem", b"particleDiesOnCollision", {"retval": {"type": b"Z"}})
-    r(b"SCNParticleSystem", b"setAffectedByGravity:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SCNParticleSystem",
+        b"setAffectedByGravity:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(
         b"SCNParticleSystem",
         b"setAffectedByPhysicsFields:",
@@ -1585,7 +1640,11 @@ try:
         {"arguments": {4: {"type_modifier": b"o"}}},
     )
     r(b"SCNScene", b"setPaused:", {"arguments": {2: {"type": b"Z"}}})
-    r(b"SCNScene", b"setWantsScreenSpaceReflection:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"SCNScene",
+        b"setWantsScreenSpaceReflection:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"SCNScene", b"wantsScreenSpaceReflection", {"retval": {"type": b"Z"}})
     r(
         b"SCNScene",
@@ -1680,7 +1739,10 @@ try:
         b"completionBlock",
         {
             "retval": {
-                "callable": {"retval": {"type": b"v"}, "arguments": {0: {"type": b"^v"}}}
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}},
+                }
             }
         },
     )
@@ -1709,7 +1771,9 @@ try:
                 3: {
                     "callable": {
                         "retval": {
-                            "type": sel32or64(b"{SCNVector4=ffff}", b"{SCNVector4=dddd}")
+                            "type": sel32or64(
+                                b"{SCNVector4=ffff}", b"{SCNVector4=dddd}"
+                            )
                         },
                         "arguments": {
                             0: {"type": b"^v"},

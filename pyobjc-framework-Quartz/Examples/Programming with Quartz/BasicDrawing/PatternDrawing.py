@@ -86,7 +86,9 @@ def createRedBlackCheckerBoardPattern(patternTransform):
 
 def doRedBlackCheckerboard(context):
     dash = [4]
-    pattern = createRedBlackCheckerBoardPattern(Quartz.CGAffineTransformMakeScale(20, 20))
+    pattern = createRedBlackCheckerBoardPattern(
+        Quartz.CGAffineTransformMakeScale(20, 20)
+    )
     if pattern is None:
         print("Couldn't create pattern!")
         return
@@ -246,7 +248,9 @@ def doPatternMatrix(context):
 
 
 def doPatternPhase(context):
-    pattern = createRedBlackCheckerBoardPattern(Quartz.CGAffineTransformMakeScale(20, 20))
+    pattern = createRedBlackCheckerBoardPattern(
+        Quartz.CGAffineTransformMakeScale(20, 20)
+    )
     if pattern is None:
         print("Couldn't create pattern!")
         return
@@ -268,7 +272,9 @@ def doPatternPhase(context):
     # Rectangle 3
     # Set the pattern phase so that the pattern origin
     # is at the lower-left of the shape.
-    Quartz.CGContextSetPatternPhase(context, scalePatternPhase(Quartz.CGSizeMake(20, 20)))
+    Quartz.CGContextSetPatternPhase(
+        context, scalePatternPhase(Quartz.CGSizeMake(20, 20))
+    )
     Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 20, 100, 100))
 
     # Rectangle 4
@@ -371,7 +377,9 @@ def doStencilPattern(context):
 
     Quartz.CGContextSaveGState(context)
     if 1:
-        Quartz.CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueBlueColor())
+        Quartz.CGContextSetFillColorWithColor(
+            context, Utilities.getRGBOpaqueBlueColor()
+        )
         # Fill color is now blue. Paint two blue rectangles
         # that will be underneath the drawing which follows.
         Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 40, 105, 80))
@@ -385,7 +393,9 @@ def doStencilPattern(context):
     # This paints over the blue rect just painted at 20,40
     # and the blue underneath is visible where the pattern has
     # transparent areas.
-    Quartz.CGContextSetPatternPhase(context, scalePatternPhase(Quartz.CGSizeMake(20, 40)))
+    Quartz.CGContextSetPatternPhase(
+        context, scalePatternPhase(Quartz.CGSizeMake(20, 40))
+    )
     Quartz.CGContextFillRect(context, Quartz.CGRectMake(20, 40, 105, 80))
 
     # Rectangle 4.

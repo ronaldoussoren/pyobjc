@@ -11,7 +11,9 @@ except NameError:
 else:
 
     class TestNSURLSessionStreamTaskHelper(NSURLSessionStreamTask):
-        def readDataOfMinLength_maxLength_timeout_completionHandler_(self, mn, mx, t, c):
+        def readDataOfMinLength_maxLength_timeout_completionHandler_(
+            self, mn, mx, t, c
+        ):
             pass
 
         def writeData_timeout_completionHandler_(self, d, t, c):
@@ -170,7 +172,9 @@ class TestNSURLSession(TestCase):
         self.assertArgIsBlock(
             NSURLSession.dataTaskWithRequest_completionHandler_, 1, b"v@@@"
         )
-        self.assertArgIsBlock(NSURLSession.dataTaskWithURL_completionHandler_, 1, b"v@@@")
+        self.assertArgIsBlock(
+            NSURLSession.dataTaskWithURL_completionHandler_, 1, b"v@@@"
+        )
         self.assertArgIsBlock(
             NSURLSession.uploadTaskWithRequest_fromFile_completionHandler_, 2, b"v@@@"
         )
@@ -188,7 +192,9 @@ class TestNSURLSession(TestCase):
             NSURLSessionDownloadTask.cancelByProducingResumeData_, 0, b"v@"
         )
 
-        self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.waitsForConnectivity)
+        self.assertResultIsBOOL(
+            TestNSURLSessionConfigurationHelper.waitsForConnectivity
+        )
         self.assertArgIsBOOL(
             TestNSURLSessionConfigurationHelper.setWaitsForConnectivity_, 0
         )
@@ -203,7 +209,9 @@ class TestNSURLSession(TestCase):
             TestNSURLSessionConfigurationHelper.setHTTPShouldUsePipelining_, 0
         )
 
-        self.assertResultIsBOOL(TestNSURLSessionConfigurationHelper.HTTPShouldSetCookies)
+        self.assertResultIsBOOL(
+            TestNSURLSessionConfigurationHelper.HTTPShouldSetCookies
+        )
         self.assertArgIsBOOL(
             TestNSURLSessionConfigurationHelper.setHTTPShouldSetCookies_, 0
         )
@@ -304,7 +312,8 @@ class TestNSURLSession(TestCase):
             TestNSURLSessionConfigurationHelper.shouldUseExtendedBackgroundIdleMode
         )
         self.assertArgIsBOOL(
-            TestNSURLSessionConfigurationHelper.setShouldUseExtendedBackgroundIdleMode_, 0
+            TestNSURLSessionConfigurationHelper.setShouldUseExtendedBackgroundIdleMode_,
+            0,
         )
 
     @min_os_level("10.15")
@@ -347,7 +356,6 @@ class TestNSURLSession(TestCase):
     def testProtocols10_11(self):
         objc.protocolNamed("NSURLSessionStreamDelegate")
 
-   
     @onlyOn64Bit
     def test_protocol_methods10_15(self):
         self.assertArgHasType(

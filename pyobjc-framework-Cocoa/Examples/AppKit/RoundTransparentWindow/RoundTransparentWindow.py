@@ -59,7 +59,10 @@ class CustomWindow(Cocoa.NSWindow):
         self, contentRect, aStyle, bufferingType, flag
     ):
         result = super(CustomWindow, self).initWithContentRect_styleMask_backing_defer_(
-            contentRect, Cocoa.NSBorderlessWindowMask, Cocoa.NSBackingStoreBuffered, False
+            contentRect,
+            Cocoa.NSBorderlessWindowMask,
+            Cocoa.NSBackingStoreBuffered,
+            False,
         )
         if result is None:
             sys.stderr.write("superclass call failed\n")

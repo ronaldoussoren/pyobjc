@@ -6,7 +6,9 @@ if sys.maxsize > 2 ** 32:
 
     class TestINSendMessageRecipientResolutionResult(TestCase):
         def testConstants(self):
-            self.assertEqual(Intents.INSendMessageRecipientUnsupportedReasonNoAccount, 1)
+            self.assertEqual(
+                Intents.INSendMessageRecipientUnsupportedReasonNoAccount, 1
+            )
             self.assertEqual(Intents.INSendMessageRecipientUnsupportedReasonOffline, 2)
             self.assertEqual(
                 Intents.INSendMessageRecipientUnsupportedReasonMessagingServiceNotEnabledForRecipient,

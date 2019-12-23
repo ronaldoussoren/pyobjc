@@ -178,7 +178,8 @@ if objc.platform == "MACOSX":
             d[b"bool".decode("ascii")] = objc.YES
 
             self.assertEqual(
-                d.writeToFile_atomically_(b"/tmp/pyobjctest.plist".decode("ascii"), 0), 1
+                d.writeToFile_atomically_(b"/tmp/pyobjctest.plist".decode("ascii"), 0),
+                1,
             )
 
             fd = open(b"/tmp/pyobjctest.plist".decode("ascii"), "rb")
@@ -194,7 +195,8 @@ if objc.platform == "MACOSX":
             d[b"bool".decode("ascii")] = NSNumber.numberWithBool_(1)
 
             self.assertEqual(
-                d.writeToFile_atomically_(b"/tmp/pyobjctest.plist".decode("ascii"), 0), 1
+                d.writeToFile_atomically_(b"/tmp/pyobjctest.plist".decode("ascii"), 0),
+                1,
             )
 
             fd = open(b"/tmp/pyobjctest.plist".decode("ascii"), "rb")

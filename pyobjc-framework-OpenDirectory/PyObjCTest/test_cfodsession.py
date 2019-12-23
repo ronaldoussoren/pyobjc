@@ -14,7 +14,8 @@ class TestCFODSession(TestCase):
 
     def testConstants(self):
         self.assertIsInstance(
-            CFOpenDirectory.kODSessionDefault, (CFOpenDirectory.ODSessionRef, type(None))
+            CFOpenDirectory.kODSessionDefault,
+            (CFOpenDirectory.ODSessionRef, type(None)),
         )
 
 

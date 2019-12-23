@@ -47,11 +47,11 @@ _BOOLEAN_ATTRIBUTES = [
 ]
 
 
-
 def _as_bytes(value):
     if isinstance(value, bytes):
         return value
     return value.encode("ascii")
+
 
 def _as_string(value):
     if isinstance(value, bytes):
@@ -603,7 +603,9 @@ class _BridgeSupportParser(object):
 _libraries = []
 
 
-def parseBridgeSupport(xmldata, globals, frameworkName, dylib_path=None, inlineTab=None):
+def parseBridgeSupport(
+    xmldata, globals, frameworkName, dylib_path=None, inlineTab=None
+):
 
     if dylib_path:
         lib = ctypes.cdll.LoadLibrary(dylib_path)

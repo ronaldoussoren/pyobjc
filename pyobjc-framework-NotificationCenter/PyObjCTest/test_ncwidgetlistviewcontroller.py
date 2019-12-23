@@ -35,7 +35,9 @@ if sys.maxsize > 2 ** 32:
                 NotificationCenter.NCWidgetListViewController.setHasDividerLines_, 0
             )
 
-            self.assertResultIsBOOL(NotificationCenter.NCWidgetListViewController.editing)
+            self.assertResultIsBOOL(
+                NotificationCenter.NCWidgetListViewController.editing
+            )
             self.assertArgIsBOOL(
                 NotificationCenter.NCWidgetListViewController.setEditing_, 0
             )

@@ -100,7 +100,9 @@ class TestURL(TestCase):
 
     def testCopyAbs(self):
         # CFURLCopyAbsoluteURL
-        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode("ascii"), None)
+        base = CFURLCreateWithString(
+            None, b"http://www.omroep.nl/".decode("ascii"), None
+        )
         self.assertIsInstance(base, CFURLRef)
 
         ref = CFURLCreateWithString(None, b"/sport".decode("ascii"), base)
@@ -172,7 +174,9 @@ class TestURL(TestCase):
         self.assertEqual(strval, b"/tmp/filename2")
 
     def testParts(self):
-        base = CFURLCreateWithString(None, b"http://www.omroep.nl/".decode("ascii"), None)
+        base = CFURLCreateWithString(
+            None, b"http://www.omroep.nl/".decode("ascii"), None
+        )
         self.assertIsInstance(base, CFURLRef)
 
         ref = CFURLCreateWithString(None, b"/sport".decode("ascii"), base)
@@ -313,7 +317,9 @@ class TestURL(TestCase):
         )
 
     def testFSRef(self):
-        ref = CFURLCreateWithFileSystemPath(None, os.getcwd(), kCFURLPOSIXPathStyle, True)
+        ref = CFURLCreateWithFileSystemPath(
+            None, os.getcwd(), kCFURLPOSIXPathStyle, True
+        )
         self.assertIsInstance(ref, CFURLRef)
 
         ok, fsref = CFURLGetFSRef(ref, None)
@@ -517,7 +523,9 @@ class TestURL(TestCase):
         self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusKey, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemDownloadingErrorKey, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemUploadingErrorKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusNotDownloaded, unicode)
+        self.assertIsInstance(
+            kCFURLUbiquitousItemDownloadingStatusNotDownloaded, unicode
+        )
         self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusDownloaded, unicode)
         self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusCurrent, unicode)
 
@@ -589,7 +597,9 @@ class TestURL(TestCase):
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertEqual(kCFURLBookmarkCreationWithSecurityScope, 1 << 11)
-        self.assertEqual(kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, 1 << 12)
+        self.assertEqual(
+            kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, 1 << 12
+        )
         self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1 << 10)
 
         self.assertIsInstance(kCFURLKeysOfUnsetValuesKey, unicode)
@@ -651,7 +661,9 @@ class TestURL(TestCase):
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(kCFURLVolumeAvailableCapacityForImportantUsageKey, unicode)
+        self.assertIsInstance(
+            kCFURLVolumeAvailableCapacityForImportantUsageKey, unicode
+        )
         self.assertIsInstance(
             kCFURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode
         )

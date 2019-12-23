@@ -61,7 +61,7 @@ class TestNSNumber(TestCase):
         self.assertIsInstance(v, long)
 
         if os_level_key(os_release()) < os_level_key("10.5"):
-            self.assertEqual(v.description(), str(-2 ** 63 + 5000))
+            self.assertEqual(v.description(), str(-(2 ** 63) + 5000))
         else:
             self.assertEqual(v.description(), str(2 ** 63 + 5000))
 
@@ -111,7 +111,7 @@ class TestNSNumber(TestCase):
 
         w = pickle.loads(data)
         if os_level_key(os_release()) < os_level_key("10.5"):
-            self.assertEqual(w, {"long": -2 ** 63 + 5000, "int": 42, "float": 2.0})
+            self.assertEqual(w, {"long": -(2 ** 63) + 5000, "int": 42, "float": 2.0})
         else:
             self.assertEqual(w, {"long": 2 ** 63 + 5000, "int": 42, "float": 2.0})
 
@@ -275,7 +275,8 @@ class TestNSNumber(TestCase):
         )
         self.assertEqual(
             OC_TestNumber.compareA_andB_(
-                NSNumber.numberWithLong_(0), NSNumber.numberWithUnsignedLongLong_(2 ** 40)
+                NSNumber.numberWithLong_(0),
+                NSNumber.numberWithUnsignedLongLong_(2 ** 40),
             ),
             NSOrderedAscending,
         )
@@ -294,7 +295,7 @@ class TestNSNumber(TestCase):
         )
         self.assertEqual(
             OC_TestNumber.compareA_andB_(
-                NSNumber.numberWithLong_(0), NSNumber.numberWithLongLong_(-2 ** 60)
+                NSNumber.numberWithLong_(0), NSNumber.numberWithLongLong_(-(2 ** 60))
             ),
             NSOrderedDescending,
         )
@@ -333,9 +334,9 @@ class TestNSNumber(TestCase):
         self.assertIsInstance(v, unicode)
         self.assertEqual(v, unicode(str(2 ** 60)))
 
-        v = OC_TestNumber.numberDescription_(NSNumber.numberWithLongLong_(-2 ** 60))
+        v = OC_TestNumber.numberDescription_(NSNumber.numberWithLongLong_(-(2 ** 60)))
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, unicode(str(-2 ** 60)))
+        self.assertEqual(v, unicode(str(-(2 ** 60))))
 
         v = OC_TestNumber.numberDescription_(NSNumber.numberWithDouble_(264.0))
         self.assertIsInstance(v, unicode)
@@ -585,7 +586,9 @@ class TestPyNumber(TestCase):
         self.assertEqual(OC_TestNumber.compareA_andB_(0, 42.0), NSOrderedAscending)
 
         self.assertEqual(OC_TestNumber.compareA_andB_(0, -1), NSOrderedDescending)
-        self.assertEqual(OC_TestNumber.compareA_andB_(0, -2 ** 64), NSOrderedDescending)
+        self.assertEqual(
+            OC_TestNumber.compareA_andB_(0, -(2 ** 64)), NSOrderedDescending
+        )
         self.assertEqual(OC_TestNumber.compareA_andB_(0, -42.0), NSOrderedDescending)
 
         self.assertEqual(OC_TestNumber.compareA_andB_(0, 0), NSOrderedSame)
@@ -599,7 +602,7 @@ class TestPyNumber(TestCase):
         self.assertFalse(OC_TestNumber.number_isEqualTo_(0, 42.0))
 
         self.assertFalse(OC_TestNumber.number_isEqualTo_(0, -1))
-        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, -2 ** 64))
+        self.assertFalse(OC_TestNumber.number_isEqualTo_(0, -(2 ** 64)))
         self.assertFalse(OC_TestNumber.number_isEqualTo_(0, -42.0))
 
         self.assertTrue(OC_TestNumber.number_isEqualTo_(0, 0))
@@ -616,9 +619,9 @@ class TestPyNumber(TestCase):
         self.assertIsInstance(v, unicode)
         self.assertEqual(v, unicode(repr(2 ** 64)))
 
-        v = OC_TestNumber.numberDescription_(-2 ** 64)
+        v = OC_TestNumber.numberDescription_(-(2 ** 64))
         self.assertIsInstance(v, unicode)
-        self.assertEqual(v, unicode(repr(-2 ** 64)))
+        self.assertEqual(v, unicode(repr(-(2 ** 64))))
 
         v = OC_TestNumber.numberDescription_(264.0)
         self.assertIsInstance(v, unicode)
@@ -651,10 +654,12 @@ class TestInteractions(TestCase):
         self.assertEqual(OC_TestNumber.compareA_andB_(42, 42), NSOrderedSame)
         for m in methods:
             self.assertEqual(
-                OC_TestNumber.compareA_andB_(getattr(NSNumber, m)(42), 42), NSOrderedSame
+                OC_TestNumber.compareA_andB_(getattr(NSNumber, m)(42), 42),
+                NSOrderedSame,
             )
             self.assertEqual(
-                OC_TestNumber.compareA_andB_(42, getattr(NSNumber, m)(42)), NSOrderedSame
+                OC_TestNumber.compareA_andB_(42, getattr(NSNumber, m)(42)),
+                NSOrderedSame,
             )
 
         self.assertEqual(OC_TestNumber.compareA_andB_(42, 99), NSOrderedAscending)
@@ -675,18 +680,30 @@ class TestInteractions(TestCase):
         # For: (bool, int, long, float) vs (char, short, ...)
         self.assertTrue(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithInt_(0)))
         self.assertTrue(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithLong_(0)))
-        self.assertTrue(OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithFloat_(0)))
+        self.assertTrue(
+            OC_TestNumber.number_isEqualTo_(0, NSNumber.numberWithFloat_(0))
+        )
         self.assertTrue(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 0))
         self.assertTrue(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 0))
-        self.assertTrue(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 0))
+        self.assertTrue(
+            OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 0)
+        )
 
-        self.assertFalse(OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithInt_(0)))
-        self.assertFalse(OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithLong_(0)))
+        self.assertFalse(
+            OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithInt_(0))
+        )
+        self.assertFalse(
+            OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithLong_(0))
+        )
         self.assertFalse(
             OC_TestNumber.number_isEqualTo_(42, NSNumber.numberWithFloat_(0))
         )
-        self.assertFalse(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 42))
-        self.assertFalse(OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 42))
+        self.assertFalse(
+            OC_TestNumber.number_isEqualTo_(NSNumber.numberWithInt_(0), 42)
+        )
+        self.assertFalse(
+            OC_TestNumber.number_isEqualTo_(NSNumber.numberWithLong_(0), 42)
+        )
         self.assertFalse(
             OC_TestNumber.number_isEqualTo_(NSNumber.numberWithFloat_(0), 42)
         )

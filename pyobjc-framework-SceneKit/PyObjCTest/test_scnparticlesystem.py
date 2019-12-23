@@ -52,7 +52,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
             self.assertEqual(SceneKit.SCNParticleBlendModeAlpha, 4)
             self.assertEqual(SceneKit.SCNParticleBlendModeReplace, 5)
 
-            self.assertEqual(SceneKit.SCNParticleOrientationModeBillboardScreenAligned, 0)
+            self.assertEqual(
+                SceneKit.SCNParticleOrientationModeBillboardScreenAligned, 0
+            )
             self.assertEqual(SceneKit.SCNParticleOrientationModeBillboardViewAligned, 1)
             self.assertEqual(SceneKit.SCNParticleOrientationModeFree, 2)
             self.assertEqual(SceneKit.SCNParticleOrientationModeBillboardYAligned, 3)
@@ -67,7 +69,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 
             self.assertEqual(SceneKit.SCNParticleImageSequenceAnimationModeRepeat, 0)
             self.assertEqual(SceneKit.SCNParticleImageSequenceAnimationModeClamp, 1)
-            self.assertEqual(SceneKit.SCNParticleImageSequenceAnimationModeAutoReverse, 2)
+            self.assertEqual(
+                SceneKit.SCNParticleImageSequenceAnimationModeAutoReverse, 2
+            )
 
             self.assertEqual(SceneKit.SCNParticleInputModeOverLife, 0)
             self.assertEqual(SceneKit.SCNParticleInputModeOverDistance, 1)

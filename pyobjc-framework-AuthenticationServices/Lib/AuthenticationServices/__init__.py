@@ -16,7 +16,9 @@ from AuthenticationServices import _AuthenticationServices
 sys.modules["AuthenticationServices"] = mod = objc.ObjCLazyModule(
     "AuthenticationServices",
     "com.apple.AuthenticationServices",
-    objc.pathForFramework("/System/Library/Frameworks/AuthenticationServices.framework"),
+    objc.pathForFramework(
+        "/System/Library/Frameworks/AuthenticationServices.framework"
+    ),
     _metadata.__dict__,
     None,
     {

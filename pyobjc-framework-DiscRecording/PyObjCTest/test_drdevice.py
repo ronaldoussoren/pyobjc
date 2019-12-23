@@ -43,20 +43,28 @@ class TestDRDevice(TestCase):
         self.assertIsInstance(
             DiscRecording.DRDevicePhysicalInterconnectLocationKey, unicode
         )
-        self.assertIsInstance(DiscRecording.DRDeviceLoadingMechanismCanEjectKey, unicode)
-        self.assertIsInstance(DiscRecording.DRDeviceLoadingMechanismCanInjectKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRDeviceLoadingMechanismCanEjectKey, unicode
+        )
+        self.assertIsInstance(
+            DiscRecording.DRDeviceLoadingMechanismCanInjectKey, unicode
+        )
         self.assertIsInstance(DiscRecording.DRDeviceLoadingMechanismCanOpenKey, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceWriteBufferSizeKey, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceSupportLevelNone, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceSupportLevelUnsupported, unicode)
-        self.assertIsInstance(DiscRecording.DRDeviceSupportLevelVendorSupported, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRDeviceSupportLevelVendorSupported, unicode
+        )
         self.assertIsInstance(DiscRecording.DRDeviceSupportLevelAppleSupported, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceSupportLevelAppleShipping, unicode)
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectATAPI, unicode)
         self.assertIsInstance(
             DiscRecording.DRDevicePhysicalInterconnectFibreChannel, unicode
         )
-        self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectFireWire, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRDevicePhysicalInterconnectFireWire, unicode
+        )
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectSCSI, unicode)
         self.assertIsInstance(DiscRecording.DRDevicePhysicalInterconnectUSB, unicode)
         self.assertIsInstance(
@@ -94,7 +102,9 @@ class TestDRDevice(TestCase):
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteHDDVDRDualLayerKey, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteHDDVDRAMKey, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteHDDVDRWKey, unicode)
-        self.assertIsInstance(DiscRecording.DRDeviceCanWriteHDDVDRWDualLayerKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRDeviceCanWriteHDDVDRWDualLayerKey, unicode
+        )
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteCDTextKey, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteIndexPointsKey, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceCanWriteISRCKey, unicode)
@@ -152,7 +162,9 @@ class TestDRDevice(TestCase):
         self.assertIsInstance(DiscRecording.DRDeviceMediaTypeDVDRW, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceMediaTypeDVDRWDualLayer, unicode)
         self.assertIsInstance(DiscRecording.DRDeviceMediaTypeDVDPlusR, unicode)
-        self.assertIsInstance(DiscRecording.DRDeviceMediaTypeDVDPlusRDoubleLayer, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRDeviceMediaTypeDVDPlusRDoubleLayer, unicode
+        )
         self.assertIsInstance(DiscRecording.DRDeviceMediaTypeDVDPlusRW, unicode)
         self.assertIsInstance(
             DiscRecording.DRDeviceMediaTypeDVDPlusRWDoubleLayer, unicode

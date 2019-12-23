@@ -11,7 +11,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MapKit.MKMapSnapshotOptions, objc.objc_class)
 
             self.assertResultIsBOOL(MapKit.MKMapSnapshotOptions.showsPointsOfInterest)
-            self.assertArgIsBOOL(MapKit.MKMapSnapshotOptions.setShowsPointsOfInterest_, 0)
+            self.assertArgIsBOOL(
+                MapKit.MKMapSnapshotOptions.setShowsPointsOfInterest_, 0
+            )
 
             self.assertResultIsBOOL(MapKit.MKMapSnapshotOptions.showsBuildings)
             self.assertArgIsBOOL(MapKit.MKMapSnapshotOptions.setShowsBuildings_, 0)

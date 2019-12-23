@@ -177,7 +177,9 @@ class ToDoDocument(Cocoa.NSDocument):
                 else:
                     due = None
 
-                self.itemList.cellAtRow_column_(i, 0).setStringValue_(thisItem.itemName())
+                self.itemList.cellAtRow_column_(i, 0).setStringValue_(
+                    thisItem.itemName()
+                )
                 self.statusList.cellAtRow_column_(i, 0).setTimeDue_(due)
                 self.statusList.cellAtRow_column_(i, 0).setTriState_(thisItem.status())
             else:
@@ -293,7 +295,11 @@ class ToDoDocument(Cocoa.NSDocument):
             )
 
             aTimer = Cocoa.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
-                notifyDate.timeIntervalSinceNow(), self, "itemTimerFired:", anItem, False
+                notifyDate.timeIntervalSinceNow(),
+                self,
+                "itemTimerFired:",
+                anItem,
+                False,
             )
             anItem.setTimer_(aTimer)
         else:

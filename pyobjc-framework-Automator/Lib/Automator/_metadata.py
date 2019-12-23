@@ -46,7 +46,11 @@ try:
         b"initWithContentsOfURL:error:",
         {"arguments": {3: {"type_modifier": b"o"}}},
     )
-    r(b"AMAction", b"initWithDefinition:fromArchive:", {"arguments": {3: {"type": "Z"}}})
+    r(
+        b"AMAction",
+        b"initWithDefinition:fromArchive:",
+        {"arguments": {3: {"type": "Z"}}},
+    )
     r(b"AMAction", b"isStopped", {"retval": {"type": "Z"}})
     r(
         b"AMAction",
@@ -133,12 +137,18 @@ protocols = {
     "AMWorkflowControllerDelegate": objc.informal_protocol(
         "AMWorkflowControllerDelegate",
         [
-            objc.selector(None, b"workflowControllerDidStop:", b"v@:@", isRequired=False),
-            objc.selector(None, b"workflowControllerWillRun:", b"v@:@", isRequired=False),
+            objc.selector(
+                None, b"workflowControllerDidStop:", b"v@:@", isRequired=False
+            ),
+            objc.selector(
+                None, b"workflowControllerWillRun:", b"v@:@", isRequired=False
+            ),
             objc.selector(
                 None, b"workflowController:willRunAction:", b"v@:@@", isRequired=False
             ),
-            objc.selector(None, b"workflowControllerDidRun:", b"v@:@", isRequired=False),
+            objc.selector(
+                None, b"workflowControllerDidRun:", b"v@:@", isRequired=False
+            ),
             objc.selector(
                 None, b"workflowController:didRunAction:", b"v@:@@", isRequired=False
             ),

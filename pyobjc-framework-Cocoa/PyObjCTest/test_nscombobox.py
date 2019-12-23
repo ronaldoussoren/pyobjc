@@ -40,10 +40,13 @@ class TestNSComboBox(TestCase):
             TestNSComboBoxHelper.numberOfItemsInComboBox_, objc._C_NSInteger
         )
         self.assertArgHasType(
-            TestNSComboBoxHelper.comboBox_objectValueForItemAtIndex_, 1, objc._C_NSInteger
+            TestNSComboBoxHelper.comboBox_objectValueForItemAtIndex_,
+            1,
+            objc._C_NSInteger,
         )
         self.assertResultHasType(
-            TestNSComboBoxHelper.comboBox_indexOfItemWithStringValue_, objc._C_NSUInteger
+            TestNSComboBoxHelper.comboBox_indexOfItemWithStringValue_,
+            objc._C_NSUInteger,
         )
 
 

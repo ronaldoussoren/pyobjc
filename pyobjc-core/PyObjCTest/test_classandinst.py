@@ -69,7 +69,9 @@ class TestClassAndInstance(TestCase):
 
         self.assertFalse(PyObjC_TestClassAndInstance.pyobjc_classMethods.isInstance())
         self.assertTrue(
-            PyObjC_TestClassAndInstance.alloc().init().pyobjc_instanceMethods.isInstance()
+            PyObjC_TestClassAndInstance.alloc()
+            .init()
+            .pyobjc_instanceMethods.isInstance()
         )
 
     def testClassAndInstanceClassOverride(self):

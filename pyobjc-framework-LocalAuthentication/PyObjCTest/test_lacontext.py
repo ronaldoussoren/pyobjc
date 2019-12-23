@@ -20,7 +20,9 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(
                 LocalAuthentication.LAContext.canEvaluatePolicy_error_
             )
-            self.assertArgIsOut(LocalAuthentication.LAContext.canEvaluatePolicy_error_, 1)
+            self.assertArgIsOut(
+                LocalAuthentication.LAContext.canEvaluatePolicy_error_, 1
+            )
 
             self.assertArgIsBlock(
                 LocalAuthentication.LAContext.evaluatePolicy_localizedReason_reply_,
@@ -29,9 +31,13 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertResultIsBOOL(LocalAuthentication.LAContext.isCancelButtonVisible)
-            self.assertArgIsBOOL(LocalAuthentication.LAContext.setCancelButtonVisible_, 0)
+            self.assertArgIsBOOL(
+                LocalAuthentication.LAContext.setCancelButtonVisible_, 0
+            )
 
-            self.assertResultIsBOOL(LocalAuthentication.LAContext.isFallbackButtonVisible)
+            self.assertResultIsBOOL(
+                LocalAuthentication.LAContext.isFallbackButtonVisible
+            )
             self.assertArgIsBOOL(
                 LocalAuthentication.LAContext.setFallbackButtonVisible_, 0
             )
@@ -69,7 +75,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.12")
         def testConstants10_12(self):
-            self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeyDecrypt, 4)
+            self.assertEqual(
+                LocalAuthentication.LAAccessControlOperationUseKeyDecrypt, 4
+            )
             self.assertEqual(
                 LocalAuthentication.LAAccessControlOperationUseKeyKeyExchange, 5
             )

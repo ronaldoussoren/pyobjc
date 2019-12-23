@@ -19,7 +19,9 @@ if sys.maxsize > 2 ** 32:
                 CloudKit.CKFetchRecordsOperation.perRecordProgressBlock, b"v@d"
             )
             self.assertArgIsBlock(
-                CloudKit.CKFetchRecordsOperation.setPerRecordCompletionBlock_, 0, b"v@@@"
+                CloudKit.CKFetchRecordsOperation.setPerRecordCompletionBlock_,
+                0,
+                b"v@@@",
             )
             self.assertResultIsBlock(
                 CloudKit.CKFetchRecordsOperation.perRecordCompletionBlock, b"v@@@"

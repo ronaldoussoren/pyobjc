@@ -9,9 +9,13 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierTitle, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierCreator, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierSubject, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierDescription, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierDescription, unicode
+        )
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierPublisher, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierContributor, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierContributor, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVMetadataCommonIdentifierCreationDate, unicode
         )
@@ -27,7 +31,9 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierLanguage, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierRelation, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierLocation, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierCopyrights, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierCopyrights, unicode
+        )
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierAlbumName, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierAuthor, unicode)
         self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierArtist, unicode)
@@ -160,18 +166,24 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifier3GPUserDataCopyright, unicode
         )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifier3GPUserDataAuthor, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifier3GPUserDataAuthor, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifier3GPUserDataPerformer, unicode
         )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifier3GPUserDataGenre, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifier3GPUserDataGenre, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifier3GPUserDataRecordingYear, unicode
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifier3GPUserDataLocation, unicode
         )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifier3GPUserDataTitle, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifier3GPUserDataTitle, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifier3GPUserDataDescription, unicode
         )
@@ -423,7 +435,9 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifieriTunesMetadataDirector, unicode
         )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifieriTunesMetadataEQ, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifieriTunesMetadataEQ, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifieriTunesMetadataLinerNotes, unicode
         )
@@ -488,7 +502,8 @@ class TestAVMetadataIdentifiers(TestCase):
             AVFoundation.AVMetadataIdentifierID3MetadataEventTimingCodes, unicode
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataGeneralEncapsulatedObject, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataGeneralEncapsulatedObject,
+            unicode,
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataGroupIdentifier, unicode
@@ -522,12 +537,16 @@ class TestAVMetadataIdentifiers(TestCase):
             AVFoundation.AVMetadataIdentifierID3MetadataRecommendedBufferSize, unicode
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataRelativeVolumeAdjustment, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataRelativeVolumeAdjustment,
+            unicode,
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataRelativeVolumeAdjustment2, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataRelativeVolumeAdjustment2,
+            unicode,
         )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataReverb, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataReverb, unicode
+        )
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataSeek, unicode)
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataSignature, unicode
@@ -600,7 +619,9 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataLanguage, unicode
         )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataLength, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataLength, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataMusicianCreditsList, unicode
         )
@@ -652,10 +673,12 @@ class TestAVMetadataIdentifiers(TestCase):
             AVFoundation.AVMetadataIdentifierID3MetadataRecordingDates, unicode
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataInternetRadioStationName, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataInternetRadioStationName,
+            unicode,
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataInternetRadioStationOwner, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataInternetRadioStationOwner,
+            unicode,
         )
         self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataSize, unicode)
         self.assertIsInstance(
@@ -697,7 +720,8 @@ class TestAVMetadataIdentifiers(TestCase):
             AVFoundation.AVMetadataIdentifierID3MetadataCopyrightInformation, unicode
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOfficialAudioFileWebpage, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOfficialAudioFileWebpage,
+            unicode,
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataOfficialArtistWebpage, unicode
@@ -714,7 +738,8 @@ class TestAVMetadataIdentifiers(TestCase):
             AVFoundation.AVMetadataIdentifierID3MetadataPayment, unicode
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOfficialPublisherWebpage, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOfficialPublisherWebpage,
+            unicode,
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataUserURL, unicode
@@ -752,24 +777,51 @@ class TestAVMetadataIdentifiers(TestCase):
     @expectedFailure
     def testConstants10_15(self):
         with self.subTest("humanbody"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedHumanBody, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedHumanBody,
+                unicode,
+            )
 
         with self.subTest("catbody"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedCatBody, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedCatBody,
+                unicode,
+            )
         with self.subTest("dogbody"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedDogBody, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedDogBody,
+                unicode,
+            )
         with self.subTest("salientobject"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedSalientObject, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedSalientObject,
+                unicode,
+            )
         with self.subTest("livephoto"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataAutoLivePhoto, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataAutoLivePhoto, unicode
+            )
         with self.subTest("vitalityscore"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScore, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScore,
+                unicode,
+            )
         with self.subTest("vitalityscoringversion"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScoringVersion, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScoringVersion,
+                unicode,
+            )
         with self.subTest("qualityscore"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScore, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScore,
+                unicode,
+            )
         with self.subTest("qaulityscoringversion"):
-            self.assertIsInstance(AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion, unicode)
+            self.assertIsInstance(
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion,
+                unicode,
+            )
+
 
 if __name__ == "__main__":
     main()

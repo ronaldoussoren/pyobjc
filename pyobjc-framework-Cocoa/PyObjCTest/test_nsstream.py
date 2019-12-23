@@ -12,7 +12,10 @@ class TestNSStreamUsage(TestCase):
         # Test the usage of methods that require extra work
 
         # Try to create a connection to the IPP port on the local host
-        inputStream, outputStream = NSStream.getStreamsToHost_port_inputStream_outputStream_(
+        (
+            inputStream,
+            outputStream,
+        ) = NSStream.getStreamsToHost_port_inputStream_outputStream_(
             NSHost.hostWithAddress_(b"127.0.0.1".decode("ascii")),
             631,  # IPP port
             None,

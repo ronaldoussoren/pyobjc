@@ -41,7 +41,9 @@ functions = {
         "",
         {"arguments": {2: {"type_modifier": "o"}, 3: {"type_modifier": "o"}}},
     ),
-    "SKSummaryGetParagraphCount": (sel32or64(b"l^{__SKSummary=}", b"q^{__SKSummary=}"),),
+    "SKSummaryGetParagraphCount": (
+        sel32or64(b"l^{__SKSummary=}", b"q^{__SKSummary=}"),
+    ),
     "SKIndexGetMaximumDocumentID": (sel32or64(b"l^{__SKIndex=}", b"q^{__SKIndex=}"),),
     "SKSearchGroupCreate": (
         b"^{__SKSearchGroup=}^{__CFArray=}",
@@ -168,7 +170,8 @@ functions = {
     "SKIndexOpenWithMutableData": (b"^{__SKIndex=}^{__CFData=}^{__CFString=}",),
     "SKSearchResultsCopyMatchingTerms": (
         sel32or64(
-            b"^{__CFArray=}^{__SKSearchResults=}l", b"^{__CFArray=}^{__SKSearchResults=}q"
+            b"^{__CFArray=}^{__SKSearchResults=}l",
+            b"^{__CFArray=}^{__SKSearchResults=}q",
         ),
         "",
         {"retval": {"already_cfretained": True}},
@@ -215,7 +218,11 @@ functions = {
     "SKIndexRenameDocument": (b"Z^{__SKIndex=}@^{__CFString=}",),
     "SKSummaryGetTypeID": (sel32or64(b"L", b"Q"),),
     "SKDocumentGetSchemeName": (b"^{__CFString=}@",),
-    "SKDocumentCopyURL": (b"^{__CFURL=}@", "", {"retval": {"already_cfretained": True}}),
+    "SKDocumentCopyURL": (
+        b"^{__CFURL=}@",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
     "SKIndexGetTypeID": (sel32or64(b"L", b"Q"),),
     "SKSearchCancel": (b"v^{__SKSearch=}",),
     "SKIndexGetDocumentCount": (sel32or64(b"l^{__SKIndex=}", b"q^{__SKIndex=}"),),

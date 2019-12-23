@@ -96,7 +96,9 @@ class TestNSStringBridging(TestCase):
                     # and would be cached
                     newString = type("test_str", (str,), {})("hello2")
                     self.assertRaises(
-                        objc.PyObjCStrBridgeWarning, NSString.stringWithString_, newString
+                        objc.PyObjCStrBridgeWarning,
+                        NSString.stringWithString_,
+                        newString,
                     )
 
                 finally:
@@ -318,7 +320,9 @@ class TestPickle(TestCase):
         self.assertArgIsIn(o.initWithBytes_length_encoding_, 0)
         self.assertArgSizeInArg(o.initWithBytes_length_encoding_, 0, 1)
         o = o.init()
-        self.assertArgIsIn(NSString.initWithBytesNoCopy_length_encoding_freeWhenDone_, 0)
+        self.assertArgIsIn(
+            NSString.initWithBytesNoCopy_length_encoding_freeWhenDone_, 0
+        )
         self.assertArgSizeInArg(
             NSString.initWithBytesNoCopy_length_encoding_freeWhenDone_, 0, 1
         )
@@ -376,7 +380,9 @@ class TestPickle(TestCase):
         self.assertArgHasType(
             NSString.getCString_maxLength_range_remainingRange_, 0, b"o^v"
         )
-        self.assertArgSizeInArg(NSString.getCString_maxLength_range_remainingRange_, 0, 1)
+        self.assertArgSizeInArg(
+            NSString.getCString_maxLength_range_remainingRange_, 0, 1
+        )
         self.assertArgIsOut(NSString.getCString_maxLength_range_remainingRange_, 3)
 
         self.assertResultIsBOOL(NSString.writeToFile_atomically_)
@@ -387,7 +393,9 @@ class TestPickle(TestCase):
         self.assertArgHasType(
             NSString.initWithCStringNoCopy_length_freeWhenDone_, 0, b"n^v"
         )
-        self.assertArgSizeInArg(NSString.initWithCStringNoCopy_length_freeWhenDone_, 0, 1)
+        self.assertArgSizeInArg(
+            NSString.initWithCStringNoCopy_length_freeWhenDone_, 0, 1
+        )
         self.assertArgIsBOOL(NSString.initWithCStringNoCopy_length_freeWhenDone_, 2)
         self.assertArgHasType(NSString.initWithCString_length_, 0, b"n^v")
         self.assertArgSizeInArg(NSString.initWithCString_length_, 0, 1)
@@ -478,7 +486,9 @@ class TestPickle(TestCase):
         self.assertArgIsBOOL(
             NSMutableString.applyTransform_reverse_range_updatedRange_, 1
         )
-        self.assertArgIsOut(NSMutableString.applyTransform_reverse_range_updatedRange_, 3)
+        self.assertArgIsOut(
+            NSMutableString.applyTransform_reverse_range_updatedRange_, 3
+        )
 
 
 if __name__ == "__main__":

@@ -81,8 +81,8 @@ CFLAGS = [
     "-Wno-import",
     "-Wno-unknown-pragmas",
     "-Wshorten-64-to-32",
-    #"-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
-    #"--analyze",
+    # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
+    # "--analyze",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -98,8 +98,8 @@ OBJC_LDFLAGS = [
     "Carbon",
     "-fvisibility=protected",
     "-g",
-    #"-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
-    #"-O3",
+    # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
+    # "-O3",
 ]
 
 
@@ -475,8 +475,8 @@ def _fixup_compiler(use_ccache):
         # generate bad code.
         with os.popen(
             "'%s' --version 2>/dev/null" % (cc.replace("'", "'\"'\"'"),)
-            ) as fp:
-                data = fp.read()
+        ) as fp:
+            data = fp.read()
         if "llvm-gcc" in data:
             cc = None
 
@@ -521,7 +521,11 @@ class oc_build_ext(build_ext.build_ext):
             None,
             "deployment target to use (can also be set using ${MACOSX_DEPLOYMENT_TARGET})",
         ),
-        ("sdk-root=", None, "Path to the SDK to use (can also be set using ${SDKROOT})"),
+        (
+            "sdk-root=",
+            None,
+            "Path to the SDK to use (can also be set using ${SDKROOT})",
+        ),
     ]
     boolean_options = ["use-system-libffi"]
 
@@ -561,7 +565,9 @@ class oc_build_ext(build_ext.build_ext):
         if not os.path.exists(self.sdk_root):
             raise DistutilsSetupError("SDK root %r does not exist" % (self.sdk_root,))
 
-        if not os.path.exists(os.path.join(self.sdk_root, "usr/include/objc/runtime.h")):
+        if not os.path.exists(
+            os.path.join(self.sdk_root, "usr/include/objc/runtime.h")
+        ):
             if "-DNO_OBJC2_RUNTIME" not in CFLAGS:
                 CFLAGS.append("-DNO_OBJC2_RUNTIME")
                 EXT_CFLAGS.append("-DNO_OBJC2_RUNTIME")
@@ -572,7 +578,9 @@ class oc_build_ext(build_ext.build_ext):
         if self.use_system_libffi:
             import shlex
 
-            LIBFFI_INCLUDEDIR = get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"
+            LIBFFI_INCLUDEDIR = (
+                get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"
+            )
 
             try:
                 p = subprocess.Popen(

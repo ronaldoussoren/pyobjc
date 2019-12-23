@@ -8,7 +8,9 @@ class TestNSTouchBar(TestCase):
         self.assertResultIsBOOL(NSTouchBar.isVisible)
         # self.assertArgIsBOOL(NSTouchBar.setVisible_, 0)
 
-        self.assertResultIsBOOL(NSApplication.isAutomaticCustomizeTouchBarMenuItemEnabled)
+        self.assertResultIsBOOL(
+            NSApplication.isAutomaticCustomizeTouchBarMenuItemEnabled
+        )
         self.assertArgIsBOOL(
             NSApplication.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0
         )
@@ -16,7 +18,9 @@ class TestNSTouchBar(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(NSTouchBar.isAutomaticCustomizeTouchBarMenuItemEnabled)
-        self.assertArgIsBOOL(NSTouchBar.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0)
+        self.assertArgIsBOOL(
+            NSTouchBar.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0
+        )
 
     @min_sdk_level("10.12")
     def testProtocolObjects(self):

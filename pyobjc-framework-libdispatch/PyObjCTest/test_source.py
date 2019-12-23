@@ -21,7 +21,8 @@ class TestSourceAPI(TestCase):
             libdispatch.DISPATCH_SOURCE_TYPE_MACH_RECV, libdispatch.dispatch_source_t
         )
         self.assertIsInstance(
-            libdispatch.DISPATCH_SOURCE_TYPE_MEMORYPRESSURE, libdispatch.dispatch_source_t
+            libdispatch.DISPATCH_SOURCE_TYPE_MEMORYPRESSURE,
+            libdispatch.dispatch_source_t,
         )
         self.assertIsInstance(
             libdispatch.DISPATCH_SOURCE_TYPE_PROC, libdispatch.dispatch_source_t

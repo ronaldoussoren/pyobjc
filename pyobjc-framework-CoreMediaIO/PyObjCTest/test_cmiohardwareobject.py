@@ -14,7 +14,9 @@ class TestCMIOHardwareObject(TestCase):
         self.assertEqual(v.mElement, 0)
 
     def testConstants(self):
-        self.assertEqual(CoreMediaIO.kCMIOObjectPropertySelectorWildcard, fourcc(b"****"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOObjectPropertySelectorWildcard, fourcc(b"****")
+        )
         self.assertEqual(CoreMediaIO.kCMIOObjectPropertyScopeWildcard, fourcc(b"****"))
         self.assertEqual(CoreMediaIO.kCMIOObjectPropertyElementWildcard, 0xFFFFFFFF)
 
@@ -38,7 +40,9 @@ class TestCMIOHardwareObject(TestCase):
         )
         self.assertEqual(CoreMediaIO.kCMIOObjectPropertyOwnedObjects, fourcc(b"ownd"))
         self.assertEqual(CoreMediaIO.kCMIOObjectPropertyListenerAdded, fourcc(b"lisa"))
-        self.assertEqual(CoreMediaIO.kCMIOObjectPropertyListenerRemoved, fourcc(b"lisr"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOObjectPropertyListenerRemoved, fourcc(b"lisr")
+        )
 
     def testFunctions(self):
         CoreMediaIO.CMIOObjectShow

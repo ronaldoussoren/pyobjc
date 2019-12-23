@@ -18,5 +18,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(SpriteKit.SKAttributeTypeVectorHalfFloat3, 7)
             self.assertEqual(SpriteKit.SKAttributeTypeVectorHalfFloat4, 8)
 
+
 if __name__ == "__main__":
     main()

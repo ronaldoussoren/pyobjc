@@ -22,7 +22,10 @@ class TestVTCompressionSession(TestCase):
     @min_os_level("10.8")
     def test_functions(self):
         self.assertArgIsFunction(
-            VideoToolbox.VTCompressionSessionCreate, 7, VTCompressionOutputCallback, True
+            VideoToolbox.VTCompressionSessionCreate,
+            7,
+            VTCompressionOutputCallback,
+            True,
         )
         self.assertArgIsOut(VideoToolbox.VTCompressionSessionCreate, 9)
         self.assertArgIsCFRetained(VideoToolbox.VTCompressionSessionCreate, 9)

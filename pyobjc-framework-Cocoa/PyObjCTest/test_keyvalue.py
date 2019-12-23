@@ -67,7 +67,9 @@ class KeyValueClass1Explicit(NSObject):
 
     def addMultiple(self):
         self._values["multiple"] = KeyValueClass1Explicit.alloc().init()
-        self._values["multiple"]._values["level2"] = KeyValueClass1Explicit.alloc().init()
+        self._values["multiple"]._values[
+            "level2"
+        ] = KeyValueClass1Explicit.alloc().init()
         self._values["multiple"]._values["level2"]._values[
             "level3"
         ] = KeyValueClass1Explicit.alloc().init()
@@ -164,7 +166,9 @@ class PyKeyValueCoding(TestCase):
 
         self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key2".decode("ascii")), 2)
         self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key3".decode("ascii")), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key4".decode("ascii")), "4")
+        self.assertEqual(
+            STUB.keyValue_forObject_key_(0, o, b"key4".decode("ascii")), "4"
+        )
         self.assertEqual(
             STUB.keyValue_forObject_key_(0, o, b"multiple".decode("ascii")), o.multiple
         )
@@ -225,7 +229,9 @@ class PyKeyValueCoding(TestCase):
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key1".decode("ascii")), 1)
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key2".decode("ascii")), 2)
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key3".decode("ascii")), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key4".decode("ascii")), "4")
+        self.assertEqual(
+            STUB.keyValue_forObject_key_(2, o, b"key4".decode("ascii")), "4"
+        )
         self.assertEqual(
             STUB.keyValue_forObject_key_(2, o, b"multiple".decode("ascii")), o.multiple
         )
@@ -583,7 +589,9 @@ class PyKeyValueCodingExplicit(TestCase):
 
         self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key2".decode("ascii")), 2)
         self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key3".decode("ascii")), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(0, o, b"key4".decode("ascii")), "4")
+        self.assertEqual(
+            STUB.keyValue_forObject_key_(0, o, b"key4".decode("ascii")), "4"
+        )
         self.assertEqual(
             STUB.keyValue_forObject_key_(0, o, b"multiple".decode("ascii")),
             o._values["multiple"],
@@ -600,7 +608,9 @@ class PyKeyValueCodingExplicit(TestCase):
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key1".decode("ascii")), 1)
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key2".decode("ascii")), 2)
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key3".decode("ascii")), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, b"key4".decode("ascii")), "4")
+        self.assertEqual(
+            STUB.keyValue_forObject_key_(2, o, b"key4".decode("ascii")), "4"
+        )
         self.assertEqual(
             STUB.keyValue_forObject_key_(2, o, b"multiple".decode("ascii")),
             o._values["multiple"],

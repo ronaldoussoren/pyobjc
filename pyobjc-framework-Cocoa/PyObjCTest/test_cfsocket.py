@@ -165,7 +165,9 @@ class TestSocket(TestCase):
             CFSocketDisableCallBacks(
                 sock, kCFSocketReadCallBack | kCFSocketAcceptCallBack
             )
-            CFSocketEnableCallBacks(sock, kCFSocketReadCallBack | kCFSocketAcceptCallBack)
+            CFSocketEnableCallBacks(
+                sock, kCFSocketReadCallBack | kCFSocketAcceptCallBack
+            )
 
             if sys.version_info[0] == 2:
                 err = CFSocketSendData(sock, None, buffer("GET / HTTP/1.0"), 1.0)

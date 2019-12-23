@@ -176,7 +176,10 @@ class TestNSGeometry(TestCase):
         self.assertEqual(NSAlignRectFlipped, 1 << 63)
         self.assertEqual(
             NSAlignAllEdgesInward,
-            NSAlignMinXInward | NSAlignMaxXInward | NSAlignMinYInward | NSAlignMaxYInward,
+            NSAlignMinXInward
+            | NSAlignMaxXInward
+            | NSAlignMinYInward
+            | NSAlignMaxYInward,
         )
         self.assertEqual(
             NSAlignAllEdgesOutward,

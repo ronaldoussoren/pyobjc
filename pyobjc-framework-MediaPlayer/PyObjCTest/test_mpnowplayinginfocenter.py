@@ -53,12 +53,15 @@ if sys.maxsize > 2 ** 32:
                 MediaPlayer.MPNowPlayingInfoPropertyExternalContentIdentifier, unicode
             )
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyExternalUserProfileIdentifier, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyExternalUserProfileIdentifier,
+                unicode,
             )
             self.assertIsInstance(
                 MediaPlayer.MPNowPlayingInfoPropertyPlaybackProgress, unicode
             )
-            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyMediaType, unicode)
+            self.assertIsInstance(
+                MediaPlayer.MPNowPlayingInfoPropertyMediaType, unicode
+            )
             self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAssetURL, unicode)
 
         @min_os_level("10.13")

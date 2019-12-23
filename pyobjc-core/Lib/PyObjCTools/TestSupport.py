@@ -493,7 +493,8 @@ class TestCase(_unittest.TestCase):
             if not info["arguments"][argno + offset].get("c_array_of_variable_length"):
                 self.fail(
                     message
-                    or "argument %d of %r is not a variable sized array" % (argno, method)
+                    or "argument %d of %r is not a variable sized array"
+                    % (argno, method)
                 )
         except (KeyError, IndexError):
             self.fail(
@@ -504,7 +505,9 @@ class TestCase(_unittest.TestCase):
     def assertResultIsVariableSize(self, method, message=None):
         info = method.__metadata__()
         if not info.get("retval", {}).get("c_array_of_variable_length", False):
-            self.fail(message or "result of %r is not a variable sized array" % (method,))
+            self.fail(
+                message or "result of %r is not a variable sized array" % (method,)
+            )
 
     def assertArgSizeInResult(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -516,7 +519,8 @@ class TestCase(_unittest.TestCase):
             if not info["arguments"][argno + offset].get("c_array_length_in_result"):
                 self.fail(
                     message
-                    or "argument %d of %r does not have size in result" % (argno, method)
+                    or "argument %d of %r does not have size in result"
+                    % (argno, method)
                 )
         except (KeyError, IndexError):
             self.fail(
@@ -768,7 +772,8 @@ class TestCase(_unittest.TestCase):
 
         if type != b"@?":
             self.fail(
-                message or "arg %d of %s is not of type block: %s" % (argno, method, type)
+                message
+                or "arg %d of %s is not of type block: %s" % (argno, method, type)
             )
 
         st = info["arguments"][argno + offset].get("callable")
@@ -812,7 +817,9 @@ class TestCase(_unittest.TestCase):
                     message or "result of %s is not of type block: %s" % (method, type)
                 )
         except KeyError:
-            self.fail(message or "result of %s is not of type block: %s" % (method, b"v"))
+            self.fail(
+                message or "result of %s is not of type block: %s" % (method, b"v")
+            )
 
         st = info["retval"].get("callable")
         if st is None:
@@ -923,7 +930,8 @@ class TestCase(_unittest.TestCase):
                 )
         except (KeyError, IndexError):
             self.fail(
-                message or "result of %s is not a C-array of length %d" % (method, count)
+                message
+                or "result of %s is not a C-array of length %d" % (method, count)
             )
 
     def assertArgSizeInArg(self, method, argno, count, message=None):
@@ -962,7 +970,8 @@ class TestCase(_unittest.TestCase):
         if cnt != count + offset:
             self.fail(
                 message
-                or "result %s is not a C-array of with length in arg %d" % (method, count)
+                or "result %s is not a C-array of with length in arg %d"
+                % (method, count)
             )
 
     def assertArgIsOut(self, method, argno, message=None):
@@ -997,7 +1006,9 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         type = info["arguments"][argno + offset]["type"]
         if not type.startswith(b"n^") and not type.startswith(b"n*"):
-            self.fail(message or "arg %d of %s is not an 'in' argument" % (argno, method))
+            self.fail(
+                message or "arg %d of %s is not an 'in' argument" % (argno, method)
+            )
 
     #
     # Addition assert methods, all of them should only be necessary for
@@ -1120,7 +1131,8 @@ class TestCase(_unittest.TestCase):
             if not isinstance(value, types):
                 self.fail(
                     message
-                    or "%s is not an instance of %r but %s" % (value, types, type(value))
+                    or "%s is not an instance of %r but %s"
+                    % (value, types, type(value))
                 )
 
     if not hasattr(_unittest.TestCase, "assertIsNotInstance"):  # pragma: no cover

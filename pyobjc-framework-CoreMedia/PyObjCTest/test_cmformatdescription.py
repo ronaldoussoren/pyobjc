@@ -20,7 +20,9 @@ class TestCMFormatDescription(TestCase):
 
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco"))
+        self.assertEqual(
+            CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco")
+        )
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
 
@@ -94,7 +96,9 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422HQ, fourcc(b"apch"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422, fourcc(b"apcn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422LT, fourcc(b"apcs"))
-        self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco"))
+        self.assertEqual(
+            CoreMedia.kCMVideoCodecType_AppleProRes422Proxy, fourcc(b"apco")
+        )
 
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAW, fourcc(b"aprn"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_AppleProResRAWHQ, fourcc(b"aprh"))
@@ -176,7 +180,9 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMMPEG2VideoProfile_XDCAM_HD422_1080p30_CBR50, fourcc(b"xd5f")
         )
         self.assertEqual(CoreMedia.kCMMPEG2VideoProfile_XDCAM_HD_540p, fourcc(b"xdhd"))
-        self.assertEqual(CoreMedia.kCMMPEG2VideoProfile_XDCAM_HD422_540p, fourcc(b"xdh2"))
+        self.assertEqual(
+            CoreMedia.kCMMPEG2VideoProfile_XDCAM_HD422_540p, fourcc(b"xdh2")
+        )
         self.assertEqual(
             CoreMedia.kCMMPEG2VideoProfile_XDCAM_HD422_720p24_CBR50, fourcc(b"xd54")
         )
@@ -218,8 +224,12 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMTextDisplayFlag_continuousKaraoke, 0x00000800)
         self.assertEqual(CoreMedia.kCMTextDisplayFlag_writeTextVertically, 0x00020000)
         self.assertEqual(CoreMedia.kCMTextDisplayFlag_fillTextRegion, 0x00040000)
-        self.assertEqual(CoreMedia.kCMTextDisplayFlag_obeySubtitleFormatting, 0x20000000)
-        self.assertEqual(CoreMedia.kCMTextDisplayFlag_forcedSubtitlesPresent, 0x40000000)
+        self.assertEqual(
+            CoreMedia.kCMTextDisplayFlag_obeySubtitleFormatting, 0x20000000
+        )
+        self.assertEqual(
+            CoreMedia.kCMTextDisplayFlag_forcedSubtitlesPresent, 0x40000000
+        )
         self.assertEqual(CoreMedia.kCMTextDisplayFlag_allSubtitlesForced, 0x80000000)
 
         self.assertEqual(CoreMedia.kCMTextJustification_left_top, 0)
@@ -259,7 +269,9 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionExtension_VerbatimISOSampleEntry, unicode
         )
 
-        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_FormatName, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_FormatName, unicode
+        )
         self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_Depth, unicode)
 
         self.assertIsInstance(
@@ -273,13 +285,16 @@ class TestCMFormatDescription(TestCase):
             unicode,
         )
         self.assertIsInstance(
-            CoreMedia.kCMFormatDescriptionKey_CleanApertureVerticalOffsetRational, unicode
+            CoreMedia.kCMFormatDescriptionKey_CleanApertureVerticalOffsetRational,
+            unicode,
         )
 
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_FullRangeVideo, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_ICCProfile, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_ICCProfile, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_BytesPerRow, unicode
         )
@@ -321,7 +336,9 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMTextFormatDescriptionExtension_DefaultStyle, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMTextFormatDescriptionStyle_StartChar, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMTextFormatDescriptionStyle_StartChar, unicode
+        )
         self.assertIsInstance(CoreMedia.kCMTextFormatDescriptionStyle_Font, unicode)
         self.assertIsInstance(CoreMedia.kCMTextFormatDescriptionStyle_FontFace, unicode)
         self.assertIsInstance(
@@ -350,7 +367,9 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMTimeCodeFormatDescriptionExtension_SourceReferenceName, unicode
         )
         self.assertIsInstance(CoreMedia.kCMTimeCodeFormatDescriptionKey_Value, unicode)
-        self.assertIsInstance(CoreMedia.kCMTimeCodeFormatDescriptionKey_LangCode, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMTimeCodeFormatDescriptionKey_LangCode, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtensionKey_MetadataKeyTable, unicode
         )
@@ -358,7 +377,9 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMMetadataFormatDescriptionKey_Namespace, unicode
         )
         self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_Value, unicode)
-        self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_LocalID, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataFormatDescriptionKey_LocalID, unicode
+        )
 
     @min_os_level("10.8")
     def test_constants10_8(self):
@@ -366,7 +387,9 @@ class TestCMFormatDescription(TestCase):
 
     @min_os_level("10.10")
     def test_constants10_10(self):
-        self.assertIsInstance(CoreMedia.kCMMetadataFormatDescriptionKey_DataType, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMMetadataFormatDescriptionKey_DataType, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMMetadataFormatDescriptionKey_DataTypeNamespace, unicode
         )
@@ -409,7 +432,9 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionKey_CleanApertureVerticalOffset, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_FieldCount, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_FieldCount, unicode
+        )
 
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_FieldDetail, unicode
@@ -476,7 +501,9 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionTransferFunction_ITU_R_2020, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMFormatDescriptionExtension_GammaLevel, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_GammaLevel, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_YCbCrMatrix, unicode
         )
@@ -499,7 +526,9 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_ChromaLocationBottomField, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMFormatDescriptionChromaLocation_Left, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionChromaLocation_Left, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionChromaLocation_Center, unicode
         )
@@ -513,7 +542,9 @@ class TestCMFormatDescription(TestCase):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionChromaLocation_Bottom, unicode
         )
-        self.assertIsInstance(CoreMedia.kCMFormatDescriptionChromaLocation_DV420, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionChromaLocation_DV420, unicode
+        )
 
         self.assertIsInstance(
             CoreMedia.kCMMetadataFormatDescriptionKey_StructuralDependency, unicode
@@ -642,7 +673,9 @@ class TestCMFormatDescription(TestCase):
         self.assertResultSizeInArg(CoreMedia.CMAudioFormatDescriptionGetMagicCookie, 1)
 
         self.assertArgIsOut(CoreMedia.CMAudioFormatDescriptionGetChannelLayout, 1)
-        self.assertResultSizeInArg(CoreMedia.CMAudioFormatDescriptionGetChannelLayout, 1)
+        self.assertResultSizeInArg(
+            CoreMedia.CMAudioFormatDescriptionGetChannelLayout, 1
+        )
 
         self.assertArgIsOut(CoreMedia.CMAudioFormatDescriptionGetFormatList, 1)
         self.assertResultSizeInArg(CoreMedia.CMAudioFormatDescriptionGetFormatList, 1)
@@ -689,16 +722,24 @@ class TestCMFormatDescription(TestCase):
         self.assertArgIsOut(CoreMedia.CMTextFormatDescriptionGetDefaultTextBox, 3)
 
         self.assertArgIsOut(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 1)
-        self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 2, b"o^Z")
-        self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 3, b"o^Z")
-        self.assertArgHasType(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 4, b"o^Z")
+        self.assertArgHasType(
+            CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 2, b"o^Z"
+        )
+        self.assertArgHasType(
+            CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 3, b"o^Z"
+        )
+        self.assertArgHasType(
+            CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 4, b"o^Z"
+        )
         self.assertArgHasType(
             CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 5, b"o^" + objc._C_CGFloat
         )
         self.assertArgHasType(
             CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 6, b"o^" + objc._C_CGFloat
         )
-        self.assertArgIsFixedSize(CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 6, 4)
+        self.assertArgIsFixedSize(
+            CoreMedia.CMTextFormatDescriptionGetDefaultStyle, 6, 4
+        )
 
         self.assertArgIsOut(CoreMedia.CMTextFormatDescriptionGetFontName, 2)
         self.assertArgIsCFRetained(CoreMedia.CMTextFormatDescriptionGetFontName, 2)
@@ -716,7 +757,9 @@ class TestCMFormatDescription(TestCase):
         CoreMedia.CMTimeCodeFormatDescriptionGetTimeCodeFlags
 
         self.assertArgIsOut(CoreMedia.CMMetadataFormatDescriptionCreateWithKeys, 3)
-        self.assertArgIsCFRetained(CoreMedia.CMMetadataFormatDescriptionCreateWithKeys, 3)
+        self.assertArgIsCFRetained(
+            CoreMedia.CMMetadataFormatDescriptionCreateWithKeys, 3
+        )
 
         CoreMedia.CMMetadataFormatDescriptionGetKeyWithLocalID
 

@@ -71,7 +71,11 @@ functions = {
         },
     ),
     "nw_interface_get_index": (b"I@",),
-    "nw_framer_copy_remote_endpoint": (b"@@", "", {"retval": {"already_retained": True}}),
+    "nw_framer_copy_remote_endpoint": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_framer_set_stop_handler": (
         b"v@@?",
         "",
@@ -230,7 +234,11 @@ functions = {
         },
     ),
     "nw_path_is_constrained": (b"B@",),
-    "nw_protocol_copy_tls_definition": (b"@", "", {"retval": {"already_retained": True}}),
+    "nw_protocol_copy_tls_definition": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_path_get_status": (b"I@",),
     "nw_framer_set_input_handler": (
         b"v@@?",
@@ -311,7 +319,11 @@ functions = {
             }
         },
     ),
-    "nw_protocol_copy_udp_definition": (b"@", "", {"retval": {"already_retained": True}}),
+    "nw_protocol_copy_udp_definition": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_establishment_report_enumerate_resolutions": (
         b"v@@?",
         "",
@@ -417,9 +429,17 @@ functions = {
     "nw_interface_get_type": (b"I@",),
     "nw_ws_options_set_maximum_message_size": (b"v@Q",),
     "nw_endpoint_get_address": (b"^{sockaddr=CC[14c]}@",),
-    "nw_txt_record_create_dictionary": (b"@", "", {"retval": {"already_retained": True}}),
+    "nw_txt_record_create_dictionary": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_path_is_equal": (b"B@@",),
-    "nw_protocol_copy_ws_definition": (b"@", "", {"retval": {"already_retained": True}}),
+    "nw_protocol_copy_ws_definition": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_endpoint_create_url": (b"@^c", "", {"retval": {"already_retained": True}}),
     "nw_endpoint_copy_port_string": (
         b"^t@",
@@ -488,7 +508,10 @@ functions = {
     "nw_endpoint_create_address": (
         b"@^{sockaddr=CC[14c]}",
         "",
-        {"retval": {"already_retained": True}, "arguments": {0: {"type_modifier": "n"}}},
+        {
+            "retval": {"already_retained": True},
+            "arguments": {0: {"type_modifier": "n"}},
+        },
     ),
     "nw_tls_copy_sec_protocol_metadata": (
         b"@@",
@@ -843,7 +866,11 @@ functions = {
             }
         },
     ),
-    "nw_browse_result_copy_endpoint": (b"@@", "", {"retval": {"already_retained": True}}),
+    "nw_browse_result_copy_endpoint": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_ip_options_set_version": (b"v@I",),
     "nw_parameters_set_local_endpoint": (b"v@@",),
     "nw_txt_record_is_dictionary": (b"B@",),
@@ -1027,7 +1054,11 @@ functions = {
             }
         },
     ),
-    "nw_connection_copy_parameters": (b"@@", "", {"retval": {"already_retained": True}}),
+    "nw_connection_copy_parameters": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_txt_record_get_key_count": (b"Q@",),
     "nw_browser_copy_parameters": (b"@@", "", {"retval": {"already_retained": True}}),
     "nw_content_context_set_antecedent": (b"v@@",),
@@ -1186,7 +1217,11 @@ functions = {
         "",
         {"retval": {"already_retained": True}},
     ),
-    "nw_protocol_copy_tcp_definition": (b"@", "", {"retval": {"already_retained": True}}),
+    "nw_protocol_copy_tcp_definition": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_connection_set_state_changed_handler": (
         b"v@@?",
         "",
@@ -1245,7 +1280,11 @@ functions = {
         "",
         {"retval": {"already_retained": True}},
     ),
-    "nw_endpoint_get_url": (b"^t@", "", {"retval": {"c_array_delimited_by_null": True}}),
+    "nw_endpoint_get_url": (
+        b"^t@",
+        "",
+        {"retval": {"c_array_delimited_by_null": True}},
+    ),
     "nw_parameters_require_interface": (b"v@@",),
     "nw_ethernet_channel_set_queue": (b"v@@",),
     "nw_connection_receive": (
@@ -1270,7 +1309,11 @@ functions = {
     ),
     "nw_ethernet_channel_cancel": (b"v@",),
     "nw_ethernet_channel_create": (b"@S@", "", {"retval": {"already_retained": True}}),
-    "nw_framer_copy_local_endpoint": (b"@@", "", {"retval": {"already_retained": True}}),
+    "nw_framer_copy_local_endpoint": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_protocol_copy_ip_definition": (b"@",),
     "nw_path_copy_effective_remote_endpoint": (
         b"@@",

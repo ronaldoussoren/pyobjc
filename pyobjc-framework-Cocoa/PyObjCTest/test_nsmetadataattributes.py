@@ -13,7 +13,9 @@ class TestNSMetaDataAttributes(TestCase):
         self.assertIsInstance(NSMetadataItemFSCreationDateKey, unicode)
         self.assertIsInstance(NSMetadataItemFSContentChangeDateKey, unicode)
         self.assertIsInstance(NSMetadataItemIsUbiquitousKey, unicode)
-        self.assertIsInstance(NSMetadataUbiquitousItemHasUnresolvedConflictsKey, unicode)
+        self.assertIsInstance(
+            NSMetadataUbiquitousItemHasUnresolvedConflictsKey, unicode
+        )
         self.assertIsInstance(NSMetadataUbiquitousItemIsDownloadedKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemIsDownloadingKey, unicode)
         self.assertIsInstance(NSMetadataUbiquitousItemIsUploadedKey, unicode)
@@ -197,8 +199,12 @@ class TestNSMetaDataAttributes(TestCase):
         )
         self.assertIsInstance(NSMetadataUbiquitousSharedItemRoleOwner, unicode)
         self.assertIsInstance(NSMetadataUbiquitousSharedItemRoleParticipant, unicode)
-        self.assertIsInstance(NSMetadataUbiquitousSharedItemPermissionsReadOnly, unicode)
-        self.assertIsInstance(NSMetadataUbiquitousSharedItemPermissionsReadWrite, unicode)
+        self.assertIsInstance(
+            NSMetadataUbiquitousSharedItemPermissionsReadOnly, unicode
+        )
+        self.assertIsInstance(
+            NSMetadataUbiquitousSharedItemPermissionsReadWrite, unicode
+        )
 
 
 if __name__ == "__main__":

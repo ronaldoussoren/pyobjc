@@ -10,7 +10,9 @@ class TestNSFontCollection(TestCase):
         self.assertEqual(AppKit.NSFontCollectionVisibilityUser, 2)
         self.assertEqual(AppKit.NSFontCollectionVisibilityComputer, 4)
 
-        self.assertIsInstance(AppKit.NSFontCollectionIncludeDisabledFontsOption, unicode)
+        self.assertIsInstance(
+            AppKit.NSFontCollectionIncludeDisabledFontsOption, unicode
+        )
         self.assertIsInstance(AppKit.NSFontCollectionRemoveDuplicatesOption, unicode)
         self.assertIsInstance(
             AppKit.NSFontCollectionDisallowAutoActivationOption, unicode

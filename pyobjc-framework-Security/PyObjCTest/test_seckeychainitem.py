@@ -62,7 +62,9 @@ class TestKeychainitem(TestCase):
         self.assertArgHasType(Security.SecKeychainItemCreateCopy, 1, objc._C_ID)
         self.assertArgHasType(Security.SecKeychainItemCreateCopy, 2, objc._C_ID)
         self.assertArgHasType(
-            Security.SecKeychainItemCreateCopy, 3, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecKeychainItemCreateCopy,
+            3,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainItemCreateCopy, 3)
 
@@ -90,7 +92,9 @@ class TestKeychainitem(TestCase):
             1,
             objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
-        self.assertArgIsCFRetained(Security.SecKeychainItemCopyFromPersistentReference, 1)
+        self.assertArgIsCFRetained(
+            Security.SecKeychainItemCopyFromPersistentReference, 1
+        )
 
         self.assertFalse(hasattr(Security, "SecKeychainItemGetDLDBHandle"))
         self.assertFalse(hasattr(Security, "SecKeychainItemGetUniqueRecordID"))
@@ -98,7 +102,9 @@ class TestKeychainitem(TestCase):
         self.assertResultHasType(Security.SecKeychainItemCopyAccess, objc._C_INT)
         self.assertArgHasType(Security.SecKeychainItemCopyAccess, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SecKeychainItemCopyAccess, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecKeychainItemCopyAccess,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainItemCopyAccess, 1)
 

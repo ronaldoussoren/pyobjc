@@ -22,7 +22,9 @@ class TestDRBurn(TestCase):
         self.assertIsInstance(DiscRecording.DRSynchronousBehaviorKey, unicode)
         self.assertIsInstance(DiscRecording.DRBurnFailureActionKey, unicode)
         self.assertIsInstance(DiscRecording.DRMediaCatalogNumberKey, unicode)
-        self.assertIsInstance(DiscRecording.DRBurnDoubleLayerL0DataZoneBlocksKey, unicode)
+        self.assertIsInstance(
+            DiscRecording.DRBurnDoubleLayerL0DataZoneBlocksKey, unicode
+        )
         self.assertIsInstance(DiscRecording.DRBurnStrategyKey, unicode)
         self.assertIsInstance(DiscRecording.DRBurnStrategyIsRequiredKey, unicode)
         self.assertIsInstance(DiscRecording.DRCDTextKey, unicode)

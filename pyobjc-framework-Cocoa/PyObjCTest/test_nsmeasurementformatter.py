@@ -8,7 +8,9 @@ class TestNSMeasurementFormatter(TestCase):
     def testConstants(self):
         self.assertEqual(NSMeasurementFormatterUnitOptionsProvidedUnit, 1 << 0)
         self.assertEqual(NSMeasurementFormatterUnitOptionsNaturalScale, 1 << 1)
-        self.assertEqual(NSMeasurementFormatterUnitOptionsTemperatureWithoutUnit, 1 << 2)
+        self.assertEqual(
+            NSMeasurementFormatterUnitOptionsTemperatureWithoutUnit, 1 << 2
+        )
 
 
 if __name__ == "__main__":

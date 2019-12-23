@@ -6,10 +6,13 @@ from Foundation import *
 class TestNSMapTable(TestCase):
     def testConstants(self):
         self.assertEqual(NSMapTableStrongMemory, 0)
-        self.assertEqual(NSMapTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory)
+        self.assertEqual(
+            NSMapTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory
+        )
         self.assertEqual(NSMapTableCopyIn, NSPointerFunctionsCopyIn)
         self.assertEqual(
-            NSMapTableObjectPointerPersonality, NSPointerFunctionsObjectPointerPersonality
+            NSMapTableObjectPointerPersonality,
+            NSPointerFunctionsObjectPointerPersonality,
         )
 
     @min_os_level("10.8")

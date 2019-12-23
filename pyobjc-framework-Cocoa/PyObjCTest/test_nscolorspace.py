@@ -26,7 +26,9 @@ class TestNSColorSpace(TestCase):
         self.assertArgHasType(
             NSColorSpace.initWithColorSyncProfile_, 0, b"^{OpaqueCMProfileRef=}"
         )
-        self.assertResultHasType(NSColorSpace.colorSyncProfile, b"^{OpaqueCMProfileRef=}")
+        self.assertResultHasType(
+            NSColorSpace.colorSyncProfile, b"^{OpaqueCMProfileRef=}"
+        )
 
 
 if __name__ == "__main__":

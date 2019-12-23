@@ -18,7 +18,9 @@ class TestInputMethodKit(TestCase):
 
     def testValues(self):
         self.assertHasAttr(InputMethodKit, "kIMKScrollingGridCandidatePanel")
-        self.assertIsInstance(InputMethodKit.kIMKScrollingGridCandidatePanel, (int, long))
+        self.assertIsInstance(
+            InputMethodKit.kIMKScrollingGridCandidatePanel, (int, long)
+        )
         self.assertEqual(InputMethodKit.kIMKScrollingGridCandidatePanel, 2)
 
     def testVariables(self):

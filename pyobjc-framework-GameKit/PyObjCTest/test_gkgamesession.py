@@ -22,10 +22,14 @@ class TestGKGameSession(TestCase):
             GameKit.GKGameSession.loadSessionsInContainer_completionHandler_, 1, b"v@@"
         )
         self.assertArgIsBlock(
-            GameKit.GKGameSession.loadSessionWithIdentifier_completionHandler_, 1, b"v@@"
+            GameKit.GKGameSession.loadSessionWithIdentifier_completionHandler_,
+            1,
+            b"v@@",
         )
         self.assertArgIsBlock(
-            GameKit.GKGameSession.removeSessionWithIdentifier_completionHandler_, 1, b"v@"
+            GameKit.GKGameSession.removeSessionWithIdentifier_completionHandler_,
+            1,
+            b"v@",
         )
         self.assertArgIsBlock(
             GameKit.GKGameSession.getShareURLWithCompletionHandler_, 0, b"v@@"
@@ -40,7 +44,9 @@ class TestGKGameSession(TestCase):
             GameKit.GKGameSession.setConnectionState_completionHandler_, 1, b"v@"
         )
         self.assertArgIsBlock(
-            GameKit.GKGameSession.sendData_withTransportType_completionHandler_, 2, b"v@"
+            GameKit.GKGameSession.sendData_withTransportType_completionHandler_,
+            2,
+            b"v@",
         )
         self.assertArgIsBOOL(
             GameKit.GKGameSession.sendMessageWithLocalizedFormatKey_arguments_data_toPlayers_badgePlayers_completionHandler_,

@@ -25,14 +25,18 @@ class TestSecIdentity(TestCase):
         self.assertResultHasType(Security.SecIdentityCopyCertificate, objc._C_INT)
         self.assertArgHasType(Security.SecIdentityCopyCertificate, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SecIdentityCopyCertificate, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecIdentityCopyCertificate,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecIdentityCopyCertificate, 1)
 
         self.assertResultHasType(Security.SecIdentityCopyPrivateKey, objc._C_INT)
         self.assertArgHasType(Security.SecIdentityCopyPrivateKey, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SecIdentityCopyPrivateKey, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecIdentityCopyPrivateKey,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecIdentityCopyPrivateKey, 1)
 

@@ -11,7 +11,9 @@ with warnings.catch_warnings():
 
 class TestLSInfo(TestCase):
     def setUp(self):
-        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dummy.txt")
+        self.path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "dummy.txt"
+        )
         fp = open(self.path, "w")
         fp.write("test contents")
         fp.close()
@@ -26,7 +28,9 @@ class TestLSInfo(TestCase):
         if sys.maxsize < 2 ** 32:
             self.assertEqual(LaunchServices.kLSInvalidExtensionIndex, 0xFFFFFFFF)
         else:
-            self.assertEqual(LaunchServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF)
+            self.assertEqual(
+                LaunchServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF
+            )
         self.assertEqual(LaunchServices.kLSAppInTrashErr, -10660)
         self.assertEqual(LaunchServices.kLSExecutableIncorrectFormat, -10661)
         self.assertEqual(LaunchServices.kLSAttributeNotFoundErr, -10662)
@@ -334,7 +338,10 @@ class TestLSInfo(TestCase):
 
         self.assertArgHasType(LaunchServices.LSCopyItemAttribute, 3, b"o^@")
         ok, value = LaunchServices.LSCopyItemAttribute(
-            ref, LaunchServices.kLSRolesAll, LaunchServices.kLSItemExtensionIsHidden, None
+            ref,
+            LaunchServices.kLSRolesAll,
+            LaunchServices.kLSItemExtensionIsHidden,
+            None,
         )
         self.assertEqual(ok, 0)
         self.assertIsInstance(value, bool)

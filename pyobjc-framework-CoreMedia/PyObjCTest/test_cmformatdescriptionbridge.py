@@ -30,11 +30,15 @@ class TestCMFormatDescriptionBridge(TestCase):
 
     @min_os_level("10.10")
     def test_constants10_10(self):
-        self.assertIsInstance(CoreMedia.kCMImageDescriptionFlavor_QuickTimeMovie, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMImageDescriptionFlavor_QuickTimeMovie, unicode
+        )
         self.assertIsInstance(CoreMedia.kCMImageDescriptionFlavor_ISOFamily, unicode)
         self.assertIsInstance(CoreMedia.kCMImageDescriptionFlavor_3GPFamily, unicode)
 
-        self.assertIsInstance(CoreMedia.kCMSoundDescriptionFlavor_QuickTimeMovie, unicode)
+        self.assertIsInstance(
+            CoreMedia.kCMSoundDescriptionFlavor_QuickTimeMovie, unicode
+        )
         self.assertIsInstance(
             CoreMedia.kCMSoundDescriptionFlavor_QuickTimeMovieV2, unicode
         )
@@ -129,7 +133,9 @@ class TestCMFormatDescriptionBridge(TestCase):
             CoreMedia.CMTextFormatDescriptionCreateFromBigEndianTextDescriptionData, 1
         )
         self.assertArgSizeInArg(
-            CoreMedia.CMTextFormatDescriptionCreateFromBigEndianTextDescriptionData, 1, 2
+            CoreMedia.CMTextFormatDescriptionCreateFromBigEndianTextDescriptionData,
+            1,
+            2,
         )
         self.assertArgIsOut(
             CoreMedia.CMTextFormatDescriptionCreateFromBigEndianTextDescriptionData, 5
@@ -148,10 +154,12 @@ class TestCMFormatDescriptionBridge(TestCase):
         )
 
         self.assertArgIsOut(
-            CoreMedia.CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer, 3
+            CoreMedia.CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer,
+            3,
         )
         self.assertArgIsCFRetained(
-            CoreMedia.CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer, 3
+            CoreMedia.CMTextFormatDescriptionCopyAsBigEndianTextDescriptionBlockBuffer,
+            3,
         )
 
         self.assertArgIsInOut(CoreMedia.CMSwapBigEndianTextDescriptionToHost, 0)
@@ -196,12 +204,16 @@ class TestCMFormatDescriptionBridge(TestCase):
             3,
         )
 
-        self.assertArgIsInOut(CoreMedia.CMSwapBigEndianClosedCaptionDescriptionToHost, 0)
+        self.assertArgIsInOut(
+            CoreMedia.CMSwapBigEndianClosedCaptionDescriptionToHost, 0
+        )
         self.assertArgSizeInArg(
             CoreMedia.CMSwapBigEndianClosedCaptionDescriptionToHost, 0, 1
         )
 
-        self.assertArgIsInOut(CoreMedia.CMSwapHostEndianClosedCaptionDescriptionToBig, 0)
+        self.assertArgIsInOut(
+            CoreMedia.CMSwapHostEndianClosedCaptionDescriptionToBig, 0
+        )
         self.assertArgSizeInArg(
             CoreMedia.CMSwapHostEndianClosedCaptionDescriptionToBig, 0, 1
         )
@@ -243,10 +255,14 @@ class TestCMFormatDescriptionBridge(TestCase):
         )
 
         self.assertArgIsInOut(CoreMedia.CMSwapBigEndianTimeCodeDescriptionToHost, 0)
-        self.assertArgSizeInArg(CoreMedia.CMSwapBigEndianTimeCodeDescriptionToHost, 0, 1)
+        self.assertArgSizeInArg(
+            CoreMedia.CMSwapBigEndianTimeCodeDescriptionToHost, 0, 1
+        )
 
         self.assertArgIsInOut(CoreMedia.CMSwapHostEndianTimeCodeDescriptionToBig, 0)
-        self.assertArgSizeInArg(CoreMedia.CMSwapHostEndianTimeCodeDescriptionToBig, 0, 1)
+        self.assertArgSizeInArg(
+            CoreMedia.CMSwapHostEndianTimeCodeDescriptionToBig, 0, 1
+        )
 
         self.assertArgIsIn(
             CoreMedia.CMMetadataFormatDescriptionCreateFromBigEndianMetadataDescriptionData,
@@ -285,10 +301,14 @@ class TestCMFormatDescriptionBridge(TestCase):
         )
 
         self.assertArgIsInOut(CoreMedia.CMSwapBigEndianMetadataDescriptionToHost, 0)
-        self.assertArgSizeInArg(CoreMedia.CMSwapBigEndianMetadataDescriptionToHost, 0, 1)
+        self.assertArgSizeInArg(
+            CoreMedia.CMSwapBigEndianMetadataDescriptionToHost, 0, 1
+        )
 
         self.assertArgIsInOut(CoreMedia.CMSwapHostEndianMetadataDescriptionToBig, 0)
-        self.assertArgSizeInArg(CoreMedia.CMSwapHostEndianMetadataDescriptionToBig, 0, 1)
+        self.assertArgSizeInArg(
+            CoreMedia.CMSwapHostEndianMetadataDescriptionToBig, 0, 1
+        )
 
 
 if __name__ == "__main__":

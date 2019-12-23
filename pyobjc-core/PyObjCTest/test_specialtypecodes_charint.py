@@ -26,7 +26,9 @@ def setupMetaData():
         b"OC_TestSpecialTypeCode",
         b"int8Array",
         dict(
-            retval=dict(type=objc._C_PTR + objc._C_CHAR_AS_INT, c_array_of_fixed_length=4)
+            retval=dict(
+                type=objc._C_PTR + objc._C_CHAR_AS_INT, c_array_of_fixed_length=4
+            )
         ),
     )
 

@@ -58,7 +58,9 @@ class TestCVPixelBufferPool(TestCase):
     @min_os_level("10.7")
     def testFunctions10_7(self):
         self.assertArgIsOut(CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3)
-        self.assertArgIsCFRetained(CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3)
+        self.assertArgIsCFRetained(
+            CVPixelBufferPoolCreatePixelBufferWithAuxAttributes, 3
+        )
 
     @min_os_level("10.11")
     def testFunctions10_11(self):

@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLDepthStencil (TestCase):
+
+class TestMTLDepthStencil(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLCompareFunctionNever, 0)
         self.assertEqual(Metal.MTLCompareFunctionLess, 1)
@@ -22,12 +23,15 @@ class TestMTLDepthStencil (TestCase):
         self.assertEqual(Metal.MTLStencilOperationIncrementWrap, 6)
         self.assertEqual(Metal.MTLStencilOperationDecrementWrap, 7)
 
-    @min_os_level('10.11')
+    @min_os_level("10.11")
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLDepthStencilDescriptor.alloc().init().isDepthWriteEnabled)
-        self.assertArgIsBOOL(Metal.MTLDepthStencilDescriptor.alloc().init().setDepthWriteEnabled_, 0)
+        self.assertResultIsBOOL(
+            Metal.MTLDepthStencilDescriptor.alloc().init().isDepthWriteEnabled
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLDepthStencilDescriptor.alloc().init().setDepthWriteEnabled_, 0
+        )
 
-    @min_sdk_level('10.11')
+    @min_sdk_level("10.11")
     def test_protocols(self):
-        objc.protocolNamed('MTLDepthStencilState')
-
+        objc.protocolNamed("MTLDepthStencilState")

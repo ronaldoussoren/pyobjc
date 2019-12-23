@@ -18,7 +18,9 @@ class TestSecCustomTransform(TestCase):
         self.assertEqual(Security.kSecTransformMetaAttributeName, 1)
         self.assertEqual(Security.kSecTransformMetaAttributeRef, 2)
         self.assertEqual(Security.kSecTransformMetaAttributeRequired, 3)
-        self.assertEqual(Security.kSecTransformMetaAttributeRequiresOutboundConnection, 4)
+        self.assertEqual(
+            Security.kSecTransformMetaAttributeRequiresOutboundConnection, 4
+        )
         self.assertEqual(Security.kSecTransformMetaAttributeDeferred, 5)
         self.assertEqual(Security.kSecTransformMetaAttributeStream, 6)
         self.assertEqual(Security.kSecTransformMetaAttributeCanCycle, 7)
@@ -32,7 +34,9 @@ class TestSecCustomTransform(TestCase):
         self.assertIsInstance(Security.kSecTransformActionExternalizeExtraData, unicode)
         self.assertIsInstance(Security.kSecTransformActionProcessData, unicode)
         self.assertIsInstance(Security.kSecTransformActionInternalizeExtraData, unicode)
-        self.assertIsInstance(Security.kSecTransformActionAttributeNotification, unicode)
+        self.assertIsInstance(
+            Security.kSecTransformActionAttributeNotification, unicode
+        )
         self.assertIsInstance(Security.kSecTransformActionAttributeValidation, unicode)
 
     def test_functions(self):

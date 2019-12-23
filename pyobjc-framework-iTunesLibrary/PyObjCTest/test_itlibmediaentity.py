@@ -21,7 +21,9 @@ class TestITLibMediaEntity(TestCase):
         )
 
     def testConstants(self):
-        self.assertIsInstance(iTunesLibrary.ITLibMediaEntityPropertyPersistentID, unicode)
+        self.assertIsInstance(
+            iTunesLibrary.ITLibMediaEntityPropertyPersistentID, unicode
+        )
 
 
 if __name__ == "__main__":

@@ -12,7 +12,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(UserNotifications.UNAuthorizationStatusProvisional, 3)
 
             self.assertEqual(UserNotifications.UNShowPreviewsSettingAlways, 0)
-            self.assertEqual(UserNotifications.UNShowPreviewsSettingWhenAuthenticated, 1)
+            self.assertEqual(
+                UserNotifications.UNShowPreviewsSettingWhenAuthenticated, 1
+            )
             self.assertEqual(UserNotifications.UNShowPreviewsSettingNever, 2)
 
             self.assertEqual(UserNotifications.UNNotificationSettingNotSupported, 0)

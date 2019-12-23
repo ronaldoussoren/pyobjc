@@ -9,7 +9,9 @@ if sys.maxsize > 2 ** 32:
         @expectedFailureIf(os_release() == "10.11")
         @min_os_level("10.11")
         def testClasses(self):
-            self.assertIsInstance(GameController.GCMicroGamepadSnapshot, objc.objc_class)
+            self.assertIsInstance(
+                GameController.GCMicroGamepadSnapshot, objc.objc_class
+            )
 
         @min_os_level("10.11")
         def testStructs(self):
@@ -27,7 +29,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.14")
         def testStructs10_14_4(self):
-            self.assertEqual(GameController.GCMicroGamepadSnapshotData.__struct_pack__, 1)
+            self.assertEqual(
+                GameController.GCMicroGamepadSnapshotData.__struct_pack__, 1
+            )
 
             v = GameController.GCMicroGamepadSnapshotData()
             self.assertIsInstance(v.version, int)
@@ -46,7 +50,9 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsOut(
                 GameController.GCMicroGamepadSnapShotDataV100FromNSData, 0
             )
-            self.assertArgIsIn(GameController.NSDataFromGCMicroGamepadSnapShotDataV100, 0)
+            self.assertArgIsIn(
+                GameController.NSDataFromGCMicroGamepadSnapShotDataV100, 0
+            )
 
         @min_os_level("10.14.4")
         def testFunctions10_14_4(self):

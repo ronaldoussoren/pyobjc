@@ -12,7 +12,6 @@ class TestSKArcadeService(TestCase):
             b"v@I@I@",
         )
 
-
     @min_os_level("10.15")
     @expectedFailure
     def test_methods10_15_missing(self):

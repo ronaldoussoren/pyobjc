@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 from pyobjc_setup import setup, Extension
 import os
 
-VERSION = '6.2b1'
+VERSION = "6.2b1"
 
 setup(
     name="pyobjc-framework-Metal",
@@ -34,14 +34,10 @@ setup(
                 for fn in os.listdir("Modules")
                 if fn.startswith("_Metal")
             ],
-        )
+        ),
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
-    options=dict(
-        bdist_wheel=dict(
-            py_limited_api="cp36"
-        )
-    ),
+    options=dict(bdist_wheel=dict(py_limited_api="cp36")),
 )

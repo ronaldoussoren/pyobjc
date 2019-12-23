@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLVertexDescriptor (TestCase):
+
+class TestMTLVertexDescriptor(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLVertexFormatInvalid, 0)
         self.assertEqual(Metal.MTLVertexFormatUChar2, 1)

@@ -122,7 +122,8 @@ class TestSecKeychain(TestCase):
         self.assertEqual(Security.kSecDeleteEventMask, 1 << Security.kSecDeleteEvent)
         self.assertEqual(Security.kSecUpdateEventMask, 1 << Security.kSecUpdateEvent)
         self.assertEqual(
-            Security.kSecPasswordChangedEventMask, 1 << Security.kSecPasswordChangedEvent
+            Security.kSecPasswordChangedEventMask,
+            1 << Security.kSecPasswordChangedEvent,
         )
         self.assertEqual(
             Security.kSecDefaultChangedEventMask, 1 << Security.kSecDefaultChangedEvent
@@ -165,7 +166,9 @@ class TestSecKeychain(TestCase):
 
         self.assertResultHasType(Security.SecKeychainCreate, objc._C_INT)
         self.assertArgHasType(
-            Security.SecKeychainCreate, 0, objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT
+            Security.SecKeychainCreate,
+            0,
+            objc._C_IN + objc._C_PTR + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgIsNullTerminated(Security.SecKeychainCreate, 0)
         self.assertArgHasType(Security.SecKeychainCreate, 1, objc._C_UINT)
@@ -224,7 +227,9 @@ class TestSecKeychain(TestCase):
 
         self.assertResultHasType(Security.SecKeychainCopySearchList, objc._C_INT)
         self.assertArgHasType(
-            Security.SecKeychainCopySearchList, 0, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecKeychainCopySearchList,
+            0,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
         self.assertArgIsCFRetained(Security.SecKeychainCopySearchList, 0)
 

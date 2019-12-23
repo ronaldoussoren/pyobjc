@@ -36,7 +36,9 @@ if sys.maxsize >= 2 ** 32:
             self.assertResultIsBOOL(NetworkExtension.NWTCPConnection.hasBetterPath)
 
             self.assertArgIsBlock(
-                NetworkExtension.NWTCPConnection.readLength_completionHandler_, 1, b"v@@"
+                NetworkExtension.NWTCPConnection.readLength_completionHandler_,
+                1,
+                b"v@@",
             )
             self.assertArgIsBlock(
                 NetworkExtension.NWTCPConnection.readMinimumLength_maximumLength_completionHandler_,

@@ -43,10 +43,13 @@ class TestIKImageBrowserView(TestCase):
         # self.assertIsInstance(protocols.IKImageBrowserDataSource, objc.informal_protocol)
 
         self.assertResultHasType(
-            TestIKImageBrowserViewHelper.numberOfItemsInImageBrowser_, objc._C_NSUInteger
+            TestIKImageBrowserViewHelper.numberOfItemsInImageBrowser_,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestIKImageBrowserViewHelper.imageBrowser_itemAtIndex_, 1, objc._C_NSUInteger
+            TestIKImageBrowserViewHelper.imageBrowser_itemAtIndex_,
+            1,
+            objc._C_NSUInteger,
         )
         self.assertResultIsBOOL(
             TestIKImageBrowserViewHelper.imageBrowser_moveItemsAtIndexes_toIndex_
@@ -61,10 +64,13 @@ class TestIKImageBrowserView(TestCase):
             objc._C_NSUInteger,
         )
         self.assertResultHasType(
-            TestIKImageBrowserViewHelper.numberOfGroupsInImageBrowser_, objc._C_NSUInteger
+            TestIKImageBrowserViewHelper.numberOfGroupsInImageBrowser_,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestIKImageBrowserViewHelper.imageBrowser_groupAtIndex_, 1, objc._C_NSUInteger
+            TestIKImageBrowserViewHelper.imageBrowser_groupAtIndex_,
+            1,
+            objc._C_NSUInteger,
         )
 
         # self.assertIsInstance(protocols.IKImageBrowserItem, objc.informal_protocol)
@@ -127,7 +133,9 @@ class TestIKImageBrowserView(TestCase):
         self.assertIsInstance(IKImageBrowserQTMovieRepresentationType, unicode)
         self.assertIsInstance(IKImageBrowserQTMoviePathRepresentationType, unicode)
         self.assertIsInstance(IKImageBrowserQCCompositionRepresentationType, unicode)
-        self.assertIsInstance(IKImageBrowserQCCompositionPathRepresentationType, unicode)
+        self.assertIsInstance(
+            IKImageBrowserQCCompositionPathRepresentationType, unicode
+        )
         self.assertIsInstance(IKImageBrowserQuickLookPathRepresentationType, unicode)
         self.assertIsInstance(IKImageBrowserIconRefPathRepresentationType, unicode)
         self.assertIsInstance(IKImageBrowserIconRefRepresentationType, unicode)

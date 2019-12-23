@@ -125,7 +125,9 @@ class TestSCNetworkConfiguration(TestCase):
         r = SCNetworkInterfaceCopyMediaSubTypeOptions(available, r[0])
         self.assertTrue(isinstance(r, CFArrayRef))
 
-        r, mtu_cur, mtu_min, mtu_max = SCNetworkInterfaceCopyMTU(iface, None, None, None)
+        r, mtu_cur, mtu_min, mtu_max = SCNetworkInterfaceCopyMTU(
+            iface, None, None, None
+        )
         self.assertTrue(r is True)
         self.assertTrue(isinstance(mtu_cur, (int, long)))
         self.assertTrue(isinstance(mtu_min, (int, long)))

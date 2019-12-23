@@ -7,7 +7,9 @@ class TestNSFileProviderExtension(TestCase):
     def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderItemFieldContents, 1 << 0)
         self.assertEqual(FileProvider.NSFileProviderItemFieldFilename, 1 << 1)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldParentItemIdentifier, 1 << 2)
+        self.assertEqual(
+            FileProvider.NSFileProviderItemFieldParentItemIdentifier, 1 << 2
+        )
         self.assertEqual(FileProvider.NSFileProviderItemFieldLastUsedDate, 1 << 3)
         self.assertEqual(FileProvider.NSFileProviderItemFieldTagData, 1 << 4)
         self.assertEqual(FileProvider.NSFileProviderItemFieldFavoriteRank, 1 << 5)
@@ -17,4 +19,6 @@ class TestNSFileProviderExtension(TestCase):
         )
         self.assertEqual(FileProvider.NSFileProviderItemFieldFlags, 1 << 8)
         self.assertEqual(FileProvider.NSFileProviderItemFieldTrashed, 1 << 9)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldExtendedAttributes, 1 << 10)
+        self.assertEqual(
+            FileProvider.NSFileProviderItemFieldExtendedAttributes, 1 << 10
+        )

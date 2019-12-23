@@ -7,7 +7,9 @@ class TestNSExtensionContext(TestCase):
     @onlyOn64Bit
     def testMethods10_10(self):
         self.assertArgIsBlock(
-            NSExtensionContext.completeRequestReturningItems_completionHandler_, 1, b"vZ"
+            NSExtensionContext.completeRequestReturningItems_completionHandler_,
+            1,
+            b"vZ",
         )
         self.assertArgIsBlock(NSExtensionContext.openURL_completionHandler_, 1, b"vZ")
 

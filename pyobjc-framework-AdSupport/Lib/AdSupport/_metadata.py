@@ -35,7 +35,11 @@ misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b"ASIdentifierManager", b"isAdvertisingTrackingEnabled", {"retval": {"type": "Z"}})
+    r(
+        b"ASIdentifierManager",
+        b"isAdvertisingTrackingEnabled",
+        {"retval": {"type": "Z"}},
+    )
 finally:
     objc._updatingMetadata(False)
 expressions = {}

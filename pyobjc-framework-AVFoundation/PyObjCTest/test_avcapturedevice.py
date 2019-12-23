@@ -60,7 +60,9 @@ class TestAVCaptureDevice(TestCase):
     @min_os_level("10.15")
     def test_constants10_15(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, unicode
+        )
         self.assertIsInstance(
             AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, unicode
         )
@@ -78,7 +80,9 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDevice.supportsAVCaptureSessionPreset_
         )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isConnected)
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isInUseByAnotherApplication)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isInUseByAnotherApplication
+        )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isSuspended)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.hasFlash)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isFlashModeSupported_)
@@ -94,7 +98,9 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDevice.isExposurePointOfInterestSupported
         )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingExposure)
-        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isWhiteBalanceModeSupported_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDevice.isWhiteBalanceModeSupported_
+        )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.transportControlsSupported)
 

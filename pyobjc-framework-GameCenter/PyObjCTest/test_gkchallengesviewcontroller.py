@@ -9,7 +9,9 @@ if sys.maxsize > 2 ** 32:
         @expectedFailure
         @min_os_level("10.8")
         def testClasses10_8(self):
-            self.assertIsInstance(GameCenter.GKChallengesViewController, objc.objc_class)
+            self.assertIsInstance(
+                GameCenter.GKChallengesViewController, objc.objc_class
+            )
 
         @min_os_level("10.8")
         def testProtocols10_8(self):

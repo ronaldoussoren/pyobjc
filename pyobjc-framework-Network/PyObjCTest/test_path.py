@@ -39,7 +39,9 @@ if sys.maxsize > 2 ** 32:
             Network.nw_path_is_constrained
 
             self.assertArgIsBlock(
-                Network.nw_path_enumerate_gateways, 1, nw_path_enumerate_gateways_block_t
+                Network.nw_path_enumerate_gateways,
+                1,
+                nw_path_enumerate_gateways_block_t,
             )
 
 

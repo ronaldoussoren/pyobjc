@@ -221,7 +221,9 @@ class TestThreadingHelpers(TestCase):
         sys.stderr = StringIO()
         try:
             obj.calls[:] = []
-            obj.pyobjc_performSelector_withObject_afterDelay_inModes_(b"sel3:", 0, 0.5, 3)
+            obj.pyobjc_performSelector_withObject_afterDelay_inModes_(
+                b"sel3:", 0, 0.5, 3
+            )
             self.assertEqual(
                 obj.calls, [(b"_pyobjc_performOnThread:", (b"sel3:", 0), 0.5, 3)]
             )
@@ -348,7 +350,11 @@ class TestThreadingHelpers(TestCase):
         self.assertEqual(
             obj.calls,
             [
-                (b"_pyobjc_performOnThreadWithResult:", ("sel2:", 3, [(True, 6)]), True),
+                (
+                    b"_pyobjc_performOnThreadWithResult:",
+                    ("sel2:", 3, [(True, 6)]),
+                    True,
+                ),
                 (
                     b"_pyobjc_performOnThreadWithResult:",
                     ("sel3:", 2.0, [(True, 0.5)]),

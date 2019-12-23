@@ -8,7 +8,8 @@ class TestNSURLRequest(TestCase):
         self.assertEqual(NSURLRequestReloadIgnoringLocalCacheData, 1)
         self.assertEqual(NSURLRequestReloadIgnoringLocalAndRemoteCacheData, 4)
         self.assertEqual(
-            NSURLRequestReloadIgnoringCacheData, NSURLRequestReloadIgnoringLocalCacheData
+            NSURLRequestReloadIgnoringCacheData,
+            NSURLRequestReloadIgnoringLocalCacheData,
         )
         self.assertEqual(NSURLRequestReturnCacheDataElseLoad, 2)
         self.assertEqual(NSURLRequestReturnCacheDataDontLoad, 3)

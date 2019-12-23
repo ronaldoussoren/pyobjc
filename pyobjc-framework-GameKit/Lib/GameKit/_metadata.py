@@ -162,7 +162,11 @@ try:
             }
         },
     )
-    r(b"GKAchievement", b"setShowsCompletionBanner:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"GKAchievement",
+        b"setShowsCompletionBanner:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"GKAchievement", b"showsCompletionBanner", {"retval": {"type": b"Z"}})
     r(b"GKAchievementDescription", b"isHidden", {"retval": {"type": b"Z"}})
     r(b"GKAchievementDescription", b"isReplayable", {"retval": {"type": b"Z"}})
@@ -1351,7 +1355,11 @@ try:
             }
         },
     )
-    r(b"GKScore", b"setShouldSetDefaultLeaderboard:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"GKScore",
+        b"setShouldSetDefaultLeaderboard:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"GKScore", b"shouldSetDefaultLeaderboard", {"retval": {"type": b"Z"}})
     r(
         b"GKSession",

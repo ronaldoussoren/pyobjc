@@ -42,7 +42,9 @@ class TestJSValue(TestCase):
     def test_contants(self):
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, unicode)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorEnumerableKey, unicode)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorConfigurableKey, unicode)
+        self.assertIsInstance(
+            JavaScriptCore.JSPropertyDescriptorConfigurableKey, unicode
+        )
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorValueKey, unicode)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorGetKey, unicode)
         self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorSetKey, unicode)

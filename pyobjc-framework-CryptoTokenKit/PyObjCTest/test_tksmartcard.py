@@ -7,7 +7,9 @@ if sys.maxsize > 2 ** 32:
     class TestTKSmartCard(TestCase):
         @min_os_level("10.10")
         def testClasses(self):
-            self.assertIsInstance(CryptoTokenKit.TKSmartCardSlotManager, objc.objc_class)
+            self.assertIsInstance(
+                CryptoTokenKit.TKSmartCardSlotManager, objc.objc_class
+            )
             self.assertIsInstance(CryptoTokenKit.TKSmartCardSlot, objc.objc_class)
             self.assertIsInstance(CryptoTokenKit.TKSmartCard, objc.objc_class)
 

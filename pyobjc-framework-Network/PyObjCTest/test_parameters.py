@@ -91,7 +91,9 @@ if sys.maxsize > 2 ** 32:
             Network.nw_parameters_set_multipath_service
             Network.nw_parameters_get_multipath_service
 
-            self.assertResultIsRetained(Network.nw_parameters_copy_default_protocol_stack)
+            self.assertResultIsRetained(
+                Network.nw_parameters_copy_default_protocol_stack
+            )
 
             Network.nw_protocol_stack_prepend_application_protocol
             Network.nw_protocol_stack_clear_application_protocols
@@ -102,11 +104,15 @@ if sys.maxsize > 2 ** 32:
                 nw_protocol_stack_iterate_protocols_block_t,
             )
 
-            self.assertResultIsRetained(Network.nw_protocol_stack_copy_transport_protocol)
+            self.assertResultIsRetained(
+                Network.nw_protocol_stack_copy_transport_protocol
+            )
 
             Network.nw_protocol_stack_set_transport_protocol
 
-            self.assertResultIsRetained(Network.nw_protocol_stack_copy_internet_protocol)
+            self.assertResultIsRetained(
+                Network.nw_protocol_stack_copy_internet_protocol
+            )
 
             Network.nw_parameters_set_local_only
             Network.nw_parameters_get_local_only

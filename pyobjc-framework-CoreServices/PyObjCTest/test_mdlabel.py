@@ -37,12 +37,16 @@ class TestMDLabel(TestCase):
         self.assertIsInstance(CoreServices.kMDLabelDisplayName, unicode)
         self.assertIsInstance(CoreServices.kMDLabelIconData, unicode)
         self.assertIsInstance(CoreServices.kMDLabelIconUUID, unicode)
-        self.assertIsInstance(CoreServices.kMDLabelIsMutuallyExclusiveSetMember, unicode)
+        self.assertIsInstance(
+            CoreServices.kMDLabelIsMutuallyExclusiveSetMember, unicode
+        )
         self.assertIsInstance(CoreServices.kMDLabelKind, unicode)
         self.assertIsInstance(CoreServices.kMDLabelSetsFinderColor, unicode)
         self.assertIsInstance(CoreServices.kMDLabelUUID, unicode)
         self.assertIsInstance(CoreServices.kMDLabelVisibility, unicode)
-        self.assertIsInstance(CoreServices.kMDLabelKindIsMutuallyExclusiveSetKey, unicode)
+        self.assertIsInstance(
+            CoreServices.kMDLabelKindIsMutuallyExclusiveSetKey, unicode
+        )
         self.assertIsInstance(CoreServices.kMDLabelKindVisibilityKey, unicode)
         self.assertIsInstance(CoreServices.kMDPrivateVisibility, unicode)
         self.assertIsInstance(CoreServices.kMDPublicVisibility, unicode)

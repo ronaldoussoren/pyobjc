@@ -12,7 +12,9 @@ class TestDRBurnSession(TestCase):
         self.assertEqual(DiscRecordingUI.kDRBurnSessionOK, 1)
         self.assertEqual(DiscRecordingUI.kDRBurnSessionCancel, 0)
 
-        self.assertEqual(DiscRecordingUI.kBurnSessionSetupDialogOptionsCurrentVersion, 1)
+        self.assertEqual(
+            DiscRecordingUI.kBurnSessionSetupDialogOptionsCurrentVersion, 1
+        )
 
         self.assertEqual(
             DiscRecordingUI.kBurnSessionSetupDialogDefaultOptions, 0x00000000

@@ -201,7 +201,12 @@ class AppController(Cocoa.NSObject):
         # now to go through the results, we can create an array for each
         # SearchKit document and another for the scores, and then populate
         # them from the SearchResults
-        busy, outDocumentIDsArray, scoresArray, resultCount = SearchKit.SKSearchFindMatches(
+        (
+            busy,
+            outDocumentIDsArray,
+            scoresArray,
+            resultCount,
+        ) = SearchKit.SKSearchFindMatches(
             searchResults,  # the search result set
             10,
             None,  # an array of SKDocumentID

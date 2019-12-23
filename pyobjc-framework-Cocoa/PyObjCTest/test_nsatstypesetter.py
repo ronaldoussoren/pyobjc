@@ -36,7 +36,9 @@ class TestNSATSTypesetterHelper(NSATSTypesetter):
     ):
         pass
 
-    def setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(self, v1, v2, v3, v4):
+    def setLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
+        self, v1, v2, v3, v4
+    ):
         pass
 
     def substituteGlyphsInRange_withGlyphs_(self, v1, v2):
@@ -121,7 +123,9 @@ class TestNSATSTypesetter(TestCase):
         self.assertArgSizeInArg(NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
 
         self.assertArgIsIn(NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
-        self.assertArgSizeInArg(NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0)
+        self.assertArgSizeInArg(
+            NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
+        )
 
     def testSubclassProtocols(self):
         self.assertResultIsBOOL(

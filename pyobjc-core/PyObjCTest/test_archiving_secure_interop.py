@@ -72,7 +72,10 @@ class TestNSKeyedArchivingInterop(TestCase):
     def test_interop_string(self):
         for testval in ("hello world", "goodbye moon"):
             v = NSArray.arrayWithObject_(testval)
-            data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+            (
+                data,
+                error,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 v, True, None
             )
 
@@ -91,7 +94,10 @@ class TestNSKeyedArchivingInterop(TestCase):
     def test_interop_float(self):
         for testval in (-4.5, 0, 5.5e10):
             v = NSArray.arrayWithObject_(testval)
-            data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+            (
+                data,
+                error,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 v, True, None
             )
 
@@ -108,9 +114,12 @@ class TestNSKeyedArchivingInterop(TestCase):
             self.assertEqual(converted, [testval])
 
     def test_interop_int(self):
-        for testval in (-42, 0, 42, -2 ** 62, 2 ** 62):
+        for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62):
             v = NSArray.arrayWithObject_(testval)
-            data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+            (
+                data,
+                error,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 v, True, None
             )
 
@@ -147,7 +156,10 @@ class TestNSKeyedArchivingInterop(TestCase):
                 testval = buffer(testval)
 
             v = NSArray.arrayWithObject_(testval)
-            data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+            (
+                data,
+                error,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 v, True, None
             )
 
@@ -166,7 +178,10 @@ class TestNSKeyedArchivingInterop(TestCase):
     def test_interop_seq(self):
         for testval in (["a", "b", 3], ("a", "b", 3)):
 
-            data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+            (
+                data,
+                error,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 testval, True, None
             )
 
@@ -186,7 +201,10 @@ class TestNSKeyedArchivingInterop(TestCase):
     def test_interop_set(self):
         for testval in ({"a", "b", 3}, frozenset({"a", "b", 3})):
 
-            data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+            (
+                data,
+                error,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 testval, True, None
             )
 
@@ -209,7 +227,10 @@ class TestNSKeyedArchivingInterop(TestCase):
     def test_interop_dict(self):
         for testval in ({"a": "b", "c": 42},):
 
-            data, error = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+            (
+                data,
+                error,
+            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
                 testval, True, None
             )
 

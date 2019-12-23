@@ -15,7 +15,9 @@ class TestVTSession(TestCase):
         self.assertIsInstance(VideoToolbox.kVTPropertyType_Number, unicode)
         self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatusKey, unicode)
         self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatus_ReadOnly, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatus_ReadWrite, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTPropertyReadWriteStatus_ReadWrite, unicode
+        )
         self.assertIsInstance(VideoToolbox.kVTPropertyShouldBeSerializedKey, unicode)
         self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueMinimumKey, unicode)
         self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueMaximumKey, unicode)

@@ -35,8 +35,12 @@ class TestPDEPluginInterface(TestCase):
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.shouldHide)
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_)
         self.assertArgIsOut(TestPDEPluginInterfaceHelper.saveValuesAndReturnError_, 0)
-        self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.restoreValuesAndReturnError_)
-        self.assertArgIsOut(TestPDEPluginInterfaceHelper.restoreValuesAndReturnError_, 0)
+        self.assertResultIsBOOL(
+            TestPDEPluginInterfaceHelper.restoreValuesAndReturnError_
+        )
+        self.assertArgIsOut(
+            TestPDEPluginInterfaceHelper.restoreValuesAndReturnError_, 0
+        )
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.shouldShowHelp)
         self.assertResultIsBOOL(TestPDEPluginInterfaceHelper.shouldPrint)
         self.assertArgIsBOOL(TestPDEPluginInterfaceHelper.printWindowWillClose_, 0)

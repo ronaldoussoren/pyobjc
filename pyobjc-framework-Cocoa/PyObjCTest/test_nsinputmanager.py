@@ -33,7 +33,9 @@ class TestNSInputManager(TestCase):
         objc.protocolNamed("NSTextInput")
         self.assertArgIsSEL(TestNSInputManagerHelper.doCommandBySelector_, 0, b"v@:@")
         self.assertArgHasType(
-            TestNSInputManagerHelper.setMarkedText_selectedRange_, 1, NSRange.__typestr__
+            TestNSInputManagerHelper.setMarkedText_selectedRange_,
+            1,
+            NSRange.__typestr__,
         )
         self.assertResultIsBOOL(TestNSInputManagerHelper.hasMarkedText)
         self.assertResultHasType(

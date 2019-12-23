@@ -42,7 +42,9 @@ class CIBevelView(SampleCIView):
 
         self.lightball = Quartz.CIImage.imageWithContentsOfURL_(url)
 
-        self.heightFieldFilter = Quartz.CIFilter.filterWithName_("CIHeightFieldFromMask")
+        self.heightFieldFilter = Quartz.CIFilter.filterWithName_(
+            "CIHeightFieldFromMask"
+        )
         self.heightFieldFilter.setDefaults()
         self.heightFieldFilter.setValue_forKey_(15.0, "inputRadius")
 
@@ -70,7 +72,9 @@ class CIBevelView(SampleCIView):
 
     def changeTwirlAngle_(self, timer):
         self.angleTime += timer.timeInterval()
-        self.twirlFilter.setValue_forKey_(-0.2 * sin(self.angleTime * 5.0), "inputAngle")
+        self.twirlFilter.setValue_forKey_(
+            -0.2 * sin(self.angleTime * 5.0), "inputAngle"
+        )
         self.updateImage()
 
     def mouseDragged_(self, event):

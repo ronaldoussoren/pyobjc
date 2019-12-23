@@ -83,11 +83,15 @@ if sys.maxsize > 2 ** 32:
                 Network.nw_ws_response_get_selected_subprotocol, b"^t"
             )
 
-            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 1, b"n^t")
+            self.assertArgHasType(
+                Network.nw_ws_response_add_additional_header, 1, b"n^t"
+            )
             self.assertArgIsNullTerminated(
                 Network.nw_ws_response_add_additional_header, 1
             )
-            self.assertArgHasType(Network.nw_ws_response_add_additional_header, 2, b"n^t")
+            self.assertArgHasType(
+                Network.nw_ws_response_add_additional_header, 2, b"n^t"
+            )
             self.assertArgIsNullTerminated(
                 Network.nw_ws_response_add_additional_header, 2
             )

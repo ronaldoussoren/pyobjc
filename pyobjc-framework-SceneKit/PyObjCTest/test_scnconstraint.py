@@ -41,7 +41,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
             self.assertArgIsBlock(
                 SceneKit.SCNTransformConstraint.transformConstraintInWorldSpace_withBlock_,
                 1,
-                SceneKit.SCNMatrix4.__typestr__ + b"@" + SceneKit.SCNMatrix4.__typestr__,
+                SceneKit.SCNMatrix4.__typestr__
+                + b"@"
+                + SceneKit.SCNMatrix4.__typestr__,
             )
 
         @min_os_level("10.13")
@@ -78,7 +80,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
             self.assertArgIsBOOL(
                 SceneKit.SCNReplicatorConstraint.setReplicatesPosition_, 0
             )
-            self.assertArgIsBOOL(SceneKit.SCNReplicatorConstraint.setReplicatesScale_, 0)
+            self.assertArgIsBOOL(
+                SceneKit.SCNReplicatorConstraint.setReplicatesScale_, 0
+            )
 
         @min_sdk_level("10.13")
         def testProtocols(self):

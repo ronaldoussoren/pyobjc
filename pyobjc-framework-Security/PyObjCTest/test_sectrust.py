@@ -48,7 +48,9 @@ class TestSecTrusted(TestCase):
 
     @min_os_level("10.12")
     def test_constants10_12(self):
-        self.assertIsInstance(Security.kSecTrustCertificateTransparencyWhiteList, unicode)
+        self.assertIsInstance(
+            Security.kSecTrustCertificateTransparencyWhiteList, unicode
+        )
 
     def test_functions(self):
         self.assertIsInstance(Security.SecTrustGetTypeID(), (int, long))
@@ -78,7 +80,9 @@ class TestSecTrusted(TestCase):
         self.assertArgHasType(Security.SecTrustSetAnchorCertificates, 0, objc._C_ID)
         self.assertArgHasType(Security.SecTrustSetAnchorCertificates, 1, objc._C_ID)
 
-        self.assertResultHasType(Security.SecTrustSetAnchorCertificatesOnly, objc._C_INT)
+        self.assertResultHasType(
+            Security.SecTrustSetAnchorCertificatesOnly, objc._C_INT
+        )
         self.assertArgHasType(Security.SecTrustSetAnchorCertificatesOnly, 0, objc._C_ID)
         self.assertArgHasType(
             Security.SecTrustSetAnchorCertificatesOnly, 1, objc._C_NSBOOL
@@ -145,7 +149,9 @@ class TestSecTrusted(TestCase):
         self.assertResultIsCFRetained(Security.SecTrustCopyPublicKey)
         self.assertArgHasType(Security.SecTrustCopyPublicKey, 0, objc._C_ID)
 
-        self.assertResultHasType(Security.SecTrustGetCertificateCount, objc._C_NSInteger)
+        self.assertResultHasType(
+            Security.SecTrustGetCertificateCount, objc._C_NSInteger
+        )
         self.assertArgHasType(Security.SecTrustGetCertificateCount, 0, objc._C_ID)
 
         self.assertResultHasType(Security.SecTrustGetCertificateAtIndex, objc._C_ID)
@@ -166,7 +172,9 @@ class TestSecTrusted(TestCase):
     def test_functions_10_9(self):
         self.assertResultHasType(Security.SecTrustSetNetworkFetchAllowed, objc._C_INT)
         self.assertArgHasType(Security.SecTrustSetNetworkFetchAllowed, 0, objc._C_ID)
-        self.assertArgHasType(Security.SecTrustSetNetworkFetchAllowed, 1, objc._C_NSBOOL)
+        self.assertArgHasType(
+            Security.SecTrustSetNetworkFetchAllowed, 1, objc._C_NSBOOL
+        )
 
         self.assertResultHasType(Security.SecTrustGetNetworkFetchAllowed, objc._C_INT)
         self.assertArgHasType(Security.SecTrustGetNetworkFetchAllowed, 0, objc._C_ID)
@@ -197,7 +205,9 @@ class TestSecTrusted(TestCase):
         self.assertResultHasType(Security.SecTrustEvaluateWithError, objc._C_BOOL)
         self.assertArgHasType(Security.SecTrustEvaluateWithError, 0, objc._C_ID)
         self.assertArgHasType(
-            Security.SecTrustEvaluateWithError, 1, objc._C_OUT + objc._C_PTR + objc._C_ID
+            Security.SecTrustEvaluateWithError,
+            1,
+            objc._C_OUT + objc._C_PTR + objc._C_ID,
         )
 
     @min_os_level("10.14.2")

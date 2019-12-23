@@ -33,7 +33,9 @@ class TestCGDisplayStream(TestCase):
         self.assertIsInstance(Quartz.kCGDisplayStreamYCbCrMatrix, unicode)
         self.assertIsInstance(Quartz.kCGDisplayStreamYCbCrMatrix_ITU_R_709_2, unicode)
         self.assertIsInstance(Quartz.kCGDisplayStreamYCbCrMatrix_ITU_R_601_4, unicode)
-        self.assertIsInstance(Quartz.kCGDisplayStreamYCbCrMatrix_SMPTE_240M_1995, unicode)
+        self.assertIsInstance(
+            Quartz.kCGDisplayStreamYCbCrMatrix_SMPTE_240M_1995, unicode
+        )
 
     @min_os_level("10.8")
     def testFunctions10_8(self):

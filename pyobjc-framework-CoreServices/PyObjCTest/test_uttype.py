@@ -19,15 +19,21 @@ class TestUTType(TestCase):
         self.assertIsInstance(CoreServices.kUTTagClassOSType, unicode)
 
     def testFunctions(self):
-        self.assertResultIsCFRetained(CoreServices.UTTypeCreatePreferredIdentifierForTag)
+        self.assertResultIsCFRetained(
+            CoreServices.UTTypeCreatePreferredIdentifierForTag
+        )
         v = CoreServices.UTTypeCreatePreferredIdentifierForTag(
-            CoreServices.kUTTagClassFilenameExtension, "py", CoreServices.kUTTypePlainText
+            CoreServices.kUTTagClassFilenameExtension,
+            "py",
+            CoreServices.kUTTypePlainText,
         )
         self.assertIsInstance(v, unicode)
 
         self.assertResultIsCFRetained(CoreServices.UTTypeCreateAllIdentifiersForTag)
         v = CoreServices.UTTypeCreateAllIdentifiersForTag(
-            CoreServices.kUTTagClassFilenameExtension, "py", CoreServices.kUTTypePlainText
+            CoreServices.kUTTagClassFilenameExtension,
+            "py",
+            CoreServices.kUTTypePlainText,
         )
         self.assertIsInstance(v, CoreServices.CFArrayRef)
         self.assertGreaterEqual(len(v), 1)

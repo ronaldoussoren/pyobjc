@@ -99,7 +99,9 @@ def createEPSPreviewImage(url):
     # corner of the bounding box.
     Quartz.CGContextBeginPath(bitmapContext)
     Quartz.CGContextMoveToPoint(bitmapContext, 0, 0)
-    Quartz.CGContextAddLineToPoint(bitmapContext, epsRect.size.width, epsRect.size.height)
+    Quartz.CGContextAddLineToPoint(
+        bitmapContext, epsRect.size.width, epsRect.size.height
+    )
     Quartz.CGContextMoveToPoint(bitmapContext, epsRect.size.width, 0)
     Quartz.CGContextAddLineToPoint(bitmapContext, 0, epsRect.size.height)
     Quartz.CGContextStrokePath(bitmapContext)

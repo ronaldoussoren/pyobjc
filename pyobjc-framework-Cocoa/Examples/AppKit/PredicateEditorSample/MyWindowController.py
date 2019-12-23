@@ -37,7 +37,9 @@ class MyWindowController(Cocoa.NSWindowController):
 
         # setup our Spotlight notifications
         nf = Cocoa.NSNotificationCenter.defaultCenter()
-        nf.addObserver_selector_name_object_(self, "queryNotification:", None, self.query)
+        nf.addObserver_selector_name_object_(
+            self, "queryNotification:", None, self.query
+        )
 
         # initialize our Spotlight query, sort by contact name
 

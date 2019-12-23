@@ -106,7 +106,9 @@ def workaround():
     resultType = objc.registerCFSignature(
         "SKSearchResultsRef", b"^{__SKSearchResults=}", resultID
     )
-    summaryType = objc.registerCFSignature("SKSummaryRef", b"^{__SKSummary=}", summaryID)
+    summaryType = objc.registerCFSignature(
+        "SKSummaryRef", b"^{__SKSummary=}", summaryID
+    )
 
     # For some reason SKDocumentGetTypeID doesn't return the right value
     # when the framework loader calls it the first time around,

@@ -6,7 +6,9 @@ import os
 
 class TestLSOpen(TestCase):
     def setUp(self):
-        self.path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dummy.txt")
+        self.path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "dummy.txt"
+        )
         fp = open(self.path, "w")
         fp.write("test contents")
         fp.close()
@@ -115,7 +117,9 @@ class TestLSOpen(TestCase):
         params = CoreServices.LSApplicationParameters(
             version=0,
             flags=CoreServices.kLSLaunchDefaults,
-            application=objc.FSRef.from_pathname("/Applications/Utilities/Terminal.app"),
+            application=objc.FSRef.from_pathname(
+                "/Applications/Utilities/Terminal.app"
+            ),
             asyncLaunchRefCon=None,
             environment=None,
             argv=[b"Terminal".decode("latin1")],

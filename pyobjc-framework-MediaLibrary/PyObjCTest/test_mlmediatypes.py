@@ -63,8 +63,12 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoEventsFolderTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLiPhotoSmartAlbumTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLiPhotoEventAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLiPhotoSmartAlbumTypeIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLiPhotoEventAlbumTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoLastImportAlbumTypeIdentifier, unicode
             )
@@ -74,12 +78,18 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoFlaggedAlbumTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLiPhotoFolderAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLiPhotoFolderAlbumTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoSubscribedAlbumTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLiPhotoFacesAlbumTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLiPhotoPlacesAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLiPhotoFacesAlbumTypeIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLiPhotoPlacesAlbumTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoPlacesCountryAlbumTypeIdentifier, unicode
             )
@@ -95,11 +105,15 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoFacebookAlbumTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLiPhotoFlickrAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLiPhotoFlickrAlbumTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoFacebookGroupTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLiPhotoFlickrGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLiPhotoFlickrGroupTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLiPhotoSlideShowAlbumTypeIdentifier, unicode
             )
@@ -110,8 +124,12 @@ if sys.maxsize > 2 ** 32:
                 MediaLibrary.MLiPhotoPhotoStreamAlbumTypeIdentifier, unicode
             )
 
-            self.assertIsInstance(MediaLibrary.MLApertureRootGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLApertureUserAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLApertureRootGroupTypeIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLApertureUserAlbumTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLApertureUserSmartAlbumTypeIdentifier, unicode
             )
@@ -145,8 +163,12 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 MediaLibrary.MLApertureSmugMugAlbumTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLApertureSlideShowTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLApertureAllPhotosTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLApertureSlideShowTypeIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLApertureAllPhotosTypeIdentifier, unicode
+            )
             self.assertIsInstance(MediaLibrary.MLApertureFlaggedTypeIdentifier, unicode)
             self.assertIsInstance(
                 MediaLibrary.MLApertureAllProjectsTypeIdentifier, unicode
@@ -190,14 +212,18 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertIsInstance(MediaLibrary.MLLogicRootGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLLogicBouncesGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLLogicBouncesGroupTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLLogicProjectsGroupTypeIdentifier, unicode
             )
             self.assertIsInstance(MediaLibrary.MLLogicProjectTypeIdentifier, unicode)
 
             self.assertIsInstance(MediaLibrary.MLiMovieRootGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLiMovieEventGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLiMovieEventGroupTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLiMovieProjectGroupTypeIdentifier, unicode
             )
@@ -207,9 +233,13 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 MediaLibrary.MLiMovieEventCalendarGroupTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLiMovieFolderGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLiMovieFolderGroupTypeIdentifier, unicode
+            )
 
-            self.assertIsInstance(MediaLibrary.MLFinalCutRootGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLFinalCutRootGroupTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLFinalCutEventGroupTypeIdentifier, unicode
             )
@@ -235,7 +265,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MediaLibrary.MLMediaObjectBitRateKey, unicode)
             self.assertIsInstance(MediaLibrary.MLMediaObjectSampleRateKey, unicode)
             self.assertIsInstance(MediaLibrary.MLMediaObjectChannelCountKey, unicode)
-            self.assertIsInstance(MediaLibrary.MLMediaObjectResolutionStringKey, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLMediaObjectResolutionStringKey, unicode
+            )
             self.assertIsInstance(MediaLibrary.MLMediaObjectCommentsKey, unicode)
             self.assertIsInstance(MediaLibrary.MLMediaObjectKeywordsKey, unicode)
             self.assertIsInstance(MediaLibrary.MLMediaObjectProtectedKey, unicode)
@@ -249,18 +281,26 @@ if sys.maxsize > 2 ** 32:
                 MediaLibrary.MLiTunesVideoPlaylistTypeIdentifier, unicode
             )
             self.assertIsInstance(MediaLibrary.MLPhotosRootGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLPhotosSharedGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLPhotosAlbumsGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosSharedGroupTypeIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosAlbumsGroupTypeIdentifier, unicode
+            )
             self.assertIsInstance(MediaLibrary.MLPhotosAlbumTypeIdentifier, unicode)
             self.assertIsInstance(MediaLibrary.MLPhotosFolderTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLPhotosSmartAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosSmartAlbumTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLPhotosPublishedAlbumTypeIdentifier, unicode
             )
             self.assertIsInstance(
                 MediaLibrary.MLPhotosAllMomentsGroupTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLPhotosMomentGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosMomentGroupTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLPhotosAllCollectionsGroupTypeIdentifier, unicode
             )
@@ -286,13 +326,21 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 MediaLibrary.MLPhotosPanoramasGroupTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLPhotosVideosGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLPhotosSloMoGroupTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosVideosGroupTypeIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosSloMoGroupTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLPhotosTimelapseGroupTypeIdentifier, unicode
             )
-            self.assertIsInstance(MediaLibrary.MLPhotosBurstGroupTypeIdentifier, unicode)
-            self.assertIsInstance(MediaLibrary.MLPhotosFacesAlbumTypeIdentifier, unicode)
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosBurstGroupTypeIdentifier, unicode
+            )
+            self.assertIsInstance(
+                MediaLibrary.MLPhotosFacesAlbumTypeIdentifier, unicode
+            )
             self.assertIsInstance(
                 MediaLibrary.MLPhotosAllPhotosAlbumTypeIdentifier, unicode
             )

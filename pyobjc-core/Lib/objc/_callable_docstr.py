@@ -239,7 +239,9 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
                     continue
 
                 if info.get("c_array_delimited_by_null"):
-                    result.append("arg%d: array (will be NULL terminated in C)" % (idx,))
+                    result.append(
+                        "arg%d: array (will be NULL terminated in C)" % (idx,)
+                    )
                     continue
 
                 result.append(
@@ -261,6 +263,7 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
 
 
 objc.options._callable_doc = describe_callable
+
 
 def callable_signature(callable):
     # Create an inspect.Signature for an PyObjC callable
@@ -285,10 +288,9 @@ def callable_signature(callable):
     parameters = []
     for idx, arg in enumerate(args):
         p_name = "arg%d" % (idx,)
-        parameters.append(
-            inspect.Parameter(p_name, inspect.Parameter.POSITIONAL_ONLY)
-        )
+        parameters.append(inspect.Parameter(p_name, inspect.Parameter.POSITIONAL_ONLY))
 
     return inspect.Signature(parameters)
+
 
 objc.options._callable_signature = callable_signature

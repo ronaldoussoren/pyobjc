@@ -28,7 +28,9 @@ class MyAppController(Cocoa.NSObject):
     def exportAsPNG_(self, sender):
         url = getURLToExport("png")
         if url:
-            AppDrawing.myExportCGDrawingAsPNG(url, self.theView.currentPrintableCommand())
+            AppDrawing.myExportCGDrawingAsPNG(
+                url, self.theView.currentPrintableCommand()
+            )
 
     @objc.IBAction
     def exportAsPDF_(self, sender):

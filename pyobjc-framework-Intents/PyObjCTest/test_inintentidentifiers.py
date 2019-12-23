@@ -15,7 +15,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(Intents.INSearchCallHistoryIntentIdentifier, unicode)
             self.assertIsInstance(Intents.INSendMessageIntentIdentifier, unicode)
             self.assertIsInstance(Intents.INSearchForMessagesIntentIdentifier, unicode)
-            self.assertIsInstance(Intents.INSetMessageAttributeIntentIdentifier, unicode)
+            self.assertIsInstance(
+                Intents.INSetMessageAttributeIntentIdentifier, unicode
+            )
 
 
 if __name__ == "__main__":

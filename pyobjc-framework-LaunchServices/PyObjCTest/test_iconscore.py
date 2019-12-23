@@ -79,7 +79,8 @@ class TestIconsCore(TestCase):
             LaunchServices.desktopIconResource, LaunchServices.kDesktopIconResource
         )
         self.assertEqual(
-            LaunchServices.openFolderIconResource, LaunchServices.kOpenFolderIconResource
+            LaunchServices.openFolderIconResource,
+            LaunchServices.kOpenFolderIconResource,
         )
         self.assertEqual(
             LaunchServices.genericHardDiskIconResource,
@@ -137,7 +138,8 @@ class TestIconsCore(TestCase):
             LaunchServices.kOwnedFolderIconResource,
         )
         self.assertEqual(
-            LaunchServices.dropFolderIconResource, LaunchServices.kDropFolderIconResource
+            LaunchServices.dropFolderIconResource,
+            LaunchServices.kDropFolderIconResource,
         )
         self.assertEqual(
             LaunchServices.sharedFolderIconResource,
@@ -224,7 +226,9 @@ class TestIconsCore(TestCase):
         )
         self.assertEqual(LaunchServices.kInternetLocationHTTPIcon, fourcc(b"ilht"))
         self.assertEqual(LaunchServices.kInternetLocationFTPIcon, fourcc(b"ilft"))
-        self.assertEqual(LaunchServices.kInternetLocationAppleShareIcon, fourcc(b"ilaf"))
+        self.assertEqual(
+            LaunchServices.kInternetLocationAppleShareIcon, fourcc(b"ilaf")
+        )
         self.assertEqual(
             LaunchServices.kInternetLocationAppleTalkZoneIcon, fourcc(b"ilat")
         )
@@ -261,7 +265,9 @@ class TestIconsCore(TestCase):
         self.assertEqual(LaunchServices.kAssistantsFolderIcon, cast_int(0x617374C4))
         self.assertEqual(LaunchServices.kColorSyncFolderIcon, fourcc(b"prof"))
         self.assertEqual(LaunchServices.kContextualMenuItemsFolderIcon, fourcc(b"cmnu"))
-        self.assertEqual(LaunchServices.kControlPanelDisabledFolderIcon, fourcc(b"ctrD"))
+        self.assertEqual(
+            LaunchServices.kControlPanelDisabledFolderIcon, fourcc(b"ctrD")
+        )
         self.assertEqual(LaunchServices.kControlPanelFolderIcon, fourcc(b"ctrl"))
         self.assertEqual(
             LaunchServices.kControlStripModulesFolderIcon, cast_int(0x736476C4)
@@ -288,12 +294,18 @@ class TestIconsCore(TestCase):
         self.assertEqual(
             LaunchServices.kScriptingAdditionsFolderIcon, cast_int(0xC4736372)
         )
-        self.assertEqual(LaunchServices.kSharedLibrariesFolderIcon, cast_int(0xC46C6962))
+        self.assertEqual(
+            LaunchServices.kSharedLibrariesFolderIcon, cast_int(0xC46C6962)
+        )
         self.assertEqual(LaunchServices.kScriptsFolderIcon, cast_int(0x736372C4))
-        self.assertEqual(LaunchServices.kShutdownItemsDisabledFolderIcon, fourcc(b"shdD"))
+        self.assertEqual(
+            LaunchServices.kShutdownItemsDisabledFolderIcon, fourcc(b"shdD")
+        )
         self.assertEqual(LaunchServices.kShutdownItemsFolderIcon, fourcc(b"shdf"))
         self.assertEqual(LaunchServices.kSpeakableItemsFolder, fourcc(b"spki"))
-        self.assertEqual(LaunchServices.kStartupItemsDisabledFolderIcon, fourcc(b"strD"))
+        self.assertEqual(
+            LaunchServices.kStartupItemsDisabledFolderIcon, fourcc(b"strD")
+        )
         self.assertEqual(LaunchServices.kStartupItemsFolderIcon, fourcc(b"strt"))
         self.assertEqual(
             LaunchServices.kSystemExtensionDisabledFolderIcon, fourcc(b"macD")
@@ -335,7 +347,9 @@ class TestIconsCore(TestCase):
         self.assertEqual(LaunchServices.kNoFilesIcon, fourcc(b"nfil"))
         self.assertEqual(LaunchServices.kNoFolderIcon, fourcc(b"nfld"))
         self.assertEqual(LaunchServices.kNoWriteIcon, fourcc(b"nwrt"))
-        self.assertEqual(LaunchServices.kProtectedApplicationFolderIcon, fourcc(b"papp"))
+        self.assertEqual(
+            LaunchServices.kProtectedApplicationFolderIcon, fourcc(b"papp")
+        )
         self.assertEqual(LaunchServices.kProtectedSystemFolderIcon, fourcc(b"psys"))
         self.assertEqual(LaunchServices.kRecentItemsIcon, fourcc(b"rcnt"))
         self.assertEqual(LaunchServices.kShortcutIcon, fourcc(b"shrt"))

@@ -9,7 +9,9 @@ class TestDataAPI(TestCase):
     @min_os_level("10.7")
     def test_constants(self):
         self.assertIsInstance(libdispatch.dispatch_data_empty, objc.objc_object)
-        self.assertIsInstance(libdispatch.DISPATCH_DATA_DESTRUCTOR_FREE, objc.objc_object)
+        self.assertIsInstance(
+            libdispatch.DISPATCH_DATA_DESTRUCTOR_FREE, objc.objc_object
+        )
 
         self.assertIs(libdispatch.DISPATCH_DATA_DESTRUCTOR_DEFAULT, None)
 
@@ -38,12 +40,18 @@ class TestDataAPI(TestCase):
 
         self.assertResultHasType(libdispatch.dispatch_data_create_subrange, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_create_subrange, 0, objc._C_ID)
-        self.assertArgHasType(libdispatch.dispatch_data_create_subrange, 1, objc._C_ULNG)
-        self.assertArgHasType(libdispatch.dispatch_data_create_subrange, 2, objc._C_ULNG)
+        self.assertArgHasType(
+            libdispatch.dispatch_data_create_subrange, 1, objc._C_ULNG
+        )
+        self.assertArgHasType(
+            libdispatch.dispatch_data_create_subrange, 2, objc._C_ULNG
+        )
 
         self.assertResultHasType(libdispatch.dispatch_data_apply, objc._C_BOOL)
         self.assertArgHasType(libdispatch.dispatch_data_apply, 0, objc._C_ID)
-        self.assertArgIsBlock(libdispatch.dispatch_data_apply, 1, dispatch_data_applier_t)
+        self.assertArgIsBlock(
+            libdispatch.dispatch_data_apply, 1, dispatch_data_applier_t
+        )
 
         self.assertResultHasType(libdispatch.dispatch_data_copy_region, objc._C_ID)
         self.assertArgHasType(libdispatch.dispatch_data_copy_region, 0, objc._C_ID)

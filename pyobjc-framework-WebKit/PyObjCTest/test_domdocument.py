@@ -4,7 +4,9 @@ from WebKit import *
 
 class TestDOMDocument(TestCase):
     def testMethods(self):
-        self.assertArgIsBOOL(DOMDocument.getMatchedCSSRules_pseudoElement_authorOnly_, 2)
+        self.assertArgIsBOOL(
+            DOMDocument.getMatchedCSSRules_pseudoElement_authorOnly_, 2
+        )
         self.assertArgIsBOOL(DOMDocument.importNode__, 1)
 
         self.assertArgIsBOOL(

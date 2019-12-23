@@ -76,7 +76,9 @@ class TestNSDictionaryInterface(TestCase):
         s = {"c", "b"} ^ d.keys()
         self.assertEqual(s, {"a", "c"})
 
-        self.assertEqual(repr(self.createDictionary(a=1).keys()), "<nsdict_keys(['a'])>")
+        self.assertEqual(
+            repr(self.createDictionary(a=1).keys()), "<nsdict_keys(['a'])>"
+        )
 
     def testValues(self):
         d = self.createDictionary()
@@ -288,15 +290,21 @@ class TestNSDictionaryInterface(TestCase):
 
     def testDictviewMixedSetOperations(self):
         # Just a few for .keys()
-        self.assertTrue(self.dictClass().dictionaryWithDictionary_({1: 1}).keys() == {1})
-        self.assertTrue({1} == self.dictClass().dictionaryWithDictionary_({1: 1}).keys())
+        self.assertTrue(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).keys() == {1}
+        )
+        self.assertTrue(
+            {1} == self.dictClass().dictionaryWithDictionary_({1: 1}).keys()
+        )
         self.assertEqual(
             self.dictClass().dictionaryWithDictionary_({1: 1}).keys() | {2}, {1, 2}
         )
         self.assertEqual(
             {2} | self.dictClass().dictionaryWithDictionary_({1: 1}).keys(), {1, 2}
         )
-        self.assertFalse(self.dictClass().dictionaryWithDictionary_({1: 1}).keys() == [1])
+        self.assertFalse(
+            self.dictClass().dictionaryWithDictionary_({1: 1}).keys() == [1]
+        )
 
         # And a few for .items()
         self.assertTrue(
@@ -306,10 +314,12 @@ class TestNSDictionaryInterface(TestCase):
             {(1, 1)} == self.dictClass().dictionaryWithDictionary_({1: 1}).items()
         )
         self.assertEqual(
-            self.dictClass().dictionaryWithDictionary_({1: 1}).items() | {2}, {(1, 1), 2}
+            self.dictClass().dictionaryWithDictionary_({1: 1}).items() | {2},
+            {(1, 1), 2},
         )
         self.assertEqual(
-            {2} | self.dictClass().dictionaryWithDictionary_({1: 1}).items(), {(1, 1), 2}
+            {2} | self.dictClass().dictionaryWithDictionary_({1: 1}).items(),
+            {(1, 1), 2},
         )
         self.assertFalse(
             self.dictClass().dictionaryWithDictionary_({1: 1}).items() == [(1, 1)]

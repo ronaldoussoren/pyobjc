@@ -28,8 +28,12 @@ class TestAVSpeechSynthesis(TestCase):
         self.assertIsInstance(AVFoundation.AVSpeechUtteranceMaximumSpeechRate, float)
         self.assertIsInstance(AVFoundation.AVSpeechUtteranceDefaultSpeechRate, float)
 
-        self.assertIsInstance(AVFoundation.AVSpeechSynthesisVoiceIdentifierAlex, unicode)
-        self.assertIsInstance(AVFoundation.AVSpeechSynthesisIPANotationAttribute, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVSpeechSynthesisVoiceIdentifierAlex, unicode
+        )
+        self.assertIsInstance(
+            AVFoundation.AVSpeechSynthesisIPANotationAttribute, unicode
+        )
 
     def testMethods(self):
         self.assertArgHasType(
@@ -42,8 +46,12 @@ class TestAVSpeechSynthesis(TestCase):
     def testMethods10_14(self):
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isSpeaking)
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.isPaused)
-        self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.stopSpeakingAtBoundary_)
-        self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.pauseSpeakingAtBoundary_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVSpeechSynthesizer.stopSpeakingAtBoundary_
+        )
+        self.assertResultIsBOOL(
+            AVFoundation.AVSpeechSynthesizer.pauseSpeakingAtBoundary_
+        )
         self.assertResultIsBOOL(AVFoundation.AVSpeechSynthesizer.continueSpeaking)
 
     @min_os_level("10.15")

@@ -17,7 +17,9 @@ class TestAVUnitSampler(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioUnitSampler.loadInstrumentAtURL_error_
         )
-        self.assertArgIsOut(AVFoundation.AVAudioUnitSampler.loadInstrumentAtURL_error_, 1)
+        self.assertArgIsOut(
+            AVFoundation.AVAudioUnitSampler.loadInstrumentAtURL_error_, 1
+        )
 
         self.assertResultIsBOOL(
             AVFoundation.AVAudioUnitSampler.loadAudioFilesAtURLs_error_

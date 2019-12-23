@@ -30,7 +30,7 @@ class TestICCameraDevice(TestCase):
         self.assertIsInstance(ICDeleteAfterSuccessfulDownload, unicode)
         self.assertIsInstance(ICDownloadSidecarFiles, unicode)
 
-    @min_os_level('10.15')
+    @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(ICDeleteSuccessful, unicode)
         self.assertIsInstance(ICDeleteCanceled, unicode)
@@ -53,7 +53,9 @@ class TestICCameraDevice(TestCase):
 
     def testProtocolMethods(self):
         self.assertArgHasType(
-            TestICCameraDeviceHelper.didDownloadFile_error_options_contextInfo_, 3, b"^v"
+            TestICCameraDeviceHelper.didDownloadFile_error_options_contextInfo_,
+            3,
+            b"^v",
         )
         self.assertArgHasType(
             TestICCameraDeviceHelper.didReceiveDownloadProgressForFile_downloadedBytes_maxBytes_,

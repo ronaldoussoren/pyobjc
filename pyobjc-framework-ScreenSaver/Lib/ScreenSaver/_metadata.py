@@ -52,7 +52,11 @@ r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
     r(b"ScreenSaverView", b"hasConfigureSheet", {"retval": {"type": "Z"}})
-    r(b"ScreenSaverView", b"initWithFrame:isPreview:", {"arguments": {3: {"type": "Z"}}})
+    r(
+        b"ScreenSaverView",
+        b"initWithFrame:isPreview:",
+        {"arguments": {3: {"type": "Z"}}},
+    )
     r(b"ScreenSaverView", b"isAnimating", {"retval": {"type": "Z"}})
     r(b"ScreenSaverView", b"isPreview", {"retval": {"type": "Z"}})
     r(b"ScreenSaverView", b"performGammaFade", {"retval": {"type": "Z"}})

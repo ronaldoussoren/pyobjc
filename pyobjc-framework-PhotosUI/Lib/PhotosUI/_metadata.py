@@ -59,7 +59,11 @@ try:
         b"canHandleAdjustmentData:",
         {"required": True, "retval": {"type": "Z"}, "arguments": {2: {"type": b"@"}}},
     )
-    r(b"NSObject", b"cancelContentEditing", {"required": True, "retval": {"type": b"v"}})
+    r(
+        b"NSObject",
+        b"cancelContentEditing",
+        {"required": True, "retval": {"type": b"v"}},
+    )
     r(
         b"NSObject",
         b"extensionWillDiscardDataSource",

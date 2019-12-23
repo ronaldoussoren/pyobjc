@@ -40,7 +40,9 @@ class HotKeyApp(Cocoa.NSApplication):
             and theEvent.subtype() == kEventHotKeyPressedSubtype
         ):
             self.activateIgnoringOtherApps_(True)
-            Cocoa.NSRunAlertPanel("Hot Key Pressed", "Hot Key Pressed", None, None, None)
+            Cocoa.NSRunAlertPanel(
+                "Hot Key Pressed", "Hot Key Pressed", None, None, None
+            )
         super(HotKeyApp, self).sendEvent_(theEvent)
 
 

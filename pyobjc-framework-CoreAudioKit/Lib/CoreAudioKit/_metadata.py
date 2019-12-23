@@ -55,9 +55,17 @@ try:
         b"initWithWidth:height:hostHasController:",
         {"arguments": {4: {"type": b"Z"}}},
     )
-    r(b"AUGenericView", b"setShowsExpertParameters:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"AUGenericView",
+        b"setShowsExpertParameters:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
     r(b"AUGenericView", b"showsExpertParameters", {"retval": {"type": b"Z"}})
-    r(b"CANetworkBrowserWindowController", b"isAVBSupported", {"retval": {"type": b"Z"}})
+    r(
+        b"CANetworkBrowserWindowController",
+        b"isAVBSupported",
+        {"retval": {"type": b"Z"}},
+    )
     r(
         b"NSObject",
         b"customViewPersistentData",

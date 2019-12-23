@@ -32,7 +32,9 @@ class TestNSFileProviderManager(TestCase):
             FileProvider.NSFileProviderManager.removeDomain_completionHandler_, 1, b"v@"
         )
         self.assertArgIsBlock(
-            FileProvider.NSFileProviderManager.getDomainsWithCompletionHandler_, 0, b"v@@"
+            FileProvider.NSFileProviderManager.getDomainsWithCompletionHandler_,
+            0,
+            b"v@@",
         )
         self.assertArgIsBlock(
             FileProvider.NSFileProviderManager.removeAllDomainsWithCompletionHandler_,

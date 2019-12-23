@@ -25,7 +25,9 @@ class TestCVImageBuffer(TestCase):
         self.assertIsInstance(kCVImageBufferFieldDetailSpatialFirstLineEarly, unicode)
         self.assertIsInstance(kCVImageBufferFieldDetailSpatialFirstLineLate, unicode)
         self.assertIsInstance(kCVImageBufferPixelAspectRatioKey, unicode)
-        self.assertIsInstance(kCVImageBufferPixelAspectRatioHorizontalSpacingKey, unicode)
+        self.assertIsInstance(
+            kCVImageBufferPixelAspectRatioHorizontalSpacingKey, unicode
+        )
         self.assertIsInstance(kCVImageBufferPixelAspectRatioVerticalSpacingKey, unicode)
         self.assertIsInstance(kCVImageBufferDisplayDimensionsKey, unicode)
         self.assertIsInstance(kCVImageBufferDisplayWidthKey, unicode)
@@ -107,7 +109,9 @@ class TestCVImageBuffer(TestCase):
     def testConstants10_15(self):
         self.assertIsInstance(kCVImageBufferAlphaChannelModeKey, unicode)
         self.assertIsInstance(kCVImageBufferAlphaChannelMode_StraightAlpha, unicode)
-        self.assertIsInstance(kCVImageBufferAlphaChannelMode_PremultipliedAlpha, unicode)
+        self.assertIsInstance(
+            kCVImageBufferAlphaChannelMode_PremultipliedAlpha, unicode
+        )
 
     def testFunctions(self):
         self.assertResultHasType(CVImageBufferGetEncodedSize, CGSize.__typestr__)

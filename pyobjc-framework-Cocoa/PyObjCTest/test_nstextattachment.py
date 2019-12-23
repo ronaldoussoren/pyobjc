@@ -30,7 +30,9 @@ class TestNSTextAttachmentHelper(NSObject):
     def wantsToTrackMouseForEvent_inRect_ofView_atCharacterIndex_(self, ev, fr, vi, i):
         return 1
 
-    def trackMouse_inRect_ofView_atCharacterIndex_untilMouseUp_(self, ev, fr, vi, i, fl):
+    def trackMouse_inRect_ofView_atCharacterIndex_untilMouseUp_(
+        self, ev, fr, vi, i, fl
+    ):
         return 1
 
     def cellFrameForTextContainer_proposedLineFragment_glyphPosition_characterIndex_(
@@ -110,7 +112,9 @@ class TestNSTextAttachment(TestCase):
         self.assertResultIsBOOL(TestNSTextAttachmentHelper.wantsToTrackMouse)
         self.assertArgIsBOOL(TestNSTextAttachmentHelper.highlight_withFrame_inView_, 0)
         self.assertArgHasType(
-            TestNSTextAttachmentHelper.highlight_withFrame_inView_, 1, NSRect.__typestr__
+            TestNSTextAttachmentHelper.highlight_withFrame_inView_,
+            1,
+            NSRect.__typestr__,
         )
         self.assertResultIsBOOL(
             TestNSTextAttachmentHelper.trackMouse_inRect_ofView_untilMouseUp_
@@ -123,7 +127,9 @@ class TestNSTextAttachment(TestCase):
         self.assertArgIsBOOL(
             TestNSTextAttachmentHelper.trackMouse_inRect_ofView_untilMouseUp_, 3
         )
-        self.assertResultHasType(TestNSTextAttachmentHelper.cellSize, NSSize.__typestr__)
+        self.assertResultHasType(
+            TestNSTextAttachmentHelper.cellSize, NSSize.__typestr__
+        )
         self.assertResultHasType(
             TestNSTextAttachmentHelper.cellBaselineOffset, NSPoint.__typestr__
         )

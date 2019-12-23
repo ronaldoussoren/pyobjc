@@ -10,7 +10,11 @@ from CalendarStore import (
     CalCalendarsChangedNotification,
     CalEventsChangedExternallyNotification,
 )
-from CalendarStore import CalEventsChangedNotification, CalPriorityHigh, CalPriorityMedium
+from CalendarStore import (
+    CalEventsChangedNotification,
+    CalPriorityHigh,
+    CalPriorityMedium,
+)
 from CalendarStore import (
     CalTasksChangedExternallyNotification,
     CalTasksChangedNotification,

@@ -188,7 +188,9 @@ def drawAlphaRects(context):
 
     # Move the origin of coordinates to a location that allows
     # the drawing to be within the window.
-    Quartz.CGContextTranslateCTM(context, 2 * ourRect.size.width, 2 * ourRect.size.height)
+    Quartz.CGContextTranslateCTM(
+        context, 2 * ourRect.size.width, 2 * ourRect.size.height
+    )
 
     # Set the fill color to a red color.
     Quartz.CGContextSetFillColorWithColor(context, myGetRedColor())

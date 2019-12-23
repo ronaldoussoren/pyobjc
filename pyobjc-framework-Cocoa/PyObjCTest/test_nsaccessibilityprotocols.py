@@ -320,7 +320,8 @@ class TestNSAccessibilityProtocols(TestCase):
             objc.protocolNamed("NSAccessibilityStaticText"), objc.formal_protocol
         )
         self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityNavigableStaticText"), objc.formal_protocol
+            objc.protocolNamed("NSAccessibilityNavigableStaticText"),
+            objc.formal_protocol,
         )
         self.assertIsInstance(
             objc.protocolNamed("NSAccessibilityProgressIndicator"), objc.formal_protocol
@@ -335,7 +336,8 @@ class TestNSAccessibilityProtocols(TestCase):
             objc.protocolNamed("NSAccessibilityImage"), objc.formal_protocol
         )
         self.assertIsInstance(
-            objc.protocolNamed("NSAccessibilityContainsTransientUI"), objc.formal_protocol
+            objc.protocolNamed("NSAccessibilityContainsTransientUI"),
+            objc.formal_protocol,
         )
         self.assertIsInstance(
             objc.protocolNamed("NSAccessibilityTable"), objc.formal_protocol
@@ -355,7 +357,9 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertIsInstance(
             objc.protocolNamed("NSAccessibilityLayoutItem"), objc.formal_protocol
         )
-        self.assertIsInstance(objc.protocolNamed("NSAccessibility"), objc.formal_protocol)
+        self.assertIsInstance(
+            objc.protocolNamed("NSAccessibility"), objc.formal_protocol
+        )
 
     @min_sdk_level("10.13")
     def testProtocolObjects10_13(self):
@@ -364,7 +368,9 @@ class TestNSAccessibilityProtocols(TestCase):
         )
 
     def testProtocols(self):
-        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityFocused)
+        self.assertResultIsBOOL(
+            TestNSAccessibilityProtocolsHelper.isAccessibilityFocused
+        )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityFrame, NSRect.__typestr__
         )
@@ -463,7 +469,9 @@ class TestNSAccessibilityProtocols(TestCase):
             NSRect.__typestr__,
         )
 
-        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityElement)
+        self.assertResultIsBOOL(
+            TestNSAccessibilityProtocolsHelper.isAccessibilityElement
+        )
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityElement_, 0
         )
@@ -475,7 +483,9 @@ class TestNSAccessibilityProtocols(TestCase):
             0,
             NSRect.__typestr__,
         )
-        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityFocused)
+        self.assertResultIsBOOL(
+            TestNSAccessibilityProtocolsHelper.isAccessibilityFocused
+        )
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityFocused_, 0
         )
@@ -489,7 +499,8 @@ class TestNSAccessibilityProtocols(TestCase):
             NSPoint.__typestr__,
         )
         self.assertResultHasType(
-            TestNSAccessibilityProtocolsHelper.accessibilityOrientation, objc._C_NSInteger
+            TestNSAccessibilityProtocolsHelper.accessibilityOrientation,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityOrientation_,
@@ -508,11 +519,15 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityExpanded_, 0
         )
-        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityEdited)
+        self.assertResultIsBOOL(
+            TestNSAccessibilityProtocolsHelper.isAccessibilityEdited
+        )
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityEdited_, 0
         )
-        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityEnabled)
+        self.assertResultIsBOOL(
+            TestNSAccessibilityProtocolsHelper.isAccessibilityEnabled
+        )
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityEnabled_, 0
         )
@@ -528,7 +543,9 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityAlternateUIVisible_, 0
         )
-        self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityHidden)
+        self.assertResultIsBOOL(
+            TestNSAccessibilityProtocolsHelper.isAccessibilityHidden
+        )
         self.assertArgIsBOOL(
             TestNSAccessibilityProtocolsHelper.setAccessibilityHidden_, 0
         )
@@ -634,10 +651,13 @@ class TestNSAccessibilityProtocols(TestCase):
             TestNSAccessibilityProtocolsHelper.accessibilityLabelValue, objc._C_FLT
         )
         self.assertArgHasType(
-            TestNSAccessibilityProtocolsHelper.setAccessibilityLabelValue_, 0, objc._C_FLT
+            TestNSAccessibilityProtocolsHelper.setAccessibilityLabelValue_,
+            0,
+            objc._C_FLT,
         )
         self.assertResultHasType(
-            TestNSAccessibilityProtocolsHelper.accessibilityColumnCount, objc._C_NSInteger
+            TestNSAccessibilityProtocolsHelper.accessibilityColumnCount,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityColumnCount_,
@@ -821,9 +841,13 @@ class TestNSAccessibilityProtocols(TestCase):
             objc._C_NSInteger,
         )
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityModal)
-        self.assertArgIsBOOL(TestNSAccessibilityProtocolsHelper.setAccessibilityModal_, 0)
+        self.assertArgIsBOOL(
+            TestNSAccessibilityProtocolsHelper.setAccessibilityModal_, 0
+        )
         self.assertResultIsBOOL(TestNSAccessibilityProtocolsHelper.isAccessibilityMain)
-        self.assertArgIsBOOL(TestNSAccessibilityProtocolsHelper.setAccessibilityMain_, 0)
+        self.assertArgIsBOOL(
+            TestNSAccessibilityProtocolsHelper.setAccessibilityMain_, 0
+        )
         self.assertResultIsBOOL(
             TestNSAccessibilityProtocolsHelper.isAccessibilityMinimized
         )

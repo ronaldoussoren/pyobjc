@@ -17,7 +17,8 @@ class TestVTPixelTransferProperties(TestCase):
             VideoToolbox.kVTPixelTransferPropertyKey_DestinationCleanAperture, unicode
         )
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationPixelAspectRatio, unicode
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationPixelAspectRatio,
+            unicode,
         )
         self.assertIsInstance(
             VideoToolbox.kVTPixelTransferPropertyKey_DownsamplingMode, unicode
@@ -28,7 +29,8 @@ class TestVTPixelTransferProperties(TestCase):
             VideoToolbox.kVTPixelTransferPropertyKey_DestinationColorPrimaries, unicode
         )
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationTransferFunction, unicode
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationTransferFunction,
+            unicode,
         )
         self.assertIsInstance(
             VideoToolbox.kVTPixelTransferPropertyKey_DestinationICCProfile, unicode
@@ -36,7 +38,9 @@ class TestVTPixelTransferProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTPixelTransferPropertyKey_DestinationYCbCrMatrix, unicode
         )
-        self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_RealTime, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTPixelTransferPropertyKey_RealTime, unicode
+        )
 
 
 if __name__ == "__main__":

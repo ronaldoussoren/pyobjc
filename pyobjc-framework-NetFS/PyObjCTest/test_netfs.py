@@ -6,7 +6,9 @@ class TestNetFS(TestCase):
     def testConstants(self):
         self.assertEqual(NetFS.kNetFSAuthenticationInfoKey, "AuthenticationInfo")
         self.assertEqual(NetFS.kNetFSServerDisplayNameKey, "ServerDisplayName")
-        self.assertEqual(NetFS.kNetFSSupportsChangePasswordKey, "SupportsChangePassword")
+        self.assertEqual(
+            NetFS.kNetFSSupportsChangePasswordKey, "SupportsChangePassword"
+        )
         self.assertEqual(NetFS.kNetFSSupportsGuestKey, "SupportsGuest")
         self.assertEqual(NetFS.kNetFSSupportsKerberosKey, "SupportsKerberos")
         self.assertEqual(NetFS.kNetFSGuestOnlyKey, "GuestOnly")
@@ -38,7 +40,8 @@ class TestNetFS(TestCase):
         self.assertEqual(NetFS.kNetFSAllowLoopbackKey, "AllowLoopback")
         self.assertEqual(NetFS.kNetFSUseKerberosKey, "Kerberos")
         self.assertEqual(
-            NetFS.kNetFSMountedWithAuthenticationInfoKey, "MountedWithAuthenticationInfo"
+            NetFS.kNetFSMountedWithAuthenticationInfoKey,
+            "MountedWithAuthenticationInfo",
         )
         self.assertEqual(NetFS.kNetFSMountedByUserKey, "MountedByUser")
         self.assertEqual(NetFS.kNetFSMountedByGuestKey, "MountedByGuest")

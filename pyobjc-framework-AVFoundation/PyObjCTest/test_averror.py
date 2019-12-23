@@ -71,7 +71,9 @@ class TestAVError(TestCase):
         self.assertEqual(AVFoundation.AVErrorDecoderTemporarilyUnavailable, -11839)
         self.assertEqual(AVFoundation.AVErrorEncoderTemporarilyUnavailable, -11840)
         self.assertEqual(AVFoundation.AVErrorInvalidVideoComposition, -11841)
-        self.assertEqual(AVFoundation.AVErrorReferenceForbiddenByReferencePolicy, -11842)
+        self.assertEqual(
+            AVFoundation.AVErrorReferenceForbiddenByReferencePolicy, -11842
+        )
         self.assertEqual(AVFoundation.AVErrorInvalidOutputURLPathExtension, -11843)
         self.assertEqual(AVFoundation.AVErrorScreenCaptureFailed, -11844)
         self.assertEqual(AVFoundation.AVErrorDisplayWasDisabled, -11845)
@@ -102,7 +104,9 @@ class TestAVError(TestCase):
             AVFoundation.AVErrorNoCompatibleAlternatesForExternalDisplay, -11868
         )
         self.assertEqual(AVFoundation.AVErrorNoSourceTrack, -11869)
-        self.assertEqual(AVFoundation.AVErrorExternalPlaybackNotSupportedForAsset, -11870)
+        self.assertEqual(
+            AVFoundation.AVErrorExternalPlaybackNotSupportedForAsset, -11870
+        )
         self.assertEqual(AVFoundation.AVErrorOperationNotSupportedForPreset, -11871)
 
     @min_os_level("10.10")

@@ -12,7 +12,9 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(
                 CryptoTokenKit.TKTokenKeychainKey.canPerformKeyExchange
             )
-            self.assertResultIsBOOL(CryptoTokenKit.TKTokenKeychainKey.isSuitableForLogin)
+            self.assertResultIsBOOL(
+                CryptoTokenKit.TKTokenKeychainKey.isSuitableForLogin
+            )
 
             self.assertArgIsBOOL(CryptoTokenKit.TKTokenKeychainKey.setCanDecrypt_, 0)
             self.assertArgIsBOOL(CryptoTokenKit.TKTokenKeychainKey.setCanSign_, 0)

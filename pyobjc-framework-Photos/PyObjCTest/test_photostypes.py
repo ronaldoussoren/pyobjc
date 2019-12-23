@@ -63,17 +63,25 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumFavorites, 203)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumTimelapses, 204)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumAllHidden, 205)
-            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumRecentlyAdded, 206)
+            self.assertEqual(
+                Photos.PHAssetCollectionSubtypeSmartAlbumRecentlyAdded, 206
+            )
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumBursts, 207)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumSlomoVideos, 208)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUserLibrary, 209)
-            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumSelfPortraits, 210)
+            self.assertEqual(
+                Photos.PHAssetCollectionSubtypeSmartAlbumSelfPortraits, 210
+            )
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumScreenshots, 211)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumDepthEffect, 212)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLivePhotos, 213)
             self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumAnimated, 214)
-            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLongExposures, 215)
-            self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUnableToUpload, 216)
+            self.assertEqual(
+                Photos.PHAssetCollectionSubtypeSmartAlbumLongExposures, 215
+            )
+            self.assertEqual(
+                Photos.PHAssetCollectionSubtypeSmartAlbumUnableToUpload, 216
+            )
             self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
             self.assertEqual(Photos.PHAssetEditOperationDelete, 1)

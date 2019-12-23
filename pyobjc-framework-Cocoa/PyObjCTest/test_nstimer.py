@@ -99,7 +99,9 @@ class TestNSTimer(TestCase):
         )
 
         self.assertArgIsBOOL(NSTimer.initWithFireDate_interval_repeats_block_, 2)
-        self.assertArgIsBlock(NSTimer.initWithFireDate_interval_repeats_block_, 3, b"v@")
+        self.assertArgIsBlock(
+            NSTimer.initWithFireDate_interval_repeats_block_, 3, b"v@"
+        )
 
 
 if __name__ == "__main__":

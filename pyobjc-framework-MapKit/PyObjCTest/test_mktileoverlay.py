@@ -16,7 +16,9 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(MapKit.MKTileOverlay.canReplaceMapContent)
             self.assertArgIsBOOL(MapKit.MKTileOverlay.setCanReplaceMapContent_, 0)
 
-            self.assertArgIsBlock(MapKit.MKTileOverlay.loadTileAtPath_result_, 1, b"v@@")
+            self.assertArgIsBlock(
+                MapKit.MKTileOverlay.loadTileAtPath_result_, 1, b"v@@"
+            )
 
         @min_os_level("10.9")
         def testStructs(self):

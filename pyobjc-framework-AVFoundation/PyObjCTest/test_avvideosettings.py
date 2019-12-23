@@ -26,7 +26,9 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(
             AVFoundation.AVVideoCleanApertureHorizontalOffsetKey, unicode
         )
-        self.assertIsInstance(AVFoundation.AVVideoCleanApertureVerticalOffsetKey, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVVideoCleanApertureVerticalOffsetKey, unicode
+        )
         self.assertIsInstance(AVFoundation.AVVideoScalingModeKey, unicode)
         self.assertIsInstance(AVFoundation.AVVideoScalingModeFit, unicode)
         self.assertIsInstance(AVFoundation.AVVideoScalingModeResize, unicode)
@@ -67,11 +69,17 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(
             AVFoundation.AVVideoProfileLevelH264BaselineAutoLevel, unicode
         )
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264MainAutoLevel, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVVideoProfileLevelH264MainAutoLevel, unicode
+        )
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High40, unicode)
         self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High41, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264HighAutoLevel, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoMaxKeyFrameIntervalDurationKey, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVVideoProfileLevelH264HighAutoLevel, unicode
+        )
+        self.assertIsInstance(
+            AVFoundation.AVVideoMaxKeyFrameIntervalDurationKey, unicode
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):
@@ -108,7 +116,9 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoCodecHEVC, unicode)
         self.assertIsInstance(AVFoundation.AVVideoDecompressionPropertiesKey, unicode)
         self.assertIsInstance(AVFoundation.AVVideoApertureModeCleanAperture, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoApertureModeProductionAperture, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVVideoApertureModeProductionAperture, unicode
+        )
         self.assertIsInstance(AVFoundation.AVVideoApertureModeEncodedPixels, unicode)
 
     @min_os_level("10.15")

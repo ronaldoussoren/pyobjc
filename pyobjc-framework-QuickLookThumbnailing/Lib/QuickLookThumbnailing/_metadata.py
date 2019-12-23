@@ -120,7 +120,10 @@ try:
                 3: {
                     "callable": {
                         "retval": {"type": b"Z"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"^{CGContext=}"}},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"^{CGContext=}"},
+                        },
                     }
                 }
             }

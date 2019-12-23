@@ -29,7 +29,9 @@ class TestVTDecompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTDecompressionPropertyKey_ThreadCount, unicode
         )
-        self.assertIsInstance(VideoToolbox.kVTDecompressionPropertyKey_FieldMode, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_FieldMode, unicode
+        )
         self.assertIsInstance(
             VideoToolbox.kVTDecompressionProperty_FieldMode_BothFields, unicode
         )
@@ -49,7 +51,8 @@ class TestVTDecompressionProperties(TestCase):
             VideoToolbox.kVTDecompressionPropertyKey_DeinterlaceMode, unicode
         )
         self.assertIsInstance(
-            VideoToolbox.kVTDecompressionProperty_DeinterlaceMode_VerticalFilter, unicode
+            VideoToolbox.kVTDecompressionProperty_DeinterlaceMode_VerticalFilter,
+            unicode,
         )
         self.assertIsInstance(
             VideoToolbox.kVTDecompressionProperty_DeinterlaceMode_Temporal, unicode
@@ -58,7 +61,9 @@ class TestVTDecompressionProperties(TestCase):
             VideoToolbox.kVTDecompressionPropertyKey_ReducedResolutionDecode, unicode
         )
         self.assertIsInstance(VideoToolbox.kVTDecompressionResolutionKey_Width, unicode)
-        self.assertIsInstance(VideoToolbox.kVTDecompressionResolutionKey_Height, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionResolutionKey_Height, unicode
+        )
         self.assertIsInstance(
             VideoToolbox.kVTDecompressionPropertyKey_ReducedCoefficientDecode, unicode
         )
@@ -122,7 +127,9 @@ class TestVTDecompressionProperties(TestCase):
 
     @min_os_level("10.10")
     def test_constants10_10(self):
-        self.assertIsInstance(VideoToolbox.kVTDecompressionPropertyKey_RealTime, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_RealTime, unicode
+        )
 
     @min_os_level("10.13")
     def test_constants10_13(self):

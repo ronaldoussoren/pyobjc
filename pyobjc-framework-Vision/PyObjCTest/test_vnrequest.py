@@ -20,7 +20,9 @@ if sys.maxsize >= 2 ** 32:
     class TestVNRequest(TestCase):
         @min_os_level("10.13")
         def testMethods10_13(self):
-            self.assertArgIsBlock(Vision.VNRequest.initWithCompletionHandler_, 0, b"v@@")
+            self.assertArgIsBlock(
+                Vision.VNRequest.initWithCompletionHandler_, 0, b"v@@"
+            )
             self.assertResultIsBOOL(Vision.VNRequest.preferBackgroundProcessing)
             self.assertArgIsBOOL(Vision.VNRequest.setPreferBackgroundProcessing_, 0)
             self.assertResultIsBOOL(Vision.VNRequest.usesCPUOnly)

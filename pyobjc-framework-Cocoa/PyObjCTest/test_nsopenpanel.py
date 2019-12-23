@@ -57,7 +57,6 @@ class TestOpenPanel(TestCase):
         self.assertResultIsBOOL(NSOpenPanel.canDownloadUbiquitousContents)
         self.assertArgIsBOOL(NSOpenPanel.setCanDownloadUbiquitousContents_, 0)
 
-
     def test_issue_272(self):
         panel = NSOpenPanel.openPanel()
         panel.setAllowedFileTypes_([".html", ".txt"])

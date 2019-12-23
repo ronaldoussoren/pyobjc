@@ -104,7 +104,9 @@ functions = {
         "",
         {"retval": {"already_cfretained": True}},
     ),
-    "SCNetworkProtocolGetConfiguration": (b"^{__CFDictionary=}^{__SCNetworkProtocol=}",),
+    "SCNetworkProtocolGetConfiguration": (
+        b"^{__CFDictionary=}^{__SCNetworkProtocol=}",
+    ),
     "SCDynamicStoreCreateWithOptions": (
         sel32or64(
             b"^{__SCDynamicStore=}^{__CFAllocator=}^{__CFString=}^{__CFDictionary=}^?^{?=i^v^?^?^?}",
@@ -132,7 +134,9 @@ functions = {
         "",
         {"retval": {"already_cfretained": True}},
     ),
-    "SCNetworkServiceGetInterface": (b"^{__SCNetworkInterface=}^{__SCNetworkService=}",),
+    "SCNetworkServiceGetInterface": (
+        b"^{__SCNetworkInterface=}^{__SCNetworkService=}",
+    ),
     "SCDynamicStoreKeyCreateProxies": (
         b"^{__CFString=}^{__CFAllocator=}",
         "",
@@ -301,7 +305,8 @@ functions = {
     "SCPreferencesSynchronize": (b"v^{__SCPreferences=}",),
     "SCPreferencesSetComputerName": (
         sel32or64(
-            b"Z^{__SCPreferences=}^{__CFString=}L", b"Z^{__SCPreferences=}^{__CFString=}I"
+            b"Z^{__SCPreferences=}^{__CFString=}L",
+            b"Z^{__SCPreferences=}^{__CFString=}I",
         ),
     ),
     "SCVLANInterfaceRemove": (b"Z^{__SCNetworkInterface=}",),
@@ -475,7 +480,9 @@ functions = {
     "SCVLANInterfaceSetPhysicalInterfaceAndTag": (
         b"Z^{__SCNetworkInterface=}^{__SCNetworkInterface=}^{__CFNumber=}",
     ),
-    "SCNetworkProtocolSetConfiguration": (b"Z^{__SCNetworkProtocol=}^{__CFDictionary=}",),
+    "SCNetworkProtocolSetConfiguration": (
+        b"Z^{__SCNetworkProtocol=}^{__CFDictionary=}",
+    ),
     "SCBondInterfaceGetOptions": (b"^{__CFDictionary=}^{__SCNetworkInterface=}",),
     "SCBondInterfaceCopyStatus": (
         b"^{__SCBondStatus=}^{__SCNetworkInterface=}",
@@ -718,7 +725,12 @@ cftypes = [
         "SCNetworkReachabilityGetTypeID",
         None,
     ),
-    ("SCNetworkServiceRef", b"^{__SCNetworkService=}", "SCNetworkServiceGetTypeID", None),
+    (
+        "SCNetworkServiceRef",
+        b"^{__SCNetworkService=}",
+        "SCNetworkServiceGetTypeID",
+        None,
+    ),
     ("SCNetworkSetRef", b"^{__SCNetworkSet=}", "SCNetworkSetGetTypeID", None),
     ("SCPreferencesRef", b"^{__SCPreferences=}", "SCPreferencesGetTypeID", None),
 ]

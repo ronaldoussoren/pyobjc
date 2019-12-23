@@ -16,15 +16,21 @@ class TestLSSharedFileList(TestCase):
         self.assertIsInstance(
             CoreServices.kLSSharedFileListRecentApplicationItems, unicode
         )
-        self.assertIsInstance(CoreServices.kLSSharedFileListRecentDocumentItems, unicode)
+        self.assertIsInstance(
+            CoreServices.kLSSharedFileListRecentDocumentItems, unicode
+        )
         self.assertIsInstance(CoreServices.kLSSharedFileListRecentServerItems, unicode)
         self.assertIsInstance(CoreServices.kLSSharedFileListSessionLoginItems, unicode)
         self.assertIsInstance(CoreServices.kLSSharedFileListGlobalLoginItems, unicode)
-        self.assertIsInstance(CoreServices.kLSSharedFileListRecentItemsMaxAmount, unicode)
+        self.assertIsInstance(
+            CoreServices.kLSSharedFileListRecentItemsMaxAmount, unicode
+        )
         self.assertIsInstance(
             CoreServices.kLSSharedFileListVolumesComputerVisible, unicode
         )
-        self.assertIsInstance(CoreServices.kLSSharedFileListVolumesIDiskVisible, unicode)
+        self.assertIsInstance(
+            CoreServices.kLSSharedFileListVolumesIDiskVisible, unicode
+        )
         self.assertIsInstance(
             CoreServices.kLSSharedFileListVolumesNetworkVisible, unicode
         )

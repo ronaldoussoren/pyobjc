@@ -52,16 +52,25 @@ protocols = {
         "QuartzFilterManagerDelegate",
         [
             objc.selector(
-                None, b"quartzFilterManager:didSelectFilter:", b"v@:@@", isRequired=False
+                None,
+                b"quartzFilterManager:didSelectFilter:",
+                b"v@:@@",
+                isRequired=False,
             ),
             objc.selector(
                 None, b"quartzFilterManager:didAddFilter:", b"v@:@@", isRequired=False
             ),
             objc.selector(
-                None, b"quartzFilterManager:didModifyFilter:", b"v@:@@", isRequired=False
+                None,
+                b"quartzFilterManager:didModifyFilter:",
+                b"v@:@@",
+                isRequired=False,
             ),
             objc.selector(
-                None, b"quartzFilterManager:didRemoveFilter:", b"v@:@@", isRequired=False
+                None,
+                b"quartzFilterManager:didRemoveFilter:",
+                b"v@:@@",
+                isRequired=False,
             ),
         ],
     )

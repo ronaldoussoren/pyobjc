@@ -8,7 +8,9 @@ if sys.maxsize >= 2 ** 32:
     class TestNEAppProxyFlow(TestCase):
         @min_os_level("10.11")
         def testConstants(self):
-            self.assertEqual(NetworkExtension.NEFilterManagerErrorConfigurationInvalid, 1)
+            self.assertEqual(
+                NetworkExtension.NEFilterManagerErrorConfigurationInvalid, 1
+            )
             self.assertEqual(
                 NetworkExtension.NEFilterManagerErrorConfigurationDisabled, 2
             )

@@ -93,7 +93,9 @@ class TestNSError(TestCase):
 
         self.assertResultIsBOOL(TestNSErrorHelper.attemptRecoveryFromError_optionIndex_)
         self.assertArgHasType(
-            TestNSErrorHelper.attemptRecoveryFromError_optionIndex_, 1, objc._C_NSUInteger
+            TestNSErrorHelper.attemptRecoveryFromError_optionIndex_,
+            1,
+            objc._C_NSUInteger,
         )
 
     @min_os_level("10.11")

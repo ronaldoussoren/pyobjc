@@ -40,7 +40,9 @@ class TestNSDateFormatter(TestCase):
         self.assertResultIsBOOL(NSDateFormatter.isLenient)
         self.assertArgIsBOOL(NSDateFormatter.setLenient_, 0)
         self.assertResultIsBOOL(NSDateFormatter.isLenient)
-        self.assertArgIsBOOL(NSDateFormatter.initWithDateFormat_allowNaturalLanguage_, 1)
+        self.assertArgIsBOOL(
+            NSDateFormatter.initWithDateFormat_allowNaturalLanguage_, 1
+        )
         self.assertResultIsBOOL(NSDateFormatter.allowsNaturalLanguage)
 
     @min_os_level("10.6")

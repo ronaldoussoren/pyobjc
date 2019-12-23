@@ -122,13 +122,17 @@ class TestNSTextFinder(TestCase):
         )
         self.assertResultIsBOOL(FindHelper.shouldReplaceCharactersInRanges_withStrings_)
         self.assertArgHasType(
-            FindHelper.replaceCharactersInRange_withString_, 0, AppKit.NSRange.__typestr__
+            FindHelper.replaceCharactersInRange_withString_,
+            0,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             FindHelper.rectsForCharacterRange_, 0, AppKit.NSRange.__typestr__
         )
         self.assertArgHasType(
-            FindHelper.contentViewAtIndex_effectiveCharacterRange_, 0, objc._C_NSUInteger
+            FindHelper.contentViewAtIndex_effectiveCharacterRange_,
+            0,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
             FindHelper.contentViewAtIndex_effectiveCharacterRange_,

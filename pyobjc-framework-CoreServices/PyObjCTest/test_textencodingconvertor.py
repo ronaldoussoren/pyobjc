@@ -107,10 +107,14 @@ class TestTextEncodingConvertor(TestCase):
         self.assertArgSizeInArg(CoreServices.TECConvertTextToMultipleEncodings, 1, 2)
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 3)
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 4)
-        self.assertArgSizeInArg(CoreServices.TECConvertTextToMultipleEncodings, 4, (5, 6))
+        self.assertArgSizeInArg(
+            CoreServices.TECConvertTextToMultipleEncodings, 4, (5, 6)
+        )
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 6)
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 7)
-        self.assertArgSizeInArg(CoreServices.TECConvertTextToMultipleEncodings, 7, (8, 9))
+        self.assertArgSizeInArg(
+            CoreServices.TECConvertTextToMultipleEncodings, 7, (8, 9)
+        )
         self.assertArgIsOut(CoreServices.TECConvertTextToMultipleEncodings, 9)
 
         self.assertArgIsOut(CoreServices.TECFlushMultipleEncodings, 1)
@@ -156,7 +160,9 @@ class TestTextEncodingConvertor(TestCase):
         CoreServices.TECSetBasicOptions
 
         self.assertArgIsOut(CoreServices.TECCopyTextEncodingInternetNameAndMIB, 2)
-        self.assertArgIsCFRetained(CoreServices.TECCopyTextEncodingInternetNameAndMIB, 2)
+        self.assertArgIsCFRetained(
+            CoreServices.TECCopyTextEncodingInternetNameAndMIB, 2
+        )
         self.assertArgIsOut(CoreServices.TECCopyTextEncodingInternetNameAndMIB, 3)
 
         self.assertArgIsOut(CoreServices.TECGetTextEncodingFromInternetNameOrMIB, 0)

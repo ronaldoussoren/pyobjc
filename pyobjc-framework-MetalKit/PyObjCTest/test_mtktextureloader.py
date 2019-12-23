@@ -15,7 +15,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(MetalKit.MTKTextureLoaderErrorDomain, unicode)
             self.assertIsInstance(MetalKit.MTKTextureLoaderErrorKey, unicode)
 
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionAllocateMipmaps, unicode)
+            self.assertIsInstance(
+                MetalKit.MTKTextureLoaderOptionAllocateMipmaps, unicode
+            )
             self.assertIsInstance(MetalKit.MTKTextureLoaderOptionSRGB, unicode)
             self.assertIsInstance(MetalKit.MTKTextureLoaderOptionTextureUsage, unicode)
             self.assertIsInstance(
@@ -24,7 +26,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.12")
         def test_constants10_12(self):
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionGenerateMipmaps, unicode)
+            self.assertIsInstance(
+                MetalKit.MTKTextureLoaderOptionGenerateMipmaps, unicode
+            )
             self.assertIsInstance(
                 MetalKit.MTKTextureLoaderOptionTextureStorageMode, unicode
             )
@@ -99,7 +103,8 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsOut(
-                MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_error_, 2
+                MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_error_,
+                2,
             )
             self.assertArgIsOut(
                 MetalKit.MTKTextureLoader.newTextureWithMDLTexture_options_error_, 2

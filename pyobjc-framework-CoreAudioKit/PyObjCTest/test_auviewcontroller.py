@@ -16,7 +16,9 @@ class TestAUViewController(TestCase):
         )
 
         self.assertArgIsBlock(
-            CoreAudioKit.AUAudioUnit.requestViewControllerWithCompletionHandler_, 0, b"v@"
+            CoreAudioKit.AUAudioUnit.requestViewControllerWithCompletionHandler_,
+            0,
+            b"v@",
         )
 
 

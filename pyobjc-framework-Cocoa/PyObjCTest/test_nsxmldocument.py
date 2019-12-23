@@ -14,7 +14,9 @@ class TestXMLDocument(TestCase):
         self.assertArgIsOut(NSXMLDocument.initWithContentsOfURL_options_error_, 2)
         self.assertArgIsOut(NSXMLDocument.initWithData_options_error_, 2)
         self.assertArgIsOut(NSXMLDocument.objectByApplyingXSLT_arguments_error_, 2)
-        self.assertArgIsOut(NSXMLDocument.objectByApplyingXSLTString_arguments_error_, 2)
+        self.assertArgIsOut(
+            NSXMLDocument.objectByApplyingXSLTString_arguments_error_, 2
+        )
         self.assertArgIsOut(NSXMLDocument.objectByApplyingXSLTAtURL_arguments_error_, 2)
         self.assertArgIsOut(NSXMLDocument.validateAndReturnError_, 0)
 

@@ -24,7 +24,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(UserNotifications.UNAuthorizationOptionSound, 1 << 1)
             self.assertEqual(UserNotifications.UNAuthorizationOptionAlert, 1 << 2)
             self.assertEqual(UserNotifications.UNAuthorizationOptionCarPlay, 1 << 3)
-            self.assertEqual(UserNotifications.UNAuthorizationOptionCriticalAlert, 1 << 4)
+            self.assertEqual(
+                UserNotifications.UNAuthorizationOptionCriticalAlert, 1 << 4
+            )
             self.assertEqual(
                 UserNotifications.UNAuthorizationOptionProvidesAppNotificationSettings,
                 1 << 5,

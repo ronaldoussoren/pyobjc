@@ -9,7 +9,12 @@ from PyObjCTools import Debugging
 
 class TestDebugging(TestCase):
     def testConstants(self):
-        for nm in ("LOGSTACKTRACE", "DEFAULTVERBOSITY", "DEFAULTMASK", "EVERYTHINGMASK"):
+        for nm in (
+            "LOGSTACKTRACE",
+            "DEFAULTVERBOSITY",
+            "DEFAULTMASK",
+            "EVERYTHINGMASK",
+        ):
             self.assertTrue(hasattr(Debugging, nm))
             self.assertTrue(isinstance(getattr(Debugging, nm), (int, long)))
 

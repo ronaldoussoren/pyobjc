@@ -2,7 +2,8 @@ from PyObjCTools.TestSupport import *
 
 import Metal
 
-class TestMTLPixelFormat (TestCase):
+
+class TestMTLPixelFormat(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLPixelFormatInvalid, 0)
         self.assertEqual(Metal.MTLPixelFormatA8Unorm, 1)

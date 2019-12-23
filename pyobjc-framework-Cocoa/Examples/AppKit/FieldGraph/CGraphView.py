@@ -140,7 +140,10 @@ class CGraphView(Cocoa.NSView):
         radius = self.graphRadius * scale
         x, y = 0, 1
         if radius >= 1:
-            dotRect = ((center[x] - radius, center[y] - radius), (2 * radius, 2 * radius))
+            dotRect = (
+                (center[x] - radius, center[y] - radius),
+                (2 * radius, 2 * radius),
+            )
             path = Cocoa.NSBezierPath.bezierPathWithOvalInRect_(dotRect)
             path.stroke()
 

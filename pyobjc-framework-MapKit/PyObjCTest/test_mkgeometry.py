@@ -105,18 +105,24 @@ if sys.maxsize > 2 ** 32:
                 bool,
             )
             self.assertIsInstance(
-                MapKit.MKMapSizeEqualToSize(MapKit.MKMapSize(), MapKit.MKMapSize()), bool
+                MapKit.MKMapSizeEqualToSize(MapKit.MKMapSize(), MapKit.MKMapSize()),
+                bool,
             )
             self.assertIsInstance(
-                MapKit.MKMapRectEqualToRect(MapKit.MKMapRect(), MapKit.MKMapRect()), bool
+                MapKit.MKMapRectEqualToRect(MapKit.MKMapRect(), MapKit.MKMapRect()),
+                bool,
             )
             self.assertIsInstance(MapKit.MKMapRectIsNull(MapKit.MKMapRect()), bool)
             self.assertIsInstance(MapKit.MKMapRectIsEmpty(MapKit.MKMapRect()), bool)
             self.assertIsInstance(
                 MapKit.MKStringFromMapPoint(MapKit.MKMapPoint()), unicode
             )
-            self.assertIsInstance(MapKit.MKStringFromMapSize(MapKit.MKMapSize()), unicode)
-            self.assertIsInstance(MapKit.MKStringFromMapRect(MapKit.MKMapRect()), unicode)
+            self.assertIsInstance(
+                MapKit.MKStringFromMapSize(MapKit.MKMapSize()), unicode
+            )
+            self.assertIsInstance(
+                MapKit.MKStringFromMapRect(MapKit.MKMapRect()), unicode
+            )
             self.assertIsInstance(
                 MapKit.MKMapRectUnion(MapKit.MKMapRect(), MapKit.MKMapRect()),
                 MapKit.MKMapRect,

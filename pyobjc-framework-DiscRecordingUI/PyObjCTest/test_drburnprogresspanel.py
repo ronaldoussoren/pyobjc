@@ -21,7 +21,9 @@ class TestDRBurnProgressPanel(TestCase):
         self.assertArgIsBOOL(
             DiscRecordingUI.DRBurnProgressPanel.setVerboseProgressStatus_, 0
         )
-        self.assertResultIsBOOL(DiscRecordingUI.DRBurnProgressPanel.verboseProgressStatus)
+        self.assertResultIsBOOL(
+            DiscRecordingUI.DRBurnProgressPanel.verboseProgressStatus
+        )
 
         self.assertResultIsBOOL(
             TestDRBurnProgressPanelHelper.burnProgressPanel_burnDidFinish_

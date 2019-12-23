@@ -7,8 +7,12 @@ if sys.maxsize > 2 ** 32:
 
     class TestGCExtendedGamepadSnapshot(TestCase):
         def test_constants(self):
-            self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion1, 0x0100)
-            self.assertEqual(GameController.GCExtendedGamepadSnapshotDataVersion2, 0x0101)
+            self.assertEqual(
+                GameController.GCExtendedGamepadSnapshotDataVersion1, 0x0100
+            )
+            self.assertEqual(
+                GameController.GCExtendedGamepadSnapshotDataVersion2, 0x0101
+            )
 
         @min_os_level("10.14.4")
         def test_constants_10_14_4(self):
@@ -90,12 +94,16 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.14.4")
         def test_functions_10_14_4(self):
-            self.assertArgIsOut(GameController.GCExtendedGamepadSnapshotDataFromNSData, 0)
+            self.assertArgIsOut(
+                GameController.GCExtendedGamepadSnapshotDataFromNSData, 0
+            )
             self.assertResultIsBOOL(
                 GameController.GCExtendedGamepadSnapshotDataFromNSData
             )
 
-            self.assertArgIsIn(GameController.NSDataFromGCExtendedGamepadSnapshotData, 0)
+            self.assertArgIsIn(
+                GameController.NSDataFromGCExtendedGamepadSnapshotData, 0
+            )
 
 
 if __name__ == "__main__":

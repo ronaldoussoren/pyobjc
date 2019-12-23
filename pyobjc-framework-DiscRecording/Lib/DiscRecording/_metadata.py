@@ -48,7 +48,14 @@ misc.update(
             sel32or64(
                 b"{DRTrackProductionInfo=^vLLLLQ}", b"{DRTrackProductionInfo=^vIIIIQ}"
             ),
-            ["buffer", "reqCount", "actCount", "flags", "blockSize", "requestedAddress"],
+            [
+                "buffer",
+                "reqCount",
+                "actCount",
+                "flags",
+                "blockSize",
+                "requestedAddress",
+            ],
         ),
     }
 )
@@ -81,7 +88,8 @@ functions = {
     ),
     "DRCDTextBlockGetValue": (
         sel32or64(
-            b"@^{__DRCDTextBlock=}l^{__CFString=}", b"@^{__DRCDTextBlock=}q^{__CFString=}"
+            b"@^{__DRCDTextBlock=}l^{__CFString=}",
+            b"@^{__DRCDTextBlock=}q^{__CFString=}",
         ),
     ),
     "DRDeviceAcquireExclusiveAccess": (
@@ -200,7 +208,11 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "DRFolderConvertRealToVirtual": (b"v^{__DRFolder=}",),
-    "DRCopyDeviceArray": (b"^{__CFArray=}", "", {"retval": {"already_cfretained": True}}),
+    "DRCopyDeviceArray": (
+        b"^{__CFArray=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
     "DRCDTextBlockGetTrackDictionaries": (b"^{__CFArray=}^{__DRCDTextBlock=}",),
     "DRFSObjectSetFilesystemProperty": (b"v@^{__CFString=}^{__CFString=}@",),
     "DRFileCreateVirtualWithData": (

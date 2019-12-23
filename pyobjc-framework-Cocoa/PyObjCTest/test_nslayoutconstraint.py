@@ -8,7 +8,8 @@ class TestNSLayoutContraintManual(TestCase):
         var2 = "bar"
 
         self.assertEqual(
-            NSDictionaryOfVariableBindings("var1", "var2"), {"var1": "foo", "var2": "bar"}
+            NSDictionaryOfVariableBindings("var1", "var2"),
+            {"var1": "foo", "var2": "bar"},
         )
 
         self.assertRaises(KeyError, NSDictionaryOfVariableBindings, "var1", "var3")
@@ -45,10 +46,14 @@ class TestNSLayoutContraintManual(TestCase):
         self.assertEqual(NSLayoutFormatAlignAllTop, (1 << NSLayoutAttributeTop))
         self.assertEqual(NSLayoutFormatAlignAllBottom, (1 << NSLayoutAttributeBottom))
         self.assertEqual(NSLayoutFormatAlignAllLeading, (1 << NSLayoutAttributeLeading))
-        self.assertEqual(NSLayoutFormatAlignAllTrailing, (1 << NSLayoutAttributeTrailing))
+        self.assertEqual(
+            NSLayoutFormatAlignAllTrailing, (1 << NSLayoutAttributeTrailing)
+        )
         self.assertEqual(NSLayoutFormatAlignAllCenterX, (1 << NSLayoutAttributeCenterX))
         self.assertEqual(NSLayoutFormatAlignAllCenterY, (1 << NSLayoutAttributeCenterY))
-        self.assertEqual(NSLayoutFormatAlignAllBaseline, (1 << NSLayoutAttributeBaseline))
+        self.assertEqual(
+            NSLayoutFormatAlignAllBaseline, (1 << NSLayoutAttributeBaseline)
+        )
         self.assertEqual(
             NSLayoutFormatAlignAllLastBaseline, (1 << NSLayoutAttributeBaseline)
         )

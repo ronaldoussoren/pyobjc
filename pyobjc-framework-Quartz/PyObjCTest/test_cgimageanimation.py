@@ -23,7 +23,9 @@ class TestCGImageAnimation(TestCase):
         self.assertArgIsBlock(
             CGAnimateImageAtURLWithBlock, 2, CGImageSourceAnimationBlock
         )
-        self.assertArgIsBlock(CGAnimateImageDataWithBlock, 2, CGImageSourceAnimationBlock)
+        self.assertArgIsBlock(
+            CGAnimateImageDataWithBlock, 2, CGImageSourceAnimationBlock
+        )
 
 
 if __name__ == "__main__":

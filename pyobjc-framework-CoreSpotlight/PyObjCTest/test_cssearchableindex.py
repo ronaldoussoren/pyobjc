@@ -31,7 +31,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CoreSpotlight.CSIndexErrorCodeUnknownError, -1)
             self.assertEqual(CoreSpotlight.CSIndexErrorCodeIndexUnavailableError, -1000)
             self.assertEqual(CoreSpotlight.CSIndexErrorCodeInvalidItemError, -1001)
-            self.assertEqual(CoreSpotlight.CSIndexErrorCodeInvalidClientStateError, -1002)
+            self.assertEqual(
+                CoreSpotlight.CSIndexErrorCodeInvalidClientStateError, -1002
+            )
             self.assertEqual(CoreSpotlight.CSIndexErrorCodeRemoteConnectionError, -1003)
             self.assertEqual(CoreSpotlight.CSIndexErrorCodeQuotaExceeded, -1004)
             self.assertEqual(CoreSpotlight.CSIndexErrorCodeIndexingUnsupported, -1005)

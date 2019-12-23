@@ -9,7 +9,9 @@ class TestNSHTTPCookieStorage(TestCase):
         self.assertEqual(NSHTTPCookieAcceptPolicyNever, 1)
         self.assertEqual(NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2)
 
-        self.assertIsInstance(NSHTTPCookieManagerAcceptPolicyChangedNotification, unicode)
+        self.assertIsInstance(
+            NSHTTPCookieManagerAcceptPolicyChangedNotification, unicode
+        )
         self.assertIsInstance(NSHTTPCookieManagerCookiesChangedNotification, unicode)
 
     @min_os_level("10.10")

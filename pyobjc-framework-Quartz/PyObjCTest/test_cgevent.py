@@ -138,7 +138,12 @@ class TestCGEvent(TestCase):
         evt = CGEventCreateScrollWheelEvent(None, kCGScrollEventUnitPixel, 2, 99, 44)
         self.assertIsInstance(evt, CGEventRef)
         self.assertRaises(
-            ValueError, CGEventCreateScrollWheelEvent, kCGScrollEventUnitPixel, 40, 2, 99
+            ValueError,
+            CGEventCreateScrollWheelEvent,
+            kCGScrollEventUnitPixel,
+            40,
+            2,
+            99,
         )
         self.assertRaises(
             ValueError,

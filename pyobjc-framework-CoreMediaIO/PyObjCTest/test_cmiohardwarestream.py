@@ -53,7 +53,9 @@ class TestCMIOHardwareStream(TestCase):
 
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDirection, fourcc(b"sdir"))
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyTerminalType, fourcc(b"term"))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyStartingChannel, fourcc(b"schn"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyStartingChannel, fourcc(b"schn")
+        )
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyLatency, fourcc(b"ltnc"))
         self.assertEqual(
             CoreMediaIO.kCMIOStreamPropertyFormatDescription, fourcc(b"pft ")
@@ -66,16 +68,22 @@ class TestCMIOHardwareStream(TestCase):
             CoreMediaIO.kCMIOStreamPropertyStillImageFormatDescriptions, fourcc(b"stft")
         )
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRate, fourcc(b"nfrt"))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyMinimumFrameRate, fourcc(b"mfrt"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyMinimumFrameRate, fourcc(b"mfrt")
+        )
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRates, fourcc(b"nfr#"))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyFrameRateRanges, fourcc(b"frrg"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyFrameRateRanges, fourcc(b"frrg")
+        )
         self.assertEqual(
             CoreMediaIO.kCMIOStreamPropertyNoDataTimeoutInMSec, fourcc(b"pmn1")
         )
         self.assertEqual(
             CoreMediaIO.kCMIOStreamPropertyDeviceSyncTimeoutInMSec, fourcc(b"pmn2")
         )
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyNoDataEventCount, fourcc(b"pmn3"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyNoDataEventCount, fourcc(b"pmn3")
+        )
         self.assertEqual(
             CoreMediaIO.kCMIOStreamPropertyOutputBufferUnderrunCount, fourcc(b"pmou")
         )
@@ -103,7 +111,9 @@ class TestCMIOHardwareStream(TestCase):
             CoreMediaIO.kCMIOStreamPropertyCanProcessDeckCommand, fourcc(b"pdcd")
         )
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeck, fourcc(b"deck"))
-        self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckFrameNumber, fourcc(b"tcod"))
+        self.assertEqual(
+            CoreMediaIO.kCMIOStreamPropertyDeckFrameNumber, fourcc(b"tcod")
+        )
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckDropness, fourcc(b"drop"))
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckThreaded, fourcc(b"thrd"))
         self.assertEqual(CoreMediaIO.kCMIOStreamPropertyDeckLocal, fourcc(b"locl"))

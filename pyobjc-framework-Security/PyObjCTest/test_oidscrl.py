@@ -17,13 +17,21 @@ class Testoidscrl(TestCase):
         self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLIssuerNameLDAP"))
         self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLThisUpdate"))
         self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLNextUpdate"))
-        self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLRevokedCertificatesStruct"))
-        self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLRevokedCertificatesCStruct"))
-        self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLNumberOfRevokedCertEntries"))
+        self.assertFalse(
+            hasattr(Security, "CSSMOID_X509V1CRLRevokedCertificatesStruct")
+        )
+        self.assertFalse(
+            hasattr(Security, "CSSMOID_X509V1CRLRevokedCertificatesCStruct")
+        )
+        self.assertFalse(
+            hasattr(Security, "CSSMOID_X509V1CRLNumberOfRevokedCertEntries")
+        )
         self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLRevokedEntryStruct"))
         self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLRevokedEntryCStruct"))
         self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLRevokedEntrySerialNumber"))
-        self.assertFalse(hasattr(Security, "CSSMOID_X509V1CRLRevokedEntryRevocationDate"))
+        self.assertFalse(
+            hasattr(Security, "CSSMOID_X509V1CRLRevokedEntryRevocationDate")
+        )
         self.assertFalse(
             hasattr(Security, "CSSMOID_X509V2CRLRevokedEntryAllExtensionsStruct")
         )
@@ -43,8 +51,12 @@ class Testoidscrl(TestCase):
         self.assertFalse(
             hasattr(Security, "CSSMOID_X509V2CRLRevokedEntryExtensionCritical")
         )
-        self.assertFalse(hasattr(Security, "CSSMOID_X509V2CRLRevokedEntryExtensionType"))
-        self.assertFalse(hasattr(Security, "CSSMOID_X509V2CRLRevokedEntryExtensionValue"))
+        self.assertFalse(
+            hasattr(Security, "CSSMOID_X509V2CRLRevokedEntryExtensionType")
+        )
+        self.assertFalse(
+            hasattr(Security, "CSSMOID_X509V2CRLRevokedEntryExtensionValue")
+        )
         self.assertFalse(hasattr(Security, "CSSMOID_X509V2CRLAllExtensionsStruct"))
         self.assertFalse(hasattr(Security, "CSSMOID_X509V2CRLAllExtensionsCStruct"))
         self.assertFalse(hasattr(Security, "CSSMOID_X509V2CRLNumberOfExtensions"))

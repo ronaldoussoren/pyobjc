@@ -65,7 +65,9 @@ if sys.maxsize > 2 ** 32:
 
             # self.assertArgHasType(ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_, 0, ...) # SIMD
             self.assertArgHasType(
-                ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_, 1, objc._C_DBL
+                ModelIO.TestMDLTransformHelper.setLocalTransform_forTime_,
+                1,
+                objc._C_DBL,
             )
 
             # self.assertArgHasType(ModelIO.TestMDLTransformHelper.setLocalTransform_, 0, ...) # SIMD

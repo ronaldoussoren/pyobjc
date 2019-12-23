@@ -409,7 +409,9 @@ class TestNSDictionary(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBlock(
-            NSDictionary.enumerateKeysAndObjectsUsingBlock_, 0, b"v@@o^" + objc._C_NSBOOL
+            NSDictionary.enumerateKeysAndObjectsUsingBlock_,
+            0,
+            b"v@@o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
             NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_,

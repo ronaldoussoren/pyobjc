@@ -12,7 +12,9 @@ class TestAVAssetWriterInput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVAssetWriterInput.setPerformsMultiPassEncodingIfSupported_, 0
         )
-        self.assertResultIsBOOL(AVFoundation.AVAssetWriterInput.canPerformMultiplePasses)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetWriterInput.canPerformMultiplePasses
+        )
         self.assertArgIsBlock(
             AVFoundation.AVAssetWriterInput.respondToEachPassDescriptionOnQueue_usingBlock_,
             1,
@@ -24,7 +26,9 @@ class TestAVAssetWriterInput(TestCase):
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertResultIsBOOL(AVFoundation.AVAssetWriterInput.marksOutputTrackAsEnabled)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetWriterInput.marksOutputTrackAsEnabled
+        )
         self.assertArgIsBOOL(
             AVFoundation.AVAssetWriterInput.setMarksOutputTrackAsEnabled_, 0
         )

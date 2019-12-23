@@ -74,7 +74,9 @@ if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
             self.assertResultIsBOOL(TestSCNViewHelper.allowsTranslation)
             self.assertResultHasType(TestSCNViewHelper.flyModeVelocity, objc._C_CGFloat)
             self.assertResultHasType(TestSCNViewHelper.panSensitivity, objc._C_CGFloat)
-            self.assertResultHasType(TestSCNViewHelper.truckSensitivity, objc._C_CGFloat)
+            self.assertResultHasType(
+                TestSCNViewHelper.truckSensitivity, objc._C_CGFloat
+            )
             self.assertResultHasType(
                 TestSCNViewHelper.rotationSensitivity, objc._C_CGFloat
             )

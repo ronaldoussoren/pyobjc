@@ -33,6 +33,7 @@ def nsdata__str__(self):
         return str(b"")
     return str(self.bytes().tobytes())
 
+
 def nsdata__bytes__(self):
     return bytes(self.bytes())
 

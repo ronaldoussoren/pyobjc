@@ -50,7 +50,9 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(AVKit.AVPlayerView.showsTimecodes)
 
             self.assertResultIsBOOL(AVKit.AVPlayerView.allowsPictureInPicturePlayback)
-            self.assertArgIsBOOL(AVKit.AVPlayerView.setAllowsPictureInPicturePlayback_, 0)
+            self.assertArgIsBOOL(
+                AVKit.AVPlayerView.setAllowsPictureInPicturePlayback_, 0
+            )
 
             self.assertArgIsBlock(
                 TestAVPlayerViewHelper.playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,

@@ -19,7 +19,9 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(
                 NetworkExtension.NEProviderStopReasonAuthenticationCanceled, 6
             )
-            self.assertEqual(NetworkExtension.NEProviderStopReasonConfigurationFailed, 7)
+            self.assertEqual(
+                NetworkExtension.NEProviderStopReasonConfigurationFailed, 7
+            )
             self.assertEqual(NetworkExtension.NEProviderStopReasonIdleTimeout, 8)
             self.assertEqual(
                 NetworkExtension.NEProviderStopReasonConfigurationDisabled, 9

@@ -15,7 +15,8 @@ class TestASAuthorizationAppleIDProvider(TestCase):
             AuthenticationServices.ASAuthorizationAppleIDProviderCredentialNotFound, 2
         )
         self.assertEqual(
-            AuthenticationServices.ASAuthorizationAppleIDProviderCredentialTransferred, 3
+            AuthenticationServices.ASAuthorizationAppleIDProviderCredentialTransferred,
+            3,
         )
 
     @min_os_level("10.15")

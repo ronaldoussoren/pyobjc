@@ -30,14 +30,22 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(Contacts.CNLabelContactRelationColleague, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationTeacher, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationSibling, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerSibling, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationYoungerSibling, unicode
+            )
             self.assertIsInstance(Contacts.CNLabelContactRelationElderSibling, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationYoungerSister, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungestSister, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationYoungestSister, unicode
+            )
             self.assertIsInstance(Contacts.CNLabelContactRelationElderSister, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationEldestSister, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerBrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungestBrother, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationYoungerBrother, unicode
+            )
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationYoungestBrother, unicode
+            )
             self.assertIsInstance(Contacts.CNLabelContactRelationElderBrother, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationEldestBrother, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationMaleFriend, unicode)
@@ -87,8 +95,12 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationGrandsonDaughtersSon, unicode
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandsonSonsSon, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandchild, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationGrandsonSonsSon, unicode
+            )
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationGreatGrandchild, unicode
+            )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationGreatGranddaughter, unicode
             )
@@ -143,8 +155,12 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationSisterInLawElderBrothersWife, unicode
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerBrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungestBrother, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationYoungerBrother, unicode
+            )
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationYoungestBrother, unicode
+            )
             self.assertIsInstance(Contacts.CNLabelContactRelationElderBrother, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationEldestBrother, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationMaleFriend, unicode)
@@ -202,7 +218,8 @@ if sys.maxsize > 2 ** 32:
                 Contacts.CNLabelContactRelationBrotherInLawSistersHusband, unicode
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawYoungerSistersHusband, unicode
+                Contacts.CNLabelContactRelationBrotherInLawYoungerSistersHusband,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationBrotherInLawElderSistersHusband, unicode
@@ -217,11 +234,16 @@ if sys.maxsize > 2 ** 32:
                 Contacts.CNLabelContactRelationBrotherInLawWifesSistersHusband, unicode
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawHusbandsSistersHusband, unicode
+                Contacts.CNLabelContactRelationBrotherInLawHusbandsSistersHusband,
+                unicode,
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationCoSiblingInLaw, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationCoSiblingInLaw, unicode
+            )
             self.assertIsInstance(Contacts.CNLabelContactRelationCoSisterInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationCoBrotherInLaw, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationCoBrotherInLaw, unicode
+            )
             self.assertIsInstance(Contacts.CNLabelContactRelationChildInLaw, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationDaughterInLaw, unicode)
             self.assertIsInstance(Contacts.CNLabelContactRelationSonInLaw, unicode)
@@ -250,7 +272,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinParentsSiblingsDaughter, unicode
+                Contacts.CNLabelContactRelationElderCousinParentsSiblingsDaughter,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationCousinMothersSistersDaughter, unicode
@@ -260,7 +283,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinMothersSistersDaughter, unicode
+                Contacts.CNLabelContactRelationElderCousinMothersSistersDaughter,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationCousinMothersSistersSon, unicode
@@ -279,7 +303,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinMothersBrothersDaughter, unicode
+                Contacts.CNLabelContactRelationElderCousinMothersBrothersDaughter,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationCousinMothersBrothersSon, unicode
@@ -298,7 +323,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinFathersSistersDaughter, unicode
+                Contacts.CNLabelContactRelationElderCousinFathersSistersDaughter,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationCousinFathersSistersSon, unicode
@@ -317,7 +343,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinFathersBrothersDaughter, unicode
+                Contacts.CNLabelContactRelationElderCousinFathersBrothersDaughter,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationCousinFathersBrothersSon, unicode
@@ -332,7 +359,8 @@ if sys.maxsize > 2 ** 32:
                 Contacts.CNLabelContactRelationCousinGrandparentsSiblingsChild, unicode
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsDaughter, unicode
+                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsDaughter,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationCousinGrandparentsSiblingsSon, unicode
@@ -353,7 +381,9 @@ if sys.maxsize > 2 ** 32:
                 Contacts.CNLabelContactRelationElderCousinMothersSiblingsDaughterOrFathersSistersDaughter,
                 unicode,
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationParentsSibling, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationParentsSibling, unicode
+            )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationParentsYoungerSibling, unicode
             )
@@ -368,7 +398,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingMothersElderSibling, unicode
+                Contacts.CNLabelContactRelationParentsSiblingMothersElderSibling,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationParentsSiblingFathersSibling, unicode
@@ -378,7 +409,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingFathersElderSibling, unicode
+                Contacts.CNLabelContactRelationParentsSiblingFathersElderSibling,
+                unicode,
             )
             self.assertIsInstance(Contacts.CNLabelContactRelationAunt, unicode)
             self.assertIsInstance(
@@ -456,7 +488,8 @@ if sys.maxsize > 2 ** 32:
                 Contacts.CNLabelContactRelationUncleFathersSistersHusband, unicode
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleFathersYoungerSistersHusband, unicode
+                Contacts.CNLabelContactRelationUncleFathersYoungerSistersHusband,
+                unicode,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationUncleFathersElderSistersHusband, unicode
@@ -490,7 +523,8 @@ if sys.maxsize > 2 ** 32:
                 unicode,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationNephewSistersSonOrWifesSiblingsSon, unicode
+                Contacts.CNLabelContactRelationNephewSistersSonOrWifesSiblingsSon,
+                unicode,
             )
             self.assertIsInstance(Contacts.CNLabelContactRelationGrandniece, unicode)
             self.assertIsInstance(
@@ -530,7 +564,9 @@ if sys.maxsize > 2 ** 32:
                 Contacts.CNLabelContactRelationCousinOrSiblingsChild, unicode
             )
             self.assertIsInstance(Contacts.CNLabelContactRelationNieceOrCousin, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationNephewOrCousin, unicode)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationNephewOrCousin, unicode
+            )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationGrandchildOrSiblingsChild, unicode
             )

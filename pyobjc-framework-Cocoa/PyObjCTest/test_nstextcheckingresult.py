@@ -60,7 +60,9 @@ class TestNSTextCheckingResult(TestCase):
             NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.dateCheckingResultWithRange_date_, 0, NSRange.__typestr__
+            NSTextCheckingResult.dateCheckingResultWithRange_date_,
+            0,
+            NSRange.__typestr__,
         )
         self.assertArgHasType(
             NSTextCheckingResult.dateCheckingResultWithRange_date_timeZone_duration_,
@@ -73,7 +75,9 @@ class TestNSTextCheckingResult(TestCase):
             NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.linkCheckingResultWithRange_URL_, 0, NSRange.__typestr__
+            NSTextCheckingResult.linkCheckingResultWithRange_URL_,
+            0,
+            NSRange.__typestr__,
         )
         self.assertArgHasType(
             NSTextCheckingResult.quoteCheckingResultWithRange_replacementString_,

@@ -16,7 +16,9 @@ class TestVTVideoEncoderList(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTVideoEncoderList_SupportedSelectionProperties, unicode
         )
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_PerformanceRating, unicode)
+        self.assertIsInstance(
+            VideoToolbox.kVTVideoEncoderList_PerformanceRating, unicode
+        )
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_QualityRating, unicode)
         self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_InstanceLimit, unicode)
         self.assertIsInstance(

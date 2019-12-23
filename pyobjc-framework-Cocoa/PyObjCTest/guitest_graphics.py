@@ -118,7 +118,9 @@ class RectTest(TestCase):
         # And white points
         for x, y in allpoints:
             self.assertEqual(
-                getPixel(img, x, y), b"\x00\x00\x00\x00", "White pixel at %d,%d" % (x, y)
+                getPixel(img, x, y),
+                b"\x00\x00\x00\x00",
+                "White pixel at %d,%d" % (x, y),
             )
 
     def tearDown(self):

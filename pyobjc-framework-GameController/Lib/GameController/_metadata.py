@@ -497,7 +497,11 @@ try:
     r(b"GCMotion", b"gravity", {"retval": {"type": b"{_GCAcceleration=ddd}"}})
     r(b"GCMotion", b"hasAttitudeAndRotationRate", {"retval": {"type": "Z"}})
     r(b"GCMotion", b"rotationRate", {"retval": {"type": b"{_GCRotationRate=ddd}"}})
-    r(b"GCMotion", b"setGravity:", {"arguments": {2: {"type": b"{_GCAcceleration=ddd}"}}})
+    r(
+        b"GCMotion",
+        b"setGravity:",
+        {"arguments": {2: {"type": b"{_GCAcceleration=ddd}"}}},
+    )
     r(
         b"GCMotion",
         b"setRotationRate:",

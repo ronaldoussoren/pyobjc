@@ -11,7 +11,9 @@ if sys.maxsize > 2 ** 32:
         def testClasses10_8(self):
             self.assertIsInstance(GameCenter.GKDialogController, objc.objc_class)
 
-            self.assertResultIsBOOL(GameCenter.GKDialogController.presentViewController_)
+            self.assertResultIsBOOL(
+                GameCenter.GKDialogController.presentViewController_
+            )
 
         @min_os_level("10.8")
         def testProtocols10_8(self):
