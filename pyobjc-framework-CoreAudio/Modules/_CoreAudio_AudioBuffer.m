@@ -12,7 +12,7 @@ static PyTypeObject audio_buffer_type; /* Forward definition */
 struct audio_buffer {
     PyObject_HEAD
 
-        char ab_owns_storage;
+    char ab_owns_storage;
     char ab_owns_buffer;
     void* ab_buf_pointer; /* for owned sample storage */
     AudioBuffer* ab_buf;

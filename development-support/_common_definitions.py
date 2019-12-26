@@ -12,9 +12,10 @@ import shutil
 import time
 
 PY_VERSIONS = [
-    "3.6",  # End-of-live: 2021-12-16
-    "3.7",  # In beta, expected EoL: 2023-06
-    "3.8",  # In beta, expected EoL: ?
+    "3.6",
+    "3.7",
+    "3.8",
+    "3.9",
 ]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

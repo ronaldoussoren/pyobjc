@@ -1,0 +1,3 @@
+#!/bin/sh
+
+black -t py36 .

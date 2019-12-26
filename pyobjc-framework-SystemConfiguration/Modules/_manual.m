@@ -66,8 +66,8 @@ mod_SCDynamicStoreCallBack(SCDynamicStoreRef store, CFArrayRef changedKeys, void
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GET_ITEM(info, 0);
-    PyObject* real_info = PyTuple_GET_ITEM(info, 1);
+    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_store = PyObjC_ObjCToPython(@encode(SCDynamicStoreRef), &store);
     if (py_store == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -95,8 +95,8 @@ mod_SCPreferencesCallBack(SCPreferencesRef prefs,
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GET_ITEM(info, 0);
-    PyObject* real_info = PyTuple_GET_ITEM(info, 1);
+    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_prefs = PyObjC_ObjCToPython(@encode(SCPreferencesRef), &prefs);
     if (py_prefs == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -124,8 +124,8 @@ mod_SCNetworkConnectionCallBack(SCNetworkConnectionRef connection,
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GET_ITEM(info, 0);
-    PyObject* real_info = PyTuple_GET_ITEM(info, 1);
+    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_connection =
         PyObjC_ObjCToPython(@encode(SCNetworkConnectionRef), &connection);
     if (py_connection == NULL) {
@@ -154,8 +154,8 @@ mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GET_ITEM(info, 0);
-    PyObject* real_info = PyTuple_GET_ITEM(info, 1);
+    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_target = PyObjC_ObjCToPython(@encode(SCNetworkReachabilityRef), &target);
     if (py_target == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);

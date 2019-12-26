@@ -13,7 +13,7 @@ static PyTypeObject audio_channel_description_type; /* Forward definition */
 struct audio_channel_description {
     PyObject_HEAD
 
-        char acd_owns_storage;
+    char acd_owns_storage;
     AudioChannelDescription* acd_description;
 };
 

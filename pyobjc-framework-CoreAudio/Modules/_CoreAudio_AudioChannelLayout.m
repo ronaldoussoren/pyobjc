@@ -13,7 +13,7 @@ static PyTypeObject audio_channel_layout_type; /* Forward definition */
 struct audio_channel_layout {
     PyObject_HEAD
 
-        char avl_ownsstorage;
+    char avl_ownsstorage;
     PyObject* avl_items; /* cache for Python version of avl_layout items, needed for
                           * ownership of buffer pointers.
                           */

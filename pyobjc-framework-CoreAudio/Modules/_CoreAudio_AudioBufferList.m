@@ -12,7 +12,7 @@ static PyTypeObject audio_buffer_list_type; /* Forward definition */
 struct audio_buffer_list {
     PyObject_HEAD
 
-        char abl_ownsstorage;
+    char abl_ownsstorage;
     PyObject* abl_items; /* cache for Python version of abl_list items, needed for
                           * ownership of buffer pointers.
                           */

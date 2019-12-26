@@ -258,8 +258,9 @@ _SETUP_KEYS = (
     "version",
     "install_requires",
     "long_description",
+    "options",
 )
-_SETUP_OPTIONAL = ("min_os_level", "max_os_level", "ext_modules", "namespace_packages")
+_SETUP_OPTIONAL = ("min_os_level", "max_os_level", "ext_modules", "namespace_packages", "options")
 
 
 def same_order(lst1, lst2):
@@ -502,7 +503,7 @@ class oc_test(Command):
                     failures += 1
 
         print(
-            "SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': %d, 'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }"
+            "SUMMARY: {'testSeconds': 0.0, 'count': 1, 'fails': %d, 'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }"
             % (failures,)
         )
         if failures:

@@ -10,7 +10,7 @@ static PyTypeObject audio_value_translation_type; /* Forward definition */
 struct audio_value_translation {
     PyObject_HEAD
 
-        char avt_ownsstorage;
+    char avt_ownsstorage;
     char avt_owns_input_buffer;
     char avt_owns_output_buffer;
     void* avt_input_buffer;  /* for owned sample storage */
