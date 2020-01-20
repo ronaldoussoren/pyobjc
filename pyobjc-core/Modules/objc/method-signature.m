@@ -577,7 +577,10 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
         } else {
             if (descr == NULL || (descr->tmpl && descr->alreadyRetained))
                 return -2;
-            descr->alreadyRetained = NO;
+            // descr may be loaded into read-only memory, so only
+            // write if truly necessary
+            if (descr->alreadyRetained)
+                descr->alreadyRetained = NO;
         }
     }
 
