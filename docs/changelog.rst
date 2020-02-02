@@ -3,6 +3,21 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.3
+-----------
+
+* #289: Fix Python 3 issues in ``PyObjCTools.Conversion``
+
+  Reported by vinolin asokan.
+
+* ``PyObjCTools.Conversio.propertyListFromPythonCollection`` didn't
+   recursively convert members of lists and tuples.
+
+* ``PyObjCTools.Conversio.propertyListFromPythonCollection`` and
+  ``PyObjCTools.Conversio.pythonCollectionFromPropertyList`` now
+  support sets.
+
+
 Version 6.2
 -----------
 
