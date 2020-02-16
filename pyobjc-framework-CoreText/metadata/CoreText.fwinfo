@@ -112,6 +112,7 @@
    "LtagTable": { "ignore": true }
   },
   "enum": {
+   "kCTFontManagerErrorAssetNotFound": { "value": 107 },
    "kKERXIndexArray": { "ignore": true },
    "kCTVersionNumber10_14": { "value": 720896 },
    "kCTFontTableCBDT": { "value": 1128416340 },

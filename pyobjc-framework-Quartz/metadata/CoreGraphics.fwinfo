@@ -204,6 +204,12 @@
    }
   },
   "externs": {
+   "kCGColorSpaceDisplayP3_PQ": {
+    "typestr": "@"
+   },
+   "kCGColorSpaceITUR_2020_PQ": {
+    "typestr": "@"
+   },
    "kCGColorConversionBlackPointCompensation": {
     "typestr": "@"
    },

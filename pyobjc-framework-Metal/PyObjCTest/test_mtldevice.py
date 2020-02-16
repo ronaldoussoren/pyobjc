@@ -180,6 +180,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newIndirectCommandBufferWithDescriptor_maxCommandCount_options_(self, a, b, c):
         return 1
 
+    def supportsRasterizationRateMapWithLayerCount_(self, a):
+        return 1
+
 
 class TestMTLDevice(TestCase):
     def test_constants(self):
@@ -563,6 +566,21 @@ class TestMTLDevice(TestCase):
             2,
             objc._C_NSUInteger,
         )
+
+        self.assertResultIsBOOL(
+            TestMTLDeviceHelper.supportsRasterizationRateMapWithLayerCount_)
+        self.assertArgHasType(
+            TestMTLDeviceHelper.supportsRasterizationRateMapWithLayerCount_,
+            0,
+            objc._C_NSUInteger)
+
+        self.assertResultIsBOOL(
+            TestMTLDeviceHelper.supportsVertexAmplificationCount_)
+        self.assertArgHasType(
+            TestMTLDeviceHelper.supportsVertexAmplificationCount_,
+            0,
+            objc._C_NSUInteger)
+
         self.assertResultHasType(TestMTLDeviceHelper.peerGroupID, objc._C_ULNGLNG)
         self.assertResultHasType(TestMTLDeviceHelper.peerIndex, objc._C_UINT)
         self.assertResultHasType(TestMTLDeviceHelper.peerCount, objc._C_UINT)

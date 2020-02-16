@@ -5906,6 +5906,13 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "presentsCalendarOverlay"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "drawsBackground"
      },
      {
@@ -5921,6 +5928,15 @@
        "type_override": "Z"
       },
       "selector": "isBordered"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setPresentsCalendarOverlay:"
      },
      {
       "args": {

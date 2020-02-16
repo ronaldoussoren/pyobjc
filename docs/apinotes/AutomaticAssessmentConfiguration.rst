@@ -1,0 +1,23 @@
+API Notes: AutomaticAssessmentConfiguration framework
+=====================================================
+
+Apple documentation
+-------------------
+
+The full API is described in `Apple's documentation`__, both
+the C and Objective-C APIs are available (but see the `API Notes`_ below).
+
+.. __: https://developer.apple.com/automaticassessmentconfiguration/?language=objc
+
+These bindings are accessed through the ``AutomaticAssessmentConfiguration`` package (that is, ``import AutomaticAssessmentConfiguration``).
+
+
+API Notes
+---------
+
+.. note::
+
+   This framework is only available on OSX 10.15.4 and later.
+
+
+The entire framework is available from Python.

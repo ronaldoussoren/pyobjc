@@ -17,6 +17,11 @@ Version 6.3
   ``PyObjCTools.Conversio.pythonCollectionFromPropertyList`` now
   support sets.
 
+* Update metadata for Xcode 11.4 (beta)
+
+* Added bindings for framework ``AutomaticAssessmentConfiguration.framework``
+  introduced in macOS 10.15.4
+
 
 Version 6.2
 -----------

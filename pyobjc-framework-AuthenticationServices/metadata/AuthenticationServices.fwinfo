@@ -9,6 +9,11 @@
    "ASWebAuthenticationSession": {
     "methods": [
      {
+      "selector": "canStart",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "initWithURL:callbackURLScheme:completionHandler:",
       "class_method": false,
       "args": {

@@ -29,6 +29,5 @@ if sys.maxsize >= 2 ** 32:
                 b"v@",
             )
 
-
 if __name__ == "__main__":
     main()

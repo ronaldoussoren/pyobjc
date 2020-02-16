@@ -938,6 +938,25 @@
    "GKLocalPlayer": {
     "methods": [
      {
+      "selector": "fetchItemsForIdentityVerificationSignature:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" },
+	  "4": { "type": "Q" },
+	  "5": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
       "selector": "loadChallengableFriendsWithCompletionHandler:",
       "class_method": false,
       "args": {

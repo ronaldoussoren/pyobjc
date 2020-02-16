@@ -8,7 +8,8 @@
    "kLAErrorBiometryLockout": { "alias": "kLAErrorTouchIDLockout" },
    "LAErrorBiometryNotAvailable": { "alias": "kLAErrorBiometryNotAvailable" },
    "LAErrorBiometryNotEnrolled": { "alias": "kLAErrorBiometryNotEnrolled" },
-   "LAErrorBiometryLockout": { "alias": "kLAErrorBiometryLockout" }
+   "LAErrorBiometryLockout": { "alias": "kLAErrorBiometryLockout" },
+   "LACredentialTypeSmartCardPIN": { "alias": "kLACredentialSmartCardPIN" }
   },
   "literals": {
    "kLAErrorDomain": {
@@ -19,6 +20,7 @@
      "LATouchIDAuthenticationMaximumAllowableReuseDuration": { "typestr": "d" }
   },
   "enum": {
+   "kLACredentialSmartCardPIN": { "value": -3 },
    "LABiometryTypeNone": { "value": 0 },
    "LABiometryNone": { "value": 0 },
    "LABiometryTypeTouchID": { "value": 1 },

@@ -40,3 +40,9 @@ class TestASWebAuthenticationSession(TestCase):
         )
 
         self.assertResultIsBOOL(AuthenticationServices.ASWebAuthenticationSession.start)
+
+    @min_os_level("10.15.4")
+    def test_methods10_15_4(self):
+        self.assertResultIsBOOL(
+            AuthenticationServices.ASWebAuthenticationSession.canStart
+        )

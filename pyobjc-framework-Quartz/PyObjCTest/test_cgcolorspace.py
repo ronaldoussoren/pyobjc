@@ -86,6 +86,11 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(kCGColorSpaceDisplayP3_HLG, unicode)
         self.assertIsInstance(kCGColorSpaceITUR_2020_HLG, unicode)
 
+    @min_os_level("10.15.5")
+    def testConstants10_15_4(self):
+        self.assertIsInstance(kCGColorSpaceITUR_2020_PQ, unicode)
+        self.assertIsInstance(kCGColorSpaceDisplayP3_PQ, unicode)
+
     def testFunctions(self):
         self.assertResultIsCFRetained(CGColorSpaceCreateDeviceGray)
         self.assertIsInstance(CGColorSpaceCreateDeviceGray(), CGColorSpaceRef)

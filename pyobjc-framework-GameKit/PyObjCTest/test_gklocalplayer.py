@@ -74,6 +74,15 @@ class TestGKLocalPlayer(TestCase):
             b"v@@",
         )
 
+    @min_os_level("10.15.4")
+    def testMethods10_15(self):
+        # XXX: Header says 10.15.5
+        self.assertArgIsBlock(
+            GameKit.GKLocalPlayer.fetchItemsForIdentityVerificationSignature_,
+            0,
+            b"v@@@Q@",
+        )
+
     def testProtocols(self):
         objc.protocolNamed("GKLocalPlayerListener")
 

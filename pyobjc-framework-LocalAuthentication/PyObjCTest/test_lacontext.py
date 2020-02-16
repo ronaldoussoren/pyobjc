@@ -73,6 +73,12 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.LAAccessControlOperationCreateKey, 2)
             self.assertEqual(LocalAuthentication.LAAccessControlOperationUseKeySign, 3)
 
+        @min_os_level("10.15")
+        def test_constants10_15(self):
+            self.assertEqual(
+                LocalAuthentication.LACredentialTypeSmartCardPIN,
+                LocalAuthentication.kLACredentialSmartCardPIN,
+
         @min_os_level("10.12")
         def testConstants10_12(self):
             self.assertEqual(

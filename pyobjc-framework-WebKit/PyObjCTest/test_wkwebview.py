@@ -33,5 +33,12 @@ class TestWKWebView(TestCase):
         self.assertResultIsBOOL(WKWebView.handlesURLScheme_)
 
 
+    @onlyOn64Bit
+    @min_os_level("10.15.4")
+    def testMethods10_15_4(self):
+        self.assertArgIsBlock(WKWebView.createPDFWithConfiguration_completionHandler_, 1, b'@@')
+        self.assertArgIsBlock(WKWebView.createWebArchiveDataWithCompletionHandler_, 0, b'@@')
+        self.assertArgIsBlock(WKWebView.findString_withConfiguration_completionHandler_, 2, b'@')
+
 if __name__ == "__main__":
     main()

@@ -11,4 +11,5 @@ setup(
     app=["TableModel.py"],
     data_files=["English.lproj"],
     setup_requires=["py2app", "pyobjc-framework-Cocoa"],
+    options=dict(py2app=dict(packages=["pkg_resources"])),
 )

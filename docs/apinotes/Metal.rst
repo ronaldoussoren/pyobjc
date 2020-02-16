@@ -20,3 +20,16 @@ API Notes
    This framework is only available on macOS 10.11 and later for 64-bit binaries.
 
 The full API is available from Python.
+
+``-[MTLRasterizationRateLayerDescriptor horizontalSampleStorage]``
+..................................................................
+
+It is generally safer to use ``MTLRasterizationRateLayerDescriptor.horizontal`` instead
+
+
+``-[MTLRasterizationRateLayerDescriptor verticalSampleStorage]``
+................................................................
+
+It is generally safer to use ``MTLRasterizationRateLayerDescriptor.vertical`` instead
+
+

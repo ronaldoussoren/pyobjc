@@ -2653,6 +2653,27 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     }
 #endif /* MAC_OS_X_VERSION_10_15_1 */
 
+#ifdef MAC_OS_X_VERSION_10_15_2
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_2", MAC_OS_X_VERSION_10_15_2) <
+        0) {
+        return NULL;
+    }
+#endif /* MAC_OS_X_VERSION_10_15_2 */
+
+#ifdef MAC_OS_X_VERSION_10_15_3
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_3", MAC_OS_X_VERSION_10_15_3) <
+        0) {
+        return NULL;
+    }
+#endif /* MAC_OS_X_VERSION_10_15_3 */
+
+#ifdef MAC_OS_X_VERSION_10_15_4
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_3) <
+        0) {
+        return NULL;
+    }
+#endif /* MAC_OS_X_VERSION_10_15_4 */
+
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         return NULL;
     }

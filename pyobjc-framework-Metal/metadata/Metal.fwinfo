@@ -2,6 +2,10 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "aliasses": {
+   "MTLCoordinate2D": { "alias": "MTLSamplePosition" },
+   "MTLCoordinate2DMake": { "alias": "MTLSamplePositionMake" }
+  },
   "expressions": {
    "MTLTextureSwizzleChannelsDefault": { "value": "MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)" },
    "MTLResourceCPUCacheModeMask": { "value": "0xf << MTLResourceCPUCacheModeShift" },
@@ -13,8 +17,89 @@
    "MTLCounterDontSample": { "value": 18446744073709551615 }
   },
   "classes": {
+   "MTLRasterizationRateMapDescriptor": {
+    "methods": [
+     {
+      "selector": "rasterizationRateMapDescriptorWithScreenSize:layerCount:layers:",
+      "class_method": false,
+      "args": {
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     }
+    ]
+   },
+   "MTLRasterizationRateLayerDescriptor": {
+    "methods": [
+     {
+      "selector": "initWithSampleCount:horizontal:horizontal:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 0 },
+       "2": { "type_modifier": "n", "c_array_length_in_arg": 0 }
+      }
+     },
+     {
+      "selector": "horizontalSampleStorage",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "verticalSampleStorage",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
+     {
+      "selector": "addPresentedHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "presentAfterMinimumDuration:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "d" }
+      }
+     },
+     {
+      "selector": "drawableID",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     },
+     {
+      "selector": "presentedTime",
+      "class_method": false,
+      "retval": { "type_override": "d" }
+     },
+     {
+      "selector": "supportsVertexAmplificationCount:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "0": { "type_override": "Q" }
+      }
+     },
+     {
+      "selector": "supportsRasterizationRateMapWithLayerCount:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "0": { "type_override": "Q" }
+      }
+     },
      {
       "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }

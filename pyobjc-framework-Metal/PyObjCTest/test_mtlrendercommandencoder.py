@@ -43,6 +43,9 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setFrontFacingWinding_(self, a):
         pass
 
+    def setVertexAmplificationCount_viewMapping_(self, a, b):
+        pass
+
     def setCullMode_(self, a):
         pass
 
@@ -176,6 +179,10 @@ class TestMTLRenderCommandEncoder(TestCase):
         v = Metal.MTLTriangleTessellationFactorsHalf()
         self.assertEqual(v.edgeTessellationFactor, None)
         self.assertEqual(v.insideTessellationFactor, 0)
+
+        v = Metal.MTLVertexAmplificationViewMapping()
+        self.assertEqual(v.viewportArrayIndexOffset, 0)
+        self.assertEqual(v.renderTargetArrayIndexOffset, 0)
 
     @min_sdk_level("10.11")
     def test_protocols(self):
@@ -355,6 +362,17 @@ class TestMTLRenderCommandEncoder(TestCase):
             TestMTLRenderCommandEncoderHelper.setFrontFacingWinding_,
             0,
             objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexAmplificationCount_viewMapping_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setVertexAmplificationCount_viewMapping_,
+            1,
+            Metal.MTLVertexAmplificationViewMapping.__typestr__,
         )
 
         self.assertArgHasType(

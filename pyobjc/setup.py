@@ -28,6 +28,7 @@ FRAMEWORK_WRAPPERS = [
     ("libdispatch", "10.8", None),
     ("AdSupport", "10.14", None),
     ("AuthenticationServices", "10.15", None),
+    ("AutomaticAssessmentConfiguration", "10.15", None),
     ("AVKit", "10.9", None),
     ("AVFoundation", "10.7", None),
     ("Accounts", "10.8", None),

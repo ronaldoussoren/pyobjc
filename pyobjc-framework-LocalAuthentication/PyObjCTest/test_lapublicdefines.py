@@ -29,6 +29,7 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(LocalAuthentication.kLACredentialTypePasscode, -1)
             self.assertEqual(LocalAuthentication.kLACredentialTypePassphrase, -2)
             self.assertEqual(LocalAuthentication.kLACredentialCTKPIN, -3)
+            self.assertEqual(LocalAuthentication.kLACredentialSmartCardPIN, -3)
 
             self.assertEqual(LocalAuthentication.kLAErrorAuthenticationFailed, -1)
             self.assertEqual(LocalAuthentication.kLAErrorUserCancel, -2)

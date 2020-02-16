@@ -54,6 +54,7 @@
     "kColorSyncByteOrder32Big": { "value": 16384 }
   },
   "externs": {
+   "kColorSyncExtendedRange": { "typestr": "@" },
    "kColorSyncTranformInfo": { "typestr": "@" },
    "kColorSyncTransformCreator": { "typestr": "@" },
    "kColorSyncTransformSrcSpace": { "typestr": "@" },

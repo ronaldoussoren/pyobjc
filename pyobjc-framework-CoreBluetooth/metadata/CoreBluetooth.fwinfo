@@ -3,6 +3,8 @@
 {
  "definitions": {
   "enum": {
+   "CBErrorPeerRemovedPairingInformation": { "value": 14 },
+   "CBErrorEncryptionTimedOut": { "value": 15 },
    "CBPeripheralManagerAuthorizationStatusNotDetermined": { "value": 0 },
    "CBPeripheralManagerAuthorizationStatusRestricted": { "value": 1 },
    "CBPeripheralManagerAuthorizationStatusDenied": { "value": 2 },

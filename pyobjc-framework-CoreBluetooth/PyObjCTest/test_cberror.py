@@ -25,6 +25,9 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBErrorUnkownDevice, 12)
         self.assertEqual(CoreBluetooth.CBErrorUnknownDevice, 12)
         self.assertEqual(CoreBluetooth.CBErrorOperationNotSupported, 13)
+        self.assertEqual(CoreBluetooth.CBErrorPeerRemovedPairingInformation, 14)
+        self.assertEqual(CoreBluetooth.CBErrorEncryptionTimedOut, 15)
+
 
         self.assertEqual(CoreBluetooth.CBATTErrorSuccess, 0x00)
         self.assertEqual(CoreBluetooth.CBATTErrorInvalidHandle, 0x01)
@@ -44,6 +47,7 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientEncryption, 0x0F)
         self.assertEqual(CoreBluetooth.CBATTErrorUnsupportedGroupType, 0x10)
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientResources, 0x11)
+
 
 
 if __name__ == "__main__":
