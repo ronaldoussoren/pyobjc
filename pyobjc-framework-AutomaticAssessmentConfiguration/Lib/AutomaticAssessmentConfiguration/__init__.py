@@ -14,7 +14,7 @@ from AutomaticAssessmentConfiguration import _metadata
 
 sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
     "AutomaticAssessmentConfiguration",
-    "com.apple.automaticassessmentconfiguration",
+    "com.apple.AutomaticAssessmentConfiguration",
     objc.pathForFramework("/System/Library/Frameworks/AutomaticAssessmentConfiguration.framework"),
     _metadata.__dict__,
     None,
@@ -26,6 +26,11 @@ sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
     },
     (Foundation,),
 )
+
+import AutomaticAssessmentConfiguration
+import objc
+AutomaticAssessmentConfiguration.AEAssessmentSession = objc.lookUpClass('AutomaticAssessmentConfiguration.AEAssessmentSession')
+AutomaticAssessmentConfiguration.AEAssessmentConfiguration = objc.lookUpClass('AutomaticAssessmentConfiguration.AEAssessmentConfiguration')
 
 import sys
 

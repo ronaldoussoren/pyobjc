@@ -9,8 +9,8 @@ class TestMTLRasterizationRateHelper(Metal.NSObject):
     def parameterBufferSizeAndAlign(self): return 1
     def copyParameterDataToBuffer_offset_(self, a, b): pass
     def physicalSizeForLayer_(self, a): return 1
-    def mapScreenToPhysicalCoordinates_forLayer_(self, a): return 1
-    def mapPhysicalToScreenCoordinates_forLayer_(self, a): return 1
+    def mapScreenToPhysicalCoordinates_forLayer_(self, a, b): return 1
+    def mapPhysicalToScreenCoordinates_forLayer_(self, a, b): return 1
 
 class TestMTLRasterizationRate(TestCase):
 
@@ -25,33 +25,33 @@ class TestMTLRasterizationRate(TestCase):
         self.assertArgHasType(TestMTLRasterizationRateHelper.physicalSizeForLayer_, 0, objc._C_NSUInteger)
 
         self.assertResultHasType(TestMTLRasterizationRateHelper.mapScreenToPhysicalCoordinates_forLayer_, Metal.MTLCoordinate2D.__typestr__)
-        self.assertArgHasType(TestMTLRasterizationRateHelper.mapScreenToPhysicalCoordinates_forLayter_, 0, Metal.MTLCoordinate2D.__typestr__)
-        self.assertArgHasType(TestMTLRasterizationRateHelper.mapScreenToPhysicalCoordinates_forLayter_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLRasterizationRateHelper.mapScreenToPhysicalCoordinates_forLayer_, 0, Metal.MTLCoordinate2D.__typestr__)
+        self.assertArgHasType(TestMTLRasterizationRateHelper.mapScreenToPhysicalCoordinates_forLayer_, 1, objc._C_NSUInteger)
 
         self.assertResultHasType(TestMTLRasterizationRateHelper.mapPhysicalToScreenCoordinates_forLayer_, Metal.MTLCoordinate2D.__typestr__)
-        self.assertArgHasType(TestMTLRasterizationRateHelper.mapPhysicalToScreenCoordinates_forLayter_, 0, Metal.MTLCoordinate2D.__typestr__)
-        self.assertArgHasType(TestMTLRasterizationRateHelper.mapPhysicalToScreenCoordinates_forLayter_, 1, objc._C_NSUInteger)
+        self.assertArgHasType(TestMTLRasterizationRateHelper.mapPhysicalToScreenCoordinates_forLayer_, 0, Metal.MTLCoordinate2D.__typestr__)
+        self.assertArgHasType(TestMTLRasterizationRateHelper.mapPhysicalToScreenCoordinates_forLayer_, 1, objc._C_NSUInteger)
 
     @min_os_level("10.15.4")
     def test_methods10_15_4(self):
         self.assertArgIsIn(
             Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_, 1)
-        )
+
         self.assertArgSizeInArg(
             Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_, 1, 0)
-        )
+
         self.assertArgIsIn(
             Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_, 2)
-        )
+
         self.assertArgSizeInArg(
             Metal.MTLRasterizationRateLayerDescriptor.initWithSampleCount_horizontal_vertical_, 2, 0)
-        )
+
 
         # XXX: Mutable buffer
         self.assertResultIsVariableSize(
-                Metal.MTLRasterizationRateLayerDescriptor.horizontalSampleStorage)
+                Metal.MTLRasterizationRateLayerDescriptor.alloc().initWithSampleCount_((5,5,5)).horizontalSampleStorage)
         self.assertResultIsVariableSize(
-                Metal.MTLRasterizationRateLayerDescriptor.verticalSampleStorage)
+                Metal.MTLRasterizationRateLayerDescriptor.alloc().initWithSampleCount_((5,5,5)).verticalSampleStorage)
 
 
         self.assertArgIsIn(Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_, 2)

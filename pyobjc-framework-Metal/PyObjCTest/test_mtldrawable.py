@@ -33,6 +33,6 @@ class TestMTLDrawable(TestCase):
         self.assertArgHasType(TestMTLDrawableHelper.presentAfterMinimumDuration_, 0, objc._C_DBL)
         self.assertArgIsBlock(TestMTLDrawableHelper.addPresentedHandler_, 0, b'v@')
         self.assertResultHasType(TestMTLDrawableHelper.presentedTime, objc._C_DBL)
-        self.assertResultHasType(TestMTLDrawableHelper.drawableID, objc._C_UInteger)
+        self.assertResultHasType(TestMTLDrawableHelper.drawableID, objc._C_NSUInteger)
 
 

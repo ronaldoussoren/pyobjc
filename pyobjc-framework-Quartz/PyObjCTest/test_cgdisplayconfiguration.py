@@ -54,7 +54,7 @@ class TestCGDisplayConfiguration(TestCase):
             CGCompleteDisplayConfiguration(config, kCGConfigureForAppOnly)
 
             # XXX: For some reason this fails on OSX 10.5:
-            if os_level_key(os_release()) > os_level_key("10.15"):
+            if os_level_key(os_release()) < os_level_key("10.15"):
                 self.assertTrue(len(info) > 0)
 
         finally:

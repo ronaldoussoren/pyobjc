@@ -33,7 +33,9 @@
     strValue = "hello world";
     rectValue = NSMakeRect(1, 2, 3, 4);
     nilValue = nil;
-    pyValue = PySlice_New(PyLong_FromLong(1), PyLong_FromLong(10), PyLong_FromLong(4));
+    PyObjC_BEGIN_WITH_GIL
+        pyValue = PySlice_New(PyLong_FromLong(1), PyLong_FromLong(10), PyLong_FromLong(4));
+    PyObjC_END_WITH_GIL
     objValue = [[NSObject alloc] init];
     return self;
 }

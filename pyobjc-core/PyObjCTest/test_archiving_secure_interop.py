@@ -18,10 +18,10 @@ import sys
 import platform
 
 if sys.version_info[0] == 2:
-    from plistlib import readPlistFromString as readPlistFromBytes, Data
+    from plistlib import readPlistFromString as readPlistFromBytes
 
 else:
-    from plistlib import loads as readPlistFromBytes, Data
+    from plistlib import loads as readPlistFromBytes
 
 
 MYDIR = os.path.dirname(os.path.abspath(__file__))

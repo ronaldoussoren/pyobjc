@@ -183,6 +183,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def supportsRasterizationRateMapWithLayerCount_(self, a):
         return 1
 
+    def supportsVertexAmplificationCount_(self, a):
+        return 1
+
 
 class TestMTLDevice(TestCase):
     def test_constants(self):

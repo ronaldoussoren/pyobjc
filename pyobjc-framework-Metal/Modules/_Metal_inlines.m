@@ -38,6 +38,10 @@ static PyObjC_function_map function_map[] = {
     {"MTLIndirectCommandBufferExecutionRangeMake",
      (PyObjC_Function_Pointer)&MTLIndirectCommandBufferExecutionRangeMake},
 #endif
+#if PyObjC_BUILD_RELEASE >= 1015
+    {"MTLCoordinate2DMake",
+     (PyObjC_Function_Pointer)&MTLCoordinate2DMake},
+#endif
     {0, 0}};
 
 #pragma clang diagnostic pop

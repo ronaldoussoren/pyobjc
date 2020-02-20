@@ -2,10 +2,6 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "aliasses": {
-   "MTLCoordinate2D": { "alias": "MTLSamplePosition" },
-   "MTLCoordinate2DMake": { "alias": "MTLSamplePositionMake" }
-  },
   "expressions": {
    "MTLTextureSwizzleChannelsDefault": { "value": "MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)" },
    "MTLResourceCPUCacheModeMask": { "value": "0xf << MTLResourceCPUCacheModeShift" },
@@ -31,7 +27,7 @@
    "MTLRasterizationRateLayerDescriptor": {
     "methods": [
      {
-      "selector": "initWithSampleCount:horizontal:horizontal:",
+      "selector": "initWithSampleCount:horizontal:vertical:",
       "class_method": false,
       "args": {
        "1": { "type_modifier": "n", "c_array_length_in_arg": 0 },
@@ -52,6 +48,14 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "setVertexAmplificationCount:viewMapping:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Q" },
+       "1": { "type_override": "{_MTLVertexAmplificationViewMapping=II}" }
+      }
+     },
      {
       "selector": "addPresentedHandler:",
       "class_method": false,

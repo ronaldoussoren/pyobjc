@@ -23,8 +23,6 @@ class TestMTLTypes(TestCase):
         self.assertEqual(v.x, 0.0)
         self.assertEqual(v.y, 0.0)
 
-        self.assertIs(Metal.MTLCoordinate2D, Metal.MTLSamplePosition)
-
     def test_functions(self):
         v = Metal.MTLOriginMake(1, 2, 3)
         self.assertIsInstance(v, Metal.MTLOrigin)
@@ -47,7 +45,6 @@ class TestMTLTypes(TestCase):
         self.assertIsInstance(v, Metal.MTLSamplePosition)
         self.assertEqual(v, (0.5, 1.5))
 
-        self.assertIs(Metal.MTLCoordinate2DMake, Metal.MTLSamplePositionMake)
-        v = Metal.MTLCoordinate2DMake(0,5, 1.5)
-        self.assertIsInstance(v, Metal.MTLSamplePosition)
+        v = Metal.MTLCoordinate2DMake(0.5, 1.5)
+        self.assertIsInstance(v, Metal.MTLCoordinate2D)
         self.assertEqual(v, (0.5, 1.5))
