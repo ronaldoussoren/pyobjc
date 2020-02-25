@@ -1855,6 +1855,9 @@ find_protocol_signature(PyObject* protocols, SEL selector, int is_class_method)
                 Py_DECREF(proto);
                 return (char*)signature;
             }
+
+            Py_DECREF(proto);
+            continue;
         }
 
         info = PyObjCInformalProtocol_FindSelector(proto, selector, is_class_method);

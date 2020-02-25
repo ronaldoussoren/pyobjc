@@ -6,6 +6,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 6.3
 -----------
 
+* #290: Fix protocol conformance testing when explicitly implementing a protocol
+
+  Before this bugfix a class explicitly conforming to a protocol could not
+  implement any method that wasn't declared in the protocol, the bridge would
+  erroneously raise an exception when checking the additional method.
+
+  Issue reported by Georg Seifert.
+
 * #289: Fix Python 3 issues in ``PyObjCTools.Conversion``
 
   Reported by vinolin asokan.

@@ -504,8 +504,31 @@ class TestFormalProtocols(TestCase):
             def classMethod(self):
                 return 2
 
+            def anotherMethod(self):
+                return 4
+
         self.assertTrue(
             MyClassImplementingNSObject.conformsToProtocol_(
+                objc.protocolNamed("OC_TestProtocol2")
+            )
+        )
+
+    def testInheritedProtocol2(self):
+        class MyClassImplementingNSObject2(NSObject):
+            __pyobjc_protocols__ = [objc.protocolNamed("OC_TestProtocol2")]
+
+            def method(self):
+                return 1
+
+            @classmethod
+            def classMethod(self):
+                return 2
+
+            def anotherMethod(self):
+                return 4
+
+        self.assertTrue(
+            MyClassImplementingNSObject2.conformsToProtocol_(
                 objc.protocolNamed("OC_TestProtocol2")
             )
         )
