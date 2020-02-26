@@ -32,6 +32,7 @@ if sys.maxsize > 2 ** 32:
                 VideoSubscriberAccount.VSErrorCodeInvalidVerificationToken, 5
             )
             self.assertEqual(VideoSubscriberAccount.VSErrorCodeRejected, 6)
+            self.assertEqual(VideoSubscriberAccount.VSErrorCodeUnsupported, 7)
 
 
 if __name__ == "__main__":
