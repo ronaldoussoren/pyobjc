@@ -1,0 +1,41 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 19.3b0
+    hooks:
+      - id: black
+        language_version: python3.7
+        # override until resolved: https://github.com/ambv/black/issues/402
+        files: \.pyi?$
+        types: []
+
+# Most plugins are disabled for now, these need
+# incremental fixes to the codebase.
+#
+#  - repo: https://gitlab.com/pycqa/flake8
+#    rev: 3.7.8
+#    hooks:
+#      - id: flake8
+#        exclude: ^altgraph_tests/
+#        language_version: python3.7
+#        additional_dependencies:
+#        - flake8-bugbear
+#        - flake8-deprecated
+#        - flake8-comprehensions
+#        - flake8-isort
+#        - flake8-quotes
+#        - flake8-mutable
+#        - flake8-todo
+#
+#  - repo: https://github.com/pre-commit/mirrors-isort
+#    rev: v4.3.21
+#    hooks:
+#      - id: isort
+#        additional_dependencies: [toml]
+#        language_version: python3.7
+#
+#  - repo: https://github.com/pre-commit/pre-commit-hooks
+#    rev: v2.3.0
+#    hooks:
+#      - id: trailing-whitespace
+#      - id: end-of-file-fixer
+#      - id: debug-statements
