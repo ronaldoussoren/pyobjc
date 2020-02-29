@@ -80,11 +80,11 @@ API documentation
 PyObjC Developement
 ===================
 
-PyObjC development is hosted at bickbucket, in particular at <https://bitbucket.org/ronaldoussoren/pyobjc/>.
+PyObjC development is hosted at GitHub, in particular at <https://github.com/ronaldoussoren/pyobjc/>.
 
 Important resources:
 
-* `Issue tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues>`_
+* `Issue tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_
 
 * `PyObjC-dev mailing list <https://sourceforge.net/projects/pyobjc/lists/pyobjc-dev>`_
 
@@ -94,13 +94,13 @@ Important resources:
 
   A mailing list for anyone developing with Python on macOS.
 
-* `Repository browser <https://bitbucket.org/ronaldoussoren/pyobjc/src>`_
+* `Repository browser <https://github.com/ronaldoussoren/pyobjc>`_
 
 * Creating a checkout of the respository:
 
   .. sourcecode:: sh
 
-     $ hg clone https://bitbucket.org/ronaldoussoren/pyobjc pyobjc
+     $ git clone https://github.com/ronaldoussoren/pyobjc
 
   You can then use the "install.py" at the root of the checkout to
   install this version of PyObjC.

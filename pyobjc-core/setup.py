@@ -368,7 +368,10 @@ class oc_egg_info(egg_info.egg_info):
                 "Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n"
             )
             fp.write(
-                "Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n"
+                "Project-URL: Issue tracker, https://github.com/ronaldoussoren/pyobjc/issues\n"
+            )
+            fp.write(
+                "Project-URL: Repository, https://github.com/ronaldoussoren/pyobjc\n"
             )
 
     def write_header(self, basename, filename):
@@ -684,10 +687,10 @@ def parse_package_metadata():
             ] += "* `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_\n\n"
             metadata[
                 opt
-            ] += "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_\n\n"
+            ] += "* `Issue Tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_\n\n"
             metadata[
                 opt
-            ] += "* `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_\n\n"
+            ] += "* `Repository <https://github.com/ronaldoussoren/pyobjc/>`_\n\n"
 
         elif opt in ("packages", "namespace_packages", "platforms", "keywords"):
             metadata[opt] = [x.strip() for x in val.split(",")]

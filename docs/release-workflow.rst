@@ -72,12 +72,12 @@ Tag the release
 Create a tag in the pyobjc repository. The tag name is "pyobjc-VERSION" (with *VERSION* replaced by
 the correct version).
 
-Push to bitbucket.
+Push to GitHub.
 
 Update the PyObjC website
 -------------------------
 
-The PyObjC website is automaticly updated after push to bitbucket.
+The PyObjC website is automaticly updated after push to GitHub.
 
 Upload the new release
 ----------------------
@@ -103,7 +103,7 @@ If this is a new bugfix release:
 * Update the version number in the bugfix branch, the version number if the version number for the
   next release followed by "b1" (e.g. "3.2.2b1" if you just released "3.2.1").
 
-Push the update to bitbucket.
+Push the update to GitHub.
 
 Check the website
 -----------------

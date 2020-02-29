@@ -64,7 +64,11 @@ class oc_egg_info(egg_info.egg_info):
                 % (REPO_NAME,)
             )
             fp.write(
-                "Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/%s/issues?status=new&status=open\n"
+                "Project-URL: Issue tracker, https://github.com/ronaldoussoren/%s/issues\n"
+                % (REPO_NAME,)
+            )
+            fp.write(
+                "Project-URL: Repository, https://github.com/ronaldoussoren/%s\n"
                 % (REPO_NAME,)
             )
 
@@ -561,12 +565,11 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
             % (REPO_NAME,)
         )
         k["long_description"] += (
-            "* `Issue Tracker <https://bitbucket.org/ronaldoussoren/%s/issues?status=new&status=open>`_\n\n"
+            "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues`_\n\n"
             % (REPO_NAME,)
         )
         k["long_description"] += (
-            "* `Repository <https://bitbucket.org/ronaldoussoren/%s/>`_\n\n"
-            % (REPO_NAME,)
+            "* `Repository <https://github.com/ronaldoussoren/%s/>`_\n\n" % (REPO_NAME,)
         )
         k["long_description_content_type"] = "text/x-rst; charset=UTF-8"
 
@@ -574,7 +577,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         cmdclass=cmdclass,
         author="Ronald Oussoren",
         author_email="pyobjc-dev@lists.sourceforge.net",
-        url="https://bitbucket.org/ronaldoussoren/pyobjc",
+        url="https://github.com/ronaldoussoren/pyobjc",
         platforms=[plat_name],
         package_dir={"": "Lib", "PyObjCTest": "PyObjCTest"},
         dependency_links=[],

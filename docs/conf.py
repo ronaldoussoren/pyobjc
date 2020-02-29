@@ -37,9 +37,7 @@ extensions = [
     "sphinx_sitemap",
 ]
 
-extlinks = {
-    "issue": ("https://bitbucket.org/ronaldoussoren/pyobjc/issues/%s", "issue ")
-}
+extlinks = {"issue": ("https://github.com/ronaldoussoren/pyobjc/issues/%s", "issue ")}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

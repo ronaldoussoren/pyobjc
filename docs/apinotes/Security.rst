@@ -45,7 +45,7 @@ These lowlevel APIs are not available from Python.
 
 This APIs are specialized and would require manual bindings. They are therefore not available from Python at this time.
 
-Please file an issue at `PyObjC's issue tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_ when you have a
+Please file an issue at `PyObjC's issue tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_ when you have a
 usecase for these APIs.
 
 ``SecPolicyCreateWithOID``, ``SecPolicyGetOID``, ``SecPolicyGetValue``, ``SecPolicySetValue``, ``SecPolicyGetTPHandle``, ``SecPolicySetProperties``
@@ -162,7 +162,7 @@ The following functions are not available from Python because they are legacy AP
 ``SecKeychainItemCopyAttributesAndData``, ``SecKeychainItemModifyAttributesAndData``, ``SecKeychainItemFreeAttributesAndData``,
 ``SecKeychainItemCopyContent``, ``SecKeychainItemModifyContent``, ``SecKeychainItemFreeContent``.
 
-Please file an issue at `PyObjC's issue tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_ when you have a
+Please file an issue at `PyObjC's issue tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_ when you have a
 usecase for these APIs.
 
 Legacy Keychain attribute API

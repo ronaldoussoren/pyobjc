@@ -214,8 +214,8 @@ Project links
 -------------
 
 * `Documentation <https://pyobjc.readthedocs.io/en/latest/>`_
-* `Issue Tracker <https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open>`_
-* `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_
+* `Issue Tracker <https://github.com/ronaldoussoren/pyobjc/issues>`_
+* `Repository <https://github.com/ronaldoussoren/pyobjc/>`_
 """
 
 
@@ -524,7 +524,10 @@ class oc_egg_info(egg_info.egg_info):
                 "Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n"
             )
             fp.write(
-                "Project-URL: Issue tracker, https://bitbucket.org/ronaldoussoren/pyobjc/issues?status=new&status=open\n"
+                "Project-URL: Issue tracker, https://github.com/ronaldoussoren/pyobjc/issues\n"
+            )
+            fp.write(
+                "Project-URL: Repository, https://github.com/ronaldoussoren/pyobjc\n"
             )
 
 
@@ -536,7 +539,7 @@ dist = setup(
     long_description_content_type="text/x-rst; charset=UTF-8",
     author="Ronald Oussoren",
     author_email="pyobjc-dev@lists.sourceforge.net",
-    url="https://bitbucket.org/ronaldoussoren/pyobjc",
+    url="https://github.com/ronaldoussoren/pyobjc",
     platforms=["macOS"],
     packages=[],
     install_requires=BASE_REQUIRES + framework_requires(),
