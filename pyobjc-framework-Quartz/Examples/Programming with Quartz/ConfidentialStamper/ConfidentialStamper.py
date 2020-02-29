@@ -1,10 +1,12 @@
 """
 Add a watermark to all pages in a PDF document
 """
-import sys, math, os
+import math
+import os
+import sys
 
-import Quartz
 import Cocoa
+import Quartz
 
 
 def usage(name):

@@ -2,7 +2,9 @@
 #
 # Last update: Tue Jun  5 12:04:40 2018
 
-import objc, sys
+import sys
+
+import objc
 
 if sys.maxsize > 2 ** 32:
 

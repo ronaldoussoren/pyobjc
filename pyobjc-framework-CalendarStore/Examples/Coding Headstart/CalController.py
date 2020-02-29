@@ -4,21 +4,18 @@ by this application.  Exposes read-only collections
 (calendars, events, tasks) as observable entities.
 """
 import objc
-from Cocoa import NSValueTransformer, NSString, NSObject, NSDate, NSNotificationCenter
-from CalendarStore import CalCalendarStore, CalCalendarsChangedExternallyNotification
 from CalendarStore import (
+    CalCalendarsChangedExternallyNotification,
     CalCalendarsChangedNotification,
+    CalCalendarStore,
     CalEventsChangedExternallyNotification,
-)
-from CalendarStore import (
     CalEventsChangedNotification,
     CalPriorityHigh,
     CalPriorityMedium,
-)
-from CalendarStore import (
     CalTasksChangedExternallyNotification,
     CalTasksChangedNotification,
 )
+from Cocoa import NSDate, NSNotificationCenter, NSObject, NSString, NSValueTransformer
 
 highPriority = "High"
 normPriority = "Normal"

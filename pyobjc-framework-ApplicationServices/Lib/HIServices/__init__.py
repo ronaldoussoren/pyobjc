@@ -5,9 +5,9 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Cocoa
 
+import Cocoa
+import objc
 from HIServices import _metadata
 
 sys.modules["HIServices"] = mod = objc.ObjCLazyModule(
@@ -25,6 +25,5 @@ sys.modules["HIServices"] = mod = objc.ObjCLazyModule(
     (Cocoa,),
 )
 
-import sys
 
 del sys.modules["HIServices._metadata"]

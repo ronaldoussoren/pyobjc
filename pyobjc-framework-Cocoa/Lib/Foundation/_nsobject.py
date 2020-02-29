@@ -1,8 +1,9 @@
 """
 Define a category on NSObject with some useful methods.
 """
-import objc
 import sys
+
+import objc
 
 if sys.version_info[0] == 2:
 

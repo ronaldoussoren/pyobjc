@@ -1,9 +1,10 @@
 from __future__ import print_function
-import Cocoa
-import Quartz
 
 import sys
+
+import Cocoa
 import objc
+import Quartz
 
 DEBUG = 1
 

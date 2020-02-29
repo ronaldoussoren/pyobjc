@@ -1,5 +1,7 @@
-from Foundation import NSObject, NSMutableArray
-import os, pwd
+import os
+import pwd
+
+from Foundation import NSMutableArray, NSObject
 
 
 def getPasswords():

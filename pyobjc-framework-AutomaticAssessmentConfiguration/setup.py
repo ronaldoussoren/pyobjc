@@ -7,8 +7,9 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-from pyobjc_setup import setup
 import os
+
+from pyobjc_setup import setup
 
 VERSION = "6.2b1"
 
@@ -18,9 +19,6 @@ setup(
     min_os_level="10.15",
     packages=["AutomaticAssessmentConfiguration"],
     version=VERSION,
-    install_requires=[
-        "pyobjc-core>=" + VERSION,
-        "pyobjc-framework-Cocoa>=" + VERSION,
-    ],
+    install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
 )

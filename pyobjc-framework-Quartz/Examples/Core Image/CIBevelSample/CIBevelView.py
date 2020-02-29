@@ -1,12 +1,9 @@
-import objc
-from objc import super
-import Quartz
-
-from SampleCIView import SampleCIView
-
 from math import sin
 
 import objc
+import Quartz
+from objc import super
+from SampleCIView import SampleCIView
 
 NUM_POINTS = 4
 

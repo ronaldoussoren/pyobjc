@@ -5,13 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
+import Foundation
+import objc
 from SafariServices import _metadata
 from SafariServices._SafariServices import *
-
 
 sys.modules["SafariServices"] = mod = objc.ObjCLazyModule(
     "SafariServices",
@@ -28,6 +27,5 @@ sys.modules["SafariServices"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["SafariServices._metadata"]

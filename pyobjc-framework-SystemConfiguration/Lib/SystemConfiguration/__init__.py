@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Foundation
-import SystemConfiguration._manual
 
+import Foundation
+import objc
+import SystemConfiguration._manual as m
 from SystemConfiguration import _metadata
 
 sys.modules["SystemConfiguration"] = mod = objc.ObjCLazyModule(
@@ -26,11 +26,9 @@ sys.modules["SystemConfiguration"] = mod = objc.ObjCLazyModule(
     (Foundation, SystemConfiguration._manual),
 )
 
-import sys
 
 del sys.modules["SystemConfiguration._metadata"]
 
-import SystemConfiguration._manual as m
 
 for nm in dir(m):
     setattr(mod, nm, getattr(m, nm))

@@ -5,6 +5,31 @@ This module defines the core interfaces of the Python<->Objective-C bridge.
 """
 import sys
 
+import objc._callable_docstr
+import objc._pycoder as _pycoder
+from objc._bridges import *
+from objc._bridgesupport import *
+from objc._category import *
+from objc._compat import *
+from objc._context import *
+from objc._convenience import *
+from objc._convenience_mapping import *
+from objc._convenience_nsarray import *
+from objc._convenience_nsdata import *
+from objc._convenience_nsdecimal import *
+from objc._convenience_nsdictionary import *
+from objc._convenience_nsobject import *
+from objc._convenience_nsset import *
+from objc._convenience_nsstring import *
+from objc._convenience_sequence import *
+from objc._descriptors import *
+from objc._dyld import *
+from objc._lazyimport import *
+from objc._locking import *
+from objc._properties import *
+from objc._protocols import *
+from objc._pythonify import *
+
 # Aliases for some common Objective-C constants
 nil = None
 YES = True
@@ -21,33 +46,6 @@ def _update(g=globals()):
 _update()
 del _update
 
-from objc._convenience import *
-from objc._convenience_nsobject import *
-from objc._convenience_nsdecimal import *
-from objc._convenience_nsdata import *
-from objc._convenience_nsdictionary import *
-from objc._convenience_nsset import *
-from objc._convenience_nsarray import *
-from objc._convenience_nsstring import *
-from objc._convenience_mapping import *
-from objc._convenience_sequence import *
-
-from objc._bridgesupport import *
-
-from objc._dyld import *
-from objc._protocols import *
-from objc._descriptors import *
-from objc._category import *
-from objc._bridges import *
-from objc._pythonify import *
-from objc._locking import *
-from objc._context import *
-from objc._properties import *
-from objc._lazyimport import *
-from objc._compat import *
-import objc._callable_docstr
-
-import objc._pycoder as _pycoder
 
 # Helper function for new-style metadata modules
 def _resolve_name(name):

@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
 from PyObjCTest.testoutputinitializer import PyObjC_TestOutputInitializer
+from PyObjCTools.TestSupport import *
 
 objc.registerMetaDataForSelector(
     b"PyObjC_TestOutputInitializer",

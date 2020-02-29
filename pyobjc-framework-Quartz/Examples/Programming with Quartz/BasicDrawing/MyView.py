@@ -1,11 +1,9 @@
-import objc
-from objc import super
-import Cocoa
-
-import UIHandling
 import AppDrawing
+import Cocoa
 import FrameworkTextDrawing
-
+import objc
+import UIHandling
+from objc import super
 
 # XXX: Why are these global?
 _drawingCommand = UIHandling.kHICommandSimpleRect

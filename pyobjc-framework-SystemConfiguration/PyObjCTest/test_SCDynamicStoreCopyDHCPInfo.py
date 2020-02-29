@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
-
-from SystemConfiguration import *
-from Foundation import NSData, NSDate
 import os
+
+from Foundation import NSData, NSDate
+from PyObjCTools.TestSupport import *
+from SystemConfiguration import *
 
 
 class TestSCDynamicStoreCopyDHCPInfo(TestCase):

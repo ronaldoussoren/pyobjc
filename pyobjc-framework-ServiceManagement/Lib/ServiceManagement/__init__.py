@@ -5,9 +5,9 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import CoreFoundation
 
+import CoreFoundation
+import objc
 from ServiceManagement import _metadata
 
 sys.modules["ServiceManagement"] = mod = objc.ObjCLazyModule(
@@ -25,6 +25,5 @@ sys.modules["ServiceManagement"] = mod = objc.ObjCLazyModule(
     (CoreFoundation,),
 )
 
-import sys
 
 del sys.modules["ServiceManagement._metadata"]

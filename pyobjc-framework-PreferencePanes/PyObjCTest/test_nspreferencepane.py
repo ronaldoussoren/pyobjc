@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from PreferencePanes import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSPreferencePane(TestCase):

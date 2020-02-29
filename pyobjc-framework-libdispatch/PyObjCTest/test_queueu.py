@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
+import array
 
 import libdispatch
-import array
+from PyObjCTools.TestSupport import *
 
 
 class TestQueueAPI(TestCase):

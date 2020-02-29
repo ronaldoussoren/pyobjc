@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
 import re
+
 from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCFUUIDAPI(TestCase):

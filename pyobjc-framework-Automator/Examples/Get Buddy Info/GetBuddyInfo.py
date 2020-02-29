@@ -1,20 +1,22 @@
 import sys
-from Cocoa import NSAppleEventDescriptor
+
+from AddressBook import ABAddressBook, ABPerson
 from Automator import AMBundleAction
+from Cocoa import NSAppleEventDescriptor
 from InstantMessage import (
-    IMService,
     IMPersonFirstNameKey,
     IMPersonLastNameKey,
-    IMPersonServiceNameKey,
-)
-from InstantMessage import (
     IMPersonScreenNameKey,
+    IMPersonServiceNameKey,
+    IMPersonStatusAvailable,
+    IMPersonStatusAway,
+    IMPersonStatusIdle,
     IMPersonStatusKey,
+    IMPersonStatusMessageKey,
+    IMPersonStatusOffline,
     IMPersonStatusUnknown,
+    IMService,
 )
-from InstantMessage import IMPersonStatusOffline, IMPersonStatusIdle, IMPersonStatusAway
-from InstantMessage import IMPersonStatusAvailable, IMPersonStatusMessageKey
-from AddressBook import ABAddressBook, ABPerson
 
 
 class GetBuddyInfo(AMBundleAction):

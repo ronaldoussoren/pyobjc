@@ -1,12 +1,12 @@
 # FIXME: This test suite seems to polute it's environment, other tests fail
 # when this test suite is active!
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
+
 import sys
 
-from PyObjCTools.TestSupport import onlyPython2
-
 import objc
+from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import onlyPython2
 
 NSObject = objc.lookUpClass("NSObject")
 

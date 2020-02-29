@@ -1,7 +1,9 @@
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
-import objc
+
 import sys
+
+import objc
+from PyObjCTools.TestSupport import *
 
 # Most useful systems will at least have 'NSObject'.
 # NSObject = objc.lookUpClass('NSObject')

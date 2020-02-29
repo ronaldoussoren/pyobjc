@@ -7,10 +7,10 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from PyObjCTools import AppHelper
 import objc
-from objc import super
 from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver
+from objc import super
+from PyObjCTools import AppHelper
 
 
 class FilteringControllerDocument(NSDocument):

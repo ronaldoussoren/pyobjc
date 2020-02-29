@@ -1,9 +1,9 @@
-from PyObjCTools import AppHelper
+import AppDelegate
+import MyPDFDocument
 import objc
+from PyObjCTools import AppHelper
 
 objc.setVerbose(True)
 
-import MyPDFDocument
-import AppDelegate
 
 AppHelper.runEventLoop()

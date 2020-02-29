@@ -4,11 +4,11 @@ Example showing screen saver in PyObjC
 Based on "Silly Balls.saver" by Eric Peyton <epeyton@epicware.com>
     http://www.epicware.com/macosxsavers.html
 """
-import objc
+from random import random, randrange
 
+import objc
 from AppKit import NSBezierPath, NSColor
 from ScreenSaver import ScreenSaverView
-from random import random, randrange
 
 
 class SillyBalls(ScreenSaverView):

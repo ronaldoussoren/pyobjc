@@ -61,7 +61,7 @@ ffi_type_test(
 #	define FFI_ASSERT_AT(x, f, l)	((x) ? 0 : ffi_assert(#x, (f), (l)))
 #	define FFI_ASSERT_VALID_TYPE(x)	ffi_type_test(x, __FILE__, __LINE__)
 #else
-#	define FFI_ASSERT(x) 
+#	define FFI_ASSERT(x)
 #	define FFI_ASSERT_AT(x, f, l)
 #	define FFI_ASSERT_VALID_TYPE(x)
 #endif	// #ifdef FFI_DEBUG

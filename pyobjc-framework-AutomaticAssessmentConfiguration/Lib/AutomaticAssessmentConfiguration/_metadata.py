@@ -2,25 +2,87 @@
 #
 # Last update: Tue Feb 18 21:37:38 2020
 
-import objc, sys
+import sys
+
+import objc
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
-}
-constants = '''$$'''
-enums = '''$$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+constants = """$$"""
+enums = """$$"""
 misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'AutomaticAssessmentConfiguration.AEAssessmentSession', b'beginSessionWithConfiguration:completion:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}}}})
-    r(b'AutomaticAssessmentConfiguration.AEAssessmentSession', b'endWithCompletion:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
-    r(b'AutomaticAssessmentConfiguration.AEAssessmentSession', b'invalidationHandler', {'retval': {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}})
-    r(b'AutomaticAssessmentConfiguration.AEAssessmentSession', b'setInvalidationHandler:', {'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}}}})
+    r(
+        b"AutomaticAssessmentConfiguration.AEAssessmentSession",
+        b"beginSessionWithConfiguration:completion:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"AutomaticAssessmentConfiguration.AEAssessmentSession",
+        b"endWithCompletion:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"AutomaticAssessmentConfiguration.AEAssessmentSession",
+        b"invalidationHandler",
+        {
+            "retval": {
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                }
+            }
+        },
+    )
+    r(
+        b"AutomaticAssessmentConfiguration.AEAssessmentSession",
+        b"setInvalidationHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    }
+                }
+            }
+        },
+    )
 finally:
     objc._updatingMetadata(False)
 expressions = {}

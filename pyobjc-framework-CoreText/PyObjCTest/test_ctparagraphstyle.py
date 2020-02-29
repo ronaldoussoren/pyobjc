@@ -1,7 +1,9 @@
-from PyObjCTools.TestSupport import *
+import struct
+import sys
+
 from CoreText import *
 from Foundation import NSArray
-import struct, sys
+from PyObjCTools.TestSupport import *
 
 
 class TestCTParagraphStyle(TestCase):

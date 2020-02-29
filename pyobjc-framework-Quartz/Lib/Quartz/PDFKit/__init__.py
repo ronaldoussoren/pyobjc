@@ -5,11 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import AppKit
 
-from Quartz.PDFKit import _metadata
-from Quartz.PDFKit import _PDFKit
+import AppKit
+import objc
+from Quartz.PDFKit import _metadata, _PDFKit
 
 # XXX: Moved to topelevel framework in 10.15
 
@@ -30,6 +29,5 @@ sys.modules["Quartz.PDFKit"] = mod = objc.ObjCLazyModule(
     (AppKit,),
 )
 
-import sys
 
 del sys.modules["Quartz.PDFKit._metadata"]

@@ -6,24 +6,24 @@
    "NSObject": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "exceptionHandler:shouldHandleException:mask:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "exceptionHandler:shouldLogException:mask:"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

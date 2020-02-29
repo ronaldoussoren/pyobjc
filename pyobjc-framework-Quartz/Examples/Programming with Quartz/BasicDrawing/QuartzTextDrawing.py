@@ -1,8 +1,7 @@
-import Quartz
-
-import Utilities
-
 import sys
+
+import Quartz
+import Utilities
 
 
 def drawQuartzRomanText(context):

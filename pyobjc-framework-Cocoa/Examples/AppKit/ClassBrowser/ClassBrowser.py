@@ -12,11 +12,11 @@ sources or nibs.)
 See also the iClass demo.
 """
 import sys
-from PyObjCTools import AppHelper
-from objc import getClassList, objc_object
+
 import objc
 from Foundation import NSObject
-
+from objc import getClassList, objc_object
+from PyObjCTools import AppHelper
 
 try:
     import AddressBook

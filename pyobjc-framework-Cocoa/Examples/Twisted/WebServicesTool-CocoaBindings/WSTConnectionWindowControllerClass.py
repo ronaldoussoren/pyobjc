@@ -4,13 +4,11 @@ for the document windows for the Web Services Tool application.
 
 Implements a standard toolbar.
 """
-import objc
 import AppKit
-
+import objc
+from RPCMethod import *
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
-
-from RPCMethod import *
 
 # from twisted.python import log
 # import sys

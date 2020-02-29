@@ -1,11 +1,14 @@
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
+
+import os
+import sys
+
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass4
+from PyObjCTools.TestSupport import *
+
 from . import fnd as Foundation
-from .fnd import NSObject, NSArray, NSAttributedString
-import sys
-import os
+from .fnd import NSArray, NSAttributedString, NSObject
 
 
 class TestConstants(TestCase):

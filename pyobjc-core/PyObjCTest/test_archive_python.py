@@ -4,9 +4,26 @@ Testcases for NSArchive-ing python objects.
 (Implementation is incomplete)
 """
 import os
-
-import sys
 import pickle
+import sys
+import test.pickletester
+
+import objc._pycoder as pycoder
+from PyObjCTest.fnd import (
+    NSArchiver,
+    NSArray,
+    NSData,
+    NSDictionary,
+    NSKeyedArchiver,
+    NSKeyedUnarchiver,
+    NSMutableArray,
+    NSMutableData,
+    NSMutableDictionary,
+    NSSet,
+    NSString,
+    NSUnarchiver,
+)
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     import copyreg
@@ -16,14 +33,6 @@ if sys.version_info[0] == 3:
 else:
     import copy_reg as copyreg
 
-from PyObjCTools.TestSupport import *
-import objc._pycoder as pycoder
-
-from PyObjCTest.fnd import NSArchiver, NSUnarchiver
-from PyObjCTest.fnd import NSKeyedArchiver, NSKeyedUnarchiver
-from PyObjCTest.fnd import NSData, NSArray, NSDictionary
-from PyObjCTest.fnd import NSMutableArray, NSMutableDictionary
-from PyObjCTest.fnd import NSMutableData, NSString, NSSet
 
 #
 # First set of tests: the stdlib tests for pickling, this
@@ -35,7 +44,6 @@ if sys.version_info[0] == 3:
     unicode = str
     long = int
 
-import test.pickletester
 
 MyList = test.pickletester.MyList
 

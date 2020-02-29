@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Foundation
 
-from ImageCaptureCore import _metadata, _ImageCaptureCore
+import Foundation
+import objc
+from ImageCaptureCore import _ImageCaptureCore, _metadata
 
 sys.modules["ImageCaptureCore"] = mod = objc.ObjCLazyModule(
     "ImageCaptureCore",
@@ -25,6 +25,5 @@ sys.modules["ImageCaptureCore"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["ImageCaptureCore._metadata"]

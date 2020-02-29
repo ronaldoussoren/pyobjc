@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import OSLog
+from PyObjCTools.TestSupport import *
 
 
 class TestEntryHelper(OSLog.NSObject):

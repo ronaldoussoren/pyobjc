@@ -1,6 +1,6 @@
 import objc
-from Cocoa import NSObject, NSDate, NSApp, NSApplication, NSLog
 from CalendarStore import CalCalendarStore, CalEvent, CalTask
+from Cocoa import NSApp, NSApplication, NSDate, NSLog, NSObject
 
 
 class AppController(NSObject):

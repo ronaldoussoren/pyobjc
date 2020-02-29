@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
-import objc
 import AddressBook
+import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestAddressBook(TestCase):

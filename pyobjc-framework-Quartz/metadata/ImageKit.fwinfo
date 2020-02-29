@@ -9,142 +9,142 @@
       "args": {
        "2": {
         "sel_of_type": [
-         "v@:@i^v", 
+         "v@:@i^v",
          "v@:@q^v"
         ]
-       }, 
+       },
        "3": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "beginWithOptions:modelessDelegate:didEndSelector:contextInfo:"
-     }, 
+     },
      {
       "args": {
        "3": {
         "sel_of_type": [
-         "v@:@i^v", 
+         "v@:@i^v",
          "v@:@q^v"
         ]
-       }, 
+       },
        "4": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "beginSheetWithOptions:modalForWindow:modalDelegate:didEndSelector:contextInfo:"
      }
     ]
-   }, 
+   },
    "IKImagePicker": {
     "methods": [
      {
       "args": {
        "1": {
         "sel_of_type": [
-         "v@:@I^v", 
+         "v@:@I^v",
          "v@:@Q^v"
         ]
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "beginImagePickerWithDelegate:didEndSelector:contextInfo:"
-     }, 
+     },
      {
       "args": {
        "2": {
         "sel_of_type": [
-         "v@:@I^v", 
+         "v@:@I^v",
          "v@:@Q^v"
         ]
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "beginImagePickerSheetForWindow:withDelegate:didEndSelector:contextInfo:"
      }
     ]
-   }, 
+   },
    "IKImageView": {
     "methods": [
      {
       "args": {
        "0": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setImage:imageProperties:"
-     }, 
+     },
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "image"
      }
     ]
-   }, 
+   },
    "IKPictureTaker": {
     "methods": [
      {
       "args": {
        "1": {
         "sel_of_type": [
-         "v@:@i^v", 
+         "v@:@i^v",
          "v@:@q^v"
         ]
-       }, 
+       },
        "2": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "beginPictureTakerWithDelegate:didEndSelector:contextInfo:"
-     }, 
+     },
      {
       "args": {
        "2": {
         "sel_of_type": [
-         "v@:@i^v", 
+         "v@:@i^v",
          "v@:@q^v"
         ]
-       }, 
+       },
        "3": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "beginPictureTakerSheetForWindow:withDelegate:didEndSelector:contextInfo:"
-     }, 
+     },
      {
       "args": {
        "2": {
         "sel_of_type": [
-         "v@:@i^v", 
+         "v@:@i^v",
          "v@:@q^v"
         ]
-       }, 
+       },
        "3": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "popUpRecentsMenuForView:withDelegate:didEndSelector:contextInfo:"
      }
     ]
    }
-  }, 
+  },
   "formal_protocols": {
    "IKImageEditPanelDataSource": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "image"
-     }, 
+     },
      {
       "args": {
        "0": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setImage:imageProperties:"
-     }, 
+     },
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "thumbnailWithMaximumSize:"
      }
     ]
    }
-  }, 
-  "functions": {}, 
+  },
+  "functions": {},
   "informal_protocols": {}
  }
 }

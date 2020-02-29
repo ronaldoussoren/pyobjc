@@ -5,13 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
 import Foundation
-
-from OSLog import _metadata
+import objc
 import OSLog._OSLog
-
+from OSLog import _metadata
 
 sys.modules["OSLog"] = mod = objc.ObjCLazyModule(
     "OSLog",
@@ -28,6 +27,5 @@ sys.modules["OSLog"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["OSLog._metadata"]

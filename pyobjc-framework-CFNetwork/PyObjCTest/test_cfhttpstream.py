@@ -1,6 +1,7 @@
+import os
+
 from CFNetwork import *
 from PyObjCTools.TestSupport import *
-import os
 
 
 class TestCFHTTPStream(TestCase):

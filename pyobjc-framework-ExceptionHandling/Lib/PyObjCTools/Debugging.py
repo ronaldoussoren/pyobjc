@@ -16,18 +16,18 @@ General guidelines for use:
 """
 from __future__ import print_function
 
-from Foundation import NSObject, NSLog
-import objc
 import os
 import sys
-
 import traceback
+
+import objc
 from ExceptionHandling import (
     NSExceptionHandler,
-    NSLogUncaughtExceptionMask,
     NSLogAndHandleEveryExceptionMask,
+    NSLogUncaughtExceptionMask,
     NSStackTraceKey,
 )
+from Foundation import NSLog, NSObject
 
 DEFAULTMASK = NSLogUncaughtExceptionMask
 EVERYTHINGMASK = NSLogAndHandleEveryExceptionMask

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreHaptics
+from PyObjCTools.TestSupport import *
 
 
 class TestCHHapticEvent(TestCase):

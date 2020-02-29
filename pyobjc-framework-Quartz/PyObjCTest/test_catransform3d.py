@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
-from Quartz.QuartzCore import *
-from Quartz import *
 from Foundation import NSValue
+from PyObjCTools.TestSupport import *
+from Quartz import *
+from Quartz.QuartzCore import *
 
 
 class TestCATransform3D(TestCase):

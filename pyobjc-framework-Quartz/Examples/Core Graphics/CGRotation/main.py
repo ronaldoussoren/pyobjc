@@ -1,10 +1,10 @@
-from PyObjCTools import AppHelper
+import CGImageUtils
+import CGImageView
+import Controller
 import objc
+from PyObjCTools import AppHelper
 
 objc.setVerbose(True)
 
-import CGImageView
-import Controller
-import CGImageUtils
 
 AppHelper.runEventLoop()

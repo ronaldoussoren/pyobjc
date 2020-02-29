@@ -2,15 +2,15 @@
 A very crude emulator of dejagnu, just enough to integrate the libbfi
 unittests into the pyobjc ones.
 """
+import codecs
 import os
 import re
-import sys
 import signal
-import codecs
-from fnmatch import fnmatch
+import sys
 import unittest
-from distutils.util import get_platform
 from distutils.sysconfig import get_config_var
+from distutils.util import get_platform
+from fnmatch import fnmatch
 
 gDgCommands = re.compile(
     r"""

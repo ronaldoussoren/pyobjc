@@ -1,6 +1,6 @@
+import CoreData
 import objc
 from PyObjCTools.TestSupport import *
-import CoreData
 
 
 class TestNSIncrementalStore(TestCase):

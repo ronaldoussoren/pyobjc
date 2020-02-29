@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import *
-import objc
-from Foundation import *
-
 # HACK
 import Foundation
+import objc
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 # NSZonePtr = getattr(Foundation, 'NSZone*')
 

@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<!-- minimal data for the CGL framework that allows access to OpenGL, 
+<!-- minimal data for the CGL framework that allows access to OpenGL,
      we're relying on PyOpenGL for full access to OpenGL -->
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
 <signatures version='0.9'>

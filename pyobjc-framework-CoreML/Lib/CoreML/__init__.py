@@ -5,13 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
+import Foundation
+import objc
 from CoreML import _metadata
 from CoreML._CoreML import *
-
 
 sys.modules["CoreML"] = mod = objc.ObjCLazyModule(
     "CoreML",
@@ -28,6 +27,5 @@ sys.modules["CoreML"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreML._metadata"]

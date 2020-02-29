@@ -42,17 +42,17 @@ int main (void)
   ts8_type_elements[4] = NULL;
 
   test_structure_8 ts8_arg;
-  
+
   /* This is a hack to get a properly aligned result buffer */
-  test_structure_8 *ts8_result = 
+  test_structure_8 *ts8_result =
     (test_structure_8 *) malloc (sizeof(test_structure_8));
-  
+
   args[0] = &ts8_type;
   values[0] = &ts8_arg;
-  
+
   /* Initialize the cif */
   CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ts8_type, args) == FFI_OK);
-  
+
   ts8_arg.f1 = 5.55f;
   ts8_arg.f2 = 55.5f;
   ts8_arg.f3 = -5.55f;
@@ -62,19 +62,19 @@ int main (void)
   printf ("%g\n", ts8_arg.f2);
   printf ("%g\n", ts8_arg.f3);
   printf ("%g\n", ts8_arg.f4);
-  
+
   ffi_call(&cif, FFI_FN(struct8), ts8_result, values);
 
   printf ("%g\n", ts8_result->f1);
   printf ("%g\n", ts8_result->f2);
   printf ("%g\n", ts8_result->f3);
   printf ("%g\n", ts8_result->f4);
-  
+
   CHECK(ts8_result->f1 == 5.55f + 1);
   CHECK(ts8_result->f2 == 55.5f + 1);
   CHECK(ts8_result->f3 == -5.55f + 1);
   CHECK(ts8_result->f4 == -55.5f + 1);
-  
+
   free (ts8_result);
   exit(0);
 }

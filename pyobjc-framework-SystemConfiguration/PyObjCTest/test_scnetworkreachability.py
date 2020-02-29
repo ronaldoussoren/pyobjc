@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import *
-from SystemConfiguration import *
+import contextlib
 import socket
 
 from PyObjCTest.test_scnetwork import resolver_available
-import contextlib
+from PyObjCTools.TestSupport import *
+from SystemConfiguration import *
 
 
 class TestSCNetworkReachability(TestCase):

@@ -1,6 +1,6 @@
-import objc
-import Cocoa
 import AppDrawing
+import Cocoa
+import objc
 
 
 def getURLToExport(suffix):

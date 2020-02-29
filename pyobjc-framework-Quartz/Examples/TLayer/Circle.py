@@ -1,8 +1,8 @@
-import Cocoa
-import Quartz
-
-import objc
 import math
+
+import Cocoa
+import objc
+import Quartz
 
 
 class Circle(Cocoa.NSObject):

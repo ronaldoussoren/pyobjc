@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Security
+from PyObjCTools.TestSupport import *
 
 SecTrustCallback = b"v@I"
 SecTrustWithErrorCallback = b"v@B@"

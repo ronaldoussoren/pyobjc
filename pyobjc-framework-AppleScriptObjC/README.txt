@@ -1,4 +1,4 @@
-Wrappers for framework 'AppleScriptObjC'. 
+Wrappers for framework 'AppleScriptObjC'.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation

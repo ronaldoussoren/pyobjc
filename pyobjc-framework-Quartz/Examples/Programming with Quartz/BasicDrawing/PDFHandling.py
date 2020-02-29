@@ -1,11 +1,11 @@
-import AppDrawing
-import FrameworkUtilities
-import Utilities
-import DataProvidersAndConsumers
-import Cocoa
-import Quartz
-
 import sys
+
+import AppDrawing
+import Cocoa
+import DataProvidersAndConsumers
+import FrameworkUtilities
+import Quartz
+import Utilities
 
 
 def createNewPDFRefFromPasteBoard():

@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from Foundation import NSNull
+from PyObjCTools.TestSupport import *
 
 
 class TestNSNull(TestCase):

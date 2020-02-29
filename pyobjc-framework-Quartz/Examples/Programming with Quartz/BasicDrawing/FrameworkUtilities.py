@@ -1,6 +1,5 @@
-import Cocoa
-
 import AppDrawing
+import Cocoa
 
 
 def myCreatePDFDataFromPasteBoard():

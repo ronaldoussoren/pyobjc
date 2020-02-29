@@ -1,8 +1,7 @@
-from PyObjCTools.TestSupport import *
-
-from Foundation import *
-import Foundation
 import AppKit
+import Foundation
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSBundle(TestCase):

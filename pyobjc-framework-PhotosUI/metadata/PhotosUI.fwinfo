@@ -9,40 +9,40 @@
       "args": {
        "1": {
         "type_override": [
-         "i", 
+         "i",
          "q"
         ]
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "livePhotoView:willBeginPlaybackWithStyle:"
-     }, 
+     },
      {
       "args": {
        "1": {
         "type_override": [
-         "i", 
+         "i",
          "q"
         ]
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "livePhotoView:didEndPlaybackWithStyle:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "canHandleAdjustmentData:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "shouldShowCancelConfirmation"
-     }, 
+     },
      {
       "args": {
        "2": {
@@ -50,21 +50,21 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
-        }, 
+        },
         "type_override": "@?"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "beginProjectWithExtensionContext:projectInfo:completion:"
-     }, 
+     },
      {
       "args": {
        "1": {
@@ -72,21 +72,21 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
-        }, 
+        },
         "type_override": "@?"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "resumeProjectWithExtensionContext:completion:"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -94,21 +94,21 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
-        }, 
+        },
         "type_override": "@?"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "finishProjectWithCompletionHandler:"
-     }, 
+     },
      {
       "args": {
        "0": {
@@ -116,52 +116,52 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
-        }, 
+        },
         "type_override": "@?"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "finishContentEditingWithCompletionHandler:"
      }
     ]
-   }, 
+   },
    "PHLivePhotoView": {
     "methods": [
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isMuted"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "setMuted:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "type_override": "Z"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "stopPlaybackAnimated:"
      }
     ]
-   }, 
+   },
    "PHProjectExtensionContext": {
     "methods": [
      {
@@ -171,97 +171,97 @@
          "arguments": {
           "0": {
            "typestr": "^v"
-          }, 
+          },
           "1": {
            "typestr": "@"
           }
-         }, 
+         },
          "retval": {
           "typestr": "v"
          }
         }
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "updatedProjectInfoFromProjectInfo:completion:"
      }
     ]
    }
-  }, 
+  },
   "enum": {
    "PHLivePhotoViewContentModeAspectFill": {
     "value": 1
-   }, 
+   },
    "PHLivePhotoViewContentModeAspectFit": {
     "value": 0
-   }, 
+   },
    "PHLivePhotoViewPlaybackStyleFull": {
     "value": 1
-   }, 
+   },
    "PHLivePhotoViewPlaybackStyleHint": {
     "value": 2
-   }, 
+   },
    "PHLivePhotoViewPlaybackStyleUndefined": {
     "value": 0
-   }, 
+   },
    "PHProjectCreationSourceAlbum": {
     "value": 2
-   }, 
+   },
    "PHProjectCreationSourceMemory": {
     "value": 3
-   }, 
+   },
    "PHProjectCreationSourceMoment": {
     "value": 4
-   }, 
+   },
    "PHProjectCreationSourceProject": {
     "value": 20
-   }, 
+   },
    "PHProjectCreationSourceProjectBook": {
     "value": 21
-   }, 
+   },
    "PHProjectCreationSourceProjectCalendar": {
     "value": 22
-   }, 
+   },
    "PHProjectCreationSourceProjectCard": {
     "value": 23
-   }, 
+   },
    "PHProjectCreationSourceProjectExtension": {
     "value": 26
-   }, 
+   },
    "PHProjectCreationSourceProjectPrintOrder": {
     "value": 24
-   }, 
+   },
    "PHProjectCreationSourceProjectSlideshow": {
     "value": 25
-   }, 
+   },
    "PHProjectCreationSourceUndefined": {
     "value": 0
-   }, 
+   },
    "PHProjectCreationSourceUserSelection": {
     "value": 1
-   }, 
+   },
    "PHProjectSectionTypeAuxiliary": {
     "value": 3
-   }, 
+   },
    "PHProjectSectionTypeContent": {
     "value": 2
-   }, 
+   },
    "PHProjectSectionTypeCover": {
     "value": 1
-   }, 
+   },
    "PHProjectSectionTypeUndefined": {
     "value": 0
-   }, 
+   },
    "PHProjectTextElementTypeBody": {
     "value": 0
-   }, 
+   },
    "PHProjectTextElementTypeSubtitle": {
     "value": 2
-   }, 
+   },
    "PHProjectTextElementTypeTitle": {
     "value": 1
    }
-  }, 
+  },
   "externs": {
    "PHProjectTypeUndefined": {
     "typestr": "@"

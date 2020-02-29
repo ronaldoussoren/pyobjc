@@ -15,12 +15,13 @@ sources or nibs.)
 NOTE: This example requires Python 2 because it uses the "Carbon"
       module that was removed in Python 3.
 """
+import struct
+from Carbon.CarbonEvt import GetApplicationEventTarget, RegisterEventHotKey
+from Carbon.Events import cmdKey, controlKey
+
 import Cocoa
 from objc import super
 from PyObjCTools import AppHelper
-from Carbon.CarbonEvt import RegisterEventHotKey, GetApplicationEventTarget
-from Carbon.Events import cmdKey, controlKey
-import struct
 
 kEventHotKeyPressedSubtype = 6
 kEventHotKeyReleasedSubtype = 9

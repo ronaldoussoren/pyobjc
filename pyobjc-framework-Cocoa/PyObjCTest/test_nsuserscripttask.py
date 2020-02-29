@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Foundation
+from PyObjCTools.TestSupport import *
 
 NSUserScriptTaskCompletionHandler = b"v@"
 NSUserUnixTaskCompletionHandler = b"v@"

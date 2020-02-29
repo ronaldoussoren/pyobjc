@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreMediaIO
+from PyObjCTools.TestSupport import *
 
 CMIOObjectPropertyListenerProc = b"iII^{CMIOObjectPropertyAddress=III}^v"
 CMIOObjectPropertyListenerBlock = b"vIn^{CMIOObjectPropertyAddress=III}"

@@ -5,11 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
-from CoreWLAN import _metadata, _CoreWLAN
+import Foundation
+import objc
+from CoreWLAN import _CoreWLAN, _metadata
 
 
 def _CW8021XProfile__eq__(self, other):
@@ -125,7 +125,6 @@ sys.modules["CoreWLAN"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreWLAN._metadata"]
 del sys.modules["CoreWLAN._CoreWLAN"]

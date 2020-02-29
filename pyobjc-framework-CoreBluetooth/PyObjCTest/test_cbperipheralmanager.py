@@ -1,7 +1,7 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 import CoreBluetooth
+from PyObjCTools.TestSupport import *
 
 
 class TestCBPeriphalManagerHelper(CoreBluetooth.NSObject):

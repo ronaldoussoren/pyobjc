@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import CoreServices
+from PyObjCTools.TestSupport import *
 
 
 class TestSKSearch(TestCase):

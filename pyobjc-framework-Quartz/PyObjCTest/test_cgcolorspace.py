@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
-from Quartz.CoreGraphics import *
 import array
 import sys
+
+from PyObjCTools.TestSupport import *
+from Quartz.CoreGraphics import *
 
 if sys.version_info[0] != 2:
 

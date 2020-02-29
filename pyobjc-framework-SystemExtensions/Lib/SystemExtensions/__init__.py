@@ -5,13 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
 import Foundation
-
-from SystemExtensions import _metadata
-from SystemExtensions import _SystemExtensions
-
+import objc
+from SystemExtensions import _metadata, _SystemExtensions
 
 sys.modules["SystemExtensions"] = mod = objc.ObjCLazyModule(
     "SystemExtensions",
@@ -28,6 +26,5 @@ sys.modules["SystemExtensions"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["SystemExtensions._metadata"]

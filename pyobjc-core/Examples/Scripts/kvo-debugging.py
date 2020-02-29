@@ -3,9 +3,11 @@
 Experimental code, attempting to work around Apple's KVO hacks.
 """
 from __future__ import print_function
-from Foundation import *
-import objc
+
 import sys
+
+import objc
+from Foundation import *
 
 _kvoclassed = {}
 

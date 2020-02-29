@@ -1,5 +1,5 @@
-from WebKit import *
 from PyObjCTools.TestSupport import *
+from WebKit import *
 
 
 class TestDOMHTMLTextAreaElement(TestCase):

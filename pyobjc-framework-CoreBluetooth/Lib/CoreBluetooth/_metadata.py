@@ -2,75 +2,393 @@
 #
 # Last update: Tue Feb 11 22:22:02 2020
 
-import objc, sys
+import sys
+
+import objc
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
-}
-constants = '''$CBATTErrorDomain$CBAdvertisementDataIsConnectable$CBAdvertisementDataLocalNameKey$CBAdvertisementDataManufacturerDataKey$CBAdvertisementDataOverflowServiceUUIDsKey$CBAdvertisementDataServiceDataKey$CBAdvertisementDataServiceUUIDsKey$CBAdvertisementDataSolicitedServiceUUIDsKey$CBAdvertisementDataTxPowerLevelKey$CBCentralManagerOptionRestoreIdentifierKey$CBCentralManagerOptionShowPowerAlertKey$CBCentralManagerRestoredStatePeripheralsKey$CBCentralManagerRestoredStateScanOptionsKey$CBCentralManagerRestoredStateScanServicesKey$CBCentralManagerScanOptionAllowDuplicatesKey$CBCentralManagerScanOptionSolicitedServiceUUIDsKey$CBConnectPeripheralOptionEnableTransportBridgingKey$CBConnectPeripheralOptionNotifyOnConnectionKey$CBConnectPeripheralOptionNotifyOnDisconnectionKey$CBConnectPeripheralOptionNotifyOnNotificationKey$CBConnectPeripheralOptionRequiresANCS$CBConnectPeripheralOptionStartDelayKey$CBConnectionEventMatchingOptionPeripheralUUIDs$CBConnectionEventMatchingOptionServiceUUIDs$CBErrorDomain$CBPeripheralManagerOptionRestoreIdentifierKey$CBPeripheralManagerOptionShowPowerAlertKey$CBPeripheralManagerRestoredStateAdvertisementDataKey$CBPeripheralManagerRestoredStateServicesKey$CBUUIDAppearanceString$CBUUIDCharacteristicAggregateFormatString$CBUUIDCharacteristicExtendedPropertiesString$CBUUIDCharacteristicFormatString$CBUUIDCharacteristicUserDescriptionString$CBUUIDCharacteristicValidRangeString$CBUUIDClientCharacteristicConfigurationString$CBUUIDDeviceNameString$CBUUIDGenericAccessProfileString$CBUUIDGenericAttributeProfileString$CBUUIDL2CAPPSMCharacteristicString$CBUUIDPeripheralPreferredConnectionParametersString$CBUUIDPeripheralPrivacyFlagString$CBUUIDReconnectionAddressString$CBUUIDServerCharacteristicConfigurationString$CBUUIDServiceChangedString$'''
-enums = '''$CBATTErrorAttributeNotFound@10$CBATTErrorAttributeNotLong@11$CBATTErrorInsufficientAuthentication@5$CBATTErrorInsufficientAuthorization@8$CBATTErrorInsufficientEncryption@15$CBATTErrorInsufficientEncryptionKeySize@12$CBATTErrorInsufficientResources@17$CBATTErrorInvalidAttributeValueLength@13$CBATTErrorInvalidHandle@1$CBATTErrorInvalidOffset@7$CBATTErrorInvalidPdu@4$CBATTErrorPrepareQueueFull@9$CBATTErrorReadNotPermitted@2$CBATTErrorRequestNotSupported@6$CBATTErrorSuccess@0$CBATTErrorUnlikelyError@14$CBATTErrorUnsupportedGroupType@16$CBATTErrorWriteNotPermitted@3$CBAttributePermissionsReadEncryptionRequired@4$CBAttributePermissionsReadable@1$CBAttributePermissionsWriteEncryptionRequired@8$CBAttributePermissionsWriteable@2$CBCentralManagerFeatureExtendedScanAndConnect@1$CBCentralManagerStatePoweredOff@4$CBCentralManagerStatePoweredOn@5$CBCentralManagerStateResetting@1$CBCentralManagerStateUnauthorized@3$CBCentralManagerStateUnknown@0$CBCentralManagerStateUnsupported@2$CBCharacteristicPropertyAuthenticatedSignedWrites@64$CBCharacteristicPropertyBroadcast@1$CBCharacteristicPropertyExtendedProperties@128$CBCharacteristicPropertyIndicate@32$CBCharacteristicPropertyIndicateEncryptionRequired@512$CBCharacteristicPropertyNotify@16$CBCharacteristicPropertyNotifyEncryptionRequired@256$CBCharacteristicPropertyRead@2$CBCharacteristicPropertyWrite@8$CBCharacteristicPropertyWriteWithoutResponse@4$CBCharacteristicWriteWithResponse@0$CBCharacteristicWriteWithoutResponse@1$CBConnectionEventPeerConnected@1$CBConnectionEventPeerDisconnected@0$CBErrorAlreadyAdvertising@9$CBErrorConnectionFailed@10$CBErrorConnectionLimitReached@11$CBErrorConnectionTimeout@6$CBErrorEncryptionTimedOut@15$CBErrorInvalidHandle@2$CBErrorInvalidParameters@1$CBErrorNotConnected@3$CBErrorOperationCancelled@5$CBErrorOperationNotSupported@13$CBErrorOutOfSpace@4$CBErrorPeerRemovedPairingInformation@14$CBErrorPeripheralDisconnected@7$CBErrorUUIDNotAllowed@8$CBErrorUnknown@0$CBErrorUnknownDevice@12$CBErrorUnkownDevice@12$CBManagerAuthorizationAllowedAlways@3$CBManagerAuthorizationDenied@2$CBManagerAuthorizationNotDetermined@0$CBManagerAuthorizationRestricted@1$CBManagerStatePoweredOff@4$CBManagerStatePoweredOn@5$CBManagerStateResetting@1$CBManagerStateUnauthorized@3$CBManagerStateUnknown@0$CBManagerStateUnsupported@2$CBPeripheralAuthorizationStatusAuthorized@3$CBPeripheralAuthorizationStatusDenied@2$CBPeripheralAuthorizationStatusNotDetermined@0$CBPeripheralAuthorizationStatusRestricted@1$CBPeripheralManagerAuthorizationStatusAuthorized@3$CBPeripheralManagerAuthorizationStatusDenied@2$CBPeripheralManagerAuthorizationStatusNotDetermined@0$CBPeripheralManagerAuthorizationStatusRestricted@1$CBPeripheralManagerConnectionLatencyHigh@2$CBPeripheralManagerConnectionLatencyLow@0$CBPeripheralManagerConnectionLatencyMedium@1$CBPeripheralManagerStatePoweredOff@4$CBPeripheralManagerStatePoweredOn@5$CBPeripheralManagerStateResetting@1$CBPeripheralManagerStateUnauthorized@3$CBPeripheralManagerStateUnknown@0$CBPeripheralManagerStateUnsupported@2$CBPeripheralStateConnected@2$CBPeripheralStateConnecting@1$CBPeripheralStateDisconnected@0$CBPeripheralStateDisconnecting@3$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+constants = """$CBATTErrorDomain$CBAdvertisementDataIsConnectable$CBAdvertisementDataLocalNameKey$CBAdvertisementDataManufacturerDataKey$CBAdvertisementDataOverflowServiceUUIDsKey$CBAdvertisementDataServiceDataKey$CBAdvertisementDataServiceUUIDsKey$CBAdvertisementDataSolicitedServiceUUIDsKey$CBAdvertisementDataTxPowerLevelKey$CBCentralManagerOptionRestoreIdentifierKey$CBCentralManagerOptionShowPowerAlertKey$CBCentralManagerRestoredStatePeripheralsKey$CBCentralManagerRestoredStateScanOptionsKey$CBCentralManagerRestoredStateScanServicesKey$CBCentralManagerScanOptionAllowDuplicatesKey$CBCentralManagerScanOptionSolicitedServiceUUIDsKey$CBConnectPeripheralOptionEnableTransportBridgingKey$CBConnectPeripheralOptionNotifyOnConnectionKey$CBConnectPeripheralOptionNotifyOnDisconnectionKey$CBConnectPeripheralOptionNotifyOnNotificationKey$CBConnectPeripheralOptionRequiresANCS$CBConnectPeripheralOptionStartDelayKey$CBConnectionEventMatchingOptionPeripheralUUIDs$CBConnectionEventMatchingOptionServiceUUIDs$CBErrorDomain$CBPeripheralManagerOptionRestoreIdentifierKey$CBPeripheralManagerOptionShowPowerAlertKey$CBPeripheralManagerRestoredStateAdvertisementDataKey$CBPeripheralManagerRestoredStateServicesKey$CBUUIDAppearanceString$CBUUIDCharacteristicAggregateFormatString$CBUUIDCharacteristicExtendedPropertiesString$CBUUIDCharacteristicFormatString$CBUUIDCharacteristicUserDescriptionString$CBUUIDCharacteristicValidRangeString$CBUUIDClientCharacteristicConfigurationString$CBUUIDDeviceNameString$CBUUIDGenericAccessProfileString$CBUUIDGenericAttributeProfileString$CBUUIDL2CAPPSMCharacteristicString$CBUUIDPeripheralPreferredConnectionParametersString$CBUUIDPeripheralPrivacyFlagString$CBUUIDReconnectionAddressString$CBUUIDServerCharacteristicConfigurationString$CBUUIDServiceChangedString$"""
+enums = """$CBATTErrorAttributeNotFound@10$CBATTErrorAttributeNotLong@11$CBATTErrorInsufficientAuthentication@5$CBATTErrorInsufficientAuthorization@8$CBATTErrorInsufficientEncryption@15$CBATTErrorInsufficientEncryptionKeySize@12$CBATTErrorInsufficientResources@17$CBATTErrorInvalidAttributeValueLength@13$CBATTErrorInvalidHandle@1$CBATTErrorInvalidOffset@7$CBATTErrorInvalidPdu@4$CBATTErrorPrepareQueueFull@9$CBATTErrorReadNotPermitted@2$CBATTErrorRequestNotSupported@6$CBATTErrorSuccess@0$CBATTErrorUnlikelyError@14$CBATTErrorUnsupportedGroupType@16$CBATTErrorWriteNotPermitted@3$CBAttributePermissionsReadEncryptionRequired@4$CBAttributePermissionsReadable@1$CBAttributePermissionsWriteEncryptionRequired@8$CBAttributePermissionsWriteable@2$CBCentralManagerFeatureExtendedScanAndConnect@1$CBCentralManagerStatePoweredOff@4$CBCentralManagerStatePoweredOn@5$CBCentralManagerStateResetting@1$CBCentralManagerStateUnauthorized@3$CBCentralManagerStateUnknown@0$CBCentralManagerStateUnsupported@2$CBCharacteristicPropertyAuthenticatedSignedWrites@64$CBCharacteristicPropertyBroadcast@1$CBCharacteristicPropertyExtendedProperties@128$CBCharacteristicPropertyIndicate@32$CBCharacteristicPropertyIndicateEncryptionRequired@512$CBCharacteristicPropertyNotify@16$CBCharacteristicPropertyNotifyEncryptionRequired@256$CBCharacteristicPropertyRead@2$CBCharacteristicPropertyWrite@8$CBCharacteristicPropertyWriteWithoutResponse@4$CBCharacteristicWriteWithResponse@0$CBCharacteristicWriteWithoutResponse@1$CBConnectionEventPeerConnected@1$CBConnectionEventPeerDisconnected@0$CBErrorAlreadyAdvertising@9$CBErrorConnectionFailed@10$CBErrorConnectionLimitReached@11$CBErrorConnectionTimeout@6$CBErrorEncryptionTimedOut@15$CBErrorInvalidHandle@2$CBErrorInvalidParameters@1$CBErrorNotConnected@3$CBErrorOperationCancelled@5$CBErrorOperationNotSupported@13$CBErrorOutOfSpace@4$CBErrorPeerRemovedPairingInformation@14$CBErrorPeripheralDisconnected@7$CBErrorUUIDNotAllowed@8$CBErrorUnknown@0$CBErrorUnknownDevice@12$CBErrorUnkownDevice@12$CBManagerAuthorizationAllowedAlways@3$CBManagerAuthorizationDenied@2$CBManagerAuthorizationNotDetermined@0$CBManagerAuthorizationRestricted@1$CBManagerStatePoweredOff@4$CBManagerStatePoweredOn@5$CBManagerStateResetting@1$CBManagerStateUnauthorized@3$CBManagerStateUnknown@0$CBManagerStateUnsupported@2$CBPeripheralAuthorizationStatusAuthorized@3$CBPeripheralAuthorizationStatusDenied@2$CBPeripheralAuthorizationStatusNotDetermined@0$CBPeripheralAuthorizationStatusRestricted@1$CBPeripheralManagerAuthorizationStatusAuthorized@3$CBPeripheralManagerAuthorizationStatusDenied@2$CBPeripheralManagerAuthorizationStatusNotDetermined@0$CBPeripheralManagerAuthorizationStatusRestricted@1$CBPeripheralManagerConnectionLatencyHigh@2$CBPeripheralManagerConnectionLatencyLow@0$CBPeripheralManagerConnectionLatencyMedium@1$CBPeripheralManagerStatePoweredOff@4$CBPeripheralManagerStatePoweredOn@5$CBPeripheralManagerStateResetting@1$CBPeripheralManagerStateUnauthorized@3$CBPeripheralManagerStateUnknown@0$CBPeripheralManagerStateUnsupported@2$CBPeripheralStateConnected@2$CBPeripheralStateConnecting@1$CBPeripheralStateDisconnected@0$CBPeripheralStateDisconnecting@3$"""
 misc.update({})
-aliases = {'CBCentralManagerStateUnknown': 'CBManagerStateUnknown', 'CBPeripheralManagerStatePoweredOff': 'CBManagerStatePoweredOff', 'CBCentralManagerStatePoweredOn': 'CBManagerStatePoweredOn', 'CBCentralManagerStatePoweredOff': 'CBManagerStatePoweredOff', 'CBPeripheralManagerStateUnauthorized': 'CBManagerStateUnauthorized', 'CBPeripheralManagerStatePoweredOn': 'CBManagerStatePoweredOn', 'CBCentralManagerStateUnsupported': 'CBManagerStateUnsupported', 'CBCentralManagerStateUnauthorized': 'CBManagerStateUnauthorized', 'CBPeripheralManagerStateUnknown': 'CBManagerStateUnknown', 'CBPeripheralManagerStateResetting': 'CBManagerStateResetting', 'CBPeripheralManagerStateUnsupported': 'CBManagerStateUnsupported', 'CBCentralManagerStateResetting': 'CBManagerStateResetting'}
+aliases = {
+    "CBCentralManagerStateUnknown": "CBManagerStateUnknown",
+    "CBPeripheralManagerStatePoweredOff": "CBManagerStatePoweredOff",
+    "CBCentralManagerStatePoweredOn": "CBManagerStatePoweredOn",
+    "CBCentralManagerStatePoweredOff": "CBManagerStatePoweredOff",
+    "CBPeripheralManagerStateUnauthorized": "CBManagerStateUnauthorized",
+    "CBPeripheralManagerStatePoweredOn": "CBManagerStatePoweredOn",
+    "CBCentralManagerStateUnsupported": "CBManagerStateUnsupported",
+    "CBCentralManagerStateUnauthorized": "CBManagerStateUnauthorized",
+    "CBPeripheralManagerStateUnknown": "CBManagerStateUnknown",
+    "CBPeripheralManagerStateResetting": "CBManagerStateResetting",
+    "CBPeripheralManagerStateUnsupported": "CBManagerStateUnsupported",
+    "CBCentralManagerStateResetting": "CBManagerStateResetting",
+}
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'CBCentralManager', b'isScanning', {'retval': {'type': 'Z'}})
-    r(b'CBCentralManager', b'supportsFeatures:', {'retval': {'type': b'Z'}})
-    r(b'CBCharacteristic', b'isBroadcasted', {'retval': {'type': b'Z'}})
-    r(b'CBCharacteristic', b'isNotifying', {'retval': {'type': b'Z'}})
-    r(b'CBMutableService', b'initWithType:primary:', {'arguments': {3: {'type': b'Z'}}})
-    r(b'CBMutableService', b'isPrimary', {'retval': {'type': b'Z'}})
-    r(b'CBMutableService', b'setIsPrimary:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'CBPeripheral', b'ancsAuthorized', {'retval': {'type': b'Z'}})
-    r(b'CBPeripheral', b'canSendWriteWithoutResponse', {'retval': {'type': 'Z'}})
-    r(b'CBPeripheral', b'isConnected', {'retval': {'type': b'Z'}})
-    r(b'CBPeripheral', b'setNotifyValue:forCharacteristic:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'CBPeripheralManager', b'isAdvertising', {'retval': {'type': b'Z'}})
-    r(b'CBPeripheralManager', b'publishL2CAPChannelWithEncryption:', {'arguments': {2: {'type': 'Z'}}})
-    r(b'CBPeripheralManager', b'updateValue:forCharacteristic:onSubscribedCentrals:', {'retval': {'type': b'Z'}})
-    r(b'CBService', b'isPrimary', {'retval': {'type': b'Z'}})
-    r(b'NSObject', b'centralManager:connectionEventDidOccur:forPeripheral:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'q'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:didConnectPeripheral:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:didDisconnectPeripheral:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:didDiscoverPeripheral:advertisementData:RSSI:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}, 5: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:didFailToConnectPeripheral:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:didRetrieveConnectedPeripherals:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:didRetrievePeripherals:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:didUpdateANCSAuthorizationForPeripheral:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'centralManager:willRestoreState:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'centralManagerDidUpdateState:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didDiscoverCharacteristicsForService:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didDiscoverDescriptorsForCharacteristic:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didDiscoverIncludedServicesForService:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didDiscoverServices:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didModifyServices:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didOpenL2CAPChannel:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didReadRSSI:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didUpdateNotificationStateForCharacteristic:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didUpdateValueForCharacteristic:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didUpdateValueForDescriptor:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didWriteValueForCharacteristic:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheral:didWriteValueForDescriptor:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralDidInvalidateServices:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralDidUpdateName:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralDidUpdateRSSI:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralIsReadyToSendWriteWithoutResponse:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:central:didSubscribeToCharacteristic:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:central:didUnsubscribeFromCharacteristic:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:didAddService:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:didOpenL2CAPChannel:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': 'S'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:didPublishL2CAPChannel:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': 'S'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:didReceiveReadRequest:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:didReceiveWriteRequests:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:didUnpublishL2CAPChannel:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': 'S'}, 4: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManager:willRestoreState:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManagerDidStartAdvertising:error:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManagerDidUpdateState:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'peripheralManagerIsReadyToUpdateSubscribers:', {'required': False, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
+    r(b"CBCentralManager", b"isScanning", {"retval": {"type": "Z"}})
+    r(b"CBCentralManager", b"supportsFeatures:", {"retval": {"type": b"Z"}})
+    r(b"CBCharacteristic", b"isBroadcasted", {"retval": {"type": b"Z"}})
+    r(b"CBCharacteristic", b"isNotifying", {"retval": {"type": b"Z"}})
+    r(b"CBMutableService", b"initWithType:primary:", {"arguments": {3: {"type": b"Z"}}})
+    r(b"CBMutableService", b"isPrimary", {"retval": {"type": b"Z"}})
+    r(b"CBMutableService", b"setIsPrimary:", {"arguments": {2: {"type": b"Z"}}})
+    r(b"CBPeripheral", b"ancsAuthorized", {"retval": {"type": b"Z"}})
+    r(b"CBPeripheral", b"canSendWriteWithoutResponse", {"retval": {"type": "Z"}})
+    r(b"CBPeripheral", b"isConnected", {"retval": {"type": b"Z"}})
+    r(
+        b"CBPeripheral",
+        b"setNotifyValue:forCharacteristic:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(b"CBPeripheralManager", b"isAdvertising", {"retval": {"type": b"Z"}})
+    r(
+        b"CBPeripheralManager",
+        b"publishL2CAPChannelWithEncryption:",
+        {"arguments": {2: {"type": "Z"}}},
+    )
+    r(
+        b"CBPeripheralManager",
+        b"updateValue:forCharacteristic:onSubscribedCentrals:",
+        {"retval": {"type": b"Z"}},
+    )
+    r(b"CBService", b"isPrimary", {"retval": {"type": b"Z"}})
+    r(
+        b"NSObject",
+        b"centralManager:connectionEventDidOccur:forPeripheral:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"q"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:didConnectPeripheral:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:didDisconnectPeripheral:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:didDiscoverPeripheral:advertisementData:RSSI:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"@"},
+                4: {"type": b"@"},
+                5: {"type": b"@"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:didFailToConnectPeripheral:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:didRetrieveConnectedPeripherals:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:didRetrievePeripherals:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:didUpdateANCSAuthorizationForPeripheral:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManager:willRestoreState:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"centralManagerDidUpdateState:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didDiscoverCharacteristicsForService:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didDiscoverDescriptorsForCharacteristic:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didDiscoverIncludedServicesForService:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didDiscoverServices:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didModifyServices:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didOpenL2CAPChannel:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didReadRSSI:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didUpdateNotificationStateForCharacteristic:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didUpdateValueForCharacteristic:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didUpdateValueForDescriptor:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didWriteValueForCharacteristic:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheral:didWriteValueForDescriptor:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralDidInvalidateServices:",
+        {"required": False, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"peripheralDidUpdateName:",
+        {"required": False, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"peripheralDidUpdateRSSI:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralIsReadyToSendWriteWithoutResponse:",
+        {"required": False, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:central:didSubscribeToCharacteristic:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:central:didUnsubscribeFromCharacteristic:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:didAddService:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:didOpenL2CAPChannel:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": "S"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:didPublishL2CAPChannel:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": "S"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:didReceiveReadRequest:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:didReceiveWriteRequests:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:didUnpublishL2CAPChannel:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": "S"}, 4: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManager:willRestoreState:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManagerDidStartAdvertising:error:",
+        {
+            "required": False,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"peripheralManagerDidUpdateState:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"peripheralManagerIsReadyToUpdateSubscribers:",
+        {"required": False, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
 finally:
     objc._updatingMetadata(False)
 expressions = {}

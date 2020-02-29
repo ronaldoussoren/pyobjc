@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import *
 import os
 import subprocess
 import sys
 
 import objc._dyld as dyld
+from PyObjCTools.TestSupport import *
 
 
 class TestDyld(TestCase):

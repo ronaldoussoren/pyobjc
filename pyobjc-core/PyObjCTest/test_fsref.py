@@ -1,10 +1,10 @@
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
-import objc
-
-from PyObjCTest.fsref import *
 
 import sys
+
+import objc
+from PyObjCTest.fsref import *
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     unicode = str

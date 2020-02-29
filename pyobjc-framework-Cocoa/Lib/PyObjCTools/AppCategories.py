@@ -3,7 +3,7 @@ A number of usefull categories on AppKit classes
 """
 __all__ = ()
 import objc
-from AppKit import NSGraphicsContext, NSAnimationContext
+from AppKit import NSAnimationContext, NSGraphicsContext
 
 
 class _ctxHelper(object):

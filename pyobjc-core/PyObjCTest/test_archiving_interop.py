@@ -5,15 +5,15 @@
 # str, int, float) a pure ObjC program should be able to read
 # that archive as a datastructure with the corresponding Cocoa
 # classes.
-from PyObjCTools.TestSupport import *
-
-import objc
+import os
+import platform
 import subprocess
+import sys
 import tempfile
 from distutils.sysconfig import get_config_var
-import os
-import sys
-import platform
+
+import objc
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 2:
     from plistlib import readPlistFromString as loads

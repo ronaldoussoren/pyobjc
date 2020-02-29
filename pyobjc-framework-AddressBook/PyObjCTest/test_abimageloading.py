@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import AddressBook
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestABImageClientHelper(AddressBook.NSObject):

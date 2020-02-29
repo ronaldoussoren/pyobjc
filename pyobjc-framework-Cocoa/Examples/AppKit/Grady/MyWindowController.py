@@ -1,6 +1,6 @@
+import Cocoa
 import objc
 from objc import super
-import Cocoa
 
 
 class MyWindowController(Cocoa.NSWindowController):

@@ -5,10 +5,11 @@ The actual class is defined in Foundation, but having the wrapper
 here is much more convenient.
 """
 __all__ = ()
-from objc._convenience import addConvenienceForClass
-from objc._objc import lookUpClass, NSDecimal
-import sys
 import operator
+import sys
+
+from objc._convenience import addConvenienceForClass
+from objc._objc import NSDecimal, lookUpClass
 
 NSDecimalNumber = lookUpClass("NSDecimalNumber")
 

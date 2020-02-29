@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-import objc
 import GameKit
+import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestGKLeaderboardViewController(TestCase):

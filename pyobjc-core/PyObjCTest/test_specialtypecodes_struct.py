@@ -5,11 +5,10 @@ TODO:
 * _C_UNICHAR, _C_CHAR_AS_INT, _C_CHAR_AS_TEXT
 """
 import weakref
-from PyObjCTools.TestSupport import *
+
 from PyObjCTest.fnd import NSObject
-
 from PyObjCTest.specialtypecodes import *
-
+from PyObjCTools.TestSupport import *
 
 EmbeddedBoolStruct = objc.createStructType(
     "EmbeddedBoolStruct",

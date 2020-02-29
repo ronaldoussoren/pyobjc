@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
+import sys
+
 from CoreFoundation import *
 from Foundation import NSCFData
-import sys
+from PyObjCTools.TestSupport import *
 
 
 class TestData(TestCase):

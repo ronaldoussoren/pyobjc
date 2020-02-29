@@ -25,17 +25,17 @@ int main (void)
 
   args[0] = &ffi_type_float;
   values[0] = &f;
-  
+
   /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, 
+  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
 		     &ffi_type_double, args) == FFI_OK);
-  
+
   f = 3.14159;
-  
+
   ffi_call(&cif, FFI_FN(dblit), &d, values);
-  
+
   /* These are not always the same!! Check for a reasonable delta */
- 
+
   CHECK(d - dblit(f) < DBL_EPSILON);
 
   exit(0);

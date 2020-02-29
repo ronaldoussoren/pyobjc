@@ -4,12 +4,12 @@ Python mapping for the LaunchServices framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import objc, sys
 import os
+import sys
+
 import Foundation
-
+import objc
 from CoreServices.LaunchServices import _metadata
-
 
 sys.modules["CoreServices.LaunchServices"] = mod = objc.ObjCLazyModule(
     "LaunchServices",
@@ -28,6 +28,5 @@ sys.modules["CoreServices.LaunchServices"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreServices.LaunchServices._metadata"]

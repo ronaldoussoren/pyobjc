@@ -8,18 +8,19 @@ object itself, which is why we need a 'setValue' callback for the
 load_* functions below.
 """
 from __future__ import unicode_literals
+
+import copy
 import sys
-import objc
+from pickle import PicklingError, UnpicklingError
 from types import *
+
+import objc
 
 if sys.version_info[0] == 2:
     import copy_reg as copyreg
 else:
     import copyreg
 
-import copy
-
-from pickle import PicklingError, UnpicklingError
 
 if sys.version_info[0] == 2:
     import __builtin__ as _builtins

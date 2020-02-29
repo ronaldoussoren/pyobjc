@@ -1,12 +1,12 @@
 """
 Testcases for the CoreFoundation wrappers introduced in 1.5
 """
-import objc
-from PyObjCTools.TestSupport import *
 import re
 import sys
 
+import objc
 from PyObjCTest.corefoundation import *
+from PyObjCTools.TestSupport import *
 
 # registerCFSignature(name, encoding, typeId [, tollfreeName]) -> type
 

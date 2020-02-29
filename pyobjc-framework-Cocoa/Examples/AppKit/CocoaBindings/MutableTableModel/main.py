@@ -6,10 +6,9 @@
 #  Copyright (c) 2004 Bob Ippolito. All rights reserved.
 #
 
-from PyObjCTools import AppHelper
-
 # import classes required to start application
 import TableModelAppDelegate
+from PyObjCTools import AppHelper
 
 # start the event loop
 AppHelper.runEventLoop(argv=[])

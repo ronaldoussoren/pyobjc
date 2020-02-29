@@ -12,9 +12,9 @@
 #
 
 import sys
-from PyObjCTools.TestSupport import *
 
 import objc
+from PyObjCTools.TestSupport import *
 
 if sys.platform == "darwin":
     import AppKit

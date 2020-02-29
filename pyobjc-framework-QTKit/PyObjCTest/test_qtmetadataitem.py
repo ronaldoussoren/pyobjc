@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import QTKit
+from PyObjCTools.TestSupport import *
 
 
 class TestQTMetadaItem(TestCase):

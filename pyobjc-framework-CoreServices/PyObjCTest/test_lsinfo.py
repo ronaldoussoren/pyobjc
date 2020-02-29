@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
-import CoreServices
-import sys
 import os
+import sys
+
+import CoreServices
+from PyObjCTools.TestSupport import *
 
 
 class TestLSInfo(TestCase):

@@ -1,6 +1,7 @@
+import sys
+
 from PyObjCTools.TestSupport import *
 from WebKit import *
-import sys
 
 
 class TestWKWebViewConfiguration(TestCase):

@@ -4,11 +4,9 @@ WSTApplicationDelegateClass
 
 import objc
 from Foundation import NSObject
-
 from PyObjCTools import AppHelper
-from WSTConnectionWindowControllerClass import WSTConnectionWindowController
-
 from twisted.internet import reactor
+from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
 
 class WSTApplicationDelegate(NSObject):

@@ -1,4 +1,4 @@
-#if defined(__ppc__) || defined(__ppc64__) 
+#if defined(__ppc__) || defined(__ppc64__)
 
 /* -----------------------------------------------------------------------
    ppc-darwin.S - Copyright (c) 2000 John Hornkvist
@@ -197,7 +197,7 @@ L(done_return_value):
 #if defined(__ppc64__)
 	ld		r27,-40(r1)
 #endif
-	blr	
+	blr
 
 #if defined(__ppc64__)
 L(st_return_value):

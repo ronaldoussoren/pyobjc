@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import FileProvider
+from PyObjCTools.TestSupport import *
 
 
 class TestNSFileProviderThumbnailing(TestCase):

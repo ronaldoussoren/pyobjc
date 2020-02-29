@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import *
-import objc
-
-from Foundation import *
 import Foundation
+import objc
+from Foundation import *
 from PyObjCTest.testhelper import PyObjC_TestClass4
+from PyObjCTools.TestSupport import *
 
 try:
     memoryview

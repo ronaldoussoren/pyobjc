@@ -1,4 +1,4 @@
-This is a "pseudo-package". It's only goal in live is to make it 
+This is a "pseudo-package". It's only goal in live is to make it
 easier to install the rest of PyObjC.
 
 That is, "python setup.py install" of "easy_install pyobjc" will install

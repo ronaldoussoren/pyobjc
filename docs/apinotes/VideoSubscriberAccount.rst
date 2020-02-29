@@ -18,4 +18,3 @@ API Notes
 .. note::
 
    This framework is only available on OSX 10.14 and later and requires a 64-bit binary.
-

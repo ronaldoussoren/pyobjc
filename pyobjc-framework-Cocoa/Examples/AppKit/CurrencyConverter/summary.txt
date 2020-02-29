@@ -1,2 +1,2 @@
-A simple NIB based application. Start with this one. Also see the 
+A simple NIB based application. Start with this one. Also see the
 :doc:`PyObjC tutorial </tutorials/index>`.

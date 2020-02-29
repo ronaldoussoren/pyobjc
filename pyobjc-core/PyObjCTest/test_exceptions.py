@@ -2,10 +2,12 @@
 # Some more tests for exception handling.
 #
 from __future__ import unicode_literals
-from PyObjCTest.exceptions import *
 
+import sys
+
+import objc
+from PyObjCTest.exceptions import *
 from PyObjCTools.TestSupport import *
-import objc, sys
 
 
 class TestExceptionsFromObjC(TestCase):

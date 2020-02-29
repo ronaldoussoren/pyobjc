@@ -2,29 +2,29 @@
     IBClasses = (
         {
             ACTIONS = {
-                changeColor = id; 
-                moveDown = id; 
-                moveLeft = id; 
-                moveRight = id; 
-                moveUp = id; 
-                setItemPropertiesToDefault = id; 
-            }; 
-            CLASS = DraggableItemView; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSView; 
-        }, 
+                changeColor = id;
+                moveDown = id;
+                moveLeft = id;
+                moveRight = id;
+                moveUp = id;
+                setItemPropertiesToDefault = id;
+            };
+            CLASS = DraggableItemView;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSView;
+        },
         {
             ACTIONS = {
-                moveDown = id; 
-                moveLeft = id; 
-                moveRight = id; 
-                moveUp = id; 
-                setItemPropertiesToDefault = id; 
-            }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
+                moveDown = id;
+                moveLeft = id;
+                moveRight = id;
+                moveUp = id;
+                setItemPropertiesToDefault = id;
+            };
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

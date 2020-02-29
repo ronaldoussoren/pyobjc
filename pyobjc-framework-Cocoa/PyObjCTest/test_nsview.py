@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-from AppKit import *
 import objc
+from AppKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSViewHelper(NSObject):

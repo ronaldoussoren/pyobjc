@@ -1,8 +1,6 @@
-from PyObjCTools.TestSupport import *
-
 import DiskArbitration
-
-from Foundation import NSDictionary, NSArray
+from Foundation import NSArray, NSDictionary
+from PyObjCTools.TestSupport import *
 
 
 class TestDiskArbitration(TestCase):

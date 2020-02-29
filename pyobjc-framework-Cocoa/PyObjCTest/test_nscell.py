@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
-
 from AppKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSCell(TestCase):

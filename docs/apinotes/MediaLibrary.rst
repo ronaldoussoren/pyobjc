@@ -18,4 +18,3 @@ The full API for the MediaLibrary framework is available from Python
 .. note::
 
    This framework is only available on macOS 10.9 and later and requires a 64-bit binary. The framework is deprecated in macOS 10.15.
-

@@ -1,8 +1,8 @@
 """
 No tests for CFPlugin: these API's are unsupported for the moment.
 """
-from PyObjCTools.TestSupport import *
 import CoreFoundation
+from PyObjCTools.TestSupport import *
 
 symbols = [
     # From CFPluginCOM.h:

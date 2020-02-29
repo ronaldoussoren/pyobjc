@@ -1,10 +1,14 @@
 """
 'test' action for setup.py
 """
-import sys, os, string, glob
-from os.path import basename, dirname, splitext, join, expanduser, walk
-from fnmatch import fnmatch
+import glob
+import os
+import string
+import sys
 import unittest
+from fnmatch import fnmatch
+from os.path import basename, dirname, expanduser, join, splitext, walk
+
 import dejagnu
 
 deja_suite = dejagnu.testSuiteForDirectory("tests/testsuite/libffi.call")

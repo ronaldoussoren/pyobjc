@@ -1,9 +1,9 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import Collaboration
 import objc
 from PyObjCTools.TestSupport import *
-import Collaboration
 
 
 class TestCollaboration(TestCase):

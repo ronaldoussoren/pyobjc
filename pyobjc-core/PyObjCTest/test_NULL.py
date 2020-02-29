@@ -1,5 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
+from PyObjCTest.NULL import *
+from PyObjCTools.TestSupport import *
 
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
@@ -46,8 +47,6 @@ objc.registerMetaDataForSelector(
     b"on:callOut:",
     dict(arguments={3: dict(type_modifier=b"N", null_accepted=True)}),  # N is by design
 )
-
-from PyObjCTest.NULL import *
 
 
 class TestNULL(TestCase):

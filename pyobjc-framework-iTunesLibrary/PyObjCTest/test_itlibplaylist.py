@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
 import iTunesLibrary
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestITLibPlaylist(TestCase):

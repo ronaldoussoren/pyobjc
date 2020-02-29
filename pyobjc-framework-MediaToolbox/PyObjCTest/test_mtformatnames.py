@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import MediaToolbox
+from PyObjCTools.TestSupport import *
 
 
 class TestMTFormatNames(TestCase):

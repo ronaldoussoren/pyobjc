@@ -1,5 +1,6 @@
-from PyObjCTools.TestSupport import *
 import sys
+
+from PyObjCTools.TestSupport import *
 
 SLRequestHandler = b"v@@@"
 

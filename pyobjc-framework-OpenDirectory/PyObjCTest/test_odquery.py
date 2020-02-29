@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-import OpenDirectory
 import objc
+import OpenDirectory
+from PyObjCTools.TestSupport import *
 
 
 class TestODQuery(TestCase):

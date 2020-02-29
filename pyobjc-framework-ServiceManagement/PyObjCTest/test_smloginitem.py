@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import ServiceManagement
+from PyObjCTools.TestSupport import *
 
 
 class TestSMLoginItem(TestCase):

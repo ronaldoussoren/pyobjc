@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Security
+from PyObjCTools.TestSupport import *
 
 SecTransformActionBlock = b"@"
 SecTransformAttributeActionBlock = b"@@@"

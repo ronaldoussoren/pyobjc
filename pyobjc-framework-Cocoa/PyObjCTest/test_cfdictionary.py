@@ -1,5 +1,5 @@
 from CoreFoundation import *
-from Foundation import NSDictionary, NSMutableDictionary, NSCFDictionary
+from Foundation import NSCFDictionary, NSDictionary, NSMutableDictionary
 from PyObjCTools.TestSupport import *
 
 

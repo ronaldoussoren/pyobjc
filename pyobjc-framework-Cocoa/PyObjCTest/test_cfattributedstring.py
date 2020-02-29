@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import NSCFAttributedString
+from PyObjCTools.TestSupport import *
 
 
 class TestAttributedString(TestCase):

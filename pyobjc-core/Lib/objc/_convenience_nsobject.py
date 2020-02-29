@@ -8,6 +8,7 @@ are kept in the core.
 
 __all__ = ()
 import sys
+
 from objc._convenience import addConvenienceForClass
 
 

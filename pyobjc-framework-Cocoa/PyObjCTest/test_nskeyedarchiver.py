@@ -1,6 +1,6 @@
 # This just tests the definitions in the NSKeyedArchiver header
-from PyObjCTools.TestSupport import *
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSKeyedArchiver(TestCase):

@@ -1,8 +1,7 @@
 import sys
-from PyObjCTools.TestSupport import *
-
 
 import MediaAccessibility
+from PyObjCTools.TestSupport import *
 
 
 class TestMAAudibleMedia(TestCase):

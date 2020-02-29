@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import libdispatch
+from PyObjCTools.TestSupport import *
 
 dispatch_io_handler_t = b"vB@i"
 

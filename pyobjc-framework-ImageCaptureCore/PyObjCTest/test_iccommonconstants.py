@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 from ImageCaptureCore import *
+from PyObjCTools.TestSupport import *
 
 
 class TestICCameraDevice(TestCase):
@@ -64,7 +63,6 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(ICReturnDeviceFailedToSendData, -9957)
         self.assertEqual(ICReturnSessionNotOpened, -9958)
         self.assertEqual(ICReturnThumbnailNotAvailable, ICReturnCodeThumbnailOffset)
-
 
         self.assertEqual(ICReturnErrorDeviceEjected, ICReturnCodeSystemOffset)
         self.assertEqual(ICReturnConnectionDriverExited, ICReturnCodeDeviceOffset)
@@ -228,8 +226,12 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(ICReturnCodeObjectDataEmpty, -21447)
         self.assertEqual(ICReturnCodeObjectDataRequestTooLarge, -21446)
 
-        self.assertEqual(ICReturnFailedToEnableTethering, ICReturnFailedToEnabeTethering)
-        self.assertEqual(ICReturnFailedToDisableTethering, ICReturnFailedToDisabeTethering)
+        self.assertEqual(
+            ICReturnFailedToEnableTethering, ICReturnFailedToEnabeTethering
+        )
+        self.assertEqual(
+            ICReturnFailedToDisableTethering, ICReturnFailedToDisabeTethering
+        )
 
 
 if __name__ == "__main__":

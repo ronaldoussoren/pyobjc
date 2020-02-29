@@ -1,12 +1,13 @@
-from PyObjCTools.TestSupport import *
-import objc
-import sys
 import platform
+import sys
+
+import objc
+from PyObjCTest.protocol import OC_TestProtocol
+from PyObjCTools.TestSupport import *
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
 
-from PyObjCTest.protocol import OC_TestProtocol
 
 MyProto = objc.informal_protocol(
     "MyProto",

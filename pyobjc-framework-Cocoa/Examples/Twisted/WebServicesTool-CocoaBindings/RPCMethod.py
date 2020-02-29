@@ -1,6 +1,6 @@
+import objc
 from Foundation import NSObject
 from objc import super
-import objc
 
 
 class RPCMethod(NSObject):

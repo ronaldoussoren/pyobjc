@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import GameKit
+from PyObjCTools.TestSupport import *
 
 
 class TestGKSessionError(TestCase):

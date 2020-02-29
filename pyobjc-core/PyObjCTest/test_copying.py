@@ -1,9 +1,11 @@
-from PyObjCTools.TestSupport import *
+import copy
+
 import objc
+from PyObjCTest.copying import OC_CopyBase, OC_CopyHelper
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
-from PyObjCTest.copying import OC_CopyHelper, OC_CopyBase
 
 
 def funcattr(**kwds):
@@ -242,7 +244,6 @@ class TestNSCopying(TestCase):
 
 
 NSMutableArray = objc.lookUpClass("NSMutableArray")
-import copy
 
 
 class TestPyCopyObjC(TestCase):

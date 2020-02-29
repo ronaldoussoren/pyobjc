@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from AppKit import *
+from PyObjCTools.TestSupport import *
 
 if is32Bit():
 

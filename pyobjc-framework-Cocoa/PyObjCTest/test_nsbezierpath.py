@@ -1,9 +1,8 @@
 # Test special methods of NSBezierPath
 # TODO: Test implementing these in python.
-from PyObjCTools.TestSupport import *
 import objc
-
 from AppKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSBezierPath(TestCase):

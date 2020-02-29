@@ -40,28 +40,28 @@ int main (void)
   ts1_type_elements[1] = &ffi_type_double;
   ts1_type_elements[2] = &ffi_type_uint;
   ts1_type_elements[3] = NULL;
-  
+
   test_structure_1 ts1_arg;
   /* This is a hack to get a properly aligned result buffer */
-  test_structure_1 *ts1_result = 
+  test_structure_1 *ts1_result =
     (test_structure_1 *) malloc (sizeof(test_structure_1));
-  
+
   args[0] = &ts1_type;
   values[0] = &ts1_arg;
-  
+
   /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, 
+  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
 		     &ts1_type, args) == FFI_OK);
-  
+
   ts1_arg.uc = '\x01';
   ts1_arg.d = 3.14159;
   ts1_arg.ui = 555;
 
   ffi_call(&cif, FFI_FN(struct1), ts1_result, values);
-  
+
   CHECK(ts1_result->ui == 556);
   CHECK(ts1_result->d == 3.14159 - 1);
- 
+
   free (ts1_result);
   exit(0);
 }

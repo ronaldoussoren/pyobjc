@@ -13,13 +13,12 @@ TODO:
 - Probably need special-casing for arrays (numarray and array.array)!
 """
 import objc
-from PyObjCTools.TestSupport import *
-
-from PyObjCTest.metadata import *
 
 # To ensure we have the right metadata
 import PyObjCTest.test_metadata
+from PyObjCTest.metadata import *
 from PyObjCTest.test_metadata_py import Py_MetaDataTest_AllArgs
+from PyObjCTools.TestSupport import *
 
 if 0:
     from PyObjCTest.test_metadata_py2 import Py_MetaDataTest_OutputOptional

@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from ExceptionHandling import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSExceptionHandlerHelper(NSObject):

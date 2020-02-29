@@ -1,9 +1,9 @@
 """
 Tests for objc.synthesize
 """
-from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import NSObject
 import objc
+from PyObjCTest.fnd import NSObject
+from PyObjCTools.TestSupport import *
 
 
 class TestSynthesizeCopier(NSObject):

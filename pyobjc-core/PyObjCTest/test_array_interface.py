@@ -1,11 +1,11 @@
-from PyObjCTools.TestSupport import *
-from test import list_tests, seq_tests
-import objc
-import sys
 import operator
+import sys
 
 # Import some of the stdlib tests
-from test import mapping_tests
+from test import list_tests, mapping_tests, seq_tests
+
+import objc
+from PyObjCTools.TestSupport import *
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")

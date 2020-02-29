@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import SystemExtensions
+from PyObjCTools.TestSupport import *
 
 
 class TestSystemExtensions(TestCase):

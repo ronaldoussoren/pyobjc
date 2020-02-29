@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import Cocoa
 from PyObjCTools import AppHelper
+from PyObjCTools.TestSupport import *
 
 
 class TestAppHelper(TestCase):

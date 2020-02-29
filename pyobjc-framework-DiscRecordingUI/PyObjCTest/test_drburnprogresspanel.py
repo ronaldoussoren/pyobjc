@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import DiscRecordingUI
+from PyObjCTools.TestSupport import *
 
 
 class TestDRBurnProgressPanelHelper(DiscRecordingUI.NSObject):

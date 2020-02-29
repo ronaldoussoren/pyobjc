@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreMedia
+from PyObjCTools.TestSupport import *
 
 
 class TestCMFormatDescription(TestCase):

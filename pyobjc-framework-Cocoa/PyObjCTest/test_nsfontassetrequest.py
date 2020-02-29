@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-import objc
-
 import AppKit
+import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestNSFontAssetRequest(TestCase):

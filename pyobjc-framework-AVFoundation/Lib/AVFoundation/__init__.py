@@ -5,15 +5,14 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
-import CoreMedia
 
+import CoreMedia
+import Foundation
+import objc
 from AVFoundation import _metadata
 from AVFoundation._AVFoundation import *
 from AVFoundation._inlines import _inline_list_
-
 
 sys.modules["AVFoundation"] = mod = objc.ObjCLazyModule(
     "AVFoundation",
@@ -30,6 +29,5 @@ sys.modules["AVFoundation"] = mod = objc.ObjCLazyModule(
     (CoreMedia, Foundation),
 )
 
-import sys
 
 del sys.modules["AVFoundation._metadata"]

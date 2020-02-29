@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from Automator import *
+from PyObjCTools.TestSupport import *
 
 
 class TestAMShellScriptAction(TestCase):

@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from CoreLocation import *
 import os
+
+from CoreLocation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCLError(TestCase):

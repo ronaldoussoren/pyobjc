@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-import objc
 import sys
+
+import objc
+from PyObjCTools.TestSupport import *
 
 if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
     import SceneKit

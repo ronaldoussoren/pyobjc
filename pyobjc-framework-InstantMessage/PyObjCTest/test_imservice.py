@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from InstantMessage import *
+from PyObjCTools.TestSupport import *
 
 
 class TestIMService(TestCase):

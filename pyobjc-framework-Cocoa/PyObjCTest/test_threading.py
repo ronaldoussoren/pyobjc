@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import *
-import objc
 import sys
 import time
 
-from PyObjCTest.testhelper import PyObjC_TestClass4
-
+import objc
 from Foundation import *
+from PyObjCTest.testhelper import PyObjC_TestClass4
+from PyObjCTools.TestSupport import *
 
 
 class ThreadingTest(TestCase):

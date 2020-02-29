@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import *
-import objc
-import types
 import sys
+import types
 
-from PyObjCTest.testhelper import PyObjC_TestClass3
-
+import objc
 from Foundation import *
+from PyObjCTest.testhelper import PyObjC_TestClass3
+from PyObjCTools.TestSupport import *
 
 
 class TestNSDictionarySubclassing(TestCase):

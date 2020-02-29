@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
 from Foundation import NSObject
+from PyObjCTools.TestSupport import *
 
 try:
     from Quartz import *

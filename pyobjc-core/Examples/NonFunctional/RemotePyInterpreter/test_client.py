@@ -1,14 +1,16 @@
 from __future__ import print_function
 
+import os
+import socket
+import sys
+from subprocess import PIPE, Popen
+
+from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
+
 try:
     import fcntl
 except:
     fcntl = None
-import os
-import sys
-from subprocess import Popen, PIPE
-import socket
-from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 
 IMPORT_MODULES = ["netrepr", "remote_console", "remote_pipe", "remote_bootstrap"]
 source = []

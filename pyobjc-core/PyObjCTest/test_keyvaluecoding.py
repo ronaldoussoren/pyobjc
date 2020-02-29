@@ -1,9 +1,9 @@
 # Tests for PyObjCTools.KeyValueCoding
-from PyObjCTools.TestSupport import *
-
-from PyObjCTools import KeyValueCoding
 import operator
 import os
+
+from PyObjCTools import KeyValueCoding
+from PyObjCTools.TestSupport import *
 
 
 class TestHelpers(TestCase):

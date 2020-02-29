@@ -1,8 +1,7 @@
+import BitmapContext
 import Cocoa
 import objc
-
 import PDFHandling
-import BitmapContext
 import Utilities
 
 # Initial defaults

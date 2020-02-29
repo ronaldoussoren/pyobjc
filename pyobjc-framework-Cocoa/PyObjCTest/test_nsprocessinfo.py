@@ -1,7 +1,7 @@
 from __future__ import with_statement
-from PyObjCTools.TestSupport import *
 
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSProcessInfo(TestCase):

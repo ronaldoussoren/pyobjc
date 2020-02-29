@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
-import objc
 import os
 
+import objc
 from AppKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSWorkspace(TestCase):

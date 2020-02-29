@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 from ImageCaptureCore import *
+from PyObjCTools.TestSupport import *
 
 
 class TestICCameraItem(TestCase):

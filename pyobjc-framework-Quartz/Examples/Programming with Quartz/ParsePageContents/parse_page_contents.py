@@ -5,12 +5,13 @@ Usage:
     python parse_page_contents.py inputfile ...
 """
 from __future__ import print_function
-import objc
-import sys
-import array
 
-import Quartz
+import array
+import sys
+
 import Cocoa
+import objc
+import Quartz
 
 
 class MyDataScan(object):

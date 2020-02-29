@@ -1,7 +1,9 @@
-from PyObjCTools.TestSupport import *
-import objc
 import pickle
 import sys
+
+import objc
+from PyObjCTest.test_object_property import OCObserve
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 NSIndexSet = objc.lookUpClass("NSIndexSet")
@@ -17,9 +19,6 @@ class TestArrayPropertyHelper(NSObject):
     array = objc.array_property()
     array2 = objc.array_property()
     roArray = objc.array_property(read_only=True)
-
-
-from PyObjCTest.test_object_property import OCObserve
 
 
 class TestArrayProperty(TestCase):

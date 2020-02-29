@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
+import Foundation
+import objc
 from ExternalAccessory import _metadata
 from ExternalAccessory._ExternalAccessory import *
 
@@ -27,6 +27,5 @@ sys.modules["ExternalAccessory"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["ExternalAccessory._metadata"]

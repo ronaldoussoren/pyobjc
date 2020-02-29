@@ -23,19 +23,20 @@ __all__ = [
     "callbackPointer",
 ]
 
+import sys
+import textwrap
+import warnings
+
 from objc._objc import (
+    _C_ID,
+    _C_NSBOOL,
+    _C_SEL,
+    _C_NSUInteger,
+    _closurePointer,
+    _makeClosure,
     ivar,
     selector,
-    _makeClosure,
-    selector,
-    _C_SEL,
-    _C_ID,
-    _C_NSUInteger,
-    _C_NSBOOL,
-    _closurePointer,
 )
-import sys, textwrap
-import warnings
 
 try:
     from inspect import getargspec

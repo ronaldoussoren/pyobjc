@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from CalendarStore import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCalTask(TestCase):

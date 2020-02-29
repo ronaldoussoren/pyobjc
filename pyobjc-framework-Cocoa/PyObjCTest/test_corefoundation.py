@@ -1,9 +1,9 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import CoreFoundation
 import objc
 from PyObjCTools.TestSupport import *
-import CoreFoundation
 
 
 class TestCoreFoundation(TestCase):

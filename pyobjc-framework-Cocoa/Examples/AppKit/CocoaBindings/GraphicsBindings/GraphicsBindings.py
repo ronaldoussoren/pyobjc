@@ -6,17 +6,16 @@
 #  Copyright (c) 2005 __MyCompanyName__. All rights reserved.
 #
 
-from PyObjCTools import AppHelper
-from Foundation import NSProcessInfo
-
-import GraphicsBindingsDocument
 import Circle
 import GraphicsArrayController
-import JoystickView
+import GraphicsBindingsDocument
 import GraphicsView
+import JoystickView
 
 # start the event loop
 import objc
+from Foundation import NSProcessInfo
+from PyObjCTools import AppHelper
 
 objc.setVerbose(1)
 AppHelper.runEventLoop(argv=[])

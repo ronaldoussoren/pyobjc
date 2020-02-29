@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AVFoundation
+from PyObjCTools.TestSupport import *
 
 AVAudioEngineManualRenderingBlock = (
     objc._C_NSInteger + b"Io^{AudioBufferList=L[1{AudioBuffer=LL^v}]}o^i"

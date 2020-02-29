@@ -1,11 +1,10 @@
-import objc
-from objc import super
-import Cocoa
-import Quartz
-
-
-from math import pi as PI
 import random
+from math import pi as PI
+
+import Cocoa
+import objc
+import Quartz
+from objc import super
 
 
 class DemoView(Cocoa.NSView):

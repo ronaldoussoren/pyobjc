@@ -1,6 +1,7 @@
-from CFNetwork import *
-import Foundation
 import sys
+
+import Foundation
+from CFNetwork import *
 from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] != 2:

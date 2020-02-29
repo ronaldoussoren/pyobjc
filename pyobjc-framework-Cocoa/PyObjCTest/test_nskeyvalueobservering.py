@@ -1,8 +1,7 @@
 # NOTE: This file only contains basic tests of the keyvalue observing header definitions,
 # test_keyvalue contains tests for the actualy KVC/KVO mechanisms.
-from PyObjCTools.TestSupport import *
-
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSKeyValueObserving(TestCase):

@@ -11,12 +11,13 @@ when the user logs in using SSH.
 TODO:
 - Undo
 """
-import objc
-from objc import super
-import Cocoa
-import PreferencePanes
-from PyObjCTools import AppHelper
 import os
+
+import Cocoa
+import objc
+import PreferencePanes
+from objc import super
+from PyObjCTools import AppHelper
 
 # Uncomment this during development, you'll get exception tracebacks when
 # the Python code fails.

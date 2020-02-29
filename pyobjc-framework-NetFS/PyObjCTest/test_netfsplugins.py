@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import NetFS
+from PyObjCTools.TestSupport import *
 
 
 class TestNetFS(TestCase):

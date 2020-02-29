@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from CoreFoundation import *
 import os
+
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCFURLEnumerator(TestCase):

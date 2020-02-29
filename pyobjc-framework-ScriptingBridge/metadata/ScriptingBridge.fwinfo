@@ -10,28 +10,28 @@
        "0": {
         "type_override": "r^{AEDesc=I^^{OpaqueAEDataStorageType}}"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "eventDidFail:withError:"
      }
     ]
-   }, 
+   },
    "SBApplication": {
     "methods": [
      {
-      "class_method": false, 
-      "retval": {}, 
+      "class_method": false,
+      "retval": {},
       "selector": "classForScriptingClass:"
-     }, 
+     },
      {
-      "class_method": false, 
+      "class_method": false,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "isRunning"
      }
     ]
-   }, 
+   },
    "SBElementArray": {
     "methods": [
      {
@@ -39,38 +39,38 @@
        "0": {
         "sel_of_type": "@@:"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "arrayByApplyingSelector:"
-     }, 
+     },
      {
       "args": {
        "0": {
         "sel_of_type": "@@:@"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "arrayByApplyingSelector:withObject:"
      }
     ]
-   }, 
+   },
    "SBObject": {
     "methods": [
      {
       "args": {
        "0": {}
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "propertyWithClass:code:"
-     }, 
+     },
      {
-      "class_method": false, 
-      "selector": "sendEvent:id:parameters:", 
+      "class_method": false,
+      "selector": "sendEvent:id:parameters:",
       "variadic": true
      }
     ]
    }
-  }, 
+  },
   "formal_protocols": {
    "SBApplicationDelegate": {
     "methods": [
@@ -79,14 +79,14 @@
        "0": {
         "type_override": "r^{AEDesc=I^^{OpaqueAEDataStorageType}}"
        }
-      }, 
-      "class_method": false, 
+      },
+      "class_method": false,
       "selector": "eventDidFail:withError:"
      }
     ]
    }
-  }, 
-  "functions": {}, 
+  },
+  "functions": {},
   "informal_protocols": {}
  }
 }

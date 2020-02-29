@@ -1,8 +1,9 @@
-import os, sys
+import os
+import sys
 
-import Quartz
 import Cocoa
 import objc
+import Quartz
 
 
 def createDataProviderFromPathName(path):

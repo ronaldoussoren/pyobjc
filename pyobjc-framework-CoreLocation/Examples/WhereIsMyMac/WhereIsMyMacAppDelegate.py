@@ -11,12 +11,13 @@ copy-right:
 //  appreciated but not required.
 """
 
-import objc
+import math
+
 import Cocoa
 import CoreLocation
+import objc
 import WebKit
 from CoreLocation import *
-import math
 
 
 class WhereIsMyMacAppDelegate(Cocoa.NSObject):

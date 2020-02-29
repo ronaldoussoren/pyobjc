@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import *
-from Quartz import *
+import os
+import sys
 
 from CoreFoundation import CFArrayRef
 from Foundation import NSMutableData
-
-import sys, os
+from PyObjCTools.TestSupport import *
+from Quartz import *
 
 if sys.version_info[0] != 2:
 

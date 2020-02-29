@@ -9,11 +9,10 @@
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
+from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver, NSValueTransformer
 from objc import super
 from PyObjCTools import AppHelper
-
 from RadiansToDegreesTransformer import RadiansToDegreesTransformer
-from Cocoa import NSDocument, NSValueTransformer, NSKeyedArchiver, NSKeyedUnarchiver
 
 
 class GraphicsBindingsDocument(NSDocument):

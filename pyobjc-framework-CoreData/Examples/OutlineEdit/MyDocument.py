@@ -1,5 +1,5 @@
-import CoreData
 import Cocoa
+import CoreData
 import objc
 from objc import super
 

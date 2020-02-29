@@ -1,5 +1,5 @@
-import objc
 import Cocoa
+import objc
 
 NOT_DONE = 0
 DONE = 1

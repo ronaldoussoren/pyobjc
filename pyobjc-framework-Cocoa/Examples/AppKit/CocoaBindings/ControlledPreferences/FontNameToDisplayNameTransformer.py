@@ -8,7 +8,7 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Cocoa import NSValueTransformer, NSString, NSFont
+from Cocoa import NSFont, NSString, NSValueTransformer
 
 
 class FontNameToDisplayNameTransformer(NSValueTransformer):

@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
 import sys
+
 import objc
+from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
     import Vision

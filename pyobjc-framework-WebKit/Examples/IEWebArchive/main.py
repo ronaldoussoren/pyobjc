@@ -1,7 +1,7 @@
+import MHTDocument
 import objc
+from PyObjCTools import AppHelper
 
 objc.setVerbose(1)
-import MHTDocument
-from PyObjCTools import AppHelper
 
 AppHelper.runEventLoop()

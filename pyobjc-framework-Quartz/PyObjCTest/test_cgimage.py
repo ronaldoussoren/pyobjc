@@ -1,9 +1,8 @@
+import os
+import sys
+
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
-import sys
-import os
-
-import sys
 
 if sys.version_info[0] != 2:
 

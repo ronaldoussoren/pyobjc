@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import *
-import objc
-from objc import YES, NO, nil
-from PyObjCTest.fnd import NSPriorDayDesignations
 import sys
-import objc
 
+import objc
+from objc import NO, YES, nil
+from PyObjCTest.fnd import NSPriorDayDesignations
+from PyObjCTest.testbndl2 import *
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     unicode = str
@@ -265,9 +265,6 @@ for method, argmeta in [
     objc.registerMetaDataForSelector(
         b"PyObjC_TestClass2", method, dict(arguments=argmeta)
     )
-
-
-from PyObjCTest.testbndl2 import *
 
 
 class PyToObjC(TestCase):

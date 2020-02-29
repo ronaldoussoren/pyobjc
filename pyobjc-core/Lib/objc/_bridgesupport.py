@@ -3,16 +3,17 @@ Backward compatibity with bridgesupport files
 """
 __all__ = ("initFrameworkWrapper", "parseBridgeSupport")
 
-import sys
-import xml.etree.ElementTree as ET
 import ctypes
-import objc
-import re
-import warnings
 import functools
-import pkg_resources
 import os
+import re
+import sys
+import warnings
+import xml.etree.ElementTree as ET
 
+import pkg_resources
+
+import objc
 
 for method in (
     b"alloc",

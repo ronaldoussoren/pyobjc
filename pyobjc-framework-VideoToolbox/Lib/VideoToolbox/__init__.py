@@ -5,14 +5,14 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
-import Quartz
-import CoreMedia
 
-from VideoToolbox import _metadata
+import CoreMedia
+import Foundation
+import objc
+import Quartz
 import VideoToolbox._VideoToolbox
+from VideoToolbox import _metadata
 
 sys.modules["VideoToolbox"] = mod = objc.ObjCLazyModule(
     "VideoToolbox",
@@ -29,6 +29,5 @@ sys.modules["VideoToolbox"] = mod = objc.ObjCLazyModule(
     (VideoToolbox._VideoToolbox, Quartz, CoreMedia, Foundation),
 )
 
-import sys
 
 del sys.modules["VideoToolbox._metadata"]

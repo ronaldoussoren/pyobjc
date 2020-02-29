@@ -1,7 +1,7 @@
 API Notes: XgridFoundation framework
 ====================================
 
-.. note:: 
+.. note::
 
    The XgridFoundation framework is not present in OSX 10.8 or later,
    which means the XgridFoundation package will raise ImportError when
@@ -11,4 +11,3 @@ API Notes
 ---------
 
 PyObjC's bindings for the XgridFoundation framework are complete.
-

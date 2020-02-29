@@ -1,11 +1,9 @@
 import sys
 
-import DataProvidersAndConsumers
-import Utilities
-
 import Cocoa
+import DataProvidersAndConsumers
 import Quartz
-
+import Utilities
 from LaunchServices import *  # kUTType* constants
 
 

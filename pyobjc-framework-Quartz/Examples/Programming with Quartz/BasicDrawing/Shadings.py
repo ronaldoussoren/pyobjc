@@ -1,7 +1,7 @@
+import sys
+
 import Quartz
 import Utilities
-
-import sys
 
 
 def RedBlackRedRampEvaluate(info, input, output):

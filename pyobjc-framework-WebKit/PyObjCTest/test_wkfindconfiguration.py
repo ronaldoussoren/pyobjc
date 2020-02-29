@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import *
 import WebKit
+from PyObjCTools.TestSupport import *
 
 
 class TestWKFindConfiguration(TestCase):
-    @min_os_level('10.15.4')
+    @min_os_level("10.15.4")
     def test_methods10_15_4(self):
         self.assertResultIsBOOL(WebKit.WKFindConfiguration.backwards)
         self.assertArgIsBOOL(WebKit.WKFindConfiguration.setBackwards_, 0)

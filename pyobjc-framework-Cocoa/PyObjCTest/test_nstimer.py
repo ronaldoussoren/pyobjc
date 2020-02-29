@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
 import gc
 
-from objc import *
 from Foundation import *
+from objc import *
+from PyObjCTools.TestSupport import *
 
 
 class PythonClass(object):

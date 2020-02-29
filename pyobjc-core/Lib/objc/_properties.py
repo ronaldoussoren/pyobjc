@@ -6,10 +6,19 @@ __all__ = (
     "dict_property",
 )
 
-from objc import ivar, selector, _C_ID, _C_NSBOOL, _C_BOOL, NULL, _C_NSUInteger
-from objc import lookUpClass
-from copy import copy as copy_func
 import sys
+from copy import copy as copy_func
+
+from objc import (
+    _C_BOOL,
+    _C_ID,
+    _C_NSBOOL,
+    NULL,
+    _C_NSUInteger,
+    ivar,
+    lookUpClass,
+    selector,
+)
 
 if sys.version_info[0] == 2:
     import collections as collections_abc

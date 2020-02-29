@@ -14,17 +14,25 @@ SelectionIndexesObservationContext = 1093
 
 
 import objc
-from objc import super
-from Cocoa import NSView, NSKeyValueObservingOptionNew, NSKeyValueObservingOptionOld
+from Circle import Circle
 from Cocoa import (
+    NSBezierPath,
+    NSColor,
+    NSDrawLightBezel,
+    NSIndexSet,
+    NSInsetRect,
+    NSIntersectsRect,
     NSKeyValueChangeNewKey,
     NSKeyValueChangeOldKey,
-    NSUnionRect,
+    NSKeyValueObservingOptionNew,
+    NSKeyValueObservingOptionOld,
     NSMakeRect,
+    NSNotFound,
+    NSShiftKeyMask,
+    NSUnionRect,
+    NSView,
 )
-from Cocoa import NSDrawLightBezel, NSBezierPath, NSNotFound, NSIntersectsRect, NSColor
-from Cocoa import NSShiftKeyMask, NSIndexSet, NSInsetRect
-from Circle import Circle
+from objc import super
 
 
 class GraphicsView(NSView):

@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from CoreData import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSMergePolicy(TestCase):

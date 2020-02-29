@@ -1,10 +1,10 @@
-import Quartz
-import Cocoa
-import Utilities
-import QuartzTextDrawing
-
 import sys
+
+import Cocoa
 import objc
+import Quartz
+import QuartzTextDrawing
+import Utilities
 from objc import super
 
 

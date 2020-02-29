@@ -1,11 +1,12 @@
 #
 # Some tests for NSDecimal (C type) and NSDecimalNumber (Objective-C class)
 #
-from PyObjCTools.TestSupport import *
-from Foundation import *
 import operator
-import objc
 import sys
+
+import objc
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 if 0:
 

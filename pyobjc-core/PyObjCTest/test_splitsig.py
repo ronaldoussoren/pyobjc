@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-import objc
+import sys
 
+import objc
+from PyObjCTools.TestSupport import *
 
 gDict = {}
 
@@ -35,8 +36,6 @@ try:
 except ImportError:
     pass
 """
-
-import sys
 
 
 class SplitSignatureTest(TestCase):

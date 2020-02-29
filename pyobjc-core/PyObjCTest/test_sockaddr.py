@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
 from PyObjCTest.sockaddr import PyObjCTestSockAddr
+from PyObjCTools.TestSupport import *
 
 objc.registerMetaDataForSelector(
     b"PyObjCTestSockAddr",

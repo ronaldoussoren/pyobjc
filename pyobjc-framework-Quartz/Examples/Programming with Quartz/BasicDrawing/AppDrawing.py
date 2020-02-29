@@ -1,21 +1,19 @@
-import Quartz
-import Cocoa
-
-import Utilities
-import UIHandling
-import Images
-import ImageMasking
 import BitmapContext
-import EPSPrinting
-import CoordinateSystem
-import PathDrawing
+import Cocoa
 import ColorAndGState
-import QuartzTextDrawing
-import PatternDrawing
-import ShadowsAndTransparencyLayers
-import Shadings
+import CoordinateSystem
 import DrawingBasics
-
+import EPSPrinting
+import ImageMasking
+import Images
+import PathDrawing
+import PatternDrawing
+import Quartz
+import QuartzTextDrawing
+import Shadings
+import ShadowsAndTransparencyLayers
+import UIHandling
+import Utilities
 
 # Defines
 kCatPDF = "Kitty.pdf"

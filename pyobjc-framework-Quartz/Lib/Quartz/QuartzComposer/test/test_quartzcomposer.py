@@ -1,8 +1,9 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
-import objc
 import unittest
+
+import objc
 import QuartzComposer
 
 

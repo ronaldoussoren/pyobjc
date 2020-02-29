@@ -2,8 +2,8 @@
 FIXME: None of these tests actually use the filedescriptor
 """
 
-from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestFileDescriptor(TestCase):

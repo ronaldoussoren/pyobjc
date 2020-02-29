@@ -1,5 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
+from Foundation import NSObject
+from PyObjCTools.TestSupport import *
 
 try:
     from Quartz.QuickLookUI import *
@@ -7,7 +8,6 @@ try:
 except ImportError:
     pass
 
-from Foundation import NSObject
 
 QLPreviewItemLoadingBlock = b"v@"
 

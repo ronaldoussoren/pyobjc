@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNumberFormatter(TestCase):

@@ -11,8 +11,8 @@ method defintions:
         o.myMethod_() # should also work, arg == 1
 """
 
-from PyObjCTools.TestSupport import *
 from PyObjCTest.fnd import NSObject
+from PyObjCTools.TestSupport import *
 
 
 class TestInheritedProtoype(TestCase):

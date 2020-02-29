@@ -42,9 +42,9 @@ int main (void)
 
 
   /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, 
+  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0,
 		     &ffi_type_void, args) == FFI_OK);
-  
+
   CHECK(ffi_prep_closure(pcl, &cif, closure_raise,
                          (void *) 3 /* userdata */) == FFI_OK);
   ok = 0;
@@ -54,7 +54,7 @@ int main (void)
  	ok = 1;
 
   NS_ENDHANDLER
-  
+
   CHECK(ok);
 
   [pool release];

@@ -1,8 +1,7 @@
-from PyObjCTools.TestSupport import *
-
-from Foundation import *
 import Foundation
 from AppKit import *
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSGridView(TestCase):

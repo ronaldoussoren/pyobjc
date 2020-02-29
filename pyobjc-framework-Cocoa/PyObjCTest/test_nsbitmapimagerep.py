@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import *
-import objc
 import array
 import sys
 
-from objc import YES, NO
+import objc
 from AppKit import *
+from objc import NO, YES
+from PyObjCTools.TestSupport import *
 
 
 class TestNSBitmapImageRep(TestCase):

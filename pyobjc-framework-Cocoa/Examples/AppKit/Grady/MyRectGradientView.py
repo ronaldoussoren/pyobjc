@@ -1,5 +1,5 @@
-from MyBaseGradientView import MyBaseGradientView
 import Cocoa
+from MyBaseGradientView import MyBaseGradientView
 
 
 class MyRectGradientView(MyBaseGradientView):

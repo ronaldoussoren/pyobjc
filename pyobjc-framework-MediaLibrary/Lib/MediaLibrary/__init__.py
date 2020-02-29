@@ -5,11 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Cocoa
-import Quartz
 
+import Cocoa
+import objc
+import Quartz
 from MediaLibrary import _metadata
 
 sys.modules["MediaLibrary"] = mod = objc.ObjCLazyModule(
@@ -27,6 +27,5 @@ sys.modules["MediaLibrary"] = mod = objc.ObjCLazyModule(
     (Cocoa, Quartz),
 )
 
-import sys
 
 del sys.modules["MediaLibrary._metadata"]

@@ -1,10 +1,11 @@
 from __future__ import with_statement
 
-from PyObjCTools.TestSupport import *
-from Quartz import *
-import Quartz
 import os
 import sys
+
+import Quartz
+from PyObjCTools.TestSupport import *
+from Quartz import *
 
 if sys.version_info[0] != 2:
 

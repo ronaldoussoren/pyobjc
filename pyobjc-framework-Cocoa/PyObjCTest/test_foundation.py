@@ -1,10 +1,11 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import os
+
+import Foundation
 import objc
 from PyObjCTools.TestSupport import *
-import Foundation
-import os
 
 
 class TestFoundation(TestCase):

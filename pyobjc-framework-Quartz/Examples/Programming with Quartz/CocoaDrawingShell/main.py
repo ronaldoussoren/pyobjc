@@ -1,4 +1,4 @@
-from PyObjCTools import AppHelper
 import MyView
+from PyObjCTools import AppHelper
 
 AppHelper.runEventLoop()

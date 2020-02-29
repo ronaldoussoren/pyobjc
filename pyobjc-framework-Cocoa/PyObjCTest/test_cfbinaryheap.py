@@ -1,5 +1,4 @@
 from CoreFoundation import *
-
 from PyObjCTools.TestSupport import *
 
 

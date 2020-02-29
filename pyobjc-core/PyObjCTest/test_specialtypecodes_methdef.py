@@ -9,10 +9,10 @@ while at the same time getting a higher fidelity bridge.
 These tests ensure that private type codes don't leak into the Objective-C runtime.
 """
 import weakref
-from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import NSObject
 
+from PyObjCTest.fnd import NSObject
 from PyObjCTest.specialtypecodes import *
+from PyObjCTools.TestSupport import *
 
 
 class TestTypeCodeLeaks(TestCase):

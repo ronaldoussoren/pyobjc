@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import *
-import sys
+import os
 import struct
+import sys
 
 import Foundation
-import os
+from PyObjCTools.TestSupport import *
 
 
 class GlobalFunctionTest(TestCase):

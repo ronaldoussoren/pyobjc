@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
-
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestSubclassing(TestCase):

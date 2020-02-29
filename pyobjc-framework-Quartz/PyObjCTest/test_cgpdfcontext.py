@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
-from Quartz import *
 import Quartz
 from Foundation import NSMutableData
+from PyObjCTools.TestSupport import *
+from Quartz import *
 
 
 class TestCGPDFContext(TestCase):

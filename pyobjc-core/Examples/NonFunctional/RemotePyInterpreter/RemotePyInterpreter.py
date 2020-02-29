@@ -1,15 +1,14 @@
-import sys
-import traceback
 import keyword
+import sys
 import time
-from Foundation import *
+import traceback
+
 from AppKit import *
-from PyObjCTools import AppHelper
-
-
 from AsyncPythonInterpreter import *
 from ConsoleReactor import *
+from Foundation import *
 from netrepr import RemoteObjectReference
+from PyObjCTools import AppHelper
 
 
 def ensure_unicode(s):

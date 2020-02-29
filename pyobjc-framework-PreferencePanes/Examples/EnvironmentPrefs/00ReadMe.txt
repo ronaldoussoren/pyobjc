@@ -3,7 +3,7 @@ EnvironmentPane
 ===============
 
 This example shows how to build preference panes in python. This example
-requires a framework install of Python and the Developer Tools. 
+requires a framework install of Python and the Developer Tools.
 
 Note that is a fully functional and usefull preference pane, this pane
 allows you to change the default environment for all your processes. Changes

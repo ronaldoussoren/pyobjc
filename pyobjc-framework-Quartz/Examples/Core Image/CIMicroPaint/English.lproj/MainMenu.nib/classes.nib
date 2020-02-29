@@ -1,7 +1,7 @@
 {
     IBClasses = (
-        {CLASS = CIMicroPaintView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = CIMicroPaintView; LANGUAGE = ObjC; SUPERCLASS = NSView; },
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

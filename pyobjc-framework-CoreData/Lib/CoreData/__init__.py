@@ -6,12 +6,12 @@ documentation for details on how to use these functions and classes.
 """
 
 import sys
-import objc
-import Foundation
 
+import CoreData._convenience
+import Foundation
+import objc
 from CoreData import _metadata
 from CoreData._CoreData import *
-import CoreData._convenience
 
 sys.modules["CoreData"] = objc.ObjCLazyModule(
     "CoreData",
@@ -28,6 +28,5 @@ sys.modules["CoreData"] = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreData._metadata"]

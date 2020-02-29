@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import objc
 import OpenDirectory
+from PyObjCTools.TestSupport import *
 
 
 class TestOpenDirectory(TestCase):

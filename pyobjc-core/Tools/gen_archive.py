@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-import sys
-import objc
 import os
+import sys
 
+import objc
 from Foundation import NSArchiver, NSKeyedArchiver, NSString
 
 #

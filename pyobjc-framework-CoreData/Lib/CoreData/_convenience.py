@@ -7,9 +7,10 @@ there (it generates accessor methods at runtime, which interferes with the
 implementation in this file).
 """
 __all__ = ()
-from objc import addConvenienceForClass, super
-from Foundation import NSObject
 import os
+
+from Foundation import NSObject
+from objc import addConvenienceForClass, super
 
 # XXX: This is fairly crude, need further research.
 #      This code basicly tries to outsmart tricks that

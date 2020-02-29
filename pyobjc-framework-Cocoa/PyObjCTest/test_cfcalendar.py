@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from CoreFoundation import *
 import datetime
+
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCFCalendarVariadic(TestCase):

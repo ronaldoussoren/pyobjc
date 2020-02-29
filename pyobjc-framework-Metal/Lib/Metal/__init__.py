@@ -5,14 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
 import Foundation
-
-from Metal import _metadata
-from Metal import _Metal
+import objc
+from Metal import _metadata, _Metal
 from Metal._inlines import _inline_list_
-
 
 sys.modules["Metal"] = mod = objc.ObjCLazyModule(
     "Metal",
@@ -29,6 +27,5 @@ sys.modules["Metal"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["Metal._metadata"]

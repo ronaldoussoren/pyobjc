@@ -3,10 +3,15 @@ Convenience methods for Cocoa mapping types.
 """
 __all__ = ("addConvenienceForBasicMapping",)
 
-from objc._objc import selector
-from objc._convenience import addConvenienceForClass, CLASS_ABC
-from objc._convenience import container_unwrap, container_wrap
 import sys
+
+from objc._convenience import (
+    CLASS_ABC,
+    addConvenienceForClass,
+    container_unwrap,
+    container_wrap,
+)
+from objc._objc import selector
 
 if sys.version_info[0] == 2:
     import collections as collections_abc

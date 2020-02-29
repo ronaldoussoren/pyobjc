@@ -24,11 +24,12 @@ of copied. This means you don't have to rebuild the app if you edit the
 sources or nibs.)
 """
 
-import objc
-import Cocoa
 import sys
 
+import Cocoa
+import objc
 from PythonBrowserModel import PythonBrowserModel
+
 
 # class defined in PythonBrowser.nib
 class PythonBrowserWindowController(Cocoa.NSWindowController):

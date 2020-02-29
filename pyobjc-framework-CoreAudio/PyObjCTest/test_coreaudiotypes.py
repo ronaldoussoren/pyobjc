@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
 import sys
 
 import CoreAudio
+from PyObjCTools.TestSupport import *
 
 
 class TestAudioDriverPlugIn(TestCase):

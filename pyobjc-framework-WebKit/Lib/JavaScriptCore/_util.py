@@ -1,5 +1,6 @@
-import JavaScriptCore
 import contextlib
+
+import JavaScriptCore
 
 
 @contextlib.contextmanager

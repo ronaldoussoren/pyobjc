@@ -1,14 +1,14 @@
-import sys
+import keyword
 import os
+import sys
+import time
+import traceback
+from code import InteractiveConsole, softspace
 
 try:
     import __builtin__
 except ImportError:
     import builtins as __builtin__
-import traceback
-import keyword
-import time
-from code import InteractiveConsole, softspace
 
 
 class RemoteConsole(InteractiveConsole):

@@ -257,7 +257,7 @@ Lld_void:
  ret
  .align  3
 Lld_int8:
- movzbl  -24(%rsp), %eax 
+ movzbl  -24(%rsp), %eax
  ret
  .align  3
 Lld_int16:

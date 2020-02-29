@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AVFoundation
+from PyObjCTools.TestSupport import *
 
 AVAudioIONodeInputBlock = b"^{AudioBufferList=L[1{AudioBuffer=LL^v}]}I"
 

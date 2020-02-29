@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import DiscRecording
+from PyObjCTools.TestSupport import *
 
 DRTrackCallbackProc = b"i^{__DRTrack=}I^v"
 

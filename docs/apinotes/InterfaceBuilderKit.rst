@@ -14,4 +14,3 @@ writing plugins and not as part of standalone applications.
 
    This package will not work with Xcode 4, which is why
    the package won't install automaticly on macOS 10.8 (or later)
-

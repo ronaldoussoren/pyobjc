@@ -9,7 +9,9 @@
 # - Implement the required functionality
 from __future__ import unicode_literals
 
-import sys, os
+import os
+import sys
+
 import objc
 from PyObjCTest.identity import *
 from PyObjCTools.TestSupport import *

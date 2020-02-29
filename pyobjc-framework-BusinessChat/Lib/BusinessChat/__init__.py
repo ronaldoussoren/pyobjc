@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import AppKit
 
+import AppKit
+import objc
 from BusinessChat import _metadata
 
 sys.modules["BusinessChat"] = mod = objc.ObjCLazyModule(
@@ -26,6 +26,5 @@ sys.modules["BusinessChat"] = mod = objc.ObjCLazyModule(
     (AppKit,),
 )
 
-import sys
 
 del sys.modules["BusinessChat._metadata"]

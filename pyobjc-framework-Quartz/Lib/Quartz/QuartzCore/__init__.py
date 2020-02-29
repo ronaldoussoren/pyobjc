@@ -5,11 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Foundation
 
-from Quartz.QuartzCore import _metadata
+import Foundation
+import objc
 import Quartz.QuartzCore._quartzcore
+from Quartz.QuartzCore import _metadata
+
 
 # XXX: addConvenienceFor... should be metadata
 def CIVector__getitem__(self, idx):
@@ -65,6 +66,5 @@ sys.modules["Quartz.QuartzCore"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["Quartz.QuartzCore._metadata"]

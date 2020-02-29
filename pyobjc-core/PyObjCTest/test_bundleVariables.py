@@ -1,7 +1,9 @@
 from __future__ import absolute_import, unicode_literals
+
 import objc
-from . import fnd as Foundation
 from PyObjCTools.TestSupport import *
+
+from . import fnd as Foundation
 
 
 class TestBundleVariables(TestCase):

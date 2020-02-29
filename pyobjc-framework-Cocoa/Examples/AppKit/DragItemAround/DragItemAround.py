@@ -1,9 +1,9 @@
 # Updated by mvl on 2009-02-22 for PyObjC 2
 
+import Cocoa
 import objc
 from objc import super
 from PyObjCTools import AppHelper
-import Cocoa
 
 
 class DraggableItemView(Cocoa.NSView):

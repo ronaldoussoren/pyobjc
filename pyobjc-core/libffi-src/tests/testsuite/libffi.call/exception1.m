@@ -24,9 +24,9 @@ int main (void)
 
 
   /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, 
+  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0,
 		     &ffi_type_void, args) == FFI_OK);
-  
+
   ok = 0;
   NS_DURING
 	ffi_call(&cif, FFI_FN(raiseit), NULL, values);
@@ -34,7 +34,7 @@ int main (void)
  	ok = 1;
 
   NS_ENDHANDLER
-  
+
   CHECK(ok);
 
   [pool release];

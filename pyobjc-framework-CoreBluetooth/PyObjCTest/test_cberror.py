@@ -1,7 +1,7 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 import CoreBluetooth
+from PyObjCTools.TestSupport import *
 
 
 class TestCBAdvertisementData(TestCase):
@@ -28,7 +28,6 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBErrorPeerRemovedPairingInformation, 14)
         self.assertEqual(CoreBluetooth.CBErrorEncryptionTimedOut, 15)
 
-
         self.assertEqual(CoreBluetooth.CBATTErrorSuccess, 0x00)
         self.assertEqual(CoreBluetooth.CBATTErrorInvalidHandle, 0x01)
         self.assertEqual(CoreBluetooth.CBATTErrorReadNotPermitted, 0x02)
@@ -47,7 +46,6 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientEncryption, 0x0F)
         self.assertEqual(CoreBluetooth.CBATTErrorUnsupportedGroupType, 0x10)
         self.assertEqual(CoreBluetooth.CBATTErrorInsufficientResources, 0x11)
-
 
 
 if __name__ == "__main__":

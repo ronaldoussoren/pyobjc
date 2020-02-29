@@ -6,9 +6,9 @@ documentation for details on how to use these functions and classes.
 """
 
 import sys
-import objc
-import Foundation
 
+import Foundation
+import objc
 from CalendarStore import _metadata
 
 sys.modules["CalendarStore"] = objc.ObjCLazyModule(
@@ -26,6 +26,5 @@ sys.modules["CalendarStore"] = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CalendarStore._metadata"]

@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import *
-
-from PyObjCTest.structpointer1 import OC_TestStructPointer
+import warnings
 
 import objc
-import warnings
+from PyObjCTest.structpointer1 import OC_TestStructPointer
+from PyObjCTools.TestSupport import *
 
 
 class TestObjCPointer(TestCase):

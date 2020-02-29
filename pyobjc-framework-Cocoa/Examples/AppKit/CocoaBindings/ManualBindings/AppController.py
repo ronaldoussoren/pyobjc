@@ -3,8 +3,13 @@
 #  ManualBindings
 #
 import objc
-from Cocoa import NSObject, NSValidatesImmediatelyBindingOption
-from Cocoa import NSError, NSLocalizedDescriptionKey, NSDecimal
+from Cocoa import (
+    NSDecimal,
+    NSError,
+    NSLocalizedDescriptionKey,
+    NSObject,
+    NSValidatesImmediatelyBindingOption,
+)
 
 
 class AppController(NSObject):

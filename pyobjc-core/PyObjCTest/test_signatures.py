@@ -1,8 +1,8 @@
 """
 Test some basic features of signature strings.
 """
-from PyObjCTools.TestSupport import *
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class PyOCTestTypeStr(TestCase):

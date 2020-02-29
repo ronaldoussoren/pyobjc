@@ -5,6 +5,7 @@ Helper script for running the PyObjC test suite
 
 import argparse
 import collections
+import configparser
 import contextlib
 import json
 import logging
@@ -12,18 +13,17 @@ import os
 import platform
 import re
 import shutil
+import ssl
 import subprocess
 import sys
 import time
-import configparser
 from http.client import HTTPSConnection
 from urllib.parse import urlencode
-import ssl
 
-from _common_definitions import TOP_DIR, TEST_STATE_DIR, PY_VERSIONS
-from _common_definitions import virtualenv, system_report, variants, setup_variant
+from _common_definitions import (PY_VERSIONS, TEST_STATE_DIR, TOP_DIR,
+                                 setup_variant, system_report, variants,
+                                 virtualenv)
 from _topsort import topological_sort
-
 
 _detected_versions = None
 def detect_pyversions():

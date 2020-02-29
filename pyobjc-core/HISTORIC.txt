@@ -7,7 +7,7 @@ historic interest. Sometime we'll convert this into a more interesting read.
 If you are reading this from the PyObjC disk image that contains the Installer
 package, simply Install the package and look in /Developer/Python/PyObjC/Examples
 
-Documentation is pretty incomplete at the moment, look in 
+Documentation is pretty incomplete at the moment, look in
 /Developer/Python/PyObjC/Documentation for the documentation we have.
 
 The PyObjC package provides the glue needed to interface the Python interpreter with the Objective-C language. The 'objc' module makes Objective-C objects and classes available as first-class Python citizens, it is not only possible to use Objective-C objects but you can also subclass Objective-C classes.
@@ -54,23 +54,23 @@ Older README
 The PyObjC package provides the glue needed to interface the Python
 interpreter with the Objective-C language. The 'objc' module makes Objective-C
 objects and classes available as first-class Python citizens, it is not only
-possible to use Objective-C objects but you can also subclass Objective-C 
+possible to use Objective-C objects but you can also subclass Objective-C
 classes.
 
 The package maintainers currently only work on supporting Mac OS X, the GNU
-runtime and GnuStep are not supported at the moment (patches to change that 
+runtime and GnuStep are not supported at the moment (patches to change that
 are welcome).
 
 The python situation on Mac OS X is a bit vague at the moment, PyObjC is known
 to work using the following versions of python:
-- Fink's python 2.2 
+- Fink's python 2.2
   Building GUI applications requires some manual work, mostly because I
   (ronald) primary use a private build of a development snapshot of Python 2.3
 - Python 2.3 (from CVS)
-  If you use a framework build it is easy to build python based standalone 
+  If you use a framework build it is easy to build python based standalone
   GUI applications (see Examples/iClass).
 - Apple's python 2.2 on 10.2
-  Same issues as Finks's python 2.2. 
+  Same issues as Finks's python 2.2.
 
 ----
 Older README:
@@ -110,7 +110,7 @@ of methods returning big structures by value. See BUGS.
 Wanna cooperate? Starts from FIXME.
 
 You can find visible user changes in NEWS For more
-details, consult ChangeLog. 
+details, consult ChangeLog.
 
 For build instructions, read INSTALL. It contains instruction
 to build the manual section too.
@@ -140,4 +140,3 @@ Bill Bumgarner <bbum@friday.com>:
 and of course to the entire ObjC-SIG community.
 
 Copyright (C) 1996,97,98 by Lele Gaifax <lele@seldati.it>
-

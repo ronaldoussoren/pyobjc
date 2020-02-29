@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import libdispatch
+from PyObjCTools.TestSupport import *
 
 
 class TestIntrospectionAPI(TestCase):

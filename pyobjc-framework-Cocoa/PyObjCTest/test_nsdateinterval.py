@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
 import sys
+
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSDateInterval(TestCase):

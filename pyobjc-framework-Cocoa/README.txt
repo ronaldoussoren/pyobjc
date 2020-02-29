@@ -1,4 +1,4 @@
-Wrappers for framework 'Cocoa', that is frameworks 'CoreFoundation', 
+Wrappers for framework 'Cocoa', that is frameworks 'CoreFoundation',
 'Foundation' and 'AppKit'.
 
 These wrappers don't include documentation, please check Apple's documention

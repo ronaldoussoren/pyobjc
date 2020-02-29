@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
-from Quartz.CoreGraphics import *
 from Quartz import CoreGraphics
+from Quartz.CoreGraphics import *
 
 
 class TestCGPath(TestCase):

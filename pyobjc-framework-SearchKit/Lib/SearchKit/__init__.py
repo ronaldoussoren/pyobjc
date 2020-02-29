@@ -4,11 +4,11 @@ Python mapping for the SearchKit framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import objc, sys
+import sys
+import warnings
 
 import CoreServices
-
-import warnings
+import objc
 
 warnings.warn(
     "pyobjc-framework-SearchKit is deprecated, use 'import CoreServices' instead",

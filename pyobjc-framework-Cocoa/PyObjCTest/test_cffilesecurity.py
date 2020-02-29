@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import CoreFoundation
+from PyObjCTools.TestSupport import *
 
 
 class TestCFFileSecurity(TestCase):

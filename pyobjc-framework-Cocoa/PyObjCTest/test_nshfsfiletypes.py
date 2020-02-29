@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
 import os
 
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSHFSFileTypes(TestCase):

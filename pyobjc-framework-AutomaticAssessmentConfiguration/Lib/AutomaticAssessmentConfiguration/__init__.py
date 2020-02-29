@@ -5,17 +5,19 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
+import AutomaticAssessmentConfiguration
 import Foundation
-
+import objc
 from AutomaticAssessmentConfiguration import _metadata
-
 
 sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
     "AutomaticAssessmentConfiguration",
     "com.apple.AutomaticAssessmentConfiguration",
-    objc.pathForFramework("/System/Library/Frameworks/AutomaticAssessmentConfiguration.framework"),
+    objc.pathForFramework(
+        "/System/Library/Frameworks/AutomaticAssessmentConfiguration.framework"
+    ),
     _metadata.__dict__,
     None,
     {
@@ -27,11 +29,13 @@ sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import AutomaticAssessmentConfiguration
-import objc
-AutomaticAssessmentConfiguration.AEAssessmentSession = objc.lookUpClass('AutomaticAssessmentConfiguration.AEAssessmentSession')
-AutomaticAssessmentConfiguration.AEAssessmentConfiguration = objc.lookUpClass('AutomaticAssessmentConfiguration.AEAssessmentConfiguration')
 
-import sys
+AutomaticAssessmentConfiguration.AEAssessmentSession = objc.lookUpClass(
+    "AutomaticAssessmentConfiguration.AEAssessmentSession"
+)
+AutomaticAssessmentConfiguration.AEAssessmentConfiguration = objc.lookUpClass(
+    "AutomaticAssessmentConfiguration.AEAssessmentConfiguration"
+)
+
 
 del sys.modules["AutomaticAssessmentConfiguration._metadata"]

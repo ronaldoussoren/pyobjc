@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
 import objc
-
+from PyObjCTools.TestSupport import *
 
 objc.registerMetaDataForSelector(
     b"OC_CallbackTest",

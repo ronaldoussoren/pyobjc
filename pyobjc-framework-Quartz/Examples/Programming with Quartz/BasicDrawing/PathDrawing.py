@@ -1,5 +1,6 @@
-import Quartz
 import math
+
+import Quartz
 
 
 def doEgg(context):

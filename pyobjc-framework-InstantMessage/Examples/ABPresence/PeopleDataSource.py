@@ -1,9 +1,8 @@
-import Cocoa
 import AddressBook
+import Cocoa
 import InstantMessage
 import objc
-
-from ServiceWatcher import kStatusImagesChanged, kAddressBookPersonStatusChanged
+from ServiceWatcher import kAddressBookPersonStatusChanged, kStatusImagesChanged
 
 
 class PeopleDataSource(Cocoa.NSObject):

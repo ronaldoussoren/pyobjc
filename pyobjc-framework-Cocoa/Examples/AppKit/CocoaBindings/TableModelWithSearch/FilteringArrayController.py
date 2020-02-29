@@ -6,10 +6,11 @@
 #  Copyright (c) 2004 __MyCompanyName__. All rights reserved.
 #
 
-from objc import super
+import re
+
 import objc
 from Cocoa import NSArrayController
-import re
+from objc import super
 
 kLiteralSearch = "Literal Search"
 kRegularExpressionSearch = "Regular Expression Search"

@@ -5,13 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
+
 import DiscRecording
-
+import Foundation
+import objc
 from DiscRecordingUI import _metadata
-
 
 sys.modules["DiscRecordingUI"] = mod = objc.ObjCLazyModule(
     "DiscRecordingUI",
@@ -28,6 +27,5 @@ sys.modules["DiscRecordingUI"] = mod = objc.ObjCLazyModule(
     (DiscRecording, Foundation),
 )
 
-import sys
 
 del sys.modules["DiscRecordingUI._metadata"]

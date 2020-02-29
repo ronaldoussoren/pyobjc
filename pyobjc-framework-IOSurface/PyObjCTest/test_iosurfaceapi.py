@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import IOSurface
+from PyObjCTools.TestSupport import *
 
 
 class TestIOSurfaceAPI(TestCase):

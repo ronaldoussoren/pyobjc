@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import *
 import array
-from CoreFoundation import *
-import CoreFoundation
 import sys
-import AppKit
 
+import AppKit
+import CoreFoundation
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 try:
     from Foundation import __NSCFString as NSCFString

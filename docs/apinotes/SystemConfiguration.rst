@@ -37,5 +37,3 @@ APIs (that is, a ``(host, port)`` tuple for IPv4 adresses or
 
 The ``addrlen`` argument should be ``objc._size_sockaddr_ip4`` for IPv4 addresses and
 ``_size_sockaddr_ip4`` for IPv6 adresses.
-
-

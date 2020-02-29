@@ -43,11 +43,11 @@ int main (void)
   values[1] = (void*) &valbuf.count;
 
   /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 2, 
+  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 2,
 		     &ffi_type_sint, args) == FFI_OK);
 
   printf("%f\n", valbuf.input[0]);
-  
+
   ffi_call(&cif, FFI_FN(array_reverse), &valbuf.rint, values);
 
   printf("%f\n", valbuf.input[0]);
@@ -61,4 +61,3 @@ int main (void)
 
   return 0;
 }
-  

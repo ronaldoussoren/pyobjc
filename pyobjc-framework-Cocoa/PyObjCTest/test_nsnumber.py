@@ -1,12 +1,11 @@
-from PyObjCTools.TestSupport import *
-import objc
-import re
-import sys
 import operator
 import os
+import re
+import sys
 
-
+import objc
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 PLIST = b"""\
 <?xml version="1.0" encoding="UTF-8"?>

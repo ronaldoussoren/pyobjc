@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from InterfaceBuilderKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestIBObjectIntegrationHelper(NSObject):

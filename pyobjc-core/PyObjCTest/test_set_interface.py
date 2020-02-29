@@ -3,22 +3,20 @@ Tests if NSSet conforms to the interface of the python type set()
 
 This is a port of the set tests from the Python stdlib for 3.2
 """
-from PyObjCTools.TestSupport import *
+import operator
+import sys
+import test.test_set
+from test.test_set import PassThru, check_pass_thru
 
 import objc
-import operator
+from PyObjCTools.TestSupport import *
 
 NSSet = objc.lookUpClass("NSSet")
 NSMutableSet = objc.lookUpClass("NSMutableSet")
 
-import test.test_set
-from test.test_set import PassThru, check_pass_thru
 
 test.test_set.empty_set = NSMutableSet()
-import operator
 
-
-import sys
 
 if sys.version_info[0] == 3:
     unicode = str

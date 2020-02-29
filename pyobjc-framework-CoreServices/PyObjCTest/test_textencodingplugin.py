@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreServices
+from PyObjCTools.TestSupport import *
 
 
 class TestTextEncodingPlugin(TestCase):

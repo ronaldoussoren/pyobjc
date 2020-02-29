@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
-from CoreFoundation import *
 import CoreFoundation
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestBase(TestCase):

@@ -8,12 +8,15 @@ while at the same time getting a higher fidelity bridge.
 - Add tests for calling methods from ObjC
 """
 from __future__ import unicode_literals
-import weakref, objc, sys
-from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import NSObject
 
-from PyObjCTest.specialtypecodes import *
 import array
+import sys
+import weakref
+
+import objc
+from PyObjCTest.fnd import NSObject
+from PyObjCTest.specialtypecodes import *
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     unichr = chr

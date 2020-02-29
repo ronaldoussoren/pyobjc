@@ -39,4 +39,3 @@ API Notes
 * ``LSOpenFromRefSpec``, ``LSOpenFromURLSpec``
 
   This functions are not yet supported and need manual wrappers.
-

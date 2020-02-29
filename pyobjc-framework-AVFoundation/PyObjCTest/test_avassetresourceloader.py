@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
 import AVFoundation
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestAVAssetResourceLoaderHelper(AVFoundation.NSObject):

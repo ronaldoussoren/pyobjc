@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
-import CoreServices
-
 import os
+
+import CoreServices
+from PyObjCTools.TestSupport import *
 
 
 class TestLSSharedFileList(TestCase):

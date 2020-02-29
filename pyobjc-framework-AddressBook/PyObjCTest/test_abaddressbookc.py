@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from AddressBook import *
+from PyObjCTools.TestSupport import *
 
 _C_ABAddressBookRef = b"^{__ABAddressBookRef=}"
 _C_ABMultiValueRef = b"^{__ABMultiValue=}"

@@ -6,31 +6,31 @@
    "NSMailDelivery": {
     "methods": [
      {
-      "class_method": true, 
+      "class_method": true,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "hasDeliveryClassBeenConfigured"
-     }, 
+     },
      {
-      "class_method": true, 
+      "class_method": true,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "deliverMessage:headers:format:protocol:"
-     }, 
+     },
      {
-      "class_method": true, 
+      "class_method": true,
       "retval": {
        "type_override": "Z"
-      }, 
+      },
       "selector": "deliverMessage:subject:to:"
      }
     ]
    }
-  }, 
-  "formal_protocols": {}, 
-  "functions": {}, 
+  },
+  "formal_protocols": {},
+  "functions": {},
   "informal_protocols": {}
  }
 }

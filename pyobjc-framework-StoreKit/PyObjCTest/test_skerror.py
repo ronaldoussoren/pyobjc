@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import StoreKit
+from PyObjCTools.TestSupport import *
 
 
 class TestSKError(TestCase):

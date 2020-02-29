@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
-from Quartz.QuartzCore import *
 from Quartz import *
+from Quartz.QuartzCore import *
 
 
 class TestCIPluginInterfaceHelper(NSObject):

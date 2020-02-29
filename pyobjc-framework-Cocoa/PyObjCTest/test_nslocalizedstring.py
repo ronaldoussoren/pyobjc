@@ -1,15 +1,14 @@
 # Place holder for real tests.
-from PyObjCTools.TestSupport import *
 import objc
-
 from Foundation import (
-    NSLocalizedString,
     NSAutoreleasePool,
+    NSBundle,
+    NSLocalizedString,
     NSLocalizedStringFromTable,
     NSLocalizedStringFromTableInBundle,
     NSLocalizedStringWithDefaultValue,
-    NSBundle,
 )
+from PyObjCTools.TestSupport import *
 
 
 class TestNSLocalizedString(TestCase):

@@ -1,6 +1,7 @@
+import os
+
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
-import os
 
 
 class TestCGPDFContentStream(TestCase):

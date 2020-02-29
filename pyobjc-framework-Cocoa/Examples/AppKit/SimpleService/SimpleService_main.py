@@ -1,7 +1,7 @@
 from AppKit import *
 from Foundation import *
-from ServiceTest import *
 from PyObjCTools import AppHelper
+from ServiceTest import *
 
 
 def main():

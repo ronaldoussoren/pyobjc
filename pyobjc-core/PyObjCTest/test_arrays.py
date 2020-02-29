@@ -3,11 +3,12 @@ Some tests for arrays in method arguments (the 'int foo[4]' type of array).
 
 This tests both calling such methods, as well as implementing methods with such arguments.
 """
-from PyObjCTools.TestSupport import *
-import objc
 import array
+
+import objc
 from PyObjCTest.arrays import *
 from PyObjCTest.fnd import NSObject
+from PyObjCTools.TestSupport import *
 
 
 class TestArrayCalling(TestCase):

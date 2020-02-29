@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
 import time
+
 from CoreFoundation import *
 from Foundation import NSDate
+from PyObjCTools.TestSupport import *
 
 
 class TestDate(TestCase):

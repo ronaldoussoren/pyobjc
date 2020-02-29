@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import OpenDirectory
+from PyObjCTools.TestSupport import *
 
 
 class TestODConfiguration(TestCase):

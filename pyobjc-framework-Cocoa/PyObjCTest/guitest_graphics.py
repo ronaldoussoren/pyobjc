@@ -3,12 +3,13 @@ Some tests for difficult wrapped graphics functions and methods
 
 NOTE: These require a WindowServer connection on macOS
 """
-from PyObjCTools.TestSupport import *
-from AppKit import *
-from Foundation import *
 import array
 import sys
 import unittest
+
+from AppKit import *
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class SimpleImage:

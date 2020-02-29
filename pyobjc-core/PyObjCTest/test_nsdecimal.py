@@ -2,14 +2,14 @@
 Tests for the NSDecimal wrapper type
 """
 from __future__ import absolute_import
-from PyObjCTools.TestSupport import *
 
-from PyObjCTest.decimal import OC_TestDecimal
-
-import sys
-import operator
-import objc
 import decimal
+import operator
+import sys
+
+import objc
+from PyObjCTest.decimal import OC_TestDecimal
+from PyObjCTools.TestSupport import *
 
 
 class TestNSDecimalWrapper(TestCase):

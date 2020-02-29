@@ -1,10 +1,11 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import unittest
+
+import CoreServices
 import objc
 from PyObjCTools.TestSupport import *
-import unittest
-import CoreServices
 
 
 class TestSearchKit(TestCase):

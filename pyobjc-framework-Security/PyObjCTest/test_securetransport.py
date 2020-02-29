@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Security
+from PyObjCTools.TestSupport import *
 
 SSLReadFunc = b"i@o^vN^L"
 SSLWriteFunc = b"i@n^vN^L"

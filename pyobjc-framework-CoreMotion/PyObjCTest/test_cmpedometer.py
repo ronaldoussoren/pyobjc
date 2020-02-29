@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreMotion
+from PyObjCTools.TestSupport import *
 
 CMPedometerHandler = b"v@"
 CMPedometerEventHandler = b"v@@"

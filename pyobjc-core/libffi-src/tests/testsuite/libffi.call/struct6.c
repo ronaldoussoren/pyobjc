@@ -16,7 +16,7 @@ static test_structure_6 struct6 (test_structure_6 ts)
 {
   ts.f += 1;
   ts.d += 1;
-  
+
   return ts;
 }
 
@@ -39,26 +39,26 @@ int main (void)
   test_structure_6 ts6_arg;
 
   /* This is a hack to get a properly aligned result buffer */
-  test_structure_6 *ts6_result = 
+  test_structure_6 *ts6_result =
     (test_structure_6 *) malloc (sizeof(test_structure_6));
-  
+
   args[0] = &ts6_type;
   values[0] = &ts6_arg;
 
   /* Initialize the cif */
   CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ts6_type, args) == FFI_OK);
-  
+
   ts6_arg.f = 5.55f;
   ts6_arg.d = 6.66;
-  
+
   printf ("%g\n", ts6_arg.f);
   printf ("%g\n", ts6_arg.d);
 
   ffi_call(&cif, FFI_FN(struct6), ts6_result, values);
-    
+
   CHECK(ts6_result->f == 5.55f + 1);
   CHECK(ts6_result->d == 6.66 + 1);
-    
+
   free (ts6_result);
   exit(0);
 }

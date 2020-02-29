@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
+import sys
 
 import Security
-import sys
+from PyObjCTools.TestSupport import *
 
 SecKeychainCallback = b"iIn^" + Security.SecKeychainCallbackInfo.__typestr__ + b"^v"
 

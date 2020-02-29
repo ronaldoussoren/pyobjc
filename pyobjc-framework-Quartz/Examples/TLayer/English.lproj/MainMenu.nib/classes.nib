@@ -1,12 +1,12 @@
 {
     IBClasses = (
         {
-            ACTIONS = {showShadowDemoWindow = id; }; 
-            CLASS = AppDelegate; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
+            ACTIONS = {showShadowDemoWindow = id; };
+            CLASS = AppDelegate;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

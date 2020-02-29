@@ -1,13 +1,20 @@
 from __future__ import print_function
-from Cocoa import NSURLProtocol, NSURLResponse, NSError, NSString, NSURL, NSData
+
+import sys
+
+import objc
 from Cocoa import (
+    NSURL,
+    NSData,
+    NSError,
+    NSString,
+    NSURLCacheStorageNotAllowed,
     NSURLErrorDomain,
     NSURLErrorResourceUnavailable,
-    NSURLCacheStorageNotAllowed,
+    NSURLProtocol,
+    NSURLResponse,
 )
-import objc
 from pydochelper import gethtmldoc
-import sys
 
 PY3K = sys.version_info[0] == 3
 

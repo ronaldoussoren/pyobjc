@@ -5,18 +5,13 @@ Common definitions for
 - run-test-suite
 """
 
-import os
-import subprocess
 import contextlib
+import os
 import shutil
+import subprocess
 import time
 
-PY_VERSIONS = [
-    "3.6",
-    "3.7",
-    "3.8",
-    "3.9",
-]
+PY_VERSIONS = ["3.6", "3.7", "3.8", "3.9"]
 
 TOP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

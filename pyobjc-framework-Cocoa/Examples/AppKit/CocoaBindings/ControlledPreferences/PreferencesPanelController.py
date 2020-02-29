@@ -9,9 +9,16 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
+from Cocoa import (
+    NSArchiver,
+    NSColor,
+    NSFont,
+    NSFontManager,
+    NSUserDefaultsController,
+    NSValueTransformer,
+    NSWindowController,
+)
 from FontNameToDisplayNameTransformer import FontNameToDisplayNameTransformer
-from Cocoa import NSWindowController, NSUserDefaultsController, NSFont
-from Cocoa import NSFontManager, NSValueTransformer, NSArchiver, NSColor
 from PyObjCTools.KeyValueCoding import getKey
 
 

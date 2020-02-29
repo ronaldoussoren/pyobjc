@@ -1,6 +1,8 @@
-import Quartz
+import os
+import sys
+
 import Cocoa
-import os, sys
+import Quartz
 
 # Return the generic RGB color space. This is a 'get' function and the caller
 # should not release the returned value unless the caller retains it first.

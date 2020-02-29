@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from InputMethodKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestIMKCandidates(TestCase):

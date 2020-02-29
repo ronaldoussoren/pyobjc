@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import Cocoa
 import PyObjCTools.AppCategories
+from PyObjCTools.TestSupport import *
 
 
 class TestAppKitCategories(TestCase):

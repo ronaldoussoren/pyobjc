@@ -1,4 +1,4 @@
-:mod:`PyObjCTools.KeyValueCoding` -- Key-Value Coding API 
+:mod:`PyObjCTools.KeyValueCoding` -- Key-Value Coding API
 =========================================================
 
 .. module:: PyObjCTools.KeyValueCoding
@@ -13,7 +13,7 @@ objects.
 
 Key-Value Coding is Cocoa functionality that is simular to
 the :func:`getattr` and :func:`setattr` functions in Python. The APIs
-in this module are modelled on those functions and work on 
+in this module are modelled on those functions and work on
 Cocoa objects as well as basic Python objects.
 
 Key-Value Coding works with keys, basically attribute names, as well as
@@ -26,7 +26,7 @@ Accessor functions
 .. function:: getKey(object, key)
 
    Return the value of the attribute referenced by ``key``. The key
-   is used to build the name of an accessor method or attribute name. 
+   is used to build the name of an accessor method or attribute name.
 
    The following methods are tried for regular Python objects:
 
@@ -39,7 +39,7 @@ Accessor functions
    * Accessor meethod or attribute ``isKey``
 
    * Attribute ``_key``
- 
+
    (In all of these "key" is replaced by the value of ``key``).
 
    This function calls the regular Key-Value Coding methods for Cocoa objects,
@@ -55,14 +55,14 @@ Accessor functions
 .. function:: setKey(object, key, value)
 
    Set the value of the attribute referenced by ``key`` to
-   ``key``. The key is used to build the name of an accessor 
-   method or attribute name. 
+   ``key``. The key is used to build the name of an accessor
+   method or attribute name.
 
    When the object is a Cocoa object (including those implemented in
    Python) this method calls the regular Cocoa API for setting a property.
 
    When the object is an instance of :class:`collections.Mapping`
-   this function uses :func:`operator.setitem` to update the 
+   this function uses :func:`operator.setitem` to update the
    dictionary.
 
    The following methods are tried for regular Python objects:
@@ -76,7 +76,7 @@ Accessor functions
    * attribute ``_key`` when that already exists
 
    * Attribute ``key``
- 
+
    (In all of these "key" is replaced by the value of ``key``).
 
    :param object: An arbitrary object
@@ -90,19 +90,19 @@ Accessor functions
 .. function:: getKeyPath(object, keypath)
 
    The ``keypath`` is a string containing a path of keys. The keys
-   are separated by colons, for example :data:`"owner.firstName"`. 
+   are separated by colons, for example :data:`"owner.firstName"`.
 
    The key path is used to traverse an object graph to an attribute. This
-   function also supports set and array operators. Those are keys of 
+   function also supports set and array operators. Those are keys of
    the form ``@operator`` are are used as ``pathToArray.@operator.pathToProperty``,
-   for example ``system.disks.@max.capacity``. 
+   for example ``system.disks.@max.capacity``.
 
    The table below lists the supported array operators
 
    =========================== =======================================================
    Operator
    =========================== =======================================================
-   ``avg``                     Use the rest of the keypath to fetch the value 
+   ``avg``                     Use the rest of the keypath to fetch the value
                                of each item in the container and returns the
 			       average of those values.
    --------------------------- -------------------------------------------------------
@@ -144,11 +144,11 @@ Accessor functions
 .. function setKeyPath(object, keypath, value)
 
    The ``keypath`` is a string containing a path of keys. The keys
-   are separated by colons, for example :data:`"owner.firstName"`. 
+   are separated by colons, for example :data:`"owner.firstName"`.
 
    The key path is used to traverse an object graph to an attribute and
    the value is then set simularly to how :func:`setKey` sets the value.
-   
+
    :param object: An arbitrary object
    :param keypath: The keypath, colon seperated keys
    :type keypath: string
@@ -170,8 +170,8 @@ Key-Value Coding wrapper
    .. method __setattr__(key, value)
 
       Returns ``setKey(self, key, value)`` if the key
-      does not start with an underscore. 
-      
+      does not start with an underscore.
+
       Sets an attribute of the wrapper
       when the key does start with an undercore.
 

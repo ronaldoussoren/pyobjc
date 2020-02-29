@@ -1,5 +1,6 @@
-import PrintCore
 import sys
+
+import PrintCore
 from PyObjCTools.TestSupport import *
 
 

@@ -1,5 +1,5 @@
-import objc
 import Cocoa
+import objc
 
 
 class MyBaseGradientView(Cocoa.NSView):

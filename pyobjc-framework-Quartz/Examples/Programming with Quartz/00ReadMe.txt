@@ -1,4 +1,4 @@
-The samples in this directory are transcriptions of the 
+The samples in this directory are transcriptions of the
 examples in the book "Programming with Quartz" (ISBN: 978-0-12-369473-7), except for code
 that relies on Carbon APIs like HIToolbox.
 
@@ -7,7 +7,7 @@ The APIs in the folder "python" use the pre-Leopard bindings to CoreGraphics, wh
 The original Readme file:
 
 These directories contain the sample source code for the Quartz Book. Note that the source files are formatted
-so that the tab indentation looks best in Xcode or BBEdit with 4 spaces per tab. 
+so that the tab indentation looks best in Xcode or BBEdit with 4 spaces per tab.
 
 CocoaDrawingShell:
 Contains source for building the sample application created in Chapter 3.
@@ -38,9 +38,7 @@ Contains the sample Python scripts from Chapter 18. These are:
 
 alpharects.py, which creates a PDF document containing the alpha rectangle drawing from Chapter 2.
 pdftojpg.py, which takes an input PDF document and creates a JPEG output file for each page of the input document.
-Stamp PDF with "Confidential".py, which is a PDF workflow script that can be installed in the 
-	~/Library/PDF Services or /Library/PDF Services directory, adding a workflow item to the 
-	workflow menu in the Print dialog. Choosing this workflow item stamps the word 
+Stamp PDF with "Confidential".py, which is a PDF workflow script that can be installed in the
+	~/Library/PDF Services or /Library/PDF Services directory, adding a workflow item to the
+	workflow menu in the Print dialog. Choosing this workflow item stamps the word
 	"Confidential" onto each page of the PDF document being printed.
-
-

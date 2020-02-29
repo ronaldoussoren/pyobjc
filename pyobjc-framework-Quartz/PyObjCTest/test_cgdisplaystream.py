@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Quartz
+from PyObjCTools.TestSupport import *
 
 CGDisplayStreamFrameAvailableHandler = b"vIQ@@"
 

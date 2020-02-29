@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import IMServicePlugIn
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestIMServicePlugInFileTransfer(TestCase):

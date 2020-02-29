@@ -11,8 +11,9 @@ and (Objective-)C frameworks
 
 Note that this framework is deprecated in OSX 10.9
 """
-from pyobjc_setup import setup, Extension
 import os
+
+from pyobjc_setup import Extension, setup
 
 VERSION = "6.2b1"
 

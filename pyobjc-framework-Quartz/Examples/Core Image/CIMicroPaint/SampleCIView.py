@@ -2,17 +2,12 @@
 SampleCIView - simple OpenGL based CoreImage view
 """
 
+import CGL
+import Cocoa
 import objc
 import Quartz
-import Cocoa
-import CGL
-
 from OpenGL.GL import *
-
-# XXX: this may or may not be a bug in the OpenGL bindings
 from OpenGL.GL.APPLE.transform_hint import *
-
-import objc
 
 # The default pixel format
 _pf = None

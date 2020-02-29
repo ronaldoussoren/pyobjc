@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from AppKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSDatePicker(TestCase):
@@ -13,10 +13,11 @@ class TestNSDatePicker(TestCase):
         self.assertResultIsBOOL(NSDatePicker.drawsBackground)
         self.assertArgIsBOOL(NSDatePicker.setDrawsBackground_, 0)
 
-    @min_os_level('10.15.4')
+    @min_os_level("10.15.4")
     def testMethods10_15_4(self):
         self.assertResultIsBOOL(NSDatePicker.presentsCalendarOverlay)
         self.assertArgIsBOOL(NSDatePicker.setPresentsCalendarOverlay_, 0)
+
 
 if __name__ == "__main__":
     main()

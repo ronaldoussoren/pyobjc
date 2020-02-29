@@ -1,10 +1,9 @@
 #! /usr/bin/python
 
-from PyObjCTools.TestSupport import *
-import objc
-
-import Foundation
 import CoreData
+import Foundation
+import objc
+from PyObjCTools.TestSupport import *
 
 
 class CoreDataTestObject(CoreData.NSManagedObject):

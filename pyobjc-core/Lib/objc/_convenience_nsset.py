@@ -3,10 +3,11 @@ Convenience interface for NSSet/NSMutableSet
 """
 __all__ = ()
 
-from objc._convenience import addConvenienceForClass, container_wrap, container_unwrap
-from objc._objc import lookUpClass
+import collections.abc
+import sys
 
-import sys, collections.abc
+from objc._convenience import addConvenienceForClass, container_unwrap, container_wrap
+from objc._objc import lookUpClass
 
 NSSet = lookUpClass("NSSet")
 NSMutableSet = lookUpClass("NSMutableSet")

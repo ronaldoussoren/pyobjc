@@ -7,7 +7,7 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Cocoa import NSValueTransformer, NSColor
+from Cocoa import NSColor, NSValueTransformer
 
 
 class PriorityToColourTransformer(NSValueTransformer):

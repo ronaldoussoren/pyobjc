@@ -1,7 +1,8 @@
 import os
-from PyObjCTools.TestSupport import *
-from CoreFoundation import *
 import sys
+
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestURLAccess(TestCase):

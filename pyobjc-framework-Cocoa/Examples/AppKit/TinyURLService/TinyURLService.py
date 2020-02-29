@@ -1,9 +1,10 @@
-import Cocoa
-from PyObjCTools import AppHelper
-import objc
 import traceback
 import urllib
 import urllib2
+
+import Cocoa
+import objc
+from PyObjCTools import AppHelper
 
 
 def serviceSelector(fn):

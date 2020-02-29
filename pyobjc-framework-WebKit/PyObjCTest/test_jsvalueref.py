@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import JavaScriptCore
+from PyObjCTools.TestSupport import *
 
 
 class TestJSValueRef(TestCase):

@@ -1,5 +1,3 @@
-from PyObjCTools import AppHelper
-
 # Make sure all code is loaded
 import AppDrawing
 import BitmapContext
@@ -14,15 +12,15 @@ import ImageMasking
 import Images
 import MyAppController
 import MyView
-import PDFHandling
+import objc
 import PathDrawing
 import PatternDrawing
+import PDFHandling
 import QuartzTextDrawing
 import Shadings
 import ShadowsAndTransparencyLayers
 import Utilities
-
-import objc
+from PyObjCTools import AppHelper
 
 objc.setVerbose(True)
 

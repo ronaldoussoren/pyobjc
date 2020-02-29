@@ -5,14 +5,13 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Cocoa
-import SpriteKit
 
+import Cocoa
+import objc
+import SpriteKit
 from GameplayKit import _metadata
 from GameplayKit._GameplayKit import *
-
 
 sys.modules["GameplayKit"] = mod = objc.ObjCLazyModule(
     "GameplayKit",
@@ -29,6 +28,5 @@ sys.modules["GameplayKit"] = mod = objc.ObjCLazyModule(
     (Cocoa, SpriteKit),
 )
 
-import sys
 
 del sys.modules["GameplayKit._metadata"]

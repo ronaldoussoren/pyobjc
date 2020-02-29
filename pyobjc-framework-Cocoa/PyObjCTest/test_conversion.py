@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import *
-import decimal
-import Cocoa
 import datetime
 import decimal
-from PyObjCTools import Conversion
 
+import Cocoa
 from objc._pythonify import OC_PythonFloat
+from PyObjCTools import Conversion
+from PyObjCTools.TestSupport import *
 
 
 class TestConversion(TestCase):

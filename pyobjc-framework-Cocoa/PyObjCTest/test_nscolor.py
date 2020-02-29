@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
-from AppKit import *
 import array
 import sys
+
+from AppKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestRegressions(TestCase):

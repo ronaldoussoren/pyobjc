@@ -2,18 +2,18 @@
     IBClasses = (
         {
             ACTIONS = {
-                setColor = id; 
-                setRadius = id; 
-                setRulersVisible = id; 
-                zoomIn = id; 
-                zoomOut = id; 
-            }; 
-            CLASS = DotView; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {colorWell = NSColorWell; sizeSlider = NSSlider; }; 
-            SUPERCLASS = NSView; 
-        }, 
+                setColor = id;
+                setRadius = id;
+                setRulersVisible = id;
+                zoomIn = id;
+                zoomOut = id;
+            };
+            CLASS = DotView;
+            LANGUAGE = ObjC;
+            OUTLETS = {colorWell = NSColorWell; sizeSlider = NSSlider; };
+            SUPERCLASS = NSView;
+        },
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

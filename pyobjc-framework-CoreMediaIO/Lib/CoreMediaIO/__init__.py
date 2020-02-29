@@ -5,11 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
-from CoreMediaIO import _metadata
+import Foundation
+import objc
+from CoreMediaIO import _CoreMediaIO, _metadata
 
 sys.modules["CoreMediaIO"] = mod = objc.ObjCLazyModule(
     "CoreMediaIO",
@@ -26,11 +26,9 @@ sys.modules["CoreMediaIO"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreMediaIO._metadata"]
 
-from CoreMediaIO import _CoreMediaIO
 
 for nm in dir(_CoreMediaIO):
     setattr(mod, nm, getattr(_CoreMediaIO, nm))

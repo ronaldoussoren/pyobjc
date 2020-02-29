@@ -2,9 +2,10 @@
 Helper module that makes it easier to import all of Quartz
 """
 import sys
-import objc
-import Foundation
+
 import AppKit
+import Foundation
+import objc
 
 
 def _load():

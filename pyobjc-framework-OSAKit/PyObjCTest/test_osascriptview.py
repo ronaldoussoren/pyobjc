@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import OSAKit
+from PyObjCTools.TestSupport import *
 
 
 class TestOSAScriptView(TestCase):

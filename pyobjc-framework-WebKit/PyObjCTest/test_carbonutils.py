@@ -1,6 +1,6 @@
+import Cocoa
 from PyObjCTools.TestSupport import *
 from WebKit import *
-import Cocoa
 
 try:
     import Quartz

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 from CoreText import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCoreText(TestCase):

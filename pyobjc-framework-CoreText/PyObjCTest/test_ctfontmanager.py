@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import CoreText
+from PyObjCTools.TestSupport import *
 
 
 class TestCTFontManager(TestCase):

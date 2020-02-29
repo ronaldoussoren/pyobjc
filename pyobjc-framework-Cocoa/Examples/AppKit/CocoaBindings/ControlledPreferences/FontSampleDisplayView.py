@@ -8,11 +8,21 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
+from Cocoa import (
+    NSAttributedString,
+    NSDrawLightBezel,
+    NSFont,
+    NSFontAttributeName,
+    NSInsetRect,
+    NSMakePoint,
+    NSNotificationCenter,
+    NSRectFill,
+    NSUnarchiver,
+    NSUserDefaultsController,
+    NSUserDefaultsDidChangeNotification,
+    NSView,
+)
 from objc import super
-from Cocoa import NSView, NSUserDefaultsController, NSUnarchiver
-from Cocoa import NSDrawLightBezel, NSRectFill, NSInsetRect
-from Cocoa import NSFontAttributeName, NSAttributedString, NSFont
-from Cocoa import NSMakePoint, NSNotificationCenter, NSUserDefaultsDidChangeNotification
 from PyObjCTools.KeyValueCoding import getKey
 
 

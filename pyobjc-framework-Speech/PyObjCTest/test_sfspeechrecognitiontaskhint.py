@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Speech
+from PyObjCTools.TestSupport import *
 
 
 class TestSFSpeechRecognitionTaskHint(TestCase):

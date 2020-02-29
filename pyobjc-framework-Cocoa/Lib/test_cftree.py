@@ -1,5 +1,6 @@
-from CoreFoundation import *
 import unittest
+
+from CoreFoundation import *
 
 
 class TestCFTree(unittest.TestCase):

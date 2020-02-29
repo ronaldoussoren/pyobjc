@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
-from PyObjCTest.testbndl import OC_TestClass2
-import objc
 import sys
+
+import objc
+from PyObjCTest.testbndl import OC_TestClass2
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 2:
     from UserList import UserList

@@ -1,9 +1,10 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import sys
+
 import objc
 from PyObjCTools.TestSupport import *
-import sys
 
 if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 

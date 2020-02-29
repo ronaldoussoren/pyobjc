@@ -1,11 +1,10 @@
-from PyObjCTools import AppHelper
-import objc
-
-objc.setVerbose(True)
-
 import ABPersonDisplayNameAdditions
+import objc
 import PeopleDataSource
 import ServiceWatcher
+from PyObjCTools import AppHelper
+
+objc.setVerbose(True)
 
 
 AppHelper.runEventLoop()

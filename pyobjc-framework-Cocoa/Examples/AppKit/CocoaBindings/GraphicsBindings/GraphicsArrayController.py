@@ -8,11 +8,12 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-import objc
-from objc import super
-from Cocoa import NSArrayController, NSColor, NSCalibratedRGBColorSpace
-from random import random
 from math import fabs
+from random import random
+
+import objc
+from Cocoa import NSArrayController, NSCalibratedRGBColorSpace, NSColor
+from objc import super
 
 
 class GraphicsArrayController(NSArrayController):

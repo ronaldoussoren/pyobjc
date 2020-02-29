@@ -8,10 +8,10 @@ Note that PyObjC only wrappers the non-deprecated parts of the CoreServices
 framework.
 """
 import sys
-import objc
 
-from CoreServices.CarbonCore import _metadata
+import objc
 from CoreServices._inlines import _inline_list_
+from CoreServices.CarbonCore import _metadata
 
 sys.modules["CoreServices.CarbonCore"] = mod = objc.ObjCLazyModule(
     "CoreServices.CarbonCore",
@@ -28,6 +28,5 @@ sys.modules["CoreServices.CarbonCore"] = mod = objc.ObjCLazyModule(
     (),
 )
 
-import sys
 
 del sys.modules["CoreServices.CarbonCore._metadata"]

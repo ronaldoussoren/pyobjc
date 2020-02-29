@@ -6,13 +6,13 @@ of not being able to use 'from Cocoa import *'
 """
 __all__ = ("ObjCLazyModule",)
 
-import sys
 import re
 import struct
-
-from objc import lookUpClass, getClassList, nosuchclass_error, loadBundle
-import objc
+import sys
 import warnings
+
+import objc
+from objc import getClassList, loadBundle, lookUpClass, nosuchclass_error
 
 ModuleType = type(sys)
 

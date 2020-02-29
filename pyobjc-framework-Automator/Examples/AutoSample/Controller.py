@@ -1,7 +1,13 @@
 import objc
-from Cocoa import NSObject, NSURL, NSMutableArray, NSBundle
-from Cocoa import NSIndexSet, NSBeginInformationalAlertSheet
 from Automator import AMWorkflow
+from Cocoa import (
+    NSURL,
+    NSBeginInformationalAlertSheet,
+    NSBundle,
+    NSIndexSet,
+    NSMutableArray,
+    NSObject,
+)
 
 
 class Controller(NSObject):

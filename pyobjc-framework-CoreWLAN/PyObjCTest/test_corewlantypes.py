@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
 import CoreWLAN
 import Foundation
+from PyObjCTools.TestSupport import *
 
 
 class TestCoreWLANTypes(TestCase):

@@ -1,5 +1,6 @@
-from PyObjCTools.TestSupport import *
 import sys
+
+from PyObjCTools.TestSupport import *
 
 if os_level_key(os_release()) < os_level_key("10.12") or sys.maxsize >= 2 ** 32:
 

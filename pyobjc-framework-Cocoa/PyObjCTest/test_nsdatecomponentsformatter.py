@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import *
-import objc
 import array
 import sys
 
+import objc
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSDateComponentsFormatter(TestCase):

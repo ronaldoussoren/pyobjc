@@ -6,13 +6,13 @@
 #  Copyright (c) 2004 Bob Ippolito. All rights reserved.
 #
 
-from PyObjCTools import AppHelper
-from Foundation import NSProcessInfo
+import FilteringArrayController
 
 # import classes required to start application
 import TableModelWithSearchAppDelegate
 import ToolbarCreator
-import FilteringArrayController
+from Foundation import NSProcessInfo
+from PyObjCTools import AppHelper
 
 # start the event loop
 AppHelper.runEventLoop(argv=[])

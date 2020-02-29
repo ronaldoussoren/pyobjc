@@ -1,7 +1,12 @@
-from PyObjCTools.TestSupport import *
-from CoreFoundation import *
-import errno, time, os, socket, sys
 import contextlib
+import errno
+import os
+import socket
+import sys
+import time
+
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 from .test_cfsocket import onTheNetwork
 

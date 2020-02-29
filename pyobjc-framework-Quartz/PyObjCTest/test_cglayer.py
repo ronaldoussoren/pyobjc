@@ -1,7 +1,8 @@
+import os
+
+import Quartz
 from PyObjCTools.TestSupport import *
 from Quartz import *
-import Quartz
-import os
 
 
 class TestCGLayer(TestCase):

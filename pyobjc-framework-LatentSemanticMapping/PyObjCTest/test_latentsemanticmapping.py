@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from LatentSemanticMapping import *
 import os
+
+from LatentSemanticMapping import *
+from PyObjCTools.TestSupport import *
 
 
 class TestLatentSemanticMapping(TestCase):

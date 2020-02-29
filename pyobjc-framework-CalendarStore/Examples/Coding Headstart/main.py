@@ -1,9 +1,9 @@
-from PyObjCTools import AppHelper
+import AppController
+import CalController
 import objc
+from PyObjCTools import AppHelper
 
 objc.setVerbose(True)
 
-import AppController
-import CalController
 
 AppHelper.runEventLoop()

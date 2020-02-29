@@ -30,7 +30,7 @@ bridge from the interpreter program to compiled code.
 The libffi library provides a portable, high level programming
 interface to various calling conventions. This allows a programmer to
 call any function specified by a call interface description at run
-time.  
+time.
 
 Ffi stands for Foreign Function Interface. A foreign function
 interface is the popular name for the interface that allows code
@@ -68,7 +68,7 @@ On PowerPC, the tests failed (see the note below).
 
 You must use GNU make to build libffi. SGI's make will not work.
 Sun's probably won't either.
-	
+
 If you port libffi to another platform, please let me know! I assume
 that some will be easy (x86 NetBSD), and others will be more difficult
 (HP).
@@ -87,15 +87,15 @@ distribution.
 
 You may want to tell configure where to install the libffi library and
 header files. To do that, use the --prefix configure switch.  Libffi
-will install under /usr/local by default. 
+will install under /usr/local by default.
 
 If you want to enable extra run-time debugging checks use the the
 --enable-debug configure switch. This is useful when your program dies
-mysteriously while using libffi. 
+mysteriously while using libffi.
 
 Another useful configure switch is --enable-purify-safety. Using this
 will add some extra code which will suppress certain warnings when you
-are using Purify with libffi. Only use this switch when using 
+are using Purify with libffi. Only use this switch when using
 Purify, as it will slow down the library.
 
 Configure has many other options. Use "configure --help" to see them all.
@@ -125,19 +125,19 @@ stands for Call InterFace. To prepare a call interface object, use the
 following function:
 
 ffi_status ffi_prep_cif(ffi_cif *cif, ffi_abi abi,
-			unsigned int nargs, 
+			unsigned int nargs,
 			ffi_type *rtype, ffi_type **atypes);
 
 	CIF is a pointer to the call interface object you wish
 		to initialize.
 
-	ABI is an enum that specifies the calling convention 
+	ABI is an enum that specifies the calling convention
 		to use for the call. FFI_DEFAULT_ABI defaults
 		to the system's native calling convention. Other
 		ABI's may be used with care. They are system
 		specific.
 
-	NARGS is the number of arguments this function accepts.	
+	NARGS is the number of arguments this function accepts.
 		libffi does not yet support vararg functions.
 
 	RTYPE is a pointer to an ffi_type structure that represents
@@ -146,14 +146,14 @@ ffi_status ffi_prep_cif(ffi_cif *cif, ffi_abi abi,
 		ffi_type objects for many of the native C types:
 		signed int, unsigned int, signed char, unsigned char,
 		etc. There is also a pointer ffi_type object and
-		a void ffi_type. Use &ffi_type_void for functions that 
+		a void ffi_type. Use &ffi_type_void for functions that
 		don't return values.
 
 	ATYPES is a vector of ffi_type pointers. ARGS must be NARGS long.
 		If NARGS is 0, this is ignored.
 
 
-ffi_prep_cif will return a status code that you are responsible 
+ffi_prep_cif will return a status code that you are responsible
 for checking. It will be one of the following:
 
 	FFI_OK - All is good.
@@ -162,7 +162,7 @@ for checking. It will be one of the following:
 		came across is bad.
 
 
-Before making the call, the VALUES vector should be initialized 
+Before making the call, the VALUES vector should be initialized
 with pointers to the appropriate argument values.
 
 To call the the function using the initialized ffi_cif, use the
@@ -178,11 +178,11 @@ void ffi_call(ffi_cif *cif, void *fn, void *rvalue, void **avalues);
 	RVALUE is a pointer to a chunk of memory that is to hold the
 		result of the function call. Currently, it must be
 		at least one word in size (except for the n32 version
-		under Irix 6.x, which must be a pointer to an 8 byte 
-		aligned value (a long long). It must also be at least 
+		under Irix 6.x, which must be a pointer to an 8 byte
+		aligned value (a long long). It must also be at least
 		word aligned (depending on the return type, and the
-		system's alignment requirements). If RTYPE is 
-		&ffi_type_void, this is ignored. If RVALUE is NULL, 
+		system's alignment requirements). If RTYPE is
+		&ffi_type_void, this is ignored. If RVALUE is NULL,
 		the return value is discarded.
 
 	AVALUES is a vector of void* that point to the memory locations
@@ -202,7 +202,7 @@ Here is a trivial example that calls puts() a few times.
 
     #include <stdio.h>
     #include <ffi.h>
-    
+
     int main()
     {
       ffi_cif cif;
@@ -210,26 +210,26 @@ Here is a trivial example that calls puts() a few times.
       void *values[1];
       char *s;
       int rc;
-      
-      /* Initialize the argument info vectors */    
+
+      /* Initialize the argument info vectors */
       args[0] = &ffi_type_uint;
       values[0] = &s;
-      
+
       /* Initialize the cif */
-      if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, 
+      if (ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
     		       &ffi_type_uint, args) == FFI_OK)
         {
           s = "Hello World!";
           ffi_call(&cif, puts, &rc, values);
           /* rc now holds the result of the call to puts */
-          
-          /* values holds a pointer to the function's arg, so to 
-	     call puts() again all we need to do is change the 
+
+          /* values holds a pointer to the function's arg, so to
+	     call puts() again all we need to do is change the
              value of s */
           s = "This is cool!";
           ffi_call(&cif, puts, &rc, values);
         }
-      
+
       return 0;
     }
 
@@ -250,7 +250,7 @@ for it. Here is the definition of ffi_type:
       short type;
       struct _ffi_type **elements;
     } ffi_type;
-    
+
 All structures must have type set to FFI_TYPE_STRUCT.  You may set
 size and alignment to 0. These will be calculated and reset to the
 appropriate values by ffi_prep_cif().
@@ -284,7 +284,7 @@ tm struct from Linux's time.h:
 
       tm_type.size = tm_type.alignment = 0;
       tm_type.elements = &tm_type_elements;
-    
+
       for (i = 0; i < 9; i++)
           tm_type_elements[i] = &ffi_type_sint;
 
@@ -330,10 +330,10 @@ than 16 bytes, be sure to provide an RVALUE that is 8 byte aligned.
 Here's one way of forcing this:
 
 	double struct_storage[2];
-	my_small_struct *s = (my_small_struct *) struct_storage;  
+	my_small_struct *s = (my_small_struct *) struct_storage;
 	/* Use s for RVALUE */
 
-If you don't do this you are liable to get spurious bus errors. 
+If you don't do this you are liable to get spurious bus errors.
 
 "long long" values are not supported yet.
 
@@ -418,9 +418,9 @@ History
 	Linux x86 a.out fix.
 
 1.12 Nov-22-96
-	Added missing ffi_type_void, needed for supporting void return 
-	types. Fixed test case for non MIPS machines. Cygnus Support 
-	is now Cygnus Solutions. 
+	Added missing ffi_type_void, needed for supporting void return
+	types. Fixed test case for non MIPS machines. Cygnus Support
+	is now Cygnus Solutions.
 
 1.11 Oct-30-96
 	Added notes about GNU make.
@@ -429,8 +429,8 @@ History
 	Added configuration fix for non GNU compilers.
 
 1.09 Oct-29-96
-	Added --enable-debug configure switch. Clean-ups based on LCLint 
-	feedback. ffi_mips.h is always installed. Many configuration 
+	Added --enable-debug configure switch. Clean-ups based on LCLint
+	feedback. ffi_mips.h is always installed. Many configuration
 	fixes. Fixed ffitest.c for sparc builds.
 
 1.08 Oct-15-96
@@ -440,7 +440,7 @@ History
 	Gordon Irlam rewrites v8.S again. Bug fixes.
 
 1.06 Oct-14-96
-	Gordon Irlam improved the sparc port. 
+	Gordon Irlam improved the sparc port.
 
 1.05 Oct-14-96
 	Interface changes based on feedback.

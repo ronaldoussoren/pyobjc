@@ -19,8 +19,10 @@ PyObjC primitives:
 
 """
 from __future__ import print_function
-import objc
+
 import timeit
+
+import objc
 
 NSObject = objc.lookUpClass("NSObject")
 NSArray = objc.lookUpClass("NSArray")

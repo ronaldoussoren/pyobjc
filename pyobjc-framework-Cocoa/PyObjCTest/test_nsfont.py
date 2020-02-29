@@ -1,10 +1,9 @@
-from PyObjCTools.TestSupport import *
-import objc
+import os
 
 import AppKit
+import objc
 from AppKit import *
-
-import os
+from PyObjCTools.TestSupport import *
 
 
 class TestNSFont(TestCase):

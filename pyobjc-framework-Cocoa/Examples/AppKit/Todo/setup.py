@@ -4,9 +4,9 @@ Script for building the example.
 Usage:
     python3 setup.py py2app
 """
-from setuptools import setup
-
 import glob
+
+from setuptools import setup
 
 images = glob.glob("Images/*.tiff")
 icons = glob.glob("Icons/*.icns")

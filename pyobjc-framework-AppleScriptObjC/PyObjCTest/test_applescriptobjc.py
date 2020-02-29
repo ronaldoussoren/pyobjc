@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import AppleScriptObjC
 import Foundation
+from PyObjCTools.TestSupport import *
 
 
 class TestAppleScriptObjC(TestCase):

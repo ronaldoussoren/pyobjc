@@ -2,32 +2,88 @@
 #
 # Last update: Wed Feb 26 07:27:16 2020
 
-import objc, sys
+import sys
+
+import objc
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
-}
-constants = '''$VSAccountProviderAuthenticationSchemeAPI$VSAccountProviderAuthenticationSchemeSAML$VSCheckAccessOptionPrompt$VSErrorDomain$VSErrorInfoKeyAccountProviderResponse$VSErrorInfoKeySAMLResponse$VSErrorInfoKeySAMLResponseStatus$VSErrorInfoKeyUnsupportedProviderIdentifier$VSOpenTVProviderSettingsURLString$'''
-enums = '''$VSAccountAccessStatusDenied@2$VSAccountAccessStatusGranted@3$VSAccountAccessStatusNotDetermined@0$VSAccountAccessStatusRestricted@1$VSErrorCodeAccessNotGranted@0$VSErrorCodeInvalidVerificationToken@5$VSErrorCodeProviderRejected@4$VSErrorCodeRejected@6$VSErrorCodeServiceTemporarilyUnavailable@3$VSErrorCodeUnsupported@7$VSErrorCodeUnsupportedProvider@1$VSErrorCodeUserCancelled@2$VSSubscriptionAccessLevelFreeWithAccount@1$VSSubscriptionAccessLevelPaid@2$VSSubscriptionAccessLevelUnknown@0$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+constants = """$VSAccountProviderAuthenticationSchemeAPI$VSAccountProviderAuthenticationSchemeSAML$VSCheckAccessOptionPrompt$VSErrorDomain$VSErrorInfoKeyAccountProviderResponse$VSErrorInfoKeySAMLResponse$VSErrorInfoKeySAMLResponseStatus$VSErrorInfoKeyUnsupportedProviderIdentifier$VSOpenTVProviderSettingsURLString$"""
+enums = """$VSAccountAccessStatusDenied@2$VSAccountAccessStatusGranted@3$VSAccountAccessStatusNotDetermined@0$VSAccountAccessStatusRestricted@1$VSErrorCodeAccessNotGranted@0$VSErrorCodeInvalidVerificationToken@5$VSErrorCodeProviderRejected@4$VSErrorCodeRejected@6$VSErrorCodeServiceTemporarilyUnavailable@3$VSErrorCodeUnsupported@7$VSErrorCodeUnsupportedProvider@1$VSErrorCodeUserCancelled@2$VSSubscriptionAccessLevelFreeWithAccount@1$VSSubscriptionAccessLevelPaid@2$VSSubscriptionAccessLevelUnknown@0$"""
 misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'NSObject', b'accountManager:dismissViewController:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'accountManager:presentViewController:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'accountManager:shouldAuthenticateAccountProviderWithIdentifier:', {'required': False, 'retval': {'type': b'Z'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'VSAccountMetadataRequest', b'forceAuthentication', {'retval': {'type': b'Z'}})
-    r(b'VSAccountMetadataRequest', b'includeAccountProviderIdentifier', {'retval': {'type': b'Z'}})
-    r(b'VSAccountMetadataRequest', b'includeAuthenticationExpirationDate', {'retval': {'type': b'Z'}})
-    r(b'VSAccountMetadataRequest', b'isInterruptionAllowed', {'retval': {'type': b'Z'}})
-    r(b'VSAccountMetadataRequest', b'setForceAuthentication:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'VSAccountMetadataRequest', b'setIncludeAccountProviderIdentifier:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'VSAccountMetadataRequest', b'setIncludeAuthenticationExpirationDate:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'VSAccountMetadataRequest', b'setInterruptionAllowed:', {'arguments': {2: {'type': b'Z'}}})
+    r(
+        b"NSObject",
+        b"accountManager:dismissViewController:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"accountManager:presentViewController:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"accountManager:shouldAuthenticateAccountProviderWithIdentifier:",
+        {
+            "required": False,
+            "retval": {"type": b"Z"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(b"VSAccountMetadataRequest", b"forceAuthentication", {"retval": {"type": b"Z"}})
+    r(
+        b"VSAccountMetadataRequest",
+        b"includeAccountProviderIdentifier",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"VSAccountMetadataRequest",
+        b"includeAuthenticationExpirationDate",
+        {"retval": {"type": b"Z"}},
+    )
+    r(b"VSAccountMetadataRequest", b"isInterruptionAllowed", {"retval": {"type": b"Z"}})
+    r(
+        b"VSAccountMetadataRequest",
+        b"setForceAuthentication:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"VSAccountMetadataRequest",
+        b"setIncludeAccountProviderIdentifier:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"VSAccountMetadataRequest",
+        b"setIncludeAuthenticationExpirationDate:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"VSAccountMetadataRequest",
+        b"setInterruptionAllowed:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
 finally:
     objc._updatingMetadata(False)
 expressions = {}

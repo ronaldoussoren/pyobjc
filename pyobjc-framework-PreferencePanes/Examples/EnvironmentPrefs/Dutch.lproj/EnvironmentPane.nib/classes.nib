@@ -1,24 +1,24 @@
 {
     IBClasses = (
         {
-            ACTIONS = {deleteVariable = id; newVariable = id; }; 
-            CLASS = EnvironmentPane; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {deleteButton = id; mainTable = id; }; 
-            SUPERCLASS = NSPreferencePane; 
-        }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+            ACTIONS = {deleteVariable = id; newVariable = id; };
+            CLASS = EnvironmentPane;
+            LANGUAGE = ObjC;
+            OUTLETS = {deleteButton = id; mainTable = id; };
+            SUPERCLASS = NSPreferencePane;
+        },
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; },
         {
-            CLASS = NSPreferencePane; 
-            LANGUAGE = ObjC; 
+            CLASS = NSPreferencePane;
+            LANGUAGE = ObjC;
             OUTLETS = {
-                "_firstKeyView" = NSView; 
-                "_initialKeyView" = NSView; 
-                "_lastKeyView" = NSView; 
-                "_window" = NSWindow; 
-            }; 
-            SUPERCLASS = NSObject; 
+                "_firstKeyView" = NSView;
+                "_initialKeyView" = NSView;
+                "_lastKeyView" = NSView;
+                "_window" = NSWindow;
+            };
+            SUPERCLASS = NSObject;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

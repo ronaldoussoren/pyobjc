@@ -1,8 +1,9 @@
-from PyObjCTools import AppHelper
-
-import Foundation, AppKit, WebKit
-import PyDocURLProtocol
+import AppKit
+import Foundation
 import PyDocEvents
+import PyDocURLProtocol
+import WebKit
+from PyObjCTools import AppHelper
 
 PyDocURLProtocol.setup()
 

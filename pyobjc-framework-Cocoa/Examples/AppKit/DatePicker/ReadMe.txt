@@ -1,15 +1,15 @@
-"DatePicker" is a Cocoa sample application that demonstrates how to use 
-``NSDatePicker`` control on Mac OS X.  ``NSDatePicker`` is a subclass of 
-``NSControl`` that provides for visually displaying and editing an 
+"DatePicker" is a Cocoa sample application that demonstrates how to use
+``NSDatePicker`` control on Mac OS X.  ``NSDatePicker`` is a subclass of
+``NSControl`` that provides for visually displaying and editing an
 ``NSDate`` instance.
 
-This control uses an ``NSDatePickerCell`` to implement much of the 
+This control uses an ``NSDatePickerCell`` to implement much of the
 control’s functionality.
 
 About the Sample
 ----------------
 
-DatePicker shows how to manipulate the behaviors of ``lNSDatePicker`` in the 
+DatePicker shows how to manipulate the behaviors of ``lNSDatePicker`` in the
 following ways
 
 1. Changing the picker style.
@@ -24,5 +24,5 @@ following ways
 
 6. Overriding the set date as a delegate.
 
-The sample also shows how to use the various date and time formats using the 
+The sample also shows how to use the various date and time formats using the
 ``NSDateFormatter`` class.

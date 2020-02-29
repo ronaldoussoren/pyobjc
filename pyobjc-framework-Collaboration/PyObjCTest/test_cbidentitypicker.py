@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from Collaboration import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCBIdentityPicker(TestCase):

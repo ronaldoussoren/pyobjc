@@ -43,5 +43,3 @@ API Notes
 
 * ``FillOutASBDForLPCM``: all arguments to this function must be provided, there is no default value for the
   last argument.
-
-

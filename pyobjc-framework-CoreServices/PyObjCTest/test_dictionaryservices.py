@@ -1,10 +1,9 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import CoreServices
 import objc
 from PyObjCTools.TestSupport import *
-
-import CoreServices
 
 
 class TestDictionaryServices(TestCase):

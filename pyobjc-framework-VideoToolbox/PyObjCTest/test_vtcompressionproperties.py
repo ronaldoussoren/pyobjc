@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import VideoToolbox
+from PyObjCTools.TestSupport import *
 
 
 class TestVTCompressionProperties(TestCase):

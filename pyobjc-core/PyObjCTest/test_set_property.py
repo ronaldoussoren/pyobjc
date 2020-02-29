@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
+import pickle
+import sys
+
 import objc
 from PyObjCTest.test_object_property import OCObserve
-import sys
-import pickle
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 

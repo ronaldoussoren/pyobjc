@@ -1,11 +1,11 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import unittest
+import warnings
+
 import objc
 from PyObjCTools.TestSupport import *
-import unittest
-
-import warnings
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore")

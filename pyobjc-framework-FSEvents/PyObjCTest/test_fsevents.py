@@ -1,10 +1,12 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import os
+import time
+
 import FSEvents
 from FSEvents import *
 from PyObjCTools.TestSupport import *
-import os, time
 
 
 class TestFSEvents(TestCase):

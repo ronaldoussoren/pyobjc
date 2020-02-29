@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
+
 import objc
-from PyObjCTools.TestSupport import *
 from PyObjCTest.initialize import OC_TestInitialize
+from PyObjCTools.TestSupport import *
 
 
 class OC_TestInitializePython(OC_TestInitialize):

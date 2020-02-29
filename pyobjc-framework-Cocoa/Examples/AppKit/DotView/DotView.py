@@ -20,9 +20,9 @@ sources or nibs.)
 # -> Scroll View), and *no* work in the code. It was too easy, so for kicks
 # I added zoom functionality and a "Show rulers" checkbox.
 
+import Cocoa
 import objc
 from objc import super
-import Cocoa
 from PyObjCTools import AppHelper
 
 ZOOM = 2.0

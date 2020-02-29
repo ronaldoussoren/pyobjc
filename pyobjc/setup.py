@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 
-import setuptools
+import ast
+import contextlib
+import glob
 import os
 import platform
-from distutils.core import Command
-from distutils.errors import DistutilsError
-from setuptools.command import egg_info
-
 import shutil
 import subprocess
-import glob
-import tarfile
 import sys
-import ast
-import glob
-import contextlib
+import tarfile
+from distutils.core import Command
+from distutils.errors import DistutilsError
+
+import setuptools
+from setuptools import setup
+from setuptools.command import egg_info
 
 VERSION = "6.2b1"
 
@@ -218,9 +218,6 @@ Project links
 * `Repository <https://bitbucket.org/ronaldoussoren/pyobjc/>`_
 """
 
-from setuptools import setup
-import os
-
 
 CLASSIFIERS = list(
     filter(
@@ -261,7 +258,13 @@ _SETUP_KEYS = (
     "long_description",
     "options",
 )
-_SETUP_OPTIONAL = ("min_os_level", "max_os_level", "ext_modules", "namespace_packages", "options")
+_SETUP_OPTIONAL = (
+    "min_os_level",
+    "max_os_level",
+    "ext_modules",
+    "namespace_packages",
+    "options",
+)
 
 
 def same_order(lst1, lst2):

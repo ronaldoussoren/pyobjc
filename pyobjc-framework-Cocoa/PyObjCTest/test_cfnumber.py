@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
 import sys
+
 from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCFNumber(TestCase):

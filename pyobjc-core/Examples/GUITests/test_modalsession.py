@@ -5,10 +5,12 @@ XXX: This is not a proper unittest, it requires human eyes to check if the
 output is correct.
 """
 from __future__ import print_function
-import objc
-from Foundation import *
-from AppKit import *
+
 import time
+
+import objc
+from AppKit import *
+from Foundation import *
 
 
 def doTest():

@@ -5,12 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
 import Foundation
-
+import objc
 from CoreMotion import _metadata
-
 
 sys.modules["CoreMotion"] = mod = objc.ObjCLazyModule(
     "CoreMotion",
@@ -27,6 +26,5 @@ sys.modules["CoreMotion"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreMotion._metadata"]

@@ -1,8 +1,9 @@
+import os
+import sys
+
+from Foundation import NSData
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
-from Foundation import NSData
-
-import sys, os
 
 if sys.version_info[0] != 2:
 

@@ -1,5 +1,5 @@
-from objc import super
 import Cocoa
+from objc import super
 
 RowSelectedNotification = "RowSelectedNotification"
 

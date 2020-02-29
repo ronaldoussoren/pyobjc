@@ -5,12 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
-from PushKit import _metadata
-from PushKit import _PushKit
+import Foundation
+import objc
+from PushKit import _metadata, _PushKit
 
 sys.modules["PushKit"] = mod = objc.ObjCLazyModule(
     "PushKit",
@@ -27,6 +26,5 @@ sys.modules["PushKit"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["PushKit._metadata"]

@@ -1,8 +1,9 @@
-import objc
-import Cocoa
-import UIHandling
-import AppDrawing
 import math
+
+import AppDrawing
+import Cocoa
+import objc
+import UIHandling
 
 _drawingCommand = UIHandling.kCommandStrokedAndFilledRects
 _pdfDocument = None

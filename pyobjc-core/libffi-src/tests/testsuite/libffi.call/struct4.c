@@ -27,7 +27,7 @@ int main (void)
   ffi_type *args[MAX_ARGS];
   void *values[MAX_ARGS];
   ffi_type ts4_type;
-  ffi_type *ts4_type_elements[4];  
+  ffi_type *ts4_type_elements[4];
   ts4_type.size = 0;
   ts4_type.alignment = 0;
   ts4_type.type = FFI_TYPE_STRUCT;
@@ -38,26 +38,26 @@ int main (void)
   ts4_type_elements[2] = &ffi_type_uint;
   ts4_type_elements[3] = NULL;
 
-  
+
   /* This is a hack to get a properly aligned result buffer */
-  test_structure_4 *ts4_result = 
+  test_structure_4 *ts4_result =
     (test_structure_4 *) malloc (sizeof(test_structure_4));
-  
+
   args[0] = &ts4_type;
   values[0] = &ts4_arg;
-  
+
   /* Initialize the cif */
   CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ts4_type, args) == FFI_OK);
-  
+
   ts4_arg.ui1 = 2;
   ts4_arg.ui2 = 3;
   ts4_arg.ui3 = 4;
-  
+
   ffi_call (&cif, FFI_FN(struct4), ts4_result, values);
-  
+
   CHECK(ts4_result->ui3 == 2U * 3U * 4U);
- 
-  
+
+
   free (ts4_result);
   exit(0);
 }

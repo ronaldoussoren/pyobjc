@@ -1,6 +1,6 @@
+import Foundation
 from CoreFoundation import *
 from PyObjCTools.TestSupport import *
-import Foundation
 
 
 class TestCFBundle(TestCase):

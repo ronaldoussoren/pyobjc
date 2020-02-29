@@ -5,11 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import sys
-import objc
 import os
-import CoreFoundation
+import sys
 
+import CFNetwork._manual
+import CoreFoundation
+import objc
 from CFNetwork import _metadata
 
 
@@ -44,11 +45,8 @@ sys.modules["CFNetwork"] = mod = objc.ObjCLazyModule(
 )
 
 
-import CFNetwork._manual
-
 for nm in dir(CFNetwork._manual):
     setattr(mod, nm, getattr(CFNetwork._manual, nm))
 
-import sys
 
 del sys.modules["CFNetwork._metadata"]

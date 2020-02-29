@@ -1,7 +1,7 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 import objc
+from PyObjCTools.TestSupport import *
 
 SKActionTimingFunction = objc._C_FLT + objc._C_FLT
 

@@ -1,13 +1,25 @@
-import sys
-import subprocess
-import shutil
-import re
-import os
-import plistlib
 import glob
-import site
+import os
 import platform
+import plistlib
+import re
 import shlex
+import shutil
+import site
+import subprocess
+import sys
+from distutils import log
+from distutils.core import Command
+from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
+from distutils.sysconfig import get_config_var as _get_config_var
+from distutils.sysconfig import get_config_vars
+
+# Patch distutils: it needs to compile .S files as well.
+from distutils.unixccompiler import UnixCCompiler
+
+from pkg_resources import add_activation_listener, normalize_path, require, working_set
+from setuptools import Extension, find_packages, setup
+from setuptools.command import build_ext, build_py, egg_info, install_lib, test
 
 try:
     import setuptools
@@ -16,17 +28,6 @@ except ImportError:
     # setuptools is required to run the setup file, bail out early
     print("This package requires setuptools to build")
     sys.exit(1)
-
-
-from pkg_resources import working_set, normalize_path, add_activation_listener, require
-
-from setuptools import setup, Extension, find_packages
-from distutils import log
-from distutils.core import Command
-from distutils.sysconfig import get_config_var as _get_config_var
-from distutils.errors import DistutilsPlatformError, DistutilsSetupError, DistutilsError
-from setuptools.command import build_py, test, egg_info
-from setuptools.command import build_ext, install_lib
 
 
 def get_config_var(var):
@@ -115,7 +116,6 @@ OBJC_LDFLAGS = [
 #   be (slightly) faster.
 #
 
-from distutils.sysconfig import get_config_vars
 
 if "-O0" in get_config_var("CFLAGS"):
     # -O0 doesn't work with some (older?) compilers, unconditionally
@@ -178,9 +178,6 @@ EMBEDDED_FFI_SOURCE = [
     "libffi-src/x86/x86-ffi_darwin.c",
 ]
 
-
-# Patch distutils: it needs to compile .S files as well.
-from distutils.unixccompiler import UnixCCompiler
 
 UnixCCompiler.src_extensions.append(".S")
 del UnixCCompiler

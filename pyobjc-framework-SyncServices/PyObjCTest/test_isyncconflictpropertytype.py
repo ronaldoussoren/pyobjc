@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import SyncServices
+from PyObjCTools.TestSupport import *
 
 
 class TestISyncConflictPropertyTypeHelper(SyncServices.NSObject):

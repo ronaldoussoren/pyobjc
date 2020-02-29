@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
 import array
-from CoreFoundation import *
 import os
+
+from CoreFoundation import *
 from Foundation import NSURL
+from PyObjCTools.TestSupport import *
 
 
 class TestURL(TestCase):

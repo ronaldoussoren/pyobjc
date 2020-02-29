@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import *
+import sys
 import types
 import warnings
-import sys
 
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSString(TestCase):

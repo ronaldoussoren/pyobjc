@@ -5,6 +5,13 @@ for the document windows for the Web Services Tool application.
 Implements a standard toolbar.
 """
 
+import string
+import sys
+import traceback
+import types
+
+import Cocoa
+
 # Note about multi-threading.
 # Although WST does its network stuff in a background thread, with Python 2.2
 # there are still moments where the app appears to hang briefly. This should
@@ -15,15 +22,8 @@ Implements a standard toolbar.
 # Python would not grant time to other threads while blocking inside
 # getaddrinfo(). This has been fixed *after* 2.3b1 was released. (jvr)
 import objc
-import Cocoa
-
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
-
-import sys
-import types
-import string
-import traceback
 
 # from twisted.python import log
 # log.startLogging(sys.stdout)

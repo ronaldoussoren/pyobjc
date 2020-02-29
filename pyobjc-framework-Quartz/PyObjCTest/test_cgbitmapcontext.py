@@ -1,6 +1,7 @@
+import array
+
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
-import array
 
 
 class TestCGBitmapContext(TestCase):

@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
+import sys
 
 import Foundation
-import sys
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 2:
     from StringIO import StringIO

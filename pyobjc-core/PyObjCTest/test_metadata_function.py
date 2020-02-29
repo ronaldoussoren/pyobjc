@@ -4,12 +4,12 @@ Tests for the new-style metadata format interface.
 These tests are for global function
 """
 from __future__ import unicode_literals
-import objc
-from PyObjCTools.TestSupport import *
-
-from PyObjCTest.metadatafunction import *
 
 import sys
+
+import objc
+from PyObjCTest.metadatafunction import *
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     unicode = str

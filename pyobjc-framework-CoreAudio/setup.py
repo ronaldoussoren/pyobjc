@@ -7,15 +7,16 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-from pyobjc_setup import setup, Extension
-import os
-
-VERSION = "6.2b1"
-
 #
 # Distutils doesn't undestand '.mm' as an extension
 #
 import distutils.unixccompiler
+import os
+
+from pyobjc_setup import Extension, setup
+
+VERSION = "6.2b1"
+
 
 distutils.unixccompiler.UnixCCompiler.src_extensions.append(".mm")
 

@@ -7,7 +7,7 @@ and then copy it to  '~/Library/Address\ Book\ Plug-Ins' (this folder may
 not exist yet.
 """
 from AddressBook import kABAddressProperty
-from AppKit import NSObject, NSNull, NSStringPboardType
+from AppKit import NSNull, NSObject, NSStringPboardType
 
 
 class PyAddressLabelDelegate(NSObject):

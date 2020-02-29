@@ -56,6 +56,7 @@ Destroy our reference to the object, to check if it will be deallocated::
 
 """
 import doctest
+
 import __main__
 
 doctest.testmod(__main__, verbose=1)

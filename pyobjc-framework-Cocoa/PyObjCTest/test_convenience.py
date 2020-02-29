@@ -1,9 +1,8 @@
+import struct
 import sys
-import objc
-from PyObjCTools.TestSupport import *
 
 import objc
-import struct
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 

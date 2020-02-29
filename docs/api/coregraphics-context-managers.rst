@@ -26,7 +26,7 @@ use the ``with``-statement in Python 2.5.
 * ``CGTransparencyLayer(context, info, rect=None)``
 
   This wraps a block of code between ``CGContextBeginTransparencyLayer``
-  (or ``CGContextBeginTransparencyLayerWithRect`` if ``rect`` is not ``None``) 
+  (or ``CGContextBeginTransparencyLayerWithRect`` if ``rect`` is not ``None``)
   and ``CGContextEndTransparencyLayer``.
 
   Usage::
@@ -50,4 +50,3 @@ use the ``with``-statement in Python 2.5.
          pass
 
   __all__ = ('CGSavedGState', 'CGTransparencyLayer',  'CGContextPage')
-

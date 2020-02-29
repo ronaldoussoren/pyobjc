@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
-from PyObjCTest.testhelper import PyObjC_TestClass3
 from Foundation import NSHost
+from PyObjCTest.testhelper import PyObjC_TestClass3
+from PyObjCTools.TestSupport import *
 
 
 class TestNSHost(TestCase):

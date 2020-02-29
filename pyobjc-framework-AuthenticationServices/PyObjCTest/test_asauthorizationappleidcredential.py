@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AuthenticationServices
+from PyObjCTools.TestSupport import *
 
 
 class TestASAuthorizationAppleIDCredential(TestCase):

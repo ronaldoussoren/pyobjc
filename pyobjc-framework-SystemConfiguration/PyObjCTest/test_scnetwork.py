@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
+import socket
+import sys
 
+from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
-import socket, sys
 
 
 def resolver_available():

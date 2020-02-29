@@ -2,19 +2,22 @@
 This module implements a callback function that is used by the C code to
 add Python special methods to Objective-C classes with a suitable interface.
 """
-from objc._objc import (
-    selector,
-    lookUpClass,
-    currentBundle,
-    repythonify,
-    splitSignature,
-    _block_call,
-    options,
-)
-from objc._objc import registerMetaDataForSelector, _updatingMetadata, _rescanClass
+import collections
 import sys
 import warnings
-import collections
+
+from objc._objc import (
+    _block_call,
+    _rescanClass,
+    _updatingMetadata,
+    currentBundle,
+    lookUpClass,
+    options,
+    registerMetaDataForSelector,
+    repythonify,
+    selector,
+    splitSignature,
+)
 
 __all__ = ("addConvenienceForClass", "registerABCForClass")
 

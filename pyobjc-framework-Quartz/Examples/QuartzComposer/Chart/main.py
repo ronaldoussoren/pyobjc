@@ -1,5 +1,4 @@
-from PyObjCTools import AppHelper
-
 import AppController
+from PyObjCTools import AppHelper
 
 AppHelper.runEventLoop()

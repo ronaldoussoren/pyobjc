@@ -1,12 +1,12 @@
 {
     IBClasses = (
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; },
         {
-            CLASS = PyDocEventHandler; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {urlfield = id; webview = id; }; 
-            SUPERCLASS = NSObject; 
+            CLASS = PyDocEventHandler;
+            LANGUAGE = ObjC;
+            OUTLETS = {urlfield = id; webview = id; };
+            SUPERCLASS = NSObject;
         }
-    ); 
-    IBVersion = 1; 
+    );
+    IBVersion = 1;
 }

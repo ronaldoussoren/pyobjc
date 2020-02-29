@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from PubSub import *
+from PyObjCTools.TestSupport import *
 
 
 class TestPSEnclosure(TestCase):

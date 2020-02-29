@@ -1,5 +1,5 @@
-from Foundation import *
 import Foundation
+from Foundation import *
 from PyObjCTools.TestSupport import *
 
 

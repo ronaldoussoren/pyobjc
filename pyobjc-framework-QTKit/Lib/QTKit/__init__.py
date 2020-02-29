@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Cocoa
-import Quartz
 
+import Cocoa
+import objc
+import Quartz
 from QTKit import _metadata, _QTKit
 
 sys.modules["QTKit"] = mod = objc.ObjCLazyModule(
@@ -26,7 +26,6 @@ sys.modules["QTKit"] = mod = objc.ObjCLazyModule(
     (Cocoa, Quartz),
 )
 
-import sys
 
 del sys.modules["QTKit._metadata"]
 del sys.modules["QTKit._QTKit"]

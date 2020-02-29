@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import AppKit
 from AppKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSImageHelper(NSObject):

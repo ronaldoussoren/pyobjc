@@ -3,7 +3,8 @@
 This script will rewrite the macho headers of the frameworks in the
 nightly webkit snapshot, to make sure PyObjC can use them.
 """
-import os, shutil
+import os
+import shutil
 
 from macholib.MachO import MachO
 

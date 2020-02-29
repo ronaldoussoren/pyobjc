@@ -5,11 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Cocoa
 
-from Quartz.QuickLookUI import _metadata
+import Cocoa
+import objc
 import Quartz.QuickLookUI._QuickLookUI
+from Quartz.QuickLookUI import _metadata
 
 sys.modules["Quartz.QuickLookUI"] = mod = objc.ObjCLazyModule(
     "Quartz.QuickLookUI",
@@ -28,6 +28,5 @@ sys.modules["Quartz.QuickLookUI"] = mod = objc.ObjCLazyModule(
     (Cocoa,),
 )
 
-import sys
 
 del sys.modules["Quartz.QuickLookUI._metadata"]

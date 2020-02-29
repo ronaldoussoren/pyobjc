@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
+
+import Foundation
 import objc
 import Quartz.CoreGraphics
-import Foundation
-
 from Quartz.QuartzComposer import _metadata
 
 sys.modules["Quartz.QuartzComposer"] = mod = objc.ObjCLazyModule(
@@ -28,6 +28,5 @@ sys.modules["Quartz.QuartzComposer"] = mod = objc.ObjCLazyModule(
     (Quartz.CoreGraphics, Foundation),
 )
 
-import sys
 
 del sys.modules["Quartz.QuartzComposer._metadata"]

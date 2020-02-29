@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from CFNetwork import *
 import os
+
+from CFNetwork import *
+from PyObjCTools.TestSupport import *
 
 SCRIPT = """
 function FindProxyForURL(url, host) {

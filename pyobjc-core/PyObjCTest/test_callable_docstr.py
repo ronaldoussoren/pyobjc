@@ -1,10 +1,9 @@
-from PyObjCTools.TestSupport import *
-
-import sys
 import inspect
+import sys
 
-from objc import _callable_docstr as mod
 import objc
+from objc import _callable_docstr as mod
+from PyObjCTools.TestSupport import *
 
 NSArray = objc.lookUpClass("NSArray")
 

@@ -5,11 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
-import Security
 
+import Foundation
+import objc
+import Security
 from SecurityFoundation import _metadata
 
 sys.modules["SecurityFoundation"] = mod = objc.ObjCLazyModule(
@@ -27,6 +27,5 @@ sys.modules["SecurityFoundation"] = mod = objc.ObjCLazyModule(
     (Foundation, Security),
 )
 
-import sys
 
 del sys.modules["SecurityFoundation._metadata"]

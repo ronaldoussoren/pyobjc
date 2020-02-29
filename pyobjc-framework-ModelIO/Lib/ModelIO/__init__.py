@@ -5,13 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Quartz
-import Cocoa
 
-from ModelIO import _metadata
-from ModelIO import _ModelIO
+import Cocoa
+import objc
+import Quartz
+from ModelIO import _metadata, _ModelIO
 
 sys.modules["ModelIO"] = mod = objc.ObjCLazyModule(
     "ModelIO",
@@ -28,7 +27,5 @@ sys.modules["ModelIO"] = mod = objc.ObjCLazyModule(
     (Cocoa, Quartz),
 )
 
-
-import sys
 
 del sys.modules["ModelIO._metadata"]

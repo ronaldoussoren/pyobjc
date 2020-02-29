@@ -10,12 +10,13 @@ TODO:
 - Probably need special-casing for arrays (numarray and array.array)!
 """
 from __future__ import unicode_literals
-import objc
-from PyObjCTools.TestSupport import *
+
 import array
 import sys
 
+import objc
 from PyObjCTest.metadata import *
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     unicode = str

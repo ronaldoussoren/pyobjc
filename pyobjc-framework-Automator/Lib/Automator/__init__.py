@@ -6,8 +6,9 @@ documentation for details on how to use these functions and classes.
 """
 
 import sys
-import objc
+
 import AppKit
+import objc
 from Automator import _metadata
 
 sys.modules["Automator"] = objc.ObjCLazyModule(
@@ -25,6 +26,5 @@ sys.modules["Automator"] = objc.ObjCLazyModule(
     (AppKit,),
 )
 
-import sys
 
 del sys.modules["Automator._metadata"]

@@ -18,13 +18,17 @@ __all__ = (
     "callLater",
 )
 
+import os
+import sys
+import traceback
+
+import objc
 from AppKit import (
     NSApp,
-    NSRunAlertPanel,
-    NSApplicationMain,
     NSApplicationDidFinishLaunchingNotification,
+    NSApplicationMain,
+    NSRunAlertPanel,
 )
-
 from Foundation import (
     NSAutoreleasePool,
     NSDate,
@@ -33,14 +37,9 @@ from Foundation import (
     NSNotificationCenter,
     NSObject,
     NSRunLoop,
-    NSTimer,
     NSThread,
+    NSTimer,
 )
-
-import os
-import sys
-import traceback
-import objc
 from objc import super
 
 PY3K = sys.version_info[0] == 3

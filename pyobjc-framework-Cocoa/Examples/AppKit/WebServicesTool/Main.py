@@ -1,9 +1,10 @@
 import sys
 
+import AppKit
+import Foundation
+
 # import pyobjc
 import objc
-import Foundation
-import AppKit
 
 # import classes required to start application
 import WSTApplicationDelegateClass

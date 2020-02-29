@@ -18,4 +18,3 @@ for mach ports and the C library for XPC.
 .. note::
 
    This framework is only available on OSX 10.6.
-

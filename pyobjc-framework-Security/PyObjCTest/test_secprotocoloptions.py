@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Security
+from PyObjCTools.TestSupport import *
 
 sec_protocol_key_update_complete_t = b"v"
 sec_protocol_key_update_t = b"v@@?"

@@ -1,5 +1,5 @@
-import objc
 import Cocoa
+import objc
 
 # date/time element popup selections:
 kNSHourMinuteDatePickerElementFlag = 0

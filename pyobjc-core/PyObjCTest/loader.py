@@ -1,13 +1,16 @@
 from __future__ import absolute_import, print_function
-import sys, os, string, glob
-from os.path import basename, dirname, splitext, join, expanduser
-from fnmatch import fnmatch
+
+import glob
+import os
+import string
+import sys
 import unittest
-
-from . import dejagnu
-
 from distutils.command.install_lib import install_lib
 from distutils.errors import DistutilsOptionError
+from fnmatch import fnmatch
+from os.path import basename, dirname, expanduser, join, splitext
+
+from . import dejagnu
 
 
 def recursiveGlob(root, pathPattern):

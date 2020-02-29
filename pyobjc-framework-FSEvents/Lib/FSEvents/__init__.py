@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
+
 import Foundation
 import FSEvents._callbacks
-
+import objc
 from FSEvents import _metadata
 
 sys.modules["FSEvents"] = mod = objc.ObjCLazyModule(
@@ -26,6 +26,5 @@ sys.modules["FSEvents"] = mod = objc.ObjCLazyModule(
     (FSEvents._callbacks, Foundation),
 )
 
-import sys
 
 del sys.modules["FSEvents._metadata"]

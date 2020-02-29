@@ -1,11 +1,12 @@
+import pickle
 import sys
+
+from objc._pythonify import OC_PythonFloat, OC_PythonLong
 from PyObjCTest.fnd import NSNumber
 from PyObjCTools.TestSupport import *
-from objc._pythonify import OC_PythonLong, OC_PythonFloat
 
 if sys.version_info[0] == 2:
     from objc._pythonify import OC_PythonInt
-import pickle
 
 try:
     import cPickle

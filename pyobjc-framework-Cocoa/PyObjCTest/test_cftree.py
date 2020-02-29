@@ -1,8 +1,7 @@
+import sys
+
 from CoreFoundation import *
 from PyObjCTools.TestSupport import *
-
-
-import sys
 
 if sys.version_info[0] == 3:
 

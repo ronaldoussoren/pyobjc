@@ -5,13 +5,13 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
+import os
 import sys
-import objc
-import Foundation
 
+import Foundation
+import objc
 from CoreLocation import _metadata
 from CoreLocation._CoreLocation import *
-import os
 
 if int(os.uname()[2].split(".")[0]) < 12:
     # OSX <= 10.7
@@ -39,6 +39,5 @@ sys.modules["CoreLocation"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreLocation._metadata"]

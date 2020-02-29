@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from PyObjCTest.protected import *
+from PyObjCTools.TestSupport import *
 
 
 class TestProtected(TestCase):

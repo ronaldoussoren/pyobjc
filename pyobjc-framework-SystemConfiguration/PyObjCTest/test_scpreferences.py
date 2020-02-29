@@ -1,6 +1,7 @@
 from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
 
+
 # from SecurityFoundation import SFAuthorization
 class TestSCPreferences(TestCase):
     def testConstants(self):

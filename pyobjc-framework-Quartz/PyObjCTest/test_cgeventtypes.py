@@ -1,4 +1,5 @@
 import sys
+
 from PyObjCTools.TestSupport import *
 from Quartz.CoreGraphics import *
 

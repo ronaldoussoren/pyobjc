@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import DiscRecording
+from PyObjCTools.TestSupport import *
 
 DRFileProc = b"i^v^{__DRFile=}I^v"
 

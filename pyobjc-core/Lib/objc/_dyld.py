@@ -10,9 +10,10 @@ __all__ = [
     "infoForFramework",
 ]
 
-import os, sys
-from objc._framework import infoForFramework
+import os
+import sys
 
+from objc._framework import infoForFramework
 
 # These are the defaults as per man dyld(1)
 #

@@ -1,6 +1,7 @@
+import sys
+
 from PyObjCTools.TestSupport import *
 from QTKit import *
-import sys
 
 
 class TestQTMovieHelper(NSObject):

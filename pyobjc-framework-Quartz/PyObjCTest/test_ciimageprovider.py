@@ -1,6 +1,7 @@
+import os
+
 from PyObjCTools.TestSupport import *
 from Quartz.QuartzCore import *
-import os
 
 
 class TestCIImageProviderHelper(NSObject):

@@ -5,9 +5,9 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import CoreData
 
+import CoreData
+import objc
 from SyncServices import _metadata
 from SyncServices._SyncServices import *
 
@@ -26,6 +26,5 @@ sys.modules["SyncServices"] = mod = objc.ObjCLazyModule(
     (CoreData,),
 )
 
-import sys
 
 del sys.modules["SyncServices._metadata"]

@@ -1,8 +1,8 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
-import objc
 import CalendarStore
+import objc
 from PyObjCTools.TestSupport import *
 
 

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreAudioKit
+from PyObjCTools.TestSupport import *
 
 
 class TestAUGenericView(TestCase):

@@ -1,8 +1,11 @@
-from PyObjCTools.TestSupport import *
-import socket, time, struct
-from CoreFoundation import *
-import CoreFoundation
+import socket
+import struct
 import sys
+import time
+
+import CoreFoundation
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 try:
     buffer

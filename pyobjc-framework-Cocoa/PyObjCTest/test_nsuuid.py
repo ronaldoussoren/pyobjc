@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
+import uuid
 
 import Foundation
-import uuid
+from PyObjCTools.TestSupport import *
 
 
 class TestNSUUID(TestCase):

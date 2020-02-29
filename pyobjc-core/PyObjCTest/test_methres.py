@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
 import objc
 import objc._objc
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 NSURL = objc.lookUpClass("NSURL")

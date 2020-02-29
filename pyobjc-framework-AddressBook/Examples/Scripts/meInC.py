@@ -6,12 +6,12 @@ the AddressBook C API.
 from __future__ import print_function
 
 from AddressBook import (
-    ABGetSharedAddressBook,
     ABGetMe,
+    ABGetSharedAddressBook,
+    ABMultiValueCopyValueAtIndex,
+    ABMultiValueCount,
     ABRecordCopyValue,
     kABEmailProperty,
-    ABMultiValueCount,
-    ABMultiValueCopyValueAtIndex,
 )
 
 

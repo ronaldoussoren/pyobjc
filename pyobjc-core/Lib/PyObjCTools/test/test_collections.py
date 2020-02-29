@@ -1,6 +1,6 @@
 import unittest
-import objc
 
+import objc
 from Foundation import *
 from PyObjCTools.Conversion import *
 

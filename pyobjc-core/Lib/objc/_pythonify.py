@@ -1,5 +1,6 @@
-from objc import _objc
 import sys
+
+from objc import _objc
 
 __all__ = []
 

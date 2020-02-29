@@ -42,5 +42,3 @@ First create a check-out::
 Then perform the installation::
 
   $ pythonX.Y pyobjc/install.py
-
-

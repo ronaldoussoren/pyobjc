@@ -6,8 +6,9 @@ NOTE: Running this script might require administrator
       privileges (depending on the macOS settings)
 """
 
-import CoreWLAN
 import sys
+
+import CoreWLAN
 
 iface = CoreWLAN.CWInterface.interface()
 

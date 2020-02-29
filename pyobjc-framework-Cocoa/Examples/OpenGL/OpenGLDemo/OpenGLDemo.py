@@ -16,7 +16,6 @@ from Cocoa import *
 from OpenGL.GL import *
 from PyObjCTools import AppHelper
 
-
 ClearColors = redIndex, greenIndex, blueIndex, alphaIndex = range(4)
 
 

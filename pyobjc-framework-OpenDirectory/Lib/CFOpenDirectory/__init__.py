@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
+
 import CoreFoundation
 import Foundation
-
+import objc
 from CFOpenDirectory import _metadata
 
 # This actually loads the OpenDirectory framework instead of the embedded CFOpenDirectory framework
@@ -27,6 +27,5 @@ sys.modules["CFOpenDirectory"] = mod = objc.ObjCLazyModule(
     (CoreFoundation, Foundation),
 )
 
-import sys
 
 del sys.modules["CFOpenDirectory._metadata"]

@@ -1,9 +1,9 @@
 import Cocoa
 import objc
 from objc import super
+from SelectionNotifyMatrix import RowSelectedNotification, SelectionNotifyMatrix
 from ToDoCell import ToDoCell
 from ToDoItem import ToDoItem
-from SelectionNotifyMatrix import RowSelectedNotification, SelectionNotifyMatrix
 
 ToDoItemChangedNotification = "ToDoItemChangedNotification"
 

@@ -5,13 +5,13 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
 import Accounts
-import Foundation
 import CoreData
 import CoreLocation
-
+import Foundation
+import objc
 from CloudKit import _metadata
 
 sys.modules["CloudKit"] = mod = objc.ObjCLazyModule(
@@ -29,6 +29,5 @@ sys.modules["CloudKit"] = mod = objc.ObjCLazyModule(
     (CoreData, CoreLocation, Accounts, Foundation),
 )
 
-import sys
 
 del sys.modules["CloudKit._metadata"]

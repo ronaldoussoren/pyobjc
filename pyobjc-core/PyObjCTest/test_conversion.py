@@ -4,21 +4,41 @@ Some basic tests for converting values to and from Objective-C
 TODO: This only tests C values at the moment.
 """
 from __future__ import absolute_import
+
+import array
+import sys
+import warnings
+
+import objc
 from PyObjCTools.TestSupport import *
 
-from .testbndl import pyObjCPy, carrayMaker
-from .testbndl import UCHAR_MAX
-from .testbndl import CHAR_MAX, CHAR_MIN
-from .testbndl import SCHAR_MAX, SCHAR_MIN
-from .testbndl import USHRT_MAX, SHRT_MAX, SHRT_MIN
-from .testbndl import UINT_MAX, INT_MAX, INT_MIN
-from .testbndl import ULONG_MAX, LONG_MAX, LONG_MIN
-from .testbndl import ULLONG_MAX, LLONG_MAX, LLONG_MIN
-from .testbndl import DBL_MAX, DBL_MIN, DBL_EPSILON
-from .testbndl import FLT_MAX, FLT_MIN, FLT_EPSILON
-import objc
-import warnings
-import array, sys
+from .testbndl import (
+    CHAR_MAX,
+    CHAR_MIN,
+    DBL_EPSILON,
+    DBL_MAX,
+    DBL_MIN,
+    FLT_EPSILON,
+    FLT_MAX,
+    FLT_MIN,
+    INT_MAX,
+    INT_MIN,
+    LLONG_MAX,
+    LLONG_MIN,
+    LONG_MAX,
+    LONG_MIN,
+    SCHAR_MAX,
+    SCHAR_MIN,
+    SHRT_MAX,
+    SHRT_MIN,
+    UCHAR_MAX,
+    UINT_MAX,
+    ULLONG_MAX,
+    ULONG_MAX,
+    USHRT_MAX,
+    carrayMaker,
+    pyObjCPy,
+)
 
 
 class TestNumbers(TestCase):

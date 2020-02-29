@@ -4,10 +4,17 @@ Python mapping for the Foundation framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
+# XXX: This is suboptimal, could calculate this in the metadata
+# generator.
 import sys
-import objc
-import CoreFoundation
 
+import CoreFoundation
+import Foundation._context
+import Foundation._Foundation
+import Foundation._functiondefines
+import Foundation._nsindexset
+import Foundation._nsobject
+import objc
 from Foundation import _metadata
 from Foundation._inlines import _inline_list_
 
@@ -202,40 +209,27 @@ sys.modules["Foundation"] = mod = objc.ObjCLazyModule(
     (CoreFoundation,),
 )
 
-import sys
 
 del sys.modules["Foundation._metadata"]
 
-import Foundation._Foundation
 
 for nm in dir(Foundation._Foundation):
     if nm.startswith("_"):
         continue
     setattr(mod, nm, getattr(Foundation._Foundation, nm))
 
-import objc
 
 mod.NSDecimal = objc.NSDecimal
 
-import Foundation._nsobject
-import Foundation._nsindexset
-
-
-import Foundation._functiondefines
 
 for nm in dir(Foundation._functiondefines):
     setattr(mod, nm, getattr(Foundation._functiondefines, nm))
 
 
-# XXX: This is suboptimal, could calculate this in the metadata
-# generator.
-import sys
-
 mod.NSIntegerMax = sys.maxsize
 mod.NSIntegerMin = -sys.maxsize - 1
 mod.NSUIntegerMax = (sys.maxsize * 2) + 1
 
-import Foundation._context
 
 for nm in dir(Foundation._context):
     setattr(mod, nm, getattr(Foundation._context, nm))

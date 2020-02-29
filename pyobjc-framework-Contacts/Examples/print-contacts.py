@@ -3,6 +3,7 @@
 Script for dumping contacts
 """
 from __future__ import print_function
+
 import Contacts
 
 

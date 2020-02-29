@@ -1,9 +1,8 @@
+import array
 import sys
 
 import Quartz
-
 import Utilities
-import array
 
 
 def doColorSpaceFillAndStroke(context):

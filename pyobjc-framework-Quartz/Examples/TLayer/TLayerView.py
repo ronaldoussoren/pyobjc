@@ -1,10 +1,9 @@
 import Cocoa
-import Quartz
 import objc
-from objc import super
-
-from Extras import makeRandomPointInRect
+import Quartz
 from Circle import Circle
+from Extras import makeRandomPointInRect
+from objc import super
 
 gCircleCount = 3
 

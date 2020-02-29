@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import objc
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 NSSortDescriptor = objc.lookUpClass("NSSortDescriptor")

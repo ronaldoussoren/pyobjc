@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
-
-from SystemConfiguration import *
 import sys
+
+from PyObjCTools.TestSupport import *
+from SystemConfiguration import *
 
 
 class TestSCNetworkConfiguration(TestCase):

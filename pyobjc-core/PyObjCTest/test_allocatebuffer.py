@@ -1,7 +1,7 @@
-from PyObjCTools.TestSupport import *
+import sys
 
 import objc
-import sys
+from PyObjCTools.TestSupport import *
 
 
 class TestAllocateBuffer(TestCase):

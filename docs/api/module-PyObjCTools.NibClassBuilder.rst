@@ -8,15 +8,15 @@
 .. deprecated:: 2.4
    Use of this module is deprecated because it cannot be
    used with modern versions of Xcode (starting at Xcode 4.0),
-   and because recent versions of Xcode can extract class 
+   and because recent versions of Xcode can extract class
    information from Python sources.
 
 
 Introduction
 ------------
 
-The module is used to avoid repeating class inheritance and outlet 
-definitions in both python sources and Interface Builder NIB files. 
+The module is used to avoid repeating class inheritance and outlet
+definitions in both python sources and Interface Builder NIB files.
 
 The module reads this information from NIB files and provides a magic
 meta class that inserts the right superclass and outlet definitions.

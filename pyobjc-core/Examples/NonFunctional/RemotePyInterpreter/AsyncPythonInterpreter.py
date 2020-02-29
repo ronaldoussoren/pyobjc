@@ -5,11 +5,12 @@ try:
 except:
     fcntl = None
 import os
-import sys
 import socket
-from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
+import sys
+
 import objc
 from Foundation import *
+from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 
 IMPORT_MODULES = ["netrepr", "remote_console", "remote_pipe", "remote_bootstrap"]
 source = []

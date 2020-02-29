@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import AppKit
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class ContantTest(TestCase):

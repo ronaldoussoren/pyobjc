@@ -5,18 +5,20 @@ This module is unsupported and is primairily used in the PyObjC
 testsuite.
 """
 from __future__ import print_function
-import plistlib as _pl
-import unittest as _unittest
-import objc
-import os as _os
+
+import contextlib
 import gc as _gc
+import os as _os
+import plistlib as _pl
+import re as _re
+import struct as _struct
 import subprocess as _subprocess
 import sys as _sys
-import struct as _struct
-from distutils.sysconfig import get_config_var as _get_config_var
-import re as _re
+import unittest as _unittest
 import warnings
-import contextlib
+from distutils.sysconfig import get_config_var as _get_config_var
+
+import objc
 
 # Ensure that methods in this module get filtered in the tracebacks
 # from unittest

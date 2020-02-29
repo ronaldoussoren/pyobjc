@@ -3,12 +3,12 @@
 #
 #
 
-from PyObjCTools import AppHelper
+import FontNameToDisplayNameTransformer
+import FontSampleDisplayView
 
 # import classes required to start application
 import PreferencesPanelController
-import FontNameToDisplayNameTransformer
-import FontSampleDisplayView
+from PyObjCTools import AppHelper
 
 # start the event loop
 AppHelper.runEventLoop()

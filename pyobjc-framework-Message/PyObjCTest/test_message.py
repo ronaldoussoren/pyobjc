@@ -1,5 +1,5 @@
-import objc
 import Message
+import objc
 from PyObjCTools.TestSupport import *
 
 

@@ -15,13 +15,13 @@ __all__ = [
     "fromPythonDecimal",
 ]
 
-import Foundation
 import datetime
-import time
-import sys
 import decimal
-import objc
+import sys
+import time
 
+import Foundation
+import objc
 from objc._pythonify import OC_PythonFloat, OC_PythonLong
 
 PYTHON_TYPES = (

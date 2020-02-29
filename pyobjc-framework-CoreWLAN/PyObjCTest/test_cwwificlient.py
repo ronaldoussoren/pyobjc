@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
 import CoreWLAN
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestCWWifiClientHelper(CoreWLAN.NSObject):

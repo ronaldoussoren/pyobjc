@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
+from Quartz import CGAffineTransform, CGPoint, CGRect
 from Quartz.QuartzCore import *
-from Quartz import CGPoint, CGRect, CGAffineTransform
 
 
 class TestCIBuiltinFilterHelper(NSObject):

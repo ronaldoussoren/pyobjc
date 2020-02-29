@@ -1,6 +1,7 @@
-import objc
-from Foundation import NSObject, NSMutableArray
 import pwd
+
+import objc
+from Foundation import NSMutableArray, NSObject
 
 FIELDS = "name password uid gid class change expire gecos home_dir shell".split()
 

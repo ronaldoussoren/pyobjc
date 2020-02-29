@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-from Foundation import *
 from AppKit import *
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSErrorHelper(NSObject):

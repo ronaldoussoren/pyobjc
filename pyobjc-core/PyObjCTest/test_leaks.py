@@ -1,9 +1,11 @@
 """
 Check if we manage retainCounts correctly.
 """
-from PyObjCTools.TestSupport import *
-import objc, gc
+import gc
+
+import objc
 from PyObjCTest.fnd import *
+from PyObjCTools.TestSupport import *
 
 LeaksDel = 0
 

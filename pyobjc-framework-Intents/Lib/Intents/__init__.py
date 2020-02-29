@@ -5,13 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
+import Foundation
+import objc
 from Intents import _metadata
 from Intents._Intents import *
-
 
 sys.modules["Intents"] = mod = objc.ObjCLazyModule(
     "Intents",
@@ -28,6 +27,5 @@ sys.modules["Intents"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["Intents._metadata"]

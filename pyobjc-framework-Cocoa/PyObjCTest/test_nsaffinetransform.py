@@ -1,9 +1,10 @@
 #
 # Tests for the struct-wrapper for NSAffineTransformStruct
 #
+import operator
+
 from Foundation import *
 from PyObjCTools.TestSupport import *
-import operator
 
 
 class TestNSAffineTransformStruct(TestCase):

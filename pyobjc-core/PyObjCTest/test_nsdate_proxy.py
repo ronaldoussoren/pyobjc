@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import NSDateFormatter, NSArray, NSDate
 import datetime
+
+from PyObjCTest.fnd import NSArray, NSDate, NSDateFormatter
+from PyObjCTools.TestSupport import *
 
 
 class TestNSDateProxy(TestCase):

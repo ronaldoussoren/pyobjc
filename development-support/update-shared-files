@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import os, shutil
+import os
+import shutil
 
 from _common_definitions import TOP_DIR
 

@@ -4,10 +4,11 @@ Python mapping for the PrintCore framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
+import functools
 import sys
-import objc
-import Cocoa
 
+import Cocoa
+import objc
 from PrintCore import _metadata
 
 sys.modules["PrintCore"] = mod = objc.ObjCLazyModule(
@@ -25,8 +26,6 @@ sys.modules["PrintCore"] = mod = objc.ObjCLazyModule(
     (Cocoa,),
 )
 
-import sys
-import functools
 
 del sys.modules["PrintCore._metadata"]
 

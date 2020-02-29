@@ -1,10 +1,11 @@
 from __future__ import print_function
 
-__all__ = ["ConsoleReactor"]
-
 import sys
-from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
+
 from Foundation import *
+from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
+
+__all__ = ["ConsoleReactor"]
 
 
 class ConsoleReactor(NSObject):

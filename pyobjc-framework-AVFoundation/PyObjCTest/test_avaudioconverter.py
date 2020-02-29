@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AVFoundation
+from PyObjCTools.TestSupport import *
 
 AVAudioConverterInputBlock = b"@Io^" + objc._C_NSInteger
 

@@ -1,8 +1,8 @@
-import time
 import sys
+import time
 
 import objc
-from AppKit import NSObject, NSApplicationMain
+from AppKit import NSApplicationMain, NSObject
 
 
 class Converter(NSObject):

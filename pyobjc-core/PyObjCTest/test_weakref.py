@@ -1,6 +1,7 @@
 import weakref
+
+from PyObjCTest.fnd import NSArray, NSAutoreleasePool, NSObject
 from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import NSObject, NSArray, NSAutoreleasePool
 
 
 class OC_WeakrefTest1(NSObject):

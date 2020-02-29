@@ -1,6 +1,6 @@
 from CFNetwork import *
-from PyObjCTools.TestSupport import *
 from Foundation import NSString
+from PyObjCTools.TestSupport import *
 
 
 class TestCFFTPStream(TestCase):

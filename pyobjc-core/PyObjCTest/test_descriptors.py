@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
-
-import objc
 import sys
 import warnings
+
+import objc
+from PyObjCTools.TestSupport import *
 
 # try:
 #    from  Foundation import NSRange

@@ -7,8 +7,8 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from objc import super
 from Cocoa import NSArrayController
+from objc import super
 
 
 class FilteringArrayController(NSArrayController):

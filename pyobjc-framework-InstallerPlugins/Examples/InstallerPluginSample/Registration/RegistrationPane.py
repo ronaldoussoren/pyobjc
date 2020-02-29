@@ -1,6 +1,5 @@
 import Cocoa
 import InstallerPlugins
-
 import objc
 
 # Important: be aware that informed end-users can remove your package's

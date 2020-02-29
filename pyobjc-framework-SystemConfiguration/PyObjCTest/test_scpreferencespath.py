@@ -1,6 +1,6 @@
+from Foundation import NSMutableDictionary
 from PyObjCTools.TestSupport import *
 from SystemConfiguration import *
-from Foundation import NSMutableDictionary
 
 
 class TestSCPreferencesPath(TestCase):

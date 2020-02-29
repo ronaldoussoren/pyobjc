@@ -5,199 +5,199 @@
   "cftypes": {
    "LSMMapRef": {
     "gettypeid_func": "LSMMapGetTypeID"
-   }, 
+   },
    "LSMResultRef": {
     "gettypeid_func": "LSMResultGetTypeID"
-   }, 
+   },
    "LSMTextRef": {
     "gettypeid_func": "LSMTextGetTypeID"
    }
-  }, 
-  "classes": {}, 
-  "formal_protocols": {}, 
+  },
+  "classes": {},
+  "formal_protocols": {},
   "functions": {
    "LSMMapAddCategory": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "LSMMapAddText": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMMapAddTextWithWeight": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMMapApplyClusters": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMMapCompile": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "LSMMapCreate": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMMapCreateClusters": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMMapCreateFromURL": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMMapGetCategoryCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "LSMMapGetProperties": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {}
-   }, 
+   },
    "LSMMapSetProperties": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMMapSetStopWords": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMMapStartTraining": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "LSMMapWriteToStream": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "LSMMapWriteToURL": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMResultCopyToken": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMResultCopyTokenCluster": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMResultCopyWord": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMResultCopyWordCluster": {
     "args": {
      "0": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMResultCreate": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
-   }, 
+   },
    "LSMResultGetCategory": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "LSMResultGetCount": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "LSMResultGetScore": {
     "args": {
      "0": {}
     }
-   }, 
+   },
    "LSMTextAddToken": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMTextAddWord": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
     }
-   }, 
+   },
    "LSMTextAddWords": {
     "args": {
-     "0": {}, 
-     "1": {}, 
+     "0": {},
+     "1": {},
      "2": {}
     }
-   }, 
+   },
    "LSMTextCreate": {
     "args": {
-     "0": {}, 
+     "0": {},
      "1": {}
-    }, 
+    },
     "retval": {
      "already_cfretained": true
     }
    }
-  }, 
+  },
   "informal_protocols": {}
  }
 }

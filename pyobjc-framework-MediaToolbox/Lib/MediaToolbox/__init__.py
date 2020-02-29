@@ -5,10 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
+import Foundation
+import MediaToolbox._MediaToolbox
+import objc
 from MediaToolbox import _metadata
 
 sys.modules["MediaToolbox"] = mod = objc.ObjCLazyModule(
@@ -26,11 +27,9 @@ sys.modules["MediaToolbox"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import MediaToolbox._MediaToolbox
 
 for nm in dir(MediaToolbox._MediaToolbox):
     setattr(mod, nm, getattr(MediaToolbox._MediaToolbox, nm))
 
-import sys
 
 del sys.modules["MediaToolbox._metadata"]

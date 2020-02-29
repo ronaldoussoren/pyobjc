@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import CFOpenDirectory
+from PyObjCTools.TestSupport import *
 
 
 class TestCFODContext(TestCase):

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Metal
+from PyObjCTools.TestSupport import *
 
 MTLDrawablePresentedHandler = b"v@"
 
@@ -30,9 +29,9 @@ class TestMTLDrawable(TestCase):
     def test_methods(self):
         self.assertArgHasType(TestMTLDrawableHelper.presentAtTime_, 0, objc._C_DBL)
 
-        self.assertArgHasType(TestMTLDrawableHelper.presentAfterMinimumDuration_, 0, objc._C_DBL)
-        self.assertArgIsBlock(TestMTLDrawableHelper.addPresentedHandler_, 0, b'v@')
+        self.assertArgHasType(
+            TestMTLDrawableHelper.presentAfterMinimumDuration_, 0, objc._C_DBL
+        )
+        self.assertArgIsBlock(TestMTLDrawableHelper.addPresentedHandler_, 0, b"v@")
         self.assertResultHasType(TestMTLDrawableHelper.presentedTime, objc._C_DBL)
         self.assertResultHasType(TestMTLDrawableHelper.drawableID, objc._C_NSUInteger)
-
-

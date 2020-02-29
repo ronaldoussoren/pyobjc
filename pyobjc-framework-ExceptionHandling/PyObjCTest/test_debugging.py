@@ -1,10 +1,11 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
-import objc
 import sys
-from PyObjCTools.TestSupport import *
+
+import objc
 from PyObjCTools import Debugging
+from PyObjCTools.TestSupport import *
 
 
 class TestDebugging(TestCase):

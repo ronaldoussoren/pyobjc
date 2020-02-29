@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from CFNetwork import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCFNetwork(TestCase):

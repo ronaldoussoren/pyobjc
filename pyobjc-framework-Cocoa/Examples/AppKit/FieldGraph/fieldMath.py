@@ -1,4 +1,4 @@
-from math import pi, sin, cos, hypot, sqrt
+from math import cos, hypot, pi, sin, sqrt
 
 # Math functions
 

@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from CoreLocation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCLLocationManager(TestCase):

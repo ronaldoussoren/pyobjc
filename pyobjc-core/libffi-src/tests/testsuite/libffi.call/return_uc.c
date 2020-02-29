@@ -24,12 +24,12 @@ int main (void)
 
   args[0] = &ffi_type_uchar;
   values[0] = &uc;
-  
+
   /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, 
+  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
 		     &ffi_type_uchar, args) == FFI_OK);
-  
-  for (uc = (unsigned char) '\x00'; 
+
+  for (uc = (unsigned char) '\x00';
        uc < (unsigned char) '\xff'; uc++)
     {
       ul++;

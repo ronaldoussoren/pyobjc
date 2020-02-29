@@ -5,12 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
-from CoreAudioKit import _metadata
 import CoreAudio
+import Foundation
+import objc
+from CoreAudioKit import _metadata
 
 sys.modules["CoreAudioKit"] = mod = objc.ObjCLazyModule(
     "CoreAudio",
@@ -27,6 +27,5 @@ sys.modules["CoreAudioKit"] = mod = objc.ObjCLazyModule(
     (CoreAudio, Foundation),
 )
 
-import sys
 
 del sys.modules["CoreAudioKit._metadata"]

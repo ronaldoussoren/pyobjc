@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
-from CoreLocation import *
 import objc
+from CoreLocation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestCLLocationManagerDelegateHelper(NSObject):

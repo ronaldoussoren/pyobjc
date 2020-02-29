@@ -3,11 +3,13 @@ Convenience interface for NSArray/NSMutableArray
 """
 __all__ = ()
 
-from objc._convenience import addConvenienceForClass, container_wrap, container_unwrap
-from objc._objc import lookUpClass, registerMetaDataForSelector, _C_NSInteger, _C_ID
-from objc._objc import _NSNotFound as NSNotFound
+import collections.abc
+import sys
 
-import sys, collections.abc
+from objc._convenience import addConvenienceForClass, container_unwrap, container_wrap
+from objc._objc import _C_ID, _C_NSInteger
+from objc._objc import _NSNotFound as NSNotFound
+from objc._objc import lookUpClass, registerMetaDataForSelector
 
 NSArray = lookUpClass("NSArray")
 NSMutableArray = lookUpClass("NSMutableArray")

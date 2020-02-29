@@ -1,9 +1,10 @@
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
+
+import sys
 
 import objc
-import sys
 from PyObjCTest.instanceVariables import ClassWithVariables
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")

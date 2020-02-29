@@ -1,7 +1,8 @@
-import Cocoa
-import UIHandling
-import Quartz
 import math
+
+import Cocoa
+import Quartz
+import UIHandling
 
 kOurImageFile = "ptlobos.tif"
 

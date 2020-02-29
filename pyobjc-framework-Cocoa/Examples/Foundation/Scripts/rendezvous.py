@@ -3,8 +3,9 @@
 This script using NSNetServiceBrowser to look for local HTTP servers.
 """
 from __future__ import print_function
+
 import objc
-from Foundation import NSObject, NSRunLoop, NSNetServiceBrowser, NSDate
+from Foundation import NSDate, NSNetServiceBrowser, NSObject, NSRunLoop
 
 objc.setVerbose(1)
 

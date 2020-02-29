@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import DiscRecording
+from PyObjCTools.TestSupport import *
 
 
 class TestDRFileHelper(DiscRecording.NSObject):

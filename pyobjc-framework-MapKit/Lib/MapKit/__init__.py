@@ -5,13 +5,13 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
 import Cocoa
 import CoreLocation
+import objc
 import Quartz
-
-from MapKit import _metadata, _MapKit
+from MapKit import _MapKit, _metadata
 from MapKit._inlines import _inline_list_
 
 sys.modules["MapKit"] = mod = objc.ObjCLazyModule(
@@ -29,7 +29,6 @@ sys.modules["MapKit"] = mod = objc.ObjCLazyModule(
     (Cocoa, CoreLocation, Quartz),
 )
 
-import sys
 
 del sys.modules["MapKit._metadata"]
 del sys.modules["MapKit._MapKit"]

@@ -6,7 +6,6 @@ Usage:
 """
 from setuptools import setup
 
-
 plist = dict(
     NSMainNibFile="MainMenu",
     CFBundleDocumentTypes=[

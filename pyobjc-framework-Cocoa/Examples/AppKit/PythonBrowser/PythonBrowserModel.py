@@ -1,9 +1,10 @@
 """PythonBrowserModel.py -- module implementing the data model for PythonBrowser."""
 
-from Foundation import NSObject
-from AppKit import NSBeep
-from operator import getitem, setitem
 import sys
+from operator import getitem, setitem
+
+from AppKit import NSBeep
+from Foundation import NSObject
 
 
 class PythonBrowserModel(NSObject):

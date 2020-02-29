@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import FileProviderUI
+from PyObjCTools.TestSupport import *
 
 
 class TestFPUIActionExtensionContext(TestCase):

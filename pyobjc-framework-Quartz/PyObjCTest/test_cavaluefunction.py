@@ -1,5 +1,5 @@
-from Quartz import *
 from PyObjCTools.TestSupport import *
+from Quartz import *
 
 
 class TestCAValueFunction(TestCase):

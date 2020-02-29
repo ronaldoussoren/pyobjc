@@ -1,5 +1,6 @@
-from PyObjCTools.TestSupport import *
 import plistlib
+
+from PyObjCTools.TestSupport import *
 
 
 class TestVersionSupport(TestCase):

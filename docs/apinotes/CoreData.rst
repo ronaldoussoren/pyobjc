@@ -25,5 +25,3 @@ API Notes
 
   The methods ``setObservationInfo:`` and ``observationInfo`` cannot be
   used from Python.
-
-

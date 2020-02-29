@@ -31,5 +31,3 @@ It is generally safer to use ``MTLRasterizationRateLayerDescriptor.horizontal`` 
 ................................................................
 
 It is generally safer to use ``MTLRasterizationRateLayerDescriptor.vertical`` instead
-
-

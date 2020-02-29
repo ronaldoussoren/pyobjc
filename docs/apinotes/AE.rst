@@ -19,4 +19,3 @@ API Notes
 ............................. ..................................................................................................................................................................................
 
 These constants are not available in Python. Apple has removed these for 64-bit code and I've decided to not make them available at all to Python code.
-

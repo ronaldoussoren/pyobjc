@@ -1,5 +1,6 @@
-import objc as _objc
 import CoreFoundation as _CF
+import objc as _objc
+
 
 #
 # 'Emulation' for CFArray contructors

@@ -2,8 +2,8 @@
 Some simple tests to check that the framework is properly wrapped.
 """
 import objc
-from PyObjCTools.TestSupport import *
 import PubSub
+from PyObjCTools.TestSupport import *
 
 
 class TestPubSub(TestCase):

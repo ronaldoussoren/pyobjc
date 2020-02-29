@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
 import sys
 
-from Foundation import *
 import Foundation
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSByteOrder(TestCase):

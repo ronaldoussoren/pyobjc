@@ -1,6 +1,6 @@
+import Foundation
 from Foundation import *
 from PyObjCTools.TestSupport import *
-import Foundation
 
 
 class TestHelper(NSObject):

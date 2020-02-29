@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import *
-import objc
-
-from Foundation import *
-
 import sys
+
+import objc
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
 

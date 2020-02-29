@@ -1,4 +1,5 @@
-import math, sys
+import math
+import sys
 
 import Quartz
 

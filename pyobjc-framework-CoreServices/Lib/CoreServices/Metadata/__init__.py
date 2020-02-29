@@ -8,8 +8,8 @@ Note that PyObjC only wrappers the non-deprecated parts of the CoreServices
 framework.
 """
 import sys
-import objc
 
+import objc
 from CoreServices.Metadata import _metadata
 
 sys.modules["CoreServices.Metadata"] = mod = objc.ObjCLazyModule(
@@ -27,6 +27,5 @@ sys.modules["CoreServices.Metadata"] = mod = objc.ObjCLazyModule(
     (),
 )
 
-import sys
 
 del sys.modules["CoreServices.Metadata._metadata"]

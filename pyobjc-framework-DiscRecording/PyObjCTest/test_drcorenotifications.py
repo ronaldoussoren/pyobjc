@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import DiscRecording
+from PyObjCTools.TestSupport import *
 
 DRNotificationCallback = (
     b"v^{__DRNotificationCenter=}^v^{__CFString=}@^{__CFDictionary=}"

@@ -1,8 +1,9 @@
 import sys
 
+import objc
+
 sys.path.insert(0, sys.argv[1])
 
-import objc
 
 if not objc.__file__.startswith(sys.argv[1]):
     print("Loaded objc from unexpected path")

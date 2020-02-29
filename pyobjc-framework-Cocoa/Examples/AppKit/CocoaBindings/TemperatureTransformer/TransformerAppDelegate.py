@@ -8,7 +8,7 @@
 #  Based on Apples FahrenheitToCelsiusTransformer Example
 
 import objc
-from Cocoa import NSValueTransformer, NSNumber, NSObject
+from Cocoa import NSNumber, NSObject, NSValueTransformer
 
 
 class FahrenheitToCelsiusTransformer(NSValueTransformer):

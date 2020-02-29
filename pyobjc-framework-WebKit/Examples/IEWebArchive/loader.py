@@ -1,7 +1,8 @@
-import email, urllib
+import email
+import urllib
 
-from WebKit import WebResource, WebArchive
-from Cocoa import NSData, NSString, NSURL
+from Cocoa import NSURL, NSData, NSString
+from WebKit import WebArchive, WebResource
 
 
 def loadMHT(filename):

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Security
+from PyObjCTools.TestSupport import *
 
 SecureDownloadTrustSetupCallback = b"i@^v"
 SecureDownloadTrustEvaluateCallback = b"i@i^v"

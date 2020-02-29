@@ -49,6 +49,7 @@ The same is true for fetching elements::
     'hello'
 """
 import doctest
+
 import __main__
 
 doctest.testmod(__main__, verbose=1)

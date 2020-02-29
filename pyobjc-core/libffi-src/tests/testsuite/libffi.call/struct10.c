@@ -60,27 +60,27 @@ int main (void)
   ts10_type_elements[2] = NULL;
 
   test_structure_10 ts10_arg;
-  
+
   /* This is a hack to get a properly aligned result buffer */
-  test_structure_10 *ts10_result = 
+  test_structure_10 *ts10_result =
     (test_structure_10 *) malloc (sizeof(test_structure_10));
-  
+
   args[0] = &ts10_type;
   values[0] = &ts10_arg;
-  
+
   /* Initialize the cif */
   CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ts10_type, args) == FFI_OK);
-  
+
   ts10_arg.r.x = 1.44;
   ts10_arg.r.y = 2.44;
   ts10_arg.l.x = 3.44;
   ts10_arg.l.y = 4.44;
-  
+
   printf ("%g\n", ts10_arg.r.x);
   printf ("%g\n", ts10_arg.r.y);
   printf ("%g\n", ts10_arg.l.x);
   printf ("%g\n", ts10_arg.l.y);
-  
+
   ffi_call(&cif, FFI_FN(struct10b), ts10_result, values);
 
   printf ("%g\n", ts10_result->r.x);

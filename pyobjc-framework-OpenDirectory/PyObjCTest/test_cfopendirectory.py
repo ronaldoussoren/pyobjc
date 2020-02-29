@@ -1,9 +1,9 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
-from PyObjCTools.TestSupport import *
-import objc
 import CFOpenDirectory
+import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestCFOpenDirectory(TestCase):

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import objc
-from Foundation import NSObject, NSKeyValueObservingOptionNew, NSKeyValueChangeNewKey
+from Foundation import NSKeyValueChangeNewKey, NSKeyValueObservingOptionNew, NSObject
 
 
 class MyClass(NSObject):

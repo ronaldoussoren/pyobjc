@@ -9,8 +9,9 @@ and (Objective-)C frameworks
 Note that using the library requires a signed application bundle.
 """
 
-from pyobjc_setup import setup
 import os
+
+from pyobjc_setup import setup
 
 VERSION = "6.2b1"
 

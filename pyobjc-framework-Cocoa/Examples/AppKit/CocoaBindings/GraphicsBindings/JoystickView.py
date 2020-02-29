@@ -8,13 +8,28 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
+from math import atan2, cos, pi, sin, sqrt
+
 import objc
+from Cocoa import (
+    NSAffineTransform,
+    NSBezierPath,
+    NSColor,
+    NSDrawDarkBezel,
+    NSDrawLightBezel,
+    NSInsetRect,
+    NSLocalizedStringFromTable,
+    NSMakePoint,
+    NSMakeRect,
+    NSMultipleValuesMarker,
+    NSNoSelectionMarker,
+    NSNotApplicableMarker,
+    NSNumber,
+    NSShiftKeyMask,
+    NSValueTransformer,
+    NSView,
+)
 from objc import super
-from Cocoa import NSView, NSNumber, NSMakePoint, NSValueTransformer, NSMakeRect
-from Cocoa import NSNoSelectionMarker, NSNotApplicableMarker, NSMultipleValuesMarker
-from Cocoa import NSShiftKeyMask, NSDrawDarkBezel, NSDrawLightBezel, NSBezierPath
-from Cocoa import NSAffineTransform, NSLocalizedStringFromTable, NSInsetRect, NSColor
-from math import sin, cos, sqrt, atan2, pi
 
 
 class JoystickView(NSView):

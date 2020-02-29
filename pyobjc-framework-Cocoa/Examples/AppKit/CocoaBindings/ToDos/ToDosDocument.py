@@ -8,13 +8,17 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
-from objc import super
-from Cocoa import NSDocument, NSMutableArray, NSValueTransformer
-from Cocoa import NSKeyedArchiver, NSKeyedUnarchiver
-
 from Category import Category
-from PriorityToColourTransformer import PriorityToColourTransformer
+from Cocoa import (
+    NSDocument,
+    NSKeyedArchiver,
+    NSKeyedUnarchiver,
+    NSMutableArray,
+    NSValueTransformer,
+)
+from objc import super
 from OverdueTransformer import OverdueTransformer
+from PriorityToColourTransformer import PriorityToColourTransformer
 
 
 class ToDosDocument(NSDocument):

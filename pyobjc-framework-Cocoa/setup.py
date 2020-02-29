@@ -7,8 +7,9 @@ for information on how to use these frameworks and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
-from pyobjc_setup import setup, Extension
 import os
+
+from pyobjc_setup import Extension, setup
 
 VERSION = "6.2b1"
 

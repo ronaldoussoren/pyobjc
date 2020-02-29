@@ -50,7 +50,7 @@ This module defines a method for ``NSGraphicsContext``:
 Context-manager for ``NSAnimationContext``
 ------------------------------------------
 
-Class :c:type:`NSAnimationContext` can be used as the context for a ``with`` 
+Class :c:type:`NSAnimationContext` can be used as the context for a ``with``
 statement:
 
     .. sourcecode:: python

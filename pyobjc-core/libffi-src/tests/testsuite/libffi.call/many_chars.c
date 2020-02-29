@@ -21,8 +21,8 @@ static long chars(long a,
 
 {
   printf("%ld %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-	a, (int)b1, (int)b2, (int)b3, (int)b4, (int)b5, (int)b6, 
-	(int)b7, (int)b8, (int)b9, (int)b10, (int)b11, (int)b12, 
+	a, (int)b1, (int)b2, (int)b3, (int)b4, (int)b5, (int)b6,
+	(int)b7, (int)b8, (int)b9, (int)b10, (int)b11, (int)b12,
 	(int)b13, (int)b14, (int)b15, (int)b16);
   return a+b1+b2+b3+b4+b5+b6+b7+b8+b9+b10+b11+b12+b13+b14+b15+b16;
 }
@@ -48,7 +48,7 @@ int main (void)
     }
 
     /* Initialize the cif */
-    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 17, 
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 17,
 		       &ffi_type_slong, args) == FFI_OK);
 
     ffi_call(&cif, FFI_FN(chars), &r, values);

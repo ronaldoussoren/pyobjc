@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from PyObjCTest.classes import OCTestClasses
 import array
-import sys
 import datetime
+import sys
+
+from PyObjCTest.classes import OCTestClasses
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     from collections import UserDict, UserList

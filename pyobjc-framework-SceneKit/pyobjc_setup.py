@@ -7,8 +7,29 @@ to all framework wrappers.
 
 __all__ = ("setup", "Extension", "Command")
 
+import os
+import plistlib
+import shlex
+import shutil
+import subprocess
 import sys
-from pkg_resources import Distribution
+from distutils import log
+from distutils.command import build, install
+from distutils.errors import DistutilsError, DistutilsPlatformError
+from distutils.sysconfig import get_config_var, get_config_vars
+
+import pkg_resources
+from pkg_resources import (
+    Distribution,
+    add_activation_listener,
+    normalize_path,
+    require,
+    working_set,
+)
+from setuptools import Command
+from setuptools import Extension as _Extension
+from setuptools import setup as _setup
+from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
 
 try:
     import setuptools
@@ -16,14 +37,6 @@ try:
 except ImportError:
     print("This package requires setuptools to build")
     sys.exit(1)
-
-from setuptools.command import test
-from setuptools.command import egg_info
-from setuptools.command import build_py
-from distutils.sysconfig import get_config_var, get_config_vars
-
-from distutils import log
-import shlex
 
 
 class oc_build_py(build_py.build_py):
@@ -36,9 +49,6 @@ class oc_build_py(build_py.build_py):
         finally:
             self.packages = p
 
-
-from pkg_resources import working_set, normalize_path, add_activation_listener, require
-from distutils.errors import DistutilsPlatformError, DistutilsError
 
 REPO_NAME = "pyobjc"
 
@@ -175,16 +185,6 @@ class oc_test(test.test):
         finally:
             self.remove_from_sys_path()
 
-
-from setuptools import setup as _setup, Extension as _Extension, Command
-from distutils.command import build, install
-from setuptools.command import develop, test, build_ext, install_lib
-import pkg_resources
-import shutil
-import os
-import subprocess
-import plistlib
-import sys
 
 CLASSIFIERS = list(
     filter(

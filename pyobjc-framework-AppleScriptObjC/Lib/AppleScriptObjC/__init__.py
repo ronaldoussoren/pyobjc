@@ -6,9 +6,9 @@ documentation for details on how to use these functions and classes.
 """
 
 import sys
-import objc
-import Foundation
 
+import Foundation
+import objc
 from AppleScriptObjC import _metadata
 
 sys.modules["AppleScriptObjC"] = mod = objc.ObjCLazyModule(
@@ -26,6 +26,5 @@ sys.modules["AppleScriptObjC"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["AppleScriptObjC._metadata"]

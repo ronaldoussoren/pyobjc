@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
-from CoreText import *
-from Quartz import *
-
 import os
+
+from CoreText import *
+from PyObjCTools.TestSupport import *
+from Quartz import *
 
 
 class TestCTFrame(TestCase):

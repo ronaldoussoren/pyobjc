@@ -1,8 +1,7 @@
-from PyObjCTools.TestSupport import *
-import objc
-
-from Foundation import *
 import Foundation
+import objc
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSExceptionInteraction(TestCase):

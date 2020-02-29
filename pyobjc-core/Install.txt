@@ -17,7 +17,7 @@ To install PyObjC::
   $ python setup.py install
 
 This will compile and install the ``pyobjc-core`` package in your Python's
-``site-packages`` directory. When you have multiple versions of Python on 
+``site-packages`` directory. When you have multiple versions of Python on
 your machine this will only install it for the version of python that's first
 in your shell's search-path.
 

@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import CoreData
+from PyObjCTools.TestSupport import *
 
 
 class TestNSPersistentCloudKitContainer(TestCase):

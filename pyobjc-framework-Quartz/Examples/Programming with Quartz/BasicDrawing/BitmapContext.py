@@ -1,13 +1,11 @@
 import sys
 
-import objc
-
-import Quartz
-import LaunchServices
-
-import Utilities
-import DrawingBasics
 import AppDrawing
+import DrawingBasics
+import LaunchServices
+import objc
+import Quartz
+import Utilities
 
 # import Carbon.QT
 

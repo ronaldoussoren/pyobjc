@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import libdispatch
+from PyObjCTools.TestSupport import *
 
 dispatch_data_applier_t = b"B@Ln^vL"
 

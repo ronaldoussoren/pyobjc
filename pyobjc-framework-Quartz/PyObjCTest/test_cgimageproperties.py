@@ -1,6 +1,6 @@
+import Quartz
 from PyObjCTools.TestSupport import *
 from Quartz import *
-import Quartz
 
 
 class TestCGImageProperties(TestCase):

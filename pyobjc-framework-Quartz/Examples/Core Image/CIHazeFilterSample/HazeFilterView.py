@@ -1,8 +1,7 @@
+import Cocoa
+import MyHazeFilter
 import objc
 import Quartz
-import Cocoa
-
-import MyHazeFilter
 
 
 class HazeFilterView(Cocoa.NSView):

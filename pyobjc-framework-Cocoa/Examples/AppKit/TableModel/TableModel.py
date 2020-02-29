@@ -15,10 +15,11 @@ sources or nibs.)
 # in the nib, both as the delegate and the data source.  The table view will
 # ask our object for data; it controls us, not the other way around.
 
-from PyObjCTools import AppHelper
-from Cocoa import NSObject
-import objc
 import pkg_resources
+
+import objc
+from Cocoa import NSObject
+from PyObjCTools import AppHelper
 
 ROWCOUNT = 200
 

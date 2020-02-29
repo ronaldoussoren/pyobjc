@@ -1,9 +1,9 @@
-from PyObjCTools.TestSupport import *
-import objc
-import warnings
 import contextlib
+import warnings
 
+import objc
 from PyObjCTest.deprecations import *
+from PyObjCTools.TestSupport import *
 
 objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method1", dict())
 objc.registerMetaDataForSelector(

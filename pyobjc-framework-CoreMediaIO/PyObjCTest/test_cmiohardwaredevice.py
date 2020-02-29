@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreMediaIO
+from PyObjCTools.TestSupport import *
 
 CMIODeviceGetSMPTETimeProc = b"d^v^Q^Z^I"
 

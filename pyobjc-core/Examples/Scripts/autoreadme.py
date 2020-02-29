@@ -9,14 +9,13 @@ The script is part of an article at MAcDevCenter:
 Usage:
     python autoreadme.py
 """
-import sys
 import os
 import re
+import sys
 
 from AppKit import *
 from Foundation import *
 from PyObjCTools import AppHelper
-
 
 readTheseFiles = re.compile("(.*read\s*me.*|.*release.*note.*|^about.*)", re.I)
 

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AVFoundation
+from PyObjCTools.TestSupport import *
 
 # OSStatus (^AVAudioSinkNodeReceiverBlock)(const AudioTimeStamp *timestamp, AVAudioFrameCount frameCount, const AudioBufferList *inputData)
 AVAudioSinkNodeReceiverBlock = b"in^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}In^^{AudioBufferList=I[1{AudioBuffer=II^v}]}"

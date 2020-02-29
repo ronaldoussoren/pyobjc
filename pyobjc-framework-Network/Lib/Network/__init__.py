@@ -5,10 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
+import Foundation
+import Network._Network as _manual
+import objc
 from Network import _metadata
 
 sys.modules["Network"] = mod = objc.ObjCLazyModule(
@@ -26,11 +27,9 @@ sys.modules["Network"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["Network._metadata"]
 
-import Network._Network as _manual
 
 for nm in dir(_manual):
     if nm.startswith("__"):

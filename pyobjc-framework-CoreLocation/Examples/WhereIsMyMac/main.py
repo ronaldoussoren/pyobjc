@@ -1,5 +1,4 @@
-from PyObjCTools import AppHelper
-
 import WhereIsMyMacAppDelegate
+from PyObjCTools import AppHelper
 
 AppHelper.runEventLoop()

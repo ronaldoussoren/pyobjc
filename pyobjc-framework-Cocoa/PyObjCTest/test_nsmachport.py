@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
-import objc
 import Foundation
+import objc
+from PyObjCTools.TestSupport import *
 
 if hasattr(Foundation, "NSMachPort"):
 

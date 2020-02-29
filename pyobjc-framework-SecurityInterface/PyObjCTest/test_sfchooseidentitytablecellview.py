@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import SecurityInterface
+from PyObjCTools.TestSupport import *
 
 
 class TestSFChooseIdentityTableCellView(TestCase):

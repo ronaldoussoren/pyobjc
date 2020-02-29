@@ -1,7 +1,7 @@
+import math
+
 import Cocoa
 import Quartz
-
-import math
 
 
 def doAlphaRects(context):

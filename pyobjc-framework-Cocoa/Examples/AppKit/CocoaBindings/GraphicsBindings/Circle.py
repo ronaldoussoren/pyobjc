@@ -8,11 +8,19 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Cocoa import NSObject, NSColor, NSMakeRect, NSUnionRect
-from Cocoa import NSShadow, NSMakeSize, NSBezierPath
-from objc import super
+from math import cos, sin
+
 import objc
-from math import sin, cos
+from Cocoa import (
+    NSBezierPath,
+    NSColor,
+    NSMakeRect,
+    NSMakeSize,
+    NSObject,
+    NSShadow,
+    NSUnionRect,
+)
+from objc import super
 
 
 class Circle(NSObject):

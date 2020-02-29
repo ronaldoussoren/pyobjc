@@ -6,14 +6,15 @@ This collects "sdist" and "wheel" archives, the latter for a number of
 Python versions (see below).
 """
 
-import subprocess
-import os
-import sys
-import shutil
 import fnmatch
+import os
+import shutil
+import subprocess
+import sys
 
-from _common_definitions import PY_VERSIONS, TOP_DIR, DIST_DIR, system_report
-from _common_definitions import variants, setup_variant
+from _common_definitions import (DIST_DIR, PY_VERSIONS, TOP_DIR, setup_variant,
+                                 system_report, variants)
+
 
 def files_matching(pattern, dirname):
     return fnmatch.filter(os.listdir(dirname), pattern)

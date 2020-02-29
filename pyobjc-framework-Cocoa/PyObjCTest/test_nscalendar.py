@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-from Foundation import *
 import Foundation
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSCalendar(TestCase):

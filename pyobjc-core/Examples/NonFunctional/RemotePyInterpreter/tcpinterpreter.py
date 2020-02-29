@@ -3,7 +3,9 @@
 """
     start socket based minimal readline exec server
 """
-import sys, socket, os
+import os
+import socket
+import sys
 
 
 def runsocketcode(clientfile, g):

@@ -21,4 +21,3 @@ as well as to the reboot started by Ronald.
 
 `Steve Majewski <sdm7g@minsky.med.virginia.edu>`_ and Bill Bumgarner
 maintained PyObjC when Lele Gaifax stopped working on it.
-

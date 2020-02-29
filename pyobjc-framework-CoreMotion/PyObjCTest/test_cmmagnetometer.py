@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreMotion
+from PyObjCTools.TestSupport import *
 
 
 class TestCMMagnetometer(TestCase):

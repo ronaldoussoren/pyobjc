@@ -43,9 +43,9 @@ NEWS
 
 """
 
-from pyobjc_setup import setup, Extension
-
 import os
+
+from pyobjc_setup import Extension, setup
 
 subpackages = [
     "Quartz.%s" % (fn,)

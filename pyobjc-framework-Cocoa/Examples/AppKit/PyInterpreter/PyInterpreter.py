@@ -1,15 +1,28 @@
 from __future__ import print_function
-import sys
-import traceback
+
 import keyword
+import sys
 import time
-from functools import partial
+import traceback
 from code import InteractiveConsole
-from objc import YES, NO, selector, IBAction, IBOutlet, super
-from Cocoa import NSBundle, NSObject, NSTextView, NSForegroundColorAttributeName
-from Cocoa import NSFont, NSColor, NSFontAttributeName, NSApplication
-from Cocoa import NSUIntegerMax, NSDate, NSDefaultRunLoopMode, NSKeyDown
-from Cocoa import NSAttributedString
+from functools import partial
+
+from Cocoa import (
+    NSApplication,
+    NSAttributedString,
+    NSBundle,
+    NSColor,
+    NSDate,
+    NSDefaultRunLoopMode,
+    NSFont,
+    NSFontAttributeName,
+    NSForegroundColorAttributeName,
+    NSKeyDown,
+    NSObject,
+    NSTextView,
+    NSUIntegerMax,
+)
+from objc import NO, YES, IBAction, IBOutlet, selector, super
 from PyObjCTools import AppHelper
 
 if sys.version_info[0] == 2:

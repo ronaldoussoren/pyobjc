@@ -7,8 +7,9 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-from pyobjc_setup import setup
 import os
+
+from pyobjc_setup import setup
 
 VERSION = "6.2b1"
 

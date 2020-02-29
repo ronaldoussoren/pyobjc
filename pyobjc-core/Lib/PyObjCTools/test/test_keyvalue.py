@@ -8,13 +8,14 @@ NOTE: Testcases here should be synchronized with the Key-Value Coding tests
 in objc.test.test_keyvalue and Foundation.test.test_keyvalue.
 """
 
-from PyObjCTools.KeyValueCoding import *
-from objc.test.keyvaluehelper import *
-import objc
-import unittest
-from objc.test import ctests
-from Foundation import *
 import datetime
+import unittest
+
+import objc
+from Foundation import *
+from objc.test import ctests
+from objc.test.keyvaluehelper import *
+from PyObjCTools.KeyValueCoding import *
 
 
 class KeyValueClass5(object):

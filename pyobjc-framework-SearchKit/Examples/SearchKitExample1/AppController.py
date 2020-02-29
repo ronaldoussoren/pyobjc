@@ -1,7 +1,8 @@
-import Cocoa
-import SearchKit
-import objc
 import os
+
+import Cocoa
+import objc
+import SearchKit
 
 
 class AppController(Cocoa.NSObject):

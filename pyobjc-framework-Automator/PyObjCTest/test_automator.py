@@ -1,9 +1,9 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import Automator
 import objc
 from PyObjCTools.TestSupport import *
-import Automator
 
 
 class TestAutomator(TestCase):

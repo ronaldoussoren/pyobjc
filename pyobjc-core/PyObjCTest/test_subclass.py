@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-import objc
-from PyObjCTest.testbndl import PyObjC_TestClass3
 import sys
 import types
+
+import objc
+from PyObjCTest.testbndl import PyObjC_TestClass3
+from PyObjCTools.TestSupport import *
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")

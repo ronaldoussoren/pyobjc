@@ -8,8 +8,8 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
 import objc
+from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver, NSMutableArray
 from objc import super
-from Cocoa import NSDocument, NSMutableArray, NSKeyedArchiver, NSKeyedUnarchiver
 
 # BookmarksDocument defines this as it may be used for copy and paste
 # in addition to just drag and drop

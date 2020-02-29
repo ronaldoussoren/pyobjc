@@ -37,31 +37,31 @@ int main (void)
   ts2_type_elements[1] = &ffi_type_double;
   ts2_type_elements[2] = NULL;
 
-  
+
   /* This is a hack to get a properly aligned result buffer */
-  test_structure_2 *ts2_result = 
+  test_structure_2 *ts2_result =
     (test_structure_2 *) malloc (sizeof(test_structure_2));
-  
+
   args[0] = &ts2_type;
   values[0] = &ts2_arg;
-  
+
   /* Initialize the cif */
   CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ts2_type, args) == FFI_OK);
-  
+
   ts2_arg.d1 = 5.55;
   ts2_arg.d2 = 6.66;
-  
+
   printf ("%g\n", ts2_arg.d1);
   printf ("%g\n", ts2_arg.d2);
-  
+
   ffi_call(&cif, FFI_FN(struct2), ts2_result, values);
-  
+
   printf ("%g\n", ts2_result->d1);
   printf ("%g\n", ts2_result->d2);
-  
+
   CHECK(ts2_result->d1 == 5.55 - 1);
   CHECK(ts2_result->d2 == 6.66 - 1);
-  
+
   free (ts2_result);
   exit(0);
 }

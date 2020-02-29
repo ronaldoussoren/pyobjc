@@ -1,13 +1,12 @@
-from PyObjCTools.TestSupport import *
-
-import objc._lazyimport as lazyimport
-import objc
-import sys
+import operator
 import os
 import struct
-import operator
+import sys
 
+import objc
+import objc._lazyimport as lazyimport
 from PyObjCTest import metadatafunction
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:  # pragma: no 2.x cover; pragma: no branch
     long = int

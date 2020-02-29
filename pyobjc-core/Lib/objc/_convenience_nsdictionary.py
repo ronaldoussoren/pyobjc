@@ -3,11 +3,13 @@ Convenience interface for NSDictionary/NSMutableDictionary
 """
 __all__ = ()
 
-from objc._convenience_mapping import addConvenienceForBasicMapping
-from objc._convenience import container_wrap, container_unwrap, addConvenienceForClass
-from objc._objc import lookUpClass
+import collections.abc
+import os
+import sys
 
-import sys, os, collections.abc
+from objc._convenience import addConvenienceForClass, container_unwrap, container_wrap
+from objc._convenience_mapping import addConvenienceForBasicMapping
+from objc._objc import lookUpClass
 
 NSDictionary = lookUpClass("NSDictionary")
 NSMutableDictionary = lookUpClass("NSMutableDictionary")

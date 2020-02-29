@@ -1,6 +1,6 @@
+import AddressBook
 import Cocoa
 import InstantMessage
-import AddressBook
 import objc
 
 kAddressBookPersonStatusChanged = "AddressBookPersonStatusChanged"

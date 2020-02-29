@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import *
-import objc
-import objc._convenience as convenience
 import operator
 import sys
 
+import objc
+import objc._convenience as convenience
 from PyObjCTest.sequence import *
+from PyObjCTools.TestSupport import *
 
 objc.addConvenienceForBasicSequence("OC_TestSequence", False)
 objc.addConvenienceForBasicSequence("OC_TestMutableSequence", True)

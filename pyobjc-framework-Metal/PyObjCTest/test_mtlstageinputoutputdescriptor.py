@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Metal
+from PyObjCTools.TestSupport import *
 
 
 class MTLStageInputOutputDescriptor(TestCase):

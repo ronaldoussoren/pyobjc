@@ -1,5 +1,6 @@
-from PyObjCTools.TestSupport import *
 import sys
+
+from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
 
@@ -28,6 +29,7 @@ if sys.maxsize >= 2 ** 32:
                 1,
                 b"v@",
             )
+
 
 if __name__ == "__main__":
     main()

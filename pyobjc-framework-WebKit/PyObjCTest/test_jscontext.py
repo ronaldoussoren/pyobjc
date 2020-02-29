@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
 import JavaScriptCore
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestJSContext(TestCase):

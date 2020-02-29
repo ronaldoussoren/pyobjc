@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
-import objc
-import types
 import inspect
+import types
+
+import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestInspectSignatures(TestCase):

@@ -8,7 +8,8 @@ and (Objective-)C frameworks
 """
 
 import os
-from pyobjc_setup import setup, Extension
+
+from pyobjc_setup import Extension, setup
 
 VERSION = "6.2b1"
 

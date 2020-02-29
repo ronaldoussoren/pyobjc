@@ -9,7 +9,9 @@ Usage::
 
 Run tests aftwards before doing a commit.
 """
-import os, sys, re
+import os
+import re
+import sys
 
 DRYRUN=False
 

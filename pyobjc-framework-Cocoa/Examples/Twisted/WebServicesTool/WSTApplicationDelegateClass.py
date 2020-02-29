@@ -7,7 +7,6 @@ An instance of this class is instantiated in the MainMenu.nib default NIB file.
 import Cocoa
 from PyObjCTools import AppHelper
 from twisted.internet import reactor
-
 from WSTConnectionWindowControllerClass import WSTConnectionWindowController
 
 

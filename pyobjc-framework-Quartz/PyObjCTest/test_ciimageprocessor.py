@@ -1,6 +1,6 @@
 from PyObjCTools.TestSupport import *
-from Quartz.QuartzCore import *
 from Quartz import CGRect
+from Quartz.QuartzCore import *
 
 
 class TestCIImageProcessorHelper(NSObject):

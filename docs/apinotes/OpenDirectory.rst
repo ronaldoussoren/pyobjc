@@ -27,4 +27,3 @@ decorator::
       pass
 
 The ``userInfo`` argument needs to be an integer.
-

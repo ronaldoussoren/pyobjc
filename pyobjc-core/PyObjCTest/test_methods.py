@@ -32,11 +32,14 @@ NOTES:
   with this file.
 """
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
-import objc
-import sys
+
 import struct
+import sys
 import warnings
+
+import objc
+from PyObjCTest.testbndl import *
+from PyObjCTools.TestSupport import *
 
 # Can't set the right signatures in plain Objective-C.
 for method, argmeta in [
@@ -85,9 +88,6 @@ for method, argmeta in [
 ]:
 
     objc.registerMetaDataForSelector(b"OC_TestClass1", method, dict(arguments=argmeta))
-
-
-from PyObjCTest.testbndl import *
 
 
 def makeCFloat(value):

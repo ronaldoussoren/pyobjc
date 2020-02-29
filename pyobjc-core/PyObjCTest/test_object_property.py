@@ -1,8 +1,10 @@
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
-import objc
+
 import copy
+
+import objc
 from PyObjCTest.fnd import *
+from PyObjCTools.TestSupport import *
 
 objc.registerMetaDataForSelector(
     b"NSObject",

@@ -4,8 +4,9 @@ Script for building the example.
 Usage:
     python3 setup.py py2app
 """
-from setuptools import setup
 import os
+
+from setuptools import setup
 
 setup(
     name="BasicDrawing",

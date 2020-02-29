@@ -2,15 +2,15 @@
 Example for using CGShading and CGFunction. This code is directly translated
 from procedural C code and is definitely not good Python style.
 """
-import objc
-from objc import super
-import Cocoa
-import Quartz
-
-import math
-import sys
-import random
 import array
+import math
+import random
+import sys
+
+import Cocoa
+import objc
+import Quartz
+from objc import super
 
 # Global variables
 frequency = [0.0, 0.0, 0.0, 0.0]

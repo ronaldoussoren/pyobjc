@@ -1,9 +1,10 @@
 #
 # Tests for the struct-wrappers for NSPoint, NSSize, NSRange and NSRect.
 #
+import operator
+
 from Foundation import *
 from PyObjCTools.TestSupport import *
-import operator
 
 
 def do_set_slice(op, start, stop, value):

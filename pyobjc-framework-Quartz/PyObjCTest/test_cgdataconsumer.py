@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from Quartz import *
+import os
+
 import Quartz
 from Foundation import NSMutableData
-import os
+from PyObjCTools.TestSupport import *
+from Quartz import *
 
 
 class TestCGDataConsumer(TestCase):

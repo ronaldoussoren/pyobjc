@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import Metal
+from PyObjCTools.TestSupport import *
 
 MTLDeviceNotificationHandler = b"v@@"
 MTLNewLibraryCompletionHandler = b"v@@"
@@ -571,18 +570,18 @@ class TestMTLDevice(TestCase):
         )
 
         self.assertResultIsBOOL(
-            TestMTLDeviceHelper.supportsRasterizationRateMapWithLayerCount_)
+            TestMTLDeviceHelper.supportsRasterizationRateMapWithLayerCount_
+        )
         self.assertArgHasType(
             TestMTLDeviceHelper.supportsRasterizationRateMapWithLayerCount_,
             0,
-            objc._C_NSUInteger)
+            objc._C_NSUInteger,
+        )
 
-        self.assertResultIsBOOL(
-            TestMTLDeviceHelper.supportsVertexAmplificationCount_)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsVertexAmplificationCount_)
         self.assertArgHasType(
-            TestMTLDeviceHelper.supportsVertexAmplificationCount_,
-            0,
-            objc._C_NSUInteger)
+            TestMTLDeviceHelper.supportsVertexAmplificationCount_, 0, objc._C_NSUInteger
+        )
 
         self.assertResultHasType(TestMTLDeviceHelper.peerGroupID, objc._C_ULNGLNG)
         self.assertResultHasType(TestMTLDeviceHelper.peerIndex, objc._C_UINT)

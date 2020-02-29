@@ -11,5 +11,3 @@ API Notes
 
 * Getting and setting values for ``kCVPixelFormatFillExtendedPixelsCallback``
   is not supported.
-
-

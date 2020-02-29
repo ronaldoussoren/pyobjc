@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-import SystemConfiguration
 import objc
+import SystemConfiguration
+from PyObjCTools.TestSupport import *
 
 
 class TestCaptiveNework(TestCase):

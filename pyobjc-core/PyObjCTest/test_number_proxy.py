@@ -5,12 +5,14 @@ NOTE: Decimal conversion is not tested, the required proxy is part of
 the Foundation bindings :-(
 """
 from __future__ import unicode_literals
-import sys, os
-from PyObjCTools.TestSupport import *
+
+import os
+import sys
+
+import objc
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.pythonnumber import OC_TestNumber
-import objc
-
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     unicode = str

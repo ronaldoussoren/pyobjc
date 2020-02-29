@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 
 def byte2bits(val):

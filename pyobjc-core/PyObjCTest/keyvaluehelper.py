@@ -1,9 +1,10 @@
 """
 Helper module for KeyValue tests
 """
-from __future__ import unicode_literals, absolute_import
-from PyObjCTest.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
+from __future__ import absolute_import, unicode_literals
+
 import objc
+from PyObjCTest.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
 
 NSObject = objc.lookUpClass("NSObject")
 

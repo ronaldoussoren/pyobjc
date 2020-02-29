@@ -5,6 +5,14 @@ for the document windows for the Web Services Tool application.
 Implements a standard toolbar.
 """
 
+import string
+import sys
+import traceback
+import types
+from threading import Thread
+
+import Cocoa
+
 # Note about multi-threading.
 # Although WST does its network stuff in a background thread, with Python 2.2
 # there are still moments where the app appears to hang briefly. This should
@@ -15,9 +23,6 @@ Implements a standard toolbar.
 # Python would not grant time to other threads while blocking inside
 # getaddrinfo(). This has been fixed *after* 2.3b1 was released. (jvr)
 import objc
-import Cocoa
-
-from threading import Thread
 
 try:
     from Queue import Queue
@@ -29,10 +34,6 @@ try:
 except ImportError:
     from xmlrpc.client import ServerProxy
 
-import sys
-import types
-import string
-import traceback
 
 kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
 """Identifier for 'reload contents' toolbar item."""

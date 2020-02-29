@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreMediaIO
+from PyObjCTools.TestSupport import *
 
 
 class TestCMIOHardware(TestCase):

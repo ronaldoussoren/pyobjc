@@ -7,8 +7,8 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-from Foundation import NSObject
 import objc
+from Foundation import NSObject
 
 
 class Category(NSObject):

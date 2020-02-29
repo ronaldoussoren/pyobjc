@@ -1,20 +1,20 @@
-from PyObjCTools.TestSupport import *
-
-import objc._bridgesupport as bridgesupport
+import ctypes
 import os
 import re
+import subprocess
 import sys
+import warnings
+import xml.etree.ElementTree as ET
+
+import objc
+import objc._bridgesupport as bridgesupport
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 2:
     from imp import reload
 else:
     from importlib import reload
-import ctypes
-import objc
-import subprocess
-import warnings
 
-import xml.etree.ElementTree as ET
 
 IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 

@@ -1,9 +1,9 @@
-import objc
-from objc import super
-import Cocoa
-from math import pi, sin, cos
+from math import cos, pi, sin
 
+import Cocoa
+import objc
 from fieldMath import degToRad
+from objc import super
 
 # Convience global variables
 x, y = 0, 1

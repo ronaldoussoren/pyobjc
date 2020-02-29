@@ -23,8 +23,8 @@
 ###
 
 import objc
-from Foundation import *
 from AppKit import *
+from Foundation import *
 from PyObjCTools import AppHelper
 
 

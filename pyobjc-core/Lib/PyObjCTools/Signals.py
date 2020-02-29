@@ -20,9 +20,10 @@ as easily cause a crash when such a signal gets in.
           DO NOT USE THIS MODULE IN PRODUCTION CODE
 """
 from __future__ import print_function
+
+import os
 import signal
 import traceback
-import os
 
 __all__ = ["dumpStackOnFatalSignal", "resetFatalSignals"]
 

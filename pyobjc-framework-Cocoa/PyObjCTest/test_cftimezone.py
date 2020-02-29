@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-import time
-from CoreFoundation import *
-from Foundation import NSDictionary, NSString, NSMutableDictionary
 import sys
+import time
+
+from CoreFoundation import *
+from Foundation import NSDictionary, NSMutableDictionary, NSString
+from PyObjCTools.TestSupport import *
 
 
 class TestTimeZone(TestCase):

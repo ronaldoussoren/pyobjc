@@ -1,13 +1,13 @@
 """
 Tests for the proxy of Python sets
 """
-import sys
-from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import NSSet, NSMutableSet, NSPredicate, NSObject, NSNull
-from PyObjCTest.pythonset import OC_TestSet
-import objc
-
 import os
+import sys
+
+import objc
+from PyObjCTest.fnd import NSMutableSet, NSNull, NSObject, NSPredicate, NSSet
+from PyObjCTest.pythonset import OC_TestSet
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     unicode = str

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import DiskArbitration
+from PyObjCTools.TestSupport import *
 
 
 class TestDASession(TestCase):

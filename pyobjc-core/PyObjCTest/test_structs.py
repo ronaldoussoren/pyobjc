@@ -7,11 +7,12 @@ XXX: Add tests that check that the type actually works as expected:
 Add tests for nested structs as well (that is assert that NSRect.location is
 an NSPoint, but using our own types)
 """
-from PyObjCTools.TestSupport import *
-import objc
 import sys
-from PyObjCTest.structs import *
+
+import objc
 from PyObjCTest.fnd import NSObject
+from PyObjCTest.structs import *
+from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
     PTR_SIZE = 8

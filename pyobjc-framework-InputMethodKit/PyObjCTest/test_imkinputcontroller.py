@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from InputMethodKit import *
 import sys
+
+from InputMethodKit import *
+from PyObjCTools.TestSupport import *
 
 
 class TestIMKInputControllerHelper(NSObject):

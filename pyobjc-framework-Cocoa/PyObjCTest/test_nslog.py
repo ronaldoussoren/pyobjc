@@ -1,7 +1,8 @@
-from PyObjCTools.TestSupport import *
 import os
-from Foundation import *
+
 import Foundation
+from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSLog(TestCase):

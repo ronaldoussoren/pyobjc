@@ -5,11 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Cocoa
 
-from Quartz.ImageKit import _metadata
+import Cocoa
+import objc
 import Quartz.ImageKit._imagekit
+from Quartz.ImageKit import _metadata
 
 objc.addConvenienceForBasicMapping("IKImageBrowserGridGroup", False)
 objc.addConvenienceForBasicMapping("IKImageCell", False)
@@ -33,6 +33,5 @@ sys.modules["Quartz.ImageKit"] = mod = objc.ObjCLazyModule(
     (Cocoa,),
 )
 
-import sys
 
 del sys.modules["Quartz.ImageKit._metadata"]

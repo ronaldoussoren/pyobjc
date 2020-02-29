@@ -4,10 +4,10 @@ Python mapping for the WebKit framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-import objc
 import sys
-import Foundation
 
+import Foundation
+import objc
 from WebKit import _metadata
 from WebKit._WebKit import *
 
@@ -28,6 +28,5 @@ sys.modules["WebKit"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["WebKit._metadata"]

@@ -5,11 +5,18 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Foundation
 
+# Manually written wrappers:
+import AppKit._AppKit
+import Foundation
+import objc
 from AppKit import _metadata
 from AppKit._inlines import _inline_list_
+
+# NSApp is a global variable that can be changed in ObjC,
+# somewhat emulate that (it is *not* possible to assign to
+# NSApp in Python)
+from AppKit._nsapp import NSApp
 
 
 def _setup_conveniences():
@@ -61,15 +68,9 @@ sys.modules["AppKit"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-# NSApp is a global variable that can be changed in ObjC,
-# somewhat emulate that (it is *not* possible to assign to
-# NSApp in Python)
-from AppKit._nsapp import NSApp
 
 mod.NSApp = NSApp
 
-# Manually written wrappers:
-import AppKit._AppKit
 
 for nm in dir(AppKit._AppKit):
     setattr(mod, nm, getattr(AppKit._AppKit, nm))
@@ -175,6 +176,5 @@ try:
 except AttributeError:
     mod.NSImageNameApplicationIcon = "NSApplicationIcon"
 
-import sys
 
 del sys.modules["AppKit._metadata"]

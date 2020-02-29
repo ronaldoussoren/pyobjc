@@ -1,7 +1,7 @@
-import objc
-import Cocoa
-import Quartz
 import CGImageUtils
+import Cocoa
+import objc
+import Quartz
 
 
 class CGImageView(Cocoa.NSView):

@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 from CoreFoundation import *
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestError(TestCase):

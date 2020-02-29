@@ -7,22 +7,23 @@
 #
 
 import objc
-from objc import super
-from Cocoa import NSObject, NSMenuItem, NSMenu, NSToolbarItem, NSToolbar
 from Cocoa import (
+    NSMenu,
+    NSMenuItem,
+    NSObject,
+    NSToolbar,
     NSToolbarCustomizeToolbarItemIdentifier,
     NSToolbarFlexibleSpaceItemIdentifier,
-)
-from Cocoa import (
+    NSToolbarItem,
     NSToolbarPrintItemIdentifier,
     NSToolbarSeparatorItemIdentifier,
     NSToolbarSpaceItemIdentifier,
 )
+from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
+from objc import super
 
 kToolbarIdentifier = "TableModel Toolbar Identifier"
 kSearchFieldItemIdentifier = "TableModel Search Field Identifier"
-
-from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
 
 
 class ToolbarCreator(NSObject):

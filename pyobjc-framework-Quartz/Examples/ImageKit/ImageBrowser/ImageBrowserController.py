@@ -1,9 +1,10 @@
-import objc
-import Cocoa
-import Quartz
-import LaunchServices
-
 import os
+
+import Cocoa
+import LaunchServices
+import objc
+import Quartz
+
 
 #       openFiles
 #

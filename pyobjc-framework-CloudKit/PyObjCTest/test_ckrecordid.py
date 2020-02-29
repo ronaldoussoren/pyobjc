@@ -1,6 +1,5 @@
 import sys
 
-
 if sys.maxsize > 2 ** 32:
     from PyObjCTools.TestSupport import *
     import CloudKit

@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-import StoreKit
 import objc
+import StoreKit
+from PyObjCTools.TestSupport import *
 
 
 class TestSKPaymentQueueHelper(StoreKit.NSObject):

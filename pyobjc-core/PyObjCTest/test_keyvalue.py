@@ -5,17 +5,20 @@ NOTE: Testcases here should be synchronized with the Key-Value Coding tests
 in PyObjCTools.test.test_keyvalue and Foundation.test.test_keyvalue.
 """
 from __future__ import unicode_literals
-import objc
-from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import *
 
+import os
+import sys
+
+import objc
+from PyObjCTest.fnd import *
+from PyObjCTest.keyvaluehelper import *
 
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
 from PyObjCTest.testbndl import PyObjC_TestClass3 as STUB
-from PyObjCTest.testbndl import PyObjCTest_KeyValueObserver
 from PyObjCTest.testbndl import *
-from PyObjCTest.keyvaluehelper import *
+from PyObjCTest.testbndl import PyObjCTest_KeyValueObserver
+from PyObjCTools.TestSupport import *
 
 
 class KeyValueClass2(object):
@@ -514,8 +517,6 @@ class TestPythonSubOverObjC(AbstractKVCodingTest, TestCase):
             ),
         )
 
-
-import sys, os
 
 if sys.platform == "darwin" and os.uname()[2] >= "7.0.0":
 

@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
-import sys
 import os
-
+import sys
 import warnings
+
+from PyObjCTools.TestSupport import *
 
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore")

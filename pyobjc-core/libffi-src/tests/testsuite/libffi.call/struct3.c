@@ -35,25 +35,25 @@ int main (void)
   ts3_type_elements[1] = NULL;
 
   test_structure_3 ts3_arg;
-  test_structure_3 *ts3_result = 
+  test_structure_3 *ts3_result =
     (test_structure_3 *) malloc (sizeof(test_structure_3));
-  
+
   args[0] = &ts3_type;
   values[0] = &ts3_arg;
-  
+
   /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, 
+  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
 		     &ts3_type, args) == FFI_OK);
-  
+
   ts3_arg.si = -123;
   compare_value = ts3_arg.si;
-  
+
   ffi_call(&cif, FFI_FN(struct3), ts3_result, values);
-  
+
   printf ("%d %d\n", ts3_result->si, -(compare_value*2));
-  
+
   CHECK(ts3_result->si == -(compare_value*2));
- 
+
   free (ts3_result);
   exit(0);
 }

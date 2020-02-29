@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import AddressBook
 import Cocoa
+from PyObjCTools.TestSupport import *
 
 
 class TestABPersonView(TestCase):

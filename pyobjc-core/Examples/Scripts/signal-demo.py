@@ -1,11 +1,12 @@
 #!/usr/bin/python
 
+import os
+import signal
+
 from PyObjCTools import Signals
 
 Signals.dumpStackOnFatalSignal()
 
-import os
-import signal
 
 ## all this does is set up an interesting stack to
 ## to show that a backtrace really is being

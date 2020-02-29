@@ -1,9 +1,9 @@
 """
 Some simple tests to check that the framework is properly wrapped.
 """
+import AppleScriptKit
 import objc
 from PyObjCTools.TestSupport import *
-import AppleScriptKit
 
 
 class TestAppleScriptKit(TestCase):

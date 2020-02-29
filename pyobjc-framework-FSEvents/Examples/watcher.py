@@ -1,11 +1,13 @@
 from __future__ import print_function
-import FSEvents
-import Cocoa
-import objc
-import sys
+
+import errno
 import os
 import stat
-import errno
+import sys
+
+import Cocoa
+import FSEvents
+import objc
 
 
 def T_or_F(x):

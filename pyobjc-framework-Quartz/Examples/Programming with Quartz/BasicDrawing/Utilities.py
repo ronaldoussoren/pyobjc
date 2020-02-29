@@ -1,7 +1,7 @@
 import math
 
-import Quartz
 import Cocoa
+import Quartz
 
 
 class ExportInfo(object):

@@ -1,8 +1,7 @@
-import objc
-from objc import super
 import Cocoa
+import objc
 import Quartz
-
+from objc import super
 from SampleCIView import SampleCIView
 
 

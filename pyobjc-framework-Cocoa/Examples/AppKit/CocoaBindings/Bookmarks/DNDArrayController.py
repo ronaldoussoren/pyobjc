@@ -12,10 +12,20 @@
 #  or http://developer.apple.com/documentation/Cocoa/Conceptual/DragandDrop/Tasks/DraggingFiles.html
 
 import objc
-from Cocoa import NSArrayController, NSMakeRange, NSIndexSet, NSCalendarDate
-from Cocoa import NSURL, NSURLPboardType, NSNotFound, NSMutableIndexSet
-from Cocoa import NSDragOperationCopy, NSDragOperationMove, NSTableViewDropAbove
 from BookmarksDocument import CopiedRowsType
+from Cocoa import (
+    NSURL,
+    NSArrayController,
+    NSCalendarDate,
+    NSDragOperationCopy,
+    NSDragOperationMove,
+    NSIndexSet,
+    NSMakeRange,
+    NSMutableIndexSet,
+    NSNotFound,
+    NSTableViewDropAbove,
+    NSURLPboardType,
+)
 
 MovedRowsType = "MOVED_ROWS_TYPE"
 

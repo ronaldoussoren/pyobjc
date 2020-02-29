@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from AppKit import *
+from PyObjCTools.TestSupport import *
 
 # Would like some tests for NSRunAlertPanel and friends as well, but those
 # require user interaction :-(

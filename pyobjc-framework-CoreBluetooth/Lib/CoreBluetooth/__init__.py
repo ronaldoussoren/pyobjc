@@ -5,11 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
-from CoreBluetooth import _metadata, _CoreBluetooth
+import Foundation
+import objc
+from CoreBluetooth import _CoreBluetooth, _metadata
 
 sys.modules["CoreBluetooth"] = mod = objc.ObjCLazyModule(
     "CoreBluetooth",
@@ -26,7 +26,6 @@ sys.modules["CoreBluetooth"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["CoreBluetooth._metadata"]
 del sys.modules["CoreBluetooth._CoreBluetooth"]

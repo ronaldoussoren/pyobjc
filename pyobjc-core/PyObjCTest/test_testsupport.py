@@ -1,10 +1,10 @@
-from PyObjCTools.TestSupport import *
-import unittest
-import objc
-import sys
 import ctypes
+import sys
+import unittest
 
+import objc
 from PyObjCTools import TestSupport
+from PyObjCTools.TestSupport import *
 
 try:
     from StringIO import StringIO

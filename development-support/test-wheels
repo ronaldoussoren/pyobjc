@@ -4,13 +4,14 @@ Run basic tests on the wheels archives.
 
 Run this after running "collect-dist-archives"
 """
-import subprocess
-import shutil
 import os
+import shutil
+import subprocess
 import sys
 
-from _common_definitions import PY_VERSIONS, TOP_DIR, DIST_DIR, virtualenv
-from _common_definitions import variants, setup_variant
+from _common_definitions import (DIST_DIR, PY_VERSIONS, TOP_DIR, setup_variant,
+                                 variants, virtualenv)
+
 
 def pyobjc_ver():
     for nm in os.listdir(DIST_DIR):
@@ -33,7 +34,7 @@ def main():
                     interpreter, "-mpip",
                         "install", "-f", DIST_DIR, "--no-index", "--no-cache-dir",
                             "pyobjc=={}".format(pyobjc_ver())]).decode('utf-8')
-    
+
                 sys.stdout.write(log)
                 if 'Building wheels for collected packages' in log:
                     print("WARNING: non-wheel install: {}".format(ver))
@@ -42,8 +43,8 @@ def main():
                     if 'Running setup.py install' in ln and 'Running setup.py install for pyobjc:' not in ln:
                         print("WARNING: non-wheel install: {}".format(ver))
                         sys.exit(1)
-    
-    
+
+
                 subprocess.check_call([
                     interpreter, os.path.join(os.path.dirname(__file__), "wheel-smoke-test.py")
                 ])

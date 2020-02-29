@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 import Cocoa
 import PyObjCTools.FndCategories
+from PyObjCTools.TestSupport import *
 
 
 class TestFndKitCategories(TestCase):

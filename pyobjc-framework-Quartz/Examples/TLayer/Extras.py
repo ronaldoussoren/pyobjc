@@ -1,6 +1,7 @@
+import random
+
 import Cocoa
 import objc
-import random
 
 
 class NSColor(objc.Category(Cocoa.NSColor)):

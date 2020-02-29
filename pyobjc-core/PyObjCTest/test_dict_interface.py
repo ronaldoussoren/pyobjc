@@ -10,12 +10,14 @@ TODO:
 - Do the same for python 2.x
 - Do the same for sets (NSSet) and lists (NSArray)
 """
-from PyObjCTools.TestSupport import *
+import collections.abc
 import operator
-import objc
 
 # Import some of the stdlib tests
 from test import mapping_tests
+
+import objc
+from PyObjCTools.TestSupport import *
 
 NSDictionary = objc.lookUpClass("NSDictionary")
 NSMutableDictionary = objc.lookUpClass("NSMutableDictionary")
@@ -723,9 +725,6 @@ class TestDictUpdates(TestCase):
 
     def test_objc(self):
         self.do_test(NSMutableDictionary)
-
-
-import collections.abc
 
 
 class TestABC(TestCase):

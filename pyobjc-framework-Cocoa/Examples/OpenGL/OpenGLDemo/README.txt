@@ -1,6 +1,6 @@
 OpenGLDemo
 
-OpenGLDemo is probably the simplest possible demonstration of 
+OpenGLDemo is probably the simplest possible demonstration of
 using OpenGL from a PyObjC application.  It is a port of Apple's
 "CocoaGL" example.  Note that this requires PyOpenGL to be installed.
 

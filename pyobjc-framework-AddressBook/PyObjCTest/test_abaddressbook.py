@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from AddressBook import *
+from PyObjCTools.TestSupport import *
 
 
 class TestABAddressBook(TestCase):

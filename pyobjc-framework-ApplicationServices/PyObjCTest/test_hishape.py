@@ -1,5 +1,6 @@
-import HIServices
 import sys
+
+import HIServices
 from PyObjCTools.TestSupport import *
 
 

@@ -5,10 +5,10 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import Foundation
-import Quartz
 
+import Foundation
+import objc
+import Quartz
 from InstantMessage import _metadata
 
 sys.modules["InstantMessage"] = mod = objc.ObjCLazyModule(
@@ -26,6 +26,5 @@ sys.modules["InstantMessage"] = mod = objc.ObjCLazyModule(
     (Foundation, Quartz),
 )
 
-import sys
 
 del sys.modules["InstantMessage._metadata"]

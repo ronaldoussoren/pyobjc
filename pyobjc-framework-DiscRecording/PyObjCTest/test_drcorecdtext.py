@@ -1,7 +1,6 @@
-from PyObjCTools.TestSupport import *
-
-import DiscRecording
 import CoreFoundation
+import DiscRecording
+from PyObjCTools.TestSupport import *
 
 
 class TestDRCoreCDText(TestCase):

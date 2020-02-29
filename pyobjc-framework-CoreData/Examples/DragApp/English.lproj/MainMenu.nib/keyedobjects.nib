@@ -348,7 +348,7 @@
 				<integer>27</integer>
 			</dict>
 		</dict>
-		<string>Use the "Club Information" window to create new "Club" entities, then select a club to view its members.  
+		<string>Use the "Club Information" window to create new "Club" entities, then select a club to view its members.
 
 To add new members to the club, create new "People" entities in the "People Picker" window, and then drag their names into the "Members" view of the "Club Information" window.  (You can select and drag more than one at a time.)
 

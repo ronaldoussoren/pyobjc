@@ -7,29 +7,24 @@ Usage:
     python internetison [address]
 """
 from __future__ import print_function
+
+import socket
+import sys
+
+from Cocoa import CFRunLoopGetCurrent, CFRunLoopRun, CFRunLoopStop
 from SystemConfiguration import (
-    kSCNetworkFlagsTransientConnection,
-    kSCNetworkFlagsReachable,
-)
-from SystemConfiguration import (
-    kSCNetworkFlagsConnectionRequired,
-    kSCNetworkFlagsConnectionAutomatic,
-)
-from SystemConfiguration import (
-    kSCNetworkFlagsInterventionRequired,
-    kSCNetworkFlagsIsLocalAddress,
-)
-from SystemConfiguration import (
-    kSCNetworkFlagsIsDirect,
     SCNetworkReachabilityCreateWithAddress,
-)
-from SystemConfiguration import (
-    SCNetworkReachabilitySetCallback,
     SCNetworkReachabilityGetFlags,
+    SCNetworkReachabilityScheduleWithRunLoop,
+    SCNetworkReachabilitySetCallback,
+    kSCNetworkFlagsConnectionAutomatic,
+    kSCNetworkFlagsConnectionRequired,
+    kSCNetworkFlagsInterventionRequired,
+    kSCNetworkFlagsIsDirect,
+    kSCNetworkFlagsIsLocalAddress,
+    kSCNetworkFlagsReachable,
+    kSCNetworkFlagsTransientConnection,
 )
-from SystemConfiguration import SCNetworkReachabilityScheduleWithRunLoop
-from Cocoa import CFRunLoopGetCurrent, CFRunLoopStop, CFRunLoopRun
-import socket, sys
 
 
 def resultAvailable(target, flags, info):

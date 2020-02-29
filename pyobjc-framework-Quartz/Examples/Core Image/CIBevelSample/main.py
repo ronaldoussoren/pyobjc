@@ -1,9 +1,7 @@
-from PyObjCTools import AppHelper
-
 import CIBevelView
-import SampleCIView
-
 import objc
+import SampleCIView
+from PyObjCTools import AppHelper
 
 objc.setVerbose(True)
 

@@ -1,7 +1,7 @@
+import sys
+
 from PyObjCTools.TestSupport import *
 from WebKit import *
-
-import sys
 
 UINT_MAX = cast_uint(-1)
 

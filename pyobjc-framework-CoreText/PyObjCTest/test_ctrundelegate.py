@@ -1,6 +1,6 @@
-from PyObjCTools.TestSupport import *
 from CoreText import *
 from Foundation import NSDictionary
+from PyObjCTools.TestSupport import *
 from Quartz import *
 
 

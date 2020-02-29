@@ -1,9 +1,10 @@
+import math
+
+import CGImageUtils
+import Cocoa
+import LaunchServices
 import objc
 import Quartz
-import Cocoa
-import CGImageUtils
-import LaunchServices
-import math
 
 
 class Controller(Cocoa.NSObject):

@@ -1,9 +1,10 @@
-from objc._objc import *
-from objc import _objc
+import collections.abc
+import datetime
 import struct
 import sys
-import datetime
-import collections.abc
+
+from objc import _objc
+from objc._objc import *
 
 __all__ = [
     "registerListType",

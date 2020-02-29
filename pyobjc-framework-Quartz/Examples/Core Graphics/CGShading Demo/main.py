@@ -1,12 +1,12 @@
-from PyObjCTools import AppHelper
+import sys
 
+# AppHelper.runEventLoop()
+import AppKit
 import MyQuartzView
-
 import objc
+from PyObjCTools import AppHelper
 
 objc.setVerbose(True)
 
-# AppHelper.runEventLoop()
-import AppKit, sys
 
 AppKit.NSApplicationMain(sys.argv)

@@ -1,9 +1,9 @@
-Shows the use of a custom controller, a value transformer, and two custom 
-bindings-enabled views. One view is a control that allows you to set the angle 
-and offset of a shadow; the other view observes and displays a collection of 
+Shows the use of a custom controller, a value transformer, and two custom
+bindings-enabled views. One view is a control that allows you to set the angle
+and offset of a shadow; the other view observes and displays a collection of
 graphic objects.
 
-Originally from "Cocoa Bindings Examples and Hints", converted to PyObjC 
+Originally from "Cocoa Bindings Examples and Hints", converted to PyObjC
 by u.fiedler.
 
 .. http://homepage.mac.com/mmalc/CocoaExamples/controllers.html

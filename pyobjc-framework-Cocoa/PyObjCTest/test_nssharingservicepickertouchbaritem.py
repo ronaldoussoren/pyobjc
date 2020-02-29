@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AppKit
+from PyObjCTools.TestSupport import *
 
 
 class TestNSSharingServicePickerTouchBarItem(TestCase):

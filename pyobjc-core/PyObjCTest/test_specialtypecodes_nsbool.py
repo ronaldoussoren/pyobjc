@@ -17,12 +17,12 @@ TODO:
 - Add tests with these types in struct definitions
 - Review test cases to make sure the tests are complete enough
 """
-import weakref
-from PyObjCTools.TestSupport import *
-from PyObjCTest.fnd import NSObject
-
-from PyObjCTest.specialtypecodes import *
 import array
+import weakref
+
+from PyObjCTest.fnd import NSObject
+from PyObjCTest.specialtypecodes import *
+from PyObjCTools.TestSupport import *
 
 
 def setupMetaData():

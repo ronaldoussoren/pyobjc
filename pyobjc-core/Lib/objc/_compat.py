@@ -1,5 +1,6 @@
-from objc import options as _options
 import warnings
+
+from objc import options as _options
 
 
 def setVerbose(value):

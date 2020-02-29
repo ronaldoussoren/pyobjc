@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreAudio
+from PyObjCTools.TestSupport import *
 
 AudioObjectPropertyListenerProc = (
     b"iIIn^" + CoreAudio.AudioObjectPropertyAddress.__typestr__ + b"^v"

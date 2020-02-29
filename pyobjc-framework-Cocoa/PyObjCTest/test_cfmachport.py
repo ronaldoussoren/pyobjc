@@ -1,10 +1,9 @@
 """
 FIXME: None of these tests actually use the MachPort
 """
-from PyObjCTools.TestSupport import *
-from CoreFoundation import *
 import Foundation
-
+from CoreFoundation import *
+from PyObjCTools.TestSupport import *
 
 MachPortClasses = tuple(
     cls for cls in objc.getClassList() if cls.__name__ == "NSMachPort"

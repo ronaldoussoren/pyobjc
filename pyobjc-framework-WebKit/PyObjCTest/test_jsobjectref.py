@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
+import sys
 
 import JavaScriptCore
 import objc
-import sys
+from PyObjCTools.TestSupport import *
 
 
 class TestJSObjectRef(TestCase):

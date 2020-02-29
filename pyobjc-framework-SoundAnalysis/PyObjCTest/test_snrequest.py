@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import SoundAnalysis
+from PyObjCTools.TestSupport import *
 
 
 class TestSNRequest(TestCase):

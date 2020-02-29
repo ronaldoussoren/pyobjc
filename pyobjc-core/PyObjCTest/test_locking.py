@@ -5,12 +5,12 @@ These tests take an annoyingly long time to ensure that we'd hit a race conditio
 locking doesn't actually lock. It should be possible to find a faster mechanism for this.
 """
 import sys
-from PyObjCTools.TestSupport import *
-import objc
 import threading
 import time
 
+import objc
 from PyObjCTest.locking import OC_LockTest
+from PyObjCTools.TestSupport import *
 
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 

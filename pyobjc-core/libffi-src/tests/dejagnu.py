@@ -5,11 +5,11 @@ unittests into the pyobjc ones.
 """
 import os
 import re
-import sys
 import signal
-from fnmatch import fnmatch
+import sys
 import unittest
 from distutils.util import get_platform
+from fnmatch import fnmatch
 
 gDgCommands = re.compile(
     r"""

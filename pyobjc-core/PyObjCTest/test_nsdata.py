@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-import objc
 import sys
+
+import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestNSDataSupport(TestCase):

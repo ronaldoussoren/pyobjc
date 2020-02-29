@@ -1,11 +1,10 @@
-import Cocoa
-import Quartz
-import objc
-
-import Utilities
-import BitmapContext
-
 import sys
+
+import BitmapContext
+import Cocoa
+import objc
+import Quartz
+import Utilities
 
 # We're using a function that isn't made available through a wrapper, just
 # load it manually:

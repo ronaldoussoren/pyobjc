@@ -1,6 +1,6 @@
 __file__ = "<RemotePyInterpreterClient>"
-import sys
 import os
+import sys
 
 pool = ObjectPool()
 netReprCenter = NetRepr(pool)

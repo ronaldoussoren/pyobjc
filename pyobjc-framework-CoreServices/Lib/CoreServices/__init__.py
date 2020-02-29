@@ -8,15 +8,16 @@ Note that PyObjC only wrappers the non-deprecated parts of the CoreServices
 framework.
 """
 import sys
-import objc
+
 import FSEvents
-
-from CoreServices import DictionaryServices
-from CoreServices import LaunchServices
-from CoreServices import Metadata
-from CoreServices import CarbonCore
-from CoreServices import SearchKit
-
+import objc
+from CoreServices import (
+    CarbonCore,
+    DictionaryServices,
+    LaunchServices,
+    Metadata,
+    SearchKit,
+)
 
 sys.modules["CoreServices"] = mod = objc.ObjCLazyModule(
     "CoreServices",

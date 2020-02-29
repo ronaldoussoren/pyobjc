@@ -5,12 +5,12 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
-import Foundation
 
-from UserNotifications import _metadata
+import Foundation
+import objc
 import UserNotifications._UserNotifications
+from UserNotifications import _metadata
 
 sys.modules["UserNotifications"] = mod = objc.ObjCLazyModule(
     "UserNotifications",
@@ -27,6 +27,5 @@ sys.modules["UserNotifications"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-import sys
 
 del sys.modules["UserNotifications._metadata"]

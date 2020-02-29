@@ -2,8 +2,8 @@
 #  FilteringController
 #
 
-from PyObjCTools import AppHelper
-import FilteringControllerDocument
 import FilteringArrayController
+import FilteringControllerDocument
+from PyObjCTools import AppHelper
 
 AppHelper.runEventLoop()

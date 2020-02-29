@@ -5,12 +5,11 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 
-import objc
 import sys
+
 import FileProvider
-
+import objc
 from FileProviderUI import _metadata
-
 
 sys.modules["FileProviderUI"] = mod = objc.ObjCLazyModule(
     "FileProviderUI",
@@ -27,6 +26,5 @@ sys.modules["FileProviderUI"] = mod = objc.ObjCLazyModule(
     (FileProvider,),
 )
 
-import sys
 
 del sys.modules["FileProviderUI._metadata"]

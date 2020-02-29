@@ -7,12 +7,12 @@ while at the same time getting a higher fidelity bridge.
 
 - Add tests for calling methods from ObjC
 """
-import weakref
-from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import *
-
-from PyObjCTest.specialtypecodes import *
 import array
+import weakref
+
+from PyObjCTest.fnd import NSObject
+from PyObjCTest.specialtypecodes import *
+from PyObjCTools.TestSupport import *
 
 
 def setupMetaData():

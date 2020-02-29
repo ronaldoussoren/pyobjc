@@ -1,4 +1,5 @@
-import types, itertools
+import itertools
+import types
 
 
 def type_string(obj):

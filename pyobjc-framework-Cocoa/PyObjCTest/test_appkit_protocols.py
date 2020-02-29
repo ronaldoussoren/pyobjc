@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import Cocoa
+from PyObjCTools.TestSupport import *
 
 
 class TestProtocolsExisting(TestCase):

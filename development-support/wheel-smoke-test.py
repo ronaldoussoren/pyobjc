@@ -8,25 +8,25 @@ copy of PyObjC
 import platform
 from distutils.version import LooseVersion
 
-sys_version = LooseVersion(platform.mac_ver()[0])
-
-
 import objc
-from Cocoa import *
-from Quartz import *
 from AddressBook import *
 from AppleScriptKit import *
 from AppleScriptObjC import *
 from ApplicationServices import *
-from HIServices import *
 from Automator import *
 from CFNetwork import *
+from Cocoa import *
 from CoreData import *
+from CoreServices import *
 from DiskArbitration import *
 from ExceptionHandling import *
 from GameController import *
+from HIServices import *
 from iTunesLibrary import *
-from CoreServices import *
+from Quartz import *
+
+sys_version = LooseVersion(platform.mac_ver()[0])
+
 
 if sys_version >= LooseVersion("10.5"):
     from CalendarStore import *

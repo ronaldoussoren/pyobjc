@@ -1,7 +1,8 @@
+import socket
+import sys
+
 from CFNetwork import *
 from PyObjCTools.TestSupport import *
-import sys
-import socket
 
 if sys.version_info[0] != 2:
 

@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
+import sys
+
 from CoreFoundation import *
 from Foundation import NSArray, NSMutableArray
-
-import sys
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
 

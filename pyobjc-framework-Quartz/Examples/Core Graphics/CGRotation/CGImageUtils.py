@@ -1,8 +1,9 @@
-import objc
-import Quartz
+import math
+
 import Cocoa
 import LaunchServices
-import math
+import objc
+import Quartz
 
 
 class ImageInfo(object):

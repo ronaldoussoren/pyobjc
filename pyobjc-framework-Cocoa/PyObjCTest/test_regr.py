@@ -1,8 +1,10 @@
-import Foundation, objc
-import AppKit
-from Foundation import NSLog, NSAutoreleasePool, NSObject
-from threading import Thread
 import os
+from threading import Thread
+
+import AppKit
+import Foundation
+import objc
+from Foundation import NSAutoreleasePool, NSLog, NSObject
 from PyObjCTools.TestSupport import *
 
 

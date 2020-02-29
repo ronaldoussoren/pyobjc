@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AVFoundation
+from PyObjCTools.TestSupport import *
 
 AVAudioNodeCompletionHandler = b"v"
 AVAudioPlayerNodeCompletionHandler = b"v" + objc._C_NSInteger

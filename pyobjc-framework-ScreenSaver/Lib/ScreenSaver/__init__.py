@@ -5,9 +5,9 @@ This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
 import sys
-import objc
-import AppKit
 
+import AppKit
+import objc
 from ScreenSaver import _metadata
 from ScreenSaver._inlines import _inline_list_
 
@@ -26,6 +26,5 @@ sys.modules["ScreenSaver"] = mod = objc.ObjCLazyModule(
     (AppKit,),
 )
 
-import sys
 
 del sys.modules["ScreenSaver._metadata"]

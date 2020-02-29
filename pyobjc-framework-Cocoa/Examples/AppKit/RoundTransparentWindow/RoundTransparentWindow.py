@@ -1,10 +1,10 @@
-from PyObjCTools import AppHelper
+import sys
+from math import floor
+
+import Cocoa
 import objc
 from objc import super
-import Cocoa
-
-from math import floor
-import sys
+from PyObjCTools import AppHelper
 
 
 class Controller(Cocoa.NSObject):

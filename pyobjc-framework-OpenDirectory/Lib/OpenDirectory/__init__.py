@@ -2,9 +2,9 @@
 Wrappers for the OpenDirectory framework
 """
 import sys
-import objc
-import CFOpenDirectory
 
+import CFOpenDirectory
+import objc
 from OpenDirectory import _metadata
 
 sys.modules["OpenDirectory"] = mod = objc.ObjCLazyModule(
@@ -24,6 +24,5 @@ sys.modules["OpenDirectory"] = mod = objc.ObjCLazyModule(
     (CFOpenDirectory,),
 )
 
-import sys
 
 del sys.modules["OpenDirectory._metadata"]

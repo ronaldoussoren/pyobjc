@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-from AppKit import *
 import sys
+
+from AppKit import *
+from PyObjCTools.TestSupport import *
 
 try:
     from Quartz.CoreGraphics import *

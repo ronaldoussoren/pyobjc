@@ -1,11 +1,10 @@
-from PyObjCTools.TestSupport import *
-import objc
 import array
 import sys
 
+import objc
 from Foundation import *
 from PyObjCTest.testhelper import PyObjC_TestClass3
-
+from PyObjCTools.TestSupport import *
 
 if sys.version_info[0] == 3:
     buffer = memoryview
@@ -381,9 +380,6 @@ class TestMyData(TestCase):
     def testBytesRaises(self):
         b = PyObjC_TestClass3.makeDataWithBytes_method_(MyData5, 1)
         self.assertRaises(ValueError, b.bytes)
-
-
-import array
 
 
 class TestBuffer(TestCase):

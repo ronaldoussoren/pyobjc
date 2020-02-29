@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
-
-from SystemConfiguration import *
-import SystemConfiguration
 import os
+
+import SystemConfiguration
+from PyObjCTools.TestSupport import *
+from SystemConfiguration import *
 
 
 class TestSCDynamicStore(TestCase):

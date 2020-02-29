@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
 import sys
+
 import objc
+from PyObjCTools.TestSupport import *
 
 VNRequestProgressHandler = b"v@d@"
 

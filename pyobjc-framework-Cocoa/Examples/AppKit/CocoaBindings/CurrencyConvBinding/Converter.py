@@ -1,6 +1,6 @@
-from objc import super
 import objc
 from Foundation import NSObject
+from objc import super
 
 
 class Converter(NSObject):

@@ -1,5 +1,5 @@
-from Cocoa import NSDocument
 import objc
+from Cocoa import NSDocument
 from loader import MHTLoader
 
 

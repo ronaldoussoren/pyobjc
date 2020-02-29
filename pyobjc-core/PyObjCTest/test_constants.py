@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 import objc
+from PyObjCTools.TestSupport import *
 
 
 class TestConstants(TestCase):

@@ -1,5 +1,4 @@
 from PyObjCTools.TestSupport import *
-
 from SystemConfiguration import *
 
 

@@ -1,6 +1,7 @@
-from PyObjCTools.TestSupport import *
-import objc
 import sys
+
+import objc
+from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 # _NSZombie = objc.lookUpClass('_NSZombie')

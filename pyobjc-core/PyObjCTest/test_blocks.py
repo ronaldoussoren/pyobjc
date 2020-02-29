@@ -1,10 +1,11 @@
 # Tests for interaction with ObjC "blocks".
 #
 # These tests are fairly minimal at the moment.
-from PyObjCTools.TestSupport import *
-from PyObjCTest.block import OCTestBlock
-import objc
 import sys
+
+import objc
+from PyObjCTest.block import OCTestBlock
+from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
     NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"

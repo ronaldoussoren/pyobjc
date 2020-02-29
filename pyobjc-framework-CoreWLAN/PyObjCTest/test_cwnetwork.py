@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import CoreWLAN
+from PyObjCTools.TestSupport import *
 
 
 class TestCWNetwork(TestCase):

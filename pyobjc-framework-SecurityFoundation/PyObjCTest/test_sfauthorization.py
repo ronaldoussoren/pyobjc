@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import SecurityFoundation
+from PyObjCTools.TestSupport import *
 
 
 class TestSFAuthorization(TestCase):

@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import DVDPlayback
+from PyObjCTools.TestSupport import *
 
 DVDFatalErrCallBackFunctionPtr = b"vi^v"
 DVDEventCallBackFunctionPtr = b"vILL^v"

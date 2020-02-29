@@ -1,6 +1,5 @@
-from PyObjCTools.TestSupport import *
-
 import AVFoundation
+from PyObjCTools.TestSupport import *
 
 AVAudioSourceNodeRenderBlock = b"io^Zn^^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}Io^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
 

@@ -1,8 +1,8 @@
 __all__ = ["classAddMethod", "Category"]
 
-from objc._objc import selector, classAddMethods, objc_class, ivar
-
 from types import FunctionType, MethodType
+
+from objc._objc import classAddMethods, ivar, objc_class, selector
 
 
 def classAddMethod(cls, name, method):

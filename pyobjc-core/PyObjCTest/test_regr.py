@@ -1,14 +1,13 @@
 from __future__ import unicode_literals
-from PyObjCTools.TestSupport import *
-from PyObjCTest import structargs
-from PyObjCTest import testbndl
-from PyObjCTest import copying
 
-import objc, sys
 import functools
+import sys
 import warnings
+
 import objc
-from PyObjCTest.fnd import NSObject, NSAutoreleasePool
+from PyObjCTest import copying, structargs, testbndl
+from PyObjCTest.fnd import NSAutoreleasePool, NSObject
+from PyObjCTools.TestSupport import *
 
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 

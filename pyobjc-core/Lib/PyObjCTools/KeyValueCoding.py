@@ -26,17 +26,17 @@ information on Key-Value coding. The protocol is basicly used to enable
 weaker coupling between the view and model layers.
 """
 from __future__ import unicode_literals
+
 import sys
+import types
+import warnings
+
+import objc
 
 __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
 if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
     __all__ = tuple(str(x) for x in __all__)
 
-
-import objc
-import types
-import sys
-import warnings
 
 if sys.version_info[0] == 2:  # pragma: no 3.x cover
     from itertools import imap as map

@@ -1,7 +1,7 @@
+import math
+
 import Cocoa
 import objc
-
-import math
 
 searchIndex = 0
 

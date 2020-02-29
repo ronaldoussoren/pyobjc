@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
 from Foundation import *
+from PyObjCTools.TestSupport import *
 
 
 class TestNSJSONSerialization(TestCase):

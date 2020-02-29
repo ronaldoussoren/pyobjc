@@ -1,22 +1,34 @@
-import sys
-import traceback
 import keyword
+import os
+import sys
 import time
+import traceback
 from code import InteractiveConsole
+
+import objc
+from Cocoa import (
+    NSAnyEventMask,
+    NSApplication,
+    NSAttributedString,
+    NSBundle,
+    NSColor,
+    NSDate,
+    NSDefaultRunLoopMode,
+    NSFont,
+    NSFontAttributeName,
+    NSForegroundColorAttributeName,
+    NSKeyDown,
+    NSLog,
+    NSObject,
+    NSView,
+)
+from objc import NO, YES, selector, super
+from PyObjCTools import AppHelper
 
 try:
     from code import softspace
 except ImportError:
     softspace = None
-import objc
-from objc import YES, NO, selector, super
-from Cocoa import NSBundle, NSObject, NSFont
-from Cocoa import NSColor, NSApplication, NSFontAttributeName
-from Cocoa import NSForegroundColorAttributeName, NSAnyEventMask, NSDate
-from Cocoa import NSDefaultRunLoopMode, NSKeyDown, NSAttributedString
-from Cocoa import NSLog, NSView
-from PyObjCTools import AppHelper
-import os
 
 FLT_MAX = 3.402_823_47e38
 

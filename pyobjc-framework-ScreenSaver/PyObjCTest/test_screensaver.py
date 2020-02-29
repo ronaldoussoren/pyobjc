@@ -2,8 +2,8 @@
 Some simple tests to check that the framework is properly wrapped.
 """
 import objc
-from PyObjCTools.TestSupport import *
 import ScreenSaver
+from PyObjCTools.TestSupport import *
 
 
 class TestScreenSaver(TestCase):

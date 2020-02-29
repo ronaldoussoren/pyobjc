@@ -1,11 +1,10 @@
-import Cocoa
-import Quartz
-
-import Images
-import DataProvidersAndConsumers
-import Utilities
-
 import sys
+
+import Cocoa
+import DataProvidersAndConsumers
+import Images
+import Quartz
+import Utilities
 
 
 def exportImageWithMaskFromURLWithDestination(
