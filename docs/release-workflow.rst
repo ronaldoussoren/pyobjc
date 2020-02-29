@@ -31,7 +31,7 @@ Ensure that PyObjC works on all supported platform
 
 This steps needs to be automated and is currently manual labor...
 
-On every supported platform start of with a clean installation of Python 2.7, 3.4 and 3.5 using
+On every supported platform start of with a clean installation of Python 3.6, 3.7 and 3.8 using
 the installers on www.python.org.
 
 Run ``development-support/run-testsuite`` and check the report at the end for errors. When you
@@ -51,14 +51,11 @@ the following additional software:
 
 * up to date version of Xcode
 
-* up to date versions of Python 2.7, 3.4, 3.5, 3.6 and 3.7
+* up to date versions of Python 3.6, 3.7 and 3.8
 
-  All of these are installed using the python.org binary installer for OSX 10.6 or later,
+  All of these are installed using the python.org binary installer for x86-64
   and during installation only the framework itself is installed (nothing in /usr/local,
   no GUI tools)
-
-  For 2.7, 3.6 and 3.7 both variants of the Python.org installer are installed, with symlinks
-  to access a specific version.
 
 The script "development-support/collect-dist-archives" creates all distribution archives, but
 is not called directly.
@@ -69,7 +66,7 @@ both build machines and moves them to a common location.
 Tag the release
 ---------------
 
-Create a tag in the pyobjc repository. The tag name is "pyobjc-VERSION" (with *VERSION* replaced by
+Create a tag in the pyobjc repository. The tag name is "vVERSION" (with *VERSION* replaced by
 the correct version).
 
 Push to GitHub.
