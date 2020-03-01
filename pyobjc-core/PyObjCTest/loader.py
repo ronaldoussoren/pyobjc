@@ -60,11 +60,6 @@ def makeTestSuite(use_system_libffi):
     import __main__
 
     topdir = dirname(__main__.__file__)
-    # if sys.version_info[0] == 3:
-    #    del sys.path[1]
-    #    deja_topdir = dirname(dirname(topdir))
-    # else:
-    #    deja_topdir = topdir
     deja_topdir = topdir
 
     deja_suite = dejagnu.testSuiteForDirectory(

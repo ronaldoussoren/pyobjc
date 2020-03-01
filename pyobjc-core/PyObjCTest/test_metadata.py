@@ -9,8 +9,6 @@ TODO:
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
 """
-from __future__ import unicode_literals
-
 import array
 import sys
 
@@ -18,17 +16,7 @@ import objc
 from PyObjCTest.metadata import *
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 3:
-    unicode = str
-
 make_array = array.array
-if sys.version_info[0] == 2:
-
-    def make_array(fmt, *args):
-        # With unicode_literals the first argument to make_array
-        # in the tests below is a unicode string and array.array
-        # in python2 doesn't grog that.
-        return array.array(fmt.encode("ascii"), *args)
 
 
 def setupMetaData():
@@ -847,7 +835,7 @@ class TestArraysIn(TestCase):
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), ["hello", "world", "there"])
         self.assertIsInstance(v, objc.lookUpClass("NSArray"))
-        self.assertIsInstance(v[0], unicode)
+        self.assertIsInstance(v[0], str)
 
         NSObject = objc.lookUpClass("NSObject")
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()
@@ -1074,7 +1062,7 @@ class TestPrintfFormat(TestCase):
 
             v = o.makeArrayWithCFormat_(fmt, *args)
             self.assertEqual(
-                list(map(unicode, list(v))),
+                list(map(str, list(v))),
                 [fmt.decode("latin"), (fmt.decode("latin") % args)[1:]],
             )
 
@@ -1252,18 +1240,10 @@ class TestMetaDataAccess(TestCase):
         self.assertEqual(meta["classmethod"], False)
 
 
-if sys.version_info[0] == 3:
-
-    def buffer_as_bytes(v):
-        if isinstance(v, bytes):
-            return v
-        return bytes(v)
-
-
-else:
-
-    def buffer_as_bytes(v):
-        return str(buffer(v))
+def buffer_as_bytes(v):
+    if isinstance(v, bytes):
+        return v
+    return bytes(v)
 
 
 class TestBuffers(TestCase):
@@ -1322,19 +1302,13 @@ class TestBuffers(TestCase):
 
         self.assertEqual(input, b"hello world")
         self.assertEqual(input[0:5], b"hello")
-        if sys.version_info[0] == 2:
-            self.assertEqual([ord(x) + 1 for x in input], [ord(x) for x in v])
-        else:
-            self.assertEqual([x + 1 for x in input], [x for x in v])
+        self.assertEqual([x + 1 for x in input], [x for x in v])
 
         input = make_array("b", b"hello\0world")
         v = o.addOneToBytes_count_(input, len(input))
         self.assertIs(v, input)
         self.assertNotEqual(input[0:5], b"hello")
-        if sys.version_info[0] == 2:
-            self.assertEqual([ord(x) + 1 for x in "hello\0world"], [x for x in v])
-        else:
-            self.assertEqual([x + 1 for x in b"hello\0world"], [x for x in v])
+        self.assertEqual([x + 1 for x in b"hello\0world"], [x for x in v])
 
     def testInOutVoids(self):
         o = OC_MetaDataTest.alloc().init()
@@ -1346,19 +1320,13 @@ class TestBuffers(TestCase):
         self.assertEqual(input, b"hello world")
         self.assertEqual(input[0:5], b"hello")
 
-        if sys.version_info[0] == 2:
-            self.assertEqual([ord(x) + 2 for x in input], [ord(x) for x in v])
-        else:
-            self.assertEqual([x + 2 for x in input], [x for x in v])
+        self.assertEqual([x + 2 for x in input], [x for x in v])
 
         input = make_array("b", b"hello\0world")
         v = o.addOneToVoids_count_(input, len(input))
         self.assertIs(v, input)
         self.assertNotEqual(input[0:5], b"hello")
-        if sys.version_info[0] == 2:
-            self.assertEqual([ord(x) + 2 for x in b"hello\0world"], [x for x in v])
-        else:
-            self.assertEqual([x + 2 for x in b"hello\0world"], [x for x in v])
+        self.assertEqual([x + 2 for x in b"hello\0world"], [x for x in v])
 
     def testOutChars(self):
         o = OC_MetaDataTest.alloc().init()
@@ -1377,10 +1345,7 @@ class TestBuffers(TestCase):
         v = o.fillVoids_count_(None, 44)
         self.assertEqual(v, b"\xab" * 44)
 
-        if sys.version_info[0] == 2:
-            a = make_array("c", b"0" * 44)
-        else:
-            a = make_array("b", (0,) * 44)
+        a = make_array("b", (0,) * 44)
         v = o.fillVoids_count_(a, 44)
         self.assertEqual(buffer_as_bytes(v), b"\xab" * 44)
         self.assertIs(v, a)
@@ -1417,18 +1382,10 @@ class TestVariableLengthValue(TestCase):
         self.assertEqual(v[8], 8)
 
         data = v.as_buffer(4)
-        if sys.version_info[0] == 2:
-            self.assertEqual(data[0], b"\x00")
-        else:
-            self.assertEqual(data[0], 0)
+        self.assertEqual(data[0], 0)
         v[0] = 0x0F0F0F0F
-        if sys.version_info[0] == 2:
-            self.assertEqual(data[0], b"\x0f")
-            data[0] = b"\x00"
-
-        else:
-            self.assertEqual(data[0], 0x0F)
-            data[0] = 0
+        self.assertEqual(data[0], 0x0F)
+        data[0] = 0
 
         if sys.byteorder == "little":
             self.assertEqual(v[0], 0x0F0F0F00)

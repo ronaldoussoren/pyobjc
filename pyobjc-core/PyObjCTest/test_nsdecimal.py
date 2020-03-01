@@ -1,8 +1,6 @@
 """
 Tests for the NSDecimal wrapper type
 """
-from __future__ import absolute_import
-
 import decimal
 import operator
 import sys
@@ -116,7 +114,6 @@ class TestNSDecimalWrapper(TestCase):
         self.assertRaises(TypeError, int, d1)
         self.assertRaises(TypeError, float, d1)
 
-    @onlyPython3
     def test_rounding(self):
         d1 = objc.NSDecimal("1.5781")
 
@@ -231,7 +228,7 @@ class TestDecimalByReference(TestCase):
         self.assertArgIsIn(o.stringFromDecimal_, 0)
         r = o.stringFromDecimal_(d)
 
-        self.assertIsInstance(r, unicode)
+        self.assertIsInstance(r, str)
         self.assertEqual(r, "1.5")
 
     def test_byref_out(self):

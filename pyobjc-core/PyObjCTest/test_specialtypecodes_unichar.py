@@ -7,8 +7,6 @@ while at the same time getting a higher fidelity bridge.
 
 - Add tests for calling methods from ObjC
 """
-from __future__ import unicode_literals
-
 import array
 import sys
 import weakref
@@ -16,10 +14,6 @@ import weakref
 from PyObjCTest.fnd import NSObject
 from PyObjCTest.specialtypecodes import *
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 3:
-    unichr = chr
-    unicode = str
 
 
 def setupMetaData():
@@ -171,7 +165,7 @@ class TestTypeCode_UniChar(TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.UniCharString()
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, str)
         self.assertEqual(v, "help")
 
     def testSimpleArg(self):
@@ -193,15 +187,15 @@ class TestTypeCode_UniChar(TestCase):
 
         v = o.UniCharStringArg_("hello world")
         self.assertEqual(v, "hello world")
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, str)
 
         v = o.UniCharStringArg_("hello world")
         self.assertEqual(v, "hello world")
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, str)
 
         v = o.UniCharStringArg_(["a", "b"])
         self.assertEqual(v, "ab")
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, str)
 
         self.assertRaises(ValueError, o.UniCharStringArg_, [99, 100, 100, 0])
 
@@ -214,10 +208,7 @@ class TestTypeCode_UniChar(TestCase):
         v = o.UniCharArrayOf4In_(["a", "b", "c", "d"])
         self.assertEqual(v, "abcd")
 
-        if sys.version_info[0] == 2:
-            a = array.array(b"h", [200, 300, 400, 500])
-        else:
-            a = array.array("h", [200, 300, 400, 500])
+        a = array.array("h", [200, 300, 400, 500])
         v = o.UniCharArrayOf4In_(a)
         self.assertEqual(
             v, "".join([unichr(200), unichr(300), unichr(400), unichr(500)])
@@ -230,10 +221,7 @@ class TestTypeCode_UniChar(TestCase):
         self.assertEqual(v, "boat")
 
         o = OC_TestSpecialTypeCode.alloc().init()
-        if sys.version_info[0] == 2:
-            a = array.array(b"h", [0] * 4)
-        else:
-            a = array.array("h", [0] * 4)
+        a = array.array("h", [0] * 4)
         v = o.UniCharArrayOf4Out_(a)
         self.assertIs(v, a)
         self.assertEqual(v[0], ord("b"))

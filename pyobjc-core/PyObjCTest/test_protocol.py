@@ -46,16 +46,11 @@ class TestInformalProtocols(TestCase):
         for cls in objc.getClassList():
             self.assertNotEqual(cls.__name__, "ProtoClass2")
 
-    @onlyIf(sys.version_info[:2] < (3, 2), "not valid for python 3.3 and later")
-    def testOptional(self):
-        class ProtoClass3(NSObject, MyProto):
-            def testMethod(self):
-                pass
 
-
-if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_info[
-    0
-] == 2:
+# XXX
+if (
+    True
+):  # (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_info[0] == 2:
     EmptyProtocol = objc.formal_protocol("EmptyProtocol", None, ())
 
     MyProtocol = objc.formal_protocol(
@@ -169,24 +164,6 @@ if (sys.maxsize < 2 ** 32 or platform.mac_ver()[0] >= "10.7") and sys.version_in
     class TestFormalProtocols(TestCase):
         # Implement unittests for formal protocols here.
         #
-
-        @onlyPython2
-        def testInheritedProtocol(self):
-            class MyClassImplementingNSObject(
-                NSObject, objc.protocolNamed("OC_TestProtocol2")
-            ):
-                def method(self):
-                    return 1
-
-                @classmethod
-                def classMethod(self):
-                    return 2
-
-            self.assertTrue(
-                MyClassImplementingNSObject.conformsToProtocol_(
-                    objc.protocolNamed("OC_TestProtocol2")
-                )
-            )
 
         def testImplementAnotherObject(self):
             anObject = NSObject.alloc().init()

@@ -32,7 +32,6 @@ class TestObjCWeakRef(TestCase):
         self.assertRaises(TypeError, objc.WeakRef, 1)
         self.assertRaises(TypeError, objc.WeakRef, "hello")
         self.assertRaises(TypeError, objc.WeakRef, b"hello")
-        self.assertRaises(TypeError, objc.WeakRef, b"hello".decode("utf-8"))
         self.assertRaises(TypeError, objc.WeakRef, [])
         self.assertRaises(TypeError, objc.WeakRef, self)
 

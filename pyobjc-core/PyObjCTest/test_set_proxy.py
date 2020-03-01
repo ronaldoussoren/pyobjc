@@ -9,11 +9,6 @@ from PyObjCTest.fnd import NSMutableSet, NSNull, NSObject, NSPredicate, NSSet
 from PyObjCTest.pythonset import OC_TestSet
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 3:
-    unicode = str
-
-onLeopard = int(os.uname()[2].split(".")[0]) >= 9
-
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 OC_BuiltinPythonSet = objc.lookUpClass("OC_BuiltinPythonSet")
 
@@ -100,15 +95,13 @@ class BasicSetTests:
         self.assertFalse(OC_TestSet.set_containsObject_(s, 4))
         self.assertTrue(OC_TestSet.set_containsObject_(s, 2))
 
-    if onLeopard:
+    def testFilteredSetUsingPredicate(self):
+        s = self.setClass(range(10))
+        p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
 
-        def testFilteredSetUsingPredicate(self):
-            s = self.setClass(range(10))
-            p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
-
-            o = OC_TestSet.set_filteredSetUsingPredicate_(s, p)
-            self.assertEqual(o, self.setClass([0, 2, 4, 6, 8]))
-            self.assertEqual(len(s), 10)
+        o = OC_TestSet.set_filteredSetUsingPredicate_(s, p)
+        self.assertEqual(o, self.setClass([0, 2, 4, 6, 8]))
+        self.assertEqual(len(s), 10)
 
     def testMakeObjectsPerform(self):
         o1 = OC_TestElem(1)
@@ -163,7 +156,7 @@ class BasicSetTests:
     def testDescription(self):
         s = self.setClass([OC_TestElem(1), 2])
         o = OC_TestSet.descriptionOfSet_(s)
-        self.assertIsInstance(o, unicode)
+        self.assertIsInstance(o, str)
 
 
 class TestImmutableSet(TestCase, BasicSetTests):
@@ -187,13 +180,12 @@ class TestImmutableSet(TestCase, BasicSetTests):
 
         self.assertRaises(TypeError, OC_TestSet.set_addObjectsFromArray_, o, [4, 5, 6])
 
-        if onLeopard:
-            self.assertRaises(
-                TypeError,
-                OC_TestSet.set_filterUsingPredicate_,
-                o,
-                NSPredicate.predicateWithValue_(True),
-            )
+        self.assertRaises(
+            TypeError,
+            OC_TestSet.set_filterUsingPredicate_,
+            o,
+            NSPredicate.predicateWithValue_(True),
+        )
 
         self.assertRaises(
             TypeError, OC_TestSet.set_intersectSet_, o, self.setClass([2, 3, 4])
@@ -256,14 +248,12 @@ class TestMutableSet(TestCase, BasicSetTests):
         OC_TestSet.set_intersectSet_(s1, s2)
         self.assertEqual(s1, self.setClass([3]))
 
-    if onLeopard:
+    def testFilterSet(self):
+        s = self.setClass(range(10))
+        p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
 
-        def testFilterSet(self):
-            s = self.setClass(range(10))
-            p = OC_SetPredicate.alloc().initWithFunction_(lambda x: x % 2 == 0)
-
-            OC_TestSet.set_filterUsingPredicate_(s, p)
-            self.assertEqual(s, self.setClass([0, 2, 4, 6, 8]))
+        OC_TestSet.set_filterUsingPredicate_(s, p)
+        self.assertEqual(s, self.setClass([0, 2, 4, 6, 8]))
 
     def testAddObject(self):
         s = self.setClass([1, 2, 3])

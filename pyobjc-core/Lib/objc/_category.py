@@ -61,7 +61,7 @@ class _CategoryMeta(type):
             if x[0] not in cls._IGNORENAMES
             and not isinstance(x[1], (FunctionType, MethodType, selector, classmethod))
         ]
-        for k, v in vars:
+        for _k, v in vars:
             if isinstance(v, ivar):
                 raise TypeError("Cannot add instance variables in a Category")
 
@@ -86,5 +86,5 @@ def Category(cls):
     """
     if not isinstance(cls, objc_class):
         raise TypeError("Category can only be used on Objective-C classes")
-    retval = _CategoryMeta._newSubclass("Category", (), dict(real_class=cls))
+    retval = _CategoryMeta._newSubclass("Category", (), {"real_class": cls})
     return retval

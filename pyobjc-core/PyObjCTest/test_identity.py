@@ -7,17 +7,12 @@
 # - Add unittests that test for "real-world" scenarios (writing stuff
 #   to plists, ...)
 # - Implement the required functionality
-from __future__ import unicode_literals
-
 import os
 import sys
 
 import objc
 from PyObjCTest.identity import *
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 
 class TestPythonRoundTrip(TestCase):
@@ -82,13 +77,13 @@ class ObjCRoundTrip(TestCase):
         container.setStoredObjectToResultOf_on_("description", cls)
         v = container.storedObject()
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
-        self.assertTrue(isinstance(v, unicode))
+        self.assertTrue(isinstance(v, str))
 
         cls = objc.lookUpClass("NSMutableString")
         container.setStoredObjectToResultOf_on_("new", cls)
         v = container.storedObject()
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
-        self.assertTrue(isinstance(v, unicode))
+        self.assertTrue(isinstance(v, str))
 
     def testProtocol(self):
         container = OC_TestIdentity.alloc().init()

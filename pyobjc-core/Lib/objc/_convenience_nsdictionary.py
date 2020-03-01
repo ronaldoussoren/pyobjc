@@ -5,9 +5,8 @@ __all__ = ()
 
 import collections.abc
 import os
-import sys
 
-from objc._convenience import addConvenienceForClass, container_unwrap, container_wrap
+from objc._convenience import addConvenienceForClass, container_wrap
 from objc._convenience_mapping import addConvenienceForBasicMapping
 from objc._objc import lookUpClass
 
@@ -246,7 +245,6 @@ if int(os.uname()[2].split(".")[0]) <= 10:
 
         return NSDictionary.dictionaryWithObjects_forKeys_(values, keys)
 
-    # XXX: 'nsdict_fromkeys' doesn't work on OSX 10.5
     def nsmutabledict_fromkeys(cls, keys, value=None):
         value = container_wrap(value)
 
@@ -278,7 +276,7 @@ def nsdict_new(cls, *args, **kwds):
         pass
 
     elif len(args) == 1:
-        d = dict()
+        d = {}
         if isinstance(args[0], collections.abc.Mapping):
             items = args[0].items()
         else:
@@ -295,7 +293,7 @@ def nsdict_new(cls, *args, **kwds):
         raise TypeError("dict expected at most 1 arguments, got {0}".format(len(args)))
 
     if kwds:
-        d = dict()
+        d = {}
         for k, v in kwds.items():
             d[container_wrap(k)] = container_wrap(v)
 

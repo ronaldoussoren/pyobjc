@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import objc
 from PyObjCTest.initialize import OC_TestInitialize
 from PyObjCTools.TestSupport import *

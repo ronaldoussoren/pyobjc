@@ -63,10 +63,7 @@ def parseDG(fdata):
             value = item[3]
             value = value.replace(r"\\-", "-")
             value = value.replace(r"\-", "-")
-            if sys.version_info[0] == 3:
-                value = codecs.decode(value, "unicode_escape")
-            else:
-                value = value.decode("string_escape")
+            value = codecs.decode(value, "unicode_escape")
             result.append(("expect", value))
 
     return result

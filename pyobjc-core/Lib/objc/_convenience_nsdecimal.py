@@ -6,7 +6,6 @@ here is much more convenient.
 """
 __all__ = ()
 import operator
-import sys
 
 from objc._convenience import addConvenienceForClass
 from objc._objc import NSDecimal, lookUpClass

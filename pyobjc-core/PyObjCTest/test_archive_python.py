@@ -25,25 +25,13 @@ from PyObjCTest.fnd import (
 )
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 3:
-    import copyreg
-
-    long = int
-
-else:
-    import copy_reg as copyreg
-
+import copyreg
 
 #
 # First set of tests: the stdlib tests for pickling, this
 # should test everything but mixed Python/Objective-C
 # object-graphs.
 #
-
-if sys.version_info[0] == 3:
-    unicode = str
-    long = int
-
 
 MyList = test.pickletester.MyList
 
@@ -341,22 +329,6 @@ class TestKeyedArchiveSimple(TestCase):
         finally:
             del f
 
-    @onlyPython2
-    def test_invalid_initargs(self):
-        v = myobject()
-        buf = self.archiverClass.archivedDataWithRootObject_(v)
-        self.assertIsInstance(buf, NSData)
-
-        if os_level_key(os_release()) >= os_level_key("10.9"):
-            # On OSX 10.11 (un)archivers modify exceptions, which looses
-            # enough information that PyObjC can no longer reconstruct
-            # the correct Python exception
-            exception = (objc.error, TypeError)
-        else:
-            exception = objc.error
-
-        self.assertRaises(exception, self.unarchiverClass.unarchiveObjectWithData_, buf)
-
     def test_class_with_slots(self):
         # Test dumpling a class with slots
         o = newstyle_with_slots()
@@ -371,17 +343,6 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertEqual(v.a, 1)
         self.assertEqual(v.b, 2)
         self.assertEqual(v.c, 3)
-
-    @onlyPython2
-    def test_class_with_state(self):
-        o = state_obj_1()
-        buf = self.archiverClass.archivedDataWithRootObject_(o)
-        self.assertIsInstance(buf, NSData)
-        v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, state_obj_1)
-        self.assertEqual(v.a, 1)
-        self.assertEqual(v.b, 2)
-        self.assertEqual(v.__dict__[42], 3)
 
     def test_class_with_setstate(self):
         o = newstyle_with_setstate()
@@ -514,25 +475,17 @@ class TestKeyedArchiveSimple(TestCase):
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        if sys.version_info[0] == 2 and not self.isKeyed:
-            self.assertIsInstance(v, unicode)
-        else:
-            self.assertIsInstance(v, str)
+        self.assertIsInstance(v, str)
         self.assertEqual(o, v)
 
         o = b"hello world"
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(
-            v,
-            bytes
-            if self.isKeyed
-            else (NSData if sys.version_info[0] == 3 else unicode),
-        )
+        self.assertIsInstance(v, bytes if self.isKeyed else NSData)
         self.assertEqual(o, v)
 
-        o = b"hello world".decode("ascii")
+        o = "hello world"
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -560,30 +513,22 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, float)
         self.assertEqual(o, v)
 
-        if sys.version_info[0] == 2:
-            buf = self.archiverClass.archivedDataWithRootObject_(unicode("hello"))
-            self.assertIsInstance(buf, NSData)
-            v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-            self.assertIsInstance(v, unicode)
-
         buf = self.archiverClass.archivedDataWithRootObject_("hello")
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(
-            v, str if sys.version_info[0] == 3 or self.isKeyed else unicode
-        )
+        self.assertIsInstance(v, str)
         self.assertEqual(v, "hello")
 
         buf = self.archiverClass.archivedDataWithRootObject_(sys.maxsize * 4)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, long)
+        self.assertIsInstance(v, int)
         self.assertEqual(v, sys.maxsize * 4)
 
         buf = self.archiverClass.archivedDataWithRootObject_(sys.maxsize ** 4)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
-        self.assertIsInstance(v, long)
+        self.assertIsInstance(v, int)
         self.assertEqual(v, sys.maxsize ** 4)
 
     def testSimpleLists(self):
@@ -598,7 +543,7 @@ class TestKeyedArchiveSimple(TestCase):
             self.assertIsInstance(v, NSMutableArray)
             self.assertEqual(list(v), o)
 
-        o = [unicode("hello"), 42]
+        o = ["hello", 42]
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -617,7 +562,7 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, list_subclass)
         self.assertEqual(v, o)
 
-        o = list_subclass([unicode("hello"), 42])
+        o = list_subclass(["hello", 42])
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -636,7 +581,7 @@ class TestKeyedArchiveSimple(TestCase):
             self.assertIsInstance(v, NSArray)
             self.assertEqual(tuple(v), o)
 
-        o = (unicode("hello"), 42)
+        o = ("hello", 42)
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -657,7 +602,7 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertEqual(v, o)
         self.assertEqual(v.a, o.a)
 
-        o = tuple_subclass([unicode("hello"), 42])
+        o = tuple_subclass(["hello", 42])
         o.a = 99
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
@@ -674,7 +619,7 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIsInstance(v, dict if self.isKeyed else NSDictionary)
         self.assertEqual(dict(v), o)
 
-        o = {unicode("hello"): unicode("bar"), 42: 1.5}
+        o = {"hello": "bar", 42: 1.5}
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -691,7 +636,7 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertEqual(v, o)
         self.assertEqual(v.a, o.a)
 
-        o = dict_subclass({unicode("hello"): unicode("bar"), 42: 1.5})
+        o = dict_subclass({"hello": "bar", 42: 1.5})
         o.a = 99
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
@@ -701,7 +646,7 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertEqual(v.a, o.a)
 
     def testNestedDicts(self):
-        o = {unicode("hello"): {1: 2}, unicode("world"): unicode("foobar")}
+        o = {"hello": {1: 2}, "world": "foobar"}
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
@@ -709,21 +654,21 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertEqual(v, o)
 
         o = {}
-        o[unicode("self")] = o
+        o["self"] = o
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
         self.assertIsInstance(v, dict if self.isKeyed else NSMutableDictionary)
 
         if self.isKeyed:
-            self.assertIs(v[unicode("self")], v)
+            self.assertIs(v["self"], v)
 
         else:
             # See 'TestArchiveNative'
-            self.assertIsNot(v[unicode("self")], v)
+            self.assertIsNot(v["self"], v)
 
     def testNestedSequences(self):
-        o = [1, 2, 3, (5, (unicode("a"), unicode("b")), 6), {1: 2}]
+        o = [1, 2, 3, (5, ("a", "b"), 6), {1: 2}]
         o[-1] = o
 
         buf = self.archiverClass.archivedDataWithRootObject_(o)
@@ -1159,7 +1104,7 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
 
         self.assertEqual(v, x)
 
-        for val in (long(0), long(1), long(sys.maxsize), long(sys.maxsize * 128)):
+        for val in (int(0), int(1), int(sys.maxsize), int(sys.maxsize * 128)):
             for x in val, -val:
                 buf = self.dumps(x)
                 v = self.loads(buf)
@@ -1528,7 +1473,7 @@ class TestArchiveNative(TestCase):
         self.assertIsInstance(buf, NSData)
         b = self.loads(buf)
         self.assertEqual(a, b)
-        self.assertIsInstance(b, (int, long))
+        self.assertIsInstance(b, int)
 
         a = 1.5
         buf = self.dumps(a)
@@ -1562,7 +1507,7 @@ class TestArchiveNative(TestCase):
         b = self.loads(buf)
         self.assertIsInstance(b, with_getstate)
         self.assertEqual(a.value, b.value)
-        self.assertIsInstance(b.value, (int, long))
+        self.assertIsInstance(b.value, int)
 
         a = with_getstate(1 << 100)
         self.assertEqual(a.value, 1 << 100)
@@ -1571,7 +1516,7 @@ class TestArchiveNative(TestCase):
         b = self.loads(buf)
         self.assertIsInstance(b, with_getstate)
         self.assertEqual(a.value, b.value)
-        self.assertIsInstance(b.value, (int, long))
+        self.assertIsInstance(b.value, int)
 
         a = with_getstate((1, 2))
         self.assertEqual(a.value, (1, 2))
@@ -1606,8 +1551,7 @@ class TestArchiveNative(TestCase):
         )
         for k in b.__dict__:
             self.assertNotIsInstance(k, objc.pyobjc_unicode)
-            if sys.version_info[0] == 3:
-                self.assertNotIsInstance(k, bytes)
+            self.assertNotIsInstance(k, bytes)
 
         a = with_reduce_func([1, 2], (3, 4), {"a": 4}, {"d", "e"}, frozenset(["f"]), id)
         buf = self.dumps(a)

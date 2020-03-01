@@ -310,7 +310,7 @@ class _BridgeSupportParser(object):
 
             def has_embedded_function(typestr):
                 nm, fields = objc.splitStructSignature(_as_bytes(typestr))
-                for nm, tp in fields:
+                for _nm, tp in fields:
                     if tp == b"?":
                         return True
                     elif tp == b"^?":
@@ -571,32 +571,15 @@ class _BridgeSupportParser(object):
         if not name or not value:
             return
 
-        if sys.version_info[0] == 2:  # pragma: no 3.x cover
-            if nsstring:
-                if not isinstance(value, unicode):
-                    value = value.decode("utf-8")
-            else:
-                if not isinstance(value, bytes):
-                    try:
-                        value = value.encode("latin1")
-                    except UnicodeError as e:
-                        warnings.warn(
-                            "Error parsing BridgeSupport data for constant %s: %s"
-                            % (name, e),
-                            RuntimeWarning,
-                        )
-                        return
-        else:  # pragma: no 2.x cover
-            if not nsstring:
-                try:
-                    value = value.encode("latin1")
-                except UnicodeError as e:
-                    warnings.warn(
-                        "Error parsing BridgeSupport data for constant %s: %s"
-                        % (name, e),
-                        RuntimeWarning,
-                    )
-                    return
+        if not nsstring:
+            try:
+                value = value.encode("latin1")
+            except UnicodeError as e:
+                warnings.warn(
+                    "Error parsing BridgeSupport data for constant %s: %s" % (name, e),
+                    RuntimeWarning,
+                )
+                return
 
         self.values[name] = value
 
@@ -866,9 +849,6 @@ _orig_registerStructAlias = objc.registerStructAlias
 
 @functools.wraps(objc.registerStructAlias)
 def registerStructAlias(typestr, structType):
-    # XXX: Disable deprecation warnings, this function is used by
-    # the framework wrappers.
-    # warnings.warn("use createStructAlias instead", DeprecationWarning)
     return _orig_registerStructAlias(typestr, structType)
 
 

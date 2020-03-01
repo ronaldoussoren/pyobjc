@@ -431,16 +431,6 @@ class TestSetProperty(TestCase):
         self.assertFalse(o.aSet <= o.aSet2)
         self.assertFalse(o.aSet <= {1})
 
-        if sys.version_info[0] == 2:
-            o.aSet = {1, 2, 3}
-            o.aSet2 = {1, 2}
-
-            self.assertRaises(TypeError, cmp, o.aSet, o.aSet2)
-            # self.assertRaises(TypeError, cmp, o.aSet, {1})
-
-            self.assertRaises(TypeError, o.aSet.__cmp__, o.aSet2)
-            self.assertRaises(TypeError, o.aSet.__cmp__, {1})
-
     def testPickling(self):
         o = TestSetPropertyHelper.alloc().init()
         o.aSet = {1, 2, 3}

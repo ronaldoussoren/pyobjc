@@ -4,8 +4,6 @@ Tests for the Key-Value Coding support in OC_PythonObject
 NOTE: Testcases here should be synchronized with the Key-Value Coding tests
 in PyObjCTools.test.test_keyvalue and Foundation.test.test_keyvalue.
 """
-from __future__ import unicode_literals
-
 import os
 import sys
 
@@ -669,10 +667,7 @@ if PyObjCTest_KeyValueObserver is not None:
     DEALLOCS = 0
 
     class PyObjCTestObserved1(NSObject):
-        if sys.version_info[0] == 3:
-            __slots__ = ("_kvo_bar", "_kvo_foo")
-        else:
-            __slots__ = (b"_kvo_bar", b"_kvo_foo")
+        __slots__ = ("_kvo_bar", "_kvo_foo")
 
         FOOBASE = "base"
 

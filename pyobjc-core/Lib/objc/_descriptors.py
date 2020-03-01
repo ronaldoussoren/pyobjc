@@ -50,6 +50,7 @@ except ImportError:
 
 _C_NSRange = [b"{_NSRange=II}", b"{_NSRange=QQ}"][sys.maxsize > 2 ** 32]
 
+
 #
 # Interface builder support.
 #
@@ -110,12 +111,12 @@ def accessor(func, typeSignature=b"@"):
             varkw,
             defaults,
             kwonlyargs,
-            kwonlydefaults,
-            annotations,
+            _kwonlydefaults,
+            _annotations,
         ) = getfullargspec(func)
     else:
         args, varargs, varkw, defaults = getargspec(func)
-        kwonlyargs = kwonlydefaults = annotations = None
+        kwonlyargs = None
     funcName = func.__name__
     maxArgs = len(args)
     minArgs = maxArgs - len(defaults or ())
@@ -130,12 +131,14 @@ def accessor(func, typeSignature=b"@"):
     if not (minArgs <= selArgs <= maxArgs):
         if minArgs == maxArgs:
             raise TypeError(
-                "%s expected to take %d args, but must accept %d from Objective-C (implicit self plus count of underscores)"
+                "%s expected to take %d args, but must accept %d "
+                "from Objective-C (implicit self plus count of underscores)"
                 % (funcName, maxArgs, selArgs)
             )
         else:
             raise TypeError(
-                "%s expected to take between %d and %d args, but must accept %d from Objective-C (implicit self plus count of underscores)"
+                "%s expected to take between %d and %d args, but must accept %d "
+                "from Objective-C (implicit self plus count of underscores)"
                 % (funcName, minArgs, maxArgs, selArgs)
             )
 
@@ -305,7 +308,7 @@ def selectorFor(callable, argIndex=-1):
 
     Usage::
 
-        @objc.selectorFor(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_)
+        @objc.selectorFor(NSApplication.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_)  # noqa: B950
         def sheetDidEnd_returnCode_contextInfo_(self, sheet, returnCode, info):
             pass
     """
@@ -358,7 +361,7 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
             def %(name)s(self, value):
                 self.%(ivar)s = value.copy()
             """
-            % dict(name=setterName, ivar=ivarName)
+            % {"name": setterName, "ivar": ivarName}
         )
 
     else:
@@ -367,7 +370,7 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
             def %(name)s(self, value):
                 self.%(ivar)s = value
             """
-            % dict(name=setterName, ivar=ivarName)
+            % {"name": setterName, "ivar": ivarName}
         )
 
     getter = textwrap.dedent(
@@ -375,7 +378,7 @@ def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
             def %(name)s(self):
                 return self.%(ivar)s
             """
-        % dict(name=name, ivar=ivarName)
+        % {"name": name, "ivar": ivarName}
     )
 
     if readwrite:

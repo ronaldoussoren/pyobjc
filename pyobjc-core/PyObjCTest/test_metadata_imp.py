@@ -9,17 +9,12 @@ TODO:
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
 """
-from __future__ import unicode_literals
-
 import sys
 
 import objc
 import PyObjCTest.test_metadata  # to get the right metadata
 from PyObjCTest.metadata import *
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 
 class TestArrayDefault(TestCase):
@@ -240,7 +235,7 @@ class TestArraysIn(TestCase):
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), ["hello", "world", "there"])
         self.assertIsInstance(v, objc.lookUpClass("NSArray"))
-        self.assertIsInstance(v[0], unicode)
+        self.assertIsInstance(v[0], str)
 
         m = o.methodForSelector_("makeObjectArray:")
 

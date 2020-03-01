@@ -6,8 +6,6 @@ from PyObjCTest.fnd import NSPriorDayDesignations
 from PyObjCTest.testbndl2 import *
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 3:
-    unicode = str
 
 # Several types are encoded slightly different on 32-bit vs. 64-bit
 # - NSPoint and NSRect: the actual type is different
@@ -18368,7 +18366,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     idArg_ = objc.selector(idArg_, signature=b"@@:@")
 
     def charPtrArg_(self, arg):
-        return unicode(arg)  # return the unicode
+        return str(arg)  # return the value as str
 
     charPtrArg_ = objc.selector(charPtrArg_, signature=b"@@:*")
 
@@ -18511,7 +18509,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     boolArg_andidArg_ = objc.selector(boolArg_andidArg_, signature=b"@@:B@")
 
     def boolArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     boolArg_andcharPtrArg_ = objc.selector(boolArg_andcharPtrArg_, signature=b"@@:B*")
@@ -18659,7 +18657,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     BOOLArg_andidArg_ = objc.selector(BOOLArg_andidArg_, signature=b"@@:c@")
 
     def BOOLArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     BOOLArg_andcharPtrArg_ = objc.selector(BOOLArg_andcharPtrArg_, signature=b"@@:c*")
@@ -18807,7 +18805,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     charArg_andidArg_ = objc.selector(charArg_andidArg_, signature=b"@@:c@")
 
     def charArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     charArg_andcharPtrArg_ = objc.selector(charArg_andcharPtrArg_, signature=b"@@:c*")
@@ -18967,7 +18965,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def signedshortArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     signedshortArg_andcharPtrArg_ = objc.selector(
@@ -19127,7 +19125,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     signedintArg_andidArg_ = objc.selector(signedintArg_andidArg_, signature=b"@@:i@")
 
     def signedintArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     signedintArg_andcharPtrArg_ = objc.selector(
@@ -19289,7 +19287,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def signedlongArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     signedlongArg_andcharPtrArg_ = objc.selector(
@@ -19456,7 +19454,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def signedlonglongArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     signedlonglongArg_andcharPtrArg_ = objc.selector(
@@ -19620,7 +19618,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def unsignedcharArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     unsignedcharArg_andcharPtrArg_ = objc.selector(
@@ -19782,7 +19780,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def unsignedshortArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     unsignedshortArg_andcharPtrArg_ = objc.selector(
@@ -19946,7 +19944,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def unsignedintArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     unsignedintArg_andcharPtrArg_ = objc.selector(
@@ -20108,7 +20106,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def unsignedlongArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     unsignedlongArg_andcharPtrArg_ = objc.selector(
@@ -20275,7 +20273,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def unsignedlonglongArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     unsignedlonglongArg_andcharPtrArg_ = objc.selector(
@@ -20427,7 +20425,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     floatArg_andidArg_ = objc.selector(floatArg_andidArg_, signature=b"@@:f@")
 
     def floatArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     floatArg_andcharPtrArg_ = objc.selector(floatArg_andcharPtrArg_, signature=b"@@:f*")
@@ -20575,7 +20573,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     doubleArg_andidArg_ = objc.selector(doubleArg_andidArg_, signature=b"@@:d@")
 
     def doubleArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     doubleArg_andcharPtrArg_ = objc.selector(
@@ -20723,7 +20721,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     idArg_andidArg_ = objc.selector(idArg_andidArg_, signature=b"@@:@@")
 
     def idArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     idArg_andcharPtrArg_ = objc.selector(idArg_andcharPtrArg_, signature=b"@@:@*")
@@ -20778,25 +20776,25 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andboolArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andboolArg_ = objc.selector(charPtrArg_andboolArg_, signature=b"@@:*B")
 
     def charPtrArg_andBOOLArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andBOOLArg_ = objc.selector(charPtrArg_andBOOLArg_, signature=b"@@:*c")
 
     def charPtrArg_andcharArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andcharArg_ = objc.selector(charPtrArg_andcharArg_, signature=b"@@:*c")
 
     def charPtrArg_andsignedshortArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andsignedshortArg_ = objc.selector(
@@ -20804,7 +20802,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andsignedintArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andsignedintArg_ = objc.selector(
@@ -20812,7 +20810,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andsignedlongArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andsignedlongArg_ = objc.selector(
@@ -20820,7 +20818,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andsignedlonglongArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andsignedlonglongArg_ = objc.selector(
@@ -20828,7 +20826,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andunsignedcharArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andunsignedcharArg_ = objc.selector(
@@ -20836,7 +20834,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andunsignedshortArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andunsignedshortArg_ = objc.selector(
@@ -20844,7 +20842,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andunsignedintArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andunsignedintArg_ = objc.selector(
@@ -20852,7 +20850,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andunsignedlongArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andunsignedlongArg_ = objc.selector(
@@ -20860,7 +20858,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andunsignedlonglongArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andunsignedlonglongArg_ = objc.selector(
@@ -20868,13 +20866,13 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andfloatArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andfloatArg_ = objc.selector(charPtrArg_andfloatArg_, signature=b"@@:*f")
 
     def charPtrArg_anddoubleArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_anddoubleArg_ = objc.selector(
@@ -20882,14 +20880,14 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andidArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andidArg_ = objc.selector(charPtrArg_andidArg_, signature=b"@@:*@")
 
     def charPtrArg_andcharPtrArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
-        arg2 = unicode(arg2)
+        arg1 = str(arg1)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     charPtrArg_andcharPtrArg_ = objc.selector(
@@ -20897,7 +20895,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andNSPointArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andNSPointArg_ = objc.selector(
@@ -20905,7 +20903,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andNSRectArg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andNSRectArg_ = objc.selector(
@@ -20913,7 +20911,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andstructTestStruct1Arg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andstructTestStruct1Arg_ = objc.selector(
@@ -20921,7 +20919,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andstructTestStruct2Arg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andstructTestStruct2Arg_ = objc.selector(
@@ -20929,7 +20927,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andstructTestStruct3Arg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andstructTestStruct3Arg_ = objc.selector(
@@ -20937,7 +20935,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andstructTestStruct4Arg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andstructTestStruct4Arg_ = objc.selector(
@@ -20945,7 +20943,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def charPtrArg_andstructTestStruct5Arg_(self, arg1, arg2):
-        arg1 = unicode(arg1)
+        arg1 = str(arg1)
         return [arg1, arg2]
 
     charPtrArg_andstructTestStruct5Arg_ = objc.selector(
@@ -21058,7 +21056,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def NSPointArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     NSPointArg_andcharPtrArg_ = objc.selector(
@@ -21225,7 +21223,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def NSRectArg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     NSRectArg_andcharPtrArg_ = objc.selector(
@@ -21397,7 +21395,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def structTestStruct1Arg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     structTestStruct1Arg_andcharPtrArg_ = objc.selector(
@@ -21571,7 +21569,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def structTestStruct2Arg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     structTestStruct2Arg_andcharPtrArg_ = objc.selector(
@@ -21742,7 +21740,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def structTestStruct3Arg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     structTestStruct3Arg_andcharPtrArg_ = objc.selector(
@@ -21913,7 +21911,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def structTestStruct4Arg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     structTestStruct4Arg_andcharPtrArg_ = objc.selector(
@@ -22084,7 +22082,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     )
 
     def structTestStruct5Arg_andcharPtrArg_(self, arg1, arg2):
-        arg2 = unicode(arg2)
+        arg2 = str(arg2)
         return [arg1, arg2]
 
     structTestStruct5Arg_andcharPtrArg_ = objc.selector(
@@ -22522,7 +22520,7 @@ class Python_TestClass(objc.lookUpClass("NSObject")):
     idInOutArg_ = objc.selector(idInOutArg_, signature=b"@@:N^@")
 
     def charPtrInArg_(self, arg):
-        return unicode(arg)  # return the unicode
+        return str(arg)  # return the value as str
 
     charPtrInArg_ = objc.selector(charPtrInArg_, signature=b"@@:n^*")
 
@@ -23474,21 +23472,21 @@ class ObjCToPy(TestCase):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_of_(b"hello", o)
-        self.assertEqual(r, unicode(b"hello"))
+        self.assertEqual(r, str(b"hello"))
         r = PyObjC_TestClass2.invokecharPtrArg_of_(b"world", o)
-        self.assertEqual(r, unicode(b"world"))
+        self.assertEqual(r, str(b"world"))
         r = PyObjC_TestClass2.invokecharPtrArg_of_(b"foobar", o)
-        self.assertEqual(r, unicode(b"foobar"))
+        self.assertEqual(r, str(b"foobar"))
 
     def testinvokecharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_of_(b"hello", o)
-        self.assertEqual(r, unicode(b"hello"))
+        self.assertEqual(r, str(b"hello"))
         r = PyObjC_TestClass2.invokecharPtrArg_of_(b"world", o)
-        self.assertEqual(r, unicode(b"world"))
+        self.assertEqual(r, str(b"world"))
         r = PyObjC_TestClass2.invokecharPtrArg_of_(b"foobar", o)
-        self.assertEqual(r, unicode(b"foobar"))
+        self.assertEqual(r, str(b"foobar"))
 
     def testcallNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -24359,44 +24357,44 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(YES, b"hello", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(YES, b"world", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(YES, b"foobar", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(NO, b"hello", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(NO, b"world", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callboolArg_andcharPtrArg_of_(NO, b"foobar", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeboolAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(YES, b"hello", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(YES, b"world", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(YES, b"foobar", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(NO, b"hello", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(NO, b"world", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeboolArg_andcharPtrArg_of_(NO, b"foobar", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallboolAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -25408,44 +25406,44 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callBOOLArg_andcharPtrArg_of_(YES, b"hello", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callBOOLArg_andcharPtrArg_of_(YES, b"world", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callBOOLArg_andcharPtrArg_of_(YES, b"foobar", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callBOOLArg_andcharPtrArg_of_(NO, b"hello", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callBOOLArg_andcharPtrArg_of_(NO, b"world", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callBOOLArg_andcharPtrArg_of_(NO, b"foobar", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeBOOLAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokeBOOLArg_andcharPtrArg_of_(YES, b"hello", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeBOOLArg_andcharPtrArg_of_(YES, b"world", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeBOOLArg_andcharPtrArg_of_(YES, b"foobar", o)
         self.assertEqual(r[0], YES)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeBOOLArg_andcharPtrArg_of_(NO, b"hello", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeBOOLArg_andcharPtrArg_of_(NO, b"world", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeBOOLArg_andcharPtrArg_of_(NO, b"foobar", o)
         self.assertEqual(r[0], NO)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallBOOLAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -26767,62 +26765,62 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(-128, b"hello", o)
         self.assertEqual(r[0], -128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(-128, b"world", o)
         self.assertEqual(r[0], -128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(-128, b"foobar", o)
         self.assertEqual(r[0], -128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(127, b"hello", o)
         self.assertEqual(r[0], 127)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(127, b"world", o)
         self.assertEqual(r[0], 127)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callcharArg_andcharPtrArg_of_(127, b"foobar", o)
         self.assertEqual(r[0], 127)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokecharAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(-128, b"hello", o)
         self.assertEqual(r[0], -128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(-128, b"world", o)
         self.assertEqual(r[0], -128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(-128, b"foobar", o)
         self.assertEqual(r[0], -128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(127, b"hello", o)
         self.assertEqual(r[0], 127)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(127, b"world", o)
         self.assertEqual(r[0], 127)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokecharArg_andcharPtrArg_of_(127, b"foobar", o)
         self.assertEqual(r[0], 127)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallcharAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -29160,55 +29158,55 @@ class ObjCToPy(TestCase):
             -(1 << 14), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 14))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(
             -(1 << 14), b"world", o
         )
         self.assertEqual(r[0], -(1 << 14))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(
             -(1 << 14), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 14))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(-42, b"hello", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(-42, b"world", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(-42, b"foobar", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(1 << 14, b"hello", o)
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(1 << 14, b"world", o)
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedshortArg_andcharPtrArg_of_(
             1 << 14, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokesignedshortAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
@@ -29217,59 +29215,59 @@ class ObjCToPy(TestCase):
             -(1 << 14), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 14))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(
             -(1 << 14), b"world", o
         )
         self.assertEqual(r[0], -(1 << 14))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(
             -(1 << 14), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 14))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(-42, b"hello", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(-42, b"world", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(-42, b"foobar", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(
             1 << 14, b"hello", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(
             1 << 14, b"world", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedshortArg_andcharPtrArg_of_(
             1 << 14, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallsignedshortAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -31861,53 +31859,53 @@ class ObjCToPy(TestCase):
             -(1 << 30), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(
             -(1 << 30), b"world", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(
             -(1 << 30), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(-42, b"hello", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(-42, b"world", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(-42, b"foobar", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(1 << 30, b"hello", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(1 << 30, b"world", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedintArg_andcharPtrArg_of_(1 << 30, b"foobar", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokesignedintAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
@@ -31916,55 +31914,55 @@ class ObjCToPy(TestCase):
             -(1 << 30), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(
             -(1 << 30), b"world", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(
             -(1 << 30), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(-42, b"hello", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(-42, b"world", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(-42, b"foobar", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(1 << 30, b"hello", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(1 << 30, b"world", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedintArg_andcharPtrArg_of_(
             1 << 30, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallsignedintAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -34586,53 +34584,53 @@ class ObjCToPy(TestCase):
             -(1 << 30), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(
             -(1 << 30), b"world", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(
             -(1 << 30), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(-42, b"hello", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(-42, b"world", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(-42, b"foobar", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(1 << 30, b"hello", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(1 << 30, b"world", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlongArg_andcharPtrArg_of_(1 << 30, b"foobar", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokesignedlongAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
@@ -34641,59 +34639,59 @@ class ObjCToPy(TestCase):
             -(1 << 30), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(
             -(1 << 30), b"world", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(
             -(1 << 30), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 30))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(-42, b"hello", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(-42, b"world", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(-42, b"foobar", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(
             1 << 30, b"hello", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(
             1 << 30, b"world", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlongArg_andcharPtrArg_of_(
             1 << 30, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallsignedlongAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -37553,59 +37551,59 @@ class ObjCToPy(TestCase):
             -(1 << 60), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 60))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(
             -(1 << 60), b"world", o
         )
         self.assertEqual(r[0], -(1 << 60))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(
             -(1 << 60), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 60))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(-42, b"hello", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(-42, b"world", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(-42, b"foobar", o)
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(
             1 << 60, b"hello", o
         )
         self.assertEqual(r[0], 1 << 60)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(
             1 << 60, b"world", o
         )
         self.assertEqual(r[0], 1 << 60)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callsignedlonglongArg_andcharPtrArg_of_(
             1 << 60, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 60)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokesignedlonglongAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
@@ -37614,67 +37612,67 @@ class ObjCToPy(TestCase):
             -(1 << 60), b"hello", o
         )
         self.assertEqual(r[0], -(1 << 60))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             -(1 << 60), b"world", o
         )
         self.assertEqual(r[0], -(1 << 60))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             -(1 << 60), b"foobar", o
         )
         self.assertEqual(r[0], -(1 << 60))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             -42, b"hello", o
         )
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             -42, b"world", o
         )
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             -42, b"foobar", o
         )
         self.assertEqual(r[0], -42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             42, b"foobar", o
         )
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             1 << 60, b"hello", o
         )
         self.assertEqual(r[0], 1 << 60)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             1 << 60, b"world", o
         )
         self.assertEqual(r[0], 1 << 60)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokesignedlonglongArg_andcharPtrArg_of_(
             1 << 60, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 60)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallsignedlonglongAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -39580,62 +39578,62 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(128, b"hello", o)
         self.assertEqual(r[0], 128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(128, b"world", o)
         self.assertEqual(r[0], 128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(128, b"foobar", o)
         self.assertEqual(r[0], 128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(255, b"hello", o)
         self.assertEqual(r[0], 255)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(255, b"world", o)
         self.assertEqual(r[0], 255)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedcharArg_andcharPtrArg_of_(255, b"foobar", o)
         self.assertEqual(r[0], 255)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeunsignedcharAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(128, b"hello", o)
         self.assertEqual(r[0], 128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(128, b"world", o)
         self.assertEqual(r[0], 128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(128, b"foobar", o)
         self.assertEqual(r[0], 128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(255, b"hello", o)
         self.assertEqual(r[0], 255)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(255, b"world", o)
         self.assertEqual(r[0], 255)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedcharArg_andcharPtrArg_of_(255, b"foobar", o)
         self.assertEqual(r[0], 255)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallunsignedcharAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -41337,74 +41335,74 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(
             1 << 14, b"hello", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(
             1 << 14, b"world", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedshortArg_andcharPtrArg_of_(
             1 << 14, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeunsignedshortAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(
             1 << 14, b"hello", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(
             1 << 14, b"world", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedshortArg_andcharPtrArg_of_(
             1 << 14, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 14)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallunsignedshortAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -43040,70 +43038,70 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(1 << 30, b"hello", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(1 << 30, b"world", o)
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedintArg_andcharPtrArg_of_(
             1 << 30, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeunsignedintAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(
             1 << 30, b"hello", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(
             1 << 30, b"world", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedintArg_andcharPtrArg_of_(
             1 << 30, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallunsignedintAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -44771,74 +44769,74 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(
             1 << 30, b"hello", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(
             1 << 30, b"world", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedlongArg_andcharPtrArg_of_(
             1 << 30, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeunsignedlongAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(42, b"foobar", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(
             1 << 30, b"hello", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(
             1 << 30, b"world", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedlongArg_andcharPtrArg_of_(
             1 << 30, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 30)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallunsignedlongAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -46656,39 +46654,39 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(0, b"hello", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(0, b"world", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(0, b"foobar", o)
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(42, b"hello", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(42, b"world", o)
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(
             42, b"foobar", o
         )
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(
             1 << 62, b"hello", o
         )
         self.assertEqual(r[0], 1 << 62)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(
             1 << 62, b"world", o
         )
         self.assertEqual(r[0], 1 << 62)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callunsignedlonglongArg_andcharPtrArg_of_(
             1 << 62, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 62)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeunsignedlonglongAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
@@ -46697,47 +46695,47 @@ class ObjCToPy(TestCase):
             0, b"hello", o
         )
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             0, b"world", o
         )
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             0, b"foobar", o
         )
         self.assertEqual(r[0], 0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             42, b"hello", o
         )
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             42, b"world", o
         )
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             42, b"foobar", o
         )
         self.assertEqual(r[0], 42)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             1 << 62, b"hello", o
         )
         self.assertEqual(r[0], 1 << 62)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             1 << 62, b"world", o
         )
         self.assertEqual(r[0], 1 << 62)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeunsignedlonglongArg_andcharPtrArg_of_(
             1 << 62, b"foobar", o
         )
         self.assertEqual(r[0], 1 << 62)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallunsignedlonglongAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -48579,80 +48577,80 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(0.128, b"hello", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(0.128, b"world", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(0.128, b"foobar", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(1.0, b"hello", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(1.0, b"world", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(1.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(42.0, b"hello", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(42.0, b"world", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(42.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(1e10, b"hello", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(1e10, b"world", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callfloatArg_andcharPtrArg_of_(1e10, b"foobar", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokefloatAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(0.128, b"hello", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(0.128, b"world", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(0.128, b"foobar", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(1.0, b"hello", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(1.0, b"world", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(1.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(42.0, b"hello", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(42.0, b"world", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(42.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(1e10, b"hello", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(1e10, b"world", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokefloatArg_andcharPtrArg_of_(1e10, b"foobar", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallfloatAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -50576,80 +50574,80 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(0.128, b"hello", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(0.128, b"world", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(0.128, b"foobar", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(1.0, b"hello", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(1.0, b"world", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(1.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(42.0, b"hello", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(42.0, b"world", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(42.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(1e10, b"hello", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(1e10, b"world", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.calldoubleArg_andcharPtrArg_of_(1e10, b"foobar", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokedoubleAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(0.128, b"hello", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(0.128, b"world", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(0.128, b"foobar", o)
         self.assertAlmostEqual(r[0], 0.128)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(1.0, b"hello", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(1.0, b"world", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(1.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 1.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(42.0, b"hello", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(42.0, b"world", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(42.0, b"foobar", o)
         self.assertAlmostEqual(r[0], 42.0)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(1e10, b"hello", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(1e10, b"world", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokedoubleArg_andcharPtrArg_of_(1e10, b"foobar", o)
         self.assertAlmostEqual(r[0], 1e10)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcalldoubleAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -51809,17 +51807,17 @@ class ObjCToPy(TestCase):
             NSPriorDayDesignations, b"hello", o
         )
         self.assertEqual(r[0], NSPriorDayDesignations)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callidArg_andcharPtrArg_of_(
             NSPriorDayDesignations, b"world", o
         )
         self.assertEqual(r[0], NSPriorDayDesignations)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callidArg_andcharPtrArg_of_(
             NSPriorDayDesignations, b"foobar", o
         )
         self.assertEqual(r[0], NSPriorDayDesignations)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeidAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
@@ -51828,17 +51826,17 @@ class ObjCToPy(TestCase):
             NSPriorDayDesignations, b"hello", o
         )
         self.assertEqual(r[0], NSPriorDayDesignations)
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeidArg_andcharPtrArg_of_(
             NSPriorDayDesignations, b"world", o
         )
         self.assertEqual(r[0], NSPriorDayDesignations)
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeidArg_andcharPtrArg_of_(
             NSPriorDayDesignations, b"foobar", o
         )
         self.assertEqual(r[0], NSPriorDayDesignations)
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallidAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -52045,150 +52043,150 @@ class ObjCToPy(TestCase):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_(b"hello", YES, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_(b"hello", NO, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_(b"world", YES, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_(b"world", NO, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_(b"foobar", YES, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.callcharPtrArg_andboolArg_of_(b"foobar", NO, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], NO)
 
     def testinvokecharPtrAndboolArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_(b"hello", YES, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_(b"hello", NO, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_(b"world", YES, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_(b"world", NO, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_(b"foobar", YES, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.invokecharPtrArg_andboolArg_of_(b"foobar", NO, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], NO)
 
     def testcallcharPtrAndBOOLArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andBOOLArg_of_(b"hello", YES, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.callcharPtrArg_andBOOLArg_of_(b"hello", NO, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.callcharPtrArg_andBOOLArg_of_(b"world", YES, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.callcharPtrArg_andBOOLArg_of_(b"world", NO, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.callcharPtrArg_andBOOLArg_of_(b"foobar", YES, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.callcharPtrArg_andBOOLArg_of_(b"foobar", NO, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], NO)
 
     def testinvokecharPtrAndBOOLArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andBOOLArg_of_(b"hello", YES, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.invokecharPtrArg_andBOOLArg_of_(b"hello", NO, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.invokecharPtrArg_andBOOLArg_of_(b"world", YES, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.invokecharPtrArg_andBOOLArg_of_(b"world", NO, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], NO)
         r = PyObjC_TestClass2.invokecharPtrArg_andBOOLArg_of_(b"foobar", YES, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], YES)
         r = PyObjC_TestClass2.invokecharPtrArg_andBOOLArg_of_(b"foobar", NO, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], NO)
 
     def testcallcharPtrAndcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"hello", -128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -128)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"hello", 127, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 127)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"world", -128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -128)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"world", 127, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 127)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"foobar", -128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -128)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andcharArg_of_(b"foobar", 127, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 127)
 
     def testinvokecharPtrAndcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"hello", -128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -128)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"hello", 127, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 127)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"world", -128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -128)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"world", 127, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 127)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"foobar", -128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -128)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharArg_of_(b"foobar", 127, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 127)
 
     def testcallcharPtrAndsignedshortArg(self):
@@ -52197,55 +52195,55 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(
             b"hello", -(1 << 14), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 14))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"hello", -42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"hello", 1 << 14, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(
             b"world", -(1 << 14), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 14))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"world", -42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"world", 1 << 14, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(
             b"foobar", -(1 << 14), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 14))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"foobar", -42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedshortArg_of_(
             b"foobar", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 14)
 
     def testinvokecharPtrAndsignedshortArg(self):
@@ -52254,59 +52252,59 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(
             b"hello", -(1 << 14), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 14))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"hello", -42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(
             b"hello", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(
             b"world", -(1 << 14), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 14))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"world", -42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(
             b"world", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(
             b"foobar", -(1 << 14), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 14))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"foobar", -42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedshortArg_of_(
             b"foobar", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 14)
 
     def testcallcharPtrAndsignedintArg(self):
@@ -52315,53 +52313,53 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(
             b"hello", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"hello", -42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"hello", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(
             b"world", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"world", -42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"world", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(
             b"foobar", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"foobar", -42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedintArg_of_(b"foobar", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testinvokecharPtrAndsignedintArg(self):
@@ -52370,55 +52368,55 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(
             b"hello", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"hello", -42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"hello", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(
             b"world", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"world", -42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"world", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(
             b"foobar", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"foobar", -42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedintArg_of_(
             b"foobar", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testcallcharPtrAndsignedlongArg(self):
@@ -52427,53 +52425,53 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(
             b"hello", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"hello", -42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"hello", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(
             b"world", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"world", -42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"world", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(
             b"foobar", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"foobar", -42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlongArg_of_(b"foobar", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testinvokecharPtrAndsignedlongArg(self):
@@ -52482,59 +52480,59 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(
             b"hello", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"hello", -42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(
             b"hello", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(
             b"world", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"world", -42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(
             b"world", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(
             b"foobar", -(1 << 30), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 30))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"foobar", -42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlongArg_of_(
             b"foobar", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testcallcharPtrAndsignedlonglongArg(self):
@@ -52543,59 +52541,59 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(
             b"hello", -(1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 60))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"hello", -42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(
             b"hello", 1 << 60, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 60)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(
             b"world", -(1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 60))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"world", -42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(
             b"world", 1 << 60, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 60)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(
             b"foobar", -(1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 60))
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"foobar", -42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andsignedlonglongArg_of_(
             b"foobar", 1 << 60, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 60)
 
     def testinvokecharPtrAndsignedlonglongArg(self):
@@ -52604,386 +52602,386 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"hello", -(1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -(1 << 60))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"hello", -42, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"hello", 1 << 60, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 60)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"world", -(1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -(1 << 60))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"world", -42, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"world", 1 << 60, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 60)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"foobar", -(1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -(1 << 60))
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"foobar", -42, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], -42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"foobar", 42, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andsignedlonglongArg_of_(
             b"foobar", 1 << 60, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 60)
 
     def testcallcharPtrAndunsignedcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"hello", 128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 128)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"hello", 255, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 255)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"world", 128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 128)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"world", 255, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 255)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"foobar", 128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 128)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedcharArg_of_(b"foobar", 255, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 255)
 
     def testinvokecharPtrAndunsignedcharArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"hello", 128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 128)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"hello", 255, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 255)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"world", 128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 128)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"world", 255, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 255)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"foobar", 128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 128)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedcharArg_of_(b"foobar", 255, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 255)
 
     def testcallcharPtrAndunsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(
             b"hello", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(
             b"world", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedshortArg_of_(
             b"foobar", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 14)
 
     def testinvokecharPtrAndunsignedshortArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(
             b"hello", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(
             b"world", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 14)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedshortArg_of_(
             b"foobar", 1 << 14, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 14)
 
     def testcallcharPtrAndunsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"hello", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"world", 1 << 30, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedintArg_of_(
             b"foobar", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testinvokecharPtrAndunsignedintArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(
             b"hello", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(
             b"world", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedintArg_of_(
             b"foobar", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testcallcharPtrAndunsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(
             b"hello", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(
             b"world", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlongArg_of_(
             b"foobar", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testinvokecharPtrAndunsignedlongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(
             b"hello", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(
             b"world", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 30)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(b"foobar", 42, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlongArg_of_(
             b"foobar", 1 << 30, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 30)
 
     def testcallcharPtrAndunsignedlonglongArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(b"hello", 0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(b"hello", 42, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(
             b"hello", 1 << 62, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 62)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(b"world", 0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(b"world", 42, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(
             b"world", 1 << 62, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 62)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(b"foobar", 0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(
             b"foobar", 42, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.callcharPtrArg_andunsignedlonglongArg_of_(
             b"foobar", 1 << 62, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 62)
 
     def testinvokecharPtrAndunsignedlonglongArg(self):
@@ -52992,207 +52990,207 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"hello", 0, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"hello", 42, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"hello", 1 << 62, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], 1 << 62)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"world", 0, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"world", 42, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"world", 1 << 62, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], 1 << 62)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"foobar", 0, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 0)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"foobar", 42, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 42)
         r = PyObjC_TestClass2.invokecharPtrArg_andunsignedlonglongArg_of_(
             b"foobar", 1 << 62, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], 1 << 62)
 
     def testcallcharPtrAndfloatArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"hello", 0.128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"hello", 1.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"hello", 42.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"hello", 1e10, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"world", 0.128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"world", 1.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"world", 42.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"world", 1e10, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"foobar", 0.128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"foobar", 1.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"foobar", 42.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.callcharPtrArg_andfloatArg_of_(b"foobar", 1e10, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1e10)
 
     def testinvokecharPtrAndfloatArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"hello", 0.128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"hello", 1.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"hello", 42.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"hello", 1e10, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"world", 0.128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"world", 1.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"world", 42.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"world", 1e10, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"foobar", 0.128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"foobar", 1.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"foobar", 42.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.invokecharPtrArg_andfloatArg_of_(b"foobar", 1e10, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1e10)
 
     def testcallcharPtrAnddoubleArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"hello", 0.128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"hello", 1.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"hello", 42.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"hello", 1e10, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"world", 0.128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"world", 1.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"world", 42.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"world", 1e10, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"foobar", 0.128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"foobar", 1.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"foobar", 42.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.callcharPtrArg_anddoubleArg_of_(b"foobar", 1e10, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1e10)
 
     def testinvokecharPtrAnddoubleArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"hello", 0.128, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"hello", 1.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"hello", 42.0, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"hello", 1e10, o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"world", 0.128, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"world", 1.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"world", 42.0, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"world", 1e10, o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertAlmostEqual(r[1], 1e10)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"foobar", 0.128, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 0.128)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"foobar", 1.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1.0)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"foobar", 42.0, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 42.0)
         r = PyObjC_TestClass2.invokecharPtrArg_anddoubleArg_of_(b"foobar", 1e10, o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertAlmostEqual(r[1], 1e10)
 
     def testcallcharPtrAndidArg(self):
@@ -53201,17 +53199,17 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andidArg_of_(
             b"hello", NSPriorDayDesignations, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], NSPriorDayDesignations)
         r = PyObjC_TestClass2.callcharPtrArg_andidArg_of_(
             b"world", NSPriorDayDesignations, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], NSPriorDayDesignations)
         r = PyObjC_TestClass2.callcharPtrArg_andidArg_of_(
             b"foobar", NSPriorDayDesignations, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], NSPriorDayDesignations)
 
     def testinvokecharPtrAndidArg(self):
@@ -53220,125 +53218,125 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andidArg_of_(
             b"hello", NSPriorDayDesignations, o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], NSPriorDayDesignations)
         r = PyObjC_TestClass2.invokecharPtrArg_andidArg_of_(
             b"world", NSPriorDayDesignations, o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], NSPriorDayDesignations)
         r = PyObjC_TestClass2.invokecharPtrArg_andidArg_of_(
             b"foobar", NSPriorDayDesignations, o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], NSPriorDayDesignations)
 
     def testcallcharPtrAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"hello", b"hello", o)
-        self.assertEqual(r[0], unicode(b"hello"))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"hello", b"world", o)
-        self.assertEqual(r[0], unicode(b"hello"))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[0], str(b"hello"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"hello", b"foobar", o)
-        self.assertEqual(r[0], unicode(b"hello"))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"hello"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"world", b"hello", o)
-        self.assertEqual(r[0], unicode(b"world"))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"world"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"world", b"world", o)
-        self.assertEqual(r[0], unicode(b"world"))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"world", b"foobar", o)
-        self.assertEqual(r[0], unicode(b"world"))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"world"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"foobar", b"hello", o)
-        self.assertEqual(r[0], unicode(b"foobar"))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"foobar"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"foobar", b"world", o)
-        self.assertEqual(r[0], unicode(b"foobar"))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[0], str(b"foobar"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callcharPtrArg_andcharPtrArg_of_(b"foobar", b"foobar", o)
-        self.assertEqual(r[0], unicode(b"foobar"))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokecharPtrAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"hello", b"hello", o)
-        self.assertEqual(r[0], unicode(b"hello"))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"hello", b"world", o)
-        self.assertEqual(r[0], unicode(b"hello"))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[0], str(b"hello"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"hello", b"foobar", o)
-        self.assertEqual(r[0], unicode(b"hello"))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"hello"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"world", b"hello", o)
-        self.assertEqual(r[0], unicode(b"world"))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"world"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"world", b"world", o)
-        self.assertEqual(r[0], unicode(b"world"))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"world", b"foobar", o)
-        self.assertEqual(r[0], unicode(b"world"))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"world"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"foobar", b"hello", o)
-        self.assertEqual(r[0], unicode(b"foobar"))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"foobar"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(b"foobar", b"world", o)
-        self.assertEqual(r[0], unicode(b"foobar"))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[0], str(b"foobar"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokecharPtrArg_andcharPtrArg_of_(
             b"foobar", b"foobar", o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallcharPtrAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrArg_andNSPointArg_of_(b"hello", (1, 2), o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.callcharPtrArg_andNSPointArg_of_(b"hello", (3, 4), o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (3, 4))
         r = PyObjC_TestClass2.callcharPtrArg_andNSPointArg_of_(b"world", (1, 2), o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.callcharPtrArg_andNSPointArg_of_(b"world", (3, 4), o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (3, 4))
         r = PyObjC_TestClass2.callcharPtrArg_andNSPointArg_of_(b"foobar", (1, 2), o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.callcharPtrArg_andNSPointArg_of_(b"foobar", (3, 4), o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (3, 4))
 
     def testinvokecharPtrAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrArg_andNSPointArg_of_(b"hello", (1, 2), o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSPointArg_of_(b"hello", (3, 4), o)
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (3, 4))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSPointArg_of_(b"world", (1, 2), o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSPointArg_of_(b"world", (3, 4), o)
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (3, 4))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSPointArg_of_(b"foobar", (1, 2), o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSPointArg_of_(b"foobar", (3, 4), o)
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (3, 4))
 
     def testcallcharPtrAndNSRectArg(self):
@@ -53347,32 +53345,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andNSRectArg_of_(
             b"hello", ((1, 2), (3, 4)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], ((1, 2), (3, 4)))
         r = PyObjC_TestClass2.callcharPtrArg_andNSRectArg_of_(
             b"hello", ((7, 8), (9, 10)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
         r = PyObjC_TestClass2.callcharPtrArg_andNSRectArg_of_(
             b"world", ((1, 2), (3, 4)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], ((1, 2), (3, 4)))
         r = PyObjC_TestClass2.callcharPtrArg_andNSRectArg_of_(
             b"world", ((7, 8), (9, 10)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
         r = PyObjC_TestClass2.callcharPtrArg_andNSRectArg_of_(
             b"foobar", ((1, 2), (3, 4)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], ((1, 2), (3, 4)))
         r = PyObjC_TestClass2.callcharPtrArg_andNSRectArg_of_(
             b"foobar", ((7, 8), (9, 10)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
 
     def testinvokecharPtrAndNSRectArg(self):
@@ -53381,32 +53379,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andNSRectArg_of_(
             b"hello", ((1, 2), (3, 4)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], ((1, 2), (3, 4)))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSRectArg_of_(
             b"hello", ((7, 8), (9, 10)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSRectArg_of_(
             b"world", ((1, 2), (3, 4)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], ((1, 2), (3, 4)))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSRectArg_of_(
             b"world", ((7, 8), (9, 10)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSRectArg_of_(
             b"foobar", ((1, 2), (3, 4)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], ((1, 2), (3, 4)))
         r = PyObjC_TestClass2.invokecharPtrArg_andNSRectArg_of_(
             b"foobar", ((7, 8), (9, 10)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], ((7, 8), (9, 10)))
 
     def testcallcharPtrAndstructTestStruct1Arg(self):
@@ -53415,32 +53413,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct1Arg_of_(
             b"hello", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct1Arg_of_(
             b"hello", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct1Arg_of_(
             b"world", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct1Arg_of_(
             b"world", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct1Arg_of_(
             b"foobar", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct1Arg_of_(
             b"foobar", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
@@ -53450,32 +53448,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct1Arg_of_(
             b"hello", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct1Arg_of_(
             b"hello", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct1Arg_of_(
             b"world", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct1Arg_of_(
             b"world", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct1Arg_of_(
             b"foobar", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct1Arg_of_(
             b"foobar", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
     def testcallcharPtrAndstructTestStruct2Arg(self):
@@ -53484,32 +53482,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct2Arg_of_(
             b"hello", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct2Arg_of_(
             b"hello", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct2Arg_of_(
             b"world", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct2Arg_of_(
             b"world", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct2Arg_of_(
             b"foobar", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct2Arg_of_(
             b"foobar", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
@@ -53519,32 +53517,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct2Arg_of_(
             b"hello", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct2Arg_of_(
             b"hello", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct2Arg_of_(
             b"world", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct2Arg_of_(
             b"world", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct2Arg_of_(
             b"foobar", (1, 2, (1, 2, 3, 4, 5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2, (1, 2, 3, 4, 5)))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct2Arg_of_(
             b"foobar", (9, 8, (-1, -2, -3, -4, -5)), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (9, 8, (-1, -2, -3, -4, -5)))
 
     def testcallcharPtrAndstructTestStruct3Arg(self):
@@ -53553,32 +53551,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct3Arg_of_(
             b"hello", (1, 2), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct3Arg_of_(
             b"hello", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct3Arg_of_(
             b"world", (1, 2), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct3Arg_of_(
             b"world", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct3Arg_of_(
             b"foobar", (1, 2), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct3Arg_of_(
             b"foobar", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
@@ -53588,32 +53586,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct3Arg_of_(
             b"hello", (1, 2), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct3Arg_of_(
             b"hello", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct3Arg_of_(
             b"world", (1, 2), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct3Arg_of_(
             b"world", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct3Arg_of_(
             b"foobar", (1, 2), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct3Arg_of_(
             b"foobar", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4))
 
     def testcallcharPtrAndstructTestStruct4Arg(self):
@@ -53622,32 +53620,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_(
             b"hello", (1, 1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 1 << 60))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_(
             b"hello", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_(
             b"world", (1, 1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 1 << 60))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_(
             b"world", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_(
             b"foobar", (1, 1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 1 << 60))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct4Arg_of_(
             b"foobar", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
@@ -53657,32 +53655,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_(
             b"hello", (1, 1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 1 << 60))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_(
             b"hello", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_(
             b"world", (1, 1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 1 << 60))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_(
             b"world", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (2, 4))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_(
             b"foobar", (1, 1 << 60), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 1 << 60))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct4Arg_of_(
             b"foobar", (2, 4), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4))
 
     def testcallcharPtrAndstructTestStruct5Arg(self):
@@ -53691,32 +53689,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_(
             b"hello", (1, 2.5), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2.5))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_(
             b"hello", (2, 4.5), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (2, 4.5))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_(
             b"world", (1, 2.5), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2.5))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_(
             b"world", (2, 4.5), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (2, 4.5))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_(
             b"foobar", (1, 2.5), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2.5))
         r = PyObjC_TestClass2.callcharPtrArg_andstructTestStruct5Arg_of_(
             b"foobar", (2, 4.5), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4.5))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
@@ -53726,32 +53724,32 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_(
             b"hello", (1, 2.5), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (1, 2.5))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_(
             b"hello", (2, 4.5), o
         )
-        self.assertEqual(r[0], unicode(b"hello"))
+        self.assertEqual(r[0], str(b"hello"))
         self.assertEqual(r[1], (2, 4.5))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_(
             b"world", (1, 2.5), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (1, 2.5))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_(
             b"world", (2, 4.5), o
         )
-        self.assertEqual(r[0], unicode(b"world"))
+        self.assertEqual(r[0], str(b"world"))
         self.assertEqual(r[1], (2, 4.5))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_(
             b"foobar", (1, 2.5), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (1, 2.5))
         r = PyObjC_TestClass2.invokecharPtrArg_andstructTestStruct5Arg_of_(
             b"foobar", (2, 4.5), o
         )
-        self.assertEqual(r[0], unicode(b"foobar"))
+        self.assertEqual(r[0], str(b"foobar"))
         self.assertEqual(r[1], (2, 4.5))
 
     def testcallNSPointAndboolArg(self):
@@ -54547,44 +54545,44 @@ class ObjCToPy(TestCase):
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callNSPointArg_andcharPtrArg_of_((1, 2), b"hello", o)
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callNSPointArg_andcharPtrArg_of_((1, 2), b"world", o)
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callNSPointArg_andcharPtrArg_of_((1, 2), b"foobar", o)
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callNSPointArg_andcharPtrArg_of_((3, 4), b"hello", o)
         self.assertEqual(r[0], (3, 4))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callNSPointArg_andcharPtrArg_of_((3, 4), b"world", o)
         self.assertEqual(r[0], (3, 4))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callNSPointArg_andcharPtrArg_of_((3, 4), b"foobar", o)
         self.assertEqual(r[0], (3, 4))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeNSPointAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokeNSPointArg_andcharPtrArg_of_((1, 2), b"hello", o)
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeNSPointArg_andcharPtrArg_of_((1, 2), b"world", o)
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeNSPointArg_andcharPtrArg_of_((1, 2), b"foobar", o)
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeNSPointArg_andcharPtrArg_of_((3, 4), b"hello", o)
         self.assertEqual(r[0], (3, 4))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeNSPointArg_andcharPtrArg_of_((3, 4), b"world", o)
         self.assertEqual(r[0], (3, 4))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeNSPointArg_andcharPtrArg_of_((3, 4), b"foobar", o)
         self.assertEqual(r[0], (3, 4))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallNSPointAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -55954,32 +55952,32 @@ class ObjCToPy(TestCase):
             ((1, 2), (3, 4)), b"hello", o
         )
         self.assertEqual(r[0], ((1, 2), (3, 4)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callNSRectArg_andcharPtrArg_of_(
             ((1, 2), (3, 4)), b"world", o
         )
         self.assertEqual(r[0], ((1, 2), (3, 4)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callNSRectArg_andcharPtrArg_of_(
             ((1, 2), (3, 4)), b"foobar", o
         )
         self.assertEqual(r[0], ((1, 2), (3, 4)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callNSRectArg_andcharPtrArg_of_(
             ((7, 8), (9, 10)), b"hello", o
         )
         self.assertEqual(r[0], ((7, 8), (9, 10)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callNSRectArg_andcharPtrArg_of_(
             ((7, 8), (9, 10)), b"world", o
         )
         self.assertEqual(r[0], ((7, 8), (9, 10)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callNSRectArg_andcharPtrArg_of_(
             ((7, 8), (9, 10)), b"foobar", o
         )
         self.assertEqual(r[0], ((7, 8), (9, 10)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testinvokeNSRectAndcharPtrArg(self):
         o = Python_TestClass.alloc().init()
@@ -55988,32 +55986,32 @@ class ObjCToPy(TestCase):
             ((1, 2), (3, 4)), b"hello", o
         )
         self.assertEqual(r[0], ((1, 2), (3, 4)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeNSRectArg_andcharPtrArg_of_(
             ((1, 2), (3, 4)), b"world", o
         )
         self.assertEqual(r[0], ((1, 2), (3, 4)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeNSRectArg_andcharPtrArg_of_(
             ((1, 2), (3, 4)), b"foobar", o
         )
         self.assertEqual(r[0], ((1, 2), (3, 4)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokeNSRectArg_andcharPtrArg_of_(
             ((7, 8), (9, 10)), b"hello", o
         )
         self.assertEqual(r[0], ((7, 8), (9, 10)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokeNSRectArg_andcharPtrArg_of_(
             ((7, 8), (9, 10)), b"world", o
         )
         self.assertEqual(r[0], ((7, 8), (9, 10)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokeNSRectArg_andcharPtrArg_of_(
             ((7, 8), (9, 10)), b"foobar", o
         )
         self.assertEqual(r[0], ((7, 8), (9, 10)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallNSRectAndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -57518,32 +57516,32 @@ class ObjCToPy(TestCase):
             (1, 2, (1, 2, 3, 4, 5)), b"hello", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct1Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"world", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct1Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callstructTestStruct1Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"hello", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct1Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"world", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct1Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"foobar", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct1AndcharPtrArg(self):
@@ -57553,32 +57551,32 @@ class ObjCToPy(TestCase):
             (1, 2, (1, 2, 3, 4, 5)), b"hello", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct1Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"world", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct1Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokestructTestStruct1Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"hello", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct1Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"world", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct1Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"foobar", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallstructTestStruct1AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -59085,32 +59083,32 @@ class ObjCToPy(TestCase):
             (1, 2, (1, 2, 3, 4, 5)), b"hello", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct2Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"world", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct2Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callstructTestStruct2Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"hello", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct2Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"world", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct2Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"foobar", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct2AndcharPtrArg(self):
@@ -59120,32 +59118,32 @@ class ObjCToPy(TestCase):
             (1, 2, (1, 2, 3, 4, 5)), b"hello", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct2Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"world", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct2Arg_andcharPtrArg_of_(
             (1, 2, (1, 2, 3, 4, 5)), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2, (1, 2, 3, 4, 5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokestructTestStruct2Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"hello", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct2Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"world", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct2Arg_andcharPtrArg_of_(
             (9, 8, (-1, -2, -3, -4, -5)), b"foobar", o
         )
         self.assertEqual(r[0], (9, 8, (-1, -2, -3, -4, -5)))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallstructTestStruct2AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -60560,32 +60558,32 @@ class ObjCToPy(TestCase):
             (1, 2), b"hello", o
         )
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct3Arg_andcharPtrArg_of_(
             (1, 2), b"world", o
         )
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct3Arg_andcharPtrArg_of_(
             (1, 2), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callstructTestStruct3Arg_andcharPtrArg_of_(
             (2, 4), b"hello", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct3Arg_andcharPtrArg_of_(
             (2, 4), b"world", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct3Arg_andcharPtrArg_of_(
             (2, 4), b"foobar", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct3AndcharPtrArg(self):
@@ -60595,32 +60593,32 @@ class ObjCToPy(TestCase):
             (1, 2), b"hello", o
         )
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct3Arg_andcharPtrArg_of_(
             (1, 2), b"world", o
         )
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct3Arg_andcharPtrArg_of_(
             (1, 2), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokestructTestStruct3Arg_andcharPtrArg_of_(
             (2, 4), b"hello", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct3Arg_andcharPtrArg_of_(
             (2, 4), b"world", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct3Arg_andcharPtrArg_of_(
             (2, 4), b"foobar", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallstructTestStruct3AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -62081,32 +62079,32 @@ class ObjCToPy(TestCase):
             (1, 1 << 60), b"hello", o
         )
         self.assertEqual(r[0], (1, 1 << 60))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_(
             (1, 1 << 60), b"world", o
         )
         self.assertEqual(r[0], (1, 1 << 60))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_(
             (1, 1 << 60), b"foobar", o
         )
         self.assertEqual(r[0], (1, 1 << 60))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_(
             (2, 4), b"hello", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_(
             (2, 4), b"world", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct4Arg_andcharPtrArg_of_(
             (2, 4), b"foobar", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct4AndcharPtrArg(self):
@@ -62116,32 +62114,32 @@ class ObjCToPy(TestCase):
             (1, 1 << 60), b"hello", o
         )
         self.assertEqual(r[0], (1, 1 << 60))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_(
             (1, 1 << 60), b"world", o
         )
         self.assertEqual(r[0], (1, 1 << 60))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_(
             (1, 1 << 60), b"foobar", o
         )
         self.assertEqual(r[0], (1, 1 << 60))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_(
             (2, 4), b"hello", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_(
             (2, 4), b"world", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct4Arg_andcharPtrArg_of_(
             (2, 4), b"foobar", o
         )
         self.assertEqual(r[0], (2, 4))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallstructTestStruct4AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -63604,32 +63602,32 @@ class ObjCToPy(TestCase):
             (1, 2.5), b"hello", o
         )
         self.assertEqual(r[0], (1, 2.5))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_(
             (1, 2.5), b"world", o
         )
         self.assertEqual(r[0], (1, 2.5))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_(
             (1, 2.5), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2.5))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_(
             (2, 4.5), b"hello", o
         )
         self.assertEqual(r[0], (2, 4.5))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_(
             (2, 4.5), b"world", o
         )
         self.assertEqual(r[0], (2, 4.5))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.callstructTestStruct5Arg_andcharPtrArg_of_(
             (2, 4.5), b"foobar", o
         )
         self.assertEqual(r[0], (2, 4.5))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     @onlyIf(nsinvoke_ok, "NSInvocation doesn't work with some structs")
     def testinvokestructTestStruct5AndcharPtrArg(self):
@@ -63639,32 +63637,32 @@ class ObjCToPy(TestCase):
             (1, 2.5), b"hello", o
         )
         self.assertEqual(r[0], (1, 2.5))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_(
             (1, 2.5), b"world", o
         )
         self.assertEqual(r[0], (1, 2.5))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_(
             (1, 2.5), b"foobar", o
         )
         self.assertEqual(r[0], (1, 2.5))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
         r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_(
             (2, 4.5), b"hello", o
         )
         self.assertEqual(r[0], (2, 4.5))
-        self.assertEqual(r[1], unicode(b"hello"))
+        self.assertEqual(r[1], str(b"hello"))
         r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_(
             (2, 4.5), b"world", o
         )
         self.assertEqual(r[0], (2, 4.5))
-        self.assertEqual(r[1], unicode(b"world"))
+        self.assertEqual(r[1], str(b"world"))
         r = PyObjC_TestClass2.invokestructTestStruct5Arg_andcharPtrArg_of_(
             (2, 4.5), b"foobar", o
         )
         self.assertEqual(r[0], (2, 4.5))
-        self.assertEqual(r[1], unicode(b"foobar"))
+        self.assertEqual(r[1], str(b"foobar"))
 
     def testcallstructTestStruct5AndNSPointArg(self):
         o = Python_TestClass.alloc().init()
@@ -64339,21 +64337,21 @@ class ObjCToPy(TestCase):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.callcharPtrInArg_of_(b"hello", o)
-        self.assertEqual(r, unicode(b"hello"))
+        self.assertEqual(r, str(b"hello"))
         r = PyObjC_TestClass2.callcharPtrInArg_of_(b"world", o)
-        self.assertEqual(r, unicode(b"world"))
+        self.assertEqual(r, str(b"world"))
         r = PyObjC_TestClass2.callcharPtrInArg_of_(b"foobar", o)
-        self.assertEqual(r, unicode(b"foobar"))
+        self.assertEqual(r, str(b"foobar"))
 
     def testinvokecharPtrIn(self):
         o = Python_TestClass.alloc().init()
         self.assertIsNotNone(o)
         r = PyObjC_TestClass2.invokecharPtrInArg_of_(b"hello", o)
-        self.assertEqual(r, unicode(b"hello"))
+        self.assertEqual(r, str(b"hello"))
         r = PyObjC_TestClass2.invokecharPtrInArg_of_(b"world", o)
-        self.assertEqual(r, unicode(b"world"))
+        self.assertEqual(r, str(b"world"))
         r = PyObjC_TestClass2.invokecharPtrInArg_of_(b"foobar", o)
-        self.assertEqual(r, unicode(b"foobar"))
+        self.assertEqual(r, str(b"foobar"))
 
     def testcallNSPointIn(self):
         o = Python_TestClass.alloc().init()

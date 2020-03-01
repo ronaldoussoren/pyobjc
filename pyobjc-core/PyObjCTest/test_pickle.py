@@ -5,21 +5,10 @@ from objc._pythonify import OC_PythonFloat, OC_PythonLong
 from PyObjCTest.fnd import NSNumber
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 2:
-    from objc._pythonify import OC_PythonInt
-
-try:
-    import cPickle
-except ImportError:
-    cPickle = None
-
 
 class TestPickleNumber(TestCase):
     def testPickleInt(self):
-        if sys.version_info[0] == 2:
-            number_type = OC_PythonInt
-        else:
-            number_type = OC_PythonLong
+        number_type = OC_PythonLong
         v = NSNumber.numberWithInt_(42)
         self.assertIsInstance(v, number_type)
 
@@ -29,14 +18,6 @@ class TestPickleNumber(TestCase):
         self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, number_type)
         self.assertIsInstance(v2, int)
-
-        if cPickle is not None:
-            # Then C pickle
-            s = cPickle.dumps(v)
-            v2 = cPickle.loads(s)
-            self.assertEqual(v2, v)
-            self.assertIsNotInstance(v2, number_type)
-            self.assertIsInstance(v2, int)
 
     def testPickleFloat(self):
         v = NSNumber.numberWithFloat_(42)
@@ -49,14 +30,6 @@ class TestPickleNumber(TestCase):
         self.assertIsNotInstance(v2, OC_PythonFloat)
         self.assertIsInstance(v2, float)
 
-        if cPickle is not None:
-            # Then C pickle
-            s = cPickle.dumps(v)
-            v2 = cPickle.loads(s)
-            self.assertEqual(v2, v)
-            self.assertIsNotInstance(v2, OC_PythonFloat)
-            self.assertIsInstance(v2, float)
-
     @onlyOn32Bit
     def testPickleLongLong(self):
         v = NSNumber.numberWithLongLong_(sys.maxsize + 3)
@@ -67,15 +40,7 @@ class TestPickleNumber(TestCase):
         v2 = pickle.loads(s)
         self.assertEqual(v2, v)
         self.assertIsNotInstance(v2, OC_PythonLong)
-        self.assertIsInstance(v2, long)
-
-        if cPickle is not None:
-            # Then C pickle
-            s = cPickle.dumps(v)
-            v2 = cPickle.loads(s)
-            self.assertEqual(v2, v)
-            self.assertIsNotInstance(v2, OC_PythonLong)
-            self.assertIsInstance(v2, long)
+        self.assertIsInstance(v2, int)
 
 
 if __name__ == "__main__":

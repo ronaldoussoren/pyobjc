@@ -841,96 +841,92 @@ class TestDescribeCallable(TestCase):
         )
 
 
-if sys.version_info[:2] >= (3, 3):
+class TestCallableSignature(TestCase):
+    def test_function(self):
+        dct = {}
+        func = objc.loadBundleFunctions(
+            None,
+            dct,
+            [
+                ("NSTemporaryDirectory", objc._C_ID),
+                (
+                    "NSSearchPathForDirectoriesInDomains",
+                    objc._C_ID
+                    + objc._C_NSUInteger
+                    + objc._C_NSUInteger
+                    + objc._C_NSBOOL,
+                ),
+            ],
+        )
+        NSTemporaryDirectory = dct["NSTemporaryDirectory"]
+        NSSearchPathForDirectoriesInDomains = dct["NSSearchPathForDirectoriesInDomains"]
 
-    class TestCallableSignature(TestCase):
-        def test_function(self):
-            dct = {}
-            func = objc.loadBundleFunctions(
-                None,
-                dct,
-                [
-                    ("NSTemporaryDirectory", objc._C_ID),
-                    (
-                        "NSSearchPathForDirectoriesInDomains",
-                        objc._C_ID
-                        + objc._C_NSUInteger
-                        + objc._C_NSUInteger
-                        + objc._C_NSBOOL,
-                    ),
-                ],
-            )
-            NSTemporaryDirectory = dct["NSTemporaryDirectory"]
-            NSSearchPathForDirectoriesInDomains = dct[
-                "NSSearchPathForDirectoriesInDomains"
-            ]
+        self.assertEqual(
+            NSTemporaryDirectory.__signature__,
+            mod.callable_signature(NSTemporaryDirectory),
+        )
+        self.assertEqual(
+            NSSearchPathForDirectoriesInDomains.__signature__,
+            mod.callable_signature(NSSearchPathForDirectoriesInDomains),
+        )
 
-            self.assertEqual(
-                NSTemporaryDirectory.__signature__,
-                mod.callable_signature(NSTemporaryDirectory),
-            )
-            self.assertEqual(
-                NSSearchPathForDirectoriesInDomains.__signature__,
-                mod.callable_signature(NSSearchPathForDirectoriesInDomains),
-            )
+        sig = NSTemporaryDirectory.__signature__
+        self.assertIsInstance(sig, inspect.Signature)
+        self.assertEqual(len(sig.parameters), 0)
 
-            sig = NSTemporaryDirectory.__signature__
-            self.assertIsInstance(sig, inspect.Signature)
-            self.assertEqual(len(sig.parameters), 0)
+        sig = NSSearchPathForDirectoriesInDomains.__signature__
+        self.assertIsInstance(sig, inspect.Signature)
+        self.assertEqual(len(sig.parameters), 3)
+        self.assertEqual(
+            sig.parameters["arg0"],
+            inspect.Parameter("arg0", inspect.Parameter.POSITIONAL_ONLY),
+        )
+        self.assertEqual(
+            sig.parameters["arg1"],
+            inspect.Parameter("arg1", inspect.Parameter.POSITIONAL_ONLY),
+        )
+        self.assertEqual(
+            sig.parameters["arg2"],
+            inspect.Parameter("arg2", inspect.Parameter.POSITIONAL_ONLY),
+        )
+        self.assertEqual(list(sig.parameters), ["arg0", "arg1", "arg2"])
 
-            sig = NSSearchPathForDirectoriesInDomains.__signature__
-            self.assertIsInstance(sig, inspect.Signature)
-            self.assertEqual(len(sig.parameters), 3)
-            self.assertEqual(
-                sig.parameters["arg0"],
-                inspect.Parameter("arg0", inspect.Parameter.POSITIONAL_ONLY),
-            )
-            self.assertEqual(
-                sig.parameters["arg1"],
-                inspect.Parameter("arg1", inspect.Parameter.POSITIONAL_ONLY),
-            )
-            self.assertEqual(
-                sig.parameters["arg2"],
-                inspect.Parameter("arg2", inspect.Parameter.POSITIONAL_ONLY),
-            )
-            self.assertEqual(list(sig.parameters), ["arg0", "arg1", "arg2"])
+    def test_selector(self):
+        m = NSArray.array
+        self.assertEqual(m.__signature__, mod.callable_signature(m))
 
-        def test_selector(self):
-            m = NSArray.array
-            self.assertEqual(m.__signature__, mod.callable_signature(m))
+        sig = m.__signature__
+        self.assertIsInstance(sig, inspect.Signature)
+        self.assertEqual(len(sig.parameters), 0)
 
-            sig = m.__signature__
-            self.assertIsInstance(sig, inspect.Signature)
-            self.assertEqual(len(sig.parameters), 0)
+        m = NSArray.arrayWithObjects_
+        sig = m.__signature__
+        self.assertIsInstance(sig, inspect.Signature)
+        self.assertEqual(len(sig.parameters), 1)
+        self.assertEqual(
+            sig.parameters["arg0"],
+            inspect.Parameter("arg0", inspect.Parameter.POSITIONAL_ONLY),
+        )
 
-            m = NSArray.arrayWithObjects_
-            sig = m.__signature__
-            self.assertIsInstance(sig, inspect.Signature)
-            self.assertEqual(len(sig.parameters), 1)
-            self.assertEqual(
-                sig.parameters["arg0"],
-                inspect.Parameter("arg0", inspect.Parameter.POSITIONAL_ONLY),
-            )
+        m = NSArray.indexOfObject_inRange_
+        sig = m.__signature__
+        self.assertIsInstance(sig, inspect.Signature)
+        self.assertEqual(len(sig.parameters), 2)
+        self.assertEqual(
+            sig.parameters["arg0"],
+            inspect.Parameter("arg0", inspect.Parameter.POSITIONAL_ONLY),
+        )
+        self.assertEqual(
+            sig.parameters["arg1"],
+            inspect.Parameter("arg1", inspect.Parameter.POSITIONAL_ONLY),
+        )
+        self.assertEqual(list(sig.parameters), ["arg0", "arg1"])
 
-            m = NSArray.indexOfObject_inRange_
-            sig = m.__signature__
-            self.assertIsInstance(sig, inspect.Signature)
-            self.assertEqual(len(sig.parameters), 2)
-            self.assertEqual(
-                sig.parameters["arg0"],
-                inspect.Parameter("arg0", inspect.Parameter.POSITIONAL_ONLY),
-            )
-            self.assertEqual(
-                sig.parameters["arg1"],
-                inspect.Parameter("arg1", inspect.Parameter.POSITIONAL_ONLY),
-            )
-            self.assertEqual(list(sig.parameters), ["arg0", "arg1"])
-
-        def test_not_for_regular_types(self):
-            self.assertRaises(AttributeError, mod.callable_signature, 42)
-            self.assertRaises(AttributeError, mod.callable_signature, int)
-            self.assertRaises(AttributeError, mod.callable_signature, dir)
-            self.assertRaises(AttributeError, mod.callable_signature, lambda x: x * 2)
+    def test_not_for_regular_types(self):
+        self.assertRaises(AttributeError, mod.callable_signature, 42)
+        self.assertRaises(AttributeError, mod.callable_signature, int)
+        self.assertRaises(AttributeError, mod.callable_signature, dir)
+        self.assertRaises(AttributeError, mod.callable_signature, lambda x: x * 2)
 
 
 if __name__ == "__main__":

@@ -7,8 +7,6 @@ while at the same time getting a higher fidelity bridge.
 
 - Add tests for calling methods from ObjC
 """
-from __future__ import unicode_literals
-
 import array
 import sys
 import weakref
@@ -17,10 +15,6 @@ import objc
 from PyObjCTest.fnd import NSObject
 from PyObjCTest.specialtypecodes import *
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 3:
-    unichr = chr
-    unicode = str
 
 
 def setupMetaData():
@@ -172,16 +166,10 @@ class TestTypeCode_byte(TestCase):
         self.assertEqual(len(v), 4)
         self.assertIsInstance(v, bytes)
 
-        if sys.version_info[0] == 2:
-            self.assertEqual(v[0], b"\x64")
-            self.assertEqual(v[1], b"\xc8")
-            self.assertEqual(v[2], b"\x96")
-            self.assertEqual(v[3], b"\x63")
-        else:
-            self.assertEqual(v[0], 0x64)
-            self.assertEqual(v[1], 0xC8)
-            self.assertEqual(v[2], 0x96)
-            self.assertEqual(v[3], 0x63)
+        self.assertEqual(v[0], 0x64)
+        self.assertEqual(v[1], 0xC8)
+        self.assertEqual(v[2], 0x96)
+        self.assertEqual(v[3], 0x63)
 
     def testReturnValueString(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -194,7 +182,7 @@ class TestTypeCode_byte(TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.byteArg_andbyteArg_(b"\x44", b"\x99")
-        self.assertEqual(v, (unichr(0x44), unichr(0x99)))
+        self.assertEqual(v, (chr(0x44), chr(0x99)))
 
         v = o.byteArg_andbyteArg_(b"a", b"b")
         self.assertEqual(v, ("a", "b"))
@@ -206,10 +194,10 @@ class TestTypeCode_byte(TestCase):
 
         v = o.byteStringArg_(b"hello world")
         self.assertEqual(v, "hello world")
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, str)
 
         v = o.byteStringArg_([b"a", b"b"])
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, str)
         self.assertEqual(v, "ab")
 
         self.assertRaises(ValueError, o.byteStringArg_, [99, 100, 100, 0])
@@ -223,12 +211,9 @@ class TestTypeCode_byte(TestCase):
         v = o.byteArrayOf4In_([b"a", b"b", b"c", b"d"])
         self.assertEqual(v, "abcd")
 
-        if sys.version_info[0] == 2:
-            a = array.array(b"B", [200, 150, 80, 20])
-        else:
-            a = array.array("B", [200, 150, 80, 20])
+        a = array.array("B", [200, 150, 80, 20])
         v = o.byteArrayOf4In_(a)
-        self.assertEqual(v, "".join([unichr(200), unichr(150), unichr(80), unichr(20)]))
+        self.assertEqual(v, "".join([chr(200), chr(150), chr(80), chr(20)]))
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -237,10 +222,7 @@ class TestTypeCode_byte(TestCase):
         self.assertEqual(v, b"boat")
 
         o = OC_TestSpecialTypeCode.alloc().init()
-        if sys.version_info[0] == 2:
-            a = array.array(b"b", [0] * 4)
-        else:
-            a = array.array("b", [0] * 4)
+        a = array.array("b", [0] * 4)
         v = o.byteArrayOf4Out_(a)
         self.assertIs(v, a)
         self.assertEqual(v[0], ord("b"))

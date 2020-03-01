@@ -3,7 +3,7 @@ Convenience methods for Cocoa mapping types.
 """
 __all__ = ("addConvenienceForBasicMapping",)
 
-import sys
+import collections.abc
 
 from objc._convenience import (
     CLASS_ABC,
@@ -11,12 +11,6 @@ from objc._convenience import (
     container_unwrap,
     container_wrap,
 )
-from objc._objc import selector
-
-if sys.version_info[0] == 2:
-    import collections as collections_abc
-else:
-    import collections.abc as collections_abc
 
 
 def __getitem__objectForKey_(self, key):
@@ -48,7 +42,6 @@ def __delitem__removeObjectForKey_(self, key):
 
 
 def update_setObject_forKey_(self, *args, **kwds):
-    # XXX - should this be more flexible?
     if len(args) == 0:
         pass
     elif len(args) != 1:
@@ -137,4 +130,4 @@ def addConvenienceForBasicMapping(classname, readonly=True):
     except KeyError:
         lst = CLASS_ABC[classname] = []
 
-    lst.append(collections_abc.Mapping if readonly else collections_abc.MutableMapping)
+    lst.append(collections.abc.Mapping if readonly else collections.abc.MutableMapping)

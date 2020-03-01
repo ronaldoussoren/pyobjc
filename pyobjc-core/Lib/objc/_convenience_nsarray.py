@@ -21,8 +21,8 @@ collections.abc.MutableSequence.register(NSMutableArray)
 registerMetaDataForSelector(
     b"NSObject",
     b"sortUsingFunction:context:",
-    dict(
-        arguments={
+    {
+        "arguments": {
             2: {
                 "callable": {
                     "retval": {"type": _C_NSInteger},
@@ -36,7 +36,7 @@ registerMetaDataForSelector(
             },
             3: {"type": _C_ID},
         }
-    ),
+    },
 )
 
 
@@ -324,65 +324,35 @@ def nsarray_clear(self):
     self.removeAllObjects()
 
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
+def nsarray_sort(self, key=lambda x: x, reverse=False):
+    if reverse:
 
-    def nsarray_sort(self, cmp=cmp, key=None, reverse=False):
-        if key is None:
-            if reverse:
+        def sort_func(a, b, _):
+            a = key(a)
+            b = key(b)
+            if a < b:
+                return 1
 
-                def sort_func(a, b, cmp):
-                    return -cmp(a, b)
-
-            else:
-
-                def sort_func(a, b, cmp):
-                    return cmp(a, b)
-
-        else:
-            if reverse:
-
-                def sort_func(a, b, cmp):
-                    return -cmp(key(a), key(b))
+            elif b < a:
+                return -1
 
             else:
+                return 0
 
-                def sort_func(a, b, cmp):
-                    return cmp(key(a), key(b))
+    else:
 
-        self.sortUsingFunction_context_(sort_func, cmp)
+        def sort_func(a, b, _):
+            a = key(a)
+            b = key(b)
 
+            if a < b:
+                return -1
+            elif b < a:
+                return 1
+            else:
+                return 0
 
-else:  # pragma: no 2.x cover
-
-    def nsarray_sort(self, key=lambda x: x, reverse=False):
-        if reverse:
-
-            def sort_func(a, b, _):
-                a = key(a)
-                b = key(b)
-                if a < b:
-                    return 1
-
-                elif b < a:
-                    return -1
-
-                else:
-                    return 0
-
-        else:
-
-            def sort_func(a, b, _):
-                a = key(a)
-                b = key(b)
-
-                if a < b:
-                    return -1
-                elif b < a:
-                    return 1
-                else:
-                    return 0
-
-        self.sortUsingFunction_context_(sort_func, None)
+    self.sortUsingFunction_context_(sort_func, None)
 
 
 def nsarray__len__(self):

@@ -2,21 +2,13 @@
 This module implements a callback function that is used by the C code to
 add Python special methods to Objective-C classes with a suitable interface.
 """
-import collections
-import sys
-import warnings
-
 from objc._objc import (
     _block_call,
     _rescanClass,
-    _updatingMetadata,
     currentBundle,
     lookUpClass,
     options,
-    registerMetaDataForSelector,
-    repythonify,
     selector,
-    splitSignature,
 )
 
 __all__ = ("addConvenienceForClass", "registerABCForClass")
@@ -29,7 +21,6 @@ def register(f):
     options._class_extender = f
 
 
-# XXX: interface is too wide (super_class is not needed, can pass actual class)
 @register
 def add_convenience_methods(cls, type_dict):
     """
@@ -71,6 +62,7 @@ def registerABCForClass(classname, *abc_class):
     Register *classname* with the *abc_class*-es when
     the class becomes available.
     """
+    global CLASS_ABC
     try:
         CLASS_ABC += tuple(abc_class)
     except KeyError:

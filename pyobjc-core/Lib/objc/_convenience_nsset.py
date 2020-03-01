@@ -4,7 +4,6 @@ Convenience interface for NSSet/NSMutableSet
 __all__ = ()
 
 import collections.abc
-import sys
 
 from objc._convenience import addConvenienceForClass, container_unwrap, container_wrap
 from objc._objc import lookUpClass

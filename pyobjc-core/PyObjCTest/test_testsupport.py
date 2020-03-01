@@ -46,11 +46,7 @@ class TestTestSupport(TestCase):
                 return config_result
 
             TestSupport._get_config_var = get_config_var
-            cache = (
-                sdkForPython.func_defaults[0]
-                if sys.version_info[0] == 2
-                else sdkForPython.__defaults__[0]
-            )
+            cache = sdkForPython.__defaults__[0]
 
             config_result = ""
             self.assertEqual(sdkForPython(), None)
@@ -144,15 +140,14 @@ class TestTestSupport(TestCase):
         self.assertIs(func_true, dec_true)
         self.assertIsNot(func_false, dec_false)
 
-        if sys.version_info[:2] >= (2, 7):
-            try:
-                dec_false()
-            except TestSupport._unittest.SkipTest:
-                # OK
-                pass
+        try:
+            dec_false()
+        except TestSupport._unittest.SkipTest:
+            # OK
+            pass
 
-            else:
-                self.fail("Not skipped?")
+        else:
+            self.fail("Not skipped?")
 
     def testOnlyPython(self):
         orig_version = sys.version_info
@@ -366,7 +361,7 @@ class TestTestSupport(TestCase):
             self.fail("CFType subclass not recognized as CFType")
 
     def test_assert_opaque(self):
-        self.assertRaises(self.failureException, self.assertIsOpaquePointer, long)
+        self.assertRaises(self.failureException, self.assertIsOpaquePointer, int)
 
         class N(object):
             @property

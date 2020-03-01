@@ -27,9 +27,9 @@ weaker coupling between the view and model layers.
 """
 from __future__ import unicode_literals
 
+import collections.abc
 import sys
 import types
-import warnings
 
 import objc
 
@@ -37,14 +37,6 @@ __all__ = ("getKey", "setKey", "getKeyPath", "setKeyPath")
 if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
     __all__ = tuple(str(x) for x in __all__)
 
-
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    from itertools import imap as map
-    import collections as collections_abc
-
-else:  # pragma: no cover (py3k)
-    basestring = str
-    import collections.abc as collections_abc
 
 _null = objc.lookUpClass("NSNull").null()
 
@@ -59,7 +51,9 @@ def keyCaps(s):
 
 
 def msum(iterable):
-    "Full precision summation using multiple floats for intermediate values"
+    """
+    Full precision summation using multiple floats for intermediate values
+    """
     # sorted, non-overlapping partial sums
     partials = []
     for x in iterable:
@@ -204,8 +198,8 @@ def getKey(obj, key):
 
     # check for array-like objects
     if isinstance(
-        obj, (collections_abc.Sequence, collections_abc.Set)
-    ) and not isinstance(obj, (basestring, collections_abc.Mapping)):
+        obj, (collections.abc.Sequence, collections.abc.Set)
+    ) and not isinstance(obj, (str, collections.abc.Mapping)):
 
         def maybe_get(obj, key):
             try:
@@ -275,7 +269,7 @@ def setKey(obj, key, value):
         obj.setValue_forKey_(value, key)
         return
 
-    if isinstance(obj, collections_abc.Mapping):
+    if isinstance(obj, collections.abc.Mapping):
         obj[key] = value
         return
 
@@ -386,11 +380,11 @@ class kvc(object):
             object.__setattr__(self, attr, value)
 
     def __getitem__(self, item):
-        if not isinstance(item, basestring):
+        if not isinstance(item, str):
             raise TypeError("Keys must be strings")
         return getKeyPath(self.__pyobjc_object__, item)
 
     def __setitem__(self, item, value):
-        if not isinstance(item, basestring):
+        if not isinstance(item, str):
             raise TypeError("Keys must be strings")
         setKeyPath(self.__pyobjc_object__, item, value)

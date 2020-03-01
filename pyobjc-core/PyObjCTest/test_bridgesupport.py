@@ -10,10 +10,7 @@ import objc
 import objc._bridgesupport as bridgesupport
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 2:
-    from imp import reload
-else:
-    from importlib import reload
+from importlib import reload
 
 
 IDENTIFIER = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
@@ -591,11 +588,11 @@ class TestBridgeSupportParser(TestCase):
             "strconst2": b"string constant 2"
             if sys.maxsize < 2 ** 32
             else b"string constant two",
-            "strconst1u": b"string constant1 unicode".decode("ascii"),
-            "strconst2u": b"string constant 2 unicode".decode("ascii")
+            "strconst1u": "string constant1 unicode",
+            "strconst2u": "string constant 2 unicode"
             if sys.maxsize < 2 ** 32
-            else b"string constant two unicode".decode("ascii"),
-            "strconst7": b"zee\xebn".decode("latin1"),
+            else "string constant two unicode",
+            "strconst7": "zee\xebn",
             "enum1": 1,
             "enum2": 3 if sys.maxsize < 2 ** 32 else 4,
             "enum3": 5 if sys.byteorder == "little" else 6,
@@ -606,7 +603,7 @@ class TestBridgeSupportParser(TestCase):
         }
         if sys.maxsize > 2 ** 32:
             all_values["strconst5"] = b"string five"
-            all_values["strconst6"] = b"string five unicode".decode("ascii")
+            all_values["strconst6"] = "string five unicode"
             all_values["enum6"] = 4
 
         if sys.byteorder == "little":
@@ -1346,17 +1343,17 @@ class TestBridgeSupportParser(TestCase):
 
             key = "c_array_of_fixed_length"
             if key in meta["retval"]:
-                self.assertIsInstance(meta["retval"][key], (int, long))
+                self.assertIsInstance(meta["retval"][key], int)
 
             key = "c_array_length_in_arg"
             if key in meta["retval"]:
                 if isinstance(meta["retval"][key], tuple):
                     self.assertEqual(len(meta["retval"][key]), 2)
                     self.assertTrue(
-                        all(isinstance(x, (int, long)) for x in meta["retval"][key])
+                        all(isinstance(x, int) for x in meta["retval"][key])
                     )
                 else:
-                    self.assertIsInstance(meta["retval"][key], (int, long))
+                    self.assertIsInstance(meta["retval"][key], int)
 
             for key in (
                 "c_array_delimited_by_null",
@@ -1372,7 +1369,7 @@ class TestBridgeSupportParser(TestCase):
 
         if "arguments" in meta:
             for idx in meta["arguments"]:
-                self.assertIsInstance(idx, (int, long))
+                self.assertIsInstance(idx, int)
                 arg = meta["arguments"][idx]
 
                 if "type" in arg:
@@ -1406,17 +1403,17 @@ class TestBridgeSupportParser(TestCase):
                     self.assertIsInstance(arg["free_result"], bool)
 
                 if "c_array_of_fixed_length" in arg:
-                    self.assertIsInstance(arg["c_array_of_fixed_length"], (int, long))
+                    self.assertIsInstance(arg["c_array_of_fixed_length"], int)
 
                 if "c_array_length_in_arg" in arg:
-                    if isinstance(arg["c_array_length_in_arg"], (int, long)):
+                    if isinstance(arg["c_array_length_in_arg"], int):
                         pass
 
                     else:
                         self.assertIsInstance(arg["c_array_length_in_arg"], tuple)
                         self.assertEqual(len(arg["c_array_length_in_arg"]), 2)
                         for x in arg["c_array_length_in_arg"]:
-                            self.assertIsInstance(x, (int, long))
+                            self.assertIsInstance(x, int)
 
                 for key in (
                     "c_array_delimited_by_null",
@@ -1431,7 +1428,7 @@ class TestBridgeSupportParser(TestCase):
                 self.assertEqual(set(arg) - valid_keys, set())
 
         if "suggestion" in meta:
-            self.assertIsInstance(meta["suggestion"], basestring)
+            self.assertIsInstance(meta["suggestion"], str)
 
         if "variadic" in meta:
             self.assertIsInstance(meta["variadic"], bool)
@@ -1453,7 +1450,7 @@ class TestBridgeSupportParser(TestCase):
 
             found = False
             if "c_array_length_in_arg" in meta:
-                self.assertIsInstance(meta["c_array_length_in_arg"], (int, long))
+                self.assertIsInstance(meta["c_array_length_in_arg"], int)
                 self.assertNotIn("c_array_delimited_by_null", meta)
                 found = True
 
@@ -1511,29 +1508,29 @@ class TestBridgeSupportParser(TestCase):
             else:
                 self.fail("Wrong item length in cftypes: %s" % (item,))
 
-            self.assertIsInstance(name, basestring)
+            self.assertIsInstance(name, str)
             self.assertIsInstance(encoding, bytes)
             self.assertEqual(len(objc.splitSignature(encoding)), 1)
             if tollfreeName is None:
-                self.assertIsInstance(typeId, (int, long))
+                self.assertIsInstance(typeId, int)
 
             else:
                 self.assertIs(typeId, None)
-                self.assertIsInstance(tollfreeName, basestring)
+                self.assertIsInstance(tollfreeName, str)
 
         for name, typestr, magic in prs.constants:
-            self.assertIsInstance(name, basestring)
+            self.assertIsInstance(name, str)
             self.assertIsInstance(typestr, bytes)
             self.assertIsInstance(magic, bool)
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name, orig in prs.func_aliases:
-            self.assertIsInstance(name, basestring)
-            self.assertIsInstance(orig, basestring)
+            self.assertIsInstance(name, str)
+            self.assertIsInstance(orig, str)
             self.assertIsIdentifier(name)
 
         for name, encoding, doc, meta in prs.functions:
-            self.assertIsInstance(name, basestring)
+            self.assertIsInstance(name, str)
             self.assertIsInstance(encoding, bytes)
 
             # check that signature string is well-formed:
@@ -1544,7 +1541,7 @@ class TestBridgeSupportParser(TestCase):
             self.assert_valid_callable(meta, function=True)
 
         for name, method_list in prs.informal_protocols:
-            self.assertIsInstance(name, basestring)
+            self.assertIsInstance(name, str)
             self.assertIsInstance(method_list, list)
             for sel in method_list:
                 self.assertIsInstance(sel, objc.selector)
@@ -1559,19 +1556,19 @@ class TestBridgeSupportParser(TestCase):
             self.assert_valid_callable(meta, function=False)
 
         for name, typestr in prs.opaque:
-            self.assertIsInstance(name, basestring)
+            self.assertIsInstance(name, str)
             self.assertIsInstance(typestr, bytes)
 
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name, typestr, alias in prs.structs:
-            self.assertIsInstance(name, basestring)
+            self.assertIsInstance(name, str)
             self.assertIsInstance(typestr, bytes)
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
         for name in prs.values:
             self.assertIsInstance(
-                prs.values[name], (basestring, long, int, float, bytes, type(None))
+                prs.values[name], (str, int, float, bytes, type(None))
             )
 
         return prs
@@ -1637,7 +1634,7 @@ class TestParseBridgeSupport(TestCase):
         def registerCFSignature(name, encoding, typeId, tollfreeName=SENTINEL):
             self.assertIsInstance(name, str)
             self.assertIsInstance(encoding, bytes)
-            self.assertIsInstance(typeId, (int, long, type(None)))
+            self.assertIsInstance(typeId, (int, type(None)))
             if tollfreeName is not SENTINEL:
                 self.assertIsInstance(tollfreeName, str)
 
@@ -1672,7 +1669,7 @@ class TestParseBridgeSupport(TestCase):
             self.assertIsInstance(typestr, bytes)
             self.assertIsInstance(fieldnames, (list, tuple, type(None)))
             self.assertIsInstance(doc, (str, type(None)))
-            self.assertIsInstance(pack, (int, long))
+            self.assertIsInstance(pack, int)
             self.assertTrue(-1 <= pack <= 32)
             if fieldnames is not None:
                 for nm in fieldnames:

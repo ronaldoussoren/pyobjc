@@ -8,6 +8,7 @@ Add tests for nested structs as well (that is assert that NSRect.location is
 an NSPoint, but using our own types)
 """
 import sys
+import warnings
 
 import objc
 from PyObjCTest.fnd import NSObject

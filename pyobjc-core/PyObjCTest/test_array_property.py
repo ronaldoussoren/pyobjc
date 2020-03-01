@@ -1,5 +1,6 @@
 import pickle
 import sys
+import collections.abc
 
 import objc
 from PyObjCTest.test_object_property import OCObserve
@@ -8,11 +9,6 @@ from PyObjCTools.TestSupport import *
 NSObject = objc.lookUpClass("NSObject")
 NSIndexSet = objc.lookUpClass("NSIndexSet")
 NSMutableIndexSet = objc.lookUpClass("NSMutableIndexSet")
-
-if sys.version_info[0] == 3:
-    import collections.abc as collections_abc
-else:
-    import collections as collections_abc
 
 
 class TestArrayPropertyHelper(NSObject):
@@ -31,7 +27,7 @@ class TestArrayProperty(TestCase):
         o = TestArrayPropertyHelper.alloc().init()
 
         v = o.array
-        self.assertIsInstance(v, collections_abc.MutableSequence)
+        self.assertIsInstance(v, collections.abc.MutableSequence)
 
         self.assertEqual(len(v), 0)
 

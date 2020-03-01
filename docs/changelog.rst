@@ -6,6 +6,14 @@ An overview of the relevant changes in new, and older, releases.
 Version 6.3
 -----------
 
+* The project has moved from Bitbucket to Github
+
+* Remove most remnants of Python 2 support
+
+* [in progress] clean up code quality issues found using flake8
+
+* Add pre-commit hook to run black on all Python code.
+
 * #290: Fix protocol conformance testing when explicitly implementing a protocol
 
   Before this bugfix a class explicitly conforming to a protocol could not

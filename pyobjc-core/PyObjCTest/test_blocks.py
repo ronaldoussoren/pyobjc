@@ -120,9 +120,7 @@ objc.parseBridgeSupport(
       </class>
     </signatures>
     """
-    % dict(
-        NSRect_tp=NSRect_tp if sys.version_info[0] == 2 else NSRect_tp.decode("ascii")
-    ),
+    % dict(NSRect_tp=NSRect_tp.decode("ascii")),
     globals(),
     "PyObjCTest",
 )

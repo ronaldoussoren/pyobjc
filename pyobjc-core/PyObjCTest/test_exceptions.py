@@ -1,8 +1,6 @@
 #
 # Some more tests for exception handling.
 #
-from __future__ import unicode_literals
-
 import sys
 
 import objc
@@ -44,12 +42,7 @@ class TestExceptionsFromObjC(TestCase):
             o.raiseUnicodeName()
 
         except objc.error as e:
-            if sys.version_info[0] == 2:
-                self.assertEqual(
-                    str(e), "SimpleException\u1234\u2049 - hello world".encode("utf-8")
-                )
-            else:
-                self.assertEqual(str(e), "SimpleException\u1234\u2049 - hello world")
+            self.assertEqual(str(e), "SimpleException\u1234\u2049 - hello world")
             self.assertEqual(e._pyobjc_info_["name"], "SimpleException\u1234\u2049")
             self.assertEqual(e._pyobjc_info_["reason"], "hello world")
             self.assertEqual(e._pyobjc_info_["userInfo"], None)
@@ -61,12 +54,7 @@ class TestExceptionsFromObjC(TestCase):
             o.raiseUnicodeReason()
 
         except objc.error as e:
-            if sys.version_info[0] == 2:
-                self.assertEqual(
-                    str(e), "SimpleException - hello world\u1234\u2049".encode("utf-8")
-                )
-            else:
-                self.assertEqual(str(e), "SimpleException - hello world\u1234\u2049")
+            self.assertEqual(str(e), "SimpleException - hello world\u1234\u2049")
             self.assertEqual(e._pyobjc_info_["name"], "SimpleException")
             self.assertEqual(e._pyobjc_info_["reason"], "hello world\u1234\u2049")
             self.assertEqual(e._pyobjc_info_["userInfo"], None)
@@ -78,17 +66,9 @@ class TestExceptionsFromObjC(TestCase):
             o.raiseUnicodeWithInfo()
 
         except objc.error as e:
-            if sys.version_info[0] == 2:
-                self.assertEqual(
-                    str(e),
-                    "InfoException\u1234\u2049 - Reason string\u1234\u2049".encode(
-                        "utf-8"
-                    ),
-                )
-            else:
-                self.assertEqual(
-                    str(e), "InfoException\u1234\u2049 - Reason string\u1234\u2049"
-                )
+            self.assertEqual(
+                str(e), "InfoException\u1234\u2049 - Reason string\u1234\u2049"
+            )
             self.assertEqual(e._pyobjc_info_["name"], "InfoException\u1234\u2049")
             self.assertEqual(e._pyobjc_info_["reason"], "Reason string\u1234\u2049")
             self.assertEqual(

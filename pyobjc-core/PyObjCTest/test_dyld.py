@@ -46,16 +46,16 @@ class TestDyld(TestCase):
 
     def test_ensure_unicode(self):
         v = dyld.ensure_unicode("foo")
-        self.assertIsInstance(v, unicode)
-        self.assertEqual(v, b"foo".decode("utf-8"))
+        self.assertIsInstance(v, str)
+        self.assertEqual(v, "foo")
 
         v = dyld.ensure_unicode(b"foo")
-        self.assertIsInstance(v, unicode)
-        self.assertEqual(v, b"foo".decode("utf-8"))
+        self.assertIsInstance(v, str)
+        self.assertEqual(v, "foo")
 
         v = dyld.ensure_unicode(b"foo".decode("utf-8"))
-        self.assertIsInstance(v, unicode)
-        self.assertEqual(v, b"foo".decode("utf-8"))
+        self.assertIsInstance(v, str)
+        self.assertEqual(v, "foo")
 
         self.assertRaises(UnicodeError, dyld.ensure_unicode, b"\xff\xff")
 
@@ -206,7 +206,7 @@ class TestDyld(TestCase):
         else:
             p = subprocess.check_output(["xcrun", "--show-sdk-path"]).strip()
             os.environ["DYLD_LIBRARY_PATH"] = os.path.join(
-                (p.decode("utf-8") if sys.version_info[0] == 3 else p), "usr", "lib"
+                p.decode("utf-8"), "usr", "lib"
             )
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
 
@@ -373,8 +373,7 @@ class TestDyld(TestCase):
             os.path.realpath(b"/usr/lib/libSystem.dylib"), b"/usr/lib/libSystem.B.dylib"
         )
         self.assertEqual(
-            os.path.realpath(b"/usr/lib/libSystem.dylib".decode("utf-8")),
-            b"/usr/lib/libSystem.B.dylib".decode("utf-8"),
+            os.path.realpath("/usr/lib/libSystem.dylib"), "/usr/lib/libSystem.B.dylib"
         )
 
     def test_dyld_find(self):

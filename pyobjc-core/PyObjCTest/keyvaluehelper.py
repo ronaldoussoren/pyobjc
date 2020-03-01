@@ -1,8 +1,6 @@
 """
 Helper module for KeyValue tests
 """
-from __future__ import absolute_import, unicode_literals
-
 import objc
 from PyObjCTest.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
 

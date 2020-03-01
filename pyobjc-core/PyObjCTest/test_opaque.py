@@ -31,8 +31,7 @@ class TestFromPython(TestCase):
         self.assertIsInstance(tp, type)
         self.assertEqual(tp.__module__, "Mod")
         self.assertEqual(tp.__name__, "BarHandle")
-        if sys.version_info[:2] >= (3, 3):
-            self.assertEqual(tp.__qualname__, "BarHandle")
+        self.assertEqual(tp.__qualname__, "BarHandle")
         self.assertEqual(repr(tp), "<class 'Mod.BarHandle'>")
 
 
@@ -70,20 +69,14 @@ class TestFromC(TestCase):
         self.assertEqual(OC_OpaqueTest.getValueOf_(f), 99)
 
         self.assertHasAttr(f, "__pointer__")
-        if sys.version_info[0] == 2:
-            self.assertIsInstance(f.__pointer__, (int, long))
-        else:
-            self.assertIsInstance(f.__pointer__, int)
+        self.assertIsInstance(f.__pointer__, int)
 
         # NULL pointer is converted to None
         self.assertEqual(OC_OpaqueTest.nullFoo(), None)
 
         # There is no exposed type object that for PyCObject, test the
         # type name instead
-        if sys.version_info[0] == 2 and sys.version_info[1] < 7:
-            self.assertEqual(type(f.__cobject__()).__name__, "PyCObject")
-        else:
-            self.assertEqual(type(f.__cobject__()).__name__, "PyCapsule")
+        self.assertEqual(type(f.__cobject__()).__name__, "PyCapsule")
 
         # Check round tripping through a PyCObject.
         co = f.__cobject__()

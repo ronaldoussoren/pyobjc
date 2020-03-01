@@ -23,9 +23,6 @@ CFDateRef = objc.registerCFSignature(
     "NSDate",
 )
 
-if sys.version_info[0] == 3:
-    unicode = str
-
 
 class TestCoreFoundation(TestCase):
     def testTollFree(self):
@@ -35,7 +32,7 @@ class TestCoreFoundation(TestCase):
         self.assertIsInstance(obj, CFDateRef)
 
         v = OC_TestCoreFoundation.formatDate_(obj)
-        self.assertIsInstance(v, unicode)
+        self.assertIsInstance(v, str)
 
         formatter = objc.lookUpClass("NSDateFormatter").new()
         formatter.setDateStyle_(OC_TestCoreFoundation.shortStyle())
@@ -55,7 +52,7 @@ class TestCoreFoundation(TestCase):
 
         formatted = OC_TestCoreFoundation.formatUUID_(obj)
 
-        self.assertIsInstance(formatted, unicode)
+        self.assertIsInstance(formatted, str)
         self.assertTrue(
             re.match(
                 r"[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}",
@@ -73,7 +70,7 @@ class TestCoreFoundation(TestCase):
 
         formatted = OC_TestCoreFoundation.formatUUID_(obj)
 
-        self.assertIsInstance(formatted, unicode)
+        self.assertIsInstance(formatted, str)
         self.assertTrue(
             re.match(
                 r"[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}",

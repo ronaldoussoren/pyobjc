@@ -1,10 +1,7 @@
 import collections.abc
 import datetime
-import struct
-import sys
 
 from objc import _objc
-from objc._objc import *
 
 __all__ = [
     "registerListType",
@@ -19,10 +16,10 @@ def registerListType(type):
     Register 'type' as a list-like type that will be proxied
     as an NSMutableArray subclass.
     """
-    if options._sequence_types is None:
-        options._sequence_types = ()
+    if _objc.options._sequence_types is None:
+        _objc.options._sequence_types = ()
 
-    options._sequence_types += (type,)
+    _objc.options._sequence_types += (type,)
 
 
 def registerMappingType(type):
@@ -30,10 +27,10 @@ def registerMappingType(type):
     Register 'type' as a dictionary-like type that will be proxied
     as an NSMutableDictionary subclass.
     """
-    if options._mapping_types is None:
-        options._mapping_types = ()
+    if _objc.options._mapping_types is None:
+        _objc.options._mapping_types = ()
 
-    options._mapping_types += (type,)
+    _objc.options._mapping_types += (type,)
 
 
 def registerSetType(type):
@@ -41,10 +38,10 @@ def registerSetType(type):
     Register 'type' as a set-like type that will be proxied
     as an NSMutableSet subclass.
     """
-    if options._set_types is None:
-        options._set_types = ()
+    if _objc.options._set_types is None:
+        _objc.options._set_types = ()
 
-    options._set_types += (type,)
+    _objc.options._set_types += (type,)
 
 
 def registerDateType(type):
@@ -52,14 +49,14 @@ def registerDateType(type):
     Register 'type' as a date-like type that will be proxied
     as an NSDate subclass.
     """
-    if options._date_types is None:
-        options._date_types = ()
+    if _objc.options._date_types is None:
+        _objc.options._date_types = ()
 
-    options._date_types += (type,)
+    _objc.options._date_types += (type,)
 
 
 registerListType(collections.abc.Sequence)
-registerListType(xrange if sys.version_info[0] == 2 else range)
+registerListType(range)
 registerMappingType(collections.abc.Mapping)
 registerMappingType(dict)
 registerSetType(set)

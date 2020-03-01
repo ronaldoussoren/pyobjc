@@ -3,6 +3,7 @@ Tests if NSSet conforms to the interface of the python type set()
 
 This is a port of the set tests from the Python stdlib for 3.2
 """
+import collections.abc
 import operator
 import sys
 import test.test_set
@@ -18,21 +19,9 @@ NSMutableSet = objc.lookUpClass("NSMutableSet")
 test.test_set.empty_set = NSMutableSet()
 
 
-if sys.version_info[0] == 3:
-    unicode = str
-
-    def xrange(*args):
-        return list(range(*args))
-
-    import collections.abc as collections_abc
-
-else:
-    import collections as collections_abc
-
-
 class TestPyObjCSet(TestCase):
     def test_reverse_operator(self):
-        class MySet(collections_abc.Set):
+        class MySet(collections.abc.Set):
             def __init__(self, init=()):
                 self._value = list(init)
 
@@ -168,7 +157,7 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertIsInstance(u, self.thetype)
         self.assertRaises(PassThru, self.s.union, check_pass_thru())
         self.assertRaises(TypeError, self.s.union, [[]])
-        for C in set, frozenset, dict.fromkeys, str, unicode, list, tuple:
+        for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(self.thetype("abcba").union(C("cdc")), set("abcd"))
             self.assertEqual(self.thetype("abcba").union(C("efgfe")), set("abcefg"))
             self.assertEqual(self.thetype("abcba").union(C("ccb")), set("abc"))
@@ -190,7 +179,7 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertIsInstance(i, self.thetype)
         self.assertRaises(PassThru, self.s.symmetric_difference, check_pass_thru())
         self.assertRaises(TypeError, self.s.symmetric_difference, [[]])
-        for C in set, frozenset, dict.fromkeys, str, unicode, list, tuple:
+        for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(
                 self.thetype("abcba").symmetric_difference(C("cdc")), set("abd")
             )
@@ -213,7 +202,7 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertIsInstance(i, self.thetype)
         self.assertRaises(PassThru, self.s.difference, check_pass_thru())
         self.assertRaises(TypeError, self.s.difference, [[]])
-        for C in set, frozenset, dict.fromkeys, str, unicode, list, tuple:
+        for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(self.thetype("abcba").difference(C("cdc")), set("ab"))
             self.assertEqual(self.thetype("abcba").difference(C("efgfe")), set("abc"))
             self.assertEqual(self.thetype("abcba").difference(C("ccb")), set("a"))
@@ -229,7 +218,7 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         # self.assertEqual(type(i), self.thetype)
         self.assertIsInstance(i, self.thetype)
         self.assertRaises(PassThru, self.s.intersection, check_pass_thru())
-        for C in set, frozenset, dict.fromkeys, str, unicode, list, tuple:
+        for C in set, frozenset, dict.fromkeys, str, list, tuple:
             self.assertEqual(self.thetype("abcba").intersection(C("cdc")), set("cc"))
             self.assertEqual(self.thetype("abcba").intersection(C("efgfe")), set(""))
             self.assertEqual(self.thetype("abcba").intersection(C("ccb")), set("bc"))
@@ -270,11 +259,6 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertEqual(len(l), len(self.s))
         for item in l:
             self.assertIn(item, self.s)
-
-    @onlyPython2
-    def test_cmp_function(self):
-        self.assertRaises(TypeError, cmp, self.s, "hello")
-        self.assertRaises(TypeError, self.s.__cmp__, self.s)
 
 
 class TestMutableSet(TestSet, test.test_set.TestSet):
@@ -465,7 +449,7 @@ class TestVariousIteratorArgs(test.test_set.TestVariousIteratorArgs):
             "",
             range(1000),
             ("do", 1.2),
-            xrange(2000, 2200, 5),
+            range(2000, 2200, 5),
             "december",
         ):
             for methname in (

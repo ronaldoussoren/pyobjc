@@ -1,16 +1,10 @@
 import array
+from collections import UserDict, UserList
 import datetime
 import sys
 
 from PyObjCTest.classes import OCTestClasses
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 3:
-    from collections import UserDict, UserList
-
-else:
-    from UserDict import UserDict
-    from UserList import UserList
 
 
 class TestBridgedClasses(TestCase):
@@ -90,13 +84,11 @@ class TestBridgedClasses(TestCase):
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonUnicode")
 
-    @onlyPython3
     def test_bytes(self):
         value = b""
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_BuiltinPythonData")
 
-    @onlyPython3
     def test_bytes_subclass(self):
         class B(bytes):
             pass
@@ -170,12 +162,6 @@ class TestBridgedClasses(TestCase):
 
     def test_memoryview(self):
         value = memoryview(b"hello")
-        cls = OCTestClasses.classForObject_(value)
-        self.assertEqual(cls.__name__, "OC_PythonData")
-
-    @onlyPython2
-    def test_buffer(self):
-        value = buffer(b"hello")
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonData")
 

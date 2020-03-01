@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import functools
 import sys
 import warnings
@@ -46,8 +44,7 @@ class TestRegressions(TestCase):
         self.assertIsNot(oc, oc2)
         self.assertEqual(oc, py)
 
-        if sys.version_info[0] == 3:
-            self.assertEqual(py, oc)
+        self.assertEqual(py, oc)
 
     def testNSObjectPerforming(self):
         o = NSObject.performSelector_("new")

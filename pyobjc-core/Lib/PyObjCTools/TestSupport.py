@@ -12,10 +12,8 @@ import os as _os
 import plistlib as _pl
 import re as _re
 import struct as _struct
-import subprocess as _subprocess
 import sys as _sys
 import unittest as _unittest
-import warnings
 from distutils.sysconfig import get_config_var as _get_config_var
 
 import objc
@@ -54,7 +52,7 @@ except NameError:
     unichr = chr
 
 
-def _typemap(tp):  # XXX: Is this needed?
+def _typemap(tp):
     if tp is None:
         return None
     return (
@@ -79,7 +77,7 @@ def pyobjc_options(**kwds):
             setattr(objc.options, k, orig[k])
 
 
-def sdkForPython(_cache=[]):
+def sdkForPython(_cache=[]):  # noqa: B006, M511
     """
     Return the SDK version used to compile Python itself,
     or None if no framework was used
@@ -436,7 +434,7 @@ class TestCase(_unittest.TestCase):
         # NOTE: Don't test if this is a subclass of one of the known
         #       CF roots, this tests is mostly used to ensure that the
         #       type is distinct from one of those roots.
-        #  XXX: With the next two lines enabled there are spurious test
+        # NOTE: With the next two lines enabled there are spurious test
         #       failures when a CF type is toll-free bridged to an
         #       (undocumented) Cocoa class. It might be worthwhile to
         #       look for these, but not in the test suite.
@@ -462,8 +460,8 @@ class TestCase(_unittest.TestCase):
         if not info.get("c_array_delimited_by_null") or not info.get("variadic"):
             self.fail(
                 message
-                or "%s is not a variadic function with a null-terminated list of arguments"
-                % (method,)
+                or "%s is not a variadic function with a "
+                "null-terminated list of arguments" % (method,)
             )
 
     def assertArgIsNullTerminated(self, method, argno, message=None):
@@ -1099,13 +1097,7 @@ class TestCase(_unittest.TestCase):
 
         def assertIsNotNone(self, value, message=None):
             if value is None:
-                sel.fail(message, "%r is not %r" % (value, test))
-
-    if not hasattr(_unittest.TestCase, "assertStartsWith"):  # pragma: no cover
-
-        def assertStartswith(self, value, check, message=None):
-            if not value.startswith(check):
-                self.fail(message or "not %r.startswith(%r)" % (value, check))
+                self.fail(message, "%r is not None" % (value,))
 
     if not hasattr(_unittest.TestCase, "assertHasAttr"):  # pragma: no cover
 

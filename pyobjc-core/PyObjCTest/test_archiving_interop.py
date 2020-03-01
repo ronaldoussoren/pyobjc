@@ -10,16 +10,11 @@ import platform
 import subprocess
 import sys
 import tempfile
+from plistlib import loads
 from distutils.sysconfig import get_config_var
 
 import objc
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 2:
-    from plistlib import readPlistFromString as loads
-
-else:
-    from plistlib import loads
 
 
 MYDIR = os.path.dirname(os.path.abspath(__file__))
@@ -58,7 +53,7 @@ class TestNSKeyedArchivingInterop(TestCase):
             os.unlink(cls.progpath)
 
     def test_interop_string(self):
-        for testval in (b"hello world".decode("utf-8"), "goodbye moon"):
+        for testval in ("hello world", "goodbye moon"):
             v = NSArray.arrayWithObject_(testval)
             data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
@@ -113,12 +108,8 @@ class TestNSKeyedArchivingInterop(TestCase):
                 [self.progpath, "keyed", fp.name],
             )
 
-    @onlyPython3
     def test_interop_data(self):
         for testval in (b"hello world",):
-            if sys.version_info[0] == 2:
-                testval = buffer(testval)
-
             v = NSArray.arrayWithObject_(testval)
             data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
@@ -161,7 +152,6 @@ class TestNSKeyedArchivingInterop(TestCase):
             self.assertTrue(converted.endswith(b")}\n"))
             converted = b"{" + converted[2:-3] + b"}"
             converted = eval(converted.decode("utf-8"), dict(a="a", b="b"))
-
             self.assertEqual(converted, set(testval))
 
     def test_interop_dict(self):
@@ -204,7 +194,7 @@ class TestNSArchivingInterop(TestCase):
             os.unlink(cls.progpath)
 
     def test_interop_string(self):
-        for testval in (b"hello world".decode("utf-8"), "goodbye moon"):
+        for testval in ("hello world", "goodbye moon"):
             v = NSArray.arrayWithObject_(testval)
             data = NSArchiver.archivedDataWithRootObject_(v)
 
@@ -259,12 +249,8 @@ class TestNSArchivingInterop(TestCase):
                 [self.progpath, "plain", fp.name],
             )
 
-    @onlyPython3
     def test_interop_data(self):
         for testval in (b"hello world",):
-            if sys.version_info[0] == 2:
-                testval = buffer(testval)
-
             v = NSArray.arrayWithObject_(testval)
             data = NSArchiver.archivedDataWithRootObject_(v)
 

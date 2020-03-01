@@ -9,7 +9,7 @@ class TestContext(TestCase):
         v = object()
 
         h = objc.context.register(v)
-        self.assertIsInstance(h, (int, long))
+        self.assertIsInstance(h, int)
         self.assertIn(h, objc.context._registry)
         self.assertIs(objc.context._registry[h], v)
 

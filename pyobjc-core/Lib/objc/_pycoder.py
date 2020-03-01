@@ -7,25 +7,15 @@ This can cause problems when the object state contains the
 object itself, which is why we need a 'setValue' callback for the
 load_* functions below.
 """
-from __future__ import unicode_literals
+__all__ = ()
 
 import copy
+import copyreg
 import sys
 from pickle import PicklingError, UnpicklingError
-from types import *
 
 import objc
 
-if sys.version_info[0] == 2:
-    import copy_reg as copyreg
-else:
-    import copyreg
-
-
-if sys.version_info[0] == 2:
-    import __builtin__ as _builtins
-else:
-    import builtins as _builtins
 
 # _getattribute and whichmodule are adapted from the
 # same function's in Python 3.4's pickle module. The
@@ -58,48 +48,26 @@ def whichmodule(obj, name):
             if _getattribute(module, name) is obj:
                 return module_name
 
-        except AttributeError as exc:
+        except AttributeError:
             pass
 
     return "__main__"
 
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    bltin_intern = intern
-
-    def intern(value):
-        if isinstance(value, objc.pyobjc_unicode):
-            return bltin_intern(value.encode("utf-8"))
-        elif isinstance(value, basestring):
-            return bltin_intern(value)
-        else:
-            return value
-
-    def import_module(name):
-        if name == "copyreg":
-            name = "copy_reg"
-        __import__(name, level=0)
-        return sys.modules[name]
+def intern(value):
+    if isinstance(value, objc.pyobjc_unicode):
+        return sys.intern(str(value))
+    elif isinstance(value, str):
+        return sys.intern(value)
+    else:
+        return value
 
 
-else:  # pragma: no 2.x cover
-    unicode = str
-    long = int
-    bltin_intern = sys.intern
-
-    def intern(value):
-        if isinstance(value, objc.pyobjc_unicode):
-            return bltin_intern(str(value))
-        elif isinstance(value, str):
-            return bltin_intern(value)
-        else:
-            return value
-
-    def import_module(name):
-        if name == "copy_reg":
-            name = "copyreg"
-        __import__(name, level=0)
-        return sys.modules[name]
+def import_module(name):
+    if name == "copy_reg":
+        name = "copyreg"
+    __import__(name, level=0)
+    return sys.modules[name]
 
 
 NSArray = objc.lookUpClass("NSArray")
@@ -190,94 +158,30 @@ def save_reduce(
         coder.encodeObject_(state)
 
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
+def save_int(coder, obj):
+    if coder.allowsKeyedCoding():
+        coder.encodeInt_forKey_(kOP_LONG, kKIND)
+        coder.encodeObject_forKey_(repr(obj), kVALUE)
+    else:
+        coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_LONG)
+        coder.encodeObject_(repr(obj))
 
-    def save_inst(coder, obj):
-        if hasattr(obj, "__getinitargs__"):
-            args = obj.__getinitargs__()
-            len(args)  # Assert it's a sequence
-        else:
-            args = ()
 
-        cls = obj.__class__
-
-        if coder.allowsKeyedCoding():
-            coder.encodeInt32_forKey_(kOP_INST, kKIND)
-            coder.encodeObject_forKey_(cls, kCLASS)
-            coder.encodeObject_forKey_(args, kARGS)
-
-        else:
-            coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_INST)
-            coder.encodeObject_(cls)
-            coder.encodeObject_(args)
-
-        try:
-            getstate = obj.__getstate__
-        except AttributeError:
-            state = obj.__dict__
-
-        else:
-            state = getstate()
-
-        if coder.allowsKeyedCoding():
-            coder.encodeObject_forKey_(state, kSTATE)
-
-        else:
-            coder.encodeObject_(state)
-
-    encode_dispatch[InstanceType] = save_inst
-
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-
-    def save_int(coder, obj):
-        if coder.allowsKeyedCoding():
-            coder.encodeInt_forKey_(kOP_INT, kKIND)
-            coder.encodeInt64_forKey_(obj, kVALUE)
-        else:
-            coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_INT)
-            coder.encodeValueOfObjCType_at_(objc._C_LNG_LNG, obj)
-
-    encode_dispatch[int] = save_int
-
-    def save_long(coder, obj):
-        encoded = unicode(repr(obj))
-        if encoded.endswith("L"):
-            encoded = encoded[:-1]
-        if coder.allowsKeyedCoding():
-            coder.encodeInt_forKey_(kOP_LONG, kKIND)
-            coder.encodeObject_forKey_(encoded, kVALUE)
-        else:
-            coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_LONG)
-            coder.encodeObject_(encoded)
-
-    encode_dispatch[long] = save_long
-
-else:  # pragma: no 2.x cover
-
-    def save_int(coder, obj):
-        if coder.allowsKeyedCoding():
-            coder.encodeInt_forKey_(kOP_LONG, kKIND)
-            coder.encodeObject_forKey_(unicode(repr(obj)), kVALUE)
-        else:
-            coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_LONG)
-            coder.encodeObject_(unicode(repr(obj)))
-
-    encode_dispatch[int] = save_int
+encode_dispatch[int] = save_int
 
 
 def save_float(coder, obj):  # pragma: no cover
     # NOTE: 'no cover' because floats are encoded as OC_PythonNumber
     # and that doesn't call back to this code for basic C types.
-    # TODO: full review the code path and remove this function.
 
     # Encode floats as strings, this seems to be needed to get
     # 100% reliable round-trips.
     if coder.allowsKeyedCoding():
         coder.encodeInt_forKey_(kOP_FLOAT_STR, kKIND)
-        coder.encodeObject_forKey_(unicode(repr(obj)), kVALUE)
+        coder.encodeObject_forKey_(repr(obj), kVALUE)
     else:
         coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_FLOAT_STR)
-        coder.encodeObject_(unicode(repr(obj)))
+        coder.encodeObject_(repr(obj))
 
 
 encode_dispatch[float] = save_float
@@ -314,8 +218,8 @@ def save_global(coder, obj, name=None):
 
         else:
             coder.encodeInt_forKey_(kOP_GLOBAL, kKIND)
-            coder.encodeObject_forKey_(unicode(module_name), kMODULE)
-            coder.encodeObject_forKey_(unicode(name), kNAME)
+            coder.encodeObject_forKey_(module_name, kMODULE)
+            coder.encodeObject_forKey_(name, kNAME)
 
     else:
         if code:
@@ -324,12 +228,10 @@ def save_global(coder, obj, name=None):
 
         else:
             coder.encodeValueOfObjCType_at_(objc._C_INT, kOP_GLOBAL)
-            coder.encodeObject_(unicode(module_name))
-            coder.encodeObject_(unicode(name))
+            coder.encodeObject_(module_name)
+            coder.encodeObject_(name)
 
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    encode_dispatch[ClassType] = save_global
 encode_dispatch[type(save_global)] = save_global
 try:
     dir.__reduce__()
@@ -338,7 +240,7 @@ except TypeError:
 
 
 def save_type(coder, obj):
-    if obj is type(None):
+    if obj is type(None):  # noqa: E721
         return save_reduce(coder, type, (None,), obj=obj)
     elif obj is type(NotImplemented):
         return save_reduce(coder, type, (NotImplemented,), obj=obj)
@@ -379,9 +281,9 @@ decode_dispatch[kOP_INT] = load_int
 
 def load_long(coder, setValue):
     if coder.allowsKeyedCoding():
-        return long(coder.decodeObjectForKey_(kVALUE))
+        return int(coder.decodeObjectForKey_(kVALUE))
     else:
-        return long(coder.decodeObject())
+        return int(coder.decodeObject())
 
 
 decode_dispatch[kOP_LONG] = load_long
@@ -455,23 +357,12 @@ def load_inst(coder, setValue):
         cls = coder.decodeObject()
         initargs = coder.decodeObject()
 
-    if (
-        sys.version_info[0] == 2
-        and not initargs
-        and type(cls) is ClassType
-        and not hasattr(cls, "__getinitargs__")
-    ):  # pragma: no 3.x cover
-        value = _EmptyClass()
-        value.__class__ = cls
-
-    else:
-        try:
-            value = cls(*initargs)
-        except TypeError as err:
-            raise TypeError(
-                "in constructor for %s: %s" % (cls.__name__, str(err)),
-                sys.exc_info()[2],
-            )
+    try:
+        value = cls(*initargs)
+    except TypeError as err:
+        raise TypeError(
+            "in constructor for %s: %s" % (cls.__name__, str(err)), sys.exc_info()[2]
+        )
 
     # We now have the object, but haven't set the correct
     # state yet.  Tell the bridge about this value right
@@ -547,20 +438,7 @@ def load_reduce(coder, setValue):
         args = new_args
         del new_args
 
-    if sys.version_info[0] == 2 and func == copyreg.__newobj__:  # pragma: no 3.x cover
-        try:
-            value = func(*args)
-        except AttributeError:
-            # copyreg.__newobj__ failed, almost certainly because
-            # there is __new__ method. This happens when a class
-            # is serialized in Python 3 and read back in Python 2
-            # as a classic class.
-            cls = args[0]
-            args = args[1:]
-            value = cls(*args)
-
-    else:
-        value = func(*args)
+    value = func(*args)
 
     # We now have the object, but haven't set the correct
     # state yet.  Tell the bridge about this value right
@@ -658,8 +536,8 @@ def pyobjectEncode(self, coder):
     if type(rv) is not tuple:
         raise PicklingError("%s must return string or tuple" % reduce)
 
-    l = len(rv)
-    if not (2 <= l <= 5):
+    rv_len = len(rv)
+    if not (2 <= rv_len <= 5):
         raise PicklingError(
             "Tuple returned by %s must have two to " "five elements" % reduce
         )

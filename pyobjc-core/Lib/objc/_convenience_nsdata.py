@@ -5,8 +5,6 @@ NSData needs to be handles specially for correctness reasons,
 and is therefore in the core instead of the Foundation
 framework wrappers.
 """
-import sys
-
 from objc._convenience import addConvenienceForClass
 from objc._objc import registerMetaDataForSelector
 
@@ -39,8 +37,6 @@ def nsdata__bytes__(self):
     return bytes(self.bytes())
 
 
-# XXX: These NSData helpers should use Cocoa method calls,
-#      instead of creating a memoryview/buffer object.
 def nsdata__getitem__(self, item):
     buff = self.bytes()
     try:

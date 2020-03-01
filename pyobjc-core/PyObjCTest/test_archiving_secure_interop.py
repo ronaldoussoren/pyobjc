@@ -17,11 +17,7 @@ from distutils.sysconfig import get_config_var
 import objc
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 2:
-    from plistlib import readPlistFromString as readPlistFromBytes
-
-else:
-    from plistlib import loads as readPlistFromBytes
+from plistlib import loads
 
 
 MYDIR = os.path.dirname(os.path.abspath(__file__))
@@ -88,7 +84,7 @@ class TestNSKeyedArchivingInterop(TestCase):
 
                 converted = subprocess.check_output([self.progpath, fp.name])
 
-            converted = readPlistFromBytes(converted)
+            converted = loads(converted)
             self.assertEqual(converted, [testval])
 
     def test_interop_float(self):
@@ -110,7 +106,7 @@ class TestNSKeyedArchivingInterop(TestCase):
 
                 converted = subprocess.check_output([self.progpath, fp.name])
 
-            converted = readPlistFromBytes(converted)
+            converted = loads(converted)
             self.assertEqual(converted, [testval])
 
     def test_interop_int(self):
@@ -132,7 +128,7 @@ class TestNSKeyedArchivingInterop(TestCase):
 
                 converted = subprocess.check_output([self.progpath, fp.name])
 
-            converted = readPlistFromBytes(converted)
+            converted = loads(converted)
             self.assertEqual(converted, [testval])
 
         testval = 2 ** 64
@@ -149,7 +145,6 @@ class TestNSKeyedArchivingInterop(TestCase):
                 [self.progpath, fp.name],
             )
 
-    @onlyPython3
     def test_interop_data(self):
         for testval in (b"hello world",):
             if sys.version_info[0] == 2:
@@ -172,7 +167,7 @@ class TestNSKeyedArchivingInterop(TestCase):
 
                 converted = subprocess.check_output([self.progpath, fp.name])
 
-            converted = readPlistFromBytes(converted)
+            converted = loads(converted)
             self.assertEqual(converted, [testval])
 
     def test_interop_seq(self):
@@ -194,7 +189,7 @@ class TestNSKeyedArchivingInterop(TestCase):
 
                 converted = subprocess.check_output([self.progpath, fp.name])
 
-            converted = readPlistFromBytes(converted)
+            converted = loads(converted)
             self.assertIs(type(converted), list)
             self.assertEqual(converted, list(testval))
 
@@ -243,7 +238,7 @@ class TestNSKeyedArchivingInterop(TestCase):
 
                 converted = subprocess.check_output([self.progpath, fp.name])
 
-            converted = readPlistFromBytes(converted)
+            converted = loads(converted)
             self.assertEqual(converted, testval)
 
 

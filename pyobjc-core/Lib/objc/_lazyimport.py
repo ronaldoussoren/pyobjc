@@ -118,7 +118,7 @@ class ObjCLazyModule(ModuleType):
             # See issue #95: there can be objects that aren't strings in
             # sys.modules.
             if hasattr(nm, "startswith") and nm.startswith(pfx):
-                rest = nm[len(pfx) :]
+                rest = nm[len(pfx) :]  # noqa: E203
                 if "." in rest:
                     continue
                 if sys.modules[nm] is not None:
@@ -428,7 +428,7 @@ class ObjCLazyModule(ModuleType):
                 info = self.__expressions.pop(name)
                 try:
                     return eval(info, {}, self.__expressions_mapping)
-                except:  # Ignore all errors in evaluation the expression.
+                except:  # noqa: E722, B001. Ignore all errors in evaluation the expression.
                     pass
 
         if self.__aliases:

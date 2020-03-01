@@ -58,33 +58,6 @@ class TestCompatFunctions(TestCase):
         finally:
             objc.options.use_kvo = orig
 
-    @onlyPython2
-    def test_strbridge_enabled(self):
-        orig = objc.options.strbridge_enabled
-        try:
-            with warnings.catch_warnings(record=True) as w:
-                warnings.simplefilter("always")
-                objc.setStrBridgeEnabled(orig)
-                objc.getStrBridgeEnabled()
-            self.assertEqual(len(w), 2)
-            self.assertEqual(w[0].category, DeprecationWarning)
-            self.assertEqual(w[1].category, DeprecationWarning)
-
-            with warnings.catch_warnings():
-                warnings.simplefilter("ignore")
-                self.assertEqual(objc.getStrBridgeEnabled(), orig)
-
-                objc.setStrBridgeEnabled(False)
-                self.assertEqual(objc.options.strbridge_enabled, False)
-                self.assertEqual(objc.getStrBridgeEnabled(), False)
-
-                objc.setStrBridgeEnabled(True)
-                self.assertEqual(objc.options.strbridge_enabled, True)
-                self.assertEqual(objc.getStrBridgeEnabled(), True)
-
-        finally:
-            objc.options.strbridge_enabled = orig
-
 
 if __name__ == "__main__":
     main()

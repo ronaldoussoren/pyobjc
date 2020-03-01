@@ -1,6 +1,5 @@
 __all__ = ()
 import inspect
-import sys
 
 import objc
 from objc._objc import _nameForSignature
@@ -208,14 +207,15 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
                 if arg is not None:
                     if isinstance(arg, tuple):
                         result.append(
-                            "arg%d: array with length on input in arg%d, and output in arg%d"
+                            "arg%d: array with length on input in arg%d, "
+                            "and output in arg%d"
                             % (idx, arg[0] - arg_offset, arg[1] - arg_offset)
                         )
                     else:
                         if info.get("c_array_length_in_result"):
                             result.append(
-                                "arg%d: array with length on input in arg%d, and output in return value"
-                                % (idx, arg - arg_offset)
+                                "arg%d: array with length on input in arg%d, "
+                                "and output in return value" % (idx, arg - arg_offset)
                             )
                         else:
                             result.append(
@@ -287,7 +287,7 @@ def callable_signature(callable):
         args = metadata["arguments"]
 
     parameters = []
-    for idx, arg in enumerate(args):
+    for idx, _arg in enumerate(args):
         p_name = "arg%d" % (idx,)
         parameters.append(inspect.Parameter(p_name, inspect.Parameter.POSITIONAL_ONLY))
 

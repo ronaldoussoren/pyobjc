@@ -413,16 +413,6 @@ class MutableArrayTest(list_tests.CommonTest):
         l.sort(key=lambda x: abs(x), reverse=True)
         self.assertEqual(l, self.type2test([-5, 4, 3, -2, 1]))
 
-        if sys.version_info[0] == 2:
-            base = [-2, 1, -5, 4, 3]
-            l = self.type2test(base)
-            l.sort(cmp=lambda x, y: cmp(abs(x), abs(y)))
-            self.assertEqual(l, self.type2test([1, -2, 3, 4, -5]))
-
-            l = self.type2test(base)
-            l.sort(cmp=lambda x, y: cmp(abs(x), abs(y)), reverse=True)
-            self.assertEqual(l, self.type2test([-5, 4, 3, -2, 1]))
-
 
 if __name__ == "__main__":
     main()

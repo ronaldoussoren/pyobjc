@@ -8,9 +8,6 @@ import objc._lazyimport as lazyimport
 from PyObjCTest import metadatafunction
 from PyObjCTools.TestSupport import *
 
-if sys.version_info[0] == 3:  # pragma: no 2.x cover; pragma: no branch
-    long = int
-
 if sys.maxsize > 2 ** 32:
 
     def sel32or64(a, b):
@@ -161,7 +158,7 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.NSWorkspaceCopyOperation, objc.pyobjc_unicode)
         self.assertIsInstance(mod.NSWorkspaceLinkOperation, objc.pyobjc_unicode)
 
-        self.assertIsInstance(mod.NSUnderlineByWordMask, (int, long))
+        self.assertIsInstance(mod.NSUnderlineByWordMask, int)
         self.assertEqual(mod.NSAWTEventType, 16)
         self.assertEqual(mod.NSAboveBottom, 4)
         self.assertEqual(mod.NSAboveTop, 1)

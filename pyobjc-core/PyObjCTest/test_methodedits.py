@@ -1,12 +1,7 @@
-# FIXME: This test suite seems to polute it's environment, other tests fail
-# when this test suite is active!
-from __future__ import unicode_literals
-
 import sys
 
 import objc
 from PyObjCTools.TestSupport import *
-from PyObjCTools.TestSupport import onlyPython2
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -201,61 +196,14 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
 
 class TestFromPythonClassToObjCClass(TestCase):
-    @onlyPython2
-    def testPythonSourcedMethods(self):
-        # 20031227, Ronald: Assigning the methods works alright, but actually
-        # using them won't because the new methods are actually still methods
-        # of a different class and will therefore complain about the type
-        # of 'self'.
-        objc.classAddMethods(
-            MEClass,
-            [PurePython.description, PurePython.newMethod, PurePython.purePythonMethod],
-        )
-
-        self.assertTrue(MEClass.instancesRespondToSelector_("description"))
-        self.assertTrue(MEClass.instancesRespondToSelector_("newMethod"))
-        self.assertTrue(MEClass.instancesRespondToSelector_("purePythonMethod"))
-
-        newInstance = MEClass.new()
-
-        # This is bogus, see above:
-        # self.assertEqual(newInstance.description(), "<pure>")
-        # self.assertEqual(newInstance.newMethod(), "<pure-new>")
-        # self.assertEqual(newInstance.purePythonMethod(), "<pure-py>")
-
-        # self.assertEqual(preEverythingInstance.description(), "<pure>")
-        # self.assertEqual(preEverythingInstance.newMethod(), "<pure-new>")
-        # self.assertEqual(preEverythingInstance.purePythonMethod(), "<pure-py>")
-
-        self.assertRaises(TypeError, newInstance.description)
-        self.assertRaises(TypeError, newInstance.newMethod)
-        self.assertRaises(TypeError, newInstance.purePythonMethod)
-        self.assertRaises(TypeError, preEverythingInstance.description)
-        self.assertRaises(TypeError, preEverythingInstance.newMethod)
-        self.assertRaises(TypeError, preEverythingInstance.purePythonMethod)
-
     def testPythonSourcedFunctions(self):
         # Same as testPythonSourcedMethods, but using function objects instead
         # of method objects.
 
-        if sys.version_info[0] == 2:
-            objc.classAddMethods(
-                MEClass,
-                [
-                    PurePython.description.im_func,
-                    PurePython.newMethod.im_func,
-                    PurePython.purePythonMethod.im_func,
-                ],
-            )
-        else:
-            objc.classAddMethods(
-                MEClass,
-                [
-                    PurePython.description,
-                    PurePython.newMethod,
-                    PurePython.purePythonMethod,
-                ],
-            )
+        objc.classAddMethods(
+            MEClass,
+            [PurePython.description, PurePython.newMethod, PurePython.purePythonMethod],
+        )
 
         self.assertTrue(MEClass.instancesRespondToSelector_("description"))
         self.assertTrue(MEClass.instancesRespondToSelector_("newMethod"))

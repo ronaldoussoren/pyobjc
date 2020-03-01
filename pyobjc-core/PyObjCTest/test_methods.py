@@ -31,8 +31,6 @@ NOTES:
 - See also testbndl.m, the implementation there must be synchronized
   with this file.
 """
-from __future__ import unicode_literals
-
 import struct
 import sys
 import warnings
@@ -95,12 +93,7 @@ def makeCFloat(value):
     C floats and doubles have a different representation, this function returns
     the result of converting a python float (== C double) to a C float and back.
     """
-    if sys.version_info[0] == 2:
-        struct_fmt = b"f"
-    else:
-        struct_fmt = "f"
-
-    return struct.unpack(struct_fmt, struct.pack(struct_fmt, value))[0]
+    return struct.unpack("f", struct.pack("f", value))[0]
 
 
 class PyOCTestSimpleReturns(TestCase):

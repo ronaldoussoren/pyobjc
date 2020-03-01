@@ -28,18 +28,9 @@ else:
 NSSet = lookUpClass("NSSet")
 NSObject = lookUpClass("NSObject")
 
-if sys.version_info[0] == 2:  # pragma: no 3.x cover
-    range = xrange
 
-    def _str(value):
-        return value
-
-
-else:  # pragma: no 2.x cover
-    long = int
-
-    def _str(value):
-        return value.decode("ascii")
+def _str(value):
+    return value.decode("ascii")
 
 
 def attrsetter(prop, name, copy):
@@ -364,10 +355,7 @@ def _id(value):
     return value
 
 
-# FIXME: split into two: array_proxy and mutable_array_proxy
 class array_proxy(collections_abc.MutableSequence):
-    # XXX: The implemenation should be complete, but is currently not
-    # tested.
     __slots__ = ("_name", "_parent", "__wrapped", "_ro")
 
     def __init__(self, name, parent, wrapped, read_only):
@@ -389,7 +377,7 @@ class array_proxy(collections_abc.MutableSequence):
 
             return result
 
-        elif isinstance(index, (int, long)):
+        elif isinstance(index, int):
             if index < 0:
                 v = len(self) + index
                 if v < 0:
@@ -505,7 +493,6 @@ class array_proxy(collections_abc.MutableSequence):
             )
 
     def extend(self, values):
-        # XXX: This is suboptimal but correct
         if self._ro:
             raise ValueError("Property '%s' is read-only" % (self._name,))
 
@@ -537,7 +524,7 @@ class array_proxy(collections_abc.MutableSequence):
     def __imul__(self, count):
         if self._ro:
             raise ValueError("Property '%s' is read-only" % (self._name,))
-        if not isinstance(count, (int, long)):
+        if not isinstance(count, int):
             raise TypeError(count)
 
         indexes = NSIndexSet.alloc().initWithIndexesInRange_(
@@ -597,50 +584,20 @@ class array_proxy(collections_abc.MutableSequence):
         else:
             return self._wrapped >= other
 
-    if sys.version_info[0] == 2:  # pragma: no 3.x cover
+    def sort(self, key=None, reverse=False):
+        if self._ro:
+            raise ValueError("Property '%s' is read-only" % (self._name,))
 
-        def __cmp__(self, other):
-            if isinstance(other, array_proxy):
-                return cmp(self._wrapped, other._wrapped)
-
-            else:
-                return cmp(self._wrapped, other)
-
-        def sort(self, cmp=None, key=None, reverse=False):
-            if self._ro:
-                raise ValueError("Property '%s' is read-only" % (self._name,))
-
-            indexes = NSIndexSet.alloc().initWithIndexesInRange_(
-                (0, len(self._wrapped))
-            )
-            self._parent.willChange_valuesAtIndexes_forKey_(
+        indexes = NSIndexSet.alloc().initWithIndexesInRange_((0, len(self._wrapped)))
+        self._parent.willChange_valuesAtIndexes_forKey_(
+            NSKeyValueChangeReplacement, indexes, self._name
+        )
+        try:
+            self._wrapped.sort(key=key, reverse=reverse)
+        finally:
+            self._parent.didChange_valuesAtIndexes_forKey_(
                 NSKeyValueChangeReplacement, indexes, self._name
             )
-            try:
-                self._wrapped.sort(cmp=cmp, key=key, reverse=reverse)
-            finally:
-                self._parent.didChange_valuesAtIndexes_forKey_(
-                    NSKeyValueChangeReplacement, indexes, self._name
-                )
-
-    else:  # pragma: no 2.x cover
-
-        def sort(self, key=None, reverse=False):
-            if self._ro:
-                raise ValueError("Property '%s' is read-only" % (self._name,))
-
-            indexes = NSIndexSet.alloc().initWithIndexesInRange_(
-                (0, len(self._wrapped))
-            )
-            self._parent.willChange_valuesAtIndexes_forKey_(
-                NSKeyValueChangeReplacement, indexes, self._name
-            )
-            try:
-                self._wrapped.sort(key=key, reverse=reverse)
-            finally:
-                self._parent.didChange_valuesAtIndexes_forKey_(
-                    NSKeyValueChangeReplacement, indexes, self._name
-                )
 
     def reverse(self):
         if self._ro:
@@ -702,7 +659,6 @@ class array_property(object_property):
         )
 
         # Insert (Mutable) Indexed Accessors
-        # FIXME: should only do the mutable bits when we're actually a mutable property
 
         name = self._name
         Name = name[0].upper() + name[1:]
@@ -765,14 +721,14 @@ class array_property(object_property):
     def __get__(self, object, owner):
         v = object_property.__get__(self, object, owner)
         if v is None:
-            v = list()
+            v = []
             object_property.__set__(self, object, v)
         return array_proxy(self._name, object, self, self._ro)
 
     def __getvalue__(self, object):
         v = object_property.__get__(self, object, None)
         if v is None:
-            v = list()
+            v = []
             object_property.__set__(self, object, v)
         return v
 
@@ -868,13 +824,13 @@ class set_proxy(collections_abc.MutableSet):
             raise ValueError("Property '%s' is read-only" % (self._name,))
 
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
-            self._name, NSKeyValueUnionSetMutation, set([item])
+            self._name, NSKeyValueUnionSetMutation, {item}
         )
         try:
             self._wrapped.add(item)
         finally:
             self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
-                self._name, NSKeyValueUnionSetMutation, set([item])
+                self._name, NSKeyValueUnionSetMutation, {item}
             )
 
     def clear(self):
@@ -958,14 +914,14 @@ class set_proxy(collections_abc.MutableSet):
             raise ValueError("Property '%s' is read-only" % (self._name,))
 
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
-            self._name, NSKeyValueMinusSetMutation, set([item])
+            self._name, NSKeyValueMinusSetMutation, {item}
         )
         try:
             self._wrapped.remove(item)
 
         finally:
             self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
-                self._name, NSKeyValueMinusSetMutation, set([item])
+                self._name, NSKeyValueMinusSetMutation, {item}
             )
 
     def symmetric_difference_update(self, other):
@@ -1142,7 +1098,6 @@ class set_property(object_property):
         )
 
         # (Mutable) Unordered Accessors
-        # FIXME: should only do the mutable bits when we're actually a mutable property
 
         name = self._name
         Name = name[0].upper() + name[1:]

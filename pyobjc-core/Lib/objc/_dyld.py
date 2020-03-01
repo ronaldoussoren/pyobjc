@@ -11,7 +11,6 @@ __all__ = [
 ]
 
 import os
-import sys
 
 from objc._framework import infoForFramework
 

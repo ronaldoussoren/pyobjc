@@ -1,13 +1,8 @@
-from __future__ import unicode_literals
-
 import sys
 
 import objc
 from PyObjCTest.fsref import *
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 
 class TestFSRef(TestCase):
@@ -21,7 +16,7 @@ class TestFSRef(TestCase):
         self.assertIsInstance(ref, objc.FSRef)
 
         self.assertIsInstance(ref.data, bytes)
-        self.assertIsInstance(ref.as_pathname(), unicode)
+        self.assertIsInstance(ref.as_pathname(), str)
 
         try:
             from Carbon.File import FSRef
@@ -39,7 +34,7 @@ class TestFSRef(TestCase):
         self.assertIsInstance(ref, objc.FSRef)
 
         p = o.stringForFSRef_(ref)
-        self.assertIsInstance(p, unicode)
+        self.assertIsInstance(p, str)
         self.assertEqual(p, "/Library")
 
     def testInput(self):
@@ -48,7 +43,7 @@ class TestFSRef(TestCase):
         self.assertIsInstance(ref, objc.FSRef)
 
         p = o.pathForFSRef_(ref)
-        self.assertIsInstance(p, unicode)
+        self.assertIsInstance(p, str)
         self.assertEqual(p, "/Library")
 
     def testOutput(self):
@@ -59,7 +54,7 @@ class TestFSRef(TestCase):
 
         # Verify the fsref contents:
         p = o.stringForFSRef_(ref)
-        self.assertIsInstance(p, unicode)
+        self.assertIsInstance(p, str)
         self.assertEqual(p, "/Library")
 
 

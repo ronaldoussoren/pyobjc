@@ -66,7 +66,7 @@ if "ABAddressBookErrorDomain" not in g:
     print("'ABAddressBookErrorDomain' not found")
     passed = False
 
-elif not isinstance(g["ABAddressBookErrorDomain"], unicode):
+elif not isinstance(g["ABAddressBookErrorDomain"], str):
     print("'ABAddressBookErrorDomain' not a string")
     passed = False
 

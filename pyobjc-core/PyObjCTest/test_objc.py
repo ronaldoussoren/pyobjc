@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import os
 import sys
 
@@ -83,15 +81,6 @@ class TestPickle(TestCase):
 
     def testPicklePure(self):
         import pickle
-
-        o = NSObject.alloc().init()
-        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 0)
-        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 1)
-        self.assertRaises((TypeError, ValueError), pickle.dumps, o, 2)
-
-    @onlyPython2
-    def testCPicklePure(self):
-        import cPickle as pickle
 
         o = NSObject.alloc().init()
         self.assertRaises((TypeError, ValueError), pickle.dumps, o, 0)

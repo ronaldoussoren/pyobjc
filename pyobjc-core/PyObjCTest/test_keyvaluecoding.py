@@ -671,7 +671,7 @@ class TestKVCHelper(TestCase):
             setattr(KeyValueCoding, k, self._orig[k])
 
     def test_repr(self):
-        for o in [object(), 42, "42", b"42", b"42".decode("latin1")]:
+        for o in [object(), 42, "42", b"42"]:
             self.assertEqual(repr(KeyValueCoding.kvc(o)), repr(o))
 
     def test_attribute_access(self):

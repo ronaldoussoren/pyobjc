@@ -3,16 +3,11 @@ Tests for the new-style metadata format interface.
 
 These tests are for global function
 """
-from __future__ import unicode_literals
-
 import sys
 
 import objc
 from PyObjCTest.metadatafunction import *
 from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] == 3:
-    unicode = str
 
 _FunctionTable = [
     (
@@ -623,7 +618,7 @@ class TestArraysIn(TestCase):
         self.assertEqual(len(v), 3)
         self.assertEqual(list(v), ["hello", "world", "there"])
         self.assertIsInstance(v, objc.lookUpClass("NSArray"))
-        self.assertIsInstance(v[0], unicode)
+        self.assertIsInstance(v[0], str)
 
         NSObject = objc.lookUpClass("NSObject")
         p, q, r = NSObject.new(), NSObject.new(), NSObject.new()

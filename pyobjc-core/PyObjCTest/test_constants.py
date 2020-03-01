@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import *
 
 class TestConstants(TestCase):
     def test_version_current(self):
-        self.assertIsInstance(objc.MAC_OS_X_VERSION_CURRENT, (int, long))
+        self.assertIsInstance(objc.MAC_OS_X_VERSION_CURRENT, int)
 
         v = os_release().split(".")[:2]
         v = "MAC_OS_X_VERSION_%s_%s" % tuple(v)

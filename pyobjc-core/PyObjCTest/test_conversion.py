@@ -50,19 +50,12 @@ class TestNumbers(TestCase):
         self.assertEqual(0, pyObjCPy(objc._C_UCHR, 0))
         self.assertEqual(0, pyObjCPy(objc._C_UCHR, b"\0"))
 
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_UCHR, long(0)))
         self.assertEqual(0, pyObjCPy(objc._C_UCHR, float(0)))
 
         self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, UCHAR_MAX))
-        if sys.version_info[0] == 2:
-            self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, chr(UCHAR_MAX)))
-        else:
-            self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, bytes([UCHAR_MAX])))
-            self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, bytearray([UCHAR_MAX])))
+        self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, bytes([UCHAR_MAX])))
+        self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, bytearray([UCHAR_MAX])))
 
-        if sys.version_info[0] == 2:
-            self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, long(UCHAR_MAX)))
         self.assertEqual(UCHAR_MAX, pyObjCPy(objc._C_UCHR, float(UCHAR_MAX)))
 
         with warnings.catch_warnings():
@@ -78,19 +71,11 @@ class TestNumbers(TestCase):
     def test_char(self):
         self.assertEqual(0, pyObjCPy(objc._C_CHR, 0))
         self.assertEqual(0, pyObjCPy(objc._C_CHR, b"\x00"))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_CHR, long(0)))
 
         self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, CHAR_MAX))
-        if sys.version_info[0] == 2:
-            self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, chr(CHAR_MAX)))
-        else:
-            self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, bytes([CHAR_MAX])))
-            self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, bytearray([CHAR_MAX])))
+        self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, bytes([CHAR_MAX])))
+        self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, bytearray([CHAR_MAX])))
         self.assertEqual(CHAR_MIN, pyObjCPy(objc._C_CHR, CHAR_MIN))
-        if sys.version_info[0] == 2:
-            self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, long(CHAR_MAX)))
-            self.assertEqual(CHAR_MIN, pyObjCPy(objc._C_CHR, long(CHAR_MIN)))
         self.assertEqual(CHAR_MAX, pyObjCPy(objc._C_CHR, float(CHAR_MAX)))
         self.assertEqual(CHAR_MIN, pyObjCPy(objc._C_CHR, float(CHAR_MIN)))
 
@@ -104,9 +89,6 @@ class TestNumbers(TestCase):
     def test_unsigned_short(self):
         self.assertEqual(0, pyObjCPy(objc._C_USHT, 0))
         self.assertEqual(USHRT_MAX, pyObjCPy(objc._C_USHT, USHRT_MAX))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_USHT, long(0)))
-            self.assertEqual(USHRT_MAX, pyObjCPy(objc._C_USHT, long(USHRT_MAX)))
         self.assertEqual(0, pyObjCPy(objc._C_USHT, float(0)))
         self.assertEqual(USHRT_MAX, pyObjCPy(objc._C_USHT, float(USHRT_MAX)))
 
@@ -123,10 +105,6 @@ class TestNumbers(TestCase):
         self.assertEqual(0, pyObjCPy(objc._C_SHT, 0))
         self.assertEqual(SHRT_MAX, pyObjCPy(objc._C_SHT, SHRT_MAX))
         self.assertEqual(SHRT_MIN, pyObjCPy(objc._C_SHT, SHRT_MIN))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_SHT, long(0)))
-            self.assertEqual(SHRT_MAX, pyObjCPy(objc._C_SHT, long(SHRT_MAX)))
-            self.assertEqual(SHRT_MIN, pyObjCPy(objc._C_SHT, long(SHRT_MIN)))
         self.assertEqual(0, pyObjCPy(objc._C_SHT, float(0)))
         self.assertEqual(SHRT_MAX, pyObjCPy(objc._C_SHT, float(SHRT_MAX)))
         self.assertEqual(SHRT_MIN, pyObjCPy(objc._C_SHT, float(SHRT_MIN)))
@@ -140,9 +118,6 @@ class TestNumbers(TestCase):
     def test_unsigned_int(self):
         self.assertEqual(0, pyObjCPy(objc._C_UINT, 0))
         self.assertEqual(UINT_MAX, pyObjCPy(objc._C_UINT, UINT_MAX))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_UINT, long(0)))
-            self.assertEqual(UINT_MAX, pyObjCPy(objc._C_UINT, long(UINT_MAX)))
         self.assertEqual(0, pyObjCPy(objc._C_UINT, float(0)))
         self.assertEqual(UINT_MAX, pyObjCPy(objc._C_UINT, float(UINT_MAX)))
 
@@ -159,10 +134,6 @@ class TestNumbers(TestCase):
         self.assertEqual(0, pyObjCPy(objc._C_INT, 0))
         self.assertEqual(INT_MAX, pyObjCPy(objc._C_INT, INT_MAX))
         self.assertEqual(INT_MIN, pyObjCPy(objc._C_INT, INT_MIN))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_INT, long(0)))
-            self.assertEqual(INT_MAX, pyObjCPy(objc._C_INT, long(INT_MAX)))
-            self.assertEqual(INT_MIN, pyObjCPy(objc._C_INT, long(INT_MIN)))
         self.assertEqual(0, pyObjCPy(objc._C_INT, float(0)))
         self.assertEqual(INT_MAX, pyObjCPy(objc._C_INT, float(INT_MAX)))
         self.assertEqual(INT_MIN, pyObjCPy(objc._C_INT, float(INT_MIN)))
@@ -177,9 +148,6 @@ class TestNumbers(TestCase):
     def test_unsigned_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_ULNG, 0))
         self.assertEqual(ULONG_MAX, pyObjCPy(objc._C_ULNG, ULONG_MAX))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_ULNG, long(0)))
-            self.assertEqual(ULONG_MAX, pyObjCPy(objc._C_ULNG, long(ULONG_MAX)))
         self.assertEqual(0, pyObjCPy(objc._C_ULNG, float(0)))
 
         with warnings.catch_warnings():
@@ -197,10 +165,6 @@ class TestNumbers(TestCase):
         self.assertEqual(0, pyObjCPy(objc._C_LNG, 0))
         self.assertEqual(LONG_MAX, pyObjCPy(objc._C_LNG, LONG_MAX))
         self.assertEqual(LONG_MIN, pyObjCPy(objc._C_LNG, LONG_MIN))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_LNG, long(0)))
-            self.assertEqual(LONG_MAX, pyObjCPy(objc._C_LNG, long(LONG_MAX)))
-            self.assertEqual(LONG_MIN, pyObjCPy(objc._C_LNG, long(LONG_MIN)))
         self.assertEqual(0, pyObjCPy(objc._C_LNG, float(0)))
         if sys.maxsize < 2 ** 32:
             self.assertEqual(LONG_MAX, pyObjCPy(objc._C_LNG, float(LONG_MAX)))
@@ -215,9 +179,6 @@ class TestNumbers(TestCase):
     def test_unsigned_long_long(self):
         self.assertEqual(0, pyObjCPy(objc._C_ULNG_LNG, 0))
         self.assertEqual(ULLONG_MAX, pyObjCPy(objc._C_ULNG_LNG, ULLONG_MAX))
-        if sys.version_info[0] == 2:
-            self.assertEqual(0, pyObjCPy(objc._C_ULNG_LNG, long(0)))
-            self.assertEqual(ULLONG_MAX, pyObjCPy(objc._C_ULNG_LNG, long(ULLONG_MAX)))
         self.assertEqual(0, pyObjCPy(objc._C_ULNG_LNG, float(0)))
 
         with warnings.catch_warnings(record=True) as w:

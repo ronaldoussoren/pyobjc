@@ -1,5 +1,3 @@
-import sys
-
 from objc import _objc
 
 __all__ = []
@@ -22,12 +20,9 @@ class OC_PythonFloat(float):
         return (float, (float(self),))
 
 
-base_class = int if sys.version_info[0] >= 3 else long
-
-
-class OC_PythonLong(base_class):
+class OC_PythonLong(int):
     def __new__(cls, obj, value):
-        self = base_class.__new__(cls, value)
+        self = int.__new__(cls, value)
         self.__pyobjc_object__ = obj
         return self
 
@@ -46,26 +41,7 @@ class OC_PythonLong(base_class):
         self.__dict__["__pyobjc_object__"] = value
 
     def __reduce__(self):
-        return (base_class, (base_class(self),))
-
-
-if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
-
-    class OC_PythonInt(int):
-        __slots__ = ("__pyobjc_object__",)
-
-        def __new__(cls, obj, value):
-            self = int.__new__(cls, value)
-            self.__pyobjc_object__ = obj
-            return self
-
-        __class__ = property(lambda self: self.__pyobjc_object__.__class__)
-
-        def __getattr__(self, attr):
-            return getattr(self.__pyobjc_object__, attr)
-
-        def __reduce__(self):
-            return (int, (int(self),))
+        return (int, (int(self),))
 
 
 NSNumber = _objc.lookUpClass("NSNumber")
@@ -93,9 +69,7 @@ def numberWrapper(obj):
             return OC_PythonLong(obj, obj.unsignedLongLongValue())
         else:
             return OC_PythonFloat(obj, obj.doubleValue())
-    elif sys.version_info[0] == 2:  # pragma: no 3.x cover
-        return OC_PythonInt(obj, obj.longValue())
-    else:  # pragma: no 2.x cover
+    else:
         return OC_PythonLong(obj, obj.longValue())
 
 
