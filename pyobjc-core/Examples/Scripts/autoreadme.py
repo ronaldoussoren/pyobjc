@@ -11,13 +11,11 @@ Usage:
 """
 import os
 import re
-import sys
 
-from AppKit import *
-from Foundation import *
+from Cocoa import NSObject, NSLog, NSWorkspace, NSWorkspaceDidMountNotification
 from PyObjCTools import AppHelper
 
-readTheseFiles = re.compile("(.*read\s*me.*|.*release.*note.*|^about.*)", re.I)
+readTheseFiles = re.compile(r"(.*read\s*me.*|.*release.*note.*|^about.*)", re.I)
 
 
 class NotificationHandler(NSObject):

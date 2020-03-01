@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import sys
 
-from Foundation import *
+from Foundation import NSObject, NSLog
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 
 __all__ = ["ConsoleReactor"]
@@ -57,8 +57,7 @@ class ConsoleReactor(NSObject):
         if not self.respondsToSelector_(sel):
             NSLog("%r does not respond to %s", self, command)
         else:
-            # XXX - this crashes PyObjC??
-            # self.performSelector_withObject_(sel, cmd)
+            self.performSelector_withObject_(sel, cmd)
             getattr(self, sel.replace(":", "_"))(cmd)
 
     def handleRespondCommand_(self, command):
@@ -78,7 +77,7 @@ class ConsoleReactor(NSObject):
         self.writeCode_(code)
 
     def doCallback_sequence_args_(self, callback, seq, args):
-        nr = self.netReprCenter
+        # nr = self.netReprCenter
         try:
             rval = callback(*args)
         except Exception as e:
@@ -96,10 +95,8 @@ class ConsoleReactor(NSObject):
         name = command[1]
         args = command[2:]
         netrepr = self.netReprCenter.netrepr
-        rval = None
-        code = None
         if name == "RemoteConsole.raw_input":
-            self.doCallback_sequence_args_(raw_input, seq, args)
+            self.doCallback_sequence_args_(input, seq, args)
         elif name == "RemoteConsole.write":
             self.doCallback_sequence_args_(sys.stdout.write, seq, args)
         elif name == "RemoteConsole.displayhook":
@@ -120,7 +117,7 @@ class ConsoleReactor(NSObject):
                 self.doCallback_sequence_args_(displayhook_local, seq, args)
         elif name.startswith("RemoteFileLike."):
             fh = getattr(sys, args[0])
-            meth = getattr(fh, name[len("RemoteFileLike.") :])
+            meth = getattr(fh, name[len("RemoteFileLike.") :])  # noqa: E203
             self.doCallback_sequence_args_(meth, seq, args[1:])
         elif name == "RemoteConsole.initialize":
             self.doCallback_sequence_args_(lambda *args: None, seq, args)

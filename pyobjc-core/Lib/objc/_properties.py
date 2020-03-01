@@ -20,10 +20,7 @@ from objc import (
     selector,
 )
 
-if sys.version_info[0] == 2:
-    import collections as collections_abc
-else:
-    import collections.abc as collections_abc
+import collections.abc
 
 NSSet = lookUpClass("NSSet")
 NSObject = lookUpClass("NSObject")
@@ -355,7 +352,7 @@ def _id(value):
     return value
 
 
-class array_proxy(collections_abc.MutableSequence):
+class array_proxy(collections.abc.MutableSequence):
     __slots__ = ("_name", "_parent", "__wrapped", "_ro")
 
     def __init__(self, name, parent, wrapped, read_only):
@@ -739,7 +736,7 @@ NSKeyValueIntersectSetMutation = 3
 NSKeyValueSetSetMutation = 4
 
 
-class set_proxy(collections_abc.MutableSet):
+class set_proxy(collections.abc.MutableSet):
     __slots__ = ("_name", "__wrapped", "_parent", "_ro")
 
     def __init__(self, name, parent, wrapped, read_only):

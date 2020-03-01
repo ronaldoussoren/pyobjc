@@ -184,9 +184,7 @@ def nsarray_remove(self, obj):
     self.removeObjectAtIndex_(idx)
 
 
-index_error_message = "index is not an integer"
-if sys.version_info[:2] >= (3, 5):
-    index_error_message = "list indices must be integers or slices"
+index_error_message = "list indices must be integers or slices"
 
 
 def nsarray__setitem__(self, idx, anObject):
@@ -408,26 +406,3 @@ addConvenienceForClass(
         ("clear", nsarray_clear),
     ),
 )
-
-
-if sys.version_info[0] == 2:  # pragma: no 3.x cover; pragma: no branch
-
-    def nsarray__getslice__(self, i, j):
-        i = max(i, 0)
-        j = max(j, 0)
-        return nsarray__getitem__(self, slice(i, j))
-
-    def nsarray__setslice__(self, i, j, seq):
-        i = max(i, 0)
-        j = max(j, 0)
-        nsarray__setitem__(self, slice(i, j), seq)
-
-    def nsarray__delslice__(self, i, j):
-        nsarray__delitem__(self, slice(i, j))
-
-    addConvenienceForClass("NSArray", (("__getslice__", nsarray__getslice__),))
-
-    addConvenienceForClass(
-        "NSMutableArray",
-        (("__setslice__", nsarray__setslice__), ("__delslice__", nsarray__delslice__)),
-    )

@@ -1,11 +1,11 @@
 import itertools
-import types
 
 
 def type_string(obj):
-    objType = type(obj)
-    if objType is types.InstanceType:
+    if isinstance(obj, type):
         objType = obj.__class__
+    else:
+        objType = type(obj)
     return getattr(objType, "__module__", "-") + "." + objType.__name__
 
 
@@ -39,17 +39,17 @@ class NetRepr(object):
         if obj is None:
             return "None"
         objtype = type(obj)
-        if objtype is int or objtype is long or objtype is float:
+        if objtype is int or objtype is float:
             return repr(obj)
-        elif objtype is str or objtype is unicode:
+        elif objtype is str:
             if True:
                 return repr(obj)
             else:
                 # "intern" these
                 obj_id = id(obj)
-                cached = self.get(cache, obj_id, None)
+                cached = self.get(self.cache, obj_id, None)
                 if cached is None:
-                    ident = self._identfactory.next()
+                    # ident = next(self._identfactory)
                     self.cache[obj_id] = "__cached__(%r)" % (obj_id,)
                     cached = "__cache__(%r, %r)" % (obj_id, obj)
                 return cached
@@ -94,7 +94,7 @@ class BaseObjectPool(object):
             raise RuntimeError("popped too many pools")
         # print "popped pool"
         pool = self.pools.pop()
-        for ref, count in pool.iteritems():
+        for ref, count in pool.items():
             ref.release(count)
 
     def referenceForObject(self, obj):
@@ -136,7 +136,7 @@ class ObjectPool(BaseObjectPool):
         obj_id = id(obj)
         rval = self.obj_ids.get(obj_id)
         if rval is None:
-            ident = self._identfactory.next()
+            ident = next(self._identfactory)
             rval = ObjectReference(self, ident, type_string(obj), obj, obj_id)
             rval = rval.alloc().autorelease()
         return rval
@@ -212,8 +212,6 @@ class ObjectReference(BaseObjectReference):
 
 
 def test_netrepr():
-    import compiler
-
     pool = ObjectPool()
     pool.push()
     netrepr = NetRepr(pool).netrepr

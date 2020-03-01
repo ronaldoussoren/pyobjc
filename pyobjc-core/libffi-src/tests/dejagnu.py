@@ -8,7 +8,6 @@ import re
 import signal
 import sys
 import unittest
-from distutils.util import get_platform
 from fnmatch import fnmatch
 
 gDgCommands = re.compile(
@@ -74,7 +73,9 @@ class DgTestCase(unittest.TestCase):
     archOption = "-arch x86_64"
     # archOption = ""
     compileOptionsBase = "-g -DMACOSX -Iinclude -o /tmp/test.bin -lffi"
-    compileOptionsList = (  # HACK ALERT: Yes, there are better ways to do this, but this is easy and extremely flexible
+    compileOptionsList = (
+        # HACK ALERT: Yes, there are better ways to do this, but this is
+        # easy and extremely flexible
         "%s %s %s" % (compileOptionsBase, archOption, "-O0"),
         "%s %s %s" % (compileOptionsBase, archOption, "-O1"),
         "%s %s %s" % (compileOptionsBase, archOption, "-O2"),
@@ -94,7 +95,7 @@ class DgTestCase(unittest.TestCase):
 
         for command, data in script:
             if command == "run":
-                action = "run"
+                # action = "run"
                 action_data = data
             if command == "expect":
                 output.append(data)
@@ -128,14 +129,11 @@ class DgTestCase(unittest.TestCase):
         return "dejagnu.%s.%s" % (dn, fn)
 
     def compileTestCase(self, compileOptions):
-        # libdir = os.path.join('build', 'temp.%s-%d.%d'%(get_platform(), sys.version_info[0], sys.version_info[1]), 'libffi-src')
-        # libffiobjects = self.object_files(libdir)
-
         commandline = "cc %s %s 2>&1" % (compileOptions, self.filename)
         fp = os.popen(commandline)
         data = fp.read()
         xit = fp.close()
-        if xit != None:
+        if xit is not None:
             self.fail("Compile failed[%s]:\n%s" % (xit, data))
 
     def runTestCase(self):
@@ -144,13 +142,13 @@ class DgTestCase(unittest.TestCase):
         del os.environ["DYLD_BIND_AT_LAUNCH"]
         data = fp.read()
         xit = fp.close()
-        if xit != None:
+        if xit is not None:
             self.fail("Running failed (%s)" % (exitCode2Description(xit),))
         return data
 
     def object_files(self, basedir):
         result = []
-        for dirpath, dirnames, filenames in os.walk(basedir):
+        for dirpath, _dirnames, filenames in os.walk(basedir):
             for fn in filenames:
                 if fn.endswith(".o"):
                     result.append(os.path.join(dirpath, fn))

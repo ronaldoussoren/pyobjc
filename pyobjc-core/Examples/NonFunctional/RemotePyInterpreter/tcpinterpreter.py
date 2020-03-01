@@ -3,7 +3,6 @@
 """
     start socket based minimal readline exec server
 """
-import os
 import socket
 import sys
 
@@ -11,7 +10,7 @@ import sys
 def runsocketcode(clientfile, g):
     try:
         source = clientfile.readline().rstrip()
-    except Exception as e:
+    except Exception:
         raise SystemExit
     if not source:
         raise SystemExit
@@ -56,7 +55,9 @@ def main():
     g.clear()
     g.update(newglobals)
     serverglobals = {"__name__": "__socketclient__"}
-    execfile(sourcefile, serverglobals, serverglobals)
+    with open(sourcefile) as fp:
+        sourcecode = fp.read()
+    exec(sourcecode, serverglobals, serverglobals)
 
 
 if __name__ == "__main__":

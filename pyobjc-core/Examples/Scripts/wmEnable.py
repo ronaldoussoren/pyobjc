@@ -1,4 +1,4 @@
-#!/usr/bin/pythonw
+#!/usr/bin/env python3
 """
 This is an evil undocumented SPI hack that shows how to enable GUI operation
 from a console application.
@@ -9,7 +9,7 @@ import os
 import sys
 
 import objc
-from Foundation import *
+from Foundation import NSBundle, NSObject
 
 
 def S(*args):
@@ -43,42 +43,40 @@ def WMEnable(name="Python"):
         )
     )
     if bndl is None:
-        print >>sys.stderr, "ApplicationServices missing"
+        print("ApplicationServices missing", file=sys.stderr)
         return False
     d = {}
     objc.loadBundleFunctions(bndl, d, FUNCTIONS)
-    for (fn, sig) in FUNCTIONS:
+    for (fn, _sig) in FUNCTIONS:
         if fn not in d:
-            print >>sys.stderr, "Missing", fn
+            print("Missing", fn, file=sys.stderr)
             return False
     err, psn = d["GetCurrentProcess"](None)
     if err:
-        print >>sys.stderr, "GetCurrentProcess", (err, psn)
+        print("GetCurrentProcess", (err, psn), file=sys.stderr)
         return False
     err = d["CPSSetProcessName"](psn, name)
     if err:
-        print >>sys.stderr, "CPSSetProcessName", (err, psn)
+        print("CPSSetProcessName", (err, psn), file=sys.stderr)
         return False
     err = d["CPSEnableForegroundOperation"](psn)
     if err:
-        print >>sys.stderr, "CPSEnableForegroundOperation", (err, psn)
+        print("CPSEnableForegroundOperation", (err, psn), file=sys.stderr)
         return False
     err = d["SetFrontProcess"](psn)
     if err:
-        print >>sys.stderr, "SetFrontProcess", (err, psn)
+        print("SetFrontProcess", (err, psn), file=sys.stderr)
         return False
     return True
 
 
 class AppDelegate(NSObject):
     def applicationDidFinishLaunching_(self, sender):
-        rval = AppKit.NSRunAlertPanel("WM Enabled", "WM was enabled!", None, None, None)
+        AppKit.NSRunAlertPanel("WM Enabled", "WM was enabled!", None, None, None)
         AppKit.NSApp().terminate_(self)
 
 
 if __name__ == "__main__":
-    import sys
-
     if WMEnable(os.path.basename(os.path.splitext(sys.argv[0])[0])):
         import AppKit
 

@@ -1,13 +1,7 @@
 """
 'test' action for setup.py
 """
-import glob
-import os
-import string
-import sys
 import unittest
-from fnmatch import fnmatch
-from os.path import basename, dirname, expanduser, join, splitext, walk
 
 import dejagnu
 

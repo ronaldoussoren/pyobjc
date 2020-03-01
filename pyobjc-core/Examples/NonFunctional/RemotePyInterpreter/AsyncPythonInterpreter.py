@@ -1,16 +1,27 @@
 __all__ = ["AsyncPythonInterpreter"]
 
-try:
-    import fcntl
-except:
-    fcntl = None
+import fcntl
 import os
 import socket
 import sys
 
 import objc
-from Foundation import *
-from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
+from Foundation import (
+    NSObject,
+    NSUserDefaults,
+    NSLog,
+    NSFileHandle,
+    NSNotificationCenter,
+    NSFileHandleConnectionAcceptedNotification,
+    NSTask,
+    NSTaskDidTerminateNotification,
+    NSFileHandleNotificationFileHandleItem,
+    NSFileHandleReadCompletionNotification,
+    NSFileHandleError,
+    NSData,
+    NSFileHandleNotificationDataItem,
+)
+
 
 IMPORT_MODULES = ["netrepr", "remote_console", "remote_pipe", "remote_bootstrap"]
 source = []
@@ -94,7 +105,7 @@ class AsyncPythonInterpreter(NSObject):
         self.host = default("AsyncPythonInterpreterInterpreterHost", "127.0.0.1", str)
         self.port = default("AsyncPythonInterpreterInterpreterPort", 0, int)
         self.interpreterPath = default(
-            "AsyncPythonInterpreterInterpreterPath", "/usr/bin/python", unicode
+            "AsyncPythonInterpreterInterpreterPath", "/usr/bin/python", str
         )
         self.scriptPath = (
             type(self).bundleForClass().pathForResource_ofType_("tcpinterpreter", "py")
@@ -241,9 +252,9 @@ def test_console():
     host = "127.0.0.1"
     port = 0
     interpreterPath = sys.executable
-    scriptPath = unicode(os.path.abspath("tcpinterpreter.py"))
+    scriptPath = os.path.abspath("tcpinterpreter.py")
     commandReactor = ConsoleReactor.alloc().init()
-    interp = AsyncPythonInterpreter.alloc().initWithHost_port_interpreterPath_scriptPath_commandReactor_(
+    interp = AsyncPythonInterpreter.alloc().initWithHost_port_interpreterPath_scriptPath_commandReactor_(  # noqa: B950
         host, port, interpreterPath, scriptPath, commandReactor
     )
     interp.connect()

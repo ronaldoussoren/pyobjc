@@ -3,12 +3,12 @@ import itertools
 
 def as_unicode(s, encoding="utf-8"):
     typ = type(s)
-    if typ is unicode:
+    if typ is str:
         pass
-    elif issubclass(typ, unicode):
-        s = unicode(s)
     elif issubclass(typ, str):
-        s = unicode(s, encoding, "replace")
+        s = str(s)
+    elif issubclass(typ, bytes):
+        s = str(s, encoding, "replace")
     else:
         raise TypeError("expecting basestring, not %s" % (typ.__name__,))
     return s
@@ -16,11 +16,11 @@ def as_unicode(s, encoding="utf-8"):
 
 def as_str(s, encoding="utf-8"):
     typ = type(s)
-    if typ is str:
+    if typ is bytes:
         pass
+    elif issubclass(typ, bytes):
+        s = bytes(s)
     elif issubclass(typ, str):
-        s = str(s)
-    elif issubclass(typ, unicode):
         s = s.encode(encoding)
     else:
         raise TypeError("expecting basestring, not %s" % (typ.__name__,))
@@ -56,7 +56,7 @@ class RemotePipe(object):
             self.pool.pop()
 
     def _expect(self, *args):
-        ident = self.sequence.next()
+        ident = next(self.sequence)
         self.send("expect", ident, *args)
         while ident not in self.result:
             self.runcode(self.clientfile, self.namespace)

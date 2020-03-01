@@ -4,10 +4,13 @@ Experimental code, attempting to work around Apple's KVO hacks.
 """
 from __future__ import print_function
 
-import sys
-
 import objc
-from Foundation import *
+from Foundation import (
+    NSObject,
+    NSKeyValueObservingOptionOld,
+    NSKeyValueObservingOptionNew,
+)
+
 
 _kvoclassed = {}
 

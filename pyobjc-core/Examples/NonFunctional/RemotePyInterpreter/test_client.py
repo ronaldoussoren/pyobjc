@@ -1,5 +1,4 @@
-from __future__ import print_function
-
+import fcntl
 import os
 import socket
 import sys
@@ -7,10 +6,6 @@ from subprocess import PIPE, Popen
 
 from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 
-try:
-    import fcntl
-except:
-    fcntl = None
 
 IMPORT_MODULES = ["netrepr", "remote_console", "remote_pipe", "remote_bootstrap"]
 source = []
@@ -19,12 +14,6 @@ for fn in IMPORT_MODULES:
         source.append(line)
     source.append("\n\n")
 SOURCE = repr("".join(source)) + "\n"
-
-
-def ensure_utf8(s):
-    if isinstance(s, unicode):
-        s = s.encode("utf-8")
-    return s
 
 
 def bind_and_listen(hostport):
@@ -93,13 +82,13 @@ def client_loop(f):
                 args = map(neteval, command[3:])
                 code = None
                 rval = None
-                if name == "RemoteConsole.raw_input":
+                if name == "RemoteConsole.input":
                     try:
-                        rval = raw_input(*args)
+                        rval = input(*args)
                     except EOFError:
                         code = "raise EOFError"
                 elif name == "RemoteConsole.write":
-                    sys.stdout.write(ensure_utf8(args[0]))
+                    sys.stdout.write(args[0])
                 elif name == "RemoteConsole.displayhook":
                     pass
                     obj = args[0]
@@ -111,8 +100,8 @@ def client_loop(f):
                         print(repr(obj))
                 elif name.startswith("RemoteFileLike."):
                     fh = getattr(sys, args[0])
-                    meth = getattr(fh, name[len("RemoteFileLike.") :])
-                    rval = meth(*map(ensure_utf8, args[1:]))
+                    meth = getattr(fh, name[len("RemoteFileLike.") :])  # noqa: E203
+                    rval = meth(*args[1:])
                 else:
                     print(name, args)
                 if code is None:

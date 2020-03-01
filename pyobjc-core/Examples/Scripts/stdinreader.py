@@ -1,7 +1,13 @@
-#!/usr/bin/python
-from __future__ import print_function
+#!/usr/bin/env python3
 
-from Foundation import *
+from Foundation import (
+    NSObject,
+    NSFileHandle,
+    NSNotificationCenter,
+    NSFileHandleReadCompletionNotification,
+    NSFileHandleNotificationDataItem,
+    NSFileHandleError,
+)
 from PyObjCTools import AppHelper
 
 

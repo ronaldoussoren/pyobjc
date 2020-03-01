@@ -13,18 +13,16 @@
 #    [ obj method: arg1 withOtherArgs: arg2 ]
 #                               obj.method_withOtherArgs_( arg1, arg2 )
 
-###
-### NOTE:  This is no longer the recommended way to build applications
-### using the pyobjc bridge under with OS X.  In particular, applications
-### work much better if they are constructed in a proper app wrapper.
-###
-### This app does demonstrate that it is possible to build full
-### featured Cocoa apps without InterfaceBuilder.
-###
+#
+# NOTE:  This is no longer the recommended way to build applications
+# using the pyobjc bridge under with OS X.  In particular, applications
+# work much better if they are constructed in a proper app wrapper.
+#
+# This app does demonstrate that it is possible to build full
+# featured Cocoa apps without InterfaceBuilder.
+#
 
-import objc
-from AppKit import *
-from Foundation import *
+from Cocoa import NSObject, NSApplication, NSApp, NSWindow, NSButton, NSSound
 from PyObjCTools import AppHelper
 
 
@@ -75,7 +73,7 @@ def main():
     bye.setSound_(adios)
 
     win.display()
-    win.orderFrontRegardless()  ## but this one does
+    win.orderFrontRegardless()  # but this one does
 
     AppHelper.runEventLoop()
 

@@ -1,16 +1,19 @@
 """
 Check if NSModalSessions are properly wrapped.
 
-XXX: This is not a proper unittest, it requires human eyes to check if the
+NOTE: This is not a proper unittest, it requires human eyes to check if the
 output is correct.
 """
-from __future__ import print_function
-
 import time
 
-import objc
-from AppKit import *
-from Foundation import *
+from Cocoa import (
+    NSApplication,
+    NSGetInformationalAlertPanel,
+    NSReleaseAlertPanel,
+    NSObject,
+    NSApp,
+    NSWindow,
+)
 
 
 def doTest():

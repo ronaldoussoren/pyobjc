@@ -1,19 +1,24 @@
-import keyword
-import sys
-import time
-import traceback
+import objc
 
-from AppKit import *
-from AsyncPythonInterpreter import *
-from ConsoleReactor import *
-from Foundation import *
+from Cocoa import (
+    NSLog,
+    NSDocument,
+    NSFont,
+    NSColor,
+    NSAttributedString,
+    NSFontAttributeName,
+    NSForegroundColorAttributeName,
+)
+
+# from AsyncPythonInterpreter import *
+from ConsoleReactor import ConsoleReactor
 from netrepr import RemoteObjectReference
 from PyObjCTools import AppHelper
 
 
 def ensure_unicode(s):
-    if not isinstance(s, unicode):
-        s = unicode(s, "utf-8", "replace")
+    if not isinstance(s, str):
+        s = str(s, "utf-8", "replace")
     return s
 
 
@@ -26,8 +31,6 @@ class RemotePyInterpreterReactor(ConsoleReactor):
         name = command[1]
         args = command[2:]
         netrepr = self.netReprCenter.netrepr
-        rval = None
-        code = None
         if name == "RemoteConsole.raw_input":
             prompt = ensure_unicode(args[0])
 
@@ -59,7 +62,7 @@ class RemotePyInterpreterReactor(ConsoleReactor):
             else:
                 self.doCallback_sequence_args_(displayhook_local, seq, args)
         elif name.startswith("RemoteFileLike."):
-            method = name[len("RemoteFileLike.") :]
+            method = name[len("RemoteFileLike.") :]  # noqa: E203
             if method == "write":
                 style, msg = map(ensure_unicode, args)
                 args = [msg, style]
@@ -82,7 +85,7 @@ class RemotePyInterpreterReactor(ConsoleReactor):
 
             def gotTitle(repr_versioninfo, executable, pid):
                 self.delegate.setVersion_executable_pid_(
-                    ".".join(map(unicode, self.netEval_(repr_versioninfo)[:3])),
+                    ".".join(map(str, self.netEval_(repr_versioninfo)[:3])),
                     ensure_unicode(executable),
                     pid,
                 )
@@ -198,7 +201,6 @@ class RemotePyInterpreterDocument(NSDocument):
         return False
 
     def awakeFromNib(self):
-        # XXX - should this be done later?
         self.setFont_(NSFont.userFixedPitchFontOfSize_(10))
         self.p_colors = {
             "stderr": NSColor.redColor(),
@@ -338,7 +340,7 @@ class RemotePyInterpreterDocument(NSDocument):
 
     def currentLine(self):
         return self.textView.textStorage().mutableString()[
-            self.characterIndexForInput() :
+            self.characterIndexForInput() :  # noqa: E203
         ]
 
     def moveAndScrollToIndex_(self, idx):
@@ -355,7 +357,7 @@ class RemotePyInterpreterDocument(NSDocument):
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(
         self, aTextView, completions, begin_length, index
     ):
-        # XXX
+        # NOTE:
         # this will probably have to be tricky in order to be asynchronous..
         # either by:
         #     nesting a run loop (bleh)
@@ -416,7 +418,6 @@ class RemotePyInterpreterDocument(NSDocument):
             if aSelector == "insertNewline:":
                 self.writeNewLine()
             return False
-        # XXX - this is ugly
         responder = getattr(self, aSelector.replace(":", "_"), None)
         if responder is not None:
             responder(aTextView)

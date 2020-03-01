@@ -1,8 +1,6 @@
 import keyword
 import os
 import sys
-import time
-import traceback
 from code import InteractiveConsole, softspace
 
 try:
@@ -41,7 +39,7 @@ class RemoteConsole(InteractiveConsole):
             exec(code, self.locals)
         except SystemExit:
             raise
-        except:
+        except:  # noqa: E722, B001
             self.showtraceback()
         else:
             if softspace(sys.stdout, 0):
@@ -92,7 +90,7 @@ class RemoteConsole(InteractiveConsole):
             objname = ".".join(parts[:-1])
             try:
                 obj = eval(objname, self.locals)
-            except:
+            except:  # noqa: E722, B001
                 return None, 0
             wordlower = parts[-1].lower()
             if wordlower == "":
