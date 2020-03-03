@@ -1,9 +1,9 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
     import BusinessChat
+    from PyObjCTools.TestSupport import TestCase
 
     class TestBCChatButton(TestCase):
         def test_constants(self):
@@ -12,7 +12,3 @@ if sys.maxsize > 2 ** 32:
 
         def test_classes(self):
             BusinessChat.BCChatButton
-
-
-if __name__ == "__main__":
-    main()

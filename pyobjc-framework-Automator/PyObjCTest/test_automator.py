@@ -1,9 +1,6 @@
-"""
-Some simple tests to check that the framework is properly wrapped.
-"""
 import Automator
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAutomator(TestCase):
@@ -16,7 +13,3 @@ class TestAutomator(TestCase):
 
     def testInformalProtocols(self):
         self.assertNotHasAttr(Automator, "protocols")
-
-
-if __name__ == "__main__":
-    main()

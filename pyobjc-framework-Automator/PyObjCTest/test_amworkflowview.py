@@ -1,13 +1,9 @@
-from Automator import *
-from PyObjCTools.TestSupport import *
+import Automator
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAMWorkflowView(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
-        self.assertResultIsBOOL(AMWorkflowView.isEditable)
-        self.assertArgIsBOOL(AMWorkflowView.setEditable_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Automator.AMWorkflowView.isEditable)
+        self.assertArgIsBOOL(Automator.AMWorkflowView.setEditable_, 0)

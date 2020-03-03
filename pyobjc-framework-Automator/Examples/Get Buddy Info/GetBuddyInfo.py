@@ -1,3 +1,4 @@
+import struct
 from AddressBook import ABAddressBook, ABPerson
 from Automator import AMBundleAction
 from Cocoa import NSAppleEventDescriptor
@@ -15,6 +16,10 @@ from InstantMessage import (
     IMPersonStatusUnknown,
     IMService,
 )
+
+typeObjectSpecifier = struct.unpack(">i", b"obj ")[0]
+keyAEContainer = struct.unpack(">i", b"from")[0]
+keyAEKeyData = struct.unpack(">i", b"seld")[0]
 
 
 class GetBuddyInfo(AMBundleAction):

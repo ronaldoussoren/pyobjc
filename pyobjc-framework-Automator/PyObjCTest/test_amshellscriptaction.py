@@ -1,11 +1,7 @@
-from Automator import *
-from PyObjCTools.TestSupport import *
+import Automator
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAMShellScriptAction(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(AMShellScriptAction.remapLineEndings)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Automator.AMShellScriptAction.remapLineEndings)

@@ -1,16 +1,12 @@
-from Automator import *
-from PyObjCTools.TestSupport import *
+import Automator
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAMWorkflow(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
-        self.assertArgIsOut(AMWorkflow.runWorkflowAtURL_withInput_error_, 2)
-        self.assertArgIsOut(AMWorkflow.initWithContentsOfURL_error_, 1)
-        self.assertResultIsBOOL(AMWorkflow.writeToURL_error_)
-        self.assertArgIsOut(AMWorkflow.writeToURL_error_, 1)
-        self.assertResultIsBOOL(AMWorkflow.setValue_forVariableWithName_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsOut(Automator.AMWorkflow.runWorkflowAtURL_withInput_error_, 2)
+        self.assertArgIsOut(Automator.AMWorkflow.initWithContentsOfURL_error_, 1)
+        self.assertResultIsBOOL(Automator.AMWorkflow.writeToURL_error_)
+        self.assertArgIsOut(Automator.AMWorkflow.writeToURL_error_, 1)
+        self.assertResultIsBOOL(Automator.AMWorkflow.setValue_forVariableWithName_)
