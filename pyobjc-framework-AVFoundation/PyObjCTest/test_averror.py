@@ -1,23 +1,21 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVError(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
-        self.assertIsInstance(AVFoundation.AVFoundationErrorDomain, unicode)
+        self.assertIsInstance(AVFoundation.AVFoundationErrorDomain, str)
 
-        self.assertIsInstance(AVFoundation.AVErrorDeviceKey, unicode)
-        self.assertIsInstance(AVFoundation.AVErrorTimeKey, unicode)
-        self.assertIsInstance(AVFoundation.AVErrorFileSizeKey, unicode)
-        self.assertIsInstance(AVFoundation.AVErrorPIDKey, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVErrorRecordingSuccessfullyFinishedKey, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVErrorMediaTypeKey, unicode)
-        self.assertIsInstance(AVFoundation.AVErrorMediaSubTypeKey, unicode)
+        self.assertIsInstance(AVFoundation.AVErrorDeviceKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorTimeKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorFileSizeKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorPIDKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorRecordingSuccessfullyFinishedKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorMediaTypeKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorMediaSubTypeKey, str)
 
-        self.assertIsInstance(AVFoundation.AVErrorDiscontinuityFlagsKey, unicode)
+        self.assertIsInstance(AVFoundation.AVErrorDiscontinuityFlagsKey, str)
 
         self.assertEqual(AVFoundation.AVErrorUnknown, -11800)
         self.assertEqual(AVFoundation.AVErrorOutOfMemory, -11801)
@@ -110,10 +108,6 @@ class TestAVError(TestCase):
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(AVFoundation.AVErrorPresentationTimeStampKey, unicode)
-        self.assertIsInstance(AVFoundation.AVErrorPersistentTrackIDKey, unicode)
-        self.assertIsInstance(AVFoundation.AVErrorFileTypeKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AVFoundation.AVErrorPresentationTimeStampKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorPersistentTrackIDKey, str)
+        self.assertIsInstance(AVFoundation.AVErrorFileTypeKey, str)

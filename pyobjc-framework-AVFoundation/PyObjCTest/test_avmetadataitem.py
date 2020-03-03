@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMetadataItem(TestCase):
@@ -8,19 +8,15 @@ class TestAVMetadataItem(TestCase):
         self.assertArgIsOut(AVFoundation.AVMetadataItem.statusOfValueForKey_error_, 1)
 
         self.assertArgIsBlock(
-            AVFoundation.AVMetadataItem.loadValuesAsynchronouslyForKeys_completionHandler_,
+            AVFoundation.AVMetadataItem.loadValuesAsynchronouslyForKeys_completionHandler_,  # noqa: B950
             1,
             b"v",
         )
 
     @min_os_level("10.11")
-    def testMethods(self):
+    def testMethods10_11(self):
         self.assertArgIsBlock(
-            AVFoundation.AVMetadataItem.metadataItemWithPropertiesOfMetadataItem_valueLoadingHandler_,
+            AVFoundation.AVMetadataItem.metadataItemWithPropertiesOfMetadataItem_valueLoadingHandler_,  # noqa: B950
             1,
             b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestAVCaptureAudioDataOutput(TestCase):
@@ -9,7 +10,3 @@ class TestAVCaptureAudioDataOutput(TestCase):
     @min_sdk_level("10.7")
     def testProtocols(self):
         objc.protocolNamed("AVCaptureAudioDataOutputSampleBufferDelegate")
-
-
-if __name__ == "__main__":
-    main()

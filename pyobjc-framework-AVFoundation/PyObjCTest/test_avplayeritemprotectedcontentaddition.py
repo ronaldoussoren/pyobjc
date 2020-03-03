@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerItemProtectedContentAdditions(TestCase):
@@ -26,11 +26,7 @@ class TestAVPlayerItemProtectedContentAdditions(TestCase):
         )
 
         self.assertArgIsBlock(
-            AVFoundation.AVPlayerItem.requestContentAuthorizationAsynchronouslyWithTimeoutInterval_completionHandler_,
+            AVFoundation.AVPlayerItem.requestContentAuthorizationAsynchronouslyWithTimeoutInterval_completionHandler_,  # noqa: B950
             1,
             b"v",
         )
-
-
-if __name__ == "__main__":
-    main()

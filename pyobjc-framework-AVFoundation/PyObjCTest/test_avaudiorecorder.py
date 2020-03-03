@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioRecorderHelper(AVFoundation.NSObject):
@@ -34,7 +35,3 @@ class TestAVAudioRecorder(TestCase):
 
     def testProtocols(self):
         objc.protocolNamed("AVAudioRecorderDelegate")
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetTrack(TestCase):
@@ -24,34 +24,26 @@ class TestAVAssetTrack(TestCase):
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeAudioFallback, unicode)
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeChapterList, unicode)
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeAudioFallback, str)
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeChapterList, str)
         self.assertIsInstance(
-            AVFoundation.AVTrackAssociationTypeForcedSubtitlesOnly, unicode
+            AVFoundation.AVTrackAssociationTypeForcedSubtitlesOnly, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVTrackAssociationTypeSelectionFollower, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeTimecode, unicode)
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeSelectionFollower, str)
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeTimecode, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(
-            AVFoundation.AVTrackAssociationTypeMetadataReferent, unicode
-        )
+        self.assertIsInstance(AVFoundation.AVTrackAssociationTypeMetadataReferent, str)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(
-            AVFoundation.AVAssetTrackTimeRangeDidChangeNotification, unicode
+            AVFoundation.AVAssetTrackTimeRangeDidChangeNotification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVAssetTrackSegmentsDidChangeNotification, unicode
+            AVFoundation.AVAssetTrackSegmentsDidChangeNotification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVAssetTrackTrackAssociationsDidChangeNotification, unicode
+            AVFoundation.AVAssetTrackTrackAssociationsDidChangeNotification, str
         )
-
-
-if __name__ == "__main__":
-    main()

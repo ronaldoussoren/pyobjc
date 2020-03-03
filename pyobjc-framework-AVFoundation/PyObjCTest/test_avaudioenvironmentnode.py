@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioEnvironmentNode(TestCase):
@@ -25,7 +25,3 @@ class TestAVAudioEnvironmentNode(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVAudioEnvironmentReverbParameters.setEnable_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

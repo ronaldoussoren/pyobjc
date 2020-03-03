@@ -1,20 +1,20 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerItem(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
-        self.assertIsInstance(AVFoundation.AVPlayerItemTimeJumpedNotification, unicode)
+        self.assertIsInstance(AVFoundation.AVPlayerItemTimeJumpedNotification, str)
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemDidPlayToEndTimeNotification, unicode
+            AVFoundation.AVPlayerItemDidPlayToEndTimeNotification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemFailedToPlayToEndTimeNotification, unicode
+            AVFoundation.AVPlayerItemFailedToPlayToEndTimeNotification, str
         )
 
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemFailedToPlayToEndTimeErrorKey, unicode
+            AVFoundation.AVPlayerItemFailedToPlayToEndTimeErrorKey, str
         )
 
         self.assertEqual(AVFoundation.AVPlayerItemStatusUnknown, 0)
@@ -23,20 +23,18 @@ class TestAVPlayerItem(TestCase):
 
     @min_os_level("10.9")
     def testConstants10_9(self):
+        self.assertIsInstance(AVFoundation.AVPlayerItemPlaybackStalledNotification, str)
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemPlaybackStalledNotification, unicode
+            AVFoundation.AVPlayerItemNewAccessLogEntryNotification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemNewAccessLogEntryNotification, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemNewErrorLogEntryNotification, unicode
+            AVFoundation.AVPlayerItemNewErrorLogEntryNotification, str
         )
 
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemMediaSelectionDidChangeNotification, unicode
+            AVFoundation.AVPlayerItemMediaSelectionDidChangeNotification, str
         )
 
     @min_os_level("10.7")
@@ -45,7 +43,7 @@ class TestAVPlayerItem(TestCase):
             AVFoundation.AVPlayerItem.seekToTime_completionHandler_, 1, b"vZ"
         )
         self.assertArgIsBlock(
-            AVFoundation.AVPlayerItem.seekToTime_toleranceBefore_toleranceAfter_completionHandler_,
+            AVFoundation.AVPlayerItem.seekToTime_toleranceBefore_toleranceAfter_completionHandler_,  # noqa: B950
             3,
             b"vZ",
         )
@@ -83,7 +81,7 @@ class TestAVPlayerItem(TestCase):
             AVFoundation.AVPlayerItem.canUseNetworkResourcesForLiveStreamingWhilePaused
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVPlayerItem.setCanUseNetworkResourcesForLiveStreamingWhilePaused_,
+            AVFoundation.AVPlayerItem.setCanUseNetworkResourcesForLiveStreamingWhilePaused_,  # noqa: B950
             0,
         )
 
@@ -100,7 +98,3 @@ class TestAVPlayerItem(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

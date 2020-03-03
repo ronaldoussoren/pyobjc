@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 AVAudioIONodeInputBlock = b"^{AudioBufferList=L[1{AudioBuffer=LL^v}]}I"
 
@@ -8,9 +8,9 @@ class TestAVAudioIONode(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVCoreAnimationBeginTimeAtZero, float)
-        self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspect, unicode)
-        self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspectFill, unicode)
-        self.assertIsInstance(AVFoundation.AVLayerVideoGravityResize, unicode)
+        self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspect, str)
+        self.assertIsInstance(AVFoundation.AVLayerVideoGravityResizeAspectFill, str)
+        self.assertIsInstance(AVFoundation.AVLayerVideoGravityResize, str)
 
     @min_os_level("10.13")
     def testMethods10_13(self):
@@ -36,7 +36,3 @@ class TestAVAudioIONode(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVAudioInputNode.setVoiceProcessingBypassed_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

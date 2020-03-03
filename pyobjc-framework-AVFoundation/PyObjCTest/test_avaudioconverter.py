@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 AVAudioConverterInputBlock = b"@Io^" + objc._C_NSInteger
 
@@ -47,7 +48,3 @@ class TestAVAudioConverter(TestCase):
             2,
             AVAudioConverterInputBlock,
         )
-
-
-if __name__ == "__main__":
-    main()

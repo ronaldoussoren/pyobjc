@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioTime(TestCase):
@@ -14,7 +14,3 @@ class TestAVAudioTime(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVAudioTime.isHostTimeValid)
         self.assertResultIsBOOL(AVFoundation.AVAudioTime.isSampleTimeValid)
-
-
-if __name__ == "__main__":
-    main()

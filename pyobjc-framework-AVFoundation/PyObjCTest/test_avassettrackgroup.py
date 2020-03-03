@@ -1,11 +1,7 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVAssetTrackGroup(TestCase):
     def testClasses(self):
         AVFoundation.AVAssetTrackGroup
-
-
-if __name__ == "__main__":
-    main()

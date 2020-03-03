@@ -1,0 +1,7 @@
+[flake8]
+max-line-length = 80
+select = C,E,F,W,B,B950,T,Q,M
+ignore = E501,W503
+inline-quotes = double
+multiline-quotes = double
+docstring-quotes = double

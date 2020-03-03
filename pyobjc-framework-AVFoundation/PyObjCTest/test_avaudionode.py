@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 AVAudioNodeTapBlock = b"v@@"
 
@@ -12,7 +12,3 @@ class TestAVAudioNode(TestCase):
             3,
             AVAudioNodeTapBlock,
         )
-
-
-if __name__ == "__main__":
-    main()

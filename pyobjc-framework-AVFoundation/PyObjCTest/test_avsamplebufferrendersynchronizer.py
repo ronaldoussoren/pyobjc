@@ -1,17 +1,17 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVSampleBufferRenderSynchronizer(TestCase):
     @min_os_level("10.13")
     def testMethods(self):
         self.assertArgIsBlock(
-            AVFoundation.AVSampleBufferRenderSynchronizer.addPeriodicTimeObserverForInterval_queue_usingBlock_,
+            AVFoundation.AVSampleBufferRenderSynchronizer.addPeriodicTimeObserverForInterval_queue_usingBlock_,  # noqa: B950
             2,
             b"v{_CMTime=qiIq}",
         )
         self.assertArgIsBlock(
-            AVFoundation.AVSampleBufferRenderSynchronizer.addBoundaryTimeObserverForTimes_queue_usingBlock_,
+            AVFoundation.AVSampleBufferRenderSynchronizer.addBoundaryTimeObserverForTimes_queue_usingBlock_,  # noqa: B950
             2,
             b"v",
         )
@@ -20,9 +20,5 @@ class TestAVSampleBufferRenderSynchronizer(TestCase):
     def test_constants10_14(self):
         self.assertIsInstance(
             AVFoundation.AVSampleBufferRenderSynchronizerRateDidChangeNotification,
-            unicode,
+            str,  # noqa: B950
         )
-
-
-if __name__ == "__main__":
-    main()

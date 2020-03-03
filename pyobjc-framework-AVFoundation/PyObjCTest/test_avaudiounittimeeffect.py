@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioUnitTimeEffect(TestCase):
@@ -7,7 +7,3 @@ class TestAVAudioUnitTimeEffect(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitTimeEffect.bypass)
         self.assertArgIsBOOL(AVFoundation.AVAudioUnitTimeEffect.setBypass_, 0)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVComposition(TestCase):
@@ -11,7 +11,3 @@ class TestAVComposition(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVMutableComposition.insertTimeRange_ofAsset_atTime_error_, 3
         )
-
-
-if __name__ == "__main__":
-    main()

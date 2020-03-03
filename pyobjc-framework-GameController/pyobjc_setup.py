@@ -8,35 +8,24 @@ to all framework wrappers.
 __all__ = ("setup", "Extension", "Command")
 
 import os
+import pkg_resources
 import plistlib
 import shlex
 import shutil
 import subprocess
 import sys
+import tempfile
+import time
+import unittest
 from distutils import log
 from distutils.command import build, install
 from distutils.errors import DistutilsError, DistutilsPlatformError
 from distutils.sysconfig import get_config_var, get_config_vars
 
-import pkg_resources
-from pkg_resources import (
-    Distribution,
-    add_activation_listener,
-    normalize_path,
-    require,
-    working_set,
-)
 from setuptools import Command
 from setuptools import Extension as _Extension
 from setuptools import setup as _setup
 from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
-
-try:
-    import setuptools
-
-except ImportError:
-    print("This package requires setuptools to build")
-    sys.exit(1)
 
 
 class oc_build_py(build_py.build_py):
@@ -60,16 +49,16 @@ class oc_egg_info(egg_info.egg_info):
         path = os.path.join(self.egg_info, "PKG-INFO")
         with open(path, "a+") as fp:
             fp.write(
-                "Project-URL: Documentation, https://%s.readthedocs.io/en/latest/\n"
-                % (REPO_NAME,)
+                "Project-URL: Documentation, "
+                "https://%s.readthedocs.io/en/latest/\n" % (REPO_NAME,)
             )
             fp.write(
-                "Project-URL: Issue tracker, https://github.com/ronaldoussoren/%s/issues\n"
-                % (REPO_NAME,)
+                "Project-URL: Issue tracker, "
+                "https://github.com/ronaldoussoren/%s/issues\n" % (REPO_NAME,)
             )
             fp.write(
-                "Project-URL: Repository, https://github.com/ronaldoussoren/%s\n"
-                % (REPO_NAME,)
+                "Project-URL: Repository, "
+                "https://github.com/ronaldoussoren/%s\n" % (REPO_NAME,)
             )
 
 
@@ -104,7 +93,7 @@ class oc_test(test.test):
             log.info("removing installed %r from sys.path before testing" % (dirname,))
             sys.path.remove(dirname)
 
-        working_set.__init__()
+        pkg_resources.working_set.__init__()
 
     def add_project_to_sys_path(self):
         from pkg_resources import normalize_path, add_activation_listener
@@ -138,16 +127,9 @@ class oc_test(test.test):
         working_set.__init__()
 
     def run(self):
-        import unittest
-        import time
-
-        # Ensure that build directory is on sys.path (py3k)
-        import sys
 
         self.cleanup_environment()
         self.add_project_to_sys_path()
-
-        import PyObjCTools.TestSupport as modo
 
         from pkg_resources import EntryPoint
 
@@ -159,10 +141,6 @@ class oc_test(test.test):
         warnings.simplefilter("error")
 
         try:
-            meta = self.distribution.metadata
-            name = meta.get_name()
-            test_pkg = name + "_tests"
-
             time_before = time.time()
             suite = loader_class().loadTestsFromName(self.distribution.test_suite)
 
@@ -173,15 +151,15 @@ class oc_test(test.test):
 
             # Print out summary. This is a structured format that
             # should make it easy to use this information in scripts.
-            summary = dict(
-                count=result.testsRun,
-                fails=len(result.failures),
-                errors=len(result.errors),
-                xfails=len(getattr(result, "expectedFailures", [])),
-                xpass=len(getattr(result, "unexpectedSuccesses", [])),
-                skip=len(getattr(result, "skipped", [])),
-                testSeconds=(time_after - time_before),
-            )
+            summary = {
+                "count": result.testsRun,
+                "fails": len(result.failures),
+                "errors": len(result.errors),
+                "xfails": len(getattr(result, "expectedFailures", [])),
+                "xpass": len(getattr(result, "unexpectedSuccesses", [])),
+                "skip=": len(getattr(result, "skipped", [])),
+                "testSeconds": (time_after - time_before),
+            }
             print("SUMMARY: %s" % (summary,))
             if not result.wasSuccessful():
                 raise DistutilsError("some tests failed")
@@ -280,7 +258,6 @@ def _find_executable(executable):
 
 
 def _working_compiler(executable):
-    import tempfile, subprocess
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".c") as fp:
         fp.write("#include <stdarg.h>\nint main(void) { return 0; }\n")
@@ -494,17 +471,17 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         cmdclass["build_py"] = oc_build_py
 
     else:
-        if min_os_level != None:
-            if max_os_level != None:
+        if min_os_level is not None:
+            if max_os_level is not None:
                 msg = (
-                    "This distribution is only supported on MacOSX versions %s upto and including %s"
-                    % (min_os_level, max_os_level)
+                    "This distribution is only supported on MacOSX "
+                    "versions %s upto and including %s" % (min_os_level, max_os_level)
                 )
             else:
                 msg = "This distribution is only supported on MacOSX >= %s" % (
                     min_os_level,
                 )
-        elif max_os_level != None:
+        elif max_os_level is not None:
             msg = "This distribution is only supported on MacOSX <= %s" % (
                 max_os_level,
             )
@@ -522,8 +499,9 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
             def run(self, msg=msg):
                 print("WARNING: %s\n" % (msg,))
                 print(
-                    "SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': 0, 'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, 'message': %r }"
-                    % (msg,)
+                    "SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': 0, "
+                    "'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, "
+                    "'message': %r }" % (msg,)
                 )
 
         cmdclass["build"] = create_command_subclass(build.build)

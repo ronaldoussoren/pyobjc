@@ -1,6 +1,6 @@
 import AVFoundation
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAsynchronousKeyValueLoadingHelper(AVFoundation.NSObject):
@@ -34,11 +34,7 @@ class TestAVAsynchronousKeyValueLoading(TestCase):
             b"o^@",
         )
         self.assertArgIsBlock(
-            TestAVAsynchronousKeyValueLoadingHelper.loadValuesAsynchronouslyForKeys_completionHandler_,
+            TestAVAsynchronousKeyValueLoadingHelper.loadValuesAsynchronouslyForKeys_completionHandler_,  # noqa: B950
             1,
             b"v",
         )
-
-
-if __name__ == "__main__":
-    main()

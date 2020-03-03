@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioFormat(TestCase):
@@ -13,27 +13,29 @@ class TestAVAudioFormat(TestCase):
 
     @min_os_level("10.10")
     def testMethods(self):
-        self.assertArgIsIn(AVFoundation.AVAudioFormat.initWithStreamDescription_, 0)
         self.assertArgIsIn(
-            AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_, 0
+            AVFoundation.AVAudioFormat.initWithStreamDescription_, 0
+        )  # noqa: B950
+        self.assertArgIsIn(
+            AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_,
+            0,  # noqa: B950
         )
         self.assertArgIsIn(
-            AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_, 0
+            AVFoundation.AVAudioFormat.initWithStreamDescription_channelLayout_,
+            0,  # noqa: B950
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVAudioFormat.initWithCommonFormat_sampleRate_channels_interleaved_,
+            AVFoundation.AVAudioFormat.initWithCommonFormat_sampleRate_channels_interleaved_,  # noqa: B950
             3,
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVAudioFormat.initWithCommonFormat_sampleRate_interleaved_channelLayout_,
+            AVFoundation.AVAudioFormat.initWithCommonFormat_sampleRate_interleaved_channelLayout_,  # noqa: B950
             2,
         )
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isEqual_)
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isStandard)
         self.assertResultIsBOOL(AVFoundation.AVAudioFormat.isInterleaved)
 
-        self.assertResultIsFixedSize(AVFoundation.AVAudioFormat.streamDescription, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsFixedSize(
+            AVFoundation.AVAudioFormat.streamDescription, 1
+        )  # noqa: B950

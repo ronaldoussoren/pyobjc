@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVSampleCursor(TestCase):
@@ -9,14 +9,16 @@ class TestAVSampleCursor(TestCase):
             AVFoundation.AVSampleCursor.stepByDecodeTime_wasPinned_, 1, b"o^Z"
         )
         self.assertArgHasType(
-            AVFoundation.AVSampleCursor.stepByPresentationTime_wasPinned_, 1, b"o^Z"
+            AVFoundation.AVSampleCursor.stepByPresentationTime_wasPinned_,
+            1,
+            b"o^Z",  # noqa: B950
         )
 
         self.assertResultIsBOOL(
-            AVFoundation.AVSampleCursor.samplesWithEarlierDecodeTimeStampsMayHaveLaterPresentationTimeStampsThanCursor_
+            AVFoundation.AVSampleCursor.samplesWithEarlierDecodeTimeStampsMayHaveLaterPresentationTimeStampsThanCursor_  # noqa: B950
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVSampleCursor.samplesWithLaterDecodeTimeStampsMayHaveEarlierPresentationTimeStampsThanCursor_
+            AVFoundation.AVSampleCursor.samplesWithLaterDecodeTimeStampsMayHaveEarlierPresentationTimeStampsThanCursor_  # noqa: B950
         )
 
     def testStructs(self):
@@ -26,19 +28,23 @@ class TestAVSampleCursor(TestCase):
         self.assertIsInstance(v.sampleIsDroppable, bool)
 
         v = AVFoundation.AVSampleCursorDependencyInfo()
-        self.assertIsInstance(v.sampleIndicatesWhetherItHasDependentSamples, bool)
+        self.assertIsInstance(
+            v.sampleIndicatesWhetherItHasDependentSamples, bool
+        )  # noqa: B950
         self.assertIsInstance(v.sampleHasDependentSamples, bool)
         self.assertIsInstance(v.sampleIndicatesWhetherItDependsOnOthers, bool)
         self.assertIsInstance(v.sampleDependsOnOthers, bool)
-        self.assertIsInstance(v.sampleIndicatesWhetherItHasRedundantCoding, bool)
+        self.assertIsInstance(
+            v.sampleIndicatesWhetherItHasRedundantCoding, bool
+        )  # noqa: B950
         self.assertIsInstance(v.sampleHasRedundantCoding, bool)
 
         v = AVFoundation.AVSampleCursorStorageRange()
-        self.assertIsInstance(v.offset, (int, long))
-        self.assertIsInstance(v.length, (int, long))
+        self.assertIsInstance(v.offset, int)
+        self.assertIsInstance(v.length, int)
 
         v = AVFoundation.AVSampleCursorChunkInfo()
-        self.assertIsInstance(v.chunkSampleCount, (int, long))
+        self.assertIsInstance(v.chunkSampleCount, int)
         self.assertIsInstance(v.chunkHasUniformSampleSizes, bool)
         self.assertIsInstance(v.chunkHasUniformSampleDurations, bool)
         self.assertIsInstance(v.chunkHasUniformFormatDescriptions, bool)
@@ -46,7 +52,3 @@ class TestAVSampleCursor(TestCase):
         v = AVFoundation.AVSampleCursorAudioDependencyInfo()
         self.assertIsInstance(v.audioSampleIsIndependentlyDecodable, bool)
         self.assertIsInstance(v.audioSamplePacketRefreshCount, int)
-
-
-if __name__ == "__main__":
-    main()

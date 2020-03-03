@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestAVQueuedSampleBufferRenderingHelper(AVFoundation.NSObject):
@@ -12,9 +13,15 @@ class TestAVQueuedSampleBufferRenderingHelper(AVFoundation.NSObject):
 
 class TestAVQueuedSampleBufferRendering(TestCase):
     def testConstants(self):
-        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0)
-        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusRendering, 1)
-        self.assertEqual(AVFoundation.AVQueuedSampleBufferRenderingStatusFailed, 2)
+        self.assertEqual(
+            AVFoundation.AVQueuedSampleBufferRenderingStatusUnknown, 0
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVQueuedSampleBufferRenderingStatusRendering, 1
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVQueuedSampleBufferRenderingStatusFailed, 2
+        )  # noqa: B950
 
     @min_sdk_level("10.13")
     def testProtocols(self):
@@ -25,11 +32,7 @@ class TestAVQueuedSampleBufferRendering(TestCase):
             TestAVQueuedSampleBufferRenderingHelper.isReadyForMoreMediaData
         )
         self.assertArgIsBlock(
-            TestAVQueuedSampleBufferRenderingHelper.requestMediaDataWhenReadyOnQueue_usingBlock_,
+            TestAVQueuedSampleBufferRenderingHelper.requestMediaDataWhenReadyOnQueue_usingBlock_,  # noqa: B950
             1,
             b"v",
         )
-
-
-if __name__ == "__main__":
-    main()

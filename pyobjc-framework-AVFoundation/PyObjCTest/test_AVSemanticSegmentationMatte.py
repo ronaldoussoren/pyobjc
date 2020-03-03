@@ -1,28 +1,22 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVSemanticSegmentationMatte(TestCase):
     @min_os_level("10.15")
     def testConstants(self):
-        self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeSkin, unicode)
-        self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeHair, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVSemanticSegmentationMatteTypeTeeth, unicode
-        )
+        self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeSkin, str)
+        self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeHair, str)
+        self.assertIsInstance(AVFoundation.AVSemanticSegmentationMatteTypeTeeth, str)
 
     @min_os_level("10.15")
     def test_methods(self):
         self.assertArgIsOut(
-            AVFoundation.AVSemanticSegmentationMatte.semanticSegmentationMatteFromImageSourceAuxiliaryDataType_dictionaryRepresentation_error_,
+            AVFoundation.AVSemanticSegmentationMatte.semanticSegmentationMatteFromImageSourceAuxiliaryDataType_dictionaryRepresentation_error_,  # noqa: B950
             2,
         )
 
         self.assertArgIsOut(
-            AVFoundation.AVSemanticSegmentationMatte.semanticSegmentationMatteByReplacingSemanticSegmentationMatteWithPixelBuffer_error_,
+            AVFoundation.AVSemanticSegmentationMatte.semanticSegmentationMatteByReplacingSemanticSegmentationMatteWithPixelBuffer_error_,  # noqa: B950
             1,
         )
-
-
-if __name__ == "__main__":
-    main()

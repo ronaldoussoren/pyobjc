@@ -4,15 +4,12 @@ import ast
 import contextlib
 import glob
 import os
-import platform
 import shutil
 import subprocess
 import sys
 import tarfile
 from distutils.core import Command
-from distutils.errors import DistutilsError
 
-import setuptools
 from setuptools import setup
 from setuptools.command import egg_info
 
@@ -177,7 +174,6 @@ def framework_requires():
     if sys.platform != "darwin":
         raise SystemExit("ERROR: Requires macOS to install or build")
 
-    build_platform = platform.mac_ver()[0]
     result = []
 
     for name, introduced, removed in FRAMEWORK_WRAPPERS:
@@ -303,12 +299,12 @@ class oc_test(Command):
 
     def run(self):
         print("  validating framework list...")
-        all_names = set(
+        all_names = {
             nm.split("-")[-1]
             for nm in os.listdir("..")
             if nm.startswith("pyobjc-framework-")
-        )
-        configured_names = set(x[0] for x in FRAMEWORK_WRAPPERS)
+        }
+        configured_names = {x[0] for x in FRAMEWORK_WRAPPERS}
         failures = 0
 
         if all_names - configured_names:
@@ -432,8 +428,8 @@ class oc_test(Command):
                 if "ext_modules" not in args:
                     if os.path.exists(os.path.join(subdir, "Modules")):
                         print(
-                            "No ext_modules in setup.py, but Modules subdir, in wrapper for %s"
-                            % (nm,)
+                            "No ext_modules in setup.py, but Modules subdir, "
+                            "in wrapper for %s" % (nm,)
                         )
                         failures += 1
 
@@ -472,7 +468,7 @@ class oc_test(Command):
                 for fn in t.getnames():
                     if fn.startswith("/"):
                         print("Absolute path in sdist for %s" % (nm,))
-                        ok = False
+                        failures += 1
 
                     for p in (
                         "__pycache__",
@@ -507,8 +503,8 @@ class oc_test(Command):
                     failures += 1
 
         print(
-            "SUMMARY: {'testSeconds': 0.0, 'count': 1, 'fails': %d, 'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }"
-            % (failures,)
+            "SUMMARY: {'testSeconds': 0.0, 'count': 1, 'fails': %d, "
+            "'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }" % (failures,)
         )
         if failures:
             sys.exit(1)
@@ -521,13 +517,15 @@ class oc_egg_info(egg_info.egg_info):
         path = os.path.join(self.egg_info, "PKG-INFO")
         with open(path, "a+") as fp:
             fp.write(
-                "Project-URL: Documentation, https://pyobjc.readthedocs.io/en/latest/\n"
+                "Project-URL: Documentation, "
+                "https://pyobjc.readthedocs.io/en/latest/\n"
             )
             fp.write(
-                "Project-URL: Issue tracker, https://github.com/ronaldoussoren/pyobjc/issues\n"
+                "Project-URL: Issue tracker, "
+                "https://github.com/ronaldoussoren/pyobjc/issues\n"
             )
             fp.write(
-                "Project-URL: Repository, https://github.com/ronaldoussoren/pyobjc\n"
+                "Project-URL: Repository, " "https://github.com/ronaldoussoren/pyobjc\n"
             )
 
 

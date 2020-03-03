@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureOutputHelper(AVFoundation.NSObject):
@@ -14,21 +15,22 @@ class TestAVCaptureOutput(TestCase):
             AVFoundation.AVCaptureVideoDataOutput.alwaysDiscardsLateVideoFrames
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVCaptureVideoDataOutput.setAlwaysDiscardsLateVideoFrames_, 0
+            AVFoundation.AVCaptureVideoDataOutput.setAlwaysDiscardsLateVideoFrames_,
+            0,  # noqa: B950
         )
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecording)
         self.assertResultIsBOOL(AVFoundation.AVCaptureFileOutput.isRecordingPaused)
 
         self.assertResultIsBOOL(
-            TestAVCaptureOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_
+            TestAVCaptureOutputHelper.captureOutputShouldProvideSampleAccurateRecordingStart_  # noqa: B950
         )
 
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureStillImageOutput.isCapturingStillImage
         )
         self.assertArgIsBlock(
-            AVFoundation.AVCaptureStillImageOutput.captureStillImageAsynchronouslyFromConnection_completionHandler_,
+            AVFoundation.AVCaptureStillImageOutput.captureStillImageAsynchronouslyFromConnection_completionHandler_,  # noqa: B950
             1,
             b"v^{opaqueCMSampleBuffer=}@",
         )
@@ -39,7 +41,3 @@ class TestAVCaptureOutput(TestCase):
         objc.protocolNamed("AVCaptureFileOutputRecordingDelegate")
         objc.protocolNamed("AVCaptureFileOutputDelegate")
         objc.protocolNamed("AVCaptureMetadataOutputObjectsDelegate")
-
-
-if __name__ == "__main__":
-    main()

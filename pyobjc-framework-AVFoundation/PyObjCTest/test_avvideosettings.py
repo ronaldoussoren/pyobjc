@@ -1,131 +1,109 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVVideoSettings(TestCase):
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(AVFoundation.AVVideoCodecKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecH264, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecJPEG, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecAppleProRes4444, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecAppleProRes422, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoWidthKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoHeightKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoPixelAspectRatioKey, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecH264, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecJPEG, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecAppleProRes4444, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecAppleProRes422, str)
+        self.assertIsInstance(AVFoundation.AVVideoWidthKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoHeightKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoPixelAspectRatioKey, str)
         self.assertIsInstance(
-            AVFoundation.AVVideoPixelAspectRatioHorizontalSpacingKey, unicode
+            AVFoundation.AVVideoPixelAspectRatioHorizontalSpacingKey, str
         )
         self.assertIsInstance(
-            AVFoundation.AVVideoPixelAspectRatioVerticalSpacingKey, unicode
+            AVFoundation.AVVideoPixelAspectRatioVerticalSpacingKey, str
         )
-        self.assertIsInstance(AVFoundation.AVVideoCleanApertureKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCleanApertureWidthKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCleanApertureHeightKey, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVVideoCleanApertureHorizontalOffsetKey, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVVideoCleanApertureVerticalOffsetKey, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVVideoScalingModeKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoScalingModeFit, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoScalingModeResize, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoScalingModeResizeAspect, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoScalingModeResizeAspectFill, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoColorPropertiesKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoColorPrimariesKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_ITU_R_709_2, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_EBU_3213, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_SMPTE_C, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoTransferFunctionKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_ITU_R_709_2, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVVideoTransferFunction_SMPTE_240M_1995, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrixKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_709_2, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_601_4, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_SMPTE_240M_1995, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCompressionPropertiesKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoAverageBitRateKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoQualityKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoMaxKeyFrameIntervalKey, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCleanApertureKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoCleanApertureWidthKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoCleanApertureHeightKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoCleanApertureHorizontalOffsetKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoCleanApertureVerticalOffsetKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoScalingModeKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoScalingModeFit, str)
+        self.assertIsInstance(AVFoundation.AVVideoScalingModeResize, str)
+        self.assertIsInstance(AVFoundation.AVVideoScalingModeResizeAspect, str)
+        self.assertIsInstance(AVFoundation.AVVideoScalingModeResizeAspectFill, str)
+        self.assertIsInstance(AVFoundation.AVVideoColorPropertiesKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimariesKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_ITU_R_709_2, str)
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_EBU_3213, str)
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_SMPTE_C, str)
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunctionKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_ITU_R_709_2, str)
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_SMPTE_240M_1995, str)
+        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrixKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_709_2, str)
+        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_601_4, str)
+        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_SMPTE_240M_1995, str)
+        self.assertIsInstance(AVFoundation.AVVideoCompressionPropertiesKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoAverageBitRateKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoQualityKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoMaxKeyFrameIntervalKey, str)
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline30, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline31, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline41, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main30, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main31, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main32, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main41, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline30, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline31, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Baseline41, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main30, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main31, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main32, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264Main41, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(
-            AVFoundation.AVVideoProfileLevelH264BaselineAutoLevel, unicode
+            AVFoundation.AVVideoProfileLevelH264BaselineAutoLevel, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVVideoProfileLevelH264MainAutoLevel, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High40, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High41, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVVideoProfileLevelH264HighAutoLevel, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVVideoMaxKeyFrameIntervalDurationKey, unicode
-        )
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264MainAutoLevel, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High40, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264High41, str)
+        self.assertIsInstance(AVFoundation.AVVideoProfileLevelH264HighAutoLevel, str)
+        self.assertIsInstance(AVFoundation.AVVideoMaxKeyFrameIntervalDurationKey, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(AVFoundation.AVVideoAllowFrameReorderingKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeCAVLC, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeCABAC, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoExpectedSourceFrameRateKey, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVVideoAverageNonDroppableFrameRateKey, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVVideoEncoderSpecificationKey, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoAllowFrameReorderingKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeCAVLC, str)
+        self.assertIsInstance(AVFoundation.AVVideoH264EntropyModeCABAC, str)
+        self.assertIsInstance(AVFoundation.AVVideoExpectedSourceFrameRateKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoAverageNonDroppableFrameRateKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoEncoderSpecificationKey, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_P3_D65, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoAllowWideColorKey, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_P3_D65, str)
+        self.assertIsInstance(AVFoundation.AVVideoAllowWideColorKey, str)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeHEVC, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeH264, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeJPEG, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes4444, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_ITU_R_2020, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeHEVC, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeH264, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeJPEG, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes4444, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422, str)
+        self.assertIsInstance(AVFoundation.AVVideoColorPrimaries_ITU_R_2020, str)
         self.assertIsInstance(
-            AVFoundation.AVVideoTransferFunction_SMPTE_ST_2084_PQ, unicode
+            AVFoundation.AVVideoTransferFunction_SMPTE_ST_2084_PQ, str
         )
-        self.assertIsInstance(
-            AVFoundation.AVVideoTransferFunction_ITU_R_2100_HLG, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_2020, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecHEVC, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoDecompressionPropertiesKey, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoApertureModeCleanAperture, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVVideoApertureModeProductionAperture, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVVideoApertureModeEncodedPixels, unicode)
+        self.assertIsInstance(AVFoundation.AVVideoTransferFunction_ITU_R_2100_HLG, str)
+        self.assertIsInstance(AVFoundation.AVVideoYCbCrMatrix_ITU_R_2020, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecHEVC, str)
+        self.assertIsInstance(AVFoundation.AVVideoDecompressionPropertiesKey, str)
+        self.assertIsInstance(AVFoundation.AVVideoApertureModeCleanAperture, str)
+        self.assertIsInstance(AVFoundation.AVVideoApertureModeProductionAperture, str)
+        self.assertIsInstance(AVFoundation.AVVideoApertureModeEncodedPixels, str)
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422HQ, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422LT, unicode)
-        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422Proxy, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422HQ, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422LT, str)
+        self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422Proxy, str)

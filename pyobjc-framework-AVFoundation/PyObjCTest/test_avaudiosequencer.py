@@ -1,11 +1,13 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioSequencer(TestCase):
     def testConstants(self):
         self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_PreserveTracks, 0)
-        self.assertEqual(AVFoundation.AVMusicSequenceLoadSMF_ChannelsToTracks, 1)
+        self.assertEqual(
+            AVFoundation.AVMusicSequenceLoadSMF_ChannelsToTracks, 1
+        )  # noqa: B950
 
         self.assertEqual(AVFoundation.AVMusicTrackLoopCountForever, -1)
 
@@ -26,7 +28,9 @@ class TestAVAudioSequencer(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVAudioSequencer.loadFromURL_options_error_
         )
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.loadFromURL_options_error_, 2)
+        self.assertArgIsOut(
+            AVFoundation.AVAudioSequencer.loadFromURL_options_error_, 2
+        )  # noqa: B950
 
         self.assertResultIsBOOL(
             AVFoundation.AVAudioSequencer.loadFromData_options_error_
@@ -36,14 +40,14 @@ class TestAVAudioSequencer(TestCase):
         )
 
         self.assertResultIsBOOL(
-            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_
+            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_  # noqa: B950
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_,
+            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_,  # noqa: B950
             2,
         )
         self.assertArgIsOut(
-            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_,
+            AVFoundation.AVAudioSequencer.writeToURL_SMPTEResolution_replaceExisting_error_,  # noqa: B950
             3,
         )
 
@@ -53,11 +57,19 @@ class TestAVAudioSequencer(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.isPlaying)
 
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.hostTimeForBeats_error_, 1)
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.beatsForHostTime_error_, 1)
+        self.assertArgIsOut(
+            AVFoundation.AVAudioSequencer.hostTimeForBeats_error_, 1
+        )  # noqa: B950
+        self.assertArgIsOut(
+            AVFoundation.AVAudioSequencer.beatsForHostTime_error_, 1
+        )  # noqa: B950
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioSequencer.startAndReturnError_)
-        self.assertArgIsOut(AVFoundation.AVAudioSequencer.startAndReturnError_, 0)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioSequencer.startAndReturnError_
+        )  # noqa: B950
+        self.assertArgIsOut(
+            AVFoundation.AVAudioSequencer.startAndReturnError_, 0
+        )  # noqa: B950
 
         self.assertResultIsBOOL(AVFoundation.AVMusicTrack.isLoopingEnabled)
         self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setLoopingEnabled_, 0)
@@ -67,7 +79,3 @@ class TestAVAudioSequencer(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVMusicTrack.isSoloed)
         self.assertArgIsBOOL(AVFoundation.AVMusicTrack.setSoloed_, 0)
-
-
-if __name__ == "__main__":
-    main()

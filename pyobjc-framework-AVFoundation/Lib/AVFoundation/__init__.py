@@ -11,7 +11,7 @@ import CoreMedia
 import Foundation
 import objc
 from AVFoundation import _metadata
-from AVFoundation._AVFoundation import *
+import AVFoundation._AVFoundation
 from AVFoundation._inlines import _inline_list_
 
 sys.modules["AVFoundation"] = mod = objc.ObjCLazyModule(
@@ -23,10 +23,10 @@ sys.modules["AVFoundation"] = mod = objc.ObjCLazyModule(
     {
         "__doc__": __doc__,
         "objc": objc,
-        "__path__": __path__,
+        "__path__": __path__,  # noqa: F405
         "__loader__": globals().get("__loader__", None),
     },
-    (CoreMedia, Foundation),
+    (AVFoundation._AVFoundation, CoreMedia, Foundation),
 )
 
 

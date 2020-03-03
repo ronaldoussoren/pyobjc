@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioFile(TestCase):
@@ -8,20 +8,24 @@ class TestAVAudioFile(TestCase):
         self.assertArgIsOut(AVFoundation.AVAudioFile.initForReading_error_, 1)
 
         self.assertArgIsBOOL(
-            AVFoundation.AVAudioFile.initForReading_commonFormat_interleaved_error_, 2
+            AVFoundation.AVAudioFile.initForReading_commonFormat_interleaved_error_,
+            2,  # noqa: B950
         )
         self.assertArgIsOut(
-            AVFoundation.AVAudioFile.initForReading_commonFormat_interleaved_error_, 3
+            AVFoundation.AVAudioFile.initForReading_commonFormat_interleaved_error_,
+            3,  # noqa: B950
         )
 
-        self.assertArgIsOut(AVFoundation.AVAudioFile.initForWriting_settings_error_, 2)
+        self.assertArgIsOut(
+            AVFoundation.AVAudioFile.initForWriting_settings_error_, 2
+        )  # noqa: B950
 
         self.assertArgIsBOOL(
-            AVFoundation.AVAudioFile.initForWriting_settings_commonFormat_interleaved_error_,
+            AVFoundation.AVAudioFile.initForWriting_settings_commonFormat_interleaved_error_,  # noqa: B950
             3,
         )
         self.assertArgIsOut(
-            AVFoundation.AVAudioFile.initForWriting_settings_commonFormat_interleaved_error_,
+            AVFoundation.AVAudioFile.initForWriting_settings_commonFormat_interleaved_error_,  # noqa: B950
             4,
         )
 
@@ -37,7 +41,3 @@ class TestAVAudioFile(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVAudioFile.writeFromBuffer_error_)
         self.assertArgIsOut(AVFoundation.AVAudioFile.writeFromBuffer_error_, 1)
-
-
-if __name__ == "__main__":
-    main()

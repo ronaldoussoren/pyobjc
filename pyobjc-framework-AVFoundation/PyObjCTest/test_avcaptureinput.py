@@ -1,13 +1,12 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureInput(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(
-            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification,
-            unicode,
+            AVFoundation.AVCaptureInputPortFormatDescriptionDidChangeNotification, str
         )
 
     def testMethods(self):
@@ -35,7 +34,3 @@ class TestAVCaptureInput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVCaptureScreenInput.setRemovesDuplicateFrames_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

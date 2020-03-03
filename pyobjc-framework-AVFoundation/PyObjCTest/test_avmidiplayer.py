@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 AVMIDIPlayerCompletionHandler = b"v"
 
@@ -18,7 +18,3 @@ class TestAVMIDIPlayer(TestCase):
             AVFoundation.AVMIDIPlayer.play_, 0, AVMIDIPlayerCompletionHandler
         )
         self.assertResultIsBOOL(AVFoundation.AVMIDIPlayer.isPlaying)
-
-
-if __name__ == "__main__":
-    main()

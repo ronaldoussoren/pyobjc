@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVMetadataObject(TestCase):
@@ -10,40 +10,34 @@ class TestAVMetadataObject(TestCase):
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeFace, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeFace, str)
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeUPCECode, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode39Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode39Mod43Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeEAN13Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeEAN8Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode93Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode128Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypePDF417Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeQRCode, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeAztecCode, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataObjectTypeInterleaved2of5Code, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeITF14Code, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDataMatrixCode, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeUPCECode, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode39Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode39Mod43Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeEAN13Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeEAN8Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode93Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCode128Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypePDF417Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeQRCode, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeAztecCode, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeInterleaved2of5Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeITF14Code, str)
+        self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDataMatrixCode, str)
 
     @min_os_level("10.15")
     @expectedFailure
     def testConstants10_15_missing(self):
         with self.subTest("humanbody"):
-            self.assertIsInstance(AVFoundationAVMetadataObjectTypeHumanBody, unicode)
-        with self.subTest("catbody"):
-            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCatBody, unicode)
-        with self.subTest("dogbody"):
-            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogBody, unicode)
-        with self.subTest("salientobject"):
             self.assertIsInstance(
-                AVFoundation.AVMetadataObjectTypeSalientObject, unicode
-            )
-
-
-if __name__ == "__main__":
-    main()
+                AVFoundation.AVFoundationAVMetadataObjectTypeHumanBody, str
+            )  # noqa: B950
+        with self.subTest("catbody"):
+            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeCatBody, str)
+        with self.subTest("dogbody"):
+            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeDogBody, str)
+        with self.subTest("salientobject"):
+            self.assertIsInstance(AVFoundation.AVMetadataObjectTypeSalientObject, str)

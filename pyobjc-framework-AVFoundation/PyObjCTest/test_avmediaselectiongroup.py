@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVMediaSelectionGroup(TestCase):
@@ -11,7 +11,3 @@ class TestAVMediaSelectionGroup(TestCase):
             AVFoundation.AVMediaSelectionOption.hasMediaCharacteristic_
         )
         self.assertResultIsBOOL(AVFoundation.AVMediaSelectionOption.isPlayable)
-
-
-if __name__ == "__main__":
-    main()

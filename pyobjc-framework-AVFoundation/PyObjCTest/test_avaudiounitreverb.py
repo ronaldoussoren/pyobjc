@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioUnitReverb(TestCase):
@@ -18,7 +18,3 @@ class TestAVAudioUnitReverb(TestCase):
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumHall2, 10)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetMediumHall3, 11)
         self.assertEqual(AVFoundation.AVAudioUnitReverbPresetLargeHall2, 12)
-
-
-if __name__ == "__main__":
-    main()

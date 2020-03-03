@@ -1,7 +1,7 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
-AVAudioSourceNodeRenderBlock = b"io^Zn^^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}Io^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+AVAudioSourceNodeRenderBlock = b"io^Zn^^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}Io^{AudioBufferList=I[1{AudioBuffer=II^v}]}"  # noqa: B950
 
 
 class TestAVAudioSourceNode(TestCase):
@@ -12,7 +12,3 @@ class TestAVAudioSourceNode(TestCase):
             0,
             AVAudioSourceNodeRenderBlock,
         )
-
-
-if __name__ == "__main__":
-    main()

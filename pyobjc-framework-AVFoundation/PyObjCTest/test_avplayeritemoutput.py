@@ -1,9 +1,10 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerOutputHelper(AVFoundation.NSObject):
-    def legibleOutput_didOutputAttributedStrings_nativeSampleBuffers_forItemTime_(
+    def legibleOutput_didOutputAttributedStrings_nativeSampleBuffers_forItemTime_(  # noqa: B950
         self, a, b, c, d
     ):
         pass
@@ -24,15 +25,15 @@ class TestAVPlayerOutput(TestCase):
         )
 
         self.assertResultIsCFRetained(
-            AVFoundation.AVPlayerItemVideoOutput.copyPixelBufferForItemTime_itemTimeForDisplay_
+            AVFoundation.AVPlayerItemVideoOutput.copyPixelBufferForItemTime_itemTimeForDisplay_  # noqa: B950
         )
         self.assertArgIsOut(
-            AVFoundation.AVPlayerItemVideoOutput.copyPixelBufferForItemTime_itemTimeForDisplay_,
+            AVFoundation.AVPlayerItemVideoOutput.copyPixelBufferForItemTime_itemTimeForDisplay_,  # noqa: B950
             1,
         )
 
         self.assertArgHasType(
-            TestAVPlayerOutputHelper.legibleOutput_didOutputAttributedStrings_nativeSampleBuffers_forItemTime_,
+            TestAVPlayerOutputHelper.legibleOutput_didOutputAttributedStrings_nativeSampleBuffers_forItemTime_,  # noqa: B950
             3,
             b"{_CMTime=qiIq}",
         )
@@ -46,13 +47,10 @@ class TestAVPlayerOutput(TestCase):
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionDefault, unicode
+            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionDefault,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionSourceAndRulesOnly,
-            unicode,
+            AVFoundation.AVPlayerItemLegibleOutputTextStylingResolutionSourceAndRulesOnly,  # noqa: B950
+            str,
         )
-
-
-if __name__ == "__main__":
-    main()

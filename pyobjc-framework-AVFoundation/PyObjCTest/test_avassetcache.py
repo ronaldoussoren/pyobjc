@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetCache(TestCase):
@@ -10,7 +10,3 @@ class TestAVAssetCache(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetCache.isPlayableOffline)
-
-
-if __name__ == "__main__":
-    main()

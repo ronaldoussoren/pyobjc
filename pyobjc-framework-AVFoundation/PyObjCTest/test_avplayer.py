@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayer(TestCase):
@@ -14,7 +14,8 @@ class TestAVPlayer(TestCase):
 
         self.assertEqual(AVFoundation.AVPlayerTimeControlStatusPaused, 0)
         self.assertEqual(
-            AVFoundation.AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate, 1
+            AVFoundation.AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate,
+            1,  # noqa: B950
         )
         self.assertEqual(AVFoundation.AVPlayerTimeControlStatusPlaying, 2)
 
@@ -25,19 +26,20 @@ class TestAVPlayer(TestCase):
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(
-            AVFoundation.AVPlayerWaitingToMinimizeStallsReason, unicode
+            AVFoundation.AVPlayerWaitingToMinimizeStallsReason, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVPlayerWaitingWhileEvaluatingBufferingRateReason, str
         )
         self.assertIsInstance(
-            AVFoundation.AVPlayerWaitingWhileEvaluatingBufferingRateReason, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, unicode
-        )
+            AVFoundation.AVPlayerWaitingWithNoItemToPlayReason, str
+        )  # noqa: B950
 
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(
-            AVFoundation.AVPlayerEligibleForHDRPlaybackDidChangeNotification, unicode
+            AVFoundation.AVPlayerEligibleForHDRPlaybackDidChangeNotification,
+            str,  # noqa: B950
         )
 
     @min_os_level("10.7")
@@ -49,7 +51,7 @@ class TestAVPlayer(TestCase):
             AVFoundation.AVPlayer.seekToTime_completionHandler_, 1, b"vZ"
         )
         self.assertArgIsBlock(
-            AVFoundation.AVPlayer.seekToTime_toleranceBefore_toleranceAfter_completionHandler_,
+            AVFoundation.AVPlayer.seekToTime_toleranceBefore_toleranceAfter_completionHandler_,  # noqa: B950
             3,
             b"vZ",
         )
@@ -57,21 +59,27 @@ class TestAVPlayer(TestCase):
             AVFoundation.AVPlayer.prerollAtRate_completionHandler_, 1, b"vZ"
         )
         self.assertArgIsBlock(
-            AVFoundation.AVPlayer.addPeriodicTimeObserverForInterval_queue_usingBlock_,
+            AVFoundation.AVPlayer.addPeriodicTimeObserverForInterval_queue_usingBlock_,  # noqa: B950
             2,
             b"v{_CMTime=qiIq}",
         )
         self.assertArgIsBlock(
-            AVFoundation.AVPlayer.addBoundaryTimeObserverForTimes_queue_usingBlock_,
+            AVFoundation.AVPlayer.addBoundaryTimeObserverForTimes_queue_usingBlock_,  # noqa: B950
             2,
             b"v",
         )
         self.assertResultIsBOOL(AVFoundation.AVPlayer.isMuted)
         self.assertArgIsBOOL(AVFoundation.AVPlayer.setMuted_, 0)
-        self.assertResultIsBOOL(AVFoundation.AVPlayer.isClosedCaptionDisplayEnabled)
-        self.assertArgIsBOOL(AVFoundation.AVPlayer.setClosedCaptionDisplayEnabled_, 0)
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayer.isClosedCaptionDisplayEnabled
+        )  # noqa: B950
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayer.setClosedCaptionDisplayEnabled_, 0
+        )  # noqa: B950
 
-        self.assertResultIsBOOL(AVFoundation.AVQueuePlayer.canInsertItem_afterItem_)
+        self.assertResultIsBOOL(
+            AVFoundation.AVQueuePlayer.canInsertItem_afterItem_
+        )  # noqa: B950
 
     @min_os_level("10.9")
     def testMethods10_9(self):
@@ -79,13 +87,16 @@ class TestAVPlayer(TestCase):
             AVFoundation.AVPlayer.appliesMediaSelectionCriteriaAutomatically
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVPlayer.setAppliesMediaSelectionCriteriaAutomatically_, 0
+            AVFoundation.AVPlayer.setAppliesMediaSelectionCriteriaAutomatically_,
+            0,  # noqa: B950
         )
 
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.allowsExternalPlayback)
-        self.assertArgIsBOOL(AVFoundation.AVPlayer.setAllowsExternalPlayback_, 0)
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayer.setAllowsExternalPlayback_, 0
+        )  # noqa: B950
         self.assertResultIsBOOL(AVFoundation.AVPlayer.isExternalPlaybackActive)
 
     @min_os_level("10.12")
@@ -98,7 +109,7 @@ class TestAVPlayer(TestCase):
         )
 
         self.assertResultIsBOOL(
-            AVFoundation.AVPlayer.outputObscuredDueToInsufficientExternalProtection
+            AVFoundation.AVPlayer.outputObscuredDueToInsufficientExternalProtection  # noqa: B950
         )
 
     @min_os_level("10.14")
@@ -113,7 +124,3 @@ class TestAVPlayer(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.eligibleForHDRPlayback)
-
-
-if __name__ == "__main__":
-    main()

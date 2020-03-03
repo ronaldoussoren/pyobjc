@@ -1,776 +1,846 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVMetadataIdentifiers(TestCase):
     @min_os_level("10.10")
     def testConstants10(self):
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierTitle, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierCreator, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierSubject, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierTitle, str)
         self.assertIsInstance(
-            AVFoundation.AVMetadataCommonIdentifierDescription, unicode
+            AVFoundation.AVMetadataCommonIdentifierCreator, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierSubject, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierDescription, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierPublisher, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierContributor, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierCreationDate, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierLastModifiedDate, str
         )
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierPublisher, unicode)
+        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierType, str)
         self.assertIsInstance(
-            AVFoundation.AVMetadataCommonIdentifierContributor, unicode
-        )
+            AVFoundation.AVMetadataCommonIdentifierFormat, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataCommonIdentifierCreationDate, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataCommonIdentifierLastModifiedDate, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierType, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierFormat, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataCommonIdentifierAssetIdentifier, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierSource, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierLanguage, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierRelation, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierLocation, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataCommonIdentifierCopyrights, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierAlbumName, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierAuthor, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierArtist, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierArtwork, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierMake, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierModel, unicode)
-        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierSoftware, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataAlbum, unicode
+            AVFoundation.AVMetadataCommonIdentifierAssetIdentifier, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataArranger, unicode
+            AVFoundation.AVMetadataCommonIdentifierSource, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierLanguage, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierRelation, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierLocation, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierCopyrights, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierAlbumName, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierAuthor, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierArtist, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierArtwork, str
+        )  # noqa: B950
+        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierMake, str)
+        self.assertIsInstance(AVFoundation.AVMetadataCommonIdentifierModel, str)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierSoftware, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataAlbum, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataArtist, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataArranger, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataAuthor, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataArtist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataChapter, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataAuthor, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataComment, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataChapter, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataComposer, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataComment, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataCopyright, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataComposer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataCreationDate, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataCopyright, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataDescription, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataCreationDate, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataDirector, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataDescription, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataDisclaimer, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataDirector, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataEncodedBy, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataDisclaimer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataFullName, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataEncodedBy, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataGenre, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataFullName, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataHostComputer, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataGenre, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataInformation, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataHostComputer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataKeywords, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataInformation, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataMake, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataKeywords, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataModel, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataMake, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataOriginalArtist, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataModel, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataOriginalFormat, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataOriginalArtist,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataOriginalSource, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataOriginalFormat,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataPerformers, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataOriginalSource,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataProducer, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataPerformers, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataPublisher, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataProducer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataProduct, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataPublisher, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataSoftware, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataProduct, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataSpecialPlaybackRequirements,
-            unicode,
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataSoftware, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataTrack, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataSpecialPlaybackRequirements,  # noqa: B950
+            str,
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataWarning, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataTrack, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataWriter, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataWarning, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataURLLink, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataWriter, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataLocationISO6709, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataURLLink, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataTrackName, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataLocationISO6709,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataCredits, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataTrackName, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeUserDataPhonogramRights, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataCredits, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataPhonogramRights,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeUserDataTaggedCharacteristic,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierISOUserDataCopyright, unicode
+            AVFoundation.AVMetadataIdentifierISOUserDataCopyright, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierISOUserDataTaggedCharacteristic, unicode
+            AVFoundation.AVMetadataIdentifierISOUserDataTaggedCharacteristic,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataCopyright, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataCopyright, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataAuthor, unicode
-        )
+            AVFoundation.AVMetadataIdentifier3GPUserDataAuthor, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataPerformer, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataPerformer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataGenre, unicode
-        )
+            AVFoundation.AVMetadataIdentifier3GPUserDataGenre, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataRecordingYear, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataRecordingYear, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataLocation, unicode
-        )
+            AVFoundation.AVMetadataIdentifier3GPUserDataLocation, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataTitle, unicode
-        )
+            AVFoundation.AVMetadataIdentifier3GPUserDataTitle, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataDescription, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataDescription, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataCollection, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataCollection, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataUserRating, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataUserRating, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataThumbnail, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataThumbnail, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataAlbumAndTrack, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataAlbumAndTrack, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataKeywordList, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataKeywordList, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataMediaClassification, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataMediaClassification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifier3GPUserDataMediaRating, unicode
+            AVFoundation.AVMetadataIdentifier3GPUserDataMediaRating, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataAuthor, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataAuthor, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataComment, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataComment, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCopyright, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCopyright, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCreationDate, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCreationDate, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDirector, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDirector, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDisplayName, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDisplayName, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataInformation, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataInformation, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataKeywords, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataKeywords, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataProducer, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataProducer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPublisher, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPublisher, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataAlbum, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataAlbum, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataArtist, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataArtist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataArtwork, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataArtwork, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDescription, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDescription, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataSoftware, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataSoftware, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataYear, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataYear, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataGenre, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataGenre, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataiXML, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataiXML, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationISO6709, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationISO6709,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataMake, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataMake, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataModel, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataModel, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataArranger, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataArranger, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataEncodedBy, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataEncodedBy, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataOriginalArtist, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataOriginalArtist,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPerformer, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPerformer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataComposer, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataComposer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCredits, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCredits, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPhonogramRights, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPhonogramRights,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraIdentifier, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraIdentifier,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraFrameReadoutTime,
-            unicode,
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCameraFrameReadoutTime,  # noqa: B950
+            str,
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataTitle, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataTitle, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCollectionUser, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataCollectionUser,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataRatingUser, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataRatingUser, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationName, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationName, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationBody, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationBody, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationNote, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationNote, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationRole, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationRole, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationDate, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationDate, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDirectionFacing, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDirectionFacing,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDirectionMotion, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDirectionMotion,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPreferredAffineTransform,
-            unicode,
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataPreferredAffineTransform,  # noqa: B950
+            str,
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataAlbum, unicode
-        )
+            AVFoundation.AVMetadataIdentifieriTunesMetadataAlbum, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataArtist, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataArtist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataUserComment, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataUserComment, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataCoverArt, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataCoverArt, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataCopyright, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataCopyright, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataReleaseDate, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataReleaseDate, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataEncodedBy, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataEncodedBy, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataPredefinedGenre, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataPredefinedGenre, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataUserGenre, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataUserGenre, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataSongName, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataSongName, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataTrackSubTitle, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataTrackSubTitle, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataEncodingTool, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataEncodingTool, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataComposer, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataComposer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataAlbumArtist, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataAlbumArtist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataAccountKind, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataAccountKind, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataAppleID, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataAppleID, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataArtistID, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataArtistID, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataSongID, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataSongID, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataDiscCompilation, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataDiscCompilation, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataDiscNumber, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataDiscNumber, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataGenreID, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataGenreID, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataGrouping, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataGrouping, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataPlaylistID, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataPlaylistID, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataContentRating, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataContentRating, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataBeatsPerMin, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataBeatsPerMin, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataTrackNumber, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataTrackNumber, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataArtDirector, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataArtDirector, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataArranger, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataArranger, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataAuthor, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataAuthor, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataLyrics, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataLyrics, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataAcknowledgement, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataAcknowledgement, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataConductor, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataConductor, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataDescription, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataDescription, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataDirector, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataDirector, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataEQ, unicode
-        )
+            AVFoundation.AVMetadataIdentifieriTunesMetadataEQ, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataLinerNotes, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataLinerNotes, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataRecordCompany, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataRecordCompany, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataOriginalArtist, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataOriginalArtist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataPhonogramRights, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataPhonogramRights, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataProducer, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataProducer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataPerformer, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataPerformer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataPublisher, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataPublisher, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataSoundEngineer, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataSoundEngineer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataSoloist, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataSoloist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataCredits, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataCredits, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataThanks, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataThanks, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataOnlineExtras, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataOnlineExtras, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifieriTunesMetadataExecProducer, unicode
+            AVFoundation.AVMetadataIdentifieriTunesMetadataExecProducer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataAudioEncryption, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataAudioEncryption, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataAttachedPicture, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataAttachedPicture, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataAudioSeekPointIndex, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataAudioSeekPointIndex, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataComments, unicode
-        )
+            AVFoundation.AVMetadataIdentifierID3MetadataComments, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataEncryption, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataEncryption, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataEqualization, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataEqualization, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataEqualization2, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataEqualization2, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataEventTimingCodes, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataEventTimingCodes, str
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataGeneralEncapsulatedObject,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataGroupIdentifier, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataGroupIdentifier, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataInvolvedPeopleList_v23, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataLink, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataMusicCDIdentifier, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataInvolvedPeopleList_v23,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataMPEGLocationLookupTable, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataLink, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataMusicCDIdentifier, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOwnership, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataMPEGLocationLookupTable,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPrivate, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOwnership, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPlayCounter, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataPrivate, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataPlayCounter, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPopularimeter, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataPopularimeter, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPositionSynchronization, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataPositionSynchronization,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataRecommendedBufferSize, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataRecommendedBufferSize,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataRelativeVolumeAdjustment,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataRelativeVolumeAdjustment2,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataReverb, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataSeek, unicode)
+            AVFoundation.AVMetadataIdentifierID3MetadataReverb, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataSignature, unicode
-        )
+            AVFoundation.AVMetadataIdentifierID3MetadataSeek, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataSynchronizedLyric, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataSynchronizedTempoCodes, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataSignature, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataAlbumTitle, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataSynchronizedLyric, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataBeatsPerMinute, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataSynchronizedTempoCodes,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataComposer, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataAlbumTitle, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataContentType, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataBeatsPerMinute, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataCopyright, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataDate, unicode)
+            AVFoundation.AVMetadataIdentifierID3MetadataComposer, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataEncodingTime, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPlaylistDelay, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataContentType, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOriginalReleaseTime, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataCopyright, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataRecordingTime, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataDate, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataEncodingTime, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataReleaseTime, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataPlaylistDelay, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataTaggingTime, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOriginalReleaseTime, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataEncodedBy, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataRecordingTime, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataLyricist, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataReleaseTime, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataFileType, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataTime, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataInvolvedPeopleList_v24, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataTaggingTime, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataContentGroupDescription, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataEncodedBy, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataTitleDescription, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataLyricist, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataFileType, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataTime, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataInvolvedPeopleList_v24,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataSubTitle, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataContentGroupDescription,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataInitialKey, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataTitleDescription, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataLanguage, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataSubTitle, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataInitialKey, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataLength, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataLanguage, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataLength, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataMusicianCreditsList, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataMusicianCreditsList, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataMediaType, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataMediaType, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataMood, unicode)
+            AVFoundation.AVMetadataIdentifierID3MetadataMood, str
+        )  # noqa: B950
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOriginalAlbumTitle, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOriginalFilename, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOriginalAlbumTitle, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOriginalLyricist, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOriginalFilename, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOriginalArtist, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOriginalLyricist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOriginalReleaseYear, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOriginalArtist, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataFileOwner, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOriginalReleaseYear, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataLeadPerformer, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataBand, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataConductor, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataFileOwner, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataModifiedBy, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataLeadPerformer, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPartOfASet, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataBand, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataConductor, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataProducedNotice, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataModifiedBy, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPublisher, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataPartOfASet, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataTrackNumber, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataProducedNotice, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataRecordingDates, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataPublisher, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataTrackNumber, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataRecordingDates, str
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataInternetRadioStationName,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataInternetRadioStationOwner,
-            unicode,
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataSize, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataAlbumSortOrder, unicode
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPerformerSortOrder, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataSize, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataAlbumSortOrder, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataTitleSortOrder, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataPerformerSortOrder, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataInternationalStandardRecordingCode,
-            unicode,
+            AVFoundation.AVMetadataIdentifierID3MetadataTitleSortOrder, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataEncodedWith, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataInternationalStandardRecordingCode,  # noqa: B950
+            str,
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataSetSubtitle, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierID3MetadataYear, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataUserText, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataEncodedWith, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataUniqueFileIdentifier, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataSetSubtitle, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataTermsOfUse, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataYear, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataUserText, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataUniqueFileIdentifier,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataUnsynchronizedLyric, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataTermsOfUse, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataCommercialInformation, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataUnsynchronizedLyric, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataCopyrightInformation, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataCommercialInformation,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierID3MetadataCopyrightInformation,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataOfficialAudioFileWebpage,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOfficialArtistWebpage, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataOfficialArtistWebpage,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataOfficialAudioSourceWebpage,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataOfficialInternetRadioStationHomepage,
-            unicode,
+            AVFoundation.AVMetadataIdentifierID3MetadataOfficialInternetRadioStationHomepage,  # noqa: B950
+            str,
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataPayment, unicode
-        )
+            AVFoundation.AVMetadataIdentifierID3MetadataPayment, str
+        )  # noqa: B950
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierID3MetadataOfficialPublisherWebpage,
-            unicode,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataUserURL, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataUserURL, str
+        )  # noqa: B950
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierIcyMetadataStreamTitle, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierIcyMetadataStreamTitle, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierIcyMetadataStreamURL, unicode
+            AVFoundation.AVMetadataIdentifierIcyMetadataStreamURL, str
         )
 
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedFace, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedFace, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataVideoOrientation, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataVideoOrientation,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierQuickTimeMetadataContentIdentifier, unicode
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataContentIdentifier,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataCommercial, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataCommercial, str
         )
         self.assertIsInstance(
-            AVFoundation.AVMetadataIdentifierID3MetadataCommerical, unicode
+            AVFoundation.AVMetadataIdentifierID3MetadataCommerical, str
         )
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(AVFoundation.AVMetadataIdentifierISOUserDataDate, unicode)
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierISOUserDataDate, str
+        )  # noqa: B950
 
     @min_os_level("10.15")
     @expectedFailure
@@ -778,49 +848,46 @@ class TestAVMetadataIdentifiers(TestCase):
         with self.subTest("humanbody"):
             self.assertIsInstance(
                 AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedHumanBody,
-                unicode,
+                str,  # noqa: B950
             )
 
         with self.subTest("catbody"):
             self.assertIsInstance(
                 AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedCatBody,
-                unicode,
+                str,  # noqa: B950
             )
         with self.subTest("dogbody"):
             self.assertIsInstance(
                 AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedDogBody,
-                unicode,
+                str,  # noqa: B950
             )
         with self.subTest("salientobject"):
             self.assertIsInstance(
-                AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedSalientObject,
-                unicode,
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataDetectedSalientObject,  # noqa: B950
+                str,
             )
         with self.subTest("livephoto"):
             self.assertIsInstance(
-                AVFoundation.AVMetadataIdentifierQuickTimeMetadataAutoLivePhoto, unicode
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataAutoLivePhoto,
+                str,  # noqa: B950
             )
         with self.subTest("vitalityscore"):
             self.assertIsInstance(
-                AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScore,
-                unicode,
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScore,  # noqa: B950
+                str,
             )
         with self.subTest("vitalityscoringversion"):
             self.assertIsInstance(
-                AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScoringVersion,
-                unicode,
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataLivePhotoVitalityScoringVersion,  # noqa: B950
+                str,
             )
         with self.subTest("qualityscore"):
             self.assertIsInstance(
-                AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScore,
-                unicode,
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScore,  # noqa: B950
+                str,
             )
         with self.subTest("qaulityscoringversion"):
             self.assertIsInstance(
-                AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion,
-                unicode,
+                AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion,  # noqa: B950
+                str,
             )
-
-
-if __name__ == "__main__":
-    main()

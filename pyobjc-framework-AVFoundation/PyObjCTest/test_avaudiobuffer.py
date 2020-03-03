@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVAudioBuffer(TestCase):
@@ -14,7 +14,3 @@ class TestAVAudioBuffer(TestCase):
     def testMethods_manual(self):
         # Not quite sure how to test this
         self.fail("check floatChannelData,int16ChannelData, int32ChannelData")
-
-
-if __name__ == "__main__":
-    main()

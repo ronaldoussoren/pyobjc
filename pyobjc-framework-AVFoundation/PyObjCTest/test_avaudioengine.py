@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 AVAudioEngineManualRenderingBlock = (
     objc._C_NSInteger + b"Io^{AudioBufferList=L[1{AudioBuffer=LL^v}]}o^i"
@@ -15,22 +16,30 @@ class TestAVAudioEngine(TestCase):
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertResultIsBOOL(AVFoundation.AVAudioEngine.isAutoShutdownEnabled)
-        self.assertArgIsBOOL(AVFoundation.AVAudioEngine.setAutoShutdownEnabled_, 0)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioEngine.isAutoShutdownEnabled
+        )  # noqa: B950
+        self.assertArgIsBOOL(
+            AVFoundation.AVAudioEngine.setAutoShutdownEnabled_, 0
+        )  # noqa: B950
 
         self.assertResultIsBOOL(
-            AVFoundation.AVAudioEngine.enableManualRenderingMode_format_maximumFrameCount_error_
+            AVFoundation.AVAudioEngine.enableManualRenderingMode_format_maximumFrameCount_error_  # noqa: B950
         )
         self.assertArgIsOut(
-            AVFoundation.AVAudioEngine.enableManualRenderingMode_format_maximumFrameCount_error_,
+            AVFoundation.AVAudioEngine.enableManualRenderingMode_format_maximumFrameCount_error_,  # noqa: B950
             3,
         )
 
-        self.assertArgIsOut(AVFoundation.AVAudioEngine.renderOffline_toBuffer_error_, 2)
+        self.assertArgIsOut(
+            AVFoundation.AVAudioEngine.renderOffline_toBuffer_error_, 2
+        )  # noqa: B950
 
-        self.assertResultIsBOOL(AVFoundation.AVAudioEngine.isInManualRenderingMode)
+        self.assertResultIsBOOL(
+            AVFoundation.AVAudioEngine.isInManualRenderingMode
+        )  # noqa: B950
 
-        # XXX: This almost certainly requires a manual wrapper to use correctly...
+        # NOTE: This almost certainly requires a manual wrapper to use correctly
         self.assertResultIsBlock(
             AVFoundation.AVAudioEngine.manualRenderingBlock,
             AVAudioEngineManualRenderingBlock,
@@ -49,12 +58,6 @@ class TestAVAudioEngine(TestCase):
             AUMIDIOutputEventBlock,
         )
 
-    @min_os_level("10.10")
-    def testConstants(self):
-        self.assertIsInstance(
-            AVFoundation.AVAudioEngineConfigurationChangeNotification, unicode
-        )
-
     def testConstants(self):
         self.assertEqual(
             AVFoundation.AVAudioEngineManualRenderingErrorInvalidMode, -80800
@@ -66,19 +69,30 @@ class TestAVAudioEngine(TestCase):
             AVFoundation.AVAudioEngineManualRenderingErrorNotRunning, -80802
         )
 
-        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusError, -1)
-        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0)
         self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusInsufficientDataFromInputNode,
+            AVFoundation.AVAudioEngineManualRenderingStatusError, -1
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingStatusSuccess, 0
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingStatusInsufficientDataFromInputNode,  # noqa: B950
             1,
         )
         self.assertEqual(
-            AVFoundation.AVAudioEngineManualRenderingStatusCannotDoInCurrentContext, 2
+            AVFoundation.AVAudioEngineManualRenderingStatusCannotDoInCurrentContext,
+            2,  # noqa: B950
         )
 
-        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingModeOffline, 0)
-        self.assertEqual(AVFoundation.AVAudioEngineManualRenderingModeRealtime, 1)
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingModeOffline, 0
+        )  # noqa: B950
+        self.assertEqual(
+            AVFoundation.AVAudioEngineManualRenderingModeRealtime, 1
+        )  # noqa: B950
 
-
-if __name__ == "__main__":
-    main()
+    @min_os_level("10.10")
+    def testConstants10_10(self):
+        self.assertIsInstance(
+            AVFoundation.AVAudioEngineConfigurationChangeNotification, str
+        )

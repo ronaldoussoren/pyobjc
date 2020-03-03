@@ -1,31 +1,33 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioUnitComponent(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeOutput, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMusicDevice, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMusicEffect, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeFormatConverter, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeEffect, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMixer, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypePanner, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeGenerator, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeOfflineEffect, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMIDIProcessor, unicode)
-        self.assertIsInstance(AVFoundation.AVAudioUnitManufacturerNameApple, unicode)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeOutput, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMusicDevice, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMusicEffect, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeFormatConverter, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeEffect, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMixer, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypePanner, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeGenerator, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeOfflineEffect, str)
+        self.assertIsInstance(AVFoundation.AVAudioUnitTypeMIDIProcessor, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioUnitManufacturerNameApple, str
+        )  # noqa: B950
 
         self.assertIsInstance(
-            AVFoundation.AVAudioUnitComponentTagsDidChangeNotification, unicode
+            AVFoundation.AVAudioUnitComponentTagsDidChangeNotification, str
         )
 
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(
-            AVFoundation.AVAudioUnitComponentManagerRegistrationsChangedNotification,
-            unicode,
+            AVFoundation.AVAudioUnitComponentManagerRegistrationsChangedNotification,  # noqa: B950
+            str,
         )
 
     @min_os_level("10.10")
@@ -36,13 +38,9 @@ class TestAVAudioUnitComponent(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.passesAUVal)
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitComponent.hasCustomView)
         self.assertResultIsBOOL(
-            AVFoundation.AVAudioUnitComponent.supportsNumberInputChannels_outputChannels_
+            AVFoundation.AVAudioUnitComponent.supportsNumberInputChannels_outputChannels_  # noqa: B950
         )
 
         self.assertArgIsBlock(
             AVFoundation.AVAudioUnitComponentManager.componentsPassingTest_, 0, b"Z@o^Z"
         )
-
-
-if __name__ == "__main__":
-    main()

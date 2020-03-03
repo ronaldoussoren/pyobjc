@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestAVAudioMixingHelper(AVFoundation.NSObject):
@@ -121,7 +122,3 @@ class TestAkAudioMixing(TestCase):
         objc.protocolNamed("AVAudioMixing")
         objc.protocolNamed("AVAudioStereoMixing")
         objc.protocolNamed("AVAudio3DMixing")
-
-
-if __name__ == "__main__":
-    main()

@@ -1,19 +1,19 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaptureSession(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(
-            AVFoundation.AVCaptureSessionRuntimeErrorNotification, unicode
+            AVFoundation.AVCaptureSessionRuntimeErrorNotification, str
         )
-        self.assertIsInstance(AVFoundation.AVCaptureSessionErrorKey, unicode)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionErrorKey, str)
         self.assertIsInstance(
-            AVFoundation.AVCaptureSessionDidStartRunningNotification, unicode
+            AVFoundation.AVCaptureSessionDidStartRunningNotification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVCaptureSessionDidStopRunningNotification, unicode
+            AVFoundation.AVCaptureSessionDidStopRunningNotification, str
         )
 
         self.assertEqual(AVFoundation.AVCaptureVideoOrientationPortrait, 1)
@@ -21,15 +21,15 @@ class TestAVCaptureSession(TestCase):
         self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeRight, 3)
         self.assertEqual(AVFoundation.AVCaptureVideoOrientationLandscapeLeft, 4)
 
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetPhoto, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetHigh, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetMedium, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetLow, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset320x240, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset352x288, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset640x480, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset960x540, unicode)
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset1280x720, unicode)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetPhoto, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetHigh, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetMedium, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetLow, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset320x240, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset352x288, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset640x480, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset960x540, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPreset1280x720, str)
 
         self.assertEqual(AVFoundation.AVVideoFieldModeBoth, 0)
         self.assertEqual(AVFoundation.AVVideoFieldModeTopOnly, 1)
@@ -38,18 +38,16 @@ class TestAVCaptureSession(TestCase):
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVCaptureSessionPresetiFrame1280x720, unicode
-        )
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame960x540, str)
+        self.assertIsInstance(AVFoundation.AVCaptureSessionPresetiFrame1280x720, str)
 
     @min_os_level("10.14")
     def testConstants10_14(self):
         self.assertIsInstance(
-            AVFoundation.AVCaptureSessionWasInterruptedNotification, unicode
+            AVFoundation.AVCaptureSessionWasInterruptedNotification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVCaptureSessionInterruptionEndedNotification, unicode
+            AVFoundation.AVCaptureSessionInterruptionEndedNotification, str
         )
 
     @min_os_level("10.7")
@@ -88,7 +86,3 @@ class TestAVCaptureSession(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,18 +1,20 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetImageGenerator(TestCase):
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(
-            AVFoundation.AVAssetImageGeneratorApertureModeCleanAperture, unicode
+            AVFoundation.AVAssetImageGeneratorApertureModeCleanAperture, str
         )
         self.assertIsInstance(
-            AVFoundation.AVAssetImageGeneratorApertureModeProductionAperture, unicode
+            AVFoundation.AVAssetImageGeneratorApertureModeProductionAperture,
+            str,  # noqa: B950
         )
         self.assertIsInstance(
-            AVFoundation.AVAssetImageGeneratorApertureModeEncodedPixels, unicode
+            AVFoundation.AVAssetImageGeneratorApertureModeEncodedPixels, str
         )
 
         self.assertEqual(AVFoundation.AVAssetImageGeneratorSucceeded, 0)
@@ -25,10 +27,12 @@ class TestAVAssetImageGenerator(TestCase):
             AVFoundation.AVAssetImageGenerator.appliesPreferredTrackTransform
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVAssetImageGenerator.setAppliesPreferredTrackTransform_, 0
+            AVFoundation.AVAssetImageGenerator.setAppliesPreferredTrackTransform_,
+            0,  # noqa: B950
         )
         self.assertArgIsOut(
-            AVFoundation.AVAssetImageGenerator.copyCGImageAtTime_actualTime_error_, 2
+            AVFoundation.AVAssetImageGenerator.copyCGImageAtTime_actualTime_error_,
+            2,  # noqa: B950
         )
 
         AVAssetImageGeneratorCompletionHandler = (
@@ -36,11 +40,7 @@ class TestAVAssetImageGenerator(TestCase):
         )
 
         self.assertArgIsBlock(
-            AVFoundation.AVAssetImageGenerator.generateCGImagesAsynchronouslyForTimes_completionHandler_,
+            AVFoundation.AVAssetImageGenerator.generateCGImagesAsynchronouslyForTimes_completionHandler_,  # noqa: B950
             1,
             AVAssetImageGeneratorCompletionHandler,
         )
-
-
-if __name__ == "__main__":
-    main()

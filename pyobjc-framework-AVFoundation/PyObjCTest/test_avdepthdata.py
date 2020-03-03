@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVDepthData(TestCase):
@@ -13,17 +13,15 @@ class TestAVDepthData(TestCase):
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsOut(
-            AVFoundation.AVDepthData.depthDataFromDictionaryRepresentation_error_, 1
+            AVFoundation.AVDepthData.depthDataFromDictionaryRepresentation_error_,
+            1,  # noqa: B950
         )
         self.assertArgIsOut(
-            AVFoundation.AVDepthData.depthDataByReplacingDepthDataMapWithPixelBuffer_error_,
+            AVFoundation.AVDepthData.depthDataByReplacingDepthDataMapWithPixelBuffer_error_,  # noqa: B950
             1,
         )
         self.assertArgIsOut(
-            AVFoundation.AVDepthData.dictionaryRepresentationForAuxiliaryDataType_, 0
+            AVFoundation.AVDepthData.dictionaryRepresentationForAuxiliaryDataType_,
+            0,  # noqa: B950
         )
         self.assertResultIsBOOL(AVFoundation.AVDepthData.isDepthDataFiltered)
-
-
-if __name__ == "__main__":
-    main()

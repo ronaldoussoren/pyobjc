@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVCaptureDevice(TestCase):
@@ -10,11 +10,9 @@ class TestAVCaptureDevice(TestCase):
 
     @min_os_level("10.7")
     def testConstants(self):
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, str)
         self.assertIsInstance(
-            AVFoundation.AVCaptureDeviceWasConnectedNotification, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVCaptureDeviceWasDisconnectedNotification, unicode
+            AVFoundation.AVCaptureDeviceWasDisconnectedNotification, str
         )
 
         self.assertEqual(AVFoundation.AVCaptureDevicePositionUnspecified, 0)
@@ -58,12 +56,10 @@ class TestAVCaptureDevice(TestCase):
 
     @min_os_level("10.15")
     def test_constants10_15(self):
-        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, unicode)
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, str)
+        self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, str)
         self.assertIsInstance(
-            AVFoundation.AVCaptureDeviceTypeBuiltInMicrophone, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, unicode
+            AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, str
         )
 
         self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
@@ -123,7 +119,3 @@ class TestAVCaptureDevice(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVCaptureDevice.setTorchModeOnWithLevel_error_, 1
         )
-
-
-if __name__ == "__main__":
-    main()

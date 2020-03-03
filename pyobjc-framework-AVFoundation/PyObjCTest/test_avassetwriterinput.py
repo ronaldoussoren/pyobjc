@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetWriterInput(TestCase):
@@ -15,7 +15,7 @@ class TestAVAssetWriterInput(TestCase):
             AVFoundation.AVAssetWriterInput.canPerformMultiplePasses
         )
         self.assertArgIsBlock(
-            AVFoundation.AVAssetWriterInput.respondToEachPassDescriptionOnQueue_usingBlock_,
+            AVFoundation.AVAssetWriterInput.respondToEachPassDescriptionOnQueue_usingBlock_,  # noqa: B950
             1,
             b"v",
         )
@@ -45,26 +45,22 @@ class TestAVAssetWriterInput(TestCase):
             AVFoundation.AVAssetWriterInput.setExpectsMediaDataInRealTime_, 0
         )
         self.assertArgIsBlock(
-            AVFoundation.AVAssetWriterInput.requestMediaDataWhenReadyOnQueue_usingBlock_,
+            AVFoundation.AVAssetWriterInput.requestMediaDataWhenReadyOnQueue_usingBlock_,  # noqa: B950
             1,
             b"v",
         )
         self.assertResultIsBOOL(AVFoundation.AVAssetWriterInput.appendSampleBuffer_)
         self.assertResultIsBOOL(
-            AVFoundation.AVAssetWriterInputPixelBufferAdaptor.appendPixelBuffer_withPresentationTime_
+            AVFoundation.AVAssetWriterInputPixelBufferAdaptor.appendPixelBuffer_withPresentationTime_  # noqa: B950
         )
 
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(
-            AVFoundation.AVAssetWriterInputMediaDataLocationInterleavedWithMainMediaData,
-            unicode,
+            AVFoundation.AVAssetWriterInputMediaDataLocationInterleavedWithMainMediaData,  # noqa: B950
+            str,
         )
         self.assertIsInstance(
-            AVFoundation.AVAssetWriterInputMediaDataLocationBeforeMainMediaDataNotInterleaved,
-            unicode,
+            AVFoundation.AVAssetWriterInputMediaDataLocationBeforeMainMediaDataNotInterleaved,  # noqa: B950
+            str,
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerItemTrack(TestCase):
@@ -11,9 +11,5 @@ class TestAVPlayerItemTrack(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(
-            AVFoundation.AVPlayerItemTrackVideoFieldModeDeinterlaceFields, unicode
+            AVFoundation.AVPlayerItemTrackVideoFieldModeDeinterlaceFields, str
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,8 +1,7 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
-# OSStatus (^AVAudioSinkNodeReceiverBlock)(const AudioTimeStamp *timestamp, AVAudioFrameCount frameCount, const AudioBufferList *inputData)
-AVAudioSinkNodeReceiverBlock = b"in^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}In^^{AudioBufferList=I[1{AudioBuffer=II^v}]}"
+AVAudioSinkNodeReceiverBlock = b"in^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}In^^{AudioBufferList=I[1{AudioBuffer=II^v}]}"  # noqa: B950
 
 
 class TestAVAudioSink(TestCase):
@@ -13,7 +12,3 @@ class TestAVAudioSink(TestCase):
             0,
             AVAudioSinkNodeReceiverBlock,
         )
-
-
-if __name__ == "__main__":
-    main()

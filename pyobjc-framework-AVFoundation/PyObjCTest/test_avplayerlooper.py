@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAVPlayerLooper(TestCase):
@@ -8,7 +8,3 @@ class TestAVPlayerLooper(TestCase):
         self.assertEqual(AVFoundation.AVPlayerLooperStatusReady, 1)
         self.assertEqual(AVFoundation.AVPlayerLooperStatusFailed, 2)
         self.assertEqual(AVFoundation.AVPlayerLooperStatusCancelled, 3)
-
-
-if __name__ == "__main__":
-    main()

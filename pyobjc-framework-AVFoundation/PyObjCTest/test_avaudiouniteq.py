@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioUnitEQ(TestCase):
@@ -21,7 +21,3 @@ class TestAVAudioUnitEQ(TestCase):
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVAudioUnitEQFilterParameters.bypass)
         self.assertArgIsBOOL(AVFoundation.AVAudioUnitEQFilterParameters.setBypass_, 0)
-
-
-if __name__ == "__main__":
-    main()

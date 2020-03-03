@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVVideoCompositingHelper(AVFoundation.NSObject):
@@ -48,7 +49,3 @@ class TestAVVideoCompositing(TestCase):
     def testProtocols(self):
         objc.protocolNamed("AVVideoCompositing")
         objc.protocolNamed("AVVideoCompositionInstruction")
-
-
-if __name__ == "__main__":
-    main()

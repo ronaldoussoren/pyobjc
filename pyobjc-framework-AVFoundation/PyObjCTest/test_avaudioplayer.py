@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestAVAudioPlayerHelper(AVFoundation.NSObject):
@@ -42,7 +43,3 @@ class TestAVAudioPlayer(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVAudioPlayer.initWithData_fileTypeHint_error_, 2
         )
-
-
-if __name__ == "__main__":
-    main()

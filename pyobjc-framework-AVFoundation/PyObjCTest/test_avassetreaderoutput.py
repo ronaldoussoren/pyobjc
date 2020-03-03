@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetReaderOutput(TestCase):
@@ -16,7 +16,3 @@ class TestAVAssetReaderOutput(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVAssetReaderOutput.setSupportsRandomAccess_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

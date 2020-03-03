@@ -1,5 +1,6 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestAVAssetHelper(AVFoundation.NSObject):
@@ -53,34 +54,32 @@ class TestAVAsset(TestCase):
         )
 
         self.assertIsInstance(
-            AVFoundation.AVURLAssetPreferPreciseDurationAndTimingKey, unicode
+            AVFoundation.AVURLAssetPreferPreciseDurationAndTimingKey, str
         )
-        self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, unicode)
+        self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, str)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
+        self.assertIsInstance(AVFoundation.AVAssetDurationDidChangeNotification, str)
         self.assertIsInstance(
-            AVFoundation.AVAssetDurationDidChangeNotification, unicode
+            AVFoundation.AVAssetContainsFragmentsDidChangeNotification, str
+        )
+        self.assertIsInstance(AVFoundation.AVAssetWasDefragmentedNotification, str)
+        self.assertIsInstance(
+            AVFoundation.AVAssetChapterMetadataGroupsDidChangeNotification, str
         )
         self.assertIsInstance(
-            AVFoundation.AVAssetContainsFragmentsDidChangeNotification, unicode
-        )
-        self.assertIsInstance(AVFoundation.AVAssetWasDefragmentedNotification, unicode)
-        self.assertIsInstance(
-            AVFoundation.AVAssetChapterMetadataGroupsDidChangeNotification, unicode
-        )
-        self.assertIsInstance(
-            AVFoundation.AVAssetMediaSelectionGroupsDidChangeNotification, unicode
+            AVFoundation.AVAssetMediaSelectionGroupsDidChangeNotification, str
         )
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(AVFoundation.AVURLAssetAllowsCellularAccessKey, unicode)
+        self.assertIsInstance(AVFoundation.AVURLAssetAllowsCellularAccessKey, str)
         self.assertIsInstance(
-            AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, unicode
+            AVFoundation.AVURLAssetAllowsExpensiveNetworkAccessKey, str
         )
         self.assertIsInstance(
-            AVFoundation.AVURLAssetAllowsConstrainedNetworkAccessKey, unicode
+            AVFoundation.AVURLAssetAllowsConstrainedNetworkAccessKey, str
         )
 
     @min_sdk_level("10.11")
@@ -90,7 +89,3 @@ class TestAVAsset(TestCase):
     @min_sdk_level("10.11")
     def testProtocolMethods(self):
         self.assertResultIsBOOL(TestAVAssetHelper.isAssociatedWithFragmentMinder)
-
-
-if __name__ == "__main__":
-    main()

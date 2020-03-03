@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetWriter(TestCase):
@@ -36,7 +36,3 @@ class TestAVAssetWriter(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.canAddInput_)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.startWriting)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.finishWriting)
-
-
-if __name__ == "__main__":
-    main()

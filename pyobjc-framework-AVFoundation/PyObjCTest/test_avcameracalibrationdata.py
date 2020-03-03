@@ -1,5 +1,5 @@
-import AVFoundation
-from PyObjCTools.TestSupport import *
+import AVFoundation  # noqa: F401
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVCameraCalibrationData(TestCase):
@@ -8,7 +8,3 @@ class TestAVCameraCalibrationData(TestCase):
     def testMethods_vector(self):
         # vector type
         self.fail("AVCameraCalibrationData.extrinsicMatrix")
-
-
-if __name__ == "__main__":
-    main()

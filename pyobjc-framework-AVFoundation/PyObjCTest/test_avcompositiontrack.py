@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCompositionTrack(TestCase):
@@ -9,15 +9,15 @@ class TestAVCompositionTrack(TestCase):
             AVFoundation.AVMutableCompositionTrack.insertTimeRange_ofTrack_atTime_error_
         )
         self.assertArgIsOut(
-            AVFoundation.AVMutableCompositionTrack.insertTimeRange_ofTrack_atTime_error_,
+            AVFoundation.AVMutableCompositionTrack.insertTimeRange_ofTrack_atTime_error_,  # noqa: B950
             3,
         )
 
         self.assertResultIsBOOL(
-            AVFoundation.AVMutableCompositionTrack.insertTimeRanges_ofTracks_atTime_error_
+            AVFoundation.AVMutableCompositionTrack.insertTimeRanges_ofTracks_atTime_error_  # noqa: B950
         )
         self.assertArgIsOut(
-            AVFoundation.AVMutableCompositionTrack.insertTimeRanges_ofTracks_atTime_error_,
+            AVFoundation.AVMutableCompositionTrack.insertTimeRanges_ofTracks_atTime_error_,  # noqa: B950
             3,
         )
 
@@ -33,7 +33,3 @@ class TestAVCompositionTrack(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgIsBOOL(AVFoundation.AVMutableCompositionTrack.setEnabled_, 0)
-
-
-if __name__ == "__main__":
-    main()

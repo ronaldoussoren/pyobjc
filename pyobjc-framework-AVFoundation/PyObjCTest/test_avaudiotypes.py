@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAudioTypes(TestCase):
@@ -47,7 +47,3 @@ class TestAVAudioTypes(TestCase):
         self.assertEqual(v.yaw, 1.5)
         self.assertEqual(v.pitch, 2.5)
         self.assertEqual(v.roll, 3.5)
-
-
-if __name__ == "__main__":
-    main()
