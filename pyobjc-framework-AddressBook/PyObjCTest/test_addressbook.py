@@ -1,6 +1,5 @@
 import AddressBook
-import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAddressBook(TestCase):
@@ -18,7 +17,3 @@ class TestAddressBook(TestCase):
 
     def testProtocols(self):
         self.assertFalse(hasattr(AddressBook, "protocols"))
-
-
-if __name__ == "__main__":
-    main()

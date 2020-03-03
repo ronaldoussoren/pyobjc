@@ -1,8 +1,8 @@
-from AddressBook import *
-from PyObjCTools.TestSupport import *
+import AddressBook
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestABActionHelper(NSObject):
+class TestABActionHelper(AddressBook.NSObject):
     def shouldEnableActionForPerson_identifier_(self, person, identifier):
         return True
 
@@ -12,7 +12,3 @@ class TestABActions(TestCase):
         self.assertResultIsBOOL(
             TestABActionHelper.shouldEnableActionForPerson_identifier_
         )
-
-
-if __name__ == "__main__":
-    main()

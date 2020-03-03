@@ -1,12 +1,12 @@
 import sys
 
-from PyObjCTools.TestSupport import *
-
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
     import AVKit
+    import objc
 
     class TestAVPlayerViewHelper(AVKit.NSObject):
-        def playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_(
+        def playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_(  # noqa: B950
             self, a, b
         ):
             pass
@@ -55,12 +55,12 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                TestAVPlayerViewHelper.playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,
+                TestAVPlayerViewHelper.playerView_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,  # noqa: B950
                 1,
                 b"vZ",
             )
             self.assertResultIsBOOL(
-                TestAVPlayerViewHelper.playerViewShouldAutomaticallyDismissAtPictureInPictureStart_
+                TestAVPlayerViewHelper.playerViewShouldAutomaticallyDismissAtPictureInPictureStart_  # noqa: B950
             )
 
         @min_os_level("10.9")
@@ -81,7 +81,3 @@ if sys.maxsize > 2 ** 32:
         @min_sdk_level("10.15")
         def test_protocols(self):
             objc.protocolNamed("AVPlayerViewPictureInPictureDelegate")
-
-
-if __name__ == "__main__":
-    main()

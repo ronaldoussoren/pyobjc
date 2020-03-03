@@ -1,5 +1,5 @@
 import AddressBook
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestABGroup(TestCase):
@@ -11,7 +11,3 @@ class TestABGroup(TestCase):
         self.assertResultIsBOOL(
             AddressBook.ABGroup.setDistributionIdentifier_forProperty_person_
         )
-
-
-if __name__ == "__main__":
-    main()

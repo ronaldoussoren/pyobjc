@@ -1,135 +1,145 @@
-from AddressBook import *
-from PyObjCTools.TestSupport import *
+import AddressBook
+import objc
+from PyObjCTools.TestSupport import TestCase, expectedFailure, fourcc
 
 
 class TestABPeoplePickerC(TestCase):
     def testConstants(self):
-        self.assertEqual(kABPickerSingleValueSelection, 1 << 0)
-        self.assertEqual(kABPickerMultipleValueSelection, 1 << 1)
-        self.assertEqual(kABPickerAllowGroupSelection, 1 << 2)
-        self.assertEqual(kABPickerAllowMultipleSelection, 1 << 3)
-        self.assertEqual(kEventClassABPeoplePicker, fourcc(b"abpp"))
-        self.assertEqual(kEventParamABPickerRef, fourcc(b"abpp"))
-        self.assertEqual(kEventABPeoplePickerGroupSelectionChanged, 1)
-        self.assertEqual(kEventABPeoplePickerNameSelectionChanged, 2)
-        self.assertEqual(kEventABPeoplePickerValueSelectionChanged, 3)
-        self.assertEqual(kEventABPeoplePickerDisplayedPropertyChanged, 4)
-        self.assertEqual(kEventABPeoplePickerGroupDoubleClicked, 5)
-        self.assertEqual(kEventABPeoplePickerNameDoubleClicked, 6)
+        self.assertEqual(AddressBook.kABPickerSingleValueSelection, 1 << 0)
+        self.assertEqual(AddressBook.kABPickerMultipleValueSelection, 1 << 1)
+        self.assertEqual(AddressBook.kABPickerAllowGroupSelection, 1 << 2)
+        self.assertEqual(AddressBook.kABPickerAllowMultipleSelection, 1 << 3)
+        self.assertEqual(AddressBook.kEventClassABPeoplePicker, fourcc(b"abpp"))
+        self.assertEqual(AddressBook.kEventParamABPickerRef, fourcc(b"abpp"))
+        self.assertEqual(AddressBook.kEventABPeoplePickerGroupSelectionChanged, 1)
+        self.assertEqual(AddressBook.kEventABPeoplePickerNameSelectionChanged, 2)
+        self.assertEqual(AddressBook.kEventABPeoplePickerValueSelectionChanged, 3)
+        self.assertEqual(AddressBook.kEventABPeoplePickerDisplayedPropertyChanged, 4)
+        self.assertEqual(AddressBook.kEventABPeoplePickerGroupDoubleClicked, 5)
+        self.assertEqual(AddressBook.kEventABPeoplePickerNameDoubleClicked, 6)
 
     def testType(self):
-        self.assertIsInstance(ABPickerRef, objc.objc_class)
+        self.assertIsInstance(AddressBook.ABPickerRef, objc.objc_class)
 
     @expectedFailure
     def testFunctions(self):
-        self.assertResultIsCFRetained(ABPickerCreate)
+        self.assertResultIsCFRetained(AddressBook.ABPickerCreate)
 
-        ref = ABPickerCreate()
+        ref = AddressBook.ABPickerCreate()
 
         try:
             self.assertIsInstance(
-                ref, (ABPickerRef, objc.lookUpClass("ABPeoplePickerCAdapter"))
+                ref,
+                (AddressBook.ABPickerRef, objc.lookUpClass("ABPeoplePickerCAdapter")),
             )
 
         except objc.error:
-            self.assertIsInstance(ref, ABPickerRef)
+            self.assertIsInstance(ref, AddressBook.ABPickerRef)
 
-        ABPickerSetFrame(ref, ((90, 100), (200, 400)))
-        r = ABPickerGetFrame(ref, None)
-        self.assertIsInstance(r, NSRect)
+        AddressBook.ABPickerSetFrame(ref, ((90, 100), (200, 400)))
+        r = AddressBook.ABPickerGetFrame(ref, None)
+        self.assertIsInstance(r, AddressBook.NSRect)
         self.assertEqual(r, ((90, 100), (200, 400)))
 
-        self.assertResultHasType(ABPickerIsVisible, objc._C_BOOL)
-        r = ABPickerIsVisible(ref)
+        self.assertResultHasType(AddressBook.ABPickerIsVisible, objc._C_BOOL)
+        r = AddressBook.ABPickerIsVisible(ref)
         self.assertIsInstance(r, bool)
         self.assertTrue(r is False)
 
-        self.assertArgHasType(ABPickerSetVisibility, 1, objc._C_BOOL)
-        ABPickerSetVisibility(ref, True)
+        self.assertArgHasType(AddressBook.ABPickerSetVisibility, 1, objc._C_BOOL)
+        AddressBook.ABPickerSetVisibility(ref, True)
 
-        r = ABPickerIsVisible(ref)
+        r = AddressBook.ABPickerIsVisible(ref)
         self.assertTrue(r is True)
 
-        ABPickerSetVisibility(ref, False)
+        AddressBook.ABPickerSetVisibility(ref, False)
 
-        r = ABPickerIsVisible(ref)
+        r = AddressBook.ABPickerIsVisible(ref)
         self.assertTrue(r is False)
 
-        r = ABPickerGetAttributes(ref)
-        self.assertIsInstance(r, (int, long))
+        r = AddressBook.ABPickerGetAttributes(ref)
+        self.assertIsInstance(r, int)
 
-        r = ABPickerChangeAttributes(ref, kABPickerAllowMultipleSelection, 0)
+        r = AddressBook.ABPickerChangeAttributes(
+            ref, AddressBook.kABPickerAllowMultipleSelection, 0
+        )
         self.assertTrue(r is None)
 
-        ABPickerAddProperty(ref, kABFirstNameProperty)
-        ABPickerAddProperty(ref, kABLastNameProperty)
-        ABPickerRemoveProperty(ref, kABFirstNameProperty)
+        AddressBook.ABPickerAddProperty(ref, AddressBook.kABFirstNameProperty)
+        AddressBook.ABPickerAddProperty(ref, AddressBook.kABLastNameProperty)
+        AddressBook.ABPickerRemoveProperty(ref, AddressBook.kABFirstNameProperty)
 
-        v = ABPickerCopyProperties(ref)
-        self.assertIsInstance(v, NSArray)
+        v = AddressBook.ABPickerCopyProperties(ref)
+        self.assertIsInstance(v, AddressBook.NSArray)
 
         # Disable detailed testing, the RemoveProperties function
         # doesn't actually remove. See radar #7999195.
-        # self.assertEqual(tuple(v), (kABLastNameProperty,))
+        # self.assertEqual(tuple(v), (AddressBook.kABLastNameProperty,))
 
-        ABPickerSetColumnTitle(ref, "Achternaam", kABLastNameProperty)
-        v = ABPickerCopyColumnTitle(ref, kABLastNameProperty)
-        self.assertResultIsCFRetained(ABPickerCopyColumnTitle)
+        AddressBook.ABPickerSetColumnTitle(
+            ref, "Achternaam", AddressBook.kABLastNameProperty
+        )
+        v = AddressBook.ABPickerCopyColumnTitle(ref, AddressBook.kABLastNameProperty)
+        self.assertResultIsCFRetained(AddressBook.ABPickerCopyColumnTitle)
         self.assertEqual(v, "Achternaam")
 
-        ABPickerSetDisplayedProperty(ref, kABLastNameProperty)
-        v = ABPickerCopyDisplayedProperty(ref)
-        self.assertResultIsCFRetained(ABPickerCopyDisplayedProperty)
-        self.assertIsInstance(v, unicode)
+        AddressBook.ABPickerSetDisplayedProperty(ref, AddressBook.kABLastNameProperty)
+        v = AddressBook.ABPickerCopyDisplayedProperty(ref)
+        self.assertResultIsCFRetained(AddressBook.ABPickerCopyDisplayedProperty)
+        self.assertIsInstance(v, str)
 
-        v = ABPickerCopySelectedGroups(ref)
-        self.assertIsInstance(v, NSArray)
+        v = AddressBook.ABPickerCopySelectedGroups(ref)
+        self.assertIsInstance(v, AddressBook.NSArray)
 
-        v = ABPickerCopySelectedRecords(ref)
-        self.assertIsInstance(v, NSArray)
+        v = AddressBook.ABPickerCopySelectedRecords(ref)
+        self.assertIsInstance(v, AddressBook.NSArray)
 
-        v = ABPickerCopySelectedIdentifiers(ref, ABGetMe(ABGetSharedAddressBook()))
+        v = AddressBook.ABPickerCopySelectedIdentifiers(
+            ref, AddressBook.ABGetMe(AddressBook.ABGetSharedAddressBook())
+        )
         if v is not None:
-            self.assertIsInstance(v, NSArray)
+            self.assertIsInstance(v, AddressBook.NSArray)
 
-        v = ABPickerCopySelectedValues(ref)
-        self.assertIsInstance(v, NSArray)
+        v = AddressBook.ABPickerCopySelectedValues(ref)
+        self.assertIsInstance(v, AddressBook.NSArray)
 
-        grp = ABCopyArrayOfAllGroups(ABGetSharedAddressBook())[0]
-        usr = ABGetMe(ABGetSharedAddressBook())
+        grp = AddressBook.ABCopyArrayOfAllGroups(AddressBook.ABGetSharedAddressBook())[
+            0
+        ]
+        usr = AddressBook.ABGetMe(AddressBook.ABGetSharedAddressBook())
 
-        ABPickerSelectGroup(ref, grp, True)
-        self.assertArgHasType(ABPickerSelectGroup, 2, objc._C_BOOL)
+        AddressBook.ABPickerSelectGroup(ref, grp, True)
+        self.assertArgHasType(AddressBook.ABPickerSelectGroup, 2, objc._C_BOOL)
 
-        ABPickerSelectRecord(ref, usr, False)
-        self.assertArgHasType(ABPickerSelectRecord, 2, objc._C_BOOL)
+        AddressBook.ABPickerSelectRecord(ref, usr, False)
+        self.assertArgHasType(AddressBook.ABPickerSelectRecord, 2, objc._C_BOOL)
 
-        ABPickerSelectIdentifier(
+        AddressBook.ABPickerSelectIdentifier(
             ref, usr, "Last", False
-        )  # ABRecordCopyUniqueId(usr), False)
-        self.assertArgHasType(ABPickerSelectIdentifier, 3, objc._C_BOOL)
+        )  # AddressBook.ABRecordCopyUniqueId(usr), False)
+        self.assertArgHasType(AddressBook.ABPickerSelectIdentifier, 3, objc._C_BOOL)
 
-        ABPickerDeselectIdentifier(ref, usr, "Last")
+        AddressBook.ABPickerDeselectIdentifier(ref, usr, "Last")
 
-        ABPickerDeselectGroup(ref, grp)
-        ABPickerDeselectRecord(ref, usr)
+        AddressBook.ABPickerDeselectGroup(ref, grp)
+        AddressBook.ABPickerDeselectRecord(ref, usr)
 
-        ABPickerDeselectAll(ref)
+        AddressBook.ABPickerDeselectAll(ref)
 
-        ABPickerClearSearchField(ref)
+        AddressBook.ABPickerClearSearchField(ref)
 
         if 0:
             # These are annoying, don't actually call
-            ABPickerEditInAddressBook(ref)
-            ABPickerSelectInAddressBook(ref)
+            AddressBook.ABPickerEditInAddressBook(ref)
+            AddressBook.ABPickerSelectInAddressBook(ref)
         else:
-            self.assertResultHasType(ABPickerEditInAddressBook, objc._C_VOID)
-            self.assertResultHasType(ABPickerSelectInAddressBook, objc._C_VOID)
+            AddressBook.self.assertResultHasType(
+                AddressBook.ABPickerEditInAddressBook, objc._C_VOID
+            )
+            AddressBook.self.assertResultHasType(
+                AddressBook.ABPickerSelectInAddressBook, objc._C_VOID
+            )
 
-        r = ABPickerGetDelegate(ref)
+        r = AddressBook.ABPickerGetDelegate(ref)
 
-        ABPickerSetDelegate
-
-
-if __name__ == "__main__":
-    main()
+        AddressBook.ABPickerSetDelegate

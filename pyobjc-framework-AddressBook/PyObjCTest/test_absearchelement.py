@@ -1,11 +1,7 @@
-from AddressBook import *
-from PyObjCTools.TestSupport import *
+import AddressBook
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestABSearchElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(ABSearchElement.matchesRecord_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AddressBook.ABSearchElement.matchesRecord_)

@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXNotificationConstants(TestCase):
@@ -86,7 +86,3 @@ class TestAXNotificationConstants(TestCase):
         self.assertEqual(HIServices.kAXPriorityLow, 10)
         self.assertEqual(HIServices.kAXPriorityMedium, 50)
         self.assertEqual(HIServices.kAXPriorityHigh, 90)
-
-
-if __name__ == "__main__":
-    main()

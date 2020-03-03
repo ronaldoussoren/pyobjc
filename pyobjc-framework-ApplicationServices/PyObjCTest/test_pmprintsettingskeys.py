@@ -1,7 +1,5 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPMPrintSettingsKeys(TestCase):
@@ -384,7 +382,3 @@ class TestPMPrintSettingsKeys(TestCase):
             PrintCore.kPMOutputFilenameKey,
             PrintCore.kPMOutputFilenameStr.decode("utf-8"),
         )
-
-
-if __name__ == "__main__":
-    main()

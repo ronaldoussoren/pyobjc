@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXAttributeConstants(TestCase):
@@ -246,7 +246,3 @@ class TestAXAttributeConstants(TestCase):
             HIServices.kAXScreenSizeForLayoutSizeParameterizedAttribute,
             "AXScreenSizeForLayoutSize",
         )
-
-
-if __name__ == "__main__":
-    main()

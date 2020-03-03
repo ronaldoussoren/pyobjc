@@ -1,7 +1,5 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPMErrors(TestCase):
@@ -112,7 +110,3 @@ class TestPMErrors(TestCase):
         self.assertEqual(
             PrintCore.kPMLastErrorCodeToMakeMaintenanceOfThisListEasier, -9799
         )
-
-
-if __name__ == "__main__":
-    main()

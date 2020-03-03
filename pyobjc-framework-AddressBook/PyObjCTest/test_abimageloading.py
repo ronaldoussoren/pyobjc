@@ -1,6 +1,6 @@
 import AddressBook
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestABImageClientHelper(AddressBook.NSObject):
@@ -17,7 +17,3 @@ class TestABImageLoading(TestCase):
 
     def testProtocols(self):
         objc.protocolNamed("ABImageClient")
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXRoleConstants(TestCase):
@@ -105,7 +105,3 @@ class TestAXRoleConstants(TestCase):
         self.assertEqual(
             HIServices.kAXProcessSwitcherListSubrole, "AXProcessSwitcherList"
         )
-
-
-if __name__ == "__main__":
-    main()

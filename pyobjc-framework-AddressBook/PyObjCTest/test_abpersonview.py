@@ -1,6 +1,5 @@
 import AddressBook
-import Cocoa
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
 
 
 class TestABPersonView(TestCase):
@@ -11,11 +10,7 @@ class TestABPersonView(TestCase):
 
     @min_os_level("10.8")
     @max_os_level("10.11")
-    def testMethods(self):
+    def testMethods10_8(self):
         v = AddressBook.ABPersonView.alloc().init()
         self.assertResultIsBOOL(v.shouldShowLinkedPeople)
         self.assertArgIsBOOL(v.setShouldShowLinkedPeople_, 0)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,5 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPMPrintAETypes(TestCase):
@@ -72,7 +70,3 @@ class TestPMPrintAETypes(TestCase):
 
         self.assertFalse(hasattr(PrintCore, "kPMErrorHandlingStandardEnum"))
         self.assertFalse(hasattr(PrintCore, "kPMErrorHandlingDetailedEnum"))
-
-
-if __name__ == "__main__":
-    main()

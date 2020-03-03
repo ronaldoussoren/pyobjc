@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestTranslationServices(TestCase):
@@ -10,7 +10,7 @@ class TestTranslationServices(TestCase):
         self.assertEqual(HIServices.kTranslationFileTranslation, 1 << 1)
 
     def testFunctions(self):
-        self.assertIsInstance(HIServices.TranslationGetTypeID(), (int, long))
+        self.assertIsInstance(HIServices.TranslationGetTypeID(), int)
 
         self.assertArgIsOut(HIServices.TranslationCreate, 3)
         self.assertArgIsCFRetained(HIServices.TranslationCreate, 3)
@@ -37,7 +37,3 @@ class TestTranslationServices(TestCase):
         self.assertArgIsCFRetained(HIServices.TranslationCopyDestinationType, 1)
 
         self.assertArgIsOut(HIServices.TranslationGetTranslationFlags, 1)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,6 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPMCore(TestCase):
@@ -263,7 +262,3 @@ class TestPMCore(TestCase):
         self.assertArgIsCFRetained(PrintCore.PMCopyPPDData, 1)
 
         self.assertResultIsCFRetained(PrintCore.PMCGImageCreateWithEPSDataProvider)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,6 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPMDefinitions(TestCase):
@@ -102,39 +101,27 @@ class TestPMDefinitions(TestCase):
         self.assertEqual(PrintCore.kUserPPDDomain, 5)
         self.assertEqual(PrintCore.kCUPSPPDDomain, 6)
 
+        self.assertEqual(PrintCore.kPMPPDDescriptionType, "PMPPDDescriptionType")
         self.assertEqual(
-            PrintCore.kPMPPDDescriptionType, b"PMPPDDescriptionType".decode("utf-8")
+            PrintCore.kPMDocumentFormatDefault, "com.apple.documentformat.default"
+        )
+        self.assertEqual(PrintCore.kPMDocumentFormatPDF, "application/pdf")
+        self.assertEqual(
+            PrintCore.kPMDocumentFormatPostScript, "application/postscript"
         )
         self.assertEqual(
-            PrintCore.kPMDocumentFormatDefault,
-            b"com.apple.documentformat.default".decode("utf-8"),
-        )
-        self.assertEqual(
-            PrintCore.kPMDocumentFormatPDF, b"application/pdf".decode("utf-8")
-        )
-        self.assertEqual(
-            PrintCore.kPMDocumentFormatPostScript,
-            b"application/postscript".decode("utf-8"),
-        )
-        self.assertEqual(
-            PrintCore.kPMGraphicsContextDefault,
-            b"com.apple.graphicscontext.default".decode("utf-8"),
+            PrintCore.kPMGraphicsContextDefault, "com.apple.graphicscontext.default"
         )
         self.assertEqual(
             PrintCore.kPMGraphicsContextCoreGraphics,
-            b"com.apple.graphicscontext.coregraphics".decode("utf-8"),
+            "com.apple.graphicscontext.coregraphics",
         )
-        self.assertEqual(PrintCore.kPDFWorkflowItemURLKey, b"itemURL".decode("utf-8"))
+        self.assertEqual(PrintCore.kPDFWorkflowItemURLKey, "itemURL")
+        self.assertEqual(PrintCore.kPDFWorkflowDisplayNameKey, "displayName")
+        self.assertEqual(PrintCore.kPDFWorkflowItemsKey, "items")
+        self.assertEqual(PrintCore.kPDFWorkflowModifiedKey, "wasModifiedInline")
         self.assertEqual(
-            PrintCore.kPDFWorkflowDisplayNameKey, b"displayName".decode("utf-8")
-        )
-        self.assertEqual(PrintCore.kPDFWorkflowItemsKey, b"items".decode("utf-8"))
-        self.assertEqual(
-            PrintCore.kPDFWorkflowModifiedKey, b"wasModifiedInline".decode("utf-8")
-        )
-        self.assertEqual(
-            PrintCore.kPMPrintSelectionTitleKey,
-            b"com.apple.printSelection.title".decode("utf-8"),
+            PrintCore.kPMPrintSelectionTitleKey, "com.apple.printSelection.title"
         )
 
         self.assertEqual(PrintCore.kPMNoError, 0)
@@ -163,15 +150,12 @@ class TestPMDefinitions(TestCase):
         self.assertEqual(PrintCore.kPMDataFormatXMLCompressed, 2)
 
         self.assertEqual(
-            PrintCore.kPMPresetGraphicsTypeKey,
-            b"com.apple.print.preset.graphicsType".decode("utf-8"),
+            PrintCore.kPMPresetGraphicsTypeKey, "com.apple.print.preset.graphicsType"
         )
-        self.assertEqual(PrintCore.kPMPresetGraphicsTypePhoto, b"Photo".decode("utf-8"))
-        self.assertEqual(PrintCore.kPMPresetGraphicsTypeAll, b"All".decode("utf-8"))
-        self.assertEqual(
-            PrintCore.kPMPresetGraphicsTypeGeneral, b"General".decode("utf-8")
-        )
-        self.assertEqual(PrintCore.kPMPresetGraphicsTypeNone, b"None".decode("utf-8"))
+        self.assertEqual(PrintCore.kPMPresetGraphicsTypePhoto, "Photo")
+        self.assertEqual(PrintCore.kPMPresetGraphicsTypeAll, "All")
+        self.assertEqual(PrintCore.kPMPresetGraphicsTypeGeneral, "General")
+        self.assertEqual(PrintCore.kPMPresetGraphicsTypeNone, "None")
 
     def test_structs(self):
         v = PrintCore.PMRect()
@@ -188,7 +172,3 @@ class TestPMDefinitions(TestCase):
         self.assertIs(v.level, None)
         self.assertIs(v.version, None)
         self.assertIs(v.release, None)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestUniversalAccess(TestCase):
@@ -12,7 +12,3 @@ class TestUniversalAccess(TestCase):
 
         self.assertArgIsIn(HIServices.UAZoomChangeFocus, 0)
         self.assertArgIsIn(HIServices.UAZoomChangeFocus, 1)
-
-
-if __name__ == "__main__":
-    main()

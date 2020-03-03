@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXActionConstants(TestCase):
@@ -20,7 +20,3 @@ class TestAXActionConstants(TestCase):
         self.assertEqual(
             HIServices.kAXUnknownSortDirectionValue, "AXUnknownSortDirection"
         )
-
-
-if __name__ == "__main__":
-    main()

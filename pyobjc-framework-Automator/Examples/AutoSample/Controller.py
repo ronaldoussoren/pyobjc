@@ -101,9 +101,11 @@ class Controller(NSObject):
 
                 # add the workflow to the list
                 theWorkflows.append(
-                    dict(
-                        name=nthDisplayName, path=nthWorkflowPath, workflow=nthWorkflow
-                    )
+                    {
+                        "name": nthDisplayName,
+                        "path": nthWorkflowPath,
+                        "workflow": nthWorkflow,
+                    }
                 )
 
         # set the workflows

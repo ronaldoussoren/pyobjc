@@ -1,7 +1,5 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPMPrintingDialogExtensions(TestCase):
@@ -115,7 +113,3 @@ class TestPMPrintingDialogExtensions(TestCase):
         self.assertEqual(
             PrintCore.kPrinterModuleTypeIDStr, "BDB091F4-E57F-11D3-B5CC-0050E4603277"
         )
-
-
-if __name__ == "__main__":
-    main()

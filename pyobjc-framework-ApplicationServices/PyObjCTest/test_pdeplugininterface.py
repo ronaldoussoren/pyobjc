@@ -1,7 +1,5 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPDEPluginInterfaceHelper(PrintCore.NSObject):
@@ -48,7 +46,3 @@ class TestPDEPluginInterface(TestCase):
         self.assertResultIsBOOL(
             TestPDEPluginInterfaceHelper.willChangePPDOptionKeyValue_ppdChoice_
         )
-
-
-if __name__ == "__main__":
-    main()

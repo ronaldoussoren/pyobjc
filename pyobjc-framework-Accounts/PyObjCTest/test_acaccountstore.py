@@ -1,8 +1,9 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Accounts
+    import objc
 
     ACAccountStoreSaveCompletionHandler = b"vZ@"
     ACAccountStoreRemoveCompletionHandler = b"vZ@"
@@ -13,7 +14,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.8")
         def testConstants(self):
             self.assertHasAttr(Accounts, "ACAccountStoreDidChangeNotification")
-            self.assertIsInstance(Accounts.ACAccountStoreDidChangeNotification, unicode)
+            self.assertIsInstance(Accounts.ACAccountStoreDidChangeNotification, str)
 
             self.assertEqual(Accounts.ACAccountCredentialRenewResultRenewed, 0)
             self.assertEqual(Accounts.ACAccountCredentialRenewResultRejected, 1)
@@ -40,7 +41,3 @@ if sys.maxsize > 2 ** 32:
                 1,
                 ACAccountStoreRemoveCompletionHandler,
             )
-
-
-if __name__ == "__main__":
-    main()

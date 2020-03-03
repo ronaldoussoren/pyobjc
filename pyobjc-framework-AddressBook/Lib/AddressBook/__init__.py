@@ -10,12 +10,7 @@ import sys
 import Foundation
 import objc
 from AddressBook import _metadata
-from AddressBook._AddressBook import *
-
-try:
-    long
-except NameError:
-    long = int
+from AddressBook import _AddressBook
 
 sys.modules["AddressBook"] = mod = objc.ObjCLazyModule(
     "AddressBook",
@@ -29,7 +24,7 @@ sys.modules["AddressBook"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_AddressBook, Foundation),
 )
 
 

@@ -1,5 +1,5 @@
 import AddressBook
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestABMutableMultiValue(TestCase):
@@ -14,7 +14,3 @@ class TestABMutableMultiValue(TestCase):
             AddressBook.ABMutableMultiValue.replaceLabelAtIndex_withLabel_
         )
         self.assertResultIsBOOL(AddressBook.ABMutableMultiValue.setPrimaryIdentifier_)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,5 @@
-import sys
-
 import PrintCore
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPrintCore(TestCase):
@@ -16,7 +14,3 @@ class TestPrintCore(TestCase):
 
         # Release the final reference
         PrintCore.PMRelease(value)
-
-
-if __name__ == "__main__":
-    main()

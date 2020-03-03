@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAXActionConstants(TestCase):
@@ -20,7 +20,3 @@ class TestAXActionConstants(TestCase):
         self.assertEqual(HIServices.kAXErrorNoValue, -25212)
         self.assertEqual(HIServices.kAXErrorParameterizedAttributeUnsupported, -25213)
         self.assertEqual(HIServices.kAXErrorNotEnoughPrecision, -25214)
-
-
-if __name__ == "__main__":
-    main()

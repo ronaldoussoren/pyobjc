@@ -1,6 +1,6 @@
-import AppleScriptObjC
+import AppleScriptObjC  # noqa: F401
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAppleScriptObjC(TestCase):
@@ -8,7 +8,3 @@ class TestAppleScriptObjC(TestCase):
     def testDummy(self):
         # Nothing to test...
         self.assertHasAttr(Foundation.NSBundle, "loadAppleScriptObjectiveCScripts")
-
-
-if __name__ == "__main__":
-    main()

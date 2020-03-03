@@ -1,5 +1,6 @@
 import AuthenticationServices
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 ASWebAuthenticationSessionCompletionHandler = b"v@@"
 
@@ -10,11 +11,11 @@ class TestASWebAuthenticationSession(TestCase):
             AuthenticationServices.ASWebAuthenticationSessionErrorCodeCanceledLogin, 1
         )
         self.assertEqual(
-            AuthenticationServices.ASWebAuthenticationSessionErrorCodePresentationContextNotProvided,
+            AuthenticationServices.ASWebAuthenticationSessionErrorCodePresentationContextNotProvided,  # noqa: B950
             2,
         )
         self.assertEqual(
-            AuthenticationServices.ASWebAuthenticationSessionErrorCodePresentationContextInvalid,
+            AuthenticationServices.ASWebAuthenticationSessionErrorCodePresentationContextInvalid,  # noqa: B950
             3,
         )
 
@@ -25,7 +26,7 @@ class TestASWebAuthenticationSession(TestCase):
     @min_os_level("10.15")
     def test_methods10_15(self):
         self.assertArgIsBlock(
-            AuthenticationServices.ASWebAuthenticationSession.initWithURL_callbackURLScheme_completionHandler_,
+            AuthenticationServices.ASWebAuthenticationSession.initWithURL_callbackURLScheme_completionHandler_,  # noqa: B950
             2,
             ASWebAuthenticationSessionCompletionHandler,
         )
@@ -34,7 +35,7 @@ class TestASWebAuthenticationSession(TestCase):
             AuthenticationServices.ASWebAuthenticationSession.prefersEphemeralWebBrowserSession
         )
         self.assertArgIsBOOL(
-            AuthenticationServices.ASWebAuthenticationSession.setPrefersEphemeralWebBrowserSession_,
+            AuthenticationServices.ASWebAuthenticationSession.setPrefersEphemeralWebBrowserSession_,  # noqa: B950
             0,
         )
 

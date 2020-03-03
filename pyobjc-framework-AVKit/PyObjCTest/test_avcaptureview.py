@@ -1,9 +1,10 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import AVKit
+    import objc
 
     class TestAVCaptureView(TestCase):
         @min_os_level("10.10")
@@ -34,7 +35,3 @@ if sys.maxsize > 2 ** 32:
                 AVKit.AVCaptureViewControlsStyleDefault,
                 AVKit.AVCaptureViewControlsStyleInline,
             )
-
-
-if __name__ == "__main__":
-    main()

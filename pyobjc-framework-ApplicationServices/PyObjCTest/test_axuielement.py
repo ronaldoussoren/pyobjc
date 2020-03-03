@@ -1,5 +1,5 @@
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAXUIElement(TestCase):
@@ -13,7 +13,7 @@ class TestAXUIElement(TestCase):
 
         HIServices.AXMakeProcessTrusted
 
-        self.assertIsInstance(HIServices.AXUIElementGetTypeID(), (int, long))
+        self.assertIsInstance(HIServices.AXUIElementGetTypeID(), int)
 
         self.assertArgIsOut(HIServices.AXUIElementCopyAttributeNames, 1)
         self.assertArgIsCFRetained(HIServices.AXUIElementCopyAttributeNames, 1)
@@ -64,11 +64,11 @@ class TestAXUIElement(TestCase):
         self.assertArgIsBOOL(HIServices.AXUIElementPostKeyboardEvent, 3)
 
         AXObserverCallback = b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^v"
-        AXObserverCallbackWithInfo = (
-            b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v"
-        )
+        # AXObserverCallbackWithInfo = (
+        #     b"v^{__AXObserver=}^{__AXUIElement=}^{__CFString=}^{__CFDictionary=}^v"
+        # )
 
-        self.assertIsInstance(HIServices.AXObserverGetTypeID(), (int, long))
+        self.assertIsInstance(HIServices.AXObserverGetTypeID(), int)
 
         self.assertArgIsFunction(
             HIServices.AXObserverCreate, 1, AXObserverCallback, True
@@ -103,8 +103,4 @@ class TestAXUIElement(TestCase):
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(HIServices.kAXTrustedCheckOptionPrompt, str)

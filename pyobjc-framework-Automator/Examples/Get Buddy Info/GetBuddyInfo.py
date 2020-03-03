@@ -1,5 +1,3 @@
-import sys
-
 from AddressBook import ABAddressBook, ABPerson
 from Automator import AMBundleAction
 from Cocoa import NSAppleEventDescriptor
@@ -43,7 +41,7 @@ class GetBuddyInfo(AMBundleAction):
                                 uid = uidDescriptor.stringValue()
                                 if uid is not None:
                                     # get the person object from the uid
-                                    person = ABAddressBook.sharedAddressBook().recordForUniqueId_(
+                                    person = ABAddressBook.sharedAddressBook().recordForUniqueId_(  # noqa: B950
                                         uid
                                     )
                                     if person is not None:

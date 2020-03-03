@@ -1,66 +1,79 @@
-from AddressBook import *
-from PyObjCTools.TestSupport import *
+import AddressBook
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestABTypedefs(TestCase):
     def testConstants(self):
-        self.assertEqual(kABMultiValueMask, 0x100)
+        self.assertEqual(AddressBook.kABMultiValueMask, 0x100)
 
-        self.assertEqual(kABErrorInProperty, 0x0)
-        self.assertEqual(kABStringProperty, 0x1)
-        self.assertEqual(kABIntegerProperty, 0x2)
-        self.assertEqual(kABRealProperty, 0x3)
-        self.assertEqual(kABDateProperty, 0x4)
-        self.assertEqual(kABArrayProperty, 0x5)
-        self.assertEqual(kABDictionaryProperty, 0x6)
-        self.assertEqual(kABDataProperty, 0x7)
-        self.assertEqual(kABDateComponentsProperty, 0x8)
+        self.assertEqual(AddressBook.kABErrorInProperty, 0x0)
+        self.assertEqual(AddressBook.kABStringProperty, 0x1)
+        self.assertEqual(AddressBook.kABIntegerProperty, 0x2)
+        self.assertEqual(AddressBook.kABRealProperty, 0x3)
+        self.assertEqual(AddressBook.kABDateProperty, 0x4)
+        self.assertEqual(AddressBook.kABArrayProperty, 0x5)
+        self.assertEqual(AddressBook.kABDictionaryProperty, 0x6)
+        self.assertEqual(AddressBook.kABDataProperty, 0x7)
+        self.assertEqual(AddressBook.kABDateComponentsProperty, 0x8)
 
-        self.assertEqual(kABMultiStringProperty, kABMultiValueMask | kABStringProperty)
         self.assertEqual(
-            kABMultiIntegerProperty, kABMultiValueMask | kABIntegerProperty
+            AddressBook.kABMultiStringProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABStringProperty,
         )
-        self.assertEqual(kABMultiRealProperty, kABMultiValueMask | kABRealProperty)
-        self.assertEqual(kABMultiDateProperty, kABMultiValueMask | kABDateProperty)
-        self.assertEqual(kABMultiArrayProperty, kABMultiValueMask | kABArrayProperty)
         self.assertEqual(
-            kABMultiDictionaryProperty, kABMultiValueMask | kABDictionaryProperty
+            AddressBook.kABMultiIntegerProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABIntegerProperty,
         )
-        self.assertEqual(kABMultiDataProperty, kABMultiValueMask | kABDataProperty)
         self.assertEqual(
-            kABMultiDateComponentsProperty,
-            kABMultiValueMask | kABDateComponentsProperty,
+            AddressBook.kABMultiRealProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABRealProperty,
+        )
+        self.assertEqual(
+            AddressBook.kABMultiDateProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABDateProperty,
+        )
+        self.assertEqual(
+            AddressBook.kABMultiArrayProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABArrayProperty,
+        )
+        self.assertEqual(
+            AddressBook.kABMultiDictionaryProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABDictionaryProperty,
+        )
+        self.assertEqual(
+            AddressBook.kABMultiDataProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABDataProperty,
+        )
+        self.assertEqual(
+            AddressBook.kABMultiDateComponentsProperty,
+            AddressBook.kABMultiValueMask | AddressBook.kABDateComponentsProperty,
         )
 
-        self.assertEqual(kABEqual, 0)
-        self.assertEqual(kABNotEqual, 1)
-        self.assertEqual(kABLessThan, 2)
-        self.assertEqual(kABLessThanOrEqual, 3)
-        self.assertEqual(kABGreaterThan, 4)
-        self.assertEqual(kABGreaterThanOrEqual, 5)
-        self.assertEqual(kABEqualCaseInsensitive, 6)
-        self.assertEqual(kABContainsSubString, 7)
-        self.assertEqual(kABContainsSubStringCaseInsensitive, 8)
-        self.assertEqual(kABPrefixMatch, 9)
-        self.assertEqual(kABPrefixMatchCaseInsensitive, 10)
-        self.assertEqual(kABBitsInBitFieldMatch, 11)
-        self.assertEqual(kABDoesNotContainSubString, 12)
-        self.assertEqual(kABDoesNotContainSubStringCaseInsensitive, 13)
-        self.assertEqual(kABNotEqualCaseInsensitive, 14)
-        self.assertEqual(kABSuffixMatch, 15)
-        self.assertEqual(kABSuffixMatchCaseInsensitive, 16)
-        self.assertEqual(kABWithinIntervalAroundToday, 17)
-        self.assertEqual(kABWithinIntervalAroundTodayYearless, 18)
-        self.assertEqual(kABNotWithinIntervalAroundToday, 19)
-        self.assertEqual(kABNotWithinIntervalAroundTodayYearless, 20)
-        self.assertEqual(kABWithinIntervalFromToday, 21)
-        self.assertEqual(kABWithinIntervalFromTodayYearless, 22)
-        self.assertEqual(kABNotWithinIntervalFromToday, 23)
-        self.assertEqual(kABNotWithinIntervalFromTodayYearless, 24)
+        self.assertEqual(AddressBook.kABEqual, 0)
+        self.assertEqual(AddressBook.kABNotEqual, 1)
+        self.assertEqual(AddressBook.kABLessThan, 2)
+        self.assertEqual(AddressBook.kABLessThanOrEqual, 3)
+        self.assertEqual(AddressBook.kABGreaterThan, 4)
+        self.assertEqual(AddressBook.kABGreaterThanOrEqual, 5)
+        self.assertEqual(AddressBook.kABEqualCaseInsensitive, 6)
+        self.assertEqual(AddressBook.kABContainsSubString, 7)
+        self.assertEqual(AddressBook.kABContainsSubStringCaseInsensitive, 8)
+        self.assertEqual(AddressBook.kABPrefixMatch, 9)
+        self.assertEqual(AddressBook.kABPrefixMatchCaseInsensitive, 10)
+        self.assertEqual(AddressBook.kABBitsInBitFieldMatch, 11)
+        self.assertEqual(AddressBook.kABDoesNotContainSubString, 12)
+        self.assertEqual(AddressBook.kABDoesNotContainSubStringCaseInsensitive, 13)
+        self.assertEqual(AddressBook.kABNotEqualCaseInsensitive, 14)
+        self.assertEqual(AddressBook.kABSuffixMatch, 15)
+        self.assertEqual(AddressBook.kABSuffixMatchCaseInsensitive, 16)
+        self.assertEqual(AddressBook.kABWithinIntervalAroundToday, 17)
+        self.assertEqual(AddressBook.kABWithinIntervalAroundTodayYearless, 18)
+        self.assertEqual(AddressBook.kABNotWithinIntervalAroundToday, 19)
+        self.assertEqual(AddressBook.kABNotWithinIntervalAroundTodayYearless, 20)
+        self.assertEqual(AddressBook.kABWithinIntervalFromToday, 21)
+        self.assertEqual(AddressBook.kABWithinIntervalFromTodayYearless, 22)
+        self.assertEqual(AddressBook.kABNotWithinIntervalFromToday, 23)
+        self.assertEqual(AddressBook.kABNotWithinIntervalFromTodayYearless, 24)
 
-        self.assertEqual(kABSearchAnd, 0)
-        self.assertEqual(kABSearchOr, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(AddressBook.kABSearchAnd, 0)
+        self.assertEqual(AddressBook.kABSearchOr, 1)

@@ -1,12 +1,12 @@
 import sys
 
-from PyObjCTools.TestSupport import *
-
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
     import AVKit
+    import objc
 
     class TestAVPictureInPictureControllerHelper(AVKit.NSObject):
-        def pictureInPictureController_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_(
+        def pictureInPictureController_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_(  # noqa: B950
             self, a, b
         ):
             pass
@@ -32,11 +32,7 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                TestAVPictureInPictureControllerHelper.pictureInPictureController_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,
+                TestAVPictureInPictureControllerHelper.pictureInPictureController_restoreUserInterfaceForPictureInPictureStopWithCompletionHandler_,  # noqa: B950
                 1,
                 b"vZ",
             )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,7 +1,6 @@
 import sys
-
 import HIServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestHIShape(TestCase):
@@ -9,7 +8,7 @@ class TestHIShape(TestCase):
         self.assertIsCFType(HIServices.HIShapeRef)
 
     def testFunctions(self):
-        self.assertIsInstance(HIServices.HIShapeGetTypeID(), (int, long))
+        self.assertIsInstance(HIServices.HIShapeGetTypeID(), int)
 
         self.assertResultIsCFRetained(HIServices.HIShapeCreateEmpty)
 
@@ -83,7 +82,3 @@ class TestHIShape(TestCase):
             HIServices.kHIShapeParseFromBottomRight,
             HIServices.kHIShapeParseFromBottom | HIServices.kHIShapeParseFromRight,
         )
-
-
-if __name__ == "__main__":
-    main()
