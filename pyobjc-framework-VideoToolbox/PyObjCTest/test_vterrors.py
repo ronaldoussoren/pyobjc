@@ -35,6 +35,7 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTPixelTransferNotPermittedErr, -12218)
         self.assertEqual(VideoToolbox.kVTColorCorrectionImageRotationFailedErr, -12219)
         self.assertEqual(VideoToolbox.kVTVideoDecoderRemovedErr, -17690)
+        self.assertEqual(VideoToolbox.kVTSessionMalfunctionErr, -17691)
         self.assertEqual(
             VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
         )

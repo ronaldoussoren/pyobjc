@@ -21,12 +21,3 @@ API Notes
 
 
 The entire framework is available from Python.
-
-``AEAssessmentSessionDelegate``
-...............................
-
-This protocol is accessed using the name ``AutomaticAssessmentConfiguration.AEAssessmentSessionDelegate``, that is:
-
-.. sourcecode:: python
-
-   objc.protocolNamed("AutomaticAssessmentConfiguration.AEAssessmentSessionDelegate")

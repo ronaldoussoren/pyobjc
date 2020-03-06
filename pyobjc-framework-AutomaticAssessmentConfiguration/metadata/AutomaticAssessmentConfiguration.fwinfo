@@ -1,8 +1,13 @@
 {
  "definitions": {
   "classes": {
-   "AutomaticAssessmentConfiguration.AEAssessmentSession": {
+   "AEAssessmentSession": {
     "methods": [
+     {
+      "selector": "isActive",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "selector": "invalidationHandler",
       "class_method": false,

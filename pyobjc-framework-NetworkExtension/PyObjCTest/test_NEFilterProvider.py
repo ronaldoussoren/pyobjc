@@ -42,14 +42,12 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(NetworkExtension.NEFilterReportEventNewFlow, 1)
             self.assertEqual(NetworkExtension.NEFilterReportEventDataDecision, 2)
             self.assertEqual(NetworkExtension.NEFilterReportEventFlowClosed, 3)
-            self.assertEqual(NetworkExtension.NEFilterReportEventFlowStatistics, 4)
+            self.assertEqual(NetworkExtension.NEFilterReportEventStatistics, 4)
 
-            self.assertEqual(NetworkExtension.NEFilterStatisticsReportFrequencyNone, 0)
-            self.assertEqual(NetworkExtension.NEFilterStatisticsReportFrequencyLow, 1)
-            self.assertEqual(
-                NetworkExtension.NEFilterStatisticsReportFrequencyMedium, 2
-            )
-            self.assertEqual(NetworkExtension.NEFilterStatisticsReportFrequencyHigh, 3)
+            self.assertEqual(NetworkExtension.NEFilterReportFrequencyNone, 0)
+            self.assertEqual(NetworkExtension.NEFilterReportFrequencyLow, 1)
+            self.assertEqual(NetworkExtension.NEFilterReportFrequencyMedium, 2)
+            self.assertEqual(NetworkExtension.NEFilterReportFrequencyHigh, 3)
 
 
 if __name__ == "__main__":
