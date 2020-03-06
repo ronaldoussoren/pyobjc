@@ -1,129 +1,126 @@
-import sys
-
-from CFNetwork import *
-from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] != 2:
-
-    def buffer(value):
-        return value.encode("latin1")
+import CFNetwork
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestCFHTTPMessage(TestCase):
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate2, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeXMobileMeAuthToken, unicode)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate2, str)
+        self.assertIsInstance(
+            CFNetwork.kCFHTTPAuthenticationSchemeXMobileMeAuthToken, str
+        )
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeNTLM, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeNegotiate, unicode)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNTLM, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeNegotiate, str)
 
     @expectedFailure
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(kCFHTTPVersion2_0, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeKerberos, unicode)
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion2_0, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeKerberos, str)
 
     def testConstants(self):
-        self.assertIsInstance(kCFHTTPVersion1_0, unicode)
-        self.assertIsInstance(kCFHTTPVersion1_1, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeBasic, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationSchemeDigest, unicode)
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion1_0, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion1_1, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeBasic, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeDigest, str)
 
     def testTypes(self):
-        self.assertIsCFType(CFHTTPMessageRef)
+        self.assertIsCFType(CFNetwork.CFHTTPMessageRef)
 
     def testFunctions(self):
-        self.assertIsInstance(CFHTTPMessageGetTypeID(), (int, long))
+        self.assertIsInstance(CFNetwork.CFHTTPMessageGetTypeID(), int)
 
-        url = CFURLCreateWithString(None, "http://www.python.org/", None)
-        self.assertIsInstance(url, CFURLRef)
+        url = CFNetwork.CFURLCreateWithString(None, "http://www.python.org/", None)
+        self.assertIsInstance(url, CFNetwork.CFURLRef)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCreateRequest)
-        req = CFHTTPMessageCreateRequest(None, "GET", url, kCFHTTPVersion1_1)
-        self.assertIsInstance(req, CFHTTPMessageRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCreateRequest)
+        req = CFNetwork.CFHTTPMessageCreateRequest(
+            None, "GET", url, CFNetwork.kCFHTTPVersion1_1
+        )
+        self.assertIsInstance(req, CFNetwork.CFHTTPMessageRef)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCreateResponse)
-        resp = CFHTTPMessageCreateResponse(None, 200, "Okidoki", kCFHTTPVersion1_1)
-        self.assertIsInstance(req, CFHTTPMessageRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCreateResponse)
+        resp = CFNetwork.CFHTTPMessageCreateResponse(
+            None, 200, "Okidoki", CFNetwork.kCFHTTPVersion1_1
+        )
+        self.assertIsInstance(req, CFNetwork.CFHTTPMessageRef)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCreateEmpty)
-        self.assertArgIsBOOL(CFHTTPMessageCreateEmpty, 1)
-        m = CFHTTPMessageCreateEmpty(None, True)
-        self.assertIsInstance(m, CFHTTPMessageRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCreateEmpty)
+        self.assertArgIsBOOL(CFNetwork.CFHTTPMessageCreateEmpty, 1)
+        m = CFNetwork.CFHTTPMessageCreateEmpty(None, True)
+        self.assertIsInstance(m, CFNetwork.CFHTTPMessageRef)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCreateCopy)
-        m = CFHTTPMessageCreateCopy(None, req)
-        self.assertIsInstance(m, CFHTTPMessageRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCreateCopy)
+        m = CFNetwork.CFHTTPMessageCreateCopy(None, req)
+        self.assertIsInstance(m, CFNetwork.CFHTTPMessageRef)
 
-        self.assertResultIsBOOL(CFHTTPMessageIsRequest)
-        self.assertTrue(CFHTTPMessageIsRequest(req) is True)
-        self.assertTrue(CFHTTPMessageIsRequest(resp) is False)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPMessageIsRequest)
+        self.assertTrue(CFNetwork.CFHTTPMessageIsRequest(req) is True)
+        self.assertTrue(CFNetwork.CFHTTPMessageIsRequest(resp) is False)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopyVersion)
-        v = CFHTTPMessageCopyVersion(req)
-        self.assertIsInstance(v, unicode)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyVersion)
+        v = CFNetwork.CFHTTPMessageCopyVersion(req)
+        self.assertIsInstance(v, str)
 
-        CFHTTPMessageSetBody(req, buffer("hello world"))
+        CFNetwork.CFHTTPMessageSetBody(req, b"hello world")
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopyBody)
-        b = CFHTTPMessageCopyBody(req)
-        if sys.version_info[0] == 2:
-            self.assertIsInstance(b, (CFDataRef, buffer))
-        else:
-            self.assertIsInstance(b, (CFDataRef, memoryview, bytes))
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyBody)
+        b = CFNetwork.CFHTTPMessageCopyBody(req)
+        self.assertIsInstance(b, (CFNetwork.CFDataRef, memoryview, bytes))
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopyAllHeaderFields)
-        v = CFHTTPMessageCopyAllHeaderFields(req)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyAllHeaderFields)
+        v = CFNetwork.CFHTTPMessageCopyAllHeaderFields(req)
+        self.assertIsInstance(v, CFNetwork.CFDictionaryRef)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopyHeaderFieldValue)
-        v = CFHTTPMessageCopyHeaderFieldValue(req, "X-Python")
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyHeaderFieldValue)
+        v = CFNetwork.CFHTTPMessageCopyHeaderFieldValue(req, "X-Python")
         self.assertTrue(v is None)
 
-        CFHTTPMessageSetHeaderFieldValue(req, "X-Python", "Rocks")
-        v = CFHTTPMessageCopyHeaderFieldValue(req, "X-Python")
+        CFNetwork.CFHTTPMessageSetHeaderFieldValue(req, "X-Python", "Rocks")
+        v = CFNetwork.CFHTTPMessageCopyHeaderFieldValue(req, "X-Python")
         self.assertEqual(v, "Rocks")
 
-        self.assertResultIsBOOL(CFHTTPMessageAppendBytes)
-        self.assertArgHasType(CFHTTPMessageAppendBytes, 1, b"n^v")
-        self.assertArgSizeInArg(CFHTTPMessageAppendBytes, 1, 2)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPMessageAppendBytes)
+        self.assertArgHasType(CFNetwork.CFHTTPMessageAppendBytes, 1, b"n^v")
+        self.assertArgSizeInArg(CFNetwork.CFHTTPMessageAppendBytes, 1, 2)
 
-        v = CFHTTPMessageAppendBytes(req, b"hello world", 11)
+        v = CFNetwork.CFHTTPMessageAppendBytes(req, b"hello world", 11)
         self.assertTrue(v is True)
 
-        self.assertResultIsBOOL(CFHTTPMessageIsHeaderComplete)
-        v = CFHTTPMessageIsHeaderComplete(req)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPMessageIsHeaderComplete)
+        v = CFNetwork.CFHTTPMessageIsHeaderComplete(req)
         self.assertTrue(v is False or v is True)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopySerializedMessage)
-        v = CFHTTPMessageCopySerializedMessage(resp)
-        self.assertIsInstance(v, CFDataRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopySerializedMessage)
+        v = CFNetwork.CFHTTPMessageCopySerializedMessage(resp)
+        self.assertIsInstance(v, CFNetwork.CFDataRef)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopyRequestURL)
-        v = CFHTTPMessageCopyRequestURL(req)
-        self.assertIsInstance(v, CFURLRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyRequestURL)
+        v = CFNetwork.CFHTTPMessageCopyRequestURL(req)
+        self.assertIsInstance(v, CFNetwork.CFURLRef)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopyRequestMethod)
-        v = CFHTTPMessageCopyRequestMethod(req)
-        self.assertIsInstance(v, unicode)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyRequestMethod)
+        v = CFNetwork.CFHTTPMessageCopyRequestMethod(req)
+        self.assertIsInstance(v, str)
 
-        self.assertResultIsBOOL(CFHTTPMessageAddAuthentication)
-        self.assertArgIsBOOL(CFHTTPMessageAddAuthentication, 5)
-        v = CFHTTPMessageAddAuthentication(
-            req, resp, "ronald", "secret", kCFHTTPAuthenticationSchemeBasic, False
+        self.assertResultIsBOOL(CFNetwork.CFHTTPMessageAddAuthentication)
+        self.assertArgIsBOOL(CFNetwork.CFHTTPMessageAddAuthentication, 5)
+        v = CFNetwork.CFHTTPMessageAddAuthentication(
+            req,
+            resp,
+            "ronald",
+            "secret",
+            CFNetwork.kCFHTTPAuthenticationSchemeBasic,
+            False,
         )
         self.assertIsInstance(v, bool)
 
-        v = CFHTTPMessageGetResponseStatusCode(resp)
-        self.assertIsInstance(v, (int, long))
+        v = CFNetwork.CFHTTPMessageGetResponseStatusCode(resp)
+        self.assertIsInstance(v, int)
 
-        self.assertResultIsCFRetained(CFHTTPMessageCopyResponseStatusLine)
-        v = CFHTTPMessageCopyResponseStatusLine(resp)
-        self.assertIsInstance(v, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyResponseStatusLine)
+        v = CFNetwork.CFHTTPMessageCopyResponseStatusLine(resp)
+        self.assertIsInstance(v, str)

@@ -1,152 +1,156 @@
-from CFNetwork import *
-from PyObjCTools.TestSupport import *
+import CFNetwork
+from PyObjCTools.TestSupport import TestCase, min_os_level, os_release, os_level_key
 
 
 class TestCFSocketStream(TestCase):
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(kCFStreamPropertyAllowExpensiveNetworkAccess, unicode)
-        self.assertIsInstance(kCFStreamPropertyConnectionIsExpensive, unicode)
-        self.assertIsInstance(kCFStreamPropertyAllowConstrainedNetworkAccess, unicode)
+        self.assertIsInstance(
+            CFNetwork.kCFStreamPropertyAllowExpensiveNetworkAccess, str
+        )
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyConnectionIsExpensive, str)
+        self.assertIsInstance(
+            CFNetwork.kCFStreamPropertyAllowConstrainedNetworkAccess, str
+        )
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(kCFStreamNetworkServiceTypeCallSignaling, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeCallSignaling, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(kCFStreamPropertySSLContext, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySSLContext, str)
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
-        self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
-        self.assertIsInstance(kCFStreamNetworkServiceTypeResponsiveData, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyNoCellular, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyConnectionIsCellular, str)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeResponsiveData, str)
 
-        self.assertIsInstance(kCFStreamNetworkServiceTypeAVStreaming, unicode)
-        self.assertIsInstance(kCFStreamNetworkServiceTypeResponsiveAV, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeAVStreaming, str)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeResponsiveAV, str)
+
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyNoCellular, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyConnectionIsCellular, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(kCFStreamNetworkServiceType, unicode)
-        self.assertIsInstance(kCFStreamNetworkServiceTypeVoIP, unicode)
-        self.assertIsInstance(kCFStreamNetworkServiceTypeVideo, unicode)
-        self.assertIsInstance(kCFStreamNetworkServiceTypeBackground, unicode)
-        self.assertIsInstance(kCFStreamNetworkServiceTypeVoice, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceType, str)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeVoIP, str)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeVideo, str)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeBackground, str)
+        self.assertIsInstance(CFNetwork.kCFStreamNetworkServiceTypeVoice, str)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(kCFStreamPropertySSLPeerTrust, unicode)
-        self.assertIsInstance(kCFStreamErrorDomainWinSock, (int, long))
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySSLPeerTrust, str)
+        self.assertIsInstance(CFNetwork.kCFStreamErrorDomainWinSock, int)
 
     def testConstants(self):
-        self.assertIsInstance(kCFStreamPropertySSLPeerCertificates, unicode)
-        self.assertIsInstance(kCFStreamPropertySSLSettings, unicode)
-        self.assertIsInstance(kCFStreamSSLLevel, unicode)
-        self.assertIsInstance(kCFStreamSSLAllowsExpiredCertificates, unicode)
-        self.assertIsInstance(kCFStreamSSLAllowsExpiredRoots, unicode)
-        self.assertIsInstance(kCFStreamSSLAllowsAnyRoot, unicode)
-        self.assertIsInstance(kCFStreamSSLValidatesCertificateChain, unicode)
-        self.assertIsInstance(kCFStreamSSLPeerName, unicode)
-        self.assertIsInstance(kCFStreamSSLCertificates, unicode)
-        self.assertIsInstance(kCFStreamSSLIsServer, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySSLPeerCertificates, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySSLSettings, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLLevel, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLAllowsExpiredCertificates, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLAllowsExpiredRoots, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLAllowsAnyRoot, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLValidatesCertificateChain, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLPeerName, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLCertificates, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSSLIsServer, str)
 
-        self.assertEqual(kCFStreamErrorSOCKSSubDomainNone, 0)
-        self.assertEqual(kCFStreamErrorSOCKSSubDomainVersionCode, 1)
-        self.assertEqual(kCFStreamErrorSOCKS4SubDomainResponse, 2)
-        self.assertEqual(kCFStreamErrorSOCKS5SubDomainUserPass, 3)
-        self.assertEqual(kCFStreamErrorSOCKS5SubDomainMethod, 4)
-        self.assertEqual(kCFStreamErrorSOCKS5SubDomainResponse, 5)
-        self.assertEqual(kCFStreamErrorSOCKS5BadResponseAddr, 1)
-        self.assertEqual(kCFStreamErrorSOCKS5BadState, 2)
-        self.assertEqual(kCFStreamErrorSOCKSUnknownClientVersion, 3)
-        self.assertEqual(kCFStreamErrorSOCKS4RequestFailed, 91)
-        self.assertEqual(kCFStreamErrorSOCKS4IdentdFailed, 92)
-        self.assertEqual(kCFStreamErrorSOCKS4IdConflict, 93)
-        self.assertEqual(kSOCKS5NoAcceptableMethod, 0xFF)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKSSubDomainNone, 0)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKSSubDomainVersionCode, 1)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS4SubDomainResponse, 2)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS5SubDomainUserPass, 3)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS5SubDomainMethod, 4)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS5SubDomainResponse, 5)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS5BadResponseAddr, 1)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS5BadState, 2)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKSUnknownClientVersion, 3)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS4RequestFailed, 91)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS4IdentdFailed, 92)
+        self.assertEqual(CFNetwork.kCFStreamErrorSOCKS4IdConflict, 93)
+        self.assertEqual(CFNetwork.kSOCKS5NoAcceptableMethod, 0xFF)
 
         # Moved to CoreFoundation in 10.14, still testing here for backward
         # compat reasons.
-        self.assertIsInstance(kCFStreamErrorDomainSOCKS, (int, long))
-        self.assertIsInstance(kCFStreamPropertySOCKSProxy, unicode)
-        self.assertIsInstance(kCFStreamPropertySOCKSProxyHost, unicode)
-        self.assertIsInstance(kCFStreamPropertySOCKSProxyPort, unicode)
-        self.assertIsInstance(kCFStreamPropertySOCKSVersion, unicode)
-        self.assertIsInstance(kCFStreamSocketSOCKSVersion4, unicode)
-        self.assertIsInstance(kCFStreamSocketSOCKSVersion5, unicode)
-        self.assertIsInstance(kCFStreamPropertySOCKSUser, unicode)
-        self.assertIsInstance(kCFStreamPropertySOCKSPassword, unicode)
-        self.assertIsInstance(kCFStreamErrorDomainSSL, (int, long))
-        self.assertIsInstance(kCFStreamPropertySocketSecurityLevel, unicode)
-        self.assertIsInstance(kCFStreamSocketSecurityLevelNone, unicode)
-        self.assertIsInstance(kCFStreamSocketSecurityLevelSSLv2, unicode)
-        self.assertIsInstance(kCFStreamSocketSecurityLevelSSLv3, unicode)
-        self.assertIsInstance(kCFStreamSocketSecurityLevelTLSv1, unicode)
-        self.assertIsInstance(kCFStreamSocketSecurityLevelNegotiatedSSL, unicode)
-        self.assertIsInstance(kCFStreamPropertyShouldCloseNativeSocket, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamErrorDomainSOCKS, int)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySOCKSProxy, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySOCKSProxyHost, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySOCKSProxyPort, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySOCKSVersion, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSocketSOCKSVersion4, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSocketSOCKSVersion5, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySOCKSUser, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySOCKSPassword, str)
+        self.assertIsInstance(CFNetwork.kCFStreamErrorDomainSSL, int)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySocketSecurityLevel, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSocketSecurityLevelNone, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSocketSecurityLevelSSLv2, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSocketSecurityLevelSSLv3, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSocketSecurityLevelTLSv1, str)
+        self.assertIsInstance(CFNetwork.kCFStreamSocketSecurityLevelNegotiatedSSL, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyShouldCloseNativeSocket, str)
         #
 
-        self.assertIsInstance(kCFStreamPropertySocketRemoteHost, unicode)
-        self.assertIsInstance(kCFStreamPropertySocketRemoteNetService, unicode)
-        self.assertEqual(kCFStreamSocketSecurityNone, 0)
-        self.assertEqual(kCFStreamSocketSecuritySSLv2, 1)
-        self.assertEqual(kCFStreamSocketSecuritySSLv3, 2)
-        self.assertEqual(kCFStreamSocketSecuritySSLv23, 3)
-        self.assertEqual(kCFStreamSocketSecurityTLSv1, 4)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySocketRemoteHost, str)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertySocketRemoteNetService, str)
+        self.assertEqual(CFNetwork.kCFStreamSocketSecurityNone, 0)
+        self.assertEqual(CFNetwork.kCFStreamSocketSecuritySSLv2, 1)
+        self.assertEqual(CFNetwork.kCFStreamSocketSecuritySSLv3, 2)
+        self.assertEqual(CFNetwork.kCFStreamSocketSecuritySSLv23, 3)
+        self.assertEqual(CFNetwork.kCFStreamSocketSecurityTLSv1, 4)
 
-        self.assertIsInstance(kCFStreamPropertyProxyLocalBypass, unicode)
+        self.assertIsInstance(CFNetwork.kCFStreamPropertyProxyLocalBypass, str)
 
     def testFunctions(self):
-        err = CFStreamError()
+        err = CFNetwork.CFStreamError()
         err.error = (1 << 16) + 2
 
-        v = CFSocketStreamSOCKSGetErrorSubdomain(err)
+        v = CFNetwork.CFSocketStreamSOCKSGetErrorSubdomain(err)
         self.assertEqual(v, 1)
 
-        v = CFSocketStreamSOCKSGetError(err)
+        v = CFNetwork.CFSocketStreamSOCKSGetError(err)
         self.assertEqual(v, 2)
 
-        self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToCFHost, 3)
-        self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToCFHost, 4)
-        self.assertArgIsOut(CFStreamCreatePairWithSocketToCFHost, 3)
-        self.assertArgIsOut(CFStreamCreatePairWithSocketToCFHost, 4)
+        self.assertArgIsCFRetained(CFNetwork.CFStreamCreatePairWithSocketToCFHost, 3)
+        self.assertArgIsCFRetained(CFNetwork.CFStreamCreatePairWithSocketToCFHost, 4)
+        self.assertArgIsOut(CFNetwork.CFStreamCreatePairWithSocketToCFHost, 3)
+        self.assertArgIsOut(CFNetwork.CFStreamCreatePairWithSocketToCFHost, 4)
 
-        host = CFHostCreateWithName(None, "connect.apple.com")
-        rd, wr = CFStreamCreatePairWithSocketToCFHost(None, host, 443, None, None)
-        self.assertIsInstance(rd, CFReadStreamRef)
-        self.assertIsInstance(wr, CFWriteStreamRef)
+        host = CFNetwork.CFHostCreateWithName(None, "connect.apple.com")
+        rd, wr = CFNetwork.CFStreamCreatePairWithSocketToCFHost(
+            None, host, 443, None, None
+        )
+        self.assertIsInstance(rd, CFNetwork.CFReadStreamRef)
+        self.assertIsInstance(wr, CFNetwork.CFWriteStreamRef)
 
         if os_level_key(os_release()) < os_level_key("10.10"):
-            self.assertResultIsBOOL(CFSocketStreamPairSetSecurityProtocol)
-            v = CFSocketStreamPairSetSecurityProtocol(
-                rd, wr, kCFStreamSocketSecuritySSLv23
+            self.assertResultIsBOOL(CFNetwork.CFSocketStreamPairSetSecurityProtocol)
+            v = CFNetwork.CFSocketStreamPairSetSecurityProtocol(
+                rd, wr, CFNetwork.kCFStreamSocketSecuritySSLv23
             )
             self.assertIsInstance(v, bool)
 
-        self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToNetService, 2)
-        self.assertArgIsCFRetained(CFStreamCreatePairWithSocketToNetService, 3)
-        self.assertArgIsOut(CFStreamCreatePairWithSocketToNetService, 2)
-        self.assertArgIsOut(CFStreamCreatePairWithSocketToNetService, 3)
-        service = CFNetServiceCreate(
+        self.assertArgIsCFRetained(
+            CFNetwork.CFStreamCreatePairWithSocketToNetService, 2
+        )
+        self.assertArgIsCFRetained(
+            CFNetwork.CFStreamCreatePairWithSocketToNetService, 3
+        )
+        self.assertArgIsOut(CFNetwork.CFStreamCreatePairWithSocketToNetService, 2)
+        self.assertArgIsOut(CFNetwork.CFStreamCreatePairWithSocketToNetService, 3)
+        service = CFNetwork.CFNetServiceCreate(
             None, "pyobjc.local", "ssh", "pyobjc.test.local", 9999
         )
-        rd, wr = CFStreamCreatePairWithSocketToNetService(None, service, None, None)
-        self.assertIsInstance(rd, CFReadStreamRef)
-        self.assertIsInstance(wr, CFWriteStreamRef)
-
-    @min_os_level("10.8")
-    def testConstants10_8(self):
-        # XXX: iOS only:
-        # self.assertIsInstance(kCFStreamPropertySSLContext, unicode)
-        self.assertIsInstance(kCFStreamPropertyNoCellular, unicode)
-        self.assertIsInstance(kCFStreamPropertyConnectionIsCellular, unicode)
+        rd, wr = CFNetwork.CFStreamCreatePairWithSocketToNetService(
+            None, service, None, None
+        )
+        self.assertIsInstance(rd, CFNetwork.CFReadStreamRef)
+        self.assertIsInstance(wr, CFNetwork.CFWriteStreamRef)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(
-            kCFStreamPropertySocketExtendedBackgroundIdleMode, unicode
+            CFNetwork.kCFStreamPropertySocketExtendedBackgroundIdleMode, str
         )
-
-
-if __name__ == "__main__":
-    main()

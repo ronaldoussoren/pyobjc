@@ -1,8 +1,9 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
     import CloudKit
+    import objc
 
     class TestCKRecord(TestCase):
         @min_sdk_level("10.11")
@@ -16,13 +17,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants(self):
-            self.assertIsInstance(CloudKit.CKRecordTypeUserRecord, unicode)
+            self.assertIsInstance(CloudKit.CKRecordTypeUserRecord, str)
 
         @min_os_level("10.12")
-        def testConstants(self):
-            self.assertIsInstance(CloudKit.CKRecordParentKey, unicode)
-            self.assertIsInstance(CloudKit.CKRecordShareKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        def testConstants10_12(self):
+            self.assertIsInstance(CloudKit.CKRecordParentKey, str)
+            self.assertIsInstance(CloudKit.CKRecordShareKey, str)

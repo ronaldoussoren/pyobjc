@@ -1,8 +1,9 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
+    import objc
 
     class TestCKContainer(TestCase):
         @min_os_level("10.10")
@@ -12,7 +13,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants(self):
-            self.assertIsInstance(CloudKit.CKOwnerDefaultName, unicode)
+            self.assertIsInstance(CloudKit.CKOwnerDefaultName, str)
 
             self.assertEqual(CloudKit.CKAccountStatusCouldNotDetermine, 0)
             self.assertEqual(CloudKit.CKAccountStatusAvailable, 1)
@@ -26,11 +27,11 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.11")
         def testConstants10_11(self):
-            self.assertIsInstance(CloudKit.CKAccountChangedNotification, unicode)
+            self.assertIsInstance(CloudKit.CKAccountChangedNotification, str)
 
         @min_os_level("10.12")
         def testConstants10_12(self):
-            self.assertIsInstance(CloudKit.CKCurrentUserDefaultName, unicode)
+            self.assertIsInstance(CloudKit.CKCurrentUserDefaultName, str)
 
         @min_os_level("10.10")
         def testMethods10_10(self):
@@ -104,7 +105,3 @@ if sys.maxsize > 2 ** 32:
                 1,
                 b"v@@",
             )
-
-
-if __name__ == "__main__":
-    main()

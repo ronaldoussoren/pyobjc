@@ -1,8 +1,9 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
+    import objc
 
     class TestCKFetchNotificationChangesOperation(TestCase):
         @min_os_level("10.10")
@@ -24,20 +25,16 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                CloudKit.CKFetchNotificationChangesOperation.setFetchNotificationChangesCompletionBlock_,
+                CloudKit.CKFetchNotificationChangesOperation.setFetchNotificationChangesCompletionBlock_,  # noqa: B950
                 0,
                 b"v@@",
             )
             self.assertResultIsBlock(
-                CloudKit.CKFetchNotificationChangesOperation.fetchNotificationChangesCompletionBlock,
+                CloudKit.CKFetchNotificationChangesOperation.fetchNotificationChangesCompletionBlock,  # noqa: B950
                 b"v@@",
             )
 
             self.assertResultIsBOOL(
                 CloudKit.CKFetchNotificationChangesOperation.moreComing
             )
-            # self.assertArgIsBOOL(CloudKit.CKFetchNotificationChangesOperation.setMoreComing_, 0)
-
-
-if __name__ == "__main__":
-    main()
+            # self.assertArgIsBOOL(CloudKit.CKFetchNotificationChangesOperation.setMoreComing_, 0)   # noqa: B950

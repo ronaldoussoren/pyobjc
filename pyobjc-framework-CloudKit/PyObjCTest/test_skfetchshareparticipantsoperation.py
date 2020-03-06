@@ -1,7 +1,7 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKFetchShareParticipantsOperation(TestCase):
@@ -18,15 +18,11 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                CloudKit.CKFetchShareParticipantsOperation.setFetchShareParticipantsCompletionBlock_,
+                CloudKit.CKFetchShareParticipantsOperation.setFetchShareParticipantsCompletionBlock_,  # noqa: B950
                 0,
                 b"v@",
             )
             self.assertResultIsBlock(
-                CloudKit.CKFetchShareParticipantsOperation.fetchShareParticipantsCompletionBlock,
+                CloudKit.CKFetchShareParticipantsOperation.fetchShareParticipantsCompletionBlock,  # noqa: B950
                 b"v@",
             )
-
-
-if __name__ == "__main__":
-    main()

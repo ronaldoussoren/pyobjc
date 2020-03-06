@@ -1,14 +1,10 @@
-from CalendarStore import *
-from PyObjCTools.TestSupport import *
+import CalendarStore
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalEvent(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(CalEvent.isAllDay)
-        self.assertArgIsBOOL(CalEvent.setIsAllDay_, 0)
+        self.assertResultIsBOOL(CalendarStore.CalEvent.isAllDay)
+        self.assertArgIsBOOL(CalendarStore.CalEvent.setIsAllDay_, 0)
 
-        self.assertResultIsBOOL(CalEvent.isDetached)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(CalendarStore.CalEvent.isDetached)

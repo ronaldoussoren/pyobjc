@@ -1,14 +1,10 @@
-from CalendarStore import *
-from PyObjCTools.TestSupport import *
+import CalendarStore
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalAlarm(TestCase):
     def testConstants(self):
-        self.assertIsInstance(CalAlarmActionDisplay, unicode)
-        self.assertIsInstance(CalAlarmActionEmail, unicode)
-        self.assertIsInstance(CalAlarmActionProcedure, unicode)
-        self.assertIsInstance(CalAlarmActionSound, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(CalendarStore.CalAlarmActionDisplay, str)
+        self.assertIsInstance(CalendarStore.CalAlarmActionEmail, str)
+        self.assertIsInstance(CalendarStore.CalAlarmActionProcedure, str)
+        self.assertIsInstance(CalendarStore.CalAlarmActionSound, str)

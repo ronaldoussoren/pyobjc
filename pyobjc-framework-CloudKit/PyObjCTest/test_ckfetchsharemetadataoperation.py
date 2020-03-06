@@ -1,7 +1,7 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKFetchShareMetadataOperation(TestCase):
@@ -32,7 +32,3 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(
                 CloudKit.CKFetchShareMetadataOperation.setShouldFetchRootRecord_, 0
             )
-
-
-if __name__ == "__main__":
-    main()

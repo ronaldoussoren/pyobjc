@@ -1,119 +1,112 @@
-import sys
-
 import Foundation
-from CFNetwork import *
-from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] != 2:
-
-    def buffer(value):
-        return value.encode("latin1")
+import CFNetwork
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestCFNetServices(TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFNetServiceRef)
-        self.assertIsCFType(CFNetServiceMonitorRef)
-        self.assertIsCFType(CFNetServiceBrowserRef)
+        self.assertIsCFType(CFNetwork.CFNetServiceRef)
+        self.assertIsCFType(CFNetwork.CFNetServiceMonitorRef)
+        self.assertIsCFType(CFNetwork.CFNetServiceBrowserRef)
 
     def testConstants(self):
-        self.assertIsInstance(kCFStreamErrorDomainMach, (int, long))
-        self.assertIsInstance(kCFStreamErrorDomainNetServices, (int, long))
+        self.assertIsInstance(CFNetwork.kCFStreamErrorDomainMach, int)
+        self.assertIsInstance(CFNetwork.kCFStreamErrorDomainNetServices, int)
 
-        self.assertEqual(kCFNetServicesErrorUnknown, -72000)
-        self.assertEqual(kCFNetServicesErrorCollision, -72001)
-        self.assertEqual(kCFNetServicesErrorNotFound, -72002)
-        self.assertEqual(kCFNetServicesErrorInProgress, -72003)
-        self.assertEqual(kCFNetServicesErrorBadArgument, -72004)
-        self.assertEqual(kCFNetServicesErrorCancel, -72005)
-        self.assertEqual(kCFNetServicesErrorInvalid, -72006)
-        self.assertEqual(kCFNetServicesErrorTimeout, -72007)
-        self.assertEqual(kCFNetServiceMonitorTXT, 1)
-        self.assertEqual(kCFNetServiceFlagNoAutoRename, 1)
-        self.assertEqual(kCFNetServiceFlagMoreComing, 1)
-        self.assertEqual(kCFNetServiceFlagIsDomain, 2)
-        self.assertEqual(kCFNetServiceFlagIsDefault, 4)
-        self.assertEqual(kCFNetServiceFlagIsRegistrationDomain, 4)
-        self.assertEqual(kCFNetServiceFlagRemove, 8)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorUnknown, -72000)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorCollision, -72001)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorNotFound, -72002)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorInProgress, -72003)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorBadArgument, -72004)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorCancel, -72005)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorInvalid, -72006)
+        self.assertEqual(CFNetwork.kCFNetServicesErrorTimeout, -72007)
+        self.assertEqual(CFNetwork.kCFNetServiceMonitorTXT, 1)
+        self.assertEqual(CFNetwork.kCFNetServiceFlagNoAutoRename, 1)
+        self.assertEqual(CFNetwork.kCFNetServiceFlagMoreComing, 1)
+        self.assertEqual(CFNetwork.kCFNetServiceFlagIsDomain, 2)
+        self.assertEqual(CFNetwork.kCFNetServiceFlagIsDefault, 4)
+        self.assertEqual(CFNetwork.kCFNetServiceFlagIsRegistrationDomain, 4)
+        self.assertEqual(CFNetwork.kCFNetServiceFlagRemove, 8)
 
     def testFunctions(self):
-        self.assertIsInstance(CFNetServiceGetTypeID(), (int, long))
-        self.assertIsInstance(CFNetServiceMonitorGetTypeID(), (int, long))
-        self.assertIsInstance(CFNetServiceBrowserGetTypeID(), (int, long))
+        self.assertIsInstance(CFNetwork.CFNetServiceGetTypeID(), int)
+        self.assertIsInstance(CFNetwork.CFNetServiceMonitorGetTypeID(), int)
+        self.assertIsInstance(CFNetwork.CFNetServiceBrowserGetTypeID(), int)
 
-        self.assertResultIsCFRetained(CFNetServiceCreate)
-        serv = CFNetServiceCreate(
-            None,
-            b"pyobjc.local".decode("latin1"),
-            b"ssh".decode("latin1"),
-            b"pyobjc.test.local".decode("latin1"),
-            9999,
+        self.assertResultIsCFRetained(CFNetwork.CFNetServiceCreate)
+        serv = CFNetwork.CFNetServiceCreate(
+            None, "pyobjc.local", "ssh", "pyobjc.test.local", 9999
         )
-        self.assertIsInstance(serv, CFNetServiceRef)
+        self.assertIsInstance(serv, CFNetwork.CFNetServiceRef)
 
-        self.assertResultIsCFRetained(CFNetServiceCreateCopy)
-        v = CFNetServiceCreateCopy(None, serv)
-        self.assertIsInstance(v, CFNetServiceRef)
+        self.assertResultIsCFRetained(CFNetwork.CFNetServiceCreateCopy)
+        v = CFNetwork.CFNetServiceCreateCopy(None, serv)
+        self.assertIsInstance(v, CFNetwork.CFNetServiceRef)
 
-        dom = CFNetServiceGetDomain(serv)
-        self.assertIsInstance(dom, unicode)
+        dom = CFNetwork.CFNetServiceGetDomain(serv)
+        self.assertIsInstance(dom, str)
 
-        dom = CFNetServiceGetType(serv)
-        self.assertIsInstance(dom, unicode)
+        dom = CFNetwork.CFNetServiceGetType(serv)
+        self.assertIsInstance(dom, str)
 
-        dom = CFNetServiceGetName(serv)
-        self.assertIsInstance(dom, unicode)
+        dom = CFNetwork.CFNetServiceGetName(serv)
+        self.assertIsInstance(dom, str)
 
-        self.assertResultIsBOOL(CFNetServiceRegisterWithOptions)
-        self.assertArgIsOut(CFNetServiceRegisterWithOptions, 2)
+        self.assertResultIsBOOL(CFNetwork.CFNetServiceRegisterWithOptions)
+        self.assertArgIsOut(CFNetwork.CFNetServiceRegisterWithOptions, 2)
 
-        ok, err = CFNetServiceRegisterWithOptions(
-            serv, kCFNetServiceFlagNoAutoRename, None
+        ok, err = CFNetwork.CFNetServiceRegisterWithOptions(
+            serv, CFNetwork.kCFNetServiceFlagNoAutoRename, None
         )
         self.assertIsInstance(ok, bool)
         if ok:
             self.assertEqual(err, None)
         else:
-            self.assertIsInstance(err, CFStreamError)
+            self.assertIsInstance(err, CFNetwork.CFStreamError)
 
-        self.assertResultIsBOOL(CFNetServiceResolveWithTimeout)
-        self.assertArgIsOut(CFNetServiceResolveWithTimeout, 2)
-        ok, err = CFNetServiceResolveWithTimeout(serv, 1.0, None)
+        self.assertResultIsBOOL(CFNetwork.CFNetServiceResolveWithTimeout)
+        self.assertArgIsOut(CFNetwork.CFNetServiceResolveWithTimeout, 2)
+        ok, err = CFNetwork.CFNetServiceResolveWithTimeout(serv, 1.0, None)
         self.assertIsInstance(ok, bool)
         if ok:
             self.assertEqual(err, None)
         else:
-            self.assertIsInstance(err, CFStreamError)
+            self.assertIsInstance(err, CFNetwork.CFStreamError)
 
-        host = CFNetServiceGetTargetHost(serv)
-        self.assertIsInstance(host, (unicode, type(None)))
+        host = CFNetwork.CFNetServiceGetTargetHost(serv)
+        self.assertIsInstance(host, (str, type(None)))
 
-        port = CFNetServiceGetPortNumber(serv)
-        self.assertIsInstance(port, (int, long))
+        port = CFNetwork.CFNetServiceGetPortNumber(serv)
+        self.assertIsInstance(port, int)
 
-        v = CFNetServiceGetAddressing(serv)
+        v = CFNetwork.CFNetServiceGetAddressing(serv)
         self.assertIsInstance(v, (Foundation.NSArray, type(None)))
 
-        v = CFNetServiceGetTXTData(serv)
+        v = CFNetwork.CFNetServiceGetTXTData(serv)
         self.assertIsInstance(v, (Foundation.NSData, type(None)))
 
-        v = CFNetServiceCreateTXTDataWithDictionary(
+        v = CFNetwork.CFNetServiceCreateTXTDataWithDictionary(
             None, {"key": "value", "key2": "value2"}
         )
         self.assertIsInstance(v, Foundation.NSData)
 
-        v = CFNetServiceCreateDictionaryWithTXTData(None, v)
+        v = CFNetwork.CFNetServiceCreateDictionaryWithTXTData(None, v)
         self.assertIsInstance(v, Foundation.NSDictionary)
 
-        self.assertResultIsBOOL(CFNetServiceSetTXTData)
-        ok = CFNetServiceSetTXTData(serv, buffer("hello"))
+        self.assertResultIsBOOL(CFNetwork.CFNetServiceSetTXTData)
+        ok = CFNetwork.CFNetServiceSetTXTData(serv, b"hello")
         self.assertIsInstance(ok, bool)
 
-        rl = CFRunLoopGetCurrent()
-        CFNetServiceScheduleWithRunLoop(serv, rl, kCFRunLoopDefaultMode)
-        CFNetServiceUnscheduleFromRunLoop(serv, rl, kCFRunLoopDefaultMode)
+        rl = CFNetwork.CFRunLoopGetCurrent()
+        CFNetwork.CFNetServiceScheduleWithRunLoop(
+            serv, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
+        CFNetwork.CFNetServiceUnscheduleFromRunLoop(
+            serv, rl, CFNetwork.kCFRunLoopDefaultMode
+        )
 
-        CFNetServiceCancel(serv)
+        CFNetwork.CFNetServiceCancel(serv)
 
     @expectedFailure
     def testMissingTests(self):
@@ -135,7 +128,3 @@ class TestCFNetServices(TestCase):
         self.fail("CFNetServiceResolve")
         self.fail("CFNetServiceGetProtocolSpecificInformation")
         self.fail("CFNetServiceSetProtocolSpecificInformation")
-
-
-if __name__ == "__main__":
-    main()

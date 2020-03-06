@@ -1,8 +1,9 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
+    import objc
 
     class TestCKQueryOperation(TestCase):
         @min_os_level("10.10")
@@ -14,7 +15,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.10")
         def testConstants(self):
-            self.assertIsInstance(CloudKit.CKQueryOperationMaximumResults, (int, long))
+            self.assertIsInstance(CloudKit.CKQueryOperationMaximumResults, int)
 
         @min_os_level("10.10")
         def testMethods(self):
@@ -30,7 +31,3 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBlock(
                 CloudKit.CKQueryOperation.setQueryCompletionBlock_, 0, b"v@@"
             )
-
-
-if __name__ == "__main__":
-    main()

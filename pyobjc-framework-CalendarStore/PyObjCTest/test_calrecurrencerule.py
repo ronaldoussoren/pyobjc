@@ -1,19 +1,15 @@
-from CalendarStore import *
-from PyObjCTools.TestSupport import *
+import CalendarStore
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalRecurrenceRule(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(CalRecurrenceEnd.usesEndDate)
+        self.assertResultIsBOOL(CalendarStore.CalRecurrenceEnd.usesEndDate)
 
     def testConstants(self):
-        self.assertEqual(CalRecurrenceDaily, 0)
-        self.assertEqual(CalRecurrenceWeekly, 1)
-        self.assertEqual(CalRecurrenceMonthly, 2)
-        self.assertEqual(CalRecurrenceYearly, 3)
+        self.assertEqual(CalendarStore.CalRecurrenceDaily, 0)
+        self.assertEqual(CalendarStore.CalRecurrenceWeekly, 1)
+        self.assertEqual(CalendarStore.CalRecurrenceMonthly, 2)
+        self.assertEqual(CalendarStore.CalRecurrenceYearly, 3)
 
-        self.assertIsInstance(CalDefaultRecurrenceInterval, (int, long))
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(CalendarStore.CalDefaultRecurrenceInterval, int)

@@ -1,7 +1,7 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKFetchRecordZoneChangesOperation(TestCase):
@@ -27,7 +27,7 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                CloudKit.CKFetchRecordZoneChangesOperation.setRecordZoneChangeTokensUpdatedBlock_,
+                CloudKit.CKFetchRecordZoneChangesOperation.setRecordZoneChangeTokensUpdatedBlock_,  # noqa: B950
                 0,
                 b"v@@@",
             )
@@ -47,12 +47,12 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                CloudKit.CKFetchRecordZoneChangesOperation.setFetchRecordZoneChangesCompletionBlock_,
+                CloudKit.CKFetchRecordZoneChangesOperation.setFetchRecordZoneChangesCompletionBlock_,  # noqa: B950
                 0,
                 b"v@",
             )
             self.assertResultIsBlock(
-                CloudKit.CKFetchRecordZoneChangesOperation.fetchRecordZoneChangesCompletionBlock,
+                CloudKit.CKFetchRecordZoneChangesOperation.fetchRecordZoneChangesCompletionBlock,  # noqa: B950
                 b"v@",
             )
 
@@ -62,7 +62,3 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(
                 CloudKit.CKFetchRecordZoneChangesOperation.setFetchAllChanges_, 0
             )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,9 +1,6 @@
-"""
-Some simple tests to check that the framework is properly wrapped.
-"""
 import CalendarStore
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalendarStore(TestCase):
@@ -12,7 +9,3 @@ class TestCalendarStore(TestCase):
         self.assertIsInstance(CalendarStore.CalAlarm, objc.objc_class)
         self.assertHasAttr(CalendarStore, "CalNthWeekDay")
         self.assertIsInstance(CalendarStore.CalNthWeekDay, objc.objc_class)
-
-
-if __name__ == "__main__":
-    main()

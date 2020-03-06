@@ -1,7 +1,7 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKShareParticipant(TestCase):
@@ -24,7 +24,3 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKShareParticipantRoleOwner, 1)
             self.assertEqual(CloudKit.CKShareParticipantRolePrivateUser, 3)
             self.assertEqual(CloudKit.CKShareParticipantRolePublicUser, 4)
-
-
-if __name__ == "__main__":
-    main()

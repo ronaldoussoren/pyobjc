@@ -1,32 +1,27 @@
 import socket
-import sys
 
-from CFNetwork import *
-from PyObjCTools.TestSupport import *
-
-if sys.version_info[0] != 2:
-
-    def buffer(value):
-        return value.encode("latin1")
+import CFNetwork
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFHost(TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFHostRef)
+        self.assertIsCFType(CFNetwork.CFHostRef)
 
     def testConstants(self):
-        self.assertIsInstance(kCFStreamErrorDomainNetDB, (int, long))
-        self.assertIsInstance(kCFStreamErrorDomainSystemConfiguration, (int, long))
-        self.assertEqual(kCFHostAddresses, 0)
-        self.assertEqual(kCFHostNames, 1)
-        self.assertEqual(kCFHostReachability, 2)
+        self.assertIsInstance(CFNetwork.kCFStreamErrorDomainNetDB, int)
+        self.assertIsInstance(CFNetwork.kCFStreamErrorDomainSystemConfiguration, int)
+        self.assertEqual(CFNetwork.kCFHostAddresses, 0)
+        self.assertEqual(CFNetwork.kCFHostNames, 1)
+        self.assertEqual(CFNetwork.kCFHostReachability, 2)
 
     def testFunctions(self):
-        self.assertIsInstance(CFHostGetTypeID(), (int, long))
+        self.assertIsInstance(CFNetwork.CFHostGetTypeID(), int)
 
-        self.assertResultIsCFRetained(CFHostCreateWithName)
-        v = CFHostCreateWithName(None, b"www.python.org".decode("latin1"))
-        self.assertIsInstance(v, CFHostRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHostCreateWithName)
+        v = CFNetwork.CFHostCreateWithName(None, "www.python.org")
+        self.assertIsInstance(v, CFNetwork.CFHostRef)
 
         try:
             value = socket.gethostbyname("www.python.org")
@@ -34,37 +29,42 @@ class TestCFHost(TestCase):
         except socket.error:
             expected_resolution = False
 
-        addr = " " * 24
-        self.assertResultIsCFRetained(CFHostCreateWithAddress)
-        t = CFHostCreateWithAddress(None, buffer(addr))
-        self.assertIsInstance(t, CFHostRef)
+        addr = b" " * 24
+        self.assertResultIsCFRetained(CFNetwork.CFHostCreateWithAddress)
+        t = CFNetwork.CFHostCreateWithAddress(None, addr)
+        self.assertIsInstance(t, CFNetwork.CFHostRef)
 
-        self.assertResultIsBOOL(CFHostStartInfoResolution)
-        self.assertArgIsOut(CFHostStartInfoResolution, 2)
-        ok, error = CFHostStartInfoResolution(v, kCFHostAddresses, None)
+        self.assertResultIsBOOL(CFNetwork.CFHostStartInfoResolution)
+        self.assertArgIsOut(CFNetwork.CFHostStartInfoResolution, 2)
+        ok, error = CFNetwork.CFHostStartInfoResolution(
+            v, CFNetwork.kCFHostAddresses, None
+        )
         self.assertIs(ok, expected_resolution)
-        self.assertIsInstance(error, CFStreamError)
+        self.assertIsInstance(error, CFNetwork.CFStreamError)
 
-        self.assertResultIsCFRetained(CFHostCreateCopy)
-        # w = CFHostCreateCopy(None, v)
+        self.assertResultIsCFRetained(CFNetwork.CFHostCreateCopy)
+        # w = CFNetwork.CFHostCreateCopy(None, v)
         # self.assertIsInstance(w, type(v))
 
-        self.assertArgHasType(CFHostGetReachability, 1, b"o^" + objc._C_NSBOOL)
-        lst, ok = CFHostGetReachability(v, None)
-        self.assertIsInstance(lst, (CFDataRef, type(None)))
+        self.assertArgHasType(
+            CFNetwork.CFHostGetReachability, 1, b"o^" + objc._C_NSBOOL
+        )
+        lst, ok = CFNetwork.CFHostGetReachability(v, None)
+        self.assertIsInstance(lst, (CFNetwork.CFDataRef, type(None)))
         self.assertIsInstance(ok, bool)
 
-        CFHostCancelInfoResolution(v, kCFHostAddresses)
+        CFNetwork.CFHostCancelInfoResolution(v, CFNetwork.kCFHostAddresses)
 
-        rl = CFRunLoopGetCurrent()
-        CFHostScheduleWithRunLoop(v, rl, kCFRunLoopDefaultMode)
+        rl = CFNetwork.CFRunLoopGetCurrent()
+        CFNetwork.CFHostScheduleWithRunLoop(v, rl, CFNetwork.kCFRunLoopDefaultMode)
 
-        CFHostUnscheduleFromRunLoop(v, rl, kCFRunLoopDefaultMode)
+        CFNetwork.CFHostUnscheduleFromRunLoop(v, rl, CFNetwork.kCFRunLoopDefaultMode)
 
-        self.assertArgHasType(CFHostGetNames, 1, b"o^" + objc._C_NSBOOL)
-        lst, ok = CFHostGetNames(v, None)
-        self.assertIsInstance(lst, CFArrayRef)
+        self.assertArgHasType(CFNetwork.CFHostGetNames, 1, b"o^" + objc._C_NSBOOL)
+        lst, ok = CFNetwork.CFHostGetNames(v, None)
+        self.assertIsInstance(lst, CFNetwork.CFArrayRef)
         self.assertIsInstance(ok, bool)
+        self.assertIn(value, lst)
 
     def testCallbacks(self):
         lst = []
@@ -73,33 +73,31 @@ class TestCFHost(TestCase):
         def callback(host, typeinfo, error, ctx):
             lst.append([host, typeinfo, error, ctx])
 
-        host = CFHostCreateWithName(None, b"localhost".decode("latin1"))
-        CFHostSetClient(host, callback, ctx)
+        host = CFNetwork.CFHostCreateWithName(None, "localhost")
+        CFNetwork.CFHostSetClient(host, callback, ctx)
 
-        rl = CFRunLoopGetCurrent()
-        CFHostScheduleWithRunLoop(host, rl, kCFRunLoopDefaultMode)
+        rl = CFNetwork.CFRunLoopGetCurrent()
+        CFNetwork.CFHostScheduleWithRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
 
-        ok, err = CFHostStartInfoResolution(host, kCFHostAddresses, None)
+        ok, err = CFNetwork.CFHostStartInfoResolution(
+            host, CFNetwork.kCFHostAddresses, None
+        )
         self.assertTrue(ok)
         self.assertIsInstance(ok, bool)
-        self.assertIsInstance(err, CFStreamError)
+        self.assertIsInstance(err, CFNetwork.CFStreamError)
 
-        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 4.0, False)
+        CFNetwork.CFRunLoopRunInMode(CFNetwork.kCFRunLoopDefaultMode, 4.0, False)
 
-        CFHostUnscheduleFromRunLoop(host, rl, kCFRunLoopDefaultMode)
+        CFNetwork.CFHostUnscheduleFromRunLoop(host, rl, CFNetwork.kCFRunLoopDefaultMode)
         self.assertEqual(len(lst), 1)
-        self.assertIsInstance(lst[0][0], CFHostRef)
-        self.assertIsInstance(lst[0][1], (int, long))
-        self.assertIsInstance(lst[0][2], CFStreamError)
+        self.assertIsInstance(lst[0][0], CFNetwork.CFHostRef)
+        self.assertIsInstance(lst[0][1], int)
+        self.assertIsInstance(lst[0][2], CFNetwork.CFStreamError)
         self.assertIs(lst[0][3], ctx)
 
-        self.assertResultIsNotCFRetained(CFHostGetAddressing)
-        self.assertArgHasType(CFHostGetAddressing, 1, b"o^Z")
-        lst, ok = CFHostGetAddressing(host, None)
-        self.assertIsInstance(lst, CFArrayRef)
-        self.assertIsInstance(lst[0], CFDataRef)
+        self.assertResultIsNotCFRetained(CFNetwork.CFHostGetAddressing)
+        self.assertArgHasType(CFNetwork.CFHostGetAddressing, 1, b"o^Z")
+        lst, ok = CFNetwork.CFHostGetAddressing(host, None)
+        self.assertIsInstance(lst, CFNetwork.CFArrayRef)
+        self.assertIsInstance(lst[0], CFNetwork.CFDataRef)
         self.assertIsInstance(ok, bool)
-
-
-if __name__ == "__main__":
-    main()

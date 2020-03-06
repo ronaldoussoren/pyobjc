@@ -1,7 +1,7 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKAcceptSharesOperation(TestCase):
@@ -22,7 +22,3 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBlock(
                 CloudKit.CKAcceptSharesOperation.acceptSharesCompletionBlock, b"v@"
             )
-
-
-if __name__ == "__main__":
-    main()

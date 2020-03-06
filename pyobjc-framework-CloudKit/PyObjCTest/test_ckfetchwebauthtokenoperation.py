@@ -1,7 +1,7 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKFetchWebAuthTokenOperation(TestCase):
@@ -18,7 +18,3 @@ if sys.maxsize > 2 ** 32:
                 0,
                 b"v@@",
             )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,18 +1,14 @@
-from CalendarStore import *
-from PyObjCTools.TestSupport import *
+import CalendarStore
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCalTask(TestCase):
     def testConstants(self):
-        self.assertEqual(CalPriorityNone, 0)
-        self.assertEqual(CalPriorityHigh, 1)
-        self.assertEqual(CalPriorityMedium, 5)
-        self.assertEqual(CalPriorityLow, 9)
+        self.assertEqual(CalendarStore.CalPriorityNone, 0)
+        self.assertEqual(CalendarStore.CalPriorityHigh, 1)
+        self.assertEqual(CalendarStore.CalPriorityMedium, 5)
+        self.assertEqual(CalendarStore.CalPriorityLow, 9)
 
     def testMethods(self):
-        self.assertResultIsBOOL(CalTask.isCompleted)
-        self.assertArgIsBOOL(CalTask.setIsCompleted_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(CalendarStore.CalTask.isCompleted)
+        self.assertArgIsBOOL(CalendarStore.CalTask.setIsCompleted_, 0)

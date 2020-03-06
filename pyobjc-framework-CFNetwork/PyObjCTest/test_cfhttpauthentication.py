@@ -1,106 +1,113 @@
-from CFNetwork import *
+import CFNetwork
 from Foundation import NSString
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCFFTPStream(TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFHTTPAuthenticationRef)
+        self.assertIsCFType(CFNetwork.CFHTTPAuthenticationRef)
 
     def testConstants(self):
-        self.assertEqual(kCFStreamErrorHTTPAuthenticationTypeUnsupported, -1000)
-        self.assertEqual(kCFStreamErrorHTTPAuthenticationBadUserName, -1001)
-        self.assertEqual(kCFStreamErrorHTTPAuthenticationBadPassword, -1002)
+        self.assertEqual(
+            CFNetwork.kCFStreamErrorHTTPAuthenticationTypeUnsupported, -1000
+        )
+        self.assertEqual(CFNetwork.kCFStreamErrorHTTPAuthenticationBadUserName, -1001)
+        self.assertEqual(CFNetwork.kCFStreamErrorHTTPAuthenticationBadPassword, -1002)
 
-        self.assertIsInstance(kCFHTTPAuthenticationUsername, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationPassword, unicode)
-        self.assertIsInstance(kCFHTTPAuthenticationAccountDomain, unicode)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationUsername, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationPassword, str)
+        self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationAccountDomain, str)
 
     @min_os_level("10.5")
-    # These functions should work on 10.4 as well, but caue a crash in CFNetwork on that platform
+    # These functions should work on 10.4 as well, but caue a crash in
+    # CFNetwork on that platform
     def testFunctions(self):
-        self.assertIsInstance(CFHTTPAuthenticationGetTypeID(), (int, long))
+        self.assertIsInstance(CFNetwork.CFHTTPAuthenticationGetTypeID(), int)
 
-        msg = CFHTTPMessageCreateResponse(None, 401, "Authenticate", kCFHTTPVersion1_0)
-        self.assertIsInstance(msg, CFHTTPMessageRef)
-        CFHTTPMessageSetHeaderFieldValue(
+        msg = CFNetwork.CFHTTPMessageCreateResponse(
+            None, 401, "Authenticate", CFNetwork.kCFHTTPVersion1_0
+        )
+        self.assertIsInstance(msg, CFNetwork.CFHTTPMessageRef)
+        CFNetwork.CFHTTPMessageSetHeaderFieldValue(
             msg,
             NSString.stringWithString_("WWW-Authenticate"),
             NSString.stringWithString_('Basic realm="WallyWorld"'),
         )
 
-        self.assertResultIsCFRetained(CFHTTPAuthenticationCreateFromResponse)
-        ref = CFHTTPAuthenticationCreateFromResponse(None, msg)
-        self.assertIsInstance(ref, CFHTTPAuthenticationRef)
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPAuthenticationCreateFromResponse)
+        ref = CFNetwork.CFHTTPAuthenticationCreateFromResponse(None, msg)
+        self.assertIsInstance(ref, CFNetwork.CFHTTPAuthenticationRef)
 
-        self.assertResultIsBOOL(CFHTTPAuthenticationIsValid)
-        self.assertArgIsOut(CFHTTPAuthenticationIsValid, 1)
-        v, err = CFHTTPAuthenticationIsValid(ref, None)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPAuthenticationIsValid)
+        self.assertArgIsOut(CFNetwork.CFHTTPAuthenticationIsValid, 1)
+        v, err = CFNetwork.CFHTTPAuthenticationIsValid(ref, None)
         self.assertIsInstance(v, bool)
         if v:
             self.assertTrue(err is None)
         else:
-            self.assertIsInstance(err, CFStreamError)
+            self.assertIsInstance(err, CFNetwork.CFStreamError)
 
-        self.assertResultIsBOOL(CFHTTPAuthenticationAppliesToRequest)
-        v = CFHTTPAuthenticationAppliesToRequest(ref, msg)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPAuthenticationAppliesToRequest)
+        v = CFNetwork.CFHTTPAuthenticationAppliesToRequest(ref, msg)
         self.assertIsInstance(v, bool)
 
-        self.assertResultIsBOOL(CFHTTPAuthenticationRequiresOrderedRequests)
-        v = CFHTTPAuthenticationRequiresOrderedRequests(ref)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPAuthenticationRequiresOrderedRequests)
+        v = CFNetwork.CFHTTPAuthenticationRequiresOrderedRequests(ref)
         self.assertIsInstance(v, bool)
 
-        url = CFURLCreateWithString(None, "http://www.python.org/", None)
-        req = CFHTTPMessageCreateRequest(None, "GET", url, "1.0")
+        url = CFNetwork.CFURLCreateWithString(None, "http://www.python.org/", None)
+        req = CFNetwork.CFHTTPMessageCreateRequest(None, "GET", url, "1.0")
 
-        self.assertResultIsBOOL(CFHTTPMessageApplyCredentials)
-        self.assertArgIsOut(CFHTTPMessageApplyCredentials, 4)
-        v, err = CFHTTPMessageApplyCredentials(req, ref, "ronald", "secret", None)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPMessageApplyCredentials)
+        self.assertArgIsOut(CFNetwork.CFHTTPMessageApplyCredentials, 4)
+        v, err = CFNetwork.CFHTTPMessageApplyCredentials(
+            req, ref, "ronald", "secret", None
+        )
         if v is True:
             self.assertEqual(err, None)
 
         else:
-            self.assertIsInstance(err, CFStreamError)
+            self.assertIsInstance(err, CFNetwork.CFStreamError)
 
-        self.assertResultIsBOOL(CFHTTPMessageApplyCredentialDictionary)
-        self.assertArgIsOut(CFHTTPMessageApplyCredentialDictionary, 3)
-        v, err = CFHTTPMessageApplyCredentialDictionary(
+        self.assertResultIsBOOL(CFNetwork.CFHTTPMessageApplyCredentialDictionary)
+        self.assertArgIsOut(CFNetwork.CFHTTPMessageApplyCredentialDictionary, 3)
+        v, err = CFNetwork.CFHTTPMessageApplyCredentialDictionary(
             req,
             ref,
             {
-                kCFHTTPAuthenticationUsername: "ronald",
-                kCFHTTPAuthenticationPassword: "secret",
+                CFNetwork.kCFHTTPAuthenticationUsername: "ronald",
+                CFNetwork.kCFHTTPAuthenticationPassword: "secret",
             },
             None,
         )
         if v is True:
             self.assertEqual(err, None)
         else:
-            self.assertIsInstance(err, CFStreamError)
+            self.assertIsInstance(err, CFNetwork.CFStreamError)
 
-        self.assertResultIsCFRetained(CFHTTPAuthenticationCopyRealm)
-        self.assertResultHasType(CFHTTPAuthenticationCopyRealm, b"@")
-        v = CFHTTPAuthenticationCopyRealm(ref)
-        self.assertTrue(v is None or isinstance(v, unicode))
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPAuthenticationCopyRealm)
+        self.assertResultHasType(CFNetwork.CFHTTPAuthenticationCopyRealm, b"@")
+        v = CFNetwork.CFHTTPAuthenticationCopyRealm(ref)
+        self.assertTrue(v is None or isinstance(v, str))
 
-        self.assertResultIsCFRetained(CFHTTPAuthenticationCopyDomains)
-        self.assertResultHasType(CFHTTPAuthenticationCopyDomains, b"^{__CFArray=}")
-        v = CFHTTPAuthenticationCopyDomains(ref)
-        self.assertTrue(v is None or isinstance(v, CFArrayRef))
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPAuthenticationCopyDomains)
+        self.assertResultHasType(
+            CFNetwork.CFHTTPAuthenticationCopyDomains, b"^{__CFArray=}"
+        )
+        v = CFNetwork.CFHTTPAuthenticationCopyDomains(ref)
+        self.assertTrue(v is None or isinstance(v, CFNetwork.CFArrayRef))
 
-        self.assertResultIsCFRetained(CFHTTPAuthenticationCopyMethod)
-        self.assertResultHasType(CFHTTPAuthenticationCopyMethod, b"@")
-        v = CFHTTPAuthenticationCopyMethod(ref)
-        self.assertTrue(v is None or isinstance(v, unicode))
+        self.assertResultIsCFRetained(CFNetwork.CFHTTPAuthenticationCopyMethod)
+        self.assertResultHasType(CFNetwork.CFHTTPAuthenticationCopyMethod, b"@")
+        v = CFNetwork.CFHTTPAuthenticationCopyMethod(ref)
+        self.assertTrue(v is None or isinstance(v, str))
 
-        self.assertResultIsBOOL(CFHTTPAuthenticationRequiresUserNameAndPassword)
-        v = CFHTTPAuthenticationRequiresUserNameAndPassword(ref)
+        self.assertResultIsBOOL(
+            CFNetwork.CFHTTPAuthenticationRequiresUserNameAndPassword
+        )
+        v = CFNetwork.CFHTTPAuthenticationRequiresUserNameAndPassword(ref)
         self.assertIsInstance(v, bool)
 
-        self.assertResultIsBOOL(CFHTTPAuthenticationRequiresAccountDomain)
-        v = CFHTTPAuthenticationRequiresAccountDomain(ref)
+        self.assertResultIsBOOL(CFNetwork.CFHTTPAuthenticationRequiresAccountDomain)
+        v = CFNetwork.CFHTTPAuthenticationRequiresAccountDomain(ref)
         self.assertIsInstance(v, bool)
-
-
-if __name__ == "__main__":
-    main()

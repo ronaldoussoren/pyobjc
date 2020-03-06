@@ -1,48 +1,45 @@
-from CFNetwork import *
-from PyObjCTools.TestSupport import *
+import CFNetwork
+import objc
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestCFNetwork(TestCase):
+    @expectedFailure
     def testTypes(self):
-        # XXX: CFNetDiagnosticsRef is not actually a proper type
-        # in Leopard, the result turns out to be a CFDictionaryRef...
-        # self.assertIsCFType(CFNetDiagnosticRef)
-        pass
+        self.assertIsCFType(CFNetwork.CFNetDiagnosticRef)
 
     def testConstants(self):
-        self.assertEqual(kCFNetDiagnosticNoErr, 0)
-        self.assertEqual(kCFNetDiagnosticErr, -66560)
-        self.assertEqual(kCFNetDiagnosticConnectionUp, -66559)
-        self.assertEqual(kCFNetDiagnosticConnectionIndeterminate, -66558)
-        self.assertEqual(kCFNetDiagnosticConnectionDown, -66557)
+        self.assertEqual(CFNetwork.kCFNetDiagnosticNoErr, 0)
+        self.assertEqual(CFNetwork.kCFNetDiagnosticErr, -66560)
+        self.assertEqual(CFNetwork.kCFNetDiagnosticConnectionUp, -66559)
+        self.assertEqual(CFNetwork.kCFNetDiagnosticConnectionIndeterminate, -66558)
+        self.assertEqual(CFNetwork.kCFNetDiagnosticConnectionDown, -66557)
 
     def testFuncdtions(self):
-        self.assertResultIsCFRetained(CFNetDiagnosticCreateWithStreams)
+        self.assertResultIsCFRetained(CFNetwork.CFNetDiagnosticCreateWithStreams)
 
-        host = CFHostCreateWithName(None, "www.apple.com")
-        rd, wr = CFStreamCreatePairWithSocketToCFHost(None, host, 80, None, None)
-        self.assertIsInstance(rd, CFReadStreamRef)
-        self.assertIsInstance(wr, CFWriteStreamRef)
+        host = CFNetwork.CFHostCreateWithName(None, "www.apple.com")
+        rd, wr = CFNetwork.CFStreamCreatePairWithSocketToCFHost(
+            None, host, 80, None, None
+        )
+        self.assertIsInstance(rd, CFNetwork.CFReadStreamRef)
+        self.assertIsInstance(wr, CFNetwork.CFWriteStreamRef)
 
-        ref = CFNetDiagnosticCreateWithStreams(None, rd, wr)
+        ref = CFNetwork.CFNetDiagnosticCreateWithStreams(None, rd, wr)
         self.assertIsInstance(ref, objc.objc_object)  # CFNetDiagnosticRef)
 
-        self.assertResultIsCFRetained(CFNetDiagnosticCreateWithURL)
-        ref = CFNetDiagnosticCreateWithURL(
-            None, CFURLCreateWithString(None, "http://www.apple.com/", None)
+        self.assertResultIsCFRetained(CFNetwork.CFNetDiagnosticCreateWithURL)
+        ref = CFNetwork.CFNetDiagnosticCreateWithURL(
+            None, CFNetwork.CFURLCreateWithString(None, "http://www.apple.com/", None)
         )
         self.assertIsInstance(ref, objc.objc_object)  # CFNetDiagnosticRef)
 
-        CFNetDiagnosticSetName(ref, "hello world")
+        CFNetwork.CFNetDiagnosticSetName(ref, "hello world")
 
-        sts = CFNetDiagnosticDiagnoseProblemInteractively(ref)
-        self.assertIsInstance(sts, (int, long))
+        sts = CFNetwork.CFNetDiagnosticDiagnoseProblemInteractively(ref)
+        self.assertIsInstance(sts, int)
 
-        self.assertArgIsOut(CFNetDiagnosticCopyNetworkStatusPassively, 1)
-        sts, descr = CFNetDiagnosticCopyNetworkStatusPassively(ref, None)
-        self.assertIsInstance(sts, (int, long))
-        self.assertIsInstance(descr, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsOut(CFNetwork.CFNetDiagnosticCopyNetworkStatusPassively, 1)
+        sts, descr = CFNetwork.CFNetDiagnosticCopyNetworkStatusPassively(ref, None)
+        self.assertIsInstance(sts, int)
+        self.assertIsInstance(descr, str)

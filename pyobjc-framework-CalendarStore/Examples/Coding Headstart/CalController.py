@@ -3,7 +3,6 @@ Bindings and notification support for Calendar data used
 by this application.  Exposes read-only collections
 (calendars, events, tasks) as observable entities.
 """
-import objc
 from CalendarStore import (
     CalCalendarsChangedExternallyNotification,
     CalCalendarsChangedNotification,
@@ -22,7 +21,7 @@ normPriority = "Normal"
 lowPriority = "Low"
 nonePriority = "None"
 
-# Transformer class for CalPriority->String conversion
+
 class CalPriorityToStringTransformer(NSValueTransformer):
     """
     The CalPriorityToStringTransformer class allows easy conversion between

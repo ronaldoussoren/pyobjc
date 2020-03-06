@@ -1,20 +1,18 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKError(TestCase):
         @min_os_level("10.10")
         def testConstants(self):
-            self.assertIsInstance(CloudKit.CKErrorDomain, unicode)
-            self.assertIsInstance(CloudKit.CKPartialErrorsByItemIDKey, unicode)
-            self.assertIsInstance(
-                CloudKit.CKRecordChangedErrorAncestorRecordKey, unicode
-            )
-            self.assertIsInstance(CloudKit.CKRecordChangedErrorServerRecordKey, unicode)
-            self.assertIsInstance(CloudKit.CKRecordChangedErrorClientRecordKey, unicode)
-            self.assertIsInstance(CloudKit.CKErrorRetryAfterKey, unicode)
+            self.assertIsInstance(CloudKit.CKErrorDomain, str)
+            self.assertIsInstance(CloudKit.CKPartialErrorsByItemIDKey, str)
+            self.assertIsInstance(CloudKit.CKRecordChangedErrorAncestorRecordKey, str)
+            self.assertIsInstance(CloudKit.CKRecordChangedErrorServerRecordKey, str)
+            self.assertIsInstance(CloudKit.CKRecordChangedErrorClientRecordKey, str)
+            self.assertIsInstance(CloudKit.CKErrorRetryAfterKey, str)
 
             self.assertEqual(CloudKit.CKErrorInternalError, 1)
             self.assertEqual(CloudKit.CKErrorPartialFailure, 2)
@@ -51,7 +49,3 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKErrorParticipantMayNeedVerification, 33)
             self.assertEqual(CloudKit.CKErrorServerResponseLost, 34)
             self.assertEqual(CloudKit.CKErrorAssetNotAvailable, 35)
-
-
-if __name__ == "__main__":
-    main()

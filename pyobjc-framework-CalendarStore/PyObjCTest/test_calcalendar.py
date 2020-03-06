@@ -1,22 +1,18 @@
-from CalendarStore import *
-from PyObjCTools.TestSupport import *
+import CalendarStore
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCalCalendar(TestCase):
     def testConstants(self):
-        self.assertIsInstance(CalCalendarTypeBirthday, unicode)
-        self.assertIsInstance(CalCalendarTypeCalDAV, unicode)
-        self.assertIsInstance(CalCalendarTypeLocal, unicode)
-        self.assertIsInstance(CalCalendarTypeSubscription, unicode)
-        self.assertIsInstance(CalCalendarTypeIMAP, unicode)
+        self.assertIsInstance(CalendarStore.CalCalendarTypeBirthday, str)
+        self.assertIsInstance(CalendarStore.CalCalendarTypeCalDAV, str)
+        self.assertIsInstance(CalendarStore.CalCalendarTypeLocal, str)
+        self.assertIsInstance(CalendarStore.CalCalendarTypeSubscription, str)
+        self.assertIsInstance(CalendarStore.CalCalendarTypeIMAP, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(CalCalendarTypeExchange, unicode)
+        self.assertIsInstance(CalendarStore.CalCalendarTypeExchange, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(CalCalendar.isEditable)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(CalendarStore.CalCalendar.isEditable)

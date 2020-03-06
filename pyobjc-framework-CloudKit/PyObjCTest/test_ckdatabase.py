@@ -1,8 +1,9 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
+    import objc
 
     class TestCKDatabase(TestCase):
         @min_os_level("10.10")
@@ -61,7 +62,3 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(CloudKit.CKDatabaseScopePublic, 1)
             self.assertEqual(CloudKit.CKDatabaseScopePrivate, 2)
             self.assertEqual(CloudKit.CKDatabaseScopeShared, 3)
-
-
-if __name__ == "__main__":
-    main()

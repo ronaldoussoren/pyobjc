@@ -1,7 +1,7 @@
 import sys
 
 if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import *
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import CloudKit
 
     class TestCKDiscoverAllUserIdentitiesOperation(TestCase):
@@ -18,15 +18,11 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBlock(
-                CloudKit.CKDiscoverAllUserIdentitiesOperation.setDiscoverAllUserIdentitiesCompletionBlock_,
+                CloudKit.CKDiscoverAllUserIdentitiesOperation.setDiscoverAllUserIdentitiesCompletionBlock_,  # noqa: B950
                 0,
                 b"v@",
             )
             self.assertResultIsBlock(
-                CloudKit.CKDiscoverAllUserIdentitiesOperation.discoverAllUserIdentitiesCompletionBlock,
+                CloudKit.CKDiscoverAllUserIdentitiesOperation.discoverAllUserIdentitiesCompletionBlock,  # noqa: B950
                 b"v@",
             )
-
-
-if __name__ == "__main__":
-    main()
