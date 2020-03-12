@@ -7,6 +7,9 @@ typedef struct s {
     int i;
     char b;
 } struct_s;
+
+typedef NSObject<NSObject> ObjectClass;
+
 @interface OCPropertyDefinitions : NSObject {
     int _prop1;
     float _prop2;
@@ -21,6 +24,8 @@ typedef struct s {
     id _prop11;
     id _prop12;
 }
+
+
 
 #if (PyObjC_BUILD_RELEASE >= 1005)
 
@@ -39,6 +44,7 @@ typedef struct s {
 @property(getter=propGetter, setter=propSetter:) id prop11;
 @property(nonatomic, readwrite, retain) id prop12;
 @property(readwrite, copy) id prop13;
+@property(weak, readonly) ObjectClass* parent;
 
 #pragma clang diagnostic pop
 #endif
@@ -62,6 +68,11 @@ typedef struct s {
 @synthesize prop11 = _prop11;
 @synthesize prop12 = _prop12;
 @dynamic prop13;
+
+-(ObjectClass*)parent
+{
+    return [NSArray array];
+}
 
 -(void)dealloc
 {

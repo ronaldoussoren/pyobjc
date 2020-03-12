@@ -38,6 +38,11 @@ Version 6.3
 * Added bindings for framework ``AutomaticAssessmentConfiguration.framework``
   introduced in macOS 10.15.4
 
+* #298: In some cases the compiler uses the type encoding "^{NSObject=#}"
+  instead of "@".
+
+  Reported by Georg Seifert.
+
 
 Version 6.2
 -----------

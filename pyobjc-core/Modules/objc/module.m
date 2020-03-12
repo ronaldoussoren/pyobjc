@@ -2700,6 +2700,19 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         return NULL;
     }
 
+    /* Issue #298, at least in Xcode 11.3 the following code results in
+     * a type encoding of "^{NSObject=#}" instead of "@" for the property:
+     *
+     * typedef NSObject<NSObject> ObjectClass;
+     *
+     * ...
+     * @property ObjectClass* value;
+     * ...
+     */
+    if (PyObjCPointerWrapper_RegisterID("NSObject", "^{NSObject=#}") < 0) {
+        return NULL;
+    }
+
     PyEval_InitThreads();
     if (![NSThread isMultiThreaded]) {
         [NSThread detachNewThreadSelector:@selector(targetForBecomingMultiThreaded:)
@@ -2732,6 +2745,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     [NSUnarchiver decodeClassName:@"OC_PythonString" asClassName:@"OC_PythonUnicode"];
 
 #pragma clang diagnostic pop
+
 
     PyObjC_Initialized = 1;
     return m;

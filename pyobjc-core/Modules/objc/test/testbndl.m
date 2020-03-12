@@ -61,6 +61,8 @@ struct complexStruct {
     /* 64 */ char* str;
 };
 
+typedef NSObject<NSObject> ObjectClass;
+
 @interface OC_TestClass1 : NSObject {
 }
 
@@ -167,6 +169,8 @@ struct complexStruct {
 - (id)passInID:(id*)arg;
 - (void)passOutID:(id*)arg;
 - (void)passInOutID:(id*)arg;
+
+-(ObjectClass*)returnObjectValue:(int)t;
 
 @end
 
@@ -846,6 +850,16 @@ static char* g_charps[] = {"hello", "world", "foobar"};
         temp = *arg;
     }
     *arg = [NSArray arrayWithObject:temp];
+}
+
+-(ObjectClass*)returnObjectValue:(int)t
+{
+    switch (t) {
+    case 1: return [NSObject new];
+    case 2: return [NSArray array];
+    case 3: return [NSDictionary dictionary];
+    default: return nil;
+    }
 }
 
 @end

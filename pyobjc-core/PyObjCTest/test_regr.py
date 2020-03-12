@@ -5,6 +5,8 @@ import warnings
 import objc
 from PyObjCTest import copying, structargs, testbndl
 from PyObjCTest.fnd import NSAutoreleasePool, NSObject
+from PyObjCTest.testbndl import OC_TestClass1
+from PyObjCTest.properties import OCPropertyDefinitions
 from PyObjCTools.TestSupport import *
 
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
@@ -341,6 +343,26 @@ class TestNSDataCreationIssue(TestCase):
         cls = objc.lookUpClass("NSData")
 
         cls.alloc().initWithData_(b"hello")
+
+class TestTypedefedClass (TestCase):
+    # Issue #298, see description in Modules/objc/module.m
+    def test_typedefed(self):
+        v = OC_TestClass1.alloc().init()
+
+        o = v.returnObjectValue_(1)
+        self.assertIsInstance(o, objc.lookUpClass("NSObject"))
+
+        o = v.returnObjectValue_(2)
+        self.assertIsInstance(o, objc.lookUpClass("NSArray"))
+
+        o = v.returnObjectValue_(3)
+        self.assertIsInstance(o, objc.lookUpClass("NSDictionary"))
+
+    def test_property(self):
+        v = OCPropertyDefinitions.alloc().init()
+
+        o = v.parent()
+        self.assertIsInstance(o, objc.lookUpClass("NSArray"))
 
 
 if __name__ == "__main__":
