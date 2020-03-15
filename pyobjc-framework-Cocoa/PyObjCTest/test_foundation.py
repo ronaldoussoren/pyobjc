@@ -4,8 +4,7 @@ Some simple tests to check that the framework is properly wrapped.
 import os
 
 import Foundation
-import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestFoundation(TestCase):
@@ -16,9 +15,9 @@ class TestFoundation(TestCase):
 
         if int(os.uname()[2].split(".")[0]) < 9:
             self.assertHasAttr(Foundation, "NSMaximumStringLength")
-            self.assertIsInstance(Foundation.NSMaximumStringLength, (int, long))
+            self.assertIsInstance(Foundation.NSMaximumStringLength, int)
         self.assertHasAttr(Foundation, "NSURLResponseUnknownLength")
-        self.assertIsInstance(Foundation.NSURLResponseUnknownLength, (int, long))
+        self.assertIsInstance(Foundation.NSURLResponseUnknownLength, int)
 
     def testFunctions(self):
         self.assertHasAttr(Foundation, "NSStringFromSelector")
@@ -57,7 +56,3 @@ class TestFoundation(TestCase):
         self.assertHasAttr(o, "m22")
         self.assertHasAttr(o, "tX")
         self.assertHasAttr(o, "tY")
-
-
-if __name__ == "__main__":
-    main()

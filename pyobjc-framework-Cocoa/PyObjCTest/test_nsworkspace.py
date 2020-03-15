@@ -1,13 +1,11 @@
-import os
-
 import objc
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSWorkspace(TestCase):
     def testInfoForFile(self):
-        ws = NSWorkspace.sharedWorkspace()
+        ws = AppKit.NSWorkspace.sharedWorkspace()
 
         # A method with 2 output parameters, this means the result
         # is a tuple with 3 elements (return value, param1, param2)
@@ -21,225 +19,258 @@ class TestNSWorkspace(TestCase):
         self.assertEqual(res[2], b"".decode("ascii"))
 
     def testConstants(self):
-        self.assertEqual(NSWorkspaceLaunchAndPrint, 0x00000002)
-        self.assertEqual(NSWorkspaceLaunchWithErrorPresentation, 0x00000040)
-        self.assertEqual(NSWorkspaceLaunchInhibitingBackgroundOnly, 0x00000080)
-        self.assertEqual(NSWorkspaceLaunchWithoutAddingToRecents, 0x00000100)
-        self.assertEqual(NSWorkspaceLaunchWithoutActivation, 0x00000200)
-        self.assertEqual(NSWorkspaceLaunchAsync, 0x00010000)
-        self.assertEqual(NSWorkspaceLaunchAllowingClassicStartup, 0x00020000)
-        self.assertEqual(NSWorkspaceLaunchPreferringClassic, 0x00040000)
-        self.assertEqual(NSWorkspaceLaunchNewInstance, 0x00080000)
-        self.assertEqual(NSWorkspaceLaunchAndHide, 0x00100000)
-        self.assertEqual(NSWorkspaceLaunchAndHideOthers, 0x00200000)
-        # self.assertEqual(NSWorkspaceLaunchDefault, (
-        #        NSWorkspaceLaunchAsync | NSWorkspaceLaunchAllowingClassicStartup))
-        self.assertEqual(NSWorkspaceLaunchDefault, NSWorkspaceLaunchAsync)
+        self.assertEqual(AppKit.NSWorkspaceLaunchAndPrint, 0x00000002)
+        self.assertEqual(AppKit.NSWorkspaceLaunchWithErrorPresentation, 0x00000040)
+        self.assertEqual(AppKit.NSWorkspaceLaunchInhibitingBackgroundOnly, 0x00000080)
+        self.assertEqual(AppKit.NSWorkspaceLaunchWithoutAddingToRecents, 0x00000100)
+        self.assertEqual(AppKit.NSWorkspaceLaunchWithoutActivation, 0x00000200)
+        self.assertEqual(AppKit.NSWorkspaceLaunchAsync, 0x00010000)
+        self.assertEqual(AppKit.NSWorkspaceLaunchAllowingClassicStartup, 0x00020000)
+        self.assertEqual(AppKit.NSWorkspaceLaunchPreferringClassic, 0x00040000)
+        self.assertEqual(AppKit.NSWorkspaceLaunchNewInstance, 0x00080000)
+        self.assertEqual(AppKit.NSWorkspaceLaunchAndHide, 0x00100000)
+        self.assertEqual(AppKit.NSWorkspaceLaunchAndHideOthers, 0x00200000)
+        self.assertEqual(AppKit.NSWorkspaceLaunchDefault, AppKit.NSWorkspaceLaunchAsync)
 
-        self.assertEqual(NSExcludeQuickDrawElementsIconCreationOption, 1 << 1)
-        self.assertEqual(NSExclude10_4ElementsIconCreationOption, 1 << 2)
+        self.assertEqual(AppKit.NSExcludeQuickDrawElementsIconCreationOption, 1 << 1)
+        self.assertEqual(AppKit.NSExclude10_4ElementsIconCreationOption, 1 << 2)
 
-        self.assertIsInstance(NSWorkspaceDidLaunchApplicationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidMountNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidPerformFileOperationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidTerminateApplicationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidUnmountNotification, unicode)
-        self.assertIsInstance(NSWorkspaceWillLaunchApplicationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceWillPowerOffNotification, unicode)
-        self.assertIsInstance(NSWorkspaceWillUnmountNotification, unicode)
-        self.assertIsInstance(NSWorkspaceWillSleepNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidWakeNotification, unicode)
-        self.assertIsInstance(NSWorkspaceSessionDidBecomeActiveNotification, unicode)
-        self.assertIsInstance(NSWorkspaceSessionDidResignActiveNotification, unicode)
-        self.assertIsInstance(NSPlainFileType, unicode)
-        self.assertIsInstance(NSDirectoryFileType, unicode)
-        self.assertIsInstance(NSApplicationFileType, unicode)
-        self.assertIsInstance(NSFilesystemFileType, unicode)
-        self.assertIsInstance(NSShellCommandFileType, unicode)
-        self.assertIsInstance(NSWorkspaceMoveOperation, unicode)
-        self.assertIsInstance(NSWorkspaceCopyOperation, unicode)
-        self.assertIsInstance(NSWorkspaceLinkOperation, unicode)
-        self.assertIsInstance(NSWorkspaceCompressOperation, unicode)
-        self.assertIsInstance(NSWorkspaceDecompressOperation, unicode)
-        self.assertIsInstance(NSWorkspaceEncryptOperation, unicode)
-        self.assertIsInstance(NSWorkspaceDecryptOperation, unicode)
-        self.assertIsInstance(NSWorkspaceDestroyOperation, unicode)
-        self.assertIsInstance(NSWorkspaceRecycleOperation, unicode)
-        self.assertIsInstance(NSWorkspaceDuplicateOperation, unicode)
+        self.assertIsInstance(AppKit.NSWorkspaceDidLaunchApplicationNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidMountNotification, str)
+        self.assertIsInstance(
+            AppKit.NSWorkspaceDidPerformFileOperationNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSWorkspaceDidTerminateApplicationNotification, str
+        )
+        self.assertIsInstance(AppKit.NSWorkspaceDidUnmountNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceWillLaunchApplicationNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceWillPowerOffNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceWillUnmountNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceWillSleepNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidWakeNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceSessionDidBecomeActiveNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceSessionDidResignActiveNotification, str)
+        self.assertIsInstance(AppKit.NSPlainFileType, str)
+        self.assertIsInstance(AppKit.NSDirectoryFileType, str)
+        self.assertIsInstance(AppKit.NSApplicationFileType, str)
+        self.assertIsInstance(AppKit.NSFilesystemFileType, str)
+        self.assertIsInstance(AppKit.NSShellCommandFileType, str)
+        self.assertIsInstance(AppKit.NSWorkspaceMoveOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceCopyOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceLinkOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceCompressOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDecompressOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceEncryptOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDecryptOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDestroyOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceRecycleOperation, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDuplicateOperation, str)
 
-        self.assertEqual(NSWorkspaceAuthorizationTypeCreateSymbolicLink, 0)
-        self.assertEqual(NSWorkspaceAuthorizationTypeSetAttributes, 1)
-        self.assertEqual(NSWorkspaceAuthorizationTypeReplaceFile, 2)
+        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeCreateSymbolicLink, 0)
+        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeSetAttributes, 1)
+        self.assertEqual(AppKit.NSWorkspaceAuthorizationTypeReplaceFile, 2)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(NSWorkspaceDesktopImageScalingKey, unicode)
-        self.assertIsInstance(NSWorkspaceDesktopImageAllowClippingKey, unicode)
-        self.assertIsInstance(NSWorkspaceDesktopImageFillColorKey, unicode)
-        self.assertIsInstance(NSWorkspaceApplicationKey, unicode)
-        self.assertIsInstance(NSWorkspaceDidHideApplicationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidUnhideApplicationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidActivateApplicationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidDeactivateApplicationNotification, unicode)
-        self.assertIsInstance(NSWorkspaceVolumeLocalizedNameKey, unicode)
-        self.assertIsInstance(NSWorkspaceVolumeURLKey, unicode)
-        self.assertIsInstance(NSWorkspaceVolumeOldLocalizedNameKey, unicode)
-        self.assertIsInstance(NSWorkspaceVolumeOldURLKey, unicode)
-        self.assertIsInstance(NSWorkspaceDidRenameVolumeNotification, unicode)
-        self.assertIsInstance(NSWorkspaceScreensDidSleepNotification, unicode)
-        self.assertIsInstance(NSWorkspaceScreensDidWakeNotification, unicode)
-        self.assertIsInstance(NSWorkspaceDidChangeFileLabelsNotification, unicode)
-        self.assertIsInstance(NSWorkspaceActiveSpaceDidChangeNotification, unicode)
-        self.assertIsInstance(NSWorkspaceLaunchConfigurationAppleEvent, unicode)
-        self.assertIsInstance(NSWorkspaceLaunchConfigurationArguments, unicode)
-        self.assertIsInstance(NSWorkspaceLaunchConfigurationEnvironment, unicode)
-        self.assertIsInstance(NSWorkspaceLaunchConfigurationArchitecture, unicode)
+        self.assertIsInstance(AppKit.NSWorkspaceDesktopImageScalingKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDesktopImageAllowClippingKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDesktopImageFillColorKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceApplicationKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidHideApplicationNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidUnhideApplicationNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidActivateApplicationNotification, str)
+        self.assertIsInstance(
+            AppKit.NSWorkspaceDidDeactivateApplicationNotification, str
+        )
+        self.assertIsInstance(AppKit.NSWorkspaceVolumeLocalizedNameKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceVolumeURLKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceVolumeOldLocalizedNameKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceVolumeOldURLKey, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidRenameVolumeNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceScreensDidSleepNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceScreensDidWakeNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceDidChangeFileLabelsNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceActiveSpaceDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationAppleEvent, str)
+        self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationArguments, str)
+        self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationEnvironment, str)
+        self.assertIsInstance(AppKit.NSWorkspaceLaunchConfigurationArchitecture, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSWorkspace.openFile_)
-        self.assertResultIsBOOL(NSWorkspace.openFile_withApplication_)
-        self.assertResultIsBOOL(NSWorkspace.openFile_withApplication_andDeactivate_)
-        self.assertArgIsBOOL(NSWorkspace.openFile_withApplication_andDeactivate_, 2)
-        self.assertResultIsBOOL(NSWorkspace.openTempFile_)
-        self.assertResultIsBOOL(NSWorkspace.openFile_fromImage_at_inView_)
-        self.assertResultIsBOOL(NSWorkspace.openURL_)
-        self.assertResultIsBOOL(NSWorkspace.launchApplication_)
-        self.assertResultIsBOOL(NSWorkspace.launchApplication_showIcon_autolaunch_)
-        self.assertArgIsBOOL(NSWorkspace.launchApplication_showIcon_autolaunch_, 1)
-        self.assertArgIsBOOL(NSWorkspace.launchApplication_showIcon_autolaunch_, 2)
-        self.assertResultIsBOOL(NSWorkspace.selectFile_inFileViewerRootedAtPath_)
-        self.assertResultIsBOOL(NSWorkspace.fileSystemChanged)
-        self.assertResultIsBOOL(NSWorkspace.userDefaultsChanged)
-        self.assertResultIsBOOL(NSWorkspace.getInfoForFile_application_type_)
-        self.assertArgIsOut(NSWorkspace.getInfoForFile_application_type_, 1)
-        self.assertArgIsOut(NSWorkspace.getInfoForFile_application_type_, 2)
-        self.assertResultIsBOOL(NSWorkspace.isFilePackageAtPath_)
-        self.assertResultIsBOOL(NSWorkspace.setIcon_forFile_options_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.openFile_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.openFile_withApplication_)
         self.assertResultIsBOOL(
-            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_
+            AppKit.NSWorkspace.openFile_withApplication_andDeactivate_
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSWorkspace.openFile_withApplication_andDeactivate_, 2
+        )
+        self.assertResultIsBOOL(AppKit.NSWorkspace.openTempFile_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.openFile_fromImage_at_inView_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.openURL_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.launchApplication_)
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_, 1
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSWorkspace.launchApplication_showIcon_autolaunch_, 2
+        )
+        self.assertResultIsBOOL(AppKit.NSWorkspace.selectFile_inFileViewerRootedAtPath_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.fileSystemChanged)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.userDefaultsChanged)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.getInfoForFile_application_type_)
+        self.assertArgIsOut(AppKit.NSWorkspace.getInfoForFile_application_type_, 1)
+        self.assertArgIsOut(AppKit.NSWorkspace.getInfoForFile_application_type_, 2)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.isFilePackageAtPath_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.setIcon_forFile_options_)
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_  # noqa: B950
         )
         self.assertArgHasType(
-            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            AppKit.NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,  # noqa: B950
             1,
             b"o^" + objc._C_NSBOOL,
         )
         self.assertArgHasType(
-            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            AppKit.NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,  # noqa: B950
             2,
             b"o^" + objc._C_NSBOOL,
         )
         self.assertArgHasType(
-            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            AppKit.NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,  # noqa: B950
             3,
             b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsOut(
-            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            AppKit.NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,  # noqa: B950
             4,
         )
         self.assertArgIsOut(
-            NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,
+            AppKit.NSWorkspace.getFileSystemInfoForPath_isRemovable_isWritable_isUnmountable_description_type_,  # noqa: B950
             5,
         )
         self.assertResultIsBOOL(
-            NSWorkspace.performFileOperation_source_destination_files_tag_
+            AppKit.NSWorkspace.performFileOperation_source_destination_files_tag_
         )
         self.assertArgIsOut(
-            NSWorkspace.performFileOperation_source_destination_files_tag_, 4
+            AppKit.NSWorkspace.performFileOperation_source_destination_files_tag_, 4
         )
-        self.assertResultIsBOOL(NSWorkspace.unmountAndEjectDeviceAtPath_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.unmountAndEjectDeviceAtPath_)
         self.assertResultIsBOOL(
-            NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_
+            AppKit.NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_  # noqa: B950
         )
         self.assertArgIsOut(
-            NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_,
+            AppKit.NSWorkspace.launchAppWithBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifier_,  # noqa: B950
             3,
         )
         self.assertResultIsBOOL(
-            NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_
+            AppKit.NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_  # noqa: B950
         )
         self.assertArgIsOut(
-            NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_,
+            AppKit.NSWorkspace.openURLs_withAppBundleIdentifier_options_additionalEventParamDescriptor_launchIdentifiers_,  # noqa: B950
             4,
         )
-        self.assertArgIsOut(NSWorkspace.typeOfFile_error_, 1)
-        self.assertResultIsBOOL(NSWorkspace.filenameExtension_isValidForType_)
-        self.assertResultIsBOOL(NSWorkspace.type_conformsToType_)
+        self.assertArgIsOut(AppKit.NSWorkspace.typeOfFile_error_, 1)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.filenameExtension_isValidForType_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.type_conformsToType_)
 
-        self.assertResultIsBOOL(NSWorkspace.selectFile_inFileViewerRootedAtPath_)
-        self.assertArgHasType(NSWorkspace.slideImage_from_to_, 1, NSPoint.__typestr__)
-        self.assertArgHasType(NSWorkspace.slideImage_from_to_, 2, NSPoint.__typestr__)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.selectFile_inFileViewerRootedAtPath_)
+        self.assertArgHasType(
+            AppKit.NSWorkspace.slideImage_from_to_, 1, AppKit.NSPoint.__typestr__
+        )
+        self.assertArgHasType(
+            AppKit.NSWorkspace.slideImage_from_to_, 2, AppKit.NSPoint.__typestr__
+        )
 
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsOut(
-            NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3
+            AppKit.NSWorkspace.launchApplicationAtURL_options_configuration_error_, 3
         )
-        self.assertResultIsBOOL(NSWorkspace.showSearchResultsForQueryString_)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.showSearchResultsForQueryString_)
 
-        self.assertArgIsBlock(NSWorkspace.recycleURLs_completionHandler_, 1, b"v@@")
-        self.assertArgIsBlock(NSWorkspace.duplicateURLs_completionHandler_, 1, b"v@@")
+        self.assertArgIsBlock(
+            AppKit.NSWorkspace.recycleURLs_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            AppKit.NSWorkspace.duplicateURLs_completionHandler_, 1, b"v@@"
+        )
 
-        self.assertResultIsBOOL(NSWorkspace.unmountAndEjectDeviceAtURL_error_)
-        self.assertArgIsOut(NSWorkspace.unmountAndEjectDeviceAtURL_error_, 1)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.unmountAndEjectDeviceAtURL_error_)
+        self.assertArgIsOut(AppKit.NSWorkspace.unmountAndEjectDeviceAtURL_error_, 1)
 
-        self.assertResultIsBOOL(NSWorkspace.setDesktopImageURL_forScreen_options_error_)
-        self.assertArgIsOut(NSWorkspace.setDesktopImageURL_forScreen_options_error_, 3)
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.setDesktopImageURL_forScreen_options_error_
+        )
+        self.assertArgIsOut(
+            AppKit.NSWorkspace.setDesktopImageURL_forScreen_options_error_, 3
+        )
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertArgIsOut(NSWorkspace.openURL_options_configuration_error_, 3)
+        self.assertArgIsOut(AppKit.NSWorkspace.openURL_options_configuration_error_, 3)
         self.assertArgIsOut(
-            NSWorkspace.openURLs_withApplicationAtURL_options_configuration_error_, 4
+            AppKit.NSWorkspace.openURLs_withApplicationAtURL_options_configuration_error_,
+            4,
         )
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertResultIsBOOL(NSWorkspace.isVoiceOverEnabled)
-        self.assertResultIsBOOL(NSWorkspace.isSwitchControlEnabled)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.isVoiceOverEnabled)
+        self.assertResultIsBOOL(AppKit.NSWorkspace.isSwitchControlEnabled)
 
     @min_os_level("10.14")
     def testMethods10_14(self):
         self.assertArgIsBlock(
-            NSWorkspace.requestAuthorizationOfType_completionHandler_, 1, b"v@@"
+            AppKit.NSWorkspace.requestAuthorizationOfType_completionHandler_, 1, b"v@@"
         )
 
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgIsBlock(
-            NSWorkspace.openURL_configuration_completionHandler_, 2, b"v@@"
+            AppKit.NSWorkspace.openURL_configuration_completionHandler_, 2, b"v@@"
         )
         self.assertArgIsBlock(
-            NSWorkspace.openURLs_withApplicationAtURL_configuration_completionHandler_,
+            AppKit.NSWorkspace.openURLs_withApplicationAtURL_configuration_completionHandler_,
             3,
             b"v@@",
         )
         self.assertArgIsBlock(
-            NSWorkspace.openApplicationAtURL_configuration_completionHandler_, 2, b"v@@"
+            AppKit.NSWorkspace.openApplicationAtURL_configuration_completionHandler_,
+            2,
+            b"v@@",
         )
 
-        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.promptsUserIfNeeded)
-        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.addsToRecentItems)
-        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.activates)
-        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.hides)
-        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.hidesOthers)
-        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.isForPrinting)
+        self.assertResultIsBOOL(AppKit.NSWorkspaceOpenConfiguration.promptsUserIfNeeded)
+        self.assertResultIsBOOL(AppKit.NSWorkspaceOpenConfiguration.addsToRecentItems)
+        self.assertResultIsBOOL(AppKit.NSWorkspaceOpenConfiguration.activates)
+        self.assertResultIsBOOL(AppKit.NSWorkspaceOpenConfiguration.hides)
+        self.assertResultIsBOOL(AppKit.NSWorkspaceOpenConfiguration.hidesOthers)
+        self.assertResultIsBOOL(AppKit.NSWorkspaceOpenConfiguration.isForPrinting)
         self.assertResultIsBOOL(
-            NSWorkspaceOpenConfiguration.createsNewApplicationInstance
+            AppKit.NSWorkspaceOpenConfiguration.createsNewApplicationInstance
         )
-        self.assertResultIsBOOL(NSWorkspaceOpenConfiguration.requiresUniversalLinks)
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspaceOpenConfiguration.requiresUniversalLinks
+        )
 
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setPromptsUserIfNeeded_, 0)
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setAddsToRecentItems_, 0)
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setActivates_, 0)
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHides_, 0)
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setHidesOthers_, 0)
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setForPrinting_, 0)
         self.assertArgIsBOOL(
-            NSWorkspaceOpenConfiguration.setCreatesNewApplicationInstance_, 0
+            AppKit.NSWorkspaceOpenConfiguration.setPromptsUserIfNeeded_, 0
         )
-        self.assertArgIsBOOL(NSWorkspaceOpenConfiguration.setRequiresUniversalLinks_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(
+            AppKit.NSWorkspaceOpenConfiguration.setAddsToRecentItems_, 0
+        )
+        self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setActivates_, 0)
+        self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setHides_, 0)
+        self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setHidesOthers_, 0)
+        self.assertArgIsBOOL(AppKit.NSWorkspaceOpenConfiguration.setForPrinting_, 0)
+        self.assertArgIsBOOL(
+            AppKit.NSWorkspaceOpenConfiguration.setCreatesNewApplicationInstance_, 0
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSWorkspaceOpenConfiguration.setRequiresUniversalLinks_, 0
+        )

@@ -1,44 +1,40 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPersonNameComponentsFormatter(TestCase):
     @min_os_level("10.11")
     def testConstants(self):
-        self.assertEqual(NSPersonNameComponentsFormatterStyleDefault, 0)
-        self.assertEqual(NSPersonNameComponentsFormatterStyleShort, 1)
-        self.assertEqual(NSPersonNameComponentsFormatterStyleMedium, 2)
-        self.assertEqual(NSPersonNameComponentsFormatterStyleLong, 3)
-        self.assertEqual(NSPersonNameComponentsFormatterStyleAbbreviated, 4)
+        self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleDefault, 0)
+        self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleShort, 1)
+        self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleMedium, 2)
+        self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleLong, 3)
+        self.assertEqual(Foundation.NSPersonNameComponentsFormatterStyleAbbreviated, 4)
 
-        self.assertEqual(NSPersonNameComponentsFormatterPhonetic, 1 << 1)
+        self.assertEqual(Foundation.NSPersonNameComponentsFormatterPhonetic, 1 << 1)
 
-        self.assertIsInstance(NSPersonNameComponentKey, unicode)
-        self.assertIsInstance(NSPersonNameComponentGivenName, unicode)
-        self.assertIsInstance(NSPersonNameComponentFamilyName, unicode)
-        self.assertIsInstance(NSPersonNameComponentMiddleName, unicode)
-        self.assertIsInstance(NSPersonNameComponentPrefix, unicode)
-        self.assertIsInstance(NSPersonNameComponentSuffix, unicode)
-        self.assertIsInstance(NSPersonNameComponentNickname, unicode)
-        self.assertIsInstance(NSPersonNameComponentDelimiter, unicode)
+        self.assertIsInstance(Foundation.NSPersonNameComponentKey, str)
+        self.assertIsInstance(Foundation.NSPersonNameComponentGivenName, str)
+        self.assertIsInstance(Foundation.NSPersonNameComponentFamilyName, str)
+        self.assertIsInstance(Foundation.NSPersonNameComponentMiddleName, str)
+        self.assertIsInstance(Foundation.NSPersonNameComponentPrefix, str)
+        self.assertIsInstance(Foundation.NSPersonNameComponentSuffix, str)
+        self.assertIsInstance(Foundation.NSPersonNameComponentNickname, str)
+        self.assertIsInstance(Foundation.NSPersonNameComponentDelimiter, str)
 
     @min_os_level("10.11")
     def testOutput(self):
         self.assertResultIsBOOL(
-            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_
+            Foundation.NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_  # noqa: B950
         )
         self.assertArgIsOut(
-            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_,
+            Foundation.NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_,  # noqa: B950
             0,
         )
         self.assertArgIsOut(
-            NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_,
+            Foundation.NSPersonNameComponentsFormatter.getObjectValue_forString_errorDescription_,  # noqa: B950
             2,
         )
 
-        self.assertResultIsBOOL(NSPersonNameComponentsFormatter.isPhonetic)
-        self.assertArgIsBOOL(NSPersonNameComponentsFormatter.setPhonetic_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSPersonNameComponentsFormatter.isPhonetic)
+        self.assertArgIsBOOL(Foundation.NSPersonNameComponentsFormatter.setPhonetic_, 0)

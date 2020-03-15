@@ -1,6 +1,5 @@
 import AppKit
-import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class ContantTest(TestCase):
@@ -15,12 +14,8 @@ class ContantTest(TestCase):
 
     def testNSViewFrameDidChangeNotification(self):
         self.assertHasAttr(AppKit, "NSViewFrameDidChangeNotification")
-        self.assertIsInstance(AppKit.NSViewFrameDidChangeNotification, unicode)
+        self.assertIsInstance(AppKit.NSViewFrameDidChangeNotification, str)
 
     def testNSUpArrowFunctionKey(self):
         self.assertHasAttr(AppKit, "NSUpArrowFunctionKey")
-        self.assertIsInstance(AppKit.NSUpArrowFunctionKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AppKit.NSUpArrowFunctionKey, str)

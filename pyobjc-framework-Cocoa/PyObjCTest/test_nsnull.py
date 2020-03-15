@@ -1,13 +1,9 @@
-from Foundation import NSNull
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSNull(TestCase):
     def testBool(self):
-        v = NSNull.null()
+        v = Foundation.NSNull.null()
         self.assertFalse(v)
         self.assertIsNot(v, None)
-
-
-if __name__ == "__main__":
-    main()

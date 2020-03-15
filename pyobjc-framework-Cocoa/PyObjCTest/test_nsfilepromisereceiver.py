@@ -1,16 +1,12 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFilePromiseReceiver(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
         self.assertArgIsBlock(
-            NSFilePromiseReceiver.receivePromisedFilesAtDestination_options_operationQueue_reader_,
+            AppKit.NSFilePromiseReceiver.receivePromisedFilesAtDestination_options_operationQueue_reader_,  # noqa: B950
             3,
             b"v@@",
         )
-
-
-if __name__ == "__main__":
-    main()

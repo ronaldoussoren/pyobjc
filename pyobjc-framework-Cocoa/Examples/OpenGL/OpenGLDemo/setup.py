@@ -6,11 +6,11 @@ Usage:
 """
 from setuptools import setup
 
-plist = dict(NSMainNibFile="OpenGLDemo")
+plist = {"NSMainNibFile": "OpenGLDemo"}
 setup(
     name="OpenGLDemo",
     app=["OpenGLDemo.py"],
     data_files=["OpenGLDemo.nib"],
-    options=dict(py2app=dict(plist=plist)),
+    options={"py2app": {"plist": plist}},
     setup_requires=["py2app", "PyOpenGL", "pyobjc-framework-Cocoa"],
 )

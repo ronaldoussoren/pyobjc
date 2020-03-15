@@ -1,30 +1,28 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestXMLNode(TestCase):
     def testConstants(self):
-        self.assertEqual(NSXMLInvalidKind, 0)
-        self.assertEqual(NSXMLDocumentKind, 1)
-        self.assertEqual(NSXMLElementKind, 2)
-        self.assertEqual(NSXMLAttributeKind, 3)
-        self.assertEqual(NSXMLNamespaceKind, 4)
-        self.assertEqual(NSXMLProcessingInstructionKind, 5)
-        self.assertEqual(NSXMLCommentKind, 6)
-        self.assertEqual(NSXMLTextKind, 7)
-        self.assertEqual(NSXMLDTDKind, 8)
-        self.assertEqual(NSXMLEntityDeclarationKind, 9)
-        self.assertEqual(NSXMLAttributeDeclarationKind, 10)
-        self.assertEqual(NSXMLElementDeclarationKind, 11)
-        self.assertEqual(NSXMLNotationDeclarationKind, 12)
+        self.assertEqual(Foundation.NSXMLInvalidKind, 0)
+        self.assertEqual(Foundation.NSXMLDocumentKind, 1)
+        self.assertEqual(Foundation.NSXMLElementKind, 2)
+        self.assertEqual(Foundation.NSXMLAttributeKind, 3)
+        self.assertEqual(Foundation.NSXMLNamespaceKind, 4)
+        self.assertEqual(Foundation.NSXMLProcessingInstructionKind, 5)
+        self.assertEqual(Foundation.NSXMLCommentKind, 6)
+        self.assertEqual(Foundation.NSXMLTextKind, 7)
+        self.assertEqual(Foundation.NSXMLDTDKind, 8)
+        self.assertEqual(Foundation.NSXMLEntityDeclarationKind, 9)
+        self.assertEqual(Foundation.NSXMLAttributeDeclarationKind, 10)
+        self.assertEqual(Foundation.NSXMLElementDeclarationKind, 11)
+        self.assertEqual(Foundation.NSXMLNotationDeclarationKind, 12)
 
     def testOutputArgs(self):
-        self.assertArgIsOut(NSXMLNode.nodesForXPath_error_, 1)
-        self.assertArgIsOut(NSXMLNode.objectsForXQuery_constants_error_, 2)
-        self.assertArgIsOut(NSXMLNode.objectsForXQuery_error_, 1)
-        self.assertArgIsBOOL(NSXMLNode.setStringValue_resolvingEntities_, 1)
-        self.assertArgIsBOOL(NSXMLNode.canonicalXMLStringPreservingComments_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsOut(Foundation.NSXMLNode.nodesForXPath_error_, 1)
+        self.assertArgIsOut(Foundation.NSXMLNode.objectsForXQuery_constants_error_, 2)
+        self.assertArgIsOut(Foundation.NSXMLNode.objectsForXQuery_error_, 1)
+        self.assertArgIsBOOL(Foundation.NSXMLNode.setStringValue_resolvingEntities_, 1)
+        self.assertArgIsBOOL(
+            Foundation.NSXMLNode.canonicalXMLStringPreservingComments_, 0
+        )

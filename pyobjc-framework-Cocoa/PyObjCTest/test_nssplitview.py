@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSSplitViewHelper(NSObject):
+class TestNSSplitViewHelper(AppKit.NSObject):
     def splitView_canCollapseSubview_(self, sp, sv):
         return 1
 
@@ -44,27 +45,27 @@ class TestNSSplitViewHelper(NSObject):
 
 class TestNSSplitView(TestCase):
     def testConstants(self):
-        self.assertEqual(NSSplitViewDividerStyleThick, 1)
-        self.assertEqual(NSSplitViewDividerStyleThin, 2)
+        self.assertEqual(AppKit.NSSplitViewDividerStyleThick, 1)
+        self.assertEqual(AppKit.NSSplitViewDividerStyleThin, 2)
 
-        self.assertIsInstance(NSSplitViewWillResizeSubviewsNotification, unicode)
-        self.assertIsInstance(NSSplitViewDidResizeSubviewsNotification, unicode)
+        self.assertIsInstance(AppKit.NSSplitViewWillResizeSubviewsNotification, str)
+        self.assertIsInstance(AppKit.NSSplitViewDidResizeSubviewsNotification, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSSplitViewDividerStylePaneSplitter, 3)
+        self.assertEqual(AppKit.NSSplitViewDividerStylePaneSplitter, 3)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSSplitView.isVertical)
-        self.assertArgIsBOOL(NSSplitView.setVertical_, 0)
-        self.assertResultIsBOOL(NSSplitView.isSubviewCollapsed_)
-        self.assertResultIsBOOL(NSSplitView.isPaneSplitter)
-        self.assertArgIsBOOL(NSSplitView.setIsPaneSplitter_, 0)
+        self.assertResultIsBOOL(AppKit.NSSplitView.isVertical)
+        self.assertArgIsBOOL(AppKit.NSSplitView.setVertical_, 0)
+        self.assertResultIsBOOL(AppKit.NSSplitView.isSubviewCollapsed_)
+        self.assertResultIsBOOL(AppKit.NSSplitView.isPaneSplitter)
+        self.assertArgIsBOOL(AppKit.NSSplitView.setIsPaneSplitter_, 0)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(NSSplitView.arrangesAllSubviews)
-        self.assertArgIsBOOL(NSSplitView.setArrangesAllSubviews_, 0)
+        self.assertResultIsBOOL(AppKit.NSSplitView.arrangesAllSubviews)
+        self.assertArgIsBOOL(AppKit.NSSplitView.setArrangesAllSubviews_, 0)
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
@@ -73,10 +74,10 @@ class TestNSSplitView(TestCase):
     def testProtocol(self):
         self.assertResultIsBOOL(TestNSSplitViewHelper.splitView_canCollapseSubview_)
         self.assertResultIsBOOL(
-            TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_
+            TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_  # noqa: B950
         )
         self.assertArgHasType(
-            TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_,
+            TestNSSplitViewHelper.splitView_shouldCollapseSubview_forDoubleClickOnDividerAtIndex_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
@@ -125,7 +126,7 @@ class TestNSSplitView(TestCase):
         self.assertArgHasType(
             TestNSSplitViewHelper.splitView_resizeSubviewsWithOldSize_,
             1,
-            NSSize.__typestr__,
+            AppKit.NSSize.__typestr__,
         )
 
     @min_os_level("10.5")
@@ -141,17 +142,17 @@ class TestNSSplitView(TestCase):
 
         self.assertResultHasType(
             TestNSSplitViewHelper.splitView_effectiveRect_forDrawnRect_ofDividerAtIndex_,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSSplitViewHelper.splitView_effectiveRect_forDrawnRect_ofDividerAtIndex_,
             1,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSSplitViewHelper.splitView_effectiveRect_forDrawnRect_ofDividerAtIndex_,
             2,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSSplitViewHelper.splitView_effectiveRect_forDrawnRect_ofDividerAtIndex_,
@@ -161,7 +162,7 @@ class TestNSSplitView(TestCase):
 
         self.assertResultHasType(
             TestNSSplitViewHelper.splitView_additionalEffectiveRectOfDividerAtIndex_,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSSplitViewHelper.splitView_additionalEffectiveRectOfDividerAtIndex_,
@@ -174,7 +175,3 @@ class TestNSSplitView(TestCase):
         self.assertResultIsBOOL(
             TestNSSplitViewHelper.splitView_shouldAdjustSizeOfSubview_
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileCoordinator(TestCase):
@@ -55,35 +55,31 @@ class TestNSFileCoordinator(TestCase):
         )
 
         self.assertArgIsOut(
-            Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,
+            Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,  # noqa: B950
             4,
         )
         self.assertArgIsBlock(
-            Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,
+            Foundation.NSFileCoordinator.coordinateReadingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,  # noqa: B950
             5,
             b"v@@",
         )
 
         self.assertArgIsOut(
-            Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,
+            Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,  # noqa: B950
             4,
         )
         self.assertArgIsBlock(
-            Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,
+            Foundation.NSFileCoordinator.coordinateWritingItemAtURL_options_writingItemAtURL_options_error_byAccessor_,  # noqa: B950
             5,
             b"v@@",
         )
 
         self.assertArgIsOut(
-            Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_,
+            Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_,  # noqa: B950
             4,
         )
         self.assertArgIsBlock(
-            Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_,
+            Foundation.NSFileCoordinator.prepareForReadingItemsAtURLs_options_writingItemsAtURLs_options_error_byAccessor_,  # noqa: B950
             5,
             b"v@?",
         )  # FIXME: Need test for the "nested" block
-
-
-if __name__ == "__main__":
-    main()

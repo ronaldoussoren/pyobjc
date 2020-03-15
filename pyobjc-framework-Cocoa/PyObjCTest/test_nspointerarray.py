@@ -1,10 +1,10 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPointerArray(TestCase):
     def testPointers(self):
-        o = NSPointerArray.pointerArrayWithStrongObjects()
+        o = Foundation.NSPointerArray.pointerArrayWithStrongObjects()
 
         m = o.addPointer_.__metadata__()
         self.assertEqual(m["arguments"][2]["type"], b"@")
@@ -17,7 +17,3 @@ class TestNSPointerArray(TestCase):
 
         m = o.pointerAtIndex_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"@")
-
-
-if __name__ == "__main__":
-    main()

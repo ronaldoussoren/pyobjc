@@ -1,14 +1,10 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSMenuItemCell(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSMenuItemCell.needsSizing)
-        self.assertArgIsBOOL(NSMenuItemCell.setNeedsSizing_, 0)
-        self.assertResultIsBOOL(NSMenuItemCell.needsDisplay)
-        self.assertArgIsBOOL(NSMenuItemCell.setNeedsDisplay_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSMenuItemCell.needsSizing)
+        self.assertArgIsBOOL(AppKit.NSMenuItemCell.setNeedsSizing_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenuItemCell.needsDisplay)
+        self.assertArgIsBOOL(AppKit.NSMenuItemCell.setNeedsDisplay_, 0)

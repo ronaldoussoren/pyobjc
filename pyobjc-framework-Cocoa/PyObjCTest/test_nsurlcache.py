@@ -1,19 +1,17 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSURLCache(TestCase):
     def testConstants(self):
-        self.assertEqual(NSURLCacheStorageAllowed, 0)
-        self.assertEqual(NSURLCacheStorageAllowedInMemoryOnly, 1)
-        self.assertEqual(NSURLCacheStorageNotAllowed, 2)
+        self.assertEqual(Foundation.NSURLCacheStorageAllowed, 0)
+        self.assertEqual(Foundation.NSURLCacheStorageAllowedInMemoryOnly, 1)
+        self.assertEqual(Foundation.NSURLCacheStorageNotAllowed, 2)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsBlock(
-            NSURLCache.getCachedResponseForDataTask_completionHandler_, 1, b"v@"
+            Foundation.NSURLCache.getCachedResponseForDataTask_completionHandler_,
+            1,
+            b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

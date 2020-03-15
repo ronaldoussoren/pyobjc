@@ -2,8 +2,8 @@
 #  FilteringController
 #
 
-import FilteringArrayController
-import FilteringControllerDocument
+import FilteringArrayController  # noqa: F401
+import FilteringControllerDocument  # noqa: F401
 from PyObjCTools import AppHelper
 
 AppHelper.runEventLoop()

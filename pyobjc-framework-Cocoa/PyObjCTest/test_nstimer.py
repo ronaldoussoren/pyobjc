@@ -1,8 +1,7 @@
 import gc
 
-from Foundation import *
-from objc import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class PythonClass(object):
@@ -16,16 +15,19 @@ class PythonClass(object):
 class TestNSTimer(TestCase):
     def _testHelp(self):
         obj = PythonClass()
-        pool = NSAutoreleasePool.alloc().init()
+        pool = Foundation.NSAutoreleasePool.alloc().init()
         self.assertArgIsBOOL(
-            NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4
+            Foundation.NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_,
+            4,
         )
-        timer = NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(
+        timer = Foundation.NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(
             0.1, obj, "fire:", None, False
         )
-        NSRunLoop.currentRunLoop().addTimer_forMode_(timer, NSDefaultRunLoopMode)
-        NSRunLoop.currentRunLoop().runUntilDate_(
-            NSDate.dateWithTimeIntervalSinceNow_(0.5)
+        Foundation.NSRunLoop.currentRunLoop().addTimer_forMode_(
+            timer, Foundation.NSDefaultRunLoopMode
+        )
+        Foundation.NSRunLoop.currentRunLoop().runUntilDate_(
+            Foundation.NSDate.dateWithTimeIntervalSinceNow_(0.5)
         )
         timer.invalidate()
         self.assertEqual(obj.fireCount, 1)
@@ -43,13 +45,13 @@ class TestNSTimer(TestCase):
         gc.collect()
         before = len(gc.get_objects())
 
-        for i in range(10):
+        for _ in range(10):
             self._testHelp()
 
         gc.collect()
         after = len(gc.get_objects())
 
-        for i in range(10):
+        for _ in range(10):
             self._testHelp()
 
         gc.collect()
@@ -58,51 +60,60 @@ class TestNSTimer(TestCase):
         self.assertEqual(after, before, "%d - %d - %d" % (before, after, after2))
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_invocation_repeats_, 2)
         self.assertArgIsBOOL(
-            NSTimer.scheduledTimerWithTimeInterval_invocation_repeats_, 2
+            Foundation.NSTimer.timerWithTimeInterval_invocation_repeats_, 2
         )
         self.assertArgIsBOOL(
-            NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 4
+            Foundation.NSTimer.scheduledTimerWithTimeInterval_invocation_repeats_, 2
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_,
+            4,
         )
         self.assertArgIsSEL(
-            NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_, 2, b"v@:@"
+            Foundation.NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_,
+            2,
+            b"v@:@",
         )
         self.assertArgIsBOOL(
-            NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_, 4
+            Foundation.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_,
+            4,
         )
         self.assertArgIsSEL(
-            NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_,
+            Foundation.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_,
             2,
             b"v@:@",
         )
 
         self.assertArgIsBOOL(
-            NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_, 5
+            Foundation.NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_,
+            5,
         )
         self.assertArgIsSEL(
-            NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_,
+            Foundation.NSTimer.initWithFireDate_interval_target_selector_userInfo_repeats_,
             3,
             b"v@:@",
         )
 
-        self.assertResultIsBOOL(NSTimer.isValid)
+        self.assertResultIsBOOL(Foundation.NSTimer.isValid)
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertArgIsBOOL(NSTimer.timerWithTimeInterval_repeats_block_, 1)
-        self.assertArgIsBlock(NSTimer.timerWithTimeInterval_repeats_block_, 2, b"v@")
-
-        self.assertArgIsBOOL(NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 1)
+        self.assertArgIsBOOL(Foundation.NSTimer.timerWithTimeInterval_repeats_block_, 1)
         self.assertArgIsBlock(
-            NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 2, b"v@"
+            Foundation.NSTimer.timerWithTimeInterval_repeats_block_, 2, b"v@"
         )
 
-        self.assertArgIsBOOL(NSTimer.initWithFireDate_interval_repeats_block_, 2)
+        self.assertArgIsBOOL(
+            Foundation.NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 1
+        )
         self.assertArgIsBlock(
-            NSTimer.initWithFireDate_interval_repeats_block_, 3, b"v@"
+            Foundation.NSTimer.scheduledTimerWithTimeInterval_repeats_block_, 2, b"v@"
         )
 
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(
+            Foundation.NSTimer.initWithFireDate_interval_repeats_block_, 2
+        )
+        self.assertArgIsBlock(
+            Foundation.NSTimer.initWithFireDate_interval_repeats_block_, 3, b"v@"
+        )

@@ -1,60 +1,69 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSOperation(TestCase):
     def testConstants(self):
-        self.assertEqual(NSOperationQueuePriorityVeryLow, -8)
-        self.assertEqual(NSOperationQueuePriorityLow, -4)
-        self.assertEqual(NSOperationQueuePriorityNormal, 0)
-        self.assertEqual(NSOperationQueuePriorityHigh, 4)
-        self.assertEqual(NSOperationQueuePriorityVeryHigh, 8)
+        self.assertEqual(Foundation.NSOperationQueuePriorityVeryLow, -8)
+        self.assertEqual(Foundation.NSOperationQueuePriorityLow, -4)
+        self.assertEqual(Foundation.NSOperationQueuePriorityNormal, 0)
+        self.assertEqual(Foundation.NSOperationQueuePriorityHigh, 4)
+        self.assertEqual(Foundation.NSOperationQueuePriorityVeryHigh, 8)
 
-        self.assertIsInstance(NSInvocationOperationVoidResultException, unicode)
-        self.assertIsInstance(NSInvocationOperationCancelledException, unicode)
-        self.assertEqual(NSOperationQueueDefaultMaxConcurrentOperationCount, -1)
+        self.assertIsInstance(Foundation.NSInvocationOperationVoidResultException, str)
+        self.assertIsInstance(Foundation.NSInvocationOperationCancelledException, str)
+        self.assertEqual(
+            Foundation.NSOperationQueueDefaultMaxConcurrentOperationCount, -1
+        )
 
         self.assertEqual(
-            NSOperationQualityOfServiceUserInteractive,
-            NSQualityOfServiceUserInteractive,
+            Foundation.NSOperationQualityOfServiceUserInteractive,
+            Foundation.NSQualityOfServiceUserInteractive,
         )
         self.assertEqual(
-            NSOperationQualityOfServiceUserInitiated, NSQualityOfServiceUserInitiated
+            Foundation.NSOperationQualityOfServiceUserInitiated,
+            Foundation.NSQualityOfServiceUserInitiated,
         )
-        self.assertEqual(NSOperationQualityOfServiceUtility, NSQualityOfServiceUtility)
         self.assertEqual(
-            NSOperationQualityOfServiceBackground, NSQualityOfServiceBackground
+            Foundation.NSOperationQualityOfServiceUtility,
+            Foundation.NSQualityOfServiceUtility,
+        )
+        self.assertEqual(
+            Foundation.NSOperationQualityOfServiceBackground,
+            Foundation.NSQualityOfServiceBackground,
         )
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSOperation.isCancelled)
-        self.assertResultIsBOOL(NSOperation.isExecuting)
-        self.assertResultIsBOOL(NSOperation.isFinished)
-        self.assertResultIsBOOL(NSOperation.isConcurrent)
-        self.assertResultIsBOOL(NSOperation.isReady)
+        self.assertResultIsBOOL(Foundation.NSOperation.isCancelled)
+        self.assertResultIsBOOL(Foundation.NSOperation.isExecuting)
+        self.assertResultIsBOOL(Foundation.NSOperation.isFinished)
+        self.assertResultIsBOOL(Foundation.NSOperation.isConcurrent)
+        self.assertResultIsBOOL(Foundation.NSOperation.isReady)
 
-        self.assertResultIsBOOL(NSOperationQueue.isSuspended)
-        self.assertArgIsBOOL(NSOperationQueue.setSuspended_, 0)
+        self.assertResultIsBOOL(Foundation.NSOperationQueue.isSuspended)
+        self.assertArgIsBOOL(Foundation.NSOperationQueue.setSuspended_, 0)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBlock(NSOperation.completionBlock, b"v")
-        self.assertArgIsBlock(NSOperation.setCompletionBlock_, 0, b"v")
+        self.assertResultIsBlock(Foundation.NSOperation.completionBlock, b"v")
+        self.assertArgIsBlock(Foundation.NSOperation.setCompletionBlock_, 0, b"v")
 
-        self.assertArgIsBlock(NSBlockOperation.blockOperationWithBlock_, 0, b"v")
-        self.assertArgIsBlock(NSBlockOperation.addExecutionBlock_, 0, b"v")
+        self.assertArgIsBlock(
+            Foundation.NSBlockOperation.blockOperationWithBlock_, 0, b"v"
+        )
+        self.assertArgIsBlock(Foundation.NSBlockOperation.addExecutionBlock_, 0, b"v")
 
-        self.assertArgIsBOOL(NSOperationQueue.addOperations_waitUntilFinished_, 1)
-        self.assertArgIsBlock(NSOperationQueue.addOperationWithBlock_, 0, b"v")
+        self.assertArgIsBOOL(
+            Foundation.NSOperationQueue.addOperations_waitUntilFinished_, 1
+        )
+        self.assertArgIsBlock(
+            Foundation.NSOperationQueue.addOperationWithBlock_, 0, b"v"
+        )
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSOperation.isAsynchronous)
+        self.assertResultIsBOOL(Foundation.NSOperation.isAsynchronous)
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertArgIsBlock(NSOperationQueue.addBarrierBlock_, 0, b"v")
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBlock(Foundation.NSOperationQueue.addBarrierBlock_, 0, b"v")

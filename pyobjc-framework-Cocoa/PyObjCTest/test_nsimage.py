@@ -1,9 +1,9 @@
 import AppKit
-from AppKit import *
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSImageHelper(NSObject):
+class TestNSImageHelper(AppKit.NSObject):
     def image_didLoadRepresentation_withStatus_(self, i, r, s):
         pass
 
@@ -31,90 +31,90 @@ class TestNSImage(TestCase):
         comboIcon.unlockFocus()
 
     def testConstants(self):
-        self.assertEqual(NSImageLoadStatusCompleted, 0)
-        self.assertEqual(NSImageLoadStatusCancelled, 1)
-        self.assertEqual(NSImageLoadStatusInvalidData, 2)
-        self.assertEqual(NSImageLoadStatusUnexpectedEOF, 3)
-        self.assertEqual(NSImageLoadStatusReadError, 4)
+        self.assertEqual(AppKit.NSImageLoadStatusCompleted, 0)
+        self.assertEqual(AppKit.NSImageLoadStatusCancelled, 1)
+        self.assertEqual(AppKit.NSImageLoadStatusInvalidData, 2)
+        self.assertEqual(AppKit.NSImageLoadStatusUnexpectedEOF, 3)
+        self.assertEqual(AppKit.NSImageLoadStatusReadError, 4)
 
-        self.assertEqual(NSImageCacheDefault, 0)
-        self.assertEqual(NSImageCacheAlways, 1)
-        self.assertEqual(NSImageCacheBySize, 2)
-        self.assertEqual(NSImageCacheNever, 3)
+        self.assertEqual(AppKit.NSImageCacheDefault, 0)
+        self.assertEqual(AppKit.NSImageCacheAlways, 1)
+        self.assertEqual(AppKit.NSImageCacheBySize, 2)
+        self.assertEqual(AppKit.NSImageCacheNever, 3)
 
-        self.assertEqual(NSImageResizingModeStretch, 0)
-        self.assertEqual(NSImageResizingModeTile, 1)
+        self.assertEqual(AppKit.NSImageResizingModeStretch, 0)
+        self.assertEqual(AppKit.NSImageResizingModeTile, 1)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(NSImageNameQuickLookTemplate, unicode)
-        self.assertIsInstance(NSImageNameBluetoothTemplate, unicode)
-        self.assertIsInstance(NSImageNameIChatTheaterTemplate, unicode)
-        self.assertIsInstance(NSImageNameSlideshowTemplate, unicode)
-        self.assertIsInstance(NSImageNameActionTemplate, unicode)
-        self.assertIsInstance(NSImageNameSmartBadgeTemplate, unicode)
-        self.assertIsInstance(NSImageNameIconViewTemplate, unicode)
-        self.assertIsInstance(NSImageNameListViewTemplate, unicode)
-        self.assertIsInstance(NSImageNameColumnViewTemplate, unicode)
-        self.assertIsInstance(NSImageNameFlowViewTemplate, unicode)
-        self.assertIsInstance(NSImageNamePathTemplate, unicode)
-        self.assertIsInstance(NSImageNameInvalidDataFreestandingTemplate, unicode)
-        self.assertIsInstance(NSImageNameLockLockedTemplate, unicode)
-        self.assertIsInstance(NSImageNameLockUnlockedTemplate, unicode)
-        self.assertIsInstance(NSImageNameGoRightTemplate, unicode)
-        self.assertIsInstance(NSImageNameGoLeftTemplate, unicode)
-        self.assertIsInstance(NSImageNameRightFacingTriangleTemplate, unicode)
-        self.assertIsInstance(NSImageNameLeftFacingTriangleTemplate, unicode)
-        self.assertIsInstance(NSImageNameAddTemplate, unicode)
-        self.assertIsInstance(NSImageNameRemoveTemplate, unicode)
-        self.assertIsInstance(NSImageNameRevealFreestandingTemplate, unicode)
-        self.assertIsInstance(NSImageNameFollowLinkFreestandingTemplate, unicode)
-        self.assertIsInstance(NSImageNameEnterFullScreenTemplate, unicode)
-        self.assertIsInstance(NSImageNameExitFullScreenTemplate, unicode)
-        self.assertIsInstance(NSImageNameStopProgressTemplate, unicode)
-        self.assertIsInstance(NSImageNameStopProgressFreestandingTemplate, unicode)
-        self.assertIsInstance(NSImageNameRefreshTemplate, unicode)
-        self.assertIsInstance(NSImageNameRefreshFreestandingTemplate, unicode)
-        self.assertIsInstance(NSImageNameBonjour, unicode)
-        self.assertIsInstance(NSImageNameDotMac, unicode)
-        self.assertIsInstance(NSImageNameComputer, unicode)
-        self.assertIsInstance(NSImageNameFolderBurnable, unicode)
-        self.assertIsInstance(NSImageNameFolderSmart, unicode)
-        self.assertIsInstance(NSImageNameNetwork, unicode)
-        self.assertIsInstance(NSImageNameMultipleDocuments, unicode)
-        self.assertIsInstance(NSImageNameUserAccounts, unicode)
-        self.assertIsInstance(NSImageNamePreferencesGeneral, unicode)
-        self.assertIsInstance(NSImageNameAdvanced, unicode)
-        self.assertIsInstance(NSImageNameInfo, unicode)
-        self.assertIsInstance(NSImageNameFontPanel, unicode)
-        self.assertIsInstance(NSImageNameColorPanel, unicode)
-        self.assertIsInstance(NSImageNameUser, unicode)
-        self.assertIsInstance(NSImageNameUserGroup, unicode)
-        self.assertIsInstance(NSImageNameEveryone, unicode)
+        self.assertIsInstance(AppKit.NSImageNameQuickLookTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameBluetoothTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameIChatTheaterTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameSlideshowTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameActionTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameSmartBadgeTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameIconViewTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameListViewTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameColumnViewTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameFlowViewTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNamePathTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameInvalidDataFreestandingTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameLockLockedTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameLockUnlockedTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameGoRightTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameGoLeftTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameRightFacingTriangleTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameLeftFacingTriangleTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameAddTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameRemoveTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameRevealFreestandingTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameFollowLinkFreestandingTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameEnterFullScreenTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameExitFullScreenTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameStopProgressTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameStopProgressFreestandingTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameRefreshTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameRefreshFreestandingTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameBonjour, str)
+        self.assertIsInstance(AppKit.NSImageNameDotMac, str)
+        self.assertIsInstance(AppKit.NSImageNameComputer, str)
+        self.assertIsInstance(AppKit.NSImageNameFolderBurnable, str)
+        self.assertIsInstance(AppKit.NSImageNameFolderSmart, str)
+        self.assertIsInstance(AppKit.NSImageNameNetwork, str)
+        self.assertIsInstance(AppKit.NSImageNameMultipleDocuments, str)
+        self.assertIsInstance(AppKit.NSImageNameUserAccounts, str)
+        self.assertIsInstance(AppKit.NSImageNamePreferencesGeneral, str)
+        self.assertIsInstance(AppKit.NSImageNameAdvanced, str)
+        self.assertIsInstance(AppKit.NSImageNameInfo, str)
+        self.assertIsInstance(AppKit.NSImageNameFontPanel, str)
+        self.assertIsInstance(AppKit.NSImageNameColorPanel, str)
+        self.assertIsInstance(AppKit.NSImageNameUser, str)
+        self.assertIsInstance(AppKit.NSImageNameUserGroup, str)
+        self.assertIsInstance(AppKit.NSImageNameEveryone, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSImage.setName_)
-        self.assertArgIsBOOL(NSImage.setScalesWhenResized_, 0)
-        self.assertResultIsBOOL(NSImage.scalesWhenResized)
-        self.assertArgIsBOOL(NSImage.setDataRetained_, 0)
-        self.assertResultIsBOOL(NSImage.isDataRetained)
-        self.assertArgIsBOOL(NSImage.setCachedSeparately_, 0)
-        self.assertResultIsBOOL(NSImage.isCachedSeparately)
-        self.assertArgIsBOOL(NSImage.setCacheDepthMatchesImageDepth_, 0)
-        self.assertResultIsBOOL(NSImage.cacheDepthMatchesImageDepth)
-        self.assertArgIsBOOL(NSImage.setUsesEPSOnResolutionMismatch_, 0)
-        self.assertResultIsBOOL(NSImage.usesEPSOnResolutionMismatch)
-        self.assertArgIsBOOL(NSImage.setPrefersColorMatch_, 0)
-        self.assertResultIsBOOL(NSImage.prefersColorMatch)
-        self.assertArgIsBOOL(NSImage.setMatchesOnMultipleResolution_, 0)
-        self.assertResultIsBOOL(NSImage.matchesOnMultipleResolution)
-        self.assertResultIsBOOL(NSImage.drawRepresentation_inRect_)
-        self.assertResultIsBOOL(NSImage.isValid)
-        self.assertResultIsBOOL(NSImage.canInitWithPasteboard_)
-        self.assertResultIsBOOL(NSImage.isFlipped)
-        self.assertArgIsBOOL(NSImage.setFlipped_, 0)
-        self.assertResultIsBOOL(NSImage.isTemplate)
-        self.assertArgIsBOOL(NSImage.setTemplate_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.setName_)
+        self.assertArgIsBOOL(AppKit.NSImage.setScalesWhenResized_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.scalesWhenResized)
+        self.assertArgIsBOOL(AppKit.NSImage.setDataRetained_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.isDataRetained)
+        self.assertArgIsBOOL(AppKit.NSImage.setCachedSeparately_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.isCachedSeparately)
+        self.assertArgIsBOOL(AppKit.NSImage.setCacheDepthMatchesImageDepth_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.cacheDepthMatchesImageDepth)
+        self.assertArgIsBOOL(AppKit.NSImage.setUsesEPSOnResolutionMismatch_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.usesEPSOnResolutionMismatch)
+        self.assertArgIsBOOL(AppKit.NSImage.setPrefersColorMatch_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.prefersColorMatch)
+        self.assertArgIsBOOL(AppKit.NSImage.setMatchesOnMultipleResolution_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.matchesOnMultipleResolution)
+        self.assertResultIsBOOL(AppKit.NSImage.drawRepresentation_inRect_)
+        self.assertResultIsBOOL(AppKit.NSImage.isValid)
+        self.assertResultIsBOOL(AppKit.NSImage.canInitWithPasteboard_)
+        self.assertResultIsBOOL(AppKit.NSImage.isFlipped)
+        self.assertArgIsBOOL(AppKit.NSImage.setFlipped_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.isTemplate)
+        self.assertArgIsBOOL(AppKit.NSImage.setTemplate_, 0)
 
     def testProtocols(self):
 
@@ -136,163 +136,172 @@ class TestNSImage(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgHasType(
-            NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+            AppKit.NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
             0,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgIsBOOL(
-            NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_, 4
+            AppKit.NSImage.drawInRect_fromRect_operation_fraction_respectFlipped_hints_,
+            4,
         )
-        self.assertArgIsBOOL(NSImage.lockFocusFlipped_, 0)
-        self.assertArgHasType(NSImage.initWithCGImage_size_, 1, NSSize.__typestr__)
+        self.assertArgIsBOOL(AppKit.NSImage.lockFocusFlipped_, 0)
         self.assertArgHasType(
-            NSImage.CGImageForProposedRect_context_hints_, 0, b"o^" + NSRect.__typestr__
+            AppKit.NSImage.initWithCGImage_size_, 1, AppKit.NSSize.__typestr__
         )
         self.assertArgHasType(
-            NSImage.bestRepresentationForRect_context_hints_, 0, NSRect.__typestr__
+            AppKit.NSImage.CGImageForProposedRect_context_hints_,
+            0,
+            b"o^" + AppKit.NSRect.__typestr__,
+        )
+        self.assertArgHasType(
+            AppKit.NSImage.bestRepresentationForRect_context_hints_,
+            0,
+            AppKit.NSRect.__typestr__,
         )
 
         self.assertResultIsBOOL(
-            NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_
+            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_
         )
         self.assertArgHasType(
-            NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
+            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
             0,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
+            AppKit.NSImage.hitTestRect_withImageDestinationRect_context_hints_flipped_,
             1,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertResultIsBOOL(NSImage.matchesOnlyOnBestFittingAxis)
-        self.assertArgIsBOOL(NSImage.setMatchesOnlyOnBestFittingAxis_, 0)
+        self.assertResultIsBOOL(AppKit.NSImage.matchesOnlyOnBestFittingAxis)
+        self.assertArgIsBOOL(AppKit.NSImage.setMatchesOnlyOnBestFittingAxis_, 0)
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertArgIsBOOL(NSImage.imageWithSize_flipped_drawingHandler_, 1)
+        self.assertArgIsBOOL(AppKit.NSImage.imageWithSize_flipped_drawingHandler_, 1)
         self.assertArgIsBlock(
-            NSImage.imageWithSize_flipped_drawingHandler_,
+            AppKit.NSImage.imageWithSize_flipped_drawingHandler_,
             2,
-            objc._C_NSBOOL + NSRect.__typestr__,
+            objc._C_NSBOOL + AppKit.NSRect.__typestr__,
         )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(NSImageHintCTM, unicode)
-        self.assertIsInstance(NSImageHintInterpolation, unicode)
-        self.assertIsInstance(NSImageNameFolder, unicode)
-        self.assertIsInstance(NSImageNameMobileMe, unicode)
-        self.assertIsInstance(NSImageNameUserGuest, unicode)
-        self.assertIsInstance(NSImageNameMenuOnStateTemplate, unicode)
-        self.assertIsInstance(NSImageNameMenuMixedStateTemplate, unicode)
-        self.assertIsInstance(NSImageNameApplicationIcon, unicode)
-        self.assertIsInstance(NSImageNameTrashEmpty, unicode)
-        self.assertIsInstance(NSImageNameTrashFull, unicode)
-        self.assertIsInstance(NSImageNameHomeTemplate, unicode)
-        self.assertIsInstance(NSImageNameBookmarksTemplate, unicode)
-        self.assertIsInstance(NSImageNameCaution, unicode)
-        self.assertIsInstance(NSImageNameStatusAvailable, unicode)
-        self.assertIsInstance(NSImageNameStatusPartiallyAvailable, unicode)
-        self.assertIsInstance(NSImageNameStatusUnavailable, unicode)
-        self.assertIsInstance(NSImageNameStatusNone, unicode)
+        self.assertIsInstance(AppKit.NSImageHintCTM, str)
+        self.assertIsInstance(AppKit.NSImageHintInterpolation, str)
+        self.assertIsInstance(AppKit.NSImageNameFolder, str)
+        self.assertIsInstance(AppKit.NSImageNameMobileMe, str)
+        self.assertIsInstance(AppKit.NSImageNameUserGuest, str)
+        self.assertIsInstance(AppKit.NSImageNameMenuOnStateTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameMenuMixedStateTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameApplicationIcon, str)
+        self.assertIsInstance(AppKit.NSImageNameTrashEmpty, str)
+        self.assertIsInstance(AppKit.NSImageNameTrashFull, str)
+        self.assertIsInstance(AppKit.NSImageNameHomeTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameBookmarksTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameCaution, str)
+        self.assertIsInstance(AppKit.NSImageNameStatusAvailable, str)
+        self.assertIsInstance(AppKit.NSImageNameStatusPartiallyAvailable, str)
+        self.assertIsInstance(AppKit.NSImageNameStatusUnavailable, str)
+        self.assertIsInstance(AppKit.NSImageNameStatusNone, str)
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(NSImageNameShareTemplate, unicode)
+        self.assertIsInstance(AppKit.NSImageNameShareTemplate, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(NSImageHintUserInterfaceLayoutDirection, unicode)
-        self.assertIsInstance(NSImageNameGoForwardTemplate, unicode)
-        self.assertIsInstance(NSImageNameGoBackTemplate, unicode)
+        self.assertIsInstance(AppKit.NSImageHintUserInterfaceLayoutDirection, str)
+        self.assertIsInstance(AppKit.NSImageNameGoForwardTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameGoBackTemplate, str)
 
-        self.assertIsInstance(NSImageNameTouchBarAddDetailTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAddTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAlarmTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAudioInputMuteTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAudioInputTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAudioOutputMuteTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAudioOutputVolumeHighTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarAudioOutputVolumeLowTemplate, unicode)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarAddDetailTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarAddTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarAlarmTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarAudioInputMuteTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarAudioInputTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarAudioOutputMuteTemplate, str)
         self.assertIsInstance(
-            NSImageNameTouchBarAudioOutputVolumeMediumTemplate, unicode
+            AppKit.NSImageNameTouchBarAudioOutputVolumeHighTemplate, str
         )
-        self.assertIsInstance(NSImageNameTouchBarAudioOutputVolumeOffTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarBookmarksTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarColorPickerFill, unicode)
-        self.assertIsInstance(NSImageNameTouchBarColorPickerFont, unicode)
-        self.assertIsInstance(NSImageNameTouchBarColorPickerStroke, unicode)
-        self.assertIsInstance(NSImageNameTouchBarCommunicationAudioTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarCommunicationVideoTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarComposeTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarDeleteTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarDownloadTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarEnterFullScreenTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarExitFullScreenTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarFastForwardTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarFolderCopyToTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarFolderMoveToTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarFolderTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarGetInfoTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarGoBackTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarGoDownTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarGoForwardTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarGoUpTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarHistoryTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarIconViewTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarListViewTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarMailTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarNewFolderTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarNewMessageTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarOpenInBrowserTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarPauseTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarPlayheadTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarPlayPauseTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarPlayTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarQuickLookTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarRecordStartTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarRecordStopTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarRefreshTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarRewindTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarRotateLeftTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarRotateRightTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSearchTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarShareTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSidebarTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipAhead15SecondsTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipAhead30SecondsTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipAheadTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipBack15SecondsTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipBack30SecondsTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipBackTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipToEndTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSkipToStartTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarSlideshowTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTagIconTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextBoldTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextBoxTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextCenterAlignTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextItalicTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextJustifiedAlignTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextLeftAlignTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextListTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextRightAlignTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextStrikethroughTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarTextUnderlineTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarUserAddTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarUserGroupTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarUserTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarVolumeDownTemplate, unicode)
-        self.assertIsInstance(NSImageNameTouchBarVolumeUpTemplate, unicode)
+        self.assertIsInstance(
+            AppKit.NSImageNameTouchBarAudioOutputVolumeLowTemplate, str
+        )
+        self.assertIsInstance(
+            AppKit.NSImageNameTouchBarAudioOutputVolumeMediumTemplate, str
+        )
+        self.assertIsInstance(
+            AppKit.NSImageNameTouchBarAudioOutputVolumeOffTemplate, str
+        )
+        self.assertIsInstance(AppKit.NSImageNameTouchBarBookmarksTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarColorPickerFill, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarColorPickerFont, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarColorPickerStroke, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarCommunicationAudioTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarCommunicationVideoTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarComposeTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarDeleteTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarDownloadTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarEnterFullScreenTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarExitFullScreenTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarFastForwardTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarFolderCopyToTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarFolderMoveToTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarFolderTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarGetInfoTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarGoBackTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarGoDownTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarGoForwardTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarGoUpTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarHistoryTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarIconViewTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarListViewTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarMailTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarNewFolderTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarNewMessageTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarOpenInBrowserTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarPauseTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarPlayheadTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarPlayPauseTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarPlayTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarQuickLookTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarRecordStartTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarRecordStopTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarRefreshTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarRewindTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarRotateLeftTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarRotateRightTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSearchTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarShareTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSidebarTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipAhead15SecondsTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipAhead30SecondsTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipAheadTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipBack15SecondsTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipBack30SecondsTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipBackTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipToEndTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSkipToStartTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarSlideshowTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTagIconTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextBoldTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextBoxTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextCenterAlignTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextItalicTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextJustifiedAlignTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextLeftAlignTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextListTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextRightAlignTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextStrikethroughTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarTextUnderlineTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarUserAddTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarUserGroupTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarUserTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarVolumeDownTemplate, str)
+        self.assertIsInstance(AppKit.NSImageNameTouchBarVolumeUpTemplate, str)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(NSImageNameTouchBarRemoveTemplate, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AppKit.NSImageNameTouchBarRemoveTemplate, str)

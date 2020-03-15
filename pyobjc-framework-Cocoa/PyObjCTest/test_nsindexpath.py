@@ -1,25 +1,27 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSIndexPath(TestCase):
     def testMethods(self):
-        self.assertArgIsIn(NSIndexPath.indexPathWithIndexes_length_, 0)
-        self.assertArgSizeInArg(NSIndexPath.indexPathWithIndexes_length_, 0, 1)
+        self.assertArgIsIn(Foundation.NSIndexPath.indexPathWithIndexes_length_, 0)
+        self.assertArgSizeInArg(
+            Foundation.NSIndexPath.indexPathWithIndexes_length_, 0, 1
+        )
 
-        self.assertArgIsIn(NSIndexPath.initWithIndexes_length_, 0)
-        self.assertArgSizeInArg(NSIndexPath.initWithIndexes_length_, 0, 1)
+        self.assertArgIsIn(Foundation.NSIndexPath.initWithIndexes_length_, 0)
+        self.assertArgSizeInArg(Foundation.NSIndexPath.initWithIndexes_length_, 0, 1)
 
-        self.assertArgIsOut(NSIndexPath.getIndexes_, 0)
-        self.assertArgIsVariableSize(NSIndexPath.getIndexes_, 0)
+        self.assertArgIsOut(Foundation.NSIndexPath.getIndexes_, 0)
+        self.assertArgIsVariableSize(Foundation.NSIndexPath.getIndexes_, 0)
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertArgIsOut(NSIndexPath.getIndexes_range_, 0)
-        self.assertArgSizeInArg(NSIndexPath.getIndexes_range_, 0, 1)
+        self.assertArgIsOut(Foundation.NSIndexPath.getIndexes_range_, 0)
+        self.assertArgSizeInArg(Foundation.NSIndexPath.getIndexes_range_, 0, 1)
 
     def testConvenience(self):
-        path = NSIndexPath.indexPathWithIndexes_length_([0, 1, 4], 3)
+        path = Foundation.NSIndexPath.indexPathWithIndexes_length_([0, 1, 4], 3)
 
         self.assertEqual(path[0], 0)
         self.assertEqual(path[1], 1)
@@ -33,7 +35,3 @@ class TestNSIndexPath(TestCase):
 
         with self.assertRaises(ValueError):
             p2[1:3]
-
-
-if __name__ == "__main__":
-    main()

@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestNSATSTypesetterHelper(NSATSTypesetter):
+class TestNSATSTypesetterHelper(AppKit.NSATSTypesetter):
     def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
         self, lineRect, glyphRange, usedRect, offset
     ):
@@ -20,7 +21,7 @@ class TestNSATSTypesetterHelper(NSATSTypesetter):
     def hyphenCharacterForGlyphAtIndex_(self, v):
         return None
 
-    def boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(
+    def boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(  # noqa: B950
         self, v, v2, v3, v4, v5
     ):
         return None
@@ -66,15 +67,15 @@ class TestNSATSTypesetterHelper(NSATSTypesetter):
 class TestNSATSTypesetter(TestCase):
     def testByRefArguments(self):
         self.assertArgIsOut(
-            NSATSTypesetter.lineFragmentRectForProposedRect_remainingRect_, 1
+            AppKit.NSATSTypesetter.lineFragmentRectForProposedRect_remainingRect_, 1
         )
-        self.assertArgIsInOut(NSATSTypesetter.layoutParagraphAtPoint_, 0)
+        self.assertArgIsInOut(AppKit.NSATSTypesetter.layoutParagraphAtPoint_, 0)
         self.assertArgIsOut(
-            NSATSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,
+            AppKit.NSATSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,  # noqa: B950
             0,
         )
         self.assertArgIsOut(
-            NSATSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,
+            AppKit.NSATSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,  # noqa: B950
             1,
         )
 
@@ -103,28 +104,40 @@ class TestNSATSTypesetter(TestCase):
         self.assertStartswith(m["arguments"][2]["type"], b"{")
         self.assertStartswith(m["arguments"][3]["type"], b"o^{")
 
-        self.assertResultIsBOOL(NSATSTypesetter.usesFontLeading)
-        self.assertArgIsBOOL(NSATSTypesetter.setUsesFontLeading_, 0)
-        self.assertResultIsBOOL(NSATSTypesetter.bidiProcessingEnabled)
-        self.assertArgIsBOOL(NSATSTypesetter.setBidiProcessingEnabled_, 0)
-        self.assertArgIsBOOL(NSATSTypesetter.setHardInvalidation_forGlyphRange_, 0)
-        self.assertArgIsBOOL(NSATSTypesetter.setNotShownAttribute_forGlyphRange_, 0)
+        self.assertResultIsBOOL(AppKit.NSATSTypesetter.usesFontLeading)
+        self.assertArgIsBOOL(AppKit.NSATSTypesetter.setUsesFontLeading_, 0)
+        self.assertResultIsBOOL(AppKit.NSATSTypesetter.bidiProcessingEnabled)
+        self.assertArgIsBOOL(AppKit.NSATSTypesetter.setBidiProcessingEnabled_, 0)
         self.assertArgIsBOOL(
-            NSATSTypesetter.setDrawsOutsideLineFragment_forGlyphRange_, 0
+            AppKit.NSATSTypesetter.setHardInvalidation_forGlyphRange_, 0
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSATSTypesetter.setNotShownAttribute_forGlyphRange_, 0
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSATSTypesetter.setDrawsOutsideLineFragment_forGlyphRange_, 0
         )
 
         self.assertArgIsIn(
-            NSATSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1
+            AppKit.NSATSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1
         )
         self.assertArgSizeInArg(
-            NSATSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1, 2
+            AppKit.NSATSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_,
+            1,
+            2,
         )
-        self.assertArgSizeInArg(NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
-        self.assertArgSizeInArg(NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
+        self.assertArgSizeInArg(
+            AppKit.NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1
+        )
+        self.assertArgSizeInArg(
+            AppKit.NSATSTypesetter.setBidiLevels_forGlyphRange_, 0, 1
+        )
 
-        self.assertArgIsIn(NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
+        self.assertArgIsIn(
+            AppKit.NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1
+        )
         self.assertArgSizeInArg(
-            NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
+            AppKit.NSATSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
         )
 
     def testSubclassProtocols(self):
@@ -137,17 +150,17 @@ class TestNSATSTypesetter(TestCase):
 
         self.assertResultHasType(
             TestNSATSTypesetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSATSTypesetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSATSTypesetterHelper.characterRangeForGlyphRange_actualGlyphRange_,
             1,
-            b"o^" + NSRange.__typestr__,
+            b"o^" + AppKit.NSRange.__typestr__,
         )
 
         self.assertArgIsBOOL(
@@ -156,9 +169,5 @@ class TestNSATSTypesetter(TestCase):
         self.assertArgHasType(
             TestNSATSTypesetterHelper.setNotShownAttribute_forGlyphRange_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
-
-
-if __name__ == "__main__":
-    main()

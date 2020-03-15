@@ -55,7 +55,8 @@ class MyWindowController(Cocoa.NSWindowController):
     clearMaxDateButton = objc.IBOutlet()
 
     def awakeFromNib(self):
-        # based our date formatter on CFDateFormatter: allows more configurability and better localization
+        # based our date formatter on CFDateFormatter: allows more
+        # configurability and better localization
         Cocoa.NSDateFormatter.setDefaultFormatterBehavior_(
             Cocoa.NSDateFormatterBehavior10_4
         )
@@ -87,7 +88,8 @@ class MyWindowController(Cocoa.NSWindowController):
         return True
 
     def setupDatePickerControl_(self, pickerStyle):
-        # we need to re-create the picker control (due to a resize bug when switching between styles)
+        # we need to re-create the picker control (due to a resize bug when
+        # switching between styles)
         if (
             self.datePickerControl is not None
         ):  # hide and release the previous date picker, if any
@@ -145,17 +147,27 @@ class MyWindowController(Cocoa.NSWindowController):
             formatter = Cocoa.NSDateFormatter.alloc().init()
 
             # some examples:
-            # formatter.setDateStyle_(Cocoa.NSDateFormatterNoStyle)            # <no date displayed>
-            # formatter.setDateStyle_(Cocoa.NSDateFormatterMediumStyle)        # Jan 24, 1984
-            # formatter.setDateStyle_(Cocoa.NSDateFormatterShortStyle)         # 1/24/84
-            # formatter.setDateStyle_(Cocoa.NSDateFormatterLongStyle)          # January 24, 1984
-            # formatter.setDateStyle_(Cocoa.NSDateFormatterFullStyle)          # Tuesday, January 24, 1984
+            # formatter.setDateStyle_(Cocoa.NSDateFormatterNoStyle)
+            #     ->  <no date displayed>
+            # formatter.setDateStyle_(Cocoa.NSDateFormatterMediumStyle)
+            #     ->  Jan 24, 1984
+            # formatter.setDateStyle_(Cocoa.NSDateFormatterShortStyle)
+            #     ->  1/24/84
+            # formatter.setDateStyle_(Cocoa.NSDateFormatterLongStyle)
+            #     ->  January 24, 1984
+            # formatter.setDateStyle_(Cocoa.NSDateFormatterFullStyle)
+            #     ->  Tuesday, January 24, 1984
             #
-            # formatter.setTimeStyle_(Cocoa.NSDateFormatterNoStyle)            # <no time displayed>
-            # formatter.setTimeStyle_(Cocoa.NSDateFormatterShortStyle)         # 2:44 PM
-            # formatter.setTimeStyle_(Cocoa.NSDateFormatterMediumStyle)        # 2:44:55 PM
-            # formatter.setTimeStyle_(Cocoa.NSDateFormatterLongStyle)          # 2:44:55 PM PDT
-            # formatter.setTimeStyle_(Cocoa.NSDateFormatterFullStyle)          # 2:44:55 PM PDT
+            # formatter.setTimeStyle_(Cocoa.NSDateFormatterNoStyle)
+            #     ->  <no time displayed>
+            # formatter.setTimeStyle_(Cocoa.NSDateFormatterShortStyle)
+            #     ->  2:44 PM
+            # formatter.setTimeStyle_(Cocoa.NSDateFormatterMediumStyle)
+            #     ->  2:44:55 PM
+            # formatter.setTimeStyle_(Cocoa.NSDateFormatterLongStyle)
+            #     ->  2:44:55 PM PDT
+            # formatter.setTimeStyle_(Cocoa.NSDateFormatterFullStyle)
+            #     ->  2:44:55 PM PDT
             #
 
             formatter.setDateStyle_(Cocoa.NSDateFormatterShortStyle)
@@ -404,13 +416,13 @@ class MyWindowController(Cocoa.NSWindowController):
 
     @objc.IBAction
     def clearMinDate_(self, sender):
-        self.datePickerControl.setMinDate_(NSDate.distantPast())
+        self.datePickerControl.setMinDate_(Cocoa.NSDate.distantPast())
         self.clearMinDateButton.setEnabled_(False)
         self.setMinDateButton.setEnabled_(True)
 
     @objc.IBAction
     def clearMaxDate_(self, sender):
-        self.datePickerControl.setMaxDate_(NSDate.distantFuture())
+        self.datePickerControl.setMaxDate_(Cocoa.NSDate.distantFuture())
         self.clearMaxDateButton.setEnabled_(False)
         self.setMaxDateButton.setEnabled_(True)
 
@@ -419,10 +431,10 @@ class MyWindowController(Cocoa.NSWindowController):
         tag = sender.selectedCell().tag()
 
         if tag == kSingleDateMode:
-            self.datePickerControl.setDatePickerMode_(NSSingleDateMode)
+            self.datePickerControl.setDatePickerMode_(Cocoa.NSSingleDateMode)
 
         elif tag == kRangeDateMode:
-            self.datePickerControl.setDatePickerMode_(NSRangeDateMode)
+            self.datePickerControl.setDatePickerMode_(Cocoa.NSRangeDateMode)
 
         self.updateControls()  # force update of all UI elements and the picker itself
 

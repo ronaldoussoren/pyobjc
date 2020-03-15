@@ -8,10 +8,6 @@
 #  The original version was written in Objective-C by Malcolm Crawford
 #  http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 
-PropertyObservationContext = 1091
-GraphicsObservationContext = 1092
-SelectionIndexesObservationContext = 1093
-
 
 import objc
 from Circle import Circle
@@ -33,6 +29,11 @@ from Cocoa import (
     NSView,
 )
 from objc import super
+
+
+PropertyObservationContext = 1091
+GraphicsObservationContext = 1092
+SelectionIndexesObservationContext = 1093
 
 
 class GraphicsView(NSView):
@@ -197,7 +198,7 @@ class GraphicsView(NSView):
         currentSelectionIndexes = (
             self.selectionIndexes()
         )  # ist das wir ein Array im Indezes?
-        if currentSelectionIndexes != None:
+        if currentSelectionIndexes is not None:
             path = NSBezierPath.bezierPath()
             index = currentSelectionIndexes.firstIndex()
             while index != NSNotFound:

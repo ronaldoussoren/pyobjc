@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSOutlineViewHelper(NSObject):
+class TestNSOutlineViewHelper(AppKit.NSObject):
     def outlineView_sizeToFitWidthOfColumn_(self, v, c):
         return 1
 
@@ -124,44 +125,44 @@ class TestNSOutlineViewHelper(NSObject):
 class TestNSOutlineView(TestCase):
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(NSOutlineViewDisclosureButtonKey, unicode)
-        self.assertIsInstance(NSOutlineViewShowHideButtonKey, unicode)
+        self.assertIsInstance(AppKit.NSOutlineViewDisclosureButtonKey, str)
+        self.assertIsInstance(AppKit.NSOutlineViewShowHideButtonKey, str)
 
     def testConstants(self):
-        self.assertEqual(NSOutlineViewDropOnItemIndex, -1)
+        self.assertEqual(AppKit.NSOutlineViewDropOnItemIndex, -1)
 
-        self.assertIsInstance(NSOutlineViewSelectionDidChangeNotification, unicode)
-        self.assertIsInstance(NSOutlineViewColumnDidMoveNotification, unicode)
-        self.assertIsInstance(NSOutlineViewColumnDidResizeNotification, unicode)
-        self.assertIsInstance(NSOutlineViewSelectionIsChangingNotification, unicode)
-        self.assertIsInstance(NSOutlineViewItemWillExpandNotification, unicode)
-        self.assertIsInstance(NSOutlineViewItemDidExpandNotification, unicode)
-        self.assertIsInstance(NSOutlineViewItemWillCollapseNotification, unicode)
-        self.assertIsInstance(NSOutlineViewItemDidCollapseNotification, unicode)
+        self.assertIsInstance(AppKit.NSOutlineViewSelectionDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSOutlineViewColumnDidMoveNotification, str)
+        self.assertIsInstance(AppKit.NSOutlineViewColumnDidResizeNotification, str)
+        self.assertIsInstance(AppKit.NSOutlineViewSelectionIsChangingNotification, str)
+        self.assertIsInstance(AppKit.NSOutlineViewItemWillExpandNotification, str)
+        self.assertIsInstance(AppKit.NSOutlineViewItemDidExpandNotification, str)
+        self.assertIsInstance(AppKit.NSOutlineViewItemWillCollapseNotification, str)
+        self.assertIsInstance(AppKit.NSOutlineViewItemDidCollapseNotification, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSOutlineView.isExpandable_)
-        self.assertArgIsBOOL(NSOutlineView.expandItem_expandChildren_, 1)
-        self.assertArgIsBOOL(NSOutlineView.collapseItem_collapseChildren_, 1)
-        self.assertArgIsBOOL(NSOutlineView.reloadItem_reloadChildren_, 1)
-        self.assertResultIsBOOL(NSOutlineView.isItemExpanded_)
-        self.assertResultIsBOOL(NSOutlineView.indentationMarkerFollowsCell)
-        self.assertArgIsBOOL(NSOutlineView.setIndentationMarkerFollowsCell_, 0)
-        self.assertResultIsBOOL(NSOutlineView.autoresizesOutlineColumn)
-        self.assertArgIsBOOL(NSOutlineView.setAutoresizesOutlineColumn_, 0)
+        self.assertResultIsBOOL(AppKit.NSOutlineView.isExpandable_)
+        self.assertArgIsBOOL(AppKit.NSOutlineView.expandItem_expandChildren_, 1)
+        self.assertArgIsBOOL(AppKit.NSOutlineView.collapseItem_collapseChildren_, 1)
+        self.assertArgIsBOOL(AppKit.NSOutlineView.reloadItem_reloadChildren_, 1)
+        self.assertResultIsBOOL(AppKit.NSOutlineView.isItemExpanded_)
+        self.assertResultIsBOOL(AppKit.NSOutlineView.indentationMarkerFollowsCell)
+        self.assertArgIsBOOL(AppKit.NSOutlineView.setIndentationMarkerFollowsCell_, 0)
+        self.assertResultIsBOOL(AppKit.NSOutlineView.autoresizesOutlineColumn)
+        self.assertArgIsBOOL(AppKit.NSOutlineView.setAutoresizesOutlineColumn_, 0)
         self.assertResultIsBOOL(
-            NSOutlineView.shouldCollapseAutoExpandedItemsForDeposited_
+            AppKit.NSOutlineView.shouldCollapseAutoExpandedItemsForDeposited_
         )
         self.assertArgIsBOOL(
-            NSOutlineView.shouldCollapseAutoExpandedItemsForDeposited_, 0
+            AppKit.NSOutlineView.shouldCollapseAutoExpandedItemsForDeposited_, 0
         )
-        self.assertResultIsBOOL(NSOutlineView.autosaveExpandedItems)
-        self.assertArgIsBOOL(NSOutlineView.setAutosaveExpandedItems_, 0)
+        self.assertResultIsBOOL(AppKit.NSOutlineView.autosaveExpandedItems)
+        self.assertArgIsBOOL(AppKit.NSOutlineView.setAutosaveExpandedItems_, 0)
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(NSOutlineView.stronglyReferencesItems)
-        self.assertArgIsBOOL(NSOutlineView.setStronglyReferencesItems_, 0)
+        self.assertResultIsBOOL(AppKit.NSOutlineView.stronglyReferencesItems)
+        self.assertArgIsBOOL(AppKit.NSOutlineView.setStronglyReferencesItems_, 0)
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
@@ -203,14 +204,14 @@ class TestNSOutlineView(TestCase):
             TestNSOutlineViewHelper.outlineView_shouldSelectTableColumn_
         )
         self.assertArgHasType(
-            TestNSOutlineViewHelper.outlineView_toolTipForCell_rect_tableColumn_item_mouseLocation_,
+            TestNSOutlineViewHelper.outlineView_toolTipForCell_rect_tableColumn_item_mouseLocation_,  # noqa: B950
             2,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestNSOutlineViewHelper.outlineView_toolTipForCell_rect_tableColumn_item_mouseLocation_,
+            TestNSOutlineViewHelper.outlineView_toolTipForCell_rect_tableColumn_item_mouseLocation_,  # noqa: B950
             5,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSOutlineViewHelper.outlineView_heightOfRowByItem_, objc._C_CGFloat
@@ -232,7 +233,7 @@ class TestNSOutlineView(TestCase):
     @min_os_level("10.5")
     def testProtocols10_5(self):
         self.assertResultIsBOOL(
-            TestNSOutlineViewHelper.outlineView_shouldTypeSelectForEvent_withCurrentSearchString_
+            TestNSOutlineViewHelper.outlineView_shouldTypeSelectForEvent_withCurrentSearchString_  # noqa: B950
         )
         self.assertResultIsBOOL(
             TestNSOutlineViewHelper.outlineView_shouldShowCellExpansionForTableColumn_item_
@@ -275,14 +276,10 @@ class TestNSOutlineView(TestCase):
         self.assertArgHasType(
             TestNSOutlineViewHelper.outlineView_draggingSession_willBeginAtPoint_,
             2,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSOutlineViewHelper.outlineView_draggingSession_endedAtPoint_,
             2,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
-
-
-if __name__ == "__main__":
-    main()

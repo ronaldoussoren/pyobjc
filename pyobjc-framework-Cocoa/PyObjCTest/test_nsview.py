@@ -1,9 +1,9 @@
 import objc
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
-class TestNSViewHelper(NSObject):
+class TestNSViewHelper(AppKit.NSObject):
     def view_stringForToolTip_point_userData_(self, a, b, c, d):
         return 1
 
@@ -11,7 +11,7 @@ class TestNSViewHelper(NSObject):
         return 1
 
 
-class ObjCTestNSView_KnowPageRange(NSView):
+class ObjCTestNSView_KnowPageRange(AppKit.NSView):
     def knowsPageRange_(self, range):
         return objc.YES, (1, 10)
 
@@ -23,185 +23,203 @@ class TestNSView(TestCase):
     def test_knowsPageRange(self):
         method = ObjCTestNSView_KnowPageRange.knowsPageRange_
         self.assertEqual(
-            method.__metadata__()["arguments"][2]["type"], b"o^" + NSRange.__typestr__
+            method.__metadata__()["arguments"][2]["type"],
+            b"o^" + AppKit.NSRange.__typestr__,
         )
 
     def test_rectForPage(self):
         method = ObjCTestNSView_KnowPageRange.rectForPage_
 
-        self.assertResultHasType(method, NSRect.__typestr__)
-        # self.assertEqual(objc.splitSignature(method.signature), objc.splitSignature(NSRect.__typestr__+b"@:" + objc._C_NSInteger))
+        self.assertResultHasType(method, AppKit.NSRect.__typestr__)
+        self.assertEqual(
+            objc.splitSignature(method.signature),
+            objc.splitSignature(AppKit.NSRect.__typestr__ + b"@:" + objc._C_NSInteger),
+        )
 
 
 class TestHeader(TestCase):
     def testConstants(self):
-        self.assertEqual(NSViewNotSizable, 0)
-        self.assertEqual(NSViewMinXMargin, 1)
-        self.assertEqual(NSViewWidthSizable, 2)
-        self.assertEqual(NSViewMaxXMargin, 4)
-        self.assertEqual(NSViewMinYMargin, 8)
-        self.assertEqual(NSViewHeightSizable, 16)
-        self.assertEqual(NSViewMaxYMargin, 32)
+        self.assertEqual(AppKit.NSViewNotSizable, 0)
+        self.assertEqual(AppKit.NSViewMinXMargin, 1)
+        self.assertEqual(AppKit.NSViewWidthSizable, 2)
+        self.assertEqual(AppKit.NSViewMaxXMargin, 4)
+        self.assertEqual(AppKit.NSViewMinYMargin, 8)
+        self.assertEqual(AppKit.NSViewHeightSizable, 16)
+        self.assertEqual(AppKit.NSViewMaxYMargin, 32)
 
-        self.assertEqual(NSNoBorder, 0)
-        self.assertEqual(NSLineBorder, 1)
-        self.assertEqual(NSBezelBorder, 2)
-        self.assertEqual(NSGrooveBorder, 3)
+        self.assertEqual(AppKit.NSNoBorder, 0)
+        self.assertEqual(AppKit.NSLineBorder, 1)
+        self.assertEqual(AppKit.NSBezelBorder, 2)
+        self.assertEqual(AppKit.NSGrooveBorder, 3)
 
-        self.assertIsInstance(NSViewFrameDidChangeNotification, unicode)
-        self.assertIsInstance(NSViewFocusDidChangeNotification, unicode)
-        self.assertIsInstance(NSViewBoundsDidChangeNotification, unicode)
-        self.assertIsInstance(NSViewGlobalFrameDidChangeNotification, unicode)
+        self.assertIsInstance(AppKit.NSViewFrameDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSViewFocusDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSViewBoundsDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSViewGlobalFrameDidChangeNotification, str)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(NSFullScreenModeAllScreens, unicode)
-        self.assertIsInstance(NSFullScreenModeSetting, unicode)
-        self.assertIsInstance(NSFullScreenModeWindowLevel, unicode)
-        self.assertIsInstance(NSViewDidUpdateTrackingAreasNotification, unicode)
+        self.assertIsInstance(AppKit.NSFullScreenModeAllScreens, str)
+        self.assertIsInstance(AppKit.NSFullScreenModeSetting, str)
+        self.assertIsInstance(AppKit.NSFullScreenModeWindowLevel, str)
+        self.assertIsInstance(AppKit.NSViewDidUpdateTrackingAreasNotification, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(NSFullScreenModeApplicationPresentationOptions, unicode)
-
-        self.assertEqual(NSViewLayerContentsRedrawNever, 0)
-        self.assertEqual(NSViewLayerContentsRedrawOnSetNeedsDisplay, 1)
-        self.assertEqual(NSViewLayerContentsRedrawDuringViewResize, 2)
-        self.assertEqual(NSViewLayerContentsRedrawBeforeViewResize, 3)
-
-        self.assertEqual(NSViewLayerContentsPlacementScaleAxesIndependently, 0)
-        self.assertEqual(NSViewLayerContentsPlacementScaleProportionallyToFit, 1)
-        self.assertEqual(NSViewLayerContentsPlacementScaleProportionallyToFill, 2)
-        self.assertEqual(NSViewLayerContentsPlacementCenter, 3)
-        self.assertEqual(NSViewLayerContentsPlacementTop, 4)
-        self.assertEqual(NSViewLayerContentsPlacementTopRight, 5)
-        self.assertEqual(NSViewLayerContentsPlacementRight, 6)
-        self.assertEqual(NSViewLayerContentsPlacementBottomRight, 7)
-        self.assertEqual(NSViewLayerContentsPlacementBottom, 8)
-        self.assertEqual(NSViewLayerContentsPlacementBottomLeft, 9)
-        self.assertEqual(NSViewLayerContentsPlacementLeft, 10)
-        self.assertEqual(NSViewLayerContentsPlacementTopLeft, 11)
-
-        self.assertIsInstance(NSDefinitionPresentationTypeKey, unicode)
-        self.assertIsInstance(NSDefinitionPresentationTypeOverlay, unicode)
         self.assertIsInstance(
-            NSDefinitionPresentationTypeDictionaryApplication, unicode
+            AppKit.NSFullScreenModeApplicationPresentationOptions, str
+        )
+
+        self.assertEqual(AppKit.NSViewLayerContentsRedrawNever, 0)
+        self.assertEqual(AppKit.NSViewLayerContentsRedrawOnSetNeedsDisplay, 1)
+        self.assertEqual(AppKit.NSViewLayerContentsRedrawDuringViewResize, 2)
+        self.assertEqual(AppKit.NSViewLayerContentsRedrawBeforeViewResize, 3)
+
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleAxesIndependently, 0)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementScaleProportionallyToFit, 1)
+        self.assertEqual(
+            AppKit.NSViewLayerContentsPlacementScaleProportionallyToFill, 2
+        )
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementCenter, 3)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementTop, 4)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementTopRight, 5)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementRight, 6)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementBottomRight, 7)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementBottom, 8)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementBottomLeft, 9)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementLeft, 10)
+        self.assertEqual(AppKit.NSViewLayerContentsPlacementTopLeft, 11)
+
+        self.assertIsInstance(AppKit.NSDefinitionPresentationTypeKey, str)
+        self.assertIsInstance(AppKit.NSDefinitionPresentationTypeOverlay, str)
+        self.assertIsInstance(
+            AppKit.NSDefinitionPresentationTypeDictionaryApplication, str
         )
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertEqual(NSViewLayerContentsRedrawCrossfade, 4)
+        self.assertEqual(AppKit.NSViewLayerContentsRedrawCrossfade, 4)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSView.isDescendantOf_)
-        self.assertResultIsBOOL(NSView.isHidden)
-        self.assertResultIsBOOL(NSView.isHiddenOrHasHiddenAncestor)
-        self.assertArgIsBOOL(NSView.setHidden_, 0)
-        self.assertResultIsBOOL(NSView.needsToDrawRect_)
-        self.assertResultIsBOOL(NSView.wantsDefaultClipping)
+        self.assertResultIsBOOL(AppKit.NSView.isDescendantOf_)
+        self.assertResultIsBOOL(AppKit.NSView.isHidden)
+        self.assertResultIsBOOL(AppKit.NSView.isHiddenOrHasHiddenAncestor)
+        self.assertArgIsBOOL(AppKit.NSView.setHidden_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.needsToDrawRect_)
+        self.assertResultIsBOOL(AppKit.NSView.wantsDefaultClipping)
 
         self.assertArgIsFunction(
-            NSView.sortSubviewsUsingFunction_context_, 0, b"i@@@", False
+            AppKit.NSView.sortSubviewsUsingFunction_context_, 0, b"i@@@", False
         )
-        self.assertArgHasType(NSView.sortSubviewsUsingFunction_context_, 1, b"@")
+        self.assertArgHasType(AppKit.NSView.sortSubviewsUsingFunction_context_, 1, b"@")
 
-        self.assertResultIsBOOL(NSView.postsFrameChangedNotifications)
-        self.assertArgIsBOOL(NSView.setPostsFrameChangedNotifications_, 0)
-        self.assertResultIsBOOL(NSView.autoresizesSubviews)
-        self.assertArgIsBOOL(NSView.setAutoresizesSubviews_, 0)
-        self.assertResultIsBOOL(NSView.isFlipped)
-        self.assertResultIsBOOL(NSView.isRotatedFromBase)
-        self.assertResultIsBOOL(NSView.isRotatedOrScaledFromBase)
-        self.assertResultIsBOOL(NSView.isOpaque)
-        self.assertResultIsBOOL(NSView.canDraw)
-        self.assertArgIsBOOL(NSView.setNeedsDisplay_, 0)
-        self.assertResultIsBOOL(NSView.needsDisplay)
-        self.assertResultIsBOOL(NSView.lockFocusIfCanDraw)
-        self.assertResultIsBOOL(NSView.lockFocusIfCanDrawInContext_)
-        self.assertResultIsBOOL(NSView.scrollRectToVisible_)
-        self.assertResultIsBOOL(NSView.autoscroll_)
-        self.assertResultIsBOOL(NSView.mouse_inRect_)
-        self.assertResultIsBOOL(NSView.performKeyEquivalent_)
-        self.assertResultIsBOOL(NSView.acceptsFirstMouse_)
-        self.assertResultIsBOOL(NSView.shouldDelayWindowOrderingForEvent_)
-        self.assertResultIsBOOL(NSView.needsPanelToBecomeKey)
-        self.assertResultIsBOOL(NSView.mouseDownCanMoveWindow)
+        self.assertResultIsBOOL(AppKit.NSView.postsFrameChangedNotifications)
+        self.assertArgIsBOOL(AppKit.NSView.setPostsFrameChangedNotifications_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.autoresizesSubviews)
+        self.assertArgIsBOOL(AppKit.NSView.setAutoresizesSubviews_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.isFlipped)
+        self.assertResultIsBOOL(AppKit.NSView.isRotatedFromBase)
+        self.assertResultIsBOOL(AppKit.NSView.isRotatedOrScaledFromBase)
+        self.assertResultIsBOOL(AppKit.NSView.isOpaque)
+        self.assertResultIsBOOL(AppKit.NSView.canDraw)
+        self.assertArgIsBOOL(AppKit.NSView.setNeedsDisplay_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.needsDisplay)
+        self.assertResultIsBOOL(AppKit.NSView.lockFocusIfCanDraw)
+        self.assertResultIsBOOL(AppKit.NSView.lockFocusIfCanDrawInContext_)
+        self.assertResultIsBOOL(AppKit.NSView.scrollRectToVisible_)
+        self.assertResultIsBOOL(AppKit.NSView.autoscroll_)
+        self.assertResultIsBOOL(AppKit.NSView.mouse_inRect_)
+        self.assertResultIsBOOL(AppKit.NSView.performKeyEquivalent_)
+        self.assertResultIsBOOL(AppKit.NSView.acceptsFirstMouse_)
+        self.assertResultIsBOOL(AppKit.NSView.shouldDelayWindowOrderingForEvent_)
+        self.assertResultIsBOOL(AppKit.NSView.needsPanelToBecomeKey)
+        self.assertResultIsBOOL(AppKit.NSView.mouseDownCanMoveWindow)
         self.assertArgHasType(
-            NSView.addTrackingRect_owner_userData_assumeInside_, 2, b"^v"
+            AppKit.NSView.addTrackingRect_owner_userData_assumeInside_, 2, b"^v"
         )
-        self.assertArgIsBOOL(NSView.addTrackingRect_owner_userData_assumeInside_, 3)
-        self.assertResultIsBOOL(NSView.shouldDrawColor)
-        self.assertResultIsBOOL(NSView.postsBoundsChangedNotifications)
-        self.assertArgIsBOOL(NSView.setPostsBoundsChangedNotifications_, 0)
-        self.assertResultIsBOOL(NSView.inLiveResize)
-        self.assertResultIsBOOL(NSView.preservesContentDuringLiveResize)
+        self.assertArgIsBOOL(
+            AppKit.NSView.addTrackingRect_owner_userData_assumeInside_, 3
+        )
+        self.assertResultIsBOOL(AppKit.NSView.shouldDrawColor)
+        self.assertResultIsBOOL(AppKit.NSView.postsBoundsChangedNotifications)
+        self.assertArgIsBOOL(AppKit.NSView.setPostsBoundsChangedNotifications_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.inLiveResize)
+        self.assertResultIsBOOL(AppKit.NSView.preservesContentDuringLiveResize)
 
         self.assertArgHasType(
-            NSView.getRectsExposedDuringLiveResize_count_, 0, b"o^" + NSRect.__typestr__
+            AppKit.NSView.getRectsExposedDuringLiveResize_count_,
+            0,
+            b"o^" + AppKit.NSRect.__typestr__,
         )
-        m = NSView.getRectsExposedDuringLiveResize_count_.__metadata__()["arguments"][2]
+        m = AppKit.NSView.getRectsExposedDuringLiveResize_count_.__metadata__()[
+            "arguments"
+        ][2]
         self.assertEqual(m["c_array_of_fixed_length"], 4)
-        self.assertArgIsOut(NSView.getRectsExposedDuringLiveResize_count_, 1)
+        self.assertArgIsOut(AppKit.NSView.getRectsExposedDuringLiveResize_count_, 1)
 
-        self.assertResultIsBOOL(NSView.performMnemonic_)
-        self.assertResultIsBOOL(NSView.canBecomeKeyView)
-        self.assertResultIsBOOL(NSView.knowsPageRange_)
-        self.assertArgIsOut(NSView.adjustPageWidthNew_left_right_limit_, 0)
-        self.assertArgIsOut(NSView.adjustPageHeightNew_top_bottom_limit_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.performMnemonic_)
+        self.assertResultIsBOOL(AppKit.NSView.canBecomeKeyView)
+        self.assertResultIsBOOL(AppKit.NSView.knowsPageRange_)
+        self.assertArgIsOut(AppKit.NSView.adjustPageWidthNew_left_right_limit_, 0)
+        self.assertArgIsOut(AppKit.NSView.adjustPageHeightNew_top_bottom_limit_, 0)
 
         self.assertArgIsBOOL(
-            NSView.dragImage_at_offset_event_pasteboard_source_slideBack_, 6
+            AppKit.NSView.dragImage_at_offset_event_pasteboard_source_slideBack_, 6
         )
-        self.assertResultIsBOOL(NSView.dragFile_fromRect_slideBack_event_)
-        self.assertArgIsBOOL(NSView.dragFile_fromRect_slideBack_event_, 2)
+        self.assertResultIsBOOL(AppKit.NSView.dragFile_fromRect_slideBack_event_)
+        self.assertArgIsBOOL(AppKit.NSView.dragFile_fromRect_slideBack_event_, 2)
         self.assertResultIsBOOL(
-            NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_
+            AppKit.NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_
         )
         self.assertArgIsBOOL(
-            NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_, 3
+            AppKit.NSView.dragPromisedFilesOfTypes_fromRect_source_slideBack_event_, 3
         )
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertArgIsBOOL(NSView.setWantsLayer_, 0)
-        self.assertResultIsBOOL(NSView.wantsLayer)
-        self.assertResultIsBOOL(NSView.enterFullScreenMode_withOptions_)
-        self.assertResultIsBOOL(NSView.isInFullScreenMode)
+        self.assertArgIsBOOL(AppKit.NSView.setWantsLayer_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.wantsLayer)
+        self.assertResultIsBOOL(AppKit.NSView.enterFullScreenMode_withOptions_)
+        self.assertResultIsBOOL(AppKit.NSView.isInFullScreenMode)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(NSView.canDrawConcurrently)
-        self.assertArgIsBOOL(NSView.setCanDrawConcurrently_, 0)
-        self.assertResultIsBOOL(NSView.acceptsTouchEvents)
-        self.assertArgIsBOOL(NSView.setAcceptsTouchEvents_, 0)
-        self.assertResultIsBOOL(NSView.wantsRestingTouches)
-        self.assertArgIsBOOL(NSView.setWantsRestingTouches_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.canDrawConcurrently)
+        self.assertArgIsBOOL(AppKit.NSView.setCanDrawConcurrently_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.acceptsTouchEvents)
+        self.assertArgIsBOOL(AppKit.NSView.setAcceptsTouchEvents_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.wantsRestingTouches)
+        self.assertArgIsBOOL(AppKit.NSView.setWantsRestingTouches_, 0)
 
         self.assertArgHasType(
-            NSView.showDefinitionForAttributedString_atPoint_, 1, NSPoint.__typestr__
+            AppKit.NSView.showDefinitionForAttributedString_atPoint_,
+            1,
+            AppKit.NSPoint.__typestr__,
         )
 
         self.assertArgHasType(
-            NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_,
+            AppKit.NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgIsBlock(
-            NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_,
+            AppKit.NSView.showDefinitionForAttributedString_range_options_baselineOriginProvider_,  # noqa: B950
             3,
-            NSPoint.__typestr__ + NSRange.__typestr__,
+            AppKit.NSPoint.__typestr__ + AppKit.NSRange.__typestr__,
         )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertResultIsBOOL(NSView.isDrawingFindIndicator)
+        self.assertResultIsBOOL(AppKit.NSView.isDrawingFindIndicator)
 
         try:
-            NSView.layer_shouldInheritContentsScale_fromWindow_
+            AppKit.NSView.layer_shouldInheritContentsScale_fromWindow_
         except AttributeError:
             pass
         else:
-            self.assertResultIsBOOL(NSView.layer_shouldInheritContentsScale_fromWindow_)
+            self.assertResultIsBOOL(
+                AppKit.NSView.layer_shouldInheritContentsScale_fromWindow_
+            )
 
         self.assertResultIsBOOL(
             TestNSViewHelper.layer_shouldInheritContentsScale_fromWindow_
@@ -209,30 +227,32 @@ class TestHeader(TestCase):
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSView.wantsUpdateLayer)
+        self.assertResultIsBOOL(AppKit.NSView.wantsUpdateLayer)
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertResultIsBOOL(NSView.canDrawSubviewsIntoLayer)
-        self.assertArgIsBOOL(NSView.setCanDrawSubviewsIntoLayer_, 0)
-        self.assertResultIsBOOL(NSView.layerUsesCoreImageFilters)
-        self.assertArgIsBOOL(NSView.setLayerUsesCoreImageFilters_, 0)
-        self.assertResultIsBOOL(NSView.isCompatibleWithResponsiveScrolling)
+        self.assertResultIsBOOL(AppKit.NSView.canDrawSubviewsIntoLayer)
+        self.assertArgIsBOOL(AppKit.NSView.setCanDrawSubviewsIntoLayer_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.layerUsesCoreImageFilters)
+        self.assertArgIsBOOL(AppKit.NSView.setLayerUsesCoreImageFilters_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.isCompatibleWithResponsiveScrolling)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSView.allowsVibrancy)
+        self.assertResultIsBOOL(AppKit.NSView.allowsVibrancy)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(NSView.wantsExtendedDynamicRangeOpenGLSurface)
-        self.assertArgIsBOOL(NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0)
+        self.assertResultIsBOOL(AppKit.NSView.wantsExtendedDynamicRangeOpenGLSurface)
+        self.assertArgIsBOOL(
+            AppKit.NSView.setWantsExtendedDynamicRangeOpenGLSurface_, 0
+        )
 
     def testProtocol(self):
         self.assertArgHasType(
             TestNSViewHelper.view_stringForToolTip_point_userData_,
             2,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSViewHelper.view_stringForToolTip_point_userData_, 3, b"^v"
@@ -244,16 +264,12 @@ class TestHeader(TestCase):
         objc.protocolNamed("NSViewToolTipOwner")
 
     def testMissingTests(self):
-        v = NSView.alloc().init()
+        v = AppKit.NSView.alloc().init()
         v.setNeedsDisplayInRect_(((0, 0), (50, 50)))
         r = v.getRectsBeingDrawn_count_(None, None)
         self.assertIsInstance(r, tuple)
         self.assertEqual(len(r), 2)
         self.assertIsInstance(r[0], tuple)
-        self.assertIsInstance(r[1], (int, long))
+        self.assertIsInstance(r[1], int)
         if r[1] != 0:
-            self.assertIsInstance(r[0][0], NSRect)
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(r[0][0], AppKit.NSRect)

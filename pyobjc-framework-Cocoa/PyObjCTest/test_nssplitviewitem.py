@@ -1,37 +1,35 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSplitViewItem(TestCase):
     def testConstants(self):
-        self.assertEqual(NSSplitViewItemBehaviorDefault, 0)
-        self.assertEqual(NSSplitViewItemBehaviorSidebar, 1)
-        self.assertEqual(NSSplitViewItemBehaviorContentList, 2)
+        self.assertEqual(AppKit.NSSplitViewItemBehaviorDefault, 0)
+        self.assertEqual(AppKit.NSSplitViewItemBehaviorSidebar, 1)
+        self.assertEqual(AppKit.NSSplitViewItemBehaviorContentList, 2)
 
-        self.assertEqual(NSSplitViewItemCollapseBehaviorDefault, 0)
+        self.assertEqual(AppKit.NSSplitViewItemCollapseBehaviorDefault, 0)
         self.assertEqual(
-            NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings, 1
+            AppKit.NSSplitViewItemCollapseBehaviorPreferResizingSplitViewWithFixedSiblings,
+            1,
         )
         self.assertEqual(
-            NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView, 2
+            AppKit.NSSplitViewItemCollapseBehaviorPreferResizingSiblingsWithFixedSplitView,
+            2,
         )
-        self.assertEqual(NSSplitViewItemCollapseBehaviorUseConstraints, 3)
+        self.assertEqual(AppKit.NSSplitViewItemCollapseBehaviorUseConstraints, 3)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertIsInstance(NSSplitViewItemUnspecifiedDimension, float)
+        self.assertIsInstance(AppKit.NSSplitViewItemUnspecifiedDimension, float)
 
-        self.assertResultIsBOOL(NSSplitViewItem.isSpringLoaded)
-        self.assertArgIsBOOL(NSSplitViewItem.setSpringLoaded_, 0)
+        self.assertResultIsBOOL(AppKit.NSSplitViewItem.isSpringLoaded)
+        self.assertArgIsBOOL(AppKit.NSSplitViewItem.setSpringLoaded_, 0)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSSplitViewItem.isCollapsed)
-        self.assertArgIsBOOL(NSSplitViewItem.setCollapsed_, 0)
+        self.assertResultIsBOOL(AppKit.NSSplitViewItem.isCollapsed)
+        self.assertArgIsBOOL(AppKit.NSSplitViewItem.setCollapsed_, 0)
 
-        self.assertResultIsBOOL(NSSplitViewItem.canCollapse)
-        self.assertArgIsBOOL(NSSplitViewItem.setCanCollapse_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSSplitViewItem.canCollapse)
+        self.assertArgIsBOOL(AppKit.NSSplitViewItem.setCanCollapse_, 0)

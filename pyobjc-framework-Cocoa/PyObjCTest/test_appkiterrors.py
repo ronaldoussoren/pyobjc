@@ -1,34 +1,30 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAppKitErrors(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTextReadInapplicableDocumentTypeError, 65806)
-        self.assertEqual(NSTextWriteInapplicableDocumentTypeError, 66062)
-        self.assertEqual(NSTextReadWriteErrorMinimum, 65792)
-        self.assertEqual(NSTextReadWriteErrorMaximum, 66303)
-        self.assertEqual(NSServiceApplicationNotFoundError, 66560)
-        self.assertEqual(NSServiceApplicationLaunchFailedError, 66561)
-        self.assertEqual(NSServiceRequestTimedOutError, 66562)
-        self.assertEqual(NSServiceInvalidPasteboardDataError, 66563)
-        self.assertEqual(NSServiceMalformedServiceDictionaryError, 66564)
-        self.assertEqual(NSServiceMiscellaneousError, 66800)
-        self.assertEqual(NSServiceErrorMinimum, 66560)
-        self.assertEqual(NSServiceErrorMaximum, 66817)
-        self.assertEqual(NSSharingServiceNotConfiguredError, 67072)
-        self.assertEqual(NSSharingServiceErrorMinimum, 67072)
-        self.assertEqual(NSSharingServiceErrorMaximum, 67327)
-        self.assertEqual(NSFontAssetDownloadError, 66304)
-        self.assertEqual(NSFontErrorMinimum, 66304)
-        self.assertEqual(NSFontErrorMaximum, 66335)
-        self.assertEqual(NSFontAssetDownloadError, 66304)
-        self.assertEqual(NSFontErrorMinimum, 66304)
-        self.assertEqual(NSFontErrorMaximum, 66335)
-        self.assertEqual(NSWorkspaceAuthorizationInvalidError, 67328)
-        self.assertEqual(NSWorkspaceErrorMinimum, 67328)
-        self.assertEqual(NSWorkspaceErrorMaximum, 67455)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(AppKit.NSTextReadInapplicableDocumentTypeError, 65806)
+        self.assertEqual(AppKit.NSTextWriteInapplicableDocumentTypeError, 66062)
+        self.assertEqual(AppKit.NSTextReadWriteErrorMinimum, 65792)
+        self.assertEqual(AppKit.NSTextReadWriteErrorMaximum, 66303)
+        self.assertEqual(AppKit.NSServiceApplicationNotFoundError, 66560)
+        self.assertEqual(AppKit.NSServiceApplicationLaunchFailedError, 66561)
+        self.assertEqual(AppKit.NSServiceRequestTimedOutError, 66562)
+        self.assertEqual(AppKit.NSServiceInvalidPasteboardDataError, 66563)
+        self.assertEqual(AppKit.NSServiceMalformedServiceDictionaryError, 66564)
+        self.assertEqual(AppKit.NSServiceMiscellaneousError, 66800)
+        self.assertEqual(AppKit.NSServiceErrorMinimum, 66560)
+        self.assertEqual(AppKit.NSServiceErrorMaximum, 66817)
+        self.assertEqual(AppKit.NSSharingServiceNotConfiguredError, 67072)
+        self.assertEqual(AppKit.NSSharingServiceErrorMinimum, 67072)
+        self.assertEqual(AppKit.NSSharingServiceErrorMaximum, 67327)
+        self.assertEqual(AppKit.NSFontAssetDownloadError, 66304)
+        self.assertEqual(AppKit.NSFontErrorMinimum, 66304)
+        self.assertEqual(AppKit.NSFontErrorMaximum, 66335)
+        self.assertEqual(AppKit.NSFontAssetDownloadError, 66304)
+        self.assertEqual(AppKit.NSFontErrorMinimum, 66304)
+        self.assertEqual(AppKit.NSFontErrorMaximum, 66335)
+        self.assertEqual(AppKit.NSWorkspaceAuthorizationInvalidError, 67328)
+        self.assertEqual(AppKit.NSWorkspaceErrorMinimum, 67328)
+        self.assertEqual(AppKit.NSWorkspaceErrorMaximum, 67455)

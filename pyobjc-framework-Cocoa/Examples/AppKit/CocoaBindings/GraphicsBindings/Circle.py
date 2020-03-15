@@ -12,6 +12,8 @@ from math import cos, sin
 
 import objc
 from Cocoa import (
+    NSArchiver,
+    NSUnarchiver,
     NSBezierPath,
     NSColor,
     NSMakeRect,

@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSColorSampler(TestCase):
@@ -8,7 +8,3 @@ class TestNSColorSampler(TestCase):
         self.assertArgIsBlock(
             AppKit.NSColorSampler.showSamplerWithSelectionHandler_, 0, b"v@"
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,6 +1,5 @@
 import Foundation
-import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 if hasattr(Foundation, "NSMachPort"):
 
@@ -11,7 +10,3 @@ if hasattr(Foundation, "NSMachPort"):
 
             obj = obj.init()
             self.assertIsNot(obj, None)
-
-
-if __name__ == "__main__":
-    main()

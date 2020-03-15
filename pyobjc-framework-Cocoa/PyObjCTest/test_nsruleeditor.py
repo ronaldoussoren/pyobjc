@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSRuleEditorHelper(NSObject):
+class TestNSRuleEditorHelper(AppKit.NSObject):
     def ruleEditor_numberOfChildrenForCriterion_withRowType_(self, ed, cr, rt):
         return 1
 
@@ -20,34 +21,36 @@ class TestNSRuleEditorHelper(NSObject):
 
 class TestNSRuleEditor(TestCase):
     def testConstants(self):
-        self.assertEqual(NSRuleEditorNestingModeSingle, 0)
-        self.assertEqual(NSRuleEditorNestingModeList, 1)
-        self.assertEqual(NSRuleEditorNestingModeCompound, 2)
-        self.assertEqual(NSRuleEditorNestingModeSimple, 3)
+        self.assertEqual(AppKit.NSRuleEditorNestingModeSingle, 0)
+        self.assertEqual(AppKit.NSRuleEditorNestingModeList, 1)
+        self.assertEqual(AppKit.NSRuleEditorNestingModeCompound, 2)
+        self.assertEqual(AppKit.NSRuleEditorNestingModeSimple, 3)
 
-        self.assertEqual(NSRuleEditorRowTypeSimple, 0)
-        self.assertEqual(NSRuleEditorRowTypeCompound, 1)
+        self.assertEqual(AppKit.NSRuleEditorRowTypeSimple, 0)
+        self.assertEqual(AppKit.NSRuleEditorRowTypeCompound, 1)
 
-        self.assertIsInstance(NSRuleEditorPredicateLeftExpression, unicode)
-        self.assertIsInstance(NSRuleEditorPredicateRightExpression, unicode)
-        self.assertIsInstance(NSRuleEditorPredicateComparisonModifier, unicode)
-        self.assertIsInstance(NSRuleEditorPredicateOptions, unicode)
-        self.assertIsInstance(NSRuleEditorPredicateOperatorType, unicode)
-        self.assertIsInstance(NSRuleEditorPredicateCustomSelector, unicode)
+        self.assertIsInstance(AppKit.NSRuleEditorPredicateLeftExpression, str)
+        self.assertIsInstance(AppKit.NSRuleEditorPredicateRightExpression, str)
+        self.assertIsInstance(AppKit.NSRuleEditorPredicateComparisonModifier, str)
+        self.assertIsInstance(AppKit.NSRuleEditorPredicateOptions, str)
+        self.assertIsInstance(AppKit.NSRuleEditorPredicateOperatorType, str)
+        self.assertIsInstance(AppKit.NSRuleEditorPredicateCustomSelector, str)
 
-        self.assertIsInstance(NSRuleEditorPredicateCompoundType, unicode)
-        self.assertIsInstance(NSRuleEditorRowsDidChangeNotification, unicode)
+        self.assertIsInstance(AppKit.NSRuleEditorPredicateCompoundType, str)
+        self.assertIsInstance(AppKit.NSRuleEditorRowsDidChangeNotification, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSRuleEditor.isEditable)
-        self.assertArgIsBOOL(NSRuleEditor.setEditable_, 0)
-        self.assertResultIsBOOL(NSRuleEditor.canRemoveAllRows)
-        self.assertArgIsBOOL(NSRuleEditor.setCanRemoveAllRows_, 0)
+        self.assertResultIsBOOL(AppKit.NSRuleEditor.isEditable)
+        self.assertArgIsBOOL(AppKit.NSRuleEditor.setEditable_, 0)
+        self.assertResultIsBOOL(AppKit.NSRuleEditor.canRemoveAllRows)
+        self.assertArgIsBOOL(AppKit.NSRuleEditor.setCanRemoveAllRows_, 0)
         self.assertArgIsBOOL(
-            NSRuleEditor.insertRowAtIndex_withType_asSubrowOfRow_animate_, 3
+            AppKit.NSRuleEditor.insertRowAtIndex_withType_asSubrowOfRow_animate_, 3
         )
-        self.assertArgIsBOOL(NSRuleEditor.removeRowsAtIndexes_includeSubrows_, 1)
-        self.assertArgIsBOOL(NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1)
+        self.assertArgIsBOOL(AppKit.NSRuleEditor.removeRowsAtIndexes_includeSubrows_, 1)
+        self.assertArgIsBOOL(
+            AppKit.NSRuleEditor.selectRowIndexes_byExtendingSelection_, 1
+        )
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
@@ -79,11 +82,7 @@ class TestNSRuleEditor(TestCase):
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSRuleEditorHelper.ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_,
+            TestNSRuleEditorHelper.ruleEditor_predicatePartsForCriterion_withDisplayValue_inRow_,  # noqa: B950
             3,
             objc._C_NSInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

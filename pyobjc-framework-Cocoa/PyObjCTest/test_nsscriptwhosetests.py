@@ -1,8 +1,8 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestNSScriptWhoseTestsHelper(NSObject):
+class TestNSScriptWhoseTestsHelper(Foundation.NSObject):
     def isEqualTo_(self, o):
         return 1
 
@@ -57,17 +57,17 @@ class TestNSScriptWhoseTestsHelper(NSObject):
 
 class TestNSScriptWhoseTests(TestCase):
     def testConstants(self):
-        self.assertEqual(NSEqualToComparison, 0)
-        self.assertEqual(NSLessThanOrEqualToComparison, 1)
-        self.assertEqual(NSLessThanComparison, 2)
-        self.assertEqual(NSGreaterThanOrEqualToComparison, 3)
-        self.assertEqual(NSGreaterThanComparison, 4)
-        self.assertEqual(NSBeginsWithComparison, 5)
-        self.assertEqual(NSEndsWithComparison, 6)
-        self.assertEqual(NSContainsComparison, 7)
+        self.assertEqual(Foundation.NSEqualToComparison, 0)
+        self.assertEqual(Foundation.NSLessThanOrEqualToComparison, 1)
+        self.assertEqual(Foundation.NSLessThanComparison, 2)
+        self.assertEqual(Foundation.NSGreaterThanOrEqualToComparison, 3)
+        self.assertEqual(Foundation.NSGreaterThanComparison, 4)
+        self.assertEqual(Foundation.NSBeginsWithComparison, 5)
+        self.assertEqual(Foundation.NSEndsWithComparison, 6)
+        self.assertEqual(Foundation.NSContainsComparison, 7)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSScriptWhoseTest.isTrue)
+        self.assertResultIsBOOL(Foundation.NSScriptWhoseTest.isTrue)
 
         self.assertResultIsBOOL(TestNSScriptWhoseTestsHelper.isEqualTo_)
         self.assertResultIsBOOL(TestNSScriptWhoseTestsHelper.isLessThanOrEqualTo_)
@@ -91,7 +91,3 @@ class TestNSScriptWhoseTests(TestCase):
         self.assertResultIsBOOL(TestNSScriptWhoseTestsHelper.scriptingBeginsWith_)
         self.assertResultIsBOOL(TestNSScriptWhoseTestsHelper.scriptingEndsWith_)
         self.assertResultIsBOOL(TestNSScriptWhoseTestsHelper.scriptingContains_)
-
-
-if __name__ == "__main__":
-    main()

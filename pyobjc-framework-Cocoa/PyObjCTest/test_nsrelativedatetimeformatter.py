@@ -1,17 +1,13 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSRelativeDateTimeFormatter(TestCase):
     def test_constants(self):
-        self.assertEqual(NSRelativeDateTimeFormatterStyleNumeric, 0)
-        self.assertEqual(NSRelativeDateTimeFormatterStyleNamed, 1)
+        self.assertEqual(Foundation.NSRelativeDateTimeFormatterStyleNumeric, 0)
+        self.assertEqual(Foundation.NSRelativeDateTimeFormatterStyleNamed, 1)
 
-        self.assertEqual(NSRelativeDateTimeFormatterUnitsStyleFull, 0)
-        self.assertEqual(NSRelativeDateTimeFormatterUnitsStyleSpellOut, 1)
-        self.assertEqual(NSRelativeDateTimeFormatterUnitsStyleShort, 2)
-        self.assertEqual(NSRelativeDateTimeFormatterUnitsStyleAbbreviated, 3)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(Foundation.NSRelativeDateTimeFormatterUnitsStyleFull, 0)
+        self.assertEqual(Foundation.NSRelativeDateTimeFormatterUnitsStyleSpellOut, 1)
+        self.assertEqual(Foundation.NSRelativeDateTimeFormatterUnitsStyleShort, 2)
+        self.assertEqual(Foundation.NSRelativeDateTimeFormatterUnitsStyleAbbreviated, 3)

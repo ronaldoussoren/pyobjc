@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSURLDownloadHelper(NSObject):
+class TestNSURLDownloadHelper(Foundation.NSObject):
     def download_willResumeWithResponse_fromByte_(self, a, b, c):
         pass
 
@@ -18,18 +19,15 @@ class TestNSURLDownloadHelper(NSObject):
     def downloadShouldUseCredentialStorage_(self, a):
         return 1
 
-    def download_willResumeWithResponse_fromByte_(self, a, b, c):
-        pass
-
 
 class TestNSURLDownload(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(
-            NSURLDownload.canResumeDownloadDecodedWithEncodingMIMEType_
+            Foundation.NSURLDownload.canResumeDownloadDecodedWithEncodingMIMEType_
         )
-        self.assertArgIsBOOL(NSURLDownload.setDestination_allowOverwrite_, 1)
-        self.assertArgIsBOOL(NSURLDownload.setDeletesFileUponFailure_, 0)
-        self.assertResultIsBOOL(NSURLDownload.deletesFileUponFailure)
+        self.assertArgIsBOOL(Foundation.NSURLDownload.setDestination_allowOverwrite_, 1)
+        self.assertArgIsBOOL(Foundation.NSURLDownload.setDeletesFileUponFailure_, 0)
+        self.assertResultIsBOOL(Foundation.NSURLDownload.deletesFileUponFailure)
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
@@ -60,7 +58,3 @@ class TestNSURLDownload(TestCase):
             2,
             objc._C_LNG_LNG,
         )
-
-
-if __name__ == "__main__":
-    main()

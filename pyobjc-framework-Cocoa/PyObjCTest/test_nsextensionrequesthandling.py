@@ -1,5 +1,6 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation  # noqa: F401
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, onlyOn64Bit
+import objc
 
 
 class TestNSExtensionRequestHandling(TestCase):
@@ -7,7 +8,3 @@ class TestNSExtensionRequestHandling(TestCase):
     @onlyOn64Bit
     def testProtocols10_10(self):
         objc.protocolNamed("NSExtensionRequestHandling")
-
-
-if __name__ == "__main__":
-    main()

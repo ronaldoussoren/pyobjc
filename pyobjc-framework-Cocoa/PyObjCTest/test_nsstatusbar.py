@@ -1,15 +1,11 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSStatusBar(TestCase):
     def testConstants(self):
-        self.assertEqual(NSVariableStatusItemLength, -1.0)
-        self.assertEqual(NSSquareStatusItemLength, -2.0)
+        self.assertEqual(AppKit.NSVariableStatusItemLength, -1.0)
+        self.assertEqual(AppKit.NSSquareStatusItemLength, -2.0)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSStatusBar.isVertical)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSStatusBar.isVertical)

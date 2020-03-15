@@ -1,5 +1,6 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class RestorationHelper(AppKit.NSObject):
@@ -40,9 +41,5 @@ class TestNSWindowRestoration(TestCase):
     @min_os_level("10.7")
     def testConstants10_7(self):
         self.assertIsInstance(
-            AppKit.NSApplicationDidFinishRestoringWindowsNotification, unicode
+            AppKit.NSApplicationDidFinishRestoringWindowsNotification, str
         )
-
-
-if __name__ == "__main__":
-    main()

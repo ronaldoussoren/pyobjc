@@ -1,47 +1,38 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
-
-try:
-    unicode
-except NameEror:
-    unicode = str
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCollectionViewLayout(TestCase):
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertEqual(NSCollectionElementCategoryItem, 0)
-        self.assertEqual(NSCollectionElementCategorySupplementaryView, 1)
-        self.assertEqual(NSCollectionElementCategoryDecorationView, 2)
-        self.assertEqual(NSCollectionElementCategoryInterItemGap, 3)
+        self.assertEqual(AppKit.NSCollectionElementCategoryItem, 0)
+        self.assertEqual(AppKit.NSCollectionElementCategorySupplementaryView, 1)
+        self.assertEqual(AppKit.NSCollectionElementCategoryDecorationView, 2)
+        self.assertEqual(AppKit.NSCollectionElementCategoryInterItemGap, 3)
 
-        self.assertEqual(NSCollectionUpdateActionInsert, 0)
-        self.assertEqual(NSCollectionUpdateActionDelete, 1)
-        self.assertEqual(NSCollectionUpdateActionReload, 2)
-        self.assertEqual(NSCollectionUpdateActionMove, 3)
-        self.assertEqual(NSCollectionUpdateActionNone, 4)
+        self.assertEqual(AppKit.NSCollectionUpdateActionInsert, 0)
+        self.assertEqual(AppKit.NSCollectionUpdateActionDelete, 1)
+        self.assertEqual(AppKit.NSCollectionUpdateActionReload, 2)
+        self.assertEqual(AppKit.NSCollectionUpdateActionMove, 3)
+        self.assertEqual(AppKit.NSCollectionUpdateActionNone, 4)
 
-        self.assertIsInstance(NSCollectionElementKindInterItemGapIndicator, unicode)
+        self.assertIsInstance(AppKit.NSCollectionElementKindInterItemGapIndicator, str)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(NSCollectionViewLayoutAttributes.isHidden)
-        self.assertArgIsBOOL(NSCollectionViewLayoutAttributes.setHidden_, 0)
+        self.assertResultIsBOOL(AppKit.NSCollectionViewLayoutAttributes.isHidden)
+        self.assertArgIsBOOL(AppKit.NSCollectionViewLayoutAttributes.setHidden_, 0)
 
         self.assertResultIsBOOL(
-            NSCollectionViewLayoutInvalidationContext.invalidateEverything
+            AppKit.NSCollectionViewLayoutInvalidationContext.invalidateEverything
         )
         self.assertResultIsBOOL(
-            NSCollectionViewLayoutInvalidationContext.invalidateDataSourceCounts
+            AppKit.NSCollectionViewLayoutInvalidationContext.invalidateDataSourceCounts
         )
 
         self.assertResultIsBOOL(
-            NSCollectionViewLayout.shouldInvalidateLayoutForBoundsChange_
+            AppKit.NSCollectionViewLayout.shouldInvalidateLayoutForBoundsChange_
         )
         self.assertResultIsBOOL(
-            NSCollectionViewLayout.shouldInvalidateLayoutForPreferredLayoutAttributes_withOriginalAttributes_
+            AppKit.NSCollectionViewLayout.shouldInvalidateLayoutForPreferredLayoutAttributes_withOriginalAttributes_  # noqa: B950
         )
-
-
-if __name__ == "__main__":
-    main()

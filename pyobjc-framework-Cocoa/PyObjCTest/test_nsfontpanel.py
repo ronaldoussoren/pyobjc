@@ -1,45 +1,45 @@
 import objc
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
-class TestNSFontPanelHelper(NSObject):
+class TestNSFontPanelHelper(AppKit.NSObject):
     def validModesForFontPanel_(self, p):
         return 1
 
 
 class TestNSFontPanel(TestCase):
     def testConstants(self):
-        self.assertEqual(NSFPPreviewButton, 131)
-        self.assertEqual(NSFPRevertButton, 130)
-        self.assertEqual(NSFPSetButton, 132)
-        self.assertEqual(NSFPPreviewField, 128)
-        self.assertEqual(NSFPSizeField, 129)
-        self.assertEqual(NSFPSizeTitle, 133)
-        self.assertEqual(NSFPCurrentField, 134)
-        self.assertEqual(NSFontPanelFaceModeMask, 1 << 0)
-        self.assertEqual(NSFontPanelSizeModeMask, 1 << 1)
-        self.assertEqual(NSFontPanelCollectionModeMask, 1 << 2)
-        self.assertEqual(NSFontPanelUnderlineEffectModeMask, 1 << 8)
-        self.assertEqual(NSFontPanelStrikethroughEffectModeMask, 1 << 9)
-        self.assertEqual(NSFontPanelTextColorEffectModeMask, 1 << 10)
-        self.assertEqual(NSFontPanelDocumentColorEffectModeMask, 1 << 11)
-        self.assertEqual(NSFontPanelShadowEffectModeMask, 1 << 12)
-        self.assertEqual(NSFontPanelAllEffectsModeMask, (0xFFF00))
-        self.assertEqual(NSFontPanelStandardModesMask, (0xFFFF))
-        self.assertEqual(NSFontPanelAllModesMask, (0xFFFFFFFF))
+        self.assertEqual(AppKit.NSFPPreviewButton, 131)
+        self.assertEqual(AppKit.NSFPRevertButton, 130)
+        self.assertEqual(AppKit.NSFPSetButton, 132)
+        self.assertEqual(AppKit.NSFPPreviewField, 128)
+        self.assertEqual(AppKit.NSFPSizeField, 129)
+        self.assertEqual(AppKit.NSFPSizeTitle, 133)
+        self.assertEqual(AppKit.NSFPCurrentField, 134)
+        self.assertEqual(AppKit.NSFontPanelFaceModeMask, 1 << 0)
+        self.assertEqual(AppKit.NSFontPanelSizeModeMask, 1 << 1)
+        self.assertEqual(AppKit.NSFontPanelCollectionModeMask, 1 << 2)
+        self.assertEqual(AppKit.NSFontPanelUnderlineEffectModeMask, 1 << 8)
+        self.assertEqual(AppKit.NSFontPanelStrikethroughEffectModeMask, 1 << 9)
+        self.assertEqual(AppKit.NSFontPanelTextColorEffectModeMask, 1 << 10)
+        self.assertEqual(AppKit.NSFontPanelDocumentColorEffectModeMask, 1 << 11)
+        self.assertEqual(AppKit.NSFontPanelShadowEffectModeMask, 1 << 12)
+        self.assertEqual(AppKit.NSFontPanelAllEffectsModeMask, (0xFFF00))
+        self.assertEqual(AppKit.NSFontPanelStandardModesMask, (0xFFFF))
+        self.assertEqual(AppKit.NSFontPanelAllModesMask, (0xFFFFFFFF))
 
-        self.assertEqual(NSFontPanelModeMaskFace, 1 << 0)
-        self.assertEqual(NSFontPanelModeMaskSize, 1 << 1)
-        self.assertEqual(NSFontPanelModeMaskCollection, 1 << 2)
-        self.assertEqual(NSFontPanelModeMaskUnderlineEffect, 1 << 8)
-        self.assertEqual(NSFontPanelModeMaskStrikethroughEffect, 1 << 9)
-        self.assertEqual(NSFontPanelModeMaskTextColorEffect, 1 << 10)
-        self.assertEqual(NSFontPanelModeMaskDocumentColorEffect, 1 << 11)
-        self.assertEqual(NSFontPanelModeMaskShadowEffect, 1 << 12)
-        self.assertEqual(NSFontPanelModeMaskAllEffects, 0xFFF00)
-        self.assertEqual(NSFontPanelModesMaskStandardModes, 0xFFFF)
-        self.assertEqual(NSFontPanelModesMaskAllModes, 0xFFFFFFFF)
+        self.assertEqual(AppKit.NSFontPanelModeMaskFace, 1 << 0)
+        self.assertEqual(AppKit.NSFontPanelModeMaskSize, 1 << 1)
+        self.assertEqual(AppKit.NSFontPanelModeMaskCollection, 1 << 2)
+        self.assertEqual(AppKit.NSFontPanelModeMaskUnderlineEffect, 1 << 8)
+        self.assertEqual(AppKit.NSFontPanelModeMaskStrikethroughEffect, 1 << 9)
+        self.assertEqual(AppKit.NSFontPanelModeMaskTextColorEffect, 1 << 10)
+        self.assertEqual(AppKit.NSFontPanelModeMaskDocumentColorEffect, 1 << 11)
+        self.assertEqual(AppKit.NSFontPanelModeMaskShadowEffect, 1 << 12)
+        self.assertEqual(AppKit.NSFontPanelModeMaskAllEffects, 0xFFF00)
+        self.assertEqual(AppKit.NSFontPanelModesMaskStandardModes, 0xFFFF)
+        self.assertEqual(AppKit.NSFontPanelModesMaskAllModes, 0xFFFFFFFF)
 
     def testProtocols(self):
         self.assertResultHasType(
@@ -51,12 +51,8 @@ class TestNSFontPanel(TestCase):
         objc.protocolNamed("NSFontChanging")
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSFontPanel.sharedFontPanelExists)
-        self.assertResultIsBOOL(NSFontPanel.worksWhenModal)
-        self.assertResultIsBOOL(NSFontPanel.isEnabled)
-        self.assertArgIsBOOL(NSFontPanel.setEnabled_, 0)
-        self.assertArgIsBOOL(NSFontPanel.setPanelFont_isMultiple_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSFontPanel.sharedFontPanelExists)
+        self.assertResultIsBOOL(AppKit.NSFontPanel.worksWhenModal)
+        self.assertResultIsBOOL(AppKit.NSFontPanel.isEnabled)
+        self.assertArgIsBOOL(AppKit.NSFontPanel.setEnabled_, 0)
+        self.assertArgIsBOOL(AppKit.NSFontPanel.setPanelFont_isMultiple_, 1)

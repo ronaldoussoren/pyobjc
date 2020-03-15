@@ -1,12 +1,13 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 
 class TestNSMethodSignature(TestCase):
     def testTypes(self):
-        o = NSObject.instanceMethodSignatureForSelector_("description")
+        o = Foundation.NSObject.instanceMethodSignatureForSelector_("description")
 
-        m = NSMethodSignature.signatureWithObjCTypes_.__metadata__()
+        m = Foundation.NSMethodSignature.signatureWithObjCTypes_.__metadata__()
         self.assertEqual(m["arguments"][2]["type"], b"n^t")
 
         m = o.methodReturnType.__metadata__()
@@ -15,8 +16,8 @@ class TestNSMethodSignature(TestCase):
         self.assertEqual(m["retval"]["type"], b"^t")
 
     def testUsing(self):
-        o = NSMethodSignature.signatureWithObjCTypes_(b"^v@:@o^i")
-        self.assertIsInstance(o, NSMethodSignature)
+        o = Foundation.NSMethodSignature.signatureWithObjCTypes_(b"^v@:@o^i")
+        self.assertIsInstance(o, Foundation.NSMethodSignature)
         v = o.methodReturnType()
         self.assertEqual(v, b"^v")
         self.assertIsInstance(v, bytes)
@@ -29,15 +30,14 @@ class TestNSMethodSignature(TestCase):
 
     def testMethods(self):
         self.assertResultHasType(
-            NSMethodSignature.getArgumentTypeAtIndex_, b"^" + objc._C_CHAR_AS_TEXT
+            Foundation.NSMethodSignature.getArgumentTypeAtIndex_,
+            b"^" + objc._C_CHAR_AS_TEXT,
         )
-        self.assertResultIsNullTerminated(NSMethodSignature.getArgumentTypeAtIndex_)
+        self.assertResultIsNullTerminated(
+            Foundation.NSMethodSignature.getArgumentTypeAtIndex_
+        )
         self.assertResultHasType(
-            NSMethodSignature.methodReturnType, b"^" + objc._C_CHAR_AS_TEXT
+            Foundation.NSMethodSignature.methodReturnType, b"^" + objc._C_CHAR_AS_TEXT
         )
-        self.assertResultIsNullTerminated(NSMethodSignature.methodReturnType)
-        self.assertResultIsBOOL(NSMethodSignature.isOneway)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsNullTerminated(Foundation.NSMethodSignature.methodReturnType)
+        self.assertResultIsBOOL(Foundation.NSMethodSignature.isOneway)

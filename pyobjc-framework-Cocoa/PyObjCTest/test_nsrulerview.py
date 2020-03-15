@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestNSRulerViewHelper(NSView):
+class TestNSRulerViewHelper(AppKit.NSView):
     def rulerView_shouldMoveMarker_(self, rl, mk):
         return 1
 
@@ -42,19 +43,19 @@ class TestNSRulerViewHelper(NSView):
 
 class TestNSRulerView(TestCase):
     def testConstants(self):
-        self.assertEqual(NSHorizontalRuler, 0)
-        self.assertEqual(NSVerticalRuler, 1)
+        self.assertEqual(AppKit.NSHorizontalRuler, 0)
+        self.assertEqual(AppKit.NSVerticalRuler, 1)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(NSRulerViewUnitInches, unicode)
-        self.assertIsInstance(NSRulerViewUnitCentimeters, unicode)
-        self.assertIsInstance(NSRulerViewUnitPoints, unicode)
-        self.assertIsInstance(NSRulerViewUnitPicas, unicode)
+        self.assertIsInstance(AppKit.NSRulerViewUnitInches, str)
+        self.assertIsInstance(AppKit.NSRulerViewUnitCentimeters, str)
+        self.assertIsInstance(AppKit.NSRulerViewUnitPoints, str)
+        self.assertIsInstance(AppKit.NSRulerViewUnitPicas, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSRulerView.trackMarker_withMouseEvent_)
-        self.assertResultIsBOOL(NSRulerView.isFlipped)
+        self.assertResultIsBOOL(AppKit.NSRulerView.trackMarker_withMouseEvent_)
+        self.assertResultIsBOOL(AppKit.NSRulerView.isFlipped)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSRulerViewHelper.rulerView_shouldMoveMarker_)
@@ -83,16 +84,15 @@ class TestNSRulerView(TestCase):
             TestNSRulerViewHelper.rulerView_locationForPoint_, objc._C_CGFloat
         )
         self.assertArgHasType(
-            TestNSRulerViewHelper.rulerView_locationForPoint_, 1, NSPoint.__typestr__
+            TestNSRulerViewHelper.rulerView_locationForPoint_,
+            1,
+            AppKit.NSPoint.__typestr__,
         )
 
         self.assertResultHasType(
-            TestNSRulerViewHelper.rulerView_pointForLocation_, NSPoint.__typestr__
+            TestNSRulerViewHelper.rulerView_pointForLocation_,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSRulerViewHelper.rulerView_pointForLocation_, 1, objc._C_CGFloat
         )
-
-
-if __name__ == "__main__":
-    main()

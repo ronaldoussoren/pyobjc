@@ -1,164 +1,171 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSpellChecker(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSSpellChecker.sharedSpellCheckerExists)
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.sharedSpellCheckerExists)
         self.assertArgIsBOOL(
-            NSSpellChecker.checkSpellingOfString_startingAt_language_wrap_inSpellDocumentWithTag_wordCount_,
+            AppKit.NSSpellChecker.checkSpellingOfString_startingAt_language_wrap_inSpellDocumentWithTag_wordCount_,  # noqa: B950
             3,
         )
         self.assertArgIsOut(
-            NSSpellChecker.checkSpellingOfString_startingAt_language_wrap_inSpellDocumentWithTag_wordCount_,
+            AppKit.NSSpellChecker.checkSpellingOfString_startingAt_language_wrap_inSpellDocumentWithTag_wordCount_,  # noqa: B950
             5,
         )
-        self.assertResultIsBOOL(NSSpellChecker.setLanguage_)
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.setLanguage_)
 
         self.assertArgHasType(
-            NSSpellChecker.completionsForPartialWordRange_inString_language_inSpellDocumentWithTag_,
+            AppKit.NSSpellChecker.completionsForPartialWordRange_inString_language_inSpellDocumentWithTag_,  # noqa: B950
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
 
     @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertArgIsBOOL(
-            NSSpellChecker.checkGrammarOfString_startingAt_language_wrap_inSpellDocumentWithTag_details_,
+            AppKit.NSSpellChecker.checkGrammarOfString_startingAt_language_wrap_inSpellDocumentWithTag_details_,  # noqa: B950
             3,
         )
         self.assertArgIsOut(
-            NSSpellChecker.checkGrammarOfString_startingAt_language_wrap_inSpellDocumentWithTag_details_,
+            AppKit.NSSpellChecker.checkGrammarOfString_startingAt_language_wrap_inSpellDocumentWithTag_details_,  # noqa: B950
             5,
         )
-        self.assertResultIsBOOL(NSSpellChecker.hasLearnedWord_)
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.hasLearnedWord_)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgHasType(
-            NSSpellChecker.checkString_range_types_options_inSpellDocumentWithTag_orthography_wordCount_,
+            AppKit.NSSpellChecker.checkString_range_types_options_inSpellDocumentWithTag_orthography_wordCount_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgIsOut(
-            NSSpellChecker.checkString_range_types_options_inSpellDocumentWithTag_orthography_wordCount_,
+            AppKit.NSSpellChecker.checkString_range_types_options_inSpellDocumentWithTag_orthography_wordCount_,  # noqa: B950
             5,
         )
         self.assertArgIsOut(
-            NSSpellChecker.checkString_range_types_options_inSpellDocumentWithTag_orthography_wordCount_,
+            AppKit.NSSpellChecker.checkString_range_types_options_inSpellDocumentWithTag_orthography_wordCount_,  # noqa: B950
             6,
         )
 
         self.assertArgHasType(
-            NSSpellChecker.requestCheckingOfString_range_types_options_inSpellDocumentWithTag_completionHandler_,
+            AppKit.NSSpellChecker.requestCheckingOfString_range_types_options_inSpellDocumentWithTag_completionHandler_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgIsBlock(
-            NSSpellChecker.requestCheckingOfString_range_types_options_inSpellDocumentWithTag_completionHandler_,
+            AppKit.NSSpellChecker.requestCheckingOfString_range_types_options_inSpellDocumentWithTag_completionHandler_,  # noqa: B950
             5,
             b"v" + objc._C_NSInteger + b"@@" + objc._C_NSInteger,
         )
 
         self.assertArgHasType(
-            NSSpellChecker.menuForResult_string_options_atLocation_inView_,
+            AppKit.NSSpellChecker.menuForResult_string_options_atLocation_inView_,
             3,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
 
         self.assertArgHasType(
-            NSSpellChecker.guessesForWordRange_inString_language_inSpellDocumentWithTag_,
+            AppKit.NSSpellChecker.guessesForWordRange_inString_language_inSpellDocumentWithTag_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
 
-        self.assertResultIsBOOL(NSSpellChecker.automaticallyIdentifiesLanguages)
-        self.assertArgIsBOOL(NSSpellChecker.setAutomaticallyIdentifiesLanguages_, 0)
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.automaticallyIdentifiesLanguages)
+        self.assertArgIsBOOL(
+            AppKit.NSSpellChecker.setAutomaticallyIdentifiesLanguages_, 0
+        )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertArgIsBlock(
-            NSSpellChecker.showCorrectionIndicatorOfType_primaryString_alternativeStrings_forStringInRect_view_completionHandler_,
+            AppKit.NSSpellChecker.showCorrectionIndicatorOfType_primaryString_alternativeStrings_forStringInRect_view_completionHandler_,  # noqa: B950
             5,
             b"v@",
         )
-        self.assertResultIsBOOL(NSSpellChecker.isAutomaticTextReplacementEnabled)
-        self.assertResultIsBOOL(NSSpellChecker.isAutomaticSpellingCorrectionEnabled)
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.isAutomaticTextReplacementEnabled)
+        self.assertResultIsBOOL(
+            AppKit.NSSpellChecker.isAutomaticSpellingCorrectionEnabled
+        )
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertResultIsBOOL(NSSpellChecker.isAutomaticQuoteSubstitutionEnabled)
-        self.assertResultIsBOOL(NSSpellChecker.isAutomaticDashSubstitutionEnabled)
+        self.assertResultIsBOOL(
+            AppKit.NSSpellChecker.isAutomaticQuoteSubstitutionEnabled
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSSpellChecker.isAutomaticDashSubstitutionEnabled
+        )
 
     @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(
-            NSSpellChecker.preventsAutocorrectionBeforeString_language_
+            AppKit.NSSpellChecker.preventsAutocorrectionBeforeString_language_
         )
-        self.assertResultIsBOOL(NSSpellChecker.isAutomaticCapitalizationEnabled)
-        self.assertResultIsBOOL(NSSpellChecker.isAutomaticPeriodSubstitutionEnabled)
-        self.assertResultIsBOOL(NSSpellChecker.isAutomaticTextCompletionEnabled)
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.isAutomaticCapitalizationEnabled)
+        self.assertResultIsBOOL(
+            AppKit.NSSpellChecker.isAutomaticPeriodSubstitutionEnabled
+        )
+        self.assertResultIsBOOL(AppKit.NSSpellChecker.isAutomaticTextCompletionEnabled)
 
         self.assertArgIsBlock(
-            NSSpellChecker.requestCandidatesForSelectedRange_inString_types_options_inSpellDocumentWithTag_completionHandler_,
+            AppKit.NSSpellChecker.requestCandidatesForSelectedRange_inString_types_options_inSpellDocumentWithTag_completionHandler_,  # noqa: B950
             5,
             b"v" + objc._C_NSInteger + b"@",
         )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(NSTextCheckingOrthographyKey, unicode)
-        self.assertIsInstance(NSTextCheckingQuotesKey, unicode)
-        self.assertIsInstance(NSTextCheckingReplacementsKey, unicode)
-        self.assertIsInstance(NSTextCheckingReferenceDateKey, unicode)
-        self.assertIsInstance(NSTextCheckingReferenceTimeZoneKey, unicode)
-        self.assertIsInstance(NSTextCheckingDocumentURLKey, unicode)
-        self.assertIsInstance(NSTextCheckingDocumentTitleKey, unicode)
-        self.assertIsInstance(NSTextCheckingDocumentAuthorKey, unicode)
+        self.assertIsInstance(AppKit.NSTextCheckingOrthographyKey, str)
+        self.assertIsInstance(AppKit.NSTextCheckingQuotesKey, str)
+        self.assertIsInstance(AppKit.NSTextCheckingReplacementsKey, str)
+        self.assertIsInstance(AppKit.NSTextCheckingReferenceDateKey, str)
+        self.assertIsInstance(AppKit.NSTextCheckingReferenceTimeZoneKey, str)
+        self.assertIsInstance(AppKit.NSTextCheckingDocumentURLKey, str)
+        self.assertIsInstance(AppKit.NSTextCheckingDocumentTitleKey, str)
+        self.assertIsInstance(AppKit.NSTextCheckingDocumentAuthorKey, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(NSTextCheckingRegularExpressionsKey, unicode)
+        self.assertIsInstance(AppKit.NSTextCheckingRegularExpressionsKey, str)
         self.assertIsInstance(
-            NSSpellCheckerDidChangeAutomaticSpellingCorrectionNotification, unicode
+            AppKit.NSSpellCheckerDidChangeAutomaticSpellingCorrectionNotification, str
         )
         self.assertIsInstance(
-            NSSpellCheckerDidChangeAutomaticTextReplacementNotification, unicode
+            AppKit.NSSpellCheckerDidChangeAutomaticTextReplacementNotification, str
         )
 
-        self.assertEqual(NSCorrectionResponseNone, 0)
-        self.assertEqual(NSCorrectionResponseAccepted, 1)
-        self.assertEqual(NSCorrectionResponseRejected, 2)
-        self.assertEqual(NSCorrectionResponseIgnored, 3)
-        self.assertEqual(NSCorrectionResponseEdited, 4)
-        self.assertEqual(NSCorrectionResponseReverted, 5)
+        self.assertEqual(AppKit.NSCorrectionResponseNone, 0)
+        self.assertEqual(AppKit.NSCorrectionResponseAccepted, 1)
+        self.assertEqual(AppKit.NSCorrectionResponseRejected, 2)
+        self.assertEqual(AppKit.NSCorrectionResponseIgnored, 3)
+        self.assertEqual(AppKit.NSCorrectionResponseEdited, 4)
+        self.assertEqual(AppKit.NSCorrectionResponseReverted, 5)
 
-        self.assertEqual(NSCorrectionIndicatorTypeDefault, 0)
-        self.assertEqual(NSCorrectionIndicatorTypeReversion, 1)
-        self.assertEqual(NSCorrectionIndicatorTypeGuesses, 2)
+        self.assertEqual(AppKit.NSCorrectionIndicatorTypeDefault, 0)
+        self.assertEqual(AppKit.NSCorrectionIndicatorTypeReversion, 1)
+        self.assertEqual(AppKit.NSCorrectionIndicatorTypeGuesses, 2)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(
-            NSSpellCheckerDidChangeAutomaticQuoteSubstitutionNotification, unicode
+            AppKit.NSSpellCheckerDidChangeAutomaticQuoteSubstitutionNotification, str
         )
         self.assertIsInstance(
-            NSSpellCheckerDidChangeAutomaticDashSubstitutionNotification, unicode
+            AppKit.NSSpellCheckerDidChangeAutomaticDashSubstitutionNotification, str
         )
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(NSTextCheckingSelectedRangeKey, unicode)
+        self.assertIsInstance(AppKit.NSTextCheckingSelectedRangeKey, str)
         self.assertIsInstance(
-            NSSpellCheckerDidChangeAutomaticCapitalizationNotification, unicode
+            AppKit.NSSpellCheckerDidChangeAutomaticCapitalizationNotification, str
         )
         self.assertIsInstance(
-            NSSpellCheckerDidChangeAutomaticPeriodSubstitutionNotification, unicode
+            AppKit.NSSpellCheckerDidChangeAutomaticPeriodSubstitutionNotification, str
         )
         self.assertIsInstance(
-            NSSpellCheckerDidChangeAutomaticTextCompletionNotification, unicode
+            AppKit.NSSpellCheckerDidChangeAutomaticTextCompletionNotification, str
         )
-
-
-if __name__ == "__main__":
-    main()

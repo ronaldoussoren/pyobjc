@@ -1,11 +1,7 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDistributedLock(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSDistributedLock.tryLock)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSDistributedLock.tryLock)

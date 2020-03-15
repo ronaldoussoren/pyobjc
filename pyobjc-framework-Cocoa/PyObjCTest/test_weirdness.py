@@ -11,31 +11,25 @@
 # NSActionCell.isEnabled_, which is wrong.
 #
 
-import sys
-
+from PyObjCTools.TestSupport import TestCase, max_sdk_level
 import objc
-from PyObjCTools.TestSupport import *
 
-if sys.platform == "darwin":
-    import AppKit
-
-    class TestWeirdness(TestCase):
-        def doWeirdness(self, className, methodToTest):
-            c = objc.lookUpClass(className)
-            before = getattr(c, methodToTest)
-            b = c.alloc().init()
-            after = getattr(c, methodToTest)
-
-            self.assertEqual(after.definingClass, c)
-
-        @max_sdk_level("10.14")
-        def testWeirdness1(self):
-            self.doWeirdness("NSButtonCell", "setEnabled_")
-
-        @max_sdk_level("10.14")
-        def testWeirdness2(self):
-            self.doWeirdness("NSTextView", "setEditable_")
+import AppKit  # noqa: F401
 
 
-if __name__ == "__main__":
-    main()
+class TestWeirdness(TestCase):
+    def doWeirdness(self, className, methodToTest):
+        c = objc.lookUpClass(className)
+        before = getattr(c, methodToTest)  # noqa: F841
+        b = c.alloc().init()  # noqa: F841
+        after = getattr(c, methodToTest)
+
+        self.assertEqual(after.definingClass, c)
+
+    @max_sdk_level("10.14")
+    def testWeirdness1(self):
+        self.doWeirdness("NSButtonCell", "setEnabled_")
+
+    @max_sdk_level("10.14")
+    def testWeirdness2(self):
+        self.doWeirdness("NSTextView", "setEditable_")

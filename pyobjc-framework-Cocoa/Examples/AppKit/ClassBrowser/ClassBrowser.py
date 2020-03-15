@@ -19,17 +19,17 @@ from objc import getClassList, objc_object
 from PyObjCTools import AppHelper
 
 try:
-    import AddressBook
+    import AddressBook  # noqa: F401
 except ImportError:
     pass
 
 try:
-    import PreferencePanes
+    import PreferencePanes  # noqa: F401
 except ImportError:
     pass
 
 try:
-    import InterfaceBuilder
+    import InterfaceBuilder  # noqa: F401
 except ImportError:
     pass
 

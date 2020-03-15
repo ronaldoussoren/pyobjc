@@ -1,15 +1,11 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestArchiver(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSInconsistentArchiveException, unicode)
+        self.assertIsInstance(Foundation.NSInconsistentArchiveException, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSArchiver.archiveRootObject_toFile_)
-        self.assertResultIsBOOL(NSUnarchiver.isAtEnd)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSArchiver.archiveRootObject_toFile_)
+        self.assertResultIsBOOL(Foundation.NSUnarchiver.isAtEnd)

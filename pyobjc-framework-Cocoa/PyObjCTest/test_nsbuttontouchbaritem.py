@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSButtonTouchBarItem(TestCase):
@@ -16,11 +16,7 @@ class TestNSButtonTouchBarItem(TestCase):
             b"v@:@",
         )
         self.assertArgIsSEL(
-            AppKit.NSButtonTouchBarItem.buttonTouchBarItemWithIdentifier_title_image_target_action_,
+            AppKit.NSButtonTouchBarItem.buttonTouchBarItemWithIdentifier_title_image_target_action_,  # noqa: B950
             4,
             b"v@:@",
         )
-
-
-if __name__ == "__main__":
-    main()

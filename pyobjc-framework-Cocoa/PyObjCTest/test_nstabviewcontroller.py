@@ -1,31 +1,30 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTabViewController(TestCase):
     @min_os_level("10.10")
     def testConstants(self):
-        self.assertEqual(NSTabViewControllerTabStyleSegmentedControlOnTop, 0)
-        self.assertEqual(NSTabViewControllerTabStyleSegmentedControlOnBottom, 1)
-        self.assertEqual(NSTabViewControllerTabStyleToolbar, 2)
-        self.assertEqual(NSTabViewControllerTabStyleUnspecified, -1)
+        self.assertEqual(AppKit.NSTabViewControllerTabStyleSegmentedControlOnTop, 0)
+        self.assertEqual(AppKit.NSTabViewControllerTabStyleSegmentedControlOnBottom, 1)
+        self.assertEqual(AppKit.NSTabViewControllerTabStyleToolbar, 2)
+        self.assertEqual(AppKit.NSTabViewControllerTabStyleUnspecified, -1)
 
     @min_os_level("10.10")
     def testMethods(self):
         self.assertResultIsBOOL(
-            NSTabViewController.canPropagateSelectedChildViewControllerTitle
+            AppKit.NSTabViewController.canPropagateSelectedChildViewControllerTitle
         )
         self.assertArgIsBOOL(
-            NSTabViewController.setCanPropagateSelectedChildViewControllerTitle_, 0
+            AppKit.NSTabViewController.setCanPropagateSelectedChildViewControllerTitle_,
+            0,
         )
 
-        self.assertResultIsBOOL(NSTabViewController.tabView_shouldSelectTabViewItem_)
+        self.assertResultIsBOOL(
+            AppKit.NSTabViewController.tabView_shouldSelectTabViewItem_
+        )
 
         self.assertArgIsBOOL(
-            NSTabViewController.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_,
+            AppKit.NSTabViewController.toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar_,
             2,
         )
-
-
-if __name__ == "__main__":
-    main()

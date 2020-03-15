@@ -1,36 +1,36 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSliderCell(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTickMarkBelow, 0)
-        self.assertEqual(NSTickMarkAbove, 1)
-        self.assertEqual(NSTickMarkLeft, NSTickMarkAbove)
-        self.assertEqual(NSTickMarkRight, NSTickMarkBelow)
+        self.assertEqual(AppKit.NSTickMarkBelow, 0)
+        self.assertEqual(AppKit.NSTickMarkAbove, 1)
+        self.assertEqual(AppKit.NSTickMarkLeft, AppKit.NSTickMarkAbove)
+        self.assertEqual(AppKit.NSTickMarkRight, AppKit.NSTickMarkBelow)
 
-        self.assertEqual(NSLinearSlider, 0)
-        self.assertEqual(NSCircularSlider, 1)
+        self.assertEqual(AppKit.NSLinearSlider, 0)
+        self.assertEqual(AppKit.NSCircularSlider, 1)
 
-        self.assertEqual(NSTickMarkPositionBelow, 0)
-        self.assertEqual(NSTickMarkPositionAbove, 1)
-        self.assertEqual(NSTickMarkPositionLeading, NSTickMarkPositionAbove)
-        self.assertEqual(NSTickMarkPositionTrailing, NSTickMarkPositionBelow)
+        self.assertEqual(AppKit.NSTickMarkPositionBelow, 0)
+        self.assertEqual(AppKit.NSTickMarkPositionAbove, 1)
+        self.assertEqual(
+            AppKit.NSTickMarkPositionLeading, AppKit.NSTickMarkPositionAbove
+        )
+        self.assertEqual(
+            AppKit.NSTickMarkPositionTrailing, AppKit.NSTickMarkPositionBelow
+        )
 
-        self.assertEqual(NSSliderTypeLinear, 0)
-        self.assertEqual(NSSliderTypeCircular, 1)
+        self.assertEqual(AppKit.NSSliderTypeLinear, 0)
+        self.assertEqual(AppKit.NSSliderTypeCircular, 1)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSSliderCell.prefersTrackingUntilMouseUp)
-        self.assertArgIsBOOL(NSSliderCell.knobRectFlipped_, 0)
-        self.assertArgIsBOOL(NSSliderCell.drawBarInside_flipped_, 1)
-        self.assertResultIsBOOL(NSSliderCell.allowsTickMarkValuesOnly)
-        self.assertArgIsBOOL(NSSliderCell.setAllowsTickMarkValuesOnly_, 0)
+        self.assertResultIsBOOL(AppKit.NSSliderCell.prefersTrackingUntilMouseUp)
+        self.assertArgIsBOOL(AppKit.NSSliderCell.knobRectFlipped_, 0)
+        self.assertArgIsBOOL(AppKit.NSSliderCell.drawBarInside_flipped_, 1)
+        self.assertResultIsBOOL(AppKit.NSSliderCell.allowsTickMarkValuesOnly)
+        self.assertArgIsBOOL(AppKit.NSSliderCell.setAllowsTickMarkValuesOnly_, 0)
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertArgIsBOOL(NSSliderCell.barRectFlipped_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(AppKit.NSSliderCell.barRectFlipped_, 0)

@@ -10,7 +10,6 @@
 import objc
 from Cocoa import NSDocument, NSKeyedArchiver, NSKeyedUnarchiver
 from objc import super
-from PyObjCTools import AppHelper
 
 
 class FilteringControllerDocument(NSDocument):
@@ -36,7 +35,7 @@ class FilteringControllerDocument(NSDocument):
         self.setPeople_(NSKeyedUnarchiver.unarchiveObjectWithData_(data))
         return True
 
-    ### indexed accessors
+    # indexed accessors
 
     def people(self):
         return self._k_people

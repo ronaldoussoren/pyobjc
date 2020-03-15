@@ -1,20 +1,20 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTableHeaderCell(TestCase):
     def testMethods(self):
         self.assertArgIsBOOL(
-            NSTableHeaderCell.drawSortIndicatorWithFrame_inView_ascending_priority_, 2
+            AppKit.NSTableHeaderCell.drawSortIndicatorWithFrame_inView_ascending_priority_,
+            2,
         )
 
         self.assertResultHasType(
-            NSTableHeaderCell.sortIndicatorRectForBounds_, NSRect.__typestr__
+            AppKit.NSTableHeaderCell.sortIndicatorRectForBounds_,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            NSTableHeaderCell.sortIndicatorRectForBounds_, 0, NSRect.__typestr__
+            AppKit.NSTableHeaderCell.sortIndicatorRectForBounds_,
+            0,
+            AppKit.NSRect.__typestr__,
         )
-
-
-if __name__ == "__main__":
-    main()

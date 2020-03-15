@@ -1,10 +1,12 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestNSHashTable(TestCase):
     def testConvenience(self):
-        v = NSHashTable.hashTableWithOptions_(NSPointerFunctionsObjectPersonality)
+        v = Foundation.NSHashTable.hashTableWithOptions_(
+            Foundation.NSPointerFunctionsObjectPersonality
+        )
         self.assertEqual(len(v), 0)
 
         v.add(32)
@@ -45,30 +47,31 @@ class TestNSHashTable(TestCase):
         self.assertEqual(len(v), 0)
 
     def testConstants(self):
-        self.assertEqual(NSHashTableStrongMemory, 0)
+        self.assertEqual(Foundation.NSHashTableStrongMemory, 0)
         self.assertEqual(
-            NSHashTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory
+            Foundation.NSHashTableZeroingWeakMemory,
+            Foundation.NSPointerFunctionsZeroingWeakMemory,
         )
-        self.assertEqual(NSHashTableCopyIn, NSPointerFunctionsCopyIn)
         self.assertEqual(
-            NSHashTableObjectPointerPersonality,
-            NSPointerFunctionsObjectPointerPersonality,
+            Foundation.NSHashTableCopyIn, Foundation.NSPointerFunctionsCopyIn
+        )
+        self.assertEqual(
+            Foundation.NSHashTableObjectPointerPersonality,
+            Foundation.NSPointerFunctionsObjectPointerPersonality,
         )
 
     @min_os_level("10.8")
-    def testConstants(self):
-        self.assertEqual(NSHashTableWeakMemory, NSPointerFunctionsWeakMemory)
+    def testConstants10_8(self):
+        self.assertEqual(
+            Foundation.NSHashTableWeakMemory, Foundation.NSPointerFunctionsWeakMemory
+        )
 
     @expectedFailure
     def testFunctions(self):
         self.fail("NSHasTable functions")
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSHashTable.containsObject_)
-        self.assertResultIsBOOL(NSHashTable.intersectsHashTable_)
-        self.assertResultIsBOOL(NSHashTable.isEqualToHashTable_)
-        self.assertResultIsBOOL(NSHashTable.isSubsetOfHashTable_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSHashTable.containsObject_)
+        self.assertResultIsBOOL(Foundation.NSHashTable.intersectsHashTable_)
+        self.assertResultIsBOOL(Foundation.NSHashTable.isEqualToHashTable_)
+        self.assertResultIsBOOL(Foundation.NSHashTable.isSubsetOfHashTable_)

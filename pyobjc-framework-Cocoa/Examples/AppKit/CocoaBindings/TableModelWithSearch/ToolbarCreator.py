@@ -20,7 +20,6 @@ from Cocoa import (
     NSToolbarSpaceItemIdentifier,
 )
 from FilteringArrayController import kLiteralSearch, kRegularExpressionSearch
-from objc import super
 
 kToolbarIdentifier = "TableModel Toolbar Identifier"
 kSearchFieldItemIdentifier = "TableModel Search Field Identifier"

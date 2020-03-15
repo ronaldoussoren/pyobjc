@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 NSUserScriptTaskCompletionHandler = b"v@"
 NSUserUnixTaskCompletionHandler = b"v@"
@@ -14,24 +14,20 @@ class TestNSUserScriptTask(TestCase):
         self.assertArgIsBlock(
             Foundation.NSUserScriptTask.executeWithCompletionHandler_,
             0,
-            NSUserScriptTaskCompletionHandler,
+            Foundation.NSUserScriptTaskCompletionHandler,
         )
         self.assertArgIsBlock(
             Foundation.NSUserUnixTask.executeWithArguments_completionHandler_,
             1,
-            NSUserUnixTaskCompletionHandler,
+            Foundation.NSUserUnixTaskCompletionHandler,
         )
         self.assertArgIsBlock(
             Foundation.NSUserAppleScriptTask.executeWithAppleEvent_completionHandler_,
             1,
-            NSUserAppleScriptTaskCompletionHandler,
+            Foundation.NSUserAppleScriptTaskCompletionHandler,
         )
         self.assertArgIsBlock(
             Foundation.NSUserAutomatorTask.executeWithInput_completionHandler_,
             1,
-            NSUserAutomatorTaskCompletionHandler,
+            Foundation.NSUserAutomatorTaskCompletionHandler,
         )
-
-
-if __name__ == "__main__":
-    main()

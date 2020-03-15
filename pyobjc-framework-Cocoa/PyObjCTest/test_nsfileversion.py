@@ -1,40 +1,43 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileVersion(TestCase):
     @min_os_level("10.7")
     def testContants10_7(self):
-        self.assertEqual(NSFileVersionAddingByMoving, 1 << 0)
-        self.assertEqual(NSFileVersionReplacingByMoving, 1 << 0)
+        self.assertEqual(Foundation.NSFileVersionAddingByMoving, 1 << 0)
+        self.assertEqual(Foundation.NSFileVersionReplacingByMoving, 1 << 0)
 
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertArgIsOut(
-            NSFileVersion.addVersionOfItemAtURL_withContentsOfURL_options_error_, 3
+            Foundation.NSFileVersion.addVersionOfItemAtURL_withContentsOfURL_options_error_,
+            3,
         )
-        self.assertArgIsOut(NSFileVersion.replaceItemAtURL_options_error_, 2)
-        self.assertArgIsOut(NSFileVersion.removeAndReturnError_, 0)
-        self.assertResultIsBOOL(NSFileVersion.removeAndReturnError_)
+        self.assertArgIsOut(Foundation.NSFileVersion.replaceItemAtURL_options_error_, 2)
+        self.assertArgIsOut(Foundation.NSFileVersion.removeAndReturnError_, 0)
+        self.assertResultIsBOOL(Foundation.NSFileVersion.removeAndReturnError_)
 
-        self.assertArgIsOut(NSFileVersion.removeOtherVersionsOfItemAtURL_error_, 1)
-        self.assertResultIsBOOL(NSFileVersion.removeOtherVersionsOfItemAtURL_error_)
+        self.assertArgIsOut(
+            Foundation.NSFileVersion.removeOtherVersionsOfItemAtURL_error_, 1
+        )
+        self.assertResultIsBOOL(
+            Foundation.NSFileVersion.removeOtherVersionsOfItemAtURL_error_
+        )
 
-        self.assertResultIsBOOL(NSFileVersion.isConflict)
+        self.assertResultIsBOOL(Foundation.NSFileVersion.isConflict)
 
-        self.assertArgIsBOOL(NSFileVersion.setResolved_, 0)
-        self.assertResultIsBOOL(NSFileVersion.isResolved)
-        self.assertArgIsBOOL(NSFileVersion.setDiscardable_, 0)
-        self.assertResultIsBOOL(NSFileVersion.isDiscardable)
+        self.assertArgIsBOOL(Foundation.NSFileVersion.setResolved_, 0)
+        self.assertResultIsBOOL(Foundation.NSFileVersion.isResolved)
+        self.assertArgIsBOOL(Foundation.NSFileVersion.setDiscardable_, 0)
+        self.assertResultIsBOOL(Foundation.NSFileVersion.isDiscardable)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsBlock(
-            NSFileVersion.getNonlocalVersionsOfItemAtURL_completionHandler_, 1, b"v@@"
+            Foundation.NSFileVersion.getNonlocalVersionsOfItemAtURL_completionHandler_,
+            1,
+            b"v@@",
         )
-        self.assertResultIsBOOL(NSFileVersion.hasLocalContents)
-        self.assertResultIsBOOL(NSFileVersion.hasThumbnail)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSFileVersion.hasLocalContents)
+        self.assertResultIsBOOL(Foundation.NSFileVersion.hasThumbnail)

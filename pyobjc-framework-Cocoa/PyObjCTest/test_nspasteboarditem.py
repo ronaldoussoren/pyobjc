@@ -1,19 +1,16 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSPasteboardItem(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(NSPasteboardItem.setDataProvider_forTypes_)
-        self.assertResultIsBOOL(NSPasteboardItem.setData_forType_)
-        self.assertResultIsBOOL(NSPasteboardItem.setString_forType_)
-        self.assertResultIsBOOL(NSPasteboardItem.setPropertyList_forType_)
+        self.assertResultIsBOOL(AppKit.NSPasteboardItem.setDataProvider_forTypes_)
+        self.assertResultIsBOOL(AppKit.NSPasteboardItem.setData_forType_)
+        self.assertResultIsBOOL(AppKit.NSPasteboardItem.setString_forType_)
+        self.assertResultIsBOOL(AppKit.NSPasteboardItem.setPropertyList_forType_)
 
     @min_sdk_level("10.6")
     def testProtocols(self):
         objc.protocolNamed("NSPasteboardItemDataProvider")
-
-
-if __name__ == "__main__":
-    main()

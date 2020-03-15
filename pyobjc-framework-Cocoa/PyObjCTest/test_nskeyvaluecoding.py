@@ -1,10 +1,10 @@
 # NOTE: This file only contains basic tests of the keyvalue coding header definitions,
 # test_keyvalue contains tests for the actualy KVC/KVO mechanisms.
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestNSKeyValueCodingHelper(NSObject):
+class TestNSKeyValueCodingHelper(Foundation.NSObject):
     def validateValue_forKey_error_(self, a, b, c):
         return 1
 
@@ -17,21 +17,21 @@ class TestNSKeyValueCodingHelper(NSObject):
 
 class TestNSKeyValueCoding(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSUndefinedKeyException, unicode)
-        self.assertIsInstance(NSAverageKeyValueOperator, unicode)
-        self.assertIsInstance(NSCountKeyValueOperator, unicode)
-        self.assertIsInstance(NSDistinctUnionOfArraysKeyValueOperator, unicode)
-        self.assertIsInstance(NSDistinctUnionOfObjectsKeyValueOperator, unicode)
-        self.assertIsInstance(NSDistinctUnionOfSetsKeyValueOperator, unicode)
-        self.assertIsInstance(NSMaximumKeyValueOperator, unicode)
-        self.assertIsInstance(NSMinimumKeyValueOperator, unicode)
-        self.assertIsInstance(NSSumKeyValueOperator, unicode)
-        self.assertIsInstance(NSUnionOfArraysKeyValueOperator, unicode)
-        self.assertIsInstance(NSUnionOfObjectsKeyValueOperator, unicode)
-        self.assertIsInstance(NSUnionOfSetsKeyValueOperator, unicode)
+        self.assertIsInstance(Foundation.NSUndefinedKeyException, str)
+        self.assertIsInstance(Foundation.NSAverageKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSCountKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSDistinctUnionOfArraysKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSDistinctUnionOfObjectsKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSDistinctUnionOfSetsKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSMaximumKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSMinimumKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSSumKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSUnionOfArraysKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSUnionOfObjectsKeyValueOperator, str)
+        self.assertIsInstance(Foundation.NSUnionOfSetsKeyValueOperator, str)
 
     def testDefineValidation(self):
-        o = NSObject.alloc().init()
+        o = Foundation.NSObject.alloc().init()
 
         m = o.validateValue_forKey_error_.__metadata__()
         self.assertEqual(m["arguments"][4]["type"], b"o^@")
@@ -40,7 +40,7 @@ class TestNSKeyValueCoding(TestCase):
         self.assertEqual(m["arguments"][4]["type"], b"o^@")
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSObject.accessInstanceVariablesDirectly)
+        self.assertResultIsBOOL(Foundation.NSObject.accessInstanceVariablesDirectly)
 
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.validateValue_forKey_error_)
         self.assertArgIsOut(TestNSKeyValueCodingHelper.validateValue_forKey_error_, 2)
@@ -55,7 +55,3 @@ class TestNSKeyValueCoding(TestCase):
             TestNSKeyValueCodingHelper.validateValue_forKeyPath_error_, 2
         )
         self.assertResultIsBOOL(TestNSKeyValueCodingHelper.useStoredAccessor)
-
-
-if __name__ == "__main__":
-    main()

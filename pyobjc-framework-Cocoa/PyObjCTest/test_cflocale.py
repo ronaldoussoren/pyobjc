@@ -1,149 +1,154 @@
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestLocale(TestCase):
     def testTypes(self):
         try:
             cls = objc.lookUpClass("__NSCFLocale")
-            self.assertIs(CFLocaleRef, cls)
+            self.assertIs(CoreFoundation.CFLocaleRef, cls)
         except objc.error:
             try:
                 cls = objc.lookUpClass("NSCFLocale")
-                self.assertIs(CFLocaleRef, cls)
+                self.assertIs(CoreFoundation.CFLocaleRef, cls)
             except objc.error:
-                self.assertIsCFType(CFLocaleRef)
+                self.assertIsCFType(CoreFoundation.CFLocaleRef)
 
     def testGetTypeID(self):
-        self.assertIsInstance(CFLocaleGetTypeID(), (int, long))
+        self.assertIsInstance(CoreFoundation.CFLocaleGetTypeID(), int)
 
     def testInspection(self):
-        locale = CFLocaleGetSystem()
-        self.assertIsInstance(locale, CFLocaleRef)
-        locale = CFLocaleCopyCurrent()
-        self.assertIsInstance(locale, CFLocaleRef)
-        idents = CFLocaleCopyAvailableLocaleIdentifiers()
-        self.assertIsInstance(idents, CFArrayRef)
-        codes = CFLocaleCopyISOLanguageCodes()
-        self.assertIsInstance(codes, CFArrayRef)
-        codes = CFLocaleCopyISOCountryCodes()
-        self.assertIsInstance(codes, CFArrayRef)
-        codes = CFLocaleCopyISOCurrencyCodes()
-        self.assertIsInstance(codes, CFArrayRef)
-        val = CFLocaleCreateCanonicalLanguageIdentifierFromString(None, "de_DE")
-        self.assertIsInstance(val, unicode)
+        locale = CoreFoundation.CFLocaleGetSystem()
+        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        locale = CoreFoundation.CFLocaleCopyCurrent()
+        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        idents = CoreFoundation.CFLocaleCopyAvailableLocaleIdentifiers()
+        self.assertIsInstance(idents, CoreFoundation.CFArrayRef)
+        codes = CoreFoundation.CFLocaleCopyISOLanguageCodes()
+        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        codes = CoreFoundation.CFLocaleCopyISOCountryCodes()
+        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        codes = CoreFoundation.CFLocaleCopyISOCurrencyCodes()
+        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        val = CoreFoundation.CFLocaleCreateCanonicalLanguageIdentifierFromString(
+            None, "de_DE"
+        )
+        self.assertIsInstance(val, str)
         self.assertEqual(val, "de-DE")
-        val = CFLocaleCreateCanonicalLocaleIdentifierFromString(None, "de_DE")
-        self.assertIsInstance(val, unicode)
+        val = CoreFoundation.CFLocaleCreateCanonicalLocaleIdentifierFromString(
+            None, "de_DE"
+        )
+        self.assertIsInstance(val, str)
         self.assertEqual(val, "de_DE")
 
-        val = CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes(
+        val = CoreFoundation.CFLocaleCreateCanonicalLocaleIdentifierFromScriptManagerCodes(
             None, 55, 75
         )
-        self.assertIsInstance(val, unicode)
-        dct = CFLocaleCreateComponentsFromLocaleIdentifier(None, "nl_NL")
-        try:
-            # 10.6
-            self.assertEqual(dct[kCFLocaleCountryCodeKey], "NL")
-            self.assertEqual(dct[kCFLocaleLanguageCodeKey], "nl")
-        except NameError:
-            # 10.5 and earlier
-            self.assertEqual(dct["locale:country code"], "NL")
-            self.assertEqual(dct["locale:language code"], "nl")
-        val = CFLocaleCreateLocaleIdentifierFromComponents(None, dct)
-        self.assertIsInstance(val, unicode)
+        self.assertIsInstance(val, str)
+        dct = CoreFoundation.CFLocaleCreateComponentsFromLocaleIdentifier(None, "nl_NL")
+        self.assertEqual(dct[CoreFoundation.kCFLocaleCountryCodeKey], "NL")
+        self.assertEqual(dct[CoreFoundation.kCFLocaleLanguageCodeKey], "nl")
+        val = CoreFoundation.CFLocaleCreateLocaleIdentifierFromComponents(None, dct)
+        self.assertIsInstance(val, str)
         self.assertEqual(val, "nl_NL")
 
-        locale = CFLocaleCreate(None, "nl_NL")
-        self.assertIsInstance(locale, CFLocaleRef)
-        locale = CFLocaleCreateCopy(None, locale)
-        self.assertIsInstance(locale, CFLocaleRef)
-        ident = CFLocaleGetIdentifier(locale)
+        locale = CoreFoundation.CFLocaleCreate(None, "nl_NL")
+        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        locale = CoreFoundation.CFLocaleCreateCopy(None, locale)
+        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        ident = CoreFoundation.CFLocaleGetIdentifier(locale)
         self.assertEqual(ident, "nl_NL")
-        v = CFLocaleGetValue(locale, kCFLocaleDecimalSeparator)
+        v = CoreFoundation.CFLocaleGetValue(
+            locale, CoreFoundation.kCFLocaleDecimalSeparator
+        )
         self.assertEqual(v, ",")
-        v = CFLocaleCopyDisplayNameForPropertyValue(
-            locale, kCFLocaleIdentifier, "nl_NL"
+        v = CoreFoundation.CFLocaleCopyDisplayNameForPropertyValue(
+            locale, CoreFoundation.kCFLocaleIdentifier, "nl_NL"
         )
         if v is not None:
-            self.assertIsInstance(v, unicode)
+            self.assertIsInstance(v, str)
         self.assertEqual(v, b"Nederlands (Nederland)".decode("ascii"))
 
     def testConstants(self):
-        self.assertIsInstance(kCFLocaleIdentifier, unicode)
-        self.assertIsInstance(kCFLocaleLanguageCode, unicode)
-        self.assertIsInstance(kCFLocaleCountryCode, unicode)
-        self.assertIsInstance(kCFLocaleScriptCode, unicode)
-        self.assertIsInstance(kCFLocaleVariantCode, unicode)
-        self.assertIsInstance(kCFLocaleExemplarCharacterSet, unicode)
-        self.assertIsInstance(kCFLocaleCalendarIdentifier, unicode)
-        self.assertIsInstance(kCFLocaleCalendar, unicode)
-        self.assertIsInstance(kCFLocaleCollationIdentifier, unicode)
-        self.assertIsInstance(kCFLocaleUsesMetricSystem, unicode)
-        self.assertIsInstance(kCFLocaleMeasurementSystem, unicode)
-        self.assertIsInstance(kCFLocaleDecimalSeparator, unicode)
-        self.assertIsInstance(kCFLocaleGroupingSeparator, unicode)
-        self.assertIsInstance(kCFLocaleCurrencySymbol, unicode)
-        self.assertIsInstance(kCFLocaleCurrencyCode, unicode)
-        self.assertIsInstance(kCFGregorianCalendar, unicode)
-        self.assertIsInstance(kCFBuddhistCalendar, unicode)
-        self.assertIsInstance(kCFChineseCalendar, unicode)
-        self.assertIsInstance(kCFHebrewCalendar, unicode)
-        self.assertIsInstance(kCFIslamicCalendar, unicode)
-        self.assertIsInstance(kCFIslamicCivilCalendar, unicode)
-        self.assertIsInstance(kCFJapaneseCalendar, unicode)
+        self.assertIsInstance(CoreFoundation.kCFLocaleIdentifier, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleLanguageCode, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleCountryCode, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleScriptCode, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleVariantCode, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleExemplarCharacterSet, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleCalendarIdentifier, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleCollationIdentifier, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleUsesMetricSystem, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleMeasurementSystem, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleDecimalSeparator, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleGroupingSeparator, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleCurrencySymbol, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleCurrencyCode, str)
+        self.assertIsInstance(CoreFoundation.kCFGregorianCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFBuddhistCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFChineseCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFHebrewCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFIslamicCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFIslamicCivilCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFJapaneseCalendar, str)
 
     @min_os_level("10.5")
     def testFunctions10_5(self):
-        codes = CFLocaleCopyCommonISOCurrencyCodes()
-        self.assertIsInstance(codes, CFArrayRef)
-        codes = CFLocaleCopyPreferredLanguages()
-        self.assertIsInstance(codes, CFArrayRef)
+        codes = CoreFoundation.CFLocaleCopyCommonISOCurrencyCodes()
+        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
+        codes = CoreFoundation.CFLocaleCopyPreferredLanguages()
+        self.assertIsInstance(codes, CoreFoundation.CFArrayRef)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(kCFLocaleCurrentLocaleDidChangeNotification, unicode)
+        self.assertIsInstance(
+            CoreFoundation.kCFLocaleCurrentLocaleDidChangeNotification, str
+        )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(kCFLocaleLanguageDirectionUnknown, 0)
-        self.assertEqual(kCFLocaleLanguageDirectionLeftToRight, 1)
-        self.assertEqual(kCFLocaleLanguageDirectionRightToLeft, 2)
-        self.assertEqual(kCFLocaleLanguageDirectionTopToBottom, 3)
-        self.assertEqual(kCFLocaleLanguageDirectionBottomToTop, 4)
+        self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionUnknown, 0)
+        self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionLeftToRight, 1)
+        self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionRightToLeft, 2)
+        self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionTopToBottom, 3)
+        self.assertEqual(CoreFoundation.kCFLocaleLanguageDirectionBottomToTop, 4)
 
-        self.assertIsInstance(kCFLocaleCollatorIdentifier, unicode)
-        self.assertIsInstance(kCFLocaleQuotationBeginDelimiterKey, unicode)
-        self.assertIsInstance(kCFLocaleQuotationEndDelimiterKey, unicode)
-        self.assertIsInstance(kCFLocaleAlternateQuotationBeginDelimiterKey, unicode)
-        self.assertIsInstance(kCFLocaleAlternateQuotationEndDelimiterKey, unicode)
-        self.assertIsInstance(kCFRepublicOfChinaCalendar, unicode)
-        self.assertIsInstance(kCFPersianCalendar, unicode)
-        self.assertIsInstance(kCFIndianCalendar, unicode)
-        self.assertIsInstance(kCFISO8601Calendar, unicode)
+        self.assertIsInstance(CoreFoundation.kCFLocaleCollatorIdentifier, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleQuotationBeginDelimiterKey, str)
+        self.assertIsInstance(CoreFoundation.kCFLocaleQuotationEndDelimiterKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFLocaleAlternateQuotationBeginDelimiterKey, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFLocaleAlternateQuotationEndDelimiterKey, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFRepublicOfChinaCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFPersianCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFIndianCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFISO8601Calendar, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(kCFIslamicTabularCalendar, unicode)
-        self.assertIsInstance(kCFIslamicUmmAlQuraCalendar, unicode)
+        self.assertIsInstance(CoreFoundation.kCFIslamicTabularCalendar, str)
+        self.assertIsInstance(CoreFoundation.kCFIslamicUmmAlQuraCalendar, str)
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
-        v = CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier("nl_NL")
-        self.assertIsInstance(v, (int, long))
+        v = CoreFoundation.CFLocaleGetWindowsLocaleCodeFromLocaleIdentifier("nl_NL")
+        self.assertIsInstance(v, int)
 
         self.assertResultIsCFRetained(
-            CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode
+            CoreFoundation.CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode
         )
-        v = CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode(None, 1043)
-        self.assertIsInstance(v, unicode)
+        v = CoreFoundation.CFLocaleCreateLocaleIdentifierFromWindowsLocaleCode(
+            None, 1043
+        )
+        self.assertIsInstance(v, str)
 
-        v = CFLocaleGetLanguageCharacterDirection("NL")
-        self.assertEqual(v, kCFLocaleLanguageDirectionLeftToRight)
+        v = CoreFoundation.CFLocaleGetLanguageCharacterDirection("NL")
+        self.assertEqual(v, CoreFoundation.kCFLocaleLanguageDirectionLeftToRight)
 
-        v = CFLocaleGetLanguageLineDirection("NL")
-        self.assertEqual(v, kCFLocaleLanguageDirectionTopToBottom)
-
-
-if __name__ == "__main__":
-    main()
+        v = CoreFoundation.CFLocaleGetLanguageLineDirection("NL")
+        self.assertEqual(v, CoreFoundation.kCFLocaleLanguageDirectionTopToBottom)

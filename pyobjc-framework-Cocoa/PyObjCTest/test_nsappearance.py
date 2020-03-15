@@ -1,41 +1,38 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAppearance(TestCase):
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSAppearance.allowsVibrancy)
+        self.assertResultIsBOOL(AppKit.NSAppearance.allowsVibrancy)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(NSAppearanceNameAqua, unicode)
-        self.assertIsInstance(NSAppearanceNameLightContent, unicode)
+        self.assertIsInstance(AppKit.NSAppearanceNameAqua, str)
+        self.assertIsInstance(AppKit.NSAppearanceNameLightContent, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(NSAppearanceNameVibrantDark, unicode)
-        self.assertIsInstance(NSAppearanceNameVibrantLight, unicode)
+        self.assertIsInstance(AppKit.NSAppearanceNameVibrantDark, str)
+        self.assertIsInstance(AppKit.NSAppearanceNameVibrantLight, str)
 
     @min_os_level("10.14")
     def testConstants10_14(self):
-        self.assertIsInstance(NSAppearanceNameDarkAqua, unicode)
+        self.assertIsInstance(AppKit.NSAppearanceNameDarkAqua, str)
 
-        self.assertIsInstance(NSAppearanceNameAccessibilityHighContrastAqua, unicode)
+        self.assertIsInstance(AppKit.NSAppearanceNameAccessibilityHighContrastAqua, str)
         self.assertIsInstance(
-            NSAppearanceNameAccessibilityHighContrastDarkAqua, unicode
+            AppKit.NSAppearanceNameAccessibilityHighContrastDarkAqua, str
         )
         self.assertIsInstance(
-            NSAppearanceNameAccessibilityHighContrastVibrantLight, unicode
+            AppKit.NSAppearanceNameAccessibilityHighContrastVibrantLight, str
         )
         self.assertIsInstance(
-            NSAppearanceNameAccessibilityHighContrastVibrantDark, unicode
+            AppKit.NSAppearanceNameAccessibilityHighContrastVibrantDark, str
         )
 
     @min_os_level("10.9")
     def testProtocols(self):
         objc.protocolNamed("NSAppearanceCustomization")
-
-
-if __name__ == "__main__":
-    main()

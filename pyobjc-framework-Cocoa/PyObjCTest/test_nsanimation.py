@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSAnimationHelper(NSObject):
+class TestNSAnimationHelper(AppKit.NSObject):
     def animationShouldStart_(self, animation):
         return 1
 
@@ -15,37 +16,37 @@ class TestNSAnimationHelper(NSObject):
 
 class TestNSAnimation(TestCase):
     def testConstants(self):
-        self.assertEqual(NSAnimationEaseInOut, 0)
-        self.assertEqual(NSAnimationEaseIn, 1)
-        self.assertEqual(NSAnimationEaseOut, 2)
-        self.assertEqual(NSAnimationLinear, 3)
+        self.assertEqual(AppKit.NSAnimationEaseInOut, 0)
+        self.assertEqual(AppKit.NSAnimationEaseIn, 1)
+        self.assertEqual(AppKit.NSAnimationEaseOut, 2)
+        self.assertEqual(AppKit.NSAnimationLinear, 3)
 
-        self.assertEqual(NSAnimationBlocking, 0)
-        self.assertEqual(NSAnimationNonblocking, 1)
-        self.assertEqual(NSAnimationNonblockingThreaded, 2)
+        self.assertEqual(AppKit.NSAnimationBlocking, 0)
+        self.assertEqual(AppKit.NSAnimationNonblocking, 1)
+        self.assertEqual(AppKit.NSAnimationNonblockingThreaded, 2)
 
-        self.assertIsInstance(NSAnimationProgressMarkNotification, unicode)
-        self.assertIsInstance(NSAnimationProgressMark, unicode)
+        self.assertIsInstance(AppKit.NSAnimationProgressMarkNotification, str)
+        self.assertIsInstance(AppKit.NSAnimationProgressMark, str)
 
-        self.assertIsInstance(NSViewAnimationTargetKey, unicode)
-        self.assertIsInstance(NSViewAnimationStartFrameKey, unicode)
-        self.assertIsInstance(NSViewAnimationEndFrameKey, unicode)
-        self.assertIsInstance(NSViewAnimationEffectKey, unicode)
-        self.assertIsInstance(NSViewAnimationFadeInEffect, unicode)
-        self.assertIsInstance(NSViewAnimationFadeOutEffect, unicode)
+        self.assertIsInstance(AppKit.NSViewAnimationTargetKey, str)
+        self.assertIsInstance(AppKit.NSViewAnimationStartFrameKey, str)
+        self.assertIsInstance(AppKit.NSViewAnimationEndFrameKey, str)
+        self.assertIsInstance(AppKit.NSViewAnimationEffectKey, str)
+        self.assertIsInstance(AppKit.NSViewAnimationFadeInEffect, str)
+        self.assertIsInstance(AppKit.NSViewAnimationFadeOutEffect, str)
 
-        self.assertIsInstance(NSAnimationTriggerOrderIn, unicode)
-        self.assertIsInstance(NSAnimationTriggerOrderOut, unicode)
+        self.assertIsInstance(AppKit.NSAnimationTriggerOrderIn, str)
+        self.assertIsInstance(AppKit.NSAnimationTriggerOrderOut, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSAnimation.isAnimating)
+        self.assertResultIsBOOL(AppKit.NSAnimation.isAnimating)
 
     @min_sdk_level("10.6")
     def testProtocol(self):
         objc.protocolNamed("NSAnimationDelegate")
         objc.protocolNamed("NSAnimatablePropertyContainer")
 
-    def testProtocol(self):
+    def testProtocolMethods(self):
         self.assertResultIsBOOL(TestNSAnimationHelper.animationShouldStart_)
 
         self.assertResultHasType(
@@ -57,7 +58,3 @@ class TestNSAnimation(TestCase):
         self.assertArgHasType(
             TestNSAnimationHelper.animation_didReachProgressMark_, 1, objc._C_FLT
         )
-
-
-if __name__ == "__main__":
-    main()

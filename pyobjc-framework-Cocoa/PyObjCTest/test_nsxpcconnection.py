@@ -1,5 +1,6 @@
 import Foundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class XPCHelper(Foundation.NSObject):
@@ -68,7 +69,3 @@ class TestNSXPCConnection(TestCase):
         self.assertArgIsBOOL(
             Foundation.NSXPCInterface.XPCTypeForSelector_argumentIndex_ofReply_, 2
         )
-
-
-if __name__ == "__main__":
-    main()

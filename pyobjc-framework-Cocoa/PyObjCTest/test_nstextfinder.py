@@ -1,5 +1,6 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class FindHelper(AppKit.NSObject):
@@ -63,8 +64,8 @@ class TestNSTextFinder(TestCase):
         self.assertEqual(AppKit.NSTextFinderActionShowReplaceInterface, 12)
         self.assertEqual(AppKit.NSTextFinderActionHideReplaceInterface, 13)
 
-        self.assertIsInstance(AppKit.NSTextFinderCaseInsensitiveKey, unicode)
-        self.assertIsInstance(AppKit.NSTextFinderMatchingTypeKey, unicode)
+        self.assertIsInstance(AppKit.NSTextFinderCaseInsensitiveKey, str)
+        self.assertIsInstance(AppKit.NSTextFinderMatchingTypeKey, str)
 
         self.assertEqual(AppKit.NSTextFinderMatchingTypeContains, 0)
         self.assertEqual(AppKit.NSTextFinderMatchingTypeStartsWith, 1)
@@ -148,7 +149,3 @@ class TestNSTextFinder(TestCase):
 
         self.assertResultIsBOOL(FindHelper.isFindBarVisible)
         self.assertArgIsBOOL(FindHelper.setFindBarVisible_, 0)
-
-
-if __name__ == "__main__":
-    main()

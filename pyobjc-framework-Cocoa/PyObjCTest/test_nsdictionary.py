@@ -1,10 +1,9 @@
-import sys
 import types
 
 import objc
-from Foundation import *
+import Foundation
 from PyObjCTest.testhelper import PyObjC_TestClass3
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSDictionarySubclassing(TestCase):
@@ -13,7 +12,7 @@ class TestNSDictionarySubclassing(TestCase):
         if objc.platform != "MACOSX":
             return
 
-        class DictTestExceptionClass(NSDictionary):
+        class DictTestExceptionClass(Foundation.NSDictionary):
             pass
 
         # Don't use self.assertRaises here, we once had a bug that
@@ -25,7 +24,7 @@ class TestNSDictionarySubclassing(TestCase):
 
         try:
             try:
-                d = DictTestExceptionClass.alloc().initWithDictionary_({})
+                _ = DictTestExceptionClass.alloc().initWithDictionary_({})
                 self.fail()
             except ValueError:
                 pass
@@ -36,7 +35,7 @@ class TestNSDictionarySubclassing(TestCase):
         if objc.platform != "MACOSX":
             return
 
-        class DictTestExceptionClass2(NSDictionary):
+        class DictTestExceptionClass2(Foundation.NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
                 return objc.super(
                     DictTestExceptionClass2, self
@@ -48,7 +47,7 @@ class TestNSDictionarySubclassing(TestCase):
 
         try:
             try:
-                d = DictTestExceptionClass2.alloc().initWithDictionary_({})
+                _ = DictTestExceptionClass2.alloc().initWithDictionary_({})
                 self.fail()
             except ValueError:
                 pass
@@ -59,14 +58,14 @@ class TestNSDictionarySubclassing(TestCase):
         if objc.platform != "MACOSX":
             return
 
-        class DictTestExceptionClass3(NSDictionary):
+        class DictTestExceptionClass3(Foundation.NSDictionary):
             def initWithObjects_forKeys_count_(self, o, k, c):
                 return objc.super(
                     DictTestExceptionClass3, self
                 ).initWithObjects_forKeys_count_(o, k, c)
 
         try:
-            d = DictTestExceptionClass3.dictionaryWithDictionary_({})
+            _ = DictTestExceptionClass3.dictionaryWithDictionary_({})
             self.fail()
         except ValueError:
             pass
@@ -85,16 +84,16 @@ class TestNSDictionaryInteraction(TestCase):
                 continue
 
             self.assertTrue(
-                hasattr(NSMutableDictionary, nm),
+                hasattr(Foundation.NSMutableDictionary, nm),
                 "NSMutableDictionary has no method '%s'" % (nm,),
             )
 
     def testRepeatedAllocInit(self):
-        for i in range(1, 1000):
-            d = NSDictionary.alloc().init()
+        for _ in range(1, 1000):
+            _ = Foundation.NSDictionary.alloc().init()
 
     def testBasicInteraction(self):
-        d = NSMutableDictionary.dictionary()
+        d = Foundation.NSMutableDictionary.dictionary()
         d[b"a".decode("ascii")] = b"foo".decode("ascii")
         d[b"b".decode("ascii")] = b"bar".decode("ascii")
 
@@ -110,7 +109,7 @@ class TestNSDictionaryInteraction(TestCase):
             pass
 
     def testPythonIteraction(self):
-        d = NSMutableDictionary.dictionary()
+        d = Foundation.NSMutableDictionary.dictionary()
         d[b"a".decode("ascii")] = b"foo".decode("ascii")
         d[b"b".decode("ascii")] = b"bar".decode("ascii")
 
@@ -133,12 +132,11 @@ class TestNSDictionaryInteraction(TestCase):
         )
 
     def testIn(self):
-        d = NSMutableDictionary.dictionary()
+        d = Foundation.NSMutableDictionary.dictionary()
         d[b"a".decode("ascii")] = b"foo".decode("ascii")
         d[b"b".decode("ascii")] = b"bar".decode("ascii")
         d[1] = b"baz".decode("ascii")
         d[0] = b"bob".decode("ascii")
-        # d[-1] = None -- this fails because the bridge doesn't proxy py(None) to objc(NSNull)... not sure if it should
 
         self.assertTrue(b"a".decode("ascii") in d)
         self.assertTrue(1 in d)
@@ -156,7 +154,7 @@ class TestNSDictionaryInteraction(TestCase):
         self.assertTrue(b"a".decode("ascii") not in d)
 
     def test_varargConstruction(self):
-        u = NSDictionary.dictionaryWithObjects_forKeys_(
+        u = Foundation.NSDictionary.dictionaryWithObjects_forKeys_(
             [1, 2, 3, 4],
             [
                 b"one".decode("ascii"),
@@ -165,7 +163,7 @@ class TestNSDictionaryInteraction(TestCase):
                 b"four".decode("ascii"),
             ],
         )
-        v = NSDictionary.alloc().initWithObjects_forKeys_(
+        v = Foundation.NSDictionary.alloc().initWithObjects_forKeys_(
             [1, 2, 3, 4],
             [
                 b"one".decode("ascii"),
@@ -174,7 +172,7 @@ class TestNSDictionaryInteraction(TestCase):
                 b"four".decode("ascii"),
             ],
         )
-        w = NSDictionary.dictionaryWithObjects_forKeys_count_(
+        w = Foundation.NSDictionary.dictionaryWithObjects_forKeys_count_(
             [1, 2, 3, 4, 5],
             [
                 b"one".decode("ascii"),
@@ -185,7 +183,7 @@ class TestNSDictionaryInteraction(TestCase):
             ],
             4,
         )
-        x = NSDictionary.alloc().initWithObjects_forKeys_count_(
+        x = Foundation.NSDictionary.alloc().initWithObjects_forKeys_count_(
             [1, 2, 3, 4, 5],
             [
                 b"one".decode("ascii"),
@@ -196,7 +194,7 @@ class TestNSDictionaryInteraction(TestCase):
             ],
             4,
         )
-        y = NSDictionary.dictionaryWithObjectsAndKeys_(
+        y = Foundation.NSDictionary.dictionaryWithObjectsAndKeys_(
             1,
             b"one".decode("ascii"),
             2,
@@ -207,7 +205,7 @@ class TestNSDictionaryInteraction(TestCase):
             b"four".decode("ascii"),
             None,
         )
-        z = NSDictionary.alloc().initWithObjectsAndKeys_(
+        z = Foundation.NSDictionary.alloc().initWithObjectsAndKeys_(
             1,
             b"one".decode("ascii"),
             2,
@@ -234,7 +232,7 @@ class TestNSDictionaryInteraction(TestCase):
         self.assertEqual(z[b"four".decode("ascii")], 4)
 
     def test_varargConstruction2(self):
-        u = NSMutableDictionary.dictionaryWithObjects_forKeys_(
+        u = Foundation.NSMutableDictionary.dictionaryWithObjects_forKeys_(
             [1, 2, 3, 4],
             [
                 b"one".decode("ascii"),
@@ -243,7 +241,8 @@ class TestNSDictionaryInteraction(TestCase):
                 b"four".decode("ascii"),
             ],
         )
-        v = NSMutableDictionary.alloc().initWithObjects_forKeys_(
+        self.assertIsNot(u, None)
+        v = Foundation.NSMutableDictionary.alloc().initWithObjects_forKeys_(
             [1, 2, 3, 4],
             [
                 b"one".decode("ascii"),
@@ -252,7 +251,8 @@ class TestNSDictionaryInteraction(TestCase):
                 b"four".decode("ascii"),
             ],
         )
-        w = NSMutableDictionary.dictionaryWithObjects_forKeys_count_(
+        self.assertIsNot(v, None)
+        w = Foundation.NSMutableDictionary.dictionaryWithObjects_forKeys_count_(
             [1, 2, 3, 4, 5],
             [
                 b"one".decode("ascii"),
@@ -263,7 +263,8 @@ class TestNSDictionaryInteraction(TestCase):
             ],
             4,
         )
-        x = NSMutableDictionary.alloc().initWithObjects_forKeys_count_(
+        self.assertIsNot(w, None)
+        x = Foundation.NSMutableDictionary.alloc().initWithObjects_forKeys_count_(
             [1, 2, 3, 4, 5],
             [
                 b"one".decode("ascii"),
@@ -274,9 +275,9 @@ class TestNSDictionaryInteraction(TestCase):
             ],
             4,
         )
+        self.assertIsNot(x, None)
 
-        # self.assertRaises(TypeError, NSMutableDictionary.dictionaryWithObjectsAndKeys_, 1, 'one', 2, 'two', None)
-        y = NSMutableDictionary.dictionaryWithObjectsAndKeys_(
+        y = Foundation.NSMutableDictionary.dictionaryWithObjectsAndKeys_(
             1,
             b"one".decode("ascii"),
             2,
@@ -287,7 +288,8 @@ class TestNSDictionaryInteraction(TestCase):
             b"four".decode("ascii"),
             None,
         )
-        z = NSMutableDictionary.alloc().initWithObjectsAndKeys_(
+        self.assertIsNot(y, None)
+        z = Foundation.NSMutableDictionary.alloc().initWithObjectsAndKeys_(
             1,
             b"one".decode("ascii"),
             2,
@@ -298,23 +300,24 @@ class TestNSDictionaryInteraction(TestCase):
             b"four".decode("ascii"),
             None,
         )
+        self.assertIsNot(z, None)
 
         self.assertEqual(len(u), 4)
         self.assertEqual(len(v), 4)
         self.assertEqual(len(w), 4)
         self.assertEqual(len(x), 4)
-        # self.assertEqual(len(y), 4)
-        # self.assertEqual(len(z), 4)
+        self.assertEqual(len(y), 4)
+        self.assertEqual(len(z), 4)
 
         self.assertEqual(u[b"one".decode("ascii")], 1)
         self.assertEqual(v[b"two".decode("ascii")], 2)
         self.assertEqual(w[b"three".decode("ascii")], 3)
         self.assertEqual(x[b"one".decode("ascii")], 1)
-        # self.assertEqual(y[b'two'.decode('ascii')], 2)
-        # self.assertEqual(z[b'four'.decode('ascii')], 4)
+        self.assertEqual(y[b"two".decode("ascii")], 2)
+        self.assertEqual(z[b"four".decode("ascii")], 4)
 
 
-class MyDictionaryBase(NSDictionary):
+class MyDictionaryBase(Foundation.NSDictionary):
     def count(self):
         if hasattr(self, "_count"):
             return self._count
@@ -337,7 +340,7 @@ class MyDictionary1(MyDictionaryBase):
 
 class MyDictionary2(MyDictionaryBase):
     def dictionaryWithObjects_forKeys_count_(self, objects, keys, count):
-        if not self is MyDictionary2:
+        if self is not MyDictionary2:
             raise AssertionError(self)
         return (objects, keys, count)
 
@@ -362,87 +365,107 @@ class TestSubclassing(TestCase):
 
 class TestVariadic(TestCase):
     def testDictionaryWithObjectsAndKeys(self):
-        o = NSDictionary.dictionaryWithObjectsAndKeys_(42, "a", 43, "b")
+        o = Foundation.NSDictionary.dictionaryWithObjectsAndKeys_(42, "a", 43, "b")
         self.assertEqual(o, {"a": 42, "b": 43})
-        self.assertIsInstance(o, NSDictionary)
+        self.assertIsInstance(o, Foundation.NSDictionary)
 
-        o = NSMutableDictionary.dictionaryWithObjectsAndKeys_(42, "a", 43, "b")
+        o = Foundation.NSMutableDictionary.dictionaryWithObjectsAndKeys_(
+            42, "a", 43, "b"
+        )
         self.assertEqual(o, {"a": 42, "b": 43})
-        self.assertIsInstance(o, NSMutableDictionary)
+        self.assertIsInstance(o, Foundation.NSMutableDictionary)
 
     def testInitWithObjectsAndKeys(self):
-        o = NSDictionary.alloc().initWithObjectsAndKeys_(42, "a", 43, "b")
+        o = Foundation.NSDictionary.alloc().initWithObjectsAndKeys_(42, "a", 43, "b")
         self.assertEqual(o, {"a": 42, "b": 43})
-        self.assertIsInstance(o, NSDictionary)
+        self.assertIsInstance(o, Foundation.NSDictionary)
 
-        o = NSMutableDictionary.alloc().initWithObjectsAndKeys_(42, "a", 43, "b")
+        o = Foundation.NSMutableDictionary.alloc().initWithObjectsAndKeys_(
+            42, "a", 43, "b"
+        )
         self.assertEqual(o, {"a": 42, "b": 43})
-        self.assertIsInstance(o, NSMutableDictionary)
+        self.assertIsInstance(o, Foundation.NSMutableDictionary)
 
 
 class TestNSDictionary(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSDictionary.isEqualToDictionary_)
-        self.assertResultIsBOOL(NSDictionary.writeToFile_atomically_)
-        self.assertArgIsBOOL(NSDictionary.writeToFile_atomically_, 1)
-        self.assertResultIsBOOL(NSDictionary.writeToURL_atomically_)
-        self.assertArgIsBOOL(NSDictionary.writeToURL_atomically_, 1)
+        self.assertResultIsBOOL(Foundation.NSDictionary.isEqualToDictionary_)
+        self.assertResultIsBOOL(Foundation.NSDictionary.writeToFile_atomically_)
+        self.assertArgIsBOOL(Foundation.NSDictionary.writeToFile_atomically_, 1)
+        self.assertResultIsBOOL(Foundation.NSDictionary.writeToURL_atomically_)
+        self.assertArgIsBOOL(Foundation.NSDictionary.writeToURL_atomically_, 1)
 
-        self.assertArgIsSEL(NSDictionary.keysSortedByValueUsingSelector_, 0, b"i@:@")
+        self.assertArgIsSEL(
+            Foundation.NSDictionary.keysSortedByValueUsingSelector_, 0, b"i@:@"
+        )
 
-        self.assertArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 0)
-        self.assertArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 0, 2)
-        self.assertArgIsIn(NSDictionary.dictionaryWithObjects_forKeys_count_, 1)
-        self.assertArgSizeInArg(NSDictionary.dictionaryWithObjects_forKeys_count_, 1, 2)
+        self.assertArgIsIn(
+            Foundation.NSDictionary.dictionaryWithObjects_forKeys_count_, 0
+        )
+        self.assertArgSizeInArg(
+            Foundation.NSDictionary.dictionaryWithObjects_forKeys_count_, 0, 2
+        )
+        self.assertArgIsIn(
+            Foundation.NSDictionary.dictionaryWithObjects_forKeys_count_, 1
+        )
+        self.assertArgSizeInArg(
+            Foundation.NSDictionary.dictionaryWithObjects_forKeys_count_, 1, 2
+        )
 
-        self.assertArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 0)
-        self.assertArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 0, 2)
-        self.assertArgIsIn(NSDictionary.initWithObjects_forKeys_count_, 1)
-        self.assertArgSizeInArg(NSDictionary.initWithObjects_forKeys_count_, 1, 2)
+        self.assertArgIsIn(Foundation.NSDictionary.initWithObjects_forKeys_count_, 0)
+        self.assertArgSizeInArg(
+            Foundation.NSDictionary.initWithObjects_forKeys_count_, 0, 2
+        )
+        self.assertArgIsIn(Foundation.NSDictionary.initWithObjects_forKeys_count_, 1)
+        self.assertArgSizeInArg(
+            Foundation.NSDictionary.initWithObjects_forKeys_count_, 1, 2
+        )
 
-        self.assertArgIsBOOL(NSDictionary.initWithDictionary_copyItems_, 1)
+        self.assertArgIsBOOL(Foundation.NSDictionary.initWithDictionary_copyItems_, 1)
 
-        self.assertIsNullTerminated(NSDictionary.initWithObjectsAndKeys_)
-        self.assertIsNullTerminated(NSDictionary.dictionaryWithObjectsAndKeys_)
+        self.assertIsNullTerminated(Foundation.NSDictionary.initWithObjectsAndKeys_)
+        self.assertIsNullTerminated(
+            Foundation.NSDictionary.dictionaryWithObjectsAndKeys_
+        )
 
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBlock(
-            NSDictionary.enumerateKeysAndObjectsUsingBlock_,
+            Foundation.NSDictionary.enumerateKeysAndObjectsUsingBlock_,
             0,
             b"v@@o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_,
+            Foundation.NSDictionary.enumerateKeysAndObjectsWithOptions_usingBlock_,
             1,
             b"v@@o^" + objc._C_NSBOOL,
         )
-        self.assertArgIsBlock(NSDictionary.keysSortedByValueUsingComparator_, 0, b"i@@")
         self.assertArgIsBlock(
-            NSDictionary.keysSortedByValueWithOptions_usingComparator_,
+            Foundation.NSDictionary.keysSortedByValueUsingComparator_, 0, b"i@@"
+        )
+        self.assertArgIsBlock(
+            Foundation.NSDictionary.keysSortedByValueWithOptions_usingComparator_,
             1,
             objc._C_NSInteger + b"@@",
         )
 
         self.assertArgIsBlock(
-            NSDictionary.keysOfEntriesPassingTest_,
+            Foundation.NSDictionary.keysOfEntriesPassingTest_,
             0,
             objc._C_NSBOOL + b"@@o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSDictionary.keysOfEntriesWithOptions_passingTest_,
+            Foundation.NSDictionary.keysOfEntriesWithOptions_passingTest_,
             1,
             objc._C_NSBOOL + b"@@o^" + objc._C_NSBOOL,
         )
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertArgIsOut(NSDictionary.writeToURL_error_, 1)
-        self.assertResultIsBOOL(NSDictionary.writeToURL_error_)
+        self.assertArgIsOut(Foundation.NSDictionary.writeToURL_error_, 1)
+        self.assertResultIsBOOL(Foundation.NSDictionary.writeToURL_error_)
 
-        self.assertArgIsOut(NSDictionary.initWithContentsOfURL_error_, 1)
-        self.assertArgIsOut(NSDictionary.dictionaryWithContentsOfURL_error_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsOut(Foundation.NSDictionary.initWithContentsOfURL_error_, 1)
+        self.assertArgIsOut(
+            Foundation.NSDictionary.dictionaryWithContentsOfURL_error_, 1
+        )

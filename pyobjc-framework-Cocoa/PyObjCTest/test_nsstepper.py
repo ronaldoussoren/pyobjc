@@ -1,14 +1,10 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSStepper(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSStepper.valueWraps)
-        self.assertArgIsBOOL(NSStepper.setValueWraps_, 0)
-        self.assertResultIsBOOL(NSStepper.autorepeat)
-        self.assertArgIsBOOL(NSStepper.setAutorepeat_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSStepper.valueWraps)
+        self.assertArgIsBOOL(AppKit.NSStepper.setValueWraps_, 0)
+        self.assertResultIsBOOL(AppKit.NSStepper.autorepeat)
+        self.assertArgIsBOOL(AppKit.NSStepper.setAutorepeat_, 0)

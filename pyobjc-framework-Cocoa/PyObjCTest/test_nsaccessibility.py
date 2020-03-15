@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
-class TestNSAccessibilityHelper(NSObject):
+class TestNSAccessibilityHelper(AppKit.NSObject):
     def accessibilityIsAttributeSettable_(self, arg):
         return 1
 
@@ -35,7 +36,9 @@ class TestNSAccessibility(TestCase):
         )
         self.assertResultIsBOOL(TestNSAccessibilityHelper.accessibilityIsIgnored)
         self.assertArgHasType(
-            TestNSAccessibilityHelper.accessibilityHitTest_, 0, NSPoint.__typestr__
+            TestNSAccessibilityHelper.accessibilityHitTest_,
+            0,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultIsBOOL(
             TestNSAccessibilityHelper.accessibilitySetOverrideValue_forAttribute_
@@ -67,491 +70,522 @@ class TestNSAccessibility(TestCase):
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldIncreaseContrast)
         self.assertResultIsBOOL(
-            NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor
+            AppKit.NSWorkspace.accessibilityDisplayShouldIncreaseContrast
         )
         self.assertResultIsBOOL(
-            NSWorkspace.accessibilityDisplayShouldReduceTransparency
+            AppKit.NSWorkspace.accessibilityDisplayShouldDifferentiateWithoutColor
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldReduceTransparency
         )
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldReduceMotion)
-        self.assertResultIsBOOL(NSWorkspace.accessibilityDisplayShouldInvertColors)
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldReduceMotion
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSWorkspace.accessibilityDisplayShouldInvertColors
+        )
 
     @min_os_level("10.10")
     def testFunctions10_10(self):
-        NSAccessibilityFrameInView  # Existence
-        NSAccessibilityPointInView  # Existence
+        AppKit.NSAccessibilityFrameInView  # Existence
+        AppKit.NSAccessibilityPointInView  # Existence
 
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(
-            NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification, unicode
+            AppKit.NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification, str
         )
+        self.assertIsInstance(AppKit.NSAccessibilityActivationPointAttribute, str)
+
+        self.assertIsInstance(AppKit.NSAccessibilitySharedFocusElementsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAlternateUIVisibleAttribute, str)
+
+        self.assertEqual(AppKit.NSAccessibilityOrientationUnknown, 0)
+        self.assertEqual(AppKit.NSAccessibilityOrientationVertical, 1)
+        self.assertEqual(AppKit.NSAccessibilityOrientationHorizontal, 2)
+
+        self.assertEqual(AppKit.NSAccessibilitySortDirectionUnknown, 0)
+        self.assertEqual(AppKit.NSAccessibilitySortDirectionAscending, 1)
+        self.assertEqual(AppKit.NSAccessibilitySortDirectionDescending, 2)
+
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeUnknown, 0)
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeTabStopLeft, 1)
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeTabStopRight, 2)
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeTabStopCenter, 3)
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeTabStopDecimal, 4)
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeIndentHead, 5)
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeIndentTail, 6)
+        self.assertEqual(AppKit.NSAccessibilityRulerMarkerTypeIndentFirstLine, 7)
+
+        self.assertEqual(AppKit.NSAccessibilityUnitsUnknown, 0)
+        self.assertEqual(AppKit.NSAccessibilityUnitsInches, 1)
+        self.assertEqual(AppKit.NSAccessibilityUnitsCentimeters, 2)
+        self.assertEqual(AppKit.NSAccessibilityUnitsPoints, 3)
+        self.assertEqual(AppKit.NSAccessibilityUnitsPicas, 4)
 
     def testFunction(self):
-        v = NSAccessibilityRoleDescription(NSAccessibilityButtonRole, None)
-        self.assertIsInstance(v, unicode)
+        v = AppKit.NSAccessibilityRoleDescription(
+            AppKit.NSAccessibilityButtonRole, None
+        )
+        self.assertIsInstance(v, str)
 
-        b = NSButton.alloc().init()
-        v = NSAccessibilityRoleDescriptionForUIElement(b)
-        self.assertIsInstance(v, unicode)
+        b = AppKit.NSButton.alloc().init()
+        v = AppKit.NSAccessibilityRoleDescriptionForUIElement(b)
+        self.assertIsInstance(v, str)
 
-        v = NSAccessibilityActionDescription(NSAccessibilityIncrementAction)
-        self.assertIsInstance(v, unicode)
+        v = AppKit.NSAccessibilityActionDescription(
+            AppKit.NSAccessibilityIncrementAction
+        )
+        self.assertIsInstance(v, str)
 
         self.assertRaises(
             objc.error,
-            NSAccessibilityRaiseBadArgumentException,
+            AppKit.NSAccessibilityRaiseBadArgumentException,
             b,
             "attribute",
             "value",
         )
 
-        v = NSAccessibilityUnignoredAncestor(b)
+        v = AppKit.NSAccessibilityUnignoredAncestor(b)
         self.assertIs(v, None)
-        v = NSAccessibilityUnignoredDescendant(b)
-        self.assertIsInstance(b, NSView)
+        v = AppKit.NSAccessibilityUnignoredDescendant(b)
+        self.assertIsInstance(b, AppKit.NSView)
 
-        v = NSAccessibilityUnignoredChildren([b])
-        self.assertIsInstance(v, NSArray)
+        v = AppKit.NSAccessibilityUnignoredChildren([b])
+        self.assertIsInstance(v, AppKit.NSArray)
 
-        v = NSAccessibilityUnignoredChildrenForOnlyChild(b)
-        self.assertIsInstance(v, NSArray)
+        v = AppKit.NSAccessibilityUnignoredChildrenForOnlyChild(b)
+        self.assertIsInstance(v, AppKit.NSArray)
 
-        v = NSAccessibilityPostNotification(b, "hello")
+        v = AppKit.NSAccessibilityPostNotification(b, "hello")
         self.assertIs(v, None)
 
     def testConstants(self):
-        self.assertEqual(NSAccessibilityAnnotationPositionFullRange, 0)
-        self.assertEqual(NSAccessibilityAnnotationPositionStart, 1)
-        self.assertEqual(NSAccessibilityAnnotationPositionEnd, 2)
+        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionFullRange, 0)
+        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionStart, 1)
+        self.assertEqual(AppKit.NSAccessibilityAnnotationPositionEnd, 2)
 
-        self.assertIsInstance(NSAccessibilityErrorCodeExceptionInfo, unicode)
-        self.assertIsInstance(NSAccessibilityRoleAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityRoleDescriptionAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySubroleAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityHelpAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMinValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMaxValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityEnabledAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityFocusedAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityParentAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityChildrenAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityWindowAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityTopLevelUIElementAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedChildrenAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVisibleChildrenAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityPositionAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySizeAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityContentsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityTitleAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityDescriptionAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityShownMenuAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityValueDescriptionAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityPreviousContentsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityNextContentsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityHeaderAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityEditedAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityTabsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityHorizontalScrollBarAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVerticalScrollBarAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityOverflowButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityIncrementButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityDecrementButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityFilenameAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityExpandedAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySplittersAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityDocumentAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityURLAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityIndexAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityRowCountAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityColumnCountAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityOrderedByRowAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityTitleUIElementAttribute, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityErrorCodeExceptionInfo, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRoleAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRoleDescriptionAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySubroleAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHelpAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityValueAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMinValueAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMaxValueAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityEnabledAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFocusedAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityParentAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityChildrenAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWindowAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTopLevelUIElementAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedChildrenAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisibleChildrenAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPositionAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySizeAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityContentsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTitleAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDescriptionAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityShownMenuAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityValueDescriptionAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPreviousContentsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityNextContentsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeaderAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityEditedAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTabsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHorizontalScrollBarAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVerticalScrollBarAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityOverflowButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityIncrementButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDecrementButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFilenameAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityExpandedAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySplittersAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityURLAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityIndexAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRowCountAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityColumnCountAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityOrderedByRowAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTitleUIElementAttribute, str)
         self.assertIsInstance(
-            NSAccessibilityServesAsTitleForUIElementsAttribute, unicode
+            AppKit.NSAccessibilityServesAsTitleForUIElementsAttribute, str
         )
-        self.assertIsInstance(NSAccessibilityLinkedUIElementsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedTextRangeAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityNumberOfCharactersAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVisibleCharacterRangeAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySharedTextUIElementsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySharedCharacterRangeAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityInsertionPointLineNumberAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedTextRangesAttribute, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityLinkedUIElementsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedTextRangeAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityNumberOfCharactersAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisibleCharacterRangeAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySharedTextUIElementsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySharedCharacterRangeAttribute, str)
         self.assertIsInstance(
-            NSAccessibilityLineForIndexParameterizedAttribute, unicode
+            AppKit.NSAccessibilityInsertionPointLineNumberAttribute, str
         )
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedTextRangesAttribute, str)
         self.assertIsInstance(
-            NSAccessibilityRangeForLineParameterizedAttribute, unicode
-        )
-        self.assertIsInstance(
-            NSAccessibilityStringForRangeParameterizedAttribute, unicode
+            AppKit.NSAccessibilityLineForIndexParameterizedAttribute, str
         )
         self.assertIsInstance(
-            NSAccessibilityRangeForPositionParameterizedAttribute, unicode
+            AppKit.NSAccessibilityRangeForLineParameterizedAttribute, str
         )
         self.assertIsInstance(
-            NSAccessibilityRangeForIndexParameterizedAttribute, unicode
+            AppKit.NSAccessibilityStringForRangeParameterizedAttribute, str
         )
         self.assertIsInstance(
-            NSAccessibilityBoundsForRangeParameterizedAttribute, unicode
-        )
-        self.assertIsInstance(NSAccessibilityRTFForRangeParameterizedAttribute, unicode)
-        self.assertIsInstance(
-            NSAccessibilityStyleRangeForIndexParameterizedAttribute, unicode
+            AppKit.NSAccessibilityRangeForPositionParameterizedAttribute, str
         )
         self.assertIsInstance(
-            NSAccessibilityAttributedStringForRangeParameterizedAttribute, unicode
+            AppKit.NSAccessibilityRangeForIndexParameterizedAttribute, str
         )
-        self.assertIsInstance(NSAccessibilityFontTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityForegroundColorTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityBackgroundColorTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityUnderlineColorTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityStrikethroughColorTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityUnderlineTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySuperscriptTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityStrikethroughTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityShadowTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityAttachmentTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityLinkTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMisspelledTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMarkedMisspelledTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityFontNameKey, unicode)
-        self.assertIsInstance(NSAccessibilityFontFamilyKey, unicode)
-        self.assertIsInstance(NSAccessibilityVisibleNameKey, unicode)
-        self.assertIsInstance(NSAccessibilityFontSizeKey, unicode)
-        self.assertIsInstance(NSAccessibilityMainAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMinimizedAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityCloseButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityZoomButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMinimizeButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityToolbarButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityProxyAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityGrowAreaAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityModalAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityDefaultButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityCancelButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMenuBarAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityWindowsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityFrontmostAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityHiddenAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMainWindowAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityFocusedWindowAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityFocusedUIElementAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityOrientationAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVerticalOrientationValue, unicode)
-        self.assertIsInstance(NSAccessibilityHorizontalOrientationValue, unicode)
-        self.assertIsInstance(NSAccessibilityColumnTitlesAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySearchButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySearchMenuAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityClearButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityRowsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVisibleRowsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedRowsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityColumnsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVisibleColumnsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedColumnsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySortDirectionAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityAscendingSortDirectionValue, unicode)
-        self.assertIsInstance(NSAccessibilityDescendingSortDirectionValue, unicode)
-        self.assertIsInstance(NSAccessibilityUnknownSortDirectionValue, unicode)
-        self.assertIsInstance(NSAccessibilityDisclosingAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityDisclosedRowsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityDisclosedByRowAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityDisclosureLevelAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityAllowedValuesAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityLabelUIElementsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityLabelValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMatteHoleAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMatteContentUIElementAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMarkerUIElementsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMarkerValuesAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMarkerGroupUIElementAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityUnitsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityUnitDescriptionAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMarkerTypeAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMarkerTypeDescriptionAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityLeftTabStopMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityRightTabStopMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityCenterTabStopMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityDecimalTabStopMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityHeadIndentMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityTailIndentMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityFirstLineIndentMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityUnknownMarkerTypeValue, unicode)
-        self.assertIsInstance(NSAccessibilityInchesUnitValue, unicode)
-        self.assertIsInstance(NSAccessibilityCentimetersUnitValue, unicode)
-        self.assertIsInstance(NSAccessibilityPointsUnitValue, unicode)
-        self.assertIsInstance(NSAccessibilityPicasUnitValue, unicode)
-        self.assertIsInstance(NSAccessibilityUnknownUnitValue, unicode)
-        self.assertIsInstance(NSAccessibilityPressAction, unicode)
-        self.assertIsInstance(NSAccessibilityIncrementAction, unicode)
-        self.assertIsInstance(NSAccessibilityDecrementAction, unicode)
-        self.assertIsInstance(NSAccessibilityConfirmAction, unicode)
-        self.assertIsInstance(NSAccessibilityPickAction, unicode)
-        self.assertIsInstance(NSAccessibilityCancelAction, unicode)
-        self.assertIsInstance(NSAccessibilityRaiseAction, unicode)
-        self.assertIsInstance(NSAccessibilityShowMenuAction, unicode)
-        self.assertIsInstance(NSAccessibilityDeleteAction, unicode)
-        self.assertIsInstance(NSAccessibilityMainWindowChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityFocusedWindowChangedNotification, unicode)
         self.assertIsInstance(
-            NSAccessibilityFocusedUIElementChangedNotification, unicode
+            AppKit.NSAccessibilityBoundsForRangeParameterizedAttribute, str
         )
-        self.assertIsInstance(NSAccessibilityApplicationActivatedNotification, unicode)
         self.assertIsInstance(
-            NSAccessibilityApplicationDeactivatedNotification, unicode
+            AppKit.NSAccessibilityRTFForRangeParameterizedAttribute, str
         )
-        self.assertIsInstance(NSAccessibilityApplicationHiddenNotification, unicode)
-        self.assertIsInstance(NSAccessibilityApplicationShownNotification, unicode)
-        self.assertIsInstance(NSAccessibilityWindowCreatedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityWindowMovedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityWindowResizedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityWindowMiniaturizedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityWindowDeminiaturizedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityDrawerCreatedNotification, unicode)
-        self.assertIsInstance(NSAccessibilitySheetCreatedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityUIElementDestroyedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityValueChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityTitleChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityResizedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityMovedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityCreatedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityHelpTagCreatedNotification, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedTextChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityRowCountChangedNotification, unicode)
         self.assertIsInstance(
-            NSAccessibilitySelectedChildrenChangedNotification, unicode
+            AppKit.NSAccessibilityStyleRangeForIndexParameterizedAttribute, str
         )
-        self.assertIsInstance(NSAccessibilitySelectedRowsChangedNotification, unicode)
         self.assertIsInstance(
-            NSAccessibilitySelectedColumnsChangedNotification, unicode
+            AppKit.NSAccessibilityAttributedStringForRangeParameterizedAttribute, str
         )
-        self.assertIsInstance(NSAccessibilityUnknownRole, unicode)
-        self.assertIsInstance(NSAccessibilityButtonRole, unicode)
-        self.assertIsInstance(NSAccessibilityRadioButtonRole, unicode)
-        self.assertIsInstance(NSAccessibilityCheckBoxRole, unicode)
-        self.assertIsInstance(NSAccessibilitySliderRole, unicode)
-        self.assertIsInstance(NSAccessibilityTabGroupRole, unicode)
-        self.assertIsInstance(NSAccessibilityTextFieldRole, unicode)
-        self.assertIsInstance(NSAccessibilityStaticTextRole, unicode)
-        self.assertIsInstance(NSAccessibilityTextAreaRole, unicode)
-        self.assertIsInstance(NSAccessibilityScrollAreaRole, unicode)
-        self.assertIsInstance(NSAccessibilityPopUpButtonRole, unicode)
-        self.assertIsInstance(NSAccessibilityMenuButtonRole, unicode)
-        self.assertIsInstance(NSAccessibilityTableRole, unicode)
-        self.assertIsInstance(NSAccessibilityApplicationRole, unicode)
-        self.assertIsInstance(NSAccessibilityGroupRole, unicode)
-        self.assertIsInstance(NSAccessibilityRadioGroupRole, unicode)
-        self.assertIsInstance(NSAccessibilityListRole, unicode)
-        self.assertIsInstance(NSAccessibilityScrollBarRole, unicode)
-        self.assertIsInstance(NSAccessibilityValueIndicatorRole, unicode)
-        self.assertIsInstance(NSAccessibilityImageRole, unicode)
-        self.assertIsInstance(NSAccessibilityMenuBarRole, unicode)
-        self.assertIsInstance(NSAccessibilityMenuRole, unicode)
-        self.assertIsInstance(NSAccessibilityMenuItemRole, unicode)
-        self.assertIsInstance(NSAccessibilityColumnRole, unicode)
-        self.assertIsInstance(NSAccessibilityRowRole, unicode)
-        self.assertIsInstance(NSAccessibilityToolbarRole, unicode)
-        self.assertIsInstance(NSAccessibilityBusyIndicatorRole, unicode)
-        self.assertIsInstance(NSAccessibilityProgressIndicatorRole, unicode)
-        self.assertIsInstance(NSAccessibilityWindowRole, unicode)
-        self.assertIsInstance(NSAccessibilityDrawerRole, unicode)
-        self.assertIsInstance(NSAccessibilitySystemWideRole, unicode)
-        self.assertIsInstance(NSAccessibilityOutlineRole, unicode)
-        self.assertIsInstance(NSAccessibilityIncrementorRole, unicode)
-        self.assertIsInstance(NSAccessibilityBrowserRole, unicode)
-        self.assertIsInstance(NSAccessibilityComboBoxRole, unicode)
-        self.assertIsInstance(NSAccessibilitySplitGroupRole, unicode)
-        self.assertIsInstance(NSAccessibilitySplitterRole, unicode)
-        self.assertIsInstance(NSAccessibilityColorWellRole, unicode)
-        self.assertIsInstance(NSAccessibilityGrowAreaRole, unicode)
-        self.assertIsInstance(NSAccessibilitySheetRole, unicode)
-        self.assertIsInstance(NSAccessibilityHelpTagRole, unicode)
-        self.assertIsInstance(NSAccessibilityMatteRole, unicode)
-        self.assertIsInstance(NSAccessibilityRulerRole, unicode)
-        self.assertIsInstance(NSAccessibilityRulerMarkerRole, unicode)
-        self.assertIsInstance(NSAccessibilitySortButtonRole, unicode)
-        self.assertIsInstance(NSAccessibilityLinkRole, unicode)
-        self.assertIsInstance(NSAccessibilityDisclosureTriangleRole, unicode)
-        self.assertIsInstance(NSAccessibilityGridRole, unicode)
-        self.assertIsInstance(NSAccessibilityUnknownSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityCloseButtonSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityZoomButtonSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityMinimizeButtonSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityToolbarButtonSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityTableRowSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityOutlineRowSubrole, unicode)
-        self.assertIsInstance(NSAccessibilitySecureTextFieldSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityStandardWindowSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityDialogSubrole, unicode)
-        self.assertIsInstance(NSAccessibilitySystemDialogSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityFloatingWindowSubrole, unicode)
-        self.assertIsInstance(NSAccessibilitySystemFloatingWindowSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityIncrementArrowSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityDecrementArrowSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityIncrementPageSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityDecrementPageSubrole, unicode)
-        self.assertIsInstance(NSAccessibilitySearchFieldSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityTextAttachmentSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityTextLinkSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityTimelineSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityRelevanceIndicatorRole, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityFontTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityForegroundColorTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityBackgroundColorTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnderlineColorTextAttribute, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilityStrikethroughColorTextAttribute, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityUnderlineTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySuperscriptTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityStrikethroughTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityShadowTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAttachmentTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLinkTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMisspelledTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMarkedMisspelledTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFontNameKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFontFamilyKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisibleNameKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFontSizeKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMainAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMinimizedAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCloseButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityZoomButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMinimizeButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityToolbarButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityProxyAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityGrowAreaAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityModalAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDefaultButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCancelButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMenuBarAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWindowsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFrontmostAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHiddenAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMainWindowAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFocusedWindowAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFocusedUIElementAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityOrientationAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVerticalOrientationValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHorizontalOrientationValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityColumnTitlesAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySearchButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySearchMenuAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityClearButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRowsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisibleRowsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedRowsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityColumnsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisibleColumnsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedColumnsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySortDirectionAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAscendingSortDirectionValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDescendingSortDirectionValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnknownSortDirectionValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDisclosingAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDisclosedRowsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDisclosedByRowAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDisclosureLevelAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAllowedValuesAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLabelUIElementsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLabelValueAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMatteHoleAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMatteContentUIElementAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMarkerUIElementsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMarkerValuesAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMarkerGroupUIElementAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnitsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnitDescriptionAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMarkerTypeAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMarkerTypeDescriptionAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLeftTabStopMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRightTabStopMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCenterTabStopMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDecimalTabStopMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHeadIndentMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTailIndentMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFirstLineIndentMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnknownMarkerTypeValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityInchesUnitValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCentimetersUnitValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPointsUnitValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPicasUnitValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnknownUnitValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPressAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityIncrementAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDecrementAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityConfirmAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPickAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCancelAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRaiseAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityShowMenuAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDeleteAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMainWindowChangedNotification, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilityFocusedWindowChangedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityFocusedUIElementChangedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityApplicationActivatedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityApplicationDeactivatedNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityApplicationHiddenNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityApplicationShownNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWindowCreatedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWindowMovedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWindowResizedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWindowMiniaturizedNotification, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilityWindowDeminiaturizedNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityDrawerCreatedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySheetCreatedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUIElementDestroyedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityValueChangedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTitleChangedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityResizedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMovedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCreatedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHelpTagCreatedNotification, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilitySelectedTextChangedNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityRowCountChangedNotification, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilitySelectedChildrenChangedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilitySelectedRowsChangedNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilitySelectedColumnsChangedNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityUnknownRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityButtonRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRadioButtonRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCheckBoxRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySliderRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTabGroupRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextFieldRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityStaticTextRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextAreaRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityScrollAreaRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPopUpButtonRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMenuButtonRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTableRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityApplicationRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityGroupRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRadioGroupRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityListRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityScrollBarRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityValueIndicatorRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityImageRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMenuBarRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMenuRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMenuItemRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityColumnRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRowRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityToolbarRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityBusyIndicatorRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityProgressIndicatorRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWindowRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDrawerRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySystemWideRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityOutlineRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityIncrementorRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityBrowserRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityComboBoxRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySplitGroupRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySplitterRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityColorWellRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityGrowAreaRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySheetRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHelpTagRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMatteRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRulerRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRulerMarkerRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySortButtonRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLinkRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDisclosureTriangleRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityGridRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUnknownSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCloseButtonSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityZoomButtonSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMinimizeButtonSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityToolbarButtonSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTableRowSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityOutlineRowSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySecureTextFieldSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityStandardWindowSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDialogSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySystemDialogSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFloatingWindowSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySystemFloatingWindowSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityIncrementArrowSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDecrementArrowSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityIncrementPageSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDecrementPageSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySearchFieldSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextAttachmentSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextLinkSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTimelineSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRelevanceIndicatorRole, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(NSAccessibilityUnknownOrientationValue, unicode)
-        self.assertIsInstance(NSAccessibilityWarningValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityCriticalValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityPlaceholderValueAttribute, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedCellsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVisibleCellsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityRowHeaderUIElementsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityColumnHeaderUIElementsAttribute, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityUnknownOrientationValue, str)
+        self.assertIsInstance(AppKit.NSAccessibilityWarningValueAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCriticalValueAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPlaceholderValueAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySelectedCellsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVisibleCellsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRowHeaderUIElementsAttribute, str)
         self.assertIsInstance(
-            NSAccessibilityCellForColumnAndRowParameterizedAttribute, unicode
-        )
-        self.assertIsInstance(NSAccessibilityRowIndexRangeAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityColumnIndexRangeAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityHorizontalUnitsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityVerticalUnitsAttribute, unicode)
-        self.assertIsInstance(
-            NSAccessibilityHorizontalUnitDescriptionAttribute, unicode
-        )
-        self.assertIsInstance(NSAccessibilityVerticalUnitDescriptionAttribute, unicode)
-        self.assertIsInstance(
-            NSAccessibilityLayoutPointForScreenPointParameterizedAttribute, unicode
+            AppKit.NSAccessibilityColumnHeaderUIElementsAttribute, str
         )
         self.assertIsInstance(
-            NSAccessibilityLayoutSizeForScreenSizeParameterizedAttribute, unicode
+            AppKit.NSAccessibilityCellForColumnAndRowParameterizedAttribute, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityRowIndexRangeAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityColumnIndexRangeAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHorizontalUnitsAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityVerticalUnitsAttribute, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilityHorizontalUnitDescriptionAttribute, str
         )
         self.assertIsInstance(
-            NSAccessibilityScreenPointForLayoutPointParameterizedAttribute, unicode
+            AppKit.NSAccessibilityVerticalUnitDescriptionAttribute, str
         )
         self.assertIsInstance(
-            NSAccessibilityScreenSizeForLayoutSizeParameterizedAttribute, unicode
+            AppKit.NSAccessibilityLayoutPointForScreenPointParameterizedAttribute, str
         )
-        self.assertIsInstance(NSAccessibilityHandlesAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityRowExpandedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityRowCollapsedNotification, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedCellsChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityUnitsChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilitySelectedChildrenMovedNotification, unicode)
-        self.assertIsInstance(NSAccessibilitySortButtonRole, unicode)
-        self.assertIsInstance(NSAccessibilityLevelIndicatorRole, unicode)
-        self.assertIsInstance(NSAccessibilityCellRole, unicode)
-        self.assertIsInstance(NSAccessibilityLayoutAreaRole, unicode)
-        self.assertIsInstance(NSAccessibilityLayoutItemRole, unicode)
-        self.assertIsInstance(NSAccessibilityHandleRole, unicode)
-        self.assertIsInstance(NSAccessibilitySortButtonSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityRatingIndicatorSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityContentListSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityDefinitionListSubrole, unicode)
+        self.assertIsInstance(
+            AppKit.NSAccessibilityLayoutSizeForScreenSizeParameterizedAttribute, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityScreenPointForLayoutPointParameterizedAttribute, str
+        )
+        self.assertIsInstance(
+            AppKit.NSAccessibilityScreenSizeForLayoutSizeParameterizedAttribute, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityHandlesAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRowExpandedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRowCollapsedNotification, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilitySelectedCellsChangedNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityUnitsChangedNotification, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilitySelectedChildrenMovedNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilitySortButtonRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLevelIndicatorRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCellRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLayoutAreaRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLayoutItemRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityHandleRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySortButtonSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityRatingIndicatorSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityContentListSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDefinitionListSubrole, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(NSAccessibilityAutocorrectedTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityFullScreenButtonAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityPopoverRole, unicode)
-        self.assertIsInstance(NSAccessibilityFullScreenButtonSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityIdentifierAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityAnnouncementRequestedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityAnnouncementKey, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityAutocorrectedTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFullScreenButtonAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPopoverRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityFullScreenButtonSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityIdentifierAttribute, str)
+        self.assertIsInstance(
+            AppKit.NSAccessibilityAnnouncementRequestedNotification, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityAnnouncementKey, str)
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(NSAccessibilityExtrasMenuBarAttribute, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityExtrasMenuBarAttribute, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(NSAccessibilityContainsProtectedContentAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityShowAlternateUIAction, unicode)
-        self.assertIsInstance(NSAccessibilityShowDefaultUIAction, unicode)
-        self.assertIsInstance(NSAccessibilityLayoutChangedNotification, unicode)
-        self.assertIsInstance(NSAccessibilityToggleSubrole, unicode)
-        self.assertIsInstance(NSAccessibilitySwitchSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityDescriptionListSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityUIElementsKey, unicode)
-        self.assertIsInstance(NSAccessibilityPriorityKey, unicode)
+        self.assertIsInstance(
+            AppKit.NSAccessibilityContainsProtectedContentAttribute, str
+        )
+        self.assertIsInstance(AppKit.NSAccessibilityShowAlternateUIAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityShowDefaultUIAction, str)
+        self.assertIsInstance(AppKit.NSAccessibilityLayoutChangedNotification, str)
+        self.assertIsInstance(AppKit.NSAccessibilityToggleSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySwitchSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityDescriptionListSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityUIElementsKey, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPriorityKey, str)
 
-        self.assertEqual(NSAccessibilityPriorityLow, 10)
-        self.assertEqual(NSAccessibilityPriorityMedium, 50)
-        self.assertEqual(NSAccessibilityPriorityHigh, 90)
-
-    @min_os_level("10.10")
-    def testConstants10_10(self):
-        self.assertIsInstance(NSAccessibilityActivationPointAttribute, unicode)
-
-        self.assertIsInstance(NSAccessibilitySharedFocusElementsAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityAlternateUIVisibleAttribute, unicode)
-
-        self.assertEqual(NSAccessibilityOrientationUnknown, 0)
-        self.assertEqual(NSAccessibilityOrientationVertical, 1)
-        self.assertEqual(NSAccessibilityOrientationHorizontal, 2)
-
-        self.assertEqual(NSAccessibilitySortDirectionUnknown, 0)
-        self.assertEqual(NSAccessibilitySortDirectionAscending, 1)
-        self.assertEqual(NSAccessibilitySortDirectionDescending, 2)
-
-        self.assertEqual(NSAccessibilityRulerMarkerTypeUnknown, 0)
-        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopLeft, 1)
-        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopRight, 2)
-        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopCenter, 3)
-        self.assertEqual(NSAccessibilityRulerMarkerTypeTabStopDecimal, 4)
-        self.assertEqual(NSAccessibilityRulerMarkerTypeIndentHead, 5)
-        self.assertEqual(NSAccessibilityRulerMarkerTypeIndentTail, 6)
-        self.assertEqual(NSAccessibilityRulerMarkerTypeIndentFirstLine, 7)
-
-        self.assertEqual(NSAccessibilityUnitsUnknown, 0)
-        self.assertEqual(NSAccessibilityUnitsInches, 1)
-        self.assertEqual(NSAccessibilityUnitsCentimeters, 2)
-        self.assertEqual(NSAccessibilityUnitsPoints, 3)
-        self.assertEqual(NSAccessibilityUnitsPicas, 4)
+        self.assertEqual(AppKit.NSAccessibilityPriorityLow, 10)
+        self.assertEqual(AppKit.NSAccessibilityPriorityMedium, 50)
+        self.assertEqual(AppKit.NSAccessibilityPriorityHigh, 90)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertIsInstance(NSAccessibilityListItemPrefixTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityListItemIndexTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityListItemLevelTextAttribute, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityListItemPrefixTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityListItemIndexTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityListItemLevelTextAttribute, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(NSAccessibilityRequiredAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityMenuBarItemRole, unicode)
-        self.assertIsInstance(NSAccessibilityTextAlignmentAttribute, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityRequiredAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityMenuBarItemRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTextAlignmentAttribute, str)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(NSAccessibilityAnnotationLabel, unicode)
-        self.assertIsInstance(NSAccessibilityAnnotationElement, unicode)
-        self.assertIsInstance(NSAccessibilityAnnotationLocation, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityAnnotationLabel, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAnnotationElement, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAnnotationLocation, str)
 
-        self.assertIsInstance(NSAccessibilityLanguageTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityCustomTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityAnnotationTextAttribute, unicode)
-        self.assertIsInstance(NSAccessibilityPageRole, unicode)
-        self.assertIsInstance(NSAccessibilityTabButtonSubrole, unicode)
-        self.assertIsInstance(NSAccessibilityCollectionListSubrole, unicode)
-        self.assertIsInstance(NSAccessibilitySectionListSubrole, unicode)
+        self.assertIsInstance(AppKit.NSAccessibilityLanguageTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCustomTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityAnnotationTextAttribute, str)
+        self.assertIsInstance(AppKit.NSAccessibilityPageRole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityTabButtonSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilityCollectionListSubrole, str)
+        self.assertIsInstance(AppKit.NSAccessibilitySectionListSubrole, str)
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
         self.assertIsInstance(
-            NSAccessibilityPostNotificationWithUserInfo, objc.function
+            AppKit.NSAccessibilityPostNotificationWithUserInfo, objc.function
         )
 
     @min_os_level("10.9")
     def testFunctions10_9(self):
-        self.assertArgIsBOOL(NSAccessibilitySetMayContainProtectedContent, 0)
-        self.assertResultIsBOOL(NSAccessibilitySetMayContainProtectedContent)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent, 0)
+        self.assertResultIsBOOL(AppKit.NSAccessibilitySetMayContainProtectedContent)

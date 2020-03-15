@@ -7,9 +7,8 @@ import array
 import sys
 import unittest
 
-from AppKit import *
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Cocoa
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class SimpleImage:
@@ -20,7 +19,7 @@ class SimpleImage:
 
     def __init__(self, image):
         data = image.TIFFRepresentation()
-        bitmap = NSBitmapImageRep.imageRepWithData_(data)
+        bitmap = Cocoa.NSBitmapImageRep.imageRepWithData_(data)
 
         self.bitmap = bitmap
         self.data = bitmap.bitmapData()
@@ -53,7 +52,7 @@ class RectTest(TestCase):
     def setUp(self):
 
         # Force NSApp initialisation, needed for some of the tests
-        NSApplication.sharedApplication().activateIgnoringOtherApps_(0)
+        Cocoa.NSApplication.sharedApplication().activateIgnoringOtherApps_(0)
 
         self.points = (
             ((10, 0), (1, 1)),
@@ -63,7 +62,7 @@ class RectTest(TestCase):
             ((70, 70), (10, 10)),
         )
 
-        self.image = NSImage.alloc().initWithSize_((100, 100))
+        self.image = Cocoa.NSImage.alloc().initWithSize_((100, 100))
 
     def makeArray(self, points):
         if sys.maxsize > 2 ** 32:
@@ -95,16 +94,9 @@ class RectTest(TestCase):
         allpoints = [(x, y) for x in range(img.width()) for y in range(img.height())]
 
         # Check black points
-        if sys.version_info[0] == 2:
-
-            def getPixel(img, x, y):
-                return img.getPixel(x, y)
-
-        else:
-
-            def getPixel(img, x, y):
-                value = img.getPixel(x, y)
-                return bytes(value)
+        def getPixel(img, x, y):
+            value = img.getPixel(x, y)
+            return bytes(value)
 
         for ((x, y), (h, w)) in points:
             for ox in range(w):
@@ -132,7 +124,7 @@ class RectTest(TestCase):
         Check NSRectFillList with a tuple of NSRects
         """
         self.image.lockFocus()
-        NSRectFillList(self.points, len(self.points))
+        Cocoa.NSRectFillList(self.points, len(self.points))
         self.image.unlockFocus()
 
         self.assertImagePoints(self.image, self.points)
@@ -142,7 +134,7 @@ class RectTest(TestCase):
         Check NSRectFillList with a array.array of NSRects
         """
         self.image.lockFocus()
-        NSRectFillList(self.makeArray(self.points), len(self.points))
+        Cocoa.NSRectFillList(self.makeArray(self.points), len(self.points))
         self.image.unlockFocus()
 
 

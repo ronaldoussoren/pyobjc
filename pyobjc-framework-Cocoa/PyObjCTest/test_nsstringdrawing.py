@@ -1,19 +1,15 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSStringDrawing(TestCase):
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertEqual(NSStringDrawingTruncatesLastVisibleLine, (1 << 5))
+        self.assertEqual(AppKit.NSStringDrawingTruncatesLastVisibleLine, (1 << 5))
 
     def testConstants(self):
-        self.assertEqual(NSStringDrawingUsesLineFragmentOrigin, (1 << 0))
-        self.assertEqual(NSStringDrawingUsesFontLeading, (1 << 1))
-        self.assertEqual(NSStringDrawingDisableScreenFontSubstitution, (1 << 2))
-        self.assertEqual(NSStringDrawingUsesDeviceMetrics, (1 << 3))
-        self.assertEqual(NSStringDrawingOneShot, (1 << 4))
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(AppKit.NSStringDrawingUsesLineFragmentOrigin, (1 << 0))
+        self.assertEqual(AppKit.NSStringDrawingUsesFontLeading, (1 << 1))
+        self.assertEqual(AppKit.NSStringDrawingDisableScreenFontSubstitution, (1 << 2))
+        self.assertEqual(AppKit.NSStringDrawingUsesDeviceMetrics, (1 << 3))
+        self.assertEqual(AppKit.NSStringDrawingOneShot, (1 << 4))

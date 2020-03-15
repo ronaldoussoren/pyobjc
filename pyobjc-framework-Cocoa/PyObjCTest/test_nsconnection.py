@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSConnectionHelper(NSObject):
+class TestNSConnectionHelper(Foundation.NSObject):
     def makeNewConnection_sender_(self, a, b):
         return 1
 
@@ -18,18 +19,20 @@ class TestNSConnectionHelper(NSObject):
 
 class TestNSConnection(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSConnectionReplyMode, unicode)
-        self.assertIsInstance(NSConnectionDidDieNotification, unicode)
-        self.assertIsInstance(NSFailedAuthenticationException, unicode)
-        self.assertIsInstance(NSConnectionDidInitializeNotification, unicode)
+        self.assertIsInstance(Foundation.NSConnectionReplyMode, str)
+        self.assertIsInstance(Foundation.NSConnectionDidDieNotification, str)
+        self.assertIsInstance(Foundation.NSFailedAuthenticationException, str)
+        self.assertIsInstance(Foundation.NSConnectionDidInitializeNotification, str)
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSConnection.setIndependentConversationQueueing_, 0)
-        self.assertResultIsBOOL(NSConnection.independentConversationQueueing)
-        self.assertResultIsBOOL(NSConnection.isValid)
-        self.assertResultIsBOOL(NSConnection.registerName_)
-        self.assertResultIsBOOL(NSConnection.registerName_withNameServer_)
-        self.assertResultIsBOOL(NSConnection.multipleThreadsEnabled)
+        self.assertArgIsBOOL(
+            Foundation.NSConnection.setIndependentConversationQueueing_, 0
+        )
+        self.assertResultIsBOOL(Foundation.NSConnection.independentConversationQueueing)
+        self.assertResultIsBOOL(Foundation.NSConnection.isValid)
+        self.assertResultIsBOOL(Foundation.NSConnection.registerName_)
+        self.assertResultIsBOOL(Foundation.NSConnection.registerName_withNameServer_)
+        self.assertResultIsBOOL(Foundation.NSConnection.multipleThreadsEnabled)
 
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSConnectionHelper.makeNewConnection_sender_)
@@ -42,7 +45,3 @@ class TestNSConnection(TestCase):
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
         objc.protocolNamed("NSConnectionDelegate")
-
-
-if __name__ == "__main__":
-    main()

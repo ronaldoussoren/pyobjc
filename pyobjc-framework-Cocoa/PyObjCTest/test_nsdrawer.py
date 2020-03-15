@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSDrawerHelper(NSObject):
+class TestNSDrawerHelper(AppKit.NSObject):
     def drawerShouldOpen_(self, sender):
         return 1
 
@@ -15,18 +16,20 @@ class TestNSDrawerHelper(NSObject):
 
 class TestNSDrawer(TestCase):
     def testConstants(self):
-        self.assertEqual(NSDrawerClosedState, 0)
-        self.assertEqual(NSDrawerOpeningState, 1)
-        self.assertEqual(NSDrawerOpenState, 2)
-        self.assertEqual(NSDrawerClosingState, 3)
+        self.assertEqual(AppKit.NSDrawerClosedState, 0)
+        self.assertEqual(AppKit.NSDrawerOpeningState, 1)
+        self.assertEqual(AppKit.NSDrawerOpenState, 2)
+        self.assertEqual(AppKit.NSDrawerClosingState, 3)
 
-        self.assertIsInstance(NSDrawerWillOpenNotification, unicode)
-        self.assertIsInstance(NSDrawerDidOpenNotification, unicode)
-        self.assertIsInstance(NSDrawerWillCloseNotification, unicode)
-        self.assertIsInstance(NSDrawerDidCloseNotification, unicode)
+        self.assertIsInstance(AppKit.NSDrawerWillOpenNotification, str)
+        self.assertIsInstance(AppKit.NSDrawerDidOpenNotification, str)
+        self.assertIsInstance(AppKit.NSDrawerWillCloseNotification, str)
+        self.assertIsInstance(AppKit.NSDrawerDidCloseNotification, str)
 
     def testMethods(self):
-        self.assertArgHasType(NSDrawer.setMinContentSize_, 0, NSSize.__typestr__)
+        self.assertArgHasType(
+            AppKit.NSDrawer.setMinContentSize_, 0, AppKit.NSSize.__typestr__
+        )
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
@@ -36,12 +39,11 @@ class TestNSDrawer(TestCase):
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldOpen_)
         self.assertResultIsBOOL(TestNSDrawerHelper.drawerShouldClose_)
         self.assertResultHasType(
-            TestNSDrawerHelper.drawerWillResizeContents_toSize_, NSSize.__typestr__
+            TestNSDrawerHelper.drawerWillResizeContents_toSize_,
+            AppKit.NSSize.__typestr__,
         )
         self.assertArgHasType(
-            TestNSDrawerHelper.drawerWillResizeContents_toSize_, 1, NSSize.__typestr__
+            TestNSDrawerHelper.drawerWillResizeContents_toSize_,
+            1,
+            AppKit.NSSize.__typestr__,
         )
-
-
-if __name__ == "__main__":
-    main()

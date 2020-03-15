@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSControlHelper(NSObject):
+class TestNSControlHelper(AppKit.NSObject):
     def control_textShouldBeginEditing_(self, c, f):
         return 1
 
@@ -27,31 +28,31 @@ class TestNSControlHelper(NSObject):
 class TestNSControl(TestCase):
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSControl.usesSingleLineMode)
-        self.assertArgIsBOOL(NSControl.setUsesSingleLineMode_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.usesSingleLineMode)
+        self.assertArgIsBOOL(AppKit.NSControl.setUsesSingleLineMode_, 0)
 
-        self.assertResultIsBOOL(NSControl.isHighlighted)
-        self.assertArgIsBOOL(NSControl.setHighlighted_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.isHighlighted)
+        self.assertArgIsBOOL(AppKit.NSControl.setHighlighted_, 0)
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSControl.allowsExpansionToolTips)
-        self.assertArgIsBOOL(NSControl.setAllowsExpansionToolTips_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.allowsExpansionToolTips)
+        self.assertArgIsBOOL(AppKit.NSControl.setAllowsExpansionToolTips_, 0)
 
     def testMethods(self):
-        self.assertArgIsSEL(NSControl.setAction_, 0, b"v@:@")
-        self.assertResultIsBOOL(NSControl.ignoresMultiClick)
-        self.assertArgIsBOOL(NSControl.setIgnoresMultiClick_, 0)
-        self.assertResultIsBOOL(NSControl.isContinuous)
-        self.assertArgIsBOOL(NSControl.setContinuous_, 0)
-        self.assertResultIsBOOL(NSControl.isEnabled)
-        self.assertArgIsBOOL(NSControl.setEnabled_, 0)
-        self.assertArgIsBOOL(NSControl.setFloatingPointFormat_left_right_, 0)
-        self.assertResultIsBOOL(NSControl.sendAction_to_)
-        self.assertArgIsSEL(NSControl.sendAction_to_, 0, b"v@:@")
-        self.assertResultIsBOOL(NSControl.abortEditing)
-        self.assertResultIsBOOL(NSControl.refusesFirstResponder)
-        self.assertArgIsBOOL(NSControl.setRefusesFirstResponder_, 0)
+        self.assertArgIsSEL(AppKit.NSControl.setAction_, 0, b"v@:@")
+        self.assertResultIsBOOL(AppKit.NSControl.ignoresMultiClick)
+        self.assertArgIsBOOL(AppKit.NSControl.setIgnoresMultiClick_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.isContinuous)
+        self.assertArgIsBOOL(AppKit.NSControl.setContinuous_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.isEnabled)
+        self.assertArgIsBOOL(AppKit.NSControl.setEnabled_, 0)
+        self.assertArgIsBOOL(AppKit.NSControl.setFloatingPointFormat_left_right_, 0)
+        self.assertResultIsBOOL(AppKit.NSControl.sendAction_to_)
+        self.assertArgIsSEL(AppKit.NSControl.sendAction_to_, 0, b"v@:@")
+        self.assertResultIsBOOL(AppKit.NSControl.abortEditing)
+        self.assertResultIsBOOL(AppKit.NSControl.refusesFirstResponder)
+        self.assertArgIsBOOL(AppKit.NSControl.setRefusesFirstResponder_, 0)
 
     @min_sdk_level("10.6")
     def testProtocols(self):
@@ -69,21 +70,17 @@ class TestNSControl(TestCase):
         )
 
         self.assertArgHasType(
-            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,
+            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,  # noqa: B950
             3,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,
+            TestNSControlHelper.control_textView_completions_forPartialWordRange_indexOfSelectedItem_,  # noqa: B950
             4,
             b"N^" + objc._C_NSInteger,
         )
 
     def testConstants(self):
-        self.assertIsInstance(NSControlTextDidBeginEditingNotification, unicode)
-        self.assertIsInstance(NSControlTextDidEndEditingNotification, unicode)
-        self.assertIsInstance(NSControlTextDidChangeNotification, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AppKit.NSControlTextDidBeginEditingNotification, str)
+        self.assertIsInstance(AppKit.NSControlTextDidEndEditingNotification, str)
+        self.assertIsInstance(AppKit.NSControlTextDidChangeNotification, str)

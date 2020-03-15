@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSDraggingHelper(NSObject):
+class TestNSDraggingHelper(AppKit.NSObject):
     def draggingFormation(self):
         return 1
 
@@ -113,42 +114,46 @@ class TestNSDraggingHelper(NSObject):
 
 class TestNSDragging(TestCase):
     def testConstants(self):
-        self.assertEqual(NSDragOperationNone, 0)
-        self.assertEqual(NSDragOperationCopy, 1)
-        self.assertEqual(NSDragOperationLink, 2)
-        self.assertEqual(NSDragOperationGeneric, 4)
-        self.assertEqual(NSDragOperationPrivate, 8)
-        self.assertEqual(NSDragOperationAll_Obsolete, 15)
-        self.assertEqual(NSDragOperationMove, 16)
-        self.assertEqual(NSDragOperationDelete, 32)
-        self.assertEqual(NSDragOperationEvery, NSUIntegerMax)
+        self.assertEqual(AppKit.NSDragOperationNone, 0)
+        self.assertEqual(AppKit.NSDragOperationCopy, 1)
+        self.assertEqual(AppKit.NSDragOperationLink, 2)
+        self.assertEqual(AppKit.NSDragOperationGeneric, 4)
+        self.assertEqual(AppKit.NSDragOperationPrivate, 8)
+        self.assertEqual(AppKit.NSDragOperationAll_Obsolete, 15)
+        self.assertEqual(AppKit.NSDragOperationMove, 16)
+        self.assertEqual(AppKit.NSDragOperationDelete, 32)
+        self.assertEqual(AppKit.NSDragOperationEvery, AppKit.NSUIntegerMax)
 
-        self.assertEqual(NSDragOperationAll, NSDragOperationAll_Obsolete)
+        self.assertEqual(AppKit.NSDragOperationAll, AppKit.NSDragOperationAll_Obsolete)
 
     @min_os_level("10.7")
     def testConstant10_7(self):
-        self.assertEqual(NSDraggingFormationDefault, 0)
-        self.assertEqual(NSDraggingFormationNone, 1)
-        self.assertEqual(NSDraggingFormationPile, 2)
-        self.assertEqual(NSDraggingFormationList, 3)
-        self.assertEqual(NSDraggingFormationStack, 4)
+        self.assertEqual(AppKit.NSDraggingFormationDefault, 0)
+        self.assertEqual(AppKit.NSDraggingFormationNone, 1)
+        self.assertEqual(AppKit.NSDraggingFormationPile, 2)
+        self.assertEqual(AppKit.NSDraggingFormationList, 3)
+        self.assertEqual(AppKit.NSDraggingFormationStack, 4)
 
-        self.assertEqual(NSDraggingContextOutsideApplication, 0)
-        self.assertEqual(NSDraggingContextWithinApplication, 1)
+        self.assertEqual(AppKit.NSDraggingContextOutsideApplication, 0)
+        self.assertEqual(AppKit.NSDraggingContextWithinApplication, 1)
 
-        self.assertEqual(NSDraggingItemEnumerationConcurrent, NSEnumerationConcurrent)
-        self.assertEqual(NSDraggingItemEnumerationClearNonenumeratedImages, 1 << 16)
+        self.assertEqual(
+            AppKit.NSDraggingItemEnumerationConcurrent, AppKit.NSEnumerationConcurrent
+        )
+        self.assertEqual(
+            AppKit.NSDraggingItemEnumerationClearNonenumeratedImages, 1 << 16
+        )
 
     @min_os_level("10.11")
     def testConstant10_11(self):
-        self.assertEqual(NSSpringLoadingHighlightNone, 0)
-        self.assertEqual(NSSpringLoadingHighlightStandard, 1)
-        self.assertEqual(NSSpringLoadingHighlightEmphasized, 2)
+        self.assertEqual(AppKit.NSSpringLoadingHighlightNone, 0)
+        self.assertEqual(AppKit.NSSpringLoadingHighlightStandard, 1)
+        self.assertEqual(AppKit.NSSpringLoadingHighlightEmphasized, 2)
 
-        self.assertEqual(NSSpringLoadingDisabled, 0)
-        self.assertEqual(NSSpringLoadingEnabled, 1)
-        self.assertEqual(NSSpringLoadingContinuousActivation, 2)
-        self.assertEqual(NSSpringLoadingNoHover, 4)
+        self.assertEqual(AppKit.NSSpringLoadingDisabled, 0)
+        self.assertEqual(AppKit.NSSpringLoadingEnabled, 1)
+        self.assertEqual(AppKit.NSSpringLoadingContinuousActivation, 2)
+        self.assertEqual(AppKit.NSSpringLoadingNoHover, 4)
 
     @min_sdk_level("10.7")
     def testProtocols(self):
@@ -164,16 +169,16 @@ class TestNSDragging(TestCase):
             TestNSDraggingHelper.draggingSourceOperationMask, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestNSDraggingHelper.draggingLocation, NSPoint.__typestr__
+            TestNSDraggingHelper.draggingLocation, AppKit.NSPoint.__typestr__
         )
         self.assertResultHasType(
-            TestNSDraggingHelper.draggedImageLocation, NSPoint.__typestr__
+            TestNSDraggingHelper.draggedImageLocation, AppKit.NSPoint.__typestr__
         )
         self.assertResultHasType(
             TestNSDraggingHelper.draggingSequenceNumber, objc._C_NSInteger
         )
         self.assertArgHasType(
-            TestNSDraggingHelper.slideDraggedImageTo_, 0, NSPoint.__typestr__
+            TestNSDraggingHelper.slideDraggedImageTo_, 0, AppKit.NSPoint.__typestr__
         )
 
         self.assertResultHasType(
@@ -194,20 +199,24 @@ class TestNSDragging(TestCase):
             TestNSDraggingHelper.draggingSourceOperationMaskForLocal_, 0
         )
         self.assertArgHasType(
-            TestNSDraggingHelper.draggedImage_beganAt_, 1, NSPoint.__typestr__
+            TestNSDraggingHelper.draggedImage_beganAt_, 1, AppKit.NSPoint.__typestr__
         )
         self.assertArgHasType(
-            TestNSDraggingHelper.draggedImage_endedAt_operation_, 1, NSPoint.__typestr__
+            TestNSDraggingHelper.draggedImage_endedAt_operation_,
+            1,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSDraggingHelper.draggedImage_endedAt_operation_, 2, objc._C_NSUInteger
         )
         self.assertArgHasType(
-            TestNSDraggingHelper.draggedImage_movedTo_, 1, NSPoint.__typestr__
+            TestNSDraggingHelper.draggedImage_movedTo_, 1, AppKit.NSPoint.__typestr__
         )
         self.assertResultIsBOOL(TestNSDraggingHelper.ignoreModifierKeysWhileDragging)
         self.assertArgHasType(
-            TestNSDraggingHelper.draggedImage_endedAt_deposited_, 1, NSPoint.__typestr__
+            TestNSDraggingHelper.draggedImage_endedAt_deposited_,
+            1,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgIsBOOL(TestNSDraggingHelper.draggedImage_endedAt_deposited_, 2)
 
@@ -237,12 +246,12 @@ class TestNSDragging(TestCase):
         )
 
         self.assertArgHasType(
-            TestNSDraggingHelper.enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_,
+            TestNSDraggingHelper.enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_,  # noqa: B950
             0,
             objc._C_NSUInteger,
         )
         self.assertArgIsBlock(
-            TestNSDraggingHelper.enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_,
+            TestNSDraggingHelper.enumerateDraggingItemsWithOptions_forView_classes_searchOptions_usingBlock_,  # noqa: B950
             4,
             b"v@" + objc._C_NSInteger + b"o^" + objc._C_NSBOOL,
         )
@@ -250,15 +259,17 @@ class TestNSDragging(TestCase):
         self.assertArgHasType(
             TestNSDraggingHelper.draggingSession_willBeginAtPoint_,
             1,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
-            TestNSDraggingHelper.draggingSession_movedToPoint_, 1, NSPoint.__typestr__
+            TestNSDraggingHelper.draggingSession_movedToPoint_,
+            1,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSDraggingHelper.draggingSession_endedAtPoint_operation_,
             1,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSDraggingHelper.draggingSession_endedAtPoint_operation_,
@@ -271,7 +282,7 @@ class TestNSDragging(TestCase):
         )
 
     @min_os_level("10.11")
-    def testProtocols10_11(self):
+    def testProtocolMethods10_11(self):
         self.assertArgIsBOOL(
             TestNSDraggingHelper.springLoadingActivated_draggingInfo_, 0
         )
@@ -281,7 +292,3 @@ class TestNSDragging(TestCase):
         self.assertResultHasType(
             TestNSDraggingHelper.springLoadingUpdated_, objc._C_NSUInteger
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,6 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 NSCollectionViewCompositionalLayoutSectionProvider = b"@q@"
 NSCollectionLayoutSectionVisibleItemsInvalidationHandler = (
@@ -74,7 +75,7 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
             AppKit.NSCollectionLayoutSectionOrthogonalScrollingBehaviorContinuous, 1
         )
         self.assertEqual(
-            AppKit.NSCollectionLayoutSectionOrthogonalScrollingBehaviorContinuousGroupLeadingBoundary,
+            AppKit.NSCollectionLayoutSectionOrthogonalScrollingBehaviorContinuousGroupLeadingBoundary,  # noqa: B950
             2,
         )
         self.assertEqual(
@@ -115,12 +116,12 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertArgIsBlock(
             AppKit.NSCollectionViewCompositionalLayout.initWithSectionProvider_,
             0,
-            NSCollectionViewCompositionalLayoutSectionProvider,
+            AppKit.NSCollectionViewCompositionalLayoutSectionProvider,
         )
         self.assertArgIsBlock(
             AppKit.NSCollectionViewCompositionalLayout.initWithSectionProvider_configuration_,
             0,
-            NSCollectionViewCompositionalLayoutSectionProvider,
+            AppKit.NSCollectionViewCompositionalLayoutSectionProvider,
         )
 
         self.assertResultIsBOOL(
@@ -132,12 +133,12 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
 
         self.assertResultIsBlock(
             AppKit.NSCollectionLayoutSection.visibleItemsInvalidationHandler,
-            NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
+            AppKit.NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
         )
         self.assertArgIsBlock(
             AppKit.NSCollectionLayoutSection.setVisibleItemsInvalidationHandler_,
             0,
-            NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
+            AppKit.NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
         )
 
         self.assertResultIsBOOL(AppKit.NSCollectionLayoutDimension.isFractionalWidth)
@@ -192,7 +193,7 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertArgIsBlock(
             AppKit.NSCollectionViewDiffableDataSource.initWithCollectionView_itemProvider_,
             1,
-            NSCollectionViewDiffableDataSourceItemProvider,
+            AppKit.NSCollectionViewDiffableDataSourceItemProvider,
         )
         self.assertArgIsBOOL(
             AppKit.NSCollectionViewDiffableDataSource.applySnapshot_animatingDifferences_,
@@ -201,12 +202,12 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
 
         self.assertResultIsBlock(
             AppKit.NSCollectionViewDiffableDataSource.supplementaryViewProvider,
-            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
+            AppKit.NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
         )
         self.assertArgIsBlock(
             AppKit.NSCollectionViewDiffableDataSource.setSupplementaryViewProvider_,
             0,
-            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
+            AppKit.NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
         )
 
     @min_sdk_level("10.15")
@@ -214,7 +215,3 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         objc.protocolNamed("NSCollectionLayoutContainer")
         objc.protocolNamed("NSCollectionLayoutEnvironment")
         objc.protocolNamed("NSCollectionLayoutVisibleItem")
-
-
-if __name__ == "__main__":
-    main()

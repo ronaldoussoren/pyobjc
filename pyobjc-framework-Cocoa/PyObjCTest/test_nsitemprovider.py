@@ -1,11 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, onlyOn64Bit
+import objc
 
 
-class TestNSItemProviderHelper(NSObject):
-    def itemProviderVisibilityForRepresentationWithTypeIdentifier_(self, a):
-        return 1
-
+class TestNSItemProviderHelper(AppKit.NSObject):
     def itemProviderVisibilityForRepresentationWithTypeIdentifier_(self, a):
         return 1
 
@@ -25,31 +23,31 @@ NSItemProviderLoadHandler = b"v@?#@"
 
 class TestNSItemProvider(TestCase):
     def testConstants(self):
-        self.assertEqual(NSItemProviderRepresentationVisibilityAll, 0)
-        self.assertEqual(NSItemProviderRepresentationVisibilityGroup, 2)
-        self.assertEqual(NSItemProviderRepresentationVisibilityOwnProcess, 3)
-        self.assertEqual(NSItemProviderFileOptionOpenInPlace, 1)
+        self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityAll, 0)
+        self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityGroup, 2)
+        self.assertEqual(AppKit.NSItemProviderRepresentationVisibilityOwnProcess, 3)
+        self.assertEqual(AppKit.NSItemProviderFileOptionOpenInPlace, 1)
 
     @min_os_level("10.10")
     @onlyOn64Bit
     def testConstants10_10(self):
-        self.assertIsInstance(NSTypeIdentifierDateText, unicode)
-        self.assertIsInstance(NSTypeIdentifierAddressText, unicode)
-        self.assertIsInstance(NSTypeIdentifierPhoneNumberText, unicode)
-        self.assertIsInstance(NSTypeIdentifierTransitInformationText, unicode)
+        self.assertIsInstance(AppKit.NSTypeIdentifierDateText, str)
+        self.assertIsInstance(AppKit.NSTypeIdentifierAddressText, str)
+        self.assertIsInstance(AppKit.NSTypeIdentifierPhoneNumberText, str)
+        self.assertIsInstance(AppKit.NSTypeIdentifierTransitInformationText, str)
 
-        self.assertIsInstance(NSItemProviderPreferredImageSizeKey, unicode)
-        self.assertIsInstance(NSExtensionJavaScriptPreprocessingResultsKey, unicode)
-        self.assertIsInstance(NSItemProviderErrorDomain, unicode)
+        self.assertIsInstance(AppKit.NSItemProviderPreferredImageSizeKey, str)
+        self.assertIsInstance(AppKit.NSExtensionJavaScriptPreprocessingResultsKey, str)
+        self.assertIsInstance(AppKit.NSItemProviderErrorDomain, str)
 
-        self.assertEqual(NSItemProviderUnknownError, -1)
-        self.assertEqual(NSItemProviderItemUnavailableError, -1000)
-        self.assertEqual(NSItemProviderUnexpectedValueClassError, -1100)
+        self.assertEqual(AppKit.NSItemProviderUnknownError, -1)
+        self.assertEqual(AppKit.NSItemProviderItemUnavailableError, -1000)
+        self.assertEqual(AppKit.NSItemProviderUnexpectedValueClassError, -1100)
 
     @min_os_level("10.11")
     @onlyOn64Bit
     def testConstants10_11(self):
-        self.assertEqual(NSItemProviderUnavailableCoercionError, -1200)
+        self.assertEqual(AppKit.NSItemProviderUnavailableCoercionError, -1200)
 
     def testMethods(self):
         self.assertResultHasType(
@@ -61,7 +59,7 @@ class TestNSItemProvider(TestCase):
             objc._C_NSInteger,
         )
         self.assertArgIsBlock(
-            TestNSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,
+            TestNSItemProviderHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
             1,
             b"v@@",
         )
@@ -76,28 +74,32 @@ class TestNSItemProvider(TestCase):
     @onlyOn64Bit
     def testMethods10_10(self):
 
-        self.assertResultIsBOOL(NSItemProvider.hasItemConformingToTypeIdentifier_)
-        self.assertArgIsBlock(
-            NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_,
-            2,
-            NSItemProviderCompletionHandler,
+        self.assertResultIsBOOL(
+            AppKit.NSItemProvider.hasItemConformingToTypeIdentifier_
         )
         self.assertArgIsBlock(
-            NSItemProvider.registerItemForTypeIdentifier_loadHandler_,
+            AppKit.NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_,
+            2,
+            AppKit.NSItemProviderCompletionHandler,
+        )
+        self.assertArgIsBlock(
+            AppKit.NSItemProvider.registerItemForTypeIdentifier_loadHandler_,
             1,
-            NSItemProviderLoadHandler,
+            AppKit.NSItemProviderLoadHandler,
         )
 
         self.assertResultIsBlock(
-            NSItemProvider.previewImageHandler, NSItemProviderLoadHandler
+            AppKit.NSItemProvider.previewImageHandler, AppKit.NSItemProviderLoadHandler
         )
         self.assertArgIsBlock(
-            NSItemProvider.setPreviewImageHandler_, 0, NSItemProviderLoadHandler
+            AppKit.NSItemProvider.setPreviewImageHandler_,
+            0,
+            AppKit.NSItemProviderLoadHandler,
         )
         self.assertArgIsBlock(
-            NSItemProvider.loadPreviewImageWithOptions_completionHandler_,
+            AppKit.NSItemProvider.loadPreviewImageWithOptions_completionHandler_,
             1,
-            NSItemProviderCompletionHandler,
+            AppKit.NSItemProviderCompletionHandler,
         )
 
         # XXX:
@@ -108,60 +110,58 @@ class TestNSItemProvider(TestCase):
     def testMethods10_13(self):
         # XXX: Cannot properly test right now...
         self.assertArgIsBlock(
-            NSItemProvider.registerDataRepresentationForTypeIdentifier_visibility_loadHandler_,
+            AppKit.NSItemProvider.registerDataRepresentationForTypeIdentifier_visibility_loadHandler_,  # noqa: B950
             2,
             b"@@?",
         )
         self.assertArgIsBlock(
-            NSItemProvider.registerFileRepresentationForTypeIdentifier_fileOptions_visibility_loadHandler_,
+            AppKit.NSItemProvider.registerFileRepresentationForTypeIdentifier_fileOptions_visibility_loadHandler_,  # noqa: B950
             3,
             b"@@?",
         )
         self.assertArgIsBlock(
-            NSItemProvider.registerObjectOfClass_visibility_loadHandler_, 2, b"@@?"
+            AppKit.NSItemProvider.registerObjectOfClass_visibility_loadHandler_,
+            2,
+            b"@@?",
         )
 
         self.assertResultIsBOOL(
-            NSItemProvider.hasRepresentationConformingToTypeIdentifier_fileOptions_
+            AppKit.NSItemProvider.hasRepresentationConformingToTypeIdentifier_fileOptions_
         )
 
         self.assertArgIsBlock(
-            NSItemProvider.loadDataRepresentationForTypeIdentifier_completionHandler_,
+            AppKit.NSItemProvider.loadDataRepresentationForTypeIdentifier_completionHandler_,  # noqa: B950
             1,
             b"v@@",
         )
         self.assertArgIsBlock(
-            NSItemProvider.loadFileRepresentationForTypeIdentifier_completionHandler_,
+            AppKit.NSItemProvider.loadFileRepresentationForTypeIdentifier_completionHandler_,  # noqa: B950
             1,
             b"v@@",
         )
         self.assertArgIsBlock(
-            NSItemProvider.loadInPlaceFileRepresentationForTypeIdentifier_completionHandler_,
+            AppKit.NSItemProvider.loadInPlaceFileRepresentationForTypeIdentifier_completionHandler_,  # noqa: B950
             1,
             b"v@Z@",
         )
         self.assertArgIsBlock(
-            NSItemProvider.loadObjectOfClass_completionHandler_, 1, b"v@@"
+            AppKit.NSItemProvider.loadObjectOfClass_completionHandler_, 1, b"v@@"
         )
-        self.assertResultIsBOOL(NSItemProvider.canLoadObjectOfClass_)
+        self.assertResultIsBOOL(AppKit.NSItemProvider.canLoadObjectOfClass_)
 
         # XXX: Cannot properly test right now...
         self.assertArgIsBlock(
-            NSItemProvider.registerItemForTypeIdentifier_loadHandler_,
+            AppKit.NSItemProvider.registerItemForTypeIdentifier_loadHandler_,
             1,
-            NSItemProviderLoadHandler,
+            AppKit.NSItemProviderLoadHandler,
         )
         self.assertArgIsBlock(
-            NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_,
+            AppKit.NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_,
             2,
-            NSItemProviderCompletionHandler,
+            AppKit.NSItemProviderCompletionHandler,
         )
 
     @min_sdk_level("10.13")
     def testProtocols10_13(self):
         objc.protocolNamed("NSItemProviderWriting")
         objc.protocolNamed("NSItemProviderReading")
-
-
-if __name__ == "__main__":
-    main()

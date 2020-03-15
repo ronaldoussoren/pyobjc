@@ -1,35 +1,31 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSColorSpace(TestCase):
     def testConstants(self):
-        self.assertEqual(NSUnknownColorSpaceModel, -1)
-        self.assertEqual(NSGrayColorSpaceModel, 0)
-        self.assertEqual(NSRGBColorSpaceModel, 1)
-        self.assertEqual(NSCMYKColorSpaceModel, 2)
-        self.assertEqual(NSLABColorSpaceModel, 3)
-        self.assertEqual(NSDeviceNColorSpaceModel, 4)
-        self.assertEqual(NSIndexedColorSpaceModel, 5)
-        self.assertEqual(NSPatternColorSpaceModel, 6)
+        self.assertEqual(AppKit.NSUnknownColorSpaceModel, -1)
+        self.assertEqual(AppKit.NSGrayColorSpaceModel, 0)
+        self.assertEqual(AppKit.NSRGBColorSpaceModel, 1)
+        self.assertEqual(AppKit.NSCMYKColorSpaceModel, 2)
+        self.assertEqual(AppKit.NSLABColorSpaceModel, 3)
+        self.assertEqual(AppKit.NSDeviceNColorSpaceModel, 4)
+        self.assertEqual(AppKit.NSIndexedColorSpaceModel, 5)
+        self.assertEqual(AppKit.NSPatternColorSpaceModel, 6)
 
-        self.assertEqual(NSColorSpaceModelUnknown, -1)
-        self.assertEqual(NSColorSpaceModelGray, 0)
-        self.assertEqual(NSColorSpaceModelRGB, 1)
-        self.assertEqual(NSColorSpaceModelCMYK, 2)
-        self.assertEqual(NSColorSpaceModelLAB, 3)
-        self.assertEqual(NSColorSpaceModelDeviceN, 4)
-        self.assertEqual(NSColorSpaceModelIndexed, 5)
-        self.assertEqual(NSColorSpaceModelPatterned, 6)
+        self.assertEqual(AppKit.NSColorSpaceModelUnknown, -1)
+        self.assertEqual(AppKit.NSColorSpaceModelGray, 0)
+        self.assertEqual(AppKit.NSColorSpaceModelRGB, 1)
+        self.assertEqual(AppKit.NSColorSpaceModelCMYK, 2)
+        self.assertEqual(AppKit.NSColorSpaceModelLAB, 3)
+        self.assertEqual(AppKit.NSColorSpaceModelDeviceN, 4)
+        self.assertEqual(AppKit.NSColorSpaceModelIndexed, 5)
+        self.assertEqual(AppKit.NSColorSpaceModelPatterned, 6)
 
     def testMethods(self):
         self.assertArgHasType(
-            NSColorSpace.initWithColorSyncProfile_, 0, b"^{OpaqueCMProfileRef=}"
+            AppKit.NSColorSpace.initWithColorSyncProfile_, 0, b"^{OpaqueCMProfileRef=}"
         )
         self.assertResultHasType(
-            NSColorSpace.colorSyncProfile, b"^{OpaqueCMProfileRef=}"
+            AppKit.NSColorSpace.colorSyncProfile, b"^{OpaqueCMProfileRef=}"
         )
-
-
-if __name__ == "__main__":
-    main()

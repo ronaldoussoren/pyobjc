@@ -1,26 +1,23 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBackgroundActivityScheduler(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertEqual(NSBackgroundActivityResultFinished, 1)
-        self.assertEqual(NSBackgroundActivityResultDeferred, 2)
+        self.assertEqual(Foundation.NSBackgroundActivityResultFinished, 1)
+        self.assertEqual(Foundation.NSBackgroundActivityResultDeferred, 2)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        NSBackgroundActivityCompletionHandler = b"v" + objc._C_NSInteger
+        Foundation.NSBackgroundActivityCompletionHandler = b"v" + objc._C_NSInteger
 
-        self.assertResultIsBOOL(NSBackgroundActivityScheduler.repeats)
-        self.assertArgIsBOOL(NSBackgroundActivityScheduler.setRepeats_, 0)
+        self.assertResultIsBOOL(Foundation.NSBackgroundActivityScheduler.repeats)
+        self.assertArgIsBOOL(Foundation.NSBackgroundActivityScheduler.setRepeats_, 0)
         self.assertArgIsBlock(
-            NSBackgroundActivityScheduler.scheduleWithBlock_,
+            Foundation.NSBackgroundActivityScheduler.scheduleWithBlock_,
             0,
-            NSBackgroundActivityCompletionHandler,
+            Foundation.NSBackgroundActivityCompletionHandler,
         )
-        self.assertResultIsBOOL(NSBackgroundActivityScheduler.shouldDefer)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSBackgroundActivityScheduler.shouldDefer)

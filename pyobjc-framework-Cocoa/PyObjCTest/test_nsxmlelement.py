@@ -1,12 +1,10 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestXMLElement(TestCase):
     def testOutputArgs(self):
-        self.assertArgIsOut(NSXMLElement.initWithXMLString_error_, 1)
-        self.assertArgIsBOOL(NSXMLElement.normalizeAdjacentTextNodesPreservingCDATA_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsOut(Foundation.NSXMLElement.initWithXMLString_error_, 1)
+        self.assertArgIsBOOL(
+            Foundation.NSXMLElement.normalizeAdjacentTextNodesPreservingCDATA_, 0
+        )

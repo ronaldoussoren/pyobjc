@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSPickerTouchBarItem(TestCase):
@@ -15,12 +15,12 @@ class TestNSPickerTouchBarItem(TestCase):
     @min_sdk_level("10.15")
     def test_nethods10_15(self):
         self.assertArgIsSEL(
-            AppKit.NSPickerTouchBarItem.pickerTouchBarItemWithIdentifier_labels_selectionMode_target_action_,
+            AppKit.NSPickerTouchBarItem.pickerTouchBarItemWithIdentifier_labels_selectionMode_target_action_,  # noqa: B950
             4,
             b"v@:@",
         )
         self.assertArgIsSEL(
-            AppKit.NSPickerTouchBarItem.pickerTouchBarItemWithIdentifier_images_selectionMode_target_action_,
+            AppKit.NSPickerTouchBarItem.pickerTouchBarItemWithIdentifier_images_selectionMode_target_action_,  # noqa: B950
             4,
             b"v@:@",
         )
@@ -31,7 +31,3 @@ class TestNSPickerTouchBarItem(TestCase):
         self.assertArgIsBOOL(AppKit.NSPickerTouchBarItem.setEnabled_, 0)
         self.assertResultIsBOOL(AppKit.NSPickerTouchBarItem.isEnabledAtIndex_)
         self.assertArgIsBOOL(AppKit.NSPickerTouchBarItem.setEnabled_atIndex_, 0)
-
-
-if __name__ == "__main__":
-    main()

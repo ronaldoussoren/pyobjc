@@ -3,7 +3,6 @@ from __future__ import print_function
 import keyword
 import sys
 import time
-import traceback
 from code import InteractiveConsole
 from functools import partial
 
@@ -12,6 +11,7 @@ from Cocoa import (
     NSAttributedString,
     NSBundle,
     NSColor,
+    NSControlKeyMask,
     NSDate,
     NSDefaultRunLoopMode,
     NSFont,
@@ -22,21 +22,8 @@ from Cocoa import (
     NSTextView,
     NSUIntegerMax,
 )
-from objc import NO, YES, IBAction, IBOutlet, selector, super
+from objc import NO, YES, IBOutlet, super
 from PyObjCTools import AppHelper
-
-if sys.version_info[0] == 2:
-    exec(
-        """
-def exec_code(code, globals):
-    exec code in locals
-    """
-    )
-else:
-    unicode = str
-    import builtins
-
-    exec_code = getattr(builtins, "exec")
 
 try:
     sys.ps1
@@ -55,7 +42,7 @@ class PseudoUTF8Output(object):
         self._write = writemethod
 
     def write(self, s):
-        if not isinstance(s, unicode):
+        if not isinstance(s, str):
             s = s.decode("utf-8", "replace")
         self._write(s)
 
@@ -148,7 +135,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
                 # next input function
                 yield _buff.append
                 more = self.push(_buff.pop())
-        except:
+        except:  # noqa: E722, B001
             self.lock = False
             raise
         self.lock = False
@@ -159,10 +146,10 @@ class AsyncInteractiveConsole(InteractiveConsole):
 
     def runcode(self, code):
         try:
-            exec_code(code, self.locals)
+            exec(code, self.locals)
         except SystemExit:
             raise
-        except:
+        except:  # noqa: E722, B001
             self.showtraceback()
         else:
             if sys.stdout.softspace:
@@ -178,7 +165,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
             objname = ".".join(parts[:-1])
             try:
                 obj = eval(objname, self.locals)
-            except:
+            except:  # noqa: E722, B001
                 return None, 0
             wordlower = parts[-1].lower()
             if wordlower == "":
@@ -412,12 +399,23 @@ class PyInterpreter(NSObject):
 
             app.sendEvent_(event)
 
-    codeString_ = lambda self, s: self._formatString_forOutput_(s, "code")
-    stderrString_ = lambda self, s: self._formatString_forOutput_(s, "stderr")
-    stdoutString_ = lambda self, s: self._formatString_forOutput_(s, "stdout")
-    writeCode_ = lambda self, s: self._writeString_forOutput_(s, "code")
-    writeStderr_ = lambda self, s: self._writeString_forOutput_(s, "stderr")
-    writeStdout_ = lambda self, s: self._writeString_forOutput_(s, "stdout")
+    def codeString_(self, s):
+        return self._formatString_forOutput_(s, "code")
+
+    def stderrString_(self, s):
+        return self._formatString_forOutput_(s, "stderr")
+
+    def stdoutString_(self, s):
+        return self._formatString_forOutput_(s, "stdout")
+
+    def writeCode_(self, s):
+        return self._writeString_forOutput_(s, "code")
+
+    def writeStderr_(self, s):
+        return self._writeString_forOutput_(s, "stderr")
+
+    def writeStdout_(self, s):
+        return self._writeString_forOutput_(s, "stdout")
 
     #
     #  Accessors
@@ -447,7 +445,7 @@ class PyInterpreter(NSObject):
     def codeColor(self):
         return self._codeColor
 
-    def setStdoutColor_(self, color):
+    def setCodeColor_(self, color):
         self._codeColor = color
 
     def isInteracting(self):

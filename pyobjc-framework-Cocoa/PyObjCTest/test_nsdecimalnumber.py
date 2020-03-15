@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 
-class Behaviour(NSObject):
+class Behaviour(Foundation.NSObject):
     def scale(self):
         return 1
 
@@ -15,78 +16,80 @@ class Behaviour(NSObject):
 
 class TestNSDecimalNumber(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSDecimalNumberExactnessException, unicode)
-        self.assertIsInstance(NSDecimalNumberOverflowException, unicode)
-        self.assertIsInstance(NSDecimalNumberUnderflowException, unicode)
-        self.assertIsInstance(NSDecimalNumberDivideByZeroException, unicode)
+        self.assertIsInstance(Foundation.NSDecimalNumberExactnessException, str)
+        self.assertIsInstance(Foundation.NSDecimalNumberOverflowException, str)
+        self.assertIsInstance(Foundation.NSDecimalNumberUnderflowException, str)
+        self.assertIsInstance(Foundation.NSDecimalNumberDivideByZeroException, str)
 
     def testNSDecimal(self):
-        dec = NSDecimal("55.0")
+        dec = Foundation.NSDecimal("55.0")
 
-        v = NSDecimalNumber.alloc().initWithDecimal_(dec)
-        self.assertIsInstance(v, NSDecimalNumber)
+        v = Foundation.NSDecimalNumber.alloc().initWithDecimal_(dec)
+        self.assertIsInstance(v, Foundation.NSDecimalNumber)
         self.assertEqual(v.description(), "55")
 
-        v = NSDecimalNumber.decimalNumberWithDecimal_(dec)
-        self.assertIsInstance(v, NSDecimalNumber)
+        v = Foundation.NSDecimalNumber.decimalNumberWithDecimal_(dec)
+        self.assertIsInstance(v, Foundation.NSDecimalNumber)
         self.assertEqual(v.description(), "55")
 
         o = v.decimalValue()
-        self.assertIsInstance(o, NSDecimal)
+        self.assertIsInstance(o, Foundation.NSDecimal)
 
         o = v.objCType()
         self.assertIsInstance(o, bytes)
 
     def testNSNumberAsNSDecimal(self):
-        v = NSNumber.numberWithFloat_(33.5)
+        v = Foundation.NSNumber.numberWithFloat_(33.5)
         o = v.decimalValue()
-        self.assertIsInstance(o, NSDecimal)
+        self.assertIsInstance(o, Foundation.NSDecimal)
 
     def testNSScannerWithDecimal(self):
-        v = NSScanner.alloc().initWithString_("55.23")
+        v = Foundation.NSScanner.alloc().initWithString_("55.23")
 
         o, dec = v.scanDecimal_(None)
-        self.assertIsInstance(dec, NSDecimal)
+        self.assertIsInstance(dec, Foundation.NSDecimal)
         self.assertIs(o, True)
         self.assertEqual(str(dec), "55.23")
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSDecimalNumber.initWithMantissa_exponent_isNegative_, 2)
         self.assertArgIsBOOL(
-            NSDecimalNumber.decimalNumberWithMantissa_exponent_isNegative_, 2
+            Foundation.NSDecimalNumber.initWithMantissa_exponent_isNegative_, 2
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSDecimalNumber.decimalNumberWithMantissa_exponent_isNegative_, 2
         )
 
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             2,
         )
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             3,
         )
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             4,
         )
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.initWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             5,
         )
 
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             2,
         )
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             3,
         )
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             4,
         )
         self.assertArgIsBOOL(
-            NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,
+            Foundation.NSDecimalNumberHandler.decimalNumberHandlerWithRoundingMode_scale_raiseOnExactness_raiseOnOverflow_raiseOnUnderflow_raiseOnDivideByZero_,  # noqa: B950
             5,
         )
 
@@ -106,7 +109,3 @@ class TestNSDecimalNumber(TestCase):
             Behaviour.scale, objc._C_SHT
         )  # XXX: should this happen without a protocol definition, a bit too generic!
         self.assertResultHasType(Behaviour.roundingMode, objc._C_NSUInteger)
-
-
-if __name__ == "__main__":
-    main()

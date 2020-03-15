@@ -8,8 +8,8 @@
 #  at http://homepage.mac.com/mmalc/CocoaExamples/controllers.html
 #
 #  See "Dragging Files" for a conceptual introduction:
-#  file:///Developer/ADC%20Reference%20Library/documentation/Cocoa/Conceptual/DragandDrop/index.html#//apple_ref/doc/uid/10000069i
-#  or http://developer.apple.com/documentation/Cocoa/Conceptual/DragandDrop/Tasks/DraggingFiles.html
+#  file:///Developer/ADC%20Reference%20Library/documentation/Cocoa/Conceptual/DragandDrop/index.html#//apple_ref/doc/uid/10000069i  # noqa: B950
+#  or http://developer.apple.com/documentation/Cocoa/Conceptual/DragandDrop/Tasks/DraggingFiles.html  # noqa: B950
 
 import objc
 from BookmarksDocument import CopiedRowsType
@@ -35,7 +35,7 @@ class DNDArrayController(NSArrayController):
     tableView = objc.IBOutlet()
 
     def awakeFromNib(self):
-        "register for drag and drop"
+        """register for drag and drop"""
         self.tableView.registerForDraggedTypes_(
             [CopiedRowsType, MovedRowsType, NSURLPboardType]
         )

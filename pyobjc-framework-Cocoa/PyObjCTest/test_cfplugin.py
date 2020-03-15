@@ -1,11 +1,11 @@
 """
-No tests for CFPlugin: these API's are unsupported for the moment.
+No tests for CoreFoundation.CFPlugin: these API's are unsupported for the moment.
 """
 import CoreFoundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 symbols = [
-    # From CFPluginCOM.h:
+    # From CoreFoundation.CFPluginCOM.h:
     "IUnknownVTbl",
     "IS_ERROR",
     "HRESULT_CODE",
@@ -25,7 +25,7 @@ symbols = [
     "E_ABORT",
     "E_FAIL",
     "E_ACCESSDENIED",
-    # From CFPlugin.h:
+    # From CoreFoundation.CFPlugin.h:
     "kCFPlugInDynamicRegistrationKey",
     "kCFPlugInDynamicRegisterFunctionKey",
     "kCFPlugInUnloadFunctionKey",
@@ -57,9 +57,6 @@ symbols = [
 class TestPluginNotSuppported(TestCase):
     def testUnsupported(self):
         for sym in symbols:
-            if hasattr(CoreFoundation, sym):
-                self.fail("Unsupported symbol present: %s" % (sym,))
-
-
-if __name__ == "__main__":
-    main()
+            with self.subTest(sym):
+                if hasattr(CoreFoundation, sym):
+                    self.fail("Unsupported symbol present: %s" % (sym,))

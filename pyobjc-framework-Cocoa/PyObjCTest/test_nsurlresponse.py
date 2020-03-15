@@ -1,11 +1,7 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLResponse(TestCase):
     def testConstants(self):
-        self.assertEqual(NSURLResponseUnknownLength, -1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(Foundation.NSURLResponseUnknownLength, -1)

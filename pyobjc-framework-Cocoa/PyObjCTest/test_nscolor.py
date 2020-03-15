@@ -1,32 +1,32 @@
 import array
 import sys
 
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestRegressions(TestCase):
     def testQualifiersInSignature(self):
-        NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)
+        AppKit.NSColor.redColor().getRed_green_blue_alpha_(None, None, None, None)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSColor.ignoresAlpha)
-        self.assertArgIsBOOL(NSColor.setIgnoresAlpha_, 0)
+        self.assertResultIsBOOL(AppKit.NSColor.ignoresAlpha)
+        self.assertArgIsBOOL(AppKit.NSColor.setIgnoresAlpha_, 0)
 
-        space = NSColorSpace.adobeRGB1998ColorSpace()
-        color = NSColor.colorWithColorSpace_components_count_(
+        space = AppKit.NSColorSpace.adobeRGB1998ColorSpace()
+        color = AppKit.NSColor.colorWithColorSpace_components_count_(
             space, (0.1, 0.2, 0.3, 0.4), 4
         )
-        self.assertIsInstance(color, NSColor)
+        self.assertIsInstance(color, AppKit.NSColor)
 
-        color = NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 0)
+        color = AppKit.NSColor.colorWithCalibratedRed_green_blue_alpha_(0, 0, 0, 0)
         r, g, b, a = color.getRed_green_blue_alpha_(None, None, None, None)
         self.assertIsInstance(r, float)
         self.assertIsInstance(g, float)
         self.assertIsInstance(b, float)
         self.assertIsInstance(a, float)
 
-        color = NSColor.colorWithCalibratedHue_saturation_brightness_alpha_(
+        color = AppKit.NSColor.colorWithCalibratedHue_saturation_brightness_alpha_(
             0.1, 0.2, 0.3, 0.4
         )
         h, s, b, a = color.getHue_saturation_brightness_alpha_(None, None, None, None)
@@ -35,12 +35,14 @@ class TestRegressions(TestCase):
         self.assertIsInstance(b, float)
         self.assertIsInstance(a, float)
 
-        color = NSColor.colorWithCalibratedWhite_alpha_(0.1, 0.2)
+        color = AppKit.NSColor.colorWithCalibratedWhite_alpha_(0.1, 0.2)
         w, a = color.getWhite_alpha_(None, None)
         self.assertIsInstance(w, float)
         self.assertIsInstance(a, float)
 
-        color = NSColor.colorWithDeviceCyan_magenta_yellow_black_alpha_(1, 1, 1, 1, 1)
+        color = AppKit.NSColor.colorWithDeviceCyan_magenta_yellow_black_alpha_(
+            1, 1, 1, 1, 1
+        )
         c, m, y, b, a = color.getCyan_magenta_yellow_black_alpha_(
             None, None, None, None, None
         )
@@ -55,23 +57,20 @@ class TestRegressions(TestCase):
         else:
             a = array.array("f", [0] * 6)
         v = color.getComponents_(a)
+        self.assertIs(v, a)
         self.assertEqual(a[0], 1.0)
 
     def testConstants(self):
-        self.assertIsInstance(NSSystemColorsDidChangeNotification, unicode)
+        self.assertIsInstance(AppKit.NSSystemColorsDidChangeNotification, str)
 
-        self.assertEqual(NSAppKitVersionNumberWithPatternColorLeakFix, 641.0)
+        self.assertEqual(AppKit.NSAppKitVersionNumberWithPatternColorLeakFix, 641.0)
 
-        self.assertEqual(NSColorTypeComponentBased, 0)
-        self.assertEqual(NSColorTypePattern, 1)
-        self.assertEqual(NSColorTypeCatalog, 2)
+        self.assertEqual(AppKit.NSColorTypeComponentBased, 0)
+        self.assertEqual(AppKit.NSColorTypePattern, 1)
+        self.assertEqual(AppKit.NSColorTypeCatalog, 2)
 
-        self.assertEqual(NSColorSystemEffectNone, 0)
-        self.assertEqual(NSColorSystemEffectPressed, 1)
-        self.assertEqual(NSColorSystemEffectDeepPressed, 2)
-        self.assertEqual(NSColorSystemEffectDisabled, 3)
-        self.assertEqual(NSColorSystemEffectRollover, 4)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(AppKit.NSColorSystemEffectNone, 0)
+        self.assertEqual(AppKit.NSColorSystemEffectPressed, 1)
+        self.assertEqual(AppKit.NSColorSystemEffectDeepPressed, 2)
+        self.assertEqual(AppKit.NSColorSystemEffectDisabled, 3)
+        self.assertEqual(AppKit.NSColorSystemEffectRollover, 4)

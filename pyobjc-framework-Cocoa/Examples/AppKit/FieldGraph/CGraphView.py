@@ -9,7 +9,11 @@ from objc import super
 x, y = 0, 1
 llc, sze = 0, 1  # Left Lower Corner, Size
 
-# ____________________________________________________________
+BLACK = Cocoa.NSColor.blackColor()
+BLUE = Cocoa.NSColor.blueColor()
+GREEN = Cocoa.NSColor.greenColor()
+
+
 class CGraphView(Cocoa.NSView):
 
     azmuthSlider = objc.IBOutlet()
@@ -49,25 +53,23 @@ class CGraphView(Cocoa.NSView):
     @objc.python_method
     def setCrossCursor(self):
         crosshairImage = Cocoa.NSImage.imageNamed_("CrossCursor")
-        imageSize = crosshairImage.size()
         self.crossCursor = Cocoa.NSCursor.alloc().initWithImage_hotSpot_(
             crosshairImage, (8, 8)
         )
-        rect = self.bounds()
         self.trackingRect = self.addTrackingRect_owner_userData_assumeInside_(
             self.bounds(), self, 0, 0
         )
 
     @objc.python_method
-    def setGridColor(self, color=Cocoa.NSColor.greenColor()):
+    def setGridColor(self, color=GREEN):
         self.gridColor = color
 
     @objc.python_method
-    def setRmsColor(self, color=Cocoa.NSColor.blueColor()):
+    def setRmsColor(self, color=BLUE):
         self.rmsColor = color
 
     @objc.python_method
-    def setGraphColor(self, color=Cocoa.NSColor.blackColor()):
+    def setGraphColor(self, color=BLACK):
         self.graphColor = color
 
     @objc.python_method

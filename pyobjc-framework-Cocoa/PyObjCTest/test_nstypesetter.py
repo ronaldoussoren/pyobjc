@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestNSTypesetterHelper(NSTypesetter):
+class TestNSTypesetterHelper(AppKit.NSTypesetter):
     def willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_(
         self, a, b, c, d
     ):
@@ -13,7 +14,7 @@ class TestNSTypesetterHelper(NSTypesetter):
     ):
         return 1
 
-    def getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_(
+    def getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_(  # noqa: B950
         self, a, b, c, d, e, f, g, h
     ):
         return 1
@@ -30,7 +31,7 @@ class TestNSTypesetterHelper(NSTypesetter):
     def hyphenCharacterForGlyphAtIndex_(self, i):
         return 1
 
-    def boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(
+    def boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(  # noqa: B950
         self, i, c, f, p, idx
     ):
         pass
@@ -38,24 +39,28 @@ class TestNSTypesetterHelper(NSTypesetter):
 
 class TestNSTypesetter(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTypesetterZeroAdvancementAction, (1 << 0))
-        self.assertEqual(NSTypesetterWhitespaceAction, (1 << 1))
-        self.assertEqual(NSTypesetterHorizontalTabAction, (1 << 2))
-        self.assertEqual(NSTypesetterLineBreakAction, (1 << 3))
-        self.assertEqual(NSTypesetterParagraphBreakAction, (1 << 4))
-        self.assertEqual(NSTypesetterContainerBreakAction, (1 << 5))
+        self.assertEqual(AppKit.NSTypesetterZeroAdvancementAction, (1 << 0))
+        self.assertEqual(AppKit.NSTypesetterWhitespaceAction, (1 << 1))
+        self.assertEqual(AppKit.NSTypesetterHorizontalTabAction, (1 << 2))
+        self.assertEqual(AppKit.NSTypesetterLineBreakAction, (1 << 3))
+        self.assertEqual(AppKit.NSTypesetterParagraphBreakAction, (1 << 4))
+        self.assertEqual(AppKit.NSTypesetterContainerBreakAction, (1 << 5))
 
     def testMethods(self):
-        self.assertArgIsIn(NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
-        self.assertArgSizeInArg(NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0)
+        self.assertArgIsIn(AppKit.NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1)
+        self.assertArgSizeInArg(
+            AppKit.NSTypesetter.substituteGlyphsInRange_withGlyphs_, 1, 0
+        )
         self.assertArgIsIn(
-            NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1
+            AppKit.NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1
         )
         self.assertArgSizeInArg(
-            NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1, 2
+            AppKit.NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1, 2
         )
-        self.assertArgIsBOOL(NSTypesetter.setNotShownAttribute_forGlyphRange_, 0)
-        self.assertArgIsBOOL(NSTypesetter.setDrawsOutsideLineFragment_forGlyphRange_, 0)
+        self.assertArgIsBOOL(AppKit.NSTypesetter.setNotShownAttribute_forGlyphRange_, 0)
+        self.assertArgIsBOOL(
+            AppKit.NSTypesetter.setDrawsOutsideLineFragment_forGlyphRange_, 0
+        )
         self.assertResultIsBOOL(
             TestNSTypesetterHelper.shouldBreakLineByWordBeforeCharacterAtIndex_
         )
@@ -84,26 +89,26 @@ class TestNSTypesetter(TestCase):
         )
 
         self.assertResultHasType(
-            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,
-            NSRect.__typestr__,
+            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,  # noqa: B950
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,
+            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,  # noqa: B950
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,
+            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,  # noqa: B950
             2,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,
+            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,  # noqa: B950
             3,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,
+            TestNSTypesetterHelper.boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
@@ -117,170 +122,172 @@ class TestNSTypesetter(TestCase):
             objc._C_NSUInteger,
         )
 
-        self.assertArgIsBOOL(NSTypesetter.setHardInvalidation_forGlyphRange_, 0)
-        self.assertResultIsBOOL(NSTypesetter.usesFontLeading)
-        self.assertArgIsBOOL(NSTypesetter.setUsesFontLeading_, 0)
-        self.assertResultIsBOOL(NSTypesetter.bidiProcessingEnabled)
-        self.assertArgIsBOOL(NSTypesetter.setBidiProcessingEnabled_, 0)
-        self.assertArgIsInOut(NSTypesetter.layoutParagraphAtPoint_, 0)
+        self.assertArgIsBOOL(AppKit.NSTypesetter.setHardInvalidation_forGlyphRange_, 0)
+        self.assertResultIsBOOL(AppKit.NSTypesetter.usesFontLeading)
+        self.assertArgIsBOOL(AppKit.NSTypesetter.setUsesFontLeading_, 0)
+        self.assertResultIsBOOL(AppKit.NSTypesetter.bidiProcessingEnabled)
+        self.assertArgIsBOOL(AppKit.NSTypesetter.setBidiProcessingEnabled_, 0)
+        self.assertArgIsInOut(AppKit.NSTypesetter.layoutParagraphAtPoint_, 0)
         self.assertArgIsOut(
-            NSTypesetter.characterRangeForGlyphRange_actualGlyphRange_, 1
+            AppKit.NSTypesetter.characterRangeForGlyphRange_actualGlyphRange_, 1
         )
         self.assertArgIsOut(
-            NSTypesetter.glyphRangeForCharacterRange_actualCharacterRange_, 1
+            AppKit.NSTypesetter.glyphRangeForCharacterRange_actualCharacterRange_, 1
         )
         self.assertArgHasType(
-            NSTypesetter.setBidiLevels_forGlyphRange_, 0, b"n^" + objc._C_CHAR_AS_INT
+            AppKit.NSTypesetter.setBidiLevels_forGlyphRange_,
+            0,
+            b"n^" + objc._C_CHAR_AS_INT,
         )
-        self.assertArgSizeInArg(NSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
+        self.assertArgSizeInArg(AppKit.NSTypesetter.setBidiLevels_forGlyphRange_, 0, 1)
         self.assertArgIsIn(
-            NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1
+            AppKit.NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1
         )
         self.assertArgSizeInArg(
-            NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1, 2
+            AppKit.NSTypesetter.setLocation_withAdvancements_forStartOfGlyphRange_, 1, 2
         )
         self.assertArgIsOut(
-            NSTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_,
+            AppKit.NSTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_,  # noqa: B950
             3,
         )
         self.assertArgIsOut(
-            NSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,  # noqa: B950
             0,
         )
         self.assertArgIsOut(
-            NSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_forParagraphSeparatorGlyphRange_atProposedOrigin_,  # noqa: B950
             1,
         )
 
         self.assertResultHasType(
-            NSTypesetter.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            AppKit.NSTypesetter.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            NSTypesetter.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            AppKit.NSTypesetter.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
 
         self.assertArgHasType(
-            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,
+            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,  # noqa: B950
             0,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,
+            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,
+            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,  # noqa: B950
             2,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,
+            TestNSTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_baselineOffset_,  # noqa: B950
             3,
             b"N^" + objc._C_CGFloat,
         )
 
         self.assertResultHasType(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             1,
             b"o^I",
         )
         self.assertArgSizeInArg(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             1,
             0,
         )
 
         self.assertArgHasType(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             2,
             b"o^" + objc._C_NSUInteger,
         )
         self.assertArgSizeInArg(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             2,
             0,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             3,
             b"o^" + objc._C_NSUInteger,
         )
         self.assertArgSizeInArg(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             3,
             0,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             4,
             b"o^" + objc._C_NSBOOL,
         )
         self.assertArgSizeInArg(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             4,
             0,
         )
         self.assertArgHasType(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             5,
             b"o^" + objc._C_UCHR,
         )
         self.assertArgSizeInArg(
-            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,
+            TestNSTypesetterHelper.getGlyphsInRange_glyphs_characterIndexes_glyphInscriptions_elasticBits_bidiLevels_,  # noqa: B950
             5,
             0,
         )
 
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             0,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             1,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             2,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             4,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             5,
             objc._C_CGFloat,
         )
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             6,
             objc._C_CGFloat,
         )
         self.assertArgHasType(
-            NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,
+            AppKit.NSTypesetter.getLineFragmentRect_usedRect_remainingRect_forStartingGlyphAtIndex_proposedRect_lineSpacing_paragraphSpacingBefore_paragraphSpacingAfter_,  # noqa: B950
             7,
             objc._C_CGFloat,
         )
@@ -288,16 +295,12 @@ class TestNSTypesetter(TestCase):
     @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertArgHasType(
-            NSTypesetter.printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count_,
+            AppKit.NSTypesetter.printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count_,  # noqa: B950
             2,
             b"n^v",
         )
         self.assertArgSizeInArg(
-            NSTypesetter.printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count_,
+            AppKit.NSTypesetter.printingAdjustmentInLayoutManager_forNominallySpacedGlyphRange_packedGlyphs_count_,  # noqa: B950
             2,
             3,
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,12 +1,8 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMeasurement(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
-        self.assertResultIsBOOL(NSMeasurement.canBeConvertedToUnit_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSMeasurement.canBeConvertedToUnit_)

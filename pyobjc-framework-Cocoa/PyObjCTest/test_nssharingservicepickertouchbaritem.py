@@ -1,5 +1,6 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSSharingServicePickerTouchBarItem(TestCase):
@@ -11,7 +12,3 @@ class TestNSSharingServicePickerTouchBarItem(TestCase):
     @min_sdk_level("10.12")
     def testProtocols10_12(self):
         objc.protocolNamed("NSSharingServicePickerTouchBarItemDelegate")
-
-
-if __name__ == "__main__":
-    main()

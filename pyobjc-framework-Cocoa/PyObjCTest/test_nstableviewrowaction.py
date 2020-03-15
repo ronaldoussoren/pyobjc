@@ -1,12 +1,8 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTableViewRowAction(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTableViewRowActionStyleRegular, 0)
-        self.assertEqual(NSTableViewRowActionStyleDestructive, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(AppKit.NSTableViewRowActionStyleRegular, 0)
+        self.assertEqual(AppKit.NSTableViewRowActionStyleDestructive, 1)

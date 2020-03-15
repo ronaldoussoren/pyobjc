@@ -1,18 +1,19 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestNSIndexSet(TestCase):
     def testConvenience(self):
-        v = NSIndexSet.indexSetWithIndexesInRange_((5, 10))
-        l = list(v)
-        self.assertEqual(l, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
+        v = Foundation.NSIndexSet.indexSetWithIndexesInRange_((5, 10))
+        lst = list(v)
+        self.assertEqual(lst, [5, 6, 7, 8, 9, 10, 11, 12, 13, 14])
 
-        l = list(reversed(v))
-        self.assertEqual(l, [14, 13, 12, 11, 10, 9, 8, 7, 6, 5])
+        lst = list(reversed(v))
+        self.assertEqual(lst, [14, 13, 12, 11, 10, 9, 8, 7, 6, 5])
 
-        v2 = NSIndexSet.indexSetWithIndexesInRange_((5, 9))
-        v3 = NSIndexSet.indexSetWithIndexesInRange_((5, 10))
+        v2 = Foundation.NSIndexSet.indexSetWithIndexesInRange_((5, 9))
+        v3 = Foundation.NSIndexSet.indexSetWithIndexesInRange_((5, 10))
 
         self.assertFalse(v == v2)
         self.assertTrue(v == v3)
@@ -27,73 +28,81 @@ class TestNSIndexSet(TestCase):
         self.assertFalse("a" in v)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSIndexSet.isEqualToIndexSet_)
-        self.assertResultIsBOOL(NSIndexSet.containsIndex_)
-        self.assertResultIsBOOL(NSIndexSet.containsIndexesInRange_)
-        self.assertResultIsBOOL(NSIndexSet.containsIndexes_)
-        self.assertResultIsBOOL(NSIndexSet.intersectsIndexesInRange_)
+        self.assertResultIsBOOL(Foundation.NSIndexSet.isEqualToIndexSet_)
+        self.assertResultIsBOOL(Foundation.NSIndexSet.containsIndex_)
+        self.assertResultIsBOOL(Foundation.NSIndexSet.containsIndexesInRange_)
+        self.assertResultIsBOOL(Foundation.NSIndexSet.containsIndexes_)
+        self.assertResultIsBOOL(Foundation.NSIndexSet.intersectsIndexesInRange_)
 
-        self.assertArgIsOut(NSIndexSet.getIndexes_maxCount_inIndexRange_, 0)
-        self.assertArgSizeInArg(NSIndexSet.getIndexes_maxCount_inIndexRange_, 0, 1)
-        self.assertArgSizeInResult(NSIndexSet.getIndexes_maxCount_inIndexRange_, 0)
+        self.assertArgIsOut(Foundation.NSIndexSet.getIndexes_maxCount_inIndexRange_, 0)
+        self.assertArgSizeInArg(
+            Foundation.NSIndexSet.getIndexes_maxCount_inIndexRange_, 0, 1
+        )
+        self.assertArgSizeInResult(
+            Foundation.NSIndexSet.getIndexes_maxCount_inIndexRange_, 0
+        )
 
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBlock(
-            NSIndexSet.enumerateIndexesUsingBlock_,
+            Foundation.NSIndexSet.enumerateIndexesUsingBlock_,
             0,
             b"v" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSIndexSet.enumerateIndexesWithOptions_usingBlock_,
+            Foundation.NSIndexSet.enumerateIndexesWithOptions_usingBlock_,
             1,
             b"v" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgHasType(
-            NSIndexSet.enumerateIndexesInRange_options_usingBlock_,
+            Foundation.NSIndexSet.enumerateIndexesInRange_options_usingBlock_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgIsBlock(
-            NSIndexSet.enumerateIndexesInRange_options_usingBlock_,
+            Foundation.NSIndexSet.enumerateIndexesInRange_options_usingBlock_,
             2,
             b"v" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
 
         self.assertArgIsBlock(
-            NSIndexSet.indexPassingTest_,
+            Foundation.NSIndexSet.indexPassingTest_,
             0,
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSIndexSet.indexWithOptions_passingTest_,
+            Foundation.NSIndexSet.indexWithOptions_passingTest_,
             1,
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgHasType(
-            NSIndexSet.indexInRange_options_passingTest_, 0, NSRange.__typestr__
+            Foundation.NSIndexSet.indexInRange_options_passingTest_,
+            0,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgIsBlock(
-            NSIndexSet.indexInRange_options_passingTest_,
+            Foundation.NSIndexSet.indexInRange_options_passingTest_,
             2,
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
 
         self.assertArgIsBlock(
-            NSIndexSet.indexesPassingTest_,
+            Foundation.NSIndexSet.indexesPassingTest_,
             0,
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSIndexSet.indexesWithOptions_passingTest_,
+            Foundation.NSIndexSet.indexesWithOptions_passingTest_,
             1,
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgHasType(
-            NSIndexSet.indexesInRange_options_passingTest_, 0, NSRange.__typestr__
+            Foundation.NSIndexSet.indexesInRange_options_passingTest_,
+            0,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgIsBlock(
-            NSIndexSet.indexesInRange_options_passingTest_,
+            Foundation.NSIndexSet.indexesInRange_options_passingTest_,
             2,
             objc._C_NSBOOL + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
@@ -101,23 +110,19 @@ class TestNSIndexSet(TestCase):
     @min_os_level("10.7")
     def testMethod10_7(self):
         self.assertArgIsBlock(
-            NSIndexSet.enumerateRangesUsingBlock_,
+            Foundation.NSIndexSet.enumerateRangesUsingBlock_,
             0,
-            b"v" + NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
+            b"v" + Foundation.NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
         )
 
         self.assertArgIsBlock(
-            NSIndexSet.enumerateRangesWithOptions_usingBlock_,
+            Foundation.NSIndexSet.enumerateRangesWithOptions_usingBlock_,
             1,
-            b"v" + NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
+            b"v" + Foundation.NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
         )
 
         self.assertArgIsBlock(
-            NSIndexSet.enumerateRangesInRange_options_usingBlock_,
+            Foundation.NSIndexSet.enumerateRangesInRange_options_usingBlock_,
             2,
-            b"v" + NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
+            b"v" + Foundation.NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
         )
-
-
-if __name__ == "__main__":
-    main()

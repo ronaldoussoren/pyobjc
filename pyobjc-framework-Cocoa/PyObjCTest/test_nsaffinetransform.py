@@ -1,16 +1,16 @@
 #
-# Tests for the struct-wrapper for NSAffineTransformStruct
+# Tests for the struct-wrapper for Foundation.NSAffineTransformStruct
 #
 import operator
 
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSAffineTransformStruct(TestCase):
     def testConstructor(self):
-        p = NSAffineTransformStruct()
-        self.assertIsInstance(p, NSAffineTransformStruct)
+        p = Foundation.NSAffineTransformStruct()
+        self.assertIsInstance(p, Foundation.NSAffineTransformStruct)
         self.assertEqual(p.m11, 0)
         self.assertEqual(p.m12, 0)
         self.assertEqual(p.m21, 0)
@@ -18,8 +18,8 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertEqual(p.tX, 0)
         self.assertEqual(p.tY, 0)
 
-        p = NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
-        self.assertIsInstance(p, NSAffineTransformStruct)
+        p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
+        self.assertIsInstance(p, Foundation.NSAffineTransformStruct)
         self.assertEqual(p.m11, 1)
         self.assertEqual(p.m12, 2)
         self.assertEqual(p.m21, 3)
@@ -33,8 +33,8 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertEqual(p[4], 5)
         self.assertEqual(p[5], 6)
 
-        p = NSAffineTransformStruct(tY=1, tX=2, m22=3, m21=4, m12=5, m11=6)
-        self.assertIsInstance(p, NSAffineTransformStruct)
+        p = Foundation.NSAffineTransformStruct(tY=1, tX=2, m22=3, m21=4, m12=5, m11=6)
+        self.assertIsInstance(p, Foundation.NSAffineTransformStruct)
         self.assertEqual(p.m11, 6)
         self.assertEqual(p.m12, 5)
         self.assertEqual(p.m21, 4)
@@ -48,18 +48,24 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertEqual(p[4], 2)
         self.assertEqual(p[5], 1)
 
-        self.assertRaises(TypeError, NSAffineTransformStruct, 1, 2, 3, 4, 5, 6, 7, 8)
-        self.assertRaises(TypeError, NSAffineTransformStruct, 1, 2, 3, 4, 5, 6, tY=3)
-        self.assertRaises(TypeError, NSAffineTransformStruct, 1, 2, 3, 4, 5, m11=3)
-        self.assertRaises(TypeError, NSAffineTransformStruct, m11=3, mXY=4)
+        self.assertRaises(
+            TypeError, Foundation.NSAffineTransformStruct, 1, 2, 3, 4, 5, 6, 7, 8
+        )
+        self.assertRaises(
+            TypeError, Foundation.NSAffineTransformStruct, 1, 2, 3, 4, 5, 6, tY=3
+        )
+        self.assertRaises(
+            TypeError, Foundation.NSAffineTransformStruct, 1, 2, 3, 4, 5, m11=3
+        )
+        self.assertRaises(TypeError, Foundation.NSAffineTransformStruct, m11=3, mXY=4)
 
     def testHash(self):
-        p = NSAffineTransformStruct()
+        p = Foundation.NSAffineTransformStruct()
         self.assertRaises(TypeError, hash, p)
 
     def testCompare(self):
-        p = NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
-        q = NSAffineTransformStruct(1, 2, 3, 4, 5, 7)
+        p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
+        q = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 7)
         P = (1, 2, 3, 4, 5, 6)
         Q = (1, 2, 3, 4, 5, 7)
 
@@ -101,13 +107,13 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertTrue(q > P)
 
     def testRepr(self):
-        p = NSAffineTransformStruct()
+        p = Foundation.NSAffineTransformStruct()
         self.assertEqual(
             repr(p),
             "<NSAffineTransformStruct m11=0.0 m12=0.0 m21=0.0 m22=0.0 tX=0.0 tY=0.0>",
         )
 
-        p = NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
+        p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         self.assertEqual(
             repr(p), "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=5 tY=6>"
         )
@@ -115,17 +121,17 @@ class TestNSAffineTransformStruct(TestCase):
         p.tX = p
         self.assertEqual(
             repr(p),
-            "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<NSAffineTransformStruct ...> tY=6>",
+            "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<NSAffineTransformStruct ...> tY=6>",  # noqa: B950
         )
 
     def testStr(self):
-        p = NSAffineTransformStruct()
+        p = Foundation.NSAffineTransformStruct()
         self.assertEqual(
             str(p),
             "<NSAffineTransformStruct m11=0.0 m12=0.0 m21=0.0 m22=0.0 tX=0.0 tY=0.0>",
         )
 
-        p = NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
+        p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         self.assertEqual(
             str(p), "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=5 tY=6>"
         )
@@ -133,18 +139,18 @@ class TestNSAffineTransformStruct(TestCase):
         p.tX = p
         self.assertEqual(
             str(p),
-            "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<NSAffineTransformStruct ...> tY=6>",
+            "<NSAffineTransformStruct m11=1 m12=2 m21=3 m22=4 tX=<NSAffineTransformStruct ...> tY=6>",  # noqa: B950
         )
 
     def testSlice(self):
-        p = NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
+        p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         q = p[:]
 
         self.assertIsInstance(q, tuple)
         self.assertEqual(q, (1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
 
     def testDeleteSlice(self):
-        p = NSAffineTransformStruct(1, 2)
+        p = Foundation.NSAffineTransformStruct(1, 2)
 
         def delslice(o, b, e):
             del o[b:e]
@@ -153,10 +159,10 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertRaises(TypeError, delslice, p, 0, 3)
 
     def testAssignSlice(self):
-        p = NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
+        p = Foundation.NSAffineTransformStruct(1, 2, 3, 4, 5, 6)
         p[:] = (4, 5, 6, 7, 8, 9)
 
-        self.assertIsInstance(p, NSAffineTransformStruct)
+        self.assertIsInstance(p, Foundation.NSAffineTransformStruct)
         self.assertEqual(p.m11, 4)
         self.assertEqual(p.m12, 5)
         self.assertEqual(p.m21, 6)
@@ -165,7 +171,7 @@ class TestNSAffineTransformStruct(TestCase):
         self.assertEqual(p.tY, 9)
 
         p[:] = p
-        self.assertIsInstance(p, NSAffineTransformStruct)
+        self.assertIsInstance(p, Foundation.NSAffineTransformStruct)
         self.assertEqual(p.m11, 4)
         self.assertEqual(p.m12, 5)
         self.assertEqual(p.m21, 6)
@@ -197,22 +203,18 @@ class TestNSAffineTransformStruct(TestCase):
 
 class TestAffineTransform(TestCase):
     def testStructReturn(self):
-        transform = NSAffineTransform.transform()
+        transform = Foundation.NSAffineTransform.transform()
         s = transform.transformStruct()
-        self.assertIsInstance(s, NSAffineTransformStruct)
-        s = NSAffineTransformStruct(0, 1, 2, 3, 4, 5)
+        self.assertIsInstance(s, Foundation.NSAffineTransformStruct)
+        s = Foundation.NSAffineTransformStruct(0, 1, 2, 3, 4, 5)
         transform.setTransformStruct_(s)
 
         t = transform.transformStruct()
-        self.assertIsInstance(t, NSAffineTransformStruct)
+        self.assertIsInstance(t, Foundation.NSAffineTransformStruct)
         self.assertEqual(s, t)
 
         v = transform.transformPoint_((1, 1))
-        self.assertIsInstance(v, NSPoint)
+        self.assertIsInstance(v, Foundation.NSPoint)
 
         v = transform.transformSize_((1, 1))
-        self.assertIsInstance(v, NSSize)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(v, Foundation.NSSize)

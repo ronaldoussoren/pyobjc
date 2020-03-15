@@ -1,5 +1,6 @@
-import Cocoa
-from PyObjCTools.TestSupport import *
+import AppKit  # noqa: F401
+import objc
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 
 
 class TestProtocolsExisting(TestCase):
@@ -81,7 +82,3 @@ class TestProtocolsExisting(TestCase):
     def testProtocols10_8(self):
         objc.protocolNamed("NSSharingServiceDelegate")
         objc.protocolNamed("NSSharingServicePickerDelegate")
-
-
-if __name__ == "__main__":
-    main()

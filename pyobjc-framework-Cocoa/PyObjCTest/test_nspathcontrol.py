@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSPathControlHelper(NSObject):
+class TestNSPathControlHelper(AppKit.NSObject):
     def pathControl_shouldDragItem_withPasteboard_(self, pc, i, p):
         return 1
 
@@ -19,15 +20,17 @@ class TestNSPathControlHelper(NSObject):
 class TestNSPathControl(TestCase):
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSPathControl.isEditable)
-        self.assertArgIsBOOL(NSPathControl.setEditable_, 0)
+        self.assertResultIsBOOL(AppKit.NSPathControl.isEditable)
+        self.assertArgIsBOOL(AppKit.NSPathControl.setEditable_, 0)
 
     @min_os_level("10.5")
     def testMethods(self):
-        m = NSPathControl.setDoubleAction_.__metadata__()
+        m = AppKit.NSPathControl.setDoubleAction_.__metadata__()
         self.assertEqual(m["arguments"][2]["sel_of_type"], b"v@:@")
 
-        self.assertArgIsBOOL(NSPathControl.setDraggingSourceOperationMask_forLocal_, 1)
+        self.assertArgIsBOOL(
+            AppKit.NSPathControl.setDraggingSourceOperationMask_forLocal_, 1
+        )
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
@@ -46,7 +49,3 @@ class TestNSPathControl(TestCase):
             TestNSPathControlHelper.pathControl_validateDrop_, objc._C_NSUInteger
         )
         self.assertResultIsBOOL(TestNSPathControlHelper.pathControl_acceptDrop_)
-
-
-if __name__ == "__main__":
-    main()

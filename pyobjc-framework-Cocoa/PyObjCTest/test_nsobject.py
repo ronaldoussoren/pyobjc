@@ -1,8 +1,10 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSObjectHelper(NSObject):
+class TestNSObjectHelper(Foundation.NSObject):
     def copyWithZone_(self, zn):
         return None
 
@@ -28,75 +30,82 @@ class TestNSObjectHelper(NSObject):
 
 class TestNSObjectFunctions(TestCase):
     def testAllocation(self):
-        o = NSAllocateObject(NSObject, 0, None)
-        self.assertIsInstance(o, NSObject)
-        o = NSAllocateObject(NSObject, 50, None)
-        self.assertIsInstance(o, NSObject)
-        NSDeallocateObject(None)
+        o = Foundation.NSAllocateObject(Foundation.NSObject, 0, None)
+        self.assertIsInstance(o, Foundation.NSObject)
+        o = Foundation.NSAllocateObject(Foundation.NSObject, 50, None)
+        self.assertIsInstance(o, Foundation.NSObject)
+        Foundation.NSDeallocateObject(None)
 
     def testCopy(self):
-        o = NSObject.alloc().init()
-        self.assertIsInstance(o, NSObject)
-        o2 = NSCopyObject(o, 50, None)
-        self.assertIsInstance(o2, NSObject)
+        o = Foundation.NSObject.alloc().init()
+        self.assertIsInstance(o, Foundation.NSObject)
+        o2 = Foundation.NSCopyObject(o, 50, None)
+        self.assertIsInstance(o2, Foundation.NSObject)
 
     def testShouldRetain(self):
-        o = NSObject.alloc().init()
-        self.assertIsInstance(o, NSObject)
-        v = NSShouldRetainWithZone(o, None)
+        o = Foundation.NSObject.alloc().init()
+        self.assertIsInstance(o, Foundation.NSObject)
+        v = Foundation.NSShouldRetainWithZone(o, None)
         self.assertTrue((v is True) or (v is False))
 
     def testRefCounts(self):
-        o = NSObject.alloc().init()
+        o = Foundation.NSObject.alloc().init()
 
-        cnt = NSExtraRefCount(o)
-        self.assertIsInstance(cnt, (int, long))
-        NSIncrementExtraRefCount(o)
-        v = NSExtraRefCount(o)
+        cnt = Foundation.NSExtraRefCount(o)
+        self.assertIsInstance(cnt, int)
+        Foundation.NSIncrementExtraRefCount(o)
+        v = Foundation.NSExtraRefCount(o)
         self.assertEqual(v, cnt + 1)
 
-        v = NSDecrementExtraRefCountWasZero(o)
+        v = Foundation.NSDecrementExtraRefCountWasZero(o)
         self.assertIs(v, False)
-        v = NSExtraRefCount(o)
+        v = Foundation.NSExtraRefCount(o)
         self.assertEqual(v, cnt)
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
         # No further testing needed:
-        CFBridgingRetain
-        CFBridgingRelease
+        CoreFoundation.CFBridgingRetain
+        CoreFoundation.CFBridgingRelease
 
 
 class TestNSObjectInteraction(TestCase):
     def testCallingInstanceMethodWithClassSelf(self):
-        self.assertRaises(TypeError, NSObject.description, NSObject)
-        self.assertRaises(TypeError, NSObject.description, "hello")
+        self.assertRaises(
+            TypeError, Foundation.NSObject.description, Foundation.NSObject
+        )
+        self.assertRaises(TypeError, Foundation.NSObject.description, "hello")
 
     def testNSObjectClassMethod(self):
         # Check that -class is accesible as 'class__' and 'class' (the latter
         # only through getattr because it is a Python keyword)
-        self.assertTrue(hasattr(NSObject, "class__"))
-        self.assertTrue(isinstance(NSObject.class__, objc.selector))
-        o = NSObject.alloc().init()
+        self.assertTrue(hasattr(Foundation.NSObject, "class__"))
+        self.assertTrue(isinstance(Foundation.NSObject.class__, objc.selector))
+        o = Foundation.NSObject.alloc().init()
         self.assertTrue(o.class__() is o.__class__)
 
-        self.assertTrue(hasattr(NSObject, "class"))
-        self.assertTrue(isinstance(getattr(NSObject, "class"), objc.selector))
+        self.assertTrue(hasattr(Foundation.NSObject, "class"))
+        self.assertTrue(
+            isinstance(getattr(Foundation.NSObject, "class"), objc.selector)
+        )
         self.assertTrue(getattr(o, "class")() is o.__class__)
 
     def testNSObjectClass(self):
         self.assertTrue(
-            NSObject.instancesRespondToSelector_("description"),
+            Foundation.NSObject.instancesRespondToSelector_("description"),
             "NSObject class claims it doesn't respond to a selector that it does.",
         )
         self.assertTrue(
-            hasattr(NSObject, "description"),
+            hasattr(Foundation.NSObject, "description"),
             "NSObject class claims it doesn't respond to a selector that it does.",
         )
-        # self.assertTrue( NSObject.description(), "NSObject class failed to respond to +description selector." )
+        self.assertTrue(
+            Foundation.NSObject.description(),
+            "NSObject class failed to respond to +description selector.",
+        )
 
     def testNSObjectInstance(self):
-        instance = NSObject.new()
+        instance = Foundation.NSObject.new()
 
         self.assertTrue(instance, "Failed to instantiate an instance")
         self.assertTrue(
@@ -105,32 +114,32 @@ class TestNSObjectInteraction(TestCase):
         )
         self.assertTrue(
             not instance.isProxy(),
-            "Instance of NSObject claimed it was a proxy.   That seems odd.",
+            "Instance of Foundation.NSObject claimed it was a proxy.   That seems odd.",
         )
         self.assertTrue(
-            isinstance(instance, NSObject),
-            "Instantiated object not an instance of NSObject.",
+            isinstance(instance, Foundation.NSObject),
+            "Instantiated object not an instance of Foundation.NSObject.",
         )
         self.assertEqual(instance, instance, "Python identity check failed.")
         self.assertTrue(instance.isEqual_(instance), "Obj-C identity check failed.")
 
     def testRepeatedAllocInit(self):
-        for i in range(1, 1000):
-            a = NSObject.alloc().init()
+        for _ in range(1, 1000):
+            _ = Foundation.NSObject.alloc().init()
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSObject.isEqual_)
-        self.assertResultIsBOOL(NSObject.isProxy)
-        self.assertResultIsBOOL(NSObject.isKindOfClass_)
-        self.assertResultIsBOOL(NSObject.isMemberOfClass_)
-        self.assertResultIsBOOL(NSObject.conformsToProtocol_)
-        self.assertResultIsBOOL(NSObject.respondsToSelector_)
-        self.assertResultIsBOOL(NSObject.instancesRespondToSelector_)
-        self.assertResultIsBOOL(NSObject.isSubclassOfClass_)
-        self.assertResultIsBOOL(NSObject.resolveClassMethod_)
-        self.assertResultIsBOOL(NSObject.resolveInstanceMethod_)
+        self.assertResultIsBOOL(Foundation.NSObject.isEqual_)
+        self.assertResultIsBOOL(Foundation.NSObject.isProxy)
+        self.assertResultIsBOOL(Foundation.NSObject.isKindOfClass_)
+        self.assertResultIsBOOL(Foundation.NSObject.isMemberOfClass_)
+        self.assertResultIsBOOL(Foundation.NSObject.conformsToProtocol_)
+        self.assertResultIsBOOL(Foundation.NSObject.respondsToSelector_)
+        self.assertResultIsBOOL(Foundation.NSObject.instancesRespondToSelector_)
+        self.assertResultIsBOOL(Foundation.NSObject.isSubclassOfClass_)
+        self.assertResultIsBOOL(Foundation.NSObject.resolveClassMethod_)
+        self.assertResultIsBOOL(Foundation.NSObject.resolveInstanceMethod_)
 
-        o = NSObject.alloc().init()
+        o = Foundation.NSObject.alloc().init()
         self.assertResultIsBOOL(o.isEqual_)
         self.assertResultIsBOOL(o.isProxy)
         self.assertResultIsBOOL(o.isKindOfClass_)
@@ -166,7 +175,3 @@ class TestNSObjectInteraction(TestCase):
     @min_sdk_level("10.7")
     def testProtocols10_7(self):
         objc.protocolNamed("NSSecureCoding")
-
-
-if __name__ == "__main__":
-    main()

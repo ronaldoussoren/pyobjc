@@ -1,23 +1,19 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSNib(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSNibOwner, unicode)
-        self.assertIsInstance(NSNibTopLevelObjects, unicode)
+        self.assertIsInstance(AppKit.NSNibOwner, str)
+        self.assertIsInstance(AppKit.NSNibTopLevelObjects, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSNib.instantiateNibWithOwner_topLevelObjects_)
-        self.assertArgIsOut(NSNib.instantiateNibWithOwner_topLevelObjects_, 1)
+        self.assertResultIsBOOL(AppKit.NSNib.instantiateNibWithOwner_topLevelObjects_)
+        self.assertArgIsOut(AppKit.NSNib.instantiateNibWithOwner_topLevelObjects_, 1)
 
-        self.assertResultIsBOOL(NSNib.instantiateNibWithExternalNameTable_)
+        self.assertResultIsBOOL(AppKit.NSNib.instantiateNibWithExternalNameTable_)
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSNib.instantiateWithOwner_topLevelObjects_)
-        self.assertArgIsOut(NSNib.instantiateWithOwner_topLevelObjects_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSNib.instantiateWithOwner_topLevelObjects_)
+        self.assertArgIsOut(AppKit.NSNib.instantiateWithOwner_topLevelObjects_, 1)

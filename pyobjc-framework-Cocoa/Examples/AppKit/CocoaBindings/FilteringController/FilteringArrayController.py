@@ -29,7 +29,7 @@ class FilteringArrayController(NSArrayController):
         return self.newObj
 
     def arrangeObjects_(self, objects):
-        if self._k_searchString == None or self._k_searchString == "":
+        if self._k_searchString is None or self._k_searchString == "":
             self.newObj = None
             return super(FilteringArrayController, self).arrangeObjects_(objects)
 

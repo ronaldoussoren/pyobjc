@@ -1,28 +1,29 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestNSSoundHelper(NSObject):
+class TestNSSoundHelper(AppKit.NSObject):
     def sound_didFinishPlaying_(self, s, p):
         pass
 
 
 class TestNSSound(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSSoundPboardType, unicode)
+        self.assertIsInstance(AppKit.NSSoundPboardType, str)
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSSound.initWithContentsOfURL_byReference_, 1)
-        self.assertArgIsBOOL(NSSound.initWithContentsOfFile_byReference_, 1)
-        self.assertResultIsBOOL(NSSound.setName_)
-        self.assertResultIsBOOL(NSSound.canInitWithPasteboard_)
-        self.assertResultIsBOOL(NSSound.play)
-        self.assertResultIsBOOL(NSSound.pause)
-        self.assertResultIsBOOL(NSSound.resume)
-        self.assertResultIsBOOL(NSSound.stop)
-        self.assertResultIsBOOL(NSSound.isPlaying)
-        self.assertResultIsBOOL(NSSound.loops)
-        self.assertArgIsBOOL(NSSound.setLoops_, 0)
+        self.assertArgIsBOOL(AppKit.NSSound.initWithContentsOfURL_byReference_, 1)
+        self.assertArgIsBOOL(AppKit.NSSound.initWithContentsOfFile_byReference_, 1)
+        self.assertResultIsBOOL(AppKit.NSSound.setName_)
+        self.assertResultIsBOOL(AppKit.NSSound.canInitWithPasteboard_)
+        self.assertResultIsBOOL(AppKit.NSSound.play)
+        self.assertResultIsBOOL(AppKit.NSSound.pause)
+        self.assertResultIsBOOL(AppKit.NSSound.resume)
+        self.assertResultIsBOOL(AppKit.NSSound.stop)
+        self.assertResultIsBOOL(AppKit.NSSound.isPlaying)
+        self.assertResultIsBOOL(AppKit.NSSound.loops)
+        self.assertArgIsBOOL(AppKit.NSSound.setLoops_, 0)
 
     @min_os_level("10.10")
     def testProtocolObjects(self):
@@ -30,7 +31,3 @@ class TestNSSound(TestCase):
 
     def testProtocols(self):
         self.assertArgIsBOOL(TestNSSoundHelper.sound_didFinishPlaying_, 1)
-
-
-if __name__ == "__main__":
-    main()

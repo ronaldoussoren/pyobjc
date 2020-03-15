@@ -1,11 +1,7 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPortMessage(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSPortMessage.sendBeforeDate_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSPortMessage.sendBeforeDate_)

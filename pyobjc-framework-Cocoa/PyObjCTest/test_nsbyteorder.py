@@ -1,80 +1,146 @@
 import sys
 
 import Foundation
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSByteOrder(TestCase):
     def testConstants(self):
-        self.assertEqual(NS_UnknownByteOrder, CFByteOrderUnknown)
-        self.assertEqual(NS_LittleEndian, CFByteOrderLittleEndian)
-        self.assertEqual(NS_BigEndian, CFByteOrderBigEndian)
+        self.assertEqual(
+            Foundation.NS_UnknownByteOrder, CoreFoundation.CFByteOrderUnknown
+        )
+        self.assertEqual(
+            Foundation.NS_LittleEndian, CoreFoundation.CFByteOrderLittleEndian
+        )
+        self.assertEqual(Foundation.NS_BigEndian, CoreFoundation.CFByteOrderBigEndian)
 
     def testInlines(self):
-        self.assertEqual(NSHostByteOrder(), CFByteOrderGetCurrent())
-        self.assertEqual(NSSwapShort(350), CFSwapInt16(350))
-        self.assertEqual(NSSwapInt(350), CFSwapInt32(350))
+        self.assertEqual(
+            Foundation.NSHostByteOrder(), CoreFoundation.CFByteOrderGetCurrent()
+        )
+        self.assertEqual(Foundation.NSSwapShort(350), CoreFoundation.CFSwapInt16(350))
+        self.assertEqual(Foundation.NSSwapInt(350), CoreFoundation.CFSwapInt32(350))
 
         if sys.maxsize > 2 ** 32:
-            self.assertEqual(NSSwapLong(350), CFSwapInt64(350))
-            self.assertEqual(NSSwapBigLongToHost(350), CFSwapInt64BigToHost(350))
-            self.assertEqual(NSSwapHostLongToBig(350), CFSwapInt64HostToBig(350))
-            self.assertEqual(NSSwapLittleLongToHost(350), CFSwapInt64LittleToHost(350))
-            self.assertEqual(NSSwapHostLongToLittle(350), CFSwapInt64HostToLittle(350))
+            self.assertEqual(
+                Foundation.NSSwapLong(350), CoreFoundation.CFSwapInt64(350)
+            )
+            self.assertEqual(
+                Foundation.NSSwapBigLongToHost(350),
+                CoreFoundation.CFSwapInt64BigToHost(350),
+            )
+            self.assertEqual(
+                Foundation.NSSwapHostLongToBig(350),
+                CoreFoundation.CFSwapInt64HostToBig(350),
+            )
+            self.assertEqual(
+                Foundation.NSSwapLittleLongToHost(350),
+                CoreFoundation.CFSwapInt64LittleToHost(350),
+            )
+            self.assertEqual(
+                Foundation.NSSwapHostLongToLittle(350),
+                CoreFoundation.CFSwapInt64HostToLittle(350),
+            )
         else:
-            self.assertEqual(NSSwapLong(350), CFSwapInt32(350))
-            self.assertEqual(NSSwapBigLongToHost(350), CFSwapInt32BigToHost(350))
-            self.assertEqual(NSSwapHostLongToBig(350), CFSwapInt32HostToBig(350))
-            self.assertEqual(NSSwapLittleLongToHost(350), CFSwapInt32LittleToHost(350))
-            self.assertEqual(NSSwapHostLongToLittle(350), CFSwapInt32HostToLittle(350))
+            self.assertEqual(
+                Foundation.NSSwapLong(350), CoreFoundation.CFSwapInt32(350)
+            )
+            self.assertEqual(
+                Foundation.NSSwapBigLongToHost(350),
+                CoreFoundation.CFSwapInt32BigToHost(350),
+            )
+            self.assertEqual(
+                Foundation.NSSwapHostLongToBig(350),
+                CoreFoundation.CFSwapInt32HostToBig(350),
+            )
+            self.assertEqual(
+                Foundation.NSSwapLittleLongToHost(350),
+                CoreFoundation.CFSwapInt32LittleToHost(350),
+            )
+            self.assertEqual(
+                Foundation.NSSwapHostLongToLittle(350),
+                CoreFoundation.CFSwapInt32HostToLittle(350),
+            )
 
-        self.assertEqual(NSSwapLongLong(350), CFSwapInt64(350))
-        self.assertEqual(NSSwapBigShortToHost(350), CFSwapInt16BigToHost(350))
-        self.assertEqual(NSSwapBigIntToHost(350), CFSwapInt32BigToHost(350))
-        self.assertEqual(NSSwapBigLongLongToHost(350), CFSwapInt64BigToHost(350))
-        self.assertEqual(NSSwapHostShortToBig(350), CFSwapInt16HostToBig(350))
-        self.assertEqual(NSSwapHostIntToBig(350), CFSwapInt32HostToBig(350))
-        self.assertEqual(NSSwapHostLongLongToBig(350), CFSwapInt64HostToBig(350))
-        self.assertEqual(NSSwapLittleShortToHost(350), CFSwapInt16LittleToHost(350))
-        self.assertEqual(NSSwapLittleIntToHost(350), CFSwapInt32LittleToHost(350))
-        self.assertEqual(NSSwapLittleLongLongToHost(350), CFSwapInt64LittleToHost(350))
-        self.assertEqual(NSSwapHostShortToLittle(350), CFSwapInt16HostToLittle(350))
-        self.assertEqual(NSSwapHostIntToLittle(350), CFSwapInt32HostToLittle(350))
-        self.assertEqual(NSSwapHostLongLongToLittle(350), CFSwapInt64HostToLittle(350))
+        self.assertEqual(
+            Foundation.NSSwapLongLong(350), CoreFoundation.CFSwapInt64(350)
+        )
+        self.assertEqual(
+            Foundation.NSSwapBigShortToHost(350),
+            CoreFoundation.CFSwapInt16BigToHost(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapBigIntToHost(350), CoreFoundation.CFSwapInt32BigToHost(350)
+        )
+        self.assertEqual(
+            Foundation.NSSwapBigLongLongToHost(350),
+            CoreFoundation.CFSwapInt64BigToHost(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostShortToBig(350),
+            CoreFoundation.CFSwapInt16HostToBig(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostIntToBig(350), CoreFoundation.CFSwapInt32HostToBig(350)
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostLongLongToBig(350),
+            CoreFoundation.CFSwapInt64HostToBig(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapLittleShortToHost(350),
+            CoreFoundation.CFSwapInt16LittleToHost(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapLittleIntToHost(350),
+            CoreFoundation.CFSwapInt32LittleToHost(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapLittleLongLongToHost(350),
+            CoreFoundation.CFSwapInt64LittleToHost(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostShortToLittle(350),
+            CoreFoundation.CFSwapInt16HostToLittle(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostIntToLittle(350),
+            CoreFoundation.CFSwapInt32HostToLittle(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostLongLongToLittle(350),
+            CoreFoundation.CFSwapInt64HostToLittle(350),
+        )
 
-        v = NSConvertHostFloatToSwapped(55.0)
-        self.assertIsInstance(v, NSSwappedFloat)
-        n = NSConvertSwappedFloatToHost(v)
+        v = Foundation.NSConvertHostFloatToSwapped(55.0)
+        self.assertIsInstance(v, Foundation.NSSwappedFloat)
+        n = Foundation.NSConvertSwappedFloatToHost(v)
         self.assertEqual(n, 55.0)
 
-        v = NSSwapFloat(v)
-        self.assertIsInstance(v, NSSwappedFloat)
-        v = NSConvertHostDoubleToSwapped(55.0)
-        self.assertIsInstance(v, NSSwappedDouble)
-        n = NSConvertSwappedDoubleToHost(v)
+        v = Foundation.NSSwapFloat(v)
+        self.assertIsInstance(v, Foundation.NSSwappedFloat)
+        v = Foundation.NSConvertHostDoubleToSwapped(55.0)
+        self.assertIsInstance(v, Foundation.NSSwappedDouble)
+        n = Foundation.NSConvertSwappedDoubleToHost(v)
         self.assertEqual(n, 55.0)
 
-        v = NSSwapDouble(v)
-        self.assertIsInstance(v, NSSwappedDouble)
-        n = NSSwapBigDoubleToHost(v)
+        v = Foundation.NSSwapDouble(v)
+        self.assertIsInstance(v, Foundation.NSSwappedDouble)
+        n = Foundation.NSSwapBigDoubleToHost(v)
         self.assertIsInstance(n, float)
-        n = NSSwapLittleDoubleToHost(v)
+        n = Foundation.NSSwapLittleDoubleToHost(v)
         self.assertIsInstance(n, float)
-        v = NSConvertHostFloatToSwapped(55.0)
-        n = NSSwapBigFloatToHost(v)
+        v = Foundation.NSConvertHostFloatToSwapped(55.0)
+        n = Foundation.NSSwapBigFloatToHost(v)
         self.assertIsInstance(n, float)
-        n = NSSwapLittleFloatToHost(v)
+        n = Foundation.NSSwapLittleFloatToHost(v)
         self.assertIsInstance(n, float)
-        v = NSSwapHostDoubleToBig(55.0)
-        self.assertIsInstance(v, NSSwappedDouble)
-        v = NSSwapHostDoubleToLittle(55.0)
-        self.assertIsInstance(v, NSSwappedDouble)
-        v = NSSwapHostFloatToBig(55.0)
-        self.assertIsInstance(v, NSSwappedFloat)
-        v = NSSwapHostFloatToLittle(55.0)
-        self.assertIsInstance(v, NSSwappedFloat)
-
-
-if __name__ == "__main__":
-    main()
+        v = Foundation.NSSwapHostDoubleToBig(55.0)
+        self.assertIsInstance(v, Foundation.NSSwappedDouble)
+        v = Foundation.NSSwapHostDoubleToLittle(55.0)
+        self.assertIsInstance(v, Foundation.NSSwappedDouble)
+        v = Foundation.NSSwapHostFloatToBig(55.0)
+        self.assertIsInstance(v, Foundation.NSSwappedFloat)
+        v = Foundation.NSSwapHostFloatToLittle(55.0)
+        self.assertIsInstance(v, Foundation.NSSwappedFloat)

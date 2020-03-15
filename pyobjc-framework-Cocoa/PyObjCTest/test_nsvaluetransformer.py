@@ -1,22 +1,20 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestValueTrans(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSNegateBooleanTransformerName, unicode)
-        self.assertIsInstance(NSIsNilTransformerName, unicode)
-        self.assertIsInstance(NSIsNotNilTransformerName, unicode)
-        self.assertIsInstance(NSUnarchiveFromDataTransformerName, unicode)
-        self.assertIsInstance(NSKeyedUnarchiveFromDataTransformerName, unicode)
+        self.assertIsInstance(Foundation.NSNegateBooleanTransformerName, str)
+        self.assertIsInstance(Foundation.NSIsNilTransformerName, str)
+        self.assertIsInstance(Foundation.NSIsNotNilTransformerName, str)
+        self.assertIsInstance(Foundation.NSUnarchiveFromDataTransformerName, str)
+        self.assertIsInstance(Foundation.NSKeyedUnarchiveFromDataTransformerName, str)
 
     @min_os_level("10.14")
-    def testConstants(self):
-        self.assertIsInstance(NSSecureUnarchiveFromDataTransformerName, unicode)
+    def testConstants10_14(self):
+        self.assertIsInstance(Foundation.NSSecureUnarchiveFromDataTransformerName, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSValueTransformer.allowsReverseTransformation)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(
+            Foundation.NSValueTransformer.allowsReverseTransformation
+        )

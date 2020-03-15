@@ -1,5 +1,6 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestCFFileSecurity(TestCase):
@@ -13,7 +14,7 @@ class TestCFFileSecurity(TestCase):
 
     @min_os_level("10.7")
     def testTypeID(self):
-        self.assertIsInstance(CoreFoundation.CFFileSecurityGetTypeID(), (int, long))
+        self.assertIsInstance(CoreFoundation.CFFileSecurityGetTypeID(), int)
 
     @min_os_level("10.7")
     @expectedFailure
@@ -23,12 +24,12 @@ class TestCFFileSecurity(TestCase):
     @min_os_level("10.8")
     @expectedFailure
     def testConstants10_8(self):
-        self.assertEqual(kCFFileSecurityClearOwner, 1 << 0)
-        self.assertEqual(kCFFileSecurityClearGroup, 1 << 1)
-        self.assertEqual(kCFFileSecurityClearMode, 1 << 2)
-        self.assertEqual(kCFFileSecurityClearOwnerUUID, 1 << 3)
-        self.assertEqual(kCFFileSecurityClearGroupUUID, 1 << 4)
-        self.assertEqual(kCFFileSecurityClearAccessControlList, 1 << 5)
+        self.assertEqual(CoreFoundation.kCFFileSecurityClearOwner, 1 << 0)
+        self.assertEqual(CoreFoundation.kCFFileSecurityClearGroup, 1 << 1)
+        self.assertEqual(CoreFoundation.kCFFileSecurityClearMode, 1 << 2)
+        self.assertEqual(CoreFoundation.kCFFileSecurityClearOwnerUUID, 1 << 3)
+        self.assertEqual(CoreFoundation.kCFFileSecurityClearGroupUUID, 1 << 4)
+        self.assertEqual(CoreFoundation.kCFFileSecurityClearAccessControlList, 1 << 5)
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
@@ -100,7 +101,3 @@ class TestCFFileSecurity(TestCase):
     def testFunctions_unsupported(self):
         self.assertFalse(hasattr(CoreFoundation, "CFFileSecurityCopyAccessControlList"))
         self.assertFalse(hasattr(CoreFoundation, "CFFileSecuritySetAccessControlList"))
-
-
-if __name__ == "__main__":
-    main()

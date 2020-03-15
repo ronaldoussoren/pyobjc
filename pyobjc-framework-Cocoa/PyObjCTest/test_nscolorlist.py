@@ -1,20 +1,16 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSColorList(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSColorListDidChangeNotification, unicode)
+        self.assertIsInstance(AppKit.NSColorListDidChangeNotification, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSColorList.isEditable)
-        self.assertResultIsBOOL(NSColorList.writeToFile_)
+        self.assertResultIsBOOL(AppKit.NSColorList.isEditable)
+        self.assertResultIsBOOL(AppKit.NSColorList.writeToFile_)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(NSColorList.writeToURL_error_)
-        self.assertArgIsOut(NSColorList.writeToURL_error_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSColorList.writeToURL_error_)
+        self.assertArgIsOut(AppKit.NSColorList.writeToURL_error_, 1)

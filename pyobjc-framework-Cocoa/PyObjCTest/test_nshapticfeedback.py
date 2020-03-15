@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestNSHapticFeedbackHelper(NSObject):
+class TestNSHapticFeedbackHelper(AppKit.NSObject):
     def performFeedbackPattern_performanceTime_(self, p, t):
         pass
 
@@ -10,13 +11,13 @@ class TestNSHapticFeedbackHelper(NSObject):
 class TestNSHapticFeedback(TestCase):
     @min_os_level("10.11")
     def testConstants(self):
-        self.assertEqual(NSHapticFeedbackPatternGeneric, 0)
-        self.assertEqual(NSHapticFeedbackPatternAlignment, 1)
-        self.assertEqual(NSHapticFeedbackPatternLevelChange, 2)
+        self.assertEqual(AppKit.NSHapticFeedbackPatternGeneric, 0)
+        self.assertEqual(AppKit.NSHapticFeedbackPatternAlignment, 1)
+        self.assertEqual(AppKit.NSHapticFeedbackPatternLevelChange, 2)
 
-        self.assertEqual(NSHapticFeedbackPerformanceTimeDefault, 0)
-        self.assertEqual(NSHapticFeedbackPerformanceTimeNow, 1)
-        self.assertEqual(NSHapticFeedbackPerformanceTimeDrawCompleted, 2)
+        self.assertEqual(AppKit.NSHapticFeedbackPerformanceTimeDefault, 0)
+        self.assertEqual(AppKit.NSHapticFeedbackPerformanceTimeNow, 1)
+        self.assertEqual(AppKit.NSHapticFeedbackPerformanceTimeDrawCompleted, 2)
 
     @min_os_level("10.11")
     def testProtocols10_11(self):
@@ -26,7 +27,3 @@ class TestNSHapticFeedback(TestCase):
             1,
             objc._C_NSUInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

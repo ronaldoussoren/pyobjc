@@ -1,17 +1,13 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSRulerMarker(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSRulerMarker.isMovable)
-        self.assertArgIsBOOL(NSRulerMarker.setMovable_, 0)
-        self.assertResultIsBOOL(NSRulerMarker.isRemovable)
-        self.assertArgIsBOOL(NSRulerMarker.setRemovable_, 0)
-        self.assertResultIsBOOL(NSRulerMarker.isDragging)
-        self.assertResultIsBOOL(NSRulerMarker.trackMouse_adding_)
-        self.assertArgIsBOOL(NSRulerMarker.trackMouse_adding_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSRulerMarker.isMovable)
+        self.assertArgIsBOOL(AppKit.NSRulerMarker.setMovable_, 0)
+        self.assertResultIsBOOL(AppKit.NSRulerMarker.isRemovable)
+        self.assertArgIsBOOL(AppKit.NSRulerMarker.setRemovable_, 0)
+        self.assertResultIsBOOL(AppKit.NSRulerMarker.isDragging)
+        self.assertResultIsBOOL(AppKit.NSRulerMarker.trackMouse_adding_)
+        self.assertArgIsBOOL(AppKit.NSRulerMarker.trackMouse_adding_, 1)

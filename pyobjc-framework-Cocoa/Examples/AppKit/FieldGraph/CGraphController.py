@@ -1,7 +1,6 @@
 import Cocoa
 import objc
 from fieldMath import degToRad, radToDeg
-from PyObjCTools import AppHelper
 
 
 # ____________________________________________________________

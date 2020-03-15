@@ -7,7 +7,7 @@
 #
 
 # import classes required to start application
-import TableModelAppDelegate
+import TableModelAppDelegate  # noqa: F401
 from PyObjCTools import AppHelper
 
 # start the event loop

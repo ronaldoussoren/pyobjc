@@ -55,7 +55,8 @@ class CGraphModel(NSObject):
 
     @objc.python_method
     def fieldValue(self, a):
-        # The intermedate values are used to more closely match standard field equations nomenclature
+        # The intermedate values are used to more closely match
+        # standard field equations nomenclature
         E0 = self.field[0]
         E1 = self.field[1]
         E2 = self.field[2]

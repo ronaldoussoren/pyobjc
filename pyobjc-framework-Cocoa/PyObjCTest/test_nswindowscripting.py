@@ -1,20 +1,16 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSWindowScripting(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSWindow.hasCloseBox)
-        self.assertResultIsBOOL(NSWindow.hasTitleBar)
-        self.assertResultIsBOOL(NSWindow.isFloatingPanel)
-        self.assertResultIsBOOL(NSWindow.isMiniaturizable)
-        self.assertResultIsBOOL(NSWindow.isModalPanel)
-        self.assertResultIsBOOL(NSWindow.isResizable)
-        self.assertResultIsBOOL(NSWindow.isZoomable)
-        self.assertArgIsBOOL(NSWindow.setIsMiniaturized_, 0)
-        self.assertArgIsBOOL(NSWindow.setIsVisible_, 0)
-        self.assertArgIsBOOL(NSWindow.setIsZoomed_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSWindow.hasCloseBox)
+        self.assertResultIsBOOL(AppKit.NSWindow.hasTitleBar)
+        self.assertResultIsBOOL(AppKit.NSWindow.isFloatingPanel)
+        self.assertResultIsBOOL(AppKit.NSWindow.isMiniaturizable)
+        self.assertResultIsBOOL(AppKit.NSWindow.isModalPanel)
+        self.assertResultIsBOOL(AppKit.NSWindow.isResizable)
+        self.assertResultIsBOOL(AppKit.NSWindow.isZoomable)
+        self.assertArgIsBOOL(AppKit.NSWindow.setIsMiniaturized_, 0)
+        self.assertArgIsBOOL(AppKit.NSWindow.setIsVisible_, 0)
+        self.assertArgIsBOOL(AppKit.NSWindow.setIsZoomed_, 0)

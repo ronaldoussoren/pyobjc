@@ -1,5 +1,5 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 NSStoryboardControllerCreator = b"@@"
 
@@ -8,16 +8,12 @@ class TestNSStoryboard(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgIsBlock(
-            NSStoryboard.instantiateInitialControllerWithCreator_,
+            AppKit.NSStoryboard.instantiateInitialControllerWithCreator_,
             0,
-            NSStoryboardControllerCreator,
+            AppKit.NSStoryboardControllerCreator,
         )
         self.assertArgIsBlock(
-            NSStoryboard.instantiateControllerWithIdentifier_creator_,
+            AppKit.NSStoryboard.instantiateControllerWithIdentifier_creator_,
             1,
-            NSStoryboardControllerCreator,
+            AppKit.NSStoryboardControllerCreator,
         )
-
-
-if __name__ == "__main__":
-    main()

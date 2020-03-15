@@ -17,7 +17,6 @@ __all__ = [
 
 import datetime
 import decimal
-import sys
 import time
 
 import Foundation
@@ -63,11 +62,11 @@ def fromPythonDecimal(aPythonDecimal):
     )
 
 
-FORMATS = dict(
-    xml=Foundation.NSPropertyListXMLFormat_v1_0,
-    binary=Foundation.NSPropertyListBinaryFormat_v1_0,
-    ascii=Foundation.NSPropertyListOpenStepFormat,  # Not actually supported!
-)
+FORMATS = {
+    "xml": Foundation.NSPropertyListXMLFormat_v1_0,
+    "binary": Foundation.NSPropertyListBinaryFormat_v1_0,
+    "ascii": Foundation.NSPropertyListOpenStepFormat,
+}
 
 
 def serializePropertyList(aPropertyList, format="xml"):
@@ -95,7 +94,7 @@ def serializePropertyList(aPropertyList, format="xml"):
         formatOption = FORMATS[format]
     except KeyError:
         raise ValueError("Invalid format: %s" % (format,))
-    data, err = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+    data, err = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(  # noqa: B950
         aPropertyList, formatOption, None
     )
     if err is not None:
@@ -111,7 +110,7 @@ def deserializePropertyList(propertyListData):
     """
     if isinstance(propertyListData, str):
         propertyListData = propertyListData.encode("utf-8")
-    plist, fmt, err = Foundation.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
+    plist, fmt, err = Foundation.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(  # noqa: B950
         propertyListData, Foundation.NSPropertyListMutableContainers, None, None
     )
     if err is not None:

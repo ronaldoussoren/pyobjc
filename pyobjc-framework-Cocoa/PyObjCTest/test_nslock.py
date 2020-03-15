@@ -1,28 +1,26 @@
 import objc
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLockProtocols(TestCase):
     def testLockIsLock(self):
         # Test for bug #1735937
-        lock = NSLock.alloc().init()
+        lock = Foundation.NSLock.alloc().init()
         self.assertTrue(lock.conformsToProtocol_(objc.protocolNamed("NSLocking")))
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSLock.tryLock)
-        self.assertResultIsBOOL(NSLock.lockBeforeDate_)
+        self.assertResultIsBOOL(Foundation.NSLock.tryLock)
+        self.assertResultIsBOOL(Foundation.NSLock.lockBeforeDate_)
 
-        self.assertResultIsBOOL(NSConditionLock.tryLock)
-        self.assertResultIsBOOL(NSConditionLock.tryLockWhenCondition_)
-        self.assertResultIsBOOL(NSConditionLock.lockBeforeDate_)
-        self.assertResultIsBOOL(NSConditionLock.lockWhenCondition_beforeDate_)
+        self.assertResultIsBOOL(Foundation.NSConditionLock.tryLock)
+        self.assertResultIsBOOL(Foundation.NSConditionLock.tryLockWhenCondition_)
+        self.assertResultIsBOOL(Foundation.NSConditionLock.lockBeforeDate_)
+        self.assertResultIsBOOL(
+            Foundation.NSConditionLock.lockWhenCondition_beforeDate_
+        )
 
-        self.assertResultIsBOOL(NSRecursiveLock.tryLock)
-        self.assertResultIsBOOL(NSRecursiveLock.lockBeforeDate_)
+        self.assertResultIsBOOL(Foundation.NSRecursiveLock.tryLock)
+        self.assertResultIsBOOL(Foundation.NSRecursiveLock.lockBeforeDate_)
 
-        self.assertResultIsBOOL(NSCondition.waitUntilDate_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSCondition.waitUntilDate_)

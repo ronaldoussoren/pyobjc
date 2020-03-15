@@ -4,7 +4,8 @@ import decimal
 import Cocoa
 from objc._pythonify import OC_PythonFloat
 from PyObjCTools import Conversion
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 
 class TestConversion(TestCase):
@@ -119,7 +120,7 @@ class TestConversion(TestCase):
             v = Conversion.pythonCollectionFromPropertyList(value)
             self.assertIsInstance(v, dict)
             self.assertEqual(v, {"a": 42})
-            self.assertNotIsInstance(next(iter(v.keys())), objc.pyobjc_unicode)
+            self.assertNotIsInstance(next(iter(v.keys())), objc.pyobjc_str)
 
         with self.subTest("list/tuple"):
             value = Cocoa.NSArray.arrayWithArray_(["a", 42])
@@ -234,7 +235,3 @@ class TestConversion(TestCase):
             self.assertIsInstance(v[2], set)
             self.assertIsInstance(next(iter(v[2])), tuple)
             self.assertEqual(next(iter(v[2])), (4, 5))
-
-
-if __name__ == "__main__":
-    main()

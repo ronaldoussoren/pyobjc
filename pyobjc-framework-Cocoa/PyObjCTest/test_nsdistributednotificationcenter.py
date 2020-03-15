@@ -1,40 +1,40 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDistributedNotificationCenter(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSLocalNotificationCenterType, unicode)
-        self.assertEqual(NSNotificationSuspensionBehaviorDrop, 1)
-        self.assertEqual(NSNotificationSuspensionBehaviorCoalesce, 2)
-        self.assertEqual(NSNotificationSuspensionBehaviorHold, 3)
-        self.assertEqual(NSNotificationSuspensionBehaviorDeliverImmediately, 4)
+        self.assertIsInstance(Foundation.NSLocalNotificationCenterType, str)
+        self.assertEqual(Foundation.NSNotificationSuspensionBehaviorDrop, 1)
+        self.assertEqual(Foundation.NSNotificationSuspensionBehaviorCoalesce, 2)
+        self.assertEqual(Foundation.NSNotificationSuspensionBehaviorHold, 3)
+        self.assertEqual(
+            Foundation.NSNotificationSuspensionBehaviorDeliverImmediately, 4
+        )
 
-        self.assertEqual(NSNotificationDeliverImmediately, 1)
-        self.assertEqual(NSNotificationPostToAllSessions, 2)
+        self.assertEqual(Foundation.NSNotificationDeliverImmediately, 1)
+        self.assertEqual(Foundation.NSNotificationPostToAllSessions, 2)
 
-        self.assertEqual(NSDistributedNotificationDeliverImmediately, 1)
-        self.assertEqual(NSDistributedNotificationPostToAllSessions, 2)
+        self.assertEqual(Foundation.NSDistributedNotificationDeliverImmediately, 1)
+        self.assertEqual(Foundation.NSDistributedNotificationPostToAllSessions, 2)
 
     def testMethods(self):
         self.assertArgIsSEL(
-            NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_,
+            Foundation.NSDistributedNotificationCenter.addObserver_selector_name_object_suspensionBehavior_,  # noqa: B950
             1,
             b"v@:@",
         )
         self.assertArgIsSEL(
-            NSDistributedNotificationCenter.addObserver_selector_name_object_,
+            Foundation.NSDistributedNotificationCenter.addObserver_selector_name_object_,
             1,
             b"v@:@",
         )
 
         self.assertArgIsBOOL(
-            NSDistributedNotificationCenter.postNotificationName_object_userInfo_deliverImmediately_,
+            Foundation.NSDistributedNotificationCenter.postNotificationName_object_userInfo_deliverImmediately_,  # noqa: B950
             3,
         )
-        self.assertArgIsBOOL(NSDistributedNotificationCenter.setSuspended_, 0)
-        self.assertResultIsBOOL(NSDistributedNotificationCenter.suspended)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(
+            Foundation.NSDistributedNotificationCenter.setSuspended_, 0
+        )
+        self.assertResultIsBOOL(Foundation.NSDistributedNotificationCenter.suspended)

@@ -1,94 +1,90 @@
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, expectedFailure
 
 
 class TestXMLNode(TestCase):
     # NOTE: This doesn't actually test the API
 
     def testTypes(self):
-        self.assertIsCFType(CFXMLNodeRef)
+        self.assertIsCFType(CoreFoundation.CFXMLNodeRef)
 
     def testConstants(self):
-        self.assertEqual(kCFXMLNodeCurrentVersion, 1)
+        self.assertEqual(CoreFoundation.kCFXMLNodeCurrentVersion, 1)
 
-        self.assertEqual(kCFXMLNodeTypeDocument, 1)
-        self.assertEqual(kCFXMLNodeTypeElement, 2)
-        self.assertEqual(kCFXMLNodeTypeAttribute, 3)
-        self.assertEqual(kCFXMLNodeTypeProcessingInstruction, 4)
-        self.assertEqual(kCFXMLNodeTypeComment, 5)
-        self.assertEqual(kCFXMLNodeTypeText, 6)
-        self.assertEqual(kCFXMLNodeTypeCDATASection, 7)
-        self.assertEqual(kCFXMLNodeTypeDocumentFragment, 8)
-        self.assertEqual(kCFXMLNodeTypeEntity, 9)
-        self.assertEqual(kCFXMLNodeTypeEntityReference, 10)
-        self.assertEqual(kCFXMLNodeTypeDocumentType, 11)
-        self.assertEqual(kCFXMLNodeTypeWhitespace, 12)
-        self.assertEqual(kCFXMLNodeTypeNotation, 13)
-        self.assertEqual(kCFXMLNodeTypeElementTypeDeclaration, 14)
-        self.assertEqual(kCFXMLNodeTypeAttributeListDeclaration, 15)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeDocument, 1)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeElement, 2)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeAttribute, 3)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeProcessingInstruction, 4)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeComment, 5)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeText, 6)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeCDATASection, 7)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeDocumentFragment, 8)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeEntity, 9)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeEntityReference, 10)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeDocumentType, 11)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeWhitespace, 12)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeNotation, 13)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeElementTypeDeclaration, 14)
+        self.assertEqual(CoreFoundation.kCFXMLNodeTypeAttributeListDeclaration, 15)
 
-        self.assertEqual(kCFXMLEntityTypeParameter, 0)
-        self.assertEqual(kCFXMLEntityTypeParsedInternal, 1)
-        self.assertEqual(kCFXMLEntityTypeParsedExternal, 2)
-        self.assertEqual(kCFXMLEntityTypeUnparsed, 3)
-        self.assertEqual(kCFXMLEntityTypeCharacter, 4)
+        self.assertEqual(CoreFoundation.kCFXMLEntityTypeParameter, 0)
+        self.assertEqual(CoreFoundation.kCFXMLEntityTypeParsedInternal, 1)
+        self.assertEqual(CoreFoundation.kCFXMLEntityTypeParsedExternal, 2)
+        self.assertEqual(CoreFoundation.kCFXMLEntityTypeUnparsed, 3)
+        self.assertEqual(CoreFoundation.kCFXMLEntityTypeCharacter, 4)
 
     def testStructs(self):
         return
 
-        o = CFXMLElementInfo()
+        o = CoreFoundation.CFXMLElementInfo()
         self.assertHasAttr(o, "attributes")
         self.assertHasAttr(o, "attributeOrder")
         self.assertHasAttr(o, "isEmpty")
         self.assertHasAttr(o, "_reserved")
-        o = CFXMLProcessingInstructionInfo()
+        o = CoreFoundation.CFXMLProcessingInstructionInfo()
         self.assertHasAttr(o, "dataString")
-        o = CFXMLDocumentInfo()
+        o = CoreFoundation.CFXMLDocumentInfo()
         self.assertHasAttr(o, "sourceURL")
         self.assertHasAttr(o, "encoding")
-        o = CFXMLExternalID()
+        o = CoreFoundation.CFXMLExternalID()
         self.assertHasAttr(o, "systemID")
         self.assertHasAttr(o, "publicID")
-        o = CFXMLDocumentTypeInfo()
+        o = CoreFoundation.CFXMLDocumentTypeInfo()
         self.assertHasAttr(o, "externalID")
-        o = CFXMLNotationInfo()
+        o = CoreFoundation.CFXMLNotationInfo()
         self.assertHasAttr(o, "externalID")
-        o = CFXMLElementTypeDeclarationInfo()
+        o = CoreFoundation.CFXMLElementTypeDeclarationInfo()
         self.assertHasAttr(o, "contentDescription")
-        o = CFXMLAttributeDeclarationInfo()
+        o = CoreFoundation.CFXMLAttributeDeclarationInfo()
         self.assertHasAttr(o, "attributeName")
         self.assertHasAttr(o, "typeString")
         self.assertHasAttr(o, "defaultString")
-        o = CFXMLAttributeListDeclarationInfo()
+        o = CoreFoundation.CFXMLAttributeListDeclarationInfo()
         self.assertHasAttr(o, "numberOfAttributes")
         self.assertHasAttr(o, "attributes")
-        o = CFXMLEntityInfo()
+        o = CoreFoundation.CFXMLEntityInfo()
         self.assertHasAttr(o, "entityType")
         self.assertHasAttr(o, "replacementText")
         self.assertHasAttr(o, "entityID")
         self.assertHasAttr(o, "notationName")
-        o = CFXMLEntityReferenceInfo()
+        o = CoreFoundation.CFXMLEntityReferenceInfo()
         self.assertHasAttr(o, "entityType")
 
     def testFunctions(self):
-        self.assertIsInstance(CFXMLNodeGetTypeID(), (int, long))
+        self.assertIsInstance(CoreFoundation.CFXMLNodeGetTypeID(), int)
 
-        # CFXMLNodeCreate: requires manual binding
-        # CFXMLNodeGetInfoPtr: likewise
+        # CoreFoundation.CFXMLNodeCreate: requires manual binding
+        # CoreFoundation.CFXMLNodeGetInfoPtr: likewise
         # Add tests that create all valid types of nodes with there additional info and
         # try to extract the information.
 
-        self.assertResultIsCFRetained(CFXMLNodeCreateCopy)
-        self.assertResultIsCFRetained(CFXMLTreeCreateWithNode)
-        CFXMLNodeGetTypeCode
-        CFXMLNodeGetString
-        CFXMLNodeGetVersion
-        CFXMLTreeGetNode
+        self.assertResultIsCFRetained(CoreFoundation.CFXMLNodeCreateCopy)
+        self.assertResultIsCFRetained(CoreFoundation.CFXMLTreeCreateWithNode)
+        CoreFoundation.CFXMLNodeGetTypeCode
+        CoreFoundation.CFXMLNodeGetString
+        CoreFoundation.CFXMLNodeGetVersion
+        CoreFoundation.CFXMLTreeGetNode
 
     @expectedFailure
     def testMissingWrappers(self):
         self.fail("CFXML requires manual wrappers (low prio)")
-
-
-if __name__ == "__main__":
-    main()

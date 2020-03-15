@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSStreamHelper(NSObject):
+class TestNSStreamHelper(Foundation.NSObject):
     def stream_handleEvent_(self, a, b):
         pass
 
@@ -15,94 +16,100 @@ class TestNSStreamUsage(TestCase):
         (
             inputStream,
             outputStream,
-        ) = NSStream.getStreamsToHost_port_inputStream_outputStream_(
-            NSHost.hostWithAddress_(b"127.0.0.1".decode("ascii")),
+        ) = Foundation.NSStream.getStreamsToHost_port_inputStream_outputStream_(
+            Foundation.NSHost.hostWithAddress_(b"127.0.0.1".decode("ascii")),
             631,  # IPP port
             None,
             None,
         )
 
-        self.assertIsInstance(inputStream, NSInputStream)
-        self.assertIsInstance(outputStream, NSOutputStream)
+        self.assertIsInstance(inputStream, Foundation.NSInputStream)
+        self.assertIsInstance(outputStream, Foundation.NSOutputStream)
 
         inputStream.close()
         outputStream.close()
 
     def testConstants(self):
-        self.assertEqual(NSStreamStatusNotOpen, 0)
-        self.assertEqual(NSStreamStatusOpening, 1)
-        self.assertEqual(NSStreamStatusOpen, 2)
-        self.assertEqual(NSStreamStatusReading, 3)
-        self.assertEqual(NSStreamStatusWriting, 4)
-        self.assertEqual(NSStreamStatusAtEnd, 5)
-        self.assertEqual(NSStreamStatusClosed, 6)
-        self.assertEqual(NSStreamStatusError, 7)
+        self.assertEqual(Foundation.NSStreamStatusNotOpen, 0)
+        self.assertEqual(Foundation.NSStreamStatusOpening, 1)
+        self.assertEqual(Foundation.NSStreamStatusOpen, 2)
+        self.assertEqual(Foundation.NSStreamStatusReading, 3)
+        self.assertEqual(Foundation.NSStreamStatusWriting, 4)
+        self.assertEqual(Foundation.NSStreamStatusAtEnd, 5)
+        self.assertEqual(Foundation.NSStreamStatusClosed, 6)
+        self.assertEqual(Foundation.NSStreamStatusError, 7)
 
-        self.assertEqual(NSStreamEventNone, 0)
-        self.assertEqual(NSStreamEventOpenCompleted, 1 << 0)
-        self.assertEqual(NSStreamEventHasBytesAvailable, 1 << 1)
-        self.assertEqual(NSStreamEventHasSpaceAvailable, 1 << 2)
-        self.assertEqual(NSStreamEventErrorOccurred, 1 << 3)
-        self.assertEqual(NSStreamEventEndEncountered, 1 << 4)
+        self.assertEqual(Foundation.NSStreamEventNone, 0)
+        self.assertEqual(Foundation.NSStreamEventOpenCompleted, 1 << 0)
+        self.assertEqual(Foundation.NSStreamEventHasBytesAvailable, 1 << 1)
+        self.assertEqual(Foundation.NSStreamEventHasSpaceAvailable, 1 << 2)
+        self.assertEqual(Foundation.NSStreamEventErrorOccurred, 1 << 3)
+        self.assertEqual(Foundation.NSStreamEventEndEncountered, 1 << 4)
 
-        self.assertIsInstance(NSStreamSocketSecurityLevelKey, unicode)
-        self.assertIsInstance(NSStreamSocketSecurityLevelNone, unicode)
-        self.assertIsInstance(NSStreamSocketSecurityLevelSSLv2, unicode)
-        self.assertIsInstance(NSStreamSocketSecurityLevelSSLv3, unicode)
-        self.assertIsInstance(NSStreamSocketSecurityLevelTLSv1, unicode)
-        self.assertIsInstance(NSStreamSocketSecurityLevelNegotiatedSSL, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyConfigurationKey, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyHostKey, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyPortKey, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyVersionKey, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyUserKey, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyPasswordKey, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyVersion4, unicode)
-        self.assertIsInstance(NSStreamSOCKSProxyVersion5, unicode)
-        self.assertIsInstance(NSStreamDataWrittenToMemoryStreamKey, unicode)
-        self.assertIsInstance(NSStreamFileCurrentOffsetKey, unicode)
-        self.assertIsInstance(NSStreamSocketSSLErrorDomain, unicode)
-        self.assertIsInstance(NSStreamSOCKSErrorDomain, unicode)
+        self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelKey, str)
+        self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelNone, str)
+        self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelSSLv2, str)
+        self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelSSLv3, str)
+        self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelTLSv1, str)
+        self.assertIsInstance(Foundation.NSStreamSocketSecurityLevelNegotiatedSSL, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyConfigurationKey, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyHostKey, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyPortKey, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyVersionKey, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyUserKey, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyPasswordKey, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyVersion4, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSProxyVersion5, str)
+        self.assertIsInstance(Foundation.NSStreamDataWrittenToMemoryStreamKey, str)
+        self.assertIsInstance(Foundation.NSStreamFileCurrentOffsetKey, str)
+        self.assertIsInstance(Foundation.NSStreamSocketSSLErrorDomain, str)
+        self.assertIsInstance(Foundation.NSStreamSOCKSErrorDomain, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(NSStreamNetworkServiceType, unicode)
-        self.assertIsInstance(NSStreamNetworkServiceTypeVoIP, unicode)
-        self.assertIsInstance(NSStreamNetworkServiceTypeVideo, unicode)
-        self.assertIsInstance(NSStreamNetworkServiceTypeBackground, unicode)
-        self.assertIsInstance(NSStreamNetworkServiceTypeVoice, unicode)
+        self.assertIsInstance(Foundation.NSStreamNetworkServiceType, str)
+        self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVoIP, str)
+        self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVideo, str)
+        self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeBackground, str)
+        self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeVoice, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(NSStreamNetworkServiceTypeCallSignaling, unicode)
+        self.assertIsInstance(Foundation.NSStreamNetworkServiceTypeCallSignaling, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSStream.setProperty_forKey_)
+        self.assertResultIsBOOL(Foundation.NSStream.setProperty_forKey_)
 
-        self.assertArgHasType(NSInputStream.read_maxLength_, 0, b"o^v")
-        self.assertArgSizeInArg(NSInputStream.read_maxLength_, 0, 1)
-        self.assertArgSizeInResult(NSInputStream.read_maxLength_, 0)
+        self.assertArgHasType(Foundation.NSInputStream.read_maxLength_, 0, b"o^v")
+        self.assertArgSizeInArg(Foundation.NSInputStream.read_maxLength_, 0, 1)
+        self.assertArgSizeInResult(Foundation.NSInputStream.read_maxLength_, 0)
 
-        self.assertResultIsBOOL(NSInputStream.hasBytesAvailable)
+        self.assertResultIsBOOL(Foundation.NSInputStream.hasBytesAvailable)
 
-        self.assertArgHasType(NSOutputStream.write_maxLength_, 0, b"n^v")
-        self.assertArgSizeInArg(NSOutputStream.write_maxLength_, 0, 1)
-        self.assertResultIsBOOL(NSOutputStream.hasSpaceAvailable)
+        self.assertArgHasType(Foundation.NSOutputStream.write_maxLength_, 0, b"n^v")
+        self.assertArgSizeInArg(Foundation.NSOutputStream.write_maxLength_, 0, 1)
+        self.assertResultIsBOOL(Foundation.NSOutputStream.hasSpaceAvailable)
 
-        b = NSOutputStream.alloc().initToMemory()
+        b = Foundation.NSOutputStream.alloc().initToMemory()
         self.assertArgHasType(b.initToFileAtPath_append_, 1, objc._C_NSBOOL)
         self.assertArgHasType(
-            NSOutputStream.outputStreamToFileAtPath_append_, 1, objc._C_NSBOOL
+            Foundation.NSOutputStream.outputStreamToFileAtPath_append_,
+            1,
+            objc._C_NSBOOL,
         )
 
         self.assertArgHasType(b.initToBuffer_capacity_, 0, b"o^v")
         self.assertArgSizeInArg(b.initToBuffer_capacity_, 0, 1)
-        self.assertArgHasType(NSOutputStream.outputStreamToBuffer_capacity_, 0, b"o^v")
-        self.assertArgSizeInArg(NSOutputStream.outputStreamToBuffer_capacity_, 0, 1)
+        self.assertArgHasType(
+            Foundation.NSOutputStream.outputStreamToBuffer_capacity_, 0, b"o^v"
+        )
+        self.assertArgSizeInArg(
+            Foundation.NSOutputStream.outputStreamToBuffer_capacity_, 0, 1
+        )
 
-        self.assertArgIsOut(NSInputStream.getBuffer_length_, 0)
-        self.assertArgIsOut(NSInputStream.getBuffer_length_, 1)
-        self.assertArgSizeInArg(NSInputStream.getBuffer_length_, 0, 1)
+        self.assertArgIsOut(Foundation.NSInputStream.getBuffer_length_, 0)
+        self.assertArgIsOut(Foundation.NSInputStream.getBuffer_length_, 1)
+        self.assertArgSizeInArg(Foundation.NSInputStream.getBuffer_length_, 0, 1)
 
     def testDelegate(self):
         self.assertArgHasType(
@@ -111,33 +118,33 @@ class TestNSStreamUsage(TestCase):
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        b = NSOutputStream.alloc()
+        b = Foundation.NSOutputStream.alloc()
         try:
             self.assertArgIsBOOL(b.initWithURL_append_, 1)
         finally:
             b = b.initToMemory()
-        self.assertArgIsBOOL(NSOutputStream.outputStreamWithURL_append_, 1)
+        self.assertArgIsBOOL(Foundation.NSOutputStream.outputStreamWithURL_append_, 1)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsOut(
-            NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 2
+            Foundation.NSStream.getStreamsToHostWithName_port_inputStream_outputStream_,
+            2,
         )
         self.assertArgIsOut(
-            NSStream.getStreamsToHostWithName_port_inputStream_outputStream_, 3
+            Foundation.NSStream.getStreamsToHostWithName_port_inputStream_outputStream_,
+            3,
         )
 
         self.assertArgIsOut(
-            NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 1
+            Foundation.NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_,
+            1,
         )
         self.assertArgIsOut(
-            NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_, 2
+            Foundation.NSStream.getBoundStreamsWithBufferSize_inputStream_outputStream_,
+            2,
         )
 
     @min_sdk_level("10.7")
     def testProtocols(self):
         objc.protocolNamed("NSStreamDelegate")
-
-
-if __name__ == "__main__":
-    main()

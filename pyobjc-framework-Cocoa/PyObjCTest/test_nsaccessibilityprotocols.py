@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSAccessibilityProtocolsHelper(NSObject):
+class TestNSAccessibilityProtocolsHelper(AppKit.NSObject):
     def accessibilityOrientation(self):
         return 1
 
@@ -372,7 +373,8 @@ class TestNSAccessibilityProtocols(TestCase):
             TestNSAccessibilityProtocolsHelper.isAccessibilityFocused
         )
         self.assertResultHasType(
-            TestNSAccessibilityProtocolsHelper.accessibilityFrame, NSRect.__typestr__
+            TestNSAccessibilityProtocolsHelper.accessibilityFrame,
+            AppKit.NSRect.__typestr__,
         )
 
         self.assertResultIsBOOL(
@@ -388,22 +390,22 @@ class TestNSAccessibilityProtocols(TestCase):
 
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityVisibleCharacterRange,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
 
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityFrameForRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityFrameForRange_,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityStringForRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityLineForIndex_,
@@ -421,7 +423,7 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRangeForLine_,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
 
         self.assertResultIsBOOL(
@@ -466,7 +468,7 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityFrame_,
             0,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
 
         self.assertResultIsBOOL(
@@ -476,12 +478,13 @@ class TestNSAccessibilityProtocols(TestCase):
             TestNSAccessibilityProtocolsHelper.setAccessibilityElement_, 0
         )
         self.assertResultHasType(
-            TestNSAccessibilityProtocolsHelper.accessibilityFrame, NSRect.__typestr__
+            TestNSAccessibilityProtocolsHelper.accessibilityFrame,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityFrame_,
             0,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertResultIsBOOL(
             TestNSAccessibilityProtocolsHelper.isAccessibilityFocused
@@ -491,12 +494,12 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityActivationPoint,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityActivationPoint_,
             0,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityOrientation,
@@ -581,39 +584,39 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityLayoutPointForScreenPoint_,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityLayoutPointForScreenPoint_,
             0,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityLayoutSizeForScreenSize_,
-            NSSize.__typestr__,
+            AppKit.NSSize.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityLayoutSizeForScreenSize_,
             0,
-            NSSize.__typestr__,
+            AppKit.NSSize.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityScreenPointForLayoutPoint_,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityScreenPointForLayoutPoint_,
             0,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityScreenSizeForLayoutSize_,
-            NSSize.__typestr__,
+            AppKit.NSSize.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityScreenSizeForLayoutSize_,
             0,
-            NSSize.__typestr__,
+            AppKit.NSSize.__typestr__,
         )
         self.assertResultIsBOOL(
             TestNSAccessibilityProtocolsHelper.isAccessibilityDisclosed
@@ -701,21 +704,21 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRowIndexRange,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityRowIndexRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityColumnIndexRange,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityColumnIndexRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityInsertionPointLineNumber,
@@ -728,21 +731,21 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilitySharedCharacterRange,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilitySharedCharacterRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityVisibleCharacterRange,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilityVisibleCharacterRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityNumberOfCharacters,
@@ -755,16 +758,16 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilitySelectedTextRange,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.setAccessibilitySelectedTextRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRangeForLine_,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRangeForLine_,
@@ -774,25 +777,25 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityAttributedStringForRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityStringForRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRangeForPosition_,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRangeForPosition_,
             0,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRangeForIndex_,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRangeForIndex_,
@@ -801,21 +804,21 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityFrameForRange_,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityFrameForRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityRTFForRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityStyleRangeForIndex_,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityStyleRangeForIndex_,
@@ -824,7 +827,7 @@ class TestNSAccessibilityProtocols(TestCase):
         )
         self.assertResultHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityStyleRangeForIndex_,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSAccessibilityProtocolsHelper.accessibilityStyleRangeForIndex_,
@@ -893,7 +896,3 @@ class TestNSAccessibilityProtocols(TestCase):
         self.assertResultIsBOOL(
             TestNSAccessibilityProtocolsHelper.isAccessibilityRequired
         )
-
-
-if __name__ == "__main__":
-    main()

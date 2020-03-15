@@ -1,22 +1,19 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 
 class TestNSController(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSController.commitEditing)
-        self.assertResultIsBOOL(NSController.isEditing)
+        self.assertResultIsBOOL(AppKit.NSController.commitEditing)
+        self.assertResultIsBOOL(AppKit.NSController.isEditing)
         self.assertArgIsSEL(
-            NSController.commitEditingWithDelegate_didCommitSelector_contextInfo_,
+            AppKit.NSController.commitEditingWithDelegate_didCommitSelector_contextInfo_,
             1,
             b"v@:@" + objc._C_NSBOOL + b"^v",
         )
         self.assertArgHasType(
-            NSController.commitEditingWithDelegate_didCommitSelector_contextInfo_,
+            AppKit.NSController.commitEditingWithDelegate_didCommitSelector_contextInfo_,
             2,
             b"^v",
         )
-
-
-if __name__ == "__main__":
-    main()

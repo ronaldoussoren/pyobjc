@@ -1,212 +1,243 @@
-import sys
-
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFNumber(TestCase):
     def testCFNumberGetValue(self):
         number = 42
 
-        ok, v = CFNumberGetValue(number, kCFNumberSInt8Type, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberSInt8Type, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberSInt16Type, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberSInt16Type, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberSInt32Type, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberSInt32Type, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberSInt64Type, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberSInt64Type, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberCharType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberCharType, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberShortType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberShortType, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberIntType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberIntType, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberLongType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberLongType, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberLongLongType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberLongLongType, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberCFIndexType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberCFIndexType, None
+        )
         self.assertTrue(ok)
-        self.assertTrue(isinstance(v, (int, long)))
+        self.assertTrue(isinstance(v, int))
         self.assertEqual(v, 42)
 
-        ok, v = CFNumberGetValue(number, kCFNumberFloat32Type, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberFloat32Type, None
+        )
         self.assertTrue(ok)
         self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
-        ok, v = CFNumberGetValue(number, kCFNumberFloat64Type, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberFloat64Type, None
+        )
         self.assertTrue(ok)
         self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
-        ok, v = CFNumberGetValue(number, kCFNumberFloatType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberFloatType, None
+        )
         self.assertTrue(ok)
         self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
 
-        ok, v = CFNumberGetValue(number, kCFNumberDoubleType, None)
+        ok, v = CoreFoundation.CFNumberGetValue(
+            number, CoreFoundation.kCFNumberDoubleType, None
+        )
         self.assertTrue(ok)
         self.assertTrue(isinstance(v, float))
         self.assertEqual(v, 42.0)
-
-        ## Don't test this, the wrapper shouldn't range-check
-        ## arguments and CFNumberGetValue will crash when the
-        ## number type is invalid
-        # ok, v = CFNumberGetValue(number, kCFNumberMaxType+2)
-        # self.asssertFalse(ok)
 
     def testBoolean(self):
-        self.assertIsInstance(CFBooleanGetTypeID(), (int, long))
-        self.assertIs(CFBooleanGetValue(kCFBooleanTrue), True)
-        self.assertIs(CFBooleanGetValue(kCFBooleanFalse), False)
-        self.assertTrue(CFBooleanGetValue(True))
-        self.assertFalse(CFBooleanGetValue(False))
+        self.assertIsInstance(CoreFoundation.CFBooleanGetTypeID(), int)
+        self.assertIs(
+            CoreFoundation.CFBooleanGetValue(CoreFoundation.kCFBooleanTrue), True
+        )
+        self.assertIs(
+            CoreFoundation.CFBooleanGetValue(CoreFoundation.kCFBooleanFalse), False
+        )
+        self.assertTrue(CoreFoundation.CFBooleanGetValue(True))
+        self.assertFalse(CoreFoundation.CFBooleanGetValue(False))
 
     def no_testNumber(self):
-        self.assertIsInstance(CFNumberGetTypeID(), (int, long))
+        self.assertIsInstance(CoreFoundation.CFNumberGetTypeID(), int)
         # Add cases for all number types
-        num = CFNumberCreate(None, kCFNumberSInt8Type, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberSInt8Type, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberSInt8Type, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberSInt8Type, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberSInt16Type, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberSInt16Type, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberSInt32Type, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberSInt32Type, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberSInt64Type, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberSInt64Type, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberFloat32Type, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertTrue(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(
+            None, CoreFoundation.kCFNumberFloat32Type, 1
+        )
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberFloat64Type, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertTrue(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(
+            None, CoreFoundation.kCFNumberFloat64Type, 1
+        )
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberCharType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberCharType, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberShortType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberShortType, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberIntType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberIntType, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberLongType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberLongType, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberLongLongType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(
+            None, CoreFoundation.kCFNumberLongLongType, 1
+        )
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberFloatType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertTrue(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberFloatType, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberDoubleType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertTrue(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(None, CoreFoundation.kCFNumberDoubleType, 1)
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberCFIndexType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(
+            None, CoreFoundation.kCFNumberCFIndexType, 1
+        )
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberNSIntegerType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertFalse(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(
+            None, CoreFoundation.kCFNumberNSIntegerType, 1
+        )
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
-        num = CFNumberCreate(None, kCFNumberCGFloatType, 1)
-        self.assertIsInstance(num, CFNumberRef)
-        self.assertTrue(CFNumberIsFloatType(num))
+        num = CoreFoundation.CFNumberCreate(
+            None, CoreFoundation.kCFNumberCGFloatType, 1
+        )
+        self.assertIsInstance(num, CoreFoundation.CFNumberRef)
+        self.assertTrue(CoreFoundation.CFNumberIsFloatType(num))
         self.assertEqual(num, 1)
 
     def testNumberTypes(self):
-        v = CFNumberGetType(44)
-        self.assertIn(v, (kCFNumberLongLongType, kCFNumberLongType))
-        v = CFNumberGetType(2.5)
-        self.assertEqual(v, kCFNumberDoubleType)
-        v = CFNumberGetByteSize(44)
+        v = CoreFoundation.CFNumberGetType(44)
+        self.assertIn(
+            v, (CoreFoundation.kCFNumberLongLongType, CoreFoundation.kCFNumberLongType)
+        )
+        v = CoreFoundation.CFNumberGetType(2.5)
+        self.assertEqual(v, CoreFoundation.kCFNumberDoubleType)
+        v = CoreFoundation.CFNumberGetByteSize(44)
 
-        if sys.maxsize > 2 ** 32 or sys.version_info[0] > 2:
-            self.assertEqual(v, 8)
-        else:
-            self.assertEqual(v, 4)
-
-        v = CFNumberGetByteSize(44.0)
         self.assertEqual(v, 8)
-        self.assertFalse(CFNumberIsFloatType(44))
-        self.assertTrue(CFNumberIsFloatType(1.0))
 
-        r = CFNumberCompare(44, 45, 0)
+        v = CoreFoundation.CFNumberGetByteSize(44.0)
+        self.assertEqual(v, 8)
+        self.assertFalse(CoreFoundation.CFNumberIsFloatType(44))
+        self.assertTrue(CoreFoundation.CFNumberIsFloatType(1.0))
+
+        r = CoreFoundation.CFNumberCompare(44, 45, 0)
         self.assertLessThan(r, 0)
 
     def testConstants(self):
-        self.assertIs(kCFBooleanTrue, True)
-        self.assertIs(kCFBooleanFalse, False)
-        self.assertEqual(kCFNumberSInt8Type, 1)
-        self.assertEqual(kCFNumberSInt16Type, 2)
-        self.assertEqual(kCFNumberSInt32Type, 3)
-        self.assertEqual(kCFNumberSInt64Type, 4)
-        self.assertEqual(kCFNumberFloat32Type, 5)
-        self.assertEqual(kCFNumberFloat64Type, 6)
-        self.assertEqual(kCFNumberCharType, 7)
-        self.assertEqual(kCFNumberShortType, 8)
-        self.assertEqual(kCFNumberIntType, 9)
-        self.assertEqual(kCFNumberLongType, 10)
-        self.assertEqual(kCFNumberLongLongType, 11)
-        self.assertEqual(kCFNumberFloatType, 12)
-        self.assertEqual(kCFNumberDoubleType, 13)
-        self.assertEqual(kCFNumberCFIndexType, 14)
-        self.assertEqual(kCFNumberNSIntegerType, 15)
-        self.assertEqual(kCFNumberCGFloatType, 16)
-        self.assertEqual(kCFNumberMaxType, 16)
-        self.assertIsInstance(kCFNumberPositiveInfinity, float)
-        self.assertIsInstance(kCFNumberNegativeInfinity, float)
-        self.assertIsInstance(kCFNumberNaN, float)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIs(CoreFoundation.kCFBooleanTrue, True)
+        self.assertIs(CoreFoundation.kCFBooleanFalse, False)
+        self.assertEqual(CoreFoundation.kCFNumberSInt8Type, 1)
+        self.assertEqual(CoreFoundation.kCFNumberSInt16Type, 2)
+        self.assertEqual(CoreFoundation.kCFNumberSInt32Type, 3)
+        self.assertEqual(CoreFoundation.kCFNumberSInt64Type, 4)
+        self.assertEqual(CoreFoundation.kCFNumberFloat32Type, 5)
+        self.assertEqual(CoreFoundation.kCFNumberFloat64Type, 6)
+        self.assertEqual(CoreFoundation.kCFNumberCharType, 7)
+        self.assertEqual(CoreFoundation.kCFNumberShortType, 8)
+        self.assertEqual(CoreFoundation.kCFNumberIntType, 9)
+        self.assertEqual(CoreFoundation.kCFNumberLongType, 10)
+        self.assertEqual(CoreFoundation.kCFNumberLongLongType, 11)
+        self.assertEqual(CoreFoundation.kCFNumberFloatType, 12)
+        self.assertEqual(CoreFoundation.kCFNumberDoubleType, 13)
+        self.assertEqual(CoreFoundation.kCFNumberCFIndexType, 14)
+        self.assertEqual(CoreFoundation.kCFNumberNSIntegerType, 15)
+        self.assertEqual(CoreFoundation.kCFNumberCGFloatType, 16)
+        self.assertEqual(CoreFoundation.kCFNumberMaxType, 16)
+        self.assertIsInstance(CoreFoundation.kCFNumberPositiveInfinity, float)
+        self.assertIsInstance(CoreFoundation.kCFNumberNegativeInfinity, float)
+        self.assertIsInstance(CoreFoundation.kCFNumberNaN, float)

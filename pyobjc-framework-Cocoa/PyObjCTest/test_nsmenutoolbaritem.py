@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestNSMenuToolbarItem(TestCase):
@@ -7,7 +7,3 @@ class TestNSMenuToolbarItem(TestCase):
     def test_nethods10_15(self):
         self.assertResultIsBOOL(AppKit.NSMenuToolbarItem.showsIndicator)
         self.assertArgIsBOOL(AppKit.NSMenuToolbarItem.setShowsIndicator_, 0)
-
-
-if __name__ == "__main__":
-    main()

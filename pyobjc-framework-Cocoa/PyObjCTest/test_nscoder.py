@@ -1,20 +1,14 @@
 import Foundation
 import objc
-from Foundation import *
 from PyObjCTest.testhelper import PyObjC_TestClass4
-from PyObjCTools.TestSupport import *
-
-try:
-    memoryview
-except NameError:
-    memoryview = None
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCoderUsage(TestCase):
     def testUsage(self):
-        class CoderClass1(NSObject):
+        class CoderClass1(Foundation.NSObject):
             def encodeWithCoder_(self, coder):
-                # NSObject does not implement NSCoding, no need to
+                # Foundation.NSObject does not implement Foundation.NSCoding, no need to
                 # call superclass implementation:
                 #    super(CoderClass1, self).encodeWithCoder_(coder)
                 coder.encodeValueOfObjCType_at_(objc._C_INT, 2)
@@ -25,7 +19,7 @@ class TestNSCoderUsage(TestCase):
                 coder.encodeBytes_length_(b"hello world!", 5)
 
             def initWithCoder_(self, coder):
-                # NSObject does not implement NSCoding, no need to
+                # Foundation.NSObject does not implement Foundation.NSCoding, no need to
                 # call superclass implementation:
                 #    self = super(CodeClass1, self).initWithCoder_(coder)
                 self = self.init()
@@ -38,11 +32,11 @@ class TestNSCoderUsage(TestCase):
                 return self
 
         origObj = CoderClass1.alloc().init()
-        data = NSMutableData.data()
-        archiver = NSArchiver.alloc().initForWritingWithMutableData_(data)
+        data = Foundation.NSMutableData.data()
+        archiver = Foundation.NSArchiver.alloc().initForWritingWithMutableData_(data)
         archiver.encodeObject_(origObj)
 
-        archiver = NSUnarchiver.alloc().initForReadingWithData_(data)
+        archiver = Foundation.NSUnarchiver.alloc().initForReadingWithData_(data)
         newObj = archiver.decodeObject()
 
         self.assertEqual(newObj.intVal, 2)
@@ -56,7 +50,7 @@ class TestNSCoderUsage(TestCase):
         self.assertEqual(newObj.decodedBytes[1], 5)
 
 
-class MyCoder(NSCoder):
+class MyCoder(Foundation.NSCoder):
     def init(self):
         self = objc.super(MyCoder, self).init()
         if self is None:
@@ -88,7 +82,7 @@ class MyCoder(NSCoder):
 
 class TestPythonCoder(TestCase):
     #
-    # This test accesses a NSCoder implemented in Python from Objective-C
+    # This test accesses a Foundation.NSCoder implemented in Python from Objective-C
     #
     # The tests only use those methods that require a custom IMP-stub.
     #
@@ -125,31 +119,33 @@ class TestPythonCoder(TestCase):
         self.assertEqual(tuple(range(10)), tuple(d))
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSCoder.allowsKeyedCoding)
-        self.assertArgIsBOOL(NSCoder.encodeBool_forKey_, 0)
-        self.assertResultIsBOOL(NSCoder.containsValueForKey_)
-        self.assertResultIsBOOL(NSCoder.decodeBoolForKey_)
+        self.assertResultIsBOOL(Foundation.NSCoder.allowsKeyedCoding)
+        self.assertArgIsBOOL(Foundation.NSCoder.encodeBool_forKey_, 0)
+        self.assertResultIsBOOL(Foundation.NSCoder.containsValueForKey_)
+        self.assertResultIsBOOL(Foundation.NSCoder.decodeBoolForKey_)
 
-        self.assertResultHasType(NSCoder.decodeBytesForKey_returnedLength_, b"^v")
-        self.assertResultSizeInArg(NSCoder.decodeBytesForKey_returnedLength_, 1)
-        self.assertArgIsOut(NSCoder.decodeBytesForKey_returnedLength_, 1)
+        self.assertResultHasType(
+            Foundation.NSCoder.decodeBytesForKey_returnedLength_, b"^v"
+        )
+        self.assertResultSizeInArg(
+            Foundation.NSCoder.decodeBytesForKey_returnedLength_, 1
+        )
+        self.assertArgIsOut(Foundation.NSCoder.decodeBytesForKey_returnedLength_, 1)
 
         self.assertTrue(hasattr(Foundation, "NXReadNSObjectFromCoder"))
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSCoder.requiresSecureCoding)
+        self.assertResultIsBOOL(Foundation.NSCoder.requiresSecureCoding)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertArgIsOut(NSCoder.decodeTopLevelObjectAndReturnError_, 0)
-        self.assertArgIsOut(NSCoder.decodeTopLevelObjectOfClass_forKey_error_, 2)
+        self.assertArgIsOut(Foundation.NSCoder.decodeTopLevelObjectAndReturnError_, 0)
+        self.assertArgIsOut(
+            Foundation.NSCoder.decodeTopLevelObjectOfClass_forKey_error_, 2
+        )
 
     @min_os_level("10.11")
     def testConstants(self):
-        self.assertEqual(NSDecodingFailurePolicyRaiseException, 0)
-        self.assertEqual(NSDecodingFailurePolicySetErrorAndReturn, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(Foundation.NSDecodingFailurePolicyRaiseException, 0)
+        self.assertEqual(Foundation.NSDecodingFailurePolicySetErrorAndReturn, 1)

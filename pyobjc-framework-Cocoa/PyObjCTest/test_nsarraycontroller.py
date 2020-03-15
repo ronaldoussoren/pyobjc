@@ -1,37 +1,39 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSArrayControler(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSArrayController.automaticallyRearrangesObjects)
+        self.assertResultIsBOOL(AppKit.NSArrayController.automaticallyRearrangesObjects)
 
-        self.assertResultIsBOOL(NSArrayController.clearsFilterPredicateOnInsertion)
-        self.assertArgIsBOOL(NSArrayController.setClearsFilterPredicateOnInsertion_, 0)
+        self.assertResultIsBOOL(
+            AppKit.NSArrayController.clearsFilterPredicateOnInsertion
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSArrayController.setClearsFilterPredicateOnInsertion_, 0
+        )
 
-        self.assertResultIsBOOL(NSArrayController.avoidsEmptySelection)
-        self.assertArgIsBOOL(NSArrayController.setAvoidsEmptySelection_, 0)
+        self.assertResultIsBOOL(AppKit.NSArrayController.avoidsEmptySelection)
+        self.assertArgIsBOOL(AppKit.NSArrayController.setAvoidsEmptySelection_, 0)
 
-        self.assertResultIsBOOL(NSArrayController.preservesSelection)
-        self.assertArgIsBOOL(NSArrayController.setPreservesSelection_, 0)
+        self.assertResultIsBOOL(AppKit.NSArrayController.preservesSelection)
+        self.assertArgIsBOOL(AppKit.NSArrayController.setPreservesSelection_, 0)
 
-        self.assertResultIsBOOL(NSArrayController.selectsInsertedObjects)
-        self.assertArgIsBOOL(NSArrayController.setSelectsInsertedObjects_, 0)
+        self.assertResultIsBOOL(AppKit.NSArrayController.selectsInsertedObjects)
+        self.assertArgIsBOOL(AppKit.NSArrayController.setSelectsInsertedObjects_, 0)
 
-        self.assertResultIsBOOL(NSArrayController.alwaysUsesMultipleValuesMarker)
-        self.assertArgIsBOOL(NSArrayController.setAlwaysUsesMultipleValuesMarker_, 0)
+        self.assertResultIsBOOL(AppKit.NSArrayController.alwaysUsesMultipleValuesMarker)
+        self.assertArgIsBOOL(
+            AppKit.NSArrayController.setAlwaysUsesMultipleValuesMarker_, 0
+        )
 
-        self.assertResultIsBOOL(NSArrayController.setSelectionIndexes_)
-        self.assertResultIsBOOL(NSArrayController.setSelectionIndex_)
-        self.assertResultIsBOOL(NSArrayController.addSelectionIndexes_)
-        self.assertResultIsBOOL(NSArrayController.removeSelectionIndexes_)
-        self.assertResultIsBOOL(NSArrayController.setSelectedObjects_)
-        self.assertResultIsBOOL(NSArrayController.addSelectedObjects_)
-        self.assertResultIsBOOL(NSArrayController.removeSelectedObjects_)
-        self.assertResultIsBOOL(NSArrayController.canInsert)
-        self.assertResultIsBOOL(NSArrayController.canSelectNext)
-        self.assertResultIsBOOL(NSArrayController.canSelectPrevious)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSArrayController.setSelectionIndexes_)
+        self.assertResultIsBOOL(AppKit.NSArrayController.setSelectionIndex_)
+        self.assertResultIsBOOL(AppKit.NSArrayController.addSelectionIndexes_)
+        self.assertResultIsBOOL(AppKit.NSArrayController.removeSelectionIndexes_)
+        self.assertResultIsBOOL(AppKit.NSArrayController.setSelectedObjects_)
+        self.assertResultIsBOOL(AppKit.NSArrayController.addSelectedObjects_)
+        self.assertResultIsBOOL(AppKit.NSArrayController.removeSelectedObjects_)
+        self.assertResultIsBOOL(AppKit.NSArrayController.canInsert)
+        self.assertResultIsBOOL(AppKit.NSArrayController.canSelectNext)
+        self.assertResultIsBOOL(AppKit.NSArrayController.canSelectPrevious)

@@ -1,9 +1,9 @@
 import Cocoa
 import objc
 from objc import super
-from SelectionNotifyMatrix import RowSelectedNotification, SelectionNotifyMatrix
+from SelectionNotifyMatrix import RowSelectedNotification
 from ToDoCell import ToDoCell
-from ToDoItem import ToDoItem
+from ToDoItem import ToDoItem, INCOMPLETE
 
 ToDoItemChangedNotification = "ToDoItemChangedNotification"
 
@@ -159,7 +159,7 @@ class ToDoDocument(Cocoa.NSDocument):
             numRows, numCols = self.itemList.getNumberOfRows_columns_(None, None)
             self._currentItems = Cocoa.NSMutableArray.alloc().initWithCapacity_(numRows)
 
-            for d in range(numRows):
+            for _ in range(numRows):
                 self._currentItems.addObject_("")
 
     def updateLists(self):
@@ -264,7 +264,7 @@ class ToDoDocument(Cocoa.NSDocument):
         return Cocoa.NSArchiver.archivedDataWithRootObject_(self._activeDays)
 
     def loadRepresentation_ofType_(self, data, aType):
-        if selfcalendar:
+        if self.calendar:
             self.loadDocWithData_(data)
         else:
             self._dataFromFile = data
@@ -294,7 +294,7 @@ class ToDoDocument(Cocoa.NSDocument):
                 anItem.secsUntilDue() - anItem.secsUntilNotify()
             )
 
-            aTimer = Cocoa.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            aTimer = Cocoa.NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(  # noqa: B950
                 notifyDate.timeIntervalSinceNow(),
                 self,
                 "itemTimerFired:",

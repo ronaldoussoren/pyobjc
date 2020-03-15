@@ -1,24 +1,20 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestNSTouchBarItem(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
-        self.assertResultIsBOOL(NSTouchBarItem.isVisible)
-        # self.assertArgIsBOOL(NSTouchBarItem.setVisible_, 0)
+        self.assertResultIsBOOL(AppKit.NSTouchBarItem.isVisible)
+        # self.assertArgIsBOOL(AppKit.NSTouchBarItem.setVisible_, 0)
 
     @min_sdk_level("10.12")
     def testConstants(self):
-        self.assertEqual(NSTouchBarItemPriorityHigh, 1000.0)
-        self.assertEqual(NSTouchBarItemPriorityNormal, 0.0)
-        self.assertEqual(NSTouchBarItemPriorityLow, -1000.0)
+        self.assertEqual(AppKit.NSTouchBarItemPriorityHigh, 1000.0)
+        self.assertEqual(AppKit.NSTouchBarItemPriorityNormal, 0.0)
+        self.assertEqual(AppKit.NSTouchBarItemPriorityLow, -1000.0)
 
-        self.assertIsInstance(NSTouchBarItemIdentifierFixedSpaceSmall, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierFixedSpaceLarge, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierFlexibleSpace, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierOtherItemsProxy, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierFixedSpaceSmall, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierFixedSpaceLarge, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierFlexibleSpace, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierOtherItemsProxy, str)

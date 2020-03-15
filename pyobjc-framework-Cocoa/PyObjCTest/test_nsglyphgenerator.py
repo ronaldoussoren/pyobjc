@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 
-class TestNSGlyphGeneratorHelper(NSObject):
+class TestNSGlyphGeneratorHelper(AppKit.NSObject):
     def insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_(
         self, glyphs, length, glyphIndex, charIndex
     ):
@@ -14,9 +15,9 @@ class TestNSGlyphGeneratorHelper(NSObject):
 
 class TestNSGlyphGenerator(TestCase):
     def testConstants(self):
-        self.assertEqual(NSShowControlGlyphs, (1 << 0))
-        self.assertEqual(NSShowInvisibleGlyphs, (1 << 1))
-        self.assertEqual(NSWantsBidiLevels, (1 << 2))
+        self.assertEqual(AppKit.NSShowControlGlyphs, (1 << 0))
+        self.assertEqual(AppKit.NSShowInvisibleGlyphs, (1 << 1))
+        self.assertEqual(AppKit.NSWantsBidiLevels, (1 << 2))
 
     def testProtocols(self):
         objc.protocolNamed("NSGlyphStorage")
@@ -42,41 +43,37 @@ class TestNSGlyphGenerator(TestCase):
         )
         self.assertEqual(o.glyphs, ([0, 1, 2, 3, 4], 5, 3, 8))
         self.assertArgHasType(
-            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
+            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,  # noqa: B950
             0,
             b"n^I",
         )
         self.assertArgSizeInArg(
-            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
+            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,  # noqa: B950
             0,
             1,
         )
         self.assertArgHasType(
-            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
+            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
+            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,
+            TestNSGlyphGeneratorHelper.insertGlyphs_length_forStartingGlyphAtIndex_characterIndex_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
 
     def testMethods(self):
         self.assertArgIsOut(
-            NSGlyphGenerator.generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_,
+            AppKit.NSGlyphGenerator.generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_,  # noqa: B950
             2,
         )
         self.assertArgIsOut(
-            NSGlyphGenerator.generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_,
+            AppKit.NSGlyphGenerator.generateGlyphsForGlyphStorage_desiredNumberOfCharacters_glyphIndex_characterIndex_,  # noqa: B950
             3,
         )
-
-
-if __name__ == "__main__":
-    main()

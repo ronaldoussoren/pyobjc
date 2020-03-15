@@ -1,8 +1,8 @@
 import struct
 import sys
 
+from PyObjCTools.TestSupport import TestCase
 import objc
-from PyObjCTools.TestSupport import *
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -31,7 +31,3 @@ class TestConveniences(TestCase):
                 expect,
                 "o.hash() == 0x%X | %r != %r" % (o.hash(), hash(o), expect),
             )
-
-
-if __name__ == "__main__":
-    main()

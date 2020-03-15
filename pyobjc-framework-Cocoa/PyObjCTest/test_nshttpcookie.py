@@ -1,34 +1,30 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSHTTPCookie(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSHTTPCookieName, unicode)
-        self.assertIsInstance(NSHTTPCookieValue, unicode)
-        self.assertIsInstance(NSHTTPCookieOriginURL, unicode)
-        self.assertIsInstance(NSHTTPCookieVersion, unicode)
-        self.assertIsInstance(NSHTTPCookieDomain, unicode)
-        self.assertIsInstance(NSHTTPCookiePath, unicode)
-        self.assertIsInstance(NSHTTPCookieSecure, unicode)
-        self.assertIsInstance(NSHTTPCookieExpires, unicode)
-        self.assertIsInstance(NSHTTPCookieComment, unicode)
-        self.assertIsInstance(NSHTTPCookieCommentURL, unicode)
-        self.assertIsInstance(NSHTTPCookieDiscard, unicode)
-        self.assertIsInstance(NSHTTPCookieMaximumAge, unicode)
-        self.assertIsInstance(NSHTTPCookiePort, unicode)
+        self.assertIsInstance(Foundation.NSHTTPCookieName, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieValue, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieOriginURL, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieVersion, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieDomain, str)
+        self.assertIsInstance(Foundation.NSHTTPCookiePath, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieSecure, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieExpires, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieComment, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieCommentURL, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieDiscard, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieMaximumAge, str)
+        self.assertIsInstance(Foundation.NSHTTPCookiePort, str)
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertIsInstance(NSHTTPCookieSameSitePolicy, unicode)
-        self.assertIsInstance(NSHTTPCookieSameSiteLax, unicode)
-        self.assertIsInstance(NSHTTPCookieSameSiteStrict, unicode)
+        self.assertIsInstance(Foundation.NSHTTPCookieSameSitePolicy, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieSameSiteLax, str)
+        self.assertIsInstance(Foundation.NSHTTPCookieSameSiteStrict, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSHTTPCookie.isSessionOnly)
-        self.assertResultIsBOOL(NSHTTPCookie.isSecure)
-        self.assertResultIsBOOL(NSHTTPCookie.isHTTPOnly)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSHTTPCookie.isSessionOnly)
+        self.assertResultIsBOOL(Foundation.NSHTTPCookie.isSecure)
+        self.assertResultIsBOOL(Foundation.NSHTTPCookie.isHTTPOnly)

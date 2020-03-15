@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSSpellServerHelper(NSObject):
+class TestNSSpellServerHelper(Foundation.NSObject):
     def spellServer_findMisspelledWordInString_language_wordCount_countOnly_(
         self, a, b, c, d, e
     ):
@@ -27,40 +28,44 @@ class TestNSSpellServerHelper(NSObject):
 
 class TestNSSpellServer(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSGrammarRange, unicode)
-        self.assertIsInstance(NSGrammarUserDescription, unicode)
-        self.assertIsInstance(NSGrammarCorrections, unicode)
+        self.assertIsInstance(Foundation.NSGrammarRange, str)
+        self.assertIsInstance(Foundation.NSGrammarUserDescription, str)
+        self.assertIsInstance(Foundation.NSGrammarCorrections, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSSpellServer.registerLanguage_byVendor_)
-        self.assertResultIsBOOL(NSSpellServer.isWordInUserDictionaries_caseSensitive_)
-        self.assertArgIsBOOL(NSSpellServer.isWordInUserDictionaries_caseSensitive_, 1)
+        self.assertResultIsBOOL(Foundation.NSSpellServer.registerLanguage_byVendor_)
+        self.assertResultIsBOOL(
+            Foundation.NSSpellServer.isWordInUserDictionaries_caseSensitive_
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSSpellServer.isWordInUserDictionaries_caseSensitive_, 1
+        )
 
     def testDelegate(self):
         self.assertResultHasType(
-            TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,
-            NSRange.__typestr__,
+            TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,  # noqa: B950
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,
+            TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,  # noqa: B950
             3,
             b"o^" + objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,
+            TestNSSpellServerHelper.spellServer_findMisspelledWordInString_language_wordCount_countOnly_,  # noqa: B950
             4,
             objc._C_NSBOOL,
         )
 
         self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_suggestCompletionsForPartialWordRange_inString_language_,
+            TestNSSpellServerHelper.spellServer_suggestCompletionsForPartialWordRange_inString_language_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
 
         self.assertResultHasType(
             TestNSSpellServerHelper.spellServer_checkGrammarInString_language_details_,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSSpellServerHelper.spellServer_checkGrammarInString_language_details_,
@@ -71,17 +76,17 @@ class TestNSSpellServer(TestCase):
     @min_os_level("10.6")
     def testDelegate10_6(self):
         self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,
+            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,
+            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
             3,
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,
+            TestNSSpellServerHelper.spellServer_checkString_offset_types_options_orthography_wordCount_,  # noqa: B950
             6,
             b"o^" + objc._C_NSInteger,
         )
@@ -89,7 +94,3 @@ class TestNSSpellServer(TestCase):
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
         objc.protocolNamed("NSSpellServerDelegate")
-
-
-if __name__ == "__main__":
-    main()

@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSTokenFieldCellHelper(NSObject):
+class TestNSTokenFieldCellHelper(AppKit.NSObject):
     def tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_(
         self, a, b, c, d
     ):
@@ -23,23 +24,23 @@ class TestNSTokenFieldCellHelper(NSObject):
 
 class TestNSTokenFieldCell(TestCase):
     def testConstants(self):
-        self.assertEqual(NSDefaultTokenStyle, 0)
-        self.assertEqual(NSTokenStyleNone, 1)
-        self.assertEqual(NSTokenStyleRounded, 2)
+        self.assertEqual(AppKit.NSDefaultTokenStyle, 0)
+        self.assertEqual(AppKit.NSTokenStyleNone, 1)
+        self.assertEqual(AppKit.NSTokenStyleRounded, 2)
 
-        self.assertEqual(NSPlainTextTokenStyle, 1)  # Deprecated
-        self.assertEqual(NSRoundedTokenStyle, 2)  # Deprecated
+        self.assertEqual(AppKit.NSPlainTextTokenStyle, 1)  # Deprecated
+        self.assertEqual(AppKit.NSRoundedTokenStyle, 2)  # Deprecated
 
-        self.assertEqual(NSTokenStyleDefault, 0)
-        self.assertEqual(NSTokenStyleNone, 1)
-        self.assertEqual(NSTokenStyleRounded, 2)
-        self.assertEqual(NSTokenStyleSquared, 3)
-        self.assertEqual(NSTokenStylePlainSquared, 4)
+        self.assertEqual(AppKit.NSTokenStyleDefault, 0)
+        self.assertEqual(AppKit.NSTokenStyleNone, 1)
+        self.assertEqual(AppKit.NSTokenStyleRounded, 2)
+        self.assertEqual(AppKit.NSTokenStyleSquared, 3)
+        self.assertEqual(AppKit.NSTokenStylePlainSquared, 4)
 
     @min_os_level("10.10")
     def testContants10_10(self):
-        self.assertEqual(NSTokenStyleSquared, 3)
-        self.assertEqual(NSTokenStylePlainSquared, 4)
+        self.assertEqual(AppKit.NSTokenStyleSquared, 3)
+        self.assertEqual(AppKit.NSTokenStylePlainSquared, 4)
 
     @min_sdk_level("10.7")
     def testProtocolObjects(self):
@@ -47,12 +48,12 @@ class TestNSTokenFieldCell(TestCase):
 
     def testProtocols(self):
         self.assertArgHasType(
-            TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_,
+            TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_,
+            TestNSTokenFieldCellHelper.tokenFieldCell_completionsForSubstring_indexOfToken_indexOfSelectedItem_,  # noqa: B950
             3,
             b"o^" + objc._C_NSInteger,
         )
@@ -71,7 +72,3 @@ class TestNSTokenFieldCell(TestCase):
             TestNSTokenFieldCellHelper.tokenFieldCell_styleForRepresentedObject_,
             objc._C_NSUInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

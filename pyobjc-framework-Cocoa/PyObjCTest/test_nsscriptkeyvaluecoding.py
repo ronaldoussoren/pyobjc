@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestNSScriptKeyValueCodingHelper(NSObject):
+class TestNSScriptKeyValueCodingHelper(Foundation.NSObject):
     def insertValue_atIndex_inPropertyWithKey_(self, a, b, c):
         pass
 
@@ -30,7 +31,3 @@ class TestNSScriptKeyValueCoding(TestCase):
             0,
             objc._C_NSUInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

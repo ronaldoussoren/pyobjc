@@ -1,117 +1,117 @@
-from Foundation import *
-from objc import *
-from PyObjCTools.TestSupport import *
+import Foundation
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPathUtilities(TestCase):
     def testSearchPaths(self):
         self.assertTrue(
-            NSSearchPathForDirectoriesInDomains(
-                NSAllLibrariesDirectory, NSAllDomainsMask, NO
+            Foundation.NSSearchPathForDirectoriesInDomains(
+                Foundation.NSAllLibrariesDirectory, Foundation.NSAllDomainsMask, objc.NO
             ),
             "NSSearchPathForDirectoriesInDomains() failed to return anything.",
         )
 
-        self.assertArgIsBOOL(NSSearchPathForDirectoriesInDomains, 2)
+        self.assertArgIsBOOL(Foundation.NSSearchPathForDirectoriesInDomains, 2)
 
     def testTrue(self):
-        for boolVal in (1, 1 == 1, YES, -1):
+        for boolVal in (1, 1 == 1, objc.YES, -1):
             self.assertEqual(
-                NSSearchPathForDirectoriesInDomains(
-                    NSLibraryDirectory, NSUserDomainMask, boolVal
+                Foundation.NSSearchPathForDirectoriesInDomains(
+                    Foundation.NSLibraryDirectory, Foundation.NSUserDomainMask, boolVal
                 )[0][0],
                 "/",
                 boolVal,
             )
 
     def testFalse(self):
-        for boolVal in (0, 1 != 1, NO):
+        for boolVal in (0, 1 != 1, objc.NO):
             self.assertNotEqual(
-                NSSearchPathForDirectoriesInDomains(
-                    NSLibraryDirectory, NSUserDomainMask, boolVal
+                Foundation.NSSearchPathForDirectoriesInDomains(
+                    Foundation.NSLibraryDirectory, Foundation.NSUserDomainMask, boolVal
                 )[0][0],
                 "/",
                 boolVal,
             )
 
     def testFunctions(self):
-        s = NSUserName()
-        self.assertIsInstance(s, unicode)
-        s = NSFullUserName()
-        self.assertIsInstance(s, unicode)
-        s = NSHomeDirectory()
-        self.assertIsInstance(s, unicode)
-        s = NSHomeDirectoryForUser("root")
-        self.assertIsInstance(s, unicode)
-        s = NSTemporaryDirectory()
-        self.assertIsInstance(s, unicode)
-        s = NSOpenStepRootDirectory()
-        self.assertIsInstance(s, unicode)
+        s = Foundation.NSUserName()
+        self.assertIsInstance(s, str)
+        s = Foundation.NSFullUserName()
+        self.assertIsInstance(s, str)
+        s = Foundation.NSHomeDirectory()
+        self.assertIsInstance(s, str)
+        s = Foundation.NSHomeDirectoryForUser("root")
+        self.assertIsInstance(s, str)
+        s = Foundation.NSTemporaryDirectory()
+        self.assertIsInstance(s, str)
+        s = Foundation.NSOpenStepRootDirectory()
+        self.assertIsInstance(s, str)
 
     def testConstants(self):
-        self.assertEqual(NSApplicationDirectory, 1)
-        self.assertEqual(NSDemoApplicationDirectory, 2)
-        self.assertEqual(NSDeveloperApplicationDirectory, 3)
-        self.assertEqual(NSAdminApplicationDirectory, 4)
-        self.assertEqual(NSLibraryDirectory, 5)
-        self.assertEqual(NSDeveloperDirectory, 6)
-        self.assertEqual(NSUserDirectory, 7)
-        self.assertEqual(NSDocumentationDirectory, 8)
-        self.assertEqual(NSDocumentDirectory, 9)
-        self.assertEqual(NSCoreServiceDirectory, 10)
-        self.assertEqual(NSDesktopDirectory, 12)
-        self.assertEqual(NSCachesDirectory, 13)
-        self.assertEqual(NSApplicationSupportDirectory, 14)
-        self.assertEqual(NSDownloadsDirectory, 15)
-        self.assertEqual(NSAllApplicationsDirectory, 100)
-        self.assertEqual(NSAllLibrariesDirectory, 101)
+        self.assertEqual(Foundation.NSApplicationDirectory, 1)
+        self.assertEqual(Foundation.NSDemoApplicationDirectory, 2)
+        self.assertEqual(Foundation.NSDeveloperApplicationDirectory, 3)
+        self.assertEqual(Foundation.NSAdminApplicationDirectory, 4)
+        self.assertEqual(Foundation.NSLibraryDirectory, 5)
+        self.assertEqual(Foundation.NSDeveloperDirectory, 6)
+        self.assertEqual(Foundation.NSUserDirectory, 7)
+        self.assertEqual(Foundation.NSDocumentationDirectory, 8)
+        self.assertEqual(Foundation.NSDocumentDirectory, 9)
+        self.assertEqual(Foundation.NSCoreServiceDirectory, 10)
+        self.assertEqual(Foundation.NSDesktopDirectory, 12)
+        self.assertEqual(Foundation.NSCachesDirectory, 13)
+        self.assertEqual(Foundation.NSApplicationSupportDirectory, 14)
+        self.assertEqual(Foundation.NSDownloadsDirectory, 15)
+        self.assertEqual(Foundation.NSAllApplicationsDirectory, 100)
+        self.assertEqual(Foundation.NSAllLibrariesDirectory, 101)
 
-        self.assertEqual(NSUserDomainMask, 1)
-        self.assertEqual(NSLocalDomainMask, 2)
-        self.assertEqual(NSNetworkDomainMask, 4)
-        self.assertEqual(NSSystemDomainMask, 8)
-        self.assertEqual(NSAllDomainsMask, 0x0FFFF)
+        self.assertEqual(Foundation.NSUserDomainMask, 1)
+        self.assertEqual(Foundation.NSLocalDomainMask, 2)
+        self.assertEqual(Foundation.NSNetworkDomainMask, 4)
+        self.assertEqual(Foundation.NSSystemDomainMask, 8)
+        self.assertEqual(Foundation.NSAllDomainsMask, 0x0FFFF)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSAutosavedInformationDirectory, 11)
+        self.assertEqual(Foundation.NSAutosavedInformationDirectory, 11)
 
-        self.assertEqual(NSInputMethodsDirectory, 16)
-        self.assertEqual(NSMoviesDirectory, 17)
-        self.assertEqual(NSMusicDirectory, 18)
-        self.assertEqual(NSPicturesDirectory, 19)
-        self.assertEqual(NSPrinterDescriptionDirectory, 20)
-        self.assertEqual(NSSharedPublicDirectory, 21)
-        self.assertEqual(NSPreferencePanesDirectory, 22)
-        self.assertEqual(NSItemReplacementDirectory, 99)
+        self.assertEqual(Foundation.NSInputMethodsDirectory, 16)
+        self.assertEqual(Foundation.NSMoviesDirectory, 17)
+        self.assertEqual(Foundation.NSMusicDirectory, 18)
+        self.assertEqual(Foundation.NSPicturesDirectory, 19)
+        self.assertEqual(Foundation.NSPrinterDescriptionDirectory, 20)
+        self.assertEqual(Foundation.NSSharedPublicDirectory, 21)
+        self.assertEqual(Foundation.NSPreferencePanesDirectory, 22)
+        self.assertEqual(Foundation.NSItemReplacementDirectory, 99)
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertEqual(NSApplicationScriptsDirectory, 23)
-        self.assertEqual(NSTrashDirectory, 102)
+        self.assertEqual(Foundation.NSApplicationScriptsDirectory, 23)
+        self.assertEqual(Foundation.NSTrashDirectory, 102)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSString.isAbsolutePath)
+        self.assertResultIsBOOL(Foundation.NSString.isAbsolutePath)
         self.assertArgIsOut(
-            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,
+            Foundation.NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,  # noqa: B950
             0,
         )
         self.assertArgIsBOOL(
-            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,
+            Foundation.NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,  # noqa: B950
             1,
         )
         self.assertArgIsOut(
-            NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,
+            Foundation.NSString.completePathIntoString_caseSensitive_matchesIntoArray_filterTypes_,  # noqa: B950
             2,
         )
-        self.assertResultIsBOOL(NSString.getFileSystemRepresentation_maxLength_)
+        self.assertResultIsBOOL(
+            Foundation.NSString.getFileSystemRepresentation_maxLength_
+        )
         self.assertArgHasType(
-            NSString.getFileSystemRepresentation_maxLength_,
+            Foundation.NSString.getFileSystemRepresentation_maxLength_,
             0,
             b"o^" + objc._C_CHAR_AS_TEXT,
         )
-        self.assertArgSizeInArg(NSString.getFileSystemRepresentation_maxLength_, 0, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgSizeInArg(
+            Foundation.NSString.getFileSystemRepresentation_maxLength_, 0, 1
+        )

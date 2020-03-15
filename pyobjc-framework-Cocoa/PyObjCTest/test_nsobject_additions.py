@@ -1,7 +1,8 @@
 import sys
 
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 if sys.version_info[0] == 2:
     from StringIO import StringIO
@@ -528,7 +529,3 @@ class TestThreadingHelpers(TestCase):
             self.assertNotIn("Traceback", sys.stderr.getvalue())
         finally:
             sys.stderr = orig_stderr
-
-
-if __name__ == "__main__":
-    main()

@@ -1,35 +1,35 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSURLProtectionSpace(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSURLProtectionSpaceHTTPProxy, unicode)
-        self.assertIsInstance(NSURLProtectionSpaceHTTPSProxy, unicode)
-        self.assertIsInstance(NSURLProtectionSpaceFTPProxy, unicode)
-        self.assertIsInstance(NSURLProtectionSpaceSOCKSProxy, unicode)
-        self.assertIsInstance(NSURLAuthenticationMethodDefault, unicode)
-        self.assertIsInstance(NSURLAuthenticationMethodHTTPBasic, unicode)
-        self.assertIsInstance(NSURLAuthenticationMethodHTTPDigest, unicode)
-        self.assertIsInstance(NSURLAuthenticationMethodHTMLForm, unicode)
+        self.assertIsInstance(Foundation.NSURLProtectionSpaceHTTPProxy, str)
+        self.assertIsInstance(Foundation.NSURLProtectionSpaceHTTPSProxy, str)
+        self.assertIsInstance(Foundation.NSURLProtectionSpaceFTPProxy, str)
+        self.assertIsInstance(Foundation.NSURLProtectionSpaceSOCKSProxy, str)
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodDefault, str)
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodHTTPBasic, str)
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodHTTPDigest, str)
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodHTMLForm, str)
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(NSURLProtectionSpaceHTTP, unicode)
-        self.assertIsInstance(NSURLProtectionSpaceHTTPS, unicode)
-        self.assertIsInstance(NSURLProtectionSpaceFTP, unicode)
-        self.assertIsInstance(NSURLAuthenticationMethodNTLM, unicode)
-        self.assertIsInstance(NSURLAuthenticationMethodNegotiate, unicode)
+        self.assertIsInstance(Foundation.NSURLProtectionSpaceHTTP, str)
+        self.assertIsInstance(Foundation.NSURLProtectionSpaceHTTPS, str)
+        self.assertIsInstance(Foundation.NSURLProtectionSpaceFTP, str)
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodNTLM, str)
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodNegotiate, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(NSURLAuthenticationMethodClientCertificate, unicode)
-        self.assertIsInstance(NSURLAuthenticationMethodServerTrust, unicode)
+        self.assertIsInstance(
+            Foundation.NSURLAuthenticationMethodClientCertificate, str
+        )
+        self.assertIsInstance(Foundation.NSURLAuthenticationMethodServerTrust, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSURLProtectionSpace.receivesCredentialSecurely)
-        self.assertResultIsBOOL(NSURLProtectionSpace.isProxy)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(
+            Foundation.NSURLProtectionSpace.receivesCredentialSecurely
+        )
+        self.assertResultIsBOOL(Foundation.NSURLProtectionSpace.isProxy)

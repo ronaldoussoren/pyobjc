@@ -6,8 +6,6 @@ Implements a standard toolbar.
 """
 
 import string
-import sys
-import traceback
 import types
 
 import Cocoa
@@ -24,9 +22,6 @@ import Cocoa
 import objc
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
-
-# from twisted.python import log
-# log.startLogging(sys.stdout)
 
 kWSTReloadContentsToolbarItemIdentifier = "WST: Reload Contents Toolbar Identifier"
 """Identifier for 'reload contents' toolbar item."""
@@ -400,7 +395,9 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         if not len(methodSignature):
             return
         for aSignature in methodSignature:
-            if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
+            if (type(aSignature) == types.ListType) and (
+                len(aSignature) > 0
+            ):  # noqa: E721
                 signature = "%s %s(%s)" % (
                     aSignature[0],
                     aMethod,
@@ -479,7 +476,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         depending on if a signature had been found on the server.
         """
         aMethod = self._methods[rowIndex]
-        if self._methodSignatures.has_key(aMethod):
+        if aMethod in self._methodSignatures:
             return self._methodSignatures[aMethod]
         else:
             return aMethod

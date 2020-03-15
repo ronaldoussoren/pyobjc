@@ -1,24 +1,26 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSHTTPCookieStorage(TestCase):
     def testConstants(self):
-        self.assertEqual(NSHTTPCookieAcceptPolicyAlways, 0)
-        self.assertEqual(NSHTTPCookieAcceptPolicyNever, 1)
-        self.assertEqual(NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2)
+        self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyAlways, 0)
+        self.assertEqual(Foundation.NSHTTPCookieAcceptPolicyNever, 1)
+        self.assertEqual(
+            Foundation.NSHTTPCookieAcceptPolicyOnlyFromMainDocumentDomain, 2
+        )
 
         self.assertIsInstance(
-            NSHTTPCookieManagerAcceptPolicyChangedNotification, unicode
+            Foundation.NSHTTPCookieManagerAcceptPolicyChangedNotification, str
         )
-        self.assertIsInstance(NSHTTPCookieManagerCookiesChangedNotification, unicode)
+        self.assertIsInstance(
+            Foundation.NSHTTPCookieManagerCookiesChangedNotification, str
+        )
 
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsBlock(
-            NSHTTPCookieStorage.getCookiesForTask_completionHandler_, 1, b"v@"
+            Foundation.NSHTTPCookieStorage.getCookiesForTask_completionHandler_,
+            1,
+            b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

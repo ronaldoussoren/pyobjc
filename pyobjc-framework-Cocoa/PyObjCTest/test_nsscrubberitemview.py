@@ -1,16 +1,12 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSScrubberItemView(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
-        self.assertResultIsBOOL(NSScrubberArrangedView.isSelected)
-        self.assertArgIsBOOL(NSScrubberArrangedView.setSelected_, 0)
+        self.assertResultIsBOOL(AppKit.NSScrubberArrangedView.isSelected)
+        self.assertArgIsBOOL(AppKit.NSScrubberArrangedView.setSelected_, 0)
 
-        self.assertResultIsBOOL(NSScrubberArrangedView.isHighlighted)
-        self.assertArgIsBOOL(NSScrubberArrangedView.setHighlighted_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSScrubberArrangedView.isHighlighted)
+        self.assertArgIsBOOL(AppKit.NSScrubberArrangedView.setHighlighted_, 0)

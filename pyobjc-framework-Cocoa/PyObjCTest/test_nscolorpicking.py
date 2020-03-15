@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 
-class TestNSColorPickingHelper(NSObject):
+class TestNSColorPickingHelper(AppKit.NSObject):
     def supportsMode_(self, m):
         return 0
 
@@ -27,7 +28,3 @@ class TestNSColorPicking(TestCase):
     def testProtocols(self):
         objc.protocolNamed("NSColorPickingCustom")
         objc.protocolNamed("NSColorPickingDefault")
-
-
-if __name__ == "__main__":
-    main()

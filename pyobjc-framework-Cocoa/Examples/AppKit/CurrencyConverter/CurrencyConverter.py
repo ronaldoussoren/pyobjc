@@ -1,5 +1,4 @@
 import sys
-import time
 
 import objc
 from AppKit import NSApplicationMain, NSObject

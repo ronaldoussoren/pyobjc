@@ -1,6 +1,6 @@
 import Cocoa
-import PyObjCTools.FndCategories
-from PyObjCTools.TestSupport import *
+import PyObjCTools.FndCategories  # noqa: F401
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestFndKitCategories(TestCase):
@@ -12,7 +12,3 @@ class TestFndKitCategories(TestCase):
         t.rotateByDegrees_atPoint_(40, Cocoa.NSPoint(1, 2))
 
         t.rotateByRadians_atPoint_(2.5, Cocoa.NSPoint(2.5, 3.5))
-
-
-if __name__ == "__main__":
-    main()

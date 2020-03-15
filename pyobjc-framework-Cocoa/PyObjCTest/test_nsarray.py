@@ -1,8 +1,8 @@
 import sys
 
 import objc
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 if sys.version_info[0] == 3:
 
@@ -16,11 +16,11 @@ if sys.version_info[0] == 3:
 
 class TestNSArrayInteraction(TestCase):
     def testRepeatedAllocInit(self):
-        for i in range(1, 1000):
-            a = NSArray.alloc().init()
+        for _ in range(1, 1000):
+            _ = Foundation.NSArray.alloc().init()
 
     def testIndices(self):
-        x = NSArray.arrayWithArray_(
+        x = Foundation.NSArray.arrayWithArray_(
             [b"foo".decode("ascii"), b"bar".decode("ascii"), b"baz".decode("ascii")]
         )
 
@@ -29,7 +29,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertRaises(IndexError, x.objectAtIndex_, 100)
 
     def testEnumeration(self):
-        x = NSArray.arrayWithArray_(
+        x = Foundation.NSArray.arrayWithArray_(
             [
                 1,
                 2,
@@ -47,7 +47,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertEqual(len(x), len(y))
 
     def testContains(self):
-        x = NSArray.arrayWithArray_(
+        x = Foundation.NSArray.arrayWithArray_(
             [b"foo".decode("ascii"), b"bar".decode("ascii"), b"baz".decode("ascii")]
         )
         self.assertEqual(x.count(), 3)
@@ -60,7 +60,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertTrue(not b"dumbledorf".decode("ascii") in x)
 
     def testIn(self):
-        x = NSMutableArray.array()
+        x = Foundation.NSMutableArray.array()
         for i in range(0, 100):
             x.addObject_(i)
 
@@ -113,7 +113,7 @@ class TestNSArrayInteraction(TestCase):
         self.assertEqual(y[-15:-5], z[-15:-5])
 
     def testSlice(self):
-        x = NSMutableArray.array()
+        x = Foundation.NSMutableArray.array()
         for i in range(0, 100):
             x.addObject_(i)
 
@@ -134,7 +134,7 @@ class TestNSArrayInteraction(TestCase):
 
         self.assertSlicesEqual(x, y, z)
 
-        # Note that x[1] = x works in python, but not for a bridged NS*Array*.
+        # Note that x[1] = x works in python, but not for a bridged Foundation.NS*Array*.
         # Not sure if there is anything we can do about that.
         x[1] = x[:]
         y[1] = y[:]
@@ -151,7 +151,7 @@ class TestNSArrayInteraction(TestCase):
     def test_mixSliceNDice(self):
         # This test failes on Python 2.2, that is expected.
         x = list(range(0, 10))
-        y = NSMutableArray.arrayWithArray_(range(0, 10))
+        y = Foundation.NSMutableArray.arrayWithArray_(range(0, 10))
 
         y[2:4] = x[1:5]
         x[2:8] = y[3:7]
@@ -159,7 +159,7 @@ class TestNSArrayInteraction(TestCase):
 
     def test_subScripts(self):
         x = list(range(0, 10))
-        y = NSMutableArray.arrayWithArray_(x)
+        y = Foundation.NSMutableArray.arrayWithArray_(x)
 
         self.assertEqual(x[0], y[0])
         self.assertEqual(x[2], y[2])
@@ -171,11 +171,11 @@ class TestNSArrayInteraction(TestCase):
         self.assertRaises(IndexError, x.__getitem__, -100)
 
     def test_varargConstruction(self):
-        w = NSArray.arrayWithObjects_(1, 2, 3, 4)
-        x = NSArray.alloc().initWithObjects_(1, 2, 3, 4)
+        w = Foundation.NSArray.arrayWithObjects_(1, 2, 3, 4)
+        x = Foundation.NSArray.alloc().initWithObjects_(1, 2, 3, 4)
 
-        y = NSArray.arrayWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
-        z = NSArray.alloc().initWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
+        y = Foundation.NSArray.arrayWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
+        z = Foundation.NSArray.alloc().initWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
 
         self.assertEqual(len(w), 4)
         self.assertEqual(len(x), 4)
@@ -188,10 +188,12 @@ class TestNSArrayInteraction(TestCase):
         self.assertEqual(z[3], 4)
 
     def test_varargConstruction2(self):
-        w = NSMutableArray.arrayWithObjects_(1, 2, 3, 4, None)
-        x = NSMutableArray.alloc().initWithObjects_(1, 2, 3, 4, None)
-        y = NSMutableArray.arrayWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
-        z = NSMutableArray.alloc().initWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
+        w = Foundation.NSMutableArray.arrayWithObjects_(1, 2, 3, 4, None)
+        x = Foundation.NSMutableArray.alloc().initWithObjects_(1, 2, 3, 4, None)
+        y = Foundation.NSMutableArray.arrayWithObjects_count_([1, 2, 3, 4, 5, 6], 4)
+        z = Foundation.NSMutableArray.alloc().initWithObjects_count_(
+            [1, 2, 3, 4, 5, 6], 4
+        )
 
         self.assertEqual(len(w), 4)
         self.assertEqual(len(x), 4)
@@ -208,7 +210,7 @@ class TestNSArraySpecialMethods(TestCase):
     # Test calling 'difficult' methods from Python
 
     def test_initWithObjects_count_(self):
-        a = NSArray.alloc().initWithObjects_count_(
+        a = Foundation.NSArray.alloc().initWithObjects_count_(
             (
                 b"a".decode("ascii"),
                 b"b".decode("ascii"),
@@ -228,7 +230,7 @@ class TestNSArraySpecialMethods(TestCase):
         try:
             self.assertRaises(
                 ValueError,
-                NSArray.alloc().initWithObjects_count_,
+                Foundation.NSArray.alloc().initWithObjects_count_,
                 (b"a".decode("ascii"), b"b".decode("ascii")),
                 3,
             )
@@ -237,7 +239,7 @@ class TestNSArraySpecialMethods(TestCase):
             del warnings.filters[0]
 
     def test_arrayWithObjects_count_(self):
-        a = NSArray.arrayWithObjects_count_(
+        a = Foundation.NSArray.arrayWithObjects_count_(
             (
                 b"a".decode("ascii"),
                 b"b".decode("ascii"),
@@ -252,7 +254,7 @@ class TestNSArraySpecialMethods(TestCase):
 
         self.assertRaises(
             ValueError,
-            NSArray.arrayWithObjects_count_,
+            Foundation.NSArray.arrayWithObjects_count_,
             (b"a".decode("ascii"), b"b".decode("ascii")),
             3,
         )
@@ -260,7 +262,7 @@ class TestNSArraySpecialMethods(TestCase):
     def test_arrayByAddingObjects_count_(self):
         return
 
-        a = NSArray.arrayWithArray_(
+        a = Foundation.NSArray.arrayWithArray_(
             (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
         )
         self.assertEqual(
@@ -293,7 +295,7 @@ class TestNSArraySpecialMethods(TestCase):
         )
 
     def test_sortedArrayUsingFunction_context_(self):
-        a = NSArray.arrayWithArray_(
+        a = Foundation.NSArray.arrayWithArray_(
             (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
         )
         self.assertEqual(
@@ -312,7 +314,7 @@ class TestNSArraySpecialMethods(TestCase):
         )
 
     def test_sortedArrayUsingFunction_context_hint_(self):
-        a = NSArray.arrayWithArray_(
+        a = Foundation.NSArray.arrayWithArray_(
             (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
         )
         self.assertEqual(
@@ -335,7 +337,7 @@ class TestNSArraySpecialMethods(TestCase):
 
 class TestNSMutableArrayInteraction(TestCase):
     def testRemoveObjects(self):
-        a = NSMutableArray.arrayWithArray_(range(10))
+        a = Foundation.NSMutableArray.arrayWithArray_(range(10))
 
         self.assertEqual(len(a), 10)
         self.assertEqual(a[0], 0)
@@ -349,10 +351,10 @@ class TestNSMutableArrayInteraction(TestCase):
 
     def testReplaceObjects(self):
         if objc.platform == "MACOSX" or hasattr(
-            NSMutableArray, "replaceObjectsInRange_withObjects_count_"
+            Foundation.NSMutableArray, "replaceObjectsInRange_withObjects_count_"
         ):
 
-            a = NSMutableArray.arrayWithArray_(range(4))
+            a = Foundation.NSMutableArray.arrayWithArray_(range(4))
             self.assertEqual(a, (0, 1, 2, 3))
 
             a.replaceObjectsInRange_withObjects_count_(
@@ -382,7 +384,7 @@ class TestNSMutableArrayInteraction(TestCase):
         def cmp(a, b):
             return -1
 
-        a = NSMutableArray.arrayWithArray_(range(4))
+        a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
         t = objc.options.verbose
@@ -401,7 +403,7 @@ class TestNSMutableArrayInteraction(TestCase):
 
     def dont_testSort2(self):
         # sortUsingFunction:context:range: isn't documented an hence shouldn't be tested
-        a = NSMutableArray.arrayWithArray_(range(10))
+        a = Foundation.NSMutableArray.arrayWithArray_(range(10))
         self.assertEqual(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
 
         if objc.platform == "MACOSX" or hasattr(a, "sortUsingFunction_context_range_"):
@@ -416,7 +418,7 @@ class TestNSMutableArrayInteraction(TestCase):
     def testSort3(self):
         # check the sort method, list interface compatibility
 
-        a = NSMutableArray.arrayWithArray_(range(4))
+        a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
         def cmpfunc(l, r):
@@ -430,7 +432,7 @@ class TestNSMutableArrayInteraction(TestCase):
         self.assertEqual(a, (0, 1, 2, 3))
 
     def testSort1(self):
-        a = NSMutableArray.arrayWithArray_(range(4))
+        a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
         def cmpfunc(l, r, c):
@@ -440,8 +442,8 @@ class TestNSMutableArrayInteraction(TestCase):
 
         self.assertEqual(a, (3, 2, 1, 0))
 
-    def dont_testSort2(self):
-        a = NSMutableArray.arrayWithArray_(range(10))
+    def dont_testSort2_2(self):  # XXX
+        a = Foundation.NSMutableArray.arrayWithArray_(range(10))
         self.assertEqual(a, (0, 1, 2, 3, 4, 5, 6, 7, 8, 9))
 
         if objc.platform == "MACOSX" or hasattr(a, "sortUsingFunction_context_range_"):
@@ -453,10 +455,10 @@ class TestNSMutableArrayInteraction(TestCase):
 
             self.assertEqual(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
-    def testSort3(self):
+    def testSort4(self):
         # check the sort method, list interface compatibility
 
-        a = NSMutableArray.arrayWithArray_(range(4))
+        a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
         def cmpfunc(l, r):
@@ -486,7 +488,7 @@ class TestNSMutableArrayInteraction(TestCase):
         self.assertEqual(a, (3, 2, 1, 0))
 
     def getObjectsRange(self):
-        o = NSArray.arrayWithArray_(range(4, 8))
+        o = Foundation.NSArray.arrayWithArray_(range(4, 8))
         v = o.getObjects_range_((1, 2))
         self.assertEqual(v, (5, 6))
 
@@ -495,7 +497,7 @@ class TestNSMutableArrayInteraction(TestCase):
         # Check that calling unsupported methods results in a TypeError
         #
         # NOTE: Some of these don't even exist on GNUstep
-        o = NSArray.arrayWithArray_(range(4))
+        o = Foundation.NSArray.arrayWithArray_(range(4))
         self.assertRaises(TypeError, o.getObjects_)
 
         #
@@ -503,7 +505,7 @@ class TestNSMutableArrayInteraction(TestCase):
         #    self.assertRaises(TypeError, o.apply_context_, lambda x, y:None, 0)
 
     def testInsert(self):
-        o = NSMutableArray.arrayWithArray_(range(4))
+        o = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(list(o), list(range(4)))
 
         self.assertEqual(o[0], 0)
@@ -517,168 +519,178 @@ class TestNSMutableArrayInteraction(TestCase):
 
 class TestVariadic(TestCase):
     def testArrayWithObjects(self):
-        a = NSArray.arrayWithObjects_(
+        a = Foundation.NSArray.arrayWithObjects_(
             b"foo".decode("ascii"), b"bar".decode("ascii"), None
         )
         self.assertEqual(a, (b"foo".decode("ascii"), b"bar".decode("ascii")))
-        self.assertIsInstance(a, NSArray)
+        self.assertIsInstance(a, Foundation.NSArray)
 
-        a = NSMutableArray.arrayWithObjects_(
+        a = Foundation.NSMutableArray.arrayWithObjects_(
             b"foo".decode("ascii"), b"bar".decode("ascii"), None
         )
         self.assertEqual(a, [b"foo".decode("ascii"), b"bar".decode("ascii")])
-        self.assertIsInstance(a, NSMutableArray)
+        self.assertIsInstance(a, Foundation.NSMutableArray)
 
     def testInitWithObjecs(self):
-        a = NSArray.alloc().initWithObjects_(
+        a = Foundation.NSArray.alloc().initWithObjects_(
             b"foo".decode("ascii"), b"bar".decode("ascii"), None
         )
         self.assertEqual(a, (b"foo".decode("ascii"), b"bar".decode("ascii")))
-        self.assertIsInstance(a, NSArray)
+        self.assertIsInstance(a, Foundation.NSArray)
 
-        a = NSMutableArray.alloc().initWithObjects_(
+        a = Foundation.NSMutableArray.alloc().initWithObjects_(
             b"foo".decode("ascii"), b"bar".decode("ascii"), None
         )
         self.assertEqual(a, [b"foo".decode("ascii"), b"bar".decode("ascii")])
-        self.assertIsInstance(a, NSMutableArray)
+        self.assertIsInstance(a, Foundation.NSMutableArray)
 
 
 class TestNSArray(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSArray.isEqualToArray_)
-        self.assertResultIsBOOL(NSArray.containsObject_)
-        self.assertResultIsBOOL(NSArray.writeToFile_atomically_)
-        self.assertArgIsBOOL(NSArray.writeToFile_atomically_, 1)
-        self.assertResultIsBOOL(NSArray.writeToURL_atomically_)
-        self.assertArgIsBOOL(NSArray.writeToURL_atomically_, 1)
+        self.assertResultIsBOOL(Foundation.NSArray.isEqualToArray_)
+        self.assertResultIsBOOL(Foundation.NSArray.containsObject_)
+        self.assertResultIsBOOL(Foundation.NSArray.writeToFile_atomically_)
+        self.assertArgIsBOOL(Foundation.NSArray.writeToFile_atomically_, 1)
+        self.assertResultIsBOOL(Foundation.NSArray.writeToURL_atomically_)
+        self.assertArgIsBOOL(Foundation.NSArray.writeToURL_atomically_, 1)
 
-        self.assertArgIsSEL(NSArray.makeObjectsPerformSelector_, 0, b"v@:")
-        self.assertArgIsSEL(NSArray.makeObjectsPerformSelector_withObject_, 0, b"v@:@")
+        self.assertArgIsSEL(Foundation.NSArray.makeObjectsPerformSelector_, 0, b"v@:")
+        self.assertArgIsSEL(
+            Foundation.NSArray.makeObjectsPerformSelector_withObject_, 0, b"v@:@"
+        )
 
-        self.assertArgIsBOOL(NSArray.initWithArray_copyItems_, 1)
+        self.assertArgIsBOOL(Foundation.NSArray.initWithArray_copyItems_, 1)
 
-        self.assertArgIsIn(NSArray.arrayWithObjects_count_, 0)
-        self.assertArgSizeInArg(NSArray.arrayWithObjects_count_, 0, 1)
-        self.assertArgIsIn(NSArray.initWithObjects_count_, 0)
-        self.assertArgSizeInArg(NSArray.initWithObjects_count_, 0, 1)
+        self.assertArgIsIn(Foundation.NSArray.arrayWithObjects_count_, 0)
+        self.assertArgSizeInArg(Foundation.NSArray.arrayWithObjects_count_, 0, 1)
+        self.assertArgIsIn(Foundation.NSArray.initWithObjects_count_, 0)
+        self.assertArgSizeInArg(Foundation.NSArray.initWithObjects_count_, 0, 1)
 
-        self.assertArgIsIn(NSMutableArray.removeObjectsFromIndices_numIndices_, 0)
+        self.assertArgIsIn(
+            Foundation.NSMutableArray.removeObjectsFromIndices_numIndices_, 0
+        )
         self.assertArgSizeInArg(
-            NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1
+            Foundation.NSMutableArray.removeObjectsFromIndices_numIndices_, 0, 1
         )
 
         self.assertArgIsFunction(
-            NSArray.sortedArrayUsingFunction_context_, 0, b"l@@@", False
+            Foundation.NSArray.sortedArrayUsingFunction_context_, 0, b"l@@@", False
         )
-        self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_, 1, b"@")
+        self.assertArgHasType(
+            Foundation.NSArray.sortedArrayUsingFunction_context_, 1, b"@"
+        )
         self.assertArgIsFunction(
-            NSArray.sortedArrayUsingFunction_context_hint_, 0, b"l@@@", False
+            Foundation.NSArray.sortedArrayUsingFunction_context_hint_, 0, b"l@@@", False
         )
-        self.assertArgHasType(NSArray.sortedArrayUsingFunction_context_hint_, 1, b"@")
-        self.assertArgIsSEL(NSArray.sortedArrayUsingSelector_, 0, b"i@:@")
+        self.assertArgHasType(
+            Foundation.NSArray.sortedArrayUsingFunction_context_hint_, 1, b"@"
+        )
+        self.assertArgIsSEL(Foundation.NSArray.sortedArrayUsingSelector_, 0, b"i@:@")
 
         self.assertArgIsFunction(
-            NSMutableArray.sortUsingFunction_context_, 0, b"l@@@", False
+            Foundation.NSMutableArray.sortUsingFunction_context_, 0, b"l@@@", False
         )
-        self.assertArgHasType(NSMutableArray.sortUsingFunction_context_, 1, b"@")
+        self.assertArgHasType(
+            Foundation.NSMutableArray.sortUsingFunction_context_, 1, b"@"
+        )
 
-        self.assertArgIsSEL(NSMutableArray.sortUsingSelector_, 0, b"i@:@")
+        self.assertArgIsSEL(Foundation.NSMutableArray.sortUsingSelector_, 0, b"i@:@")
 
-        self.assertIsNullTerminated(NSArray.arrayWithObjects_)
-        self.assertIsNullTerminated(NSArray.initWithObjects_)
+        self.assertIsNullTerminated(Foundation.NSArray.arrayWithObjects_)
+        self.assertIsNullTerminated(Foundation.NSArray.initWithObjects_)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBlock(
-            NSArray.enumerateObjectsUsingBlock_,
+            Foundation.NSArray.enumerateObjectsUsingBlock_,
             0,
             b"v@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSArray.enumerateObjectsWithOptions_usingBlock_,
+            Foundation.NSArray.enumerateObjectsWithOptions_usingBlock_,
             1,
             b"v@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSArray.enumerateObjectsAtIndexes_options_usingBlock_,
+            Foundation.NSArray.enumerateObjectsAtIndexes_options_usingBlock_,
             2,
             b"v@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
 
         self.assertArgIsBlock(
-            NSArray.indexOfObjectPassingTest_,
+            Foundation.NSArray.indexOfObjectPassingTest_,
             0,
             objc._C_NSBOOL + b"@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSArray.indexOfObjectWithOptions_passingTest_,
+            Foundation.NSArray.indexOfObjectWithOptions_passingTest_,
             1,
             objc._C_NSBOOL + b"@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSArray.indexOfObjectAtIndexes_options_passingTest_,
+            Foundation.NSArray.indexOfObjectAtIndexes_options_passingTest_,
             2,
             objc._C_NSBOOL + b"@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
 
         self.assertArgIsBlock(
-            NSArray.indexesOfObjectsPassingTest_,
+            Foundation.NSArray.indexesOfObjectsPassingTest_,
             0,
             objc._C_NSBOOL + b"@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSArray.indexesOfObjectsWithOptions_passingTest_,
+            Foundation.NSArray.indexesOfObjectsWithOptions_passingTest_,
             1,
             objc._C_NSBOOL + b"@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            NSArray.indexesOfObjectsAtIndexes_options_passingTest_,
+            Foundation.NSArray.indexesOfObjectsAtIndexes_options_passingTest_,
             2,
             objc._C_NSBOOL + b"@" + objc._C_NSUInteger + b"o^" + objc._C_NSBOOL,
         )
 
-        self.assertArgIsBlock(NSArray.sortedArrayUsingComparator_, 0, b"l@@")
+        self.assertArgIsBlock(Foundation.NSArray.sortedArrayUsingComparator_, 0, b"l@@")
         self.assertArgIsBlock(
-            NSArray.sortedArrayWithOptions_usingComparator_, 1, b"l@@"
+            Foundation.NSArray.sortedArrayWithOptions_usingComparator_, 1, b"l@@"
         )
         self.assertArgIsBlock(
-            NSArray.indexOfObject_inSortedRange_options_usingComparator_, 3, b"l@@"
+            Foundation.NSArray.indexOfObject_inSortedRange_options_usingComparator_,
+            3,
+            b"l@@",
         )
         self.assertArgHasType(
-            NSArray.indexOfObject_inSortedRange_options_usingComparator_,
+            Foundation.NSArray.indexOfObject_inSortedRange_options_usingComparator_,
             1,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
 
         self.assertArgIsBlock(
-            NSMutableArray.sortUsingComparator_, 0, objc._C_NSInteger + b"@@"
+            Foundation.NSMutableArray.sortUsingComparator_, 0, objc._C_NSInteger + b"@@"
         )
         self.assertArgIsBlock(
-            NSMutableArray.sortWithOptions_usingComparator_,
+            Foundation.NSMutableArray.sortWithOptions_usingComparator_,
             1,
             objc._C_NSInteger + b"@@",
         )
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertResultIsBOOL(NSArray.writeToURL_error_)
-        self.assertArgIsOut(NSArray.writeToURL_error_, 1)
+        self.assertResultIsBOOL(Foundation.NSArray.writeToURL_error_)
+        self.assertArgIsOut(Foundation.NSArray.writeToURL_error_, 1)
 
-        self.assertArgIsOut(NSArray.initWithContentsOfURL_error_, 1)
-        self.assertArgIsOut(NSArray.arrayWithContentsOfURL_error_, 1)
+        self.assertArgIsOut(Foundation.NSArray.initWithContentsOfURL_error_, 1)
+        self.assertArgIsOut(Foundation.NSArray.arrayWithContentsOfURL_error_, 1)
 
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgIsBlock(
-            NSArray.differenceFromArray_withOptions_usingEquivalenceTest_, 2, b"b@@"
+            Foundation.NSArray.differenceFromArray_withOptions_usingEquivalenceTest_,
+            2,
+            b"b@@",
         )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSBinarySearchingFirstEqual, 1 << 8)
-        self.assertEqual(NSBinarySearchingLastEqual, 1 << 9)
-        self.assertEqual(NSBinarySearchingInsertionIndex, 1 << 10)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(Foundation.NSBinarySearchingFirstEqual, 1 << 8)
+        self.assertEqual(Foundation.NSBinarySearchingLastEqual, 1 << 9)
+        self.assertEqual(Foundation.NSBinarySearchingInsertionIndex, 1 << 10)

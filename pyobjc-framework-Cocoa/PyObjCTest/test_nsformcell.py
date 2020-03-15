@@ -1,11 +1,7 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSFormCell(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSFormCell.isOpaque)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSFormCell.isOpaque)

@@ -1,27 +1,23 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBox(TestCase):
     def testConstants(self):
-        self.assertEqual(NSNoTitle, 0)
-        self.assertEqual(NSAboveTop, 1)
-        self.assertEqual(NSAtTop, 2)
-        self.assertEqual(NSBelowTop, 3)
-        self.assertEqual(NSAboveBottom, 4)
-        self.assertEqual(NSAtBottom, 5)
-        self.assertEqual(NSBelowBottom, 6)
+        self.assertEqual(AppKit.NSNoTitle, 0)
+        self.assertEqual(AppKit.NSAboveTop, 1)
+        self.assertEqual(AppKit.NSAtTop, 2)
+        self.assertEqual(AppKit.NSBelowTop, 3)
+        self.assertEqual(AppKit.NSAboveBottom, 4)
+        self.assertEqual(AppKit.NSAtBottom, 5)
+        self.assertEqual(AppKit.NSBelowBottom, 6)
 
-        self.assertEqual(NSBoxPrimary, 0)
-        self.assertEqual(NSBoxSecondary, 1)
-        self.assertEqual(NSBoxSeparator, 2)
-        self.assertEqual(NSBoxOldStyle, 3)
-        self.assertEqual(NSBoxCustom, 4)
+        self.assertEqual(AppKit.NSBoxPrimary, 0)
+        self.assertEqual(AppKit.NSBoxSecondary, 1)
+        self.assertEqual(AppKit.NSBoxSeparator, 2)
+        self.assertEqual(AppKit.NSBoxOldStyle, 3)
+        self.assertEqual(AppKit.NSBoxCustom, 4)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSBox.isTransparent)
-        self.assertArgIsBOOL(NSBox.setTransparent_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSBox.isTransparent)
+        self.assertArgIsBOOL(AppKit.NSBox.setTransparent_, 0)

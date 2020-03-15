@@ -1,11 +1,8 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation  # noqa: F401
+from PyObjCTools.TestSupport import TestCase
+import objc
 
 
-class TestNSURLAuthenticationChallenge(NSObject):
+class TestNSURLAuthenticationChallenge(TestCase):
     def testProtocols(self):
         objc.protocolNamed("NSURLAuthenticationChallengeSender")
-
-
-if __name__ == "__main__":
-    main()

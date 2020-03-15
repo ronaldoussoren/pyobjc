@@ -1,85 +1,106 @@
-# This just tests the definitions in the NSKeyedArchiver header
-from Foundation import *
-from PyObjCTools.TestSupport import *
+# This just tests the definitions in the Foundation.NSKeyedArchiver header
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSKeyedArchiver(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSInvalidArchiveOperationException, unicode)
-        self.assertIsInstance(NSInvalidUnarchiveOperationException, unicode)
+        self.assertIsInstance(Foundation.NSInvalidArchiveOperationException, str)
+        self.assertIsInstance(Foundation.NSInvalidUnarchiveOperationException, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(NSKeyedArchiveRootObjectKey, unicode)
+        self.assertIsInstance(Foundation.NSKeyedArchiveRootObjectKey, str)
 
     def testOutput(self):
-        o = NSKeyedUnarchiver.alloc().initForReadingWithData_(
-            NSKeyedArchiver.archivedDataWithRootObject_(b"foobar".decode("ascii"))
+        o = Foundation.NSKeyedUnarchiver.alloc().initForReadingWithData_(
+            Foundation.NSKeyedArchiver.archivedDataWithRootObject_(
+                b"foobar".decode("ascii")
+            )
         )
-        self.assertIsInstance(o, NSKeyedUnarchiver)
+        self.assertIsInstance(o, Foundation.NSKeyedUnarchiver)
         m = o.decodeBytesForKey_returnedLength_.__metadata__()
         self.assertEqual(m["retval"]["type"], b"^v")
         self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
 
-        data = NSMutableData.alloc().init()
-        o = NSArchiver.alloc().initForWritingWithMutableData_(data)
+        data = Foundation.NSMutableData.alloc().init()
+        o = Foundation.NSArchiver.alloc().initForWritingWithMutableData_(data)
         m = o.encodeBytes_length_forKey_.__metadata__()
         self.assertEqual(m["arguments"][2]["type"], b"n^v")
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSKeyedArchiver.archiveRootObject_toFile_)
-        self.assertArgIsBOOL(NSKeyedArchiver.encodeBool_forKey_, 0)
-        self.assertArgHasType(NSKeyedArchiver.encodeBytes_length_forKey_, 0, b"n^v")
-        self.assertArgSizeInArg(NSKeyedArchiver.encodeBytes_length_forKey_, 0, 1)
+        self.assertResultIsBOOL(Foundation.NSKeyedArchiver.archiveRootObject_toFile_)
+        self.assertArgIsBOOL(Foundation.NSKeyedArchiver.encodeBool_forKey_, 0)
+        self.assertArgHasType(
+            Foundation.NSKeyedArchiver.encodeBytes_length_forKey_, 0, b"n^v"
+        )
+        self.assertArgSizeInArg(
+            Foundation.NSKeyedArchiver.encodeBytes_length_forKey_, 0, 1
+        )
 
-        self.assertResultIsBOOL(NSKeyedUnarchiver.containsValueForKey_)
-        self.assertResultIsBOOL(NSKeyedUnarchiver.decodeBoolForKey_)
+        self.assertResultIsBOOL(Foundation.NSKeyedUnarchiver.containsValueForKey_)
+        self.assertResultIsBOOL(Foundation.NSKeyedUnarchiver.decodeBoolForKey_)
 
         self.assertResultHasType(
-            NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, b"^v"
+            Foundation.NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, b"^v"
         )
         self.assertResultSizeInArg(
-            NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1
+            Foundation.NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1
         )
-        self.assertArgIsOut(NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1)
+        self.assertArgIsOut(
+            Foundation.NSKeyedUnarchiver.decodeBytesForKey_returnedLength_, 1
+        )
 
-        self.assertArgHasType(NSCoder.encodePoint_forKey_, 0, NSPoint.__typestr__)
-        self.assertArgHasType(NSCoder.encodeSize_forKey_, 0, NSSize.__typestr__)
-        self.assertArgHasType(NSCoder.encodeRect_forKey_, 0, NSRect.__typestr__)
-        self.assertResultHasType(NSCoder.decodePointForKey_, NSPoint.__typestr__)
-        self.assertResultHasType(NSCoder.decodeSizeForKey_, NSSize.__typestr__)
-        self.assertResultHasType(NSCoder.decodeRectForKey_, NSRect.__typestr__)
+        self.assertArgHasType(
+            Foundation.NSCoder.encodePoint_forKey_, 0, Foundation.NSPoint.__typestr__
+        )
+        self.assertArgHasType(
+            Foundation.NSCoder.encodeSize_forKey_, 0, Foundation.NSSize.__typestr__
+        )
+        self.assertArgHasType(
+            Foundation.NSCoder.encodeRect_forKey_, 0, Foundation.NSRect.__typestr__
+        )
+        self.assertResultHasType(
+            Foundation.NSCoder.decodePointForKey_, Foundation.NSPoint.__typestr__
+        )
+        self.assertResultHasType(
+            Foundation.NSCoder.decodeSizeForKey_, Foundation.NSSize.__typestr__
+        )
+        self.assertResultHasType(
+            Foundation.NSCoder.decodeRectForKey_, Foundation.NSRect.__typestr__
+        )
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSKeyedArchiver.requiresSecureCoding)
-        self.assertArgIsBOOL(NSKeyedArchiver.setRequiresSecureCoding_, 0)
-        self.assertResultIsBOOL(NSKeyedUnarchiver.requiresSecureCoding)
-        self.assertArgIsBOOL(NSKeyedUnarchiver.setRequiresSecureCoding_, 0)
+        self.assertResultIsBOOL(Foundation.NSKeyedArchiver.requiresSecureCoding)
+        self.assertArgIsBOOL(Foundation.NSKeyedArchiver.setRequiresSecureCoding_, 0)
+        self.assertResultIsBOOL(Foundation.NSKeyedUnarchiver.requiresSecureCoding)
+        self.assertArgIsBOOL(Foundation.NSKeyedUnarchiver.setRequiresSecureCoding_, 0)
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertArgIsBOOL(NSKeyedArchiver.initRequiringSecureCoding_, 0)
+        self.assertArgIsBOOL(Foundation.NSKeyedArchiver.initRequiringSecureCoding_, 0)
         self.assertArgIsBOOL(
-            NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_, 1
+            Foundation.NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_,
+            1,
         )
         self.assertArgIsOut(
-            NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_, 2
+            Foundation.NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_,
+            2,
         )
 
-        self.assertArgIsOut(NSKeyedUnarchiver.initForReadingFromData_error_, 1)
         self.assertArgIsOut(
-            NSKeyedUnarchiver.unarchivedObjectOfClass_fromData_error_, 2
+            Foundation.NSKeyedUnarchiver.initForReadingFromData_error_, 1
         )
         self.assertArgIsOut(
-            NSKeyedUnarchiver.unarchivedObjectOfClasses_fromData_error_, 2
+            Foundation.NSKeyedUnarchiver.unarchivedObjectOfClass_fromData_error_, 2
+        )
+        self.assertArgIsOut(
+            Foundation.NSKeyedUnarchiver.unarchivedObjectOfClasses_fromData_error_, 2
         )
 
     @min_sdk_level("10.7")
     def testProtocols(self):
         objc.protocolNamed("NSKeyedArchiverDelegate")
         objc.protocolNamed("NSKeyedUnarchiverDelegate")
-
-
-if __name__ == "__main__":
-    main()

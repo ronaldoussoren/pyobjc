@@ -38,7 +38,7 @@ class ServiceTest(Cocoa.NSObject):
                 )
 
             return ERROR(None)
-        except:
+        except:  # noqa: E722, B001
             import traceback
 
             traceback.print_exc()
@@ -75,7 +75,7 @@ class ServiceTest(Cocoa.NSObject):
             pboard.declareTypes_owner_([Cocoa.NSStringPboardType], None)
             pboard.setString_forType_(newString, Cocoa.NSStringPboardType)
             return ERROR(None)
-        except:
+        except:  # noqa: E722, B001
             import traceback
 
             traceback.print_exc()

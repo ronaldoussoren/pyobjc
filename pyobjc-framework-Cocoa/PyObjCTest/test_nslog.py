@@ -1,8 +1,7 @@
 import os
 
 import Foundation
-from Foundation import *
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLog(TestCase):
@@ -23,7 +22,7 @@ class TestNSLog(TestCase):
     def testBasic(self):
         self._redirect()
         try:
-            NSLog("Hello world")
+            Foundation.NSLog("Hello world")
         finally:
             data = self._cleanup().rstrip()
 
@@ -32,7 +31,7 @@ class TestNSLog(TestCase):
     def testWithArguments(self):
         self._redirect()
         try:
-            NSLog("Hello %@: the count is %d", "ronald", 99)
+            Foundation.NSLog("Hello %@: the count is %d", "ronald", 99)
         finally:
             data = self._cleanup().rstrip()
 
@@ -41,22 +40,29 @@ class TestNSLog(TestCase):
     def testWithInvalidFormat(self):
         self._redirect()
         try:
-            self.assertRaises(ValueError, NSLog, "Hello %@: the count is %d", "ronald")
             self.assertRaises(
-                ValueError, NSLog, "Hello %@: the count is %d", "ronald", "foo"
+                ValueError, Foundation.NSLog, "Hello %@: the count is %d", "ronald"
             )
             self.assertRaises(
-                ValueError, NSLog, "Hello %@: the count is %d", "ronald", 42, "foo"
+                ValueError,
+                Foundation.NSLog,
+                "Hello %@: the count is %d",
+                "ronald",
+                "foo",
+            )
+            self.assertRaises(
+                ValueError,
+                Foundation.NSLog,
+                "Hello %@: the count is %d",
+                "ronald",
+                42,
+                "foo",
             )
 
         finally:
-            data = self._cleanup().rstrip()
+            self._cleanup()
 
 
 class TestNSLogv(TestCase):
     def testNotSuchThing(self):
         self.assertFalse(hasattr(Foundation, "NSLogv"))
-
-
-if __name__ == "__main__":
-    main()

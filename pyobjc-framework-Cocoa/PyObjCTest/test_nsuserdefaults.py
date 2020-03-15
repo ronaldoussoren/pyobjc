@@ -1,10 +1,10 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class PythonListAsValue(TestCase):
     def testSettingPythonList(self):
-        defaults = NSUserDefaults.standardUserDefaults()
+        defaults = Foundation.NSUserDefaults.standardUserDefaults()
         defaults.setObject_forKey_(
             [b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii")],
             b"randomKey".decode("ascii"),
@@ -16,46 +16,44 @@ class PythonListAsValue(TestCase):
         )
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSUserDefaults.boolForKey_)
-        self.assertArgIsBOOL(NSUserDefaults.setBool_forKey_, 0)
-        self.assertResultIsBOOL(NSUserDefaults.synchronize)
-        self.assertResultIsBOOL(NSUserDefaults.objectIsForcedForKey_)
-        self.assertResultIsBOOL(NSUserDefaults.objectIsForcedForKey_inDomain_)
+        self.assertResultIsBOOL(Foundation.NSUserDefaults.boolForKey_)
+        self.assertArgIsBOOL(Foundation.NSUserDefaults.setBool_forKey_, 0)
+        self.assertResultIsBOOL(Foundation.NSUserDefaults.synchronize)
+        self.assertResultIsBOOL(Foundation.NSUserDefaults.objectIsForcedForKey_)
+        self.assertResultIsBOOL(
+            Foundation.NSUserDefaults.objectIsForcedForKey_inDomain_
+        )
 
     def testConstants(self):
-        self.assertIsInstance(NSGlobalDomain, unicode)
-        self.assertIsInstance(NSArgumentDomain, unicode)
-        self.assertIsInstance(NSRegistrationDomain, unicode)
+        self.assertIsInstance(Foundation.NSGlobalDomain, str)
+        self.assertIsInstance(Foundation.NSArgumentDomain, str)
+        self.assertIsInstance(Foundation.NSRegistrationDomain, str)
 
-        self.assertIsInstance(NSUserDefaultsDidChangeNotification, unicode)
+        self.assertIsInstance(Foundation.NSUserDefaultsDidChangeNotification, str)
 
-        self.assertIsInstance(NSWeekDayNameArray, unicode)
-        self.assertIsInstance(NSShortWeekDayNameArray, unicode)
-        self.assertIsInstance(NSMonthNameArray, unicode)
-        self.assertIsInstance(NSShortMonthNameArray, unicode)
-        self.assertIsInstance(NSTimeFormatString, unicode)
-        self.assertIsInstance(NSDateFormatString, unicode)
-        self.assertIsInstance(NSTimeDateFormatString, unicode)
-        self.assertIsInstance(NSShortTimeDateFormatString, unicode)
-        self.assertIsInstance(NSCurrencySymbol, unicode)
-        self.assertIsInstance(NSDecimalSeparator, unicode)
-        self.assertIsInstance(NSThousandsSeparator, unicode)
-        self.assertIsInstance(NSDecimalDigits, unicode)
-        self.assertIsInstance(NSAMPMDesignation, unicode)
-        self.assertIsInstance(NSHourNameDesignations, unicode)
-        self.assertIsInstance(NSYearMonthWeekDesignations, unicode)
-        self.assertIsInstance(NSEarlierTimeDesignations, unicode)
-        self.assertIsInstance(NSLaterTimeDesignations, unicode)
-        self.assertIsInstance(NSThisDayDesignations, unicode)
-        self.assertIsInstance(NSNextDayDesignations, unicode)
-        self.assertIsInstance(NSNextNextDayDesignations, unicode)
-        self.assertIsInstance(NSPriorDayDesignations, unicode)
-        self.assertIsInstance(NSDateTimeOrdering, unicode)
-        self.assertIsInstance(NSInternationalCurrencyString, unicode)
-        self.assertIsInstance(NSShortDateFormatString, unicode)
-        self.assertIsInstance(NSPositiveCurrencyFormatString, unicode)
-        self.assertIsInstance(NSNegativeCurrencyFormatString, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(Foundation.NSWeekDayNameArray, str)
+        self.assertIsInstance(Foundation.NSShortWeekDayNameArray, str)
+        self.assertIsInstance(Foundation.NSMonthNameArray, str)
+        self.assertIsInstance(Foundation.NSShortMonthNameArray, str)
+        self.assertIsInstance(Foundation.NSTimeFormatString, str)
+        self.assertIsInstance(Foundation.NSDateFormatString, str)
+        self.assertIsInstance(Foundation.NSTimeDateFormatString, str)
+        self.assertIsInstance(Foundation.NSShortTimeDateFormatString, str)
+        self.assertIsInstance(Foundation.NSCurrencySymbol, str)
+        self.assertIsInstance(Foundation.NSDecimalSeparator, str)
+        self.assertIsInstance(Foundation.NSThousandsSeparator, str)
+        self.assertIsInstance(Foundation.NSDecimalDigits, str)
+        self.assertIsInstance(Foundation.NSAMPMDesignation, str)
+        self.assertIsInstance(Foundation.NSHourNameDesignations, str)
+        self.assertIsInstance(Foundation.NSYearMonthWeekDesignations, str)
+        self.assertIsInstance(Foundation.NSEarlierTimeDesignations, str)
+        self.assertIsInstance(Foundation.NSLaterTimeDesignations, str)
+        self.assertIsInstance(Foundation.NSThisDayDesignations, str)
+        self.assertIsInstance(Foundation.NSNextDayDesignations, str)
+        self.assertIsInstance(Foundation.NSNextNextDayDesignations, str)
+        self.assertIsInstance(Foundation.NSPriorDayDesignations, str)
+        self.assertIsInstance(Foundation.NSDateTimeOrdering, str)
+        self.assertIsInstance(Foundation.NSInternationalCurrencyString, str)
+        self.assertIsInstance(Foundation.NSShortDateFormatString, str)
+        self.assertIsInstance(Foundation.NSPositiveCurrencyFormatString, str)
+        self.assertIsInstance(Foundation.NSNegativeCurrencyFormatString, str)

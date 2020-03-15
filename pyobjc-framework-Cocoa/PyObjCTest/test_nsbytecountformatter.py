@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSByteCountFormatter(TestCase):
@@ -48,7 +48,3 @@ class TestNSByteCountFormatter(TestCase):
         self.assertArgIsBOOL(
             Foundation.NSByteCountFormatter.setZeroPadsFractionDigits_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

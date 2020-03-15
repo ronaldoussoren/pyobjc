@@ -1,8 +1,8 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestNSItemProviderReadingWritingHelper(NSObject):
+class TestNSItemProviderReadingWritingHelper(AppKit.NSObject):
     def loadDataWithTypeIdentifier_forItemProviderCompletionHandler_(self, ti, ch):
         pass
 
@@ -17,20 +17,16 @@ class TestNSItemProviderReadingWritingHelper(NSObject):
 class TestNSItemProviderReadingWriting(TestCase):
     def testMethods(self):
         self.assertArgIsBlock(
-            TestNSItemProviderReadingWritingHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,
+            TestNSItemProviderReadingWritingHelper.loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,  # noqa: B950
             1,
             b"v@@",
         )
         self.assertArgIsOut(
-            TestNSItemProviderReadingWritingHelper.initWithItemProviderData_typeIdentifier_error_,
+            TestNSItemProviderReadingWritingHelper.initWithItemProviderData_typeIdentifier_error_,  # noqa: B950
             2,
         )
 
         self.assertArgIsOut(
-            TestNSItemProviderReadingWritingHelper.objectWithItemProviderData_typeIdentifier_error_,
+            TestNSItemProviderReadingWritingHelper.objectWithItemProviderData_typeIdentifier_error_,  # noqa: B950
             2,
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,15 +1,11 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
 
 
 class TestNSExtensionItem(TestCase):
     @min_os_level("10.10")
     @onlyOn64Bit
     def testConstant10_10(self):
-        self.assertIsInstance(NSExtensionItemAttributedTitleKey, unicode)
-        self.assertIsInstance(NSExtensionItemAttributedContentTextKey, unicode)
-        self.assertIsInstance(NSExtensionItemAttachmentsKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(Foundation.NSExtensionItemAttributedTitleKey, str)
+        self.assertIsInstance(Foundation.NSExtensionItemAttributedContentTextKey, str)
+        self.assertIsInstance(Foundation.NSExtensionItemAttachmentsKey, str)

@@ -1,4 +1,3 @@
-import os
 import pwd
 
 from Foundation import NSMutableArray, NSObject

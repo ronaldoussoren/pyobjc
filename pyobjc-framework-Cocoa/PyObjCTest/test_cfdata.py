@@ -1,8 +1,6 @@
-import sys
-
-from CoreFoundation import *
-from Foundation import NSCFData
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestData(TestCase):
@@ -12,93 +10,98 @@ class TestData(TestCase):
         except objc.error:
             NSCFData = objc.lookUpClass("NSCFData")
 
-        self.assertIs(CFDataRef, NSCFData)
+        self.assertIs(CoreFoundation.CFDataRef, NSCFData)
 
     def testTypeID(self):
-        v = CFDataGetTypeID()
-        self.assertTrue(v, (int, long))
+        v = CoreFoundation.CFDataGetTypeID()
+        self.assertTrue(v, int)
 
     def testCreation(self):
-        self.assertArgHasType(CFDataCreate, 1, b"n^v")
-        self.assertArgSizeInArg(CFDataCreate, 1, 2)
-        data = CFDataCreate(None, b"hello", 5)
-        self.assertIsInstance(data, CFDataRef)
-        if sys.version_info[0] == 3:
-            bytes = b"hello world"
-        else:
-            bytes = buffer("hello world")
-        self.assertArgHasType(CFDataCreateWithBytesNoCopy, 1, b"n^v")
-        self.assertArgSizeInArg(CFDataCreateWithBytesNoCopy, 1, 2)
-        data = CFDataCreateWithBytesNoCopy(None, bytes, 5, kCFAllocatorNull)
-        self.assertIsInstance(data, CFDataRef)
+        self.assertArgHasType(CoreFoundation.CFDataCreate, 1, b"n^v")
+        self.assertArgSizeInArg(CoreFoundation.CFDataCreate, 1, 2)
+        data = CoreFoundation.CFDataCreate(None, b"hello", 5)
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        bytes = b"hello world"
+        self.assertArgHasType(CoreFoundation.CFDataCreateWithBytesNoCopy, 1, b"n^v")
+        self.assertArgSizeInArg(CoreFoundation.CFDataCreateWithBytesNoCopy, 1, 2)
+        data = CoreFoundation.CFDataCreateWithBytesNoCopy(
+            None, bytes, 5, CoreFoundation.kCFAllocatorNull
+        )
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
         del data
 
-        data = CFDataCreate(None, b"hello", 5)
-        self.assertIsInstance(data, CFDataRef)
-        cpy = CFDataCreateCopy(None, data)
-        self.assertIsInstance(cpy, CFDataRef)
-        cpy2 = CFDataCreateMutableCopy(None, 0, data)
-        self.assertIsInstance(cpy2, CFDataRef)
-        mut = CFDataCreateMutable(None, 0)
-        self.assertIsInstance(mut, CFDataRef)
+        data = CoreFoundation.CFDataCreate(None, b"hello", 5)
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        cpy = CoreFoundation.CFDataCreateCopy(None, data)
+        self.assertIsInstance(cpy, CoreFoundation.CFDataRef)
+        cpy2 = CoreFoundation.CFDataCreateMutableCopy(None, 0, data)
+        self.assertIsInstance(cpy2, CoreFoundation.CFDataRef)
+        mut = CoreFoundation.CFDataCreateMutable(None, 0)
+        self.assertIsInstance(mut, CoreFoundation.CFDataRef)
 
     def testInspection(self):
-        data = CFDataCreate(None, b"hello", 5)
-        self.assertIsInstance(data, CFDataRef)
-        mutableData = CFDataCreateMutableCopy(None, 0, data)
-        self.assertIsInstance(mutableData, CFDataRef)
-        self.assertEqual(CFDataGetLength(data), 5)
-        self.assertEqual(CFDataGetLength(mutableData), 5)
-        v = CFDataGetBytePtr(data)
-        self.assertEqual(CFDataGetBytePtr(data)[0], b"h")
-        v = CFDataGetMutableBytePtr(mutableData)
+        data = CoreFoundation.CFDataCreate(None, b"hello", 5)
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        mutableData = CoreFoundation.CFDataCreateMutableCopy(None, 0, data)
+        self.assertIsInstance(mutableData, CoreFoundation.CFDataRef)
+        self.assertEqual(CoreFoundation.CFDataGetLength(data), 5)
+        self.assertEqual(CoreFoundation.CFDataGetLength(mutableData), 5)
+        v = CoreFoundation.CFDataGetBytePtr(data)
+        self.assertEqual(CoreFoundation.CFDataGetBytePtr(data)[0], b"h")
+        v = CoreFoundation.CFDataGetMutableBytePtr(mutableData)
         self.assertEqual(v[0], b"h")
         v[0] = b"p"
 
-        v = CFDataGetBytePtr(mutableData)
+        v = CoreFoundation.CFDataGetBytePtr(mutableData)
         self.assertEqual(v[0], b"p")
-        self.assertArgHasType(CFDataGetBytes, 2, b"o^v")
-        self.assertArgSizeInArg(CFDataGetBytes, 2, 1)
-        bytes = CFDataGetBytes(data, (1, 3), None)
+        self.assertArgHasType(CoreFoundation.CFDataGetBytes, 2, b"o^v")
+        self.assertArgSizeInArg(CoreFoundation.CFDataGetBytes, 2, 1)
+        bytes = CoreFoundation.CFDataGetBytes(data, (1, 3), None)
         self.assertEqual(bytes, b"hello"[1:4])
 
-        CFDataSetLength(mutableData, 3)
-        self.assertEqual(CFDataGetLength(mutableData), 3)
-        CFDataIncreaseLength(mutableData, 17)
-        self.assertEqual(CFDataGetLength(mutableData), 20)
-        CFDataSetLength(mutableData, 3)
+        CoreFoundation.CFDataSetLength(mutableData, 3)
+        self.assertEqual(CoreFoundation.CFDataGetLength(mutableData), 3)
+        CoreFoundation.CFDataIncreaseLength(mutableData, 17)
+        self.assertEqual(CoreFoundation.CFDataGetLength(mutableData), 20)
+        CoreFoundation.CFDataSetLength(mutableData, 3)
 
-        self.assertArgHasType(CFDataAppendBytes, 1, b"n^v")
-        self.assertArgSizeInArg(CFDataAppendBytes, 1, 2)
-        CFDataAppendBytes(mutableData, b" world", 6)
-        self.assertEqual(CFDataGetLength(mutableData), 9)
-        self.assertEqual(CFDataGetBytes(mutableData, (0, 9), None), b"pel world")
+        self.assertArgHasType(CoreFoundation.CFDataAppendBytes, 1, b"n^v")
+        self.assertArgSizeInArg(CoreFoundation.CFDataAppendBytes, 1, 2)
+        CoreFoundation.CFDataAppendBytes(mutableData, b" world", 6)
+        self.assertEqual(CoreFoundation.CFDataGetLength(mutableData), 9)
+        self.assertEqual(
+            CoreFoundation.CFDataGetBytes(mutableData, (0, 9), None), b"pel world"
+        )
 
-        self.assertArgHasType(CFDataReplaceBytes, 2, b"n^v")
-        self.assertArgSizeInArg(CFDataReplaceBytes, 2, 3)
-        CFDataReplaceBytes(mutableData, (0, 3), b"hello", 5)
-        self.assertEqual(CFDataGetBytes(mutableData, (0, 9), None), b"hello world"[:9])
+        self.assertArgHasType(CoreFoundation.CFDataReplaceBytes, 2, b"n^v")
+        self.assertArgSizeInArg(CoreFoundation.CFDataReplaceBytes, 2, 3)
+        CoreFoundation.CFDataReplaceBytes(mutableData, (0, 3), b"hello", 5)
+        self.assertEqual(
+            CoreFoundation.CFDataGetBytes(mutableData, (0, 9), None), b"hello world"[:9]
+        )
 
-        CFDataDeleteBytes(mutableData, (0, 6))
-        self.assertEqual(CFDataGetBytes(mutableData, (0, 5), None), b"world")
+        CoreFoundation.CFDataDeleteBytes(mutableData, (0, 6))
+        self.assertEqual(
+            CoreFoundation.CFDataGetBytes(mutableData, (0, 5), None), b"world"
+        )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(kCFDataSearchBackwards, 1 << 0)
-        self.assertEqual(kCFDataSearchAnchored, 1 << 1)
+        self.assertEqual(CoreFoundation.kCFDataSearchBackwards, 1 << 0)
+        self.assertEqual(CoreFoundation.kCFDataSearchAnchored, 1 << 1)
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
-        data = CFDataCreate(None, b"hello world", 11)
-        self.assertIsInstance(data, CFDataRef)
-        src = CFDataCreate(None, b"wor", 3)
-        self.assertIsInstance(src, CFDataRef)
-        self.assertResultHasType(CFDataFind, CFRange.__typestr__)
-        self.assertArgHasType(CFDataFind, 2, CFRange.__typestr__)
-        v = CFDataFind(data, src, (0, 11), 0)
-        self.assertIsInstance(v, CFRange)
+        data = CoreFoundation.CFDataCreate(None, b"hello world", 11)
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        src = CoreFoundation.CFDataCreate(None, b"wor", 3)
+        self.assertIsInstance(src, CoreFoundation.CFDataRef)
+        self.assertResultHasType(
+            CoreFoundation.CFDataFind, CoreFoundation.CFRange.__typestr__
+        )
+        self.assertArgHasType(
+            CoreFoundation.CFDataFind, 2, CoreFoundation.CFRange.__typestr__
+        )
+        v = CoreFoundation.CFDataFind(data, src, (0, 11), 0)
+        self.assertIsInstance(v, CoreFoundation.CFRange)
         self.assertEqual(v, (6, 3))
-
-
-if __name__ == "__main__":
-    main()

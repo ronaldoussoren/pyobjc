@@ -25,7 +25,7 @@ from PyObjCTools.KeyValueCoding import getKey
 class PreferencesPanelController(NSWindowController):
     @objc.IBAction
     def changeTextFont_(self, sender):
-        "The user changed the current font selection, so update the default font"
+        """The user changed the current font selection, so update the default font"""
 
         # Get font name and size from user defaults
         defaults = NSUserDefaultsController.sharedUserDefaultsController().values()
@@ -44,7 +44,7 @@ class PreferencesPanelController(NSWindowController):
 
     @objc.IBAction
     def changeFont_(self, sender):
-        "This is the message the font panel sends when a new font is selected"
+        """This is the message the font panel sends when a new font is selected"""
         # Get selected font
         fontManager = NSFontManager.sharedFontManager()
         selectedFont = fontManager.selectedFont()

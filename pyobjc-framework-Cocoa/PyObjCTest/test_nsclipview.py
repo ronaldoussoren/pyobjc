@@ -1,20 +1,16 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSClipView(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSClipView.drawsBackground)
-        self.assertArgIsBOOL(NSClipView.setDrawsBackground_, 0)
-        self.assertResultIsBOOL(NSClipView.copiesOnScroll)
-        self.assertArgIsBOOL(NSClipView.setCopiesOnScroll_, 0)
-        self.assertResultIsBOOL(NSClipView.autoscroll_)
+        self.assertResultIsBOOL(AppKit.NSClipView.drawsBackground)
+        self.assertArgIsBOOL(AppKit.NSClipView.setDrawsBackground_, 0)
+        self.assertResultIsBOOL(AppKit.NSClipView.copiesOnScroll)
+        self.assertArgIsBOOL(AppKit.NSClipView.setCopiesOnScroll_, 0)
+        self.assertResultIsBOOL(AppKit.NSClipView.autoscroll_)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSClipView.automaticallyAdjustsContentInsets)
-        self.assertArgIsBOOL(NSClipView.setAutomaticallyAdjustsContentInsets_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSClipView.automaticallyAdjustsContentInsets)
+        self.assertArgIsBOOL(AppKit.NSClipView.setAutomaticallyAdjustsContentInsets_, 0)

@@ -47,10 +47,10 @@ class PythonBrowserModel(NSObject):
             return
         try:
             obj = eval(value, {})
-        except:
+        except:  # noqa: E722, B001
             NSBeep()
-            print("XXX Error:", sys.exc_info())
-            print("XXX      :", repr(value))
+            print("Error:", sys.exc_info())
+            print("     :", repr(value))
         else:
             item.setValue_(obj)
 
@@ -78,8 +78,6 @@ def getInstanceVarNames(obj):
     if hasattr(cls, "__mro__"):
         for base in cls.__mro__:
             for name, value in base.__dict__.items():
-                # XXX using callable() is a heuristic which isn't 100%
-                # foolproof.
                 if (
                     hasattr(value, "__get__")
                     and not callable(value)
@@ -88,7 +86,7 @@ def getInstanceVarNames(obj):
                     slots[name] = 1
     if "__dict__" in slots:
         del slots["__dict__"]
-    slots = list(sorted(slots.keys()))
+    slots = sorted(slots.keys())
     return slots
 
 
@@ -130,11 +128,9 @@ class PythonItem(NSObject):
         self._setValue = setvalue
         self.type = type(obj).__name__
         try:
-            self.value = repr(obj)[
-                :256
-            ]  # XXX [:256] makes it quite a bit faster for long reprs.
+            self.value = repr(obj)[:256]
             assert isinstance(self.value, str)
-        except:
+        except:  # noqa: E722, B001
             self.value = repr(NiceError(sys.exc_info()))
         self.object = obj
         self.childrenEditable = 0
@@ -157,7 +153,7 @@ class PythonItem(NSObject):
             self.children = getInstanceVarNames(obj)
             self._getChild = getattr
             self._setChild = setattr
-            self.childrenEditable = 1  # XXX we don't know that...
+            self.childrenEditable = 1
         self._childRefs = {}
 
     def setValue_(self, value):
@@ -177,8 +173,9 @@ class PythonItem(NSObject):
         name = self.children[child]
         try:
             obj = self._getChild(self.object, name)
-        except:
+        except:  # noqa: E722, B001
             obj = NiceError(sys.exc_info())
+
         if self.childrenEditable:
             childObj = PythonItem(name, obj, self.object, self._setChild)
         else:

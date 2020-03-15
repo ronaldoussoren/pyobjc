@@ -1,308 +1,308 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSGraphics(TestCase):
     def testConstants(self):
-        self.assertEqual(NSCompositeClear, 0)
-        self.assertEqual(NSCompositeCopy, 1)
-        self.assertEqual(NSCompositeSourceOver, 2)
-        self.assertEqual(NSCompositeSourceIn, 3)
-        self.assertEqual(NSCompositeSourceOut, 4)
-        self.assertEqual(NSCompositeSourceAtop, 5)
-        self.assertEqual(NSCompositeDestinationOver, 6)
-        self.assertEqual(NSCompositeDestinationIn, 7)
-        self.assertEqual(NSCompositeDestinationOut, 8)
-        self.assertEqual(NSCompositeDestinationAtop, 9)
-        self.assertEqual(NSCompositeXOR, 10)
-        self.assertEqual(NSCompositePlusDarker, 11)
-        self.assertEqual(NSCompositeHighlight, 12)
-        self.assertEqual(NSCompositePlusLighter, 13)
-        self.assertEqual(NSCompositeMultiply, 14)
-        self.assertEqual(NSCompositeScreen, 15)
-        self.assertEqual(NSCompositeOverlay, 16)
-        self.assertEqual(NSCompositeDarken, 17)
-        self.assertEqual(NSCompositeLighten, 18)
-        self.assertEqual(NSCompositeColorDodge, 19)
-        self.assertEqual(NSCompositeColorBurn, 20)
-        self.assertEqual(NSCompositeSoftLight, 21)
-        self.assertEqual(NSCompositeHardLight, 22)
-        self.assertEqual(NSCompositeDifference, 23)
-        self.assertEqual(NSCompositeExclusion, 24)
-        self.assertEqual(NSCompositeHue, 25)
-        self.assertEqual(NSCompositeSaturation, 26)
-        self.assertEqual(NSCompositeColor, 27)
-        self.assertEqual(NSCompositeLuminosity, 28)
+        self.assertEqual(AppKit.NSCompositeClear, 0)
+        self.assertEqual(AppKit.NSCompositeCopy, 1)
+        self.assertEqual(AppKit.NSCompositeSourceOver, 2)
+        self.assertEqual(AppKit.NSCompositeSourceIn, 3)
+        self.assertEqual(AppKit.NSCompositeSourceOut, 4)
+        self.assertEqual(AppKit.NSCompositeSourceAtop, 5)
+        self.assertEqual(AppKit.NSCompositeDestinationOver, 6)
+        self.assertEqual(AppKit.NSCompositeDestinationIn, 7)
+        self.assertEqual(AppKit.NSCompositeDestinationOut, 8)
+        self.assertEqual(AppKit.NSCompositeDestinationAtop, 9)
+        self.assertEqual(AppKit.NSCompositeXOR, 10)
+        self.assertEqual(AppKit.NSCompositePlusDarker, 11)
+        self.assertEqual(AppKit.NSCompositeHighlight, 12)
+        self.assertEqual(AppKit.NSCompositePlusLighter, 13)
+        self.assertEqual(AppKit.NSCompositeMultiply, 14)
+        self.assertEqual(AppKit.NSCompositeScreen, 15)
+        self.assertEqual(AppKit.NSCompositeOverlay, 16)
+        self.assertEqual(AppKit.NSCompositeDarken, 17)
+        self.assertEqual(AppKit.NSCompositeLighten, 18)
+        self.assertEqual(AppKit.NSCompositeColorDodge, 19)
+        self.assertEqual(AppKit.NSCompositeColorBurn, 20)
+        self.assertEqual(AppKit.NSCompositeSoftLight, 21)
+        self.assertEqual(AppKit.NSCompositeHardLight, 22)
+        self.assertEqual(AppKit.NSCompositeDifference, 23)
+        self.assertEqual(AppKit.NSCompositeExclusion, 24)
+        self.assertEqual(AppKit.NSCompositeHue, 25)
+        self.assertEqual(AppKit.NSCompositeSaturation, 26)
+        self.assertEqual(AppKit.NSCompositeColor, 27)
+        self.assertEqual(AppKit.NSCompositeLuminosity, 28)
 
-        self.assertEqual(NSCompositingOperationClear, 0)
-        self.assertEqual(NSCompositingOperationCopy, 1)
-        self.assertEqual(NSCompositingOperationSourceOver, 2)
-        self.assertEqual(NSCompositingOperationSourceIn, 3)
-        self.assertEqual(NSCompositingOperationSourceOut, 4)
-        self.assertEqual(NSCompositingOperationSourceAtop, 5)
-        self.assertEqual(NSCompositingOperationDestinationOver, 6)
-        self.assertEqual(NSCompositingOperationDestinationIn, 7)
-        self.assertEqual(NSCompositingOperationDestinationOut, 8)
-        self.assertEqual(NSCompositingOperationDestinationAtop, 9)
-        self.assertEqual(NSCompositingOperationXOR, 10)
-        self.assertEqual(NSCompositingOperationPlusDarker, 11)
-        self.assertEqual(NSCompositingOperationHighlight, 12)
-        self.assertEqual(NSCompositingOperationPlusLighter, 13)
-        self.assertEqual(NSCompositingOperationMultiply, 14)
-        self.assertEqual(NSCompositingOperationScreen, 15)
-        self.assertEqual(NSCompositingOperationOverlay, 16)
-        self.assertEqual(NSCompositingOperationDarken, 17)
-        self.assertEqual(NSCompositingOperationLighten, 18)
-        self.assertEqual(NSCompositingOperationColorDodge, 19)
-        self.assertEqual(NSCompositingOperationColorBurn, 20)
-        self.assertEqual(NSCompositingOperationSoftLight, 21)
-        self.assertEqual(NSCompositingOperationHardLight, 22)
-        self.assertEqual(NSCompositingOperationDifference, 23)
-        self.assertEqual(NSCompositingOperationExclusion, 24)
-        self.assertEqual(NSCompositingOperationHue, 25)
-        self.assertEqual(NSCompositingOperationSaturation, 26)
-        self.assertEqual(NSCompositingOperationColor, 27)
-        self.assertEqual(NSCompositingOperationLuminosity, 28)
+        self.assertEqual(AppKit.NSCompositingOperationClear, 0)
+        self.assertEqual(AppKit.NSCompositingOperationCopy, 1)
+        self.assertEqual(AppKit.NSCompositingOperationSourceOver, 2)
+        self.assertEqual(AppKit.NSCompositingOperationSourceIn, 3)
+        self.assertEqual(AppKit.NSCompositingOperationSourceOut, 4)
+        self.assertEqual(AppKit.NSCompositingOperationSourceAtop, 5)
+        self.assertEqual(AppKit.NSCompositingOperationDestinationOver, 6)
+        self.assertEqual(AppKit.NSCompositingOperationDestinationIn, 7)
+        self.assertEqual(AppKit.NSCompositingOperationDestinationOut, 8)
+        self.assertEqual(AppKit.NSCompositingOperationDestinationAtop, 9)
+        self.assertEqual(AppKit.NSCompositingOperationXOR, 10)
+        self.assertEqual(AppKit.NSCompositingOperationPlusDarker, 11)
+        self.assertEqual(AppKit.NSCompositingOperationHighlight, 12)
+        self.assertEqual(AppKit.NSCompositingOperationPlusLighter, 13)
+        self.assertEqual(AppKit.NSCompositingOperationMultiply, 14)
+        self.assertEqual(AppKit.NSCompositingOperationScreen, 15)
+        self.assertEqual(AppKit.NSCompositingOperationOverlay, 16)
+        self.assertEqual(AppKit.NSCompositingOperationDarken, 17)
+        self.assertEqual(AppKit.NSCompositingOperationLighten, 18)
+        self.assertEqual(AppKit.NSCompositingOperationColorDodge, 19)
+        self.assertEqual(AppKit.NSCompositingOperationColorBurn, 20)
+        self.assertEqual(AppKit.NSCompositingOperationSoftLight, 21)
+        self.assertEqual(AppKit.NSCompositingOperationHardLight, 22)
+        self.assertEqual(AppKit.NSCompositingOperationDifference, 23)
+        self.assertEqual(AppKit.NSCompositingOperationExclusion, 24)
+        self.assertEqual(AppKit.NSCompositingOperationHue, 25)
+        self.assertEqual(AppKit.NSCompositingOperationSaturation, 26)
+        self.assertEqual(AppKit.NSCompositingOperationColor, 27)
+        self.assertEqual(AppKit.NSCompositingOperationLuminosity, 28)
 
-        self.assertEqual(NSBackingStoreRetained, 0)
-        self.assertEqual(NSBackingStoreNonretained, 1)
-        self.assertEqual(NSBackingStoreBuffered, 2)
+        self.assertEqual(AppKit.NSBackingStoreRetained, 0)
+        self.assertEqual(AppKit.NSBackingStoreNonretained, 1)
+        self.assertEqual(AppKit.NSBackingStoreBuffered, 2)
 
-        self.assertEqual(NSWindowAbove, 1)
-        self.assertEqual(NSWindowBelow, -1)
-        self.assertEqual(NSWindowOut, 0)
+        self.assertEqual(AppKit.NSWindowAbove, 1)
+        self.assertEqual(AppKit.NSWindowBelow, -1)
+        self.assertEqual(AppKit.NSWindowOut, 0)
 
-        self.assertEqual(NSFocusRingOnly, 0)
-        self.assertEqual(NSFocusRingBelow, 1)
-        self.assertEqual(NSFocusRingAbove, 2)
+        self.assertEqual(AppKit.NSFocusRingOnly, 0)
+        self.assertEqual(AppKit.NSFocusRingBelow, 1)
+        self.assertEqual(AppKit.NSFocusRingAbove, 2)
 
-        self.assertEqual(NSFocusRingTypeDefault, 0)
-        self.assertEqual(NSFocusRingTypeNone, 1)
-        self.assertEqual(NSFocusRingTypeExterior, 2)
+        self.assertEqual(AppKit.NSFocusRingTypeDefault, 0)
+        self.assertEqual(AppKit.NSFocusRingTypeNone, 1)
+        self.assertEqual(AppKit.NSFocusRingTypeExterior, 2)
 
-        self.assertIsInstance(NSCalibratedWhiteColorSpace, unicode)
-        self.assertIsInstance(NSCalibratedBlackColorSpace, unicode)
-        self.assertIsInstance(NSCalibratedRGBColorSpace, unicode)
-        self.assertIsInstance(NSDeviceWhiteColorSpace, unicode)
-        self.assertIsInstance(NSDeviceBlackColorSpace, unicode)
-        self.assertIsInstance(NSDeviceRGBColorSpace, unicode)
-        self.assertIsInstance(NSDeviceCMYKColorSpace, unicode)
-        self.assertIsInstance(NSNamedColorSpace, unicode)
-        self.assertIsInstance(NSPatternColorSpace, unicode)
-        self.assertIsInstance(NSCustomColorSpace, unicode)
-        self.assertIsInstance(NSWhite, float)
-        self.assertIsInstance(NSLightGray, float)
-        self.assertIsInstance(NSDarkGray, float)
-        self.assertIsInstance(NSBlack, float)
+        self.assertIsInstance(AppKit.NSCalibratedWhiteColorSpace, str)
+        self.assertIsInstance(AppKit.NSCalibratedBlackColorSpace, str)
+        self.assertIsInstance(AppKit.NSCalibratedRGBColorSpace, str)
+        self.assertIsInstance(AppKit.NSDeviceWhiteColorSpace, str)
+        self.assertIsInstance(AppKit.NSDeviceBlackColorSpace, str)
+        self.assertIsInstance(AppKit.NSDeviceRGBColorSpace, str)
+        self.assertIsInstance(AppKit.NSDeviceCMYKColorSpace, str)
+        self.assertIsInstance(AppKit.NSNamedColorSpace, str)
+        self.assertIsInstance(AppKit.NSPatternColorSpace, str)
+        self.assertIsInstance(AppKit.NSCustomColorSpace, str)
+        self.assertIsInstance(AppKit.NSWhite, float)
+        self.assertIsInstance(AppKit.NSLightGray, float)
+        self.assertIsInstance(AppKit.NSDarkGray, float)
+        self.assertIsInstance(AppKit.NSBlack, float)
 
-        self.assertIsInstance(NSDeviceResolution, unicode)
-        self.assertIsInstance(NSDeviceColorSpaceName, unicode)
-        self.assertIsInstance(NSDeviceBitsPerSample, unicode)
-        self.assertIsInstance(NSDeviceIsScreen, unicode)
-        self.assertIsInstance(NSDeviceIsPrinter, unicode)
-        self.assertIsInstance(NSDeviceSize, unicode)
-        self.assertEqual(NSAnimationEffectDisappearingItemDefault, 0)
-        self.assertEqual(NSAnimationEffectPoof, 10)
+        self.assertIsInstance(AppKit.NSDeviceResolution, str)
+        self.assertIsInstance(AppKit.NSDeviceColorSpaceName, str)
+        self.assertIsInstance(AppKit.NSDeviceBitsPerSample, str)
+        self.assertIsInstance(AppKit.NSDeviceIsScreen, str)
+        self.assertIsInstance(AppKit.NSDeviceIsPrinter, str)
+        self.assertIsInstance(AppKit.NSDeviceSize, str)
+        self.assertEqual(AppKit.NSAnimationEffectDisappearingItemDefault, 0)
+        self.assertEqual(AppKit.NSAnimationEffectPoof, 10)
 
-        self.assertEqual(NSDisplayGamutSRGB, 1)
-        self.assertEqual(NSDisplayGamutP3, 2)
+        self.assertEqual(AppKit.NSDisplayGamutSRGB, 1)
+        self.assertEqual(AppKit.NSDisplayGamutP3, 2)
 
     def testFunctions(self):
-        app = NSApplication.sharedApplication()
+        app = AppKit.NSApplication.sharedApplication()  # noqa: F841
 
-        self.assertArgHasType(NSBestDepth, 4, b"o^" + objc._C_NSBOOL)
-        self.assertArgIsBOOL(NSBestDepth, 3)
-        d, e = NSBestDepth(NSDeviceRGBColorSpace, 8, 32, False, None)
-        self.assertIsInstance(d, (int, long))
+        self.assertArgHasType(AppKit.NSBestDepth, 4, b"o^" + objc._C_NSBOOL)
+        self.assertArgIsBOOL(AppKit.NSBestDepth, 3)
+        d, e = AppKit.NSBestDepth(AppKit.NSDeviceRGBColorSpace, 8, 32, False, None)
+        self.assertIsInstance(d, int)
         self.assertIsInstance(e, bool)
 
-        self.assertResultIsBOOL(NSPlanarFromDepth)
-        self.assertIsInstance(NSPlanarFromDepth(0), bool)
+        self.assertResultIsBOOL(AppKit.NSPlanarFromDepth)
+        self.assertIsInstance(AppKit.NSPlanarFromDepth(0), bool)
 
-        self.assertIsInstance(NSColorSpaceFromDepth(0), unicode)
-        self.assertIsInstance(NSBitsPerSampleFromDepth(0), (int, long))
-        self.assertIsInstance(NSBitsPerPixelFromDepth(0), (int, long))
+        self.assertIsInstance(AppKit.NSColorSpaceFromDepth(0), str)
+        self.assertIsInstance(AppKit.NSBitsPerSampleFromDepth(0), int)
+        self.assertIsInstance(AppKit.NSBitsPerPixelFromDepth(0), int)
         self.assertIsInstance(
-            NSNumberOfColorComponents(NSDeviceRGBColorSpace), (int, long)
+            AppKit.NSNumberOfColorComponents(AppKit.NSDeviceRGBColorSpace), int
         )
 
-        v = NSAvailableWindowDepths()
+        v = AppKit.NSAvailableWindowDepths()
         self.assertIsInstance(v, tuple)
         self.assertNotEqual(len(v), 0)
         self.assertIsInstance(v[0], int)
 
-        img = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
-            None, 255, 255, 8, 4, True, False, NSCalibratedRGBColorSpace, 0, 0, 0
+        img = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+            None, 255, 255, 8, 4, True, False, AppKit.NSCalibratedRGBColorSpace, 0, 0, 0
         )
-        context = NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
-        current = NSGraphicsContext.currentContext()
+        context = AppKit.NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
+        current = AppKit.NSGraphicsContext.currentContext()
         try:
-            NSGraphicsContext.setCurrentContext_(context)
-            NSRectFill(((0, 0), (1, 2)))
+            AppKit.NSGraphicsContext.setCurrentContext_(context)
+            AppKit.NSRectFill(((0, 0), (1, 2)))
 
-            self.assertArgSizeInArg(NSRectFillList, 0, 1)
-            NSRectFillList([((0, 0), (1, 2)), ((10, 50), (9, 9))], 2)
+            self.assertArgSizeInArg(AppKit.NSRectFillList, 0, 1)
+            AppKit.NSRectFillList([((0, 0), (1, 2)), ((10, 50), (9, 9))], 2)
 
-            self.assertArgSizeInArg(NSRectFillListWithGrays, 0, 2)
-            self.assertArgSizeInArg(NSRectFillListWithGrays, 1, 2)
-            NSRectFillListWithGrays(
+            self.assertArgSizeInArg(AppKit.NSRectFillListWithGrays, 0, 2)
+            self.assertArgSizeInArg(AppKit.NSRectFillListWithGrays, 1, 2)
+            AppKit.NSRectFillListWithGrays(
                 [((0, 0), (1, 2)), ((10, 50), (9, 9))], (0.5, 0.6), 2
             )
 
-            self.assertArgSizeInArg(NSRectFillListWithColors, 0, 2)
-            self.assertArgSizeInArg(NSRectFillListWithColors, 1, 2)
-            NSRectFillListWithColors(
+            self.assertArgSizeInArg(AppKit.NSRectFillListWithColors, 0, 2)
+            self.assertArgSizeInArg(AppKit.NSRectFillListWithColors, 1, 2)
+            AppKit.NSRectFillListWithColors(
                 [((0, 0), (1, 2)), ((10, 50), (9, 9))],
-                (NSColor.blueColor(), NSColor.redColor()),
+                (AppKit.NSColor.blueColor(), AppKit.NSColor.redColor()),
                 2,
             )
 
-            NSRectFillUsingOperation(((0, 0), (1, 2)), NSCompositeSourceOver)
-
-            self.assertArgSizeInArg(NSRectFillListUsingOperation, 0, 1)
-            NSRectFillListUsingOperation(
-                [((0, 0), (1, 2)), ((10, 50), (9, 9))], 2, NSCompositeSourceOver
+            AppKit.NSRectFillUsingOperation(
+                ((0, 0), (1, 2)), AppKit.NSCompositeSourceOver
             )
 
-            self.assertArgSizeInArg(NSRectFillListWithColorsUsingOperation, 0, 2)
-            self.assertArgSizeInArg(NSRectFillListWithColorsUsingOperation, 1, 2)
-            NSRectFillListWithColorsUsingOperation(
+            self.assertArgSizeInArg(AppKit.NSRectFillListUsingOperation, 0, 1)
+            AppKit.NSRectFillListUsingOperation(
+                [((0, 0), (1, 2)), ((10, 50), (9, 9))], 2, AppKit.NSCompositeSourceOver
+            )
+
+            self.assertArgSizeInArg(AppKit.NSRectFillListWithColorsUsingOperation, 0, 2)
+            self.assertArgSizeInArg(AppKit.NSRectFillListWithColorsUsingOperation, 1, 2)
+            AppKit.NSRectFillListWithColorsUsingOperation(
                 [((0, 0), (1, 2)), ((10, 50), (9, 9))],
-                (NSColor.blueColor(), NSColor.redColor()),
+                (AppKit.NSColor.blueColor(), AppKit.NSColor.redColor()),
                 2,
-                NSCompositeSourceOver,
+                AppKit.NSCompositeSourceOver,
             )
 
-            NSFrameRect(((5, 5), (20, 30)))
-            NSFrameRectWithWidth(((5, 5), (20, 30)), 4)
-            NSFrameRectWithWidthUsingOperation(
-                ((5, 5), (20, 30)), 4, NSCompositeSourceOver
+            AppKit.NSFrameRect(((5, 5), (20, 30)))
+            AppKit.NSFrameRectWithWidth(((5, 5), (20, 30)), 4)
+            AppKit.NSFrameRectWithWidthUsingOperation(
+                ((5, 5), (20, 30)), 4, AppKit.NSCompositeSourceOver
             )
 
-            NSRectClip(((5, 5), (200, 200)))
-            self.assertArgSizeInArg(NSRectClipList, 0, 1)
-            NSRectClipList([((5, 5), (200, 200)), ((50, 50), (90, 100))], 2)
+            AppKit.NSRectClip(((5, 5), (200, 200)))
+            self.assertArgSizeInArg(AppKit.NSRectClipList, 0, 1)
+            AppKit.NSRectClipList([((5, 5), (200, 200)), ((50, 50), (90, 100))], 2)
 
-            color = NSReadPixel((5, 5))
-            self.assertIsInstance(color, NSColor)
+            color = AppKit.NSReadPixel((5, 5))
+            self.assertIsInstance(color, AppKit.NSColor)
 
-            self.assertArgSizeInArg(NSDrawTiledRects, 2, 4)
-            self.assertArgSizeInArg(NSDrawTiledRects, 3, 4)
-            self.assertArgIsIn(NSDrawTiledRects, 2)
-            self.assertArgIsIn(NSDrawTiledRects, 3)
-            NSDrawTiledRects(
+            self.assertArgSizeInArg(AppKit.NSDrawTiledRects, 2, 4)
+            self.assertArgSizeInArg(AppKit.NSDrawTiledRects, 3, 4)
+            self.assertArgIsIn(AppKit.NSDrawTiledRects, 2)
+            self.assertArgIsIn(AppKit.NSDrawTiledRects, 3)
+            AppKit.NSDrawTiledRects(
                 ((10, 10), (50, 50)),
                 ((15, 15), (10, 10)),
-                [NSMinXEdge, NSMaxXEdge],
+                [AppKit.NSMinXEdge, AppKit.NSMaxXEdge],
                 [0.8, 0.9],
                 2,
             )
 
-            NSDrawGrayBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
-            NSDrawGroove(((0, 0), (10, 10)), ((0, 0), (50, 50)))
-            NSDrawWhiteBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
-            NSDrawButton(((0, 0), (10, 10)), ((0, 0), (50, 50)))
-            NSEraseRect(((0, 0), (10, 10)))
-            NSCopyBits(0, ((10, 10), (50, 50)), (50, 50))
-            NSHighlightRect(((10, 10), (50, 50)))
-            NSDrawDarkBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
-            NSDrawLightBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
-            NSDottedFrameRect(((10, 10), (50, 50)))
-            NSDrawWindowBackground(((10, 10), (50, 50)))
+            AppKit.NSDrawGrayBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            AppKit.NSDrawGroove(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            AppKit.NSDrawWhiteBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            AppKit.NSDrawButton(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            AppKit.NSEraseRect(((0, 0), (10, 10)))
+            AppKit.NSCopyBits(0, ((10, 10), (50, 50)), (50, 50))
+            AppKit.NSHighlightRect(((10, 10), (50, 50)))
+            AppKit.NSDrawDarkBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            AppKit.NSDrawLightBezel(((0, 0), (10, 10)), ((0, 0), (50, 50)))
+            AppKit.NSDottedFrameRect(((10, 10), (50, 50)))
+            AppKit.NSDrawWindowBackground(((10, 10), (50, 50)))
 
         finally:
-            NSGraphicsContext.setCurrentContext_(current)
+            AppKit.NSGraphicsContext.setCurrentContext_(current)
 
-            NSSetFocusRingStyle(NSFocusRingAbove)
+            AppKit.NSSetFocusRingStyle(AppKit.NSFocusRingAbove)
 
-            self.assertArgIsOut(NSGetWindowServerMemory, 1)
-            self.assertArgIsOut(NSGetWindowServerMemory, 2)
-            self.assertArgIsOut(NSGetWindowServerMemory, 3)
-            r = NSGetWindowServerMemory(0, None, None, None)
-            self.assertIsInstance(r[0], (int, long))
-            self.assertIsInstance(r[1], (int, long))
-            self.assertIsInstance(r[2], (int, long))
+            self.assertArgIsOut(AppKit.NSGetWindowServerMemory, 1)
+            self.assertArgIsOut(AppKit.NSGetWindowServerMemory, 2)
+            self.assertArgIsOut(AppKit.NSGetWindowServerMemory, 3)
+            r = AppKit.NSGetWindowServerMemory(0, None, None, None)
+            self.assertIsInstance(r[0], int)
+            self.assertIsInstance(r[1], int)
+            self.assertIsInstance(r[2], int)
 
-            self.assertArgSizeInArg(NSDrawColorTiledRects, 2, 4)
-            self.assertArgSizeInArg(NSDrawColorTiledRects, 3, 4)
-            self.assertArgIsIn(NSDrawColorTiledRects, 2)
-            self.assertArgIsIn(NSDrawColorTiledRects, 3)
-            NSDrawColorTiledRects(
+            self.assertArgSizeInArg(AppKit.NSDrawColorTiledRects, 2, 4)
+            self.assertArgSizeInArg(AppKit.NSDrawColorTiledRects, 3, 4)
+            self.assertArgIsIn(AppKit.NSDrawColorTiledRects, 2)
+            self.assertArgIsIn(AppKit.NSDrawColorTiledRects, 3)
+            AppKit.NSDrawColorTiledRects(
                 ((10, 10), (50, 50)),
                 ((15, 15), (10, 10)),
-                [NSMinXEdge, NSMaxXEdge],
-                [NSColor.redColor(), NSColor.blueColor()],
+                [AppKit.NSMinXEdge, AppKit.NSMaxXEdge],
+                [AppKit.NSColor.redColor(), AppKit.NSColor.blueColor()],
                 2,
             )
 
-            # self.assertArgIsBOOL(NSDrawBitmap, 7)
-            # self.assertArgIsBOOL(NSDrawBitmap, 8)
-            # NSDrawBitmap(((0, 0), (10, 10)), 10, 20, 8, 4, 32, 40, False, True,
-            #        NSDeviceRGBColorSpace, [' '*4*10*20, '', '', '', ''])
+            # self.assertArgIsBOOL(AppKit.NSDrawBitmap, 7)
+            # self.assertArgIsBOOL(AppKit.NSDrawBitmap, 8)
+            # AppKit.NSDrawBitmap(((0, 0), (10, 10)), 10, 20, 8, 4, 32, 40, False, True,
+            #        AppKit.NSDeviceRGBColorSpace, [' '*4*10*20, '', '', '', ''])
 
-            self.assertArgSizeInArg(NSWindowList, 1, 0)
-            self.assertArgIsOut(NSWindowList, 1)
-            v = NSWindowList(5, None)
+            self.assertArgSizeInArg(AppKit.NSWindowList, 1, 0)
+            self.assertArgIsOut(AppKit.NSWindowList, 1)
+            v = AppKit.NSWindowList(5, None)
             self.assertIsInstance(v, tuple)
             self.assertEqual(len(v), 5)
-            self.assertIsInstance(v[0], (int, long))
+            self.assertIsInstance(v[0], int)
 
-            self.assertArgIsOut(NSCountWindowsForContext, 1)
-            v = NSCountWindowsForContext(1, None)
-            self.assertIsInstance(v, (int, long))
+            self.assertArgIsOut(AppKit.NSCountWindowsForContext, 1)
+            v = AppKit.NSCountWindowsForContext(1, None)
+            self.assertIsInstance(v, int)
 
-            self.assertArgIsOut(NSWindowListForContext, 2)
-            self.assertArgSizeInArg(NSWindowListForContext, 2, 1)
-            v = NSWindowListForContext(0, 5, None)
+            self.assertArgIsOut(AppKit.NSWindowListForContext, 2)
+            self.assertArgSizeInArg(AppKit.NSWindowListForContext, 2, 1)
+            v = AppKit.NSWindowListForContext(0, 5, None)
             self.assertIsInstance(v, tuple)
             self.assertEqual(len(v), 5)
-            self.assertIsInstance(v[0], (int, long))
+            self.assertIsInstance(v[0], int)
 
-        NSBeep()
-        count = NSCountWindows(None)
-        self.assertIsInstance(count, (int, long))
+        AppKit.NSBeep()
+        count = AppKit.NSCountWindows(None)
+        self.assertIsInstance(count, int)
 
         try:
-            NSDisableScreenUpdates()
+            AppKit.NSDisableScreenUpdates()
         except objc.error:
             pass
 
         try:
-            NSEnableScreenUpdates()
+            AppKit.NSEnableScreenUpdates()
         except objc.error:
             pass
 
-        self.assertArgIsSEL(NSShowAnimationEffect, 4, b"v@:^v")
-        self.assertArgHasType(NSShowAnimationEffect, 5, b"^v")
+        self.assertArgIsSEL(AppKit.NSShowAnimationEffect, 4, b"v@:^v")
+        self.assertArgHasType(AppKit.NSShowAnimationEffect, 5, b"^v")
         try:
-            NSShowAnimationEffect(
-                NSAnimationEffectPoof, (10, 10), (20, 30), None, None, None
+            AppKit.NSShowAnimationEffect(
+                AppKit.NSAnimationEffectPoof, (10, 10), (20, 30), None, None, None
             )
         except objc.error:
             pass
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertEqual(NSColorRenderingIntentDefault, 0)
-        self.assertEqual(NSColorRenderingIntentAbsoluteColorimetric, 1)
-        self.assertEqual(NSColorRenderingIntentRelativeColorimetric, 2)
-        self.assertEqual(NSColorRenderingIntentPerceptual, 3)
-        self.assertEqual(NSColorRenderingIntentSaturation, 4)
+        self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
+        self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
+        self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
+        self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
+        self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
 
-        self.assertEqual(NSImageInterpolationDefault, 0)
-        self.assertEqual(NSImageInterpolationNone, 1)
-        self.assertEqual(NSImageInterpolationLow, 2)
-        self.assertEqual(NSImageInterpolationHigh, 3)
+        self.assertEqual(AppKit.NSImageInterpolationDefault, 0)
+        self.assertEqual(AppKit.NSImageInterpolationNone, 1)
+        self.assertEqual(AppKit.NSImageInterpolationLow, 2)
+        self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSWindowDepthTwentyfourBitRGB, 0x208)
-        self.assertEqual(NSWindowDepthSixtyfourBitRGB, 0x210)
-        self.assertEqual(NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)
+        self.assertEqual(AppKit.NSWindowDepthTwentyfourBitRGB, 0x208)
+        self.assertEqual(AppKit.NSWindowDepthSixtyfourBitRGB, 0x210)
+        self.assertEqual(AppKit.NSWindowDepthOnehundredtwentyeightBitRGB, 0x220)
 
-        self.assertEqual(NSImageInterpolationMedium, 4)
+        self.assertEqual(AppKit.NSImageInterpolationMedium, 4)
 
-
-if __name__ == "__main__":
-    NSApplication.sharedApplication()
-    main()
+    AppKit.NSApplication.sharedApplication()

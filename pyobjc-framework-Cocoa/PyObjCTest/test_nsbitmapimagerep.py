@@ -2,9 +2,9 @@ import array
 import sys
 
 import objc
-from AppKit import *
+import AppKit
 from objc import NO, YES
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBitmapImageRep(TestCase):
@@ -14,13 +14,13 @@ class TestNSBitmapImageRep(TestCase):
         height = 256
         dataPlanes = (None, None, None, None, None)
         dataPlanes = None
-        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
-            dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+        i1 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+            dataPlanes, width, height, 8, 3, NO, NO, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
         self.assertTrue(i1)
 
-        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
-            None, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+        i2 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+            None, width, height, 8, 3, NO, NO, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
         self.assertTrue(i2)
 
@@ -28,7 +28,7 @@ class TestNSBitmapImageRep(TestCase):
         width = 16
         height = 16
 
-        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
+        i1 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
             None,
             width,
             height,
@@ -36,12 +36,12 @@ class TestNSBitmapImageRep(TestCase):
             3,
             NO,
             NO,
-            NSDeviceRGBColorSpace,
-            NSAlphaFirstBitmapFormat,
+            AppKit.NSDeviceRGBColorSpace,
+            AppKit.NSAlphaFirstBitmapFormat,
             0,
             0,
         )
-        self.assertIsInstance(i1, NSBitmapImageRep)
+        self.assertIsInstance(i1, AppKit.NSBitmapImageRep)
 
         singlePlane = objc.allocateBuffer(width * height * 4)
         for i in range(0, width * height):
@@ -52,7 +52,7 @@ class TestNSBitmapImageRep(TestCase):
             singlePlane[si + 3] = 4
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer
-        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
+        i2 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
             dataPlanes,
             width,
             height,
@@ -60,12 +60,12 @@ class TestNSBitmapImageRep(TestCase):
             3,
             NO,
             NO,
-            NSDeviceRGBColorSpace,
-            NSAlphaFirstBitmapFormat,
+            AppKit.NSDeviceRGBColorSpace,
+            AppKit.NSAlphaFirstBitmapFormat,
             0,
             0,
         )
-        self.assertIsInstance(i2, NSBitmapImageRep)
+        self.assertIsInstance(i2, AppKit.NSBitmapImageRep)
 
         bitmapData = i2.bitmapData()
 
@@ -96,8 +96,8 @@ class TestNSBitmapImageRep(TestCase):
         dataPlanes = (rPlane, gPlane, bPlane, None, None)
 
         # test planar, pre-made buffer
-        i1 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
-            dataPlanes, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0
+        i1 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+            dataPlanes, width, height, 8, 3, NO, YES, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
         self.assertTrue(i1)
 
@@ -122,15 +122,15 @@ class TestNSBitmapImageRep(TestCase):
 
         dataPlanes = (singlePlane, None, None, None, None)
         # test non-planar, premade buffer
-        i2 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
-            dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+        i2 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+            dataPlanes, width, height, 8, 3, NO, NO, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
 
         # test grey scale
         greyPlane = array.array("B")
         greyPlane.fromlist([x % 256 for x in range(0, height) for x in range(0, width)])
         greyPlanes = (greyPlane, None, None, None, None)
-        greyImage = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
+        greyImage = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
             greyPlanes,
             width,
             height,
@@ -138,14 +138,15 @@ class TestNSBitmapImageRep(TestCase):
             1,
             NO,
             YES,
-            NSCalibratedWhiteColorSpace,
+            AppKit.NSCalibratedWhiteColorSpace,
             width,
             8,
         )
+        self.assertIsNot(greyImage, None)
 
-        # test planar, NSBIR allocated buffer
-        i3 = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
-            None, width, height, 8, 3, NO, YES, NSDeviceRGBColorSpace, 0, 0
+        # test planar, AppKit.NSBIR allocated buffer
+        i3 = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+            None, width, height, 8, 3, NO, YES, AppKit.NSDeviceRGBColorSpace, 0, 0
         )
 
         r, g, b, a, o = i3.getBitmapDataPlanes_()
@@ -166,15 +167,10 @@ class TestNSBitmapImageRep(TestCase):
         bitmapData = i2.bitmapData()
 
         self.assertEqual(len(bitmapData), len(singlePlane))
-        try:
-            memoryview
-        except NameError:
-            self.assertEqual(bitmapData, singlePlane)
-        else:
-            self.assertEqual(bitmapData.tobytes(), singlePlane)
+        self.assertEqual(bitmapData.tobytes(), singlePlane)
 
         a = array.array("L", [255] * 4)
-        self.assertArgIsOut(NSBitmapImageRep.getPixel_atX_y_, 0)
+        self.assertArgIsOut(AppKit.NSBitmapImageRep.getPixel_atX_y_, 0)
         d = i2.getPixel_atX_y_(a, 1, 1)
         self.assertIs(a, d)
 
@@ -182,7 +178,7 @@ class TestNSBitmapImageRep(TestCase):
 class TestBadCreation(TestCase):
 
     # Redirect stderr to /dev/null for the duration of this test,
-    # NSBitmapImageRep will write an error message to stderr.
+    # AppKit.NSBitmapImageRep will write an error message to stderr.
 
     def setUp(self):
         import os
@@ -198,98 +194,105 @@ class TestBadCreation(TestCase):
         os.dup2(self.duppedStderr, 2)
 
     def test_AllocInit(self):
-        y = NSBitmapImageRep.alloc()
+        y = AppKit.NSBitmapImageRep.alloc()
         try:
             self.assertRaises(ValueError, y.init)
         finally:
             width = 256
             height = 256
             dataPlanes = (None, None, None, None, None)
-            y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(
-                dataPlanes, width, height, 8, 3, NO, NO, NSDeviceRGBColorSpace, 0, 0
+            y = y.initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bytesPerRow_bitsPerPixel_(  # noqa: B950
+                dataPlanes,
+                width,
+                height,
+                8,
+                3,
+                NO,
+                NO,
+                AppKit.NSDeviceRGBColorSpace,
+                0,
+                0,
             )
 
     def testConstants(self):
-        self.assertEqual(NSTIFFCompressionNone, 1)
-        self.assertEqual(NSTIFFCompressionCCITTFAX3, 3)
-        self.assertEqual(NSTIFFCompressionCCITTFAX4, 4)
-        self.assertEqual(NSTIFFCompressionLZW, 5)
-        self.assertEqual(NSTIFFCompressionJPEG, 6)
-        self.assertEqual(NSTIFFCompressionNEXT, 32766)
-        self.assertEqual(NSTIFFCompressionPackBits, 32773)
-        self.assertEqual(NSTIFFCompressionOldJPEG, 32865)
+        self.assertEqual(AppKit.NSTIFFCompressionNone, 1)
+        self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX3, 3)
+        self.assertEqual(AppKit.NSTIFFCompressionCCITTFAX4, 4)
+        self.assertEqual(AppKit.NSTIFFCompressionLZW, 5)
+        self.assertEqual(AppKit.NSTIFFCompressionJPEG, 6)
+        self.assertEqual(AppKit.NSTIFFCompressionNEXT, 32766)
+        self.assertEqual(AppKit.NSTIFFCompressionPackBits, 32773)
+        self.assertEqual(AppKit.NSTIFFCompressionOldJPEG, 32865)
 
-        self.assertEqual(NSTIFFFileType, 0)
-        self.assertEqual(NSBMPFileType, 1)
-        self.assertEqual(NSGIFFileType, 2)
-        self.assertEqual(NSJPEGFileType, 3)
-        self.assertEqual(NSPNGFileType, 4)
-        self.assertEqual(NSJPEG2000FileType, 5)
+        self.assertEqual(AppKit.NSTIFFFileType, 0)
+        self.assertEqual(AppKit.NSBMPFileType, 1)
+        self.assertEqual(AppKit.NSGIFFileType, 2)
+        self.assertEqual(AppKit.NSJPEGFileType, 3)
+        self.assertEqual(AppKit.NSPNGFileType, 4)
+        self.assertEqual(AppKit.NSJPEG2000FileType, 5)
 
-        self.assertEqual(NSBitmapImageFileTypeTIFF, 0)
-        self.assertEqual(NSBitmapImageFileTypeBMP, 1)
-        self.assertEqual(NSBitmapImageFileTypeGIF, 2)
-        self.assertEqual(NSBitmapImageFileTypeJPEG, 3)
-        self.assertEqual(NSBitmapImageFileTypePNG, 4)
-        self.assertEqual(NSBitmapImageFileTypeJPEG2000, 5)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeTIFF, 0)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeBMP, 1)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeGIF, 2)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeJPEG, 3)
+        self.assertEqual(AppKit.NSBitmapImageFileTypePNG, 4)
+        self.assertEqual(AppKit.NSBitmapImageFileTypeJPEG2000, 5)
 
-        self.assertEqual(NSBitmapFormatAlphaFirst, 1 << 0)
-        self.assertEqual(NSBitmapFormatAlphaNonpremultiplied, 1 << 1)
-        self.assertEqual(NSBitmapFormatFloatingPointSamples, 1 << 2)
-        self.assertEqual(NSBitmapFormatSixteenBitLittleEndian, 1 << 8)
-        self.assertEqual(NSBitmapFormatThirtyTwoBitLittleEndian, 1 << 9)
-        self.assertEqual(NSBitmapFormatSixteenBitBigEndian, 1 << 10)
-        self.assertEqual(NSBitmapFormatThirtyTwoBitBigEndian, 1 << 11)
+        self.assertEqual(AppKit.NSBitmapFormatAlphaFirst, 1 << 0)
+        self.assertEqual(AppKit.NSBitmapFormatAlphaNonpremultiplied, 1 << 1)
+        self.assertEqual(AppKit.NSBitmapFormatFloatingPointSamples, 1 << 2)
+        self.assertEqual(AppKit.NSBitmapFormatSixteenBitLittleEndian, 1 << 8)
+        self.assertEqual(AppKit.NSBitmapFormatThirtyTwoBitLittleEndian, 1 << 9)
+        self.assertEqual(AppKit.NSBitmapFormatSixteenBitBigEndian, 1 << 10)
+        self.assertEqual(AppKit.NSBitmapFormatThirtyTwoBitBigEndian, 1 << 11)
 
-        self.assertEqual(NSImageRepLoadStatusUnknownType, -1)
-        self.assertEqual(NSImageRepLoadStatusReadingHeader, -2)
-        self.assertEqual(NSImageRepLoadStatusWillNeedAllData, -3)
-        self.assertEqual(NSImageRepLoadStatusInvalidData, -4)
-        self.assertEqual(NSImageRepLoadStatusUnexpectedEOF, -5)
-        self.assertEqual(NSImageRepLoadStatusCompleted, -6)
+        self.assertEqual(AppKit.NSImageRepLoadStatusUnknownType, -1)
+        self.assertEqual(AppKit.NSImageRepLoadStatusReadingHeader, -2)
+        self.assertEqual(AppKit.NSImageRepLoadStatusWillNeedAllData, -3)
+        self.assertEqual(AppKit.NSImageRepLoadStatusInvalidData, -4)
+        self.assertEqual(AppKit.NSImageRepLoadStatusUnexpectedEOF, -5)
+        self.assertEqual(AppKit.NSImageRepLoadStatusCompleted, -6)
 
-        self.assertEqual(NSAlphaFirstBitmapFormat, 1 << 0)
-        self.assertEqual(NSAlphaNonpremultipliedBitmapFormat, 1 << 1)
-        self.assertEqual(NSFloatingPointSamplesBitmapFormat, 1 << 2)
+        self.assertEqual(AppKit.NSAlphaFirstBitmapFormat, 1 << 0)
+        self.assertEqual(AppKit.NSAlphaNonpremultipliedBitmapFormat, 1 << 1)
+        self.assertEqual(AppKit.NSFloatingPointSamplesBitmapFormat, 1 << 2)
 
-        self.assertIsInstance(NSImageCompressionMethod, unicode)
-        self.assertIsInstance(NSImageCompressionFactor, unicode)
-        self.assertIsInstance(NSImageDitherTransparency, unicode)
-        self.assertIsInstance(NSImageRGBColorTable, unicode)
-        self.assertIsInstance(NSImageInterlaced, unicode)
-        self.assertIsInstance(NSImageColorSyncProfileData, unicode)
-        self.assertIsInstance(NSImageFrameCount, unicode)
-        self.assertIsInstance(NSImageCurrentFrame, unicode)
-        self.assertIsInstance(NSImageCurrentFrameDuration, unicode)
-        self.assertIsInstance(NSImageLoopCount, unicode)
-        self.assertIsInstance(NSImageGamma, unicode)
-        self.assertIsInstance(NSImageProgressive, unicode)
-        self.assertIsInstance(NSImageEXIFData, unicode)
-        self.assertIsInstance(NSImageFallbackBackgroundColor, unicode)
+        self.assertIsInstance(AppKit.NSImageCompressionMethod, str)
+        self.assertIsInstance(AppKit.NSImageCompressionFactor, str)
+        self.assertIsInstance(AppKit.NSImageDitherTransparency, str)
+        self.assertIsInstance(AppKit.NSImageRGBColorTable, str)
+        self.assertIsInstance(AppKit.NSImageInterlaced, str)
+        self.assertIsInstance(AppKit.NSImageColorSyncProfileData, str)
+        self.assertIsInstance(AppKit.NSImageFrameCount, str)
+        self.assertIsInstance(AppKit.NSImageCurrentFrame, str)
+        self.assertIsInstance(AppKit.NSImageCurrentFrameDuration, str)
+        self.assertIsInstance(AppKit.NSImageLoopCount, str)
+        self.assertIsInstance(AppKit.NSImageGamma, str)
+        self.assertIsInstance(AppKit.NSImageProgressive, str)
+        self.assertIsInstance(AppKit.NSImageEXIFData, str)
+        self.assertIsInstance(AppKit.NSImageFallbackBackgroundColor, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertEqual(NS16BitLittleEndianBitmapFormat, (1 << 8))
-        self.assertEqual(NS32BitLittleEndianBitmapFormat, (1 << 9))
-        self.assertEqual(NS16BitBigEndianBitmapFormat, (1 << 10))
-        self.assertEqual(NS32BitBigEndianBitmapFormat, (1 << 11))
+        self.assertEqual(AppKit.NS16BitLittleEndianBitmapFormat, (1 << 8))
+        self.assertEqual(AppKit.NS32BitLittleEndianBitmapFormat, (1 << 9))
+        self.assertEqual(AppKit.NS16BitBigEndianBitmapFormat, (1 << 10))
+        self.assertEqual(AppKit.NS32BitBigEndianBitmapFormat, (1 << 11))
 
     def testTiffCompression(self):
-        lst, nr = NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
+        lst, nr = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
         self.assertIsInstance(lst, tuple)
-        self.assertIsInstance(nr, (int, long))
+        self.assertIsInstance(nr, int)
         self.assertEqual(len(lst), nr)
         self.assertNotEqual(len(lst), 0)
-        self.assertIsInstance(lst[0], (int, long))
+        self.assertIsInstance(lst[0], int)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSBitmapImageRep.isPlanar)
-        self.assertResultIsBOOL(NSBitmapImageRep.canBeCompressedUsing_)
-        self.assertArgIsBOOL(NSBitmapImageRep.incrementalLoadFromData_complete_, 1)
+        self.assertResultIsBOOL(AppKit.NSBitmapImageRep.isPlanar)
+        self.assertResultIsBOOL(AppKit.NSBitmapImageRep.canBeCompressedUsing_)
+        self.assertArgIsBOOL(
+            AppKit.NSBitmapImageRep.incrementalLoadFromData_complete_, 1
+        )
 
-        self.assertArgIsOut(NSBitmapImageRep.getCompression_factor_, 0)
-        self.assertArgIsOut(NSBitmapImageRep.getCompression_factor_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 0)
+        self.assertArgIsOut(AppKit.NSBitmapImageRep.getCompression_factor_, 1)

@@ -1,13 +1,12 @@
 import Foundation
-from Foundation import *
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSInvocation(TestCase):
     def test_dummy(self):
-        value = NSMutableArray.arrayWithArray_([1, 2, 3])
+        value = Foundation.NSMutableArray.arrayWithArray_([1, 2, 3])
 
-        invocation = NSInvocation.invocationWithMethodSignature_(
+        invocation = Foundation.NSInvocation.invocationWithMethodSignature_(
             value.methodSignatureForSelector_("count")
         )
         invocation.setSelector_("count")
@@ -15,10 +14,10 @@ class TestNSInvocation(TestCase):
         invocation.invoke()
 
         v = invocation.getReturnValue_(None)
-        self.assertIsInstance(v, (int, long))
+        self.assertIsInstance(v, int)
         self.assertEqual(v, 3)
 
-        invocation = NSInvocation.invocationWithMethodSignature_(
+        invocation = Foundation.NSInvocation.invocationWithMethodSignature_(
             value.methodSignatureForSelector_("addObject:")
         )
         invocation.setSelector_("addObject:")
@@ -31,7 +30,7 @@ class TestNSInvocation(TestCase):
         self.assertEqual(value.count(), 4)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSInvocation.argumentsRetained)
+        self.assertResultIsBOOL(Foundation.NSInvocation.argumentsRetained)
 
     def testNoUnsupported(self):
         self.assertNotHasAttr(Foundation, "NSObjCValue")
@@ -52,7 +51,3 @@ class TestNSInvocation(TestCase):
         self.assertNotHasAttr(Foundation, "NSObjCArrayType")
         self.assertNotHasAttr(Foundation, "NSObjCUnionType")
         self.assertNotHasAttr(Foundation, "NSObjCBitfield")
-
-
-if __name__ == "__main__":
-    main()

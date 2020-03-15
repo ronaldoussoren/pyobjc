@@ -3,7 +3,7 @@ import struct
 import sys
 
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class GlobalFunctionTest(TestCase):
@@ -113,9 +113,5 @@ class NSLogTest(TestCase):
                 Foundation, "NSMetadataQueryDidFinishGatheringNotification"
             )
             self.assertIsInstance(
-                Foundation.NSMetadataQueryDidFinishGatheringNotification, unicode
+                Foundation.NSMetadataQueryDidFinishGatheringNotification, str
             )
-
-
-if __name__ == "__main__":
-    main()

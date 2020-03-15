@@ -1,20 +1,16 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSInterfaceStyle(TestCase):
     def testConstants(self):
-        self.assertEqual(NSNoInterfaceStyle, 0)
-        self.assertEqual(NSNextStepInterfaceStyle, 1)
-        self.assertEqual(NSWindows95InterfaceStyle, 2)
-        self.assertEqual(NSMacintoshInterfaceStyle, 3)
+        self.assertEqual(AppKit.NSNoInterfaceStyle, 0)
+        self.assertEqual(AppKit.NSNextStepInterfaceStyle, 1)
+        self.assertEqual(AppKit.NSWindows95InterfaceStyle, 2)
+        self.assertEqual(AppKit.NSMacintoshInterfaceStyle, 3)
 
-        self.assertIsInstance(NSInterfaceStyleDefault, unicode)
+        self.assertIsInstance(AppKit.NSInterfaceStyleDefault, str)
 
     def testFunctions(self):
-        v = NSInterfaceStyleForKey("button", None)
-        self.assertIsInstance(v, (int, long))
-
-
-if __name__ == "__main__":
-    main()
+        v = AppKit.NSInterfaceStyleForKey("button", None)
+        self.assertIsInstance(v, int)

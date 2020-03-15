@@ -1,17 +1,13 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTabViewItem(TestCase):
     def testConstants(self):
-        self.assertEqual(NSSelectedTab, 0)
-        self.assertEqual(NSBackgroundTab, 1)
-        self.assertEqual(NSPressedTab, 2)
+        self.assertEqual(AppKit.NSSelectedTab, 0)
+        self.assertEqual(AppKit.NSBackgroundTab, 1)
+        self.assertEqual(AppKit.NSPressedTab, 2)
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSTabViewItem.drawLabel_inRect_, 0)
-        self.assertArgIsBOOL(NSTabViewItem.sizeOfLabel_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(AppKit.NSTabViewItem.drawLabel_inRect_, 0)
+        self.assertArgIsBOOL(AppKit.NSTabViewItem.sizeOfLabel_, 0)

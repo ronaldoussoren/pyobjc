@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSTokenFieldHelper(NSObject):
+class TestNSTokenFieldHelper(AppKit.NSObject):
     def tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_(
         self, a, b, c, d
     ):
@@ -28,12 +29,12 @@ class TestNSTokenField(TestCase):
 
     def testProtocols(self):
         self.assertArgHasType(
-            TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_,
+            TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_,
+            TestNSTokenFieldHelper.tokenField_completionsForSubstring_indexOfToken_indexOfSelectedItem_,  # noqa: B950
             3,
             b"o^" + objc._C_NSInteger,
         )
@@ -52,7 +53,3 @@ class TestNSTokenField(TestCase):
             TestNSTokenFieldHelper.tokenField_styleForRepresentedObject_,
             objc._C_NSUInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

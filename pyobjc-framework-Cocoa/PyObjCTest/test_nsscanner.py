@@ -1,11 +1,10 @@
-import objc
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSScannerUsage(TestCase):
     def testUsage(self):
-        obj = NSScanner.scannerWithString_(b"1.2 2.5".decode("ascii"))
+        obj = Foundation.NSScanner.scannerWithString_(b"1.2 2.5".decode("ascii"))
 
         didConvert, value = obj.scanDouble_(None)
         self.assertTrue(didConvert)
@@ -15,10 +14,10 @@ class TestNSScannerUsage(TestCase):
         self.assertTrue(didConvert)
         self.assertAlmostEqual(value, 2.5)
 
-        obj = NSScanner.scannerWithString_(b"abcd1234 efgh".decode("ascii"))
+        obj = Foundation.NSScanner.scannerWithString_(b"abcd1234 efgh".decode("ascii"))
 
         didConvert, value = obj.scanCharactersFromSet_intoString_(
-            NSCharacterSet.lowercaseLetterCharacterSet(), None
+            Foundation.NSCharacterSet.lowercaseLetterCharacterSet(), None
         )
         self.assertTrue(didConvert)
         self.assertEqual(value, b"abcd".decode("ascii"))
@@ -27,7 +26,7 @@ class TestNSScannerUsage(TestCase):
         self.assertTrue(didConvert)
         self.assertEqual(value, 1234)
 
-        obj = NSScanner.scannerWithString_(b"1234 efgh".decode("ascii"))
+        obj = Foundation.NSScanner.scannerWithString_(b"1234 efgh".decode("ascii"))
 
         didConvert, value = obj.scanLongLong_(None)
         self.assertTrue(didConvert)
@@ -37,49 +36,49 @@ class TestNSScannerUsage(TestCase):
         self.assertTrue(didConvert)
         self.assertEqual(value, b"efgh".decode("ascii"))
 
-        obj = NSScanner.scannerWithString_(b"1234 efgh".decode("ascii"))
+        obj = Foundation.NSScanner.scannerWithString_(b"1234 efgh".decode("ascii"))
         didConvert, value = obj.scanUpToCharactersFromSet_intoString_(
-            NSCharacterSet.lowercaseLetterCharacterSet(), None
+            Foundation.NSCharacterSet.lowercaseLetterCharacterSet(), None
         )
         self.assertTrue(didConvert)
         self.assertEqual(value, b"1234 ".decode("ascii"))
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSScanner.setCaseSensitive_, 0)
-        self.assertResultIsBOOL(NSScanner.caseSensitive)
-        self.assertResultIsBOOL(NSScanner.scanInt_)
-        self.assertArgIsOut(NSScanner.scanInt_, 0)
-        self.assertResultIsBOOL(NSScanner.scanInteger_)
-        self.assertArgIsOut(NSScanner.scanInteger_, 0)
-        self.assertResultIsBOOL(NSScanner.scanHexLongLong_)
-        self.assertArgIsOut(NSScanner.scanHexLongLong_, 0)
-        self.assertResultIsBOOL(NSScanner.scanHexFloat_)
-        self.assertArgIsOut(NSScanner.scanHexFloat_, 0)
-        self.assertResultIsBOOL(NSScanner.scanHexDouble_)
-        self.assertArgIsOut(NSScanner.scanHexDouble_, 0)
-        self.assertResultIsBOOL(NSScanner.scanHexInt_)
-        self.assertArgIsOut(NSScanner.scanHexInt_, 0)
-        self.assertResultIsBOOL(NSScanner.scanLongLong_)
-        self.assertArgIsOut(NSScanner.scanLongLong_, 0)
-        self.assertResultIsBOOL(NSScanner.scanFloat_)
-        self.assertArgIsOut(NSScanner.scanFloat_, 0)
-        self.assertResultIsBOOL(NSScanner.scanDouble_)
-        self.assertArgIsOut(NSScanner.scanDouble_, 0)
-        self.assertResultIsBOOL(NSScanner.scanString_intoString_)
-        self.assertArgIsOut(NSScanner.scanString_intoString_, 1)
-        self.assertResultIsBOOL(NSScanner.scanCharactersFromSet_intoString_)
-        self.assertArgIsOut(NSScanner.scanCharactersFromSet_intoString_, 1)
-        self.assertResultIsBOOL(NSScanner.scanUpToString_intoString_)
-        self.assertArgIsOut(NSScanner.scanUpToString_intoString_, 1)
-        self.assertResultIsBOOL(NSScanner.scanUpToCharactersFromSet_intoString_)
-        self.assertArgIsOut(NSScanner.scanUpToCharactersFromSet_intoString_, 1)
-        self.assertResultIsBOOL(NSScanner.isAtEnd)
+        self.assertArgIsBOOL(Foundation.NSScanner.setCaseSensitive_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.caseSensitive)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanInt_)
+        self.assertArgIsOut(Foundation.NSScanner.scanInt_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanInteger_)
+        self.assertArgIsOut(Foundation.NSScanner.scanInteger_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanHexLongLong_)
+        self.assertArgIsOut(Foundation.NSScanner.scanHexLongLong_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanHexFloat_)
+        self.assertArgIsOut(Foundation.NSScanner.scanHexFloat_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanHexDouble_)
+        self.assertArgIsOut(Foundation.NSScanner.scanHexDouble_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanHexInt_)
+        self.assertArgIsOut(Foundation.NSScanner.scanHexInt_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanLongLong_)
+        self.assertArgIsOut(Foundation.NSScanner.scanLongLong_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanFloat_)
+        self.assertArgIsOut(Foundation.NSScanner.scanFloat_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanDouble_)
+        self.assertArgIsOut(Foundation.NSScanner.scanDouble_, 0)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanString_intoString_)
+        self.assertArgIsOut(Foundation.NSScanner.scanString_intoString_, 1)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanCharactersFromSet_intoString_)
+        self.assertArgIsOut(Foundation.NSScanner.scanCharactersFromSet_intoString_, 1)
+        self.assertResultIsBOOL(Foundation.NSScanner.scanUpToString_intoString_)
+        self.assertArgIsOut(Foundation.NSScanner.scanUpToString_intoString_, 1)
+        self.assertResultIsBOOL(
+            Foundation.NSScanner.scanUpToCharactersFromSet_intoString_
+        )
+        self.assertArgIsOut(
+            Foundation.NSScanner.scanUpToCharactersFromSet_intoString_, 1
+        )
+        self.assertResultIsBOOL(Foundation.NSScanner.isAtEnd)
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertResultIsBOOL(NSScanner.scanUnsignedLongLong_)
-        self.assertArgIsOut(NSScanner.scanUnsignedLongLong_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSScanner.scanUnsignedLongLong_)
+        self.assertArgIsOut(Foundation.NSScanner.scanUnsignedLongLong_, 0)

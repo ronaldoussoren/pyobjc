@@ -1,8 +1,8 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestNSDictionaryControllerHelper(NSObject):
+class TestNSDictionaryControllerHelper(AppKit.NSObject):
     def isExplicitlyIncluded(self):
         return 1
 
@@ -10,7 +10,3 @@ class TestNSDictionaryControllerHelper(NSObject):
 class TestNSDictionaryController(TestCase):
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSDictionaryControllerHelper.isExplicitlyIncluded)
-
-
-if __name__ == "__main__":
-    main()

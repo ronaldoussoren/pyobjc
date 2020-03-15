@@ -10,6 +10,6 @@ setup(
     name="WebServices Tool (CoreData)",
     app=["Main.py"],
     data_files=["English.lproj", "Preferences.png", "Reload.png", "WST.png"],
-    options=dict(py2app=dict(iconfile="WST.icns")),
+    options={"py2app": {"iconfile": "WST.icns"}},
     setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

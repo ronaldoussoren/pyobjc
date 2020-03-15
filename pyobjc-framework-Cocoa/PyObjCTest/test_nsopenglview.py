@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSOpenGLView(TestCase):
@@ -9,7 +9,3 @@ class TestNSOpenGLView(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSOpenGLView.setWantsBestResolutionOpenGLSurface_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

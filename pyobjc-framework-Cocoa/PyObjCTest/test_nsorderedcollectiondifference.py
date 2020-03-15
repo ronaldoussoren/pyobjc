@@ -1,26 +1,26 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSOrderedCollectionDifference(TestCase):
     def test_constants(self):
         self.assertEqual(
-            NSOrderedCollectionDifferenceCalculationOmitInsertedObjects, 1 << 0
+            Foundation.NSOrderedCollectionDifferenceCalculationOmitInsertedObjects,
+            1 << 0,
         )
         self.assertEqual(
-            NSOrderedCollectionDifferenceCalculationOmitRemovedObjects, 1 << 1
+            Foundation.NSOrderedCollectionDifferenceCalculationOmitRemovedObjects,
+            1 << 1,
         )
-        self.assertEqual(NSOrderedCollectionDifferenceCalculationInferMoves, 1 << 2)
+        self.assertEqual(
+            Foundation.NSOrderedCollectionDifferenceCalculationInferMoves, 1 << 2
+        )
 
     @min_os_level("10.15")
     def test_methods(self):
-        self.assertResultIsBOOL(NSOrderedCollectionDifference.hasChanges)
+        self.assertResultIsBOOL(Foundation.NSOrderedCollectionDifference.hasChanges)
         self.assertArgIsBlock(
-            NSOrderedCollectionDifference.differenceByTransformingChangesWithBlock_,
+            Foundation.NSOrderedCollectionDifference.differenceByTransformingChangesWithBlock_,
             0,
             b"@@",
         )
-
-
-if __name__ == "__main__":
-    main()

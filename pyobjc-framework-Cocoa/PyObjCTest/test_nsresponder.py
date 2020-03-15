@@ -1,41 +1,44 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSResponder(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSResponder.tryToPerform_with_)
-        self.assertResultIsBOOL(NSResponder.performKeyEquivalent_)
-        self.assertResultIsBOOL(NSResponder.acceptsFirstResponder)
-        self.assertResultIsBOOL(NSResponder.becomeFirstResponder)
-        self.assertResultIsBOOL(NSResponder.resignFirstResponder)
-        self.assertResultIsBOOL(NSResponder.shouldBeTreatedAsInkEvent_)
-        self.assertResultIsBOOL(NSResponder.performMnemonic_)
-        self.assertArgIsSEL(NSResponder.doCommandBySelector_, 0, b"v@:@")
+        self.assertResultIsBOOL(AppKit.NSResponder.tryToPerform_with_)
+        self.assertResultIsBOOL(AppKit.NSResponder.performKeyEquivalent_)
+        self.assertResultIsBOOL(AppKit.NSResponder.acceptsFirstResponder)
+        self.assertResultIsBOOL(AppKit.NSResponder.becomeFirstResponder)
+        self.assertResultIsBOOL(AppKit.NSResponder.resignFirstResponder)
+        self.assertResultIsBOOL(AppKit.NSResponder.shouldBeTreatedAsInkEvent_)
+        self.assertResultIsBOOL(AppKit.NSResponder.performMnemonic_)
+        self.assertArgIsSEL(AppKit.NSResponder.doCommandBySelector_, 0, b"v@:@")
 
         self.assertArgIsSEL(
-            NSResponder.presentError_modalForWindow_delegate_didPresentSelector_contextInfo_,
+            AppKit.NSResponder.presentError_modalForWindow_delegate_didPresentSelector_contextInfo_,  # noqa: B950
             3,
             b"v@:" + objc._C_NSBOOL + b"^v",
         )
         self.assertArgHasType(
-            NSResponder.presentError_modalForWindow_delegate_didPresentSelector_contextInfo_,
+            AppKit.NSResponder.presentError_modalForWindow_delegate_didPresentSelector_contextInfo_,  # noqa: B950
             4,
             b"^v",
         )
-        self.assertResultIsBOOL(NSResponder.presentError_)
+        self.assertResultIsBOOL(AppKit.NSResponder.presentError_)
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertResultIsBOOL(NSResponder.wantsScrollEventsForSwipeTrackingOnAxis_)
-        self.assertResultIsBOOL(NSResponder.wantsForwardedScrollEventsForAxis_)
-        self.assertArgIsSEL(NSResponder.supplementalTargetForAction_sender_, 0, b"v@:@")
-        self.assertResultIsBOOL(NSResponder.validateProposedFirstResponder_forEvent_)
+        self.assertResultIsBOOL(
+            AppKit.NSResponder.wantsScrollEventsForSwipeTrackingOnAxis_
+        )
+        self.assertResultIsBOOL(AppKit.NSResponder.wantsForwardedScrollEventsForAxis_)
+        self.assertArgIsSEL(
+            AppKit.NSResponder.supplementalTargetForAction_sender_, 0, b"v@:@"
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSResponder.validateProposedFirstResponder_forEvent_
+        )
 
     @min_sdk_level("10.14")
     def testProtocols(self):
         objc.protocolNamed("NSStandardKeyBindingResponding")
-
-
-if __name__ == "__main__":
-    main()

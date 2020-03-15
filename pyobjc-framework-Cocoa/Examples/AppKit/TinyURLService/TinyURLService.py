@@ -22,7 +22,7 @@ TINYURL_API = "http://tinyurl.com/api-create.php"
 
 
 def getTinyURL(url):
-    data = urllib.urlencode(dict(url=url, source=NAME))
+    data = urllib.urlencode({"url": url, "source": NAME})
     return urllib2.urlopen(TINYURL_API, data).read().decode("utf-8")
 
 
@@ -69,7 +69,7 @@ class TinyURLService(Cocoa.NSObject):
             pboard.declareTypes_owner_([Cocoa.NSStringPboardType], None)
             pboard.setString_forType_(resURL.absoluteString(), Cocoa.NSStringPboardType)
             return ERROR(None)
-        except:
+        except:  # noqa: E722, B001
             traceback.print_exc()
             return ERROR("Exception, see traceback")
 

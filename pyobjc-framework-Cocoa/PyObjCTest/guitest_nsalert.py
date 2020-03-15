@@ -1,5 +1,5 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import Cocoa
+from PyObjCTools.TestSupport import TestCase, main
 
 # Would like some tests for NSRunAlertPanel and friends as well, but those
 # require user interaction :-(
@@ -7,14 +7,14 @@ from PyObjCTools.TestSupport import *
 
 class TestAlertFormat(TestCase):
     def testSimple(self):
-        alert = NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_(
+        alert = Cocoa.NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_(  # noqa: B950
             "message text", "ok", "cancel", "help", "foobar is the sucks"
         )
         self.assertEqual(alert.messageText(), "message text")
         self.assertEqual(alert.informativeText(), "foobar is the sucks")
 
     def testWithFormat(self):
-        alert = NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_(
+        alert = Cocoa.NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_(  # noqa: B950
             "message text", "ok", "cancel", "help", "%d * %d = %d", 9, 7, 9 * 7
         )
         self.assertEqual(alert.messageText(), "message text")

@@ -1,141 +1,155 @@
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestPropertyList(TestCase):
     def testFunctions(self):
-        dta = CFPropertyListCreateXMLData(
+        dta = CoreFoundation.CFPropertyListCreateXMLData(
             None, {b"key".decode("ascii"): 42, b"key2".decode("ascii"): 1}
         )
-        self.assertIsInstance(dta, CFDataRef)
-        self.assertArgIsOut(CFPropertyListCreateFromXMLData, 3)
-        v, err = CFPropertyListCreateFromXMLData(None, dta, 0, None)
+        self.assertIsInstance(dta, CoreFoundation.CFDataRef)
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateFromXMLData, 3)
+        v, err = CoreFoundation.CFPropertyListCreateFromXMLData(None, dta, 0, None)
         self.assertIs(err, None)
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
         self.assertIn("key", v)
         self.assertIn("key2", v)
         self.assertEqual(v["key"], 42)
         self.assertEqual(v["key2"], True)
-        v = CFPropertyListCreateDeepCopy(
+        v = CoreFoundation.CFPropertyListCreateDeepCopy(
             None, {b"key".decode("ascii"): 42, b"key2".decode("ascii"): True}, 0
         )
-        self.assertIsInstance(v, CFDictionaryRef)
+        self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
         self.assertIn("key", v)
         self.assertIn("key2", v)
         self.assertEqual(v["key"], 42)
         self.assertEqual(v["key2"], True)
-        valid = CFPropertyListIsValid(
+        valid = CoreFoundation.CFPropertyListIsValid(
             {b"key".decode("ascii"): 42, b"key2".decode("ascii"): True},
-            kCFPropertyListBinaryFormat_v1_0,
+            CoreFoundation.kCFPropertyListBinaryFormat_v1_0,
         )
         self.assertIs(valid, True)
 
     def testStreams(self):
-        stream = CFWriteStreamCreateWithAllocatedBuffers(
-            kCFAllocatorDefault, kCFAllocatorDefault
+        stream = CoreFoundation.CFWriteStreamCreateWithAllocatedBuffers(
+            CoreFoundation.kCFAllocatorDefault, CoreFoundation.kCFAllocatorDefault
         )
-        r = CFWriteStreamOpen(stream)
+        r = CoreFoundation.CFWriteStreamOpen(stream)
         self.assertTrue(r)
 
         value = {b"key1".decode("ascii"): 42, b"key2".decode("ascii"): 1}
 
-        self.assertArgIsOut(CFPropertyListWriteToStream, 3)
-        rval, errorString = CFPropertyListWriteToStream(
-            value, stream, kCFPropertyListXMLFormat_v1_0, None
+        self.assertArgIsOut(CoreFoundation.CFPropertyListWriteToStream, 3)
+        rval, errorString = CoreFoundation.CFPropertyListWriteToStream(
+            value, stream, CoreFoundation.kCFPropertyListXMLFormat_v1_0, None
         )
-        self.assertIsInstance(rval, (int, long))
+        self.assertIsInstance(rval, int)
         self.assertTrue(rval)
         self.assertIs(errorString, None)
-        buf = CFWriteStreamCopyProperty(stream, kCFStreamPropertyDataWritten)
-        self.assertIsInstance(buf, CFDataRef)
-        buf = CFDataGetBytes(buf, (0, CFDataGetLength(buf)), None)
+        buf = CoreFoundation.CFWriteStreamCopyProperty(
+            stream, CoreFoundation.kCFStreamPropertyDataWritten
+        )
+        self.assertIsInstance(buf, CoreFoundation.CFDataRef)
+        buf = CoreFoundation.CFDataGetBytes(
+            buf, (0, CoreFoundation.CFDataGetLength(buf)), None
+        )
         self.assertIsInstance(buf, bytes)
         self.assertIn(b"<key>key1</key>", buf)
         self.assertIn(b"<integer>42</integer>", buf)
         self.assertIn(b"<key>key2</key>", buf)
         self.assertIn(b"<integer>1</integer>", buf)
-        stream = CFReadStreamCreateWithBytesNoCopy(
-            None, buf, len(buf), kCFAllocatorNull
+        stream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
+            None, buf, len(buf), CoreFoundation.kCFAllocatorNull
         )
-        r = CFReadStreamOpen(stream)
+        r = CoreFoundation.CFReadStreamOpen(stream)
         self.assertTrue(r)
 
-        self.assertArgIsOut(CFPropertyListCreateFromStream, 4)
-        self.assertArgIsOut(CFPropertyListCreateFromStream, 5)
-        res, format, errorString = CFPropertyListCreateFromStream(
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateFromStream, 4)
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateFromStream, 5)
+        res, format, errorString = CoreFoundation.CFPropertyListCreateFromStream(
             None, stream, 0, 0, None, None
         )
-        self.assertEqual(format, kCFPropertyListXMLFormat_v1_0)
+        self.assertEqual(format, CoreFoundation.kCFPropertyListXMLFormat_v1_0)
         self.assertIs(errorString, None)
         self.assertEqual(res, value)
 
     def testConstants(self):
-        self.assertEqual(kCFPropertyListImmutable, 0)
-        self.assertEqual(kCFPropertyListMutableContainers, 1 << 0)
-        self.assertEqual(kCFPropertyListMutableContainersAndLeaves, 1 << 1)
+        self.assertEqual(CoreFoundation.kCFPropertyListImmutable, 0)
+        self.assertEqual(CoreFoundation.kCFPropertyListMutableContainers, 1 << 0)
+        self.assertEqual(
+            CoreFoundation.kCFPropertyListMutableContainersAndLeaves, 1 << 1
+        )
 
-        self.assertEqual(kCFPropertyListOpenStepFormat, 1)
-        self.assertEqual(kCFPropertyListXMLFormat_v1_0, 100)
-        self.assertEqual(kCFPropertyListBinaryFormat_v1_0, 200)
+        self.assertEqual(CoreFoundation.kCFPropertyListOpenStepFormat, 1)
+        self.assertEqual(CoreFoundation.kCFPropertyListXMLFormat_v1_0, 100)
+        self.assertEqual(CoreFoundation.kCFPropertyListBinaryFormat_v1_0, 200)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(kCFPropertyListReadCorruptError, 3840)
-        self.assertEqual(kCFPropertyListReadUnknownVersionError, 3841)
-        self.assertEqual(kCFPropertyListReadStreamError, 3842)
-        self.assertEqual(kCFPropertyListWriteStreamError, 3851)
+        self.assertEqual(CoreFoundation.kCFPropertyListReadCorruptError, 3840)
+        self.assertEqual(CoreFoundation.kCFPropertyListReadUnknownVersionError, 3841)
+        self.assertEqual(CoreFoundation.kCFPropertyListReadStreamError, 3842)
+        self.assertEqual(CoreFoundation.kCFPropertyListWriteStreamError, 3851)
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
-        dta = CFPropertyListCreateXMLData(
+        dta = CoreFoundation.CFPropertyListCreateXMLData(
             None, {b"key".decode("ascii"): 42, b"key2".decode("ascii"): 1}
         )
-        self.assertIsInstance(dta, CFDataRef)
-        bytes = CFDataGetBytes(dta, (0, CFDataGetLength(dta)), None)
-        self.assertIsNot(bytes, None)
-        self.assertResultIsCFRetained(CFPropertyListCreateWithData)
-        self.assertArgIsOut(CFPropertyListCreateWithData, 3)
-        self.assertArgIsOut(CFPropertyListCreateWithData, 4)
-        v, fmt, err = CFPropertyListCreateWithData(None, dta, 0, None, None)
-        self.assertIsNot(v, None)
-        self.assertIsInstance(fmt, (int, long))
-        self.assertIs(err, None)
-        stream = CFReadStreamCreateWithBytesNoCopy(
-            None, bytes, len(bytes), kCFAllocatorNull
+        self.assertIsInstance(dta, CoreFoundation.CFDataRef)
+        bytes = CoreFoundation.CFDataGetBytes(
+            dta, (0, CoreFoundation.CFDataGetLength(dta)), None
         )
-        CFReadStreamOpen(stream)
+        self.assertIsNot(bytes, None)
+        self.assertResultIsCFRetained(CoreFoundation.CFPropertyListCreateWithData)
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithData, 3)
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithData, 4)
+        v, fmt, err = CoreFoundation.CFPropertyListCreateWithData(
+            None, dta, 0, None, None
+        )
+        self.assertIsNot(v, None)
+        self.assertIsInstance(fmt, int)
+        self.assertIs(err, None)
+        stream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
+            None, bytes, len(bytes), CoreFoundation.kCFAllocatorNull
+        )
+        CoreFoundation.CFReadStreamOpen(stream)
 
-        self.assertResultIsCFRetained(CFPropertyListCreateWithStream)
-        self.assertArgIsOut(CFPropertyListCreateWithStream, 4)
-        self.assertArgIsOut(CFPropertyListCreateWithStream, 5)
-        v, fmt, err = CFPropertyListCreateWithStream(
+        self.assertResultIsCFRetained(CoreFoundation.CFPropertyListCreateWithStream)
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithStream, 4)
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithStream, 5)
+        v, fmt, err = CoreFoundation.CFPropertyListCreateWithStream(
             None, stream, len(bytes), 0, None, None
         )
         self.assertIsNot(v, None)
-        self.assertIsInstance(fmt, (int, long))
+        self.assertIsInstance(fmt, int)
         self.assertIs(err, None)
         import array
 
         buf = array.array("b", b" " * 1024)
 
-        stream = CFWriteStreamCreateWithBuffer(None, buf, 1024)
-        CFWriteStreamOpen(stream)
+        stream = CoreFoundation.CFWriteStreamCreateWithBuffer(None, buf, 1024)
+        CoreFoundation.CFWriteStreamOpen(stream)
 
-        self.assertArgIsOut(CFPropertyListWrite, 4)
-        cnt, err = CFPropertyListWrite(
-            {"key": 42}, stream, kCFPropertyListBinaryFormat_v1_0, 0, None
+        self.assertArgIsOut(CoreFoundation.CFPropertyListWrite, 4)
+        cnt, err = CoreFoundation.CFPropertyListWrite(
+            {"key": 42},
+            stream,
+            CoreFoundation.kCFPropertyListBinaryFormat_v1_0,
+            0,
+            None,
         )
         self.assertNotEqual(cnt, 0)
         self.assertEqual(err, None)
 
-        self.assertResultIsCFRetained(CFPropertyListCreateData)
-        self.assertArgIsOut(CFPropertyListCreateData, 4)
-        dta, err = CFPropertyListCreateData(
-            None, {"key": "value"}, kCFPropertyListBinaryFormat_v1_0, 0, None
+        self.assertResultIsCFRetained(CoreFoundation.CFPropertyListCreateData)
+        self.assertArgIsOut(CoreFoundation.CFPropertyListCreateData, 4)
+        dta, err = CoreFoundation.CFPropertyListCreateData(
+            None,
+            {"key": "value"},
+            CoreFoundation.kCFPropertyListBinaryFormat_v1_0,
+            0,
+            None,
         )
-        self.assertIsInstance(dta, CFDataRef)
+        self.assertIsInstance(dta, CoreFoundation.CFDataRef)
         self.assertEqual(err, None)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,12 +1,8 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSOrderedCollectionChange(TestCase):
     def test_constants(self):
-        self.assertEqual(NSCollectionChangeInsert, 0)
-        self.assertEqual(NSCollectionChangeRemove, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(Foundation.NSCollectionChangeInsert, 0)
+        self.assertEqual(Foundation.NSCollectionChangeRemove, 1)

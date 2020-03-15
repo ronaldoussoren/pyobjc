@@ -12,6 +12,8 @@ from math import atan2, cos, pi, sin, sqrt
 
 import objc
 from Cocoa import (
+    NSError,
+    NSLocalizedDescriptionKey,
     NSAffineTransform,
     NSBezierPath,
     NSColor,
@@ -239,7 +241,7 @@ class JoystickView(NSView):
                     )
                     newControllerAngle = vt.reverseTransformedValue_(newAngleDegrees)
                 else:
-                    newControllerAngle = angle
+                    newControllerAngle = newAngle
             self.observedObjectForAngle.setValue_forKeyPath_(
                 newControllerAngle, self.observedKeyPathForAngle
             )
@@ -372,7 +374,7 @@ class JoystickView(NSView):
         path.stroke()
 
     def setNilValueForKey_(self, key):
-        "We may get passed nil for angle or offset. Just use 0"
+        """We may get passed nil for angle or offset. Just use 0"""
         self.setValue_forKey_(0, key)
 
     def validateMaxOffset_error_(self, ioValue, error):

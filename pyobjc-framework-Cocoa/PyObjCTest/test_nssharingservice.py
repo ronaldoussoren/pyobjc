@@ -1,5 +1,6 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSSharingServiceHelper(AppKit.NSObject):
@@ -10,7 +11,7 @@ class TestNSSharingServiceHelper(AppKit.NSObject):
 class TestNSSharingService(TestCase):
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(AppKit.NSSharingServiceNameCloudSharing, unicode)
+        self.assertIsInstance(AppKit.NSSharingServiceNameCloudSharing, str)
 
         self.assertEqual(AppKit.NSCloudKitSharingServiceStandard, 0)
         self.assertEqual(AppKit.NSCloudKitSharingServiceAllowPublic, 1 << 0)
@@ -20,36 +21,28 @@ class TestNSSharingService(TestCase):
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTencentWeibo, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnLinkedIn, unicode)
-        self.assertIsInstance(
-            AppKit.NSSharingServiceNameUseAsFacebookProfileImage, unicode
-        )
-        self.assertIsInstance(
-            AppKit.NSSharingServiceNameUseAsLinkedInProfileImage, unicode
-        )
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTencentWeibo, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnLinkedIn, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsFacebookProfileImage, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsLinkedInProfileImage, str)
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnFacebook, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTwitter, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnSinaWeibo, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNameComposeEmail, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNameComposeMessage, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNameSendViaAirDrop, unicode)
-        self.assertIsInstance(
-            AppKit.NSSharingServiceNameAddToSafariReadingList, unicode
-        )
-        self.assertIsInstance(AppKit.NSSharingServiceNameAddToIPhoto, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNameAddToAperture, unicode)
-        self.assertIsInstance(
-            AppKit.NSSharingServiceNameUseAsTwitterProfileImage, unicode
-        )
-        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsDesktopPicture, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostImageOnFlickr, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnVimeo, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnYouku, unicode)
-        self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnTudou, unicode)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnFacebook, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnTwitter, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostOnSinaWeibo, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameComposeEmail, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameComposeMessage, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameSendViaAirDrop, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameAddToSafariReadingList, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameAddToIPhoto, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameAddToAperture, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsTwitterProfileImage, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNameUseAsDesktopPicture, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostImageOnFlickr, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnVimeo, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnYouku, str)
+        self.assertIsInstance(AppKit.NSSharingServiceNamePostVideoOnTudou, str)
 
         self.assertEqual(AppKit.NSSharingContentScopeItem, 0)
         self.assertEqual(AppKit.NSSharingContentScopePartial, 1)
@@ -80,9 +73,5 @@ class TestNSSharingService(TestCase):
         )
 
     @min_sdk_level("10.12")
-    def testProtocolObjects(self):
+    def testProtocolObjects10_12(self):
         objc.protocolNamed("NSCloudSharingServiceDelegate")
-
-
-if __name__ == "__main__":
-    main()

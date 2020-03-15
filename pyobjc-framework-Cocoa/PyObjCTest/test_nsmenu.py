@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSMenuHelper(NSObject):
+class TestNSMenuHelper(AppKit.NSObject):
     def validateMenuItem_(self, item):
         return 1
 
@@ -45,54 +46,56 @@ class TestNSMenu(TestCase):
         )
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSMenu.menuBarVisible)
-        self.assertArgIsBOOL(NSMenu.setMenuBarVisible_, 0)
-        self.assertResultIsBOOL(NSMenu.autoenablesItems)
-        self.assertArgIsBOOL(NSMenu.setAutoenablesItems_, 0)
-        self.assertResultIsBOOL(NSMenu.performKeyEquivalent_)
-        self.assertResultIsBOOL(NSMenu.autoenablesItems)
-        self.assertArgIsBOOL(NSMenu.setMenuChangedMessagesEnabled_, 0)
-        self.assertResultIsBOOL(NSMenu.isTornOff)
-        self.assertResultIsBOOL(NSMenu.isAttached)
-        self.assertResultIsBOOL(NSMenu.showsStateColumn)
-        self.assertArgIsBOOL(NSMenu.setShowsStateColumn_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenu.menuBarVisible)
+        self.assertArgIsBOOL(AppKit.NSMenu.setMenuBarVisible_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenu.autoenablesItems)
+        self.assertArgIsBOOL(AppKit.NSMenu.setAutoenablesItems_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenu.performKeyEquivalent_)
+        self.assertResultIsBOOL(AppKit.NSMenu.autoenablesItems)
+        self.assertArgIsBOOL(AppKit.NSMenu.setMenuChangedMessagesEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenu.isTornOff)
+        self.assertResultIsBOOL(AppKit.NSMenu.isAttached)
+        self.assertResultIsBOOL(AppKit.NSMenu.showsStateColumn)
+        self.assertArgIsBOOL(AppKit.NSMenu.setShowsStateColumn_, 0)
 
-        self.assertResultIsBOOL(NSMenu.menuChangedMessagesEnabled)
-        self.assertArgIsBOOL(NSMenu.setMenuChangedMessagesEnabled_, 0)
-        self.assertResultHasType(NSMenu.locationForSubmenu_, NSPoint.__typestr__)
+        self.assertResultIsBOOL(AppKit.NSMenu.menuChangedMessagesEnabled)
+        self.assertArgIsBOOL(AppKit.NSMenu.setMenuChangedMessagesEnabled_, 0)
+        self.assertResultHasType(
+            AppKit.NSMenu.locationForSubmenu_, AppKit.NSPoint.__typestr__
+        )
 
     def testConstants(self):
-        self.assertIsInstance(NSMenuWillSendActionNotification, unicode)
-        self.assertIsInstance(NSMenuDidSendActionNotification, unicode)
-        self.assertIsInstance(NSMenuDidAddItemNotification, unicode)
-        self.assertIsInstance(NSMenuDidRemoveItemNotification, unicode)
-        self.assertIsInstance(NSMenuDidChangeItemNotification, unicode)
-        self.assertIsInstance(NSMenuDidBeginTrackingNotification, unicode)
-        self.assertIsInstance(NSMenuDidEndTrackingNotification, unicode)
+        self.assertIsInstance(AppKit.NSMenuWillSendActionNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidSendActionNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidAddItemNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidRemoveItemNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidChangeItemNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidBeginTrackingNotification, str)
+        self.assertIsInstance(AppKit.NSMenuDidEndTrackingNotification, str)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(NSMenu.popUpMenuPositioningItem_atLocation_inView_)
-        self.assertArgHasType(
-            NSMenu.popUpMenuPositioningItem_atLocation_inView_, 1, NSPoint.__typestr__
+        self.assertResultIsBOOL(
+            AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_
         )
-        self.assertResultHasType(NSMenu.size, NSSize.__typestr__)
-        self.assertResultIsBOOL(NSMenu.allowsContextMenuPlugIns)
-        self.assertArgIsBOOL(NSMenu.setAllowsContextMenuPlugIns_, 0)
+        self.assertArgHasType(
+            AppKit.NSMenu.popUpMenuPositioningItem_atLocation_inView_,
+            1,
+            AppKit.NSPoint.__typestr__,
+        )
+        self.assertResultHasType(AppKit.NSMenu.size, AppKit.NSSize.__typestr__)
+        self.assertResultIsBOOL(AppKit.NSMenu.allowsContextMenuPlugIns)
+        self.assertArgIsBOOL(AppKit.NSMenu.setAllowsContextMenuPlugIns_, 0)
 
         self.assertResultHasType(
-            TestNSMenuHelper.confinementRectForMenu_onScreen_, NSRect.__typestr__
+            TestNSMenuHelper.confinementRectForMenu_onScreen_, AppKit.NSRect.__typestr__
         )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSMenuPropertyItemTitle, 1 << 0)
-        self.assertEqual(NSMenuPropertyItemAttributedTitle, 1 << 1)
-        self.assertEqual(NSMenuPropertyItemKeyEquivalent, 1 << 2)
-        self.assertEqual(NSMenuPropertyItemImage, 1 << 3)
-        self.assertEqual(NSMenuPropertyItemEnabled, 1 << 4)
-        self.assertEqual(NSMenuPropertyItemAccessibilityDescription, 1 << 5)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(AppKit.NSMenuPropertyItemTitle, 1 << 0)
+        self.assertEqual(AppKit.NSMenuPropertyItemAttributedTitle, 1 << 1)
+        self.assertEqual(AppKit.NSMenuPropertyItemKeyEquivalent, 1 << 2)
+        self.assertEqual(AppKit.NSMenuPropertyItemImage, 1 << 3)
+        self.assertEqual(AppKit.NSMenuPropertyItemEnabled, 1 << 4)
+        self.assertEqual(AppKit.NSMenuPropertyItemAccessibilityDescription, 1 << 5)

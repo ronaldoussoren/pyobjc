@@ -1,15 +1,13 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSliderAccessory(TestCase):
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(NSSliderAccessory.isEnabled)
-        self.assertArgIsBOOL(NSSliderAccessory.setEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSSliderAccessory.isEnabled)
+        self.assertArgIsBOOL(AppKit.NSSliderAccessory.setEnabled_, 0)
 
-        self.assertArgIsBlock(NSSliderAccessoryBehavior.behaviorWithHandler_, 0, b"v@")
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBlock(
+            AppKit.NSSliderAccessoryBehavior.behaviorWithHandler_, 0, b"v@"
+        )

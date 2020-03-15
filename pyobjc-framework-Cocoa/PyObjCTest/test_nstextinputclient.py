@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestNSTextInputClientHelper(NSObject):
+class TestNSTextInputClientHelper(AppKit.NSObject):
     def insertText_replacementRange_(self, txt, rng):
         pass
 
@@ -50,7 +51,7 @@ class TestNSTextInputClient(TestCase):
         self.assertArgHasType(
             TestNSTextInputClientHelper.insertText_replacementRange_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextInputClientHelper.doCommandBySelector_, 0, objc._C_SEL
@@ -58,49 +59,51 @@ class TestNSTextInputClient(TestCase):
         self.assertArgHasType(
             TestNSTextInputClientHelper.setMarkedText_selectedRange_replacementRange_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextInputClientHelper.setMarkedText_selectedRange_replacementRange_,
             2,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
-            TestNSTextInputClientHelper.selectedRange, NSRange.__typestr__
+            TestNSTextInputClientHelper.selectedRange, AppKit.NSRange.__typestr__
         )
         self.assertResultHasType(
-            TestNSTextInputClientHelper.markedRange, NSRange.__typestr__
+            TestNSTextInputClientHelper.markedRange, AppKit.NSRange.__typestr__
         )
         self.assertResultIsBOOL(TestNSTextInputClientHelper.hasMarkedText)
         self.assertArgHasType(
             TestNSTextInputClientHelper.attributedSubstringForProposedRange_actualRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextInputClientHelper.attributedSubstringForProposedRange_actualRange_,
             1,
-            b"o^" + NSRange.__typestr__,
+            b"o^" + AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSTextInputClientHelper.firstRectForCharacterRange_actualRange_,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextInputClientHelper.firstRectForCharacterRange_actualRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextInputClientHelper.firstRectForCharacterRange_actualRange_,
             1,
-            b"o^" + NSRange.__typestr__,
+            b"o^" + AppKit.NSRange.__typestr__,
         )
         self.assertResultHasType(
             TestNSTextInputClientHelper.characterIndexForPoint_, objc._C_NSUInteger
         )
         self.assertArgHasType(
-            TestNSTextInputClientHelper.characterIndexForPoint_, 0, NSPoint.__typestr__
+            TestNSTextInputClientHelper.characterIndexForPoint_,
+            0,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSTextInputClientHelper.fractionOfDistanceThroughGlyphForPoint_,
@@ -109,7 +112,7 @@ class TestNSTextInputClient(TestCase):
         self.assertArgHasType(
             TestNSTextInputClientHelper.fractionOfDistanceThroughGlyphForPoint_,
             0,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSTextInputClientHelper.baselineDeltaForCharacterAtIndex_,
@@ -134,7 +137,3 @@ class TestNSTextInputClient(TestCase):
             0,
             objc._C_NSInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

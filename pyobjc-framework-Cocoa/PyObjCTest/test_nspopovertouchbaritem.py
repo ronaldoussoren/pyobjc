@@ -1,13 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPopoverTouchBarItem(TestCase):
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(NSPopoverTouchBarItem.showsCloseButton)
-        self.assertArgIsBOOL(NSPopoverTouchBarItem.setShowsCloseButton_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSPopoverTouchBarItem.showsCloseButton)
+        self.assertArgIsBOOL(AppKit.NSPopoverTouchBarItem.setShowsCloseButton_, 0)

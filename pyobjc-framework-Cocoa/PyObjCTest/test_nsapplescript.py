@@ -1,31 +1,27 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAE(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSAppleScriptErrorMessage, unicode)
-        self.assertIsInstance(NSAppleScriptErrorNumber, unicode)
-        self.assertIsInstance(NSAppleScriptErrorAppName, unicode)
-        self.assertIsInstance(NSAppleScriptErrorBriefMessage, unicode)
-        self.assertIsInstance(NSAppleScriptErrorRange, unicode)
+        self.assertIsInstance(Foundation.NSAppleScriptErrorMessage, str)
+        self.assertIsInstance(Foundation.NSAppleScriptErrorNumber, str)
+        self.assertIsInstance(Foundation.NSAppleScriptErrorAppName, str)
+        self.assertIsInstance(Foundation.NSAppleScriptErrorBriefMessage, str)
+        self.assertIsInstance(Foundation.NSAppleScriptErrorRange, str)
 
     def testOutput(self):
-        obj = NSAppleScript.alloc().initWithSource_(
+        obj = Foundation.NSAppleScript.alloc().initWithSource_(
             'tell application Terminal to do Xscript "ls -l"'
         )
         ok, error = obj.compileAndReturnError_(None)
         self.assertIs(ok, False)
-        self.assertIsInstance(error, NSDictionary)
+        self.assertIsInstance(error, Foundation.NSDictionary)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSAppleScript.isCompiled)
-        self.assertResultIsBOOL(NSAppleScript.compileAndReturnError_)
-        self.assertArgIsOut(NSAppleScript.compileAndReturnError_, 0)
-        self.assertArgIsOut(NSAppleScript.executeAndReturnError_, 0)
-        self.assertArgIsOut(NSAppleScript.executeAppleEvent_error_, 1)
-        self.assertArgIsOut(NSAppleScript.initWithContentsOfURL_error_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSAppleScript.isCompiled)
+        self.assertResultIsBOOL(Foundation.NSAppleScript.compileAndReturnError_)
+        self.assertArgIsOut(Foundation.NSAppleScript.compileAndReturnError_, 0)
+        self.assertArgIsOut(Foundation.NSAppleScript.executeAndReturnError_, 0)
+        self.assertArgIsOut(Foundation.NSAppleScript.executeAppleEvent_error_, 1)
+        self.assertArgIsOut(Foundation.NSAppleScript.initWithContentsOfURL_error_, 1)

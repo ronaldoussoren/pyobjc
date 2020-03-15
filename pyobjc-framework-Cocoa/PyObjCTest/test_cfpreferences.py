@@ -1,46 +1,53 @@
 import os
 
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPreferences(TestCase):
     def testGetting(self):
-        v = CFPreferencesCopyAppValue("Default Window Settings", "com.apple.Terminal")
-        self.assertIsInstance(v, unicode)
-        self.assertResultIsBOOL(CFPreferencesGetAppBooleanValue)
-        self.assertArgHasType(CFPreferencesGetAppBooleanValue, 2, b"o^Z")
-        v, valid = CFPreferencesGetAppBooleanValue(
+        v = CoreFoundation.CFPreferencesCopyAppValue(
+            "Default Window Settings", "com.apple.Terminal"
+        )
+        self.assertIsInstance(v, str)
+        self.assertResultIsBOOL(CoreFoundation.CFPreferencesGetAppBooleanValue)
+        self.assertArgHasType(CoreFoundation.CFPreferencesGetAppBooleanValue, 2, b"o^Z")
+        v, valid = CoreFoundation.CFPreferencesGetAppBooleanValue(
             "SecureKeyboardEntry", "com.apple.Terminal", None
         )
         self.assertTrue(valid)
         self.assertIsInstance(v, bool)
-        self.assertArgHasType(CFPreferencesGetAppIntegerValue, 2, b"o^Z")
-        v, valid = CFPreferencesGetAppIntegerValue(
+        self.assertArgHasType(CoreFoundation.CFPreferencesGetAppIntegerValue, 2, b"o^Z")
+        v, valid = CoreFoundation.CFPreferencesGetAppIntegerValue(
             "ABMetaDataChangeCount", "com.apple.AddressBook", None
         )
         # self.assertTrue(valid)
-        self.assertIsInstance(v, (int, long))
-        v = CFPreferencesCopyValue(
+        self.assertIsInstance(v, int)
+        v = CoreFoundation.CFPreferencesCopyValue(
             "Default Window Settings",
             "com.apple.Terminal",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        self.assertIsInstance(v, unicode)
-        v = CFPreferencesCopyMultiple(
-            None, "com.apple.Terminal", kCFPreferencesCurrentUser, kCFPreferencesAnyHost
+        self.assertIsInstance(v, str)
+        v = CoreFoundation.CFPreferencesCopyMultiple(
+            None,
+            "com.apple.Terminal",
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        self.assertIsInstance(v, CFDictionaryRef)
-        v = CFPreferencesCopyMultiple(
+        self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
+        v = CoreFoundation.CFPreferencesCopyMultiple(
             [b"AutoFocus".decode("ascii"), b"WindowCloseAction".decode("ascii")],
             "com.apple.Terminal",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        self.assertIsInstance(v, CFDictionaryRef)
-        self.assertResultIsBOOL(CFPreferencesAppValueIsForced)
-        v = CFPreferencesAppValueIsForced("AutoFocus", "com.apple.Terminal")
+        self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
+        self.assertResultIsBOOL(CoreFoundation.CFPreferencesAppValueIsForced)
+        v = CoreFoundation.CFPreferencesAppValueIsForced(
+            "AutoFocus", "com.apple.Terminal"
+        )
         self.assertIs(v is True or v, False)
 
     def testSetting(self):
@@ -48,108 +55,110 @@ class TestPreferences(TestCase):
         if os.path.exists(prefsFn):
             os.unlink(prefsFn)
 
-        v = CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
+        v = CoreFoundation.CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
         self.assertIs(v, None)
-        CFPreferencesSetAppValue("PyObjCTestValue", "value1", "PyObjCTest")
-        v = CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
+        CoreFoundation.CFPreferencesSetAppValue(
+            "PyObjCTestValue", "value1", "PyObjCTest"
+        )
+        v = CoreFoundation.CFPreferencesCopyAppValue("PyObjCTestValue", "PyObjCTest")
         self.assertEqual(v, "value1")
-        CFPreferencesSetAppValue("PyObjCTestValue", None, "PyObjCTest")
-        CFPreferencesAddSuitePreferencesToApp(
-            "PyObjCTest", kCFPreferencesCurrentApplication
+        CoreFoundation.CFPreferencesSetAppValue("PyObjCTestValue", None, "PyObjCTest")
+        CoreFoundation.CFPreferencesAddSuitePreferencesToApp(
+            "PyObjCTest", CoreFoundation.kCFPreferencesCurrentApplication
         )
-        CFPreferencesRemoveSuitePreferencesFromApp(
-            "PyObjCTest", kCFPreferencesCurrentApplication
+        CoreFoundation.CFPreferencesRemoveSuitePreferencesFromApp(
+            "PyObjCTest", CoreFoundation.kCFPreferencesCurrentApplication
         )
 
-        ok = CFPreferencesAppSynchronize("PyObjCTest")
+        ok = CoreFoundation.CFPreferencesAppSynchronize("PyObjCTest")
         self.assertTrue(ok)
-        listing = os.listdir(os.path.dirname(prefsFn))
-        # self.assertTrue([fn for fn in listing if fn.startswith(os.path.basename(prefsFn))])
 
-        CFPreferencesSetValue(
+        CoreFoundation.CFPreferencesSetValue(
             "PyObjCTestValue2",
             "value2",
             "PyObjCTest",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        v = CFPreferencesCopyValue(
+        v = CoreFoundation.CFPreferencesCopyValue(
             "PyObjCTestValue2",
             "PyObjCTest",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
         self.assertEqual(v, "value2")
-        CFPreferencesSetValue(
+        CoreFoundation.CFPreferencesSetValue(
             "PyObjCTestValue2",
             None,
             "PyObjCTest",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        v = CFPreferencesCopyValue(
+        v = CoreFoundation.CFPreferencesCopyValue(
             "PyObjCTestValue2",
             "PyObjCTest",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
         self.assertIs(v, None)
-        v = CFPreferencesCopyValue(
+        v = CoreFoundation.CFPreferencesCopyValue(
             "PyObjCTestValue2",
             "PyObjCTest",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
         # self.assertIsNot(v, None)
-        CFPreferencesSetMultiple(
+        CoreFoundation.CFPreferencesSetMultiple(
             {"key1": 99, "key2": 42},
             ["PyObjCTestValue"],
             "PyObjCTest",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        v = CFPreferencesCopyValue(
+        v = CoreFoundation.CFPreferencesCopyValue(
             "PyObjCTestValue",
             "PyObjCTest",
-            kCFPreferencesCurrentUser,
-            kCFPreferencesAnyHost,
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
         self.assertIs(v, None)
-        v = CFPreferencesCopyValue(
-            "key2", "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost
+        v = CoreFoundation.CFPreferencesCopyValue(
+            "key2",
+            "PyObjCTest",
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
         self.assertEqual(v, 42)
         if os.path.exists(prefsFn):
             os.unlink(prefsFn)
-        ok = CFPreferencesSynchronize(
-            "PyObjCTest", kCFPreferencesCurrentUser, kCFPreferencesAnyHost
+        ok = CoreFoundation.CFPreferencesSynchronize(
+            "PyObjCTest",
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
 
         self.assertTrue(ok)
-        listing = os.listdir(os.path.dirname(prefsFn))
-        # self.assertTrue([fn for fn in listing if fn.startswith(os.path.basename(prefsFn))])
 
-        self.assertResultIsCFRetained(CFPreferencesCopyApplicationList)
-        apps = CFPreferencesCopyApplicationList(
-            kCFPreferencesCurrentUser, kCFPreferencesAnyHost
+        self.assertResultIsCFRetained(CoreFoundation.CFPreferencesCopyApplicationList)
+        apps = CoreFoundation.CFPreferencesCopyApplicationList(
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        self.assertIsInstance(apps, CFArrayRef)
+        self.assertIsInstance(apps, CoreFoundation.CFArrayRef)
         self.assertIn(b"com.apple.AddressBook".decode("ascii"), apps)
-        self.assertResultIsCFRetained(CFPreferencesCopyKeyList)
-        keys = CFPreferencesCopyKeyList(
-            "com.apple.dock", kCFPreferencesCurrentUser, kCFPreferencesAnyHost
+        self.assertResultIsCFRetained(CoreFoundation.CFPreferencesCopyKeyList)
+        keys = CoreFoundation.CFPreferencesCopyKeyList(
+            "com.apple.dock",
+            CoreFoundation.kCFPreferencesCurrentUser,
+            CoreFoundation.kCFPreferencesAnyHost,
         )
-        self.assertIsInstance(keys, CFArrayRef)
+        self.assertIsInstance(keys, CoreFoundation.CFArrayRef)
         self.assertTrue("region" in keys or "version" in keys)
 
     def testConstants(self):
-        self.assertIsInstance(kCFPreferencesAnyApplication, unicode)
-        self.assertIsInstance(kCFPreferencesCurrentApplication, unicode)
-        self.assertIsInstance(kCFPreferencesAnyHost, unicode)
-        self.assertIsInstance(kCFPreferencesCurrentHost, unicode)
-        self.assertIsInstance(kCFPreferencesAnyUser, unicode)
-        self.assertIsInstance(kCFPreferencesCurrentUser, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(CoreFoundation.kCFPreferencesAnyApplication, str)
+        self.assertIsInstance(CoreFoundation.kCFPreferencesCurrentApplication, str)
+        self.assertIsInstance(CoreFoundation.kCFPreferencesAnyHost, str)
+        self.assertIsInstance(CoreFoundation.kCFPreferencesCurrentHost, str)
+        self.assertIsInstance(CoreFoundation.kCFPreferencesAnyUser, str)
+        self.assertIsInstance(CoreFoundation.kCFPreferencesCurrentUser, str)

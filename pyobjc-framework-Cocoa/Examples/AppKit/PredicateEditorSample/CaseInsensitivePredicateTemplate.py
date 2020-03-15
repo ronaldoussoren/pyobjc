@@ -11,7 +11,7 @@ class CaseInsensitivePredicateTemplate(Cocoa.NSPredicateEditorRowTemplate):
 
         # construct an identical predicate, but add the
         # NSCaseInsensitivePredicateOption flag
-        return Cocoa.NSComparisonPredicate.predicateWithLeftExpression_rightExpression_modifier_type_options_(
+        return Cocoa.NSComparisonPredicate.predicateWithLeftExpression_rightExpression_modifier_type_options_(  # noqa: B950
             predicate.leftExpression(),
             predicate.rightExpression(),
             predicate.comparisonPredicateModifier(),

@@ -1,12 +1,8 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSecureTextFieldCell(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSSecureTextFieldCell.echosBullets)
-        self.assertArgIsBOOL(NSSecureTextFieldCell.setEchosBullets_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSSecureTextFieldCell.echosBullets)
+        self.assertArgIsBOOL(AppKit.NSSecureTextFieldCell.setEchosBullets_, 0)

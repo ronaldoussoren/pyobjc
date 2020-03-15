@@ -1,6 +1,7 @@
-import Cocoa
+import Cocoa  # noqa: F401
+import objc
 from PyObjCTools import AppHelper
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAppHelper(TestCase):
@@ -22,7 +23,3 @@ class TestAppHelper(TestCase):
 
     def test_runEventLoop(self):
         pass
-
-
-if __name__ == "__main__":
-    main()

@@ -1,22 +1,20 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSPrinter(TestCase):
     def testConstants(self):
-        self.assertEqual(NSPrinterTableOK, 0)
-        self.assertEqual(NSPrinterTableNotFound, 1)
-        self.assertEqual(NSPrinterTableError, 2)
+        self.assertEqual(AppKit.NSPrinterTableOK, 0)
+        self.assertEqual(AppKit.NSPrinterTableNotFound, 1)
+        self.assertEqual(AppKit.NSPrinterTableError, 2)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSPrinter.isKey_inTable_)
-        self.assertResultIsBOOL(NSPrinter.booleanForKey_inTable_)
-        self.assertResultIsBOOL(NSPrinter.acceptsBinary)
-        self.assertResultIsBOOL(NSPrinter.isColor)
-        self.assertResultIsBOOL(NSPrinter.isFontAvailable_)
-        self.assertResultIsBOOL(NSPrinter.isOutputStackInReverseOrder)
-        self.assertArgIsBOOL(NSPrinter.printerWithName_domain_includeUnavailable_, 2)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSPrinter.isKey_inTable_)
+        self.assertResultIsBOOL(AppKit.NSPrinter.booleanForKey_inTable_)
+        self.assertResultIsBOOL(AppKit.NSPrinter.acceptsBinary)
+        self.assertResultIsBOOL(AppKit.NSPrinter.isColor)
+        self.assertResultIsBOOL(AppKit.NSPrinter.isFontAvailable_)
+        self.assertResultIsBOOL(AppKit.NSPrinter.isOutputStackInReverseOrder)
+        self.assertArgIsBOOL(
+            AppKit.NSPrinter.printerWithName_domain_includeUnavailable_, 2
+        )

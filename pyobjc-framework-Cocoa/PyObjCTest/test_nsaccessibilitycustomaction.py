@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAccessibilityCustomAction(TestCase):
@@ -18,7 +18,3 @@ class TestNSAccessibilityCustomAction(TestCase):
         # XXX: Cannot describe this properly:
         # self.assertResultIsBlock(AppKit.NSAccessibilityCustomAction.selector, b'...')
         # self.assertArgIsBlock(AppKit.NSAccessibilityCustomAction.setSelector_, 0, b'...')
-
-
-if __name__ == "__main__":
-    main()

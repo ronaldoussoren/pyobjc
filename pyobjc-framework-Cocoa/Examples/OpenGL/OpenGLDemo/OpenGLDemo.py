@@ -12,9 +12,30 @@ sources or nibs.)
 This example requires PyOpenGL
 """
 
-from Cocoa import *
-from OpenGL.GL import *
+from Cocoa import (
+    NSOpenGLView,
+    NSOpenGLPFANoRecovery,
+    NSOpenGLPFAWindow,
+    NSOpenGLPFAAccelerated,
+    NSOpenGLPFADoubleBuffer,
+    NSOpenGLPFAColorSize,
+    NSOpenGLPFAAlphaSize,
+    NSOpenGLPFADepthSize,
+    NSOpenGLPFAStencilSize,
+    NSOpenGLPFAAccumSize,
+    NSOpenGLPixelFormat,
+)
+from OpenGL.GL import (
+    glViewport,
+    glClearColor,
+    glClear,
+    GL_COLOR_BUFFER_BIT,
+    GL_DEPTH_BUFFER_BIT,
+    GL_STENCIL_BUFFER_BIT,
+)
 from PyObjCTools import AppHelper
+import objc
+from objc import super
 
 ClearColors = redIndex, greenIndex, blueIndex, alphaIndex = range(4)
 

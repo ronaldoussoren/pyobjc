@@ -1,32 +1,31 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSTouchBar(TestCase):
     @min_os_level("10.12")
     def testMethods(self):
-        self.assertResultIsBOOL(NSTouchBar.isVisible)
-        # self.assertArgIsBOOL(NSTouchBar.setVisible_, 0)
+        self.assertResultIsBOOL(AppKit.NSTouchBar.isVisible)
+        # self.assertArgIsBOOL(AppKit.NSTouchBar.setVisible_, 0)
 
         self.assertResultIsBOOL(
-            NSApplication.isAutomaticCustomizeTouchBarMenuItemEnabled
+            AppKit.NSApplication.isAutomaticCustomizeTouchBarMenuItemEnabled
         )
         self.assertArgIsBOOL(
-            NSApplication.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0
+            AppKit.NSApplication.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0
         )
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertResultIsBOOL(NSTouchBar.isAutomaticCustomizeTouchBarMenuItemEnabled)
+        self.assertResultIsBOOL(
+            AppKit.NSTouchBar.isAutomaticCustomizeTouchBarMenuItemEnabled
+        )
         self.assertArgIsBOOL(
-            NSTouchBar.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0
+            AppKit.NSTouchBar.setAutomaticCustomizeTouchBarMenuItemEnabled_, 0
         )
 
     @min_sdk_level("10.12")
     def testProtocolObjects(self):
         objc.protocolNamed("NSTouchBarDelegate")
         objc.protocolNamed("NSTouchBarProvider")
-
-
-if __name__ == "__main__":
-    main()

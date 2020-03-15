@@ -1,13 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTreeNode(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
-        self.assertResultIsBOOL(NSTreeNode.isLeaf)
-        self.assertArgIsBOOL(NSTreeNode.sortWithSortDescriptors_recursively_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSTreeNode.isLeaf)
+        self.assertArgIsBOOL(AppKit.NSTreeNode.sortWithSortDescriptors_recursively_, 1)

@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSTextStorageHelper(NSObject):
+class TestNSTextStorageHelper(AppKit.NSObject):
     def textStorage_willProcessEditing_range_changeInLength_(self, s, e, r, l):
         pass
 
@@ -12,14 +13,14 @@ class TestNSTextStorageHelper(NSObject):
 
 class TestNSTextStorage(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTextStorageEditedAttributes, 1 << 0)
-        self.assertEqual(NSTextStorageEditedCharacters, 1 << 1)
+        self.assertEqual(AppKit.NSTextStorageEditedAttributes, 1 << 0)
+        self.assertEqual(AppKit.NSTextStorageEditedCharacters, 1 << 1)
 
-        self.assertIsInstance(NSTextStorageWillProcessEditingNotification, unicode)
-        self.assertIsInstance(NSTextStorageDidProcessEditingNotification, unicode)
+        self.assertIsInstance(AppKit.NSTextStorageWillProcessEditingNotification, str)
+        self.assertIsInstance(AppKit.NSTextStorageDidProcessEditingNotification, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSTextStorage.fixesAttributesLazily)
+        self.assertResultIsBOOL(AppKit.NSTextStorage.fixesAttributesLazily)
 
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
@@ -34,7 +35,7 @@ class TestNSTextStorage(TestCase):
         self.assertArgHasType(
             TestNSTextStorageHelper.textStorage_willProcessEditing_range_changeInLength_,
             2,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextStorageHelper.textStorage_willProcessEditing_range_changeInLength_,
@@ -50,14 +51,10 @@ class TestNSTextStorage(TestCase):
         self.assertArgHasType(
             TestNSTextStorageHelper.textStorage_didProcessEditing_range_changeInLength_,
             2,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextStorageHelper.textStorage_didProcessEditing_range_changeInLength_,
             3,
             objc._C_NSInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,15 +1,15 @@
 import os
 
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSHFSFileTypes(TestCase):
     def testFunctions(self):
-        v = NSHFSTypeCodeFromFileType("'rtfd'")
-        self.assertIsInstance(v, (int, long))
-        w = NSFileTypeForHFSTypeCode(v)
-        self.assertIsInstance(w, unicode)
+        v = Foundation.NSHFSTypeCodeFromFileType("'rtfd'")
+        self.assertIsInstance(v, int)
+        w = Foundation.NSFileTypeForHFSTypeCode(v)
+        self.assertIsInstance(w, str)
         self.assertEqual(w, b"'rtfd'".decode("latin1"))
 
         fname = "/Library/Documentation/Acknowledgements.rtf"
@@ -21,9 +21,5 @@ class TestNSHFSFileTypes(TestCase):
         if not os.path.exists(fname):
             self.fail("test file doesn't exist")
 
-        v = NSHFSTypeOfFile(fname)
-        self.assertIsInstance(v, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        v = Foundation.NSHFSTypeOfFile(fname)
+        self.assertIsInstance(v, str)

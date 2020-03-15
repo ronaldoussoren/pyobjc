@@ -1,42 +1,43 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSProgress(TestCase):
     @min_os_level("10.9")
     def testMethods(self):
-        self.assertResultIsBOOL(NSProgress.isCancellable)
-        self.assertArgIsBOOL(NSProgress.setCancellable_, 0)
+        self.assertResultIsBOOL(AppKit.NSProgress.isCancellable)
+        self.assertArgIsBOOL(AppKit.NSProgress.setCancellable_, 0)
 
-        self.assertResultIsBOOL(NSProgress.isPausable)
-        self.assertArgIsBOOL(NSProgress.setPausable_, 0)
+        self.assertResultIsBOOL(AppKit.NSProgress.isPausable)
+        self.assertArgIsBOOL(AppKit.NSProgress.setPausable_, 0)
 
-        self.assertResultIsBOOL(NSProgress.isCancelled)
-        self.assertResultIsBOOL(NSProgress.isPaused)
+        self.assertResultIsBOOL(AppKit.NSProgress.isCancelled)
+        self.assertResultIsBOOL(AppKit.NSProgress.isPaused)
 
-        self.assertResultIsBlock(NSProgress.cancellationHandler, b"v")
-        self.assertArgIsBlock(NSProgress.setCancellationHandler_, 0, b"v")
+        self.assertResultIsBlock(AppKit.NSProgress.cancellationHandler, b"v")
+        self.assertArgIsBlock(AppKit.NSProgress.setCancellationHandler_, 0, b"v")
 
-        self.assertResultIsBlock(NSProgress.pausingHandler, b"v")
-        self.assertArgIsBlock(NSProgress.setPausingHandler_, 0, b"v")
+        self.assertResultIsBlock(AppKit.NSProgress.pausingHandler, b"v")
+        self.assertArgIsBlock(AppKit.NSProgress.setPausingHandler_, 0, b"v")
 
-        self.assertResultIsBOOL(NSProgress.isIndeterminate)
+        self.assertResultIsBOOL(AppKit.NSProgress.isIndeterminate)
 
         self.assertArgIsBlock(
-            NSProgress.addSubscriberForFileURL_withPublishingHandler_, 1, b"@?@"
+            AppKit.NSProgress.addSubscriberForFileURL_withPublishingHandler_, 1, b"@?@"
         )
 
-        self.assertResultIsBOOL(NSProgress.isOld)
+        self.assertResultIsBOOL(AppKit.NSProgress.isOld)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBlock(NSProgress.resumingHandler, b"v")
-        self.assertArgIsBlock(NSProgress.setResumingHandler_, 0, b"v")
+        self.assertResultIsBlock(AppKit.NSProgress.resumingHandler, b"v")
+        self.assertArgIsBlock(AppKit.NSProgress.setResumingHandler_, 0, b"v")
 
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsBlock(
-            NSProgress.performAsCurrentWithPendingUnitCount_usingBlock_, 1, b"v"
+            AppKit.NSProgress.performAsCurrentWithPendingUnitCount_usingBlock_, 1, b"v"
         )
 
     @min_sdk_level("10.11")
@@ -45,23 +46,19 @@ class TestNSProgress(TestCase):
 
     @min_os_level("10.9")
     def testConstants(self):
-        self.assertIsInstance(NSProgressEstimatedTimeRemainingKey, unicode)
-        self.assertIsInstance(NSProgressThroughputKey, unicode)
-        self.assertIsInstance(NSProgressKindFile, unicode)
-        self.assertIsInstance(NSProgressFileOperationKindKey, unicode)
-        self.assertIsInstance(NSProgressFileOperationKindDownloading, unicode)
+        self.assertIsInstance(AppKit.NSProgressEstimatedTimeRemainingKey, str)
+        self.assertIsInstance(AppKit.NSProgressThroughputKey, str)
+        self.assertIsInstance(AppKit.NSProgressKindFile, str)
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindDownloading, str)
         self.assertIsInstance(
-            NSProgressFileOperationKindDecompressingAfterDownloading, unicode
+            AppKit.NSProgressFileOperationKindDecompressingAfterDownloading, str
         )
-        self.assertIsInstance(NSProgressFileOperationKindReceiving, unicode)
-        self.assertIsInstance(NSProgressFileOperationKindCopying, unicode)
-        self.assertIsInstance(NSProgressFileURLKey, unicode)
-        self.assertIsInstance(NSProgressFileTotalCountKey, unicode)
-        self.assertIsInstance(NSProgressFileCompletedCountKey, unicode)
-        self.assertIsInstance(NSProgressFileAnimationImageKey, unicode)
-        self.assertIsInstance(NSProgressFileAnimationImageOriginalRectKey, unicode)
-        self.assertIsInstance(NSProgressFileIconKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindReceiving, str)
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindCopying, str)
+        self.assertIsInstance(AppKit.NSProgressFileURLKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileTotalCountKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileCompletedCountKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileAnimationImageKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileAnimationImageOriginalRectKey, str)
+        self.assertIsInstance(AppKit.NSProgressFileIconKey, str)

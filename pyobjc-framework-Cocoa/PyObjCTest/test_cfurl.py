@@ -1,172 +1,226 @@
 import array
 import os
+import objc
 
-from CoreFoundation import *
+import CoreFoundation
 from Foundation import NSURL
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestURL(TestCase):
     def testTypes(self):
-        self.assertIs(CFURLRef, NSURL)
+        self.assertIs(CoreFoundation.CFURLRef, NSURL)
 
     def testTypeID(self):
-        val = CFURLGetTypeID()
-        self.assertIsInstance(val, (int, long))
+        val = CoreFoundation.CFURLGetTypeID()
+        self.assertIsInstance(val, int)
 
     def testCreateWithBytes(self):
         url = b"http://www.omroep.nl/"
 
-        ref = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, None)
-        self.assertIsInstance(ref, CFURLRef)
+        ref = CoreFoundation.CFURLCreateWithBytes(
+            None, url, len(url), CoreFoundation.kCFStringEncodingUTF8, None
+        )
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
-        strval = CFURLGetString(ref)
-        self.assertEqual(strval, unicode(url, "utf-8"))
+        strval = CoreFoundation.CFURLGetString(ref)
+        self.assertEqual(strval, str(url, "utf-8"))
 
-        ref2 = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, ref)
-        self.assertIsInstance(ref2, CFURLRef)
+        ref2 = CoreFoundation.CFURLCreateWithBytes(
+            None, url, len(url), CoreFoundation.kCFStringEncodingUTF8, ref
+        )
+        self.assertIsInstance(ref2, CoreFoundation.CFURLRef)
 
         a = array.array("b", b"http://www.nu.nl/")
-        ref3 = CFURLCreateWithBytes(None, a, len(a), kCFStringEncodingUTF8, None)
-        self.assertIsInstance(ref3, CFURLRef)
+        ref3 = CoreFoundation.CFURLCreateWithBytes(
+            None, a, len(a), CoreFoundation.kCFStringEncodingUTF8, None
+        )
+        self.assertIsInstance(ref3, CoreFoundation.CFURLRef)
 
-        # Explictely test for unicode's buffer madness.
+        # Explictely test for str's buffer madness.
         self.assertRaises(
             (ValueError, TypeError),
-            CFURLCreateWithBytes,
+            CoreFoundation.CFURLCreateWithBytes,
             None,
-            unicode(url),
+            str(url),
             len(url),
-            kCFStringEncodingUTF8,
+            CoreFoundation.kCFStringEncodingUTF8,
             None,
         )
 
     def testCreateData(self):
         url = b"http://www.omroep.nl/ blank"
 
-        ref = CFURLCreateWithBytes(None, url, len(url), kCFStringEncodingUTF8, None)
-        self.assertIsInstance(ref, CFURLRef)
+        ref = CoreFoundation.CFURLCreateWithBytes(
+            None, url, len(url), CoreFoundation.kCFStringEncodingUTF8, None
+        )
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
-        data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, False)
-        self.assertIsInstance(data, CFDataRef)
-        val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
+        data = CoreFoundation.CFURLCreateData(
+            None, ref, CoreFoundation.kCFStringEncodingUTF8, False
+        )
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        val = CoreFoundation.CFDataGetBytes(
+            data, (0, CoreFoundation.CFDataGetLength(data)), None
+        )
         self.assertEqual(val, url.replace(b" ", b"%20"))
 
-        data = CFURLCreateData(None, ref, kCFStringEncodingUTF8, True)
-        self.assertIsInstance(data, CFDataRef)
-        val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
+        data = CoreFoundation.CFURLCreateData(
+            None, ref, CoreFoundation.kCFStringEncodingUTF8, True
+        )
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        val = CoreFoundation.CFDataGetBytes(
+            data, (0, CoreFoundation.CFDataGetLength(data)), None
+        )
         self.assertEqual(val, url.replace(b" ", b"%20"))
 
     def testCreateWithString(self):
         url = b"http://www.omroep.nl/".decode("ascii")
 
-        ref = CFURLCreateWithString(None, url, None)
-        self.assertIsInstance(ref, CFURLRef)
+        ref = CoreFoundation.CFURLCreateWithString(None, url, None)
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
-        strval = CFURLGetString(ref)
+        strval = CoreFoundation.CFURLGetString(ref)
         self.assertEqual(strval, url)
 
-        ref2 = CFURLCreateWithString(None, url, ref)
-        self.assertIsInstance(ref2, CFURLRef)
+        ref2 = CoreFoundation.CFURLCreateWithString(None, url, ref)
+        self.assertIsInstance(ref2, CoreFoundation.CFURLRef)
 
     def testCreateAbsolute(self):
         url = b"http://www.omroep.nl/sport/".decode("ascii")
-        baseref = CFURLCreateWithString(None, url, None)
+        baseref = CoreFoundation.CFURLCreateWithString(None, url, None)
 
-        self.assertArgHasType(CFURLCreateAbsoluteURLWithBytes, 1, b"n^v")
-        self.assertArgSizeInArg(CFURLCreateAbsoluteURLWithBytes, 1, 2)
-        ref = CFURLCreateAbsoluteURLWithBytes(
-            None, b"socker", len(b"socker"), kCFStringEncodingUTF8, baseref, True
+        self.assertArgHasType(CoreFoundation.CFURLCreateAbsoluteURLWithBytes, 1, b"n^v")
+        self.assertArgSizeInArg(CoreFoundation.CFURLCreateAbsoluteURLWithBytes, 1, 2)
+        ref = CoreFoundation.CFURLCreateAbsoluteURLWithBytes(
+            None,
+            b"socker",
+            len(b"socker"),
+            CoreFoundation.kCFStringEncodingUTF8,
+            baseref,
+            True,
         )
-        self.assertIsInstance(ref, CFURLRef)
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
-        strval = CFURLGetString(ref)
+        strval = CoreFoundation.CFURLGetString(ref)
         self.assertEqual(strval, b"http://www.omroep.nl/sport/socker".decode("ascii"))
 
         relpath = b"../../../dummy"
-        ref = CFURLCreateAbsoluteURLWithBytes(
-            None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, True
+        ref = CoreFoundation.CFURLCreateAbsoluteURLWithBytes(
+            None,
+            relpath,
+            len(relpath),
+            CoreFoundation.kCFStringEncodingUTF8,
+            baseref,
+            True,
         )
-        self.assertIsInstance(ref, CFURLRef)
-        strval = CFURLGetString(ref)
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
+        strval = CoreFoundation.CFURLGetString(ref)
         self.assertEqual(strval, b"http://www.omroep.nl/dummy".decode("ascii"))
 
         relpath = b"../../../dummy"
-        ref = CFURLCreateAbsoluteURLWithBytes(
-            None, relpath, len(relpath), kCFStringEncodingUTF8, baseref, False
+        ref = CoreFoundation.CFURLCreateAbsoluteURLWithBytes(
+            None,
+            relpath,
+            len(relpath),
+            CoreFoundation.kCFStringEncodingUTF8,
+            baseref,
+            False,
         )
-        self.assertIsInstance(ref, CFURLRef)
-        strval = CFURLGetString(ref)
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
+        strval = CoreFoundation.CFURLGetString(ref)
         self.assertEqual(strval, b"http://www.omroep.nl/../../dummy".decode("ascii"))
 
     def testCopyAbs(self):
-        # CFURLCopyAbsoluteURL
-        base = CFURLCreateWithString(
+        # CoreFoundation.CFURLCopyAbsoluteURL
+        base = CoreFoundation.CFURLCreateWithString(
             None, b"http://www.omroep.nl/".decode("ascii"), None
         )
-        self.assertIsInstance(base, CFURLRef)
+        self.assertIsInstance(base, CoreFoundation.CFURLRef)
 
-        ref = CFURLCreateWithString(None, b"/sport".decode("ascii"), base)
-        self.assertIsInstance(ref, CFURLRef)
+        ref = CoreFoundation.CFURLCreateWithString(
+            None, b"/sport".decode("ascii"), base
+        )
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
-        self.assertEqual(CFURLGetString(ref), b"/sport".decode("ascii"))
-        abs = CFURLCopyAbsoluteURL(ref)
-        self.assertIsInstance(abs, CFURLRef)
+        self.assertEqual(CoreFoundation.CFURLGetString(ref), b"/sport".decode("ascii"))
+        abs = CoreFoundation.CFURLCopyAbsoluteURL(ref)
+        self.assertIsInstance(abs, CoreFoundation.CFURLRef)
         self.assertEqual(
-            CFURLGetString(abs), b"http://www.omroep.nl/sport".decode("ascii")
+            CoreFoundation.CFURLGetString(abs),
+            b"http://www.omroep.nl/sport".decode("ascii"),
         )
 
     def testPaths(self):
-        url = CFURLCreateWithFileSystemPath(
-            None, b"/tmp/".decode("ascii"), kCFURLPOSIXPathStyle, True
+        url = CoreFoundation.CFURLCreateWithFileSystemPath(
+            None, b"/tmp/".decode("ascii"), CoreFoundation.kCFURLPOSIXPathStyle, True
         )
-        self.assertIsInstance(url, CFURLRef)
-        self.assertTrue(CFURLHasDirectoryPath(url))
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
+        self.assertTrue(CoreFoundation.CFURLHasDirectoryPath(url))
 
-        url = CFURLCreateWithFileSystemPath(
-            None, b"/etc/hosts".decode("ascii"), kCFURLPOSIXPathStyle, False
+        url = CoreFoundation.CFURLCreateWithFileSystemPath(
+            None,
+            b"/etc/hosts".decode("ascii"),
+            CoreFoundation.kCFURLPOSIXPathStyle,
+            False,
         )
-        self.assertIsInstance(url, CFURLRef)
-        self.assertFalse(CFURLHasDirectoryPath(url))
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
+        self.assertFalse(CoreFoundation.CFURLHasDirectoryPath(url))
 
         p = os.path.expanduser("~")
         p = p.encode("utf-8")
-        self.assertArgHasType(CFURLCreateFromFileSystemRepresentation, 1, b"n^t")
-        self.assertArgIsNullTerminated(CFURLCreateFromFileSystemRepresentation, 1)
-        url = CFURLCreateFromFileSystemRepresentation(None, p, len(p), True)
-        self.assertIsInstance(url, CFURLRef)
+        self.assertArgHasType(
+            CoreFoundation.CFURLCreateFromFileSystemRepresentation, 1, b"n^t"
+        )
+        self.assertArgIsNullTerminated(
+            CoreFoundation.CFURLCreateFromFileSystemRepresentation, 1
+        )
+        url = CoreFoundation.CFURLCreateFromFileSystemRepresentation(
+            None, p, len(p), True
+        )
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
         self.assertRaises(
             (ValueError, TypeError),
-            CFURLCreateFromFileSystemRepresentation,
+            CoreFoundation.CFURLCreateFromFileSystemRepresentation,
             None,
             b"/tmp/".decode("ascii"),
             4,
             True,
         )
 
-        base = CFURLCreateWithFileSystemPath(
-            None, b"/tmp".decode("ascii"), kCFURLPOSIXPathStyle, True
+        base = CoreFoundation.CFURLCreateWithFileSystemPath(
+            None, b"/tmp".decode("ascii"), CoreFoundation.kCFURLPOSIXPathStyle, True
         )
-        self.assertIsInstance(base, CFURLRef)
+        self.assertIsInstance(base, CoreFoundation.CFURLRef)
 
-        self.assertArgIsBOOL(CFURLCreateWithFileSystemPathRelativeToBase, 3)
-        url = CFURLCreateWithFileSystemPathRelativeToBase(
-            None, b"filename".decode("ascii"), kCFURLPOSIXPathStyle, True, base
+        self.assertArgIsBOOL(
+            CoreFoundation.CFURLCreateWithFileSystemPathRelativeToBase, 3
         )
-        self.assertIsInstance(url, CFURLRef)
+        url = CoreFoundation.CFURLCreateWithFileSystemPathRelativeToBase(
+            None,
+            b"filename".decode("ascii"),
+            CoreFoundation.kCFURLPOSIXPathStyle,
+            True,
+            base,
+        )
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
 
-        strval = CFURLGetString(url)
+        strval = CoreFoundation.CFURLGetString(url)
         self.assertEqual(strval, b"filename/".decode("ascii"))
 
-        self.assertArgIsBOOL(CFURLCreateFromFileSystemRepresentationRelativeToBase, 3)
-        url = CFURLCreateFromFileSystemRepresentationRelativeToBase(
+        self.assertArgIsBOOL(
+            CoreFoundation.CFURLCreateFromFileSystemRepresentationRelativeToBase, 3
+        )
+        url = CoreFoundation.CFURLCreateFromFileSystemRepresentationRelativeToBase(
             None, b"filename2", 9, False, base
         )
-        self.assertIsInstance(url, CFURLRef)
-        strval = CFURLGetString(url)
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
+        strval = CoreFoundation.CFURLGetString(url)
         self.assertEqual(strval, b"filename2".decode("ascii"))
 
-        ok, strval = CFURLGetFileSystemRepresentation(url, True, None, 100)
+        ok, strval = CoreFoundation.CFURLGetFileSystemRepresentation(
+            url, True, None, 100
+        )
         self.assertTrue(ok)
 
         # Unfortunately metadata doesn't allow describing what we actually need
@@ -175,287 +229,317 @@ class TestURL(TestCase):
         self.assertEqual(strval, b"/tmp/filename2")
 
     def testParts(self):
-        base = CFURLCreateWithString(
+        base = CoreFoundation.CFURLCreateWithString(
             None, b"http://www.omroep.nl/".decode("ascii"), None
         )
-        self.assertIsInstance(base, CFURLRef)
+        self.assertIsInstance(base, CoreFoundation.CFURLRef)
 
-        ref = CFURLCreateWithString(None, b"/sport".decode("ascii"), base)
-        self.assertIsInstance(ref, CFURLRef)
+        ref = CoreFoundation.CFURLCreateWithString(
+            None, b"/sport".decode("ascii"), base
+        )
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
-        self.assertEqual(CFURLGetBaseURL(base), None)
-        self.assertEqual(CFURLGetBaseURL(ref), base)
-        self.assertTrue(CFURLCanBeDecomposed(ref) is True)
+        self.assertEqual(CoreFoundation.CFURLGetBaseURL(base), None)
+        self.assertEqual(CoreFoundation.CFURLGetBaseURL(ref), base)
+        self.assertTrue(CoreFoundation.CFURLCanBeDecomposed(ref) is True)
 
-        self.assertEqual(CFURLCopyScheme(ref), b"http".decode("ascii"))
-        self.assertEqual(CFURLCopyNetLocation(ref), b"www.omroep.nl".decode("ascii"))
-        self.assertEqual(CFURLCopyPath(ref), b"/sport".decode("ascii"))
+        self.assertEqual(CoreFoundation.CFURLCopyScheme(ref), b"http".decode("ascii"))
+        self.assertEqual(
+            CoreFoundation.CFURLCopyNetLocation(ref), b"www.omroep.nl".decode("ascii")
+        )
+        self.assertEqual(CoreFoundation.CFURLCopyPath(ref), b"/sport".decode("ascii"))
 
-        path, isDir = CFURLCopyStrictPath(ref, None)
+        path, isDir = CoreFoundation.CFURLCopyStrictPath(ref, None)
         self.assertEqual(path, b"sport".decode("ascii"))
         self.assertEqual(isDir, True)
 
-        path = CFURLCopyFileSystemPath(ref, kCFURLPOSIXPathStyle)
+        path = CoreFoundation.CFURLCopyFileSystemPath(
+            ref, CoreFoundation.kCFURLPOSIXPathStyle
+        )
         self.assertEqual(path, b"/sport".decode("ascii"))
 
-        path = CFURLCopyFileSystemPath(ref, kCFURLPOSIXPathStyle)
+        path = CoreFoundation.CFURLCopyFileSystemPath(
+            ref, CoreFoundation.kCFURLPOSIXPathStyle
+        )
         self.assertEqual(path, b"/sport".decode("ascii"))
-        path = CFURLCopyFileSystemPath(ref, kCFURLWindowsPathStyle)
+        path = CoreFoundation.CFURLCopyFileSystemPath(
+            ref, CoreFoundation.kCFURLWindowsPathStyle
+        )
         self.assertEqual(path, b"\\sport".decode("ascii"))
 
-        self.assertFalse(CFURLHasDirectoryPath(ref))
+        self.assertFalse(CoreFoundation.CFURLHasDirectoryPath(ref))
 
-        v = CFURLCopyResourceSpecifier(ref)
+        v = CoreFoundation.CFURLCopyResourceSpecifier(ref)
         self.assertEqual(v, None)
 
-        v = CFURLCopyHostName(ref)
+        v = CoreFoundation.CFURLCopyHostName(ref)
         self.assertEqual(v, "www.omroep.nl")
 
-        v = CFURLGetPortNumber(ref)
+        v = CoreFoundation.CFURLGetPortNumber(ref)
         self.assertEqual(v, -1)
 
-        ref = CFURLCreateWithString(
+        ref = CoreFoundation.CFURLCreateWithString(
             None,
             b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor".decode(
                 "ascii"
             ),
             None,
         )
-        v = CFURLGetPortNumber(ref)
+        v = CoreFoundation.CFURLGetPortNumber(ref)
         self.assertEqual(v, 42)
 
-        v = CFURLCopyResourceSpecifier(ref)
+        v = CoreFoundation.CFURLCopyResourceSpecifier(ref)
         self.assertEqual(v, b"?qs=1#anchor".decode("ascii"))
 
-        v = CFURLCopyUserName(ref)
+        v = CoreFoundation.CFURLCopyUserName(ref)
         self.assertEqual(v, "ronald")
 
-        v = CFURLCopyPassword(ref)
+        v = CoreFoundation.CFURLCopyPassword(ref)
         self.assertEqual(v, "test")
 
-        v = CFURLCopyParameterString(ref, None)
+        v = CoreFoundation.CFURLCopyParameterString(ref, None)
         self.assertEqual(v, None)
 
-        v = CFURLCopyQueryString(ref, None)
+        v = CoreFoundation.CFURLCopyQueryString(ref, None)
         self.assertEqual(v, "qs=1")
 
-        v = CFURLCopyLastPathComponent(ref)
+        v = CoreFoundation.CFURLCopyLastPathComponent(ref)
         self.assertEqual(v, "results.cgi")
 
-        v = CFURLCopyPathExtension(ref)
+        v = CoreFoundation.CFURLCopyPathExtension(ref)
         self.assertEqual(v, "cgi")
 
-        cnt, bytes = CFURLGetBytes(ref, None, 100)
+        cnt, bytes = CoreFoundation.CFURLGetBytes(ref, None, 100)
         self.assertEqual(cnt, 62)
         self.assertEqual(
             bytes, b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor"
         )
 
-        cnt, bytes = CFURLGetBytes(ref, objc.NULL, 0)
+        cnt, bytes = CoreFoundation.CFURLGetBytes(ref, objc.NULL, 0)
         self.assertEqual(cnt, 62)
         self.assertEqual(bytes, objc.NULL)
 
-        rng1, rng2 = CFURLGetByteRangeForComponent(ref, kCFURLComponentHost, None)
-        self.assertIsInstance(rng1, CFRange)
-        self.assertIsInstance(rng2, CFRange)
+        rng1, rng2 = CoreFoundation.CFURLGetByteRangeForComponent(
+            ref, CoreFoundation.kCFURLComponentHost, None
+        )
+        self.assertIsInstance(rng1, CoreFoundation.CFRange)
+        self.assertIsInstance(rng2, CoreFoundation.CFRange)
 
     def testUpdating(self):
-        base = CFURLCreateWithString(
+        base = CoreFoundation.CFURLCreateWithString(
             None, b"http://www.omroep.nl/sport".decode("ascii"), None
         )
-        self.assertIsInstance(base, CFURLRef)
+        self.assertIsInstance(base, CoreFoundation.CFURLRef)
 
-        url = CFURLCreateCopyAppendingPathComponent(None, base, "soccer", True)
-        self.assertIsInstance(url, CFURLRef)
+        url = CoreFoundation.CFURLCreateCopyAppendingPathComponent(
+            None, base, "soccer", True
+        )
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
 
-        strval = CFURLGetString(url)
+        strval = CoreFoundation.CFURLGetString(url)
         self.assertEqual(strval, "http://www.omroep.nl/sport/soccer/")
 
-        url = CFURLCreateCopyDeletingLastPathComponent(None, base)
-        self.assertIsInstance(url, CFURLRef)
-        strval = CFURLGetString(url)
+        url = CoreFoundation.CFURLCreateCopyDeletingLastPathComponent(None, base)
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
+        strval = CoreFoundation.CFURLGetString(url)
         self.assertEqual(strval, "http://www.omroep.nl/")
 
-        url = CFURLCreateCopyAppendingPathExtension(None, base, "cgi")
-        self.assertIsInstance(url, CFURLRef)
-        strval = CFURLGetString(url)
+        url = CoreFoundation.CFURLCreateCopyAppendingPathExtension(None, base, "cgi")
+        self.assertIsInstance(url, CoreFoundation.CFURLRef)
+        strval = CoreFoundation.CFURLGetString(url)
         self.assertEqual(strval, "http://www.omroep.nl/sport.cgi")
 
-        url2 = CFURLCreateCopyDeletingPathExtension(None, base)
-        self.assertIsInstance(url2, CFURLRef)
-        strval = CFURLGetString(url2)
+        url2 = CoreFoundation.CFURLCreateCopyDeletingPathExtension(None, base)
+        self.assertIsInstance(url2, CoreFoundation.CFURLRef)
+        strval = CoreFoundation.CFURLGetString(url2)
         self.assertEqual(strval, "http://www.omroep.nl/sport")
 
     def testStringEncoding(self):
         base = b"http://www.omroep.nl/sport%20en%20%73%70el".decode("ascii")
 
-        strval = CFURLCreateStringByReplacingPercentEscapes(None, base, objc.NULL)
+        strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapes(
+            None, base, objc.NULL
+        )
         self.assertEqual(strval, "http://www.omroep.nl/sport%20en%20%73%70el")
 
-        strval = CFURLCreateStringByReplacingPercentEscapes(None, base, "")
+        strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapes(
+            None, base, ""
+        )
         self.assertEqual(strval, "http://www.omroep.nl/sport en spel")
 
-        strval = CFURLCreateStringByReplacingPercentEscapes(None, base, " ")
+        strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapes(
+            None, base, " "
+        )
         self.assertEqual(strval, "http://www.omroep.nl/sport%20en%20spel")
 
-        strval = CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
-            None, base, "", kCFStringEncodingISOLatin1
+        strval = CoreFoundation.CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
+            None, base, "", CoreFoundation.kCFStringEncodingISOLatin1
         )
         self.assertEqual(strval, "http://www.omroep.nl/sport en spel")
 
         base = b"http://www.omroep.nl/sport en spel".decode("ascii")
-        strval = CFURLCreateStringByAddingPercentEscapes(
-            None, base, "", "", kCFStringEncodingISOLatin1
+        strval = CoreFoundation.CFURLCreateStringByAddingPercentEscapes(
+            None, base, "", "", CoreFoundation.kCFStringEncodingISOLatin1
         )
         self.assertEqual(
             strval, b"http://www.omroep.nl/sport%20en%20spel".decode("ascii")
         )
-        strval = CFURLCreateStringByAddingPercentEscapes(
-            None, base, " ", "s", kCFStringEncodingISOLatin1
+        strval = CoreFoundation.CFURLCreateStringByAddingPercentEscapes(
+            None, base, " ", "s", CoreFoundation.kCFStringEncodingISOLatin1
         )
         self.assertEqual(
             strval, b"http://www.omroep.nl/%73port en %73pel".decode("ascii")
         )
 
     def testFSRef(self):
-        ref = CFURLCreateWithFileSystemPath(
-            None, os.getcwd(), kCFURLPOSIXPathStyle, True
+        ref = CoreFoundation.CFURLCreateWithFileSystemPath(
+            None, os.getcwd(), CoreFoundation.kCFURLPOSIXPathStyle, True
         )
-        self.assertIsInstance(ref, CFURLRef)
+        self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
-        ok, fsref = CFURLGetFSRef(ref, None)
+        ok, fsref = CoreFoundation.CFURLGetFSRef(ref, None)
         self.assertTrue(ok)
         self.assertIsInstance(fsref, objc.FSRef)
         self.assertEqual(fsref.as_pathname(), os.getcwd())
 
-        ref2 = CFURLCreateFromFSRef(None, fsref)
+        ref2 = CoreFoundation.CFURLCreateFromFSRef(None, fsref)
         self.assertEqual(ref, ref2)
 
     def testConstants(self):
-        self.assertEqual(kCFURLPOSIXPathStyle, 0)
-        self.assertEqual(kCFURLHFSPathStyle, 1)
-        self.assertEqual(kCFURLWindowsPathStyle, 2)
+        self.assertEqual(CoreFoundation.kCFURLPOSIXPathStyle, 0)
+        self.assertEqual(CoreFoundation.kCFURLHFSPathStyle, 1)
+        self.assertEqual(CoreFoundation.kCFURLWindowsPathStyle, 2)
 
-        self.assertEqual(kCFURLComponentScheme, 1)
-        self.assertEqual(kCFURLComponentNetLocation, 2)
-        self.assertEqual(kCFURLComponentPath, 3)
-        self.assertEqual(kCFURLComponentResourceSpecifier, 4)
-        self.assertEqual(kCFURLComponentUser, 5)
-        self.assertEqual(kCFURLComponentPassword, 6)
-        self.assertEqual(kCFURLComponentUserInfo, 7)
-        self.assertEqual(kCFURLComponentHost, 8)
-        self.assertEqual(kCFURLComponentPort, 9)
-        self.assertEqual(kCFURLComponentParameterString, 10)
-        self.assertEqual(kCFURLComponentQuery, 11)
-        self.assertEqual(kCFURLComponentFragment, 12)
+        self.assertEqual(CoreFoundation.kCFURLComponentScheme, 1)
+        self.assertEqual(CoreFoundation.kCFURLComponentNetLocation, 2)
+        self.assertEqual(CoreFoundation.kCFURLComponentPath, 3)
+        self.assertEqual(CoreFoundation.kCFURLComponentResourceSpecifier, 4)
+        self.assertEqual(CoreFoundation.kCFURLComponentUser, 5)
+        self.assertEqual(CoreFoundation.kCFURLComponentPassword, 6)
+        self.assertEqual(CoreFoundation.kCFURLComponentUserInfo, 7)
+        self.assertEqual(CoreFoundation.kCFURLComponentHost, 8)
+        self.assertEqual(CoreFoundation.kCFURLComponentPort, 9)
+        self.assertEqual(CoreFoundation.kCFURLComponentParameterString, 10)
+        self.assertEqual(CoreFoundation.kCFURLComponentQuery, 11)
+        self.assertEqual(CoreFoundation.kCFURLComponentFragment, 12)
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
         fp = open("/tmp/pyobjc.test", "w")
         fp.close()
         try:
-            baseURL = CFURLCreateWithFileSystemPath(
+            baseURL = CoreFoundation.CFURLCreateWithFileSystemPath(
                 None,
                 os.path.realpath(b"/tmp/pyobjc.test".decode("ascii")),
-                kCFURLPOSIXPathStyle,
+                CoreFoundation.kCFURLPOSIXPathStyle,
                 False,
             )
-            self.assertIsInstance(baseURL, CFURLRef)
+            self.assertIsInstance(baseURL, CoreFoundation.CFURLRef)
 
-            self.assertResultIsCFRetained(CFURLCreateFileReferenceURL)
-            url, err = CFURLCreateFileReferenceURL(None, baseURL, None)
-            self.assertIsInstance(url, CFURLRef)
+            self.assertResultIsCFRetained(CoreFoundation.CFURLCreateFileReferenceURL)
+            url, err = CoreFoundation.CFURLCreateFileReferenceURL(None, baseURL, None)
+            self.assertIsInstance(url, CoreFoundation.CFURLRef)
             self.assertEqual(err, None)
 
-            self.assertResultIsCFRetained(CFURLCreateFilePathURL)
-            url, err = CFURLCreateFilePathURL(None, baseURL, None)
-            self.assertIsInstance(url, CFURLRef)
+            self.assertResultIsCFRetained(CoreFoundation.CFURLCreateFilePathURL)
+            url, err = CoreFoundation.CFURLCreateFilePathURL(None, baseURL, None)
+            self.assertIsInstance(url, CoreFoundation.CFURLRef)
             self.assertEqual(err, None)
 
-            self.assertResultIsBOOL(CFURLCopyResourcePropertyForKey)
-            self.assertArgIsCFRetained(CFURLCopyResourcePropertyForKey, 2)
-            self.assertArgIsOut(CFURLCopyResourcePropertyForKey, 2)
-            self.assertArgIsOut(CFURLCopyResourcePropertyForKey, 3)
-            ok, value, error = CFURLCopyResourcePropertyForKey(
-                url, kCFURLNameKey, None, None
+            self.assertResultIsBOOL(CoreFoundation.CFURLCopyResourcePropertyForKey)
+            self.assertArgIsCFRetained(
+                CoreFoundation.CFURLCopyResourcePropertyForKey, 2
+            )
+            self.assertArgIsOut(CoreFoundation.CFURLCopyResourcePropertyForKey, 2)
+            self.assertArgIsOut(CoreFoundation.CFURLCopyResourcePropertyForKey, 3)
+            ok, value, error = CoreFoundation.CFURLCopyResourcePropertyForKey(
+                url, CoreFoundation.kCFURLNameKey, None, None
             )
             self.assertTrue(ok)
-            self.assertIsInstance(value, unicode)
+            self.assertIsInstance(value, str)
             self.assertEqual(error, None)
 
-            ok, value, error = CFURLCopyResourcePropertyForKey(
-                url, kCFURLIsRegularFileKey, None, None
+            ok, value, error = CoreFoundation.CFURLCopyResourcePropertyForKey(
+                url, CoreFoundation.kCFURLIsRegularFileKey, None, None
             )
             self.assertTrue(ok)
             self.assertIsInstance(value, bool)
             self.assertEqual(error, None)
 
-            self.assertResultIsCFRetained(CFURLCreateFilePathURL)
-            self.assertArgIsOut(CFURLCopyResourcePropertyForKey, 2)
-            values, error = CFURLCopyResourcePropertiesForKeys(
-                url, [kCFURLNameKey, kCFURLIsRegularFileKey], None
+            self.assertResultIsCFRetained(CoreFoundation.CFURLCreateFilePathURL)
+            self.assertArgIsOut(CoreFoundation.CFURLCopyResourcePropertyForKey, 2)
+            values, error = CoreFoundation.CFURLCopyResourcePropertiesForKeys(
+                url,
+                [CoreFoundation.kCFURLNameKey, CoreFoundation.kCFURLIsRegularFileKey],
+                None,
             )
-            self.assertIsInstance(values, CFDictionaryRef)
+            self.assertIsInstance(values, CoreFoundation.CFDictionaryRef)
             self.assertEqual(error, None)
 
-            CFURLClearResourcePropertyCacheForKey(url, kCFURLIsRegularFileKey)
-            CFURLClearResourcePropertyCache(url)
-            self.assertResultIsBOOL(CFURLResourceIsReachable)
-            v, err = CFURLResourceIsReachable(url, None)
+            CoreFoundation.CFURLClearResourcePropertyCacheForKey(
+                url, CoreFoundation.kCFURLIsRegularFileKey
+            )
+            CoreFoundation.CFURLClearResourcePropertyCache(url)
+            self.assertResultIsBOOL(CoreFoundation.CFURLResourceIsReachable)
+            v, err = CoreFoundation.CFURLResourceIsReachable(url, None)
             self.assertIsInstance(v, bool)
             self.assertEqual(err, None)
 
-            CFURLSetTemporaryResourcePropertyForKey(
+            CoreFoundation.CFURLSetTemporaryResourcePropertyForKey(
                 url, "pyobjc.test", b"hello".decode("ascii")
             )
-            ok, v, err = CFURLCopyResourcePropertyForKey(url, "pyobjc.test", None, None)
+            ok, v, err = CoreFoundation.CFURLCopyResourcePropertyForKey(
+                url, "pyobjc.test", None, None
+            )
             self.assertTrue(ok)
             self.assertEqual(v, b"hello".decode("ascii"))
 
-            ok, cur, err = CFURLCopyResourcePropertyForKey(
-                url, kCFURLIsHiddenKey, None, None
+            ok, cur, err = CoreFoundation.CFURLCopyResourcePropertyForKey(
+                url, CoreFoundation.kCFURLIsHiddenKey, None, None
             )
             self.assertTrue(ok)
 
-            ok, err = CFURLSetResourcePropertyForKey(
-                url, kCFURLIsHiddenKey, not cur, None
+            ok, err = CoreFoundation.CFURLSetResourcePropertyForKey(
+                url, CoreFoundation.kCFURLIsHiddenKey, not cur, None
             )
             self.assertTrue(ok)
 
-            ok, new, err = CFURLCopyResourcePropertyForKey(
-                url, kCFURLIsHiddenKey, None, None
+            ok, new, err = CoreFoundation.CFURLCopyResourcePropertyForKey(
+                url, CoreFoundation.kCFURLIsHiddenKey, None, None
             )
             self.assertTrue(ok)
             self.assertEqual(new, not cur)
             self.assertEqual(err, None)
 
-            ok, err = CFURLSetResourcePropertiesForKeys(
-                url, {kCFURLIsHiddenKey: cur}, None
+            ok, err = CoreFoundation.CFURLSetResourcePropertiesForKeys(
+                url, {CoreFoundation.kCFURLIsHiddenKey: cur}, None
             )
             self.assertTrue(ok)
             self.assertEqual(err, None)
 
-            ok, new, err = CFURLCopyResourcePropertyForKey(
-                url, kCFURLIsHiddenKey, None, None
+            ok, new, err = CoreFoundation.CFURLCopyResourcePropertyForKey(
+                url, CoreFoundation.kCFURLIsHiddenKey, None, None
             )
             self.assertTrue(ok)
             self.assertEqual(new, cur)
             self.assertEqual(err, None)
 
-            self.assertResultIsCFRetained(CFURLCreateBookmarkData)
-            data, err = CFURLCreateBookmarkData(
+            self.assertResultIsCFRetained(CoreFoundation.CFURLCreateBookmarkData)
+            data, err = CoreFoundation.CFURLCreateBookmarkData(
                 None,
                 url,
-                kCFURLBookmarkCreationSuitableForBookmarkFile,
-                [kCFURLNameKey, kCFURLIsHiddenKey],
+                CoreFoundation.kCFURLBookmarkCreationSuitableForBookmarkFile,
+                [CoreFoundation.kCFURLNameKey, CoreFoundation.kCFURLIsHiddenKey],
                 None,
                 None,
             )
             self.assertIs(err, None)
-            self.assertIsInstance(data, CFDataRef)
+            self.assertIsInstance(data, CoreFoundation.CFDataRef)
 
-            self.assertResultIsCFRetained(CFURLCreateByResolvingBookmarkData)
-            u, stale, err = CFURLCreateByResolvingBookmarkData(
+            self.assertResultIsCFRetained(
+                CoreFoundation.CFURLCreateByResolvingBookmarkData
+            )
+            u, stale, err = CoreFoundation.CFURLCreateByResolvingBookmarkData(
                 None, data, 0, None, None, None, None
             )
             self.assertEqual(u, url)
@@ -463,39 +547,50 @@ class TestURL(TestCase):
             self.assertFalse(stale)
             self.assertIs(err, None)
             self.assertResultIsCFRetained(
-                CFURLCreateResourcePropertiesForKeysFromBookmarkData
+                CoreFoundation.CFURLCreateResourcePropertiesForKeysFromBookmarkData
             )
-            v = CFURLCreateResourcePropertiesForKeysFromBookmarkData(
-                None, [kCFURLNameKey], data
+            v = CoreFoundation.CFURLCreateResourcePropertiesForKeysFromBookmarkData(
+                None, [CoreFoundation.kCFURLNameKey], data
             )
-            self.assertIsInstance(v, CFDictionaryRef)
+            self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
 
             self.assertResultIsCFRetained(
-                CFURLCreateResourcePropertyForKeyFromBookmarkData
+                CoreFoundation.CFURLCreateResourcePropertyForKeyFromBookmarkData
             )
-            v = CFURLCreateResourcePropertyForKeyFromBookmarkData(
-                None, kCFURLNameKey, data
+            v = CoreFoundation.CFURLCreateResourcePropertyForKeyFromBookmarkData(
+                None, CoreFoundation.kCFURLNameKey, data
             )
-            self.assertIsInstance(v, unicode)
+            self.assertIsInstance(v, str)
 
-            refURL = CFURLCreateWithFileSystemPath(
-                None, b"/tmp/pyobjc.test.2".decode("ascii"), kCFURLPOSIXPathStyle, False
+            refURL = CoreFoundation.CFURLCreateWithFileSystemPath(
+                None,
+                b"/tmp/pyobjc.test.2".decode("ascii"),
+                CoreFoundation.kCFURLPOSIXPathStyle,
+                False,
             )
-            ok, err = CFURLWriteBookmarkDataToFile(data, refURL, 0, None)
+            ok, err = CoreFoundation.CFURLWriteBookmarkDataToFile(data, refURL, 0, None)
             self.assertTrue(ok)
             self.assertIs(err, None)
             self.assertTrue(os.path.exists("/tmp/pyobjc.test.2"))
 
-            self.assertResultIsCFRetained(CFURLCreateBookmarkDataFromFile)
-            n, err = CFURLCreateBookmarkDataFromFile(None, refURL, None)
-            self.assertIsInstance(n, CFDataRef)
+            self.assertResultIsCFRetained(
+                CoreFoundation.CFURLCreateBookmarkDataFromFile
+            )
+            n, err = CoreFoundation.CFURLCreateBookmarkDataFromFile(None, refURL, None)
+            self.assertIsInstance(n, CoreFoundation.CFDataRef)
             self.assertIs(err, None)
-            self.assertResultIsCFRetained(CFURLCreateBookmarkDataFromAliasRecord)
-            self.assertArgHasType(
-                CFURLCreateBookmarkDataFromAliasRecord, 0, b"^{__CFAllocator=}"
+            self.assertResultIsCFRetained(
+                CoreFoundation.CFURLCreateBookmarkDataFromAliasRecord
             )
             self.assertArgHasType(
-                CFURLCreateBookmarkDataFromAliasRecord, 1, b"^{__CFData=}"
+                CoreFoundation.CFURLCreateBookmarkDataFromAliasRecord,
+                0,
+                b"^{__CFAllocator=}",
+            )
+            self.assertArgHasType(
+                CoreFoundation.CFURLCreateBookmarkDataFromAliasRecord,
+                1,
+                b"^{__CFData=}",
             )
 
         finally:
@@ -505,176 +600,225 @@ class TestURL(TestCase):
 
     @min_os_level("10.8")
     def testFunctions10_8(self):
-        self.assertResultIsBOOL(CFURLStartAccessingSecurityScopedResource)
-        CFURLStopAccessingSecurityScopedResource
+        self.assertResultIsBOOL(
+            CoreFoundation.CFURLStartAccessingSecurityScopedResource
+        )
+        CoreFoundation.CFURLStopAccessingSecurityScopedResource
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(kCFURLIsExcludedFromBackupKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLIsExcludedFromBackupKey, str)
 
-        self.assertIsInstance(kCFURLPathKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLPathKey, str)
 
-        self.assertEqual(kCFBookmarkResolutionWithoutUIMask, 1 << 8)
-        self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
-        self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1 << 10)
+        self.assertEqual(CoreFoundation.kCFBookmarkResolutionWithoutUIMask, 1 << 8)
+        self.assertEqual(
+            CoreFoundation.kCFBookmarkResolutionWithoutMountingMask, 1 << 9
+        )
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkResolutionWithSecurityScope, 1 << 10
+        )
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(kCFURLTagNamesKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemDownloadingErrorKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemUploadingErrorKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLTagNamesKey, str)
         self.assertIsInstance(
-            kCFURLUbiquitousItemDownloadingStatusNotDownloaded, unicode
+            CoreFoundation.kCFURLUbiquitousItemDownloadingStatusKey, str
         )
-        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusDownloaded, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemDownloadingStatusCurrent, unicode)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemDownloadingErrorKey, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemUploadingErrorKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemDownloadingStatusNotDownloaded, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemDownloadingStatusDownloaded, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemDownloadingStatusCurrent, str
+        )
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(kCFURLGenerationIdentifierKey, unicode)
-        self.assertIsInstance(kCFURLDocumentIdentifierKey, unicode)
-        self.assertIsInstance(kCFURLAddedToDirectoryDateKey, unicode)
-        self.assertIsInstance(kCFURLQuarantinePropertiesKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLGenerationIdentifierKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLDocumentIdentifierKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLAddedToDirectoryDateKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLQuarantinePropertiesKey, str)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertIsInstance(kCFURLIsApplicationKey, unicode)
-        self.assertIsInstance(kCFURLApplicationIsScriptableKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLIsApplicationKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLApplicationIsScriptableKey, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(kCFURLNameKey, unicode)
-        self.assertIsInstance(kCFURLLocalizedNameKey, unicode)
-        self.assertIsInstance(kCFURLIsRegularFileKey, unicode)
-        self.assertIsInstance(kCFURLIsDirectoryKey, unicode)
-        self.assertIsInstance(kCFURLIsSymbolicLinkKey, unicode)
-        self.assertIsInstance(kCFURLIsVolumeKey, unicode)
-        self.assertIsInstance(kCFURLIsPackageKey, unicode)
-        self.assertIsInstance(kCFURLIsSystemImmutableKey, unicode)
-        self.assertIsInstance(kCFURLIsUserImmutableKey, unicode)
-        self.assertIsInstance(kCFURLIsHiddenKey, unicode)
-        self.assertIsInstance(kCFURLHasHiddenExtensionKey, unicode)
-        self.assertIsInstance(kCFURLCreationDateKey, unicode)
-        self.assertIsInstance(kCFURLContentAccessDateKey, unicode)
-        self.assertIsInstance(kCFURLContentModificationDateKey, unicode)
-        self.assertIsInstance(kCFURLAttributeModificationDateKey, unicode)
-        self.assertIsInstance(kCFURLLinkCountKey, unicode)
-        self.assertIsInstance(kCFURLParentDirectoryURLKey, unicode)
-        self.assertIsInstance(kCFURLVolumeURLKey, unicode)
-        self.assertIsInstance(kCFURLTypeIdentifierKey, unicode)
-        self.assertIsInstance(kCFURLLocalizedTypeDescriptionKey, unicode)
-        self.assertIsInstance(kCFURLLabelNumberKey, unicode)
-        self.assertIsInstance(kCFURLLabelColorKey, unicode)
-        self.assertIsInstance(kCFURLLocalizedLabelKey, unicode)
-        self.assertIsInstance(kCFURLEffectiveIconKey, unicode)
-        self.assertIsInstance(kCFURLCustomIconKey, unicode)
-        self.assertIsInstance(kCFURLFileSizeKey, unicode)
-        self.assertIsInstance(kCFURLFileAllocatedSizeKey, unicode)
-        self.assertIsInstance(kCFURLIsAliasFileKey, unicode)
-        self.assertIsInstance(kCFURLVolumeLocalizedFormatDescriptionKey, unicode)
-        self.assertIsInstance(kCFURLVolumeTotalCapacityKey, unicode)
-        self.assertIsInstance(kCFURLVolumeAvailableCapacityKey, unicode)
-        self.assertIsInstance(kCFURLVolumeResourceCountKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsPersistentIDsKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsSymbolicLinksKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsHardLinksKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsJournalingKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsJournalingKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsSparseFilesKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsZeroRunsKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsCaseSensitiveNamesKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsCasePreservedNamesKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLNameKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLLocalizedNameKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsRegularFileKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsDirectoryKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsSymbolicLinkKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsVolumeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsPackageKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsSystemImmutableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsUserImmutableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsHiddenKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLHasHiddenExtensionKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLCreationDateKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLContentAccessDateKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLContentModificationDateKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLAttributeModificationDateKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLLinkCountKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLParentDirectoryURLKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeURLKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLTypeIdentifierKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLLocalizedTypeDescriptionKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLLabelNumberKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLLabelColorKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLLocalizedLabelKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLEffectiveIconKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLCustomIconKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileSizeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileAllocatedSizeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsAliasFileKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeLocalizedFormatDescriptionKey, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeTotalCapacityKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeAvailableCapacityKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeResourceCountKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsPersistentIDsKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsSymbolicLinksKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsHardLinksKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsJournalingKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsJournalingKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsSparseFilesKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsZeroRunsKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeSupportsCaseSensitiveNamesKey, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeSupportsCasePreservedNamesKey, str
+        )
 
-        self.assertEqual(kCFURLBookmarkCreationPreferFileIDResolutionMask, 1 << 8)
-        self.assertEqual(kCFURLBookmarkCreationMinimalBookmarkMask, 1 << 9)
-        self.assertEqual(kCFURLBookmarkCreationSuitableForBookmarkFile, 1 << 10)
-        self.assertEqual(kCFBookmarkResolutionWithoutUIMask, 1 << 8)
-        self.assertEqual(kCFBookmarkResolutionWithoutMountingMask, 1 << 9)
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkCreationPreferFileIDResolutionMask, 1 << 8
+        )
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkCreationMinimalBookmarkMask, 1 << 9
+        )
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkCreationSuitableForBookmarkFile, 1 << 10
+        )
+        self.assertEqual(CoreFoundation.kCFBookmarkResolutionWithoutUIMask, 1 << 8)
+        self.assertEqual(
+            CoreFoundation.kCFBookmarkResolutionWithoutMountingMask, 1 << 9
+        )
 
-        self.assertEqual(kCFURLBookmarkResolutionWithoutUIMask, 1 << 8)
-        self.assertEqual(kCFURLBookmarkResolutionWithoutMountingMask, 1 << 9)
+        self.assertEqual(CoreFoundation.kCFURLBookmarkResolutionWithoutUIMask, 1 << 8)
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkResolutionWithoutMountingMask, 1 << 9
+        )
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(kCFURLBookmarkCreationWithSecurityScope, 1 << 11)
         self.assertEqual(
-            kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, 1 << 12
+            CoreFoundation.kCFURLBookmarkCreationWithSecurityScope, 1 << 11
         )
-        self.assertEqual(kCFURLBookmarkResolutionWithSecurityScope, 1 << 10)
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkCreationSecurityScopeAllowOnlyReadAccess,
+            1 << 12,
+        )
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkResolutionWithSecurityScope, 1 << 10
+        )
 
-        self.assertIsInstance(kCFURLKeysOfUnsetValuesKey, unicode)
-        self.assertIsInstance(kCFURLFileResourceIdentifierKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIdentifierKey, unicode)
-        self.assertIsInstance(kCFURLPreferredIOBlockSizeKey, unicode)
-        self.assertIsInstance(kCFURLIsReadableKey, unicode)
-        self.assertIsInstance(kCFURLIsWritableKey, unicode)
-        self.assertIsInstance(kCFURLIsExecutableKey, unicode)
-        self.assertIsInstance(kCFURLFileSecurityKey, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeKey, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeNamedPipe, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeCharacterSpecial, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeDirectory, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeBlockSpecial, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeRegular, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeSymbolicLink, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeSocket, unicode)
-        self.assertIsInstance(kCFURLFileResourceTypeUnknown, unicode)
-        self.assertIsInstance(kCFURLTotalFileSizeKey, unicode)
-        self.assertIsInstance(kCFURLTotalFileAllocatedSizeKey, unicode)
-        self.assertIsInstance(kCFURLIsMountTriggerKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsRootDirectoryDatesKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsVolumeSizesKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsRenamingKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsAdvisoryFileLockingKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsExtendedSecurityKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsBrowsableKey, unicode)
-        self.assertIsInstance(kCFURLVolumeMaximumFileSizeKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsEjectableKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsRemovableKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsInternalKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsAutomountedKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsLocalKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsReadOnlyKey, unicode)
-        self.assertIsInstance(kCFURLVolumeCreationDateKey, unicode)
-        self.assertIsInstance(kCFURLVolumeURLForRemountingKey, unicode)
-        self.assertIsInstance(kCFURLVolumeUUIDStringKey, unicode)
-        self.assertIsInstance(kCFURLVolumeNameKey, unicode)
-        self.assertIsInstance(kCFURLVolumeLocalizedNameKey, unicode)
-        self.assertIsInstance(kCFURLIsUbiquitousItemKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemHasUnresolvedConflictsKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemIsDownloadedKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemIsDownloadingKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemIsUploadedKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemIsUploadingKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemPercentDownloadedKey, unicode)
-        self.assertIsInstance(kCFURLUbiquitousItemPercentUploadedKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLKeysOfUnsetValuesKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceIdentifierKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIdentifierKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLPreferredIOBlockSizeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsReadableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsWritableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsExecutableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileSecurityKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeNamedPipe, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLFileResourceTypeCharacterSpecial, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeDirectory, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeBlockSpecial, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeRegular, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeSymbolicLink, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeSocket, str)
+        self.assertIsInstance(CoreFoundation.kCFURLFileResourceTypeUnknown, str)
+        self.assertIsInstance(CoreFoundation.kCFURLTotalFileSizeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLTotalFileAllocatedSizeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsMountTriggerKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeSupportsRootDirectoryDatesKey, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsVolumeSizesKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsRenamingKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeSupportsAdvisoryFileLockingKey, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeSupportsExtendedSecurityKey, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsBrowsableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeMaximumFileSizeKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsEjectableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsRemovableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsInternalKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsAutomountedKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsLocalKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsReadOnlyKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeCreationDateKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeURLForRemountingKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeUUIDStringKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeNameKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeLocalizedNameKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsUbiquitousItemKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemHasUnresolvedConflictsKey, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemIsDownloadedKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemIsDownloadingKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemIsUploadedKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLUbiquitousItemIsUploadingKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemPercentDownloadedKey, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFURLUbiquitousItemPercentUploadedKey, str
+        )
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(kCFURLVolumeLocalizedNameKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsEncryptedKey, unicode)
-        self.assertIsInstance(kCFURLVolumeIsRootFileSystemKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsCompressionKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsFileCloningKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsSwapRenamingKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsExclusiveRenamingKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeLocalizedNameKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsEncryptedKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeIsRootFileSystemKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsCompressionKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsFileCloningKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsSwapRenamingKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeSupportsExclusiveRenamingKey, str
+        )
 
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(
-            kCFURLVolumeAvailableCapacityForImportantUsageKey, unicode
+            CoreFoundation.kCFURLVolumeAvailableCapacityForImportantUsageKey, str
         )
         self.assertIsInstance(
-            kCFURLVolumeAvailableCapacityForOpportunisticUsageKey, unicode
+            CoreFoundation.kCFURLVolumeAvailableCapacityForOpportunisticUsageKey, str
         )
-        self.assertIsInstance(kCFURLVolumeSupportsImmutableFilesKey, unicode)
-        self.assertIsInstance(kCFURLVolumeSupportsAccessPermissionsKey, unicode)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsImmutableFilesKey, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFURLVolumeSupportsAccessPermissionsKey, str
+        )
 
     @min_os_level("10.9")
     def testFunctions10_9(self):
-        self.assertResultIsBOOL(CFURLIsFileReferenceURL)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(CoreFoundation.CFURLIsFileReferenceURL)

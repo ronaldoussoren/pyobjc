@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSTableViewHelper(NSObject):
+class TestNSTableViewHelper(AppKit.NSObject):
     def tableView_rowActionsForRow_edge_(self, a, b, c):
         pass
 
@@ -101,148 +102,162 @@ class TestNSTableViewHelper(NSObject):
 
 class TestNSTableView(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTableViewDropOn, 0)
-        self.assertEqual(NSTableViewDropAbove, 1)
+        self.assertEqual(AppKit.NSTableViewDropOn, 0)
+        self.assertEqual(AppKit.NSTableViewDropAbove, 1)
 
-        self.assertEqual(NSTableViewNoColumnAutoresizing, 0)
-        self.assertEqual(NSTableViewUniformColumnAutoresizingStyle, 1)
-        self.assertEqual(NSTableViewSequentialColumnAutoresizingStyle, 2)
-        self.assertEqual(NSTableViewReverseSequentialColumnAutoresizingStyle, 3)
-        self.assertEqual(NSTableViewLastColumnOnlyAutoresizingStyle, 4)
-        self.assertEqual(NSTableViewFirstColumnOnlyAutoresizingStyle, 5)
+        self.assertEqual(AppKit.NSTableViewNoColumnAutoresizing, 0)
+        self.assertEqual(AppKit.NSTableViewUniformColumnAutoresizingStyle, 1)
+        self.assertEqual(AppKit.NSTableViewSequentialColumnAutoresizingStyle, 2)
+        self.assertEqual(AppKit.NSTableViewReverseSequentialColumnAutoresizingStyle, 3)
+        self.assertEqual(AppKit.NSTableViewLastColumnOnlyAutoresizingStyle, 4)
+        self.assertEqual(AppKit.NSTableViewFirstColumnOnlyAutoresizingStyle, 5)
 
-        self.assertEqual(NSTableViewGridNone, 0)
-        self.assertEqual(NSTableViewSolidVerticalGridLineMask, 1 << 0)
-        self.assertEqual(NSTableViewSolidHorizontalGridLineMask, 1 << 1)
+        self.assertEqual(AppKit.NSTableViewGridNone, 0)
+        self.assertEqual(AppKit.NSTableViewSolidVerticalGridLineMask, 1 << 0)
+        self.assertEqual(AppKit.NSTableViewSolidHorizontalGridLineMask, 1 << 1)
 
-        self.assertEqual(NSTableViewSelectionHighlightStyleRegular, 0)
-        self.assertEqual(NSTableViewSelectionHighlightStyleSourceList, 1)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleRegular, 0)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleSourceList, 1)
 
-        self.assertIsInstance(NSTableViewSelectionDidChangeNotification, unicode)
-        self.assertIsInstance(NSTableViewColumnDidMoveNotification, unicode)
-        self.assertIsInstance(NSTableViewColumnDidResizeNotification, unicode)
-        self.assertIsInstance(NSTableViewSelectionIsChangingNotification, unicode)
+        self.assertIsInstance(AppKit.NSTableViewSelectionDidChangeNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewColumnDidMoveNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewColumnDidResizeNotification, str)
+        self.assertIsInstance(AppKit.NSTableViewSelectionIsChangingNotification, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSTableViewSelectionHighlightStyleNone, -1)
-        self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleNone, -1)
-        self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
-        self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleSourceList, 1)
+        self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleNone, -1)
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleRegular, 0)
+        self.assertEqual(
+            AppKit.NSTableViewDraggingDestinationFeedbackStyleSourceList, 1
+        )
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(NSTableViewDashedHorizontalGridLineMask, 1 << 3)
+        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
 
-        self.assertEqual(NSTableViewRowSizeStyleDefault, -1)
-        self.assertEqual(NSTableViewRowSizeStyleCustom, 0)
-        self.assertEqual(NSTableViewRowSizeStyleSmall, 1)
-        self.assertEqual(NSTableViewRowSizeStyleMedium, 2)
-        self.assertEqual(NSTableViewRowSizeStyleLarge, 3)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleDefault, -1)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleCustom, 0)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleSmall, 1)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleMedium, 2)
+        self.assertEqual(AppKit.NSTableViewRowSizeStyleLarge, 3)
 
-        self.assertEqual(NSTableViewAnimationEffectNone, 0)
-        self.assertEqual(NSTableViewAnimationEffectFade, 1)
-        self.assertEqual(NSTableViewAnimationEffectGap, 2)
-        self.assertEqual(NSTableViewAnimationSlideUp, 0x10)
-        self.assertEqual(NSTableViewAnimationSlideDown, 0x20)
-        self.assertEqual(NSTableViewAnimationSlideLeft, 0x30)
-        self.assertEqual(NSTableViewAnimationSlideRight, 0x40)
+        self.assertEqual(AppKit.NSTableViewAnimationEffectNone, 0)
+        self.assertEqual(AppKit.NSTableViewAnimationEffectFade, 1)
+        self.assertEqual(AppKit.NSTableViewAnimationEffectGap, 2)
+        self.assertEqual(AppKit.NSTableViewAnimationSlideUp, 0x10)
+        self.assertEqual(AppKit.NSTableViewAnimationSlideDown, 0x20)
+        self.assertEqual(AppKit.NSTableViewAnimationSlideLeft, 0x30)
+        self.assertEqual(AppKit.NSTableViewAnimationSlideRight, 0x40)
 
-        self.assertIsInstance(NSTableViewRowViewKey, unicode)
+        self.assertIsInstance(AppKit.NSTableViewRowViewKey, str)
 
-        self.assertEqual(NSTableViewDashedHorizontalGridLineMask, 1 << 3)
+        self.assertEqual(AppKit.NSTableViewDashedHorizontalGridLineMask, 1 << 3)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertEqual(NSTableViewDraggingDestinationFeedbackStyleGap, 2)
+        self.assertEqual(AppKit.NSTableViewDraggingDestinationFeedbackStyleGap, 2)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertEqual(NSTableRowActionEdgeLeading, 0)
-        self.assertEqual(NSTableRowActionEdgeTrailing, 1)
+        self.assertEqual(AppKit.NSTableRowActionEdgeLeading, 0)
+        self.assertEqual(AppKit.NSTableRowActionEdgeTrailing, 1)
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSTableView.setAllowsColumnReordering_, 0)
-        self.assertResultIsBOOL(NSTableView.allowsColumnReordering)
-        self.assertArgIsBOOL(NSTableView.setAllowsColumnResizing_, 0)
-        self.assertResultIsBOOL(NSTableView.allowsColumnResizing)
-        self.assertArgIsBOOL(NSTableView.setUsesAlternatingRowBackgroundColors_, 0)
-        self.assertResultIsBOOL(NSTableView.usesAlternatingRowBackgroundColors)
-        self.assertArgIsBOOL(NSTableView.setVerticalMotionCanBeginDrag_, 0)
-        self.assertResultIsBOOL(NSTableView.verticalMotionCanBeginDrag)
-        self.assertResultIsBOOL(NSTableView.canDragRowsWithIndexes_atPoint_)
-        self.assertArgIsInOut(
-            NSTableView.dragImageForRowsWithIndexes_tableColumns_event_offset_, 3
+        self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnReordering_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.allowsColumnReordering)
+        self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnResizing_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.allowsColumnResizing)
+        self.assertArgIsBOOL(
+            AppKit.NSTableView.setUsesAlternatingRowBackgroundColors_, 0
         )
-        self.assertArgIsBOOL(NSTableView.setDraggingSourceOperationMask_forLocal_, 1)
-        self.assertResultIsBOOL(NSTableView.verticalMotionCanBeginDrag)
-        self.assertArgIsBOOL(NSTableView.setAllowsMultipleSelection_, 0)
-        self.assertResultIsBOOL(NSTableView.allowsMultipleSelection)
-        self.assertArgIsBOOL(NSTableView.setAllowsEmptySelection_, 0)
-        self.assertResultIsBOOL(NSTableView.allowsEmptySelection)
-        self.assertArgIsBOOL(NSTableView.setAllowsColumnSelection_, 0)
-        self.assertResultIsBOOL(NSTableView.allowsColumnSelection)
-        self.assertArgIsBOOL(NSTableView.selectColumnIndexes_byExtendingSelection_, 1)
-        self.assertArgIsBOOL(NSTableView.selectRowIndexes_byExtendingSelection_, 1)
-        self.assertResultIsBOOL(NSTableView.isColumnSelected_)
-        self.assertResultIsBOOL(NSTableView.isRowSelected_)
-        self.assertResultIsBOOL(NSTableView.textShouldBeginEditing_)
-        self.assertResultIsBOOL(NSTableView.textShouldEndEditing_)
-        self.assertArgIsBOOL(NSTableView.setAutosaveTableColumns_, 0)
-        self.assertResultIsBOOL(NSTableView.autosaveTableColumns)
-        self.assertArgIsBOOL(NSTableView.editColumn_row_withEvent_select_, 3)
+        self.assertResultIsBOOL(AppKit.NSTableView.usesAlternatingRowBackgroundColors)
+        self.assertArgIsBOOL(AppKit.NSTableView.setVerticalMotionCanBeginDrag_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.verticalMotionCanBeginDrag)
+        self.assertResultIsBOOL(AppKit.NSTableView.canDragRowsWithIndexes_atPoint_)
+        self.assertArgIsInOut(
+            AppKit.NSTableView.dragImageForRowsWithIndexes_tableColumns_event_offset_, 3
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTableView.setDraggingSourceOperationMask_forLocal_, 1
+        )
+        self.assertResultIsBOOL(AppKit.NSTableView.verticalMotionCanBeginDrag)
+        self.assertArgIsBOOL(AppKit.NSTableView.setAllowsMultipleSelection_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.allowsMultipleSelection)
+        self.assertArgIsBOOL(AppKit.NSTableView.setAllowsEmptySelection_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.allowsEmptySelection)
+        self.assertArgIsBOOL(AppKit.NSTableView.setAllowsColumnSelection_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.allowsColumnSelection)
+        self.assertArgIsBOOL(
+            AppKit.NSTableView.selectColumnIndexes_byExtendingSelection_, 1
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTableView.selectRowIndexes_byExtendingSelection_, 1
+        )
+        self.assertResultIsBOOL(AppKit.NSTableView.isColumnSelected_)
+        self.assertResultIsBOOL(AppKit.NSTableView.isRowSelected_)
+        self.assertResultIsBOOL(AppKit.NSTableView.textShouldBeginEditing_)
+        self.assertResultIsBOOL(AppKit.NSTableView.textShouldEndEditing_)
+        self.assertArgIsBOOL(AppKit.NSTableView.setAutosaveTableColumns_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.autosaveTableColumns)
+        self.assertArgIsBOOL(AppKit.NSTableView.editColumn_row_withEvent_select_, 3)
 
         self.assertArgHasType(
-            NSTableView.drawBackgroundInClipRect_, 0, NSRect.__typestr__
+            AppKit.NSTableView.drawBackgroundInClipRect_, 0, AppKit.NSRect.__typestr__
         )
 
-        self.assertArgIsBOOL(NSTableView.setDrawsGrid_, 0)
-        self.assertResultIsBOOL(NSTableView.drawsGrid)
-        self.assertArgIsBOOL(NSTableView.selectColumn_byExtendingSelection_, 1)
-        self.assertArgIsBOOL(NSTableView.selectRow_byExtendingSelection_, 1)
-        self.assertArgIsInOut(NSTableView.dragImageForRows_event_dragImageOffset_, 2)
-        self.assertArgIsBOOL(NSTableView.setAutoresizesAllColumnsToFit_, 0)
-        self.assertResultIsBOOL(NSTableView.autoresizesAllColumnsToFit)
+        self.assertArgIsBOOL(AppKit.NSTableView.setDrawsGrid_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.drawsGrid)
+        self.assertArgIsBOOL(AppKit.NSTableView.selectColumn_byExtendingSelection_, 1)
+        self.assertArgIsBOOL(AppKit.NSTableView.selectRow_byExtendingSelection_, 1)
+        self.assertArgIsInOut(
+            AppKit.NSTableView.dragImageForRows_event_dragImageOffset_, 2
+        )
+        self.assertArgIsBOOL(AppKit.NSTableView.setAutoresizesAllColumnsToFit_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.autoresizesAllColumnsToFit)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertArgIsBOOL(NSTableView.setAllowsTypeSelect_, 0)
-        self.assertResultIsBOOL(NSTableView.allowsTypeSelect)
+        self.assertArgIsBOOL(AppKit.NSTableView.setAllowsTypeSelect_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.allowsTypeSelect)
 
-        self.assertArgHasType(NSTableView.columnIndexesInRect_, 0, NSRect.__typestr__)
+        self.assertArgHasType(
+            AppKit.NSTableView.columnIndexesInRect_, 0, AppKit.NSRect.__typestr__
+        )
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(NSTableView.shouldFocusCell_atColumn_row_)
+        self.assertResultIsBOOL(AppKit.NSTableView.shouldFocusCell_atColumn_row_)
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertArgIsBOOL(NSTableView.viewAtColumn_row_makeIfNecessary_, 2)
-        self.assertArgIsBOOL(NSTableView.rowViewAtRow_makeIfNecessary_, 1)
+        self.assertArgIsBOOL(AppKit.NSTableView.viewAtColumn_row_makeIfNecessary_, 2)
+        self.assertArgIsBOOL(AppKit.NSTableView.rowViewAtRow_makeIfNecessary_, 1)
 
         self.assertArgIsBlock(
-            NSTableView.enumerateAvailableRowViewsUsingBlock_,
+            AppKit.NSTableView.enumerateAvailableRowViewsUsingBlock_,
             0,
             b"v@" + objc._C_NSInteger,
         )
 
-        self.assertResultIsBOOL(NSTableView.floatsGroupRows)
-        self.assertArgIsBOOL(NSTableView.setFloatsGroupRows_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.floatsGroupRows)
+        self.assertArgIsBOOL(AppKit.NSTableView.setFloatsGroupRows_, 0)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSTableView.usesStaticContents)
-        self.assertArgIsBOOL(NSTableView.setUsesStaticContents_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.usesStaticContents)
+        self.assertArgIsBOOL(AppKit.NSTableView.setUsesStaticContents_, 0)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(NSTableView.rowActionsVisible)
-        self.assertArgIsBOOL(NSTableView.setRowActionsVisible_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.rowActionsVisible)
+        self.assertArgIsBOOL(AppKit.NSTableView.setRowActionsVisible_, 0)
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertResultIsBOOL(NSTableView.usesAutomaticRowHeights)
-        self.assertArgIsBOOL(NSTableView.setUsesAutomaticRowHeights_, 0)
+        self.assertResultIsBOOL(AppKit.NSTableView.usesAutomaticRowHeights)
+        self.assertArgIsBOOL(AppKit.NSTableView.setUsesAutomaticRowHeights_, 0)
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
@@ -316,7 +331,7 @@ class TestNSTableView(TestCase):
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_,
             2,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_,
@@ -326,7 +341,7 @@ class TestNSTableView(TestCase):
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_,
             5,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestNSTableViewHelper.tableView_heightOfRow_, objc._C_CGFloat
@@ -433,12 +448,12 @@ class TestNSTableView(TestCase):
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_draggingSession_willBeginAtPoint_forRowIndexes_,
             2,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_draggingSession_endedAtPoint_operation_,
             2,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
 
     @min_os_level("10.11")
@@ -449,7 +464,3 @@ class TestNSTableView(TestCase):
         self.assertArgHasType(
             TestNSTableViewHelper.tableView_rowActionsForRow_edge_, 2, objc._C_NSInteger
         )
-
-
-if __name__ == "__main__":
-    main()

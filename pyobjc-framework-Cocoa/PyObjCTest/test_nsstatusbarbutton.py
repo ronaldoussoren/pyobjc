@@ -1,13 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSStatusBarButton(TestCase):
     @min_os_level("10.10")
     def testMethods(self):
-        self.assertResultIsBOOL(NSStatusBarButton.appearsDisabled)
-        self.assertArgIsBOOL(NSStatusBarButton.setAppearsDisabled_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSStatusBarButton.appearsDisabled)
+        self.assertArgIsBOOL(AppKit.NSStatusBarButton.setAppearsDisabled_, 0)

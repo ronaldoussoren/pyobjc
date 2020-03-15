@@ -1,18 +1,15 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
 class TestNSSpeechRecognizer(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSSpeechRecognizer.listensInForegroundOnly)
-        self.assertResultIsBOOL(NSSpeechRecognizer.blocksOtherRecognizers)
-        self.assertArgIsBOOL(NSSpeechRecognizer.setListensInForegroundOnly_, 0)
-        self.assertArgIsBOOL(NSSpeechRecognizer.setBlocksOtherRecognizers_, 0)
+        self.assertResultIsBOOL(AppKit.NSSpeechRecognizer.listensInForegroundOnly)
+        self.assertResultIsBOOL(AppKit.NSSpeechRecognizer.blocksOtherRecognizers)
+        self.assertArgIsBOOL(AppKit.NSSpeechRecognizer.setListensInForegroundOnly_, 0)
+        self.assertArgIsBOOL(AppKit.NSSpeechRecognizer.setBlocksOtherRecognizers_, 0)
 
     @min_sdk_level("10.10")
     def testProtocols(self):
         objc.protocolNamed("NSSpeechRecognizerDelegate")
-
-
-if __name__ == "__main__":
-    main()

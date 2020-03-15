@@ -1,36 +1,33 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSURLHandle(TestCase):
-    def testMethods(self):
-        self.assertIsInstance(NSHTTPPropertyStatusCodeKey, unicode)
-        self.assertIsInstance(NSHTTPPropertyStatusReasonKey, unicode)
-        self.assertIsInstance(NSHTTPPropertyServerHTTPVersionKey, unicode)
-        self.assertIsInstance(NSHTTPPropertyRedirectionHeadersKey, unicode)
-        self.assertIsInstance(NSHTTPPropertyErrorPageDataKey, unicode)
-        self.assertIsInstance(NSHTTPPropertyHTTPProxy, unicode)
-        self.assertIsInstance(NSFTPPropertyUserLoginKey, unicode)
-        self.assertIsInstance(NSFTPPropertyUserPasswordKey, unicode)
-        self.assertIsInstance(NSFTPPropertyActiveTransferModeKey, unicode)
-        self.assertIsInstance(NSFTPPropertyFileOffsetKey, unicode)
-        self.assertIsInstance(NSFTPPropertyFTPProxy, unicode)
+    def testConstants(self):
+        self.assertIsInstance(Foundation.NSHTTPPropertyStatusCodeKey, str)
+        self.assertIsInstance(Foundation.NSHTTPPropertyStatusReasonKey, str)
+        self.assertIsInstance(Foundation.NSHTTPPropertyServerHTTPVersionKey, str)
+        self.assertIsInstance(Foundation.NSHTTPPropertyRedirectionHeadersKey, str)
+        self.assertIsInstance(Foundation.NSHTTPPropertyErrorPageDataKey, str)
+        self.assertIsInstance(Foundation.NSHTTPPropertyHTTPProxy, str)
+        self.assertIsInstance(Foundation.NSFTPPropertyUserLoginKey, str)
+        self.assertIsInstance(Foundation.NSFTPPropertyUserPasswordKey, str)
+        self.assertIsInstance(Foundation.NSFTPPropertyActiveTransferModeKey, str)
+        self.assertIsInstance(Foundation.NSFTPPropertyFileOffsetKey, str)
+        self.assertIsInstance(Foundation.NSFTPPropertyFTPProxy, str)
 
-        self.assertEqual(NSURLHandleNotLoaded, 0)
-        self.assertEqual(NSURLHandleLoadSucceeded, 1)
-        self.assertEqual(NSURLHandleLoadInProgress, 2)
-        self.assertEqual(NSURLHandleLoadFailed, 3)
+        self.assertEqual(Foundation.NSURLHandleNotLoaded, 0)
+        self.assertEqual(Foundation.NSURLHandleLoadSucceeded, 1)
+        self.assertEqual(Foundation.NSURLHandleLoadInProgress, 2)
+        self.assertEqual(Foundation.NSURLHandleLoadFailed, 3)
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSURLHandle.didLoadBytes_loadComplete_, 1)
-        self.assertResultIsBOOL(NSURLHandle.canInitWithURL_)
-        self.assertArgIsBOOL(NSURLHandle.initWithURL_cached_, 1)
-        self.assertResultIsBOOL(NSURLHandle.writeProperty_forKey_)
-        self.assertResultIsBOOL(NSURLHandle.writeData_)
+        self.assertArgIsBOOL(Foundation.NSURLHandle.didLoadBytes_loadComplete_, 1)
+        self.assertResultIsBOOL(Foundation.NSURLHandle.canInitWithURL_)
+        self.assertArgIsBOOL(Foundation.NSURLHandle.initWithURL_cached_, 1)
+        self.assertResultIsBOOL(Foundation.NSURLHandle.writeProperty_forKey_)
+        self.assertResultIsBOOL(Foundation.NSURLHandle.writeData_)
 
     def testProtocols(self):
         objc.protocolNamed("NSURLHandleClient")
-
-
-if __name__ == "__main__":
-    main()

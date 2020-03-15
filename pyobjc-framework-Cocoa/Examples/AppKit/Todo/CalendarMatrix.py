@@ -35,7 +35,7 @@ class CalendarMatrix(Cocoa.NSMatrix):
                     val.setTag_(count)
                 count += 1
 
-        self._selectedDay = Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
+        self._selectedDay = Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(  # noqa: B950
             now.yearOfCommonEra(),
             now.monthOfYear(),
             now.dayOfMonth(),

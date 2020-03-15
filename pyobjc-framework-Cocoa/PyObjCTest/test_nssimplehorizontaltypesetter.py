@@ -1,9 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, is32Bit, onlyOn32Bit
 
 if is32Bit():
 
-    class TestNSSimpleHorizontalTypesetterHelper(NSSimpleHorizontalTypesetter):
+    class TestNSSimpleHorizontalTypesetterHelper(AppKit.NSSimpleHorizontalTypesetter):
         def willSetLineFragmentRect_forGlyphRange_usedRect_(self, a, b, c):
             return 1
 
@@ -11,55 +11,51 @@ if is32Bit():
 class TestNSSimpleHorizontalTypesetter(TestCase):
     # @onlyOn32Bit
     def testConstants(self):
-        self.assertEqual(NSLayoutNotDone, 0)
-        self.assertEqual(NSLayoutDone, 1)
-        self.assertEqual(NSLayoutCantFit, 2)
-        self.assertEqual(NSLayoutOutOfGlyphs, 3)
+        self.assertEqual(AppKit.NSLayoutNotDone, 0)
+        self.assertEqual(AppKit.NSLayoutDone, 1)
+        self.assertEqual(AppKit.NSLayoutCantFit, 2)
+        self.assertEqual(AppKit.NSLayoutOutOfGlyphs, 3)
 
-        self.assertEqual(NSGlyphLayoutAtAPoint, 0)
-        self.assertEqual(NSGlyphLayoutAgainstAPoint, 1)
-        self.assertEqual(NSGlyphLayoutWithPrevious, 2)
+        self.assertEqual(AppKit.NSGlyphLayoutAtAPoint, 0)
+        self.assertEqual(AppKit.NSGlyphLayoutAgainstAPoint, 1)
+        self.assertEqual(AppKit.NSGlyphLayoutWithPrevious, 2)
 
-        self.assertEqual(NSLayoutLeftToRight, 0)
-        self.assertEqual(NSLayoutRightToLeft, 1)
+        self.assertEqual(AppKit.NSLayoutLeftToRight, 0)
+        self.assertEqual(AppKit.NSLayoutRightToLeft, 1)
 
-        self.assertEqual(NSBaselineNotSet, -1.0)
-        self.assertEqual(NumGlyphsToGetEachTime, 20)
+        self.assertEqual(AppKit.NSBaselineNotSet, -1.0)
+        self.assertEqual(AppKit.NumGlyphsToGetEachTime, 20)
 
     @onlyOn32Bit
     def testMethods(self):
         self.assertArgIsOut(
-            NSSimpleHorizontalTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_,
+            AppKit.NSSimpleHorizontalTypesetter.layoutGlyphsInLayoutManager_startingAtGlyphIndex_maxNumberOfLineFragments_nextGlyphIndex_,  # noqa: B950
             3,
         )
         self.assertArgIsInOut(
-            NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_,
+            AppKit.NSSimpleHorizontalTypesetter.layoutGlyphsInHorizontalLineFragment_baseline_,
             1,
         )
         self.assertArgIsBOOL(
-            NSSimpleHorizontalTypesetter.growGlyphCaches_fillGlyphInfo_, 1
+            AppKit.NSSimpleHorizontalTypesetter.growGlyphCaches_fillGlyphInfo_, 1
         )
 
         self.assertArgIsInOut(
-            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,
+            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,  # noqa: B950
             2,
         )
         self.assertArgHasType(
-            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,
+            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,  # noqa: B950
             2,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,
+            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,
+            TestNSSimpleHorizontalTypesetterHelper.willSetLineFragmentRect_forGlyphRange_usedRect_,  # noqa: B950
             0,
-            b"N^" + NSRect.__typestr__,
+            b"N^" + AppKit.NSRect.__typestr__,
         )
-
-
-if __name__ == "__main__":
-    main()

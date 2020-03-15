@@ -1,7 +1,8 @@
 import datetime
+import objc
 
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCFCalendarVariadic(TestCase):
@@ -13,55 +14,65 @@ class TestCFCalendarVariadic(TestCase):
             cls = objc.lookUpClass("__NSCFCalendar")
 
         if cls is None:
-            self.assertIsCFType(CFCalendarRef)
+            self.assertIsCFType(CoreFoundation.CFCalendarRef)
 
         else:
-            self.assertIs(CFCalendarRef, cls)
+            self.assertIs(CoreFoundation.CFCalendarRef, cls)
 
     def testCFCalendarComposeAbsoluteTime(self):
-        calendar = CFCalendarCreateWithIdentifier(None, kCFGregorianCalendar)
-        self.assertIsInstance(calendar, CFCalendarRef)
+        calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
+            None, CoreFoundation.kCFGregorianCalendar
+        )
+        self.assertIsInstance(calendar, CoreFoundation.CFCalendarRef)
 
-        success, at = CFCalendarComposeAbsoluteTime(calendar, None, b"")
+        success, at = CoreFoundation.CFCalendarComposeAbsoluteTime(calendar, None, b"")
         self.assertEqual(success, True)
         self.assertIsInstance(at, float)
 
-        success, at = CFCalendarComposeAbsoluteTime(
+        success, at = CoreFoundation.CFCalendarComposeAbsoluteTime(
             calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0
         )
         self.assertEqual(success, True)
         self.assertIsInstance(at, float)
 
     def testCFCalendarAddComponents(self):
-        calendar = CFCalendarCreateWithIdentifier(None, kCFGregorianCalendar)
-        self.assertIsInstance(calendar, CFCalendarRef)
+        calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
+            None, CoreFoundation.kCFGregorianCalendar
+        )
+        self.assertIsInstance(calendar, CoreFoundation.CFCalendarRef)
 
-        success, at = CFCalendarComposeAbsoluteTime(
+        success, at = CoreFoundation.CFCalendarComposeAbsoluteTime(
             calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0
         )
         self.assertEqual(success, True)
         self.assertIsInstance(at, float)
 
-        success, at2 = CFCalendarAddComponents(calendar, at, 0, b"yH", 2, 3)
+        success, at2 = CoreFoundation.CFCalendarAddComponents(
+            calendar, at, 0, b"yH", 2, 3
+        )
         self.assertEqual(success, True)
         self.assertIsInstance(at2, float)
 
-        success, y, H = CFCalendarGetComponentDifference(calendar, at, at2, 0, b"yH")
+        success, y, H = CoreFoundation.CFCalendarGetComponentDifference(
+            calendar, at, at2, 0, b"yH"
+        )
         self.assertEqual(success, True)
         self.assertEqual(y, 2)
         self.assertEqual(H, 3)
 
     def testCFCalendarDecomposeAbsoluteTime(self):
-        calendar = CFCalendarCreateWithIdentifier(None, kCFGregorianCalendar)
+        calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
+            None, CoreFoundation.kCFGregorianCalendar
+        )
         self.assertTrue(calendar is not None)
 
-        success, at = CFCalendarComposeAbsoluteTime(
+        success, at = CoreFoundation.CFCalendarComposeAbsoluteTime(
             calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0
         )
         self.assertEqual(success, True)
         self.assertIsInstance(at, float)
 
-        success, y, M, d, H, m, s = CFCalendarDecomposeAbsoluteTime(
+        success, y, M, d, H, m, s = CoreFoundation.CFCalendarDecomposeAbsoluteTime(
             calendar, at, b"yMdHms"
         )
         self.assertEqual(y, 1965)
@@ -72,53 +83,65 @@ class TestCFCalendarVariadic(TestCase):
         self.assertEqual(s, 0)
 
     def testCFCalendarGetComponentDifference(self):
-        calendar = CFCalendarCreateWithIdentifier(None, kCFGregorianCalendar)
+        calendar = CoreFoundation.CFCalendarCreateWithIdentifier(
+            None, CoreFoundation.kCFGregorianCalendar
+        )
         self.assertTrue(calendar is not None)
 
-        success, at1 = CFCalendarComposeAbsoluteTime(
+        success, at1 = CoreFoundation.CFCalendarComposeAbsoluteTime(
             calendar, None, b"yMdHms", 1965, 1, 6, 14, 10, 0
         )
         self.assertEqual(success, True)
         self.assertIsInstance(at1, float)
 
-        success, at2 = CFCalendarComposeAbsoluteTime(
+        success, at2 = CoreFoundation.CFCalendarComposeAbsoluteTime(
             calendar, None, b"yMdHms", 1967, 2, 6, 14, 10, 0
         )
         self.assertEqual(success, True)
         self.assertIsInstance(at2, float)
 
-        success, y, M = CFCalendarGetComponentDifference(calendar, at1, at2, 0, b"yM")
+        success, y, M = CoreFoundation.CFCalendarGetComponentDifference(
+            calendar, at1, at2, 0, b"yM"
+        )
         self.assertEqual(success, True)
         self.assertEqual(y, 2)
         self.assertEqual(M, 1)
 
     def testTypeID(self):
-        v = CFCalendarGetTypeID()
-        self.assertIsInstance(v, (int, long))
+        v = CoreFoundation.CFCalendarGetTypeID()
+        self.assertIsInstance(v, int)
 
     def testCreation(self):
-        cal = CFCalendarCopyCurrent()
-        self.assertIsInstance(cal, CFCalendarRef)
-        cal = CFCalendarCreateWithIdentifier(None, kCFBuddhistCalendar)
-        self.assertIsInstance(cal, CFCalendarRef)
+        cal = CoreFoundation.CFCalendarCopyCurrent()
+        self.assertIsInstance(cal, CoreFoundation.CFCalendarRef)
+        cal = CoreFoundation.CFCalendarCreateWithIdentifier(
+            None, CoreFoundation.kCFBuddhistCalendar
+        )
+        self.assertIsInstance(cal, CoreFoundation.CFCalendarRef)
 
     def testInspection(self):
-        cal = CFCalendarCreateWithIdentifier(None, kCFGregorianCalendar)
-        self.assertIsInstance(cal, CFCalendarRef)
-        name = CFCalendarGetIdentifier(cal)
-        self.assertEqual(name, kCFGregorianCalendar)
-        locale = CFCalendarCopyLocale(cal)
-        self.assertIsInstance(locale, CFLocaleRef)
-        timezone = CFCalendarCopyTimeZone(cal)
-        self.assertIsInstance(timezone, CFTimeZoneRef)
-        weekday = CFCalendarGetFirstWeekday(cal)
+        cal = CoreFoundation.CFCalendarCreateWithIdentifier(
+            None, CoreFoundation.kCFGregorianCalendar
+        )
+        self.assertIsInstance(cal, CoreFoundation.CFCalendarRef)
+        name = CoreFoundation.CFCalendarGetIdentifier(cal)
+        self.assertEqual(name, CoreFoundation.kCFGregorianCalendar)
+        locale = CoreFoundation.CFCalendarCopyLocale(cal)
+        self.assertIsInstance(locale, CoreFoundation.CFLocaleRef)
+        timezone = CoreFoundation.CFCalendarCopyTimeZone(cal)
+        self.assertIsInstance(timezone, CoreFoundation.CFTimeZoneRef)
+        weekday = CoreFoundation.CFCalendarGetFirstWeekday(cal)
         self.assertLessEqual(0 <= weekday, 7)
-        num = CFCalendarGetMinimumDaysInFirstWeek(cal)
+        num = CoreFoundation.CFCalendarGetMinimumDaysInFirstWeek(cal)
         self.assertLessEqual(0 <= num, 7)
-        rng = CFCalendarGetMinimumRangeOfUnit(cal, kCFCalendarUnitEra)
-        self.assertIsInstance(rng, CFRange)
-        rng = CFCalendarGetMaximumRangeOfUnit(cal, kCFCalendarUnitEra)
-        self.assertIsInstance(rng, CFRange)
+        rng = CoreFoundation.CFCalendarGetMinimumRangeOfUnit(
+            cal, CoreFoundation.kCFCalendarUnitEra
+        )
+        self.assertIsInstance(rng, CoreFoundation.CFRange)
+        rng = CoreFoundation.CFCalendarGetMaximumRangeOfUnit(
+            cal, CoreFoundation.kCFCalendarUnitEra
+        )
+        self.assertIsInstance(rng, CoreFoundation.CFRange)
         m = datetime.date.today()
         if m.month in (1, 3, 5, 7, 8, 10, 12):
             monthLength = 31
@@ -131,19 +154,29 @@ class TestCFCalendarVariadic(TestCase):
                 monthLength = 29
             else:
                 monthLength = 28
-        rng = CFCalendarGetRangeOfUnit(
-            cal, kCFCalendarUnitDay, kCFCalendarUnitMonth, CFAbsoluteTimeGetCurrent()
+        rng = CoreFoundation.CFCalendarGetRangeOfUnit(
+            cal,
+            CoreFoundation.kCFCalendarUnitDay,
+            CoreFoundation.kCFCalendarUnitMonth,
+            CoreFoundation.CFAbsoluteTimeGetCurrent(),
         )
-        self.assertIsInstance(rng, CFRange)
+        self.assertIsInstance(rng, CoreFoundation.CFRange)
         self.assertEqual(rng.location, 1)
         self.assertEqual(rng.length, monthLength)
 
-        v = CFCalendarGetOrdinalityOfUnit(
-            cal, kCFCalendarUnitDay, kCFCalendarUnitYear, CFAbsoluteTimeGetCurrent()
+        v = CoreFoundation.CFCalendarGetOrdinalityOfUnit(
+            cal,
+            CoreFoundation.kCFCalendarUnitDay,
+            CoreFoundation.kCFCalendarUnitYear,
+            CoreFoundation.CFAbsoluteTimeGetCurrent(),
         )
-        self.assertIsInstance(v, (int, long))
-        ok, startp, tip = CFCalendarGetTimeRangeOfUnit(
-            cal, kCFCalendarUnitDay, CFAbsoluteTimeGetCurrent(), None, None
+        self.assertIsInstance(v, int)
+        ok, startp, tip = CoreFoundation.CFCalendarGetTimeRangeOfUnit(
+            cal,
+            CoreFoundation.kCFCalendarUnitDay,
+            CoreFoundation.CFAbsoluteTimeGetCurrent(),
+            None,
+            None,
         )
         self.assertIs(ok, True)
         self.assertIsInstance(startp, float)
@@ -151,70 +184,71 @@ class TestCFCalendarVariadic(TestCase):
         self.assertIn(tip, (86400.0, 90000.0, 82800))  # 1 day, remove DST, add DST
 
     def testMutation(self):
-        cal = CFCalendarCreateWithIdentifier(None, kCFBuddhistCalendar)
+        cal = CoreFoundation.CFCalendarCreateWithIdentifier(
+            None, CoreFoundation.kCFBuddhistCalendar
+        )
 
-        loc = CFLocaleCreate(None, b"mr_IN".decode("latin1"))
-        self.assertIsInstance(loc, CFLocaleRef)
-        id1 = CFLocaleGetIdentifier(loc)
+        loc = CoreFoundation.CFLocaleCreate(None, b"mr_IN".decode("latin1"))
+        self.assertIsInstance(loc, CoreFoundation.CFLocaleRef)
+        id1 = CoreFoundation.CFLocaleGetIdentifier(loc)
 
-        orig_loc = CFCalendarCopyLocale(cal)
-        self.assertIsInstance(orig_loc, CFLocaleRef)
-        orig_id = CFLocaleGetIdentifier(orig_loc)
-        CFCalendarSetLocale(cal, loc)
-        new_loc = CFCalendarCopyLocale(cal)
-        self.assertIsInstance(new_loc, CFLocaleRef)
-        new_id = CFLocaleGetIdentifier(new_loc)
+        orig_loc = CoreFoundation.CFCalendarCopyLocale(cal)
+        self.assertIsInstance(orig_loc, CoreFoundation.CFLocaleRef)
+        orig_id = CoreFoundation.CFLocaleGetIdentifier(orig_loc)
+        CoreFoundation.CFCalendarSetLocale(cal, loc)
+        new_loc = CoreFoundation.CFCalendarCopyLocale(cal)
+        self.assertIsInstance(new_loc, CoreFoundation.CFLocaleRef)
+        new_id = CoreFoundation.CFLocaleGetIdentifier(new_loc)
 
         self.assertEqual(new_id, id1)
         self.assertNotEqual(orig_id, id1)
-        tz = CFTimeZoneCreateWithName(None, b"Pacific/Wallis".decode("latin1"), True)
-        self.assertIsInstance(tz, CFTimeZoneRef)
-        orig_zone = CFCalendarCopyTimeZone(cal)
-        self.assertIsInstance(orig_zone, CFTimeZoneRef)
-        CFCalendarSetTimeZone(cal, tz)
-        new_zone = CFCalendarCopyTimeZone(cal)
-        self.assertIsInstance(new_zone, CFTimeZoneRef)
-        self.assertEqual(
-            CFTimeZoneGetName(new_zone), b"Pacific/Wallis".decode("latin1")
+        tz = CoreFoundation.CFTimeZoneCreateWithName(
+            None, b"Pacific/Wallis".decode("latin1"), True
         )
-        weekday = CFCalendarGetFirstWeekday(cal)
+        self.assertIsInstance(tz, CoreFoundation.CFTimeZoneRef)
+        orig_zone = CoreFoundation.CFCalendarCopyTimeZone(cal)
+        self.assertIsInstance(orig_zone, CoreFoundation.CFTimeZoneRef)
+        CoreFoundation.CFCalendarSetTimeZone(cal, tz)
+        new_zone = CoreFoundation.CFCalendarCopyTimeZone(cal)
+        self.assertIsInstance(new_zone, CoreFoundation.CFTimeZoneRef)
+        self.assertEqual(
+            CoreFoundation.CFTimeZoneGetName(new_zone),
+            b"Pacific/Wallis".decode("latin1"),
+        )
+        weekday = CoreFoundation.CFCalendarGetFirstWeekday(cal)
         weekday = weekday + 2 % 7
-        CFCalendarSetFirstWeekday(cal, weekday)
-        new = CFCalendarGetFirstWeekday(cal)
+        CoreFoundation.CFCalendarSetFirstWeekday(cal, weekday)
+        new = CoreFoundation.CFCalendarGetFirstWeekday(cal)
         self.assertEqual(new, weekday)
-        num = CFCalendarGetMinimumDaysInFirstWeek(cal)
+        num = CoreFoundation.CFCalendarGetMinimumDaysInFirstWeek(cal)
         if num == 1:
             num = 2
         else:
             num = 1
 
-        CFCalendarSetMinimumDaysInFirstWeek(cal, num)
-        num2 = CFCalendarGetMinimumDaysInFirstWeek(cal)
+        CoreFoundation.CFCalendarSetMinimumDaysInFirstWeek(cal, num)
+        num2 = CoreFoundation.CFCalendarGetMinimumDaysInFirstWeek(cal)
         self.assertEqual(num2, num)
 
     def testConstants(self):
-        self.assertEqual(kCFCalendarUnitEra, (1 << 1))
-        self.assertEqual(kCFCalendarUnitYear, (1 << 2))
-        self.assertEqual(kCFCalendarUnitMonth, (1 << 3))
-        self.assertEqual(kCFCalendarUnitDay, (1 << 4))
-        self.assertEqual(kCFCalendarUnitHour, (1 << 5))
-        self.assertEqual(kCFCalendarUnitMinute, (1 << 6))
-        self.assertEqual(kCFCalendarUnitSecond, (1 << 7))
-        self.assertEqual(kCFCalendarUnitWeek, (1 << 8))
-        self.assertEqual(kCFCalendarUnitWeekday, (1 << 9))
-        self.assertEqual(kCFCalendarUnitWeekdayOrdinal, (1 << 10))
-        self.assertEqual(kCFCalendarComponentsWrap, (1 << 0))
+        self.assertEqual(CoreFoundation.kCFCalendarUnitEra, 1 << 1)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitYear, 1 << 2)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitMonth, 1 << 3)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitDay, 1 << 4)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitHour, 1 << 5)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitMinute, 1 << 6)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitSecond, 1 << 7)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitWeek, 1 << 8)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitWeekday, 1 << 9)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitWeekdayOrdinal, 1 << 10)
+        self.assertEqual(CoreFoundation.kCFCalendarComponentsWrap, 1 << 0)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(kCFCalendarUnitQuarter, 1 << 11)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitQuarter, 1 << 11)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(kCFCalendarUnitWeekOfMonth, 1 << 12)
-        self.assertEqual(kCFCalendarUnitWeekOfYear, 1 << 13)
-        self.assertEqual(kCFCalendarUnitYearForWeekOfYear, 1 << 14)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfMonth, 1 << 12)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitWeekOfYear, 1 << 13)
+        self.assertEqual(CoreFoundation.kCFCalendarUnitYearForWeekOfYear, 1 << 14)

@@ -1,70 +1,74 @@
 from __future__ import with_statement
 
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSProcessInfo(TestCase):
     def testConvenience(self):
         # This doesn't actually test anything...
-        with NSDisabledSuddenTermination():
+        with Foundation.NSDisabledSuddenTermination():
             pass
 
-        with NSDisabledAutomaticTermination("something"):
+        with Foundation.NSDisabledAutomaticTermination("something"):
             pass
 
     def testStructs(self):
-        v = NSOperatingSystemVersion()
-        self.assertIsInstance(v.majorVersion, (int, long))
-        self.assertIsInstance(v.minorVersion, (int, long))
-        self.assertIsInstance(v.patchVersion, (int, long))
+        v = Foundation.NSOperatingSystemVersion()
+        self.assertIsInstance(v.majorVersion, int)
+        self.assertIsInstance(v.minorVersion, int)
+        self.assertIsInstance(v.patchVersion, int)
 
     def testConstants(self):
-        self.assertEqual(NSWindowsNTOperatingSystem, 1)
-        self.assertEqual(NSWindows95OperatingSystem, 2)
-        self.assertEqual(NSSolarisOperatingSystem, 3)
-        self.assertEqual(NSHPUXOperatingSystem, 4)
-        self.assertEqual(NSMACHOperatingSystem, 5)
-        self.assertEqual(NSSunOSOperatingSystem, 6)
-        self.assertEqual(NSOSF1OperatingSystem, 7)
+        self.assertEqual(Foundation.NSWindowsNTOperatingSystem, 1)
+        self.assertEqual(Foundation.NSWindows95OperatingSystem, 2)
+        self.assertEqual(Foundation.NSSolarisOperatingSystem, 3)
+        self.assertEqual(Foundation.NSHPUXOperatingSystem, 4)
+        self.assertEqual(Foundation.NSMACHOperatingSystem, 5)
+        self.assertEqual(Foundation.NSSunOSOperatingSystem, 6)
+        self.assertEqual(Foundation.NSOSF1OperatingSystem, 7)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertEqual(NSActivityIdleDisplaySleepDisabled, 1 << 40)
-        self.assertEqual(NSActivityIdleSystemSleepDisabled, 1 << 20)
-        self.assertEqual(NSActivitySuddenTerminationDisabled, 1 << 14)
-        self.assertEqual(NSActivityAutomaticTerminationDisabled, 1 << 15)
+        self.assertEqual(Foundation.NSActivityIdleDisplaySleepDisabled, 1 << 40)
+        self.assertEqual(Foundation.NSActivityIdleSystemSleepDisabled, 1 << 20)
+        self.assertEqual(Foundation.NSActivitySuddenTerminationDisabled, 1 << 14)
+        self.assertEqual(Foundation.NSActivityAutomaticTerminationDisabled, 1 << 15)
         self.assertEqual(
-            NSActivityUserInitiated, 0x00FFFFFF | NSActivityIdleSystemSleepDisabled
+            Foundation.NSActivityUserInitiated,
+            0x00FFFFFF | Foundation.NSActivityIdleSystemSleepDisabled,
         )
         self.assertEqual(
-            NSActivityUserInitiatedAllowingIdleSystemSleep,
-            NSActivityUserInitiated & ~NSActivityIdleSystemSleepDisabled,
+            Foundation.NSActivityUserInitiatedAllowingIdleSystemSleep,
+            Foundation.NSActivityUserInitiated
+            & ~Foundation.NSActivityIdleSystemSleepDisabled,
         )
-        self.assertEqual(NSActivityBackground, 0x000000FF)
-        self.assertEqual(NSActivityLatencyCritical, 0xFF00000000)
+        self.assertEqual(Foundation.NSActivityBackground, 0x000000FF)
+        self.assertEqual(Foundation.NSActivityLatencyCritical, 0xFF00000000)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertEqual(NSProcessInfoThermalStateNominal, 0)
-        self.assertEqual(NSProcessInfoThermalStateFair, 1)
-        self.assertEqual(NSProcessInfoThermalStateSerious, 2)
-        self.assertEqual(NSProcessInfoThermalStateCritical, 3)
+        self.assertEqual(Foundation.NSProcessInfoThermalStateNominal, 0)
+        self.assertEqual(Foundation.NSProcessInfoThermalStateFair, 1)
+        self.assertEqual(Foundation.NSProcessInfoThermalStateSerious, 2)
+        self.assertEqual(Foundation.NSProcessInfoThermalStateCritical, 3)
 
-        self.assertIsInstance(NSProcessInfoThermalStateDidChangeNotification, unicode)
+        self.assertIsInstance(
+            Foundation.NSProcessInfoThermalStateDidChangeNotification, str
+        )
 
     @min_os_level("10.6")
     def testNSDisabledSuddenTermination(self):
         # annoyingly we cannot easily test if this has an effect, but
         # this at least guards against typos.
-        with NSDisabledSuddenTermination():
+        with Foundation.NSDisabledSuddenTermination():
             pass
 
         class TestException(Exception):
             pass
 
         try:
-            with NSDisabledSuddenTermination():
+            with Foundation.NSDisabledSuddenTermination():
                 raise TestException(1)
 
         except TestException:
@@ -72,17 +76,21 @@ class TestNSProcessInfo(TestCase):
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertArgIsBOOL(NSProcessInfo.setAutomaticTerminationSupportEnabled_, 0)
-        self.assertResultIsBOOL(NSProcessInfo.automaticTerminationSupportEnabled)
+        self.assertArgIsBOOL(
+            Foundation.NSProcessInfo.setAutomaticTerminationSupportEnabled_, 0
+        )
+        self.assertResultIsBOOL(
+            Foundation.NSProcessInfo.automaticTerminationSupportEnabled
+        )
 
-        with NSDisabledAutomaticTermination("reason"):
+        with Foundation.NSDisabledAutomaticTermination("reason"):
             pass
 
         class TestException(Exception):
             pass
 
         try:
-            with NSDisabledAutomaticTermination("reason"):
+            with Foundation.NSDisabledAutomaticTermination("reason"):
                 raise TestException(1)
 
         except TestException:
@@ -91,17 +99,17 @@ class TestNSProcessInfo(TestCase):
     @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertArgIsBlock(
-            NSProcessInfo.performActivityWithOptions_reason_usingBlock_, 2, b"v"
+            Foundation.NSProcessInfo.performActivityWithOptions_reason_usingBlock_,
+            2,
+            b"v",
         )
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSProcessInfo.isOperatingSystemAtLeastVersion_)
+        self.assertResultIsBOOL(
+            Foundation.NSProcessInfo.isOperatingSystemAtLeastVersion_
+        )
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertResultIsBOOL(NSProcessInfo.isMacCatalystApp)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSProcessInfo.isMacCatalystApp)

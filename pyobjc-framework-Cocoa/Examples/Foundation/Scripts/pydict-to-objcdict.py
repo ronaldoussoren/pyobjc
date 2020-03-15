@@ -1,9 +1,5 @@
-from __future__ import print_function
-
 import pprint
-import sys
 
-import objc
 from PyObjCTools.Conversion import propertyListFromPythonCollection
 
 input = {

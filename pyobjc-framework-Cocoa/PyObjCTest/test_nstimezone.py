@@ -1,26 +1,22 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTimeZone(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSTimeZone.isDaylightSavingTimeForDate_)
-        self.assertResultIsBOOL(NSTimeZone.isDaylightSavingTime)
-        self.assertResultIsBOOL(NSTimeZone.isEqualToTimeZone_)
+        self.assertResultIsBOOL(Foundation.NSTimeZone.isDaylightSavingTimeForDate_)
+        self.assertResultIsBOOL(Foundation.NSTimeZone.isDaylightSavingTime)
+        self.assertResultIsBOOL(Foundation.NSTimeZone.isEqualToTimeZone_)
 
     def testConstants(self):
-        self.assertEqual(NSTimeZoneNameStyleStandard, 0)
-        self.assertEqual(NSTimeZoneNameStyleShortStandard, 1)
-        self.assertEqual(NSTimeZoneNameStyleDaylightSaving, 2)
-        self.assertEqual(NSTimeZoneNameStyleShortDaylightSaving, 3)
+        self.assertEqual(Foundation.NSTimeZoneNameStyleStandard, 0)
+        self.assertEqual(Foundation.NSTimeZoneNameStyleShortStandard, 1)
+        self.assertEqual(Foundation.NSTimeZoneNameStyleDaylightSaving, 2)
+        self.assertEqual(Foundation.NSTimeZoneNameStyleShortDaylightSaving, 3)
 
-        self.assertIsInstance(NSSystemTimeZoneDidChangeNotification, unicode)
+        self.assertIsInstance(Foundation.NSSystemTimeZoneDidChangeNotification, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSTimeZoneNameStyleGeneric, 4)
-        self.assertEqual(NSTimeZoneNameStyleShortGeneric, 5)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(Foundation.NSTimeZoneNameStyleGeneric, 4)
+        self.assertEqual(Foundation.NSTimeZoneNameStyleShortGeneric, 5)

@@ -115,7 +115,7 @@ class WorkerThread(Thread):
             if work is None or not self.working:
                 break
             func, args, kwargs = work
-            pool = Cocoa.NSAutoreleasePool.alloc().init()
+            pool = Cocoa.NSAutoreleasePool.alloc().init()  # noqa: F841
             try:
                 func(*args, **kwargs)
             finally:
@@ -390,11 +390,11 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         try:
             self._methods = self._server.listMethods()
             self._methodPrefix = ""
-        except:
+        except:  # noqa: E722, B001
             try:
                 self._methods = self._server.system.listMethods()
                 self._methodPrefix = "system."
-            except:
+            except:  # noqa: E722, B001
                 self._server = None
                 self._methodPrefix = None
                 self.setStatusTextFieldMessage_(
@@ -403,7 +403,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
                 )
 
                 exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
-                self.methodDescriptionTextView.performSelectorOnMainThread_withObject_waitUntilDone_(
+                self.methodDescriptionTextView.performSelectorOnMainThread_withObject_waitUntilDone_(  # noqa: B950
                     "setString:",
                     "Exception information\n\nType: %s\n\nValue: %s\n\nTraceback:\n\n %s\n"
                     % (
@@ -420,7 +420,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         if self._windowIsClosing:
             return
 
-        self._methods.sort(lambda x, y: cmp(x, y))
+        self._methods.sort()
         self.reloadData()
         self.setStatusTextFieldMessage_(
             "Retrieving information about %d methods." % len(self._methods)
@@ -451,7 +451,9 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
                 continue
 
             for aSignature in methodSignature:
-                if (type(aSignature) == types.ListType) and (len(aSignature) > 0):
+                if (type(aSignature) == types.ListType) and (
+                    len(aSignature) > 0
+                ):  # noqa: E721
                     signature = "%s %s(%s)" % (
                         aSignature[0],
                         aMethod,
@@ -478,7 +480,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         selectedRow = self.methodsTable.selectedRow()
         selectedMethod = self._methods[selectedRow]
 
-        if not self._methodDescriptions.has_key(selectedMethod):
+        if selectedMethod not in self._methodDescriptions:
             self._methodDescriptions[
                 selectedMethod
             ] = "<description is being retrieved>"
@@ -519,7 +521,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         depending on if a signature had been found on the server.
         """
         aMethod = self._methods[rowIndex]
-        if self._methodSignatures.has_key(aMethod):
+        if aMethod in self._methodSignatures:
             return self._methodSignatures[aMethod]
         else:
             return aMethod

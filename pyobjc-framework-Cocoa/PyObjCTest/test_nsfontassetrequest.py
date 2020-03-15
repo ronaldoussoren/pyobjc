@@ -1,6 +1,5 @@
 import AppKit
-import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
 
 
 class TestNSFontAssetRequest(TestCase):
@@ -13,7 +12,3 @@ class TestNSFontAssetRequest(TestCase):
         self.assertArgIsBlock(
             AppKit.NSFontAssetRequest.downloadFontAssetsWithCompletionHandler_, 0, b"Z@"
         )
-
-
-if __name__ == "__main__":
-    main()

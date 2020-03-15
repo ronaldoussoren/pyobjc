@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDebug(TestCase):
@@ -23,7 +23,3 @@ class TestNSDebug(TestCase):
         self.assertIsInstance(Foundation.NSDeallocateZombies, bool)
         self.assertIsInstance(Foundation.NSHangOnUncaughtException, bool)
         self.assertIsInstance(Foundation.NSKeepAllocationStatistics, bool)
-
-
-if __name__ == "__main__":
-    main()

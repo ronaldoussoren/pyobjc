@@ -1,19 +1,15 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLevelIndicatorCell(TestCase):
     def testConstants(self):
-        self.assertEqual(NSRelevancyLevelIndicatorStyle, 0)
-        self.assertEqual(NSContinuousCapacityLevelIndicatorStyle, 1)
-        self.assertEqual(NSDiscreteCapacityLevelIndicatorStyle, 2)
-        self.assertEqual(NSRatingLevelIndicatorStyle, 3)
+        self.assertEqual(AppKit.NSRelevancyLevelIndicatorStyle, 0)
+        self.assertEqual(AppKit.NSContinuousCapacityLevelIndicatorStyle, 1)
+        self.assertEqual(AppKit.NSDiscreteCapacityLevelIndicatorStyle, 2)
+        self.assertEqual(AppKit.NSRatingLevelIndicatorStyle, 3)
 
-        self.assertEqual(NSLevelIndicatorStyleRelevancy, 0)
-        self.assertEqual(NSLevelIndicatorStyleContinuousCapacity, 1)
-        self.assertEqual(NSLevelIndicatorStyleDiscreteCapacity, 2)
-        self.assertEqual(NSLevelIndicatorStyleRating, 3)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(AppKit.NSLevelIndicatorStyleRelevancy, 0)
+        self.assertEqual(AppKit.NSLevelIndicatorStyleContinuousCapacity, 1)
+        self.assertEqual(AppKit.NSLevelIndicatorStyleDiscreteCapacity, 2)
+        self.assertEqual(AppKit.NSLevelIndicatorStyleRating, 3)

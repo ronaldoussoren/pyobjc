@@ -1,57 +1,64 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSURLRequest(TestCase):
     def testConstants(self):
-        self.assertEqual(NSURLRequestUseProtocolCachePolicy, 0)
-        self.assertEqual(NSURLRequestReloadIgnoringLocalCacheData, 1)
-        self.assertEqual(NSURLRequestReloadIgnoringLocalAndRemoteCacheData, 4)
+        self.assertEqual(Foundation.NSURLRequestUseProtocolCachePolicy, 0)
+        self.assertEqual(Foundation.NSURLRequestReloadIgnoringLocalCacheData, 1)
         self.assertEqual(
-            NSURLRequestReloadIgnoringCacheData,
-            NSURLRequestReloadIgnoringLocalCacheData,
+            Foundation.NSURLRequestReloadIgnoringLocalAndRemoteCacheData, 4
         )
-        self.assertEqual(NSURLRequestReturnCacheDataElseLoad, 2)
-        self.assertEqual(NSURLRequestReturnCacheDataDontLoad, 3)
-        self.assertEqual(NSURLRequestReloadRevalidatingCacheData, 5)
+        self.assertEqual(
+            Foundation.NSURLRequestReloadIgnoringCacheData,
+            Foundation.NSURLRequestReloadIgnoringLocalCacheData,
+        )
+        self.assertEqual(Foundation.NSURLRequestReturnCacheDataElseLoad, 2)
+        self.assertEqual(Foundation.NSURLRequestReturnCacheDataDontLoad, 3)
+        self.assertEqual(Foundation.NSURLRequestReloadRevalidatingCacheData, 5)
 
-        self.assertEqual(NSURLNetworkServiceTypeDefault, 0)
-        self.assertEqual(NSURLNetworkServiceTypeVoIP, 1)
-        self.assertEqual(NSURLNetworkServiceTypeVideo, 2)
-        self.assertEqual(NSURLNetworkServiceTypeBackground, 3)
-        self.assertEqual(NSURLNetworkServiceTypeVoice, 4)
-        self.assertEqual(NSURLNetworkServiceTypeResponsiveData, 6)
-        self.assertEqual(NSURLNetworkServiceTypeAVStreaming, 8)
-        self.assertEqual(NSURLNetworkServiceTypeResponsiveAV, 9)
-        self.assertEqual(NSURLNetworkServiceTypeCallSignaling, 11)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeDefault, 0)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeVoIP, 1)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeVideo, 2)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeBackground, 3)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeVoice, 4)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeResponsiveData, 6)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeAVStreaming, 8)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeResponsiveAV, 9)
+        self.assertEqual(Foundation.NSURLNetworkServiceTypeCallSignaling, 11)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSURLRequest.HTTPShouldHandleCookies)
-        self.assertArgIsBOOL(NSMutableURLRequest.setHTTPShouldHandleCookies_, 0)
+        self.assertResultIsBOOL(Foundation.NSURLRequest.HTTPShouldHandleCookies)
+        self.assertArgIsBOOL(
+            Foundation.NSMutableURLRequest.setHTTPShouldHandleCookies_, 0
+        )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertResultIsBOOL(NSURLRequest.HTTPShouldUsePipelining)
-        self.assertArgIsBOOL(NSMutableURLRequest.setHTTPShouldUsePipelining_, 0)
+        self.assertResultIsBOOL(Foundation.NSURLRequest.HTTPShouldUsePipelining)
+        self.assertArgIsBOOL(
+            Foundation.NSMutableURLRequest.setHTTPShouldUsePipelining_, 0
+        )
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSURLRequest.allowsCellularAccess)
-        self.assertArgIsBOOL(NSMutableURLRequest.setAllowsCellularAccess_, 0)
+        self.assertResultIsBOOL(Foundation.NSURLRequest.allowsCellularAccess)
+        self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAllowsCellularAccess_, 0)
 
-        self.assertResultIsBOOL(NSURLRequest.supportsSecureCoding)
+        self.assertResultIsBOOL(Foundation.NSURLRequest.supportsSecureCoding)
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertResultIsBOOL(NSURLRequest.allowsExpensiveNetworkAccess)
-        self.assertArgIsBOOL(NSMutableURLRequest.setAllowsExpensiveNetworkAccess_, 0)
-        self.assertResultIsBOOL(NSURLRequest.allowsConstrainedNetworkAccess)
-        self.assertArgIsBOOL(NSMutableURLRequest.setAllowsConstrainedNetworkAccess_, 0)
+        self.assertResultIsBOOL(Foundation.NSURLRequest.allowsExpensiveNetworkAccess)
+        self.assertArgIsBOOL(
+            Foundation.NSMutableURLRequest.setAllowsExpensiveNetworkAccess_, 0
+        )
+        self.assertResultIsBOOL(Foundation.NSURLRequest.allowsConstrainedNetworkAccess)
+        self.assertArgIsBOOL(
+            Foundation.NSMutableURLRequest.setAllowsConstrainedNetworkAccess_, 0
+        )
 
     @min_sdk_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("NSURLSessionWebSocketDelegate")
-
-
-if __name__ == "__main__":
-    main()

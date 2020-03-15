@@ -1,20 +1,16 @@
-from Foundation import *
-from objc import *
-from PyObjCTools.TestSupport import *
+import Foundation
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestTollFreeBridging(TestCase):
     def testImplicitFromCF(self):
 
-        c = CFArrayCreateMutable(None, 0, None)
-        self.assertIsInstance(c, CFMutableArrayRef)
+        c = CoreFoundation.CFArrayCreateMutable(None, 0, None)
+        self.assertIsInstance(c, CoreFoundation.CFMutableArrayRef)
 
-        nsa = NSMutableArray.array()
+        nsa = Foundation.NSMutableArray.array()
         nsa.addObject_(c)
 
         o = nsa[0]
-        self.assertIsInstance(o, NSMutableArray)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(o, Foundation.NSMutableArray)

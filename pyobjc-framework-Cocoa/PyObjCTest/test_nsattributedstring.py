@@ -1,245 +1,259 @@
-import Foundation
-from AppKit import *
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import objc
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAttributedString(TestCase):
     def testMethodsFoundation(self):
-        self.assertArgIsOut(NSAttributedString.attributesAtIndex_effectiveRange_, 1)
         self.assertArgIsOut(
-            NSAttributedString.attributesAtIndex_longestEffectiveRange_inRange_, 1
+            AppKit.NSAttributedString.attributesAtIndex_effectiveRange_, 1
         )
         self.assertArgIsOut(
-            NSAttributedString.attribute_atIndex_longestEffectiveRange_inRange_, 2
+            AppKit.NSAttributedString.attributesAtIndex_longestEffectiveRange_inRange_,
+            1,
+        )
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.attribute_atIndex_longestEffectiveRange_inRange_,
+            2,
         )
 
-        self.assertResultIsBOOL(NSAttributedString.isEqualToAttributedString_)
+        self.assertResultIsBOOL(AppKit.NSAttributedString.isEqualToAttributedString_)
 
     def testConstantsAppKit(self):
-        self.assertIsInstance(NSManagerDocumentAttribute, unicode)
-        self.assertIsInstance(NSFontAttributeName, unicode)
-        self.assertIsInstance(NSParagraphStyleAttributeName, unicode)
-        self.assertIsInstance(NSForegroundColorAttributeName, unicode)
-        self.assertIsInstance(NSUnderlineStyleAttributeName, unicode)
-        self.assertIsInstance(NSSuperscriptAttributeName, unicode)
-        self.assertIsInstance(NSBackgroundColorAttributeName, unicode)
-        self.assertIsInstance(NSAttachmentAttributeName, unicode)
-        self.assertIsInstance(NSLigatureAttributeName, unicode)
-        self.assertIsInstance(NSBaselineOffsetAttributeName, unicode)
-        self.assertIsInstance(NSKernAttributeName, unicode)
-        self.assertIsInstance(NSLinkAttributeName, unicode)
-        self.assertIsInstance(NSStrokeWidthAttributeName, unicode)
-        self.assertIsInstance(NSStrokeColorAttributeName, unicode)
-        self.assertIsInstance(NSUnderlineColorAttributeName, unicode)
-        self.assertIsInstance(NSStrikethroughStyleAttributeName, unicode)
-        self.assertIsInstance(NSStrikethroughColorAttributeName, unicode)
-        self.assertIsInstance(NSShadowAttributeName, unicode)
-        self.assertIsInstance(NSObliquenessAttributeName, unicode)
-        self.assertIsInstance(NSExpansionAttributeName, unicode)
-        self.assertIsInstance(NSCursorAttributeName, unicode)
-        self.assertIsInstance(NSToolTipAttributeName, unicode)
-        self.assertIsInstance(NSCharacterShapeAttributeName, unicode)
-        self.assertIsInstance(NSGlyphInfoAttributeName, unicode)
-        self.assertIsInstance(NSMarkedClauseSegmentAttributeName, unicode)
-        self.assertIsInstance(NSSpellingStateAttributeName, unicode)
+        self.assertIsInstance(AppKit.NSManagerDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSFontAttributeName, str)
+        self.assertIsInstance(AppKit.NSParagraphStyleAttributeName, str)
+        self.assertIsInstance(AppKit.NSForegroundColorAttributeName, str)
+        self.assertIsInstance(AppKit.NSUnderlineStyleAttributeName, str)
+        self.assertIsInstance(AppKit.NSSuperscriptAttributeName, str)
+        self.assertIsInstance(AppKit.NSBackgroundColorAttributeName, str)
+        self.assertIsInstance(AppKit.NSAttachmentAttributeName, str)
+        self.assertIsInstance(AppKit.NSLigatureAttributeName, str)
+        self.assertIsInstance(AppKit.NSBaselineOffsetAttributeName, str)
+        self.assertIsInstance(AppKit.NSKernAttributeName, str)
+        self.assertIsInstance(AppKit.NSLinkAttributeName, str)
+        self.assertIsInstance(AppKit.NSStrokeWidthAttributeName, str)
+        self.assertIsInstance(AppKit.NSStrokeColorAttributeName, str)
+        self.assertIsInstance(AppKit.NSUnderlineColorAttributeName, str)
+        self.assertIsInstance(AppKit.NSStrikethroughStyleAttributeName, str)
+        self.assertIsInstance(AppKit.NSStrikethroughColorAttributeName, str)
+        self.assertIsInstance(AppKit.NSShadowAttributeName, str)
+        self.assertIsInstance(AppKit.NSObliquenessAttributeName, str)
+        self.assertIsInstance(AppKit.NSExpansionAttributeName, str)
+        self.assertIsInstance(AppKit.NSCursorAttributeName, str)
+        self.assertIsInstance(AppKit.NSToolTipAttributeName, str)
+        self.assertIsInstance(AppKit.NSCharacterShapeAttributeName, str)
+        self.assertIsInstance(AppKit.NSGlyphInfoAttributeName, str)
+        self.assertIsInstance(AppKit.NSMarkedClauseSegmentAttributeName, str)
+        self.assertIsInstance(AppKit.NSSpellingStateAttributeName, str)
 
-        self.assertEqual(NSUnderlineStyleNone, 0x00)
-        self.assertEqual(NSUnderlineStyleSingle, 0x01)
-        self.assertEqual(NSUnderlineStyleThick, 0x02)
-        self.assertEqual(NSUnderlineStyleDouble, 0x09)
-        self.assertEqual(NSUnderlinePatternSolid, 0x0000)
-        self.assertEqual(NSUnderlinePatternDot, 0x0100)
-        self.assertEqual(NSUnderlinePatternDash, 0x0200)
-        self.assertEqual(NSUnderlinePatternDashDot, 0x0300)
-        self.assertEqual(NSUnderlinePatternDashDotDot, 0x0400)
+        self.assertEqual(AppKit.NSUnderlineStyleNone, 0x00)
+        self.assertEqual(AppKit.NSUnderlineStyleSingle, 0x01)
+        self.assertEqual(AppKit.NSUnderlineStyleThick, 0x02)
+        self.assertEqual(AppKit.NSUnderlineStyleDouble, 0x09)
+        self.assertEqual(AppKit.NSUnderlinePatternSolid, 0x0000)
+        self.assertEqual(AppKit.NSUnderlinePatternDot, 0x0100)
+        self.assertEqual(AppKit.NSUnderlinePatternDash, 0x0200)
+        self.assertEqual(AppKit.NSUnderlinePatternDashDot, 0x0300)
+        self.assertEqual(AppKit.NSUnderlinePatternDashDotDot, 0x0400)
 
-        self.assertIsInstance(NSUnderlineByWordMask, (int, long))
+        self.assertIsInstance(AppKit.NSUnderlineByWordMask, int)
 
-        self.assertEqual(NSSpellingStateSpellingFlag, 1)
-        self.assertEqual(NSSpellingStateGrammarFlag, 2)
+        self.assertEqual(AppKit.NSSpellingStateSpellingFlag, 1)
+        self.assertEqual(AppKit.NSSpellingStateGrammarFlag, 2)
 
-        self.assertIsInstance(NSPlainTextDocumentType, unicode)
-        self.assertIsInstance(NSRTFTextDocumentType, unicode)
-        self.assertIsInstance(NSRTFDTextDocumentType, unicode)
-        self.assertIsInstance(NSMacSimpleTextDocumentType, unicode)
-        self.assertIsInstance(NSHTMLTextDocumentType, unicode)
-        self.assertIsInstance(NSDocFormatTextDocumentType, unicode)
-        self.assertIsInstance(NSWordMLTextDocumentType, unicode)
-        self.assertIsInstance(NSWebArchiveTextDocumentType, unicode)
-        self.assertIsInstance(NSOfficeOpenXMLTextDocumentType, unicode)
-        self.assertIsInstance(NSOpenDocumentTextDocumentType, unicode)
-        self.assertIsInstance(NSPaperSizeDocumentAttribute, unicode)
-        self.assertIsInstance(NSLeftMarginDocumentAttribute, unicode)
-        self.assertIsInstance(NSRightMarginDocumentAttribute, unicode)
-        self.assertIsInstance(NSTopMarginDocumentAttribute, unicode)
-        self.assertIsInstance(NSBottomMarginDocumentAttribute, unicode)
-        self.assertIsInstance(NSViewSizeDocumentAttribute, unicode)
-        self.assertIsInstance(NSViewZoomDocumentAttribute, unicode)
-        self.assertIsInstance(NSViewModeDocumentAttribute, unicode)
-        self.assertIsInstance(NSDocumentTypeDocumentAttribute, unicode)
-        self.assertIsInstance(NSReadOnlyDocumentAttribute, unicode)
-        self.assertIsInstance(NSConvertedDocumentAttribute, unicode)
-        self.assertIsInstance(NSCocoaVersionDocumentAttribute, unicode)
-        self.assertIsInstance(NSBackgroundColorDocumentAttribute, unicode)
-        self.assertIsInstance(NSHyphenationFactorDocumentAttribute, unicode)
-        self.assertIsInstance(NSDefaultTabIntervalDocumentAttribute, unicode)
-        self.assertIsInstance(NSCharacterEncodingDocumentAttribute, unicode)
-        self.assertIsInstance(NSTitleDocumentAttribute, unicode)
-        self.assertIsInstance(NSCompanyDocumentAttribute, unicode)
-        self.assertIsInstance(NSCopyrightDocumentAttribute, unicode)
-        self.assertIsInstance(NSSubjectDocumentAttribute, unicode)
-        self.assertIsInstance(NSAuthorDocumentAttribute, unicode)
-        self.assertIsInstance(NSKeywordsDocumentAttribute, unicode)
-        self.assertIsInstance(NSCommentDocumentAttribute, unicode)
-        self.assertIsInstance(NSEditorDocumentAttribute, unicode)
-        self.assertIsInstance(NSCreationTimeDocumentAttribute, unicode)
-        self.assertIsInstance(NSModificationTimeDocumentAttribute, unicode)
-        self.assertIsInstance(NSExcludedElementsDocumentAttribute, unicode)
-        self.assertIsInstance(NSTextEncodingNameDocumentAttribute, unicode)
-        self.assertIsInstance(NSPrefixSpacesDocumentAttribute, unicode)
-        self.assertIsInstance(NSDocumentTypeDocumentOption, unicode)
-        self.assertIsInstance(NSDefaultAttributesDocumentOption, unicode)
-        self.assertIsInstance(NSCharacterEncodingDocumentOption, unicode)
-        self.assertIsInstance(NSTextEncodingNameDocumentOption, unicode)
-        self.assertIsInstance(NSBaseURLDocumentOption, unicode)
-        self.assertIsInstance(NSTimeoutDocumentOption, unicode)
-        self.assertIsInstance(NSWebPreferencesDocumentOption, unicode)
-        self.assertIsInstance(NSWebResourceLoadDelegateDocumentOption, unicode)
-        self.assertIsInstance(NSTextSizeMultiplierDocumentOption, unicode)
+        self.assertIsInstance(AppKit.NSPlainTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSRTFTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSRTFDTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSMacSimpleTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSHTMLTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSDocFormatTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSWordMLTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSWebArchiveTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSOfficeOpenXMLTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSOpenDocumentTextDocumentType, str)
+        self.assertIsInstance(AppKit.NSPaperSizeDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSLeftMarginDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSRightMarginDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSTopMarginDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSBottomMarginDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSViewSizeDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSViewZoomDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSViewModeDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSDocumentTypeDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSReadOnlyDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSConvertedDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSCocoaVersionDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSBackgroundColorDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSHyphenationFactorDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSDefaultTabIntervalDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSCharacterEncodingDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSTitleDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSCompanyDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSCopyrightDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSSubjectDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSAuthorDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSKeywordsDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSCommentDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSEditorDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSCreationTimeDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSModificationTimeDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSExcludedElementsDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSTextEncodingNameDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSPrefixSpacesDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSDocumentTypeDocumentOption, str)
+        self.assertIsInstance(AppKit.NSDefaultAttributesDocumentOption, str)
+        self.assertIsInstance(AppKit.NSCharacterEncodingDocumentOption, str)
+        self.assertIsInstance(AppKit.NSTextEncodingNameDocumentOption, str)
+        self.assertIsInstance(AppKit.NSBaseURLDocumentOption, str)
+        self.assertIsInstance(AppKit.NSTimeoutDocumentOption, str)
+        self.assertIsInstance(AppKit.NSWebPreferencesDocumentOption, str)
+        self.assertIsInstance(AppKit.NSWebResourceLoadDelegateDocumentOption, str)
+        self.assertIsInstance(AppKit.NSTextSizeMultiplierDocumentOption, str)
 
-        self.assertEqual(NSNoUnderlineStyle, 0)
-        self.assertEqual(NSSingleUnderlineStyle, 1)
-        self.assertIsInstance(NSUnderlineStrikethroughMask, (int, long))
+        self.assertEqual(AppKit.NSNoUnderlineStyle, 0)
+        self.assertEqual(AppKit.NSSingleUnderlineStyle, 1)
+        self.assertIsInstance(AppKit.NSUnderlineStrikethroughMask, int)
 
     def testMethodsAppKit(self):
-        self.assertResultIsBOOL(NSAttributedString.containsAttachments)
-        self.assertArgIsBOOL(NSAttributedString.nextWordFromIndex_forward_, 1)
-        self.assertArgIsOut(NSAttributedString.URLAtIndex_effectiveRange_, 1)
+        self.assertResultIsBOOL(AppKit.NSAttributedString.containsAttachments)
+        self.assertArgIsBOOL(AppKit.NSAttributedString.nextWordFromIndex_forward_, 1)
+        self.assertArgIsOut(AppKit.NSAttributedString.URLAtIndex_effectiveRange_, 1)
 
         self.assertArgIsOut(
-            NSAttributedString.initWithURL_options_documentAttributes_error_, 2
+            AppKit.NSAttributedString.initWithURL_options_documentAttributes_error_, 2
         )
         self.assertArgIsOut(
-            NSAttributedString.initWithURL_options_documentAttributes_error_, 3
-        )
-
-        self.assertArgIsOut(
-            NSAttributedString.initWithData_options_documentAttributes_error_, 2
-        )
-        self.assertArgIsOut(
-            NSAttributedString.initWithData_options_documentAttributes_error_, 3
-        )
-
-        self.assertArgIsOut(NSAttributedString.initWithPath_documentAttributes_, 1)
-        self.assertArgIsOut(NSAttributedString.initWithURL_documentAttributes_, 1)
-        self.assertArgIsOut(NSAttributedString.initWithRTF_documentAttributes_, 1)
-        self.assertArgIsOut(NSAttributedString.initWithRTFD_documentAttributes_, 1)
-        self.assertArgIsOut(NSAttributedString.initWithHTML_documentAttributes_, 1)
-        self.assertArgIsOut(
-            NSAttributedString.initWithHTML_options_documentAttributes_, 2
-        )
-        self.assertArgIsOut(
-            NSAttributedString.initWithHTML_baseURL_documentAttributes_, 2
-        )
-        self.assertArgIsOut(
-            NSAttributedString.initWithRTFDFileWrapper_documentAttributes_, 1
+            AppKit.NSAttributedString.initWithURL_options_documentAttributes_error_, 3
         )
 
         self.assertArgIsOut(
-            NSAttributedString.dataFromRange_documentAttributes_error_, 2
+            AppKit.NSAttributedString.initWithData_options_documentAttributes_error_, 2
         )
         self.assertArgIsOut(
-            NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2
+            AppKit.NSAttributedString.initWithData_options_documentAttributes_error_, 3
         )
 
-        self.assertResultIsBOOL(
-            NSMutableAttributedString.readFromURL_options_documentAttributes_error_
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.initWithPath_documentAttributes_, 1
         )
         self.assertArgIsOut(
-            NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 2
+            AppKit.NSAttributedString.initWithURL_documentAttributes_, 1
         )
         self.assertArgIsOut(
-            NSMutableAttributedString.readFromURL_options_documentAttributes_error_, 3
+            AppKit.NSAttributedString.initWithRTF_documentAttributes_, 1
+        )
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.initWithRTFD_documentAttributes_, 1
+        )
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.initWithHTML_documentAttributes_, 1
+        )
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.initWithHTML_options_documentAttributes_, 2
+        )
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.initWithHTML_baseURL_documentAttributes_, 2
+        )
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.initWithRTFDFileWrapper_documentAttributes_, 1
         )
 
-        self.assertResultIsBOOL(
-            NSMutableAttributedString.readFromData_options_documentAttributes_error_
+        self.assertArgIsOut(
+            AppKit.NSAttributedString.dataFromRange_documentAttributes_error_, 2
         )
         self.assertArgIsOut(
-            NSMutableAttributedString.readFromData_options_documentAttributes_error_, 2
-        )
-        self.assertArgIsOut(
-            NSMutableAttributedString.readFromData_options_documentAttributes_error_, 3
+            AppKit.NSAttributedString.fileWrapperFromRange_documentAttributes_error_, 2
         )
 
         self.assertResultIsBOOL(
-            NSMutableAttributedString.readFromURL_options_documentAttributes_
+            AppKit.NSMutableAttributedString.readFromURL_options_documentAttributes_error_
         )
         self.assertArgIsOut(
-            NSMutableAttributedString.readFromURL_options_documentAttributes_, 2
+            AppKit.NSMutableAttributedString.readFromURL_options_documentAttributes_error_,
+            2,
+        )
+        self.assertArgIsOut(
+            AppKit.NSMutableAttributedString.readFromURL_options_documentAttributes_error_,
+            3,
         )
 
         self.assertResultIsBOOL(
-            NSMutableAttributedString.readFromData_options_documentAttributes_
+            AppKit.NSMutableAttributedString.readFromData_options_documentAttributes_error_
         )
         self.assertArgIsOut(
-            NSMutableAttributedString.readFromData_options_documentAttributes_, 2
+            AppKit.NSMutableAttributedString.readFromData_options_documentAttributes_error_,
+            2,
+        )
+        self.assertArgIsOut(
+            AppKit.NSMutableAttributedString.readFromData_options_documentAttributes_error_,
+            3,
+        )
+
+        self.assertResultIsBOOL(
+            AppKit.NSMutableAttributedString.readFromURL_options_documentAttributes_
+        )
+        self.assertArgIsOut(
+            AppKit.NSMutableAttributedString.readFromURL_options_documentAttributes_, 2
+        )
+
+        self.assertResultIsBOOL(
+            AppKit.NSMutableAttributedString.readFromData_options_documentAttributes_
+        )
+        self.assertArgIsOut(
+            AppKit.NSMutableAttributedString.readFromData_options_documentAttributes_, 2
         )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSAttributedStringEnumerationReverse, 1 << 1)
+        self.assertEqual(AppKit.NSAttributedStringEnumerationReverse, 1 << 1)
         self.assertEqual(
-            NSAttributedStringEnumerationLongestEffectiveRangeNotRequired, 1 << 20
+            AppKit.NSAttributedStringEnumerationLongestEffectiveRangeNotRequired,
+            1 << 20,
         )
 
-        self.assertIsInstance(NSWritingDirectionAttributeName, unicode)
-        self.assertIsInstance(NSFileTypeDocumentAttribute, unicode)
-        self.assertIsInstance(NSCategoryDocumentAttribute, unicode)
-        self.assertIsInstance(NSFileTypeDocumentOption, unicode)
+        self.assertIsInstance(AppKit.NSWritingDirectionAttributeName, str)
+        self.assertIsInstance(AppKit.NSFileTypeDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSCategoryDocumentAttribute, str)
+        self.assertIsInstance(AppKit.NSFileTypeDocumentOption, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(NSVerticalGlyphFormAttributeName, unicode)
-        self.assertIsInstance(NSTextLayoutSectionOrientation, unicode)
-        self.assertIsInstance(NSTextLayoutSectionRange, unicode)
-        self.assertIsInstance(NSTextLayoutSectionsAttribute, unicode)
+        self.assertIsInstance(AppKit.NSVerticalGlyphFormAttributeName, str)
+        self.assertIsInstance(AppKit.NSTextLayoutSectionOrientation, str)
+        self.assertIsInstance(AppKit.NSTextLayoutSectionRange, str)
+        self.assertIsInstance(AppKit.NSTextLayoutSectionsAttribute, str)
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(NSTextAlternativesAttributeName, unicode)
-        self.assertIsInstance(NSUsesScreenFontsDocumentAttribute, unicode)
+        self.assertIsInstance(AppKit.NSTextAlternativesAttributeName, str)
+        self.assertIsInstance(AppKit.NSUsesScreenFontsDocumentAttribute, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(NSTextEffectAttributeName, unicode)
-        self.assertIsInstance(NSTextEffectLetterpressStyle, unicode)
+        self.assertIsInstance(AppKit.NSTextEffectAttributeName, str)
+        self.assertIsInstance(AppKit.NSTextEffectLetterpressStyle, str)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgHasType(
-            NSAttributedString.enumerateAttributesInRange_options_usingBlock_,
+            AppKit.NSAttributedString.enumerateAttributesInRange_options_usingBlock_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgIsBlock(
-            NSAttributedString.enumerateAttributesInRange_options_usingBlock_,
+            AppKit.NSAttributedString.enumerateAttributesInRange_options_usingBlock_,
             2,
-            b"v@" + NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
+            b"v@" + AppKit.NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
         )
 
         self.assertArgHasType(
-            NSAttributedString.enumerateAttribute_inRange_options_usingBlock_,
+            AppKit.NSAttributedString.enumerateAttribute_inRange_options_usingBlock_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgIsBlock(
-            NSAttributedString.enumerateAttribute_inRange_options_usingBlock_,
+            AppKit.NSAttributedString.enumerateAttribute_inRange_options_usingBlock_,
             3,
-            b"v@" + NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
+            b"v@" + AppKit.NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
         )
-
-
-if __name__ == "__main__":
-    main()

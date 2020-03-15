@@ -6,7 +6,7 @@ Implements a standard toolbar.
 """
 import AppKit
 import objc
-from RPCMethod import *
+from RPCMethod import RPCMethod
 from twisted.internet import defer
 from twisted.web.xmlrpc import Proxy
 

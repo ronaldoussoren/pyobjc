@@ -1,5 +1,6 @@
 import Foundation
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class UserNotificationHelper(Foundation.NSObject):
@@ -20,7 +21,7 @@ class TestNSUserNotification(TestCase):
             Foundation.NSUserNotificationActivationTypeAdditionalActionClicked, 4
         )
 
-        self.assertIsInstance(Foundation.NSUserNotificationDefaultSoundName, unicode)
+        self.assertIsInstance(Foundation.NSUserNotificationDefaultSoundName, str)
 
     @min_os_level("10.8")
     def testMethods10_8(self):
@@ -45,7 +46,3 @@ class TestNSUserNotification(TestCase):
     @min_os_level("10.10")
     def testProtocolsObjects(self):
         objc.protocolNamed("NSUserNotificationCenterDelegate")
-
-
-if __name__ == "__main__":
-    main()

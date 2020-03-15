@@ -1,14 +1,7 @@
 # Place holder for real tests.
 import objc
-from Foundation import (
-    NSAutoreleasePool,
-    NSBundle,
-    NSLocalizedString,
-    NSLocalizedStringFromTable,
-    NSLocalizedStringFromTableInBundle,
-    NSLocalizedStringWithDefaultValue,
-)
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSLocalizedString(TestCase):
@@ -18,41 +11,39 @@ class TestNSLocalizedString(TestCase):
         if objc.platform != "MACOSX":
             return
 
-        pool = NSAutoreleasePool.alloc().init()
-        s = NSLocalizedString(b"hello world".decode("ascii"), b"".decode("ascii"))
+        pool = Foundation.NSAutoreleasePool.alloc().init()
+        s = Foundation.NSLocalizedString(
+            b"hello world".decode("ascii"), b"".decode("ascii")
+        )
         del pool
         self.assertEqual(s, b"hello world".decode("ascii"))
-        # XXX : Since we get the same object back, it's still unicode
+        # XXX : Since we get the same object back, it's still str
         # self.assertEqual (s.nsstring().description(), b"hello world".decode('ascii'))
 
-        pool = NSAutoreleasePool.alloc().init()
-        s = NSLocalizedStringFromTable(
+        pool = Foundation.NSAutoreleasePool.alloc().init()
+        s = Foundation.NSLocalizedStringFromTable(
             b"hello world".decode("ascii"), b"tab".decode("utf-8"), b"".decode("ascii")
         )
         del pool
         self.assertEqual(s, b"hello world".decode("ascii"))
 
-        pool = NSAutoreleasePool.alloc().init()
-        s = NSLocalizedStringFromTableInBundle(
+        pool = Foundation.NSAutoreleasePool.alloc().init()
+        s = Foundation.NSLocalizedStringFromTableInBundle(
             b"hello world".decode("ascii"),
             b"tab".decode("utf-8"),
-            NSBundle.mainBundle(),
+            Foundation.NSBundle.mainBundle(),
             b"".decode("ascii"),
         )
         del pool
         self.assertEqual(s, b"hello world".decode("ascii"))
 
-        pool = NSAutoreleasePool.alloc().init()
-        s = NSLocalizedStringWithDefaultValue(
+        pool = Foundation.NSAutoreleasePool.alloc().init()
+        s = Foundation.NSLocalizedStringWithDefaultValue(
             b"hello world".decode("ascii"),
             b"tab".decode("utf-8"),
-            NSBundle.mainBundle(),
+            Foundation.NSBundle.mainBundle(),
             b"default".decode("utf-8"),
             b"".decode("ascii"),
         )
         del pool
         self.assertEqual(s, b"default".decode("ascii"))
-
-
-if __name__ == "__main__":
-    main()

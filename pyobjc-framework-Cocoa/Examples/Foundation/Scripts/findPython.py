@@ -2,10 +2,6 @@
 """
 Find the library name for the current Python interpreter
 """
-from __future__ import print_function
-
-import sys
-
 import objc
 from Foundation import NSBundle
 
@@ -30,7 +26,7 @@ def libraryNameForSymbol(symbol):
     bndl = NSBundle.bundleWithPath_("/System/Library/Frameworks/System.framework")
     d = {}
     objc.loadBundleFunctions(bndl, d, FUNCTIONS)
-    for (fn, sig) in FUNCTIONS:
+    for (fn, _sig) in FUNCTIONS:
         if fn not in d:
             raise ValueError("Couldn't find function %s" % (fn,))
     symbol = b"_" + symbol

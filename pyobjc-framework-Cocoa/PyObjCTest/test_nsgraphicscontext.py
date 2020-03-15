@@ -1,5 +1,5 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 try:
     import Quartz
@@ -9,55 +9,55 @@ except ImportError:
 
 class TestNSGraphicsContext(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSGraphicsContextDestinationAttributeName, unicode)
+        self.assertIsInstance(AppKit.NSGraphicsContextDestinationAttributeName, str)
         self.assertIsInstance(
-            NSGraphicsContextRepresentationFormatAttributeName, unicode
+            AppKit.NSGraphicsContextRepresentationFormatAttributeName, str
         )
-        self.assertIsInstance(NSGraphicsContextPSFormat, unicode)
-        self.assertIsInstance(NSGraphicsContextPDFFormat, unicode)
+        self.assertIsInstance(AppKit.NSGraphicsContextPSFormat, str)
+        self.assertIsInstance(AppKit.NSGraphicsContextPDFFormat, str)
 
-        self.assertEqual(NSImageInterpolationDefault, 0)
-        self.assertEqual(NSImageInterpolationNone, 1)
-        self.assertEqual(NSImageInterpolationLow, 2)
-        self.assertEqual(NSImageInterpolationHigh, 3)
-        self.assertEqual(NSImageInterpolationMedium, 4)
+        self.assertEqual(AppKit.NSImageInterpolationDefault, 0)
+        self.assertEqual(AppKit.NSImageInterpolationNone, 1)
+        self.assertEqual(AppKit.NSImageInterpolationLow, 2)
+        self.assertEqual(AppKit.NSImageInterpolationHigh, 3)
+        self.assertEqual(AppKit.NSImageInterpolationMedium, 4)
 
-        self.assertEqual(NSColorRenderingIntentDefault, 0)
-        self.assertEqual(NSColorRenderingIntentAbsoluteColorimetric, 1)
-        self.assertEqual(NSColorRenderingIntentRelativeColorimetric, 2)
-        self.assertEqual(NSColorRenderingIntentPerceptual, 3)
-        self.assertEqual(NSColorRenderingIntentSaturation, 4)
+        self.assertEqual(AppKit.NSColorRenderingIntentDefault, 0)
+        self.assertEqual(AppKit.NSColorRenderingIntentAbsoluteColorimetric, 1)
+        self.assertEqual(AppKit.NSColorRenderingIntentRelativeColorimetric, 2)
+        self.assertEqual(AppKit.NSColorRenderingIntentPerceptual, 3)
+        self.assertEqual(AppKit.NSColorRenderingIntentSaturation, 4)
 
     def testMethods(self):
         self.assertArgIsBOOL(
-            NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 1
+            AppKit.NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_, 1
         )
-        self.assertResultIsBOOL(NSGraphicsContext.currentContextDrawingToScreen)
-        self.assertResultIsBOOL(NSGraphicsContext.isDrawingToScreen)
-        self.assertResultIsBOOL(NSGraphicsContext.isFlipped)
-        self.assertResultIsBOOL(NSGraphicsContext.shouldAntialias)
-        self.assertArgIsBOOL(NSGraphicsContext.setShouldAntialias_, 0)
+        self.assertResultIsBOOL(AppKit.NSGraphicsContext.currentContextDrawingToScreen)
+        self.assertResultIsBOOL(AppKit.NSGraphicsContext.isDrawingToScreen)
+        self.assertResultIsBOOL(AppKit.NSGraphicsContext.isFlipped)
+        self.assertResultIsBOOL(AppKit.NSGraphicsContext.shouldAntialias)
+        self.assertArgIsBOOL(AppKit.NSGraphicsContext.setShouldAntialias_, 0)
 
-        img = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
-            None, 255, 255, 8, 4, True, False, NSCalibratedRGBColorSpace, 0, 0, 0
+        img = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
+            None, 255, 255, 8, 4, True, False, AppKit.NSCalibratedRGBColorSpace, 0, 0, 0
         )
-        context = NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
-        self.assertIsInstance(context, NSGraphicsContext)
+        context = AppKit.NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
+        self.assertIsInstance(context, AppKit.NSGraphicsContext)
         if Quartz is not None:
             port = context.graphicsPort()
             self.assertIsInstance(port, Quartz.CGContextRef)
 
         self.assertArgHasType(
-            NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_,
+            AppKit.NSGraphicsContext.graphicsContextWithGraphicsPort_flipped_,
             0,
             b"^{CGContext=}",
         )
-        self.assertResultHasType(NSGraphicsContext.graphicsPort, b"^{CGContext=}")
+        self.assertResultHasType(
+            AppKit.NSGraphicsContext.graphicsPort, b"^{CGContext=}"
+        )
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertArgIsBOOL(NSGraphicsContext.graphicsContextWithCGContext_flipped_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(
+            AppKit.NSGraphicsContext.graphicsContextWithCGContext_flipped_, 1
+        )

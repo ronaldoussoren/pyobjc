@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSBitmapImageRep(TestCase):
@@ -16,7 +16,3 @@ class TestNSBitmapImageRep(TestCase):
 
         self.assertEqual(len(lst), ln)
         self.assertTrue(all(isinstance(x, int) for x in lst))
-
-
-if __name__ == "__main__":
-    main()

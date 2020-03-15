@@ -1,31 +1,27 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMassFormatter(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertEqual(NSMassFormatterUnitGram, 11)
-        self.assertEqual(NSMassFormatterUnitKilogram, 14)
-        self.assertEqual(NSMassFormatterUnitOunce, (6 << 8) + 1)
-        self.assertEqual(NSMassFormatterUnitPound, (6 << 8) + 2)
-        self.assertEqual(NSMassFormatterUnitStone, (6 << 8) + 3)
+        self.assertEqual(Foundation.NSMassFormatterUnitGram, 11)
+        self.assertEqual(Foundation.NSMassFormatterUnitKilogram, 14)
+        self.assertEqual(Foundation.NSMassFormatterUnitOunce, (6 << 8) + 1)
+        self.assertEqual(Foundation.NSMassFormatterUnitPound, (6 << 8) + 2)
+        self.assertEqual(Foundation.NSMassFormatterUnitStone, (6 << 8) + 3)
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(NSMassFormatter.isForPersonMassUse)
-        self.assertArgIsBOOL(NSMassFormatter.setForPersonMassUse_, 0)
+        self.assertResultIsBOOL(Foundation.NSMassFormatter.isForPersonMassUse)
+        self.assertArgIsBOOL(Foundation.NSMassFormatter.setForPersonMassUse_, 0)
 
         self.assertResultIsBOOL(
-            NSLengthFormatter.getObjectValue_forString_errorDescription_
+            Foundation.NSLengthFormatter.getObjectValue_forString_errorDescription_
         )
         self.assertArgIsOut(
-            NSLengthFormatter.getObjectValue_forString_errorDescription_, 0
+            Foundation.NSLengthFormatter.getObjectValue_forString_errorDescription_, 0
         )
         self.assertArgIsOut(
-            NSLengthFormatter.getObjectValue_forString_errorDescription_, 2
+            Foundation.NSLengthFormatter.getObjectValue_forString_errorDescription_, 2
         )
-
-
-if __name__ == "__main__":
-    main()

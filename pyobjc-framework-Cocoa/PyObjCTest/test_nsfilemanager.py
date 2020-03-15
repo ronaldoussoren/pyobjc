@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSFileManagerHelper(NSObject):
+class TestNSFileManagerHelper(Foundation.NSObject):
     def fileManager_shouldProceedAfterError_(self, a, b):
         return 1
 
@@ -60,197 +61,232 @@ class TestNSFileManagerHelper(NSObject):
 
 class TestNSFileManager(TestCase):
     def testConstants(self):
-        self.assertEqual(NSFoundationVersionWithFileManagerResourceForkSupport, 412)
+        self.assertEqual(
+            Foundation.NSFoundationVersionWithFileManagerResourceForkSupport, 412
+        )
 
-        self.assertIsInstance(NSFileType, unicode)
-        self.assertIsInstance(NSFileTypeDirectory, unicode)
-        self.assertIsInstance(NSFileTypeRegular, unicode)
-        self.assertIsInstance(NSFileTypeSymbolicLink, unicode)
-        self.assertIsInstance(NSFileTypeSocket, unicode)
-        self.assertIsInstance(NSFileTypeCharacterSpecial, unicode)
-        self.assertIsInstance(NSFileTypeBlockSpecial, unicode)
-        self.assertIsInstance(NSFileTypeUnknown, unicode)
-        self.assertIsInstance(NSFileSize, unicode)
-        self.assertIsInstance(NSFileModificationDate, unicode)
-        self.assertIsInstance(NSFileReferenceCount, unicode)
-        self.assertIsInstance(NSFileDeviceIdentifier, unicode)
-        self.assertIsInstance(NSFileOwnerAccountName, unicode)
-        self.assertIsInstance(NSFileGroupOwnerAccountName, unicode)
-        self.assertIsInstance(NSFilePosixPermissions, unicode)
-        self.assertIsInstance(NSFileSystemNumber, unicode)
-        self.assertIsInstance(NSFileSystemFileNumber, unicode)
-        self.assertIsInstance(NSFileExtensionHidden, unicode)
-        self.assertIsInstance(NSFileHFSCreatorCode, unicode)
-        self.assertIsInstance(NSFileHFSTypeCode, unicode)
-        self.assertIsInstance(NSFileImmutable, unicode)
-        self.assertIsInstance(NSFileAppendOnly, unicode)
-        self.assertIsInstance(NSFileCreationDate, unicode)
-        self.assertIsInstance(NSFileOwnerAccountID, unicode)
-        self.assertIsInstance(NSFileGroupOwnerAccountID, unicode)
-        self.assertIsInstance(NSFileBusy, unicode)
-        self.assertIsInstance(NSFileSystemSize, unicode)
-        self.assertIsInstance(NSFileSystemFreeSize, unicode)
-        self.assertIsInstance(NSFileSystemNodes, unicode)
-        self.assertIsInstance(NSFileSystemFreeNodes, unicode)
+        self.assertIsInstance(Foundation.NSFileType, str)
+        self.assertIsInstance(Foundation.NSFileTypeDirectory, str)
+        self.assertIsInstance(Foundation.NSFileTypeRegular, str)
+        self.assertIsInstance(Foundation.NSFileTypeSymbolicLink, str)
+        self.assertIsInstance(Foundation.NSFileTypeSocket, str)
+        self.assertIsInstance(Foundation.NSFileTypeCharacterSpecial, str)
+        self.assertIsInstance(Foundation.NSFileTypeBlockSpecial, str)
+        self.assertIsInstance(Foundation.NSFileTypeUnknown, str)
+        self.assertIsInstance(Foundation.NSFileSize, str)
+        self.assertIsInstance(Foundation.NSFileModificationDate, str)
+        self.assertIsInstance(Foundation.NSFileReferenceCount, str)
+        self.assertIsInstance(Foundation.NSFileDeviceIdentifier, str)
+        self.assertIsInstance(Foundation.NSFileOwnerAccountName, str)
+        self.assertIsInstance(Foundation.NSFileGroupOwnerAccountName, str)
+        self.assertIsInstance(Foundation.NSFilePosixPermissions, str)
+        self.assertIsInstance(Foundation.NSFileSystemNumber, str)
+        self.assertIsInstance(Foundation.NSFileSystemFileNumber, str)
+        self.assertIsInstance(Foundation.NSFileExtensionHidden, str)
+        self.assertIsInstance(Foundation.NSFileHFSCreatorCode, str)
+        self.assertIsInstance(Foundation.NSFileHFSTypeCode, str)
+        self.assertIsInstance(Foundation.NSFileImmutable, str)
+        self.assertIsInstance(Foundation.NSFileAppendOnly, str)
+        self.assertIsInstance(Foundation.NSFileCreationDate, str)
+        self.assertIsInstance(Foundation.NSFileOwnerAccountID, str)
+        self.assertIsInstance(Foundation.NSFileGroupOwnerAccountID, str)
+        self.assertIsInstance(Foundation.NSFileBusy, str)
+        self.assertIsInstance(Foundation.NSFileSystemSize, str)
+        self.assertIsInstance(Foundation.NSFileSystemFreeSize, str)
+        self.assertIsInstance(Foundation.NSFileSystemNodes, str)
+        self.assertIsInstance(Foundation.NSFileSystemFreeNodes, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSVolumeEnumerationSkipHiddenVolumes, 1 << 1)
-        self.assertEqual(NSVolumeEnumerationProduceFileReferenceURLs, 1 << 2)
+        self.assertEqual(Foundation.NSVolumeEnumerationSkipHiddenVolumes, 1 << 1)
+        self.assertEqual(Foundation.NSVolumeEnumerationProduceFileReferenceURLs, 1 << 2)
 
-        self.assertEqual(NSDirectoryEnumerationSkipsSubdirectoryDescendants, 1 << 0)
-        self.assertEqual(NSDirectoryEnumerationSkipsPackageDescendants, 1 << 1)
-        self.assertEqual(NSDirectoryEnumerationSkipsHiddenFiles, 1 << 2)
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationSkipsSubdirectoryDescendants, 1 << 0
+        )
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationSkipsPackageDescendants, 1 << 1
+        )
+        self.assertEqual(Foundation.NSDirectoryEnumerationSkipsHiddenFiles, 1 << 2)
 
-        self.assertEqual(NSFileManagerItemReplacementUsingNewMetadataOnly, 1 << 0)
-        self.assertEqual(NSFileManagerItemReplacementWithoutDeletingBackupItem, 1 << 1)
+        self.assertEqual(
+            Foundation.NSFileManagerItemReplacementUsingNewMetadataOnly, 1 << 0
+        )
+        self.assertEqual(
+            Foundation.NSFileManagerItemReplacementWithoutDeletingBackupItem, 1 << 1
+        )
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(NSUbiquityIdentityDidChangeNotification, unicode)
+        self.assertIsInstance(Foundation.NSUbiquityIdentityDidChangeNotification, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertEqual(NSURLRelationshipContains, 0)
-        self.assertEqual(NSURLRelationshipSame, 1)
-        self.assertEqual(NSURLRelationshipOther, 2)
+        self.assertEqual(Foundation.NSURLRelationshipContains, 0)
+        self.assertEqual(Foundation.NSURLRelationshipSame, 1)
+        self.assertEqual(Foundation.NSURLRelationshipOther, 2)
 
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertEqual(NSFileManagerUnmountAllPartitionsAndEjectDisk, 1 << 0)
-        self.assertEqual(NSFileManagerUnmountWithoutUI, 1 << 1)
+        self.assertEqual(
+            Foundation.NSFileManagerUnmountAllPartitionsAndEjectDisk, 1 << 0
+        )
+        self.assertEqual(Foundation.NSFileManagerUnmountWithoutUI, 1 << 1)
 
         self.assertIsInstance(
-            NSFileManagerUnmountDissentingProcessIdentifierErrorKey, unicode
+            Foundation.NSFileManagerUnmountDissentingProcessIdentifierErrorKey, str
         )
 
     @min_os_level("10.15")
     def testConstants10_15(self):
-        self.assertEqual(NSDirectoryEnumerationIncludesDirectoriesPostOrder, 1 << 3)
-        self.assertEqual(NSDirectoryEnumerationProducesRelativePathURLs, 1 << 4)
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationIncludesDirectoriesPostOrder, 1 << 3
+        )
+        self.assertEqual(
+            Foundation.NSDirectoryEnumerationProducesRelativePathURLs, 1 << 4
+        )
 
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsOut(
-            NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_,
+            Foundation.NSFileManager.contentsOfDirectoryAtURL_includingPropertiesForKeys_options_error_,  # noqa: B950
             3,
         )
         self.assertArgIsBOOL(
-            NSFileManager.URLForDirectory_inDomain_appropriateForURL_create_error_, 3
+            Foundation.NSFileManager.URLForDirectory_inDomain_appropriateForURL_create_error_,
+            3,
         )
         self.assertArgIsOut(
-            NSFileManager.URLForDirectory_inDomain_appropriateForURL_create_error_, 4
+            Foundation.NSFileManager.URLForDirectory_inDomain_appropriateForURL_create_error_,
+            4,
         )
 
-        self.assertResultIsBOOL(NSFileManager.copyItemAtURL_toURL_error_)
-        self.assertArgIsOut(NSFileManager.copyItemAtURL_toURL_error_, 2)
-        self.assertResultIsBOOL(NSFileManager.moveItemAtURL_toURL_error_)
-        self.assertArgIsOut(NSFileManager.moveItemAtURL_toURL_error_, 2)
-        self.assertResultIsBOOL(NSFileManager.linkItemAtURL_toURL_error_)
-        self.assertArgIsOut(NSFileManager.linkItemAtURL_toURL_error_, 2)
-        self.assertResultIsBOOL(NSFileManager.removeItemAtURL_error_)
-        self.assertArgIsOut(NSFileManager.removeItemAtURL_error_, 1)
+        self.assertResultIsBOOL(Foundation.NSFileManager.copyItemAtURL_toURL_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.copyItemAtURL_toURL_error_, 2)
+        self.assertResultIsBOOL(Foundation.NSFileManager.moveItemAtURL_toURL_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.moveItemAtURL_toURL_error_, 2)
+        self.assertResultIsBOOL(Foundation.NSFileManager.linkItemAtURL_toURL_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.linkItemAtURL_toURL_error_, 2)
+        self.assertResultIsBOOL(Foundation.NSFileManager.removeItemAtURL_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.removeItemAtURL_error_, 1)
 
         self.assertArgIsBlock(
-            NSFileManager.enumeratorAtURL_includingPropertiesForKeys_options_errorHandler_,
+            Foundation.NSFileManager.enumeratorAtURL_includingPropertiesForKeys_options_errorHandler_,  # noqa: B950
             3,
             objc._C_NSBOOL + b"@@",
         )
 
         self.assertResultIsBOOL(
-            NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_
+            Foundation.NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_  # noqa: B950
         )
         self.assertArgIsOut(
-            NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_,
+            Foundation.NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_,  # noqa: B950
             4,
         )
         self.assertArgIsOut(
-            NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_,
+            Foundation.NSFileManager.replaceItemAtURL_withItemAtURL_backupItemName_options_resultingItemURL_error_,  # noqa: B950
             5,
         )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(
-            NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_
+            Foundation.NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_  # noqa: B950
         )
         self.assertArgIsBOOL(
-            NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_,
+            Foundation.NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_,  # noqa: B950
             1,
         )
         self.assertArgIsOut(
-            NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_,
+            Foundation.NSFileManager.createDirectoryAtURL_withIntermediateDirectories_attributes_error_,  # noqa: B950
             3,
         )
 
         self.assertResultIsBOOL(
-            NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_
+            Foundation.NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_
         )
         self.assertArgIsOut(
-            NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_, 2
+            Foundation.NSFileManager.createSymbolicLinkAtURL_withDestinationURL_error_,
+            2,
         )
 
         self.assertResultIsBOOL(
-            NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_
+            Foundation.NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_
         )
         self.assertArgIsBOOL(
-            NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_, 0
+            Foundation.NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_, 0
         )
         self.assertArgIsOut(
-            NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_, 3
+            Foundation.NSFileManager.setUbiquitous_itemAtURL_destinationURL_error_, 3
         )
-        self.assertResultIsBOOL(NSFileManager.isUbiquitousItemAtURL_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.isUbiquitousItemAtURL_)
 
         self.assertResultIsBOOL(
-            NSFileManager.startDownloadingUbiquitousItemAtURL_error_
-        )
-        self.assertArgIsOut(NSFileManager.startDownloadingUbiquitousItemAtURL_error_, 1)
-
-        self.assertResultIsBOOL(NSFileManager.evictUbiquitousItemAtURL_error_)
-        self.assertArgIsOut(NSFileManager.evictUbiquitousItemAtURL_error_, 1)
-
-        self.assertArgIsOut(
-            NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 1
+            Foundation.NSFileManager.startDownloadingUbiquitousItemAtURL_error_
         )
         self.assertArgIsOut(
-            NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_, 2
+            Foundation.NSFileManager.startDownloadingUbiquitousItemAtURL_error_, 1
+        )
+
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.evictUbiquitousItemAtURL_error_
+        )
+        self.assertArgIsOut(Foundation.NSFileManager.evictUbiquitousItemAtURL_error_, 1)
+
+        self.assertArgIsOut(
+            Foundation.NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_,
+            1,
+        )
+        self.assertArgIsOut(
+            Foundation.NSFileManager.URLForPublishingUbiquitousItemAtURL_expirationDate_error_,
+            2,
         )
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSFileManager.trashItemAtURL_resultingItemURL_error_)
-        self.assertArgIsOut(NSFileManager.trashItemAtURL_resultingItemURL_error_, 1)
-        self.assertArgIsOut(NSFileManager.trashItemAtURL_resultingItemURL_error_, 2)
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.trashItemAtURL_resultingItemURL_error_
+        )
+        self.assertArgIsOut(
+            Foundation.NSFileManager.trashItemAtURL_resultingItemURL_error_, 1
+        )
+        self.assertArgIsOut(
+            Foundation.NSFileManager.trashItemAtURL_resultingItemURL_error_, 2
+        )
 
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(
-            NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_
+            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_
         )
         self.assertArgIsOut(
-            NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_, 0
+            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_,
+            0,
         )
         self.assertArgIsOut(
-            NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_, 3
+            Foundation.NSFileManager.getRelationship_ofDirectoryAtURL_toItemAtURL_error_,
+            3,
         )
 
         self.assertResultIsBOOL(
-            NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_
+            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_
         )
         self.assertArgIsOut(
-            NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_, 0
+            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_,
+            0,
         )
         self.assertArgIsOut(
-            NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_, 4
+            Foundation.NSFileManager.getRelationship_ofDirectory_inDomain_toItemAtURL_error_,
+            4,
         )
 
     def testOutput(self):
-        obj = NSFileManager.defaultManager()
+        obj = Foundation.NSFileManager.defaultManager()
         m = obj.setAttributes_ofItemAtPath_error_.__metadata__()
         self.assertTrue(m["arguments"][4]["type"].startswith(b"o^"))
 
         m = (
-            obj.createDirectoryAtPath_withIntermediateDirectories_attributes_error_.__metadata__()
+            obj.createDirectoryAtPath_withIntermediateDirectories_attributes_error_.__metadata__()  # noqa: B950
         )
         self.assertEqual(m["arguments"][3]["type"], b"Z")
         self.assertTrue(m["arguments"][5]["type"].startswith(b"o^"))
@@ -290,7 +326,7 @@ class TestNSFileManager(TestCase):
         self.assertTrue(m["arguments"][3]["type"].startswith(b"o^"))
 
     def testProtocols(self):
-        class FileManagerTest1(NSObject):
+        class FileManagerTest1(Foundation.NSObject):
             def fileManager_shouldCopyItemAtPath_toPath_(self, fm, src, dst):
                 return True
 
@@ -349,103 +385,131 @@ class TestNSFileManager(TestCase):
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertResultIsBOOL(NSFileManager.setAttributes_ofItemAtPath_error_)
-        self.assertArgIsOut(NSFileManager.setAttributes_ofItemAtPath_error_, 2)
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.setAttributes_ofItemAtPath_error_
+        )
+        self.assertArgIsOut(
+            Foundation.NSFileManager.setAttributes_ofItemAtPath_error_, 2
+        )
 
         self.assertResultIsBOOL(
-            NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_
+            Foundation.NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_  # noqa: B950
         )
         self.assertArgIsBOOL(
-            NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_,
+            Foundation.NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_,  # noqa: B950
             1,
         )
         self.assertArgIsOut(
-            NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_,
+            Foundation.NSFileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_,  # noqa: B950
             3,
         )
 
-        self.assertArgIsOut(NSFileManager.contentsOfDirectoryAtPath_error_, 1)
-        self.assertArgIsOut(NSFileManager.subpathsOfDirectoryAtPath_error_, 1)
-        self.assertArgIsOut(NSFileManager.attributesOfItemAtPath_error_, 1)
-        self.assertArgIsOut(NSFileManager.attributesOfFileSystemForPath_error_, 1)
-
-        self.assertResultIsBOOL(
-            NSFileManager.createSymbolicLinkAtPath_withDestinationPath_error_
+        self.assertArgIsOut(
+            Foundation.NSFileManager.contentsOfDirectoryAtPath_error_, 1
         )
         self.assertArgIsOut(
-            NSFileManager.createSymbolicLinkAtPath_withDestinationPath_error_, 2
+            Foundation.NSFileManager.subpathsOfDirectoryAtPath_error_, 1
+        )
+        self.assertArgIsOut(Foundation.NSFileManager.attributesOfItemAtPath_error_, 1)
+        self.assertArgIsOut(
+            Foundation.NSFileManager.attributesOfFileSystemForPath_error_, 1
         )
 
-        self.assertArgIsOut(NSFileManager.destinationOfSymbolicLinkAtPath_error_, 1)
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.createSymbolicLinkAtPath_withDestinationPath_error_
+        )
+        self.assertArgIsOut(
+            Foundation.NSFileManager.createSymbolicLinkAtPath_withDestinationPath_error_,
+            2,
+        )
 
-        self.assertResultIsBOOL(NSFileManager.copyItemAtPath_toPath_error_)
-        self.assertArgIsOut(NSFileManager.copyItemAtPath_toPath_error_, 2)
-        self.assertResultIsBOOL(NSFileManager.moveItemAtPath_toPath_error_)
-        self.assertArgIsOut(NSFileManager.moveItemAtPath_toPath_error_, 2)
-        self.assertResultIsBOOL(NSFileManager.linkItemAtPath_toPath_error_)
-        self.assertArgIsOut(NSFileManager.linkItemAtPath_toPath_error_, 2)
-        self.assertResultIsBOOL(NSFileManager.removeItemAtPath_error_)
-        self.assertArgIsOut(NSFileManager.removeItemAtPath_error_, 1)
+        self.assertArgIsOut(
+            Foundation.NSFileManager.destinationOfSymbolicLinkAtPath_error_, 1
+        )
+
+        self.assertResultIsBOOL(Foundation.NSFileManager.copyItemAtPath_toPath_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.copyItemAtPath_toPath_error_, 2)
+        self.assertResultIsBOOL(Foundation.NSFileManager.moveItemAtPath_toPath_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.moveItemAtPath_toPath_error_, 2)
+        self.assertResultIsBOOL(Foundation.NSFileManager.linkItemAtPath_toPath_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.linkItemAtPath_toPath_error_, 2)
+        self.assertResultIsBOOL(Foundation.NSFileManager.removeItemAtPath_error_)
+        self.assertArgIsOut(Foundation.NSFileManager.removeItemAtPath_error_, 1)
 
     def testMethods(self):
-        self.assertArgIsBOOL(NSFileManager.fileAttributesAtPath_traverseLink_, 1)
-        self.assertResultIsBOOL(NSFileManager.changeFileAttributes_atPath_)
-        self.assertResultIsBOOL(NSFileManager.createSymbolicLinkAtPath_pathContent_)
-        self.assertResultIsBOOL(NSFileManager.createDirectoryAtPath_attributes_)
-        self.assertResultIsBOOL(NSFileManager.linkPath_toPath_handler_)
-        self.assertResultIsBOOL(NSFileManager.copyPath_toPath_handler_)
-        self.assertResultIsBOOL(NSFileManager.movePath_toPath_handler_)
-        self.assertResultIsBOOL(NSFileManager.removeFileAtPath_handler_)
-        self.assertResultIsBOOL(NSFileManager.changeCurrentDirectoryPath_)
-        self.assertResultIsBOOL(NSFileManager.fileExistsAtPath_)
-        self.assertResultIsBOOL(NSFileManager.fileExistsAtPath_isDirectory_)
-        self.assertArgHasType(
-            NSFileManager.fileExistsAtPath_isDirectory_, 1, b"o^" + objc._C_NSBOOL
+        self.assertArgIsBOOL(
+            Foundation.NSFileManager.fileAttributesAtPath_traverseLink_, 1
         )
-        self.assertResultIsBOOL(NSFileManager.isReadableFileAtPath_)
-        self.assertResultIsBOOL(NSFileManager.isWritableFileAtPath_)
-        self.assertResultIsBOOL(NSFileManager.isExecutableFileAtPath_)
-        self.assertResultIsBOOL(NSFileManager.isDeletableFileAtPath_)
-        self.assertResultIsBOOL(NSFileManager.contentsEqualAtPath_andPath_)
-        self.assertResultIsBOOL(NSFileManager.createFileAtPath_contents_attributes_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.changeFileAttributes_atPath_)
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.createSymbolicLinkAtPath_pathContent_
+        )
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.createDirectoryAtPath_attributes_
+        )
+        self.assertResultIsBOOL(Foundation.NSFileManager.linkPath_toPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.copyPath_toPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.movePath_toPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.removeFileAtPath_handler_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.changeCurrentDirectoryPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.fileExistsAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.fileExistsAtPath_isDirectory_)
+        self.assertArgHasType(
+            Foundation.NSFileManager.fileExistsAtPath_isDirectory_,
+            1,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertResultIsBOOL(Foundation.NSFileManager.isReadableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.isWritableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.isExecutableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.isDeletableFileAtPath_)
+        self.assertResultIsBOOL(Foundation.NSFileManager.contentsEqualAtPath_andPath_)
+        self.assertResultIsBOOL(
+            Foundation.NSFileManager.createFileAtPath_contents_attributes_
+        )
         self.assertResultHasType(
-            NSFileManager.fileSystemRepresentationWithPath_, b"^" + objc._C_CHAR_AS_TEXT
+            Foundation.NSFileManager.fileSystemRepresentationWithPath_,
+            b"^" + objc._C_CHAR_AS_TEXT,
         )
         self.assertResultIsNullTerminated(
-            NSFileManager.fileSystemRepresentationWithPath_
+            Foundation.NSFileManager.fileSystemRepresentationWithPath_
         )
         self.assertArgHasType(
-            NSFileManager.stringWithFileSystemRepresentation_length_,
+            Foundation.NSFileManager.stringWithFileSystemRepresentation_length_,
             0,
             b"n^" + objc._C_CHAR_AS_TEXT,
         )
         self.assertArgSizeInArg(
-            NSFileManager.stringWithFileSystemRepresentation_length_, 0, 1
+            Foundation.NSFileManager.stringWithFileSystemRepresentation_length_, 0, 1
         )
 
-        self.assertResultIsBOOL(NSDictionary.fileIsImmutable)
-        self.assertResultIsBOOL(NSDictionary.fileIsAppendOnly)
-        self.assertResultIsBOOL(NSDictionary.fileExtensionHidden)
+        self.assertResultIsBOOL(Foundation.NSDictionary.fileIsImmutable)
+        self.assertResultIsBOOL(Foundation.NSDictionary.fileIsAppendOnly)
+        self.assertResultIsBOOL(Foundation.NSDictionary.fileExtensionHidden)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertArgIsBlock(
-            NSFileManager.unmountVolumeAtURL_options_completionHandler_, 2, b"v@"
+            Foundation.NSFileManager.unmountVolumeAtURL_options_completionHandler_,
+            2,
+            b"v@",
         )
 
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsBlock(
-            NSFileManager.getFileProviderMessageInterfacesForItemAtURL_completionHandler_,
+            Foundation.NSFileManager.getFileProviderMessageInterfacesForItemAtURL_completionHandler_,  # noqa: B950
             1,
             b"v@@",
         )
 
     @min_os_level("10.15")
     def testMethods10_15(self):
-        self.assertResultIsBOOL(NSDirectoryEnumerator.isEnumeratingDirectoryPostOrder)
+        self.assertResultIsBOOL(
+            Foundation.NSDirectoryEnumerator.isEnumeratingDirectoryPostOrder
+        )
 
-    def testProtocols(self):
+    def testProtocolsMethods(self):
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldProceedAfterError_
         )
@@ -453,7 +517,7 @@ class TestNSFileManager(TestCase):
             TestNSFileManagerHelper.fileManager_shouldCopyItemAtPath_toPath_
         )
         self.assertResultIsBOOL(
-            TestNSFileManagerHelper.fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_
+            TestNSFileManagerHelper.fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_  # noqa: B950
         )
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldMoveItemAtPath_toPath_
@@ -465,7 +529,7 @@ class TestNSFileManager(TestCase):
             TestNSFileManagerHelper.fileManager_shouldLinkItemAtPath_toPath_
         )
         self.assertResultIsBOOL(
-            TestNSFileManagerHelper.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_
+            TestNSFileManagerHelper.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_  # noqa: B950
         )
         self.assertResultIsBOOL(
             TestNSFileManagerHelper.fileManager_shouldRemoveItemAtPath_
@@ -505,7 +569,3 @@ class TestNSFileManager(TestCase):
     @min_sdk_level("10.10")
     def testProtocols10_10(self):
         objc.protocolNamed("NSFileManagerDelegate")
-
-
-if __name__ == "__main__":
-    main()

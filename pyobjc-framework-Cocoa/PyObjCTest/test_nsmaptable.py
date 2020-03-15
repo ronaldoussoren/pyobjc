@@ -1,27 +1,28 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestNSMapTable(TestCase):
     def testConstants(self):
-        self.assertEqual(NSMapTableStrongMemory, 0)
+        self.assertEqual(Foundation.NSMapTableStrongMemory, 0)
         self.assertEqual(
-            NSMapTableZeroingWeakMemory, NSPointerFunctionsZeroingWeakMemory
+            Foundation.NSMapTableZeroingWeakMemory,
+            Foundation.NSPointerFunctionsZeroingWeakMemory,
         )
-        self.assertEqual(NSMapTableCopyIn, NSPointerFunctionsCopyIn)
         self.assertEqual(
-            NSMapTableObjectPointerPersonality,
-            NSPointerFunctionsObjectPointerPersonality,
+            Foundation.NSMapTableCopyIn, Foundation.NSPointerFunctionsCopyIn
+        )
+        self.assertEqual(
+            Foundation.NSMapTableObjectPointerPersonality,
+            Foundation.NSPointerFunctionsObjectPointerPersonality,
         )
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertEqual(NSMapTableWeakMemory, NSPointerFunctionsWeakMemory)
+        self.assertEqual(
+            Foundation.NSMapTableWeakMemory, Foundation.NSPointerFunctionsWeakMemory
+        )
 
     @expectedFailure
     def testFunctions(self):
         self.fail("NSMapTable C-API is untested")
-
-
-if __name__ == "__main__":
-    main()

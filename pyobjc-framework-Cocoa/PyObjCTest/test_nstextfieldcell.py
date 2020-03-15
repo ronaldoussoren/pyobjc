@@ -1,17 +1,15 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSTextFieldCell(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTextFieldSquareBezel, 0)
-        self.assertEqual(NSTextFieldRoundedBezel, 1)
+        self.assertEqual(AppKit.NSTextFieldSquareBezel, 0)
+        self.assertEqual(AppKit.NSTextFieldRoundedBezel, 1)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSTextFieldCell.drawsBackground)
-        self.assertArgIsBOOL(NSTextFieldCell.setDrawsBackground_, 0)
-        self.assertArgIsBOOL(NSTextFieldCell.setWantsNotificationForMarkedText_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSTextFieldCell.drawsBackground)
+        self.assertArgIsBOOL(AppKit.NSTextFieldCell.setDrawsBackground_, 0)
+        self.assertArgIsBOOL(
+            AppKit.NSTextFieldCell.setWantsNotificationForMarkedText_, 0
+        )

@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSSavePanelHelper(NSObject):
+class TestNSSavePanelHelper(AppKit.NSObject):
     def panel_shouldShowFilename_(self, p, f):
         return 1
 
@@ -33,31 +34,31 @@ class TestNSSavePanelHelper(NSObject):
 
 class TestNSSavePanel(TestCase):
     def testConstants(self):
-        self.assertEqual(NSFileHandlingPanelCancelButton, NSCancelButton)
-        self.assertEqual(NSFileHandlingPanelOKButton, NSOKButton)
+        self.assertEqual(AppKit.NSFileHandlingPanelCancelButton, AppKit.NSCancelButton)
+        self.assertEqual(AppKit.NSFileHandlingPanelOKButton, AppKit.NSOKButton)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSSavePanel.showsHiddenFiles)
-        self.assertArgIsBOOL(NSSavePanel.setShowsHiddenFiles_, 0)
-        self.assertResultIsBOOL(NSSavePanel.allowsOtherFileTypes)
-        self.assertArgIsBOOL(NSSavePanel.setAllowsOtherFileTypes_, 0)
-        self.assertResultIsBOOL(NSSavePanel.isExpanded)
-        self.assertResultIsBOOL(NSSavePanel.canCreateDirectories)
-        self.assertArgIsBOOL(NSSavePanel.setCanCreateDirectories_, 0)
-        self.assertResultIsBOOL(NSSavePanel.canSelectHiddenExtension)
-        self.assertArgIsBOOL(NSSavePanel.setCanSelectHiddenExtension_, 0)
-        self.assertResultIsBOOL(NSSavePanel.isExtensionHidden)
-        self.assertArgIsBOOL(NSSavePanel.setExtensionHidden_, 0)
-        self.assertResultIsBOOL(NSSavePanel.treatsFilePackagesAsDirectories)
-        self.assertArgIsBOOL(NSSavePanel.setTreatsFilePackagesAsDirectories_, 0)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.showsHiddenFiles)
+        self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsHiddenFiles_, 0)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.allowsOtherFileTypes)
+        self.assertArgIsBOOL(AppKit.NSSavePanel.setAllowsOtherFileTypes_, 0)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.isExpanded)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.canCreateDirectories)
+        self.assertArgIsBOOL(AppKit.NSSavePanel.setCanCreateDirectories_, 0)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.canSelectHiddenExtension)
+        self.assertArgIsBOOL(AppKit.NSSavePanel.setCanSelectHiddenExtension_, 0)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.isExtensionHidden)
+        self.assertArgIsBOOL(AppKit.NSSavePanel.setExtensionHidden_, 0)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.treatsFilePackagesAsDirectories)
+        self.assertArgIsBOOL(AppKit.NSSavePanel.setTreatsFilePackagesAsDirectories_, 0)
 
         self.assertArgIsSEL(
-            NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_,
+            AppKit.NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_,  # noqa: B950
             4,
             b"v@:@" + objc._C_NSInteger + b"^v",
         )
         self.assertArgHasType(
-            NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_,
+            AppKit.NSSavePanel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_,  # noqa: B950
             5,
             b"^v",
         )
@@ -84,7 +85,7 @@ class TestNSSavePanel(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBlock(
-            NSSavePanel.beginWithCompletionHandler_, 0, b"v" + objc._C_NSInteger
+            AppKit.NSSavePanel.beginWithCompletionHandler_, 0, b"v" + objc._C_NSInteger
         )
 
         self.assertResultIsBOOL(TestNSSavePanelHelper.panel_shouldEnableURL_)
@@ -92,23 +93,19 @@ class TestNSSavePanel(TestCase):
         self.assertArgHasType(TestNSSavePanelHelper.panel_validateURL_error_, 2, b"o^@")
 
         self.assertArgIsBlock(
-            NSSavePanel.beginSheetModalForWindow_completionHandler_,
+            AppKit.NSSavePanel.beginSheetModalForWindow_completionHandler_,
             1,
             b"v" + objc._C_NSInteger,
         )
         self.assertArgIsBlock(
-            NSSavePanel.beginWithCompletionHandler_, 0, b"v" + objc._C_NSInteger
+            AppKit.NSSavePanel.beginWithCompletionHandler_, 0, b"v" + objc._C_NSInteger
         )
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertArgIsBOOL(NSSavePanel.setShowsTagField_, 0)
-        self.assertResultIsBOOL(NSSavePanel.showsTagField)
+        self.assertArgIsBOOL(AppKit.NSSavePanel.setShowsTagField_, 0)
+        self.assertResultIsBOOL(AppKit.NSSavePanel.showsTagField)
 
     def test_issue282(self):
-        panel = NSSavePanel.savePanel()
-        self.assertIsInstance(panel, NSSavePanel)
-
-
-if __name__ == "__main__":
-    main()
+        panel = AppKit.NSSavePanel.savePanel()
+        self.assertIsInstance(panel, AppKit.NSSavePanel)

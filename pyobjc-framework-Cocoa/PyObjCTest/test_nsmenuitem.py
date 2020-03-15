@@ -1,30 +1,26 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSMenuItem(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSMenuItem.usesUserKeyEquivalents)
-        self.assertArgIsBOOL(NSMenuItem.setUsesUserKeyEquivalents_, 0)
-        self.assertResultIsBOOL(NSMenuItem.hasSubmenu)
-        self.assertResultIsBOOL(NSMenuItem.isSeparatorItem)
-        self.assertResultIsBOOL(NSMenuItem.isEnabled)
-        self.assertArgIsBOOL(NSMenuItem.setEnabled_, 0)
-        self.assertResultIsBOOL(NSMenuItem.isAlternate)
-        self.assertArgIsBOOL(NSMenuItem.setAlternate_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.usesUserKeyEquivalents)
+        self.assertArgIsBOOL(AppKit.NSMenuItem.setUsesUserKeyEquivalents_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.hasSubmenu)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.isSeparatorItem)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.isEnabled)
+        self.assertArgIsBOOL(AppKit.NSMenuItem.setEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.isAlternate)
+        self.assertArgIsBOOL(AppKit.NSMenuItem.setAlternate_, 0)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertResultIsBOOL(NSMenuItem.isHighlighted)
-        self.assertResultIsBOOL(NSMenuItem.isHidden)
-        self.assertArgIsBOOL(NSMenuItem.setHidden_, 0)
-        self.assertResultIsBOOL(NSMenuItem.isHiddenOrHasHiddenAncestor)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.isHighlighted)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.isHidden)
+        self.assertArgIsBOOL(AppKit.NSMenuItem.setHidden_, 0)
+        self.assertResultIsBOOL(AppKit.NSMenuItem.isHiddenOrHasHiddenAncestor)
 
     @min_os_level("10.13")
     def testMethods10_13(self):
-        self.assertResultIsBOOL(NSMenuItem.allowsKeyEquivalentWhenHidden)
-        self.assertArgIsBOOL(NSMenuItem.setAllowsKeyEquivalentWhenHidden_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSMenuItem.allowsKeyEquivalentWhenHidden)
+        self.assertArgIsBOOL(AppKit.NSMenuItem.setAllowsKeyEquivalentWhenHidden_, 0)

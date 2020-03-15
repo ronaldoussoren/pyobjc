@@ -1,9 +1,9 @@
 import Foundation
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestHelper(NSObject):
+class TestHelper(Foundation.NSObject):
     def incFoo_(self, foo):
         foo[0] += 1
 
@@ -11,33 +11,34 @@ class TestHelper(NSObject):
 class TestNSUndoManager(TestCase):
     def testUndoManager(self):
         x = TestHelper.new()
-        m = NSUndoManager.new()
-        l = [0]
+        m = Foundation.NSUndoManager.new()
+        lst = [0]
 
-        m.prepareWithInvocationTarget_(x).incFoo_(l)
+        m.prepareWithInvocationTarget_(x).incFoo_(lst)
         m.undo()
 
-        self.assertEqual(l[0], 1)
+        self.assertEqual(lst[0], 1)
 
     def __del__(self, objc=objc):
         objc.recycleAutoreleasePool()
 
 
-## Undo Integer test
-## From David Eppstein
+# Undo Integer test
+# From David Eppstein
+#
 # test ability of int argument to pass through undo and then
 # be used as parameter to another routine expecting an int
 #
 # the actual routine I want to use is
-# NSTableView.editColumn_row_withEvent_select_
-# but that involves setting up a UI; instead use NSIndexSpecifier
+# Foundation.NSTableView.editColumn_row_withEvent_select_
+# but that involves setting up a UI; instead use Foundation.NSIndexSpecifier
 
 if hasattr(Foundation, "NSIndexSpecifier"):
 
     class TestUndoInt(TestCase):
-        class UndoInt(NSObject):
-            undo = NSUndoManager.alloc().init()
-            idx = NSIndexSpecifier.alloc().init()
+        class UndoInt(Foundation.NSObject):
+            undo = Foundation.NSUndoManager.alloc().init()
+            idx = Foundation.NSIndexSpecifier.alloc().init()
             idx.setIndex_(0)
 
             def test_(self, i):
@@ -53,62 +54,64 @@ if hasattr(Foundation, "NSIndexSpecifier"):
             assert x.idx.index() == 0
 
 
-## end Undo Integer test
+# end Undo Integer test
 
 
 class TestSubclassingUndo(TestCase):
-    # Bugreport: 678759 Subclassing NSUndoManager fails
+    # Bugreport: 678759 Subclassing Foundation.NSUndoManager fails
 
     def testSubclass(self):
-        class UndoSubclass(NSUndoManager):
+        class UndoSubclass(Foundation.NSUndoManager):
             pass
 
         x = TestHelper.new()
         m = UndoSubclass.new()
-        l = [0]
+        lst = [0]
 
-        m.prepareWithInvocationTarget_(x).incFoo_(l)
+        m.prepareWithInvocationTarget_(x).incFoo_(lst)
         m.undo()
 
-        self.assertEqual(l[0], 1)
+        self.assertEqual(lst[0], 1)
 
     def testConstants(self):
-        self.assertIsInstance(NSUndoManagerCheckpointNotification, unicode)
-        self.assertIsInstance(NSUndoManagerWillUndoChangeNotification, unicode)
-        self.assertIsInstance(NSUndoManagerWillRedoChangeNotification, unicode)
-        self.assertIsInstance(NSUndoManagerDidUndoChangeNotification, unicode)
-        self.assertIsInstance(NSUndoManagerDidRedoChangeNotification, unicode)
-        self.assertIsInstance(NSUndoManagerDidOpenUndoGroupNotification, unicode)
-        self.assertIsInstance(NSUndoManagerWillCloseUndoGroupNotification, unicode)
-        self.assertEqual(NSUndoCloseGroupingRunLoopOrdering, 350_000)
+        self.assertIsInstance(Foundation.NSUndoManagerCheckpointNotification, str)
+        self.assertIsInstance(Foundation.NSUndoManagerWillUndoChangeNotification, str)
+        self.assertIsInstance(Foundation.NSUndoManagerWillRedoChangeNotification, str)
+        self.assertIsInstance(Foundation.NSUndoManagerDidUndoChangeNotification, str)
+        self.assertIsInstance(Foundation.NSUndoManagerDidRedoChangeNotification, str)
+        self.assertIsInstance(Foundation.NSUndoManagerDidOpenUndoGroupNotification, str)
+        self.assertIsInstance(
+            Foundation.NSUndoManagerWillCloseUndoGroupNotification, str
+        )
+        self.assertEqual(Foundation.NSUndoCloseGroupingRunLoopOrdering, 350_000)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(NSUndoManagerGroupIsDiscardableKey, unicode)
-        self.assertIsInstance(NSUndoManagerDidCloseUndoGroupNotification, unicode)
+        self.assertIsInstance(Foundation.NSUndoManagerGroupIsDiscardableKey, str)
+        self.assertIsInstance(
+            Foundation.NSUndoManagerDidCloseUndoGroupNotification, str
+        )
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSUndoManager.isUndoRegistrationEnabled)
-        self.assertResultIsBOOL(NSUndoManager.groupsByEvent)
-        self.assertArgIsBOOL(NSUndoManager.setGroupsByEvent_, 0)
-        self.assertResultIsBOOL(NSUndoManager.canUndo)
-        self.assertResultIsBOOL(NSUndoManager.canRedo)
-        self.assertResultIsBOOL(NSUndoManager.isUndoing)
-        self.assertResultIsBOOL(NSUndoManager.isRedoing)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.isUndoRegistrationEnabled)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.groupsByEvent)
+        self.assertArgIsBOOL(Foundation.NSUndoManager.setGroupsByEvent_, 0)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.canUndo)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.canRedo)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.isUndoing)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.isRedoing)
         self.assertArgIsSEL(
-            NSUndoManager.registerUndoWithTarget_selector_object_, 1, b"v@:@"
+            Foundation.NSUndoManager.registerUndoWithTarget_selector_object_, 1, b"v@:@"
         )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertArgIsBOOL(NSUndoManager.setActionIsDiscardable_, 0)
-        self.assertResultIsBOOL(NSUndoManager.undoActionIsDiscardable)
-        self.assertResultIsBOOL(NSUndoManager.redoActionIsDiscardable)
+        self.assertArgIsBOOL(Foundation.NSUndoManager.setActionIsDiscardable_, 0)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.undoActionIsDiscardable)
+        self.assertResultIsBOOL(Foundation.NSUndoManager.redoActionIsDiscardable)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertArgIsBlock(NSUndoManager.registerUndoWithTarget_handler_, 1, b"v@")
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBlock(
+            Foundation.NSUndoManager.registerUndoWithTarget_handler_, 1, b"v@"
+        )

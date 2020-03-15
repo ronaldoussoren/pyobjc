@@ -1,54 +1,55 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSAlertHelper(NSObject):
+class TestNSAlertHelper(AppKit.NSObject):
     def alertShowHelp_(self, alert):
         return 1
 
 
 class TestNSAlert(TestCase):
     def testConstants(self):
-        self.assertEqual(NSWarningAlertStyle, 0)
-        self.assertEqual(NSInformationalAlertStyle, 1)
-        self.assertEqual(NSCriticalAlertStyle, 2)
+        self.assertEqual(AppKit.NSWarningAlertStyle, 0)
+        self.assertEqual(AppKit.NSInformationalAlertStyle, 1)
+        self.assertEqual(AppKit.NSCriticalAlertStyle, 2)
 
-        self.assertEqual(NSAlertStyleWarning, 0)
-        self.assertEqual(NSAlertStyleInformational, 1)
-        self.assertEqual(NSAlertStyleCritical, 2)
+        self.assertEqual(AppKit.NSAlertStyleWarning, 0)
+        self.assertEqual(AppKit.NSAlertStyleInformational, 1)
+        self.assertEqual(AppKit.NSAlertStyleCritical, 2)
 
-        self.assertEqual(NSAlertFirstButtonReturn, 1000)
-        self.assertEqual(NSAlertSecondButtonReturn, 1001)
-        self.assertEqual(NSAlertThirdButtonReturn, 1002)
+        self.assertEqual(AppKit.NSAlertFirstButtonReturn, 1000)
+        self.assertEqual(AppKit.NSAlertSecondButtonReturn, 1001)
+        self.assertEqual(AppKit.NSAlertThirdButtonReturn, 1002)
 
     def testMethods(self):
         self.assertArgIsPrintf(
-            NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_,
+            AppKit.NSAlert.alertWithMessageText_defaultButton_alternateButton_otherButton_informativeTextWithFormat_,  # noqa: B950
             4,
         )
         self.assertArgIsSEL(
-            NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_,
+            AppKit.NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_,
             2,
             b"v@:@" + objc._C_NSInteger + b"^v",
         )
         self.assertArgHasType(
-            NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_,
+            AppKit.NSAlert.beginSheetModalForWindow_modalDelegate_didEndSelector_contextInfo_,
             3,
             b"^v",
         )
 
-        self.assertResultIsBOOL(NSAlert.showsHelp)
-        self.assertArgIsBOOL(NSAlert.setShowsHelp_, 0)
+        self.assertResultIsBOOL(AppKit.NSAlert.showsHelp)
+        self.assertArgIsBOOL(AppKit.NSAlert.setShowsHelp_, 0)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertResultIsBOOL(NSAlert.showsSuppressionButton)
-        self.assertArgIsBOOL(NSAlert.setShowsSuppressionButton_, 0)
+        self.assertResultIsBOOL(AppKit.NSAlert.showsSuppressionButton)
+        self.assertArgIsBOOL(AppKit.NSAlert.setShowsSuppressionButton_, 0)
 
     @min_os_level("10.9")
     def testMethods10_9(self):
         self.assertArgIsBlock(
-            NSAlert.beginSheetModalForWindow_completionHandler_,
+            AppKit.NSAlert.beginSheetModalForWindow_completionHandler_,
             1,
             b"v" + objc._C_NSInteger,
         )
@@ -59,7 +60,3 @@ class TestNSAlert(TestCase):
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
         objc.protocolNamed("NSAlertDelegate")
-
-
-if __name__ == "__main__":
-    main()

@@ -1,17 +1,13 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSCharacterSet(TestCase):
     def testConstants(self):
-        self.assertEqual(NSOpenStepUnicodeReservedBase, 0xF400)
+        self.assertEqual(Foundation.NSOpenStepUnicodeReservedBase, 0xF400)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSCharacterSet.characterIsMember_)
-        self.assertResultIsBOOL(NSCharacterSet.longCharacterIsMember_)
-        self.assertResultIsBOOL(NSCharacterSet.isSupersetOfSet_)
-        self.assertResultIsBOOL(NSCharacterSet.hasMemberInPlane_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSCharacterSet.characterIsMember_)
+        self.assertResultIsBOOL(Foundation.NSCharacterSet.longCharacterIsMember_)
+        self.assertResultIsBOOL(Foundation.NSCharacterSet.isSupersetOfSet_)
+        self.assertResultIsBOOL(Foundation.NSCharacterSet.hasMemberInPlane_)

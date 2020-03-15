@@ -2,7 +2,8 @@
 
 import Cocoa
 import objc
-from PyObjCTools import AppHelper, Signals
+import sys
+from PyObjCTools import AppHelper
 
 
 class TinyTinyDocument(Cocoa.NSDocument):

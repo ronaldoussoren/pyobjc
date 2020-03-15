@@ -25,8 +25,7 @@ class GraphicsArrayController(NSArrayController):
     graphicsView = objc.IBOutlet()
 
     def arrangeObjects_(self, objects):
-        "Filtering is not yet connected in IB!"
-        # XXX: This doesn't work yet, so disable
+        """ Filtering is not yet connected in IB! """
         if self.shouldFilter:
             self.shouldFilter = False
 
@@ -52,7 +51,7 @@ class GraphicsArrayController(NSArrayController):
         return super(GraphicsArrayController, self).arrangeObjects_(filteredObjects)
 
     def newObject(self):
-        "Randomize attributes of new circles so we get a pretty display"
+        """ Randomize attributes of new circles so we get a pretty display """
         self.newCircle = super(GraphicsArrayController, self).newObject()
         radius = 5.0 + 15.0 * random()
         self.newCircle.radius = radius

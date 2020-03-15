@@ -1,24 +1,19 @@
 import array
 import sys
 
-import AppKit
+import Foundation
 import CoreFoundation
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
-
-try:
-    from Foundation import __NSCFString as NSCFString
-except ImportError:
-    from Foundation import NSCFString
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestString(TestCase):
     def testType(self):
-        self.assertTrue(issubclass(CFStringRef, NSString))
+        self.assertTrue(issubclass(CoreFoundation.CFStringRef, Foundation.NSString))
 
     def testTypeID(self):
-        v = CFStringGetTypeID()
-        self.assertIsInstance(v, (int, long))
+        v = CoreFoundation.CFStringGetTypeID()
+        self.assertIsInstance(v, int)
 
     def testNoPascalStrings(self):
         self.assertNotHasAttr(CoreFoundation, "CFStringCreateWithPascalString")
@@ -28,59 +23,73 @@ class TestString(TestCase):
         self.assertNotHasAttr(CoreFoundation, "CFStringAppendPascalString")
 
     def testCreation(self):
-        s = CFStringCreateWithCString(None, b"hello world", kCFStringEncodingASCII)
-        self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertIsInstance(s, unicode)
+        s = CoreFoundation.CFStringCreateWithCString(
+            None, b"hello world", CoreFoundation.kCFStringEncodingASCII
+        )
+        self.assertIsInstance(s, objc.pyobjc_str)
+        self.assertIsInstance(s, str)
         self.assertEqual(s, b"hello world".decode("ascii"))
 
-        s = CFStringCreateWithBytes(
-            None, b"hello world", 5, kCFStringEncodingASCII, False
+        s = CoreFoundation.CFStringCreateWithBytes(
+            None, b"hello world", 5, CoreFoundation.kCFStringEncodingASCII, False
         )
-        self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertIsInstance(s, unicode)
+        self.assertIsInstance(s, objc.pyobjc_str)
+        self.assertIsInstance(s, str)
         self.assertEqual(s, b"hello".decode("ascii"))
 
-        s = CFStringCreateWithCharacters(None, b"HELLO".decode("ascii"), 5)
-        self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertIsInstance(s, unicode)
+        s = CoreFoundation.CFStringCreateWithCharacters(
+            None, b"HELLO".decode("ascii"), 5
+        )
+        self.assertIsInstance(s, objc.pyobjc_str)
+        self.assertIsInstance(s, str)
         self.assertEqual(s, b"HELLO".decode("ascii"))
 
-        # NOTE: the deallocator must be kCFAllocatorNull
-        s = CFStringCreateWithCStringNoCopy(
-            None, b"hello world", kCFStringEncodingASCII, kCFAllocatorNull
+        # NOTE: the deallocator must be CoreFoundation.kCFAllocatorNull
+        s = CoreFoundation.CFStringCreateWithCStringNoCopy(
+            None,
+            b"hello world",
+            CoreFoundation.kCFStringEncodingASCII,
+            CoreFoundation.kCFAllocatorNull,
         )
-        self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertIsInstance(s, unicode)
+        self.assertIsInstance(s, objc.pyobjc_str)
+        self.assertIsInstance(s, str)
         self.assertEqual(s, b"hello world".decode("ascii"))
 
-        s = CFStringCreateWithBytesNoCopy(
-            None, b"hello world", 5, kCFStringEncodingASCII, False, kCFAllocatorNull
+        s = CoreFoundation.CFStringCreateWithBytesNoCopy(
+            None,
+            b"hello world",
+            5,
+            CoreFoundation.kCFStringEncodingASCII,
+            False,
+            CoreFoundation.kCFAllocatorNull,
         )
-        self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertIsInstance(s, unicode)
+        self.assertIsInstance(s, objc.pyobjc_str)
+        self.assertIsInstance(s, str)
         self.assertEqual(s, b"hello".decode("ascii"))
 
-        s = CFStringCreateWithCharactersNoCopy(
-            None, b"HELLO".decode("ascii"), 5, kCFAllocatorNull
+        s = CoreFoundation.CFStringCreateWithCharactersNoCopy(
+            None, b"HELLO".decode("ascii"), 5, CoreFoundation.kCFAllocatorNull
         )
-        self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertIsInstance(s, unicode)
+        self.assertIsInstance(s, objc.pyobjc_str)
+        self.assertIsInstance(s, str)
         self.assertEqual(s, b"HELLO".decode("ascii"))
 
         del s
 
-        s = CFStringCreateWithSubstring(
-            None, b"Hello world".decode("ascii"), CFRange(2, 4)
+        s = CoreFoundation.CFStringCreateWithSubstring(
+            None, b"Hello world".decode("ascii"), CoreFoundation.CFRange(2, 4)
         )
-        self.assertIsInstance(s, objc.pyobjc_unicode)
+        self.assertIsInstance(s, objc.pyobjc_str)
         self.assertEqual(s, b"Hello world".decode("ascii")[2:6])
 
-        s = CFStringCreateCopy(None, b"foo the bar".decode("ascii"))
-        self.assertIsInstance(s, objc.pyobjc_unicode)
+        s = CoreFoundation.CFStringCreateCopy(None, b"foo the bar".decode("ascii"))
+        self.assertIsInstance(s, objc.pyobjc_str)
         self.assertEqual(s, b"foo the bar".decode("ascii"))
 
-        s = CFStringCreateWithFormat(None, None, "hello %s = %d", b"foo", 52)
-        self.assertIsInstance(s, objc.pyobjc_unicode)
+        s = CoreFoundation.CFStringCreateWithFormat(
+            None, None, "hello %s = %d", b"foo", 52
+        )
+        self.assertIsInstance(s, objc.pyobjc_str)
         self.assertEqual(s, b"hello foo = 52".decode("ascii"))
 
         self.assertFalse(
@@ -88,12 +97,12 @@ class TestString(TestCase):
         )
 
     def testCreateMutable(self):
-        s = CFStringCreateMutable(None, 0)
-        self.assertIsInstance(s, objc.pyobjc_unicode)
+        s = CoreFoundation.CFStringCreateMutable(None, 0)
+        self.assertIsInstance(s, objc.pyobjc_str)
         self.assertEqual(s, b"".decode("ascii"))
 
-        s = CFStringCreateMutableCopy(None, 0, b"foobar".decode("ascii"))
-        self.assertIsInstance(s, objc.pyobjc_unicode)
+        s = CoreFoundation.CFStringCreateMutableCopy(None, 0, b"foobar".decode("ascii"))
+        self.assertIsInstance(s, objc.pyobjc_str)
         self.assertEqual(s, b"foobar".decode("ascii"))
 
         if sys.version_info[:2] < (3, 3):
@@ -103,15 +112,15 @@ class TestString(TestCase):
             # of Python.
 
             b = array.array("u", b"hello world".decode("latin1"))
-            s = CFStringCreateMutableWithExternalCharactersNoCopy(
-                None, b, len(b), len(b), kCFAllocatorNull
+            s = CoreFoundation.CFStringCreateMutableWithExternalCharactersNoCopy(
+                None, b, len(b), len(b), CoreFoundation.kCFAllocatorNull
             )
-            self.assertIsInstance(s, objc.pyobjc_unicode)
+            self.assertIsInstance(s, objc.pyobjc_str)
             self.assertEqual(s, b"hello world".decode("ascii"))
 
             b[0] = b"H".decode("ascii")
 
-            # The objc_unicode proxy is immutable
+            # The objc_str proxy is immutable
             self.assertEqual(s, b"hello world".decode("ascii"))
 
             # The changed string can be accessed directly though:
@@ -119,27 +128,32 @@ class TestString(TestCase):
             self.assertEqual(s, b"Hello world".decode("ascii"))
 
             b2 = array.array("u", b" ".decode("ascii") * 40)
-            CFStringSetExternalCharactersNoCopy(s, b2, len(s), 40)
+            CoreFoundation.CFStringSetExternalCharactersNoCopy(s, b2, len(s), 40)
             self.assertEqual(s, " " * len(b))
             b2[0] = b"X".decode("ascii")
             self.assertEqual(s, "X" + (" " * (len(b) - 1)))
 
     def testFunctions(self):
-        v = CFStringGetLength(b"bla bla".decode("ascii"))
+        v = CoreFoundation.CFStringGetLength(b"bla bla".decode("ascii"))
         self.assertEqual(v, 7)
 
-        v = CFStringGetCharacterAtIndex(b"zing".decode("ascii"), 2)
-        self.assertIsInstance(v, unicode)
-        self.assertIsNotInstance(v, objc.pyobjc_unicode)
+        v = CoreFoundation.CFStringGetCharacterAtIndex(b"zing".decode("ascii"), 2)
+        self.assertIsInstance(v, str)
+        self.assertIsNotInstance(v, objc.pyobjc_str)
         self.assertEqual(v, b"n".decode("ascii"))
 
-        v = CFStringGetCharacters(b"foo".decode("ascii"), CFRange(0, 3), None)
-        self.assertIsInstance(v, unicode)
-        self.assertIsNotInstance(v, objc.pyobjc_unicode)
+        v = CoreFoundation.CFStringGetCharacters(
+            b"foo".decode("ascii"), CoreFoundation.CFRange(0, 3), None
+        )
+        self.assertIsInstance(v, str)
+        self.assertIsNotInstance(v, objc.pyobjc_str)
         self.assertEqual(v, b"foo".decode("ascii"))
 
-        ok, buf = CFStringGetCString(
-            b"sing along".decode("ascii"), None, 100, kCFStringEncodingUTF8
+        ok, buf = CoreFoundation.CFStringGetCString(
+            b"sing along".decode("ascii"),
+            None,
+            100,
+            CoreFoundation.kCFStringEncodingUTF8,
         )
         self.assertTrue(ok)
 
@@ -148,18 +162,20 @@ class TestString(TestCase):
         if b"\0" in buf:
             buf = buf[: buf.index(b"\0")]
         self.assertEqual(buf, b"sing along")
-        s = CFStringGetCStringPtr(b"apenootjes".decode("ascii"), kCFStringEncodingASCII)
+        s = CoreFoundation.CFStringGetCStringPtr(
+            b"apenootjes".decode("ascii"), CoreFoundation.kCFStringEncodingASCII
+        )
         if s is not objc.NULL:
             self.assertEqual(s, b"apenootjes")
             self.assertIsInstance(s, str)
-        s = CFStringGetCharactersPtr(b"apenootjes".decode("ascii"))
+        s = CoreFoundation.CFStringGetCharactersPtr(b"apenootjes".decode("ascii"))
         if s is not objc.NULL:
             self.assertEqual(s, "apenootjes")
-            self.assertIsInstance(s, unicode)
-        idx, buf, used = CFStringGetBytes(
+            self.assertIsInstance(s, str)
+        idx, buf, used = CoreFoundation.CFStringGetBytes(
             b"apenootjes".decode("ascii"),
-            CFRange(1, 4),
-            kCFStringEncodingASCII,
+            CoreFoundation.CFRange(1, 4),
+            CoreFoundation.kCFStringEncodingASCII,
             b"\0",
             True,
             None,
@@ -171,33 +187,32 @@ class TestString(TestCase):
         self.assertEqual(buf, b"peno")
         self.assertEqual(used, 4)
 
-        if sys.version_info[0] == 2:
-            s = CFStringCreateFromExternalRepresentation(
-                None, buffer("hello world"), kCFStringEncodingUTF8
-            )
-        else:
-            s = CFStringCreateFromExternalRepresentation(
-                None, b"hello world", kCFStringEncodingUTF8
-            )
-        self.assertIsInstance(s, objc.pyobjc_unicode)
+        s = CoreFoundation.CFStringCreateFromExternalRepresentation(
+            None, b"hello world", CoreFoundation.kCFStringEncodingUTF8
+        )
+        self.assertIsInstance(s, objc.pyobjc_str)
         self.assertEqual(s, b"hello world".decode("ascii"))
 
-        data = CFStringCreateExternalRepresentation(
-            None, s, kCFStringEncodingUTF16BE, b"\0"
+        data = CoreFoundation.CFStringCreateExternalRepresentation(
+            None, s, CoreFoundation.kCFStringEncodingUTF16BE, b"\0"
         )
-        self.assertIsInstance(data, CFDataRef)
-        val = CFDataGetBytes(data, (0, CFDataGetLength(data)), None)
+        self.assertIsInstance(data, CoreFoundation.CFDataRef)
+        val = CoreFoundation.CFDataGetBytes(
+            data, (0, CoreFoundation.CFDataGetLength(data)), None
+        )
         self.assertEqual(val, b"\0h\0e\0l\0l\0o\0 \0w\0o\0r\0l\0d")
 
-        v = CFStringGetSmallestEncoding(s)
-        self.assertIsInstance(v, (int, long))
-        v = CFStringGetFastestEncoding(s)
-        self.assertIsInstance(v, (int, long))
-        v = CFStringGetSystemEncoding()
-        self.assertIsInstance(v, (int, long))
-        v = CFStringGetMaximumSizeForEncoding(100, kCFStringEncodingUTF8)
-        self.assertIsInstance(v, (int, long))
-        ok, buf = CFStringGetFileSystemRepresentation(
+        v = CoreFoundation.CFStringGetSmallestEncoding(s)
+        self.assertIsInstance(v, int)
+        v = CoreFoundation.CFStringGetFastestEncoding(s)
+        self.assertIsInstance(v, int)
+        v = CoreFoundation.CFStringGetSystemEncoding()
+        self.assertIsInstance(v, int)
+        v = CoreFoundation.CFStringGetMaximumSizeForEncoding(
+            100, CoreFoundation.kCFStringEncodingUTF8
+        )
+        self.assertIsInstance(v, int)
+        ok, buf = CoreFoundation.CFStringGetFileSystemRepresentation(
             b"/path/to/nowhere.txt".decode("ascii"), None, 100
         )
         self.assertTrue(ok)
@@ -205,249 +220,299 @@ class TestString(TestCase):
             buf = buf[: buf.index(b"\0")]
         self.assertEqual(buf, b"/path/to/nowhere.txt")
         self.assertIsInstance(buf, bytes)
-        idx = CFStringGetMaximumSizeOfFileSystemRepresentation(b"/tmp".decode("ascii"))
-        self.assertIsInstance(idx, (int, long))
-        s = CFStringCreateWithFileSystemRepresentation(None, b"/tmp")
-        self.assertIsInstance(s, objc.pyobjc_unicode)
+        idx = CoreFoundation.CFStringGetMaximumSizeOfFileSystemRepresentation(
+            b"/tmp".decode("ascii")
+        )
+        self.assertIsInstance(idx, int)
+        s = CoreFoundation.CFStringCreateWithFileSystemRepresentation(None, b"/tmp")
+        self.assertIsInstance(s, objc.pyobjc_str)
         self.assertEqual(s, b"/tmp".decode("ascii"))
         self.assertRaises(
             (TypeError, ValueError),
-            CFStringCreateWithFileSystemRepresentation,
+            CoreFoundation.CFStringCreateWithFileSystemRepresentation,
             None,
             b"/tmp".decode("ascii"),
         )
 
-        r = CFStringCompareWithOptionsAndLocale(
+        r = CoreFoundation.CFStringCompareWithOptionsAndLocale(
             b"aas".decode("ascii"),
             b"noot".decode("ascii"),
-            CFRange(0, 3),
-            kCFCompareBackwards,
-            CFLocaleCopyCurrent(),
+            CoreFoundation.CFRange(0, 3),
+            CoreFoundation.kCFCompareBackwards,
+            CoreFoundation.CFLocaleCopyCurrent(),
         )
-        self.assertEqual(r, kCFCompareLessThan)
+        self.assertEqual(r, CoreFoundation.kCFCompareLessThan)
 
-        r = CFStringCompareWithOptions(
-            b"aap".decode("ascii"), b"noot".decode("ascii"), CFRange(0, 3), 0
+        r = CoreFoundation.CFStringCompareWithOptions(
+            b"aap".decode("ascii"),
+            b"noot".decode("ascii"),
+            CoreFoundation.CFRange(0, 3),
+            0,
         )
-        self.assertEqual(r, kCFCompareLessThan)
+        self.assertEqual(r, CoreFoundation.kCFCompareLessThan)
 
-        r = CFStringCompare(
-            b"aap".decode("ascii"), b"AAP".decode("ascii"), kCFCompareCaseInsensitive
+        r = CoreFoundation.CFStringCompare(
+            b"aap".decode("ascii"),
+            b"AAP".decode("ascii"),
+            CoreFoundation.kCFCompareCaseInsensitive,
         )
-        self.assertEqual(r, kCFCompareEqualTo)
+        self.assertEqual(r, CoreFoundation.kCFCompareEqualTo)
 
-        found, rng = CFStringFindWithOptionsAndLocale(
+        found, rng = CoreFoundation.CFStringFindWithOptionsAndLocale(
             b"the longer string".decode("ascii"),
             b"longer".decode("ascii"),
-            CFRange(0, 17),
+            CoreFoundation.CFRange(0, 17),
             0,
-            CFLocaleCopyCurrent(),
+            CoreFoundation.CFLocaleCopyCurrent(),
             None,
         )
         self.assertIs(found, True)
-        self.assertIsInstance(rng, CFRange)
-        self.assertEqual(rng, CFRange(4, 6))
+        self.assertIsInstance(rng, CoreFoundation.CFRange)
+        self.assertEqual(rng, CoreFoundation.CFRange(4, 6))
 
-        found, rng = CFStringFindWithOptions(
+        found, rng = CoreFoundation.CFStringFindWithOptions(
             b"the longer string".decode("ascii"),
             b"longer".decode("ascii"),
-            CFRange(0, 17),
+            CoreFoundation.CFRange(0, 17),
             0,
             None,
         )
         self.assertIs(found, True)
-        self.assertIsInstance(rng, CFRange)
-        self.assertEqual(rng, CFRange(4, 6))
+        self.assertIsInstance(rng, CoreFoundation.CFRange)
+        self.assertEqual(rng, CoreFoundation.CFRange(4, 6))
 
-        arr = CFStringCreateArrayWithFindResults(
+        arr = CoreFoundation.CFStringCreateArrayWithFindResults(
             None,
             b"word a world a world".decode("ascii"),
             b"world".decode("ascii"),
-            CFRange(0, 20),
+            CoreFoundation.CFRange(0, 20),
             0,
         )
-        self.assertIsInstance(arr, CFArrayRef)
+        self.assertIsInstance(arr, CoreFoundation.CFArrayRef)
         self.assertEqual(len(arr), 2)
 
-        rng = CFStringFind("hello world", "world", 0)
-        self.assertEqual(rng, CFRange(6, 5))
+        rng = CoreFoundation.CFStringFind("hello world", "world", 0)
+        self.assertEqual(rng, CoreFoundation.CFRange(6, 5))
 
-        ok = CFStringHasPrefix(b"hello".decode("ascii"), b"he".decode("ascii"))
+        ok = CoreFoundation.CFStringHasPrefix(
+            b"hello".decode("ascii"), b"he".decode("ascii")
+        )
         self.assertIs(ok, True)
-        ok = CFStringHasPrefix(b"hello".decode("ascii"), b"ge".decode("ascii"))
+        ok = CoreFoundation.CFStringHasPrefix(
+            b"hello".decode("ascii"), b"ge".decode("ascii")
+        )
         self.assertIs(ok, False)
-        ok = CFStringHasSuffix(b"hello".decode("ascii"), "lo")
+        ok = CoreFoundation.CFStringHasSuffix(b"hello".decode("ascii"), "lo")
         self.assertIs(ok, True)
-        rng = CFStringGetRangeOfComposedCharactersAtIndex(
+        rng = CoreFoundation.CFStringGetRangeOfComposedCharactersAtIndex(
             b"hello world".decode("ascii"), 5
         )
-        self.assertIsInstance(rng, CFRange)
-        found, rng = CFStringFindCharacterFromSet(
+        self.assertIsInstance(rng, CoreFoundation.CFRange)
+        found, rng = CoreFoundation.CFStringFindCharacterFromSet(
             "hello  world",
-            CFCharacterSetGetPredefined(kCFCharacterSetWhitespace),
-            CFRange(0, 12),
+            CoreFoundation.CFCharacterSetGetPredefined(
+                CoreFoundation.kCFCharacterSetWhitespace
+            ),
+            CoreFoundation.CFRange(0, 12),
             0,
             None,
         )
         self.assertIs(found, True)
-        self.assertIsInstance(rng, CFRange)
-        lineBeginIndex, lineEndIndex, contentsEndIndex = CFStringGetLineBounds(
-            b"hello\n\nworld".decode("ascii"), CFRange(0, 12), None, None, None
+        self.assertIsInstance(rng, CoreFoundation.CFRange)
+        lineBeginIndex, lineEndIndex, contentsEndIndex = CoreFoundation.CFStringGetLineBounds(
+            b"hello\n\nworld".decode("ascii"),
+            CoreFoundation.CFRange(0, 12),
+            None,
+            None,
+            None,
         )
         self.assertEqual(lineBeginIndex, 0)
         self.assertEqual(lineEndIndex, 12)
         self.assertEqual(contentsEndIndex, 12)
 
-        paraBeginIndex, paraEndIndex, contentsEndIndex = CFStringGetParagraphBounds(
-            b"hello\n\nworld".decode("ascii"), CFRange(0, 12), None, None, None
+        paraBeginIndex, paraEndIndex, contentsEndIndex = CoreFoundation.CFStringGetParagraphBounds(  # noqa: B950
+            b"hello\n\nworld".decode("ascii"),
+            CoreFoundation.CFRange(0, 12),
+            None,
+            None,
+            None,
         )
         self.assertEqual(paraBeginIndex, 0)
         self.assertEqual(paraEndIndex, 12)
         self.assertEqual(contentsEndIndex, 12)
 
-        result = CFStringCreateByCombiningStrings(
+        result = CoreFoundation.CFStringCreateByCombiningStrings(
             None, [b"hello".decode("ascii"), b"world".decode("ascii")], "//"
         )
         self.assertEqual(result, b"hello//world".decode("ascii"))
 
-        result = CFStringCreateArrayBySeparatingStrings(None, "hello world", " ")
+        result = CoreFoundation.CFStringCreateArrayBySeparatingStrings(
+            None, "hello world", " "
+        )
         self.assertEqual(result, ["hello", "world"])
 
-        v = CFStringGetIntValue(b"1000".decode("ascii"))
+        v = CoreFoundation.CFStringGetIntValue(b"1000".decode("ascii"))
         self.assertEqual(v, 1000)
 
-        v = CFStringGetDoubleValue(b"1000".decode("ascii"))
+        v = CoreFoundation.CFStringGetDoubleValue(b"1000".decode("ascii"))
         self.assertEqual(v, 1000.0)
 
-        v = CFStringGetDoubleValue(b"1000.5".decode("ascii"))
+        v = CoreFoundation.CFStringGetDoubleValue(b"1000.5".decode("ascii"))
         self.assertEqual(v, 1000.5)
 
     def testMutableFunctions(self):
-        s = CFStringCreateMutable(None, 0)
+        s = CoreFoundation.CFStringCreateMutable(None, 0)
         s = s.nsstring()
-        CFStringAppend(s, b"hello".decode("ascii"))
+        CoreFoundation.CFStringAppend(s, b"hello".decode("ascii"))
         self.assertEqual(s, b"hello".decode("ascii"))
 
-        s = CFStringCreateMutable(None, 0)
+        s = CoreFoundation.CFStringCreateMutable(None, 0)
         # Ensure that we actually see updates:
         s = s.nsstring()
 
-        CFStringAppendCharacters(s, b"hel".decode("ascii"), 3)
+        CoreFoundation.CFStringAppendCharacters(s, b"hel".decode("ascii"), 3)
         self.assertEqual(s, b"hel".decode("ascii"))
 
-        CFStringAppendCString(s, b"lo world", kCFStringEncodingUTF8)
+        CoreFoundation.CFStringAppendCString(
+            s, b"lo world", CoreFoundation.kCFStringEncodingUTF8
+        )
         self.assertEqual(s, b"hello world".decode("ascii"))
 
-        CFStringAppendFormat(s, None, ": %s = %d", b"x", 99)
+        CoreFoundation.CFStringAppendFormat(s, None, ": %s = %d", b"x", 99)
         self.assertEqual(s, b"hello world: x = 99".decode("ascii"))
 
         self.assertNotHasAttr(CoreFoundation, "CFStringAppendFormatAndArguments")
-        CFStringInsert(s, 2, "--")
+        CoreFoundation.CFStringInsert(s, 2, "--")
         self.assertEqual(s, b"he--llo world: x = 99".decode("ascii"))
 
-        CFStringDelete(s, CFRange(0, 8))
+        CoreFoundation.CFStringDelete(s, CoreFoundation.CFRange(0, 8))
         self.assertEqual(s, b"world: x = 99".decode("ascii"))
 
-        CFStringReplace(s, CFRange(0, 4), "WOR")
+        CoreFoundation.CFStringReplace(s, CoreFoundation.CFRange(0, 4), "WOR")
         self.assertEqual(s, b"WORd: x = 99".decode("ascii"))
 
-        CFStringReplaceAll(s, "WHOOPS")
+        CoreFoundation.CFStringReplaceAll(s, "WHOOPS")
         self.assertEqual(s, b"WHOOPS".decode("ascii"))
 
-        CFStringReplaceAll(s, b"BLAblaBLAblaBLA".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, b"BLAblaBLAblaBLA".decode("ascii"))
         self.assertEqual(s, b"BLAblaBLAblaBLA".decode("ascii"))
 
-        CFStringFindAndReplace(s, "BL", " fo ", CFRange(0, 15), 0)
+        CoreFoundation.CFStringFindAndReplace(
+            s, "BL", " fo ", CoreFoundation.CFRange(0, 15), 0
+        )
         self.assertEqual(s, " fo Abla fo Abla fo A")
 
-        CFStringReplaceAll(s, b"abc".decode("ascii"))
-        CFStringPad(s, " ", 9, 0)
+        CoreFoundation.CFStringReplaceAll(s, b"abc".decode("ascii"))
+        CoreFoundation.CFStringPad(s, " ", 9, 0)
         self.assertEqual(s, b"abc      ".decode("ascii"))
 
-        CFStringReplaceAll(s, b"abc".decode("ascii"))
-        CFStringPad(s, ". ", 9, 1)
+        CoreFoundation.CFStringReplaceAll(s, b"abc".decode("ascii"))
+        CoreFoundation.CFStringPad(s, ". ", 9, 1)
         self.assertEqual(s, b"abc . . .".decode("ascii"))
 
-        CFStringReplaceAll(s, b"abcdef".decode("ascii"))
-        CFStringPad(s, ". ", 3, 0)
+        CoreFoundation.CFStringReplaceAll(s, b"abcdef".decode("ascii"))
+        CoreFoundation.CFStringPad(s, ". ", 3, 0)
         self.assertEqual(s, b"abc".decode("ascii"))
 
-        CFStringReplaceAll(s, b"aHelloaaa".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, b"aHelloaaa".decode("ascii"))
         trim_chars = b"a".decode("ascii")
 
         # print s
-        CFStringTrim(s, trim_chars)
+        CoreFoundation.CFStringTrim(s, trim_chars)
         # print s
         # print(s)
-        # CFShow(s)
+        # CoreFoundation.CFShow(s)
         self.assertEqual(s, b"Hello".decode("ascii"))
 
-        CFStringReplaceAll(s, b"* * * *abc * ".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, b"* * * *abc * ".decode("ascii"))
         trim_chars = b"* ".decode("ascii")
 
-        trim_chars = CFStringCreateWithCString(None, b"* ", kCFStringEncodingASCII)
-        CFStringTrim(s, trim_chars)
+        trim_chars = CoreFoundation.CFStringCreateWithCString(
+            None, b"* ", CoreFoundation.kCFStringEncodingASCII
+        )
+        CoreFoundation.CFStringTrim(s, trim_chars)
         self.assertEqual(s, b"*abc ".decode("ascii"))
 
-        CFStringReplaceAll(s, b" \tHello world  \t ".decode("ascii"))
-        CFStringTrimWhitespace(s)
+        CoreFoundation.CFStringReplaceAll(s, b" \tHello world  \t ".decode("ascii"))
+        CoreFoundation.CFStringTrimWhitespace(s)
         self.assertEqual(s, b"Hello world".decode("ascii"))
 
-        CFStringReplaceAll(s, b"AbC".decode("ascii"))
-        CFStringLowercase(s, CFLocaleCopyCurrent())
+        CoreFoundation.CFStringReplaceAll(s, b"AbC".decode("ascii"))
+        CoreFoundation.CFStringLowercase(s, CoreFoundation.CFLocaleCopyCurrent())
         self.assertEqual(s, b"abc".decode("ascii"))
 
-        CFStringReplaceAll(s, b"AbC".decode("ascii"))
-        CFStringUppercase(s, CFLocaleCopyCurrent())
+        CoreFoundation.CFStringReplaceAll(s, b"AbC".decode("ascii"))
+        CoreFoundation.CFStringUppercase(s, CoreFoundation.CFLocaleCopyCurrent())
         self.assertEqual(s, b"ABC".decode("ascii"))
 
-        CFStringReplaceAll(s, b"hello world".decode("ascii"))
-        CFStringCapitalize(s, CFLocaleCopyCurrent())
+        CoreFoundation.CFStringReplaceAll(s, b"hello world".decode("ascii"))
+        CoreFoundation.CFStringCapitalize(s, CoreFoundation.CFLocaleCopyCurrent())
         self.assertEqual(s, b"Hello World".decode("ascii"))
 
-        CFStringNormalize(s, kCFStringNormalizationFormKD)
+        CoreFoundation.CFStringNormalize(s, CoreFoundation.kCFStringNormalizationFormKD)
         self.assertEqual(s, b"Hello World".decode("ascii"))
 
-        CFStringFold(s, kCFCompareCaseInsensitive, CFLocaleCopyCurrent())
+        CoreFoundation.CFStringFold(
+            s,
+            CoreFoundation.kCFCompareCaseInsensitive,
+            CoreFoundation.CFLocaleCopyCurrent(),
+        )
         self.assertEqual(s, b"hello world".decode("ascii"))
 
-        CFStringReplaceAll(s, b"A C".decode("ascii"))
-        ok, rng = CFStringTransform(s, CFRange(0, 3), kCFStringTransformToXMLHex, False)
+        CoreFoundation.CFStringReplaceAll(s, b"A C".decode("ascii"))
+        ok, rng = CoreFoundation.CFStringTransform(
+            s,
+            CoreFoundation.CFRange(0, 3),
+            CoreFoundation.kCFStringTransformToXMLHex,
+            False,
+        )
         self.assertEqual(s, "A C")
         self.assertIs(ok, True)
-        self.assertEqual(rng, CFRange(0, 3))
+        self.assertEqual(rng, CoreFoundation.CFRange(0, 3))
 
     def testStringEncoding(self):
-        ok = CFStringIsEncodingAvailable(kCFStringEncodingUTF8)
+        ok = CoreFoundation.CFStringIsEncodingAvailable(
+            CoreFoundation.kCFStringEncodingUTF8
+        )
         self.assertIs(ok, True)
-        encodings = CFStringGetListOfAvailableEncodings()
+        encodings = CoreFoundation.CFStringGetListOfAvailableEncodings()
         self.assertIsInstance(encodings, objc.varlist)
         for e in encodings:
-            if e == kCFStringEncodingInvalidId:
+            if e == CoreFoundation.kCFStringEncodingInvalidId:
                 break
-            self.assertIsInstance(e, (int, long))
-        s = CFStringGetNameOfEncoding(kCFStringEncodingUTF8)
+            self.assertIsInstance(e, int)
+        s = CoreFoundation.CFStringGetNameOfEncoding(
+            CoreFoundation.kCFStringEncodingUTF8
+        )
         self.assertEqual(s, "Unicode (UTF-8)")
 
-        v = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingUTF8)
-        self.assertIsInstance(v, (int, long))
-        t = CFStringConvertNSStringEncodingToEncoding(v)
-        self.assertEqual(t, kCFStringEncodingUTF8)
+        v = CoreFoundation.CFStringConvertEncodingToNSStringEncoding(
+            CoreFoundation.kCFStringEncodingUTF8
+        )
+        self.assertIsInstance(v, int)
+        t = CoreFoundation.CFStringConvertNSStringEncodingToEncoding(v)
+        self.assertEqual(t, CoreFoundation.kCFStringEncodingUTF8)
 
-        v = CFStringConvertEncodingToWindowsCodepage(kCFStringEncodingISOLatin1)
-        self.assertIsInstance(v, (int, long))
-        t = CFStringConvertWindowsCodepageToEncoding(v)
-        self.assertEqual(t, kCFStringEncodingISOLatin1)
+        v = CoreFoundation.CFStringConvertEncodingToWindowsCodepage(
+            CoreFoundation.kCFStringEncodingISOLatin1
+        )
+        self.assertIsInstance(v, int)
+        t = CoreFoundation.CFStringConvertWindowsCodepageToEncoding(v)
+        self.assertEqual(t, CoreFoundation.kCFStringEncodingISOLatin1)
 
-        v = CFStringConvertEncodingToIANACharSetName(kCFStringEncodingUTF8)
-        self.assertIsInstance(v, unicode)
+        v = CoreFoundation.CFStringConvertEncodingToIANACharSetName(
+            CoreFoundation.kCFStringEncodingUTF8
+        )
+        self.assertIsInstance(v, str)
         self.assertIn(v, ("UTF-8", "utf-8"))
 
-        t = CFStringConvertIANACharSetNameToEncoding(v)
-        self.assertEqual(t, kCFStringEncodingUTF8)
+        t = CoreFoundation.CFStringConvertIANACharSetNameToEncoding(v)
+        self.assertEqual(t, CoreFoundation.kCFStringEncodingUTF8)
 
-        v = CFStringGetMostCompatibleMacStringEncoding(kCFStringEncodingWindowsLatin1)
-        self.assertEqual(v, kCFStringEncodingMacRoman)
+        v = CoreFoundation.CFStringGetMostCompatibleMacStringEncoding(
+            CoreFoundation.kCFStringEncodingWindowsLatin1
+        )
+        self.assertEqual(v, CoreFoundation.kCFStringEncodingMacRoman)
 
     def testNoInlineBuffer(self):
         self.assertNotHasAttr(CoreFoundation, "CFStringInlineBuffer")
@@ -455,240 +520,245 @@ class TestString(TestCase):
         self.assertNotHasAttr(CoreFoundation, "CFStringGetCharacterFromInlineBuffer")
 
     def testConstants(self):
-        self.assertEqual(kCFStringEncodingInvalidId, 0xFFFFFFFF)
-        self.assertEqual(kCFStringEncodingMacRoman, 0)
-        self.assertEqual(kCFStringEncodingWindowsLatin1, 0x0500)
-        self.assertEqual(kCFStringEncodingISOLatin1, 0x0201)
-        self.assertEqual(kCFStringEncodingNextStepLatin, 0x0B01)
-        self.assertEqual(kCFStringEncodingASCII, 0x0600)
-        self.assertEqual(kCFStringEncodingUnicode, 0x0100)
-        self.assertEqual(kCFStringEncodingUTF8, 0x08000100)
-        self.assertEqual(kCFStringEncodingNonLossyASCII, 0x0BFF)
-        self.assertEqual(kCFStringEncodingUTF16, 0x0100)
-        self.assertEqual(kCFStringEncodingUTF16BE, 0x10000100)
-        self.assertEqual(kCFStringEncodingUTF16LE, 0x14000100)
-        self.assertEqual(kCFStringEncodingUTF32, 0x0C000100)
-        self.assertEqual(kCFStringEncodingUTF32BE, 0x18000100)
-        self.assertEqual(kCFStringEncodingUTF32LE, 0x1C000100)
-        self.assertEqual(kCFCompareCaseInsensitive, 1)
-        self.assertEqual(kCFCompareBackwards, 4)
-        self.assertEqual(kCFCompareAnchored, 8)
-        self.assertEqual(kCFCompareNonliteral, 16)
-        self.assertEqual(kCFCompareLocalized, 32)
-        self.assertEqual(kCFCompareNumerically, 64)
-        self.assertEqual(kCFCompareDiacriticInsensitive, 128)
-        self.assertEqual(kCFCompareWidthInsensitive, 256)
-        self.assertEqual(kCFCompareForcedOrdering, 512)
-        self.assertEqual(kCFStringNormalizationFormD, 0)
-        self.assertEqual(kCFStringNormalizationFormKD, 1)
-        self.assertEqual(kCFStringNormalizationFormC, 2)
-        self.assertEqual(kCFStringNormalizationFormKC, 3)
-        self.assertIsInstance(kCFStringTransformStripCombiningMarks, unicode)
-        self.assertIsInstance(kCFStringTransformToLatin, unicode)
-        self.assertIsInstance(kCFStringTransformFullwidthHalfwidth, unicode)
-        self.assertIsInstance(kCFStringTransformLatinKatakana, unicode)
-        self.assertIsInstance(kCFStringTransformLatinHiragana, unicode)
-        self.assertIsInstance(kCFStringTransformHiraganaKatakana, unicode)
-        self.assertIsInstance(kCFStringTransformMandarinLatin, unicode)
-        self.assertIsInstance(kCFStringTransformLatinHangul, unicode)
-        self.assertIsInstance(kCFStringTransformLatinArabic, unicode)
-        self.assertIsInstance(kCFStringTransformLatinHebrew, unicode)
-        self.assertIsInstance(kCFStringTransformLatinThai, unicode)
-        self.assertIsInstance(kCFStringTransformLatinCyrillic, unicode)
-        self.assertIsInstance(kCFStringTransformLatinGreek, unicode)
-        self.assertIsInstance(kCFStringTransformToXMLHex, unicode)
-        self.assertIsInstance(kCFStringTransformToUnicodeName, unicode)
-        self.assertIsInstance(kCFStringTransformStripDiacritics, unicode)
+        self.assertEqual(CoreFoundation.kCFStringEncodingInvalidId, 0xFFFFFFFF)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacRoman, 0)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsLatin1, 0x0500)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin1, 0x0201)
+        self.assertEqual(CoreFoundation.kCFStringEncodingNextStepLatin, 0x0B01)
+        self.assertEqual(CoreFoundation.kCFStringEncodingASCII, 0x0600)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUnicode, 0x0100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF8, 0x08000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingNonLossyASCII, 0x0BFF)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF16, 0x0100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF16BE, 0x10000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF16LE, 0x14000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF32, 0x0C000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF32BE, 0x18000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF32LE, 0x1C000100)
+        self.assertEqual(CoreFoundation.kCFCompareCaseInsensitive, 1)
+        self.assertEqual(CoreFoundation.kCFCompareBackwards, 4)
+        self.assertEqual(CoreFoundation.kCFCompareAnchored, 8)
+        self.assertEqual(CoreFoundation.kCFCompareNonliteral, 16)
+        self.assertEqual(CoreFoundation.kCFCompareLocalized, 32)
+        self.assertEqual(CoreFoundation.kCFCompareNumerically, 64)
+        self.assertEqual(CoreFoundation.kCFCompareDiacriticInsensitive, 128)
+        self.assertEqual(CoreFoundation.kCFCompareWidthInsensitive, 256)
+        self.assertEqual(CoreFoundation.kCFCompareForcedOrdering, 512)
+        self.assertEqual(CoreFoundation.kCFStringNormalizationFormD, 0)
+        self.assertEqual(CoreFoundation.kCFStringNormalizationFormKD, 1)
+        self.assertEqual(CoreFoundation.kCFStringNormalizationFormC, 2)
+        self.assertEqual(CoreFoundation.kCFStringNormalizationFormKC, 3)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformStripCombiningMarks, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformToLatin, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformFullwidthHalfwidth, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinKatakana, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinHiragana, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformHiraganaKatakana, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformMandarinLatin, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinHangul, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinArabic, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinHebrew, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinThai, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinCyrillic, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformLatinGreek, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformToXMLHex, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformToUnicodeName, str)
+        self.assertIsInstance(CoreFoundation.kCFStringTransformStripDiacritics, str)
 
     def testNoPrivate(self):
         self.assertNotHasAttr(CoreFoundation, "__CFStringMakeConstantString")
 
     def testCFSTR(self):
-        v = CFSTR(b"hello".decode("ascii"))
-        self.assertIsInstance(v, unicode)
+        v = CoreFoundation.CFSTR(b"hello".decode("ascii"))
+        self.assertIsInstance(v, str)
 
 
 class TestStringEncodingExt(TestCase):
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(kCFStringEncodingUTF7, 0x04000100)
-        self.assertEqual(kCFStringEncodingUTF7_IMAP, 0x0A10)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7, 0x04000100)
+        self.assertEqual(CoreFoundation.kCFStringEncodingUTF7_IMAP, 0x0A10)
 
     def testConstants(self):
-        self.assertEqual(kCFStringEncodingMacJapanese, 1)
-        self.assertEqual(kCFStringEncodingMacChineseTrad, 2)
-        self.assertEqual(kCFStringEncodingMacKorean, 3)
-        self.assertEqual(kCFStringEncodingMacArabic, 4)
-        self.assertEqual(kCFStringEncodingMacHebrew, 5)
-        self.assertEqual(kCFStringEncodingMacGreek, 6)
-        self.assertEqual(kCFStringEncodingMacCyrillic, 7)
-        self.assertEqual(kCFStringEncodingMacDevanagari, 9)
-        self.assertEqual(kCFStringEncodingMacGurmukhi, 10)
-        self.assertEqual(kCFStringEncodingMacGujarati, 11)
-        self.assertEqual(kCFStringEncodingMacOriya, 12)
-        self.assertEqual(kCFStringEncodingMacBengali, 13)
-        self.assertEqual(kCFStringEncodingMacTamil, 14)
-        self.assertEqual(kCFStringEncodingMacTelugu, 15)
-        self.assertEqual(kCFStringEncodingMacKannada, 16)
-        self.assertEqual(kCFStringEncodingMacMalayalam, 17)
-        self.assertEqual(kCFStringEncodingMacSinhalese, 18)
-        self.assertEqual(kCFStringEncodingMacBurmese, 19)
-        self.assertEqual(kCFStringEncodingMacKhmer, 20)
-        self.assertEqual(kCFStringEncodingMacThai, 21)
-        self.assertEqual(kCFStringEncodingMacLaotian, 22)
-        self.assertEqual(kCFStringEncodingMacGeorgian, 23)
-        self.assertEqual(kCFStringEncodingMacArmenian, 24)
-        self.assertEqual(kCFStringEncodingMacChineseSimp, 25)
-        self.assertEqual(kCFStringEncodingMacTibetan, 26)
-        self.assertEqual(kCFStringEncodingMacMongolian, 27)
-        self.assertEqual(kCFStringEncodingMacEthiopic, 28)
-        self.assertEqual(kCFStringEncodingMacCentralEurRoman, 29)
-        self.assertEqual(kCFStringEncodingMacVietnamese, 30)
-        self.assertEqual(kCFStringEncodingMacExtArabic, 31)
-        self.assertEqual(kCFStringEncodingMacSymbol, 33)
-        self.assertEqual(kCFStringEncodingMacDingbats, 34)
-        self.assertEqual(kCFStringEncodingMacTurkish, 35)
-        self.assertEqual(kCFStringEncodingMacCroatian, 36)
-        self.assertEqual(kCFStringEncodingMacIcelandic, 37)
-        self.assertEqual(kCFStringEncodingMacRomanian, 38)
-        self.assertEqual(kCFStringEncodingMacCeltic, 39)
-        self.assertEqual(kCFStringEncodingMacGaelic, 40)
-        self.assertEqual(kCFStringEncodingMacFarsi, 0x8C)
-        self.assertEqual(kCFStringEncodingMacUkrainian, 0x98)
-        self.assertEqual(kCFStringEncodingMacInuit, 0xEC)
-        self.assertEqual(kCFStringEncodingMacVT100, 0xFC)
-        self.assertEqual(kCFStringEncodingMacHFS, 0xFF)
-        self.assertEqual(kCFStringEncodingISOLatin2, 0x0202)
-        self.assertEqual(kCFStringEncodingISOLatin3, 0x0203)
-        self.assertEqual(kCFStringEncodingISOLatin4, 0x0204)
-        self.assertEqual(kCFStringEncodingISOLatinCyrillic, 0x0205)
-        self.assertEqual(kCFStringEncodingISOLatinArabic, 0x0206)
-        self.assertEqual(kCFStringEncodingISOLatinGreek, 0x0207)
-        self.assertEqual(kCFStringEncodingISOLatinHebrew, 0x0208)
-        self.assertEqual(kCFStringEncodingISOLatin5, 0x0209)
-        self.assertEqual(kCFStringEncodingISOLatin6, 0x020A)
-        self.assertEqual(kCFStringEncodingISOLatinThai, 0x020B)
-        self.assertEqual(kCFStringEncodingISOLatin7, 0x020D)
-        self.assertEqual(kCFStringEncodingISOLatin8, 0x020E)
-        self.assertEqual(kCFStringEncodingISOLatin9, 0x020F)
-        self.assertEqual(kCFStringEncodingISOLatin10, 0x0210)
-        self.assertEqual(kCFStringEncodingDOSLatinUS, 0x0400)
-        self.assertEqual(kCFStringEncodingDOSGreek, 0x0405)
-        self.assertEqual(kCFStringEncodingDOSBalticRim, 0x0406)
-        self.assertEqual(kCFStringEncodingDOSLatin1, 0x0410)
-        self.assertEqual(kCFStringEncodingDOSGreek1, 0x0411)
-        self.assertEqual(kCFStringEncodingDOSLatin2, 0x0412)
-        self.assertEqual(kCFStringEncodingDOSCyrillic, 0x0413)
-        self.assertEqual(kCFStringEncodingDOSTurkish, 0x0414)
-        self.assertEqual(kCFStringEncodingDOSPortuguese, 0x0415)
-        self.assertEqual(kCFStringEncodingDOSIcelandic, 0x0416)
-        self.assertEqual(kCFStringEncodingDOSHebrew, 0x0417)
-        self.assertEqual(kCFStringEncodingDOSCanadianFrench, 0x0418)
-        self.assertEqual(kCFStringEncodingDOSArabic, 0x0419)
-        self.assertEqual(kCFStringEncodingDOSNordic, 0x041A)
-        self.assertEqual(kCFStringEncodingDOSRussian, 0x041B)
-        self.assertEqual(kCFStringEncodingDOSGreek2, 0x041C)
-        self.assertEqual(kCFStringEncodingDOSThai, 0x041D)
-        self.assertEqual(kCFStringEncodingDOSJapanese, 0x0420)
-        self.assertEqual(kCFStringEncodingDOSChineseSimplif, 0x0421)
-        self.assertEqual(kCFStringEncodingDOSKorean, 0x0422)
-        self.assertEqual(kCFStringEncodingDOSChineseTrad, 0x0423)
-        self.assertEqual(kCFStringEncodingWindowsLatin2, 0x0501)
-        self.assertEqual(kCFStringEncodingWindowsCyrillic, 0x0502)
-        self.assertEqual(kCFStringEncodingWindowsGreek, 0x0503)
-        self.assertEqual(kCFStringEncodingWindowsLatin5, 0x0504)
-        self.assertEqual(kCFStringEncodingWindowsHebrew, 0x0505)
-        self.assertEqual(kCFStringEncodingWindowsArabic, 0x0506)
-        self.assertEqual(kCFStringEncodingWindowsBalticRim, 0x0507)
-        self.assertEqual(kCFStringEncodingWindowsVietnamese, 0x0508)
-        self.assertEqual(kCFStringEncodingWindowsKoreanJohab, 0x0510)
-        self.assertEqual(kCFStringEncodingANSEL, 0x0601)
-        self.assertEqual(kCFStringEncodingJIS_X0201_76, 0x0620)
-        self.assertEqual(kCFStringEncodingJIS_X0208_83, 0x0621)
-        self.assertEqual(kCFStringEncodingJIS_X0208_90, 0x0622)
-        self.assertEqual(kCFStringEncodingJIS_X0212_90, 0x0623)
-        self.assertEqual(kCFStringEncodingJIS_C6226_78, 0x0624)
-        self.assertEqual(kCFStringEncodingShiftJIS_X0213, 0x0628)
-        self.assertEqual(kCFStringEncodingShiftJIS_X0213_MenKuTen, 0x0629)
-        self.assertEqual(kCFStringEncodingGB_2312_80, 0x0630)
-        self.assertEqual(kCFStringEncodingGBK_95, 0x0631)
-        self.assertEqual(kCFStringEncodingGB_18030_2000, 0x0632)
-        self.assertEqual(kCFStringEncodingKSC_5601_87, 0x0640)
-        self.assertEqual(kCFStringEncodingKSC_5601_92_Johab, 0x0641)
-        self.assertEqual(kCFStringEncodingCNS_11643_92_P1, 0x0651)
-        self.assertEqual(kCFStringEncodingCNS_11643_92_P2, 0x0652)
-        self.assertEqual(kCFStringEncodingCNS_11643_92_P3, 0x0653)
-        self.assertEqual(kCFStringEncodingISO_2022_JP, 0x0820)
-        self.assertEqual(kCFStringEncodingISO_2022_JP_2, 0x0821)
-        self.assertEqual(kCFStringEncodingISO_2022_JP_1, 0x0822)
-        self.assertEqual(kCFStringEncodingISO_2022_JP_3, 0x0823)
-        self.assertEqual(kCFStringEncodingISO_2022_CN, 0x0830)
-        self.assertEqual(kCFStringEncodingISO_2022_CN_EXT, 0x0831)
-        self.assertEqual(kCFStringEncodingISO_2022_KR, 0x0840)
-        self.assertEqual(kCFStringEncodingEUC_JP, 0x0920)
-        self.assertEqual(kCFStringEncodingEUC_CN, 0x0930)
-        self.assertEqual(kCFStringEncodingEUC_TW, 0x0931)
-        self.assertEqual(kCFStringEncodingEUC_KR, 0x0940)
-        self.assertEqual(kCFStringEncodingShiftJIS, 0x0A01)
-        self.assertEqual(kCFStringEncodingKOI8_R, 0x0A02)
-        self.assertEqual(kCFStringEncodingBig5, 0x0A03)
-        self.assertEqual(kCFStringEncodingMacRomanLatin1, 0x0A04)
-        self.assertEqual(kCFStringEncodingHZ_GB_2312, 0x0A05)
-        self.assertEqual(kCFStringEncodingBig5_HKSCS_1999, 0x0A06)
-        self.assertEqual(kCFStringEncodingVISCII, 0x0A07)
-        self.assertEqual(kCFStringEncodingKOI8_U, 0x0A08)
-        self.assertEqual(kCFStringEncodingBig5_E, 0x0A09)
-        self.assertEqual(kCFStringEncodingNextStepJapanese, 0x0B02)
-        self.assertEqual(kCFStringEncodingEBCDIC_US, 0x0C01)
-        self.assertEqual(kCFStringEncodingEBCDIC_CP037, 0x0C02)
-        self.assertEqual(kCFStringEncodingShiftJIS_X0213_00, 0x0628)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacJapanese, 1)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacChineseTrad, 2)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacKorean, 3)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacArabic, 4)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacHebrew, 5)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacGreek, 6)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacCyrillic, 7)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacDevanagari, 9)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacGurmukhi, 10)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacGujarati, 11)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacOriya, 12)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacBengali, 13)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacTamil, 14)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacTelugu, 15)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacKannada, 16)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacMalayalam, 17)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacSinhalese, 18)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacBurmese, 19)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacKhmer, 20)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacThai, 21)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacLaotian, 22)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacGeorgian, 23)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacArmenian, 24)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacChineseSimp, 25)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacTibetan, 26)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacMongolian, 27)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacEthiopic, 28)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacCentralEurRoman, 29)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacVietnamese, 30)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacExtArabic, 31)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacSymbol, 33)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacDingbats, 34)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacTurkish, 35)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacCroatian, 36)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacIcelandic, 37)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacRomanian, 38)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacCeltic, 39)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacGaelic, 40)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacFarsi, 0x8C)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacUkrainian, 0x98)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacInuit, 0xEC)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacVT100, 0xFC)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacHFS, 0xFF)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin2, 0x0202)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin3, 0x0203)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin4, 0x0204)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatinCyrillic, 0x0205)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatinArabic, 0x0206)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatinGreek, 0x0207)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatinHebrew, 0x0208)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin5, 0x0209)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin6, 0x020A)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatinThai, 0x020B)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin7, 0x020D)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin8, 0x020E)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin9, 0x020F)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISOLatin10, 0x0210)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSLatinUS, 0x0400)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSGreek, 0x0405)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSBalticRim, 0x0406)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSLatin1, 0x0410)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSGreek1, 0x0411)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSLatin2, 0x0412)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSCyrillic, 0x0413)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSTurkish, 0x0414)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSPortuguese, 0x0415)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSIcelandic, 0x0416)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSHebrew, 0x0417)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSCanadianFrench, 0x0418)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSArabic, 0x0419)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSNordic, 0x041A)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSRussian, 0x041B)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSGreek2, 0x041C)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSThai, 0x041D)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSJapanese, 0x0420)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSChineseSimplif, 0x0421)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSKorean, 0x0422)
+        self.assertEqual(CoreFoundation.kCFStringEncodingDOSChineseTrad, 0x0423)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsLatin2, 0x0501)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsCyrillic, 0x0502)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsGreek, 0x0503)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsLatin5, 0x0504)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsHebrew, 0x0505)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsArabic, 0x0506)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsBalticRim, 0x0507)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsVietnamese, 0x0508)
+        self.assertEqual(CoreFoundation.kCFStringEncodingWindowsKoreanJohab, 0x0510)
+        self.assertEqual(CoreFoundation.kCFStringEncodingANSEL, 0x0601)
+        self.assertEqual(CoreFoundation.kCFStringEncodingJIS_X0201_76, 0x0620)
+        self.assertEqual(CoreFoundation.kCFStringEncodingJIS_X0208_83, 0x0621)
+        self.assertEqual(CoreFoundation.kCFStringEncodingJIS_X0208_90, 0x0622)
+        self.assertEqual(CoreFoundation.kCFStringEncodingJIS_X0212_90, 0x0623)
+        self.assertEqual(CoreFoundation.kCFStringEncodingJIS_C6226_78, 0x0624)
+        self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS_X0213, 0x0628)
+        self.assertEqual(
+            CoreFoundation.kCFStringEncodingShiftJIS_X0213_MenKuTen, 0x0629
+        )
+        self.assertEqual(CoreFoundation.kCFStringEncodingGB_2312_80, 0x0630)
+        self.assertEqual(CoreFoundation.kCFStringEncodingGBK_95, 0x0631)
+        self.assertEqual(CoreFoundation.kCFStringEncodingGB_18030_2000, 0x0632)
+        self.assertEqual(CoreFoundation.kCFStringEncodingKSC_5601_87, 0x0640)
+        self.assertEqual(CoreFoundation.kCFStringEncodingKSC_5601_92_Johab, 0x0641)
+        self.assertEqual(CoreFoundation.kCFStringEncodingCNS_11643_92_P1, 0x0651)
+        self.assertEqual(CoreFoundation.kCFStringEncodingCNS_11643_92_P2, 0x0652)
+        self.assertEqual(CoreFoundation.kCFStringEncodingCNS_11643_92_P3, 0x0653)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISO_2022_JP, 0x0820)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISO_2022_JP_2, 0x0821)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISO_2022_JP_1, 0x0822)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISO_2022_JP_3, 0x0823)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISO_2022_CN, 0x0830)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISO_2022_CN_EXT, 0x0831)
+        self.assertEqual(CoreFoundation.kCFStringEncodingISO_2022_KR, 0x0840)
+        self.assertEqual(CoreFoundation.kCFStringEncodingEUC_JP, 0x0920)
+        self.assertEqual(CoreFoundation.kCFStringEncodingEUC_CN, 0x0930)
+        self.assertEqual(CoreFoundation.kCFStringEncodingEUC_TW, 0x0931)
+        self.assertEqual(CoreFoundation.kCFStringEncodingEUC_KR, 0x0940)
+        self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS, 0x0A01)
+        self.assertEqual(CoreFoundation.kCFStringEncodingKOI8_R, 0x0A02)
+        self.assertEqual(CoreFoundation.kCFStringEncodingBig5, 0x0A03)
+        self.assertEqual(CoreFoundation.kCFStringEncodingMacRomanLatin1, 0x0A04)
+        self.assertEqual(CoreFoundation.kCFStringEncodingHZ_GB_2312, 0x0A05)
+        self.assertEqual(CoreFoundation.kCFStringEncodingBig5_HKSCS_1999, 0x0A06)
+        self.assertEqual(CoreFoundation.kCFStringEncodingVISCII, 0x0A07)
+        self.assertEqual(CoreFoundation.kCFStringEncodingKOI8_U, 0x0A08)
+        self.assertEqual(CoreFoundation.kCFStringEncodingBig5_E, 0x0A09)
+        self.assertEqual(CoreFoundation.kCFStringEncodingNextStepJapanese, 0x0B02)
+        self.assertEqual(CoreFoundation.kCFStringEncodingEBCDIC_US, 0x0C01)
+        self.assertEqual(CoreFoundation.kCFStringEncodingEBCDIC_CP037, 0x0C02)
+        self.assertEqual(CoreFoundation.kCFStringEncodingShiftJIS_X0213_00, 0x0628)
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
-        self.assertResultIsBOOL(CFStringIsSurrogateHighCharacter)
-        self.assertTrue(CFStringIsSurrogateHighCharacter(unichr(0xD800)))
-        self.assertFalse(CFStringIsSurrogateHighCharacter(unichr(0x0600)))
-        self.assertTrue(CFStringIsSurrogateLowCharacter(unichr(0xDC00)))
-        self.assertFalse(CFStringIsSurrogateLowCharacter(unichr(0x0600)))
-        v = CFStringGetLongCharacterForSurrogatePair(unichr(0xD801), unichr(0xDC01))
+        self.assertResultIsBOOL(CoreFoundation.CFStringIsSurrogateHighCharacter)
+        self.assertTrue(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0xD800)))
+        self.assertFalse(CoreFoundation.CFStringIsSurrogateHighCharacter(chr(0x0600)))
+        self.assertTrue(CoreFoundation.CFStringIsSurrogateLowCharacter(chr(0xDC00)))
+        self.assertFalse(CoreFoundation.CFStringIsSurrogateLowCharacter(chr(0x0600)))
+        v = CoreFoundation.CFStringGetLongCharacterForSurrogatePair(
+            chr(0xD801), chr(0xDC01)
+        )
         # self.assertEqual(v, ((1 << 10) | 1) + 0x0010000)
         self.assertEqual(v, 66561)
 
-        self.assertResultIsBOOL(CFStringGetSurrogatePairForLongCharacter)
-        ok, chars = CFStringGetSurrogatePairForLongCharacter(v, None)
+        self.assertResultIsBOOL(CoreFoundation.CFStringGetSurrogatePairForLongCharacter)
+        ok, chars = CoreFoundation.CFStringGetSurrogatePairForLongCharacter(v, None)
         self.assertTrue(ok)
 
         if sys.version_info[:2] < (3, 3) == 65535:
             # ucs2 build of python 3.2 or earlier:
             self.assertEqual(len(chars), 2)
-            self.assertEqual(chars[0], unichr(0xD801))
-            self.assertEqual(chars[1], unichr(0xDC01))
+            self.assertEqual(chars[0], chr(0xD801))
+            self.assertEqual(chars[1], chr(0xDC01))
 
         else:
             # ucs4 build of python 3.2 or earlier; or
             # python 3.3
             #
             # In both cases this function is useless because
-            # Python can represent unicode codepoints without using
+            # Python can represent str codepoints without using
             # surrogate pairs, and will do so when converting
-            # an array of UCS2 codepoints to a Pytho unicode object
+            # an array of UCS2 codepoints to a Pytho str object
             pass
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
-        loc = CFLocaleCopyCurrent()
+        loc = CoreFoundation.CFLocaleCopyCurrent()
 
-        self.assertArgIsOut(CFStringGetHyphenationLocationBeforeIndex, 5)
-        v, ch = CFStringGetHyphenationLocationBeforeIndex(
-            b"hello world".decode("ascii"), 5, CFRange(0, 10), 0, loc, None
+        self.assertArgIsOut(CoreFoundation.CFStringGetHyphenationLocationBeforeIndex, 5)
+        v, ch = CoreFoundation.CFStringGetHyphenationLocationBeforeIndex(
+            b"hello world".decode("ascii"),
+            5,
+            CoreFoundation.CFRange(0, 10),
+            0,
+            loc,
+            None,
         )
-        self.assertIsInstance(v, (int, long))
-        self.assertIsInstance(ch, (int, long))
+        self.assertIsInstance(v, int)
+        self.assertIsInstance(ch, int)
 
-        self.assertResultIsBOOL(CFStringIsHyphenationAvailableForLocale)
-        v = CFStringIsHyphenationAvailableForLocale(loc)
+        self.assertResultIsBOOL(CoreFoundation.CFStringIsHyphenationAvailableForLocale)
+        v = CoreFoundation.CFStringIsHyphenationAvailableForLocale(loc)
         self.assertIsInstance(v, bool)
-
-
-if __name__ == "__main__":
-    main()

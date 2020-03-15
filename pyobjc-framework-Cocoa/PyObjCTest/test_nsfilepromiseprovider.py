@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class TestNSFilePromiseProviderHelper(NSObject):
+class TestNSFilePromiseProviderHelper(AppKit.NSObject):
     def filePromiseProvider_writePromiseToURL_completionHandler_(self, p, u, h):
         pass
 
@@ -14,11 +15,7 @@ class TestNSFilePromiseProvider(TestCase):
 
     def testMethods(self):
         self.assertArgIsBlock(
-            TestNSFilePromiseProviderHelper.filePromiseProvider_writePromiseToURL_completionHandler_,
+            TestNSFilePromiseProviderHelper.filePromiseProvider_writePromiseToURL_completionHandler_,  # noqa: B950
             2,
             b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,6 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class PopoverHelper(AppKit.NSObject):
@@ -20,13 +21,13 @@ class TestNSPopover(TestCase):
         self.assertEqual(AppKit.NSPopoverBehaviorTransient, 1)
         self.assertEqual(AppKit.NSPopoverBehaviorSemitransient, 2)
 
-        self.assertIsInstance(AppKit.NSPopoverCloseReasonKey, unicode)
-        self.assertIsInstance(AppKit.NSPopoverCloseReasonStandard, unicode)
-        self.assertIsInstance(AppKit.NSPopoverCloseReasonDetachToWindow, unicode)
-        self.assertIsInstance(AppKit.NSPopoverWillShowNotification, unicode)
-        self.assertIsInstance(AppKit.NSPopoverDidShowNotification, unicode)
-        self.assertIsInstance(AppKit.NSPopoverWillCloseNotification, unicode)
-        self.assertIsInstance(AppKit.NSPopoverDidCloseNotification, unicode)
+        self.assertIsInstance(AppKit.NSPopoverCloseReasonKey, str)
+        self.assertIsInstance(AppKit.NSPopoverCloseReasonStandard, str)
+        self.assertIsInstance(AppKit.NSPopoverCloseReasonDetachToWindow, str)
+        self.assertIsInstance(AppKit.NSPopoverWillShowNotification, str)
+        self.assertIsInstance(AppKit.NSPopoverDidShowNotification, str)
+        self.assertIsInstance(AppKit.NSPopoverWillCloseNotification, str)
+        self.assertIsInstance(AppKit.NSPopoverDidCloseNotification, str)
 
     @min_os_level("10.7")
     def testMethods10_7(self):
@@ -55,7 +56,3 @@ class TestNSPopover(TestCase):
     def testProtocols10_10(self):
         objc.protocolNamed("NSPopoverDelegate")
         self.assertResultIsBOOL(PopoverHelper.popoverShouldDetach_)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,21 +1,17 @@
-"""
-FIXME: None of these tests actually use the filedescriptor
-"""
-
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestFileDescriptor(TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFFileDescriptorRef)
+        self.assertIsCFType(CoreFoundation.CFFileDescriptorRef)
 
     def testTypeID(self):
-        self.assertIsInstance(CFFileDescriptorGetTypeID(), (int, long))
+        self.assertIsInstance(CoreFoundation.CFFileDescriptorGetTypeID(), int)
 
     def testConstants(self):
-        self.assertEqual(kCFFileDescriptorReadCallBack, 1 << 0)
-        self.assertEqual(kCFFileDescriptorWriteCallBack, 1 << 1)
+        self.assertEqual(CoreFoundation.kCFFileDescriptorReadCallBack, 1 << 0)
+        self.assertEqual(CoreFoundation.kCFFileDescriptorWriteCallBack, 1 << 1)
 
     def testInspection(self):
         def callout(fd, types, context):
@@ -25,24 +21,24 @@ class TestFileDescriptor(TestCase):
             pass
 
         context = Context()
-        fd = CFFileDescriptorCreate(None, 0, False, callout, context)
-        self.assertIsInstance(fd, CFFileDescriptorRef)
-        self.assertEqual(CFFileDescriptorGetNativeDescriptor(fd), 0)
-        ctx = CFFileDescriptorGetContext(fd, None)
+        fd = CoreFoundation.CFFileDescriptorCreate(None, 0, False, callout, context)
+        self.assertIsInstance(fd, CoreFoundation.CFFileDescriptorRef)
+        self.assertEqual(CoreFoundation.CFFileDescriptorGetNativeDescriptor(fd), 0)
+        ctx = CoreFoundation.CFFileDescriptorGetContext(fd, None)
         self.assertIs(ctx, context)
-        CFFileDescriptorEnableCallBacks(fd, kCFFileDescriptorReadCallBack)
-        CFFileDescriptorDisableCallBacks(
-            fd, kCFFileDescriptorReadCallBack | kCFFileDescriptorWriteCallBack
+        CoreFoundation.CFFileDescriptorEnableCallBacks(
+            fd, CoreFoundation.kCFFileDescriptorReadCallBack
+        )
+        CoreFoundation.CFFileDescriptorDisableCallBacks(
+            fd,
+            CoreFoundation.kCFFileDescriptorReadCallBack
+            | CoreFoundation.kCFFileDescriptorWriteCallBack,
         )
 
-        rls = CFFileDescriptorCreateRunLoopSource(None, fd, 0)
-        self.assertIsInstance(rls, CFRunLoopSourceRef)
-        self.assertTrue(CFFileDescriptorIsValid(fd))
-        CFFileDescriptorInvalidate(fd)
-        self.assertFalse(CFFileDescriptorIsValid(fd))
+        rls = CoreFoundation.CFFileDescriptorCreateRunLoopSource(None, fd, 0)
+        self.assertIsInstance(rls, CoreFoundation.CFRunLoopSourceRef)
+        self.assertTrue(CoreFoundation.CFFileDescriptorIsValid(fd))
+        CoreFoundation.CFFileDescriptorInvalidate(fd)
+        self.assertFalse(CoreFoundation.CFFileDescriptorIsValid(fd))
 
-        self.assertResultIsBOOL(CFFileDescriptorIsValid)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(CoreFoundation.CFFileDescriptorIsValid)

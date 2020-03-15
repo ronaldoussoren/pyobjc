@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSTextViewHelper(NSObject):
+class TestNSTextViewHelper(AppKit.NSObject):
     def textView_URLForContentsOfTextAttachment_atIndex_(self, a, b, c):
         pass
 
@@ -84,142 +85,164 @@ class TestNSTextViewHelper(NSObject):
 
 class TestNSTextView(TestCase):
     def testConstants(self):
-        self.assertEqual(NSSelectByCharacter, 0)
-        self.assertEqual(NSSelectByWord, 1)
-        self.assertEqual(NSSelectByParagraph, 2)
+        self.assertEqual(AppKit.NSSelectByCharacter, 0)
+        self.assertEqual(AppKit.NSSelectByWord, 1)
+        self.assertEqual(AppKit.NSSelectByParagraph, 2)
 
-        self.assertEqual(NSSelectionAffinityUpstream, 0)
-        self.assertEqual(NSSelectionAffinityDownstream, 1)
+        self.assertEqual(AppKit.NSSelectionAffinityUpstream, 0)
+        self.assertEqual(AppKit.NSSelectionAffinityDownstream, 1)
 
-        self.assertEqual(NSFindPanelActionShowFindPanel, 1)
-        self.assertEqual(NSFindPanelActionNext, 2)
-        self.assertEqual(NSFindPanelActionPrevious, 3)
-        self.assertEqual(NSFindPanelActionReplaceAll, 4)
-        self.assertEqual(NSFindPanelActionReplace, 5)
-        self.assertEqual(NSFindPanelActionReplaceAndFind, 6)
-        self.assertEqual(NSFindPanelActionSetFindString, 7)
-        self.assertEqual(NSFindPanelActionReplaceAllInSelection, 8)
-        self.assertEqual(NSFindPanelActionSelectAll, 9)
-        self.assertEqual(NSFindPanelActionSelectAllInSelection, 10)
+        self.assertEqual(AppKit.NSFindPanelActionShowFindPanel, 1)
+        self.assertEqual(AppKit.NSFindPanelActionNext, 2)
+        self.assertEqual(AppKit.NSFindPanelActionPrevious, 3)
+        self.assertEqual(AppKit.NSFindPanelActionReplaceAll, 4)
+        self.assertEqual(AppKit.NSFindPanelActionReplace, 5)
+        self.assertEqual(AppKit.NSFindPanelActionReplaceAndFind, 6)
+        self.assertEqual(AppKit.NSFindPanelActionSetFindString, 7)
+        self.assertEqual(AppKit.NSFindPanelActionReplaceAllInSelection, 8)
+        self.assertEqual(AppKit.NSFindPanelActionSelectAll, 9)
+        self.assertEqual(AppKit.NSFindPanelActionSelectAllInSelection, 10)
 
-        self.assertIsInstance(NSFindPanelSearchOptionsPboardType, unicode)
+        self.assertIsInstance(AppKit.NSFindPanelSearchOptionsPboardType, str)
 
-        self.assertIsInstance(NSFindPanelCaseInsensitiveSearch, unicode)
-        self.assertIsInstance(NSFindPanelSubstringMatch, unicode)
+        self.assertIsInstance(AppKit.NSFindPanelCaseInsensitiveSearch, str)
+        self.assertIsInstance(AppKit.NSFindPanelSubstringMatch, str)
 
-        self.assertEqual(NSFindPanelSubstringMatchTypeContains, 0)
-        self.assertEqual(NSFindPanelSubstringMatchTypeStartsWith, 1)
-        self.assertEqual(NSFindPanelSubstringMatchTypeFullWord, 2)
-        self.assertEqual(NSFindPanelSubstringMatchTypeEndsWith, 3)
+        self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeContains, 0)
+        self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeStartsWith, 1)
+        self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeFullWord, 2)
+        self.assertEqual(AppKit.NSFindPanelSubstringMatchTypeEndsWith, 3)
 
-        self.assertIsInstance(NSAllRomanInputSourcesLocaleIdentifier, unicode)
+        self.assertIsInstance(AppKit.NSAllRomanInputSourcesLocaleIdentifier, str)
 
         self.assertIsInstance(
-            NSTextViewWillChangeNotifyingTextViewNotification, unicode
+            AppKit.NSTextViewWillChangeNotifyingTextViewNotification, str
         )
-        self.assertIsInstance(NSTextViewDidChangeSelectionNotification, unicode)
-        self.assertIsInstance(NSTextViewDidChangeTypingAttributesNotification, unicode)
+        self.assertIsInstance(AppKit.NSTextViewDidChangeSelectionNotification, str)
+        self.assertIsInstance(
+            AppKit.NSTextViewDidChangeTypingAttributesNotification, str
+        )
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(NSTouchBarItemIdentifierCharacterPicker, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierTextColorPicker, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierTextStyle, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierTextAlignment, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierTextList, unicode)
-        self.assertIsInstance(NSTouchBarItemIdentifierTextFormat, unicode)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierCharacterPicker, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextColorPicker, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextStyle, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextAlignment, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextList, str)
+        self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextFormat, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSTextView.shouldDrawInsertionPoint)
-        # self.assertArgIsBOOL(NSTextView.setShouldDrawInsertionPoint_, 0)
-        self.assertResultIsBOOL(NSTextView.rulerView_shouldMoveMarker_)
-        self.assertResultIsBOOL(NSTextView.rulerView_shouldAddMarker_)
-        self.assertResultIsBOOL(NSTextView.rulerView_shouldRemoveMarker_)
-        self.assertArgIsBOOL(NSTextView.setNeedsDisplayInRect_avoidAdditionalLayout_, 1)
-        self.assertArgIsBOOL(NSTextView.drawInsertionPointInRect_color_turnedOn_, 2)
-        self.assertArgIsOut(
-            NSTextView.completionsForPartialWordRange_indexOfSelectedItem_, 1
+        self.assertResultIsBOOL(AppKit.NSTextView.shouldDrawInsertionPoint)
+        # self.assertArgIsBOOL(AppKit.NSTextView.setShouldDrawInsertionPoint_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.rulerView_shouldMoveMarker_)
+        self.assertResultIsBOOL(AppKit.NSTextView.rulerView_shouldAddMarker_)
+        self.assertResultIsBOOL(AppKit.NSTextView.rulerView_shouldRemoveMarker_)
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.setNeedsDisplayInRect_avoidAdditionalLayout_, 1
         )
         self.assertArgIsBOOL(
-            NSTextView.insertCompletion_forPartialWordRange_movement_isFinal_, 3
+            AppKit.NSTextView.drawInsertionPointInRect_color_turnedOn_, 2
         )
-        self.assertResultIsBOOL(NSTextView.writeSelectionToPasteboard_type_)
-        self.assertResultIsBOOL(NSTextView.writeSelectionToPasteboard_types_)
-        self.assertResultIsBOOL(NSTextView.readSelectionFromPasteboard_type_)
-        self.assertResultIsBOOL(NSTextView.readSelectionFromPasteboard_)
-        self.assertResultIsBOOL(NSTextView.dragSelectionWithEvent_offset_slideBack_)
-        self.assertArgIsBOOL(NSTextView.dragSelectionWithEvent_offset_slideBack_, 2)
-        self.assertArgIsBOOL(NSTextView.setSelectedRanges_affinity_stillSelecting_, 2)
-        self.assertArgIsBOOL(NSTextView.setSelectedRange_affinity_stillSelecting_, 2)
-        self.assertArgIsBOOL(NSTextView.updateInsertionPointStateAndRestartTimer_, 0)
-        self.assertResultIsBOOL(NSTextView.acceptsGlyphInfo)
-        self.assertArgIsBOOL(NSTextView.setAcceptsGlyphInfo_, 0)
-        self.assertArgIsBOOL(NSTextView.setRulerVisible_, 0)
-        self.assertResultIsBOOL(NSTextView.usesRuler)
-        self.assertArgIsBOOL(NSTextView.setUsesRuler_, 0)
-        self.assertResultIsBOOL(NSTextView.isContinuousSpellCheckingEnabled)
-        self.assertArgIsBOOL(NSTextView.setContinuousSpellCheckingEnabled_, 0)
-        self.assertResultIsBOOL(NSTextView.isGrammarCheckingEnabled)
-        self.assertArgIsBOOL(NSTextView.setGrammarCheckingEnabled_, 0)
-        self.assertResultIsBOOL(NSTextView.shouldChangeTextInRanges_replacementStrings_)
-        self.assertResultIsBOOL(NSTextView.shouldChangeTextInRange_replacementString_)
-        self.assertResultIsBOOL(NSTextView.usesFindPanel)
-        self.assertArgIsBOOL(NSTextView.setUsesFindPanel_, 0)
-        self.assertResultIsBOOL(NSTextView.allowsDocumentBackgroundColorChange)
-        self.assertArgIsBOOL(NSTextView.setAllowsDocumentBackgroundColorChange_, 0)
-        self.assertResultIsBOOL(NSTextView.allowsUndo)
-        self.assertArgIsBOOL(NSTextView.setAllowsUndo_, 0)
-        self.assertResultIsBOOL(NSTextView.allowsImageEditing)
-        self.assertArgIsBOOL(NSTextView.setAllowsImageEditing_, 0)
-        self.assertResultIsBOOL(NSTextView.isEditable)
-        self.assertArgIsBOOL(NSTextView.setEditable_, 0)
-        self.assertResultIsBOOL(NSTextView.isSelectable)
-        self.assertArgIsBOOL(NSTextView.setSelectable_, 0)
-        self.assertResultIsBOOL(NSTextView.isRichText)
-        self.assertArgIsBOOL(NSTextView.setRichText_, 0)
-        self.assertResultIsBOOL(NSTextView.importsGraphics)
-        self.assertArgIsBOOL(NSTextView.setImportsGraphics_, 0)
-        self.assertResultIsBOOL(NSTextView.drawsBackground)
-        self.assertArgIsBOOL(NSTextView.setDrawsBackground_, 0)
-        self.assertResultIsBOOL(NSTextView.isFieldEditor)
-        self.assertArgIsBOOL(NSTextView.setFieldEditor_, 0)
-        self.assertResultIsBOOL(NSTextView.usesFontPanel)
-        self.assertArgIsBOOL(NSTextView.setUsesFontPanel_, 0)
-        self.assertResultIsBOOL(NSTextView.isRulerVisible)
-        self.assertArgIsBOOL(NSTextView.setRulerVisible_, 0)
-        self.assertResultIsBOOL(NSTextView.smartInsertDeleteEnabled)
-        self.assertArgIsBOOL(NSTextView.setSmartInsertDeleteEnabled_, 0)
+        self.assertArgIsOut(
+            AppKit.NSTextView.completionsForPartialWordRange_indexOfSelectedItem_, 1
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.insertCompletion_forPartialWordRange_movement_isFinal_, 3
+        )
+        self.assertResultIsBOOL(AppKit.NSTextView.writeSelectionToPasteboard_type_)
+        self.assertResultIsBOOL(AppKit.NSTextView.writeSelectionToPasteboard_types_)
+        self.assertResultIsBOOL(AppKit.NSTextView.readSelectionFromPasteboard_type_)
+        self.assertResultIsBOOL(AppKit.NSTextView.readSelectionFromPasteboard_)
+        self.assertResultIsBOOL(
+            AppKit.NSTextView.dragSelectionWithEvent_offset_slideBack_
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.dragSelectionWithEvent_offset_slideBack_, 2
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.setSelectedRanges_affinity_stillSelecting_, 2
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.setSelectedRange_affinity_stillSelecting_, 2
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.updateInsertionPointStateAndRestartTimer_, 0
+        )
+        self.assertResultIsBOOL(AppKit.NSTextView.acceptsGlyphInfo)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAcceptsGlyphInfo_, 0)
+        self.assertArgIsBOOL(AppKit.NSTextView.setRulerVisible_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.usesRuler)
+        self.assertArgIsBOOL(AppKit.NSTextView.setUsesRuler_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isContinuousSpellCheckingEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setContinuousSpellCheckingEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isGrammarCheckingEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setGrammarCheckingEnabled_, 0)
+        self.assertResultIsBOOL(
+            AppKit.NSTextView.shouldChangeTextInRanges_replacementStrings_
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSTextView.shouldChangeTextInRange_replacementString_
+        )
+        self.assertResultIsBOOL(AppKit.NSTextView.usesFindPanel)
+        self.assertArgIsBOOL(AppKit.NSTextView.setUsesFindPanel_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.allowsDocumentBackgroundColorChange)
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.setAllowsDocumentBackgroundColorChange_, 0
+        )
+        self.assertResultIsBOOL(AppKit.NSTextView.allowsUndo)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAllowsUndo_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.allowsImageEditing)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAllowsImageEditing_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isEditable)
+        self.assertArgIsBOOL(AppKit.NSTextView.setEditable_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isSelectable)
+        self.assertArgIsBOOL(AppKit.NSTextView.setSelectable_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isRichText)
+        self.assertArgIsBOOL(AppKit.NSTextView.setRichText_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.importsGraphics)
+        self.assertArgIsBOOL(AppKit.NSTextView.setImportsGraphics_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.drawsBackground)
+        self.assertArgIsBOOL(AppKit.NSTextView.setDrawsBackground_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isFieldEditor)
+        self.assertArgIsBOOL(AppKit.NSTextView.setFieldEditor_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.usesFontPanel)
+        self.assertArgIsBOOL(AppKit.NSTextView.setUsesFontPanel_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isRulerVisible)
+        self.assertArgIsBOOL(AppKit.NSTextView.setRulerVisible_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.smartInsertDeleteEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setSmartInsertDeleteEnabled_, 0)
 
-        self.assertArgIsOut(NSTextView.dragImageForSelectionWithEvent_origin_, 1)
+        self.assertArgIsOut(AppKit.NSTextView.dragImageForSelectionWithEvent_origin_, 1)
         self.assertArgIsOut(
-            NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 2
+            AppKit.NSTextView.smartInsertForString_replacingRange_beforeString_afterString_,
+            2,
         )
         self.assertArgIsOut(
-            NSTextView.smartInsertForString_replacingRange_beforeString_afterString_, 3
+            AppKit.NSTextView.smartInsertForString_replacingRange_beforeString_afterString_,
+            3,
         )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
-        self.assertResultIsBOOL(NSTextView.usesRolloverButtonForSelection)
-        self.assertArgIsBOOL(NSTextView.setUsesRolloverButtonForSelection_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.usesRolloverButtonForSelection)
+        self.assertArgIsBOOL(AppKit.NSTextView.setUsesRolloverButtonForSelection_, 0)
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
-        self.assertResultIsBOOL(NSTextView.usesInspectorBar)
-        self.assertArgIsBOOL(NSTextView.setUsesInspectorBar_, 0)
-        self.assertResultIsBOOL(NSTextView.usesFindBar)
-        self.assertArgIsBOOL(NSTextView.setUsesFindBar_, 0)
-        self.assertResultIsBOOL(NSTextView.isIncrementalSearchingEnabled)
-        self.assertArgIsBOOL(NSTextView.setIncrementalSearchingEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.usesInspectorBar)
+        self.assertArgIsBOOL(AppKit.NSTextView.setUsesInspectorBar_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.usesFindBar)
+        self.assertArgIsBOOL(AppKit.NSTextView.setUsesFindBar_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isIncrementalSearchingEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setIncrementalSearchingEnabled_, 0)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertResultIsBOOL(NSTextView.displaysLinkToolTips)
-        self.assertArgIsBOOL(NSTextView.setDisplaysLinkToolTips_, 0)
-        self.assertResultIsBOOL(NSTextView.isAutomaticQuoteSubstitutionEnabled)
-        self.assertArgIsBOOL(NSTextView.setAutomaticQuoteSubstitutionEnabled_, 0)
-        self.assertResultIsBOOL(NSTextView.isAutomaticLinkDetectionEnabled)
-        self.assertArgIsBOOL(NSTextView.setAutomaticLinkDetectionEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.displaysLinkToolTips)
+        self.assertArgIsBOOL(AppKit.NSTextView.setDisplaysLinkToolTips_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticQuoteSubstitutionEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticQuoteSubstitutionEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticLinkDetectionEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticLinkDetectionEnabled_, 0)
 
     @min_sdk_level("10.6")
     def testProtocolObjects(self):
@@ -233,7 +256,7 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_,
             2,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_clickedOnCell_inRect_atIndex_,
@@ -243,7 +266,7 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_atIndex_,
             2,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_atIndex_,
@@ -253,7 +276,7 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_draggedCell_inRect_event_atIndex_,
             2,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_draggedCell_inRect_event_atIndex_,
@@ -274,14 +297,14 @@ class TestNSTextView(TestCase):
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_,
+            TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_,
+            TestNSTextViewHelper.textView_willChangeSelectionFromCharacterRange_toCharacterRange_,  # noqa: B950
             2,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultIsBOOL(
             TestNSTextViewHelper.textView_shouldChangeTextInRanges_replacementStrings_
@@ -294,7 +317,7 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_,
             2,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_completions_forPartialWordRange_indexOfSelectedItem_,
@@ -307,7 +330,7 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_shouldChangeTextInRange_replacementString_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_doCommandBySelector_)
         self.assertArgHasType(
@@ -315,17 +338,19 @@ class TestNSTextView(TestCase):
         )
         self.assertResultIsBOOL(TestNSTextViewHelper.textView_clickedOnLink_)
         self.assertArgHasType(
-            TestNSTextViewHelper.textView_clickedOnCell_inRect_, 2, NSRect.__typestr__
+            TestNSTextViewHelper.textView_clickedOnCell_inRect_,
+            2,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_doubleClickedOnCell_inRect_,
             2,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_draggedCell_inRect_event_,
             2,
-            NSRect.__typestr__,
+            AppKit.NSRect.__typestr__,
         )
 
     @min_os_level("10.5")
@@ -338,7 +363,7 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_shouldSetSpellingState_range_,
             2,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_menu_forEvent_atIndex_, 3, objc._C_NSUInteger
@@ -346,41 +371,47 @@ class TestNSTextView(TestCase):
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(NSTextView.isCoalescingUndo)
+        self.assertResultIsBOOL(AppKit.NSTextView.isCoalescingUndo)
 
-        self.assertArgIsBOOL(NSTextView.setAutomaticDataDetectionEnabled_, 0)
-        self.assertResultIsBOOL(NSTextView.isAutomaticDataDetectionEnabled)
-        self.assertArgIsBOOL(NSTextView.setAutomaticDashSubstitutionEnabled_, 0)
-        self.assertResultIsBOOL(NSTextView.isAutomaticDashSubstitutionEnabled)
-        self.assertArgIsBOOL(NSTextView.setAutomaticTextReplacementEnabled_, 0)
-        self.assertResultIsBOOL(NSTextView.isAutomaticTextReplacementEnabled)
-        self.assertArgIsBOOL(NSTextView.setAutomaticSpellingCorrectionEnabled_, 0)
-        self.assertResultIsBOOL(NSTextView.isAutomaticSpellingCorrectionEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticDataDetectionEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticDataDetectionEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticDashSubstitutionEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticDashSubstitutionEnabled)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAutomaticTextReplacementEnabled_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticTextReplacementEnabled)
+        self.assertArgIsBOOL(
+            AppKit.NSTextView.setAutomaticSpellingCorrectionEnabled_, 0
+        )
+        self.assertResultIsBOOL(AppKit.NSTextView.isAutomaticSpellingCorrectionEnabled)
 
         self.assertArgHasType(
-            NSTextView.checkTextInRange_types_options_, 0, NSRange.__typestr__
+            AppKit.NSTextView.checkTextInRange_types_options_,
+            0,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextView.handleTextCheckingResults_forRange_types_options_orthography_wordCount_,
+            AppKit.NSTextView.handleTextCheckingResults_forRange_types_options_orthography_wordCount_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
 
     @min_os_level("10.12")
     def testMethods10_12(self):
-        self.assertResultIsBOOL(NSTextView.stronglyReferencesTextStorage)
+        self.assertResultIsBOOL(AppKit.NSTextView.stronglyReferencesTextStorage)
 
-        self.assertResultIsBOOL(NSTextView.allowsCharacterPickerTouchBarItem)
-        self.assertArgIsBOOL(NSTextView.setAllowsCharacterPickerTouchBarItem_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextView.allowsCharacterPickerTouchBarItem)
+        self.assertArgIsBOOL(AppKit.NSTextView.setAllowsCharacterPickerTouchBarItem_, 0)
 
     @min_os_level("10.14")
     def testMethods10_14(self):
         self.assertResultIsBOOL(
-            NSTextView.performValidatedReplacementInRange_withAttributedString_
+            AppKit.NSTextView.performValidatedReplacementInRange_withAttributedString_
         )
-        self.assertResultIsBOOL(NSTextView.usesAdaptiveColorMappingForDarkAppearance)
+        self.assertResultIsBOOL(
+            AppKit.NSTextView.usesAdaptiveColorMappingForDarkAppearance
+        )
         self.assertArgIsBOOL(
-            NSTextView.setUsesAdaptiveColorMappingForDarkAppearance_, 0
+            AppKit.NSTextView.setUsesAdaptiveColorMappingForDarkAppearance_, 0
         )
 
     @min_os_level("10.6")
@@ -388,7 +419,7 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_willCheckTextInRange_options_types_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_willCheckTextInRange_options_types_,
@@ -397,17 +428,17 @@ class TestNSTextView(TestCase):
         )
 
         self.assertArgHasType(
-            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,
+            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,  # noqa: B950
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,
+            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,
+            TestNSTextViewHelper.textView_didCheckTextInRange_types_options_results_orthography_wordCount_,  # noqa: B950
             6,
             objc._C_NSInteger,
         )
@@ -425,12 +456,12 @@ class TestNSTextView(TestCase):
         self.assertArgHasType(
             TestNSTextViewHelper.textView_candidatesForSelectedRange_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_candidates_forSelectedRange_,
             2,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextViewHelper.textView_shouldSelectCandidateAtIndex_,
@@ -444,7 +475,3 @@ class TestNSTextView(TestCase):
     @min_os_level("10.14")
     def testProtocols10_14(self):
         objc.protocolNamed("NSUserActivityRestoring")
-
-
-if __name__ == "__main__":
-    main()

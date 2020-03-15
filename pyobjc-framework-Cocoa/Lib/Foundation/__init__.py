@@ -4,8 +4,6 @@ Python mapping for the Foundation framework.
 This module does not contain docstrings for the wrapped code, check Apple's
 documentation for details on how to use these functions and classes.
 """
-# XXX: This is suboptimal, could calculate this in the metadata
-# generator.
 import sys
 
 import CoreFoundation
@@ -22,7 +20,6 @@ objc.addConvenienceForClass(
     "NSAttributedString", (("__len__", lambda self: self.length()),)
 )
 
-# XXX
 objc.addConvenienceForBasicMapping("NSMergeConflict", True)
 objc.addConvenienceForBasicMapping("NSUbiquitousKeyValueStore", False)
 objc.addConvenienceForBasicMapping("NSUserDefaults", False)
@@ -89,7 +86,6 @@ def _setup_conveniences():
         else:
             return value
 
-    # XXX: add more of the set interface
     objc.addConvenienceForClass(
         "NSHashTable",
         (
@@ -103,23 +99,6 @@ def _setup_conveniences():
         ),
     )
 
-    # XXX: These convenience wrappers don't work due to type issues
-    # def charset_contains(self, value):
-    #    try:
-    #        return self.characterIsMember_(value)
-    #    except ValueErorr:
-    #        # Wrong type
-    #        return False
-
-    # objc.addConvenienceForClass('NSCharacterSet', (
-    #    ('__len__',         lambda self: self.count()),
-    #    ('__contains__',    charset_contains),
-    # ))
-
-    # XXX: add full set interface (even if other value can only be a set)
-    # objc.addConvenienceForClass('NSMutableCharacterSet', (
-
-    # XXX: add __new__, __getitem__ and __iter__ as well
     objc.addConvenienceForClass(
         "NSIndexPath", (("__len__", lambda self: self.count()),)
     )
@@ -161,7 +140,6 @@ def _setup_conveniences():
         except ValueError:
             return False
 
-    # XXX: Add __new__
     objc.addConvenienceForClass(
         "NSIndexSet",
         (

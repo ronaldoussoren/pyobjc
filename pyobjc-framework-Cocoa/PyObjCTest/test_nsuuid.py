@@ -1,7 +1,7 @@
 import uuid
 
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSUUID(TestCase):
@@ -23,7 +23,3 @@ class TestNSUUID(TestCase):
         w = uuid.uuid1()
         val = Foundation.NSUUID.alloc().initWithUUIDBytes_(w.bytes)
         self.assertEqual(str(w).lower(), val.UUIDString().lower())
-
-
-if __name__ == "__main__":
-    main()

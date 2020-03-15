@@ -1,10 +1,10 @@
 import Cocoa
-import PyObjCTools.AppCategories
-from PyObjCTools.TestSupport import *
+import PyObjCTools.AppCategories  # noqa: F401
+from PyObjCTools.TestSupport import TestCase, onlyIf
 
 
 class TestAppKitCategories(TestCase):
-    # XXX: These tests don't actually test anything beyond asserting that
+    # Note: These tests don't actually test anything beyond asserting that
     # the code doesn't crash...
 
     def testSavedGraphicsState(self):
@@ -17,7 +17,3 @@ class TestAppKitCategories(TestCase):
     def testAnimationContext(self):
         with Cocoa.NSAnimationContext:
             pass
-
-
-if __name__ == "__main__":
-    main()

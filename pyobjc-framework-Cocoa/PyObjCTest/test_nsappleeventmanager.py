@@ -1,27 +1,22 @@
 import Foundation
-from Foundation import *
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestEAManager(TestCase):
     def testContants(self):
         self.assertIsInstance(
-            NSAppleEventManagerWillProcessFirstEventNotification, unicode
+            Foundation.NSAppleEventManagerWillProcessFirstEventNotification, str
         )
-        self.assertIsInstance(NSAppleEventTimeOutDefault, float)
-        self.assertIsInstance(NSAppleEventTimeOutNone, float)
+        self.assertIsInstance(Foundation.NSAppleEventTimeOutDefault, float)
+        self.assertIsInstance(Foundation.NSAppleEventTimeOutNone, float)
 
     def testOpaque(self):
         self.assertHasAttr(Foundation, "NSAppleEventManagerSuspensionID")
-        self.assertHasAttr(NSAppleEventManagerSuspensionID, "__pointer__")
+        self.assertHasAttr(Foundation.NSAppleEventManagerSuspensionID, "__pointer__")
 
     def testMethods(self):
         self.assertArgIsSEL(
-            NSAppleEventManager.setEventHandler_andSelector_forEventClass_andEventID_,
+            Foundation.NSAppleEventManager.setEventHandler_andSelector_forEventClass_andEventID_,  # noqa: B950
             1,
             b"v@:@@",
         )
-
-
-if __name__ == "__main__":
-    main()

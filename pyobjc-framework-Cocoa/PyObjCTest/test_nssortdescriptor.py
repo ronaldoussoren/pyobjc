@@ -1,36 +1,40 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSSortDescriptor(TestCase):
     def testMethods(self):
-        self.assertArgIsBOOL(NSSortDescriptor.initWithKey_ascending_, 1)
-        self.assertArgIsBOOL(NSSortDescriptor.initWithKey_ascending_selector_, 1)
+        self.assertArgIsBOOL(Foundation.NSSortDescriptor.initWithKey_ascending_, 1)
+        self.assertArgIsBOOL(
+            Foundation.NSSortDescriptor.initWithKey_ascending_selector_, 1
+        )
         self.assertArgIsSEL(
-            NSSortDescriptor.initWithKey_ascending_selector_, 2, b"i@:@"
+            Foundation.NSSortDescriptor.initWithKey_ascending_selector_, 2, b"i@:@"
         )
 
-        self.assertResultIsBOOL(NSSortDescriptor.ascending)
+        self.assertResultIsBOOL(Foundation.NSSortDescriptor.ascending)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertArgIsBOOL(NSSortDescriptor.sortDescriptorWithKey_ascending_, 1)
         self.assertArgIsBOOL(
-            NSSortDescriptor.sortDescriptorWithKey_ascending_selector_, 1
+            Foundation.NSSortDescriptor.sortDescriptorWithKey_ascending_, 1
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSSortDescriptor.sortDescriptorWithKey_ascending_selector_, 1
         )
 
         self.assertArgIsBOOL(
-            NSSortDescriptor.sortDescriptorWithKey_ascending_comparator_, 1
+            Foundation.NSSortDescriptor.sortDescriptorWithKey_ascending_comparator_, 1
         )
         self.assertArgIsBlock(
-            NSSortDescriptor.sortDescriptorWithKey_ascending_comparator_, 2, b"i@@"
+            Foundation.NSSortDescriptor.sortDescriptorWithKey_ascending_comparator_,
+            2,
+            b"i@@",
         )
-        self.assertArgIsBOOL(NSSortDescriptor.initWithKey_ascending_comparator_, 1)
+        self.assertArgIsBOOL(
+            Foundation.NSSortDescriptor.initWithKey_ascending_comparator_, 1
+        )
         self.assertArgIsBlock(
-            NSSortDescriptor.initWithKey_ascending_comparator_, 2, b"i@@"
+            Foundation.NSSortDescriptor.initWithKey_ascending_comparator_, 2, b"i@@"
         )
-        self.assertResultIsBlock(NSSortDescriptor.comparator, b"i@@")
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBlock(Foundation.NSSortDescriptor.comparator, b"i@@")

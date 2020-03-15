@@ -1,86 +1,86 @@
 import CoreFoundation
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestRunLoop(TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFRunLoopRef)
-        self.assertIsCFType(CFRunLoopSourceRef)
-        self.assertIsCFType(CFRunLoopObserverRef)
+        self.assertIsCFType(CoreFoundation.CFRunLoopRef)
+        self.assertIsCFType(CoreFoundation.CFRunLoopSourceRef)
+        self.assertIsCFType(CoreFoundation.CFRunLoopObserverRef)
 
         try:
-            if objc.lookUpClass("__NSCFTimer") is CFRunLoopTimerRef:
+            if objc.lookUpClass("__NSCFTimer") is CoreFoundation.CFRunLoopTimerRef:
                 return
         except objc.error:
             pass
         try:
-            if objc.lookUpClass("NSCFTimer") is CFRunLoopTimerRef:
+            if objc.lookUpClass("NSCFTimer") is CoreFoundation.CFRunLoopTimerRef:
                 return
         except objc.error:
             pass
-        self.assertIsCFType(CFRunLoopTimerRef)
+        self.assertIsCFType(CoreFoundation.CFRunLoopTimerRef)
 
     def testConstants(self):
-        self.assertEqual(kCFRunLoopRunFinished, 1)
-        self.assertEqual(kCFRunLoopRunStopped, 2)
-        self.assertEqual(kCFRunLoopRunTimedOut, 3)
-        self.assertEqual(kCFRunLoopRunHandledSource, 4)
-        self.assertEqual(kCFRunLoopEntry, (1 << 0))
-        self.assertEqual(kCFRunLoopBeforeTimers, (1 << 1))
-        self.assertEqual(kCFRunLoopBeforeSources, (1 << 2))
-        self.assertEqual(kCFRunLoopBeforeWaiting, (1 << 5))
-        self.assertEqual(kCFRunLoopAfterWaiting, (1 << 6))
-        self.assertEqual(kCFRunLoopExit, (1 << 7))
-        self.assertEqual(kCFRunLoopAllActivities, 0x0FFFFFFF)
-        self.assertIsInstance(kCFRunLoopDefaultMode, unicode)
-        self.assertIsInstance(kCFRunLoopCommonModes, unicode)
+        self.assertEqual(CoreFoundation.kCFRunLoopRunFinished, 1)
+        self.assertEqual(CoreFoundation.kCFRunLoopRunStopped, 2)
+        self.assertEqual(CoreFoundation.kCFRunLoopRunTimedOut, 3)
+        self.assertEqual(CoreFoundation.kCFRunLoopRunHandledSource, 4)
+        self.assertEqual(CoreFoundation.kCFRunLoopEntry, (1 << 0))
+        self.assertEqual(CoreFoundation.kCFRunLoopBeforeTimers, (1 << 1))
+        self.assertEqual(CoreFoundation.kCFRunLoopBeforeSources, (1 << 2))
+        self.assertEqual(CoreFoundation.kCFRunLoopBeforeWaiting, (1 << 5))
+        self.assertEqual(CoreFoundation.kCFRunLoopAfterWaiting, (1 << 6))
+        self.assertEqual(CoreFoundation.kCFRunLoopExit, (1 << 7))
+        self.assertEqual(CoreFoundation.kCFRunLoopAllActivities, 0x0FFFFFFF)
+        self.assertIsInstance(CoreFoundation.kCFRunLoopDefaultMode, str)
+        self.assertIsInstance(CoreFoundation.kCFRunLoopCommonModes, str)
 
     def testGetTypeID(self):
-        self.assertIsInstance(CFRunLoopGetTypeID(), (int, long))
-        self.assertIsInstance(CFRunLoopSourceGetTypeID(), (int, long))
-        self.assertIsInstance(CFRunLoopObserverGetTypeID(), (int, long))
-        self.assertIsInstance(CFRunLoopTimerGetTypeID(), (int, long))
+        self.assertIsInstance(CoreFoundation.CFRunLoopGetTypeID(), int)
+        self.assertIsInstance(CoreFoundation.CFRunLoopSourceGetTypeID(), int)
+        self.assertIsInstance(CoreFoundation.CFRunLoopObserverGetTypeID(), int)
+        self.assertIsInstance(CoreFoundation.CFRunLoopTimerGetTypeID(), int)
 
     def testRunloop(self):
-        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
-        loop = CFRunLoopGetCurrent()
-        self.assertIsInstance(loop, CFRunLoopRef)
-        loop = CFRunLoopGetMain()
-        self.assertIsInstance(loop, CFRunLoopRef)
-        mode = CFRunLoopCopyCurrentMode(loop)
+        loop = CoreFoundation.CFRunLoopGetCurrent()
+        self.assertIsInstance(loop, CoreFoundation.CFRunLoopRef)
+        loop = CoreFoundation.CFRunLoopGetMain()
+        self.assertIsInstance(loop, CoreFoundation.CFRunLoopRef)
+        mode = CoreFoundation.CFRunLoopCopyCurrentMode(loop)
         if mode is not None:
-            self.assertIsInstance(mode, unicode)
-        self.assertResultIsCFRetained(CFRunLoopCopyAllModes)
-        allmodes = CFRunLoopCopyAllModes(loop)
-        self.assertIsInstance(allmodes, CFArrayRef)
+            self.assertIsInstance(mode, str)
+        self.assertResultIsCFRetained(CoreFoundation.CFRunLoopCopyAllModes)
+        allmodes = CoreFoundation.CFRunLoopCopyAllModes(loop)
+        self.assertIsInstance(allmodes, CoreFoundation.CFArrayRef)
         self.assertNotEqual(len(allmodes), 0)
         for mode in allmodes:
-            self.assertIsInstance(mode, unicode)
-        CFRunLoopAddCommonMode(loop, "pyobjctest")
-        allmodes = CFRunLoopCopyAllModes(loop)
+            self.assertIsInstance(mode, str)
+        CoreFoundation.CFRunLoopAddCommonMode(loop, "pyobjctest")
+        allmodes = CoreFoundation.CFRunLoopCopyAllModes(loop)
 
-        tm = CFRunLoopGetNextTimerFireDate(loop, runloop_mode)
+        tm = CoreFoundation.CFRunLoopGetNextTimerFireDate(loop, runloop_mode)
         self.assertIsInstance(tm, float)
-        b = CFRunLoopIsWaiting(loop)
+        b = CoreFoundation.CFRunLoopIsWaiting(loop)
         self.assertIsInstance(b, bool)
-        CFRunLoopWakeUp(loop)
-        CFRunLoopStop(loop)
+        CoreFoundation.CFRunLoopWakeUp(loop)
+        CoreFoundation.CFRunLoopStop(loop)
 
-        res = CFRunLoopRunInMode("mode", 2.0, True)
-        self.assertIsInstance(res, (int, long))
-        self.assertEqual(res, kCFRunLoopRunFinished)
+        res = CoreFoundation.CFRunLoopRunInMode("mode", 2.0, True)
+        self.assertIsInstance(res, int)
+        self.assertEqual(res, CoreFoundation.kCFRunLoopRunFinished)
 
-        # CFRunLoopRun is hard to test reliably
+        # CoreFoundation.CFRunLoopRun is hard to test reliably
         self.assertHasAttr(CoreFoundation, "CFRunLoopRun")
 
     def testObserver(self):
-        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
-        rl = CFRunLoopGetCurrent()
+        rl = CoreFoundation.CFRunLoopGetCurrent()
 
         data = {}
         state = []
@@ -88,52 +88,72 @@ class TestRunLoop(TestCase):
         def callback(observer, activity, info):
             state.append((observer, activity, info))
 
-        observer = CFRunLoopObserverCreate(
-            None, kCFRunLoopEntry | kCFRunLoopExit, True, 4, callback, data
+        observer = CoreFoundation.CFRunLoopObserverCreate(
+            None,
+            CoreFoundation.kCFRunLoopEntry | CoreFoundation.kCFRunLoopExit,
+            True,
+            4,
+            callback,
+            data,
         )
-        self.assertIsInstance(observer, CFRunLoopObserverRef)
-        ctx = CFRunLoopObserverGetContext(observer, None)
+        self.assertIsInstance(observer, CoreFoundation.CFRunLoopObserverRef)
+        ctx = CoreFoundation.CFRunLoopObserverGetContext(observer, None)
         self.assertIs(ctx, data)
-        self.assertIs(CFRunLoopObserverDoesRepeat(observer), True)
-        self.assertEqual(CFRunLoopObserverGetOrder(observer), 4)
-        self.assertIs(CFRunLoopObserverIsValid(observer), True)
+        self.assertIs(CoreFoundation.CFRunLoopObserverDoesRepeat(observer), True)
+        self.assertEqual(CoreFoundation.CFRunLoopObserverGetOrder(observer), 4)
+        self.assertIs(CoreFoundation.CFRunLoopObserverIsValid(observer), True)
         self.assertEqual(
-            CFRunLoopObserverGetActivities(observer), kCFRunLoopEntry | kCFRunLoopExit
+            CoreFoundation.CFRunLoopObserverGetActivities(observer),
+            CoreFoundation.kCFRunLoopEntry | CoreFoundation.kCFRunLoopExit,
         )
-        CFRunLoopObserverInvalidate(observer)
-        self.assertIs(CFRunLoopObserverIsValid(observer), False)
-        ctx = CFRunLoopObserverGetContext(observer, None)
+        CoreFoundation.CFRunLoopObserverInvalidate(observer)
+        self.assertIs(CoreFoundation.CFRunLoopObserverIsValid(observer), False)
+        ctx = CoreFoundation.CFRunLoopObserverGetContext(observer, None)
         self.assertIs(ctx, objc.NULL)
-        observer = CFRunLoopObserverCreate(
-            None, kCFRunLoopEntry | kCFRunLoopExit, True, 4, callback, data
+        observer = CoreFoundation.CFRunLoopObserverCreate(
+            None,
+            CoreFoundation.kCFRunLoopEntry | CoreFoundation.kCFRunLoopExit,
+            True,
+            4,
+            callback,
+            data,
         )
-        self.assertIsInstance(observer, CFRunLoopObserverRef)
-        self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), False)
-        CFRunLoopAddObserver(rl, observer, runloop_mode)
-        self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), True)
+        self.assertIsInstance(observer, CoreFoundation.CFRunLoopObserverRef)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsObserver(rl, observer, runloop_mode), False
+        )
+        CoreFoundation.CFRunLoopAddObserver(rl, observer, runloop_mode)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsObserver(rl, observer, runloop_mode), True
+        )
 
         # Use dummy stream to ensure that the runloop actually performs work
         strval = b"hello world"
-        stream = CFReadStreamCreateWithBytesNoCopy(
-            None, strval, len(strval), kCFAllocatorNull
+        stream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
+            None, strval, len(strval), CoreFoundation.kCFAllocatorNull
         )
-        self.assertIsInstance(stream, CFReadStreamRef)
-        CFReadStreamScheduleWithRunLoop(stream, rl, runloop_mode)
-        res = CFRunLoopRunInMode(runloop_mode, 1.0, True)
-        CFReadStreamUnscheduleFromRunLoop(stream, rl, runloop_mode)
+        self.assertIsInstance(stream, CoreFoundation.CFReadStreamRef)
+        CoreFoundation.CFReadStreamScheduleWithRunLoop(stream, rl, runloop_mode)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 1.0, True)
+        self.assertIsInstance(res, int)
+        CoreFoundation.CFReadStreamUnscheduleFromRunLoop(stream, rl, runloop_mode)
 
         self.assertNotEqual(len(state), 0)
         for item in state:
             self.assertIs(item[0], observer)
-            self.assertIn(item[1], (kCFRunLoopEntry, kCFRunLoopExit))
+            self.assertIn(
+                item[1], (CoreFoundation.kCFRunLoopEntry, CoreFoundation.kCFRunLoopExit)
+            )
             self.assertIs(item[2], data)
-        CFRunLoopRemoveObserver(rl, observer, runloop_mode)
-        self.assertIs(CFRunLoopContainsObserver(rl, observer, runloop_mode), False)
+        CoreFoundation.CFRunLoopRemoveObserver(rl, observer, runloop_mode)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsObserver(rl, observer, runloop_mode), False
+        )
 
     def testTimer(self):
-        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
-        rl = CFRunLoopGetCurrent()
+        rl = CoreFoundation.CFRunLoopGetCurrent()
 
         state = []
         data = {}
@@ -141,43 +161,50 @@ class TestRunLoop(TestCase):
         def callback(timer, info):
             state.append((timer, info))
 
-        timer = CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
+        timer = CoreFoundation.CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
 
-        r = CFRunLoopTimerGetNextFireDate(timer)
+        r = CoreFoundation.CFRunLoopTimerGetNextFireDate(timer)
         self.assertIsInstance(r, float)
-        CFRunLoopTimerSetNextFireDate(timer, r + 2)
-        r2 = CFRunLoopTimerGetNextFireDate(timer)
+        CoreFoundation.CFRunLoopTimerSetNextFireDate(timer, r + 2)
+        r2 = CoreFoundation.CFRunLoopTimerGetNextFireDate(timer)
         self.assertEqual(int(r2), int(r + 2))
 
-        r = CFRunLoopTimerGetInterval(timer)
+        r = CoreFoundation.CFRunLoopTimerGetInterval(timer)
         self.assertEqual(r, 0.5)
 
-        self.assertIs(CFRunLoopTimerGetContext(timer, None), data)
-        self.assertIs(CFRunLoopTimerDoesRepeat(timer), True)
-        self.assertEqual(CFRunLoopTimerGetOrder(timer), 0)
-        self.assertIs(CFRunLoopTimerIsValid(timer), True)
-        CFRunLoopTimerInvalidate(timer)
-        self.assertIs(CFRunLoopTimerIsValid(timer), False)
-        self.assertIs(CFRunLoopTimerGetContext(timer, None), objc.NULL)
-        timer = CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
-        self.assertIs(CFRunLoopContainsTimer(rl, timer, runloop_mode), False)
-        CFRunLoopAddTimer(rl, timer, runloop_mode)
-        self.assertIs(CFRunLoopContainsTimer(rl, timer, runloop_mode), True)
-        res = CFRunLoopRunInMode(runloop_mode, 1.3, True)
+        self.assertIs(CoreFoundation.CFRunLoopTimerGetContext(timer, None), data)
+        self.assertIs(CoreFoundation.CFRunLoopTimerDoesRepeat(timer), True)
+        self.assertEqual(CoreFoundation.CFRunLoopTimerGetOrder(timer), 0)
+        self.assertIs(CoreFoundation.CFRunLoopTimerIsValid(timer), True)
+        CoreFoundation.CFRunLoopTimerInvalidate(timer)
+        self.assertIs(CoreFoundation.CFRunLoopTimerIsValid(timer), False)
+        self.assertIs(CoreFoundation.CFRunLoopTimerGetContext(timer, None), objc.NULL)
+        timer = CoreFoundation.CFRunLoopTimerCreate(None, 0, 0.5, 0, 0, callback, data)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsTimer(rl, timer, runloop_mode), False
+        )
+        CoreFoundation.CFRunLoopAddTimer(rl, timer, runloop_mode)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsTimer(rl, timer, runloop_mode), True
+        )
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 1.3, True)
+        self.assertIsInstance(res, int)
 
-        CFRunLoopTimerInvalidate(timer)
-        CFRunLoopRemoveTimer(rl, timer, runloop_mode)
-        self.assertIs(CFRunLoopContainsTimer(rl, timer, runloop_mode), False)
+        CoreFoundation.CFRunLoopTimerInvalidate(timer)
+        CoreFoundation.CFRunLoopRemoveTimer(rl, timer, runloop_mode)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsTimer(rl, timer, runloop_mode), False
+        )
         self.assertFalse(len(state) < 3)
         for item in state:
             self.assertIs(item[0], timer)
             self.assertIs(item[1], data)
 
     def testSource(self):
-        runloop_mode = kCFRunLoopDefaultMode
+        runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
         runloop_mode = "pyobjctest.cfrunloop"
 
-        rl = CFRunLoopGetCurrent()
+        rl = CoreFoundation.CFRunLoopGetCurrent()
 
         state = []
         data = {}
@@ -191,9 +218,11 @@ class TestRunLoop(TestCase):
         def perform(info):
             state.append(["perform", info])
 
-        source = CFRunLoopSourceCreate(None, 55, (0, schedule, cancel, perform, data))
-        self.assertIsInstance(source, CFRunLoopSourceRef)
-        ctx = CFRunLoopSourceGetContext(source, None)
+        source = CoreFoundation.CFRunLoopSourceCreate(
+            None, 55, (0, schedule, cancel, perform, data)
+        )
+        self.assertIsInstance(source, CoreFoundation.CFRunLoopSourceRef)
+        ctx = CoreFoundation.CFRunLoopSourceGetContext(source, None)
         self.assertIsInstance(ctx, tuple)
         self.assertEqual(ctx[0], 0)
         self.assertEqual(ctx[1], schedule)
@@ -201,15 +230,21 @@ class TestRunLoop(TestCase):
         self.assertEqual(ctx[3], perform)
         self.assertEqual(ctx[4], data)
 
-        self.assertEqual(CFRunLoopSourceGetOrder(source), 55)
-        self.assertIs(CFRunLoopSourceIsValid(source), True)
-        CFRunLoopSourceInvalidate(source)
-        self.assertIs(CFRunLoopSourceIsValid(source), False)
-        source = CFRunLoopSourceCreate(None, 55, (0, schedule, cancel, perform, data))
-        self.assertIsInstance(source, CFRunLoopSourceRef)
-        self.assertIs(CFRunLoopContainsSource(rl, source, runloop_mode), False)
-        CFRunLoopAddSource(rl, source, runloop_mode)
-        self.assertIs(CFRunLoopContainsSource(rl, source, runloop_mode), True)
+        self.assertEqual(CoreFoundation.CFRunLoopSourceGetOrder(source), 55)
+        self.assertIs(CoreFoundation.CFRunLoopSourceIsValid(source), True)
+        CoreFoundation.CFRunLoopSourceInvalidate(source)
+        self.assertIs(CoreFoundation.CFRunLoopSourceIsValid(source), False)
+        source = CoreFoundation.CFRunLoopSourceCreate(
+            None, 55, (0, schedule, cancel, perform, data)
+        )
+        self.assertIsInstance(source, CoreFoundation.CFRunLoopSourceRef)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsSource(rl, source, runloop_mode), False
+        )
+        CoreFoundation.CFRunLoopAddSource(rl, source, runloop_mode)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsSource(rl, source, runloop_mode), True
+        )
         self.assertEqual(len(state), 1)
         self.assertEqual(state[0][0], "schedule")
         self.assertIs(state[0][1], data)
@@ -217,25 +252,27 @@ class TestRunLoop(TestCase):
         self.assertEqual(state[0][3], runloop_mode)
         del state[:]
 
-        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
-        self.assertIsInstance(res, (int, long))
-        # self.assertEqual(res, kCFRunLoopRunTimedOut)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        self.assertIsInstance(res, int)
+        # self.assertEqual(res, CoreFoundation.kCFRunLoopRunTimedOut)
 
         self.assertEqual(len(state), 0)
 
-        CFRunLoopSourceSignal(source)
+        CoreFoundation.CFRunLoopSourceSignal(source)
 
-        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
-        self.assertIsInstance(res, (int, long))
-        self.assertEqual(res, kCFRunLoopRunHandledSource)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        self.assertIsInstance(res, int)
+        self.assertEqual(res, CoreFoundation.kCFRunLoopRunHandledSource)
 
         self.assertEqual(len(state), 1)
         self.assertEqual(state[0][0], "perform")
         self.assertIs(state[0][1], data)
         del state[:]
 
-        CFRunLoopRemoveSource(rl, source, runloop_mode)
-        self.assertIs(CFRunLoopContainsSource(rl, source, runloop_mode), False)
+        CoreFoundation.CFRunLoopRemoveSource(rl, source, runloop_mode)
+        self.assertIs(
+            CoreFoundation.CFRunLoopContainsSource(rl, source, runloop_mode), False
+        )
         self.assertEqual(len(state), 1)
         self.assertEqual(state[0][0], "cancel")
         self.assertIs(state[0][1], data)
@@ -244,87 +281,94 @@ class TestRunLoop(TestCase):
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
-        self.assertArgIsBlock(CFRunLoopPerformBlock, 2, b"v")
+        self.assertArgIsBlock(CoreFoundation.CFRunLoopPerformBlock, 2, b"v")
 
-        runloop_mode = kCFRunLoopDefaultMode
-        rl = CFRunLoopGetCurrent()
+        runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
+        rl = CoreFoundation.CFRunLoopGetCurrent()
 
-        l = []
+        lst = []
 
         def doit():
-            l.append(True)
+            lst.append(True)
 
-        CFRunLoopPerformBlock(rl, runloop_mode, doit)
-        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        CoreFoundation.CFRunLoopPerformBlock(rl, runloop_mode, doit)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        self.assertIsInstance(res, int)
 
-        self.assertEqual(l, [True])
+        self.assertEqual(lst, [True])
 
     @min_os_level("10.7")
     def testFunctions10_7(self):
-        self.assertArgIsBOOL(CFRunLoopObserverCreateWithHandler, 2)
+        self.assertArgIsBOOL(CoreFoundation.CFRunLoopObserverCreateWithHandler, 2)
         self.assertArgIsBlock(
-            CFRunLoopObserverCreateWithHandler,
+            CoreFoundation.CFRunLoopObserverCreateWithHandler,
             4,
             b"v^{__CFRunLoopObserver=}" + objc._C_NSUInteger,
         )
 
-        l = []
+        lst = []
 
         def record(observer, activity):
-            l.append((observer, activity))
+            lst.append((observer, activity))
 
-        ref = CFRunLoopObserverCreateWithHandler(
-            None, kCFRunLoopAllActivities, False, 0, record
+        ref = CoreFoundation.CFRunLoopObserverCreateWithHandler(
+            None, CoreFoundation.kCFRunLoopAllActivities, False, 0, record
         )
-        self.assertIsInstance(ref, CFRunLoopObserverRef)
+        self.assertIsInstance(ref, CoreFoundation.CFRunLoopObserverRef)
 
-        runloop_mode = kCFRunLoopDefaultMode
-        rl = CFRunLoopGetCurrent()
+        runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
+        rl = CoreFoundation.CFRunLoopGetCurrent()
 
-        CFRunLoopAddObserver(rl, ref, runloop_mode)
-        res = CFRunLoopRunInMode(runloop_mode, 0.5, True)
-        CFRunLoopRemoveObserver(rl, ref, runloop_mode)
+        CoreFoundation.CFRunLoopAddObserver(rl, ref, runloop_mode)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 0.5, True)
+        CoreFoundation.CFRunLoopRemoveObserver(rl, ref, runloop_mode)
 
-        self.assertNotEqual(l, [])
-        for a, b in l:
+        self.assertNotEqual(lst, [])
+        for a, b in lst:
             self.assertEqual(a, ref)
-            self.assertIsInstance(b, (int, long))
+            self.assertIsInstance(b, int)
 
         self.assertArgIsBlock(
-            CFRunLoopTimerCreateWithHandler, 5, b"v^{__CFRunLoopTimer=}"
+            CoreFoundation.CFRunLoopTimerCreateWithHandler, 5, b"v^{__CFRunLoopTimer=}"
         )
-        l = []
-        ref = CFRunLoopTimerCreateWithHandler(
-            None, CFAbsoluteTimeGetCurrent() + 2.9, 0.0, 0, 0, lambda x: l.append(x)
+        lst = []
+        ref = CoreFoundation.CFRunLoopTimerCreateWithHandler(
+            None,
+            CoreFoundation.CFAbsoluteTimeGetCurrent() + 2.9,
+            0.0,
+            0,
+            0,
+            lambda x: lst.append(x),
         )
-        self.assertIsInstance(ref, CFRunLoopTimerRef)
+        self.assertIsInstance(ref, CoreFoundation.CFRunLoopTimerRef)
 
-        CFRunLoopAddTimer(rl, ref, runloop_mode)
-        res = CFRunLoopRunInMode(runloop_mode, 6.0, True)
-        CFRunLoopRemoveTimer(rl, ref, runloop_mode)
+        CoreFoundation.CFRunLoopAddTimer(rl, ref, runloop_mode)
+        res = CoreFoundation.CFRunLoopRunInMode(runloop_mode, 6.0, True)
+        self.assertIsInstance(res, int)
+        CoreFoundation.CFRunLoopRemoveTimer(rl, ref, runloop_mode)
 
-        # XXX: For some reason the timer fails with a full testrun.
-        # See also issue #11 in the pyobjc tracker
         import __main__
 
+        # XXX: See issue #11 in the pyobjc tracker
         if "setup" in __main__.__file__:
             return
 
-        self.assertNotEqual(l, [])
-        for a in l:
+        self.assertNotEqual(lst, [])
+        for a in lst:
             self.assertEqual(a, ref)
 
     @min_os_level("10.9")
     def testFunctions10_9(self):
-        l = []
-        ref = CFRunLoopTimerCreateWithHandler(
-            None, CFAbsoluteTimeGetCurrent() + 2.9, 0.0, 0, 0, lambda x: l.append(x)
+        lst = []
+        ref = CoreFoundation.CFRunLoopTimerCreateWithHandler(
+            None,
+            CoreFoundation.CFAbsoluteTimeGetCurrent() + 2.9,
+            0.0,
+            0,
+            0,
+            lambda x: lst.append(x),
         )
-        self.assertIsInstance(ref, CFRunLoopTimerRef)
-        CFRunLoopTimerSetTolerance(ref, 5.0)
-        v = CFRunLoopTimerGetTolerance(ref)
+        self.assertIsInstance(ref, CoreFoundation.CFRunLoopTimerRef)
+        CoreFoundation.CFRunLoopTimerSetTolerance(ref, 5.0)
+        v = CoreFoundation.CFRunLoopTimerGetTolerance(ref)
         self.assertIsInstance(v, float)
-
-
-if __name__ == "__main__":
-    main()

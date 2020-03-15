@@ -1,7 +1,7 @@
 """
 Port of "function defines".
 """
-from Foundation import NSBundle, NSProcessInfo
+from Foundation import NSBundle
 
 
 def NSLocalizedString(key, comment):

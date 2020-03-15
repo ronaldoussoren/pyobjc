@@ -1,21 +1,18 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPDFPanel(TestCase):
     def testConstants(self):
-        self.assertEqual(NSPDFPanelShowsPaperSize, 1 << 2)
-        self.assertEqual(NSPDFPanelShowsOrientation, 1 << 3)
-        self.assertEqual(NSPDFPanelRequestsParentDirectory, 1 << 24)
+        self.assertEqual(AppKit.NSPDFPanelShowsPaperSize, 1 << 2)
+        self.assertEqual(AppKit.NSPDFPanelShowsOrientation, 1 << 3)
+        self.assertEqual(AppKit.NSPDFPanelRequestsParentDirectory, 1 << 24)
 
     @min_os_level("10.9")
     def testMethods(self):
         self.assertArgIsBlock(
-            NSPDFPanel.beginSheetWithPDFInfo_modalForWindow_completionHandler_,
+            AppKit.NSPDFPanel.beginSheetWithPDFInfo_modalForWindow_completionHandler_,
             2,
             objc._C_VOID + objc._C_NSInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

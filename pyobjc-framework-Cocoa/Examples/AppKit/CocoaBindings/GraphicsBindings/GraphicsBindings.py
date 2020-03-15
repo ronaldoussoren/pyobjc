@@ -6,15 +6,14 @@
 #  Copyright (c) 2005 __MyCompanyName__. All rights reserved.
 #
 
-import Circle
-import GraphicsArrayController
-import GraphicsBindingsDocument
-import GraphicsView
-import JoystickView
+import Circle  # noqa: F401
+import GraphicsArrayController  # noqa: F401
+import GraphicsBindingsDocument  # noqa: F401
+import GraphicsView  # noqa: F401
+import JoystickView  # noqa: F401
 
 # start the event loop
 import objc
-from Foundation import NSProcessInfo
 from PyObjCTools import AppHelper
 
 objc.setVerbose(1)

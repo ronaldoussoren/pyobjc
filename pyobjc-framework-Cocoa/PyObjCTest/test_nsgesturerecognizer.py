@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSGestureRecognizerHelper(NSObject):
+class TestNSGestureRecognizerHelper(AppKit.NSObject):
     def gestureRecognizerShouldBegin_(self, g):
         return 1
 
@@ -26,46 +27,61 @@ class TestNSGestureRecognizerHelper(NSObject):
 
 class TestNSGestureRecognizer(TestCase):
     def testConstants(self):
-        self.assertEqual(NSGestureRecognizerStatePossible, 0)
-        self.assertEqual(NSGestureRecognizerStateBegan, 1)
-        self.assertEqual(NSGestureRecognizerStateChanged, 2)
-        self.assertEqual(NSGestureRecognizerStateEnded, 3)
-        self.assertEqual(NSGestureRecognizerStateCancelled, 4)
-        self.assertEqual(NSGestureRecognizerStateFailed, 5)
+        self.assertEqual(AppKit.NSGestureRecognizerStatePossible, 0)
+        self.assertEqual(AppKit.NSGestureRecognizerStateBegan, 1)
+        self.assertEqual(AppKit.NSGestureRecognizerStateChanged, 2)
+        self.assertEqual(AppKit.NSGestureRecognizerStateEnded, 3)
+        self.assertEqual(AppKit.NSGestureRecognizerStateCancelled, 4)
+        self.assertEqual(AppKit.NSGestureRecognizerStateFailed, 5)
         self.assertEqual(
-            NSGestureRecognizerStateRecognized, NSGestureRecognizerStateEnded
+            AppKit.NSGestureRecognizerStateRecognized,
+            AppKit.NSGestureRecognizerStateEnded,
         )
 
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertArgIsSEL(NSGestureRecognizer.initWithTarget_action_, 1, b"v@:@")
-        self.assertArgIsSEL(NSGestureRecognizer.setAction_, 0, b"v@:@")
-        self.assertResultIsBOOL(NSGestureRecognizer.isEnabled)
-        self.assertArgIsBOOL(NSGestureRecognizer.setEnabled_, 0)
+        self.assertArgIsSEL(
+            AppKit.NSGestureRecognizer.initWithTarget_action_, 1, b"v@:@"
+        )
+        self.assertArgIsSEL(AppKit.NSGestureRecognizer.setAction_, 0, b"v@:@")
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.isEnabled)
+        self.assertArgIsBOOL(AppKit.NSGestureRecognizer.setEnabled_, 0)
 
-        self.assertResultIsBOOL(NSGestureRecognizer.delaysPrimaryMouseButtonEvents)
-        self.assertResultIsBOOL(NSGestureRecognizer.delaysSecondaryMouseButtonEvents)
-        self.assertResultIsBOOL(NSGestureRecognizer.delaysOtherMouseButtonEvents)
-        self.assertResultIsBOOL(NSGestureRecognizer.delaysKeyEvents)
-        self.assertResultIsBOOL(NSGestureRecognizer.delaysMagnificationEvents)
-        self.assertResultIsBOOL(NSGestureRecognizer.delaysRotationEvents)
+        self.assertResultIsBOOL(
+            AppKit.NSGestureRecognizer.delaysPrimaryMouseButtonEvents
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSGestureRecognizer.delaysSecondaryMouseButtonEvents
+        )
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.delaysOtherMouseButtonEvents)
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.delaysKeyEvents)
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.delaysMagnificationEvents)
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.delaysRotationEvents)
 
-        self.assertArgIsBOOL(NSGestureRecognizer.setDelaysPrimaryMouseButtonEvents_, 0)
         self.assertArgIsBOOL(
-            NSGestureRecognizer.setDelaysSecondaryMouseButtonEvents_, 0
+            AppKit.NSGestureRecognizer.setDelaysPrimaryMouseButtonEvents_, 0
         )
-        self.assertArgIsBOOL(NSGestureRecognizer.setDelaysOtherMouseButtonEvents_, 0)
-        self.assertArgIsBOOL(NSGestureRecognizer.setDelaysKeyEvents_, 0)
-        self.assertArgIsBOOL(NSGestureRecognizer.setDelaysMagnificationEvents_, 0)
-        self.assertArgIsBOOL(NSGestureRecognizer.setDelaysRotationEvents_, 0)
+        self.assertArgIsBOOL(
+            AppKit.NSGestureRecognizer.setDelaysSecondaryMouseButtonEvents_, 0
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSGestureRecognizer.setDelaysOtherMouseButtonEvents_, 0
+        )
+        self.assertArgIsBOOL(AppKit.NSGestureRecognizer.setDelaysKeyEvents_, 0)
+        self.assertArgIsBOOL(
+            AppKit.NSGestureRecognizer.setDelaysMagnificationEvents_, 0
+        )
+        self.assertArgIsBOOL(AppKit.NSGestureRecognizer.setDelaysRotationEvents_, 0)
 
-        self.assertResultIsBOOL(NSGestureRecognizer.canPreventGestureRecognizer_)
-        self.assertResultIsBOOL(NSGestureRecognizer.canBePreventedByGestureRecognizer_)
+        self.assertResultIsBOOL(AppKit.NSGestureRecognizer.canPreventGestureRecognizer_)
         self.assertResultIsBOOL(
-            NSGestureRecognizer.shouldRequireFailureOfGestureRecognizer_
+            AppKit.NSGestureRecognizer.canBePreventedByGestureRecognizer_
         )
         self.assertResultIsBOOL(
-            NSGestureRecognizer.shouldBeRequiredToFailByGestureRecognizer_
+            AppKit.NSGestureRecognizer.shouldRequireFailureOfGestureRecognizer_
+        )
+        self.assertResultIsBOOL(
+            AppKit.NSGestureRecognizer.shouldBeRequiredToFailByGestureRecognizer_
         )
 
     @min_sdk_level("10.10")
@@ -75,13 +91,13 @@ class TestNSGestureRecognizer(TestCase):
             TestNSGestureRecognizerHelper.gestureRecognizerShouldBegin_
         )
         self.assertResultIsBOOL(
-            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_
+            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRecognizeSimultaneouslyWithGestureRecognizer_  # noqa: B950
         )
         self.assertResultIsBOOL(
-            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRequireFailureOfGestureRecognizer_
+            TestNSGestureRecognizerHelper.gestureRecognizer_shouldRequireFailureOfGestureRecognizer_  # noqa: B950
         )
         self.assertResultIsBOOL(
-            TestNSGestureRecognizerHelper.gestureRecognizer_shouldBeRequiredToFailByGestureRecognizer_
+            TestNSGestureRecognizerHelper.gestureRecognizer_shouldBeRequiredToFailByGestureRecognizer_  # noqa: B950
         )
 
     @min_sdk_level("10.11")
@@ -95,7 +111,3 @@ class TestNSGestureRecognizer(TestCase):
         self.assertResultIsBOOL(
             TestNSGestureRecognizerHelper.gestureRecognizer_shouldReceiveTouch_
         )
-
-
-if __name__ == "__main__":
-    main()

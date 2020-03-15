@@ -1,7 +1,5 @@
-import sys
-
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSWindowTabGroup(TestCase):
@@ -10,7 +8,7 @@ class TestNSWindowTabGroup(TestCase):
         # Use subclass for testing because these methods aren't present
         # on the main class.
 
-        class TestNSWindowTabGroupHelper(NSWindowTabGroup):
+        class TestNSWindowTabGroupHelper(AppKit.NSWindowTabGroup):
             def isOverviewVisible(self):
                 return 1
 
@@ -28,7 +26,3 @@ class TestNSWindowTabGroup(TestCase):
 
         self.assertResultIsBOOL(TestNSWindowTabGroupHelper.isTabBarVisible)
         self.assertArgIsBOOL(TestNSWindowTabGroupHelper.setTabBarVisible_, 0)
-
-
-if __name__ == "__main__":
-    main()

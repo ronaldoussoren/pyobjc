@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, onlyOn64Bit
+import objc
 
 
-class TestNSTextCheckingClientHelper(NSObject):
+class TestNSTextCheckingClientHelper(AppKit.NSObject):
     def annotatedSubstringForProposedRange_actualRange_(self, a, b):
         return 1
 
@@ -87,9 +88,9 @@ class TestNSTextCheckingClientHelper(NSObject):
 
 class TestNSTextCheckingClient(TestCase):
     def test_constants(self):
-        self.assertEqual(NSTextInputTraitTypeDefault, 0)
-        self.assertEqual(NSTextInputTraitTypeNo, 1)
-        self.assertEqual(NSTextInputTraitTypeYes, 2)
+        self.assertEqual(AppKit.NSTextInputTraitTypeDefault, 0)
+        self.assertEqual(AppKit.NSTextInputTraitTypeNo, 1)
+        self.assertEqual(AppKit.NSTextInputTraitTypeYes, 2)
 
     @onlyOn64Bit
     def test_methods(self):
@@ -160,53 +161,55 @@ class TestNSTextCheckingClient(TestCase):
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.annotatedSubstringForProposedRange_actualRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.annotatedSubstringForProposedRange_actualRange_,
             1,
-            b"o^" + NSRange.__typestr__,
+            b"o^" + AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTextCheckingClientHelper.setAnnotations_range_, 1, NSRange.__typestr__
+            TestNSTextCheckingClientHelper.setAnnotations_range_,
+            1,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTextCheckingClientHelper.addAnnotations_range_, 1, NSRange.__typestr__
+            TestNSTextCheckingClientHelper.addAnnotations_range_,
+            1,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.removeAnnotation_range_,
             1,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.replaceCharactersInRange_withAnnotatedString_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestNSTextCheckingClientHelper.selectAndShowRange_, 0, NSRange.__typestr__
+            TestNSTextCheckingClientHelper.selectAndShowRange_,
+            0,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.viewForRange_firstRect_actualRange_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.viewForRange_firstRect_actualRange_,
             1,
-            b"o^" + NSRect.__typestr__,
+            b"o^" + AppKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
             TestNSTextCheckingClientHelper.viewForRange_firstRect_actualRange_,
             2,
-            b"o^" + NSRange.__typestr__,
+            b"o^" + AppKit.NSRange.__typestr__,
         )
 
     @min_sdk_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("NSTextInputTraits")
         objc.protocolNamed("NSTextCheckingClient")
-
-
-if __name__ == "__main__":
-    main()

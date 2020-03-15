@@ -1,13 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
-
-try:
-    unicode
-except NameEror:
-    unicode = str
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
-class TestNSCollectionViewFlowLayoutHelper(NSObject):
+class TestNSCollectionViewFlowLayoutHelper(AppKit.NSObject):
     def collectionView_layout_sizeForItemAtIndexPath_(self, cv, l, p):
         return 1
 
@@ -30,45 +26,47 @@ class TestNSCollectionViewFlowLayoutHelper(NSObject):
 class TestNSCollectionViewFlowLayout(TestCase):
     @min_os_level("10.11")
     def testConstants10_11(self):
-        self.assertEqual(NSCollectionViewScrollDirectionVertical, 0)
-        self.assertEqual(NSCollectionViewScrollDirectionHorizontal, 1)
-        self.assertIsInstance(NSCollectionElementKindSectionHeader, unicode)
-        self.assertIsInstance(NSCollectionElementKindSectionFooter, unicode)
+        self.assertEqual(AppKit.NSCollectionViewScrollDirectionVertical, 0)
+        self.assertEqual(AppKit.NSCollectionViewScrollDirectionHorizontal, 1)
+        self.assertIsInstance(AppKit.NSCollectionElementKindSectionHeader, str)
+        self.assertIsInstance(AppKit.NSCollectionElementKindSectionFooter, str)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(
-            NSCollectionViewFlowLayoutInvalidationContext.invalidateFlowLayoutDelegateMetrics
+            AppKit.NSCollectionViewFlowLayoutInvalidationContext.invalidateFlowLayoutDelegateMetrics  # noqa: B950
         )
         self.assertArgIsBOOL(
-            NSCollectionViewFlowLayoutInvalidationContext.setInvalidateFlowLayoutDelegateMetrics_,
+            AppKit.NSCollectionViewFlowLayoutInvalidationContext.setInvalidateFlowLayoutDelegateMetrics_,  # noqa: B950
             0,
         )
         self.assertResultIsBOOL(
-            NSCollectionViewFlowLayoutInvalidationContext.invalidateFlowLayoutAttributes
+            AppKit.NSCollectionViewFlowLayoutInvalidationContext.invalidateFlowLayoutAttributes
         )
         self.assertArgIsBOOL(
-            NSCollectionViewFlowLayoutInvalidationContext.setInvalidateFlowLayoutAttributes_,
+            AppKit.NSCollectionViewFlowLayoutInvalidationContext.setInvalidateFlowLayoutAttributes_,  # noqa: B950
             0,
         )
 
     @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(
-            NSCollectionViewFlowLayout.sectionHeadersPinToVisibleBounds
+            AppKit.NSCollectionViewFlowLayout.sectionHeadersPinToVisibleBounds
         )
         self.assertArgIsBOOL(
-            NSCollectionViewFlowLayout.setSectionHeadersPinToVisibleBounds_, 0
+            AppKit.NSCollectionViewFlowLayout.setSectionHeadersPinToVisibleBounds_, 0
         )
 
         self.assertResultIsBOOL(
-            NSCollectionViewFlowLayout.sectionFootersPinToVisibleBounds
+            AppKit.NSCollectionViewFlowLayout.sectionFootersPinToVisibleBounds
         )
         self.assertArgIsBOOL(
-            NSCollectionViewFlowLayout.setSectionFootersPinToVisibleBounds_, 0
+            AppKit.NSCollectionViewFlowLayout.setSectionFootersPinToVisibleBounds_, 0
         )
 
-        self.assertResultIsBOOL(NSCollectionViewFlowLayout.sectionAtIndexIsCollapsed_)
+        self.assertResultIsBOOL(
+            AppKit.NSCollectionViewFlowLayout.sectionAtIndexIsCollapsed_
+        )
 
     @min_os_level("10.11")
     def testProtocols10_11(self):
@@ -76,12 +74,12 @@ class TestNSCollectionViewFlowLayout(TestCase):
 
         self.assertResultHasType(
             TestNSCollectionViewFlowLayoutHelper.collectionView_layout_sizeForItemAtIndexPath_,
-            NSSize.__typestr__,
+            AppKit.NSSize.__typestr__,
         )
 
         self.assertResultHasType(
             TestNSCollectionViewFlowLayoutHelper.collectionView_layout_insetForSectionAtIndex_,
-            NSEdgeInsets.__typestr__,
+            AppKit.NSEdgeInsets.__typestr__,
         )
         self.assertArgHasType(
             TestNSCollectionViewFlowLayoutHelper.collectionView_layout_insetForSectionAtIndex_,
@@ -90,45 +88,41 @@ class TestNSCollectionViewFlowLayout(TestCase):
         )
 
         self.assertResultHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumLineSpacingForSectionAtIndex_,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumLineSpacingForSectionAtIndex_,  # noqa: B950
             objc._C_CGFloat,
         )
         self.assertArgHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumLineSpacingForSectionAtIndex_,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumLineSpacingForSectionAtIndex_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
 
         self.assertResultHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumInteritemSpacingForSectionAtIndex_,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumInteritemSpacingForSectionAtIndex_,  # noqa: B950
             objc._C_CGFloat,
         )
         self.assertArgHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumInteritemSpacingForSectionAtIndex_,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_minimumInteritemSpacingForSectionAtIndex_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
 
         self.assertResultHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForHeaderInSection_,
-            NSSize.__typestr__,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForHeaderInSection_,  # noqa: B950
+            AppKit.NSSize.__typestr__,
         )
         self.assertArgHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForHeaderInSection_,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForHeaderInSection_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
 
         self.assertResultHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForFooterInSection_,
-            NSSize.__typestr__,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForFooterInSection_,  # noqa: B950
+            AppKit.NSSize.__typestr__,
         )
         self.assertArgHasType(
-            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForFooterInSection_,
+            TestNSCollectionViewFlowLayoutHelper.collectionView_layout_referenceSizeForFooterInSection_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

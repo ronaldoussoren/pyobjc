@@ -43,7 +43,7 @@ class FilteringArrayController(NSArrayController):
         supermethod = super(FilteringArrayController, self).arrangeObjects_
         try:
             regex = regexForSearchString(self.searchString, self.searchType)
-        except:
+        except:  # noqa: E722, B001
             regex = self.lastRegex
         self.lastRegex = regex
         if regex is None:

@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
-class TestNSURLConnectionHelper(NSObject):
+class TestNSURLConnectionHelper(Foundation.NSObject):
     def connection_canAuthenticateAgainstProtectionSpace_(self, a, b):
         return 1
 
@@ -25,17 +26,19 @@ class TestNSURLConnectionHelper(NSObject):
 
 class TestNSURLConnection(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(NSURLConnection.canHandleRequest_)
+        self.assertResultIsBOOL(Foundation.NSURLConnection.canHandleRequest_)
 
         self.assertArgIsBOOL(
-            NSURLConnection.initWithRequest_delegate_startImmediately_, 2
+            Foundation.NSURLConnection.initWithRequest_delegate_startImmediately_, 2
         )
 
         self.assertArgIsOut(
-            NSURLConnection.sendSynchronousRequest_returningResponse_error_, 1
+            Foundation.NSURLConnection.sendSynchronousRequest_returningResponse_error_,
+            1,
         )
         self.assertArgIsOut(
-            NSURLConnection.sendSynchronousRequest_returningResponse_error_, 2
+            Foundation.NSURLConnection.sendSynchronousRequest_returningResponse_error_,
+            2,
         )
 
     @min_os_level("10.6")
@@ -47,44 +50,44 @@ class TestNSURLConnection(TestCase):
             TestNSURLConnectionHelper.connectionShouldUseCredentialStorage_
         )
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_,
+            TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_,  # noqa: B950
             1,
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_,
+            TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_,  # noqa: B950
             2,
             objc._C_NSInteger,
         )
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_,
+            TestNSURLConnectionHelper.connection_didSendBodyData_totalBytesWritten_totalBytesExpectedToWrite_,  # noqa: B950
             3,
             objc._C_NSInteger,
         )
 
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connection_didWriteData_totalBytesWritten_expectedTotalBytes_,
+            TestNSURLConnectionHelper.connection_didWriteData_totalBytesWritten_expectedTotalBytes_,  # noqa: B950
             1,
             objc._C_LNG_LNG,
         )
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connection_didWriteData_totalBytesWritten_expectedTotalBytes_,
+            TestNSURLConnectionHelper.connection_didWriteData_totalBytesWritten_expectedTotalBytes_,  # noqa: B950
             2,
             objc._C_LNG_LNG,
         )
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connection_didWriteData_totalBytesWritten_expectedTotalBytes_,
+            TestNSURLConnectionHelper.connection_didWriteData_totalBytesWritten_expectedTotalBytes_,  # noqa: B950
             3,
             objc._C_LNG_LNG,
         )
 
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connectionDidResumeDownloading_totalBytesWritten_expectedTotalBytes_,
+            TestNSURLConnectionHelper.connectionDidResumeDownloading_totalBytesWritten_expectedTotalBytes_,  # noqa: B950
             1,
             objc._C_LNG_LNG,
         )
         self.assertArgHasType(
-            TestNSURLConnectionHelper.connectionDidResumeDownloading_totalBytesWritten_expectedTotalBytes_,
+            TestNSURLConnectionHelper.connectionDidResumeDownloading_totalBytesWritten_expectedTotalBytes_,  # noqa: B950
             2,
             objc._C_LNG_LNG,
         )
@@ -92,7 +95,9 @@ class TestNSURLConnection(TestCase):
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertArgIsBlock(
-            NSURLConnection.sendAsynchronousRequest_queue_completionHandler_, 2, b"v@@"
+            Foundation.NSURLConnection.sendAsynchronousRequest_queue_completionHandler_,
+            2,
+            b"v@@",
         )
 
     @min_sdk_level("10.7")
@@ -103,7 +108,3 @@ class TestNSURLConnection(TestCase):
     def testProtocolObjects10_10(self):
         objc.protocolNamed("NSURLConnectionDataDelegate")
         objc.protocolNamed("NSURLConnectionDownloadDelegate")
-
-
-if __name__ == "__main__":
-    main()

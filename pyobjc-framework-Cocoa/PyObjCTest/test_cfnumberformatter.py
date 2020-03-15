@@ -1,66 +1,82 @@
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNumberFormatter(TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFNumberFormatterRef)
+        self.assertIsCFType(CoreFoundation.CFNumberFormatterRef)
 
     def testTypeID(self):
-        self.assertIsInstance(CFNumberFormatterGetTypeID(), (int, long))
+        self.assertIsInstance(CoreFoundation.CFNumberFormatterGetTypeID(), int)
 
     def testFuncs(self):
-        locale = CFLocaleCreate(None, "en_US")
-        fmt = CFNumberFormatterCreate(None, locale, kCFNumberFormatterDecimalStyle)
-        self.assertIsInstance(fmt, CFNumberFormatterRef)
-        v = CFNumberFormatterGetLocale(fmt)
+        locale = CoreFoundation.CFLocaleCreate(None, "en_US")
+        fmt = CoreFoundation.CFNumberFormatterCreate(
+            None, locale, CoreFoundation.kCFNumberFormatterDecimalStyle
+        )
+        self.assertIsInstance(fmt, CoreFoundation.CFNumberFormatterRef)
+        v = CoreFoundation.CFNumberFormatterGetLocale(fmt)
         self.assertIs(v, locale)
-        v = CFNumberFormatterGetStyle(fmt)
-        self.assertEqual(v, kCFNumberFormatterDecimalStyle)
-        v = CFNumberFormatterGetFormat(fmt)
-        self.assertIsInstance(v, unicode)
-        CFNumberFormatterSetFormat(fmt, v[:-2])
-        v2 = CFNumberFormatterGetFormat(fmt)
+        v = CoreFoundation.CFNumberFormatterGetStyle(fmt)
+        self.assertEqual(v, CoreFoundation.kCFNumberFormatterDecimalStyle)
+        v = CoreFoundation.CFNumberFormatterGetFormat(fmt)
+        self.assertIsInstance(v, str)
+        CoreFoundation.CFNumberFormatterSetFormat(fmt, v[:-2])
+        v2 = CoreFoundation.CFNumberFormatterGetFormat(fmt)
         self.assertEqual(v2, v[:-2])
-        v = CFNumberFormatterCreateStringWithNumber(None, fmt, 42.5)
-        self.assertIsInstance(v, unicode)
+        v = CoreFoundation.CFNumberFormatterCreateStringWithNumber(None, fmt, 42.5)
+        self.assertIsInstance(v, str)
         self.assertEqual(v, b"42.5".decode("ascii"))
 
-        v = CFNumberFormatterCreateStringWithValue(None, fmt, kCFNumberDoubleType, 42.5)
-        self.assertIsInstance(v, unicode)
+        v = CoreFoundation.CFNumberFormatterCreateStringWithValue(
+            None, fmt, CoreFoundation.kCFNumberDoubleType, 42.5
+        )
+        self.assertIsInstance(v, str)
         self.assertEqual(v, b"42.5".decode("ascii"))
-        num, rng = CFNumberFormatterCreateNumberFromString(
+        num, rng = CoreFoundation.CFNumberFormatterCreateNumberFromString(
             None, fmt, b"42.0a".decode("ascii"), (0, 5), 0
         )
         self.assertEqual(num, 42.0)
         self.assertEqual(rng, (0, 4))
-        ok, rng, num = CFNumberFormatterGetValueFromString(
-            fmt, b"42.0a".decode("ascii"), (0, 5), kCFNumberDoubleType, None
+        ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
+            fmt,
+            b"42.0a".decode("ascii"),
+            (0, 5),
+            CoreFoundation.kCFNumberDoubleType,
+            None,
         )
         self.assertEqual(ok, True)
         self.assertEqual(num, 42.0)
         self.assertEqual(rng, (0, 4))
-        num, rng = CFNumberFormatterCreateNumberFromString(
+        num, rng = CoreFoundation.CFNumberFormatterCreateNumberFromString(
             None,
             fmt,
             b"42.0a".decode("ascii"),
             (0, 5),
-            kCFNumberFormatterParseIntegersOnly,
+            CoreFoundation.kCFNumberFormatterParseIntegersOnly,
         )
         self.assertEqual(num, 42)
         self.assertEqual(rng, (0, 2))
-        v = CFNumberFormatterCopyProperty(fmt, kCFNumberFormatterCurrencyCode)
-        self.assertIsInstance(v, unicode)
-        CFNumberFormatterSetProperty(
-            fmt, kCFNumberFormatterCurrencyCode, b"HFL".decode("ascii")
+        v = CoreFoundation.CFNumberFormatterCopyProperty(
+            fmt, CoreFoundation.kCFNumberFormatterCurrencyCode
+        )
+        self.assertIsInstance(v, str)
+        CoreFoundation.CFNumberFormatterSetProperty(
+            fmt, CoreFoundation.kCFNumberFormatterCurrencyCode, b"HFL".decode("ascii")
         )
 
-        self.assertResultIsCFRetained(CFNumberFormatterCopyProperty)
-        v = CFNumberFormatterCopyProperty(fmt, kCFNumberFormatterCurrencyCode)
+        self.assertResultIsCFRetained(CoreFoundation.CFNumberFormatterCopyProperty)
+        v = CoreFoundation.CFNumberFormatterCopyProperty(
+            fmt, CoreFoundation.kCFNumberFormatterCurrencyCode
+        )
         self.assertEqual(v, b"HFL".decode("ascii"))
-        self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 1)
-        self.assertArgIsOut(CFNumberFormatterGetDecimalInfoForCurrencyCode, 2)
-        ok, frac, rnd = CFNumberFormatterGetDecimalInfoForCurrencyCode(
+        self.assertArgIsOut(
+            CoreFoundation.CFNumberFormatterGetDecimalInfoForCurrencyCode, 1
+        )
+        self.assertArgIsOut(
+            CoreFoundation.CFNumberFormatterGetDecimalInfoForCurrencyCode, 2
+        )
+        ok, frac, rnd = CoreFoundation.CFNumberFormatterGetDecimalInfoForCurrencyCode(
             "EUR", None, None
         )
         self.assertEqual(ok, True)
@@ -68,77 +84,91 @@ class TestNumberFormatter(TestCase):
         self.assertEqual(rnd, 0.0)
 
     def testConstants(self):
-        self.assertEqual(kCFNumberFormatterNoStyle, 0)
-        self.assertEqual(kCFNumberFormatterDecimalStyle, 1)
-        self.assertEqual(kCFNumberFormatterCurrencyStyle, 2)
-        self.assertEqual(kCFNumberFormatterPercentStyle, 3)
-        self.assertEqual(kCFNumberFormatterScientificStyle, 4)
-        self.assertEqual(kCFNumberFormatterSpellOutStyle, 5)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterNoStyle, 0)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterDecimalStyle, 1)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterCurrencyStyle, 2)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterPercentStyle, 3)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterScientificStyle, 4)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterSpellOutStyle, 5)
 
-        self.assertEqual(kCFNumberFormatterParseIntegersOnly, 1)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterParseIntegersOnly, 1)
 
-        self.assertEqual(kCFNumberFormatterRoundCeiling, 0)
-        self.assertEqual(kCFNumberFormatterRoundFloor, 1)
-        self.assertEqual(kCFNumberFormatterRoundDown, 2)
-        self.assertEqual(kCFNumberFormatterRoundUp, 3)
-        self.assertEqual(kCFNumberFormatterRoundHalfEven, 4)
-        self.assertEqual(kCFNumberFormatterRoundHalfDown, 5)
-        self.assertEqual(kCFNumberFormatterRoundHalfUp, 6)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterRoundCeiling, 0)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterRoundFloor, 1)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterRoundDown, 2)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterRoundUp, 3)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterRoundHalfEven, 4)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterRoundHalfDown, 5)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterRoundHalfUp, 6)
 
-        self.assertEqual(kCFNumberFormatterPadBeforePrefix, 0)
-        self.assertEqual(kCFNumberFormatterPadAfterPrefix, 1)
-        self.assertEqual(kCFNumberFormatterPadBeforeSuffix, 2)
-        self.assertEqual(kCFNumberFormatterPadAfterSuffix, 3)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterPadBeforePrefix, 0)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterPadAfterPrefix, 1)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterPadBeforeSuffix, 2)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterPadAfterSuffix, 3)
 
-        self.assertIsInstance(kCFNumberFormatterCurrencyCode, unicode)
-        self.assertIsInstance(kCFNumberFormatterDecimalSeparator, unicode)
-        self.assertIsInstance(kCFNumberFormatterCurrencyDecimalSeparator, unicode)
-        self.assertIsInstance(kCFNumberFormatterAlwaysShowDecimalSeparator, unicode)
-        self.assertIsInstance(kCFNumberFormatterGroupingSeparator, unicode)
-        self.assertIsInstance(kCFNumberFormatterUseGroupingSeparator, unicode)
-        self.assertIsInstance(kCFNumberFormatterPercentSymbol, unicode)
-        self.assertIsInstance(kCFNumberFormatterZeroSymbol, unicode)
-        self.assertIsInstance(kCFNumberFormatterNaNSymbol, unicode)
-        self.assertIsInstance(kCFNumberFormatterInfinitySymbol, unicode)
-        self.assertIsInstance(kCFNumberFormatterMinusSign, unicode)
-        self.assertIsInstance(kCFNumberFormatterPlusSign, unicode)
-        self.assertIsInstance(kCFNumberFormatterCurrencySymbol, unicode)
-        self.assertIsInstance(kCFNumberFormatterExponentSymbol, unicode)
-        self.assertIsInstance(kCFNumberFormatterMinIntegerDigits, unicode)
-        self.assertIsInstance(kCFNumberFormatterMaxIntegerDigits, unicode)
-        self.assertIsInstance(kCFNumberFormatterMinFractionDigits, unicode)
-        self.assertIsInstance(kCFNumberFormatterMaxFractionDigits, unicode)
-        self.assertIsInstance(kCFNumberFormatterGroupingSize, unicode)
-        self.assertIsInstance(kCFNumberFormatterSecondaryGroupingSize, unicode)
-        self.assertIsInstance(kCFNumberFormatterRoundingMode, unicode)
-        self.assertIsInstance(kCFNumberFormatterRoundingIncrement, unicode)
-        self.assertIsInstance(kCFNumberFormatterFormatWidth, unicode)
-        self.assertIsInstance(kCFNumberFormatterPaddingPosition, unicode)
-        self.assertIsInstance(kCFNumberFormatterPaddingCharacter, unicode)
-        self.assertIsInstance(kCFNumberFormatterDefaultFormat, unicode)
-        self.assertIsInstance(kCFNumberFormatterMultiplier, unicode)
-        self.assertIsInstance(kCFNumberFormatterPositivePrefix, unicode)
-        self.assertIsInstance(kCFNumberFormatterPositiveSuffix, unicode)
-        self.assertIsInstance(kCFNumberFormatterNegativePrefix, unicode)
-        self.assertIsInstance(kCFNumberFormatterNegativeSuffix, unicode)
-        self.assertIsInstance(kCFNumberFormatterPerMillSymbol, unicode)
-        self.assertIsInstance(kCFNumberFormatterInternationalCurrencySymbol, unicode)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterCurrencyCode, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterDecimalSeparator, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterCurrencyDecimalSeparator, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterAlwaysShowDecimalSeparator, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterGroupingSeparator, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterUseGroupingSeparator, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterPercentSymbol, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterZeroSymbol, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterNaNSymbol, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterInfinitySymbol, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMinusSign, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterPlusSign, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterCurrencySymbol, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterExponentSymbol, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMinIntegerDigits, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMaxIntegerDigits, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMinFractionDigits, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMaxFractionDigits, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterGroupingSize, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterSecondaryGroupingSize, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterRoundingMode, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterRoundingIncrement, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterFormatWidth, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterPaddingPosition, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterPaddingCharacter, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterDefaultFormat, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterMultiplier, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterPositivePrefix, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterPositiveSuffix, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterNegativePrefix, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterNegativeSuffix, str)
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterPerMillSymbol, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterInternationalCurrencySymbol, str
+        )
 
     @min_os_level("10.5")
     def testConstants10_5(self):
-        self.assertIsInstance(kCFNumberFormatterCurrencyGroupingSeparator, unicode)
-        self.assertIsInstance(kCFNumberFormatterIsLenient, unicode)
-        self.assertIsInstance(kCFNumberFormatterUseSignificantDigits, unicode)
-        self.assertIsInstance(kCFNumberFormatterMinSignificantDigits, unicode)
-        self.assertIsInstance(kCFNumberFormatterMaxSignificantDigits, unicode)
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterCurrencyGroupingSeparator, str
+        )
+        self.assertIsInstance(CoreFoundation.kCFNumberFormatterIsLenient, str)
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterUseSignificantDigits, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterMinSignificantDigits, str
+        )
+        self.assertIsInstance(
+            CoreFoundation.kCFNumberFormatterMaxSignificantDigits, str
+        )
 
     @min_os_level("10.11")
-    def testConstants(self):
-        self.assertEqual(kCFNumberFormatterOrdinalStyle, 6)
-        self.assertEqual(kCFNumberFormatterCurrencyISOCodeStyle, 8)
-        self.assertEqual(kCFNumberFormatterCurrencyPluralStyle, 9)
-        self.assertEqual(kCFNumberFormatterCurrencyAccountingStyle, 10)
-
-
-if __name__ == "__main__":
-    main()
+    def testConstants10_11(self):
+        self.assertEqual(CoreFoundation.kCFNumberFormatterOrdinalStyle, 6)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterCurrencyISOCodeStyle, 8)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterCurrencyPluralStyle, 9)
+        self.assertEqual(CoreFoundation.kCFNumberFormatterCurrencyAccountingStyle, 10)

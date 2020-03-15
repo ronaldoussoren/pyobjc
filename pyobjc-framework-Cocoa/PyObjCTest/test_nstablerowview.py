@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTableRowView(TestCase):
@@ -22,7 +22,3 @@ class TestNSTableRowView(TestCase):
     def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSTableRowView.isPreviousRowSelected)
         self.assertArgIsBOOL(AppKit.NSTableRowView.setPreviousRowSelected_, 0)
-
-
-if __name__ == "__main__":
-    main()

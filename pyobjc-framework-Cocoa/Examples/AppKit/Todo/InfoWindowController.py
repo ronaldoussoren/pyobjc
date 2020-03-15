@@ -3,6 +3,15 @@ from __future__ import print_function
 import Cocoa
 import objc
 from ToDoDocument import ToDoDocument
+from ToDoItem import (
+    COMPLETE,
+    SECS_IN_HOUR,
+    SECS_IN_DAY,
+    ToDoItem,
+    ConvertSecondsToTime,
+    ConvertTimeToSeconds,
+    ToDoItemChangedNotification,
+)
 
 NOTIFY_TAG = 0
 RESCHEDULE_TAG = 1
@@ -70,7 +79,7 @@ class InfoWindowController(Cocoa.NSWindowController):
                 theItem.setSecsUntilNotify_(SECS_IN_DAY)
             elif idx == NotifyLengthOther:
                 theItem.setSecsUntilNotify_(
-                    infoNotifyOtherHours.intValue() * SECS_IN_HOUR
+                    self.infoNotifyOtherHours.intValue() * SECS_IN_HOUR
                 )
             else:
                 Cocoa.NSLog("Error in selectedRow")
@@ -91,7 +100,7 @@ class InfoWindowController(Cocoa.NSWindowController):
 
     def textDidEndEditing_(self, notification):
         if notification.object() is self.infoNotes:
-            self._inspectingDocument.selectedItem().setNotes_(infoNotes.string())
+            self._inspectingDocument.selectedItem().setNotes_(self.infoNotes.string())
             self._inspectingDocument.selectedItemModified()
 
     def controlTextDidEndEditing_(self, notification):
@@ -109,6 +118,7 @@ class InfoWindowController(Cocoa.NSWindowController):
                 self.infoNotifyMinute.intValue(),
                 self.infoNotifyAMPM.cellAtRow_column_(1, 0).state(),
             )
+            theItem.setSecsUntilNotify_(dueSecs)
         elif notification.object() is self.infoNotifyOtherHours:
             if self.infoNotifySwitchMatrix.selectedRow() == NotifyLengthOther:
                 theItem.setSecsUntilNotify_(
@@ -132,8 +142,6 @@ class InfoWindowController(Cocoa.NSWindowController):
         return _sharedInfoWindowController
 
     def init(self):
-        # XXX: Not sure if the native code works correctly if the return value
-        # from super != self.
         self = self.initWithWindowNibName_("ToDoInfoWindow")
         if self:
             self.setWindowFrameAutosaveName_("Info")
@@ -162,7 +170,6 @@ class InfoWindowController(Cocoa.NSWindowController):
     def windowDidLoad(self):
         Cocoa.NSWindowController.windowDidLoad(self)
 
-        # XXX: The calls to retain may not be necessary.
         self.notifyView.retain()
         self.notifyView.removeFromSuperview()
 

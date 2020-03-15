@@ -1,28 +1,24 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, onlyOn32Bit
 
 
 class TestNSMovieView(TestCase):
     @onlyOn32Bit
     def testConstants(self):
-        self.assertEqual(NSQTMovieNormalPlayback, 0)
-        self.assertEqual(NSQTMovieLoopingPlayback, 1)
-        self.assertEqual(NSQTMovieLoopingBackAndForthPlayback, 2)
+        self.assertEqual(AppKit.NSQTMovieNormalPlayback, 0)
+        self.assertEqual(AppKit.NSQTMovieLoopingPlayback, 1)
+        self.assertEqual(AppKit.NSQTMovieLoopingBackAndForthPlayback, 2)
 
     @onlyOn32Bit
     def testMethods(self):
-        self.assertResultIsBOOL(NSMovieView.isPlaying)
-        self.assertResultIsBOOL(NSMovieView.isMuted)
-        self.assertArgIsBOOL(NSMovieView.setMuted_, 0)
-        self.assertResultIsBOOL(NSMovieView.playsSelectionOnly)
-        self.assertArgIsBOOL(NSMovieView.setPlaysSelectionOnly_, 0)
-        self.assertResultIsBOOL(NSMovieView.playsEveryFrame)
-        self.assertResultIsBOOL(NSMovieView.isControllerVisible)
-        self.assertArgIsBOOL(NSMovieView.showController_adjustingSize_, 0)
-        self.assertArgIsBOOL(NSMovieView.showController_adjustingSize_, 1)
-        self.assertArgIsBOOL(NSMovieView.setEditable_, 0)
-        self.assertResultIsBOOL(NSMovieView.isEditable)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(AppKit.NSMovieView.isPlaying)
+        self.assertResultIsBOOL(AppKit.NSMovieView.isMuted)
+        self.assertArgIsBOOL(AppKit.NSMovieView.setMuted_, 0)
+        self.assertResultIsBOOL(AppKit.NSMovieView.playsSelectionOnly)
+        self.assertArgIsBOOL(AppKit.NSMovieView.setPlaysSelectionOnly_, 0)
+        self.assertResultIsBOOL(AppKit.NSMovieView.playsEveryFrame)
+        self.assertResultIsBOOL(AppKit.NSMovieView.isControllerVisible)
+        self.assertArgIsBOOL(AppKit.NSMovieView.showController_adjustingSize_, 0)
+        self.assertArgIsBOOL(AppKit.NSMovieView.showController_adjustingSize_, 1)
+        self.assertArgIsBOOL(AppKit.NSMovieView.setEditable_, 0)
+        self.assertResultIsBOOL(AppKit.NSMovieView.isEditable)

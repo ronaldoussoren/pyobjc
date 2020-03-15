@@ -1,15 +1,11 @@
-from AppKit import *
-from Foundation import *
+from Cocoa import NSRegisterServicesProvider
 from PyObjCTools import AppHelper
-from ServiceTest import *
+from ServiceTest import ServiceTest
 
 
 def main():
-    # NSLog(u"main()")
     serviceProvider = ServiceTest.alloc().init()
-    # NSLog(u"serviceProvider = %s", serviceProvider)
     NSRegisterServicesProvider(serviceProvider, "PyObjCSimpleService")
-    # NSLog(u"registered as PyObjCSimpleService")
     AppHelper.runConsoleEventLoop()
 
 

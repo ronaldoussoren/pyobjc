@@ -1,12 +1,8 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSForm(TestCase):
     def testMethods(self):
-        self.assertArgIsBOOL(NSForm.setBordered_, 0)
-        self.assertArgIsBOOL(NSForm.setBezeled_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(AppKit.NSForm.setBordered_, 0)
+        self.assertArgIsBOOL(AppKit.NSForm.setBezeled_, 0)

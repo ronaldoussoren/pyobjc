@@ -2,9 +2,9 @@ import sys
 import time
 
 import objc
-from Foundation import *
+import Foundation
 from PyObjCTest.testhelper import PyObjC_TestClass4
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class ThreadingTest(TestCase):
@@ -25,7 +25,7 @@ class ThreadingTest(TestCase):
             sys.setcheckinterval(self._int)
 
     def testNSObjectString(self):
-        class PyObjCTestThreadRunnerString(NSObject):
+        class PyObjCTestThreadRunnerString(Foundation.NSObject):
             def init(self):
                 self = objc.super(PyObjCTestThreadRunnerString, self).init()
                 if self is None:
@@ -35,12 +35,12 @@ class ThreadingTest(TestCase):
                 return self
 
             def run_(self, argument):
-                NSAutoreleasePool.alloc().init()
+                Foundation.NSAutoreleasePool.alloc().init()
                 self.storage.append(argument)
 
         myObj = PyObjCTestThreadRunnerString.alloc().init()
 
-        NSThread.detachNewThreadSelector_toTarget_withObject_(
+        Foundation.NSThread.detachNewThreadSelector_toTarget_withObject_(
             "run:", myObj, b"hello world".decode("ascii")
         )
 
@@ -48,16 +48,18 @@ class ThreadingTest(TestCase):
         self.assertEqual(myObj.storage[0], b"hello world".decode("ascii"))
 
     def testNSObject(self):
-        class PyObjCTestThreadRunner(NSObject):
+        class PyObjCTestThreadRunner(Foundation.NSObject):
             def run_(self, argument):
-                NSAutoreleasePool.alloc().init()
+                Foundation.NSAutoreleasePool.alloc().init()
                 for i in range(100):
                     argument.append(i)
 
         myObj = PyObjCTestThreadRunner.alloc().init()
         lst = []
 
-        NSThread.detachNewThreadSelector_toTarget_withObject_("run:", myObj, lst)
+        Foundation.NSThread.detachNewThreadSelector_toTarget_withObject_(
+            "run:", myObj, lst
+        )
 
         lst2 = []
         for i in range(100):
@@ -85,7 +87,9 @@ class ThreadingTest(TestCase):
         os.close(fp)
 
         try:
-            NSThread.detachNewThreadSelector_toTarget_withObject_("run:", myObj, lst)
+            Foundation.NSThread.detachNewThreadSelector_toTarget_withObject_(
+                "run:", myObj, lst
+            )
 
             lst2 = []
             for i in range(100):
@@ -101,20 +105,18 @@ class ThreadingTest(TestCase):
         class Dummy:
             pass
 
-        class PyObjCTestCalling(NSObject):
+        class PyObjCTestCalling(Foundation.NSObject):
             def call(self):
                 return Dummy()
 
         my = PyObjC_TestClass4.alloc().init()
         cb = PyObjCTestCalling.alloc().init()
 
-        NSThread.detachNewThreadSelector_toTarget_withObject_("runThread:", my, cb)
+        Foundation.NSThread.detachNewThreadSelector_toTarget_withObject_(
+            "runThread:", my, cb
+        )
 
         time.sleep(2)
 
         retval = my.returnObject()
         self.assertIsInstance(retval, Dummy)
-
-
-if __name__ == "__main__":
-    main()

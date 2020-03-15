@@ -1,162 +1,243 @@
 import Foundation
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSCalendar(TestCase):
     def testConstants(self):
-        self.assertEqual(NSEraCalendarUnit, kCFCalendarUnitEra)
-        self.assertEqual(NSYearCalendarUnit, kCFCalendarUnitYear)
-        self.assertEqual(NSMonthCalendarUnit, kCFCalendarUnitMonth)
-        self.assertEqual(NSDayCalendarUnit, kCFCalendarUnitDay)
-        self.assertEqual(NSHourCalendarUnit, kCFCalendarUnitHour)
-        self.assertEqual(NSMinuteCalendarUnit, kCFCalendarUnitMinute)
-        self.assertEqual(NSSecondCalendarUnit, kCFCalendarUnitSecond)
-        self.assertEqual(NSWeekCalendarUnit, kCFCalendarUnitWeek)
-        self.assertEqual(NSWeekdayCalendarUnit, kCFCalendarUnitWeekday)
-        self.assertEqual(NSWeekdayOrdinalCalendarUnit, kCFCalendarUnitWeekdayOrdinal)
-
-        self.assertEqual(NSWrapCalendarComponents, kCFCalendarComponentsWrap)
-
-        self.assertEqual(NSUndefinedDateComponent, NSIntegerMax)
-        self.assertEqual(NSDateComponentUndefined, NSIntegerMax)
-
-        self.assertEqual(NSCalendarUnitEra, kCFCalendarUnitEra)
-        self.assertEqual(NSCalendarUnitYear, kCFCalendarUnitYear)
-        self.assertEqual(NSCalendarUnitMonth, kCFCalendarUnitMonth)
-        self.assertEqual(NSCalendarUnitDay, kCFCalendarUnitDay)
-        self.assertEqual(NSCalendarUnitHour, kCFCalendarUnitHour)
-        self.assertEqual(NSCalendarUnitMinute, kCFCalendarUnitMinute)
-        self.assertEqual(NSCalendarUnitSecond, kCFCalendarUnitSecond)
-        self.assertEqual(NSCalendarUnitWeekday, kCFCalendarUnitWeekday)
-        self.assertEqual(NSCalendarUnitWeekdayOrdinal, kCFCalendarUnitWeekdayOrdinal)
-        self.assertEqual(NSCalendarUnitQuarter, kCFCalendarUnitQuarter)
-        self.assertEqual(NSCalendarUnitWeekOfMonth, kCFCalendarUnitWeekOfMonth)
-        self.assertEqual(NSCalendarUnitWeekOfYear, kCFCalendarUnitWeekOfYear)
         self.assertEqual(
-            NSCalendarUnitYearForWeekOfYear, kCFCalendarUnitYearForWeekOfYear
+            Foundation.NSEraCalendarUnit, CoreFoundation.kCFCalendarUnitEra
         )
-        self.assertEqual(NSCalendarUnitNanosecond, (1 << 15))
-        self.assertEqual(NSCalendarUnitCalendar, (1 << 20))
-        self.assertEqual(NSCalendarUnitTimeZone, (1 << 21))
-        self.assertEqual(NSCalendarWrapComponents, (1 << 0))
-        self.assertEqual(NSCalendarMatchStrictly, (1 << 1))
-        self.assertEqual(NSCalendarSearchBackwards, (1 << 2))
-        self.assertEqual(NSCalendarMatchPreviousTimePreservingSmallerUnits, (1 << 8))
-        self.assertEqual(NSCalendarMatchNextTimePreservingSmallerUnits, (1 << 9))
-        self.assertEqual(NSCalendarMatchNextTime, (1 << 10))
-        self.assertEqual(NSCalendarMatchFirst, (1 << 12))
-        self.assertEqual(NSCalendarMatchLast, (1 << 13))
+        self.assertEqual(
+            Foundation.NSYearCalendarUnit, CoreFoundation.kCFCalendarUnitYear
+        )
+        self.assertEqual(
+            Foundation.NSMonthCalendarUnit, CoreFoundation.kCFCalendarUnitMonth
+        )
+        self.assertEqual(
+            Foundation.NSDayCalendarUnit, CoreFoundation.kCFCalendarUnitDay
+        )
+        self.assertEqual(
+            Foundation.NSHourCalendarUnit, CoreFoundation.kCFCalendarUnitHour
+        )
+        self.assertEqual(
+            Foundation.NSMinuteCalendarUnit, CoreFoundation.kCFCalendarUnitMinute
+        )
+        self.assertEqual(
+            Foundation.NSSecondCalendarUnit, CoreFoundation.kCFCalendarUnitSecond
+        )
+        self.assertEqual(
+            Foundation.NSWeekCalendarUnit, CoreFoundation.kCFCalendarUnitWeek
+        )
+        self.assertEqual(
+            Foundation.NSWeekdayCalendarUnit, CoreFoundation.kCFCalendarUnitWeekday
+        )
+        self.assertEqual(
+            Foundation.NSWeekdayOrdinalCalendarUnit,
+            CoreFoundation.kCFCalendarUnitWeekdayOrdinal,
+        )
+
+        self.assertEqual(
+            Foundation.NSWrapCalendarComponents,
+            CoreFoundation.kCFCalendarComponentsWrap,
+        )
+
+        self.assertEqual(Foundation.NSUndefinedDateComponent, Foundation.NSIntegerMax)
+        self.assertEqual(Foundation.NSDateComponentUndefined, Foundation.NSIntegerMax)
+
+        self.assertEqual(
+            Foundation.NSCalendarUnitEra, CoreFoundation.kCFCalendarUnitEra
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitYear, CoreFoundation.kCFCalendarUnitYear
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitMonth, CoreFoundation.kCFCalendarUnitMonth
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitDay, CoreFoundation.kCFCalendarUnitDay
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitHour, CoreFoundation.kCFCalendarUnitHour
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitMinute, CoreFoundation.kCFCalendarUnitMinute
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitSecond, CoreFoundation.kCFCalendarUnitSecond
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitWeekday, CoreFoundation.kCFCalendarUnitWeekday
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitWeekdayOrdinal,
+            CoreFoundation.kCFCalendarUnitWeekdayOrdinal,
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitQuarter, CoreFoundation.kCFCalendarUnitQuarter
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitWeekOfMonth,
+            CoreFoundation.kCFCalendarUnitWeekOfMonth,
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitWeekOfYear,
+            CoreFoundation.kCFCalendarUnitWeekOfYear,
+        )
+        self.assertEqual(
+            Foundation.NSCalendarUnitYearForWeekOfYear,
+            CoreFoundation.kCFCalendarUnitYearForWeekOfYear,
+        )
+        self.assertEqual(Foundation.NSCalendarUnitNanosecond, (1 << 15))
+        self.assertEqual(Foundation.NSCalendarUnitCalendar, (1 << 20))
+        self.assertEqual(Foundation.NSCalendarUnitTimeZone, (1 << 21))
+        self.assertEqual(Foundation.NSCalendarWrapComponents, (1 << 0))
+        self.assertEqual(Foundation.NSCalendarMatchStrictly, (1 << 1))
+        self.assertEqual(Foundation.NSCalendarSearchBackwards, (1 << 2))
+        self.assertEqual(
+            Foundation.NSCalendarMatchPreviousTimePreservingSmallerUnits, (1 << 8)
+        )
+        self.assertEqual(
+            Foundation.NSCalendarMatchNextTimePreservingSmallerUnits, (1 << 9)
+        )
+        self.assertEqual(Foundation.NSCalendarMatchNextTime, (1 << 10))
+        self.assertEqual(Foundation.NSCalendarMatchFirst, (1 << 12))
+        self.assertEqual(Foundation.NSCalendarMatchLast, (1 << 13))
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertEqual(NSQuarterCalendarUnit, kCFCalendarUnitQuarter)
+        self.assertEqual(
+            Foundation.NSQuarterCalendarUnit, CoreFoundation.kCFCalendarUnitQuarter
+        )
 
-        self.assertIsInstance(NSCalendarIdentifierGregorian, unicode)
-        self.assertIsInstance(NSCalendarIdentifierBuddhist, unicode)
-        self.assertIsInstance(NSCalendarIdentifierChinese, unicode)
-        self.assertIsInstance(NSCalendarIdentifierCoptic, unicode)
-        self.assertIsInstance(NSCalendarIdentifierEthiopicAmeteMihret, unicode)
-        self.assertIsInstance(NSCalendarIdentifierEthiopicAmeteAlem, unicode)
-        self.assertIsInstance(NSCalendarIdentifierHebrew, unicode)
-        self.assertIsInstance(NSCalendarIdentifierISO8601, unicode)
-        self.assertIsInstance(NSCalendarIdentifierIndian, unicode)
-        self.assertIsInstance(NSCalendarIdentifierIslamic, unicode)
-        self.assertIsInstance(NSCalendarIdentifierIslamicCivil, unicode)
-        self.assertIsInstance(NSCalendarIdentifierJapanese, unicode)
-        self.assertIsInstance(NSCalendarIdentifierPersian, unicode)
-        self.assertIsInstance(NSCalendarIdentifierRepublicOfChina, unicode)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierGregorian, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierBuddhist, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierChinese, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierCoptic, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierEthiopicAmeteMihret, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierEthiopicAmeteAlem, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierHebrew, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierISO8601, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierIndian, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierIslamic, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicCivil, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierJapanese, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierPersian, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierRepublicOfChina, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(NSWeekOfMonthCalendarUnit, kCFCalendarUnitWeekOfMonth)
-        self.assertEqual(NSWeekOfYearCalendarUnit, kCFCalendarUnitWeekOfYear)
         self.assertEqual(
-            NSYearForWeekOfYearCalendarUnit, kCFCalendarUnitYearForWeekOfYear
+            Foundation.NSWeekOfMonthCalendarUnit,
+            CoreFoundation.kCFCalendarUnitWeekOfMonth,
         )
-        self.assertEqual(NSCalendarCalendarUnit, (1 << 20))
-        self.assertEqual(NSTimeZoneCalendarUnit, (1 << 21))
+        self.assertEqual(
+            Foundation.NSWeekOfYearCalendarUnit,
+            CoreFoundation.kCFCalendarUnitWeekOfYear,
+        )
+        self.assertEqual(
+            Foundation.NSYearForWeekOfYearCalendarUnit,
+            CoreFoundation.kCFCalendarUnitYearForWeekOfYear,
+        )
+        self.assertEqual(Foundation.NSCalendarCalendarUnit, (1 << 20))
+        self.assertEqual(Foundation.NSTimeZoneCalendarUnit, (1 << 21))
 
     @min_os_level("10.9")
     def testConstants10_9(self):
-        self.assertIsInstance(NSCalendarDayChangedNotification, unicode)
+        self.assertIsInstance(Foundation.NSCalendarDayChangedNotification, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(NSCalendarIdentifierIslamicTabular, unicode)
-        self.assertIsInstance(NSCalendarIdentifierIslamicUmmAlQura, unicode)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicTabular, str)
+        self.assertIsInstance(Foundation.NSCalendarIdentifierIslamicUmmAlQura, str)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        obj = NSCalendar.currentCalendar()
+        Foundation.NSCalendar.currentCalendar()
 
-        self.assertResultIsBOOL(NSCalendar.rangeOfUnit_startDate_interval_forDate_)
-        self.assertArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 1)
-        self.assertArgIsOut(NSCalendar.rangeOfUnit_startDate_interval_forDate_, 2)
+        self.assertResultIsBOOL(
+            Foundation.NSCalendar.rangeOfUnit_startDate_interval_forDate_
+        )
+        self.assertArgIsOut(
+            Foundation.NSCalendar.rangeOfUnit_startDate_interval_forDate_, 1
+        )
+        self.assertArgIsOut(
+            Foundation.NSCalendar.rangeOfUnit_startDate_interval_forDate_, 2
+        )
 
     @min_os_level("10.8")
     def testMethods10_8(self):
-        self.assertResultIsBOOL(NSDateComponents.isLeapMonth)
-        self.assertArgIsBOOL(NSDateComponents.setLeapMonth_, 0)
+        self.assertResultIsBOOL(Foundation.NSDateComponents.isLeapMonth)
+        self.assertArgIsBOOL(Foundation.NSDateComponents.setLeapMonth_, 0)
 
     @min_os_level("10.9")
     def testMethods10_9(self):
-        self.assertArgIsOut(NSCalendar.getEra_year_month_day_fromDate_, 0)
-        self.assertArgIsOut(NSCalendar.getEra_year_month_day_fromDate_, 1)
-        self.assertArgIsOut(NSCalendar.getEra_year_month_day_fromDate_, 2)
-        self.assertArgIsOut(NSCalendar.getEra_year_month_day_fromDate_, 3)
+        self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 0)
+        self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 1)
+        self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 2)
+        self.assertArgIsOut(Foundation.NSCalendar.getEra_year_month_day_fromDate_, 3)
 
         self.assertArgIsOut(
-            NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_, 0
+            Foundation.NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_,
+            0,
         )
         self.assertArgIsOut(
-            NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_, 1
+            Foundation.NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_,
+            1,
         )
         self.assertArgIsOut(
-            NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_, 2
+            Foundation.NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_,
+            2,
         )
         self.assertArgIsOut(
-            NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_, 3
+            Foundation.NSCalendar.getEra_yearForWeekOfYear_weekOfYear_weekday_fromDate_,
+            3,
         )
 
-        self.assertArgIsOut(NSCalendar.getHour_minute_second_nanosecond_fromDate_, 0)
-        self.assertArgIsOut(NSCalendar.getHour_minute_second_nanosecond_fromDate_, 1)
-        self.assertArgIsOut(NSCalendar.getHour_minute_second_nanosecond_fromDate_, 2)
-        self.assertArgIsOut(NSCalendar.getHour_minute_second_nanosecond_fromDate_, 3)
+        self.assertArgIsOut(
+            Foundation.NSCalendar.getHour_minute_second_nanosecond_fromDate_, 0
+        )
+        self.assertArgIsOut(
+            Foundation.NSCalendar.getHour_minute_second_nanosecond_fromDate_, 1
+        )
+        self.assertArgIsOut(
+            Foundation.NSCalendar.getHour_minute_second_nanosecond_fromDate_, 2
+        )
+        self.assertArgIsOut(
+            Foundation.NSCalendar.getHour_minute_second_nanosecond_fromDate_, 3
+        )
 
-        self.assertResultIsBOOL(NSCalendar.isDate_equalToDate_toUnitGranularity_)
-        self.assertResultIsBOOL(NSCalendar.isDate_inSameDayAsDate_)
-        self.assertResultIsBOOL(NSCalendar.isDateInToday_)
-        self.assertResultIsBOOL(NSCalendar.isDateInTomorrow_)
-        self.assertResultIsBOOL(NSCalendar.isDateInWeekend_)
         self.assertResultIsBOOL(
-            NSCalendar.rangeOfWeekendStartDate_interval_containingDate_
+            Foundation.NSCalendar.isDate_equalToDate_toUnitGranularity_
+        )
+        self.assertResultIsBOOL(Foundation.NSCalendar.isDate_inSameDayAsDate_)
+        self.assertResultIsBOOL(Foundation.NSCalendar.isDateInToday_)
+        self.assertResultIsBOOL(Foundation.NSCalendar.isDateInTomorrow_)
+        self.assertResultIsBOOL(Foundation.NSCalendar.isDateInWeekend_)
+        self.assertResultIsBOOL(
+            Foundation.NSCalendar.rangeOfWeekendStartDate_interval_containingDate_
         )
         self.assertArgIsOut(
-            NSCalendar.rangeOfWeekendStartDate_interval_containingDate_, 0
+            Foundation.NSCalendar.rangeOfWeekendStartDate_interval_containingDate_, 0
         )
         self.assertArgIsOut(
-            NSCalendar.rangeOfWeekendStartDate_interval_containingDate_, 1
+            Foundation.NSCalendar.rangeOfWeekendStartDate_interval_containingDate_, 1
         )
         self.assertResultIsBOOL(
-            NSCalendar.nextWeekendStartDate_interval_options_afterDate_
+            Foundation.NSCalendar.nextWeekendStartDate_interval_options_afterDate_
         )
         self.assertArgIsOut(
-            NSCalendar.nextWeekendStartDate_interval_options_afterDate_, 0
+            Foundation.NSCalendar.nextWeekendStartDate_interval_options_afterDate_, 0
         )
         self.assertArgIsOut(
-            NSCalendar.nextWeekendStartDate_interval_options_afterDate_, 1
+            Foundation.NSCalendar.nextWeekendStartDate_interval_options_afterDate_, 1
         )
         self.assertArgIsBlock(
-            NSCalendar.enumerateDatesStartingAfterDate_matchingComponents_options_usingBlock_,
+            Foundation.NSCalendar.enumerateDatesStartingAfterDate_matchingComponents_options_usingBlock_,  # noqa: B950
             3,
             b"v@Zo^Z",
         )
-        self.assertResultIsBOOL(NSCalendar.date_matchesComponents_)
+        self.assertResultIsBOOL(Foundation.NSCalendar.date_matchesComponents_)
 
-        self.assertResultIsBOOL(NSDateComponents.isValidDate)
-        self.assertResultIsBOOL(NSDateComponents.isValidDateInCalendar_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Foundation.NSDateComponents.isValidDate)
+        self.assertResultIsBOOL(Foundation.NSDateComponents.isValidDateInCalendar_)

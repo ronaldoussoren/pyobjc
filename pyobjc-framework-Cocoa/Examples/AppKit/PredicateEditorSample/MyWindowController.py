@@ -1,5 +1,3 @@
-import math
-
 import Cocoa
 import objc
 
@@ -85,15 +83,14 @@ class MyWindowController(Cocoa.NSWindowController):
             ).stringByResolvingSymlinksInPath()
 
             # create a dictionary entry to be added to our search results array
-            emptyStr = ""
-            dict = {
+            aDict = {
                 "name": nameStr or "",
                 "phone": phoneStr or "",
                 "city": cityStr or "",
                 "state": stateStr or "",
                 "url": Cocoa.NSURL.fileURLWithPath_(storePath),
             }
-            self.mySearchResults.append(dict)
+            self.mySearchResults.append(aDict)
 
     def queryNotification_(self, note):
         # the NSMetadataQuery will send back a note when updates are happening.
@@ -143,9 +140,11 @@ class MyWindowController(Cocoa.NSWindowController):
     # ------------------------------------------------------------------------
     #   spotlightFriendlyPredicate:predicate
     #
-    #   This method will "clean up" an NSPredicate to make it ready for Spotlight, or return nil if the predicate can't be cleaned.
+    #   This method will "clean up" an NSPredicate to make it ready for Spotlight, or return nil
+    #   if the predicate can't be cleaned.
     #
-    #   Foundation's Spotlight support in NSMetdataQuery places the following requirements on an NSPredicate:
+    #   Foundation's Spotlight support in NSMetdataQuery places the following requirements on
+    #   an NSPredicate:
     #           - Value-type (always YES or NO) predicates are not allowed
     #           - Any compound predicate (other than NOT) must have at least two subpredicates
     # -------------------------------------------------------------------------
@@ -207,7 +206,8 @@ class MyWindowController(Cocoa.NSWindowController):
     #
     #   We need to do potentially three things:
     #           1) Fire off a search if the user hits enter.
-    #           2) Add some rows if the user deleted all of them, so the user isn't left without any rows.
+    #           2) Add some rows if the user deleted all of them, so the user isn't left
+    #              without any rows.
     #           3) Resize the window if the number of rows changed (the user hit + or -).
     # --------------------------------------------------------------------------
     @objc.IBAction
@@ -233,22 +233,26 @@ class MyWindowController(Cocoa.NSWindowController):
                     )
                     searchIndex += 1
 
-        # if the user deleted the first row, then add it again - no sense leaving the user with no rows
+        # if the user deleted the first row, then add it again - no sense
+        # leaving the user with no rows
         if self.predicateEditor.numberOfRows() == 0:
             self.predicateEditor.addRow_(self)
 
         # resize the window vertically to accomodate our views:
 
         # get the new number of rows, which tells us the needed change in height,
-        # note that we can't just get the view frame, because it's currently animating - this method is called before the animation is finished.
+        # note that we can't just get the view frame, because it's currently
+        # animating - this method is called before the animation is finished.
         newRowCount = self.predicateEditor.numberOfRows()
 
         # if there's no change in row count, there's no need to resize anything
         if newRowCount == self.previousRowCount:
             return
 
-        # The autoresizing masks, by default, allows the NSTableView to grow and keeps the predicate editor fixed.
-        # We need to temporarily grow the predicate editor, and keep the NSTableView fixed, so we have to change the autoresizing masks.
+        # The autoresizing masks, by default, allows the NSTableView to grow
+        # and keeps the predicate editor fixed. We need to temporarily grow the
+        # predicate editor, and keep the NSTableView fixed, so we have to change
+        # the autoresizing masks.
         # Save off the old ones; we'll restore them after changing the window frame.
         tableScrollView = self.myTableView.enclosingScrollView()
         oldOutlineViewMask = tableScrollView.autoresizingMask()
@@ -266,7 +270,8 @@ class MyWindowController(Cocoa.NSWindowController):
         # determine if we need to grow or shrink the window
         growing = newRowCount > self.previousRowCount
 
-        # if growing, figure out by how much.  Sizes must contain nonnegative values, which is why we avoid negative floats here.
+        # if growing, figure out by how much.  Sizes must contain nonnegative
+        # values, which is why we avoid negative floats here.
         heightDifference = abs(
             self.predicateEditor.rowHeight() * (newRowCount - self.previousRowCount)
         )
@@ -291,7 +296,8 @@ class MyWindowController(Cocoa.NSWindowController):
         )
 
         # change the window frame size:
-        # - if we're growing, the height goes up and the origin goes down (corresponding to growing down).
+        # - if we're growing, the height goes up and the origin goes down
+        #    (corresponding to growing down).
         # - if we're shrinking, the height goes down and the origin goes up.
         windowFrame = self.window().frame()
         if growing:

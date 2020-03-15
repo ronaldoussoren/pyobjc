@@ -1,11 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSClassDescription(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSClassDescriptionNeededForClassNotification, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(
+            Foundation.NSClassDescriptionNeededForClassNotification, str
+        )

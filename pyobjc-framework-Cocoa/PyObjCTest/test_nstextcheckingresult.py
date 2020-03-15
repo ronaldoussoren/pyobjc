@@ -1,118 +1,121 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextCheckingResult(TestCase):
     @min_os_level("10.6")
     def testConstants(self):
-        self.assertEqual(NSTextCheckingTypeOrthography, 1 << 0)
-        self.assertEqual(NSTextCheckingTypeSpelling, 1 << 1)
-        self.assertEqual(NSTextCheckingTypeGrammar, 1 << 2)
-        self.assertEqual(NSTextCheckingTypeDate, 1 << 3)
-        self.assertEqual(NSTextCheckingTypeAddress, 1 << 4)
-        self.assertEqual(NSTextCheckingTypeLink, 1 << 5)
-        self.assertEqual(NSTextCheckingTypeQuote, 1 << 6)
-        self.assertEqual(NSTextCheckingTypeDash, 1 << 7)
-        self.assertEqual(NSTextCheckingTypeReplacement, 1 << 8)
-        self.assertEqual(NSTextCheckingTypeCorrection, 1 << 9)
+        self.assertEqual(Foundation.NSTextCheckingTypeOrthography, 1 << 0)
+        self.assertEqual(Foundation.NSTextCheckingTypeSpelling, 1 << 1)
+        self.assertEqual(Foundation.NSTextCheckingTypeGrammar, 1 << 2)
+        self.assertEqual(Foundation.NSTextCheckingTypeDate, 1 << 3)
+        self.assertEqual(Foundation.NSTextCheckingTypeAddress, 1 << 4)
+        self.assertEqual(Foundation.NSTextCheckingTypeLink, 1 << 5)
+        self.assertEqual(Foundation.NSTextCheckingTypeQuote, 1 << 6)
+        self.assertEqual(Foundation.NSTextCheckingTypeDash, 1 << 7)
+        self.assertEqual(Foundation.NSTextCheckingTypeReplacement, 1 << 8)
+        self.assertEqual(Foundation.NSTextCheckingTypeCorrection, 1 << 9)
 
-        self.assertEqual(NSTextCheckingAllSystemTypes, 0xFFFFFFFF)
-        self.assertEqual(NSTextCheckingAllCustomTypes, (0xFFFFFFFF << 32))
+        self.assertEqual(Foundation.NSTextCheckingAllSystemTypes, 0xFFFFFFFF)
+        self.assertEqual(Foundation.NSTextCheckingAllCustomTypes, (0xFFFFFFFF << 32))
         self.assertEqual(
-            NSTextCheckingAllTypes,
-            (NSTextCheckingAllSystemTypes | NSTextCheckingAllCustomTypes),
+            Foundation.NSTextCheckingAllTypes,
+            (
+                Foundation.NSTextCheckingAllSystemTypes
+                | Foundation.NSTextCheckingAllCustomTypes
+            ),
         )
 
-        self.assertIsInstance(NSTextCheckingNameKey, unicode)
-        self.assertIsInstance(NSTextCheckingJobTitleKey, unicode)
-        self.assertIsInstance(NSTextCheckingOrganizationKey, unicode)
-        self.assertIsInstance(NSTextCheckingStreetKey, unicode)
-        self.assertIsInstance(NSTextCheckingCityKey, unicode)
-        self.assertIsInstance(NSTextCheckingStateKey, unicode)
-        self.assertIsInstance(NSTextCheckingZIPKey, unicode)
-        self.assertIsInstance(NSTextCheckingCountryKey, unicode)
-        self.assertIsInstance(NSTextCheckingPhoneKey, unicode)
+        self.assertIsInstance(Foundation.NSTextCheckingNameKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingJobTitleKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingOrganizationKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingStreetKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingCityKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingStateKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingZIPKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingCountryKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingPhoneKey, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertEqual(NSTextCheckingTypeRegularExpression, 1 << 10)
-        self.assertEqual(NSTextCheckingTypePhoneNumber, 1 << 11)
-        self.assertEqual(NSTextCheckingTypeTransitInformation, 1 << 12)
+        self.assertEqual(Foundation.NSTextCheckingTypeRegularExpression, 1 << 10)
+        self.assertEqual(Foundation.NSTextCheckingTypePhoneNumber, 1 << 11)
+        self.assertEqual(Foundation.NSTextCheckingTypeTransitInformation, 1 << 12)
 
-        self.assertIsInstance(NSTextCheckingAirlineKey, unicode)
-        self.assertIsInstance(NSTextCheckingFlightKey, unicode)
+        self.assertIsInstance(Foundation.NSTextCheckingAirlineKey, str)
+        self.assertIsInstance(Foundation.NSTextCheckingFlightKey, str)
 
     @min_os_level("10.6")
     def testMethods(self):
-        self.assertResultHasType(NSTextCheckingResult.range, NSRange.__typestr__)
+        self.assertResultHasType(
+            Foundation.NSTextCheckingResult.range, Foundation.NSRange.__typestr__
+        )
 
         self.assertArgHasType(
-            NSTextCheckingResult.orthographyCheckingResultWithRange_orthography_,
+            Foundation.NSTextCheckingResult.orthographyCheckingResultWithRange_orthography_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.spellCheckingResultWithRange_, 0, NSRange.__typestr__
+            Foundation.NSTextCheckingResult.spellCheckingResultWithRange_,
+            0,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.grammarCheckingResultWithRange_details_,
+            Foundation.NSTextCheckingResult.grammarCheckingResultWithRange_details_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.dateCheckingResultWithRange_date_,
+            Foundation.NSTextCheckingResult.dateCheckingResultWithRange_date_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.dateCheckingResultWithRange_date_timeZone_duration_,
+            Foundation.NSTextCheckingResult.dateCheckingResultWithRange_date_timeZone_duration_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.addressCheckingResultWithRange_components_,
+            Foundation.NSTextCheckingResult.addressCheckingResultWithRange_components_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.linkCheckingResultWithRange_URL_,
+            Foundation.NSTextCheckingResult.linkCheckingResultWithRange_URL_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.quoteCheckingResultWithRange_replacementString_,
+            Foundation.NSTextCheckingResult.quoteCheckingResultWithRange_replacementString_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.dashCheckingResultWithRange_replacementString_,
+            Foundation.NSTextCheckingResult.dashCheckingResultWithRange_replacementString_,
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.replacementCheckingResultWithRange_replacementString_,
+            Foundation.NSTextCheckingResult.replacementCheckingResultWithRange_replacementString_,  # noqa: B950
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            NSTextCheckingResult.correctionCheckingResultWithRange_replacementString_,
+            Foundation.NSTextCheckingResult.correctionCheckingResultWithRange_replacementString_,  # noqa: B950
             0,
-            NSRange.__typestr__,
+            Foundation.NSRange.__typestr__,
         )
 
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertArgHasType(
-            NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_,
+            Foundation.NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_,  # noqa: B950
             0,
-            b"n^" + NSRange.__typestr__,
+            b"n^" + Foundation.NSRange.__typestr__,
         )
         self.assertArgSizeInArg(
-            NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_,
+            Foundation.NSTextCheckingResult.regularExpressionCheckingResultWithRanges_count_regularExpression_,  # noqa: B950
             0,
             1,
         )
-
-
-if __name__ == "__main__":
-    main()

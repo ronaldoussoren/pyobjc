@@ -3,9 +3,8 @@ from threading import Thread
 
 import AppKit
 import Foundation
-import objc
 from Foundation import NSAutoreleasePool, NSLog, NSObject
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestRegr(TestCase):
@@ -39,7 +38,7 @@ class TestRegr(TestCase):
 
             class MyThread(Thread):
                 def run(self):
-                    pool = NSAutoreleasePool.alloc().init()
+                    pool = NSAutoreleasePool.alloc().init()  # noqa: F841
                     aList.append("before")
                     NSLog(b"does this print?".decode("ascii"))
                     aList.append("after")
@@ -67,11 +66,11 @@ class TestRegr(TestCase):
 
         plist = 0
 
-        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(  # noqa: B950
             plist, Foundation.NSPropertyListXMLFormat_v1_0, None
         )
         self.assertEqual(r[1], None)
-        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(
+        r = Foundation.NSPropertyListSerialization.dataFromPropertyList_format_errorDescription_(  # noqa: B950
             plist, Foundation.NSPropertyListXMLFormat_v1_0, None
         )
         self.assertEqual(r[1], None)
@@ -91,6 +90,7 @@ class TestRegr(TestCase):
                 32,
             )
         )
+        self.assertTrue(o is not None)
 
     @min_os_level("10.6")
     def testBinaryPlist(self):
@@ -99,18 +99,14 @@ class TestRegr(TestCase):
                 (
                     data,
                     error,
-                ) = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(
+                ) = Foundation.NSPropertyListSerialization.dataWithPropertyList_format_options_error_(  # noqa: B950
                     pl, Foundation.NSPropertyListBinaryFormat_v1_0, 0, None
                 )
             (
                 restored,
                 format,
                 error,
-            ) = Foundation.NSPropertyListSerialization.propertyListWithData_options_format_error_(
+            ) = Foundation.NSPropertyListSerialization.propertyListWithData_options_format_error_(  # noqa: B950
                 data, 0, None, None
             )
             self.assertEqual(pl, restored)
-
-
-if __name__ == "__main__":
-    main()

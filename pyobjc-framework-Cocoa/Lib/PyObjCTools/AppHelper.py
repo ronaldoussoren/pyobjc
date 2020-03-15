@@ -42,8 +42,6 @@ from Foundation import (
 )
 from objc import super
 
-PY3K = sys.version_info[0] == 3
-
 
 class PyObjCMessageRunner(NSObject):
     """
@@ -236,11 +234,9 @@ def machInterrupt(signum):
 
 
 def installMachInterrupt():
-    try:
-        import signal
-        from PyObjCTools import MachSignals
-    except:
-        return
+    import signal
+    from PyObjCTools import MachSignals
+
     MachSignals.signal(signal.SIGINT, machInterrupt)
 
 
@@ -330,14 +326,10 @@ def runEventLoop(
             except RAISETHESE:
                 traceback.print_exc()
                 break
-            except:
+            except:  # noqa: E722, B001
                 exctype, e, tb = sys.exc_info()
-                objc_exception = False
                 if isinstance(e, objc.error):
-                    if PY3K:
-                        error_str = str(e)
-                    else:
-                        error_str = unicode(str(e), "utf-8", "replace")
+                    error_str = str(e)
 
                     NSLog("%@", error_str)
                 elif not unexpectedErrorAlert():

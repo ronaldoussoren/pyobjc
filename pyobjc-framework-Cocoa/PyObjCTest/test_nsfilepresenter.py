@@ -1,8 +1,9 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
-class Presenter(NSObject):
+class Presenter(Foundation.NSObject):
     def relinquishPresentedItemToReader_(self, a):
         pass
 
@@ -42,7 +43,3 @@ class TestNSFilePresenter(TestCase):
             1,
             b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

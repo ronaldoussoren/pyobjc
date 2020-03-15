@@ -1,31 +1,27 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextList(TestCase):
     def testConstants(self):
-        self.assertEqual(NSTextListPrependEnclosingMarker, 1)
+        self.assertEqual(AppKit.NSTextListPrependEnclosingMarker, 1)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(NSTextListMarkerBox, unicode)
-        self.assertIsInstance(NSTextListMarkerCheck, unicode)
-        self.assertIsInstance(NSTextListMarkerCircle, unicode)
-        self.assertIsInstance(NSTextListMarkerDiamond, unicode)
-        self.assertIsInstance(NSTextListMarkerDisc, unicode)
-        self.assertIsInstance(NSTextListMarkerHyphen, unicode)
-        self.assertIsInstance(NSTextListMarkerSquare, unicode)
-        self.assertIsInstance(NSTextListMarkerLowercaseHexadecimal, unicode)
-        self.assertIsInstance(NSTextListMarkerUppercaseHexadecimal, unicode)
-        self.assertIsInstance(NSTextListMarkerOctal, unicode)
-        self.assertIsInstance(NSTextListMarkerLowercaseAlpha, unicode)
-        self.assertIsInstance(NSTextListMarkerUppercaseAlpha, unicode)
-        self.assertIsInstance(NSTextListMarkerLowercaseLatin, unicode)
-        self.assertIsInstance(NSTextListMarkerUppercaseLatin, unicode)
-        self.assertIsInstance(NSTextListMarkerLowercaseRoman, unicode)
-        self.assertIsInstance(NSTextListMarkerUppercaseRoman, unicode)
-        self.assertIsInstance(NSTextListMarkerDecimal, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(AppKit.NSTextListMarkerBox, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerCheck, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerCircle, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerDiamond, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerDisc, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerHyphen, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerSquare, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerLowercaseHexadecimal, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerUppercaseHexadecimal, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerOctal, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerLowercaseAlpha, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerUppercaseAlpha, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerLowercaseLatin, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerUppercaseLatin, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerLowercaseRoman, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerUppercaseRoman, str)
+        self.assertIsInstance(AppKit.NSTextListMarkerDecimal, str)

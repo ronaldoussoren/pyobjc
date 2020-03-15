@@ -6,11 +6,11 @@ Usage:
 """
 from setuptools import setup
 
-plist = dict(CFBundleName="FieldGraph")
+plist = {"CFBundleName": "FieldGraph"}
 setup(
     name="FieldGraph",
     app=["Main.py"],
     data_files=["English.lproj", "CrossCursor.tiff", "Map.png"],
-    options=dict(py2app=dict(plist=plist)),
+    options={"py2app": {"plist": plist}},
     setup_requires=["py2app", "pyobjc-framework-Cocoa"],
 )

@@ -1,8 +1,9 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
-class TestNSInputServerHelper(NSObject):
+class TestNSInputServerHelper(AppKit.NSObject):
     def doCommandBySelector_client_(self, sel, sender):
         pass
 
@@ -48,7 +49,7 @@ class TestNSInputServer(TestCase):
         self.assertArgHasType(
             TestNSInputServerHelper.markedTextSelectionChanged_client_,
             0,
-            NSRange.__typestr__,
+            AppKit.NSRange.__typestr__,
         )
         self.assertResultIsBOOL(TestNSInputServerHelper.canBeDisabled)
         self.assertResultIsBOOL(TestNSInputServerHelper.wantsToInterpretAllKeystrokes)
@@ -80,7 +81,7 @@ class TestNSInputServer(TestCase):
         self.assertArgHasType(
             TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_,
             1,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_,
@@ -89,17 +90,17 @@ class TestNSInputServer(TestCase):
         )
 
         self.assertResultIsBOOL(
-            TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_
+            TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_  # noqa: B950
         )
         self.assertArgHasType(
-            TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_,
+            TestNSInputServerHelper.mouseDraggedOnCharacterIndex_atCoordinate_withModifier_client_,  # noqa: B950
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
             TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_,
             1,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSInputServerHelper.mouseDownOnCharacterIndex_atCoordinate_withModifier_client_,
@@ -119,14 +120,10 @@ class TestNSInputServer(TestCase):
         self.assertArgHasType(
             TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_,
             1,
-            NSPoint.__typestr__,
+            AppKit.NSPoint.__typestr__,
         )
         self.assertArgHasType(
             TestNSInputServerHelper.mouseUpOnCharacterIndex_atCoordinate_withModifier_client_,
             2,
             objc._C_NSUInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

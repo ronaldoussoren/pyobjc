@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSAnimationContext(TestCase):
@@ -19,7 +19,3 @@ class TestNSAnimationContext(TestCase):
     def testMethods10_8(self):
         self.assertResultIsBOOL(AppKit.NSAnimationContext.allowsImplicitAnimation)
         self.assertArgIsBOOL(AppKit.NSAnimationContext.setAllowsImplicitAnimation_, 0)
-
-
-if __name__ == "__main__":
-    main()

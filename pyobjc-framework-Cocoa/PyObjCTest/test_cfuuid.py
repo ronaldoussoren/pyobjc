@@ -1,40 +1,40 @@
 import re
 
-from CoreFoundation import *
-from PyObjCTools.TestSupport import *
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCFUUIDAPI(TestCase):
     def testTypes(self):
-        self.assertIsCFType(CFUUIDRef)
+        self.assertIsCFType(CoreFoundation.CFUUIDRef)
 
     def testTypeID(self):
-        v = CFUUIDGetTypeID()
-        self.assertIsInstance(v, (int, long))
+        v = CoreFoundation.CFUUIDGetTypeID()
+        self.assertIsInstance(v, int)
 
     def testCreate(self):
-        self.assertResultIsCFRetained(CFUUIDCreate)
-        uuid = CFUUIDCreate(None)
+        self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreate)
+        uuid = CoreFoundation.CFUUIDCreate(None)
         self.assertIsNot(uuid, None)
-        self.assertIsInstance(uuid, CFUUIDRef)
-        text = CFUUIDCreateString(None, uuid)
-        self.assertIsInstance(text, unicode)
+        self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
+        text = CoreFoundation.CFUUIDCreateString(None, uuid)
+        self.assertIsInstance(text, str)
         m = re.match("^[0-9A-Z]{8}(-[0-9A-Z]{4}){3}-[0-9A-Z]{12}$", text)
         self.assertIsNot(m, None)
 
     def testCreateWithBytes(self):
-        self.assertResultIsCFRetained(CFUUIDCreateWithBytes)
-        uuid = CFUUIDCreateWithBytes(
+        self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreateWithBytes)
+        uuid = CoreFoundation.CFUUIDCreateWithBytes(
             None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
         )
         self.assertIsNot(uuid, None)
-        self.assertIsInstance(uuid, CFUUIDRef)
-        self.assertResultIsCFRetained(CFUUIDCreateString)
-        text = CFUUIDCreateString(None, uuid)
+        self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
+        self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreateString)
+        text = CoreFoundation.CFUUIDCreateString(None, uuid)
         self.assertEqual(text, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii"))
         self.assertRaises(
             ValueError,
-            CFUUIDCreateWithBytes,
+            CoreFoundation.CFUUIDCreateWithBytes,
             None,
             1,
             2,
@@ -55,7 +55,7 @@ class TestCFUUIDAPI(TestCase):
         )
         self.assertRaises(
             ValueError,
-            CFUUIDCreateWithBytes,
+            CoreFoundation.CFUUIDCreateWithBytes,
             None,
             1,
             2,
@@ -76,30 +76,30 @@ class TestCFUUIDAPI(TestCase):
         )
 
     def testCreateFromString(self):
-        self.assertResultIsCFRetained(CFUUIDCreateFromString)
-        uuid1 = CFUUIDCreateFromString(
+        self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreateFromString)
+        uuid1 = CoreFoundation.CFUUIDCreateFromString(
             None, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii")
         )
         self.assertIsNot(uuid1, None)
-        self.assertIsInstance(uuid1, CFUUIDRef)
-        text = CFUUIDCreateString(None, uuid1)
+        self.assertIsInstance(uuid1, CoreFoundation.CFUUIDRef)
+        text = CoreFoundation.CFUUIDCreateString(None, uuid1)
         self.assertEqual(text, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii"))
-        uuid2 = CFUUIDCreateFromString(
+        uuid2 = CoreFoundation.CFUUIDCreateFromString(
             None, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii")
         )
-        text = CFUUIDCreateString(None, uuid2)
+        text = CoreFoundation.CFUUIDCreateString(None, uuid2)
         self.assertEqual(text, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii"))
-        # CFUUID interns values
+        # CoreFoundation.CFUUID interns values
         self.assertIs(uuid1, uuid2)
 
     def testGetBytes(self):
-        uuid = CFUUIDCreateWithBytes(
+        uuid = CoreFoundation.CFUUIDCreateWithBytes(
             None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
         )
         self.assertIsNot(uuid, None)
-        self.assertIsInstance(uuid, CFUUIDRef)
-        bytes = CFUUIDGetUUIDBytes(uuid)
-        self.assertIsInstance(bytes, CFUUIDBytes)
+        self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
+        bytes = CoreFoundation.CFUUIDGetUUIDBytes(uuid)
+        self.assertIsInstance(bytes, CoreFoundation.CFUUIDBytes)
         self.assertEqual(bytes.byte0, 1)
         self.assertEqual(bytes.byte1, 2)
         self.assertEqual(bytes.byte2, 3)
@@ -119,35 +119,37 @@ class TestCFUUIDAPI(TestCase):
 
     def testConstant(self):
         # This is an interesting one, the result of
-        # CFUUIDGetConstantUUIDWithBytes should not be released.
+        # CoreFoundation.CFUUIDGetConstantUUIDWithBytes should not be released.
 
-        uuid = CFUUIDGetConstantUUIDWithBytes(None, *range(16))
-        CFRetain(CFUUIDGetConstantUUIDWithBytes)  # Ensure the value won't be released.
+        uuid = CoreFoundation.CFUUIDGetConstantUUIDWithBytes(None, *range(16))
+        CoreFoundation.CFRetain(
+            CoreFoundation.CFUUIDGetConstantUUIDWithBytes
+        )  # Ensure the value won't be released.
         self.assertIsNot(uuid, None)
-        self.assertIsInstance(uuid, CFUUIDRef)
-        s = CFUUIDCreateString(None, uuid)
+        self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
+        s = CoreFoundation.CFUUIDCreateString(None, uuid)
 
         uuid = None
         del uuid
 
-        uuid = CFUUIDGetConstantUUIDWithBytes(None, *range(16))
+        uuid = CoreFoundation.CFUUIDGetConstantUUIDWithBytes(None, *range(16))
         self.assertIsNot(uuid, None)
-        self.assertIsInstance(uuid, CFUUIDRef)
-        t = CFUUIDCreateString(None, uuid)
+        self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
+        t = CoreFoundation.CFUUIDCreateString(None, uuid)
 
         self.assertEqual(s, t)
 
     def testCreateFromUUIDBytes(self):
-        bytes = CFUUIDBytes(*range(16, 32))
-        uuid = CFUUIDCreateFromUUIDBytes(None, bytes)
+        bytes = CoreFoundation.CFUUIDBytes(*range(16, 32))
+        uuid = CoreFoundation.CFUUIDCreateFromUUIDBytes(None, bytes)
 
         self.assertIsNot(uuid, None)
-        self.assertIsInstance(uuid, CFUUIDRef)
-        text = CFUUIDCreateString(None, uuid)
+        self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
+        text = CoreFoundation.CFUUIDCreateString(None, uuid)
         self.assertEqual(text, b"10111213-1415-1617-1819-1A1B1C1D1E1F".decode("ascii"))
 
     def testStructs(self):
-        o = CFUUIDBytes()
+        o = CoreFoundation.CFUUIDBytes()
         self.assertHasAttr(o, "byte0")
         self.assertHasAttr(o, "byte1")
         self.assertHasAttr(o, "byte2")
@@ -164,7 +166,3 @@ class TestCFUUIDAPI(TestCase):
         self.assertHasAttr(o, "byte13")
         self.assertHasAttr(o, "byte14")
         self.assertHasAttr(o, "byte15")
-
-
-if __name__ == "__main__":
-    main()

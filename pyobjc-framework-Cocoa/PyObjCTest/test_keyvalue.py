@@ -9,15 +9,13 @@ TODO:
     - Tests that access properties in the parent Objective-C class!
     - More key-error tests, the tests don't cover all relevant code yet.
 """
-import sys
-
 import objc
-from Foundation import *
+import Foundation
 from PyObjCTest.testhelper import PyObjC_TestClass3 as STUB
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, max_os_level
 
 
-class KeyValueClass1(NSObject):
+class KeyValueClass1(Foundation.NSObject):
     def init(self):
         self = objc.super(KeyValueClass1, self).init()
         self.key3 = 3
@@ -57,7 +55,7 @@ class KeyValueClass1(NSObject):
         return self.getKey1
 
 
-class KeyValueClass1Explicit(NSObject):
+class KeyValueClass1Explicit(Foundation.NSObject):
     def init(self):
         self = objc.super(KeyValueClass1Explicit, self).init()
         self._values = {}
@@ -108,7 +106,7 @@ class KeyValueClass1Explicit(NSObject):
         self.setValue_forKey_(value, key)
 
 
-class KeyValueClass4(NSObject):
+class KeyValueClass4(Foundation.NSObject):
     __slots__ = ("foo",)
 
     def init(self):
@@ -131,7 +129,7 @@ class KeyValueClass4(NSObject):
     roprop = property(lambda self: b"read-only".decode("ascii"))
 
 
-class KVOClass(NSObject):
+class KVOClass(Foundation.NSObject):
     def automaticallyNotifiesObserversForKey_(self, aKey):
         return objc.NO
 
@@ -139,7 +137,7 @@ class KVOClass(NSObject):
         return b"test".decode("ascii")
 
 
-class KeyValueObserver(NSObject):
+class KeyValueObserver(Foundation.NSObject):
     def init(self):
         self.observed = []
         return self
@@ -502,7 +500,7 @@ class PyKeyValueCoding(TestCase):
         )
         self.assertEqual(o.multiple.level2.level3.keyB, 9.999)
 
-    if hasattr(NSObject, b"willChangeValueForKey_".decode("ascii")):
+    if hasattr(Foundation.NSObject, b"willChangeValueForKey_".decode("ascii")):
         # NSKeyValueObserving is only available on Panther and beyond
         def testKVO1(self):
             o = KVOClass.alloc().init()
@@ -534,7 +532,7 @@ class PyKeyValueCoding(TestCase):
                 keyPath, object, change = observer.observed[0]
                 self.assertEqual(keyPath, b"key3".decode("ascii"))
                 self.assertIs(object, o)
-                self.assertEqual(change, {NSKeyValueChangeKindKey: 1})
+                self.assertEqual(change, {Foundation.NSKeyValueChangeKindKey: 1})
 
             finally:
                 o.removeObserver_forKeyPath_(observer, b"key3".decode("ascii"))
@@ -554,7 +552,8 @@ class PyKeyValueCoding(TestCase):
             o.addObserver_forKeyPath_options_context_(
                 observer,
                 b"key3".decode("ascii"),
-                NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld,
+                Foundation.NSKeyValueObservingOptionNew
+                | Foundation.NSKeyValueObservingOptionOld,
                 0,
             )
             try:
@@ -571,9 +570,9 @@ class PyKeyValueCoding(TestCase):
                 self.assertEqual(
                     change,
                     {
-                        NSKeyValueChangeKindKey: 1,
-                        NSKeyValueChangeNewKey: b"drie".decode("ascii"),
-                        NSKeyValueChangeOldKey: b"three".decode("ascii"),
+                        Foundation.NSKeyValueChangeKindKey: 1,
+                        Foundation.NSKeyValueChangeNewKey: b"drie".decode("ascii"),
+                        Foundation.NSKeyValueChangeOldKey: b"three".decode("ascii"),
                     },
                 )
 
@@ -815,17 +814,17 @@ class TestBaseExceptions(TestCase):
     """
 
     def testValueForKey(self):
-        o = NSObject.alloc().init()
+        o = Foundation.NSObject.alloc().init()
 
         self.assertRaises(KeyError, o.valueForKey_, b"unknownKey".decode("ascii"))
 
     def testStoredValueForKey(self):
-        o = NSObject.alloc().init()
+        o = Foundation.NSObject.alloc().init()
 
         self.assertRaises(KeyError, o.storedValueForKey_, b"unknownKey".decode("ascii"))
 
     def testTakeStoredValue(self):
-        o = NSObject.alloc().init()
+        o = Foundation.NSObject.alloc().init()
 
         self.assertRaises(
             KeyError,
@@ -833,7 +832,3 @@ class TestBaseExceptions(TestCase):
             b"value".decode("ascii"),
             b"unknownKey".decode("ascii"),
         )
-
-
-if __name__ == "__main__":
-    main()

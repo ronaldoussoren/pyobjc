@@ -1,5 +1,5 @@
 # import classes required to start application
-import TransformerAppDelegate
+import TransformerAppDelegate  # noqa: F401
 from PyObjCTools import AppHelper
 
 if __name__ == "__main__":

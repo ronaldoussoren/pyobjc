@@ -1,13 +1,14 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
-class PortDelegate(NSObject):
+class PortDelegate(Foundation.NSObject):
     def handleMachMessage_(self, m):
         pass
 
 
-class NSPortHelper(NSPort):
+class NSPortHelper(Foundation.NSPort):
     def sendBeforeDate_components_from_reserved_(self, a, b, c, d):
         pass
 
@@ -17,24 +18,28 @@ class NSPortHelper(NSPort):
 
 class TestNSPort(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSPortDidBecomeInvalidNotification, unicode)
-        self.assertEqual(NSMachPortDeallocateNone, 0)
-        self.assertEqual(NSMachPortDeallocateSendRight, (1 << 0))
-        self.assertEqual(NSMachPortDeallocateReceiveRight, (1 << 1))
+        self.assertIsInstance(Foundation.NSPortDidBecomeInvalidNotification, str)
+        self.assertEqual(Foundation.NSMachPortDeallocateNone, 0)
+        self.assertEqual(Foundation.NSMachPortDeallocateSendRight, (1 << 0))
+        self.assertEqual(Foundation.NSMachPortDeallocateReceiveRight, (1 << 1))
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSPort.isValid)
+        self.assertResultIsBOOL(Foundation.NSPort.isValid)
 
-        self.assertResultIsBOOL(NSPortHelper.sendBeforeDate_components_from_reserved_)
         self.assertResultIsBOOL(
-            NSPortHelper.sendBeforeDate_msgid_components_from_reserved_
+            Foundation.NSPortHelper.sendBeforeDate_components_from_reserved_
+        )
+        self.assertResultIsBOOL(
+            Foundation.NSPortHelper.sendBeforeDate_msgid_components_from_reserved_
         )
 
         self.assertArgHasType(
-            NSPortHelper.sendBeforeDate_components_from_reserved_, 3, objc._C_NSUInteger
+            Foundation.NSPortHelper.sendBeforeDate_components_from_reserved_,
+            3,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            NSPortHelper.sendBeforeDate_msgid_components_from_reserved_,
+            Foundation.NSPortHelper.sendBeforeDate_msgid_components_from_reserved_,
             4,
             objc._C_NSUInteger,
         )
@@ -45,7 +50,3 @@ class TestNSPort(TestCase):
     def testProtocols(self):
         objc.protocolNamed("NSPortDelegate")
         objc.protocolNamed("NSMachPortDelegate")
-
-
-if __name__ == "__main__":
-    main()

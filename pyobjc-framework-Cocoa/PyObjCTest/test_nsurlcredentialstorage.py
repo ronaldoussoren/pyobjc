@@ -1,30 +1,26 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSURLCredentialStorage(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSURLCredentialStorageChangedNotification, unicode)
+        self.assertIsInstance(Foundation.NSURLCredentialStorageChangedNotification, str)
 
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(
-            NSURLCredentialStorageRemoveSynchronizableCredentials, unicode
+            Foundation.NSURLCredentialStorageRemoveSynchronizableCredentials, str
         )
 
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsBlock(
-            NSURLCredentialStorage.getCredentialsForProtectionSpace_task_completionHandler_,
+            Foundation.NSURLCredentialStorage.getCredentialsForProtectionSpace_task_completionHandler_,  # noqa: B950
             2,
             b"v@",
         )
         self.assertArgIsBlock(
-            NSURLCredentialStorage.getDefaultCredentialForProtectionSpace_task_completionHandler_,
+            Foundation.NSURLCredentialStorage.getDefaultCredentialForProtectionSpace_task_completionHandler_,  # noqa: B950
             2,
             b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

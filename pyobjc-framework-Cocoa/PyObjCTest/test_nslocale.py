@@ -1,60 +1,64 @@
-from Foundation import *
-from PyObjCTools.TestSupport import *
+import Foundation
+import CoreFoundation
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSLocale(TestCase):
     def testConstants(self):
-        self.assertIsInstance(NSCurrentLocaleDidChangeNotification, unicode)
-        self.assertIsInstance(NSLocaleIdentifier, unicode)
-        self.assertIsInstance(NSLocaleLanguageCode, unicode)
-        self.assertIsInstance(NSLocaleCountryCode, unicode)
-        self.assertIsInstance(NSLocaleScriptCode, unicode)
-        self.assertIsInstance(NSLocaleVariantCode, unicode)
-        self.assertIsInstance(NSLocaleExemplarCharacterSet, unicode)
-        self.assertIsInstance(NSLocaleCalendar, unicode)
-        self.assertIsInstance(NSLocaleCollationIdentifier, unicode)
-        self.assertIsInstance(NSLocaleUsesMetricSystem, unicode)
-        self.assertIsInstance(NSLocaleMeasurementSystem, unicode)
-        self.assertIsInstance(NSLocaleDecimalSeparator, unicode)
-        self.assertIsInstance(NSLocaleGroupingSeparator, unicode)
-        self.assertIsInstance(NSLocaleCurrencySymbol, unicode)
-        self.assertIsInstance(NSLocaleCurrencyCode, unicode)
-        self.assertIsInstance(NSGregorianCalendar, unicode)
-        self.assertIsInstance(NSBuddhistCalendar, unicode)
-        self.assertIsInstance(NSChineseCalendar, unicode)
-        self.assertIsInstance(NSHebrewCalendar, unicode)
-        self.assertIsInstance(NSIslamicCalendar, unicode)
-        self.assertIsInstance(NSIslamicCivilCalendar, unicode)
-        self.assertIsInstance(NSJapaneseCalendar, unicode)
+        self.assertIsInstance(Foundation.NSCurrentLocaleDidChangeNotification, str)
+        self.assertIsInstance(Foundation.NSLocaleIdentifier, str)
+        self.assertIsInstance(Foundation.NSLocaleLanguageCode, str)
+        self.assertIsInstance(Foundation.NSLocaleCountryCode, str)
+        self.assertIsInstance(Foundation.NSLocaleScriptCode, str)
+        self.assertIsInstance(Foundation.NSLocaleVariantCode, str)
+        self.assertIsInstance(Foundation.NSLocaleExemplarCharacterSet, str)
+        self.assertIsInstance(Foundation.NSLocaleCalendar, str)
+        self.assertIsInstance(Foundation.NSLocaleCollationIdentifier, str)
+        self.assertIsInstance(Foundation.NSLocaleUsesMetricSystem, str)
+        self.assertIsInstance(Foundation.NSLocaleMeasurementSystem, str)
+        self.assertIsInstance(Foundation.NSLocaleDecimalSeparator, str)
+        self.assertIsInstance(Foundation.NSLocaleGroupingSeparator, str)
+        self.assertIsInstance(Foundation.NSLocaleCurrencySymbol, str)
+        self.assertIsInstance(Foundation.NSLocaleCurrencyCode, str)
+        self.assertIsInstance(Foundation.NSGregorianCalendar, str)
+        self.assertIsInstance(Foundation.NSBuddhistCalendar, str)
+        self.assertIsInstance(Foundation.NSChineseCalendar, str)
+        self.assertIsInstance(Foundation.NSHebrewCalendar, str)
+        self.assertIsInstance(Foundation.NSIslamicCalendar, str)
+        self.assertIsInstance(Foundation.NSIslamicCivilCalendar, str)
+        self.assertIsInstance(Foundation.NSJapaneseCalendar, str)
 
     @min_os_level("10.6")
     def testConstants10_6(self):
-        self.assertIsInstance(NSLocaleCollatorIdentifier, unicode)
-        self.assertIsInstance(NSLocaleQuotationBeginDelimiterKey, unicode)
-        self.assertIsInstance(NSLocaleQuotationEndDelimiterKey, unicode)
-        self.assertIsInstance(NSLocaleAlternateQuotationBeginDelimiterKey, unicode)
-        self.assertIsInstance(NSLocaleAlternateQuotationEndDelimiterKey, unicode)
-        self.assertIsInstance(NSRepublicOfChinaCalendar, unicode)
-        self.assertIsInstance(NSPersianCalendar, unicode)
-        self.assertIsInstance(NSIndianCalendar, unicode)
-        self.assertIsInstance(NSISO8601Calendar, unicode)
+        self.assertIsInstance(Foundation.NSLocaleCollatorIdentifier, str)
+        self.assertIsInstance(Foundation.NSLocaleQuotationBeginDelimiterKey, str)
+        self.assertIsInstance(Foundation.NSLocaleQuotationEndDelimiterKey, str)
+        self.assertIsInstance(
+            Foundation.NSLocaleAlternateQuotationBeginDelimiterKey, str
+        )
+        self.assertIsInstance(Foundation.NSLocaleAlternateQuotationEndDelimiterKey, str)
+        self.assertIsInstance(Foundation.NSRepublicOfChinaCalendar, str)
+        self.assertIsInstance(Foundation.NSPersianCalendar, str)
+        self.assertIsInstance(Foundation.NSIndianCalendar, str)
+        self.assertIsInstance(Foundation.NSISO8601Calendar, str)
 
         self.assertEqual(
-            NSLocaleLanguageDirectionUnknown, kCFLocaleLanguageDirectionUnknown
+            Foundation.NSLocaleLanguageDirectionUnknown,
+            CoreFoundation.kCFLocaleLanguageDirectionUnknown,
         )
         self.assertEqual(
-            NSLocaleLanguageDirectionLeftToRight, kCFLocaleLanguageDirectionLeftToRight
+            Foundation.NSLocaleLanguageDirectionLeftToRight,
+            CoreFoundation.kCFLocaleLanguageDirectionLeftToRight,
         )
         self.assertEqual(
-            NSLocaleLanguageDirectionRightToLeft, kCFLocaleLanguageDirectionRightToLeft
+            Foundation.NSLocaleLanguageDirectionRightToLeft,
+            CoreFoundation.kCFLocaleLanguageDirectionRightToLeft,
         )
         self.assertEqual(
-            NSLocaleLanguageDirectionTopToBottom, kCFLocaleLanguageDirectionTopToBottom
+            Foundation.NSLocaleLanguageDirectionTopToBottom,
+            CoreFoundation.kCFLocaleLanguageDirectionTopToBottom,
         )
         self.assertEqual(
-            NSLocaleLanguageDirectionBottomToTop, kCFLocaleLanguageDirectionBottomToTop
+            Foundation.NSLocaleLanguageDirectionBottomToTop,
+            CoreFoundation.kCFLocaleLanguageDirectionBottomToTop,
         )
-
-
-if __name__ == "__main__":
-    main()

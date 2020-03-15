@@ -1,35 +1,31 @@
-from AppKit import *
-from PyObjCTools.TestSupport import *
+import AppKit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSTextContainer(TestCase):
     def testConstants(self):
-        self.assertEqual(NSLineSweepLeft, 0)
-        self.assertEqual(NSLineSweepRight, 1)
-        self.assertEqual(NSLineSweepDown, 2)
-        self.assertEqual(NSLineSweepUp, 3)
+        self.assertEqual(AppKit.NSLineSweepLeft, 0)
+        self.assertEqual(AppKit.NSLineSweepRight, 1)
+        self.assertEqual(AppKit.NSLineSweepDown, 2)
+        self.assertEqual(AppKit.NSLineSweepUp, 3)
 
-        self.assertEqual(NSLineDoesntMove, 0)
-        self.assertEqual(NSLineMovesLeft, 1)
-        self.assertEqual(NSLineMovesRight, 2)
-        self.assertEqual(NSLineMovesDown, 3)
-        self.assertEqual(NSLineMovesUp, 4)
+        self.assertEqual(AppKit.NSLineDoesntMove, 0)
+        self.assertEqual(AppKit.NSLineMovesLeft, 1)
+        self.assertEqual(AppKit.NSLineMovesRight, 2)
+        self.assertEqual(AppKit.NSLineMovesDown, 3)
+        self.assertEqual(AppKit.NSLineMovesUp, 4)
 
     def testMethods(self):
-        self.assertResultIsBOOL(NSTextContainer.widthTracksTextView)
-        self.assertArgIsBOOL(NSTextContainer.setWidthTracksTextView_, 0)
-        self.assertResultIsBOOL(NSTextContainer.heightTracksTextView)
-        self.assertArgIsBOOL(NSTextContainer.setHeightTracksTextView_, 0)
-        self.assertResultIsBOOL(NSTextContainer.isSimpleRectangularTextContainer)
-        self.assertResultIsBOOL(NSTextContainer.containsPoint_)
+        self.assertResultIsBOOL(AppKit.NSTextContainer.widthTracksTextView)
+        self.assertArgIsBOOL(AppKit.NSTextContainer.setWidthTracksTextView_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextContainer.heightTracksTextView)
+        self.assertArgIsBOOL(AppKit.NSTextContainer.setHeightTracksTextView_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextContainer.isSimpleRectangularTextContainer)
+        self.assertResultIsBOOL(AppKit.NSTextContainer.containsPoint_)
 
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertArgIsOut(
-            NSTextContainer.lineFragmentRectForProposedRect_atIndex_writingDirection_remainingRect_,
+            AppKit.NSTextContainer.lineFragmentRectForProposedRect_atIndex_writingDirection_remainingRect_,  # noqa: B950
             3,
         )
-
-
-if __name__ == "__main__":
-    main()
