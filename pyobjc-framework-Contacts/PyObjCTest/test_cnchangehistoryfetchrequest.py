@@ -1,9 +1,9 @@
 import sys
 
 import objc
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNChangeHistoryFetchRequest(TestCase):
@@ -31,7 +31,3 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsBOOL(
                 Contacts.CNChangeHistoryFetchRequest.setIncludeGroupChanges_, 0
             )
-
-
-if __name__ == "__main__":
-    main()

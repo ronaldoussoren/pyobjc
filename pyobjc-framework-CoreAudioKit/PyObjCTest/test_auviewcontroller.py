@@ -1,5 +1,5 @@
 import CoreAudioKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
 
 
 class TestAUViewController(TestCase):
@@ -19,7 +19,3 @@ class TestAUViewController(TestCase):
             0,
             b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

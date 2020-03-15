@@ -1,7 +1,6 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBAdvertisementData(TestCase):
@@ -44,7 +43,3 @@ class TestCBAdvertisementData(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBCharacteristic.isBroadcasted)
         self.assertResultIsBOOL(CoreBluetooth.CBCharacteristic.isNotifying)
-
-
-if __name__ == "__main__":
-    main()

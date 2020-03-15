@@ -1,23 +1,15 @@
 import sys
 
 import CoreAudio
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
 
 
 class TestAudioDriverPlugIn(TestCase):
-
-    if sys.version_info[0] == 2:
-
-        def assert_buffer_size(self, buf, size):
-            self.assertIsInstance(buf, buffer)
-            self.assertEqual(len(buf), size)
-
-    else:
-
-        def assert_buffer_size(self, buf, size):
-            self.assertIsInstance(buf, memoryview)
-            self.assertEqual(buf.itemsize, 1)
-            self.assertEqual(buf.nbytes, size)
+    def assert_buffer_size(self, buf, size):
+        self.assertIsInstance(buf, memoryview)
+        self.assertEqual(buf.itemsize, 1)
+        self.assertEqual(buf.nbytes, size)
 
     def testConstants(self):
         self.assertEqual(CoreAudio.kAudio_UnimplementedError, -4)
@@ -120,7 +112,7 @@ class TestAudioDriverPlugIn(TestCase):
 
         if sys.byteorder == "big":
             self.assertEqual(
-                CoreAudio.kAudioFormatFlagsNativeEndian, kAudioFormatFlagIsBigEndian
+                CoreAudio.kAudioFormatFlagsNativeEndian, CoreAudio.kAudioFormatFlagIsBigEndian
             )
         else:
             self.assertEqual(CoreAudio.kAudioFormatFlagsNativeEndian, 0)
@@ -643,18 +635,10 @@ class TestAudioDriverPlugIn(TestCase):
 
 
 class TestManualWrappers(TestCase):
-    if sys.version_info[0] == 2:
-
-        def assert_buffer_size(self, buf, size):
-            self.assertIsInstance(buf, buffer)
-            self.assertEqual(len(buf), size)
-
-    else:
-
-        def assert_buffer_size(self, buf, size):
-            self.assertIsInstance(buf, memoryview)
-            self.assertEqual(buf.itemsize, 1)
-            self.assertEqual(buf.nbytes, size)
+    def assert_buffer_size(self, buf, size):
+        self.assertIsInstance(buf, memoryview)
+        self.assertEqual(buf.itemsize, 1)
+        self.assertEqual(buf.nbytes, size)
 
     def testAudioBuffer(self):
         buf = CoreAudio.AudioBuffer()
@@ -781,7 +765,3 @@ class TestManualWrappers(TestCase):
 
         with self.assertRaises(IndexError):
             v[-4]
-
-
-if __name__ == "__main__":
-    main()

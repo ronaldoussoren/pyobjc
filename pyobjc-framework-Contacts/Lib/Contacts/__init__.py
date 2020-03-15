@@ -10,12 +10,7 @@ import sys
 import Foundation
 import objc
 from Contacts import _metadata
-from Contacts._Contacts import *
-
-try:
-    long
-except NameError:
-    long = int
+from Contacts import _Contacts
 
 sys.modules["Contacts"] = mod = objc.ObjCLazyModule(
     "Contacts",
@@ -29,7 +24,7 @@ sys.modules["Contacts"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_Contacts, Foundation),
 )
 
 

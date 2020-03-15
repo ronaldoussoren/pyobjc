@@ -1,7 +1,6 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBPeriphalManagerHelper(CoreBluetooth.NSObject):
@@ -59,7 +58,7 @@ class TestCBPeriphicalManager(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBPeripheralManager.isAdvertising)
         self.assertResultIsBOOL(
-            CoreBluetooth.CBPeripheralManager.updateValue_forCharacteristic_onSubscribedCentrals_
+            CoreBluetooth.CBPeripheralManager.updateValue_forCharacteristic_onSubscribedCentrals_  # noqa: B950
         )
 
         # XXX: A number of methods have a dispatch_queue as their argument
@@ -85,7 +84,3 @@ class TestCBPeriphicalManager(TestCase):
         self.assertArgIsBOOL(
             CoreBluetooth.CBPeripheralManager.publishL2CAPChannelWithEncryption_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

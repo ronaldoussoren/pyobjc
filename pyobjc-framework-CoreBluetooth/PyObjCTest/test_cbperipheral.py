@@ -1,7 +1,6 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
 
 
 class TestCBPeripheral(TestCase):
@@ -40,7 +39,3 @@ class TestCBPeripheral(TestCase):
         self.assertIsInstance(
             objc.protocolNamed("CBPeripheralDelegate"), objc.formal_protocol
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,587 +1,507 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
-
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNContactRelation(TestCase):
         @min_os_level("10.11")
         def testConstants10_11(self):
-            self.assertIsInstance(Contacts.CNLabelContactRelationFather, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationMother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationParent, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationBrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationSister, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationChild, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationFriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationSpouse, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationPartner, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationAssistant, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationManager, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationFather, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationMother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationParent, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSister, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationChild, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationFriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSpouse, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationPartner, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationAssistant, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationManager, str)
 
         @min_os_level("10.13")
         def testConstants10_13(self):
-            self.assertIsInstance(Contacts.CNLabelContactRelationSon, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationDaughter, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSon, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationDaughter, str)
 
         @min_os_level("10.15")
         def testConstants10_15(self):
-            self.assertIsInstance(Contacts.CNLabelContactRelationColleague, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationTeacher, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationSibling, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationColleague, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationTeacher, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSibling, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerSibling, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderSibling, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerSister, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungestSister, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderSister, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationEldestSister, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungestBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationEldestBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationMaleFriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationFemaleFriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationWife, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationHusband, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationMalePartner, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationFemalePartner, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerSibling, unicode
+                Contacts.CNLabelContactRelationGirlfriendOrBoyfriend, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationElderSibling, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerSister, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGirlfriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationBoyfriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandparent, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandmother, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungestSister, unicode
+                Contacts.CNLabelContactRelationGrandmotherMothersMother, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationElderSister, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationEldestSister, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerBrother, unicode
+                Contacts.CNLabelContactRelationGrandmotherFathersMother, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandfather, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungestBrother, unicode
+                Contacts.CNLabelContactRelationGrandfatherMothersFather, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationElderBrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationEldestBrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationMaleFriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationFemaleFriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationWife, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationHusband, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationMalePartner, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationFemalePartner, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGirlfriendOrBoyfriend, unicode
+                Contacts.CNLabelContactRelationGrandfatherFathersFather, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGirlfriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationBoyfriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandparent, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandmother, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandparent, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandmother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandfather, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandchild, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGranddaughter, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandmotherMothersMother, unicode
+                Contacts.CNLabelContactRelationGranddaughterDaughtersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandmotherFathersMother, unicode
+                Contacts.CNLabelContactRelationGranddaughterSonsDaughter, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandfather, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandson, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandfatherMothersFather, unicode
+                Contacts.CNLabelContactRelationGrandsonDaughtersSon, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandsonSonsSon, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandchild, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandfatherFathersFather, unicode
+                Contacts.CNLabelContactRelationGreatGranddaughter, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandson, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationParentInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationMotherInLaw, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandparent, unicode
+                Contacts.CNLabelContactRelationMotherInLawWifesMother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandmother, unicode
+                Contacts.CNLabelContactRelationMotherInLawHusbandsMother, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationFatherInLaw, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandfather, unicode
+                Contacts.CNLabelContactRelationFatherInLawWifesFather, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandchild, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationGranddaughter, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGranddaughterDaughtersDaughter, unicode
+                Contacts.CNLabelContactRelationFatherInLawHusbandsFather, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationCoParentInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationCoMotherInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationCoFatherInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSiblingInLaw, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGranddaughterSonsDaughter, unicode
+                Contacts.CNLabelContactRelationYoungerSiblingInLaw, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandson, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderSiblingInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSisterInLaw, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandsonDaughtersSon, unicode
+                Contacts.CNLabelContactRelationYoungerSisterInLaw, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderSisterInLaw, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandsonSonsSon, unicode
+                Contacts.CNLabelContactRelationSisterInLawSpousesSister, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandchild, unicode
+                Contacts.CNLabelContactRelationSisterInLawWifesSister, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGranddaughter, unicode
+                Contacts.CNLabelContactRelationSisterInLawHusbandsSister, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandson, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationParentInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationMotherInLaw, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationMotherInLawWifesMother, unicode
+                Contacts.CNLabelContactRelationSisterInLawBrothersWife, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationMotherInLawHusbandsMother, unicode
+                Contacts.CNLabelContactRelationSisterInLawYoungerBrothersWife, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationFatherInLaw, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationFatherInLawWifesFather, unicode
+                Contacts.CNLabelContactRelationSisterInLawElderBrothersWife, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungestBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationEldestBrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationMaleFriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationFemaleFriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationWife, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationHusband, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationMalePartner, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationFemalePartner, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationFatherInLawHusbandsFather, unicode
+                Contacts.CNLabelContactRelationGirlfriendOrBoyfriend, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationCoParentInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationCoMotherInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationCoFatherInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationSiblingInLaw, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGirlfriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationBoyfriend, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandparent, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandmother, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerSiblingInLaw, unicode
+                Contacts.CNLabelContactRelationGrandmotherMothersMother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderSiblingInLaw, unicode
+                Contacts.CNLabelContactRelationGrandmotherFathersMother, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationSisterInLaw, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandfather, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerSisterInLaw, unicode
+                Contacts.CNLabelContactRelationGrandfatherMothersFather, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderSisterInLaw, unicode
+                Contacts.CNLabelContactRelationGrandfatherFathersFather, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandparent, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandmother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGreatGrandfather, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationBrotherInLaw, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawSpousesSister, unicode
+                Contacts.CNLabelContactRelationYoungerBrotherInLaw, str
             )
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderBrotherInLaw, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawWifesSister, unicode
+                Contacts.CNLabelContactRelationBrotherInLawSpousesBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawHusbandsSister, unicode
+                Contacts.CNLabelContactRelationBrotherInLawHusbandsBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawBrothersWife, unicode
+                Contacts.CNLabelContactRelationBrotherInLawWifesBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawYoungerBrothersWife, unicode
+                Contacts.CNLabelContactRelationBrotherInLawSistersHusband, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawElderBrothersWife, unicode
+                Contacts.CNLabelContactRelationBrotherInLawYoungerSistersHusband, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerBrother, unicode
+                Contacts.CNLabelContactRelationBrotherInLawElderSistersHusband, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungestBrother, unicode
+                Contacts.CNLabelContactRelationSisterInLawWifesBrothersWife, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationElderBrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationEldestBrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationMaleFriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationFemaleFriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationWife, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationHusband, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationMalePartner, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationFemalePartner, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGirlfriendOrBoyfriend, unicode
+                Contacts.CNLabelContactRelationSisterInLawHusbandsBrothersWife, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGirlfriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationBoyfriend, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandparent, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandmother, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandmotherMothersMother, unicode
+                Contacts.CNLabelContactRelationBrotherInLawWifesSistersHusband, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandmotherFathersMother, unicode
+                Contacts.CNLabelContactRelationBrotherInLawHusbandsSistersHusband, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandfather, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationCoSiblingInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationCoSisterInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationCoBrotherInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationChildInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationDaughterInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSonInLaw, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationCousin, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerCousin, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationElderCousin, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationMaleCousin, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationFemaleCousin, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandfatherMothersFather, unicode
+                Contacts.CNLabelContactRelationCousinParentsSiblingsChild, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandfatherFathersFather, unicode
+                Contacts.CNLabelContactRelationCousinParentsSiblingsSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandparent, unicode
+                Contacts.CNLabelContactRelationYoungerCousinParentsSiblingsSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandmother, unicode
+                Contacts.CNLabelContactRelationElderCousinParentsSiblingsSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandfather, unicode
+                Contacts.CNLabelContactRelationCousinParentsSiblingsDaughter, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationBrotherInLaw, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerBrotherInLaw, unicode
+                Contacts.CNLabelContactRelationYoungerCousinParentsSiblingsDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderBrotherInLaw, unicode
+                Contacts.CNLabelContactRelationElderCousinParentsSiblingsDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawSpousesBrother, unicode
+                Contacts.CNLabelContactRelationCousinMothersSistersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawHusbandsBrother, unicode
+                Contacts.CNLabelContactRelationYoungerCousinMothersSistersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawWifesBrother, unicode
+                Contacts.CNLabelContactRelationElderCousinMothersSistersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawSistersHusband, unicode
+                Contacts.CNLabelContactRelationCousinMothersSistersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawYoungerSistersHusband,
-                unicode,
+                Contacts.CNLabelContactRelationYoungerCousinMothersSistersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawElderSistersHusband, unicode
+                Contacts.CNLabelContactRelationElderCousinMothersSistersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawWifesBrothersWife, unicode
+                Contacts.CNLabelContactRelationCousinMothersBrothersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSisterInLawHusbandsBrothersWife, unicode
+                Contacts.CNLabelContactRelationYoungerCousinMothersBrothersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawWifesSistersHusband, unicode
+                Contacts.CNLabelContactRelationElderCousinMothersBrothersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationBrotherInLawHusbandsSistersHusband,
-                unicode,
+                Contacts.CNLabelContactRelationCousinMothersBrothersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCoSiblingInLaw, unicode
+                Contacts.CNLabelContactRelationYoungerCousinMothersBrothersSon, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationCoSisterInLaw, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCoBrotherInLaw, unicode
+                Contacts.CNLabelContactRelationElderCousinMothersBrothersSon, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationChildInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationDaughterInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationSonInLaw, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationCousin, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationYoungerCousin, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationElderCousin, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationMaleCousin, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationFemaleCousin, unicode)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinParentsSiblingsChild, unicode
+                Contacts.CNLabelContactRelationCousinFathersSistersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinParentsSiblingsSon, unicode
+                Contacts.CNLabelContactRelationYoungerCousinFathersSistersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinParentsSiblingsSon, unicode
+                Contacts.CNLabelContactRelationElderCousinFathersSistersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinParentsSiblingsSon, unicode
+                Contacts.CNLabelContactRelationCousinFathersSistersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinParentsSiblingsDaughter, unicode
+                Contacts.CNLabelContactRelationYoungerCousinFathersSistersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinParentsSiblingsDaughter,
-                unicode,
+                Contacts.CNLabelContactRelationElderCousinFathersSistersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinParentsSiblingsDaughter,
-                unicode,
+                Contacts.CNLabelContactRelationCousinFathersBrothersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinMothersSistersDaughter, unicode
+                Contacts.CNLabelContactRelationYoungerCousinFathersBrothersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinMothersSistersDaughter,
-                unicode,
+                Contacts.CNLabelContactRelationElderCousinFathersBrothersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinMothersSistersDaughter,
-                unicode,
+                Contacts.CNLabelContactRelationCousinFathersBrothersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinMothersSistersSon, unicode
+                Contacts.CNLabelContactRelationYoungerCousinFathersBrothersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinMothersSistersSon, unicode
+                Contacts.CNLabelContactRelationElderCousinFathersBrothersSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinMothersSistersSon, unicode
+                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsChild, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinMothersBrothersDaughter, unicode
+                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinMothersBrothersDaughter,
-                unicode,
+                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsSon, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinMothersBrothersDaughter,
-                unicode,
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinMothersBrothersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinMothersBrothersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinMothersBrothersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinFathersSistersDaughter, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinFathersSistersDaughter,
-                unicode,
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinFathersSistersDaughter,
-                unicode,
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinFathersSistersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinFathersSistersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinFathersSistersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinFathersBrothersDaughter, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinFathersBrothersDaughter,
-                unicode,
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinFathersBrothersDaughter,
-                unicode,
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinFathersBrothersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinFathersBrothersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinFathersBrothersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsChild, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsDaughter,
-                unicode,
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinGrandparentsSiblingsSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinMothersSiblingsSonOrFathersSistersSon,
-                unicode,
+                Contacts.CNLabelContactRelationYoungerCousinMothersSiblingsSonOrFathersSistersSon,  # noqa: B950
+                str,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationElderCousinMothersSiblingsSonOrFathersSistersSon,
-                unicode,
+                str,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationYoungerCousinMothersSiblingsDaughterOrFathersSistersDaughter,
-                unicode,
+                Contacts.CNLabelContactRelationYoungerCousinMothersSiblingsDaughterOrFathersSistersDaughter,  # noqa: B950
+                str,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationElderCousinMothersSiblingsDaughterOrFathersSistersDaughter,
-                unicode,
+                Contacts.CNLabelContactRelationElderCousinMothersSiblingsDaughterOrFathersSistersDaughter,  # noqa: B950
+                str,
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationParentsSibling, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationParentsYoungerSibling, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSibling, unicode
+                Contacts.CNLabelContactRelationParentsElderSibling, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsYoungerSibling, unicode
+                Contacts.CNLabelContactRelationParentsSiblingMothersSibling, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsElderSibling, unicode
+                Contacts.CNLabelContactRelationParentsSiblingMothersYoungerSibling, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingMothersSibling, unicode
+                Contacts.CNLabelContactRelationParentsSiblingMothersElderSibling, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingMothersYoungerSibling,
-                unicode,
+                Contacts.CNLabelContactRelationParentsSiblingFathersSibling, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingMothersElderSibling,
-                unicode,
+                Contacts.CNLabelContactRelationParentsSiblingFathersYoungerSibling, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingFathersSibling, unicode
+                Contacts.CNLabelContactRelationParentsSiblingFathersElderSibling, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationAunt, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationAuntParentsSister, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationAuntParentsYoungerSister, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingFathersYoungerSibling,
-                unicode,
+                Contacts.CNLabelContactRelationAuntParentsElderSister, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationAuntFathersSister, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationAuntFathersYoungerSister, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationParentsSiblingFathersElderSibling,
-                unicode,
-            )
-            self.assertIsInstance(Contacts.CNLabelContactRelationAunt, unicode)
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntParentsSister, unicode
+                Contacts.CNLabelContactRelationAuntFathersElderSister, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntParentsYoungerSister, unicode
+                Contacts.CNLabelContactRelationAuntFathersBrothersWife, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntParentsElderSister, unicode
+                Contacts.CNLabelContactRelationAuntFathersYoungerBrothersWife, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntFathersSister, unicode
+                Contacts.CNLabelContactRelationAuntFathersElderBrothersWife, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationAuntMothersSister, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationAuntMothersYoungerSister, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntFathersYoungerSister, unicode
+                Contacts.CNLabelContactRelationAuntMothersElderSister, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntFathersElderSister, unicode
+                Contacts.CNLabelContactRelationAuntMothersBrothersWife, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandaunt, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationUncle, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationUncleParentsBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntFathersBrothersWife, unicode
+                Contacts.CNLabelContactRelationUncleParentsYoungerBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntFathersYoungerBrothersWife, unicode
+                Contacts.CNLabelContactRelationUncleParentsElderBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntFathersElderBrothersWife, unicode
+                Contacts.CNLabelContactRelationUncleMothersBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntMothersSister, unicode
+                Contacts.CNLabelContactRelationUncleMothersYoungerBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntMothersYoungerSister, unicode
+                Contacts.CNLabelContactRelationUncleMothersElderBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntMothersElderSister, unicode
+                Contacts.CNLabelContactRelationUncleMothersSistersHusband, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationAuntMothersBrothersWife, unicode
-            )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandaunt, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationUncle, unicode)
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleParentsBrother, unicode
+                Contacts.CNLabelContactRelationUncleFathersBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleParentsYoungerBrother, unicode
+                Contacts.CNLabelContactRelationUncleFathersYoungerBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleParentsElderBrother, unicode
+                Contacts.CNLabelContactRelationUncleFathersElderBrother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleMothersBrother, unicode
+                Contacts.CNLabelContactRelationUncleFathersSistersHusband, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleMothersYoungerBrother, unicode
+                Contacts.CNLabelContactRelationUncleFathersYoungerSistersHusband, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleMothersElderBrother, unicode
+                Contacts.CNLabelContactRelationUncleFathersElderSistersHusband, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationGranduncle, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationSiblingsChild, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationNiece, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationNieceSistersDaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleMothersSistersHusband, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleFathersBrother, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleFathersYoungerBrother, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleFathersElderBrother, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleFathersSistersHusband, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleFathersYoungerSistersHusband,
-                unicode,
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationUncleFathersElderSistersHusband, unicode
-            )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGranduncle, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationSiblingsChild, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationNiece, unicode)
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationNieceSistersDaughter, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationNieceBrothersDaughter, unicode
+                Contacts.CNLabelContactRelationNieceBrothersDaughter, str
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationNieceSistersDaughterOrWifesSiblingsDaughter,
-                unicode,
+                str,
             )
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationNieceBrothersDaughterOrHusbandsSiblingsDaughter,
-                unicode,
+                str,
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationNephew, unicode)
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationNephewSistersSon, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationNephewBrothersSon, unicode
-            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationNephew, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationNephewSistersSon, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationNephewBrothersSon, str)
             self.assertIsInstance(
                 Contacts.CNLabelContactRelationNephewBrothersSonOrHusbandsSiblingsSon,
-                unicode,
+                str,
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationNephewSistersSonOrWifesSiblingsSon,
-                unicode,
+                Contacts.CNLabelContactRelationNephewSistersSonOrWifesSiblingsSon, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandniece, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandniece, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandnieceSistersGranddaughter, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandnieceBrothersGranddaughter, unicode
-            )
-            self.assertIsInstance(Contacts.CNLabelContactRelationGrandnephew, unicode)
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandnephewSistersGrandson, unicode
+                Contacts.CNLabelContactRelationGrandnieceSistersGranddaughter, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandnephewBrothersGrandson, unicode
+                Contacts.CNLabelContactRelationGrandnieceBrothersGranddaughter, str
             )
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepparent, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepfather, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepmother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepchild, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepson, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepdaughter, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepbrother, unicode)
-            self.assertIsInstance(Contacts.CNLabelContactRelationStepsister, unicode)
+            self.assertIsInstance(Contacts.CNLabelContactRelationGrandnephew, str)
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationMotherInLawOrStepmother, unicode
+                Contacts.CNLabelContactRelationGrandnephewSistersGrandson, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationFatherInLawOrStepfather, unicode
+                Contacts.CNLabelContactRelationGrandnephewBrothersGrandson, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepparent, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepfather, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepmother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepchild, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepson, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepdaughter, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepbrother, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationStepsister, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationMotherInLawOrStepmother, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationDaughterInLawOrStepdaughter, unicode
+                Contacts.CNLabelContactRelationFatherInLawOrStepfather, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationSonInLawOrStepson, unicode
+                Contacts.CNLabelContactRelationDaughterInLawOrStepdaughter, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationSonInLawOrStepson, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationCousinOrSiblingsChild, str
+            )
+            self.assertIsInstance(Contacts.CNLabelContactRelationNieceOrCousin, str)
+            self.assertIsInstance(Contacts.CNLabelContactRelationNephewOrCousin, str)
+            self.assertIsInstance(
+                Contacts.CNLabelContactRelationGrandchildOrSiblingsChild, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationCousinOrSiblingsChild, unicode
-            )
-            self.assertIsInstance(Contacts.CNLabelContactRelationNieceOrCousin, unicode)
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationNephewOrCousin, unicode
+                Contacts.CNLabelContactRelationGreatGrandchildOrSiblingsGrandchild, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGrandchildOrSiblingsChild, unicode
+                Contacts.CNLabelContactRelationDaughterInLawOrSisterInLaw, str
             )
             self.assertIsInstance(
-                Contacts.CNLabelContactRelationGreatGrandchildOrSiblingsGrandchild,
-                unicode,
+                Contacts.CNLabelContactRelationSonInLawOrBrotherInLaw, str
             )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationDaughterInLawOrSisterInLaw, unicode
-            )
-            self.assertIsInstance(
-                Contacts.CNLabelContactRelationSonInLawOrBrotherInLaw, unicode
-            )
-
-
-if __name__ == "__main__":
-    main()

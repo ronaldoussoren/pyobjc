@@ -1,9 +1,7 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
-
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNContainer(TestCase):
@@ -14,10 +12,6 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Contacts.CNContainerTypeExchange, 2)
             self.assertEqual(Contacts.CNContainerTypeCardDAV, 3)
 
-            self.assertIsInstance(Contacts.CNContainerIdentifierKey, unicode)
-            self.assertIsInstance(Contacts.CNContainerNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContainerTypeKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(Contacts.CNContainerIdentifierKey, str)
+            self.assertIsInstance(Contacts.CNContainerNameKey, str)
+            self.assertIsInstance(Contacts.CNContainerTypeKey, str)

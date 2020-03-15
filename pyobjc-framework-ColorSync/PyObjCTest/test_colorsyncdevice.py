@@ -1,51 +1,52 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
+    import objc
     import ColorSync
 
     class TestColorSyncDevice(TestCase):
         def testConstants(self):
-            self.assertIsInstance(ColorSync.kColorSyncDeviceID, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceClass, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncCameraDeviceClass, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDisplayDeviceClass, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncPrinterDeviceClass, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncScannerDeviceClass, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileURL, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceDescription, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceDescriptions, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncFactoryProfiles, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncCustomProfiles, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceModeDescription, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceModeDescriptions, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceDefaultProfileID, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceHostScope, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceUserScope, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncProfileHostScope, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncProfileUserScope, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsFactory, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsDefault, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsCurrent, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileID, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceID, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceClass, str)
+            self.assertIsInstance(ColorSync.kColorSyncCameraDeviceClass, str)
+            self.assertIsInstance(ColorSync.kColorSyncDisplayDeviceClass, str)
+            self.assertIsInstance(ColorSync.kColorSyncPrinterDeviceClass, str)
+            self.assertIsInstance(ColorSync.kColorSyncScannerDeviceClass, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileURL, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceDescription, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceDescriptions, str)
+            self.assertIsInstance(ColorSync.kColorSyncFactoryProfiles, str)
+            self.assertIsInstance(ColorSync.kColorSyncCustomProfiles, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceModeDescription, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceModeDescriptions, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceDefaultProfileID, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceHostScope, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceUserScope, str)
+            self.assertIsInstance(ColorSync.kColorSyncProfileHostScope, str)
+            self.assertIsInstance(ColorSync.kColorSyncProfileUserScope, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsFactory, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsDefault, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileIsCurrent, str)
+            self.assertIsInstance(ColorSync.kColorSyncDeviceProfileID, str)
             self.assertIsInstance(
-                ColorSync.kColorSyncDeviceRegisteredNotification, unicode
+                ColorSync.kColorSyncDeviceRegisteredNotification, str
             )
             self.assertIsInstance(
-                ColorSync.kColorSyncDeviceUnregisteredNotification, unicode
+                ColorSync.kColorSyncDeviceUnregisteredNotification, str
             )
             self.assertIsInstance(
-                ColorSync.kColorSyncDeviceProfilesNotification, unicode
+                ColorSync.kColorSyncDeviceProfilesNotification, str
             )
             self.assertIsInstance(
-                ColorSync.kColorSyncDisplayDeviceProfilesNotification, unicode
+                ColorSync.kColorSyncDisplayDeviceProfilesNotification, str
             )
             self.assertIsInstance(
-                ColorSync.kColorSyncProfileRepositoryChangeNotification, unicode
+                ColorSync.kColorSyncProfileRepositoryChangeNotification, str
             )
             self.assertIsInstance(
-                ColorSync.kColorSyncRegistrationUpdateWindowServer, unicode
+                ColorSync.kColorSyncRegistrationUpdateWindowServer, str
             )
 
     def testFunctions(self):
@@ -59,7 +60,3 @@ if sys.maxsize > 2 ** 32:
         self.assertResultIsCFRetained(ColorSync.CGDisplayCreateUUIDFromDisplayID)
 
         ColorSync.CGDisplayGetDisplayIDFromUUID
-
-
-if __name__ == "__main__":
-    main()

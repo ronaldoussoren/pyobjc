@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
 
 AudioObjectPropertyListenerProc = (
     b"iIIn^" + CoreAudio.AudioObjectPropertyAddress.__typestr__ + b"^v"
@@ -411,7 +411,3 @@ class TestAudioHardware(TestCase):
         self.assertEqual(v.mIOProc, None)
         self.assertEqual(v.mNumberStreams, 0)
         self.assertEqual(v.mStreamIsOn, None)
-
-
-if __name__ == "__main__":
-    main()

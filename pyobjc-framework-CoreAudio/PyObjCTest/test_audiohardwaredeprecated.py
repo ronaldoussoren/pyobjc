@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, fourcc
 
 AudioDeviceIOProc = (
     b"iIn^"
@@ -298,7 +298,3 @@ class TestAudioHardwareDeprecated(TestCase):
             AudioStreamPropertyListenerProc,
             True,
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -11,12 +11,7 @@ import AppKit
 import Contacts
 import objc
 from ContactsUI import _metadata
-from ContactsUI._ContactsUI import *
-
-try:
-    long
-except NameError:
-    long = int
+from ContactsUI import _ContactsUI
 
 sys.modules["ContactsUI"] = mod = objc.ObjCLazyModule(
     "ContactsUI",
@@ -30,7 +25,7 @@ sys.modules["ContactsUI"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (AppKit, Contacts),
+    (_ContactsUI, AppKit, Contacts),
 )
 
 

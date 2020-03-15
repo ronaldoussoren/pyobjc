@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAudioServerPlugIn(TestCase):
@@ -60,7 +60,3 @@ class TestAudioServerPlugIn(TestCase):
         self.assertFalse(hasattr(CoreAudio, "AudioServerPlugInIOCycleInfo"))
         self.assertFalse(hasattr(CoreAudio, "AudioServerPlugInHostInterface"))
         self.assertFalse(hasattr(CoreAudio, "AudioServerPlugInDriverInterface"))
-
-
-if __name__ == "__main__":
-    main()

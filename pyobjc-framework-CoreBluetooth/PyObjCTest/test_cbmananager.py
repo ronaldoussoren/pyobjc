@@ -1,7 +1,5 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCBManager(TestCase):
@@ -17,7 +15,3 @@ class TestCBManager(TestCase):
         self.assertEqual(CoreBluetooth.CBManagerAuthorizationRestricted, 1)
         self.assertEqual(CoreBluetooth.CBManagerAuthorizationDenied, 2)
         self.assertEqual(CoreBluetooth.CBManagerAuthorizationAllowedAlways, 3)
-
-
-if __name__ == "__main__":
-    main()

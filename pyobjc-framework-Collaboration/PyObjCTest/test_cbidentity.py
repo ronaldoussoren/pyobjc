@@ -1,14 +1,10 @@
-from Collaboration import *
-from PyObjCTools.TestSupport import *
+import Collaboration
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCBIdentity(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(CBIdentity.isHidden)
-        self.assertResultIsBOOL(CBIdentity.isMemberOfGroup_)
-        self.assertResultIsBOOL(CBUserIdentity.isEnabled)
-        self.assertResultIsBOOL(CBUserIdentity.authenticateWithPassword_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(Collaboration.CBIdentity.isHidden)
+        self.assertResultIsBOOL(Collaboration.CBIdentity.isMemberOfGroup_)
+        self.assertResultIsBOOL(Collaboration.CBUserIdentity.isEnabled)
+        self.assertResultIsBOOL(Collaboration.CBUserIdentity.authenticateWithPassword_)

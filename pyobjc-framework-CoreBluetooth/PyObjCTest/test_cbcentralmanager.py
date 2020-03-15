@@ -1,7 +1,6 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBCentralManagerHelper(CoreBluetooth.NSObject):
@@ -40,11 +39,7 @@ class TestCBCentralManager(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertArgHasType(
-            CoreBluetooth.TestCBCentralManagerHelper.centralManager_connectionEventDidOccur_forPeripheral_,
+            CoreBluetooth.TestCBCentralManagerHelper.centralManager_connectionEventDidOccur_forPeripheral_,  # noqa: B950
             1,
             objc._C_NSInteger,
         )
-
-
-if __name__ == "__main__":
-    main()

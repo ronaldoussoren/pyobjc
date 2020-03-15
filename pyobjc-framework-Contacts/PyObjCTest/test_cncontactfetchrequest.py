@@ -1,9 +1,7 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
-
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNContactFetchRequest(TestCase):
@@ -14,7 +12,3 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsBOOL(Contacts.CNContactFetchRequest.unifyResults)
             self.assertArgIsBOOL(Contacts.CNContactFetchRequest.setUnifyResults_, 0)
-
-
-if __name__ == "__main__":
-    main()

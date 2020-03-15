@@ -1,8 +1,9 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
+    import objc
     import ColorSync
 
     class TestColorSyncCMM(TestCase):
@@ -12,7 +13,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.13")
         def testFunctions(self):
-            self.assertIsInstance(ColorSync.ColorSyncCMMGetTypeID(), (int, long))
+            self.assertIsInstance(ColorSync.ColorSyncCMMGetTypeID(), int)
             self.assertResultIsCFRetained(ColorSync.ColorSyncCMMCreate)
             ColorSync.ColorSyncCMMGetBundle
             self.assertResultIsCFRetained(ColorSync.ColorSyncCMMCopyLocalizedName)
@@ -27,13 +28,9 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.13")
         def testConstants(self):
-            self.assertIsInstance(ColorSync.kCMMInitializeLinkProfileProcName, unicode)
-            self.assertIsInstance(ColorSync.kCMMInitializeTransformProcName, unicode)
-            self.assertIsInstance(ColorSync.kCMMApplyTransformProcName, unicode)
+            self.assertIsInstance(ColorSync.kCMMInitializeLinkProfileProcName, str)
+            self.assertIsInstance(ColorSync.kCMMInitializeTransformProcName, str)
+            self.assertIsInstance(ColorSync.kCMMApplyTransformProcName, str)
             self.assertIsInstance(
-                ColorSync.kCMMCreateTransformPropertyProcName, unicode
+                ColorSync.kCMMCreateTransformPropertyProcName, str
             )
-
-
-if __name__ == "__main__":
-    main()

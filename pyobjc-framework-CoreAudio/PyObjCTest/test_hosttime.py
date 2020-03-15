@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestHostTime(TestCase):
@@ -8,7 +8,3 @@ class TestHostTime(TestCase):
         CoreAudio.AudioGetHostClockFrequency
         CoreAudio.AudioGetHostClockMinimumTimeDelta
         CoreAudio.AudioConvertNanosToHostTime
-
-
-if __name__ == "__main__":
-    main()

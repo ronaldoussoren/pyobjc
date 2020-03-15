@@ -1,27 +1,19 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBAdvertisementData(TestCase):
     @min_os_level("10.9")
     def testConstants(self):
-        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataLocalNameKey, unicode)
-        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataTxPowerLevelKey, unicode)
-        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataServiceUUIDsKey, unicode)
-        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataServiceDataKey, unicode)
+        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataLocalNameKey, str)
+        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataTxPowerLevelKey, str)
+        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataServiceUUIDsKey, str)
+        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataServiceDataKey, str)
+        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataManufacturerDataKey, str)
         self.assertIsInstance(
-            CoreBluetooth.CBAdvertisementDataManufacturerDataKey, unicode
+            CoreBluetooth.CBAdvertisementDataOverflowServiceUUIDsKey, str
         )
+        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataIsConnectable, str)
         self.assertIsInstance(
-            CoreBluetooth.CBAdvertisementDataOverflowServiceUUIDsKey, unicode
+            CoreBluetooth.CBAdvertisementDataSolicitedServiceUUIDsKey, str
         )
-        self.assertIsInstance(CoreBluetooth.CBAdvertisementDataIsConnectable, unicode)
-        self.assertIsInstance(
-            CoreBluetooth.CBAdvertisementDataSolicitedServiceUUIDsKey, unicode
-        )
-
-
-if __name__ == "__main__":
-    main()

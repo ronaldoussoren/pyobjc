@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, fourcc
 
 
 class TestAudioHardwareBase(TestCase):
@@ -331,7 +331,3 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioStereoPanControlPropertyPanningChannels, fourcc(b"spcc")
         )
-
-
-if __name__ == "__main__":
-    main()

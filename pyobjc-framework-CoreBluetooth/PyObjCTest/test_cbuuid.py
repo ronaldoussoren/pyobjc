@@ -1,52 +1,43 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBUUID(TestCase):
     @min_os_level("10.9")
     def testConstants(self):
         self.assertIsInstance(
-            CoreBluetooth.CBUUIDCharacteristicExtendedPropertiesString, unicode
+            CoreBluetooth.CBUUIDCharacteristicExtendedPropertiesString, str
         )
         self.assertIsInstance(
-            CoreBluetooth.CBUUIDCharacteristicUserDescriptionString, unicode
+            CoreBluetooth.CBUUIDCharacteristicUserDescriptionString, str
         )
         self.assertIsInstance(
-            CoreBluetooth.CBUUIDClientCharacteristicConfigurationString, unicode
+            CoreBluetooth.CBUUIDClientCharacteristicConfigurationString, str
         )
         self.assertIsInstance(
-            CoreBluetooth.CBUUIDServerCharacteristicConfigurationString, unicode
+            CoreBluetooth.CBUUIDServerCharacteristicConfigurationString, str
         )
-        self.assertIsInstance(CoreBluetooth.CBUUIDCharacteristicFormatString, unicode)
+        self.assertIsInstance(CoreBluetooth.CBUUIDCharacteristicFormatString, str)
         self.assertIsInstance(
-            CoreBluetooth.CBUUIDCharacteristicAggregateFormatString, unicode
+            CoreBluetooth.CBUUIDCharacteristicAggregateFormatString, str
         )
-        self.assertIsInstance(CoreBluetooth.CBUUIDGenericAccessProfileString, unicode)
+        self.assertIsInstance(CoreBluetooth.CBUUIDGenericAccessProfileString, str)
+        self.assertIsInstance(CoreBluetooth.CBUUIDGenericAttributeProfileString, str)
+        self.assertIsInstance(CoreBluetooth.CBUUIDDeviceNameString, str)
+        self.assertIsInstance(CoreBluetooth.CBUUIDAppearanceString, str)
+        self.assertIsInstance(CoreBluetooth.CBUUIDPeripheralPrivacyFlagString, str)
+        self.assertIsInstance(CoreBluetooth.CBUUIDReconnectionAddressString, str)
         self.assertIsInstance(
-            CoreBluetooth.CBUUIDGenericAttributeProfileString, unicode
+            CoreBluetooth.CBUUIDPeripheralPreferredConnectionParametersString, str
         )
-        self.assertIsInstance(CoreBluetooth.CBUUIDDeviceNameString, unicode)
-        self.assertIsInstance(CoreBluetooth.CBUUIDAppearanceString, unicode)
-        self.assertIsInstance(CoreBluetooth.CBUUIDPeripheralPrivacyFlagString, unicode)
-        self.assertIsInstance(CoreBluetooth.CBUUIDReconnectionAddressString, unicode)
-        self.assertIsInstance(
-            CoreBluetooth.CBUUIDPeripheralPreferredConnectionParametersString, unicode
-        )
-        self.assertIsInstance(CoreBluetooth.CBUUIDServiceChangedString, unicode)
+        self.assertIsInstance(CoreBluetooth.CBUUIDServiceChangedString, str)
 
     @min_os_level("10.13")
     def testConstants10_13(self):
-        self.assertIsInstance(
-            CoreBluetooth.CBUUIDCharacteristicValidRangeString, unicode
-        )
-        self.assertIsInstance(CoreBluetooth.CBUUIDL2CAPPSMCharacteristicString, unicode)
+        self.assertIsInstance(CoreBluetooth.CBUUIDCharacteristicValidRangeString, str)
+        self.assertIsInstance(CoreBluetooth.CBUUIDL2CAPPSMCharacteristicString, str)
 
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(CoreBluetooth.CBUUID, objc.objc_class)
-
-
-if __name__ == "__main__":
-    main()

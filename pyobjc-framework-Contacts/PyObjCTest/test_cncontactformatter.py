@@ -1,9 +1,8 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNContactFormatter(TestCase):
@@ -16,8 +15,4 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Contacts.CNContactDisplayNameOrderGivenNameFirst, 1)
             self.assertEqual(Contacts.CNContactDisplayNameOrderFamilyNameFirst, 2)
 
-            self.assertIsInstance(Contacts.CNContactPropertyAttribute, unicode)
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(Contacts.CNContactPropertyAttribute, str)

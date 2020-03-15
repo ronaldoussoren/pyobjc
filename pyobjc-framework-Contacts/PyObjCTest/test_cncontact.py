@@ -1,18 +1,16 @@
 import sys
 
 import objc
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
     import Contacts
+    from PyObjCTools.TestSupport import TestCase, min_os_level
 
     class TestCNContact(TestCase):
         @min_os_level("10.12")
         def testConstants10_12(self):
-            self.assertIsInstance(
-                Contacts.CNContactPhoneticOrganizationNameKey, unicode
-            )
-            self.assertIsInstance(Contacts.CNContactImageDataAvailableKey, unicode)
+            self.assertIsInstance(Contacts.CNContactPhoneticOrganizationNameKey, str)
+            self.assertIsInstance(Contacts.CNContactImageDataAvailableKey, str)
 
         @min_os_level("10.11")
         def testConstants(self):
@@ -25,36 +23,36 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Contacts.CNContactSortOrderFamilyName, 3)
 
             self.assertIsInstance(
-                Contacts.CNContactPropertyNotFetchedExceptionName, unicode
+                Contacts.CNContactPropertyNotFetchedExceptionName, str
             )
-            self.assertIsInstance(Contacts.CNContactIdentifierKey, unicode)
-            self.assertIsInstance(Contacts.CNContactNamePrefixKey, unicode)
-            self.assertIsInstance(Contacts.CNContactGivenNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactMiddleNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactFamilyNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactPreviousFamilyNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactNameSuffixKey, unicode)
-            self.assertIsInstance(Contacts.CNContactNicknameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactPhoneticGivenNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactPhoneticMiddleNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactPhoneticFamilyNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactOrganizationNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactDepartmentNameKey, unicode)
-            self.assertIsInstance(Contacts.CNContactJobTitleKey, unicode)
-            self.assertIsInstance(Contacts.CNContactBirthdayKey, unicode)
-            self.assertIsInstance(Contacts.CNContactNonGregorianBirthdayKey, unicode)
-            self.assertIsInstance(Contacts.CNContactNoteKey, unicode)
-            self.assertIsInstance(Contacts.CNContactImageDataKey, unicode)
-            self.assertIsInstance(Contacts.CNContactThumbnailImageDataKey, unicode)
-            self.assertIsInstance(Contacts.CNContactTypeKey, unicode)
-            self.assertIsInstance(Contacts.CNContactPhoneNumbersKey, unicode)
-            self.assertIsInstance(Contacts.CNContactEmailAddressesKey, unicode)
-            self.assertIsInstance(Contacts.CNContactPostalAddressesKey, unicode)
-            self.assertIsInstance(Contacts.CNContactDatesKey, unicode)
-            self.assertIsInstance(Contacts.CNContactUrlAddressesKey, unicode)
-            self.assertIsInstance(Contacts.CNContactRelationsKey, unicode)
-            self.assertIsInstance(Contacts.CNContactSocialProfilesKey, unicode)
-            self.assertIsInstance(Contacts.CNContactInstantMessageAddressesKey, unicode)
+            self.assertIsInstance(Contacts.CNContactIdentifierKey, str)
+            self.assertIsInstance(Contacts.CNContactNamePrefixKey, str)
+            self.assertIsInstance(Contacts.CNContactGivenNameKey, str)
+            self.assertIsInstance(Contacts.CNContactMiddleNameKey, str)
+            self.assertIsInstance(Contacts.CNContactFamilyNameKey, str)
+            self.assertIsInstance(Contacts.CNContactPreviousFamilyNameKey, str)
+            self.assertIsInstance(Contacts.CNContactNameSuffixKey, str)
+            self.assertIsInstance(Contacts.CNContactNicknameKey, str)
+            self.assertIsInstance(Contacts.CNContactPhoneticGivenNameKey, str)
+            self.assertIsInstance(Contacts.CNContactPhoneticMiddleNameKey, str)
+            self.assertIsInstance(Contacts.CNContactPhoneticFamilyNameKey, str)
+            self.assertIsInstance(Contacts.CNContactOrganizationNameKey, str)
+            self.assertIsInstance(Contacts.CNContactDepartmentNameKey, str)
+            self.assertIsInstance(Contacts.CNContactJobTitleKey, str)
+            self.assertIsInstance(Contacts.CNContactBirthdayKey, str)
+            self.assertIsInstance(Contacts.CNContactNonGregorianBirthdayKey, str)
+            self.assertIsInstance(Contacts.CNContactNoteKey, str)
+            self.assertIsInstance(Contacts.CNContactImageDataKey, str)
+            self.assertIsInstance(Contacts.CNContactThumbnailImageDataKey, str)
+            self.assertIsInstance(Contacts.CNContactTypeKey, str)
+            self.assertIsInstance(Contacts.CNContactPhoneNumbersKey, str)
+            self.assertIsInstance(Contacts.CNContactEmailAddressesKey, str)
+            self.assertIsInstance(Contacts.CNContactPostalAddressesKey, str)
+            self.assertIsInstance(Contacts.CNContactDatesKey, str)
+            self.assertIsInstance(Contacts.CNContactUrlAddressesKey, str)
+            self.assertIsInstance(Contacts.CNContactRelationsKey, str)
+            self.assertIsInstance(Contacts.CNContactSocialProfilesKey, str)
+            self.assertIsInstance(Contacts.CNContactInstantMessageAddressesKey, str)
 
         @min_os_level("10.11")
         def testProtocols(self):
@@ -67,7 +65,3 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(
                 Contacts.CNContact.isUnifiedWithContactWithIdentifier_
             )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,25 +1,19 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBAdvertisementData(TestCase):
     @min_os_level("10.9")
     def testConstants(self):
         self.assertIsInstance(
-            CoreBluetooth.CBPeripheralManagerOptionShowPowerAlertKey, unicode
+            CoreBluetooth.CBPeripheralManagerOptionShowPowerAlertKey, str
         )
         self.assertIsInstance(
-            CoreBluetooth.CBPeripheralManagerOptionRestoreIdentifierKey, unicode
+            CoreBluetooth.CBPeripheralManagerOptionRestoreIdentifierKey, str
         )
         self.assertIsInstance(
-            CoreBluetooth.CBPeripheralManagerRestoredStateServicesKey, unicode
+            CoreBluetooth.CBPeripheralManagerRestoredStateServicesKey, str
         )
         self.assertIsInstance(
-            CoreBluetooth.CBPeripheralManagerRestoredStateServicesKey, unicode
+            CoreBluetooth.CBPeripheralManagerRestoredStateServicesKey, str
         )
-
-
-if __name__ == "__main__":
-    main()

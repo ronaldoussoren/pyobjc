@@ -1,15 +1,13 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
-
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNError(TestCase):
         @min_os_level("10.11")
         def testConstants(self):
-            self.assertIsInstance(Contacts.CNErrorDomain, unicode)
+            self.assertIsInstance(Contacts.CNErrorDomain, str)
 
             self.assertEqual(Contacts.CNErrorCodeCommunicationError, 1)
             self.assertEqual(Contacts.CNErrorCodeDataAccessError, 2)
@@ -39,13 +37,9 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(Contacts.CNErrorCodeVCardMalformed, 700)
             self.assertEqual(Contacts.CNErrorCodeVCardSummarizationError, 701)
 
-            self.assertIsInstance(Contacts.CNErrorUserInfoAffectedRecordsKey, unicode)
+            self.assertIsInstance(Contacts.CNErrorUserInfoAffectedRecordsKey, str)
             self.assertIsInstance(
-                Contacts.CNErrorUserInfoAffectedRecordIdentifiersKey, unicode
+                Contacts.CNErrorUserInfoAffectedRecordIdentifiersKey, str
             )
-            self.assertIsInstance(Contacts.CNErrorUserInfoValidationErrorsKey, unicode)
-            self.assertIsInstance(Contacts.CNErrorUserInfoKeyPathsKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(Contacts.CNErrorUserInfoValidationErrorsKey, str)
+            self.assertIsInstance(Contacts.CNErrorUserInfoKeyPathsKey, str)

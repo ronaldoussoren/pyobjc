@@ -1,9 +1,9 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
+    import objc
     import Contacts
 
     class TestCNContactStore(TestCase):
@@ -57,7 +57,3 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsBOOL(Contacts.CNContactStore.executeSaveRequest_error_)
             self.assertArgIsOut(Contacts.CNContactStore.executeSaveRequest_error_, 1)
-
-
-if __name__ == "__main__":
-    main()

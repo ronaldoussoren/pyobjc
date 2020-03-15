@@ -1,9 +1,7 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
-
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNContactVCardSerialization(TestCase):
@@ -15,7 +13,3 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsOut(
                 Contacts.CNContactVCardSerialization.contactsWithData_error_, 1
             )
-
-
-if __name__ == "__main__":
-    main()

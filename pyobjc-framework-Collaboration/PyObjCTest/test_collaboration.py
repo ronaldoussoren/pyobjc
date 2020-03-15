@@ -3,7 +3,7 @@ Some simple tests to check that the framework is properly wrapped.
 """
 import Collaboration
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCollaboration(TestCase):
@@ -14,7 +14,3 @@ class TestCollaboration(TestCase):
         self.assertIsInstance(Collaboration.CBGroupIdentity, objc.objc_class)
         self.assertHasAttr(Collaboration, "CBIdentityPicker")
         self.assertIsInstance(Collaboration.CBIdentityPicker, objc.objc_class)
-
-
-if __name__ == "__main__":
-    main()

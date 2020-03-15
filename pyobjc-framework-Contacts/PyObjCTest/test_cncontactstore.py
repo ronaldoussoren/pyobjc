@@ -1,9 +1,8 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNContactStore(TestCase):
@@ -44,14 +43,10 @@ if sys.maxsize > 2 ** 32:
             self.assertArgIsOut(Contacts.CNContactStore.executeSaveRequest_error_, 1)
 
         @min_os_level("10.15")
-        def test_methods(self):
+        def test_methods10_15(self):
             self.assertArgIsOut(
                 Contacts.CNContactStore.enumeratorForContactFetchRequest_error_, 1
             )
             self.assertArgIsOut(
                 Contacts.CNContactStore.enumeratorForChangeHistoryFetchRequest_error_, 1
             )
-
-
-if __name__ == "__main__":
-    main()

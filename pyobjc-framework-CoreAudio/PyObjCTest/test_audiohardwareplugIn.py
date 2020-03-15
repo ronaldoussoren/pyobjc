@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAudioHardwarePlugIn(TestCase):
@@ -46,7 +46,3 @@ class TestAudioHardwarePlugIn(TestCase):
         self.assertArgSizeInArg(CoreAudio.AudioHardwareStreamsDied, 3, 2)
 
         CoreAudio.AudioHardwareStreamPropertyChanged
-
-
-if __name__ == "__main__":
-    main()

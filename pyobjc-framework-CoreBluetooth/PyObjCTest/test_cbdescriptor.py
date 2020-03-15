@@ -1,7 +1,6 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBAdvertisementData(TestCase):
@@ -9,7 +8,3 @@ class TestCBAdvertisementData(TestCase):
     def testClasses(self):
         self.assertIsInstance(CoreBluetooth.CBDescriptor, objc.objc_class)
         self.assertIsInstance(CoreBluetooth.CBMutableDescriptor, objc.objc_class)
-
-
-if __name__ == "__main__":
-    main()

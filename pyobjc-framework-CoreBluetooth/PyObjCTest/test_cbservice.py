@@ -1,7 +1,6 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBService(TestCase):
@@ -14,9 +13,4 @@ class TestCBService(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CoreBluetooth.CBService.isPrimary)
         self.assertResultIsBOOL(CoreBluetooth.CBMutableService.isPrimary)
-        # self.assertArgIsBOOL(CoreBluetooth.CBMutableService.setPrimary_, 0)
         self.assertArgIsBOOL(CoreBluetooth.CBMutableService.initWithType_primary_, 1)
-
-
-if __name__ == "__main__":
-    main()

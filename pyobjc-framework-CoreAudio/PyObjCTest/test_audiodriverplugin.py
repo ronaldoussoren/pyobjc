@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAudioDriverPlugIn(TestCase):
@@ -12,7 +12,3 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertFalse(hasattr(CoreAudio, "AudioDriverPlugInStreamGetPropertyInfo"))
         self.assertFalse(hasattr(CoreAudio, "AudioDriverPlugInStreamGetProperty"))
         self.assertFalse(hasattr(CoreAudio, "AudioDriverPlugInStreamSetProperty"))
-
-
-if __name__ == "__main__":
-    main()

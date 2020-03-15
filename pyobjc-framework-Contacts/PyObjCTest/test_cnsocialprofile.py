@@ -1,28 +1,23 @@
 import sys
 
-import objc
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Contacts
 
     class TestCNSocialProfile(TestCase):
         @min_os_level("10.11")
         def testConstants(self):
-            self.assertIsInstance(Contacts.CNSocialProfileURLStringKey, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileUsernameKey, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileUserIdentifierKey, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceKey, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceFacebook, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceFlickr, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceLinkedIn, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceMySpace, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceSinaWeibo, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceTencentWeibo, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceTwitter, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceYelp, unicode)
-            self.assertIsInstance(Contacts.CNSocialProfileServiceGameCenter, unicode)
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(Contacts.CNSocialProfileURLStringKey, str)
+            self.assertIsInstance(Contacts.CNSocialProfileUsernameKey, str)
+            self.assertIsInstance(Contacts.CNSocialProfileUserIdentifierKey, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceKey, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceFacebook, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceFlickr, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceLinkedIn, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceMySpace, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceSinaWeibo, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceTencentWeibo, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceTwitter, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceYelp, str)
+            self.assertIsInstance(Contacts.CNSocialProfileServiceGameCenter, str)

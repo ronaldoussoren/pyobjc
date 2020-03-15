@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
     import ColorSync
 
     class TestColorSyncTransform(TestCase):
@@ -12,7 +12,7 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.13")
         def testFunctions(self):
-            self.assertIsInstance(ColorSync.ColorSyncTransformGetTypeID(), (int, long))
+            self.assertIsInstance(ColorSync.ColorSyncTransformGetTypeID(), int)
 
             self.assertResultIsCFRetained(ColorSync.ColorSyncTransformCreate)
             self.assertResultIsCFRetained(ColorSync.ColorSyncTransformCopyProperty)
@@ -50,84 +50,80 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(ColorSync.kColorSyncByteOrder16Big, 3 << 12)
             self.assertEqual(ColorSync.kColorSyncByteOrder32Big, 4 << 12)
 
-            self.assertIsInstance(ColorSync.kColorSyncProfile, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncRenderingIntent, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncProfile, str)
+            self.assertIsInstance(ColorSync.kColorSyncRenderingIntent, str)
             self.assertIsInstance(
-                ColorSync.kColorSyncRenderingIntentPerceptual, unicode
+                ColorSync.kColorSyncRenderingIntentPerceptual, str
             )
-            self.assertIsInstance(ColorSync.kColorSyncRenderingIntentRelative, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncRenderingIntentRelative, str)
             self.assertIsInstance(
-                ColorSync.kColorSyncRenderingIntentSaturation, unicode
+                ColorSync.kColorSyncRenderingIntentSaturation, str
             )
-            self.assertIsInstance(ColorSync.kColorSyncRenderingIntentAbsolute, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncRenderingIntentAbsolute, str)
             self.assertIsInstance(
-                ColorSync.kColorSyncRenderingIntentUseProfileHeader, unicode
+                ColorSync.kColorSyncRenderingIntentUseProfileHeader, str
             )
-            self.assertIsInstance(ColorSync.kColorSyncTransformTag, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformDeviceToPCS, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformPCSToPCS, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformPCSToDevice, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformDeviceToDevice, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformGamutCheck, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncBlackPointCompensation, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncPreferredCMM, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConvertQuality, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncBestQuality, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncNormalQuality, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncDraftQuality, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConvertThreadCount, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConvertUseVectorUnit, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConvertUseExtendedRange, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformCreator, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncTransformTag, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformDeviceToPCS, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformPCSToPCS, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformPCSToDevice, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformDeviceToDevice, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformGamutCheck, str)
+            self.assertIsInstance(ColorSync.kColorSyncBlackPointCompensation, str)
+            self.assertIsInstance(ColorSync.kColorSyncPreferredCMM, str)
+            self.assertIsInstance(ColorSync.kColorSyncConvertQuality, str)
+            self.assertIsInstance(ColorSync.kColorSyncBestQuality, str)
+            self.assertIsInstance(ColorSync.kColorSyncNormalQuality, str)
+            self.assertIsInstance(ColorSync.kColorSyncDraftQuality, str)
+            self.assertIsInstance(ColorSync.kColorSyncConvertThreadCount, str)
+            self.assertIsInstance(ColorSync.kColorSyncConvertUseVectorUnit, str)
+            self.assertIsInstance(ColorSync.kColorSyncConvertUseExtendedRange, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformCreator, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, str)
             self.assertIsInstance(
-                ColorSync.kColorSyncTransformCodeFragmentType, unicode
+                ColorSync.kColorSyncTransformCodeFragmentType, str
             )
-            self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentMD5, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentMD5, str)
             self.assertIsInstance(
-                ColorSync.kColorSyncTransformFullConversionData, unicode
-            )
-            self.assertIsInstance(
-                ColorSync.kColorSyncTransformSimplifiedConversionData, unicode
+                ColorSync.kColorSyncTransformFullConversionData, str
             )
             self.assertIsInstance(
-                ColorSync.kColorSyncTransformParametricConversionData, unicode
+                ColorSync.kColorSyncTransformSimplifiedConversionData, str
             )
-            self.assertIsInstance(ColorSync.kColorSyncConversionMatrix, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve0, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve1, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve2, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve3, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve4, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversion1DLut, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionGridPoints, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionChannelID, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversion3DLut, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionNDLut, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionInpChan, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionOutChan, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncConversionBPC, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncFixedPointRange, unicode)
+            self.assertIsInstance(
+                ColorSync.kColorSyncTransformParametricConversionData, str
+            )
+            self.assertIsInstance(ColorSync.kColorSyncConversionMatrix, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve0, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve1, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve2, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve3, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionParamCurve4, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversion1DLut, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionGridPoints, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionChannelID, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversion3DLut, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionNDLut, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionInpChan, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionOutChan, str)
+            self.assertIsInstance(ColorSync.kColorSyncConversionBPC, str)
+            self.assertIsInstance(ColorSync.kColorSyncFixedPointRange, str)
 
-            self.assertIsInstance(ColorSync.kColorSyncTransformCreator, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, unicode)
-            self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncTransformCreator, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, str)
+            self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, str)
 
         @min_os_level("10.13")
         @max_os_level("10.13")
         def testConstants10_13_only(self):
-            self.assertIsInstance(ColorSync.kColorSyncTranformInfo, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncTranformInfo, str)
 
         @min_os_level("10.14")
         def testConstants10_14(self):
-            self.assertIsInstance(ColorSync.kColorSyncTransformInfo, unicode)
+            self.assertIsInstance(ColorSync.kColorSyncTransformInfo, str)
 
         @min_os_level("10.15")
         def testConstants10_16(self):
             # XXX: Header says available in 10.16
-            self.assertIsInstance(ColorSync.kColorSyncExtendedRange, unicode)
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(ColorSync.kColorSyncExtendedRange, str)

@@ -1,5 +1,5 @@
 import CoreAudioKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAUGenericView(TestCase):
@@ -11,7 +11,3 @@ class TestAUGenericView(TestCase):
     def testMethods(self):
         self.assertResultIsBOOL(CoreAudioKit.AUGenericView.showsExpertParameters)
         self.assertArgIsBOOL(CoreAudioKit.AUGenericView.setShowsExpertParameters_, 0)
-
-
-if __name__ == "__main__":
-    main()

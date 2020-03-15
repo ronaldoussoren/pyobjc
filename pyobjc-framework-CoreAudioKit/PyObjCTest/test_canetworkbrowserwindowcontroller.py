@@ -1,5 +1,5 @@
 import CoreAudioKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCANetworkBrowserWindowController(TestCase):
@@ -8,7 +8,3 @@ class TestCANetworkBrowserWindowController(TestCase):
         self.assertResultIsBOOL(
             CoreAudioKit.CANetworkBrowserWindowController.isAVBSupported
         )
-
-
-if __name__ == "__main__":
-    main()

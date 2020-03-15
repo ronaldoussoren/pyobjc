@@ -1,7 +1,6 @@
-import sys
-
 import CoreBluetooth
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestFinderSync(TestCase):
@@ -9,7 +8,3 @@ class TestFinderSync(TestCase):
     def testClasses(self):
         self.assertHasAttr(CoreBluetooth, "CBATTRequest")
         self.assertIsInstance(CoreBluetooth.CBATTRequest, objc.objc_class)
-
-
-if __name__ == "__main__":
-    main()
