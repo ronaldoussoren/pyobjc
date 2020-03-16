@@ -9,7 +9,7 @@ import sys
 import CoreData
 import objc
 from SyncServices import _metadata
-from SyncServices._SyncServices import *
+from SyncServices import _SyncServices
 
 sys.modules["SyncServices"] = mod = objc.ObjCLazyModule(
     "SyncServices",
@@ -23,7 +23,7 @@ sys.modules["SyncServices"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (CoreData,),
+    (_SyncServices, CoreData),
 )
 
 

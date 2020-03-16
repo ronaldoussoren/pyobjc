@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from SyncServices import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import SyncServices
+import objc
 
 
-class TestISyncCoreDataHelper(NSObject):
+class TestISyncCoreDataHelper(SyncServices.NSObject):
     def persistentStoreCoordinatorShouldStartSyncing_(self, v):
         return True
 
@@ -16,13 +17,15 @@ class TestISyncCoreData(TestCase):
     @min_os_level("10.5")
     def testMethods(self):
         self.assertResultIsBOOL(
-            NSPersistentStoreCoordinator.syncWithClient_inBackground_handler_error_
+            SyncServices.NSPersistentStoreCoordinator.syncWithClient_inBackground_handler_error_  # noqa: B950
         )
         self.assertArgIsBOOL(
-            NSPersistentStoreCoordinator.syncWithClient_inBackground_handler_error_, 1
+            SyncServices.NSPersistentStoreCoordinator.syncWithClient_inBackground_handler_error_,  # noqa: B950
+            1,
         )
         self.assertArgIsOut(
-            NSPersistentStoreCoordinator.syncWithClient_inBackground_handler_error_, 3
+            SyncServices.NSPersistentStoreCoordinator.syncWithClient_inBackground_handler_error_,  # noqa: B950
+            3,
         )
 
     def testProtocols(self):
@@ -31,9 +34,5 @@ class TestISyncCoreData(TestCase):
             TestISyncCoreDataHelper.persistentStoreCoordinatorShouldStartSyncing_
         )
         self.assertResultIsBOOL(
-            TestISyncCoreDataHelper.persistentStoreCoordinator_willDeleteRecordWithIdentifier_inSyncSession_
+            TestISyncCoreDataHelper.persistentStoreCoordinator_willDeleteRecordWithIdentifier_inSyncSession_  # noqa: B950
         )
-
-
-if __name__ == "__main__":
-    main()

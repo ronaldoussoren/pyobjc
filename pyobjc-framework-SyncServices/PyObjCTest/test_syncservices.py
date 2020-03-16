@@ -3,7 +3,7 @@ Some simple tests to check that the framework is properly wrapped.
 """
 import objc
 import SyncServices
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestSyncServices(TestCase):
@@ -19,7 +19,3 @@ class TestSyncServices(TestCase):
         # Document for 10.5, but not actually present there
         objc.protocolNamed("ISyncSessionDriverDataSource")
         objc.protocolNamed("NSPersistentStoreCoordinatorSyncing")
-
-
-if __name__ == "__main__":
-    main()

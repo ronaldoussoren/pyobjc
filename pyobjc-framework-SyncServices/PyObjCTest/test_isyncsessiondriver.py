@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from SyncServices import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import SyncServices
+import objc
 
 
-class TestISyncSessionDriverHelper(NSObject):
+class TestISyncSessionDriverHelper(SyncServices.NSObject):
     def preferredSyncModeForEntityName_(self, n):
         return 1
 
@@ -63,25 +64,25 @@ class TestISyncSessionDriverHelper(NSObject):
 class TestISyncSessionDriver(TestCase):
     @min_os_level("10.5")
     def testConstants(self):
-        self.assertEqual(ISyncSessionDriverModeFast, 1)
-        self.assertEqual(ISyncSessionDriverModeSlow, 2)
-        self.assertEqual(ISyncSessionDriverModeRefresh, 3)
+        self.assertEqual(SyncServices.ISyncSessionDriverModeFast, 1)
+        self.assertEqual(SyncServices.ISyncSessionDriverModeSlow, 2)
+        self.assertEqual(SyncServices.ISyncSessionDriverModeRefresh, 3)
 
-        self.assertEqual(ISyncSessionDriverChangeRefused, 0)
-        self.assertEqual(ISyncSessionDriverChangeAccepted, 1)
-        self.assertEqual(ISyncSessionDriverChangeIgnored, 2)
-        self.assertEqual(ISyncSessionDriverChangeError, 3)
+        self.assertEqual(SyncServices.ISyncSessionDriverChangeRefused, 0)
+        self.assertEqual(SyncServices.ISyncSessionDriverChangeAccepted, 1)
+        self.assertEqual(SyncServices.ISyncSessionDriverChangeIgnored, 2)
+        self.assertEqual(SyncServices.ISyncSessionDriverChangeError, 3)
 
     def testMethods(self):
-        self.assertResultIsBOOL(ISyncSessionDriver.handlesSyncAlerts)
-        self.assertArgIsBOOL(ISyncSessionDriver.setHandlesSyncAlerts_, 0)
+        self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.handlesSyncAlerts)
+        self.assertArgIsBOOL(SyncServices.ISyncSessionDriver.setHandlesSyncAlerts_, 0)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertResultIsBOOL(ISyncSessionDriver.sync)
-        self.assertResultIsBOOL(ISyncSessionDriver.startAsynchronousSync_)
-        self.assertArgIsOut(ISyncSessionDriver.startAsynchronousSync_, 0)
-        self.assertResultIsBOOL(ISyncSessionDriver.handlesSyncAlerts)
+        self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.sync)
+        self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.startAsynchronousSync_)
+        self.assertArgIsOut(SyncServices.ISyncSessionDriver.startAsynchronousSync_, 0)
+        self.assertResultIsBOOL(SyncServices.ISyncSessionDriver.handlesSyncAlerts)
 
     @min_os_level("10.5")
     def testProtocols(self):
@@ -105,19 +106,19 @@ class TestISyncSessionDriver(TestCase):
         )
 
         self.assertResultHasType(
-            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,
+            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,  # noqa: B950
             objc._C_INT,
         )
         self.assertArgIsOut(
-            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,
+            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,  # noqa: B950
             2,
         )
         self.assertArgIsOut(
-            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,
+            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,  # noqa: B950
             3,
         )
         self.assertArgIsOut(
-            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,
+            TestISyncSessionDriverHelper.applyChange_forEntityName_remappedRecordIdentifier_formattedRecord_error_,  # noqa: B950
             4,
         )
 
@@ -149,12 +150,12 @@ class TestISyncSessionDriver(TestCase):
             TestISyncSessionDriverHelper.changesForEntityName_moreComing_error_, 2
         )
         self.assertArgHasType(
-            TestISyncSessionDriverHelper.identifiersForRecordsToDeleteForEntityName_moreComing_error_,
+            TestISyncSessionDriverHelper.identifiersForRecordsToDeleteForEntityName_moreComing_error_,  # noqa: B950
             1,
             objc._C_OUT + objc._C_PTR + objc._C_NSBOOL,
         )
         self.assertArgIsOut(
-            TestISyncSessionDriverHelper.identifiersForRecordsToDeleteForEntityName_moreComing_error_,
+            TestISyncSessionDriverHelper.identifiersForRecordsToDeleteForEntityName_moreComing_error_,  # noqa: B950
             2,
         )
 
@@ -218,7 +219,3 @@ class TestISyncSessionDriver(TestCase):
             TestISyncSessionDriverHelper.sessionDriver_didReceiveSyncAlertAndReturnError_,
             1,
         )
-
-
-if __name__ == "__main__":
-    main()

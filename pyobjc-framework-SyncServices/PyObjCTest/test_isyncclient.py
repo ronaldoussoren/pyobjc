@@ -1,39 +1,41 @@
-from PyObjCTools.TestSupport import *
-from SyncServices import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import SyncServices
 
 
 class TestISyncClient(TestCase):
     def testConstants(self):
-        self.assertEqual(ISyncStatusRunning, 1)
-        self.assertEqual(ISyncStatusSuccess, 2)
-        self.assertEqual(ISyncStatusWarnings, 3)
-        self.assertEqual(ISyncStatusErrors, 4)
-        self.assertEqual(ISyncStatusCancelled, 5)
-        self.assertEqual(ISyncStatusFailed, 6)
-        self.assertEqual(ISyncStatusNever, 7)
+        self.assertEqual(SyncServices.ISyncStatusRunning, 1)
+        self.assertEqual(SyncServices.ISyncStatusSuccess, 2)
+        self.assertEqual(SyncServices.ISyncStatusWarnings, 3)
+        self.assertEqual(SyncServices.ISyncStatusErrors, 4)
+        self.assertEqual(SyncServices.ISyncStatusCancelled, 5)
+        self.assertEqual(SyncServices.ISyncStatusFailed, 6)
+        self.assertEqual(SyncServices.ISyncStatusNever, 7)
 
-        self.assertIsInstance(ISyncClientTypeApplication, unicode)
-        self.assertIsInstance(ISyncClientTypeDevice, unicode)
-        self.assertIsInstance(ISyncClientTypeServer, unicode)
-        self.assertIsInstance(ISyncClientTypePeer, unicode)
+        self.assertIsInstance(SyncServices.ISyncClientTypeApplication, str)
+        self.assertIsInstance(SyncServices.ISyncClientTypeDevice, str)
+        self.assertIsInstance(SyncServices.ISyncClientTypeServer, str)
+        self.assertIsInstance(SyncServices.ISyncClientTypePeer, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(ISyncClient.canPushChangesForEntityName_)
-        self.assertResultIsBOOL(ISyncClient.canPullChangesForEntityName_)
-        self.assertResultIsBOOL(ISyncClient.isEnabledForEntityName_)
-        self.assertArgIsBOOL(ISyncClient.setEnabled_forEntityNames_, 0)
-        self.assertResultIsBOOL(ISyncClient.shouldReplaceClientRecordsForEntityName_)
-        self.assertArgIsBOOL(
-            ISyncClient.setShouldReplaceClientRecords_forEntityNames_, 0
+        self.assertResultIsBOOL(SyncServices.ISyncClient.canPushChangesForEntityName_)
+        self.assertResultIsBOOL(SyncServices.ISyncClient.canPullChangesForEntityName_)
+        self.assertResultIsBOOL(SyncServices.ISyncClient.isEnabledForEntityName_)
+        self.assertArgIsBOOL(SyncServices.ISyncClient.setEnabled_forEntityNames_, 0)
+        self.assertResultIsBOOL(
+            SyncServices.ISyncClient.shouldReplaceClientRecordsForEntityName_
         )
-        self.assertResultIsBOOL(ISyncClient.shouldSynchronizeWithClientsOfType_)
-        self.assertArgIsBOOL(ISyncClient.setShouldSynchronize_withClientsOfType_, 0)
+        self.assertArgIsBOOL(
+            SyncServices.ISyncClient.setShouldReplaceClientRecords_forEntityNames_, 0
+        )
+        self.assertResultIsBOOL(
+            SyncServices.ISyncClient.shouldSynchronizeWithClientsOfType_
+        )
+        self.assertArgIsBOOL(
+            SyncServices.ISyncClient.setShouldSynchronize_withClientsOfType_, 0
+        )
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(ISyncClient.formatsRelationships)
-        self.assertArgIsBOOL(ISyncClient.setFormatsRelationships_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(SyncServices.ISyncClient.formatsRelationships)
+        self.assertArgIsBOOL(SyncServices.ISyncClient.setFormatsRelationships_, 0)

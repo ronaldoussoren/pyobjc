@@ -1,25 +1,21 @@
-from PyObjCTools.TestSupport import *
-from SyncServices import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import SyncServices
 
 
 class TestISyncChange(TestCase):
     def testConstants(self):
-        self.assertEqual(ISyncChangeTypeNone, 0)
-        self.assertEqual(ISyncChangeTypeAdd, 1)
-        self.assertEqual(ISyncChangeTypeModify, 2)
-        self.assertEqual(ISyncChangeTypeDelete, 3)
+        self.assertEqual(SyncServices.ISyncChangeTypeNone, 0)
+        self.assertEqual(SyncServices.ISyncChangeTypeAdd, 1)
+        self.assertEqual(SyncServices.ISyncChangeTypeModify, 2)
+        self.assertEqual(SyncServices.ISyncChangeTypeDelete, 3)
 
-        self.assertIsInstance(ISyncChangePropertyActionKey, unicode)
-        self.assertIsInstance(ISyncChangePropertySet, unicode)
-        self.assertIsInstance(ISyncChangePropertyClear, unicode)
-        self.assertIsInstance(ISyncChangePropertyNameKey, unicode)
-        self.assertIsInstance(ISyncChangePropertyValueKey, unicode)
+        self.assertIsInstance(SyncServices.ISyncChangePropertyActionKey, str)
+        self.assertIsInstance(SyncServices.ISyncChangePropertySet, str)
+        self.assertIsInstance(SyncServices.ISyncChangePropertyClear, str)
+        self.assertIsInstance(SyncServices.ISyncChangePropertyNameKey, str)
+        self.assertIsInstance(SyncServices.ISyncChangePropertyValueKey, str)
 
     @min_os_level("10.6")
     def testConstants10_5(self):
         # Document for 10.5, but not actually present there
-        self.assertIsInstance(ISyncChangePropertyValueIsDefaultKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(SyncServices.ISyncChangePropertyValueIsDefaultKey, str)

@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from SyncServices import *
+from PyObjCTools.TestSupport import TestCase
+import SyncServices  # noqa: F401
+import objc
 
 
-class TestISyncFilterHelper(NSObject):
+class TestISyncFilterHelper(SyncServices.NSObject):
     def isEqual_(self, other):
         return True
 
@@ -17,7 +18,3 @@ class TestISyncFilter(TestCase):
         self.assertResultIsBOOL(
             TestISyncFilterHelper.shouldApplyRecord_withRecordIdentifier_
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,48 +1,51 @@
-from PyObjCTools.TestSupport import *
-from SyncServices import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import SyncServices
 
 
 class TestISyncSession(TestCase):
     @min_os_level("10.5")
     def testMethods10_5(self):
         self.assertArgIsSEL(
-            ISyncSession.beginSessionInBackgroundWithClient_entityNames_target_selector_,
+            SyncServices.ISyncSession.beginSessionInBackgroundWithClient_entityNames_target_selector_,  # noqa: B950
             3,
             b"v@:@@",
         )
 
     def testMethods(self):
-        self.assertResultIsBOOL(ISyncSession.shouldPushChangesForEntityName_)
-        self.assertResultIsBOOL(ISyncSession.shouldPushAllRecordsForEntityName_)
-        self.assertResultIsBOOL(ISyncSession.shouldPullChangesForEntityName_)
         self.assertResultIsBOOL(
-            ISyncSession.shouldReplaceAllRecordsOnClientForEntityName_
+            SyncServices.ISyncSession.shouldPushChangesForEntityName_
+        )
+        self.assertResultIsBOOL(
+            SyncServices.ISyncSession.shouldPushAllRecordsForEntityName_
+        )
+        self.assertResultIsBOOL(
+            SyncServices.ISyncSession.shouldPullChangesForEntityName_
+        )
+        self.assertResultIsBOOL(
+            SyncServices.ISyncSession.shouldReplaceAllRecordsOnClientForEntityName_
         )
 
         self.assertArgIsBOOL(
-            ISyncSession.clientLostRecordWithIdentifier_shouldReplaceOnNextSync_, 1
+            SyncServices.ISyncSession.clientLostRecordWithIdentifier_shouldReplaceOnNextSync_,
+            1,
         )
         self.assertResultIsBOOL(
-            ISyncSession.prepareToPullChangesForEntityNames_beforeDate_
+            SyncServices.ISyncSession.prepareToPullChangesForEntityNames_beforeDate_
         )
         self.assertArgIsSEL(
-            ISyncSession.prepareToPullChangesInBackgroundForEntityNames_target_selector_,
+            SyncServices.ISyncSession.prepareToPullChangesInBackgroundForEntityNames_target_selector_,  # noqa: B950
             2,
             b"v@:@@",
         )
-        self.assertResultIsBOOL(ISyncSession.isCancelled)
+        self.assertResultIsBOOL(SyncServices.ISyncSession.isCancelled)
 
     def testConstants(self):
-        self.assertIsInstance(ISyncSessionCancelledException, unicode)
-        self.assertIsInstance(ISyncSessionUnavailableException, unicode)
-        self.assertIsInstance(ISyncInvalidRecordException, unicode)
-        self.assertIsInstance(ISyncInvalidRecordIdentifiersKey, unicode)
-        self.assertIsInstance(ISyncInvalidRecordReasonsKey, unicode)
-        self.assertIsInstance(ISyncInvalidRecordsKey, unicode)
-        self.assertIsInstance(ISyncInvalidEntityException, unicode)
-        self.assertIsInstance(ISyncUnsupportedEntityException, unicode)
-        self.assertIsInstance(ISyncRecordEntityNameKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(SyncServices.ISyncSessionCancelledException, str)
+        self.assertIsInstance(SyncServices.ISyncSessionUnavailableException, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordException, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordIdentifiersKey, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordReasonsKey, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidRecordsKey, str)
+        self.assertIsInstance(SyncServices.ISyncInvalidEntityException, str)
+        self.assertIsInstance(SyncServices.ISyncUnsupportedEntityException, str)
+        self.assertIsInstance(SyncServices.ISyncRecordEntityNameKey, str)
