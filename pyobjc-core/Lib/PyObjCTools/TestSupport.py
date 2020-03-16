@@ -852,6 +852,28 @@ class TestCase(_unittest.TestCase):
                 % (method, sel_type, iface)
             )
 
+    def assertResultIsSEL(self, method, sel_type, message=None):
+        info = method.__metadata__()
+        try:
+            i = info["retval"]
+        except (KeyError, IndexError):
+            self.fail(
+                message
+                or "result of %s has no metadata (or doesn't exist)" % (method, )
+            )
+
+        type = i.get("type", b"@")
+        if type != objc._C_SEL:
+            self.fail(message or "result of %s is not of type SEL" % (method, ))
+
+        st = i.get("sel_of_type")
+        if st != sel_type and _typemap(st) != _typemap(sel_type):
+            self.fail(
+                message
+                or "result of %s doesn't have sel_type %r but %r"
+                % (method, sel_type, st)
+            )
+
     def assertArgIsSEL(self, method, argno, sel_type, message=None):
         if isinstance(method, objc.selector):
             offset = 2

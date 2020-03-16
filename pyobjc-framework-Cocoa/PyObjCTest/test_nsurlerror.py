@@ -1,11 +1,6 @@
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
-try:
-    import CoreFoundation.CFNetwork
-except ImportError:
-    CoreFoundation.CFNetwork = None
-
 
 class TestNSURLError(TestCase):
     def testConstants(self):

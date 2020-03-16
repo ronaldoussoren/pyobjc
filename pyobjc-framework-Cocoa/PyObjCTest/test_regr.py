@@ -82,7 +82,7 @@ class TestRegr(TestCase):
         cls = AppKit.NSOpenGLPixelFormat
         dir(cls)
 
-        o = cls.alloc().initWithAttributes_(
+        _ = cls.alloc().initWithAttributes_(
             (
                 AppKit.NSOpenGLPFAAccelerated,
                 AppKit.NSOpenGLPFANoRecovery,
@@ -90,7 +90,6 @@ class TestRegr(TestCase):
                 32,
             )
         )
-        self.assertTrue(o is not None)
 
     @min_os_level("10.6")
     def testBinaryPlist(self):

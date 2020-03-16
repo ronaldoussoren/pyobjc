@@ -6,9 +6,8 @@ documentation for details on how to use these functions and classes.
 """
 import sys
 
-import CoreFoundation
-import CoreText._manual as m
 import objc
+import CoreFoundation
 import Quartz
 from CoreText import _metadata
 
@@ -26,10 +25,10 @@ sys.modules["CoreText"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (CoreFoundation, Quartz, CoreText._manual),
+    (CoreFoundation, Quartz),
 )
 
-
+import CoreText._manual as m  # isort:skip
 for nm in dir(m):
     setattr(mod, nm, getattr(m, nm))
 

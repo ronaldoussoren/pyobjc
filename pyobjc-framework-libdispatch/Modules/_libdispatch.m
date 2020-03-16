@@ -177,6 +177,9 @@ PyObjC_MODULE_INIT(_libdispatch)
     if (PyObjCPointerWrapper_RegisterID("dispatch_semaphore_t",
                                         "^{dispatch_semaphore_s=}") < 0)
         goto error;
+    if (PyObjCPointerWrapper_RegisterID("dispatch_source_t",
+                                        "^{dispatch_source_type_s=}") < 0)
+        goto error;
 
     PyObjC_INITDONE();
 

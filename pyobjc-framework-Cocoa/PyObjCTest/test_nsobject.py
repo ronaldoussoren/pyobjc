@@ -65,8 +65,8 @@ class TestNSObjectFunctions(TestCase):
     @min_os_level("10.7")
     def testFunctions10_7(self):
         # No further testing needed:
-        CoreFoundation.CFBridgingRetain
-        CoreFoundation.CFBridgingRelease
+        Foundation.CFBridgingRetain
+        Foundation.CFBridgingRelease
 
 
 class TestNSObjectInteraction(TestCase):

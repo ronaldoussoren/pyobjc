@@ -14,20 +14,20 @@ class TestNSUserScriptTask(TestCase):
         self.assertArgIsBlock(
             Foundation.NSUserScriptTask.executeWithCompletionHandler_,
             0,
-            Foundation.NSUserScriptTaskCompletionHandler,
+            NSUserScriptTaskCompletionHandler,
         )
         self.assertArgIsBlock(
             Foundation.NSUserUnixTask.executeWithArguments_completionHandler_,
             1,
-            Foundation.NSUserUnixTaskCompletionHandler,
+            NSUserUnixTaskCompletionHandler,
         )
         self.assertArgIsBlock(
             Foundation.NSUserAppleScriptTask.executeWithAppleEvent_completionHandler_,
             1,
-            Foundation.NSUserAppleScriptTaskCompletionHandler,
+            NSUserAppleScriptTaskCompletionHandler,
         )
         self.assertArgIsBlock(
             Foundation.NSUserAutomatorTask.executeWithInput_completionHandler_,
             1,
-            Foundation.NSUserAutomatorTaskCompletionHandler,
+            NSUserAutomatorTaskCompletionHandler,
         )

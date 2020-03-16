@@ -29,13 +29,4 @@ sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
-
-AutomaticAssessmentConfiguration.AEAssessmentSession = objc.lookUpClass(
-    "AutomaticAssessmentConfiguration.AEAssessmentSession"
-)
-AutomaticAssessmentConfiguration.AEAssessmentConfiguration = objc.lookUpClass(
-    "AutomaticAssessmentConfiguration.AEAssessmentConfiguration"
-)
-
-
 del sys.modules["AutomaticAssessmentConfiguration._metadata"]

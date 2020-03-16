@@ -8,7 +8,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, cast_uint, onlyPytho
 
 class TestNSString(TestCase):
     def testClassTree(self):
-        self.assertTrue(issubclass(objc.pyobjc_str, str))
+        self.assertTrue(issubclass(objc.pyobjc_unicode, str))
 
     def testCompare(self):
         self.assertTrue(
@@ -82,7 +82,7 @@ class TestNSStringBridging(TestCase):
             objc.setStrBridgeEnabled(True)
             try:
                 v = Foundation.NSString.stringWithString_("hello2")
-                self.assertIsInstance(v, objc.pyobjc_str)
+                self.assertIsInstance(v, objc.pyobjc_unicode)
                 self.assertEqual(v, b"hello2".decode("ascii"))
 
                 self.assertRaises(UnicodeError, str, "\xff")
@@ -112,7 +112,7 @@ class TestNSStringBridging(TestCase):
                 objc.setStrBridgeEnabled(curEnabledFlag)
 
     def testNSStringMethodAccess(self):
-        self.assertIsInstance(self.nsUniString, objc.pyobjc_str)
+        self.assertIsInstance(self.nsUniString, objc.pyobjc_unicode)
         v = self.nsUniString.stringByAppendingString_
         self.assertIsInstance(v, objc.selector)
 

@@ -80,26 +80,24 @@ class TestNSItemProvider(TestCase):
         self.assertArgIsBlock(
             AppKit.NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_,
             2,
-            AppKit.NSItemProviderCompletionHandler,
+            NSItemProviderCompletionHandler,
         )
         self.assertArgIsBlock(
             AppKit.NSItemProvider.registerItemForTypeIdentifier_loadHandler_,
             1,
-            AppKit.NSItemProviderLoadHandler,
+            NSItemProviderLoadHandler,
         )
 
         self.assertResultIsBlock(
-            AppKit.NSItemProvider.previewImageHandler, AppKit.NSItemProviderLoadHandler
+            AppKit.NSItemProvider.previewImageHandler, NSItemProviderLoadHandler
         )
         self.assertArgIsBlock(
-            AppKit.NSItemProvider.setPreviewImageHandler_,
-            0,
-            AppKit.NSItemProviderLoadHandler,
+            AppKit.NSItemProvider.setPreviewImageHandler_, 0, NSItemProviderLoadHandler,
         )
         self.assertArgIsBlock(
             AppKit.NSItemProvider.loadPreviewImageWithOptions_completionHandler_,
             1,
-            AppKit.NSItemProviderCompletionHandler,
+            NSItemProviderCompletionHandler,
         )
 
         # XXX:
@@ -153,12 +151,12 @@ class TestNSItemProvider(TestCase):
         self.assertArgIsBlock(
             AppKit.NSItemProvider.registerItemForTypeIdentifier_loadHandler_,
             1,
-            AppKit.NSItemProviderLoadHandler,
+            NSItemProviderLoadHandler,
         )
         self.assertArgIsBlock(
             AppKit.NSItemProvider.loadItemForTypeIdentifier_options_completionHandler_,
             2,
-            AppKit.NSItemProviderCompletionHandler,
+            NSItemProviderCompletionHandler,
         )
 
     @min_sdk_level("10.13")

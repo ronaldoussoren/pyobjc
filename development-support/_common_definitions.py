@@ -37,17 +37,15 @@ def mac_ver():
 
 
 def repository_id():
-    return subprocess.check_output(["hg", "id"], cwd=TOP_DIR).decode("utf-8").strip()
+    return subprocess.check_output(["git", "describe", "--abbrev=12", "--always", "--dirty=+"], cwd=TOP_DIR).decode("utf-8").strip()
 
 
 def repository_commit_state():
-    summary = subprocess.check_output(["hg", "summary"], cwd=TOP_DIR).decode("utf-8")
+    summary = subprocess.check_output(["git", "status"], cwd=TOP_DIR).decode("utf-8")
     for ln in summary.splitlines():
-        if ln.startswith("commit:"):
-            return ln
-
-    raise RuntimeError("Cannot find commit status")
-
+        if "Changes not staged for commit"  in ln:
+            return "(dirty)"
+    return "(clean)"
 
 def xcode_version():
     data = subprocess.check_output(["xcodebuild", "-version"])

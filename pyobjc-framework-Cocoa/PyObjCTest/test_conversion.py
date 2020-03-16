@@ -120,7 +120,7 @@ class TestConversion(TestCase):
             v = Conversion.pythonCollectionFromPropertyList(value)
             self.assertIsInstance(v, dict)
             self.assertEqual(v, {"a": 42})
-            self.assertNotIsInstance(next(iter(v.keys())), objc.pyobjc_str)
+            self.assertNotIsInstance(next(iter(v.keys())), objc.pyobjc_unicode)
 
         with self.subTest("list/tuple"):
             value = Cocoa.NSArray.arrayWithArray_(["a", 42])

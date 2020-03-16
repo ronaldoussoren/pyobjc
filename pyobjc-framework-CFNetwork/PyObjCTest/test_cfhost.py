@@ -62,6 +62,7 @@ class TestCFHost(TestCase):
 
         self.assertArgHasType(CFNetwork.CFHostGetNames, 1, b"o^" + objc._C_NSBOOL)
         lst, ok = CFNetwork.CFHostGetNames(v, None)
+        print("XXX", lst)
         self.assertIsInstance(lst, CFNetwork.CFArrayRef)
         self.assertIsInstance(ok, bool)
         self.assertIn(value, lst)

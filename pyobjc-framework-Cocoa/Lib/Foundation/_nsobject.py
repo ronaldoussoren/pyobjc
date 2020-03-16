@@ -49,7 +49,7 @@ class NSObject(objc.Category(NSObject)):
             m = getattr(self, _str(sel))
             r = m(arg)
             result.append((True, r))
-        except:   # noqa: E722, B001
+        except:  # noqa: E722, B001
             result.append((False, sys.exc_info()))
 
     if hasattr(NSObject, "performSelector_onThread_withObject_waitUntilDone_"):

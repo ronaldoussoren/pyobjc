@@ -415,22 +415,6 @@ class TestNSMutableArrayInteraction(TestCase):
 
             self.assertEqual(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
-    def testSort3(self):
-        # check the sort method, list interface compatibility
-
-        a = Foundation.NSMutableArray.arrayWithArray_(range(4))
-        self.assertEqual(a, (0, 1, 2, 3))
-
-        def cmpfunc(l, r):
-            return -cmp(l, r)
-
-        a.sort(cmpfunc)
-
-        self.assertEqual(a, (3, 2, 1, 0))
-
-        a.sort()
-        self.assertEqual(a, (0, 1, 2, 3))
-
     def testSort1(self):
         a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))

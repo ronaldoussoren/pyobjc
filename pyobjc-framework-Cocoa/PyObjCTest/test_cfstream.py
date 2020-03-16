@@ -401,7 +401,10 @@ class TestStream(TestCase):
 
         self.assertArgIsOut(CoreFoundation.CFStreamCreatePairWithPeerSocketSignature, 2)
         self.assertArgIsOut(CoreFoundation.CFStreamCreatePairWithPeerSocketSignature, 3)
-        readStream, writeStream = CoreFoundation.CFStreamCreatePairWithPeerSocketSignature(
+        (
+            readStream,
+            writeStream,
+        ) = CoreFoundation.CFStreamCreatePairWithPeerSocketSignature(
             None, signature, None, None
         )
 

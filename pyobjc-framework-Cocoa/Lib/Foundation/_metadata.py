@@ -1974,6 +1974,7 @@ try:
         },
     )
     r(b"NSCoder", b"requiresSecureCoding", {"retval": {"type": b"Z"}})
+    r(b"NSComparisonPredicate", b"customSelector", {"retval": {"sel_of_type": b"Z@:@"}})
     r(
         b"NSComparisonPredicate",
         b"initWithLeftExpression:rightExpression:customSelector:",

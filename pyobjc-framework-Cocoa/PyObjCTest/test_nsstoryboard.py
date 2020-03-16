@@ -10,10 +10,10 @@ class TestNSStoryboard(TestCase):
         self.assertArgIsBlock(
             AppKit.NSStoryboard.instantiateInitialControllerWithCreator_,
             0,
-            AppKit.NSStoryboardControllerCreator,
+            NSStoryboardControllerCreator,
         )
         self.assertArgIsBlock(
             AppKit.NSStoryboard.instantiateControllerWithIdentifier_creator_,
             1,
-            AppKit.NSStoryboardControllerCreator,
+            NSStoryboardControllerCreator,
         )

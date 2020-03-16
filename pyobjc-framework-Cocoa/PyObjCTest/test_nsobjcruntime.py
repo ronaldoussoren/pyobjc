@@ -168,15 +168,15 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(align, int)
 
     def testMinMax(self):
-        self.assertEqual(objc.MAX(1, 2), 2)
-        self.assertEqual(objc.MAX(2, 1), 2)
-        self.assertEqual(objc.MAX("a", "b"), "b")
-        self.assertEqual(objc.MIN(1, 2), 1)
-        self.assertEqual(objc.MIN(2, 1), 1)
-        self.assertEqual(objc.MIN("a", "b"), "a")
-        self.assertEqual(objc.ABS(1), 1)
-        self.assertEqual(objc.ABS(-1), 1)
-        self.assertEqual(objc.ABS(-1.0), 1.0)
+        self.assertEqual(Foundation.MAX(1, 2), 2)
+        self.assertEqual(Foundation.MAX(2, 1), 2)
+        self.assertEqual(Foundation.MAX("a", "b"), "b")
+        self.assertEqual(Foundation.MIN(1, 2), 1)
+        self.assertEqual(Foundation.MIN(2, 1), 1)
+        self.assertEqual(Foundation.MIN("a", "b"), "a")
+        self.assertEqual(Foundation.ABS(1), 1)
+        self.assertEqual(Foundation.ABS(-1), 1)
+        self.assertEqual(Foundation.ABS(-1.0), 1.0)
 
     def testFunctions(self):
         self.assertArgIsPrintf(Foundation.NSLog, 0)

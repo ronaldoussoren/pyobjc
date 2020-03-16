@@ -5,7 +5,7 @@ import sys
 
 import objc
 import Foundation
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, sdkForPython
 
 # flake8: noqa: B950
 PLIST = b"""\
@@ -56,9 +56,9 @@ class TestNSNumber(TestCase):
     def testUseAsBasicType(self):
         lstValue = list(range(0, 20, 2))
         for idx, v in enumerate(lstValue):
-            self.assertEqual(v, lstValue[NSNumber.numberWithInt_(idx)])
-            self.assertEqual(v, lstValue[NSNumber.numberWithLong_(idx)])
-            self.assertEqual(v, lstValue[NSNumber.numberWithLongLong_(idx)])
+            self.assertEqual(v, lstValue[Foundation.NSNumber.numberWithInt_(idx)])
+            self.assertEqual(v, lstValue[Foundation.NSNumber.numberWithLong_(idx)])
+            self.assertEqual(v, lstValue[Foundation.NSNumber.numberWithLongLong_(idx)])
 
         self.assertRaises(
             TypeError,

@@ -7,11 +7,7 @@ documentation for details on how to use these functions and classes.
 import sys
 
 import CoreFoundation
-import Foundation._context
 import Foundation._Foundation
-import Foundation._functiondefines
-import Foundation._nsindexset
-import Foundation._nsobject
 import objc
 from Foundation import _metadata
 from Foundation._inlines import _inline_list_
@@ -199,6 +195,10 @@ for nm in dir(Foundation._Foundation):
 
 mod.NSDecimal = objc.NSDecimal
 
+import Foundation._context  # isort:skip
+import Foundation._functiondefines  # isort:skip
+import Foundation._nsindexset  # isort:skip
+import Foundation._nsobject  # isort:skip
 
 for nm in dir(Foundation._functiondefines):
     setattr(mod, nm, getattr(Foundation._functiondefines, nm))

@@ -499,7 +499,8 @@ class oc_test(Command):
                     subprocess.check_output(
                         [sys.executable, "-mtwine", "check"] + glob.glob("dist/*")
                     )
-                except subprocess.CalledProcessError:
+                except subprocess.CalledProcessError as exc:
+                    print("Twine failed for", nm, exc)
                     failures += 1
 
         print(

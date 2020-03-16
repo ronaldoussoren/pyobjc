@@ -40,7 +40,12 @@ class TestURLAccess(TestCase):
         self.assertArgIsOut(CoreFoundation.CFURLCreateDataAndPropertiesFromResource, 2)
         self.assertArgIsOut(CoreFoundation.CFURLCreateDataAndPropertiesFromResource, 3)
         self.assertArgIsOut(CoreFoundation.CFURLCreateDataAndPropertiesFromResource, 5)
-        ok, data, properties, errorCode = CoreFoundation.CFURLCreateDataAndPropertiesFromResource(  # noqa: B950
+        (
+            ok,
+            data,
+            properties,
+            errorCode,
+        ) = CoreFoundation.CFURLCreateDataAndPropertiesFromResource(  # noqa: B950
             None, url, None, None, None, None
         )
         self.assertTrue(ok)

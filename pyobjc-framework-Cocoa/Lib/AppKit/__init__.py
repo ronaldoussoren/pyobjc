@@ -7,16 +7,10 @@ documentation for details on how to use these functions and classes.
 import sys
 
 # Manually written wrappers:
-import AppKit._AppKit
 import Foundation
 import objc
 from AppKit import _metadata
 from AppKit._inlines import _inline_list_
-
-# NSApp is a global variable that can be changed in ObjC,
-# somewhat emulate that (it is *not* possible to assign to
-# NSApp in Python)
-from AppKit._nsapp import NSApp
 
 
 def _setup_conveniences():
@@ -68,28 +62,29 @@ sys.modules["AppKit"] = mod = objc.ObjCLazyModule(
     (Foundation,),
 )
 
+# NSApp is a global variable that can be changed in ObjC,
+# somewhat emulate that (it is *not* possible to assign to
+# NSApp in Python)
+from AppKit._nsapp import NSApp  # isort:skip
 
 mod.NSApp = NSApp
 
+import AppKit._AppKit  # isort:skip
 
 for nm in dir(AppKit._AppKit):
     setattr(mod, nm, getattr(AppKit._AppKit, nm))
 
 # Fix types for a number of character constants
-try:
-    unichr
-except NameError:
-    unichr = chr
-mod.NSEnterCharacter = unichr(mod.NSEnterCharacter)
-mod.NSBackspaceCharacter = unichr(mod.NSBackspaceCharacter)
-mod.NSTabCharacter = unichr(mod.NSTabCharacter)
-mod.NSNewlineCharacter = unichr(mod.NSNewlineCharacter)
-mod.NSFormFeedCharacter = unichr(mod.NSFormFeedCharacter)
-mod.NSCarriageReturnCharacter = unichr(mod.NSCarriageReturnCharacter)
-mod.NSBackTabCharacter = unichr(mod.NSBackTabCharacter)
-mod.NSDeleteCharacter = unichr(mod.NSDeleteCharacter)
-mod.NSLineSeparatorCharacter = unichr(mod.NSLineSeparatorCharacter)
-mod.NSParagraphSeparatorCharacter = unichr(mod.NSParagraphSeparatorCharacter)
+mod.NSEnterCharacter = chr(mod.NSEnterCharacter)
+mod.NSBackspaceCharacter = chr(mod.NSBackspaceCharacter)
+mod.NSTabCharacter = chr(mod.NSTabCharacter)
+mod.NSNewlineCharacter = chr(mod.NSNewlineCharacter)
+mod.NSFormFeedCharacter = chr(mod.NSFormFeedCharacter)
+mod.NSCarriageReturnCharacter = chr(mod.NSCarriageReturnCharacter)
+mod.NSBackTabCharacter = chr(mod.NSBackTabCharacter)
+mod.NSDeleteCharacter = chr(mod.NSDeleteCharacter)
+mod.NSLineSeparatorCharacter = chr(mod.NSLineSeparatorCharacter)
+mod.NSParagraphSeparatorCharacter = chr(mod.NSParagraphSeparatorCharacter)
 
 
 for nm in [
@@ -167,7 +162,7 @@ for nm in [
     "NSModeSwitchFunctionKey",
 ]:
     try:
-        setattr(mod, nm, unichr(getattr(mod, nm)))
+        setattr(mod, nm, chr(getattr(mod, nm)))
     except AttributeError:
         pass
 

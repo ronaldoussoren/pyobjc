@@ -2586,6 +2586,11 @@
    "NSComparisonPredicate": {
     "methods": [
      {
+      "retval": { "sel_of_type": "Z@:@" },
+      "selector": "customSelector",
+      "class_method": false
+     },
+     {
       "args": {
        "2": {
         "sel_of_type": "Z@:@"

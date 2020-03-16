@@ -219,28 +219,28 @@ class TestCFBundle(TestCase):
 
         try:
             CoreFoundation.CFBundleGetFunctionPointerForName
-        except NameError:
+        except AttributeError:
             pass
         else:
             self.fail("CFBundleGetFunctionPointerForName")
 
         try:
             CoreFoundation.CFBundleGetFunctionPointersForNames
-        except NameError:
+        except AttributeError:
             pass
         else:
             self.fail("CFBundleGetFunctionPointersForNames")
 
         try:
             CoreFoundation.CFBundleGetDataPointerForName
-        except NameError:
+        except AttributeError:
             pass
         else:
             self.fail("CFBundleGetDataPointerForName")
 
         try:
             CoreFoundation.CFBundleGetDataPointersForNames
-        except NameError:
+        except AttributeError:
             pass
         else:
             self.fail("CFBundleGetDataPointersForNames")

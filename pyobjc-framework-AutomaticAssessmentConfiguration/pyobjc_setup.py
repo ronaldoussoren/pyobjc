@@ -543,7 +543,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
             % (REPO_NAME,)
         )
         k["long_description"] += (
-            "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues`_\n\n"
+            "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues>`_\n\n"
             % (REPO_NAME,)
         )
         k["long_description"] += (

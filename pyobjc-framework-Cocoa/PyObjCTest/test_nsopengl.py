@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, max_os_level
 
 
 class TestNSOpenGL(TestCase):
@@ -145,17 +145,18 @@ class TestNSOpenGL(TestCase):
         )
 
     @min_os_level("10.6")
+    @max_os_level("10.14")
     def testMethods10_6(self):
         self.assertArgHasType(
             AppKit.NSOpenGLPixelFormat.initWithCGLPixelFormatObj_,
             0,
-            b"^{_CGLPixelFormatObject}",
+            b"^{_CGLPixelFormatObject=}",
         )
         self.assertArgHasType(
-            AppKit.NSOpenGLPixelFormat.initWithCGLBufferObj, 0, b"^{_CGLBufferObject}"
+            AppKit.NSOpenGLPixelFormat.initWithCGLBufferObj_, 0, b"^{_CGLBufferObject=}"
         )
         self.assertResultHasType(
-            AppKit.NSOpenGLPixelFormat.CGLBufferObj, b"^{_CGLBufferObject}"
+            AppKit.NSOpenGLPixelFormat.CGLBufferObj_, b"^{_CGLBufferObject=}"
         )
 
     @min_os_level("10.6")

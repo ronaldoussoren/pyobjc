@@ -116,12 +116,12 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertArgIsBlock(
             AppKit.NSCollectionViewCompositionalLayout.initWithSectionProvider_,
             0,
-            AppKit.NSCollectionViewCompositionalLayoutSectionProvider,
+            NSCollectionViewCompositionalLayoutSectionProvider,
         )
         self.assertArgIsBlock(
             AppKit.NSCollectionViewCompositionalLayout.initWithSectionProvider_configuration_,
             0,
-            AppKit.NSCollectionViewCompositionalLayoutSectionProvider,
+            NSCollectionViewCompositionalLayoutSectionProvider,
         )
 
         self.assertResultIsBOOL(
@@ -133,12 +133,12 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
 
         self.assertResultIsBlock(
             AppKit.NSCollectionLayoutSection.visibleItemsInvalidationHandler,
-            AppKit.NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
+            NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
         )
         self.assertArgIsBlock(
             AppKit.NSCollectionLayoutSection.setVisibleItemsInvalidationHandler_,
             0,
-            AppKit.NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
+            NSCollectionLayoutSectionVisibleItemsInvalidationHandler,
         )
 
         self.assertResultIsBOOL(AppKit.NSCollectionLayoutDimension.isFractionalWidth)
@@ -193,7 +193,7 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
         self.assertArgIsBlock(
             AppKit.NSCollectionViewDiffableDataSource.initWithCollectionView_itemProvider_,
             1,
-            AppKit.NSCollectionViewDiffableDataSourceItemProvider,
+            NSCollectionViewDiffableDataSourceItemProvider,
         )
         self.assertArgIsBOOL(
             AppKit.NSCollectionViewDiffableDataSource.applySnapshot_animatingDifferences_,
@@ -202,12 +202,12 @@ class TestNSCollectionViewCompositionalLayout(TestCase):
 
         self.assertResultIsBlock(
             AppKit.NSCollectionViewDiffableDataSource.supplementaryViewProvider,
-            AppKit.NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
+            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
         )
         self.assertArgIsBlock(
             AppKit.NSCollectionViewDiffableDataSource.setSupplementaryViewProvider_,
             0,
-            AppKit.NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
+            NSCollectionViewDiffableDataSourceSupplementaryViewProvider,
         )
 
     @min_sdk_level("10.15")

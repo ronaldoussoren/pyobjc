@@ -280,5 +280,7 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionLayoutVisibleItem));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSSpringLoadingDestination));
+    Py_XDECREF(p);
 #endif
 }

@@ -8,7 +8,6 @@ import sys
 
 import Foundation
 import objc
-import SystemConfiguration._manual as m
 from SystemConfiguration import _metadata
 
 sys.modules["SystemConfiguration"] = mod = objc.ObjCLazyModule(
@@ -23,13 +22,14 @@ sys.modules["SystemConfiguration"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Foundation, SystemConfiguration._manual),
+    (Foundation, ),
 )
 
 
 del sys.modules["SystemConfiguration._metadata"]
 
 
+import SystemConfiguration._manual as m  # isort:skip
 for nm in dir(m):
     setattr(mod, nm, getattr(m, nm))
 

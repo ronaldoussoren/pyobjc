@@ -361,27 +361,27 @@ class TestNSFileManager(TestCase):
 
         obj = FileManagerTest1.alloc().init()
         m = obj.fileManager_shouldCopyItemAtPath_toPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
         m = (
             obj.fileManager_shouldProceedAfterError_copyingItemAtPath_toPath_.__metadata__()
         )
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
         m = obj.fileManager_shouldMoveItemAtPath_toPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
         m = (
             obj.fileManager_shouldProceedAfterError_movingItemAtPath_toPath_.__metadata__()
         )
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
         m = obj.fileManager_shouldLinkItemAtPath_toPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
         m = (
             obj.fileManager_shouldProceedAfterError_linkingItemAtPath_toPath_.__metadata__()
         )
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
         m = obj.fileManager_shouldRemoveItemAtPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
         m = obj.fileManager_shouldProceedAfterError_removingItemAtPath_.__metadata__()
-        self.assertEqual(m["retval"]["type"], "Z")
+        self.assertEqual(m["retval"]["type"], b"Z")
 
     @min_os_level("10.5")
     def testMethods10_5(self):

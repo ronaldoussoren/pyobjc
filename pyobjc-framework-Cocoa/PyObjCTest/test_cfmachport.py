@@ -33,7 +33,7 @@ class TestMachPort(TestCase):
         port, shouldFree = CoreFoundation.CFMachPortCreate(None, callout, context, None)
 
         # On OSX 10.7 or earlier this test passed, on OSX 10.8 it doesn't???
-        self.assertIsInstance(port, CoreFoundation.MachPortClasses)
+        self.assertIsInstance(port, MachPortClasses)
 
     def testCreate(self):
         class Context:
@@ -51,7 +51,7 @@ class TestMachPort(TestCase):
 
         port, shouldFree = CoreFoundation.CFMachPortCreate(None, callout, context, None)
 
-        self.assertIsInstance(port, CoreFoundation.MachPortClasses)
+        self.assertIsInstance(port, MachPortClasses)
         self.assertIsInstance(port, Foundation.NSPort)
         self.assertTrue(shouldFree is True or shouldFree is False)
         idx = CoreFoundation.CFMachPortGetPort(port)

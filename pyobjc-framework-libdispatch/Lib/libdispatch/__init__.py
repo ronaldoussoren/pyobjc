@@ -7,7 +7,6 @@ documentation for details on how to use these functions.
 
 import sys
 
-import libdispatch._libdispatch as _manual
 import objc
 from libdispatch import _metadata
 from libdispatch._inlines import _inline_list_
@@ -27,6 +26,7 @@ sys.modules["libdispatch"] = mod = objc.ObjCLazyModule(
 )
 
 
+import libdispatch._libdispatch as _manual
 for nm in dir(_manual):
     if nm.startswith("__"):
         continue
