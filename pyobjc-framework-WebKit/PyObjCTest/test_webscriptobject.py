@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import objc
+import WebKit
 
 
-class TestWebScriptObjectHelper(NSObject):
+class TestWebScriptObjectHelper(WebKit.NSObject):
     @classmethod
     def webScriptNameForSelector_(self, sel):
         return 1
@@ -45,8 +46,4 @@ class TestWebScriptObject(TestCase):
             TestWebScriptObjectHelper.isKeyExcludedFromWebScript_, 0
         )
 
-        self.assertResultIsBOOL(WebScriptObject.throwException_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.WebScriptObject.throwException_)

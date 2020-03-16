@@ -1,5 +1,6 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestObjectAPI(TestCase):
@@ -59,7 +60,3 @@ class TestObjectAPI(TestCase):
     def test_functions_10_12(self):
         self.assertResultHasType(libdispatch.dispatch_activate, objc._C_VOID)
         self.assertArgHasType(libdispatch.dispatch_activate, 0, objc._C_ID)
-
-
-if __name__ == "__main__":
-    main()

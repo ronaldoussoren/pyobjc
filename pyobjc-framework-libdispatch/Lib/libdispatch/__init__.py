@@ -26,7 +26,8 @@ sys.modules["libdispatch"] = mod = objc.ObjCLazyModule(
 )
 
 
-import libdispatch._libdispatch as _manual
+import libdispatch._libdispatch as _manual  # isort:skip # noqa: E402
+
 for nm in dir(_manual):
     if nm.startswith("__"):
         continue

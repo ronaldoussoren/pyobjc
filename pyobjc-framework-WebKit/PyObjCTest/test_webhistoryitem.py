@@ -1,11 +1,7 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestWebHistoryItem(TestCase):
     def testConstants(self):
-        self.assertIsInstance(WebHistoryItemChangedNotification, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(WebKit.WebHistoryItemChangedNotification, str)

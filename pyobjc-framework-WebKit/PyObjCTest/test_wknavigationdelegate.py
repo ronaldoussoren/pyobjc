@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+import WebKit
+import objc
 
 
-class TestWKNavigationDelegateHelper(NSObject):
+class TestWKNavigationDelegateHelper(WebKit.NSObject):
     def webView_decidePolicyForNavigationAction_decisionHandler_(self, w, a, h):
         pass
 
@@ -17,13 +18,13 @@ class TestWKNavigationDelegate(TestCase):
     @onlyOn64Bit
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(WKErrorDomain, unicode)
+        self.assertIsInstance(WebKit.WKErrorDomain, str)
 
-        self.assertEqual(WKNavigationActionPolicyCancel, 0)
-        self.assertEqual(WKNavigationActionPolicyAllow, 1)
+        self.assertEqual(WebKit.WKNavigationActionPolicyCancel, 0)
+        self.assertEqual(WebKit.WKNavigationActionPolicyAllow, 1)
 
-        self.assertEqual(WKNavigationResponsePolicyCancel, 0)
-        self.assertEqual(WKNavigationResponsePolicyAllow, 1)
+        self.assertEqual(WebKit.WKNavigationResponsePolicyCancel, 0)
+        self.assertEqual(WebKit.WKNavigationResponsePolicyAllow, 1)
 
     @onlyOn64Bit
     @min_os_level("10.10")
@@ -32,21 +33,17 @@ class TestWKNavigationDelegate(TestCase):
         self.assertIsInstance(p, objc.formal_protocol)
 
         self.assertArgIsBlock(
-            TestWKNavigationDelegateHelper.webView_decidePolicyForNavigationAction_decisionHandler_,
+            TestWKNavigationDelegateHelper.webView_decidePolicyForNavigationAction_decisionHandler_,  # noqa: B950
             2,
             objc._C_VOID + objc._C_NSInteger,
         )
         self.assertArgIsBlock(
-            TestWKNavigationDelegateHelper.webView_decidePolicyForNavigationResponse_decisionHandler_,
+            TestWKNavigationDelegateHelper.webView_decidePolicyForNavigationResponse_decisionHandler_,  # noqa: B950
             2,
             objc._C_VOID + objc._C_NSInteger,
         )
         self.assertArgIsBlock(
-            TestWKNavigationDelegateHelper.webView_didReceiveAuthenticationChallenge_completionHandler_,
+            TestWKNavigationDelegateHelper.webView_didReceiveAuthenticationChallenge_completionHandler_,  # noqa: B950
             2,
             objc._C_VOID + objc._C_NSInteger + objc._C_ID,
         )
-
-
-if __name__ == "__main__":
-    main()

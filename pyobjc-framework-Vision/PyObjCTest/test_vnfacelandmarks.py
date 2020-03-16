@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNFaceLandmarks(TestCase):
@@ -14,7 +14,3 @@ if sys.maxsize >= 2 ** 32:
             self.assertResultIsVariableSize(
                 Vision.VNFaceLandmarkRegion2D.pointsInImageOfSize_
             )
-
-
-if __name__ == "__main__":
-    main()

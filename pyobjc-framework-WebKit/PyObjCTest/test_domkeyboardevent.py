@@ -1,133 +1,129 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import WebKit
 
 
 class TestDOMKeyboardEvent(TestCase):
     def testConstants(self):
-        self.assertEqual(DOM_KEY_LOCATION_STANDARD, 0)
-        self.assertEqual(DOM_KEY_LOCATION_LEFT, 1)
-        self.assertEqual(DOM_KEY_LOCATION_RIGHT, 2)
-        self.assertEqual(DOM_KEY_LOCATION_NUMPAD, 3)
+        self.assertEqual(WebKit.DOM_KEY_LOCATION_STANDARD, 0)
+        self.assertEqual(WebKit.DOM_KEY_LOCATION_LEFT, 1)
+        self.assertEqual(WebKit.DOM_KEY_LOCATION_RIGHT, 2)
+        self.assertEqual(WebKit.DOM_KEY_LOCATION_NUMPAD, 3)
 
     @min_os_level("10.5")
     def testMethods10_5(self):
-        self.assertResultIsBOOL(DOMKeyboardEvent.altGraphKey)
+        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.altGraphKey)
 
     def testMethods(self):
-        self.assertResultIsBOOL(DOMKeyboardEvent.ctrlKey)
-        self.assertResultIsBOOL(DOMKeyboardEvent.shiftKey)
-        self.assertResultIsBOOL(DOMKeyboardEvent.altKey)
-        self.assertResultIsBOOL(DOMKeyboardEvent.metaKey)
-        self.assertResultIsBOOL(DOMKeyboardEvent.getModifierState_)
+        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.ctrlKey)
+        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.shiftKey)
+        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.altKey)
+        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.metaKey)
+        self.assertResultIsBOOL(WebKit.DOMKeyboardEvent.getModifierState_)
 
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             1,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             2,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             6,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             7,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             8,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             9,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             10,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             1,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             2,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             6,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             7,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             8,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_keyLocation_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             9,
         )
 
     @min_os_level("10.10")
     def test_methods10_10(self):
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             1,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             2,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             6,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             7,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             8,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             9,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_altGraphKey_,  # noqa: B950
             10,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             1,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             2,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             6,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             7,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             8,
         )
         self.assertArgIsBOOL(
-            DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMKeyboardEvent.initKeyboardEvent_canBubble_cancelable_view_keyIdentifier_location_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             9,
         )
-
-
-if __name__ == "__main__":
-    main()

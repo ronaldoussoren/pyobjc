@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNRecognizeAnimalsRequest(TestCase):
@@ -11,8 +11,8 @@ if sys.maxsize >= 2 ** 32:
 
         @min_os_level("10.15")
         def test_constants10_15(self):
-            self.assertIsInstance(Vision.VNAnimalIdentifierDog, unicode)
-            self.assertIsInstance(Vision.VNAnimalIdentifierCat, unicode)
+            self.assertIsInstance(Vision.VNAnimalIdentifierDog, str)
+            self.assertIsInstance(Vision.VNAnimalIdentifierCat, str)
 
         @min_os_level("10.15")
         def test_methods10_15(self):
@@ -20,7 +20,3 @@ if sys.maxsize >= 2 ** 32:
                 Vision.VNRecognizeAnimalsRequest.knownAnimalIdentifiersForRevision_error_,
                 1,
             )
-
-
-if __name__ == "__main__":
-    main()

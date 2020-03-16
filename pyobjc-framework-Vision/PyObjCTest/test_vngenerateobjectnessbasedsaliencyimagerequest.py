@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import Vision
 
     class TestVNGenerateObjectnessBasedSaliencyImageRequest(TestCase):
@@ -10,7 +10,3 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(
                 Vision.VNGenerateObjectnessBasedSaliencyImageRequestRevision1, 1
             )
-
-
-if __name__ == "__main__":
-    main()

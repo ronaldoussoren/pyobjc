@@ -1,5 +1,6 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 dispatch_io_handler_t = b"vB@i"
 
@@ -121,7 +122,3 @@ class TestIoAPI(TestCase):
         )  # dispatch_io_t
         self.assertArgHasType(libdispatch.dispatch_io_set_interval, 1, objc._C_ULNGLNG)
         self.assertArgHasType(libdispatch.dispatch_io_set_interval, 2, objc._C_ULNG)
-
-
-if __name__ == "__main__":
-    main()

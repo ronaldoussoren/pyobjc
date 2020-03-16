@@ -1,6 +1,6 @@
 import JavaScriptCore
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestJSBase(TestCase):
@@ -45,7 +45,3 @@ class TestJSBase(TestCase):
         self.assertArgHasType(
             JavaScriptCore.JSGarbageCollect, 0, JavaScriptCore.JSContextRef.__typestr__
         )
-
-
-if __name__ == "__main__":
-    main()

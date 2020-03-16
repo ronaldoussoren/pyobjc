@@ -1,5 +1,5 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestVTErrors(TestCase):
@@ -47,7 +47,3 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTDecodeInfo_ImageBufferModifiable, 1 << 2)
         self.assertEqual(VideoToolbox.kVTEncodeInfo_Asynchronous, 1 << 0)
         self.assertEqual(VideoToolbox.kVTEncodeInfo_FrameDropped, 1 << 1)
-
-
-if __name__ == "__main__":
-    main()

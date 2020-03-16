@@ -1,15 +1,11 @@
-from PyObjCTools.TestSupport import *
-from XgridFoundation import *
+from PyObjCTools.TestSupport import TestCase
+import XgridFoundation
 
 
 class TestXGFile(TestCase):
     def testConstants(self):
-        self.assertEqual(XGFileTypeNone, 0)
-        self.assertEqual(XGFileTypeRegular, 1)
-        self.assertEqual(XGFileTypeStream, 2)
-        self.assertIsInstance(XGFileStandardOutputPath, unicode)
-        self.assertIsInstance(XGFileStandardErrorPath, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(XgridFoundation.XGFileTypeNone, 0)
+        self.assertEqual(XgridFoundation.XGFileTypeRegular, 1)
+        self.assertEqual(XgridFoundation.XGFileTypeStream, 2)
+        self.assertIsInstance(XgridFoundation.XGFileStandardOutputPath, str)
+        self.assertIsInstance(XgridFoundation.XGFileStandardErrorPath, str)

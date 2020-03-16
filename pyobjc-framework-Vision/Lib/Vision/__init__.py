@@ -12,7 +12,7 @@ import Foundation
 import objc
 import Quartz
 from Vision import _metadata
-from Vision._Vision import *
+from Vision import _Vision
 
 sys.modules["Vision"] = mod = objc.ObjCLazyModule(
     "Vision",
@@ -26,7 +26,7 @@ sys.modules["Vision"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation, Quartz, CoreML),
+    (_Vision, Foundation, Quartz, CoreML),
 )
 
 

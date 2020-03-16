@@ -1,6 +1,6 @@
 import iTunesLibrary
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestITLibAlbum(TestCase):
@@ -11,7 +11,3 @@ class TestITLibAlbum(TestCase):
         self.assertResultIsBOOL(iTunesLibrary.ITLibAlbum.isCompilation)
         self.assertResultIsBOOL(iTunesLibrary.ITLibAlbum.isRatingComputed)
         self.assertResultIsBOOL(iTunesLibrary.ITLibAlbum.isGapless)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,11 +1,7 @@
-from PyObjCTools.TestSupport import *
-from XgridFoundation import *
+from PyObjCTools.TestSupport import TestCase
+import XgridFoundation
 
 
 class TestXGGrid(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(XGGrid.isDefault)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(XgridFoundation.XGGrid.isDefault)

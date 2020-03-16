@@ -1,11 +1,7 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMCSSStyleDeclaration(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMCSSStyleDeclaration.isPropertyImplicit_)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMCSSStyleDeclaration.isPropertyImplicit_)

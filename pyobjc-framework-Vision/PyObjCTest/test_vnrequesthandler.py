@@ -1,15 +1,15 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNRequestHandler(TestCase):
         @min_os_level("10.13")
         def testConstants10_13(self):
-            self.assertIsInstance(Vision.VNImageOptionProperties, unicode)
-            self.assertIsInstance(Vision.VNImageOptionCameraIntrinsics, unicode)
+            self.assertIsInstance(Vision.VNImageOptionProperties, str)
+            self.assertIsInstance(Vision.VNImageOptionCameraIntrinsics, str)
 
         @min_os_level("10.13")
         def testMethods10_13(self):
@@ -24,10 +24,10 @@ if sys.maxsize >= 2 ** 32:
                 2,
             )
             self.assertResultIsBOOL(
-                Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_orientation_error_
+                Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_orientation_error_  # noqa: B950
             )
             self.assertArgIsOut(
-                Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_orientation_error_,
+                Vision.VNSequenceRequestHandler.performRequests_onCVPixelBuffer_orientation_error_,  # noqa: B950
                 3,
             )
 
@@ -86,7 +86,3 @@ if sys.maxsize >= 2 ** 32:
                 Vision.VNSequenceRequestHandler.performRequests_onImageData_orientation_error_,
                 3,
             )
-
-
-if __name__ == "__main__":
-    main()

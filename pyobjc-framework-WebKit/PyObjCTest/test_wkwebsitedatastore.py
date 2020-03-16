@@ -1,27 +1,25 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+import WebKit
 
 
 class TestWKWebsiteDataStore(TestCase):
     @onlyOn64Bit
     @min_os_level("10.11")
     def testMethods10_11(self):
-        self.assertResultIsBOOL(WKWebsiteDataStore.isPersistent)
+        self.assertResultIsBOOL(WebKit.WKWebsiteDataStore.isPersistent)
 
         self.assertArgIsBlock(
-            WKWebsiteDataStore.fetchDataRecordsOfTypes_completionHandler_, 1, b"v@"
+            WebKit.WKWebsiteDataStore.fetchDataRecordsOfTypes_completionHandler_,
+            1,
+            b"v@",
         )
         self.assertArgIsBlock(
-            WKWebsiteDataStore.removeDataOfTypes_forDataRecords_completionHandler_,
+            WebKit.WKWebsiteDataStore.removeDataOfTypes_forDataRecords_completionHandler_,
             2,
             b"v",
         )
         self.assertArgIsBlock(
-            WKWebsiteDataStore.removeDataOfTypes_modifiedSince_completionHandler_,
+            WebKit.WKWebsiteDataStore.removeDataOfTypes_modifiedSince_completionHandler_,
             2,
             b"v",
         )
-
-
-if __name__ == "__main__":
-    main()

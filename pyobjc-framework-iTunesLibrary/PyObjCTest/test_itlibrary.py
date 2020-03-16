@@ -1,6 +1,6 @@
 import iTunesLibrary
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestITLibrary(TestCase):
@@ -31,7 +31,3 @@ class TestITLibrary(TestCase):
 
         self.assertEqual(iTunesLibrary.ITLibInitOptionNone, 0)
         self.assertEqual(iTunesLibrary.ITLibInitOptionLazyLoadData, 1)
-
-
-if __name__ == "__main__":
-    main()

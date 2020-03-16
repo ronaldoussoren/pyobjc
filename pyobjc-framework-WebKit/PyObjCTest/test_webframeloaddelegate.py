@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import WebKit  # noqa: F401
+import objc
 
 
-class TestWebFrameLoadDelegateHelper(NSObject):
+class TestWebFrameLoadDelegateHelper(WebKit.NSObject):
     def webView_willPerformClientRedirectToURL_delay_fireDate_forFrame_(
         self, a, b, c, d, e
     ):
@@ -16,11 +17,7 @@ class TestWebFrameLoadDelegate(TestCase):
 
     def testMethods(self):
         self.assertArgHasType(
-            TestWebFrameLoadDelegateHelper.webView_willPerformClientRedirectToURL_delay_fireDate_forFrame_,
+            TestWebFrameLoadDelegateHelper.webView_willPerformClientRedirectToURL_delay_fireDate_forFrame_,  # noqa: B950
             2,
             objc._C_DBL,
         )
-
-
-if __name__ == "__main__":
-    main()

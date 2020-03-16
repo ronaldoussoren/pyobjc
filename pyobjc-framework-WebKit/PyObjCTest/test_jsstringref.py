@@ -1,6 +1,6 @@
 import JavaScriptCore
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestJSBase(TestCase):
@@ -61,7 +61,3 @@ class TestJSBase(TestCase):
             JavaScriptCore.JSStringIsEqualToUTF8CString, 1, b"n^" + objc._C_CHAR_AS_TEXT
         )
         self.assertArgIsNullTerminated(JavaScriptCore.JSStringIsEqualToUTF8CString, 1)
-
-
-if __name__ == "__main__":
-    main()

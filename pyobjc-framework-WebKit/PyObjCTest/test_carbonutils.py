@@ -1,6 +1,6 @@
 import Cocoa
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, onlyOn32Bit
+import WebKit
 
 try:
     import Quartz
@@ -14,16 +14,12 @@ class TestCarbonUtils(TestCase):
         if Quartz is None:
             self.fail("Quartz is not installed")
 
-        WebInitForCarbon()
+        WebKit.WebInitForCarbon()
 
         # img = NSImage.imageNamed_('NSHelpCursor')
-        img = NSImage.imageNamed_(Cocoa.NSImageNameUserAccounts)
-        self.assertIsInstance(img, NSImage)
+        img = Cocoa.NSImage.imageNamed_(Cocoa.NSImageNameUserAccounts)
+        self.assertIsInstance(img, Cocoa.NSImage)
 
-        ref = WebConvertNSImageToCGImageRef(img)
+        ref = Cocoa.WebConvertNSImageToCGImageRef(img)
         if ref is not None:
             self.assertIsInstance(ref, Quartz.CGImageRef)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,34 +1,30 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import UserNotifications
 
     class TestUNNotificationAttachment(TestCase):
         def test_constants(self):
             self.assertIsInstance(
-                UserNotifications.UNNotificationAttachmentOptionsTypeHintKey, unicode
+                UserNotifications.UNNotificationAttachmentOptionsTypeHintKey, str
             )
             self.assertIsInstance(
                 UserNotifications.UNNotificationAttachmentOptionsThumbnailHiddenKey,
-                unicode,
+                str,
             )
             self.assertIsInstance(
                 UserNotifications.UNNotificationAttachmentOptionsThumbnailClippingRectKey,
-                unicode,
+                str,
             )
             self.assertIsInstance(
                 UserNotifications.UNNotificationAttachmentOptionsThumbnailTimeKey,
-                unicode,
+                str,
             )
 
         def test_methods(self):
             self.assertArgIsOut(
-                UserNotifications.UNNotificationAttachment.attachmentWithIdentifier_URL_options_error_,
+                UserNotifications.UNNotificationAttachment.attachmentWithIdentifier_URL_options_error_,  # noqa: B950
                 3,
             )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit  # noqa: F401
+import objc
 
 
-class TestWebDocumentHelper(NSObject):
+class TestWebDocumentHelper(WebKit.NSObject):
     def setNeedsLayout_(self, v):
         pass
 
@@ -49,7 +50,3 @@ class TestWebDocument(TestCase):
 
         self.assertResultIsBOOL(TestWebDocumentHelper.supportsTextEncoding)
         self.assertResultIsBOOL(TestWebDocumentHelper.canProvideDocumentSource)
-
-
-if __name__ == "__main__":
-    main()

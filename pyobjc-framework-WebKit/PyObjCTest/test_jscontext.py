@@ -1,6 +1,5 @@
 import JavaScriptCore
-import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
 
 
 class TestJSContext(TestCase):
@@ -11,7 +10,3 @@ class TestJSContext(TestCase):
 
         self.assertResultIsBlock(JavaScriptCore.JSContext.exceptionHandler, b"v@@")
         self.assertArgIsBlock(JavaScriptCore.JSContext.setExceptionHandler_, 0, b"v@@")
-
-
-if __name__ == "__main__":
-    main()

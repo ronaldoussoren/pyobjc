@@ -1,11 +1,7 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLElement(TestCase):
     def testMehods(self):
-        self.assertResultIsBOOL(DOMHTMLElement.isContentEditable)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLElement.isContentEditable)

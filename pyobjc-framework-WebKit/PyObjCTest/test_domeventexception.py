@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMEventException(TestCase):
     def testConstants(self):
-        self.assertIsInstance(DOMEventException, unicode)
-        self.assertEqual(DOM_UNSPECIFIED_EVENT_TYPE_ERR, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(WebKit.DOMEventException, str)
+        self.assertEqual(WebKit.DOM_UNSPECIFIED_EVENT_TYPE_ERR, 0)

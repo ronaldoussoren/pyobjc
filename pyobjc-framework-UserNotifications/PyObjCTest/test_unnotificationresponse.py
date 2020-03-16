@@ -1,19 +1,15 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import UserNotifications
 
     class TestUNNotificationResponse(TestCase):
         def test_constants(self):
             self.assertIsInstance(
-                UserNotifications.UNNotificationDefaultActionIdentifier, unicode
+                UserNotifications.UNNotificationDefaultActionIdentifier, str
             )
             self.assertIsInstance(
-                UserNotifications.UNNotificationDismissActionIdentifier, unicode
+                UserNotifications.UNNotificationDismissActionIdentifier, str
             )
-
-
-if __name__ == "__main__":
-    main()

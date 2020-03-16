@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMImplementation(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMImplementation.hasFeature_version_)
-        self.assertResultIsBOOL(DOMImplementation.hasFeature__)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMImplementation.hasFeature_version_)
+        self.assertResultIsBOOL(WebKit.DOMImplementation.hasFeature__)

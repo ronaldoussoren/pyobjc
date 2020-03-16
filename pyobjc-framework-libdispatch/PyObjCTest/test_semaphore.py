@@ -1,7 +1,6 @@
-import array
-
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestSemaphoreAPI(TestCase):
@@ -16,7 +15,3 @@ class TestSemaphoreAPI(TestCase):
 
         self.assertResultHasType(libdispatch.dispatch_semaphore_signal, objc._C_LNG)
         self.assertArgHasType(libdispatch.dispatch_semaphore_signal, 0, objc._C_ID)
-
-
-if __name__ == "__main__":
-    main()

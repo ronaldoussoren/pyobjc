@@ -1,6 +1,6 @@
 import iTunesLibrary
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestITLibPlaylist(TestCase):
@@ -47,24 +47,16 @@ class TestITLibPlaylist(TestCase):
         self.assertEqual(iTunesLibrary.ITLibPlaylistKindFolder, 3)
         self.assertEqual(iTunesLibrary.ITLibPlaylistKindGeniusMix, 4)
 
-        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyName, unicode)
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyName, str)
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyAllItemsPlaylist, str)
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyDistinguisedKind, str)
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyMaster, str)
         self.assertIsInstance(
-            iTunesLibrary.ITLibPlaylistPropertyAllItemsPlaylist, unicode
+            iTunesLibrary.ITLibPlaylistPropertyParentPersistentID, str
         )
-        self.assertIsInstance(
-            iTunesLibrary.ITLibPlaylistPropertyDistinguisedKind, unicode
-        )
-        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyMaster, unicode)
-        self.assertIsInstance(
-            iTunesLibrary.ITLibPlaylistPropertyParentPersistentID, unicode
-        )
-        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyVisible, unicode)
-        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyItems, unicode)
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyVisible, str)
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyItems, str)
 
     @min_os_level("10.7")
     def testConstants10_7(self):
-        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyKind, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(iTunesLibrary.ITLibPlaylistPropertyKind, str)

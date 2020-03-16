@@ -23,7 +23,7 @@ sys.modules["SystemExtensions"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_SystemExtensions, Foundation),
 )
 
 

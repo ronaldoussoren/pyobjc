@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import Vision
 
     class TestVNError(TestCase):
@@ -25,7 +25,3 @@ if sys.maxsize >= 2 ** 32:
             self.assertEqual(Vision.VNErrorInvalidModel, 15)
             self.assertEqual(Vision.VNErrorUnsupportedRevision, 16)
             self.assertEqual(Vision.VNErrorDataUnavailable, 17)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,25 +1,24 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import VideoSubscriberAccount
 
     class TestVideoSubscriberAccountErrors(TestCase):
         def testConstants(self):
-            self.assertIsInstance(VideoSubscriberAccount.VSErrorDomain, unicode)
+            self.assertIsInstance(VideoSubscriberAccount.VSErrorDomain, str)
             self.assertIsInstance(
-                VideoSubscriberAccount.VSErrorInfoKeySAMLResponse, unicode
+                VideoSubscriberAccount.VSErrorInfoKeySAMLResponse, str
             )
             self.assertIsInstance(
-                VideoSubscriberAccount.VSErrorInfoKeySAMLResponseStatus, unicode
+                VideoSubscriberAccount.VSErrorInfoKeySAMLResponseStatus, str
             )
             self.assertIsInstance(
-                VideoSubscriberAccount.VSErrorInfoKeyAccountProviderResponse, unicode
+                VideoSubscriberAccount.VSErrorInfoKeyAccountProviderResponse, str
             )
             self.assertIsInstance(
-                VideoSubscriberAccount.VSErrorInfoKeyUnsupportedProviderIdentifier,
-                unicode,
+                VideoSubscriberAccount.VSErrorInfoKeyUnsupportedProviderIdentifier, str
             )
 
             self.assertEqual(VideoSubscriberAccount.VSErrorCodeAccessNotGranted, 0)
@@ -34,7 +33,3 @@ if sys.maxsize > 2 ** 32:
             )
             self.assertEqual(VideoSubscriberAccount.VSErrorCodeRejected, 6)
             self.assertEqual(VideoSubscriberAccount.VSErrorCodeUnsupported, 7)
-
-
-if __name__ == "__main__":
-    main()

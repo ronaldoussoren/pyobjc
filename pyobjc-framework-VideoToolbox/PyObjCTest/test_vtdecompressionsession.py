@@ -1,5 +1,6 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 VTDecompressionOutputHandler = (
     b"viI^{__CVBuffer=}"
@@ -54,7 +55,3 @@ class TestVTDecompressionSession(TestCase):
     @min_os_level("10.13")
     def test_functions10_13(self):
         self.assertResultIsBOOL(VideoToolbox.VTIsHardwareDecodeSupported)
-
-
-if __name__ == "__main__":
-    main()

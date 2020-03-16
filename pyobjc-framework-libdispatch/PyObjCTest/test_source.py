@@ -1,5 +1,6 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestSourceAPI(TestCase):
@@ -161,7 +162,3 @@ class TestSourceAPI(TestCase):
         self.assertArgIsFunction(
             libdispatch.dispatch_source_set_registration_handler_f, 1, b"v^v", 1
         )
-
-
-if __name__ == "__main__":
-    main()

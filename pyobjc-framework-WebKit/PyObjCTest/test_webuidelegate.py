@@ -1,12 +1,11 @@
-import sys
-
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, cast_uint
+import WebKit
+import objc
 
 UINT_MAX = cast_uint(-1)
 
 
-class TestWebUIDelegateHelper(NSObject):
+class TestWebUIDelegateHelper(WebKit.NSObject):
     def webView_willPerformDragDestinationAction_forDraggingInfo_(self, wv, a, i):
         pass
 
@@ -81,57 +80,54 @@ class TestWebUIDelegateHelper(NSObject):
     ):
         pass
 
-    def webView_runJavaScriptConfirmPanelWithMessage_(self, a, b):
-        return 1
-
 
 class TestWebUIDelegate(TestCase):
     def testConstants(self):
-        self.assertEqual(WebMenuItemTagOpenLinkInNewWindow, 1)
-        self.assertEqual(WebMenuItemTagDownloadLinkToDisk, 2)
-        self.assertEqual(WebMenuItemTagCopyLinkToClipboard, 3)
-        self.assertEqual(WebMenuItemTagOpenImageInNewWindow, 4)
-        self.assertEqual(WebMenuItemTagDownloadImageToDisk, 5)
-        self.assertEqual(WebMenuItemTagCopyImageToClipboard, 6)
-        self.assertEqual(WebMenuItemTagOpenFrameInNewWindow, 7)
-        self.assertEqual(WebMenuItemTagCopy, 8)
-        self.assertEqual(WebMenuItemTagGoBack, 9)
-        self.assertEqual(WebMenuItemTagGoForward, 10)
-        self.assertEqual(WebMenuItemTagStop, 11)
-        self.assertEqual(WebMenuItemTagReload, 12)
-        self.assertEqual(WebMenuItemTagCut, 13)
-        self.assertEqual(WebMenuItemTagPaste, 14)
-        self.assertEqual(WebMenuItemTagSpellingGuess, 15)
-        self.assertEqual(WebMenuItemTagNoGuessesFound, 16)
-        self.assertEqual(WebMenuItemTagIgnoreSpelling, 17)
-        self.assertEqual(WebMenuItemTagLearnSpelling, 18)
-        self.assertEqual(WebMenuItemTagOther, 19)
-        self.assertEqual(WebMenuItemTagSearchInSpotlight, 20)
-        self.assertEqual(WebMenuItemTagSearchWeb, 21)
-        self.assertEqual(WebMenuItemTagLookUpInDictionary, 22)
-        self.assertEqual(WebMenuItemTagOpenWithDefaultApplication, 23)
-        self.assertEqual(WebMenuItemPDFActualSize, 24)
-        self.assertEqual(WebMenuItemPDFZoomIn, 25)
-        self.assertEqual(WebMenuItemPDFZoomOut, 26)
-        self.assertEqual(WebMenuItemPDFAutoSize, 27)
-        self.assertEqual(WebMenuItemPDFSinglePage, 28)
-        self.assertEqual(WebMenuItemPDFFacingPages, 29)
-        self.assertEqual(WebMenuItemPDFContinuous, 30)
-        self.assertEqual(WebMenuItemPDFNextPage, 31)
-        self.assertEqual(WebMenuItemPDFPreviousPage, 32)
+        self.assertEqual(WebKit.WebMenuItemTagOpenLinkInNewWindow, 1)
+        self.assertEqual(WebKit.WebMenuItemTagDownloadLinkToDisk, 2)
+        self.assertEqual(WebKit.WebMenuItemTagCopyLinkToClipboard, 3)
+        self.assertEqual(WebKit.WebMenuItemTagOpenImageInNewWindow, 4)
+        self.assertEqual(WebKit.WebMenuItemTagDownloadImageToDisk, 5)
+        self.assertEqual(WebKit.WebMenuItemTagCopyImageToClipboard, 6)
+        self.assertEqual(WebKit.WebMenuItemTagOpenFrameInNewWindow, 7)
+        self.assertEqual(WebKit.WebMenuItemTagCopy, 8)
+        self.assertEqual(WebKit.WebMenuItemTagGoBack, 9)
+        self.assertEqual(WebKit.WebMenuItemTagGoForward, 10)
+        self.assertEqual(WebKit.WebMenuItemTagStop, 11)
+        self.assertEqual(WebKit.WebMenuItemTagReload, 12)
+        self.assertEqual(WebKit.WebMenuItemTagCut, 13)
+        self.assertEqual(WebKit.WebMenuItemTagPaste, 14)
+        self.assertEqual(WebKit.WebMenuItemTagSpellingGuess, 15)
+        self.assertEqual(WebKit.WebMenuItemTagNoGuessesFound, 16)
+        self.assertEqual(WebKit.WebMenuItemTagIgnoreSpelling, 17)
+        self.assertEqual(WebKit.WebMenuItemTagLearnSpelling, 18)
+        self.assertEqual(WebKit.WebMenuItemTagOther, 19)
+        self.assertEqual(WebKit.WebMenuItemTagSearchInSpotlight, 20)
+        self.assertEqual(WebKit.WebMenuItemTagSearchWeb, 21)
+        self.assertEqual(WebKit.WebMenuItemTagLookUpInDictionary, 22)
+        self.assertEqual(WebKit.WebMenuItemTagOpenWithDefaultApplication, 23)
+        self.assertEqual(WebKit.WebMenuItemPDFActualSize, 24)
+        self.assertEqual(WebKit.WebMenuItemPDFZoomIn, 25)
+        self.assertEqual(WebKit.WebMenuItemPDFZoomOut, 26)
+        self.assertEqual(WebKit.WebMenuItemPDFAutoSize, 27)
+        self.assertEqual(WebKit.WebMenuItemPDFSinglePage, 28)
+        self.assertEqual(WebKit.WebMenuItemPDFFacingPages, 29)
+        self.assertEqual(WebKit.WebMenuItemPDFContinuous, 30)
+        self.assertEqual(WebKit.WebMenuItemPDFNextPage, 31)
+        self.assertEqual(WebKit.WebMenuItemPDFPreviousPage, 32)
 
-        self.assertEqual(WebDragDestinationActionNone, 0)
-        self.assertEqual(WebDragDestinationActionDHTML, 1)
-        self.assertEqual(WebDragDestinationActionEdit, 2)
-        self.assertEqual(WebDragDestinationActionLoad, 4)
-        self.assertEqual(WebDragDestinationActionAny, UINT_MAX)
+        self.assertEqual(WebKit.WebDragDestinationActionNone, 0)
+        self.assertEqual(WebKit.WebDragDestinationActionDHTML, 1)
+        self.assertEqual(WebKit.WebDragDestinationActionEdit, 2)
+        self.assertEqual(WebKit.WebDragDestinationActionLoad, 4)
+        self.assertEqual(WebKit.WebDragDestinationActionAny, UINT_MAX)
 
-        self.assertEqual(WebDragSourceActionNone, 0)
-        self.assertEqual(WebDragSourceActionDHTML, 1)
-        self.assertEqual(WebDragSourceActionImage, 2)
-        self.assertEqual(WebDragSourceActionLink, 4)
-        self.assertEqual(WebDragSourceActionSelection, 8)
-        self.assertEqual(WebDragSourceActionAny, UINT_MAX)
+        self.assertEqual(WebKit.WebDragSourceActionNone, 0)
+        self.assertEqual(WebKit.WebDragSourceActionDHTML, 1)
+        self.assertEqual(WebKit.WebDragSourceActionImage, 2)
+        self.assertEqual(WebKit.WebDragSourceActionLink, 4)
+        self.assertEqual(WebKit.WebDragSourceActionSelection, 8)
+        self.assertEqual(WebKit.WebDragSourceActionAny, UINT_MAX)
 
     def testProtocols(self):
         objc.protocolNamed("WebOpenPanelResultListener")
@@ -148,10 +144,10 @@ class TestWebUIDelegate(TestCase):
         self.assertResultIsBOOL(TestWebUIDelegateHelper.webViewIsResizable_)
         self.assertArgIsBOOL(TestWebUIDelegateHelper.webView_setResizable_, 1)
         self.assertResultIsBOOL(
-            TestWebUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_initiatedByFrame_
+            TestWebUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_initiatedByFrame_  # noqa: B950
         )
         self.assertResultIsBOOL(
-            TestWebUIDelegateHelper.webView_runBeforeUnloadConfirmPanelWithMessage_initiatedByFrame_
+            TestWebUIDelegateHelper.webView_runBeforeUnloadConfirmPanelWithMessage_initiatedByFrame_  # noqa: B950
         )
         self.assertArgHasType(
             TestWebUIDelegateHelper.webView_mouseDidMoveOverElement_modifierFlags_,
@@ -177,14 +173,14 @@ class TestWebUIDelegate(TestCase):
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_,
+            TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_,
+            TestWebUIDelegateHelper.webView_willPerformDragSourceAction_fromPoint_withPasteboard_,  # noqa: B950
             2,
-            NSPoint.__typestr__,
+            WebKit.NSPoint.__typestr__,
         )
         self.assertResultHasType(
             TestWebUIDelegateHelper.webViewHeaderHeight_, objc._C_FLT
@@ -193,19 +189,25 @@ class TestWebUIDelegate(TestCase):
             TestWebUIDelegateHelper.webViewFooterHeight_, objc._C_FLT
         )
         self.assertArgHasType(
-            TestWebUIDelegateHelper.webView_drawHeaderInRect_, 1, NSRect.__typestr__
+            TestWebUIDelegateHelper.webView_drawHeaderInRect_,
+            1,
+            WebKit.NSRect.__typestr__,
         )
         self.assertArgHasType(
-            TestWebUIDelegateHelper.webView_drawFooterInRect_, 1, NSRect.__typestr__
+            TestWebUIDelegateHelper.webView_drawFooterInRect_,
+            1,
+            WebKit.NSRect.__typestr__,
         )
         self.assertResultIsBOOL(
             TestWebUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_
         )
         self.assertArgHasType(
-            TestWebUIDelegateHelper.webView_setContentRect_, 1, NSRect.__typestr__
+            TestWebUIDelegateHelper.webView_setContentRect_,
+            1,
+            WebKit.NSRect.__typestr__,
         )
         self.assertResultHasType(
-            TestWebUIDelegateHelper.webViewContentRect_, NSRect.__typestr__
+            TestWebUIDelegateHelper.webViewContentRect_, WebKit.NSRect.__typestr__
         )
         self.assertArgHasType(
             TestWebUIDelegateHelper.webView_willPerformDragDestinationAction_forDraggingInfo_,
@@ -216,13 +218,9 @@ class TestWebUIDelegate(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(
-            TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_,
+            TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_,   # noqa: B950
             2,
         )
         self.assertResultIsBOOL(
             TestWebUIDelegateHelper.webView_runJavaScriptConfirmPanelWithMessage_
         )
-
-
-if __name__ == "__main__":
-    main()

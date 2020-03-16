@@ -1,8 +1,5 @@
-from __future__ import print_function
-
 import sys
 
-import objc
 from Cocoa import (
     NSURL,
     NSData,
@@ -43,7 +40,7 @@ class PyDocURLProtocol(NSURLProtocol):
             data = gethtmldoc(modpath)
             if PY3K:
                 data = data.encode("utf-8")
-        except Exception as e:
+        except Exception:
             client.URLProtocol_didFailWithError_(
                 self,
                 NSError.errorWithDomain_code_userInfo_(
@@ -51,7 +48,7 @@ class PyDocURLProtocol(NSURLProtocol):
                 ),
             )
         else:
-            response = NSURLResponse.alloc().initWithURL_MIMEType_expectedContentLength_textEncodingName_(
+            response = NSURLResponse.alloc().initWithURL_MIMEType_expectedContentLength_textEncodingName_(  # noqa: B950
                 request.URL(), "text/html", len(data), "utf-8"
             )
             client.URLProtocol_didReceiveResponse_cacheStoragePolicy_(

@@ -3,7 +3,7 @@ Some simple tests to check that the framework is properly wrapped.
 """
 import objc
 import WebKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, onlyOn32Bit
 
 
 class TestWebKit(TestCase):
@@ -16,19 +16,19 @@ class TestWebKit(TestCase):
 
     def testValues(self):
         self.assertHasAttr(WebKit, "DOM_CSS_PERCENTAGE")
-        self.assertIsInstance(WebKit.DOM_CSS_PERCENTAGE, (int, long))
+        self.assertIsInstance(WebKit.DOM_CSS_PERCENTAGE, int)
         self.assertEqual(WebKit.DOM_CSS_PERCENTAGE, 2)
 
         self.assertHasAttr(WebKit, "DOM_CSS_VALUE_LIST")
-        self.assertIsInstance(WebKit.DOM_CSS_VALUE_LIST, (int, long))
+        self.assertIsInstance(WebKit.DOM_CSS_VALUE_LIST, int)
         self.assertEqual(WebKit.DOM_CSS_VALUE_LIST, 2)
 
         self.assertHasAttr(WebKit, "WebViewInsertActionDropped")
-        self.assertIsInstance(WebKit.WebViewInsertActionDropped, (int, long))
+        self.assertIsInstance(WebKit.WebViewInsertActionDropped, int)
 
     def testVariables(self):
         self.assertHasAttr(WebKit, "DOMRangeException")
-        self.assertIsInstance(WebKit.DOMRangeException, unicode)
+        self.assertIsInstance(WebKit.DOMRangeException, str)
 
     @onlyOn32Bit
     def testFunctions(self):
@@ -48,7 +48,3 @@ class TestWebKit(TestCase):
         objc.protocolNamed("WebOpenPanelResultListener")
         objc.protocolNamed("WebPlugInViewFactory")
         objc.protocolNamed("WebPolicyDecisionListener")
-
-
-if __name__ == "__main__":
-    main()

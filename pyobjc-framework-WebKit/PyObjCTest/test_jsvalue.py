@@ -1,6 +1,5 @@
 import JavaScriptCore
-import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
 
 
 class TestJSValue(TestCase):
@@ -39,15 +38,9 @@ class TestJSValue(TestCase):
     @onlyOn64Bit
     @min_os_level("10.9")
     def test_contants(self):
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, unicode)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorEnumerableKey, unicode)
-        self.assertIsInstance(
-            JavaScriptCore.JSPropertyDescriptorConfigurableKey, unicode
-        )
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorValueKey, unicode)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorGetKey, unicode)
-        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorSetKey, unicode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorWritableKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorEnumerableKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorConfigurableKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorValueKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorGetKey, str)
+        self.assertIsInstance(JavaScriptCore.JSPropertyDescriptorSetKey, str)

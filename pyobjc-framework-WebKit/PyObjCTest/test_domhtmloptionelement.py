@@ -1,16 +1,12 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLOptionElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLOptionElement.defaultSelected)
-        self.assertArgIsBOOL(DOMHTMLOptionElement.setDefaultSelected_, 0)
-        self.assertResultIsBOOL(DOMHTMLOptionElement.disabled)
-        self.assertArgIsBOOL(DOMHTMLOptionElement.setDisabled_, 0)
-        self.assertResultIsBOOL(DOMHTMLOptionElement.selected)
-        self.assertArgIsBOOL(DOMHTMLOptionElement.setSelected_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLOptionElement.defaultSelected)
+        self.assertArgIsBOOL(WebKit.DOMHTMLOptionElement.setDefaultSelected_, 0)
+        self.assertResultIsBOOL(WebKit.DOMHTMLOptionElement.disabled)
+        self.assertArgIsBOOL(WebKit.DOMHTMLOptionElement.setDisabled_, 0)
+        self.assertResultIsBOOL(WebKit.DOMHTMLOptionElement.selected)
+        self.assertArgIsBOOL(WebKit.DOMHTMLOptionElement.setSelected_, 0)

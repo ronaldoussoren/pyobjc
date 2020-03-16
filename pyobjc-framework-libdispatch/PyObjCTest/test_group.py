@@ -1,5 +1,6 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestGroupAPI(TestCase):
@@ -60,7 +61,3 @@ class TestGroupAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_group_leave, 0, objc._C_ID
         )  # dispatch_group_t
-
-
-if __name__ == "__main__":
-    main()

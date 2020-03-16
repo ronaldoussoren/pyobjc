@@ -1,5 +1,6 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestBlockAPI(TestCase):
@@ -49,7 +50,3 @@ class TestBlockAPI(TestCase):
 
         self.assertResultHasType(libdispatch.dispatch_block_testcancel, objc._C_LNG)
         self.assertArgIsBlock(libdispatch.dispatch_block_testcancel, 0, b"v")
-
-
-if __name__ == "__main__":
-    main()

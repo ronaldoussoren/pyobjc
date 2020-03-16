@@ -1,22 +1,18 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestWebKitErrors(TestCase):
     def testConstants(self):
-        self.assertIsInstance(WebKitErrorDomain, unicode)
-        self.assertIsInstance(WebKitErrorMIMETypeKey, unicode)
-        self.assertIsInstance(WebKitErrorPlugInNameKey, unicode)
-        self.assertIsInstance(WebKitErrorPlugInPageURLStringKey, unicode)
+        self.assertIsInstance(WebKit.WebKitErrorDomain, str)
+        self.assertIsInstance(WebKit.WebKitErrorMIMETypeKey, str)
+        self.assertIsInstance(WebKit.WebKitErrorPlugInNameKey, str)
+        self.assertIsInstance(WebKit.WebKitErrorPlugInPageURLStringKey, str)
 
-        self.assertEqual(WebKitErrorCannotShowMIMEType, 100)
-        self.assertEqual(WebKitErrorCannotShowURL, 101)
-        self.assertEqual(WebKitErrorFrameLoadInterruptedByPolicyChange, 102)
-        self.assertEqual(WebKitErrorCannotFindPlugIn, 200)
-        self.assertEqual(WebKitErrorCannotLoadPlugIn, 201)
-        self.assertEqual(WebKitErrorJavaUnavailable, 202)
-        self.assertEqual(WebKitErrorBlockedPlugInVersion, 203)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(WebKit.WebKitErrorCannotShowMIMEType, 100)
+        self.assertEqual(WebKit.WebKitErrorCannotShowURL, 101)
+        self.assertEqual(WebKit.WebKitErrorFrameLoadInterruptedByPolicyChange, 102)
+        self.assertEqual(WebKit.WebKitErrorCannotFindPlugIn, 200)
+        self.assertEqual(WebKit.WebKitErrorCannotLoadPlugIn, 201)
+        self.assertEqual(WebKit.WebKitErrorJavaUnavailable, 202)
+        self.assertEqual(WebKit.WebKitErrorBlockedPlugInVersion, 203)

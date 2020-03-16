@@ -1,18 +1,14 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import WebKit
 
 
 class TestDOMHTMLButtonElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLButtonElement.disabled)
-        self.assertArgIsBOOL(DOMHTMLButtonElement.setDisabled_, 0)
+        self.assertResultIsBOOL(WebKit.DOMHTMLButtonElement.disabled)
+        self.assertArgIsBOOL(WebKit.DOMHTMLButtonElement.setDisabled_, 0)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(DOMHTMLButtonElement.willValidate)
-        self.assertResultIsBOOL(DOMHTMLButtonElement.autofocus)
-        self.assertArgIsBOOL(DOMHTMLButtonElement.setAutofocus_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLButtonElement.willValidate)
+        self.assertResultIsBOOL(WebKit.DOMHTMLButtonElement.autofocus)
+        self.assertArgIsBOOL(WebKit.DOMHTMLButtonElement.setAutofocus_, 0)

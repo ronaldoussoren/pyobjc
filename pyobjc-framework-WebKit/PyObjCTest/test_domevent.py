@@ -1,29 +1,25 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import WebKit
 
 
 class TestDOMEvent(TestCase):
     def testConstants(self):
-        self.assertEqual(DOM_NONE, 0)
-        self.assertEqual(DOM_CAPTURING_PHASE, 1)
-        self.assertEqual(DOM_AT_TARGET, 2)
-        self.assertEqual(DOM_BUBBLING_PHASE, 3)
+        self.assertEqual(WebKit.DOM_NONE, 0)
+        self.assertEqual(WebKit.DOM_CAPTURING_PHASE, 1)
+        self.assertEqual(WebKit.DOM_AT_TARGET, 2)
+        self.assertEqual(WebKit.DOM_BUBBLING_PHASE, 3)
 
     def testMethods(self):
-        self.assertResultIsBOOL(DOMEvent.bubbles)
-        self.assertResultIsBOOL(DOMEvent.cancelable)
-        self.assertArgIsBOOL(DOMEvent.initEvent_canBubbleArg_cancelableArg_, 1)
-        self.assertArgIsBOOL(DOMEvent.initEvent_canBubbleArg_cancelableArg_, 2)
-        self.assertArgIsBOOL(DOMEvent.initEvent___, 1)
-        self.assertArgIsBOOL(DOMEvent.initEvent___, 2)
+        self.assertResultIsBOOL(WebKit.DOMEvent.bubbles)
+        self.assertResultIsBOOL(WebKit.DOMEvent.cancelable)
+        self.assertArgIsBOOL(WebKit.DOMEvent.initEvent_canBubbleArg_cancelableArg_, 1)
+        self.assertArgIsBOOL(WebKit.DOMEvent.initEvent_canBubbleArg_cancelableArg_, 2)
+        self.assertArgIsBOOL(WebKit.DOMEvent.initEvent___, 1)
+        self.assertArgIsBOOL(WebKit.DOMEvent.initEvent___, 2)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
-        self.assertResultIsBOOL(DOMEvent.returnValue)
-        self.assertArgIsBOOL(DOMEvent.setReturnValue_, 0)
-        self.assertResultIsBOOL(DOMEvent.cancelBubble)
-        self.assertArgIsBOOL(DOMEvent.setCancelBubble_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMEvent.returnValue)
+        self.assertArgIsBOOL(WebKit.DOMEvent.setReturnValue_, 0)
+        self.assertResultIsBOOL(WebKit.DOMEvent.cancelBubble)
+        self.assertArgIsBOOL(WebKit.DOMEvent.setCancelBubble_, 0)

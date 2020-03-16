@@ -1,9 +1,9 @@
 import sys
 
 import objc
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_sdk_level
     import Vision
 
     class TestVNRequestRevisionProviderHelper(Vision.NSObject):
@@ -19,7 +19,3 @@ if sys.maxsize >= 2 ** 32:
         @min_sdk_level("10.14")
         def test_protocols(self):
             objc.protocolNamed("VNRequestRevisionProviding")
-
-
-if __name__ == "__main__":
-    main()

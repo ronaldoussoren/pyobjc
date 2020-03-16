@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLMenuElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLMenuElement.compact)
-        self.assertArgIsBOOL(DOMHTMLMenuElement.setCompact_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLMenuElement.compact)
+        self.assertArgIsBOOL(WebKit.DOMHTMLMenuElement.setCompact_, 0)

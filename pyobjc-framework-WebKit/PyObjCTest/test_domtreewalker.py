@@ -1,11 +1,7 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMTreeWalker(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMTreeWalker.expandEntityReferences)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMTreeWalker.expandEntityReferences)

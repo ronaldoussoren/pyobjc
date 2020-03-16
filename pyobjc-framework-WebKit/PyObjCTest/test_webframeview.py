@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestWebFrameView(TestCase):
     def testMethods(self):
-        self.assertArgIsBOOL(WebFrameView.setAllowsScrolling_, 0)
-        self.assertResultIsBOOL(WebFrameView.allowsScrolling)
-        self.assertResultIsBOOL(WebFrameView.canPrintHeadersAndFooters)
-        self.assertResultIsBOOL(WebFrameView.documentViewShouldHandlePrint)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertArgIsBOOL(WebKit.WebFrameView.setAllowsScrolling_, 0)
+        self.assertResultIsBOOL(WebKit.WebFrameView.allowsScrolling)
+        self.assertResultIsBOOL(WebKit.WebFrameView.canPrintHeadersAndFooters)
+        self.assertResultIsBOOL(WebKit.WebFrameView.documentViewShouldHandlePrint)

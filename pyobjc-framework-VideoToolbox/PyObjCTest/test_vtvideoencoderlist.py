@@ -1,28 +1,26 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestVTVideoEncoderList(TestCase):
     def test_constants(self):
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_CodecType, unicode)
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_EncoderID, unicode)
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_CodecName, unicode)
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_EncoderName, unicode)
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_DisplayName, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_CodecType, str)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_EncoderID, str)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_CodecName, str)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_EncoderName, str)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_DisplayName, str)
 
     @min_os_level("10.14")
     def test_constants10_14(self):
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_GPURegistryID, unicode)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_GPURegistryID, str)
         self.assertIsInstance(
-            VideoToolbox.kVTVideoEncoderList_SupportedSelectionProperties, unicode
+            VideoToolbox.kVTVideoEncoderList_SupportedSelectionProperties, str
         )
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_PerformanceRating, str)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_QualityRating, str)
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_InstanceLimit, str)
         self.assertIsInstance(
-            VideoToolbox.kVTVideoEncoderList_PerformanceRating, unicode
-        )
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_QualityRating, unicode)
-        self.assertIsInstance(VideoToolbox.kVTVideoEncoderList_InstanceLimit, unicode)
-        self.assertIsInstance(
-            VideoToolbox.kVTVideoEncoderList_IsHardwareAccelerated, unicode
+            VideoToolbox.kVTVideoEncoderList_IsHardwareAccelerated, str
         )
 
     def test_functions(self):
@@ -39,7 +37,3 @@ class TestVTVideoEncoderList(TestCase):
         self.assertArgIsCFRetained(
             VideoToolbox.VTCopySupportedPropertyDictionaryForEncoder, 5
         )
-
-
-if __name__ == "__main__":
-    main()

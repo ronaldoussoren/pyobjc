@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import UserNotifications
 
     class TestUNError(TestCase):
@@ -26,7 +26,3 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(
                 UserNotifications.UNErrorCodeNotificationInvalidNoContent, 1401
             )
-
-
-if __name__ == "__main__":
-    main()

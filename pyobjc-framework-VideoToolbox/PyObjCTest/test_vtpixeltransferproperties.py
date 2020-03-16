@@ -1,47 +1,37 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestVTPixelTransferProperties(TestCase):
     def test_constants(self):
+        self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_ScalingMode, str)
+        self.assertIsInstance(VideoToolbox.kVTScalingMode_Normal, str)
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_ScalingMode, unicode
+            VideoToolbox.kVTScalingMode_CropSourceToCleanAperture, str
         )
-        self.assertIsInstance(VideoToolbox.kVTScalingMode_Normal, unicode)
+        self.assertIsInstance(VideoToolbox.kVTScalingMode_Letterbox, str)
+        self.assertIsInstance(VideoToolbox.kVTScalingMode_Trim, str)
         self.assertIsInstance(
-            VideoToolbox.kVTScalingMode_CropSourceToCleanAperture, unicode
-        )
-        self.assertIsInstance(VideoToolbox.kVTScalingMode_Letterbox, unicode)
-        self.assertIsInstance(VideoToolbox.kVTScalingMode_Trim, unicode)
-        self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationCleanAperture, unicode
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationCleanAperture, str
         )
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationPixelAspectRatio,
-            unicode,
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationPixelAspectRatio, str
         )
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DownsamplingMode, unicode
+            VideoToolbox.kVTPixelTransferPropertyKey_DownsamplingMode, str
         )
-        self.assertIsInstance(VideoToolbox.kVTDownsamplingMode_Decimate, unicode)
-        self.assertIsInstance(VideoToolbox.kVTDownsamplingMode_Average, unicode)
+        self.assertIsInstance(VideoToolbox.kVTDownsamplingMode_Decimate, str)
+        self.assertIsInstance(VideoToolbox.kVTDownsamplingMode_Average, str)
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationColorPrimaries, unicode
-        )
-        self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationTransferFunction,
-            unicode,
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationColorPrimaries, str
         )
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationICCProfile, unicode
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationTransferFunction, str
         )
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_DestinationYCbCrMatrix, unicode
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationICCProfile, str
         )
         self.assertIsInstance(
-            VideoToolbox.kVTPixelTransferPropertyKey_RealTime, unicode
+            VideoToolbox.kVTPixelTransferPropertyKey_DestinationYCbCrMatrix, str
         )
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(VideoToolbox.kVTPixelTransferPropertyKey_RealTime, str)

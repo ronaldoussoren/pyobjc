@@ -1,5 +1,5 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestVTBase(TestCase):
@@ -11,7 +11,3 @@ class TestVTBase(TestCase):
         v = VideoToolbox.VTInt32Size()
         self.assertEqual(v.width, 0)
         self.assertEqual(v.height, 0)
-
-
-if __name__ == "__main__":
-    main()

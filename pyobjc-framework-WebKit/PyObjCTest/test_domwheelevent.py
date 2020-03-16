@@ -1,37 +1,33 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMWheelEvent(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMWheelEvent.ctrlKey)
-        self.assertResultIsBOOL(DOMWheelEvent.shiftKey)
-        self.assertResultIsBOOL(DOMWheelEvent.altKey)
-        self.assertResultIsBOOL(DOMWheelEvent.metaKey)
-        self.assertResultIsBOOL(DOMWheelEvent.isHorizontal)
+        self.assertResultIsBOOL(WebKit.DOMWheelEvent.ctrlKey)
+        self.assertResultIsBOOL(WebKit.DOMWheelEvent.shiftKey)
+        self.assertResultIsBOOL(WebKit.DOMWheelEvent.altKey)
+        self.assertResultIsBOOL(WebKit.DOMWheelEvent.metaKey)
+        self.assertResultIsBOOL(WebKit.DOMWheelEvent.isHorizontal)
 
         self.assertArgIsBOOL(
-            DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             7,
         )
         self.assertArgIsBOOL(
-            DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             8,
         )
         self.assertArgIsBOOL(
-            DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             9,
         )
         self.assertArgIsBOOL(
-            DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,
+            WebKit.DOMWheelEvent.initWheelEvent_wheelDeltaY_view_screenX_screenY_clientX_clientY_ctrlKey_altKey_shiftKey_metaKey_,  # noqa: B950
             10,
         )
 
     def testConstants(self):
-        self.assertEqual(DOM_DOM_DELTA_PIXEL, 0)
-        self.assertEqual(DOM_DOM_DELTA_LINE, 1)
-        self.assertEqual(DOM_DOM_DELTA_PAGE, 2)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(WebKit.DOM_DOM_DELTA_PIXEL, 0)
+        self.assertEqual(WebKit.DOM_DOM_DELTA_LINE, 1)
+        self.assertEqual(WebKit.DOM_DOM_DELTA_PAGE, 2)

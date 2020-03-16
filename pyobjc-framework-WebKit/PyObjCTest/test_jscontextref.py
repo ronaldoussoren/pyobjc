@@ -1,6 +1,6 @@
 import JavaScriptCore
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestJSContextRef(TestCase):
@@ -120,7 +120,3 @@ class TestJSContextRef(TestCase):
             1,
             JavaScriptCore.JSStringRef.__typestr__,
         )
-
-
-if __name__ == "__main__":
-    main()

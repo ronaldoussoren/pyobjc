@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLFrameElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLFrameElement.noResize)
-        self.assertArgIsBOOL(DOMHTMLFrameElement.setNoResize_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLFrameElement.noResize)
+        self.assertArgIsBOOL(WebKit.DOMHTMLFrameElement.setNoResize_, 0)

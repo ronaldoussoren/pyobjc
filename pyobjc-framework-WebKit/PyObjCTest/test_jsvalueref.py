@@ -1,5 +1,6 @@
 import JavaScriptCore
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestJSValueRef(TestCase):
@@ -102,7 +103,3 @@ class TestJSValueRef(TestCase):
     def testFunctions10_15(self):
         JavaScriptCore.JSValueIsSymbol
         JavaScriptCore.JSValueMakeSymbol
-
-
-if __name__ == "__main__":
-    main()

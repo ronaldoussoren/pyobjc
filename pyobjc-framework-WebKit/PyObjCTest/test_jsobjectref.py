@@ -2,7 +2,7 @@ import sys
 
 import JavaScriptCore
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestJSObjectRef(TestCase):
@@ -580,7 +580,3 @@ class TestJSObjectRef(TestCase):
         self.assertNotHasAttr(JavaScriptCore, "JSClassDefinition")
 
         self.assertNotHasAttr(JavaScriptCore, "JSClassCreate")
-
-
-if __name__ == "__main__":
-    main()

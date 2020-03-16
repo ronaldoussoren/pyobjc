@@ -1,6 +1,6 @@
 import iTunesLibrary
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestITLibArtwork(TestCase):
@@ -17,7 +17,3 @@ class TestITLibArtwork(TestCase):
         self.assertEqual(iTunesLibrary.ITLibArtworkFormatBMP, 6)
         self.assertEqual(iTunesLibrary.ITLibArtworkFormatTIFF, 7)
         self.assertEqual(iTunesLibrary.ITLibArtworkFormatPICT, 8)
-
-
-if __name__ == "__main__":
-    main()

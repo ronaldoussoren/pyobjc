@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNTypes(TestCase):
@@ -17,26 +17,20 @@ if sys.maxsize >= 2 ** 32:
 
         @min_os_level("10.13")
         def testConstants10_13(self):
-            self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyCode39Checksum, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyCode39FullASCII, unicode)
-            self.assertIsInstance(
-                Vision.VNBarcodeSymbologyCode39FullASCIIChecksum, unicode
-            )
-            self.assertIsInstance(Vision.VNBarcodeSymbologyCode93, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyCode93i, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyCode128, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyDataMatrix, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyEAN8, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyEAN13, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyI2of5, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyI2of5Checksum, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyITF14, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyPDF417, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyQR, unicode)
-            self.assertIsInstance(Vision.VNBarcodeSymbologyUPCE, unicode)
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyCode39Checksum, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyCode39FullASCII, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyCode39FullASCIIChecksum, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyCode93, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyCode93i, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyCode128, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyDataMatrix, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyEAN8, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyEAN13, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyI2of5, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyI2of5Checksum, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyITF14, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyPDF417, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyQR, str)
+            self.assertIsInstance(Vision.VNBarcodeSymbologyUPCE, str)

@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNTargetedImageRequest(TestCase):
@@ -24,12 +24,12 @@ if sys.maxsize >= 2 ** 32:
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedCIImage_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedCIImage_options_completionHandler_,  # noqa: B950
                 2,
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedCIImage_orientation_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedCIImage_orientation_options_completionHandler_,  # noqa: B950
                 3,
                 b"v@@",
             )
@@ -39,12 +39,12 @@ if sys.maxsize >= 2 ** 32:
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedImageURL_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedImageURL_options_completionHandler_,  # noqa: B950
                 2,
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedImageURL_orientation_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedImageURL_orientation_options_completionHandler_,  # noqa: B950
                 3,
                 b"v@@",
             )
@@ -54,12 +54,12 @@ if sys.maxsize >= 2 ** 32:
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedImageData_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedImageData_options_completionHandler_,  # noqa: B950
                 2,
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedImageData_orientation_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedImageData_orientation_options_completionHandler_,  # noqa: B950
                 3,
                 b"v@@",
             )
@@ -67,26 +67,22 @@ if sys.maxsize >= 2 ** 32:
                 Vision.VNTargetedImageRequest.initWithCompletionHandler_, 0, b"v@@"
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedCVPixelBuffer_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedCVPixelBuffer_options_completionHandler_,  # noqa: B950
                 2,
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedCVPixelBuffer_orientation_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedCVPixelBuffer_orientation_options_completionHandler_,  # noqa: B950
                 3,
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedCGImage_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedCGImage_options_completionHandler_,  # noqa: B950
                 2,
                 b"v@@",
             )
             self.assertArgIsBlock(
-                Vision.VNTargetedImageRequest.initWithTargetedCGImage_orientation_options_completionHandler_,
+                Vision.VNTargetedImageRequest.initWithTargetedCGImage_orientation_options_completionHandler_,  # noqa: B950
                 3,
                 b"v@@",
             )
-
-
-if __name__ == "__main__":
-    main()

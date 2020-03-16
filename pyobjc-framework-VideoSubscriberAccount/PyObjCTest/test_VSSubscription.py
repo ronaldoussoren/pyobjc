@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import VideoSubscriberAccount
 
     class TestVSSubscription(TestCase):
@@ -15,7 +15,3 @@ if sys.maxsize > 2 ** 32:
 
         def testClasses(self):
             VideoSubscriberAccount.VSSubscription
-
-
-if __name__ == "__main__":
-    main()

@@ -1,22 +1,18 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestWebHistory(TestCase):
     def testConstants(self):
-        self.assertIsInstance(WebHistoryItemsAddedNotification, unicode)
-        self.assertIsInstance(WebHistoryItemsRemovedNotification, unicode)
-        self.assertIsInstance(WebHistoryAllItemsRemovedNotification, unicode)
-        self.assertIsInstance(WebHistoryLoadedNotification, unicode)
-        self.assertIsInstance(WebHistorySavedNotification, unicode)
-        self.assertIsInstance(WebHistoryItemsKey, unicode)
+        self.assertIsInstance(WebKit.WebHistoryItemsAddedNotification, str)
+        self.assertIsInstance(WebKit.WebHistoryItemsRemovedNotification, str)
+        self.assertIsInstance(WebKit.WebHistoryAllItemsRemovedNotification, str)
+        self.assertIsInstance(WebKit.WebHistoryLoadedNotification, str)
+        self.assertIsInstance(WebKit.WebHistorySavedNotification, str)
+        self.assertIsInstance(WebKit.WebHistoryItemsKey, str)
 
     def testMethods(self):
-        self.assertResultIsBOOL(WebHistory.loadFromURL_error_)
-        self.assertArgIsOut(WebHistory.loadFromURL_error_, 1)
-        self.assertResultIsBOOL(WebHistory.saveToURL_error_)
-        self.assertArgIsOut(WebHistory.saveToURL_error_, 1)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.WebHistory.loadFromURL_error_)
+        self.assertArgIsOut(WebKit.WebHistory.loadFromURL_error_, 1)
+        self.assertResultIsBOOL(WebKit.WebHistory.saveToURL_error_)
+        self.assertArgIsOut(WebKit.WebHistory.saveToURL_error_, 1)

@@ -1,5 +1,6 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 VTCompressionOutputCallback = b"v^v^viI^{opaqueCMSampleBuffer=}"
 VTCompressionOutputHandler = b"vi@^{opaqueCMSampleBuffer=}"
@@ -15,9 +16,7 @@ class TestVTCompressionSession(TestCase):
 
     @min_os_level("10.8")
     def test_constants10_8(self):
-        self.assertIsInstance(
-            VideoToolbox.kVTVideoEncoderSpecification_EncoderID, unicode
-        )
+        self.assertIsInstance(VideoToolbox.kVTVideoEncoderSpecification_EncoderID, str)
 
     @min_os_level("10.8")
     def test_functions(self):
@@ -32,7 +31,7 @@ class TestVTCompressionSession(TestCase):
 
         VideoToolbox.VTCompressionSessionInvalidate
 
-        self.assertIsInstance(VideoToolbox.VTCompressionSessionGetTypeID(), (int, long))
+        self.assertIsInstance(VideoToolbox.VTCompressionSessionGetTypeID(), int)
 
         VideoToolbox.VTCompressionSessionGetPixelBufferPool
 
@@ -64,7 +63,3 @@ class TestVTCompressionSession(TestCase):
             6,
             VTCompressionOutputHandler,
         )
-
-
-if __name__ == "__main__":
-    main()

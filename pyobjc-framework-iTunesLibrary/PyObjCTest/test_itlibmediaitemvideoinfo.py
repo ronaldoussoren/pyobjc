@@ -1,6 +1,6 @@
 import iTunesLibrary
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestITLibMediaItemVideoInfo(TestCase):
@@ -9,7 +9,3 @@ class TestITLibMediaItemVideoInfo(TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(iTunesLibrary.ITLibMediaItemVideoInfo.isHD)
-
-
-if __name__ == "__main__":
-    main()

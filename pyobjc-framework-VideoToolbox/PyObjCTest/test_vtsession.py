@@ -1,5 +1,6 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestVTSession(TestCase):
@@ -9,20 +10,18 @@ class TestVTSession(TestCase):
         self.assertIsCFType(VideoToolbox.VTSessionRef)
 
     def test_constants(self):
-        self.assertIsInstance(VideoToolbox.kVTPropertyTypeKey, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertyType_Enumeration, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertyType_Boolean, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertyType_Number, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatusKey, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatus_ReadOnly, unicode)
-        self.assertIsInstance(
-            VideoToolbox.kVTPropertyReadWriteStatus_ReadWrite, unicode
-        )
-        self.assertIsInstance(VideoToolbox.kVTPropertyShouldBeSerializedKey, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueMinimumKey, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueMaximumKey, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueListKey, unicode)
-        self.assertIsInstance(VideoToolbox.kVTPropertyDocumentationKey, unicode)
+        self.assertIsInstance(VideoToolbox.kVTPropertyTypeKey, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyType_Enumeration, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyType_Boolean, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyType_Number, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatusKey, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatus_ReadOnly, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyReadWriteStatus_ReadWrite, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyShouldBeSerializedKey, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueMinimumKey, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueMaximumKey, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertySupportedValueListKey, str)
+        self.assertIsInstance(VideoToolbox.kVTPropertyDocumentationKey, str)
 
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTSessionCopySupportedPropertyDictionary, 1)
@@ -40,7 +39,3 @@ class TestVTSession(TestCase):
 
         self.assertArgIsOut(VideoToolbox.VTSessionCopySerializableProperties, 2)
         self.assertArgIsCFRetained(VideoToolbox.VTSessionCopySerializableProperties, 2)
-
-
-if __name__ == "__main__":
-    main()

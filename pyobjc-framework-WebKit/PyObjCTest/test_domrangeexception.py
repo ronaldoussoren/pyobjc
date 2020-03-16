@@ -1,13 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMRangeException(TestCase):
     def testConstants(self):
-        self.assertIsInstance(DOMRangeException, unicode)
-        self.assertEqual(DOM_BAD_BOUNDARYPOINTS_ERR, 1)
-        self.assertEqual(DOM_INVALID_NODE_TYPE_ERR, 2)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(WebKit.DOMRangeException, str)
+        self.assertEqual(WebKit.DOM_BAD_BOUNDARYPOINTS_ERR, 1)
+        self.assertEqual(WebKit.DOM_INVALID_NODE_TYPE_ERR, 2)

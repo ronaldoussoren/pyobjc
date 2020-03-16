@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMXPathException(TestCase):
     def testConstants(self):
-        self.assertIsInstance(DOMXPathException, unicode)
+        self.assertIsInstance(WebKit.DOMXPathException, str)
 
-        self.assertEqual(DOM_INVALID_EXPRESSION_ERR, 51)
-        self.assertEqual(DOM_TYPE_ERR, 52)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(WebKit.DOM_INVALID_EXPRESSION_ERR, 51)
+        self.assertEqual(WebKit.DOM_TYPE_ERR, 52)

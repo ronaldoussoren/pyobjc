@@ -1,8 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit  # noqa: F401
 
 
-class TestWebPluginHelper(NSObject):
+class TestWebPluginHelper(WebKit.NSObject):
     def webPlugInSetIsSelected_(self, v):
         pass
 
@@ -10,7 +10,3 @@ class TestWebPluginHelper(NSObject):
 class TestWebPlugin(TestCase):
     def testMethods(self):
         self.assertArgIsBOOL(TestWebPluginHelper.webPlugInSetIsSelected_, 0)
-
-
-if __name__ == "__main__":
-    main()

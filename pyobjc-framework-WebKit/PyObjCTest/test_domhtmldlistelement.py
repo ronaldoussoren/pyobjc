@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLDListElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLDListElement.compact)
-        self.assertArgIsBOOL(DOMHTMLDListElement.setCompact_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLDListElement.compact)
+        self.assertArgIsBOOL(WebKit.DOMHTMLDListElement.setCompact_, 0)

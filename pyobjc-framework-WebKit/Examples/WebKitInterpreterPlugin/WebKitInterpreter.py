@@ -1,5 +1,4 @@
 import keyword
-import os
 import sys
 import time
 import traceback
@@ -7,6 +6,9 @@ from code import InteractiveConsole
 
 import objc
 from Cocoa import (
+    NSZeroRect,
+    NSControlKeyMask,
+    NSViewWidthSizable,
     NSAnyEventMask,
     NSApplication,
     NSAttributedString,
@@ -21,9 +23,11 @@ from Cocoa import (
     NSLog,
     NSObject,
     NSView,
+    NSScrollView,
+    NSViewHeightSizable,
+    NSTextView,
 )
-from objc import NO, YES, selector, super
-from PyObjCTools import AppHelper
+from objc import NO, YES, super
 
 try:
     from code import softspace
@@ -152,7 +156,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
                 # next input function
                 yield _buff.append
                 more = self.push(_buff.pop())
-        except:
+        except:  # noqa: E722, B001
             self.lock = False
             raise
         self.lock = False
@@ -166,7 +170,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
             exec(code, self.locals)
         except SystemExit:
             raise
-        except:
+        except:  # noqa: E722, B001
             self.showtraceback()
         else:
             if softspace is not None and softspace(sys.stdout, 0):
@@ -182,7 +186,7 @@ class AsyncInteractiveConsole(InteractiveConsole):
             objname = ".".join(parts[:-1])
             try:
                 obj = eval(objname, self.locals)
-            except:
+            except:  # noqa: E722, B001
                 return None, 0
             wordlower = parts[-1].lower()
             if wordlower == "":
@@ -421,12 +425,23 @@ class PyInterpreter(NSObject):
 
             app.sendEvent_(event)
 
-    codeString_ = lambda self, s: self._formatString_forOutput_(s, "code")
-    stderrString_ = lambda self, s: self._formatString_forOutput_(s, "stderr")
-    stdoutString_ = lambda self, s: self._formatString_forOutput_(s, "stdout")
-    writeCode_ = lambda self, s: self._writeString_forOutput_(s, "code")
-    writeStderr_ = lambda self, s: self._writeString_forOutput_(s, "stderr")
-    writeStdout_ = lambda self, s: self._writeString_forOutput_(s, "stdout")
+    def codeString_(self, s):
+        return self._formatString_forOutput_(s, "code")
+
+    def stderrString_(self, s):
+        return self._formatString_forOutput_(s, "stderr")
+
+    def stdoutString_(self, s):
+        return self._formatString_forOutput_(s, "stdout")
+
+    def writeCode_(self, s):
+        return self._writeString_forOutput_(s, "code")
+
+    def writeStderr_(self, s):
+        return self._writeString_forOutput_(s, "stderr")
+
+    def writeStdout_(self, s):
+        return self._writeString_forOutput_(s, "stdout")
 
     #
     #  Accessors
@@ -456,7 +471,7 @@ class PyInterpreter(NSObject):
     def codeColor(self):
         return self._codeColor
 
-    def setStdoutColor_(self, color):
+    def setCodeColor_(self, color):
         self._codeColor = color
 
     def isInteracting(self):
@@ -621,9 +636,7 @@ class WebKitInterpreter(NSView):
         NSLog("pluginStart")
         try:
             self.doPluginStart()
-        except:
-            import traceback
-
+        except:  # noqa: E722, B001
             traceback.print_exc()
 
     def doPluginStart(self):

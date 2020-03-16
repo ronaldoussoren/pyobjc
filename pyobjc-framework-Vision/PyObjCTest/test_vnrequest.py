@@ -1,11 +1,11 @@
 import sys
 
 import objc
-from PyObjCTools.TestSupport import *
 
 VNRequestProgressHandler = b"v@d@"
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
     import Vision
 
     class TestVNRequestHelper(Vision.NSObject):
@@ -44,7 +44,3 @@ if sys.maxsize >= 2 ** 32:
         @min_sdk_level("10.15")
         def testProtocols(self):
             objc.protocolNamed("VNRequestProgressProviding")
-
-
-if __name__ == "__main__":
-    main()

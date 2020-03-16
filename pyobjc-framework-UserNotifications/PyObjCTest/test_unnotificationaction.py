@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import UserNotifications
 
     class TestUNNotificationAction(TestCase):
@@ -21,7 +21,3 @@ if sys.maxsize > 2 ** 32:
 
         def test_classes(self):
             UserNotifications.UNNotificationAction
-
-
-if __name__ == "__main__":
-    main()

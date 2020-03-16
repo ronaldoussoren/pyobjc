@@ -1,9 +1,10 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase
     import UserNotifications
+    import objc
 
     class TestUNUserNotificationCenterHelper(UserNotifications.NSObject):
         def userNotificationCenter_willPresentNotification_withCompletionHandler_(
@@ -51,50 +52,46 @@ if sys.maxsize > 2 ** 32:
                 UserNotifications.UNUserNotificationCenter.supportsContentExtensions
             )
             self.assertArgIsBlock(
-                UserNotifications.UNUserNotificationCenter.requestAuthorizationWithOptions_completionHandler_,
+                UserNotifications.UNUserNotificationCenter.requestAuthorizationWithOptions_completionHandler_,  # noqa: B950
                 1,
                 b"vZ@",
             )
             self.assertArgIsBlock(
-                UserNotifications.UNUserNotificationCenter.getNotificationCategoriesWithCompletionHandler_,
+                UserNotifications.UNUserNotificationCenter.getNotificationCategoriesWithCompletionHandler_,  # noqa: B950
                 0,
                 b"v@",
             )
             self.assertArgIsBlock(
-                UserNotifications.UNUserNotificationCenter.getNotificationSettingsWithCompletionHandler_,
+                UserNotifications.UNUserNotificationCenter.getNotificationSettingsWithCompletionHandler_,  # noqa: B950
                 0,
                 b"v@",
             )
             self.assertArgIsBlock(
-                UserNotifications.UNUserNotificationCenter.addNotificationRequest_withCompletionHandler_,
+                UserNotifications.UNUserNotificationCenter.addNotificationRequest_withCompletionHandler_,  # noqa: B950
                 1,
                 b"v@",
             )
             self.assertArgIsBlock(
-                UserNotifications.UNUserNotificationCenter.getPendingNotificationRequestsWithCompletionHandler_,
+                UserNotifications.UNUserNotificationCenter.getPendingNotificationRequestsWithCompletionHandler_,  # noqa: B950
                 0,
                 b"v@",
             )
             self.assertArgIsBlock(
-                UserNotifications.UNUserNotificationCenter.getDeliveredNotificationsWithCompletionHandler_,
+                UserNotifications.UNUserNotificationCenter.getDeliveredNotificationsWithCompletionHandler_,  # noqa: B950
                 0,
                 b"v@",
             )
 
             self.assertArgIsBlock(
-                TestUNUserNotificationCenterHelper.userNotificationCenter_willPresentNotification_withCompletionHandler_,
+                TestUNUserNotificationCenterHelper.userNotificationCenter_willPresentNotification_withCompletionHandler_,  # noqa: B950
                 2,
                 b"v" + objc._C_NSUInteger,
             )
             self.assertArgIsBlock(
-                TestUNUserNotificationCenterHelper.userNotificationCenter_didReceiveNotificationResponse_withCompletionHandler_,
+                TestUNUserNotificationCenterHelper.userNotificationCenter_didReceiveNotificationResponse_withCompletionHandler_,  # noqa: B950
                 2,
                 b"v",
             )
 
         def test_protocols(self):
             objc.protocolNamed("UNUserNotificationCenterDelegate")
-
-
-if __name__ == "__main__":
-    main()

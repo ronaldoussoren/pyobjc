@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import *
-from XgridFoundation import *
+from PyObjCTools.TestSupport import TestCase
+import XgridFoundation
 
 
 class TestXGAuthenticator(TestCase):
     def testConstants(self):
-        self.assertEqual(XGAuthenticatorStateUnauthenticated, 0)
-        self.assertEqual(XGAuthenticatorStateAuthenticating, 1)
-        self.assertEqual(XGAuthenticatorStateAuthenticated, 2)
-        self.assertEqual(XGAuthenticatorStateFailed, 3)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertEqual(XgridFoundation.XGAuthenticatorStateUnauthenticated, 0)
+        self.assertEqual(XgridFoundation.XGAuthenticatorStateAuthenticating, 1)
+        self.assertEqual(XgridFoundation.XGAuthenticatorStateAuthenticated, 2)
+        self.assertEqual(XgridFoundation.XGAuthenticatorStateFailed, 3)

@@ -1,6 +1,6 @@
 import JavaScriptCore
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestJSTypedArray(TestCase):
@@ -267,7 +267,3 @@ class TestJSTypedArray(TestCase):
             2,
             b"o^" + JavaScriptCore.JSValueRef.__typestr__,
         )
-
-
-if __name__ == "__main__":
-    main()

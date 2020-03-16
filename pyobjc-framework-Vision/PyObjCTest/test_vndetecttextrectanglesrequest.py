@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNDetectTextRectanglesRequest(TestCase):
@@ -17,7 +17,3 @@ if sys.maxsize >= 2 ** 32:
 
         def test_constants(self):
             self.assertEqual(Vision.VNDetectTextRectanglesRequestRevision1, 1)
-
-
-if __name__ == "__main__":
-    main()

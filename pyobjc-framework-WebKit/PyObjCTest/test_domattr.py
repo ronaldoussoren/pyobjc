@@ -1,11 +1,7 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMAttr(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMAttr.specified)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMAttr.specified)

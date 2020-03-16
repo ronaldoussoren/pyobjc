@@ -1,5 +1,5 @@
 import WebKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 NSAttributedStringCompletionHandler = b"v@@@"
 
@@ -7,7 +7,7 @@ NSAttributedStringCompletionHandler = b"v@@@"
 class TestWKContentRuleListStore(TestCase):
     @min_os_level("10.15")
     def test_constants(self):
-        self.assertIsInstance(WebKit.NSReadAccessURLDocumentOption, unicode)
+        self.assertIsInstance(WebKit.NSReadAccessURLDocumentOption, str)
 
     @min_os_level("10.15")
     def test_methods(self):
@@ -31,7 +31,3 @@ class TestWKContentRuleListStore(TestCase):
             2,
             NSAttributedStringCompletionHandler,
         )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLAreaElement(TestCase):
     def testMehods(self):
-        self.assertResultIsBOOL(DOMHTMLAreaElement.noHref)
-        self.assertArgIsBOOL(DOMHTMLAreaElement.setNoHref_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLAreaElement.noHref)
+        self.assertArgIsBOOL(WebKit.DOMHTMLAreaElement.setNoHref_, 0)

@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNRecognizeTextRequest(TestCase):
@@ -15,7 +15,7 @@ if sys.maxsize >= 2 ** 32:
         @min_os_level("10.15")
         def test_methods(self):
             self.assertArgIsOut(
-                Vision.VNRecognizeTextRequest.supportedRecognitionLanguagesForTextRecognitionLevel_revision_error_,
+                Vision.VNRecognizeTextRequest.supportedRecognitionLanguagesForTextRecognitionLevel_revision_error_,  # noqa: B950
                 2,
             )
 
@@ -25,7 +25,3 @@ if sys.maxsize >= 2 ** 32:
             self.assertArgIsBOOL(
                 Vision.VNRecognizeTextRequest.setUsesLanguageCorrection_, 0
             )
-
-
-if __name__ == "__main__":
-    main()

@@ -1,24 +1,22 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMOverflowEvent(TestCase):
     def testConstants(self):
-        self.assertEqual(DOM_HORIZONTAL, 0)
-        self.assertEqual(DOM_VERTICAL, 1)
-        self.assertEqual(DOM_BOTH, 2)
+        self.assertEqual(WebKit.DOM_HORIZONTAL, 0)
+        self.assertEqual(WebKit.DOM_VERTICAL, 1)
+        self.assertEqual(WebKit.DOM_BOTH, 2)
 
     def testMethods(self):
-        self.assertResultIsBOOL(DOMOverflowEvent.horizontalOverflow)
-        self.assertResultIsBOOL(DOMOverflowEvent.verticalOverflow)
+        self.assertResultIsBOOL(WebKit.DOMOverflowEvent.horizontalOverflow)
+        self.assertResultIsBOOL(WebKit.DOMOverflowEvent.verticalOverflow)
 
         self.assertArgIsBOOL(
-            DOMOverflowEvent.initOverflowEvent_horizontalOverflow_verticalOverflow_, 1
+            WebKit.DOMOverflowEvent.initOverflowEvent_horizontalOverflow_verticalOverflow_,
+            1,
         )
         self.assertArgIsBOOL(
-            DOMOverflowEvent.initOverflowEvent_horizontalOverflow_verticalOverflow_, 2
+            WebKit.DOMOverflowEvent.initOverflowEvent_horizontalOverflow_verticalOverflow_,
+            2,
         )
-
-
-if __name__ == "__main__":
-    main()

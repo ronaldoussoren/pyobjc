@@ -9,7 +9,7 @@ import sys
 import Foundation
 import objc
 from WebKit import _metadata
-from WebKit._WebKit import *
+from WebKit import _WebKit
 
 objc.addConvenienceForBasicSequence("WebScriptObject", True)
 
@@ -25,7 +25,7 @@ sys.modules["WebKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_WebKit, Foundation,),
 )
 
 

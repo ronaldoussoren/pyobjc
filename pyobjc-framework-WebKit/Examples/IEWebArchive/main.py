@@ -1,4 +1,4 @@
-import MHTDocument
+import MHTDocument  # noqa: F401
 import objc
 from PyObjCTools import AppHelper
 

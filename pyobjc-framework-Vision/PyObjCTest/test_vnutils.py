@@ -1,10 +1,11 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
     import Quartz
+    import objc
 
     class TestVNUtils(TestCase):
         @min_os_level("10.13")
@@ -55,24 +56,20 @@ if sys.maxsize >= 2 ** 32:
             self.assertFalse(
                 hasattr(Vision, "VNNormalizedFaceBoundingBoxPointForLandmarkPoint")
             )
-            # self.assertResultHasType(Vision.VNNormalizedFaceBoundingBoxPointForLandmarkPoint, Quartz.CGPoint.__typestr__)
+            # self.assertResultHasType(Vision.VNNormalizedFaceBoundingBoxPointForLandmarkPoint, Quartz.CGPoint.__typestr__)  # noqa: B950
             # self.assertArgHasType(Vision.VNNormalizedRectForImageRect, 0, vector_float2)
-            # self.assertArgHasType(Vision.VNNormalizedRectForImageRect, 1, Quartz.CGRect.__typestr__)
+            # self.assertArgHasType(Vision.VNNormalizedRectForImageRect, 1, Quartz.CGRect.__typestr__)  # noqa: B950
             # self.assertArgHasType(Vision.VNNormalizedRectForImageRect, 2, objc._C_ULNG)
             # self.assertArgHasType(Vision.VNNormalizedRectForImageRect, 3, objc._C_ULNG)
 
             # Vector types
             self.assertFalse(hasattr(Vision, "VNImagePointForFaceLandmarkPoint"))
-            # self.assertResultHasType(Vision.VNImagePointForFaceLandmarkPoint, Quartz.CGPoint.__typestr__)
+            # self.assertResultHasType(Vision.VNImagePointForFaceLandmarkPoint, Quartz.CGPoint.__typestr__)  # noqa: B950
             # self.assertArgHasType(Vision.VNImagePointForFaceLandmarkPoint, 0, vector_float2)
-            # self.assertArgHasType(Vision.VNImagePointForFaceLandmarkPoint, 1, Quartz.CGRect.__typestr__)
+            # self.assertArgHasType(Vision.VNImagePointForFaceLandmarkPoint, 1, Quartz.CGRect.__typestr__)  # noqa: B950
             # self.assertArgHasType(Vision.VNImagePointForFaceLandmarkPoint, 2, objc._C_ULNG)
             # self.assertArgHasType(Vision.VNImagePointForFaceLandmarkPoint, 3, objc._C_ULNG)
 
         @min_os_level("10.15")
         def testFunctions10_15(self):
             Vision.VNElementTypeSize
-
-
-if __name__ == "__main__":
-    main()

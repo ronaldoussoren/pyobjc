@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLImageElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLImageElement.isMap)
-        self.assertArgIsBOOL(DOMHTMLImageElement.setIsMap_, 0)
+        self.assertResultIsBOOL(WebKit.DOMHTMLImageElement.isMap)
+        self.assertArgIsBOOL(WebKit.DOMHTMLImageElement.setIsMap_, 0)
 
-        self.assertResultIsBOOL(DOMHTMLImageElement.complete)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLImageElement.complete)

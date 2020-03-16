@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNRequest(TestCase):
@@ -17,7 +17,3 @@ if sys.maxsize >= 2 ** 32:
             self.assertArgIsBlock(
                 Vision.VNTrackingRequest.initWithCompletionHandler_, 0, b"v@@"
             )
-
-
-if __name__ == "__main__":
-    main()

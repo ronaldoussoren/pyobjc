@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLDirectoryElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLDirectoryElement.compact)
-        self.assertArgIsBOOL(DOMHTMLDirectoryElement.setCompact_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLDirectoryElement.compact)
+        self.assertArgIsBOOL(WebKit.DOMHTMLDirectoryElement.setCompact_, 0)

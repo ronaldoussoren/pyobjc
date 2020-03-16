@@ -1,5 +1,6 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestTime(TestCase):
@@ -31,7 +32,3 @@ class TestTime(TestCase):
         self.assertResultHasType(libdispatch.dispatch_walltime, objc._C_ULNGLNG)
         self.assertArgHasType(libdispatch.dispatch_walltime, 0, b"n^{timespec=ll}")
         self.assertArgHasType(libdispatch.dispatch_walltime, 1, objc._C_LNGLNG)
-
-
-if __name__ == "__main__":
-    main()

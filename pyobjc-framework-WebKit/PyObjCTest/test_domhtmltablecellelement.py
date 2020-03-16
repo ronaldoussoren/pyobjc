@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLTableCellElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLTableCellElement.noWrap)
-        self.assertArgIsBOOL(DOMHTMLTableCellElement.setNoWrap_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLTableCellElement.noWrap)
+        self.assertArgIsBOOL(WebKit.DOMHTMLTableCellElement.setNoWrap_, 0)

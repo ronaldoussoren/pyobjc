@@ -1,5 +1,5 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestVTProfessionalVideoWorkflow(TestCase):
@@ -7,7 +7,3 @@ class TestVTProfessionalVideoWorkflow(TestCase):
     def test_functions(self):
         VideoToolbox.VTRegisterProfessionalVideoWorkflowVideoDecoders
         VideoToolbox.VTRegisterProfessionalVideoWorkflowVideoEncoders
-
-
-if __name__ == "__main__":
-    main()

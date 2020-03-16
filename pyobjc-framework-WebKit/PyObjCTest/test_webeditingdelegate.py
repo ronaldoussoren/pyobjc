@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import WebKit
+import objc
 
 
-class TestWebEditingDelegateHelper(NSObject):
+class TestWebEditingDelegateHelper(WebKit.NSObject):
     def webView_shouldBeginEditingInDOMRange_(self, a, b):
         return 1
 
@@ -39,9 +40,9 @@ class TestWebEditingDelegate(TestCase):
         objc.protocolNamed("WebEditingDelegate")
 
     def testConstants(self):
-        self.assertEqual(WebViewInsertActionTyped, 0)
-        self.assertEqual(WebViewInsertActionPasted, 1)
-        self.assertEqual(WebViewInsertActionDropped, 2)
+        self.assertEqual(WebKit.WebViewInsertActionTyped, 0)
+        self.assertEqual(WebKit.WebViewInsertActionPasted, 1)
+        self.assertEqual(WebKit.WebViewInsertActionDropped, 2)
 
     def testMethods(self):
         self.assertResultIsBOOL(
@@ -60,10 +61,10 @@ class TestWebEditingDelegate(TestCase):
             TestWebEditingDelegateHelper.webView_shouldDeleteDOMRange_
         )
         self.assertResultIsBOOL(
-            TestWebEditingDelegateHelper.webView_shouldChangeSelectedDOMRange_toDOMRange_affinity_stillSelecting_
+            TestWebEditingDelegateHelper.webView_shouldChangeSelectedDOMRange_toDOMRange_affinity_stillSelecting_  # noqa: B950
         )
         self.assertArgIsBOOL(
-            TestWebEditingDelegateHelper.webView_shouldChangeSelectedDOMRange_toDOMRange_affinity_stillSelecting_,
+            TestWebEditingDelegateHelper.webView_shouldChangeSelectedDOMRange_toDOMRange_affinity_stillSelecting_,  # noqa: B950
             4,
         )
         self.assertResultIsBOOL(
@@ -75,7 +76,3 @@ class TestWebEditingDelegate(TestCase):
         self.assertResultIsBOOL(
             TestWebEditingDelegateHelper.webView_doCommandBySelector_
         )
-
-
-if __name__ == "__main__":
-    main()

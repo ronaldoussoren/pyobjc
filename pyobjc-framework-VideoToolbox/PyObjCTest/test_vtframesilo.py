@@ -1,5 +1,5 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestVTFrameSilo(TestCase):
@@ -34,7 +34,3 @@ class TestVTFrameSilo(TestCase):
             2,
             b"i^{opaqueCMSampleBuffer=}",
         )
-
-
-if __name__ == "__main__":
-    main()

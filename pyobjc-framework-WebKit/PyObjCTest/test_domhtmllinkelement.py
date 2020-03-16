@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLLinkElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLLinkElement.disabled)
-        self.assertArgIsBOOL(DOMHTMLLinkElement.setDisabled_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLLinkElement.disabled)
+        self.assertArgIsBOOL(WebKit.DOMHTMLLinkElement.setDisabled_, 0)

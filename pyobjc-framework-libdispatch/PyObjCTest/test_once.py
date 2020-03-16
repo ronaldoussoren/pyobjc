@@ -1,7 +1,8 @@
 import array
 
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestOnceAPI(TestCase):
@@ -43,7 +44,3 @@ class TestOnceUsage(TestCase):
         libdispatch.dispatch_once(pred, callable)
 
         self.assertEqual(record, [None])
-
-
-if __name__ == "__main__":
-    main()

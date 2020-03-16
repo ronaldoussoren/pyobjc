@@ -1,6 +1,6 @@
 import iTunesLibrary
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestITLibMediaEntity(TestCase):
@@ -20,10 +20,4 @@ class TestITLibMediaEntity(TestCase):
         )
 
     def testConstants(self):
-        self.assertIsInstance(
-            iTunesLibrary.ITLibMediaEntityPropertyPersistentID, unicode
-        )
-
-
-if __name__ == "__main__":
-    main()
+        self.assertIsInstance(iTunesLibrary.ITLibMediaEntityPropertyPersistentID, str)

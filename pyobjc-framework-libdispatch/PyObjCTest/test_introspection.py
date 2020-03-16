@@ -1,5 +1,5 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestIntrospectionAPI(TestCase):
@@ -25,7 +25,3 @@ class TestIntrospectionAPI(TestCase):
         self.assertFalse(
             hasattr(libdispatch, "dispatch_introspection_hook_queue_callout_end")
         )
-
-
-if __name__ == "__main__":
-    main()

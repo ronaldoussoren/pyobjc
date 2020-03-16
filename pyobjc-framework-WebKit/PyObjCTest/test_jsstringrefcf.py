@@ -1,5 +1,5 @@
 import JavaScriptCore
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestJSStrintRefCF(TestCase):
@@ -9,11 +9,7 @@ class TestJSStrintRefCF(TestCase):
 
         o = JavaScriptCore.JSStringCopyCFString(None, v)
         self.assertEqual(o, "hello world")
-        self.assertIsInstance(o, unicode)
+        self.assertIsInstance(o, str)
         self.assertResultIsCFRetained(JavaScriptCore.JSStringCopyCFString)
 
         JavaScriptCore.JSStringRelease(v)
-
-
-if __name__ == "__main__":
-    main()

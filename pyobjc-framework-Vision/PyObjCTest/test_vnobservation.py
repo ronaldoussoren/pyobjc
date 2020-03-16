@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize >= 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import Vision
 
     class TestVNObservation(TestCase):
@@ -18,13 +18,9 @@ if sys.maxsize >= 2 ** 32:
             self.assertArgIsOut(Vision.VNRecognizedText.boundingBoxForRange_error_, 1)
 
             self.assertResultIsBOOL(
-                Vision.VNFeaturePrintObservation.computeDistance_toFeaturePrintObservation_error_
+                Vision.VNFeaturePrintObservation.computeDistance_toFeaturePrintObservation_error_  # noqa: B950
             )
             self.assertArgIsOut(
-                Vision.VNFeaturePrintObservation.computeDistance_toFeaturePrintObservation_error_,
+                Vision.VNFeaturePrintObservation.computeDistance_toFeaturePrintObservation_error_,  # noqa: B950
                 2,
             )
-
-
-if __name__ == "__main__":
-    main()

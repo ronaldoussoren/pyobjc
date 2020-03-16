@@ -1,7 +1,6 @@
-import array
-
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestQueueAPI(TestCase):
@@ -37,7 +36,10 @@ class TestQueueAPI(TestCase):
         self.assertIsInstance(
             libdispatch.DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL, objc.objc_object
         )
-        # self.assertIsInstance(libdispatch.DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL, objc.objc_object)
+        self.assertIsInstance(
+            libdispatch.DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL,
+            objc.objc_object,
+        )
 
     @min_os_level("10.6")
     def test_functions(self):
@@ -267,7 +269,3 @@ class TestQueueAPI(TestCase):
 
         self.assertResultHasType(libdispatch.dispatch_assert_queue_not, objc._C_VOID)
         self.assertArgHasType(libdispatch.dispatch_assert_queue_not, 0, objc._C_ID)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,14 +1,15 @@
 import SystemExtensions
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestSystemExtensions(TestCase):
     @min_os_level("10.15")
     def test_constants10_15(self):
-        self.assertIsInstance(SystemExtensions.OSSystemExtensionErrorDomain, unicode)
-        self.assertIsInstance(SystemExtensions.OSBundleUsageDescriptionKey, unicode)
+        self.assertIsInstance(SystemExtensions.OSSystemExtensionErrorDomain, str)
+        self.assertIsInstance(SystemExtensions.OSBundleUsageDescriptionKey, str)
         self.assertIsInstance(
-            SystemExtensions.NSSystemExtensionUsageDescriptionKey, unicode
+            SystemExtensions.NSSystemExtensionUsageDescriptionKey, str
         )
 
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorUnknown, 1)

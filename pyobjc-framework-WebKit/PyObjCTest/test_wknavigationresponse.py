@@ -1,14 +1,10 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+import WebKit
 
 
 class TestWKNavigationResponse(TestCase):
     @onlyOn64Bit
     @min_os_level("10.10")
     def testMethods10_10(self):
-        self.assertResultIsBOOL(WKNavigationResponse.isForMainFrame)
-        self.assertResultIsBOOL(WKNavigationResponse.canShowMIMEType)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.WKNavigationResponse.isForMainFrame)
+        self.assertResultIsBOOL(WebKit.WKNavigationResponse.canShowMIMEType)

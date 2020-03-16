@@ -1,8 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit  # noqa: F401
+import objc
 
 
-class TestDOMEventTargetHelper(NSObject):
+class TestDOMEventTargetHelper(WebKit.NSObject):
     def addEventListener_listener_useCapture_(self, a, b, c):
         pass
 
@@ -34,7 +35,3 @@ class TestDOMEventTarget(TestCase):
     def testProtocols(self):
         p = objc.protocolNamed("DOMEventTarget")
         self.assertIsInstance(p, objc.formal_protocol)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,12 +1,8 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMHTMLStyleElement(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMHTMLStyleElement.disabled)
-        self.assertArgIsBOOL(DOMHTMLStyleElement.setDisabled_, 0)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMHTMLStyleElement.disabled)
+        self.assertArgIsBOOL(WebKit.DOMHTMLStyleElement.setDisabled_, 0)

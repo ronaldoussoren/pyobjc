@@ -1,6 +1,6 @@
-import JavaScriptCore
+import JavaScriptCore  # noqa: F401
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
 
 
 class TestJSExport(TestCase):
@@ -17,7 +17,3 @@ class TestJSExport(TestCase):
         self.assertIsInstance(objc.protocolNamed("JSExport"), objc.formal_protocol)
 
     # XXX: JSExportAs support
-
-
-if __name__ == "__main__":
-    main()

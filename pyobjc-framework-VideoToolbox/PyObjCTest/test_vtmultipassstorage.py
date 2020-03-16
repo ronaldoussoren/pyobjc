@@ -1,5 +1,5 @@
 import VideoToolbox
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestVTMultiPassStorage(TestCase):
@@ -11,7 +11,7 @@ class TestVTMultiPassStorage(TestCase):
     @min_os_level("10.10")
     def test_constants(self):
         self.assertIsInstance(
-            VideoToolbox.kVTMultiPassStorageCreationOption_DoNotDelete, unicode
+            VideoToolbox.kVTMultiPassStorageCreationOption_DoNotDelete, str
         )
 
     @min_os_level("10.10")
@@ -22,7 +22,3 @@ class TestVTMultiPassStorage(TestCase):
         self.assertArgIsCFRetained(VideoToolbox.VTMultiPassStorageCreate, 4)
 
         VideoToolbox.VTMultiPassStorageClose
-
-
-if __name__ == "__main__":
-    main()

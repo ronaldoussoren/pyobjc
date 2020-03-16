@@ -1,5 +1,5 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+import WebKit
 
 
 class TestWKContentRuleListStore(TestCase):
@@ -7,24 +7,22 @@ class TestWKContentRuleListStore(TestCase):
     @min_os_level("10.13")
     def testMethods(self):
         self.assertArgIsBlock(
-            WKContentRuleListStore.compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_,
+            WebKit.WKContentRuleListStore.compileContentRuleListForIdentifier_encodedContentRuleList_completionHandler_,  # noqa: B950
             2,
             b"v@@",
         )
         self.assertArgIsBlock(
-            WKContentRuleListStore.lookUpContentRuleListForIdentifier_completionHandler_,
+            WebKit.WKContentRuleListStore.lookUpContentRuleListForIdentifier_completionHandler_,
             1,
             b"v@@",
         )
         self.assertArgIsBlock(
-            WKContentRuleListStore.removeContentRuleListForIdentifier_completionHandler_,
+            WebKit.WKContentRuleListStore.removeContentRuleListForIdentifier_completionHandler_,
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            WKContentRuleListStore.getAvailableContentRuleListIdentifiers_, 0, b"v@"
+            WebKit.WKContentRuleListStore.getAvailableContentRuleListIdentifiers_,
+            0,
+            b"v@",
         )
-
-
-if __name__ == "__main__":
-    main()

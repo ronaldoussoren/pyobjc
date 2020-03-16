@@ -9,8 +9,8 @@ import sys
 
 import Foundation
 import objc
-import UserNotifications._UserNotifications
 from UserNotifications import _metadata
+from UserNotifications import _UserNotifications
 
 sys.modules["UserNotifications"] = mod = objc.ObjCLazyModule(
     "UserNotifications",
@@ -24,7 +24,7 @@ sys.modules["UserNotifications"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_UserNotifications, Foundation),
 )
 
 

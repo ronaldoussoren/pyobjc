@@ -1,5 +1,6 @@
 import libdispatch
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 dispatch_data_applier_t = b"B@Ln^vL"
 
@@ -101,7 +102,3 @@ class TestDataUsage(TestCase):
         self.assertIsInstance(b, memoryview)
         self.assertEqual(b.tobytes(), b"hello world")
         self.assertEqual(s, 11)
-
-
-if __name__ == "__main__":
-    main()

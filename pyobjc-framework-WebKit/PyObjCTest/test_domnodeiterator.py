@@ -1,13 +1,9 @@
-from PyObjCTools.TestSupport import *
-from WebKit import *
+from PyObjCTools.TestSupport import TestCase
+import WebKit
 
 
 class TestDOMNodeIterator(TestCase):
     def testMethods(self):
-        self.assertResultIsBOOL(DOMNodeIterator.expandEntityReferences)
+        self.assertResultIsBOOL(WebKit.DOMNodeIterator.expandEntityReferences)
 
-        self.assertResultIsBOOL(DOMNodeIterator.pointerBeforeReferenceNode)
-
-
-if __name__ == "__main__":
-    main()
+        self.assertResultIsBOOL(WebKit.DOMNodeIterator.pointerBeforeReferenceNode)
