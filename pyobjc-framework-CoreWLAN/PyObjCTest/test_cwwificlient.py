@@ -1,6 +1,6 @@
 import CoreWLAN
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCWWifiClientHelper(CoreWLAN.NSObject):
@@ -18,7 +18,7 @@ class TestCWWiFiClient(TestCase):
         )
 
         self.assertArgHasType(
-            TestCWWifiClientHelper.linkQualityDidChangeForWiFiInterfaceWithName_rssi_transmitRate_,
+            TestCWWifiClientHelper.linkQualityDidChangeForWiFiInterfaceWithName_rssi_transmitRate_,  # noqa: B950
             1,
             objc._C_NSInteger,
             objc._C_DBL,
@@ -44,7 +44,3 @@ class TestCWWiFiClient(TestCase):
         self.assertArgIsOut(
             CoreWLAN.CWWiFiClient.stopMonitoringAllEventsAndReturnError_, 0
         )
-
-
-if __name__ == "__main__":
-    main()

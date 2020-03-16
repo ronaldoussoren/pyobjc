@@ -1,5 +1,5 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_between
 
 
 class TestCWConfiguration(TestCase):
@@ -58,7 +58,3 @@ class TestCWConfiguration(TestCase):
 
         self.assertFalse(c1 == 42)
         self.assertTrue(c1 != 42)
-
-
-if __name__ == "__main__":
-    main()

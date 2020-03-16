@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import MediaPlayer
     import Quartz
 
@@ -24,71 +24,55 @@ if sys.maxsize > 2 ** 32:
 
             self.assertEqual(MediaPlayer.MPMediaTypeAny, 0xFFFFFFFFFFFFFFFF)
 
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPersistentID, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyMediaType, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyTitle, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumTitle, unicode)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPersistentID, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyMediaType, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyTitle, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumTitle, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumPersistentID, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyArtist, str)
             self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyAlbumPersistentID, unicode
+                MediaPlayer.MPMediaItemPropertyArtistPersistentID, str
             )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyArtist, unicode)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumArtist, str)
             self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyArtistPersistentID, unicode
+                MediaPlayer.MPMediaItemPropertyAlbumArtistPersistentID, str
             )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumArtist, unicode)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyGenre, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyGenrePersistentID, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyComposer, str)
             self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyAlbumArtistPersistentID, unicode
+                MediaPlayer.MPMediaItemPropertyComposerPersistentID, str
             )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyGenre, unicode)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPlaybackDuration, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumTrackNumber, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAlbumTrackCount, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDiscNumber, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDiscCount, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyArtwork, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsExplicit, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyLyrics, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyReleaseDate, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyBeatsPerMinute, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyComments, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAssetURL, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsCloudItem, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyHasProtectedAsset, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPodcastTitle, str)
             self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyGenrePersistentID, unicode
+                MediaPlayer.MPMediaItemPropertyPodcastPersistentID, str
             )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyComposer, unicode)
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyComposerPersistentID, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyPlaybackDuration, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyAlbumTrackNumber, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyAlbumTrackCount, unicode
-            )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDiscNumber, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDiscCount, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyArtwork, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsExplicit, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyLyrics, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyReleaseDate, unicode)
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyBeatsPerMinute, unicode
-            )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyComments, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyAssetURL, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsCloudItem, unicode)
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyHasProtectedAsset, unicode
-            )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPodcastTitle, unicode)
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyPodcastPersistentID, unicode
-            )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPlayCount, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertySkipCount, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyRating, unicode)
-            self.assertIsInstance(
-                MediaPlayer.MPMediaItemPropertyLastPlayedDate, unicode
-            )
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyUserGrouping, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyBookmarkTime, unicode)
-            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDateAdded, unicode)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPlayCount, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertySkipCount, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyRating, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyLastPlayedDate, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyUserGrouping, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyBookmarkTime, str)
+            self.assertIsInstance(MediaPlayer.MPMediaItemPropertyDateAdded, str)
 
         @min_os_level("10.13.1")
         def testConstants10_13(self):
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, str
             )
 
         @min_os_level("10.12")
@@ -103,7 +87,3 @@ if sys.maxsize > 2 ** 32:
                 1,
                 b"@" + Quartz.CGSize.__typestr__,
             )
-
-
-if __name__ == "__main__":
-    main()

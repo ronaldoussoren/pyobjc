@@ -1,5 +1,5 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestCWNetwork(TestCase):
@@ -7,15 +7,13 @@ class TestCWNetwork(TestCase):
     def test_methods10_7(self):
         self.assertResultIsBOOL(CoreWLAN.CWNetwork.ibss)
 
+        self.assertResultIsBOOL(CoreWLAN.CWNetwork.supportsSecurity_)
+        self.assertResultIsBOOL(CoreWLAN.CWNetwork.supportsPHYMode_)
+
     @min_os_level("10.6")
     def test_methods10_6(self):
         self.assertResultIsBOOL(CoreWLAN.CWNetwork.isEqualToNetwork_)
         self.assertResultIsBOOL(CoreWLAN.CWNetwork.isIBSS)
-
-    @min_os_level("10.7")
-    def test_methods10_7(self):
-        self.assertResultIsBOOL(CoreWLAN.CWNetwork.supportsSecurity_)
-        self.assertResultIsBOOL(CoreWLAN.CWNetwork.supportsPHYMode_)
 
     @min_os_level("10.7")
     @expectedFailure  # on 10.15
@@ -28,7 +26,3 @@ class TestCWNetwork(TestCase):
 
         self.assertFalse(c1 == 42)
         self.assertTrue(c1 != 42)
-
-
-if __name__ == "__main__":
-    main()

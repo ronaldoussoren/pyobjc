@@ -1,8 +1,14 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import (
+        TestCase,
+        min_os_level,
+        os_level_key,
+        os_release,
+        expectedFailureIf,
+    )
     import MediaPlayer
 
     class TestMPNowPlayingInfoCenter(TestCase):
@@ -18,52 +24,41 @@ if sys.maxsize > 2 ** 32:
             self.assertEqual(MediaPlayer.MPNowPlayingPlaybackStateInterrupted, 4)
 
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyElapsedPlaybackTime, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyElapsedPlaybackTime, str
+            )
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyPlaybackRate, str)
+            self.assertIsInstance(
+                MediaPlayer.MPNowPlayingInfoPropertyDefaultPlaybackRate, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyPlaybackRate, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueIndex, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyDefaultPlaybackRate, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueCount, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueIndex, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyChapterNumber, str
+            )
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyChapterCount, str)
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyIsLiveStream, str)
+            self.assertIsInstance(
+                MediaPlayer.MPNowPlayingInfoPropertyAvailableLanguageOptions, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyPlaybackQueueCount, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyCurrentLanguageOptions, str
+            )
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoCollectionIdentifier, str)
+            self.assertIsInstance(
+                MediaPlayer.MPNowPlayingInfoPropertyExternalContentIdentifier, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyChapterNumber, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyExternalUserProfileIdentifier, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyChapterCount, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyPlaybackProgress, str
             )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyIsLiveStream, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyAvailableLanguageOptions, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyCurrentLanguageOptions, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoCollectionIdentifier, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyExternalContentIdentifier, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyExternalUserProfileIdentifier,
-                unicode,
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyPlaybackProgress, unicode
-            )
-            self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyMediaType, unicode
-            )
-            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAssetURL, unicode)
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyMediaType, str)
+            self.assertIsInstance(MediaPlayer.MPNowPlayingInfoPropertyAssetURL, str)
 
         @min_os_level("10.13")
         @expectedFailureIf(
@@ -71,15 +66,11 @@ if sys.maxsize > 2 ** 32:
         )  # Documented for 10.13, but doesn't work there
         def testConstants10_13(self):
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyServiceIdentifier, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyServiceIdentifier, str
             )
 
         @min_os_level("10.13.1")
         def testConstants10_13_1(self):
             self.assertIsInstance(
-                MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, unicode
+                MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, str
             )
-
-
-if __name__ == "__main__":
-    main()

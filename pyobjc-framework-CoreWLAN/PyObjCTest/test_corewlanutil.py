@@ -1,5 +1,5 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCoreWLANUtil(TestCase):
@@ -40,7 +40,3 @@ class TestCoreWLANUtil(TestCase):
         CoreWLAN.CWKeychainSetWiFiEAPUsernameAndPassword  # Only check existance
         CoreWLAN.CWKeychainDeleteWiFiEAPUsernameAndPassword  # Only check existance
         CoreWLAN.CWKeychainSetWiFiEAPIdentity  # Only check existance
-
-
-if __name__ == "__main__":
-    main()

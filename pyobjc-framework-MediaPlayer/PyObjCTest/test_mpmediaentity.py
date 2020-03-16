@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import MediaPlayer
 
     class TestMPMediaEntity(TestCase):
@@ -18,10 +18,4 @@ if sys.maxsize > 2 ** 32:
 
         @min_os_level("10.12")
         def testConstants(self):
-            self.assertIsInstance(
-                MediaPlayer.MPMediaEntityPropertyPersistentID, unicode
-            )
-
-
-if __name__ == "__main__":
-    main()
+            self.assertIsInstance(MediaPlayer.MPMediaEntityPropertyPersistentID, str)

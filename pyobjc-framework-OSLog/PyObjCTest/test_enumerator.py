@@ -1,5 +1,5 @@
 import OSLog
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestEnumerator(TestCase):

@@ -1,28 +1,28 @@
 import OSAKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestOSAScript(TestCase):
     def testConstants(self):
-        self.assertIsInstance(OSAKit.OSAScriptErrorMessageKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorBriefMessageKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorNumberKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorPartialResultKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorOffendingObjectKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorExpectedTypeKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorAppAddressKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorAppNameKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorRangeKey, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorMessage, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorNumber, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorAppName, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorBriefMessage, unicode)
-        self.assertIsInstance(OSAKit.OSAScriptErrorRange, unicode)
-        self.assertIsInstance(OSAKit.OSAStorageScriptType, unicode)
-        self.assertIsInstance(OSAKit.OSAStorageScriptBundleType, unicode)
-        self.assertIsInstance(OSAKit.OSAStorageApplicationType, unicode)
-        self.assertIsInstance(OSAKit.OSAStorageApplicationBundleType, unicode)
-        self.assertIsInstance(OSAKit.OSAStorageTextType, unicode)
+        self.assertIsInstance(OSAKit.OSAScriptErrorMessageKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorBriefMessageKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorNumberKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorPartialResultKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorOffendingObjectKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorExpectedTypeKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorAppAddressKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorAppNameKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorRangeKey, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorMessage, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorNumber, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorAppName, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorBriefMessage, str)
+        self.assertIsInstance(OSAKit.OSAScriptErrorRange, str)
+        self.assertIsInstance(OSAKit.OSAStorageScriptType, str)
+        self.assertIsInstance(OSAKit.OSAStorageScriptBundleType, str)
+        self.assertIsInstance(OSAKit.OSAStorageApplicationType, str)
+        self.assertIsInstance(OSAKit.OSAStorageApplicationBundleType, str)
+        self.assertIsInstance(OSAKit.OSAStorageTextType, str)
 
         self.assertEqual(OSAKit.OSANull, 0x00000000)
         self.assertEqual(OSAKit.OSAPreventGetSource, 0x00000001)
@@ -45,7 +45,7 @@ class TestOSAScript(TestCase):
             OSAKit.OSAScript.initWithCompiledData_fromURL_usingStorageOptions_error_, 3
         )
         self.assertArgIsOut(
-            OSAKit.OSAScript.initWithScriptDataDescriptor_fromURL_languageInstance_usingStorageOptions_error_,
+            OSAKit.OSAScript.initWithScriptDataDescriptor_fromURL_languageInstance_usingStorageOptions_error_,  # noqa: B950
             4,
         )
 
@@ -75,7 +75,3 @@ class TestOSAScript(TestCase):
         self.assertArgIsOut(
             OSAKit.OSAScript.compiledDataForType_usingStorageOptions_error_, 2
         )
-
-
-if __name__ == "__main__":
-    main()

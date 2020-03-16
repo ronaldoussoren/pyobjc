@@ -1,5 +1,5 @@
 import NetFS
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNetFS(TestCase):
@@ -87,7 +87,3 @@ class TestNetFS(TestCase):
     @min_os_level("10.10")
     def testFunctions10_10(self):
         self.assertResultIsCFRetained(NetFS.NetFSCopyURLForRemountingVolume)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import MediaPlayer
 
     class TestMPPlayableContentManagerContext(TestCase):
@@ -17,7 +17,3 @@ if sys.maxsize > 2 ** 32:
             self.assertResultIsBOOL(
                 MediaPlayer.MPPlayableContentManagerContext.endpointAvailable
             )
-
-
-if __name__ == "__main__":
-    main()

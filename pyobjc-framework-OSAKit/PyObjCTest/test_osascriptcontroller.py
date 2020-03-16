@@ -1,5 +1,5 @@
 import OSAKit
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestOSAScriptController(TestCase):
@@ -10,7 +10,3 @@ class TestOSAScriptController(TestCase):
 
     def testMethods(self):
         self.assertResultIsBOOL(OSAKit.OSAScriptController.isCompiling)
-
-
-if __name__ == "__main__":
-    main()

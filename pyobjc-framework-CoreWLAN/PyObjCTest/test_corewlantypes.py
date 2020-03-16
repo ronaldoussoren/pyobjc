@@ -1,6 +1,6 @@
 import CoreWLAN
 import Foundation
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCoreWLANTypes(TestCase):
@@ -149,7 +149,3 @@ class TestCoreWLANTypes(TestCase):
         # Introduced in 10.12
         self.assertEqual(CoreWLAN.CWEventTypeVirtualInterfaceStateChanged, 9)
         self.assertEqual(CoreWLAN.CWEventTypeRangingReportEvent, 10)
-
-
-if __name__ == "__main__":
-    main()

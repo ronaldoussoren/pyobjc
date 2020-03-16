@@ -9,8 +9,8 @@ import sys
 
 import Foundation
 import objc
-import OSLog._OSLog
 from OSLog import _metadata
+from OSLog import _OSLog
 
 sys.modules["OSLog"] = mod = objc.ObjCLazyModule(
     "OSLog",
@@ -24,7 +24,7 @@ sys.modules["OSLog"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_OSLog, Foundation,),
 )
 
 

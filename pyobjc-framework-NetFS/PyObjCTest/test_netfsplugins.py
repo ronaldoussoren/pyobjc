@@ -1,5 +1,5 @@
 import NetFS
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNetFS(TestCase):
@@ -12,7 +12,3 @@ class TestNetFS(TestCase):
         self.assertNotHasAttr(NetFS, "NetFSInterface_Release")
         self.assertNotHasAttr(NetFS, "NetFS_CreateInterface")
         self.assertNotHasAttr(NetFS, "NetFSQueryInterface")
-
-
-if __name__ == "__main__":
-    main()

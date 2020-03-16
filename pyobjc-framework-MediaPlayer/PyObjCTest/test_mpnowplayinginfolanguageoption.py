@@ -1,45 +1,43 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import MediaPlayer
 
     class TestMPNowPlayingInfoLanguageOption(TestCase):
         @min_os_level("10.12")
         def testConstants(self):
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicIsMainProgramContent, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicIsMainProgramContent, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicIsAuxiliaryContent, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicIsAuxiliaryContent, str
             )
             self.assertIsInstance(
                 MediaPlayer.MPLanguageOptionCharacteristicContainsOnlyForcedSubtitles,
-                unicode,
+                str,
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicTranscribesSpokenDialog,
-                unicode,
+                MediaPlayer.MPLanguageOptionCharacteristicTranscribesSpokenDialog, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicDescribesMusicAndSound,
-                unicode,
+                MediaPlayer.MPLanguageOptionCharacteristicDescribesMusicAndSound, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicEasyToRead, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicEasyToRead, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicDescribesVideo, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicDescribesVideo, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicLanguageTranslation, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicLanguageTranslation, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicDubbedTranslation, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicDubbedTranslation, str
             )
             self.assertIsInstance(
-                MediaPlayer.MPLanguageOptionCharacteristicVoiceOverTranslation, unicode
+                MediaPlayer.MPLanguageOptionCharacteristicVoiceOverTranslation, str
             )
 
             self.assertEqual(MediaPlayer.MPNowPlayingInfoLanguageOptionTypeAudible, 0)
@@ -55,13 +53,9 @@ if sys.maxsize > 2 ** 32:
             )
 
             self.assertArgIsBOOL(
-                MediaPlayer.MPNowPlayingInfoLanguageOptionGroup.initWithLanguageOptions_defaultLanguageOption_allowEmptySelection_,
+                MediaPlayer.MPNowPlayingInfoLanguageOptionGroup.initWithLanguageOptions_defaultLanguageOption_allowEmptySelection_,  # noqa: B950
                 2,
             )
             self.assertResultIsBOOL(
                 MediaPlayer.MPNowPlayingInfoLanguageOptionGroup.allowEmptySelection
             )
-
-
-if __name__ == "__main__":
-    main()

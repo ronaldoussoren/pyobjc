@@ -1,9 +1,10 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import MediaPlayer
+    import objc
 
     class TestMPRemoteCommand(TestCase):
         @min_os_level("10.12")
@@ -31,7 +32,3 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsBOOL(MediaPlayer.MPFeedbackCommand.isActive)
             self.assertArgIsBOOL(MediaPlayer.MPFeedbackCommand.setActive_, 0)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,8 +1,8 @@
 import sys
 
-from PyObjCTools.TestSupport import *
 
 if sys.maxsize > 2 ** 32:
+    from PyObjCTools.TestSupport import TestCase, min_os_level
     import MediaPlayer
 
     class TestMPContentItem(TestCase):
@@ -19,7 +19,3 @@ if sys.maxsize > 2 ** 32:
 
             self.assertResultIsBOOL(MediaPlayer.MPContentItem.isExplicitContent)
             self.assertArgIsBOOL(MediaPlayer.MPContentItem.setExplicitContent_, 0)
-
-
-if __name__ == "__main__":
-    main()

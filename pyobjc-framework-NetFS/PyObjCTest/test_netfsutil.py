@@ -1,5 +1,6 @@
 import NetFS
-from PyObjCTools.TestSupport import *
+import objc
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNetFS(TestCase):
@@ -8,7 +9,3 @@ class TestNetFS(TestCase):
             NetFS.NetFSCFStringtoCString, objc._C_PTR + objc._C_CHAR_AS_TEXT
         )
         self.assertResultIsNullTerminated(NetFS.NetFSCFStringtoCString)
-
-
-if __name__ == "__main__":
-    main()

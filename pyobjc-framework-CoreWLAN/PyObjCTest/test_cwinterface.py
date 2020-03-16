@@ -1,5 +1,5 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_between
 
 
 class TestCWInterface(TestCase):
@@ -106,7 +106,3 @@ class TestCWInterface(TestCase):
 
         self.assertResultIsBOOL(CoreWLAN.CWInterface.commitConfiguration_error_)
         self.assertArgIsOut(CoreWLAN.CWInterface.commitConfiguration_error_, 1)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,5 +1,5 @@
 import CoreWLAN
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCW8021XProfile(TestCase):
@@ -20,7 +20,3 @@ class TestCW8021XProfile(TestCase):
 
         self.assertFalse(p1 == 42)
         self.assertTrue(p1 != 42)
-
-
-if __name__ == "__main__":
-    main()
