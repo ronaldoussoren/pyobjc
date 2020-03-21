@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -14,9 +14,9 @@ class TestUseKVOObserver(NSObject):
         return self
 
     def observeValueForKeyPath_ofObject_change_context_(
-        self, path, object, change, context
+        self, path, value, change, context
     ):
-        self.observations.append((path, object))
+        self.observations.append((path, value))
 
 
 class TestUseKVO(TestCase):
@@ -27,25 +27,25 @@ class TestUseKVO(TestCase):
     def tearDown(self):
         objc.options.use_kvo = self._previous
 
-    def areChangesEmitted(self, object):
+    def areChangesEmitted(self, value):
         observer = TestUseKVOObserver.alloc().init()
-        object.addObserver_forKeyPath_options_context_(observer, "value", 0, 0)
+        value.addObserver_forKeyPath_options_context_(observer, "value", 0, 0)
 
         try:
-            object.value = 42
+            value.value = 42
 
         finally:
-            object.removeObserver_forKeyPath_(observer, "value")
+            value.removeObserver_forKeyPath_(observer, "value")
 
         return len(observer.observations) > 0
 
-    def assertChangesEmitted(self, object):
-        if not self.areChangesEmitted(object):
-            self.fail("Setting 'value' on %r doesn't emit KVO" % object)
+    def assertChangesEmitted(self, value):
+        if not self.areChangesEmitted(value):
+            self.fail("Setting 'value' on %r doesn't emit KVO" % value)
 
-    def assertNoChangesEmitted(self, object):
-        if self.areChangesEmitted(object):
-            self.fail("Setting 'value' on %r does emit KVO" % object)
+    def assertNoChangesEmitted(self, value):
+        if self.areChangesEmitted(value):
+            self.fail("Setting 'value' on %r does emit KVO" % value)
 
     def testPythonAttr_True(self):
         objc.options.use_kvo = True

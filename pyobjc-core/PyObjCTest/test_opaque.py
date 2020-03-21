@@ -1,8 +1,6 @@
-import sys
-
 import objc
-from PyObjCTest.opaque import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.opaque import OC_OpaqueTest, BarEncoded, FooEncoded
+from PyObjCTools.TestSupport import TestCase, main
 
 FooHandle = objc.createOpaquePointerType("FooHandle", FooEncoded, "FooHandle doc")
 

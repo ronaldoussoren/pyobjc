@@ -1,7 +1,7 @@
 import sys
 
 from PyObjCTest.voidpointer import OC_TestVoidPointer
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestVoidPointer(TestCase):

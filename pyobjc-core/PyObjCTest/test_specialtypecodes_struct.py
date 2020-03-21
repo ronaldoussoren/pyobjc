@@ -4,11 +4,9 @@ Tests for using special type codes in struct definitions
 TODO:
 * _C_UNICHAR, _C_CHAR_AS_INT, _C_CHAR_AS_TEXT
 """
-import weakref
-
-from PyObjCTest.fnd import NSObject
-from PyObjCTest.specialtypecodes import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
+from PyObjCTools.TestSupport import TestCase, main
+import objc
 
 EmbeddedBoolStruct = objc.createStructType(
     "EmbeddedBoolStruct",

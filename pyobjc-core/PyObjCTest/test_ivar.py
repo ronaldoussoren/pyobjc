@@ -1,8 +1,6 @@
-import sys
-
 import objc
 from PyObjCTest.instanceVariables import ClassWithVariables
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
@@ -55,7 +53,9 @@ class TestInstanceVariables(TestCase):
         # Check that we can set and query attributes of type 'int'
         self.assertEqual(self.object.intVar, 0)
 
-        self.assertRaises(ValueError, lambda x: setattr(self.object, "intVar", x), "h")
+        self.assertRaises(
+            ValueError, lambda x: setattr(self.object, "intVar", x), "h"  # noqa: B010
+        )
 
         self.object.intVar = 42
         self.assertEqual(self.object.intVar, 42)
@@ -66,7 +66,9 @@ class TestInstanceVariables(TestCase):
         # Can't rely on this for doubles...
         # self.assertEqual(self.object.doubleVar, 0.0)
         self.assertRaises(
-            ValueError, lambda x: setattr(self.object, "doubleVar", x), "h"
+            ValueError,
+            lambda x: setattr(self.object, "doubleVar", x),  # noqa: B010
+            "h",
         )
         self.object.doubleVar = 42.0
         self.assertAlmostEqual(self.object.doubleVar, 42.0)
@@ -76,7 +78,7 @@ class TestInstanceVariables(TestCase):
         # they are no longer the value of an attribute
         pool = NSAutoreleasePool.alloc().init()
         self.deleted = 0
-        self.object.idVar = Base(lambda: setattr(self, "deleted", 1))
+        self.object.idVar = Base(lambda: setattr(self, "deleted", 1))  # noqa: B010
         self.object.idVar = None
         del pool
         self.assertEqual(self.deleted, 1)
@@ -87,7 +89,7 @@ class TestInstanceVariables(TestCase):
 
         pool = NSAutoreleasePool.alloc().init()
 
-        self.object.idVar = Base(lambda: setattr(self, "deleted", 1))
+        self.object.idVar = Base(lambda: setattr(self, "deleted", 1))  # noqa: B010
         del self.object
         del pool
         self.assertEqual(self.deleted, 1)
@@ -97,7 +99,9 @@ class TestInstanceVariables(TestCase):
         # they are no longer the value of an attribute
         pool = NSAutoreleasePool.alloc().init()
         self.deleted = 0
-        self.object.idVar = OCBase.alloc().init_(lambda: setattr(self, "deleted", 1))
+        self.object.idVar = OCBase.alloc().init_(
+            lambda: setattr(self, "deleted", 1)  # noqa: B010
+        )
         self.object.idVar = None
         del pool
         self.assertEqual(self.deleted, 1)
@@ -105,7 +109,9 @@ class TestInstanceVariables(TestCase):
     def testOCLeak2(self):
         pool = NSAutoreleasePool.alloc().init()
         self.deleted = 0
-        self.object.idVar = OCBase.alloc().init_(lambda: setattr(self, "deleted", 1))
+        self.object.idVar = OCBase.alloc().init_(
+            lambda: setattr(self, "deleted", 1)  # noqa: B010
+        )
         del self.object
         del pool
         self.assertEqual(self.deleted, 1)
@@ -281,7 +287,10 @@ class TestStructConvenience(TestCase):
         ]:
             with self.subTest(name):
                 self.assertHasAttr(objc.ivar, name)
-                v = getattr(objc.ivar, name)()
+                try:
+                    v = getattr(objc.ivar, name)()
+                except TypeError as exc:
+                    print("XXX", exc, name, getattr(objc.ivar, name))
                 self.assertIsInstance(v, objc.ivar)
                 self.assertEqual(v.__typestr__, typestr)
                 self.assertEqual(v.__name__, None)

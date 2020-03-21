@@ -34,7 +34,7 @@ else:
             "retval": {
                 "already_retained": False,
                 "already_cfretained": False,
-                "type": "q" if sys.maxint > 2 ** 32 else "l",
+                "type": "q" if sys.maxsize > 2 ** 32 else "l",
             },
             "arguments": (
                 {

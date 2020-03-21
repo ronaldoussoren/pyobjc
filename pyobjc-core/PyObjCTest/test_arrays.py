@@ -6,9 +6,9 @@ This tests both calling such methods, as well as implementing methods with such 
 import array
 
 import objc
-from PyObjCTest.arrays import *
+from PyObjCTest.arrays import OC_ArrayTest
 from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestArrayCalling(TestCase):
@@ -113,18 +113,18 @@ class TestArrayCalling(TestCase):
         a = array.array("i", [0] * 8)
         v = o.arrayOf4StructsOut_(a)
         self.assertIs(a, v)
-        l = []
+        lst = []
         for i in range(4):
-            l.append(1 + i * i)
-            l.append(-4 - i * i * i)
-        self.assertEqual(a[0], l[0])
-        self.assertEqual(a[1], l[1])
-        self.assertEqual(a[2], l[2])
-        self.assertEqual(a[3], l[3])
-        self.assertEqual(a[4], l[4])
-        self.assertEqual(a[5], l[5])
-        self.assertEqual(a[6], l[6])
-        self.assertEqual(a[7], l[7])
+            lst.append(1 + i * i)
+            lst.append(-4 - i * i * i)
+        self.assertEqual(a[0], lst[0])
+        self.assertEqual(a[1], lst[1])
+        self.assertEqual(a[2], lst[2])
+        self.assertEqual(a[3], lst[3])
+        self.assertEqual(a[4], lst[4])
+        self.assertEqual(a[5], lst[5])
+        self.assertEqual(a[6], lst[6])
+        self.assertEqual(a[7], lst[7])
 
 
 StructArrayDelegate = objc.informal_protocol(

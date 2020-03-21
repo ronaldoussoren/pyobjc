@@ -4,7 +4,8 @@ import datetime
 import sys
 
 from PyObjCTest.classes import OCTestClasses
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
+import objc
 
 
 class TestBridgedClasses(TestCase):
@@ -116,7 +117,7 @@ class TestBridgedClasses(TestCase):
         self.assertEqual(cls.__name__, "OC_BuiltinPythonNumber")
 
     def test_integer_subclass(self):
-        class I(int):
+        class I(int):  # noqa: E742
             pass
 
         value = I()
@@ -174,7 +175,7 @@ class TestBridgedClasses(TestCase):
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonObject")
 
-        class O(object):
+        class O(object):  # noqa: E742
             pass
 
         value = O()

@@ -31,8 +31,8 @@ class RemoteConsole(InteractiveConsole):
             __builtin__._ = value
         return self.pipe.expect("RemoteConsole.displayhook", value)
 
-    def excepthook(self, type, value, traceback):
-        return self.pipe.expect("RemoteConsole.excepthook", type, value, traceback)
+    def excepthook(self, exc_type, value, traceback):
+        return self.pipe.expect("RemoteConsole.excepthook", exc_type, value, traceback)
 
     def runcode(self, code):
         try:

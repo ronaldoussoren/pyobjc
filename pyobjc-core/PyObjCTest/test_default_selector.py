@@ -1,5 +1,5 @@
 from objc import selector
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestDefaultSelectors(TestCase):

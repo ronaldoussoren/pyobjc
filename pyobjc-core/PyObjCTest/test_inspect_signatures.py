@@ -2,7 +2,7 @@ import inspect
 import types
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, min_python_release
 
 
 class TestInspectSignatures(TestCase):

@@ -3,11 +3,11 @@ Testcases for NSArchive-ing python objects.
 
 (Implementation is incomplete)
 """
-import os
 import pickle
 import sys
 import test.pickletester
 
+import objc
 import objc._pycoder as pycoder
 from PyObjCTest.fnd import (
     NSArchiver,
@@ -23,7 +23,15 @@ from PyObjCTest.fnd import (
     NSString,
     NSUnarchiver,
 )
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import (
+    TestCase,
+    main,
+    onlyIf,
+    expectedFailure,
+    expectedFailureIf,
+    os_level_key,
+    os_release,
+)
 
 import copyreg
 
@@ -95,9 +103,10 @@ class reduce_global(object):
 
 reduce_global = reduce_global()
 
-# Quick hack to add a proper __repr__ to class C in
-# pickletester, makes it a lot easier to debug.
+
 def C__repr__(self):
+    # Quick hack to add a proper __repr__ to class C in
+    # pickletester, makes it a lot easier to debug.
     return "<%s instance at %#x: %r>" % (
         self.__class__.__name__,
         id(self),
@@ -267,7 +276,7 @@ class TestKeyedArchiveSimple(TestCase):
                 archiver.finishEncoding()
 
         finally:
-            mystr = orig
+            mystr = orig  # noqa: F841
 
         try:
             copyreg.add_extension(
@@ -304,7 +313,6 @@ class TestKeyedArchiveSimple(TestCase):
             )
 
         finally:
-            mystr = orig
             try:
                 copyreg.remove_extension(
                     a_newstyle_class.__module__, a_newstyle_class.__name__, 42
@@ -706,7 +714,7 @@ class TestKeyedArchiveSimple(TestCase):
         import pickle
 
         b = pickle.dumps(o)
-        o2 = pickle.loads(b)
+        pickle.loads(b)
 
         buf = self.archiverClass.archivedDataWithRootObject_(o)
         self.assertIsInstance(buf, NSData)
@@ -725,13 +733,13 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertEqual(o.value, 42)
 
     def testRecusiveNesting(self):
-        l = []
-        d = {1: l}
+        lst = []
+        d = {1: lst}
         i = a_classic_class()
         i.attr = d
-        l.append(i)
+        lst.append(i)
 
-        buf = self.archiverClass.archivedDataWithRootObject_(l)
+        buf = self.archiverClass.archivedDataWithRootObject_(lst)
         self.assertIsInstance(buf, NSData)
         v = self.unarchiverClass.unarchiveObjectWithData_(buf)
 
@@ -1387,9 +1395,9 @@ class TestKeyedArchiveMixedGraphs(TestCase):
         o1 = a_classic_class()
         o2 = a_newstyle_class()
         o2.lst = NSArray.arrayWithObject_(o1)
-        l = NSArray.arrayWithArray_([o1, o2, [o1, o2]])
+        lst = NSArray.arrayWithArray_([o1, o2, [o1, o2]])
 
-        buf = self.dumps(l)
+        buf = self.dumps(lst)
         self.assertIsInstance(buf, NSData)
 
         out = self.loads(buf)
@@ -1537,17 +1545,7 @@ class TestArchiveNative(TestCase):
         self.assertIsInstance(b, only_getstate)
         self.assertEqual(
             b.__dict__,
-            {
-                #'_slots': None,
-                #'_kwds': None,
-                "a": 42,
-                "b": 9,
-                "c": 4,
-                "d": 7,
-                42: "b",
-                "nsstr": "xx",
-                "otherstr": "b",
-            },
+            {"a": 42, "b": 9, "c": 4, "d": 7, 42: "b", "nsstr": "xx", "otherstr": "b"},
         )
         for k in b.__dict__:
             self.assertNotIsInstance(k, objc.pyobjc_unicode)

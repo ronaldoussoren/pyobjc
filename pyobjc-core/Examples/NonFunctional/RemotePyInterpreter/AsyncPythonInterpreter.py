@@ -166,8 +166,8 @@ class AsyncPythonInterpreter(NSObject):
             self.close()
             NSLog("Error: %@", ui.objectForKey_(NSFileHandleError))
             return
-        bytes = newData.bytes()[:]
-        if len(bytes) == 0:
+        data_bytes = newData.bytes()[:]
+        if len(data_bytes) == 0:
             self.close()
             return
         self.remoteFileHandle.readInBackgroundAndNotify()
@@ -187,11 +187,11 @@ class AsyncPythonInterpreter(NSObject):
         for line in lines:
             self.commandReactor.lineReceived_fromConnection_(line, self)
 
-    def writeBytes_(self, bytes):
-        # NSLog(u'Writing bytes: %s' bytes)
+    def writeBytes_(self, data):
+        # NSLog(u'Writing bytes: %s', data)
         try:
             self.remoteFileHandle.writeData_(
-                NSData.dataWithBytes_length_(bytes, len(bytes))
+                NSData.dataWithBytes_length_(data, len(data))
             )
         except objc.error:
             self.close()

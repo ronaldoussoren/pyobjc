@@ -1,7 +1,7 @@
 import warnings
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestCompatFunctions(TestCase):

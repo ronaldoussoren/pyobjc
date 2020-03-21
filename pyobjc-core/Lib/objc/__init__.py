@@ -77,5 +77,5 @@ class autorelease_pool(object):
     def __enter__(self):
         self._pool = _NSAutoreleasePool.alloc().init()
 
-    def __exit__(self, type, value, tp):
+    def __exit__(self, exc_type, value, tp):
         del self._pool

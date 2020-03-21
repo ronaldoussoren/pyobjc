@@ -4,13 +4,21 @@ import unittest
 
 import objc
 from PyObjCTools import TestSupport
-from PyObjCTools.TestSupport import *
-
-try:
-    from StringIO import StringIO
-
-except ImportError:
-    from io import StringIO
+from PyObjCTools.TestSupport import (
+    TestCase,
+    main,
+    sdkForPython,
+    os_release,
+    onlyIf,
+    onlyPython2,
+    onlyPython3,
+    max_os_level,
+    is32Bit,
+    onlyOn32Bit,
+    onlyOn64Bit,
+    min_os_level,
+    fourcc,
+)
 
 
 class Method(object):
@@ -73,7 +81,7 @@ class TestTestSupport(TestCase):
 
             cache[:] = []
 
-            config_result = "-dynamic -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch x86_64"
+            config_result = "-dynamic -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.4u.sdk -arch i386 -arch x86_64"  # noqa: B950
             self.assertEqual(sdkForPython(), (10, 4))
             self.assertEqual(cache, [(10, 4)])
             self.assertEqual(sdkForPython(), (10, 4))
@@ -81,7 +89,7 @@ class TestTestSupport(TestCase):
 
             cache[:] = []
 
-            config_result = "-dynamic -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -arch i386 -arch x86_64"
+            config_result = "-dynamic -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk -arch i386 -arch x86_64"  # noqa: B950
             self.assertEqual(sdkForPython(), (10, 10))
             self.assertEqual(cache, [(10, 10)])
             self.assertEqual(sdkForPython(), (10, 10))
@@ -340,7 +348,7 @@ class TestTestSupport(TestCase):
         self.assertRaises(self.failureException, self.assertIsInstance, 42, str)
 
     def test_assert_cftype(self):
-        self.assertRaises(self.failureException, self.assertIsCFType, long)
+        self.assertRaises(self.failureException, self.assertIsCFType, int)
         self.assertRaises(
             self.failureException, self.assertIsCFType, objc.lookUpClass("NSCFType")
         )
@@ -1403,6 +1411,7 @@ class TestTestSupport(TestCase):
 
         allocs = [0]
         NSObject = objc.lookUpClass("NSObject")
+        self.assertIsNot(NSObject, None)
 
         class PoolClass(object):
             def init(self):

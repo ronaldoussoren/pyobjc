@@ -4,8 +4,8 @@ Check if we manage retainCounts correctly.
 import gc
 
 import objc
-from PyObjCTest.fnd import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.fnd import NSAutoreleasePool, NSMutableArray, NSObject
+from PyObjCTools.TestSupport import TestCase, main
 
 LeaksDel = 0
 

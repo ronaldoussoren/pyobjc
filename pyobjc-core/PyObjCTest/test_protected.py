@@ -1,5 +1,5 @@
-from PyObjCTest.protected import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.protected import PyObjCTest_Protected
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestProtected(TestCase):
@@ -10,4 +10,4 @@ class TestProtected(TestCase):
 
 
 if __name__ == "__main__":
-    PyObjCTest.main()
+    main()

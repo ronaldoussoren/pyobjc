@@ -17,7 +17,7 @@ import operator
 from test import mapping_tests
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSDictionary = objc.lookUpClass("NSDictionary")
 NSMutableDictionary = objc.lookUpClass("NSMutableDictionary")
@@ -568,7 +568,7 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
                         b[repr(i)] = i
                 if copymode > 0:
                     b = a.mutableCopy()
-                for i in range(size):
+                for _ in range(size):
                     ka, va = ta = a.popitem()
                     self.assertEqual(va, int(ka))
                     kb, vb = tb = b.popitem()
@@ -806,7 +806,7 @@ class TestPyObjCDict(TestCase):
             self.assertEqual(v["b"], "world")
 
     def test_values(self):
-        py = dict(a=4, b=3)
+        py = {"a": 4, "b": 3}
         oc = NSDictionary(a=4, b=3)
 
         self.assertIn(4, py.values())

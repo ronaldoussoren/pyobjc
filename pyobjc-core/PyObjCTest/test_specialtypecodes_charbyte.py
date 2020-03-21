@@ -8,143 +8,142 @@ while at the same time getting a higher fidelity bridge.
 - Add tests for calling methods from ObjC
 """
 import array
-import sys
-import weakref
 
+from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
+from PyObjCTools.TestSupport import TestCase, main
 import objc
-from PyObjCTest.fnd import NSObject
-from PyObjCTest.specialtypecodes import *
-from PyObjCTools.TestSupport import *
 
 
 def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteValue",
-        dict(retval=dict(type=objc._C_CHAR_AS_TEXT)),
+        {"retval": {"type": objc._C_CHAR_AS_TEXT}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArray",
-        dict(
-            retval=dict(
-                type=objc._C_PTR + objc._C_CHAR_AS_TEXT, c_array_of_fixed_length=4
-            )
-        ),
+        {
+            "retval": {
+                "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                "c_array_of_fixed_length": 4,
+            }
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteString",
-        dict(
-            retval=dict(
-                type=objc._C_PTR + objc._C_CHAR_AS_TEXT, c_array_delimited_by_null=True
-            )
-        ),
+        {
+            "retval": {
+                "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                "c_array_delimited_by_null": True,
+            }
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteStringArg:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_CHAR_AS_TEXT,
-                    c_array_delimited_by_null=True,
-                    type_modifier=objc._C_IN,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                    "c_array_delimited_by_null": True,
+                    "type_modifier": objc._C_IN,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArg:andbyteArg:",
-        dict(
-            arguments={
-                2: dict(type=objc._C_CHAR_AS_TEXT),
-                3: dict(type=objc._C_CHAR_AS_TEXT),
+        {
+            "arguments": {
+                2: {"type": objc._C_CHAR_AS_TEXT},
+                3: {"type": objc._C_CHAR_AS_TEXT},
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArrayOf4In:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_CHAR_AS_TEXT,
-                    type_modifier=objc._C_IN,
-                    c_array_of_fixed_length=4,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 4,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArrayOf4Out:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_CHAR_AS_TEXT,
-                    type_modifier=objc._C_OUT,
-                    c_array_of_fixed_length=4,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArrayOf4InOut:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_CHAR_AS_TEXT,
-                    type_modifier=objc._C_INOUT,
-                    c_array_of_fixed_length=4,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_of_fixed_length": 4,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArrayOfCount:In:",
-        dict(
-            arguments={
-                3: dict(
-                    type=objc._C_PTR + objc._C_CHAR_AS_TEXT,
-                    type_modifier=objc._C_IN,
-                    c_array_of_lenght_in_arg=2,
-                )
+        {
+            "arguments": {
+                3: {
+                    "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_lenght_in_arg": 2,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArrayOfCount:Out:",
-        dict(
-            arguments={
-                3: dict(
-                    type=objc._C_PTR + objc._C_CHAR_AS_TEXT,
-                    type_modifier=objc._C_OUT,
-                    c_array_of_lenght_in_arg=2,
-                )
+        {
+            "arguments": {
+                3: {
+                    "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_lenght_in_arg": 2,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"byteArrayOfCount:InOut:",
-        dict(
-            arguments={
-                3: dict(
-                    type=objc._C_PTR + objc._C_CHAR_AS_TEXT,
-                    type_modifier=objc._C_INOUT,
-                    c_array_of_lenght_in_arg=2,
-                )
+        {
+            "arguments": {
+                3: {
+                    "type": objc._C_PTR + objc._C_CHAR_AS_TEXT,
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_of_lenght_in_arg": 2,
+                }
             }
-        ),
+        },
     )
 
 

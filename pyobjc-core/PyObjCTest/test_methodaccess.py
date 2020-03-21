@@ -1,7 +1,5 @@
-import sys
-
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 # _NSZombie = objc.lookUpClass('_NSZombie')
@@ -32,14 +30,6 @@ class MethodAccessTest(TestCase):
             AttributeError, getattr, NSProxy.pyobjc_classMethods, "foobar"
         )
         self.assertRaises(AttributeError, getattr, NSProxy, "foobar")
-
-    #
-    #    if sys.platform == 'darwin':
-    #        def testNSZombie(self):
-    #            self.assertRaises(AttributeError, getattr, _NSZombie.pyobjc_instanceMethods, "foobar")
-    #            self.assertRaises(AttributeError, getattr, _NSZombie.pyobjc_classMethods, "foobar")
-    #            self.assertRaises(AttributeError, getattr, _NSZombie, "foobar")
-    #
 
     def testDir(self):
         o = NSObject.new()

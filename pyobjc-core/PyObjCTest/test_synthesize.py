@@ -3,7 +3,7 @@ Tests for objc.synthesize
 """
 import objc
 from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestSynthesizeCopier(NSObject):

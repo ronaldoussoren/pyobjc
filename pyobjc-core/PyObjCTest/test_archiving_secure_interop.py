@@ -10,12 +10,10 @@
 import os
 import platform
 import subprocess
-import sys
 import tempfile
-from distutils.sysconfig import get_config_var
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 from plistlib import loads
 
@@ -32,12 +30,12 @@ NSSet = objc.lookUpClass("NSSet")
 objc.registerMetaDataForSelector(
     b"NSKeyedArchiver",
     b"archivedDataWithRootObject:requiringSecureCoding:error:",
-    dict(
-        arguments={
-            2 + 1: dict(type=objc._C_NSBOOL),
-            2 + 2: dict(type_modifier=objc._C_OUT),
+    {
+        "arguments": {
+            2 + 1: {"type": objc._C_NSBOOL},
+            2 + 2: {"type_modifier": objc._C_OUT},
         }
-    ),
+    },
 )
 
 
@@ -147,9 +145,6 @@ class TestNSKeyedArchivingInterop(TestCase):
 
     def test_interop_data(self):
         for testval in (b"hello world",):
-            if sys.version_info[0] == 2:
-                testval = buffer(testval)
-
             v = NSArray.arrayWithObject_(testval)
             (
                 data,
@@ -215,7 +210,7 @@ class TestNSKeyedArchivingInterop(TestCase):
             self.assertTrue(converted.startswith(b"{("))
             self.assertTrue(converted.endswith(b")}\n"))
             converted = b"{" + converted[2:-3] + b"}"
-            converted = eval(converted.decode("utf-8"), dict(a="a", b="b"))
+            converted = eval(converted.decode("utf-8"), {"a": "a", "b": "b"})
 
             self.assertEqual(converted, set(testval))
 

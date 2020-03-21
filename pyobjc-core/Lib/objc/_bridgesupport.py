@@ -588,7 +588,7 @@ _libraries = []
 
 
 def parseBridgeSupport(
-    xmldata, globals, frameworkName, dylib_path=None, inlineTab=None
+    xmldata, globals, frameworkName, dylib_path=None, inlineTab=None  # noqa: A002
 ):
 
     if dylib_path:
@@ -644,7 +644,7 @@ def parseBridgeSupport(
         objc._updatingMetadata(False)
 
 
-def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):
+def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):  # noqa: A002
     try:
         objc.parseBridgeSupport(data, globals, frameworkName, *args, **kwds)
     except objc.internal_error as e:
@@ -669,7 +669,7 @@ def initFrameworkWrapper(
     frameworkName,
     frameworkPath,
     frameworkIdentifier,
-    globals,
+    globals,  # noqa: A002
     inlineTab=None,
     scan_classes=None,
     frameworkResourceName=None,

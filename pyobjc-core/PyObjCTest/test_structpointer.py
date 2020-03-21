@@ -1,7 +1,7 @@
 import objc
-from PyObjCTest.structpointer1 import *
-from PyObjCTest.structpointer2 import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.structpointer1 import OC_TestStructPointer
+from PyObjCTest.structpointer2 import FooEncoded
+from PyObjCTools.TestSupport import TestCase, main
 
 TestStructPointerStructPtr = objc.createOpaquePointerType(
     "TestStructPointerStructPtr", FooEncoded

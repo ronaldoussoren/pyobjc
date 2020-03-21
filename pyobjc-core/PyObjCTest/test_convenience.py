@@ -3,8 +3,8 @@ import sys
 
 import objc
 import objc._convenience as convenience
-from PyObjCTest.sequence import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.sequence import OC_TestSequence, OC_TestMutableSequence
+from PyObjCTools.TestSupport import TestCase, main
 
 objc.addConvenienceForBasicSequence("OC_TestSequence", False)
 objc.addConvenienceForBasicSequence("OC_TestMutableSequence", True)
@@ -19,7 +19,7 @@ class OC_WithHash(objc.lookUpClass("NSObject")):
         self._hash = value
         return self
 
-    def hash(self):
+    def hash(self):  # noqa: A003
         return self._hash
 
     def someKey(self):
@@ -356,7 +356,7 @@ class TestNSData(TestCase):
     def writing(self):
         NSData = objc.lookUpClass("NSMutableData")
         bdata = b"hello"
-        data = NSData(bdata)
+        bdata = NSData(bdata)
         barray = bytearray(bdata)
 
         bdata[0] = b"x"[0]
@@ -410,7 +410,7 @@ class TestNSString(TestCase):
         self.assertEqual(value, "")
         self.assertIsInstance(value.nsstring(), NSString)
 
-    def test_nsstring_creation(self):
+    def test_nsstring_creation2(self):
         NSMutableString = objc.lookUpClass("NSMutableString")
 
         value = NSMutableString("hello world")

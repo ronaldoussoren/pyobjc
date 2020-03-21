@@ -1,13 +1,15 @@
 import functools
 import sys
+import gc
 import warnings
 
 import objc
-from PyObjCTest import copying, structargs, testbndl
+from PyObjCTest import copying, structargs
+from PyObjCTest import testbndl  # noqa: F401
 from PyObjCTest.fnd import NSAutoreleasePool, NSObject
 from PyObjCTest.testbndl import OC_TestClass1
 from PyObjCTest.properties import OCPropertyDefinitions
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
@@ -70,8 +72,6 @@ class TestRegressions(TestCase):
 
         # Check that we generate a warning for unitialized objects that
         # get deallocated
-        import sys
-        import gc
 
         with warnings.catch_warnings(record=True) as w:
             warnings.filterwarnings("always")
@@ -114,10 +114,10 @@ class TestRegressions(TestCase):
             def f(cls):
                 pass
 
-        object = NSObject.alloc().init()
+        anObject = NSObject.alloc().init()
 
-        self.assertRaises(TypeError, object.description, None)
-        self.assertRaises(TypeError, object.description, "twelf")
+        self.assertRaises(TypeError, anObject.description, None)
+        self.assertRaises(TypeError, anObject.description, "twelf")
         self.assertRaises(TypeError, NSObject.description, None)
         self.assertRaises(TypeError, ClsIsNone.f, None)
 
@@ -158,9 +158,9 @@ class TestRegressions(TestCase):
             def initialize(cls):
                 calls.append(repr(cls))
 
-        o = InitializeTestClass.new()
+        InitializeTestClass.new()
         self.assertEqual(len(calls), 1)
-        o = InitializeTestClass.new()
+        InitializeTestClass.new()
         self.assertEqual(len(calls), 1)
 
     def testStructReturnPy(self):
@@ -344,7 +344,8 @@ class TestNSDataCreationIssue(TestCase):
 
         cls.alloc().initWithData_(b"hello")
 
-class TestTypedefedClass (TestCase):
+
+class TestTypedefedClass(TestCase):
     # Issue #298, see description in Modules/objc/module.m
     def test_typedefed(self):
         v = OC_TestClass1.alloc().init()

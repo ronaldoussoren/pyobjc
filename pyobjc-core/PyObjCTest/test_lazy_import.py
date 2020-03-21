@@ -6,7 +6,7 @@ import sys
 import objc
 import objc._lazyimport as lazyimport
 from PyObjCTest import metadatafunction
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 if sys.maxsize > 2 ** 32:
 
@@ -70,12 +70,12 @@ class TestLazyImport(TestCase):
         self.assertTrue(o.isLoaded())
 
     def test_all_types_without_all(self):
-        self.do_test_all_types(all=False)
+        self.do_test_all_types(dunder_all=False)
 
     def test_all_types_with_all(self):
-        self.do_test_all_types(all=True)
+        self.do_test_all_types(dunder_all=True)
 
-    def do_test_all_types(self, all):
+    def do_test_all_types(self, dunder_all):
         metadict = {
             "nometadata": 42,  # Ignored...
             "protocols": {
@@ -143,7 +143,7 @@ class TestLazyImport(TestCase):
         self.assertRaises(AttributeError, getattr, mod, "Foo)")
         self.assertRaises(AttributeError, getattr, mod, "42")
 
-        if all:
+        if dunder_all:
             # Force precalculation of all attributes by accessing the __all__
             # attribute
             self.assertEqual(set(dir(mod)), set(mod.__all__))
@@ -343,25 +343,25 @@ class TestLazyImport(TestCase):
                 "makeArrayWithFormat_": (
                     b"@@",
                     "",
-                    dict(variadic=True, arguments={0: dict(printf_format=True)}),
+                    {"variadic": True, "arguments": {0: {"printf_format": True}}},
                 ),
                 "makeArrayWithCFormat_": (
                     b"@*",
                     "",
-                    dict(variadic=True, arguments={0: dict(printf_format=True)}),
+                    {"variadic": True, "arguments": {0: {"printf_format": True}}},
                 ),
                 "make4Tuple_": (
                     b"@^d",
                     "",
-                    dict(
-                        arguments={
-                            0: dict(
-                                type_modifier=objc._C_IN,
-                                c_array_of_fixed_length=4,
-                                null_accepted=False,
-                            )
+                    {
+                        "arguments": {
+                            0: {
+                                "type_modifier": objc._C_IN,
+                                "c_array_of_fixed_length": 4,
+                                "null_accepted": False,
+                            }
                         }
-                    ),
+                    },
                 ),
                 "NoSuchFunction": (b"@d", "", {}),
             }
@@ -406,7 +406,7 @@ class TestLazyImport(TestCase):
                 "CFAllocatorGetTypeID": (objc._C_NSUInteger, ""),
                 "CFArrayGetTypeID": (objc._C_NSUInteger, ""),
             },
-            "constants": "$kCFAllocatorDefault@=^{__CFAllocator=}$kCFAllocatorMalloc@=^{__CFAllocator=}$kCFAllocatorMissing@=^{__CFAllocator=}$",
+            "constants": "$kCFAllocatorDefault@=^{__CFAllocator=}$kCFAllocatorMalloc@=^{__CFAllocator=}$kCFAllocatorMissing@=^{__CFAllocator=}$",  # noqa: B950
             "constants_dict": {
                 "kCFAllocatorSystemDefault": "=^{__CFAllocator=}",
                 "kCFAllocatorMallocZone": "=^{__CFAllocator=}",

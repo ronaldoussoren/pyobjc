@@ -23,7 +23,7 @@ class object_lock(object):
     def __enter__(self):
         _objc._objc_sync_enter(self.__value)
 
-    def __exit__(self, type, value, tp):
+    def __exit__(self, exc_type, value, tp):
         _objc._objc_sync_exit(self.__value)
 
     def lock(self):

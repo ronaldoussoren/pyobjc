@@ -2,7 +2,7 @@ import sys
 import warnings
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 # try:
 #    from  Foundation import NSRange
@@ -161,7 +161,7 @@ class TestBasicDescriptors(TestCase):
             return ["sour", "sweet"]
 
         @objc.accessor
-        def getFlavors_range_(self, buffer, range):
+        def getFlavors_range_(self, bfr, rng):
             return ["sour", "sweet"]
 
         self.assertIsInstance(countOfFlavors, objc.selector)
@@ -362,7 +362,7 @@ class TestBasicDescriptors(TestCase):
             return ["sour", "sweet"]
 
         @objc.typedAccessor(mytype)
-        def getFlavors_range_(self, buffer, range):
+        def getFlavors_range_(self, bfr, rng):
             return ["sour", "sweet"]
 
         self.assertIsInstance(countOfFlavors, objc.selector)
@@ -524,7 +524,7 @@ class TestBasicDescriptors(TestCase):
                 return ["sour", "sweet"]
 
             @objc.Accessor
-            def getFlavors_range_(self, buffer, range):
+            def getFlavors_range_(self, buffer, rng):
                 return ["sour", "sweet"]
 
             self.assertIsInstance(countOfFlavors, objc.selector)

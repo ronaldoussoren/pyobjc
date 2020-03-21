@@ -49,24 +49,24 @@ class _CategoryMeta(type):
         if c.__name__ != name:
             raise TypeError("Category name must be same as class name")
 
-        m = [
+        callables = [
             x[1]
             for x in methods.items()
             if x[0] not in cls._IGNORENAMES
             and isinstance(x[1], (FunctionType, MethodType, selector, classmethod))
         ]
-        vars = [
+        variables = [
             x
             for x in methods.items()
             if x[0] not in cls._IGNORENAMES
             and not isinstance(x[1], (FunctionType, MethodType, selector, classmethod))
         ]
-        for _k, v in vars:
+        for _k, v in variables:
             if isinstance(v, ivar):
                 raise TypeError("Cannot add instance variables in a Category")
 
-        classAddMethods(c, m)
-        for k, v in vars:
+        classAddMethods(c, callables)
+        for k, v in variables:
             setattr(c, k, v)
         return c
 

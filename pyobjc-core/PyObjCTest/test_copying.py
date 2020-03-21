@@ -2,7 +2,7 @@ import copy
 
 import objc
 from PyObjCTest.copying import OC_CopyBase, OC_CopyHelper
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")

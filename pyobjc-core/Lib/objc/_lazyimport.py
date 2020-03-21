@@ -465,7 +465,7 @@ class ObjCLazyModule(ModuleType):
         if not cftypes:
             return
 
-        for name, type, gettypeid_func, tollfree in cftypes:
+        for name, typestr, gettypeid_func, tollfree in cftypes:
             if tollfree:
                 for nm in tollfree.split(","):  # pragma: no branch
                     try:
@@ -476,7 +476,7 @@ class ObjCLazyModule(ModuleType):
                         tollfree = nm
                         break
                 try:
-                    v = objc.registerCFSignature(name, type, None, tollfree)
+                    v = objc.registerCFSignature(name, typestr, None, tollfree)
                     self.__dict__[name] = v
                     continue
                 except objc.nosuchclass_error:
@@ -497,10 +497,10 @@ class ObjCLazyModule(ModuleType):
                 # platform, or a CFType without a public GetTypeID
                 # function. Proxy using the generic CFType
                 if tollfree is None:
-                    v = objc.registerCFSignature(name, type, None, "NSCFType")
+                    v = objc.registerCFSignature(name, typestr, None, "NSCFType")
                     self.__dict__[name] = v
 
                 continue
 
-            v = objc.registerCFSignature(name, type, func())
+            v = objc.registerCFSignature(name, typestr, func())
             self.__dict__[name] = v

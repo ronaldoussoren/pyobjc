@@ -25,7 +25,7 @@ __unittest = False
 # Have a way to disable the autorelease pool behaviour
 _usepool = not _os.environ.get("PYOBJC_NO_AUTORELEASE")
 
-# Python 2/3 Compatibility for the PyObjC Test Suite
+# XXX: Python 2 Compatibility for the PyObjC Test Suite
 try:
     unicode
 except NameError:
@@ -40,11 +40,6 @@ try:
     basestring
 except NameError:
     basestring = str
-
-try:
-    bytes
-except NameError:
-    bytes = str
 
 try:
     unichr
@@ -622,11 +617,11 @@ class TestCase(_unittest.TestCase):
 
     def assertResultHasType(self, method, tp, message=None):
         info = method.__metadata__()
-        type = info.get("retval").get("type", b"v")
+        typestr = info.get("retval").get("type", b"v")
         if (
-            type != tp
-            and _typemap(type) != _typemap(tp)
-            and _typealias.get(type, type) != _typealias.get(tp, tp)
+            typestr != tp
+            and _typemap(typestr) != _typemap(tp)
+            and _typealias.get(typestr, typestr) != _typealias.get(tp, tp)
         ):
             self.fail(
                 message or "result of %r is not of type %r, but %r" % (method, tp, type)
@@ -648,12 +643,12 @@ class TestCase(_unittest.TestCase):
             )
 
         else:
-            type = i.get("type", b"@")
+            typestr = i.get("type", b"@")
 
         if (
-            type != tp
-            and _typemap(type) != _typemap(tp)
-            and _typealias.get(type, type) != _typealias.get(tp, tp)
+            typestr != tp
+            and _typemap(typestr) != _typemap(tp)
+            and _typealias.get(typestr, typestr) != _typealias.get(tp, tp)
         ):
             self.fail(
                 message
@@ -676,9 +671,9 @@ class TestCase(_unittest.TestCase):
             )
 
         else:
-            type = i.get("type", b"@")
+            typestr = i.get("type", b"@")
 
-        if type != b"^?":
+        if typestr != b"^?":
             self.fail(
                 message
                 or "arg %d of %s is not of type function_pointer" % (argno, method)
@@ -728,9 +723,9 @@ class TestCase(_unittest.TestCase):
             )
 
         else:
-            type = i.get("type", b"@")
+            typestr = i.get("type", b"@")
 
-        if type != b"^?":
+        if typestr != b"^?":
             self.fail(
                 message or "result of %s is not of type function_pointer" % (method,)
             )
@@ -766,14 +761,14 @@ class TestCase(_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         try:
-            type = info["arguments"][argno + offset]["type"]
+            typestr = info["arguments"][argno + offset]["type"]
         except (IndexError, KeyError):
             self.fail("arg %d of %s does not exist" % (argno, method))
 
-        if type != b"@?":
+        if typestr != b"@?":
             self.fail(
                 message
-                or "arg %d of %s is not of type block: %s" % (argno, method, type)
+                or "arg %d of %s is not of type block: %s" % (argno, method, typestr)
             )
 
         st = info["arguments"][argno + offset].get("callable")
@@ -811,10 +806,11 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
 
         try:
-            type = info["retval"]["type"]
-            if type != b"@?":
+            typestr = info["retval"]["type"]
+            if typestr != b"@?":
                 self.fail(
-                    message or "result of %s is not of type block: %s" % (method, type)
+                    message
+                    or "result of %s is not of type block: %s" % (method, typestr)
                 )
         except KeyError:
             self.fail(
@@ -858,13 +854,12 @@ class TestCase(_unittest.TestCase):
             i = info["retval"]
         except (KeyError, IndexError):
             self.fail(
-                message
-                or "result of %s has no metadata (or doesn't exist)" % (method, )
+                message or "result of %s has no metadata (or doesn't exist)" % (method,)
             )
 
-        type = i.get("type", b"@")
-        if type != objc._C_SEL:
-            self.fail(message or "result of %s is not of type SEL" % (method, ))
+        typestr = i.get("type", b"@")
+        if typestr != objc._C_SEL:
+            self.fail(message or "result of %s is not of type SEL" % (method,))
 
         st = i.get("sel_of_type")
         if st != sel_type and _typemap(st) != _typemap(sel_type):
@@ -888,8 +883,8 @@ class TestCase(_unittest.TestCase):
                 or "arg %d of %s has no metadata (or doesn't exist)" % (argno, method)
             )
 
-        type = i.get("type", b"@")
-        if type != objc._C_SEL:
+        typestr = i.get("type", b"@")
+        if typestr != objc._C_SEL:
             self.fail(message or "arg %d of %s is not of type SEL" % (argno, method))
 
         st = i.get("sel_of_type")
@@ -902,10 +897,11 @@ class TestCase(_unittest.TestCase):
 
     def assertResultIsBOOL(self, method, message=None):
         info = method.__metadata__()
-        type = info["retval"]["type"]
-        if type != objc._C_NSBOOL:
+        typestr = info["retval"]["type"]
+        if typestr != objc._C_NSBOOL:
             self.fail(
-                message or "result of %s is not of type BOOL, but %r" % (method, type)
+                message
+                or "result of %s is not of type BOOL, but %r" % (method, typestr)
             )
 
     def assertArgIsBOOL(self, method, argno, message=None):
@@ -914,11 +910,11 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
-        type = info["arguments"][argno + offset]["type"]
-        if type != objc._C_NSBOOL:
+        typestr = info["arguments"][argno + offset]["type"]
+        if typestr != objc._C_NSBOOL:
             self.fail(
                 message
-                or "arg %d of %s is not of type BOOL, but %r" % (argno, method, type)
+                or "arg %d of %s is not of type BOOL, but %r" % (argno, method, typestr)
             )
 
     def assertArgIsFixedSize(self, method, argno, count, message=None):
@@ -1002,8 +998,8 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
-        type = info["arguments"][argno + offset]["type"]
-        if not type.startswith(b"o^") and not type.startswith(b"o*"):
+        typestr = info["arguments"][argno + offset]["type"]
+        if not typestr.startswith(b"o^") and not typestr.startswith(b"o*"):
             self.fail(
                 message or "arg %d of %s is not an 'out' argument" % (argno, method)
             )
@@ -1014,8 +1010,8 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
-        type = info["arguments"][argno + offset]["type"]
-        if not type.startswith(b"N^") and not type.startswith(b"N*"):
+        typestr = info["arguments"][argno + offset]["type"]
+        if not typestr.startswith(b"N^") and not typestr.startswith(b"N*"):
             self.fail(
                 message or "arg %d of %s is not an 'inout' argument" % (argno, method)
             )
@@ -1026,8 +1022,8 @@ class TestCase(_unittest.TestCase):
         else:
             offset = 0
         info = method.__metadata__()
-        type = info["arguments"][argno + offset]["type"]
-        if not type.startswith(b"n^") and not type.startswith(b"n*"):
+        typestr = info["arguments"][argno + offset]["type"]
+        if not typestr.startswith(b"n^") and not typestr.startswith(b"n*"):
             self.fail(
                 message or "arg %d of %s is not an 'in' argument" % (argno, method)
             )

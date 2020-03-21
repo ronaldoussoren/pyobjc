@@ -3,7 +3,8 @@ import operator
 import os
 
 from PyObjCTools import KeyValueCoding
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
+import objc
 
 
 class TestHelpers(TestCase):
@@ -192,43 +193,33 @@ class TestArrayOperators(TestCase):
                 else:
                     return False
 
-            def __cmp__(self, other):
-                if isinstance(other, str):
-                    return cmp(self._value, other)
-
-                elif isinstance(other, Str):
-                    return cmp(self._value, other._value)
-
-                else:
-                    return NotImplementedError
-
             def __hash__(self):
                 raise TypeError
 
         transactions = [
             [
-                dict(payee="Green Power", amount=120.0),
-                dict(payee="Green Power", amount=150.0),
-                dict(payee=Str("Green Power"), amount=170.0),
+                {"payee": "Green Power", "amount": 120.0},
+                {"payee": "Green Power", "amount": 150.0},
+                {"payee": Str("Green Power"), "amount": 170.0},
                 Rec(payee="Car Loan", amount=250.0),
-                dict(payee="Car Loan", amount=250.0),
-                dict(payee="Car Loan", amount=250.0),
-                dict(payee=Str("General Cable"), amount=120.0),
-                dict(payee="General Cable", amount=155.0),
+                {"payee": "Car Loan", "amount": 250.0},
+                {"payee": "Car Loan", "amount": 250.0},
+                {"payee": Str("General Cable"), "amount": 120.0},
+                {"payee": "General Cable", "amount": 155.0},
                 Rec(payee="General Cable", amount=120.0),
-                dict(payee="Mortgage", amount=1250.0),
-                dict(payee="Mortgage", amount=1250.0),
-                dict(payee="Mortgage", amount=1250.0),
-                dict(payee="Animal Hospital", amount=600.0),
+                {"payee": "Mortgage", "amount": 1250.0},
+                {"payee": "Mortgage", "amount": 1250.0},
+                {"payee": "Mortgage", "amount": 1250.0},
+                {"payee": "Animal Hospital", "amount": 600.0},
             ],
             [
-                dict(payee="General Cable - Cottage", amount=120.0),
-                dict(payee="General Cable - Cottage", amount=155.0),
+                {"payee": "General Cable - Cottage", "amount": 120.0},
+                {"payee": "General Cable - Cottage", "amount": 155.0},
                 Rec(payee="General Cable - Cottage", amount=120.0),
-                dict(payee="Second Mortgage", amount=1250.0),
-                dict(payee="Second Mortgage", amount=1250.0),
-                dict(payee=Str("Second Mortgage"), amount=1250.0),
-                dict(payee="Hobby Shop", amount=600.0),
+                {"payee": "Second Mortgage", "amount": 1250.0},
+                {"payee": "Second Mortgage", "amount": 1250.0},
+                {"payee": Str("Second Mortgage"), "amount": 1250.0},
+                {"payee": "Hobby Shop", "amount": 600.0},
             ],
         ]
 
@@ -353,9 +344,9 @@ class TestPythonObject(TestCase):
         self.assertRaises(KeyError, KeyValueCoding.getKey, d, "b")
 
     def test_array_get(self):
-        l = [{"a": 1, "b": 2}, {"a": 2}]
-        self.assertEqual(KeyValueCoding.getKey(l, "a"), [1, 2])
-        self.assertEqual(KeyValueCoding.getKey(l, "b"), [2, null])
+        lst = [{"a": 1, "b": 2}, {"a": 2}]
+        self.assertEqual(KeyValueCoding.getKey(lst, "a"), [1, 2])
+        self.assertEqual(KeyValueCoding.getKey(lst, "b"), [2, null])
 
     def test_attr_get(self):
         class Record(object):
@@ -438,17 +429,17 @@ class TestPythonObject(TestCase):
 
         t = Object()
         o = objc.lookUpClass("NSObject").alloc().init()
-        l = []
+        lst = []
 
         r.attr5 = t.isAttr4
         r.attr6 = o.description
-        r.attr7 = l.__len__
+        r.attr7 = lst.__len__
         r.attr8 = os.getpid
         r.attr9 = "attribute 9"
 
         self.assertEqual(KeyValueCoding.getKey(r, "attr5"), t.isAttr4)
         self.assertEqual(KeyValueCoding.getKey(r, "attr6"), r.attr6)
-        self.assertEqual(KeyValueCoding.getKey(r, "attr7"), l.__len__)
+        self.assertEqual(KeyValueCoding.getKey(r, "attr7"), lst.__len__)
         self.assertEqual(KeyValueCoding.getKey(r, "attr8"), os.getpid())
         self.assertEqual(KeyValueCoding.getKey(r, "attr9"), "attribute 9")
         self.assertEqual(KeyValueCoding.getKey(1.5, "hex"), (1.5).hex())

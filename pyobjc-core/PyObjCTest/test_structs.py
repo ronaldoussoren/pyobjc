@@ -12,8 +12,8 @@ import warnings
 
 import objc
 from PyObjCTest.fnd import NSObject
-from PyObjCTest.structs import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.structs import OC_StructTest
+from PyObjCTools.TestSupport import TestCase, main, pyobjc_options
 
 if sys.maxsize > 2 ** 32:
     PTR_SIZE = 8
@@ -70,29 +70,29 @@ class TestStructs(TestCase):
         self.assertEqual(p2.x, 3.0)
         self.assertEqual(p2.y, 5)
 
-        l = Line(Point(1, 2), Point(8, 9), 7)
-        self.assertEqual(l.start.x, 1.0)
-        self.assertEqual(l.start.y, 2.0)
-        self.assertEqual(l.stop.x, 8.0)
-        self.assertEqual(l.stop.y, 9.0)
-        self.assertEqual(l.width, 7.0)
+        ln = Line(Point(1, 2), Point(8, 9), 7)
+        self.assertEqual(ln.start.x, 1.0)
+        self.assertEqual(ln.start.y, 2.0)
+        self.assertEqual(ln.stop.x, 8.0)
+        self.assertEqual(ln.stop.y, 9.0)
+        self.assertEqual(ln.width, 7.0)
 
         self.assertEqual(
-            l._asdict(), {"start": Point(1, 2), "stop": Point(8, 9), "width": 7.0}
+            ln._asdict(), {"start": Point(1, 2), "stop": Point(8, 9), "width": 7.0}
         )
 
-        l2 = l._replace(stop=Point(3, 4), width=0.5)
-        self.assertEqual(l.start.x, 1.0)
-        self.assertEqual(l.start.y, 2.0)
-        self.assertEqual(l.stop.x, 8.0)
-        self.assertEqual(l.stop.y, 9.0)
-        self.assertEqual(l.width, 7.0)
+        ln2 = ln._replace(stop=Point(3, 4), width=0.5)
+        self.assertEqual(ln.start.x, 1.0)
+        self.assertEqual(ln.start.y, 2.0)
+        self.assertEqual(ln.stop.x, 8.0)
+        self.assertEqual(ln.stop.y, 9.0)
+        self.assertEqual(ln.width, 7.0)
 
-        self.assertEqual(l2.start.x, 1.0)
-        self.assertEqual(l2.start.y, 2.0)
-        self.assertEqual(l2.stop.x, 3.0)
-        self.assertEqual(l2.stop.y, 4.0)
-        self.assertEqual(l2.width, 0.5)
+        self.assertEqual(ln2.start.x, 1.0)
+        self.assertEqual(ln2.start.y, 2.0)
+        self.assertEqual(ln2.stop.x, 3.0)
+        self.assertEqual(ln2.stop.y, 4.0)
+        self.assertEqual(ln2.width, 0.5)
 
     def testCreateImplicit(self):
         tp = objc.createStructType("BarStruct", b'{_BarStruct="e"f"f"f"g"f"h"f}', None)
@@ -169,6 +169,7 @@ class TestStructs(TestCase):
                     )
                 ],
             )
+            self.assertIsInstance(StructArrayDelegate, objc.informal_protocol)
 
             class OC_PyStruct(NSObject):
                 def arrayOf4Structs_(self, value):

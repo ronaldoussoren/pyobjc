@@ -1,11 +1,11 @@
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 NSSortDescriptor = objc.lookUpClass("NSSortDescriptor")
 
 objc.registerMetaDataForSelector(
-    b"NSObject", b"selector", dict(retval=dict(type=objc._C_VOID))
+    b"NSObject", b"selector", {"retval": {"type": objc._C_VOID}}
 )
 
 

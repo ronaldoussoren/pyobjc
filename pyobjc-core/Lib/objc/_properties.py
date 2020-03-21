@@ -62,8 +62,8 @@ def _return_value(value):
 
 
 def _dynamic_getter(name):
-    def getter(object):
-        m = getattr(object.pyobjc_instanceMethods, name)
+    def getter(an_object):
+        m = getattr(an_object.pyobjc_instanceMethods, name)
         return m()
 
     getter.__name__ = name
@@ -71,15 +71,15 @@ def _dynamic_getter(name):
 
 
 def _dynamic_setter(name):
-    def setter(object, value):
-        m = getattr(object.pyobjc_instanceMethods, name.replace(":", "_"))
+    def setter(an_object, value):
+        m = getattr(an_object.pyobjc_instanceMethods, name.replace(":", "_"))
         return m(value)
 
     setter.__name__ = name
     return setter
 
 
-class object_property(object):
+class object_property:
     def __init__(
         self,
         name=None,
@@ -267,18 +267,18 @@ class object_property(object):
             class_dict[affecting.selector] = affecting
             class_methods.add(affecting)
 
-    def __get__(self, object, owner):
-        if object is None:
+    def __get__(self, an_object, owner):
+        if an_object is None:
             return self
-        return self.__getprop(object)
+        return self.__getprop(an_object)
 
-    def __set__(self, object, value):
+    def __set__(self, an_object, value):
         if self.__setprop is None:
             raise ValueError("setting read-only property " + self._name)
 
-        return self.__setprop(object, value)
+        return self.__setprop(an_object, value)
 
-    def __delete__(self, object):
+    def __delete__(self, an_object):
         raise TypeError("cannot delete property " + self._name)
 
     def depends_on(self, keypath):
@@ -704,29 +704,29 @@ class array_property(object_property):
         replace.isHidden = True
         instance_methods.add(replace)
 
-    def __set__(self, object, value):
+    def __set__(self, an_object, value):
         if isinstance(value, array_proxy):
-            if value._name == self._name and value._parent is object:
+            if value._name == self._name and value._parent is an_object:
                 # attr.prop = attr.prop
                 return
 
         if isinstance(value, array_proxy):
             value = list(value)
 
-        super(array_property, self).__set__(object, value)
+        super(array_property, self).__set__(an_object, value)
 
-    def __get__(self, object, owner):
-        v = object_property.__get__(self, object, owner)
+    def __get__(self, an_object, owner):
+        v = object_property.__get__(self, an_object, owner)
         if v is None:
             v = []
-            object_property.__set__(self, object, v)
-        return array_proxy(self._name, object, self, self._ro)
+            object_property.__set__(self, an_object, v)
+        return array_proxy(self._name, an_object, self, self._ro)
 
-    def __getvalue__(self, object):
-        v = object_property.__get__(self, object, None)
+    def __getvalue__(self, an_object):
+        v = object_property.__get__(self, an_object, None)
         if v is None:
             v = []
-            object_property.__set__(self, object, v)
+            object_property.__set__(self, an_object, v)
         return v
 
 
@@ -834,15 +834,15 @@ class set_proxy(collections.abc.MutableSet):
         if self._ro:
             raise ValueError("Property '%s' is read-only" % (self._name,))
 
-        object = set(self._wrapped)
+        current_value = set(self._wrapped)
         self._parent.willChangeValueForKey_withSetMutation_usingObjects_(
-            self._name, NSKeyValueMinusSetMutation, object
+            self._name, NSKeyValueMinusSetMutation, current_value
         )
         try:
             self._wrapped.clear()
         finally:
             self._parent.didChangeValueForKey_withSetMutation_usingObjects_(
-                self._name, NSKeyValueMinusSetMutation, object
+                self._name, NSKeyValueMinusSetMutation, current_value
             )
 
     def difference_update(self, *others):
@@ -1064,29 +1064,29 @@ class set_property(object_property):
             depends_on=depends_on,
         )
 
-    def __get__(self, object, owner):
-        v = object_property.__get__(self, object, owner)
+    def __get__(self, an_object, owner):
+        v = object_property.__get__(self, an_object, owner)
         if v is None:
             v = set()
-            object_property.__set__(self, object, v)
-        return set_proxy(self._name, object, self, self._ro)
+            object_property.__set__(self, an_object, v)
+        return set_proxy(self._name, an_object, self, self._ro)
 
-    def __set__(self, object, value):
+    def __set__(self, an_object, value):
         if isinstance(value, set_proxy):
-            if value._name == self._name and value._parent is object:
+            if value._name == self._name and value._parent is an_object:
                 # attr.prop = attr.prop
                 return
 
         if isinstance(value, set_proxy):
             value = list(value)
 
-        super(set_property, self).__set__(object, value)
+        super(set_property, self).__set__(an_object, value)
 
-    def __getvalue__(self, object):
-        v = object_property.__get__(self, object, None)
+    def __getvalue__(self, an_object):
+        v = object_property.__get__(self, an_object, None)
         if v is None:
             v = set()
-            object_property.__set__(self, object, v)
+            object_property.__set__(self, an_object, v)
         return v
 
     def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
@@ -1156,9 +1156,9 @@ NSMutableDictionary = lookUpClass("NSMutableDictionary")
 
 
 class dict_property(object_property):
-    def __get__(self, object, owner):
-        v = object_property.__get__(self, object, owner)
+    def __get__(self, an_object, owner):
+        v = object_property.__get__(self, an_object, owner)
         if v is None:
             v = NSMutableDictionary.alloc().init()
-            object_property.__set__(self, object, v)
-        return object_property.__get__(self, object, owner)
+            object_property.__set__(self, an_object, v)
+        return object_property.__get__(self, an_object, owner)

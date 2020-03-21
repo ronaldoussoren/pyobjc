@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -25,21 +25,21 @@ if 0:
                 classMethod2_ = classmethod(classMethod2_)
 
             o = VarArgsClass1.alloc().init()
-            l = []
-            o.instanceMethod1_(l, 1, 2, 3)
-            self.assertEqual(l, [(1, 2, 3)])
+            lst = []
+            o.instanceMethod1_(lst, 1, 2, 3)
+            self.assertEqual(lst, [(1, 2, 3)])
 
-            l = []
-            VarArgsClass1.classMethod1_(l, 3, 4, 5)
-            self.assertEqual(l, [(3, 4, 5)])
+            lst = []
+            VarArgsClass1.classMethod1_(lst, 3, 4, 5)
+            self.assertEqual(lst, [(3, 4, 5)])
 
-            l = []
-            o.instanceMethod2_(l, 1, 2, 3)
-            self.assertEqual(l, [(1, 2, 3)])
+            lst = []
+            o.instanceMethod2_(lst, 1, 2, 3)
+            self.assertEqual(lst, [(1, 2, 3)])
 
-            l = []
-            VarArgsClass1.classMethod2_(l, 3, 4, 5)
-            self.assertEqual(l, [(3, 4, 5)])
+            lst = []
+            VarArgsClass1.classMethod2_(lst, 3, 4, 5)
+            self.assertEqual(lst, [(3, 4, 5)])
 
         def testKeywordArguments(self):
             class VarArgsClass2(NSObject):
@@ -52,13 +52,13 @@ if 0:
                 classMethod1_ = classmethod(classMethod1_)
 
             o = VarArgsClass2.alloc().init()
-            l = []
-            o.instanceMethod1_(l, a=1, c=2)
-            self.assertEqual(l, [{"a": 1, "c": 2}])
+            lst = []
+            o.instanceMethod1_(lst, a=1, c=2)
+            self.assertEqual(lst, [{"a": 1, "c": 2}])
 
-            l = []
-            VarArgsClass2.classMethod1_(l, foo="bar", baz="foo")
-            self.assertEqual(l, [{"foo": "bar", "baz": "foo"}])
+            lst = []
+            VarArgsClass2.classMethod1_(lst, foo="bar", baz="foo")
+            self.assertEqual(lst, [{"foo": "bar", "baz": "foo"}])
 
 
 if __name__ == "__main__":

@@ -265,7 +265,7 @@ def Accessor(func):
 #
 # Callback support
 #
-def callbackFor(callable, argIndex=-1):
+def callbackFor(callable, argIndex=-1):  # noqa: A002
     """
     Decorator for converting a function into an object that can be used
     as a callback function for (Objective-)C API's that take such a beast
@@ -301,7 +301,7 @@ def callbackPointer(closure):
     return _closurePointer(closure.pyobjc_closure)
 
 
-def selectorFor(callable, argIndex=-1):
+def selectorFor(callable, argIndex=-1):  # noqa: A002
     """
     Decorator that makes sure that the method has the right signature to be
     used as the selector argument to the specified method.
@@ -332,7 +332,9 @@ def selectorFor(callable, argIndex=-1):
     return addSignature
 
 
-def synthesize(name, copy=False, readwrite=True, type=_C_ID, ivarName=None):
+def synthesize(
+    name, copy=False, readwrite=True, type=_C_ID, ivarName=None  # noqa: A002
+):
     """
     Use this in a class dictionary to syntheze simple setting/setter methods.
 

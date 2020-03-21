@@ -3,7 +3,7 @@ import sys
 
 from objc._pythonify import OC_PythonFloat, OC_PythonLong
 from PyObjCTest.fnd import NSNumber
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, onlyOn32Bit
 
 
 class TestPickleNumber(TestCase):

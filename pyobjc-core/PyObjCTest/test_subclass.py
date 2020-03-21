@@ -1,9 +1,6 @@
-import sys
-import types
-
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass3
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
@@ -130,7 +127,10 @@ class TestCopying(TestCase):
 
         self.assertFalse((o.copyWithZone_.__metadata__()["classmethod"]))
         self.assertTrue(o.copyWithZone_.__metadata__()["retval"]["already_retained"])
-        # self.assertTrue(o.copyWithZone_.callable == MyCopyClass.__dict__['copyWithZone_'].callable)
+        # self.assertEqual(
+        #    o.copyWithZone_.callable,
+        #    MyCopyClass.__dict__['copyWithZone_'].callable
+        # )
 
         o = MyCopyClass.alloc().init()
         o.foobar = 1

@@ -4,14 +4,13 @@ Tests for the proxy of Python numbers
 NOTE: Decimal conversion is not tested, the required proxy is part of
 the Foundation bindings :-(
 """
-import os
 import sys
 import warnings
 
 import objc
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.pythonnumber import OC_TestNumber
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, os_level_key, os_release
 
 OC_PythonNumber = objc.lookUpClass("OC_PythonNumber")
 OC_BuiltinPythonNumber = objc.lookUpClass("OC_BuiltinPythonNumber")

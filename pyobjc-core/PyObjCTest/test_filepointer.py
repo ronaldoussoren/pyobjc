@@ -3,7 +3,7 @@ Tests for dealing with 'FILE*' argument.
 """
 import objc
 from PyObjCTest.filepointer import OC_TestFilePointer
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 fp = objc.FILE("/etc/passwd", "r")
 gFirstPasswdLine = fp.readline()

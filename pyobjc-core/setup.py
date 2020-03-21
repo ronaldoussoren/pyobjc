@@ -1,15 +1,12 @@
 import glob
 import os
-import platform
 import plistlib
-import re
 import shlex
-import shutil
-import site
-import subprocess
+import tempfile
 import sys
+import subprocess
+import warnings
 from distutils import log
-from distutils.core import Command
 from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
 from distutils.sysconfig import get_config_var as _get_config_var
 from distutils.sysconfig import get_config_vars
@@ -18,16 +15,8 @@ from distutils.sysconfig import get_config_vars
 from distutils.unixccompiler import UnixCCompiler
 
 from pkg_resources import add_activation_listener, normalize_path, require, working_set
-from setuptools import Extension, find_packages, setup
+from setuptools import Extension, setup
 from setuptools.command import build_ext, build_py, egg_info, install_lib, test
-
-try:
-    import setuptools
-
-except ImportError:
-    # setuptools is required to run the setup file, bail out early
-    print("This package requires setuptools to build")
-    sys.exit(1)
 
 
 def get_config_var(var):
@@ -121,10 +110,10 @@ if "-O0" in get_config_var("CFLAGS"):
     # -O0 doesn't work with some (older?) compilers, unconditionally
     # change -O0 to -O1 to work around that issue.
     print("Change -O0 to -O1 (-O0 miscompiles libffi)")
-    vars = get_config_vars()
-    for k in vars:
-        if isinstance(vars[k], str) and "-O0" in vars[k]:
-            vars[k] = vars[k].replace("-O0", "-O1")
+    config_vars = get_config_vars()
+    for k in config_vars:
+        if isinstance(config_vars[k], str) and "-O0" in config_vars[k]:
+            config_vars[k] = config_vars[k].replace("-O0", "-O1")
 
 
 if get_config_var("Py_DEBUG"):
@@ -230,8 +219,6 @@ class oc_test(test.test):
             self.verbosity = int(self.verbosity)
 
     def cleanup_environment(self):
-        from pkg_resources import add_activation_listener
-
         add_activation_listener(lambda dist: dist.activate())
 
         ei_cmd = self.get_finalized_command("egg_info")
@@ -250,8 +237,7 @@ class oc_test(test.test):
         working_set.__init__(sys.path)
 
     def add_project_to_sys_path(self):
-        from pkg_resources import normalize_path, add_activation_listener
-        from pkg_resources import working_set, require
+        from pkg_resources import working_set
 
         self.reinitialize_command("egg_info")
         self.run_command("egg_info")
@@ -304,22 +290,14 @@ class oc_test(test.test):
         import unittest
 
         # Ensure that build directory is on sys.path (py3k)
-        import sys
-
         self.cleanup_environment()
         self.add_project_to_sys_path()
 
         from PyObjCTest.loader import makeTestSuite
-        import PyObjCTools.TestSupport as mod
-
-        import warnings
 
         warnings.simplefilter("error")
 
         try:
-            meta = self.distribution.metadata
-            name = meta.get_name()
-            test_pkg = name + "_tests"
             suite = makeTestSuite(be_cmd.use_system_libffi)
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
@@ -327,14 +305,14 @@ class oc_test(test.test):
 
             # Print out summary. This is a structured format that
             # should make it easy to use this information in scripts.
-            summary = dict(
-                count=result.testsRun,
-                fails=len(result.failures),
-                errors=len(result.errors),
-                xfails=len(getattr(result, "expectedFailures", [])),
-                xpass=len(getattr(result, "expectedSuccesses", [])),
-                skip=len(getattr(result, "skipped", [])),
-            )
+            summary = {
+                "count": result.testsRun,
+                "fails": len(result.failures),
+                "errors": len(result.errors),
+                "xfails": len(getattr(result, "expectedFailures", [])),
+                "xpass": len(getattr(result, "expectedSuccesses", [])),
+                "skip": len(getattr(result, "skipped", [])),
+            }
             print("SUMMARY: %s" % (summary,))
 
             if not result.wasSuccessful():
@@ -422,7 +400,6 @@ def _find_executable(executable):
 
 
 def _working_compiler(executable):
-    import tempfile, subprocess, shlex
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".c") as fp:
         fp.write("#include <stdarg.h>\nint main(void) { return 0; }\n")
@@ -438,8 +415,8 @@ def _working_compiler(executable):
             stderr=subprocess.PIPE,
         )
         stdout, stderr = p.communicate()
-        exit = p.wait()
-        if exit != 0:
+        status = p.wait()
+        if status != 0:
             return False
 
         binfile = fp.name[:-1] + "o"
@@ -505,12 +482,12 @@ def _fixup_compiler(use_ccache):
     if cc != oldcc:
         log.info("Use '%s' instead of '%s' as the compiler" % (cc, oldcc))
 
-        vars = get_config_vars()
+        config_vars = get_config_vars()
         for env in ("BLDSHARED", "LDSHARED", "CC", "CXX"):
-            if env in vars and env not in os.environ:
-                split = vars[env].split()
+            if env in config_vars and env not in os.environ:
+                split = config_vars[env].split()
                 split[0] = cc if env != "CXX" else cc + "++"
-                vars[env] = " ".join(split)
+                config_vars[env] = " ".join(split)
 
 
 class oc_build_ext(build_ext.build_ext):
@@ -541,15 +518,9 @@ class oc_build_ext(build_ext.build_ext):
         # setting was not set manually, check whether python was configured this
         # way.
         if not self.use_system_libffi:
-            if sys.executable == "/usr/bin/python" or getattr(
-                sys, "real_prefix", ""
-            ).startswith("/System/"):
-                # System python: Apple doesn't ship libffi headers, therefore ignore --with-system-ffi
-                pass
-            else:
-                self.use_system_libffi = "--with-system-ffi" in get_config_var(
-                    "CONFIG_ARGS"
-                )
+            self.use_system_libffi = "--with-system-ffi" in get_config_var(
+                "CONFIG_ARGS"
+            )
 
         self.sdk_root = os.environ.get("SDKROOT", None)
         if self.sdk_root is None:
@@ -576,7 +547,6 @@ class oc_build_ext(build_ext.build_ext):
         verify_platform()
 
         if self.use_system_libffi:
-            import shlex
 
             LIBFFI_INCLUDEDIR = (
                 get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"

@@ -5,12 +5,11 @@ This is a port of the set tests from the Python stdlib for 3.2
 """
 import collections.abc
 import operator
-import sys
 import test.test_set
 from test.test_set import PassThru, check_pass_thru
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, onlyIf
 
 NSSet = objc.lookUpClass("NSSet")
 NSMutableSet = objc.lookUpClass("NSMutableSet")
@@ -70,7 +69,7 @@ class TestPyObjCSet(TestCase):
         self.assertIsInstance(res, NSSet)
 
     def test_subset(self):
-        s = set([1, 2, 3])
+        s = {1, 2, 3}
         self.assertTrue(s.issubset([1, 2, 3, 4]))
         self.assertFalse(s.issubset([1, 2, 4, 5]))
 
@@ -79,7 +78,7 @@ class TestPyObjCSet(TestCase):
         self.assertFalse(s.issubset([1, 2, 4, 5]))
 
     def test_superset(self):
-        s = set([1, 2, 3])
+        s = {1, 2, 3}
         self.assertTrue(s.issuperset([1, 2]))
         self.assertFalse(s.issuperset([1, 5]))
 
@@ -95,7 +94,7 @@ class TestPyObjCSet(TestCase):
         self.assertItemsEqual(list(it), [1, 2, 3])
 
         it = iter(s)
-        it.next()
+        next(it)
         v = list(it)
         self.assertEqual(len(v), 2)
         seen = set()
@@ -168,7 +167,7 @@ class TestSet(test.test_set.TestJointOps, TestCase):
 
         # Issue #6573
         x = self.thetype()
-        self.assertEqual(x.union(set([1]), x, set([2])), self.thetype([1, 2]))
+        self.assertEqual(x.union({1}, x, {2}), self.thetype([1, 2]))
 
     def test_symmetric_difference(self):
         i = self.s.symmetric_difference(self.otherword)
@@ -254,10 +253,10 @@ class TestSet(test.test_set.TestJointOps, TestCase):
         self.assertEqual(id(self.s), id(dup))
 
     def test_as_list(self):
-        l = list(self.s)
-        self.assertIsInstance(l, list)
-        self.assertEqual(len(l), len(self.s))
-        for item in l:
+        lst = list(self.s)
+        self.assertIsInstance(lst, list)
+        self.assertEqual(len(lst), len(self.s))
+        for item in lst:
             self.assertIn(item, self.s)
 
 

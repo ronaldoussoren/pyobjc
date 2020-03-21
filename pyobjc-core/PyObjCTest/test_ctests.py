@@ -10,7 +10,7 @@ import platform
 import sys
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 ctests = objc._ctests
 
@@ -18,9 +18,9 @@ names = list(ctests.keys())
 methods = {}
 
 
-def do_exec(value, locals, globals):
+def do_exec(value, locals_dict, globals_dict):
 
-    exec(value, locals, globals)
+    exec(value, locals_dict, globals_dict)
 
 
 def make_test(name):

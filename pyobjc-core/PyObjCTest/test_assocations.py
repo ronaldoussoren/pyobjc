@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, min_os_level
 
 NSObject = objc.lookUpClass("NSObject")
 

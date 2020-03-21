@@ -1,11 +1,9 @@
 #
 # Some more tests for exception handling.
 #
-import sys
-
 import objc
-from PyObjCTest.exceptions import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.exceptions import PyObjCTestExceptions
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestExceptionsFromObjC(TestCase):

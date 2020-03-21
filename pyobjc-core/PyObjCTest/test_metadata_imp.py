@@ -9,12 +9,10 @@ TODO:
   likely to change when the bridge is feature-complete.
 - Probably need special-casing for arrays (numarray and array.array)!
 """
-import sys
-
 import objc
-import PyObjCTest.test_metadata  # to get the right metadata
-from PyObjCTest.metadata import *
-from PyObjCTools.TestSupport import *
+import PyObjCTest.test_metadata  # noqa: F401
+from PyObjCTest.metadata import OC_MetaDataTest
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestArrayDefault(TestCase):

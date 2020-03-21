@@ -1,9 +1,6 @@
 import objc
-from PyObjCTest.testclassandinst import (
-    PyObjC_TestClassAndInstance,
-    PyObjC_TestUnallocatable,
-)
-from PyObjCTools.TestSupport import *
+from PyObjCTest.testclassandinst import PyObjC_TestClassAndInstance
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class PyObjC_TestClassAndInstanceSubclass(PyObjC_TestClassAndInstance):

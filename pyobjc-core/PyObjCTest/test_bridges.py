@@ -1,8 +1,6 @@
-import sys
-
 import objc
 from PyObjCTest.testbndl import OC_TestClass2
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 from collections import UserDict as IterableUserDict, UserList
 import collections.abc

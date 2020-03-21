@@ -1,7 +1,5 @@
-import sys
-
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -49,13 +47,13 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
         orig_classAddMethods = mod.classAddMethods
         try:
-            l = []
+            lst = []
 
             def classAddMethods(cls, values):
                 self.assertIsInstance(cls, objc.objc_class)
                 for item in values:
                     self.assertIsInstance(item, objc.selector)
-                l.append((cls, values))
+                lst.append((cls, values))
 
             mod.classAddMethods = classAddMethods
 
@@ -63,10 +61,10 @@ class TestFromObjCSuperToObjCClass(TestCase):
                 return "foo the bar"
 
             objc.classAddMethod(NSObject, b"python_description", my_python_description)
-            self.assertEqual(len(l), 1)
-            self.assertIs(l[0][0], NSObject)
-            self.assertEqual(len(l[0][1]), 1)
-            m = l[0][1][0]
+            self.assertEqual(len(lst), 1)
+            self.assertIs(lst[0][0], NSObject)
+            self.assertEqual(len(lst[0][1]), 1)
+            m = lst[0][1][0]
             self.assertIsInstance(m, objc.selector)
             self.assertIs(m.callable, my_python_description)
             self.assertEqual(m.selector, b"python_description")
@@ -76,11 +74,11 @@ class TestFromObjCSuperToObjCClass(TestCase):
             def myAction(self):
                 return 1
 
-            l[:] = []
+            lst[:] = []
             objc.classAddMethod(NSObject, b"value", myAction)
-            self.assertIs(l[0][0], NSObject)
-            self.assertEqual(len(l[0][1]), 1)
-            m = l[0][1][0]
+            self.assertIs(lst[0][0], NSObject)
+            self.assertEqual(len(lst[0][1]), 1)
+            m = lst[0][1][0]
             self.assertIsInstance(m, objc.selector)
             self.assertIs(m.callable, myAction.callable)
             self.assertEqual(m.selector, b"value")
@@ -165,13 +163,13 @@ class TestFromObjCSuperToObjCClass(TestCase):
 
     def testAddedMethodType(self):
         def anotherNewClassMethod(cls):
-            "CLS DOC STRING"
+            """CLS DOC STRING"""
             return "BAR CLS"
 
         anotherNewClassMethod = classmethod(anotherNewClassMethod)
 
         def anotherNewMethod(self):
-            "INST DOC STRING"
+            """INST DOC STRING"""
             return "BAR SELF"
 
         self.assertTrue(
@@ -346,7 +344,7 @@ class TestCategory(TestCase):
         try:
             global list
 
-            class list(objc.Category(list)):
+            class list(objc.Category(list)):  # noqa: A001
                 pass
 
             self.fail("Category on list???")

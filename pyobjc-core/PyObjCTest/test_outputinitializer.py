@@ -1,11 +1,11 @@
 import objc
 from PyObjCTest.testoutputinitializer import PyObjC_TestOutputInitializer
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 objc.registerMetaDataForSelector(
     b"PyObjC_TestOutputInitializer",
     b"initWithBooleanOutput:",
-    dict(arguments={2: dict(type_modifier=b"o")}),
+    {"arguments": {2: {"type_modifier": b"o"}}},
 )
 
 

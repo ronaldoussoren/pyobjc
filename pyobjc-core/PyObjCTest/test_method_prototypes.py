@@ -12,7 +12,8 @@ method defintions:
 """
 
 from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
+import objc
 
 
 class TestInheritedProtoype(TestCase):
@@ -378,7 +379,7 @@ class TestExplicitPrototype(TestCase):
             oneoutput_ = objc.selector(oneoutput_, signature=b"i@:^@")
 
         class OC_ExplProto_OutputPresent2(NSObject):
-            def oneinput_output_(self, input, output):
+            def oneinput_output_(self, input_value, output_value):
                 pass
 
             oneinput_output_ = objc.selector(oneinput_output_, signature=b"i@:f^@")
@@ -404,7 +405,7 @@ class TestExplicitPrototype(TestCase):
         try:
 
             class OC_ExplProto_OutputAbsent2(NSObject):
-                def oneinput_output_(self, input):
+                def oneinput_output_(self, value):
                     pass
 
                 oneinput_output_ = objc.selector(oneinput_output_, signature=b"i@:i^@")

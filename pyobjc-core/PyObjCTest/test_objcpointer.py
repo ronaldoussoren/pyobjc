@@ -2,7 +2,7 @@ import warnings
 
 import objc
 from PyObjCTest.structpointer1 import OC_TestStructPointer
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestObjCPointer(TestCase):

@@ -1,8 +1,6 @@
-import sys
-
 import objc
-from PyObjCTest.fsref import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.fsref import OC_TestFSRefHelper
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestFSRef(TestCase):

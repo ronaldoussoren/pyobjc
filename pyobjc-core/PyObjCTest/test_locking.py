@@ -4,13 +4,12 @@ Test locking objects and interaction with @synchronized() statements
 These tests take an annoyingly long time to ensure that we'd hit a race condition when
 locking doesn't actually lock. It should be possible to find a faster mechanism for this.
 """
-import sys
 import threading
 import time
 
 import objc
 from PyObjCTest.locking import OC_LockTest
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
@@ -59,12 +58,12 @@ class ObjCThread(threading.Thread):
 
 
 class BaseClass(objc.lookUpClass("NSObject")):
-    def initWithList_(self, list):
+    def initWithList_(self, aList):
         self = objc.super(BaseClass, self).init()
         if self is None:
             return None
 
-        self.list = list
+        self.list = aList
         self._locked = False
         return self
 
@@ -87,7 +86,7 @@ class TestLockingBasic(TestCase):
 
         thr = OtherThread(obj)
         thr.start()
-        for i in range(5):
+        for _ in range(5):
             time.sleep(0.1)
             lck.lock()
             self.assertFalse(obj.isLocked())
@@ -112,7 +111,7 @@ class TestLockingBasic(TestCase):
 
         thr = ObjCThread(obj)
         thr.start()
-        for i in range(5):
+        for _ in range(5):
             time.sleep(0.1)
             lck.lock()
             self.assertFalse(obj.isLocked())
@@ -139,7 +138,7 @@ class TestLockingWithStatement(TestCase):
 
         thr = OtherThread(obj)
         thr.start()
-        for i in range(5):
+        for _ in range(5):
             time.sleep(0.1)
             with objc.object_lock(obj):
                 self.assertFalse(obj.isLocked())

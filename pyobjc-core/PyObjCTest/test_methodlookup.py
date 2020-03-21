@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.methodlookup import PyObjC_MethodLookup1, PyObjC_MethodLookup2
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestSuperObject(TestCase):

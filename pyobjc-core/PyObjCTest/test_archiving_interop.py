@@ -8,13 +8,11 @@
 import os
 import platform
 import subprocess
-import sys
 import tempfile
 from plistlib import loads
-from distutils.sysconfig import get_config_var
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 MYDIR = os.path.dirname(os.path.abspath(__file__))
@@ -26,6 +24,7 @@ NSKeyedArchiver = objc.lookUpClass("NSKeyedArchiver")
 NSUnarchiver = objc.lookUpClass("NSUnarchiver")
 NSKeyedUnarchiver = objc.lookUpClass("NSKeyedUnarchiver")
 NSSet = objc.lookUpClass("NSSet")
+NSString = objc.lookUpClass("NSString")
 
 
 class TestNSKeyedArchivingInterop(TestCase):
@@ -151,7 +150,7 @@ class TestNSKeyedArchivingInterop(TestCase):
             self.assertTrue(converted.startswith(b"{("))
             self.assertTrue(converted.endswith(b")}\n"))
             converted = b"{" + converted[2:-3] + b"}"
-            converted = eval(converted.decode("utf-8"), dict(a="a", b="b"))
+            converted = eval(converted.decode("utf-8"), {"a": "a", "b": "b"})
             self.assertEqual(converted, set(testval))
 
     def test_interop_dict(self):
@@ -292,7 +291,7 @@ class TestNSArchivingInterop(TestCase):
             self.assertTrue(converted.startswith(b"{("))
             self.assertTrue(converted.endswith(b")}\n"))
             converted = b"{" + converted[2:-3] + b"}"
-            converted = eval(converted.decode("utf-8"), dict(a="a", b="b"))
+            converted = eval(converted.decode("utf-8"), {"a": "a", "b": "b"})
             self.assertEqual(converted, set(testval))
 
     def test_interop_dict(self):

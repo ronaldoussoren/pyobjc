@@ -1,9 +1,8 @@
 import inspect
-import sys
 
 import objc
 from objc import _callable_docstr as mod
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSArray = objc.lookUpClass("NSArray")
 
@@ -69,7 +68,7 @@ class TestDescribeType(TestCase):
             "struct hello*",
         )
 
-        handle = objc.createOpaquePointerType("NamedPointer", b"^{NamedTestPointer1=}")
+        _ = objc.createOpaquePointerType("NamedPointer", b"^{NamedTestPointer1=}")
         self.assertEqual(mod.describe_type(b"^{NamedTestPointer1=}"), "NamedPointer")
 
     def test_unknown(self):
@@ -119,7 +118,7 @@ class TestDescribeType(TestCase):
             "struct name",
         )
 
-        strType = objc.createStructType(
+        _ = objc.createStructType(
             "NamedTestStruct", b'{NamedTestStruct1="a"i"b"i}', None
         )
         self.assertEqual(mod.describe_type(b"{NamedTestStruct1=ii}"), "NamedTestStruct")
@@ -154,7 +153,7 @@ class TestDescribeType(TestCase):
 class TestDescribeCallable(TestCase):
     def setUp(self):
         dct = {}
-        func = objc.loadBundleFunctions(
+        objc.loadBundleFunctions(
             None,
             dct,
             [
@@ -199,14 +198,14 @@ class TestDescribeCallable(TestCase):
                 [
                     (
                         (NSArray.array.__name__, NSArray.array.__metadata__()),
-                        dict(ismethod=True),
+                        {"ismethod": True},
                     ),
                     (
                         (
                             self.NSTemporaryDirectory.__name__,
                             self.NSTemporaryDirectory.__metadata__(),
                         ),
-                        dict(ismethod=False),
+                        {"ismethod": False},
                     ),
                 ],
             )
@@ -246,7 +245,8 @@ class TestDescribeCallable(TestCase):
             "void array(int arg0, float arg1, ...);",
         )
 
-        # This is metadata is nonsense (C doesn't allow variadic functions where all arguments are variadic)
+        # This is metadata is nonsense (C doesn't allow variadic
+        # functions where all arguments are variadic)
         self.assertEqual(
             mod.describe_callable_metadata(
                 "array",
@@ -382,7 +382,9 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void array(out float arg0, in int arg1);\n\narg0: pass-by-reference out argument\narg1: pass-by-reference in argument",
+            "void array(out float arg0, in int arg1);\n\n"
+            "arg0: pass-by-reference out argument\n"
+            "arg1: pass-by-reference in argument",
         )
 
         self.assertEqual(
@@ -468,7 +470,10 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void function(<FUNCTION> arg0);\n\narg0: int callback(<FUNCTION> arg0);\n\n    arg0: double callback(in id arg0, id arg1);\n\n        arg0: array with length in arg1",
+            "void function(<FUNCTION> arg0);\n\n"
+            "arg0: int callback(<FUNCTION> arg0);\n\n"
+            "    arg0: double callback(in id arg0, id arg1);\n\n"
+            "        arg0: array with length in arg1",
         )
 
         # - block pointers (simple and nested)
@@ -561,7 +566,10 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void function(<BLOCK> arg0);\n\narg0: int callback(<BLOCK> arg0);\n\n    arg0: double callback(in id arg0, id arg1);\n\n        arg0: array with length in arg1",
+            "void function(<BLOCK> arg0);\n\n"
+            "arg0: int callback(<BLOCK> arg0);\n\n"
+            "    arg0: double callback(in id arg0, id arg1);\n\n"
+            "        arg0: array with length in arg1",
         )
 
         # - variadic arguments
@@ -589,7 +597,8 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void printf(id arg0, int arg1, ...);\n\nVariadic arguments form an array of C type int",
+            "void printf(id arg0, int arg1, ...);\n\n"
+            "Variadic arguments form an array of C type int",
         )
         self.assertEqual(
             mod.describe_callable_metadata(
@@ -602,7 +611,9 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void printf(in id arg0, int arg1, ...);\n\narg0: pass-by-reference in argument\nVariadic arguments form an array of C type int",
+            "void printf(in id arg0, int arg1, ...);\n\n"
+            "arg0: pass-by-reference in argument\n"
+            "Variadic arguments form an array of C type int",
         )
 
         # - printf_format
@@ -679,7 +690,8 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void array(in int arg0);\n\narg0: array with length on input in arg2, and output in arg3",
+            "void array(in int arg0);\n\n"
+            "arg0: array with length on input in arg2, and output in arg3",
         )
         self.assertEqual(
             mod.describe_callable_metadata(
@@ -696,7 +708,9 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void array(in int arg0);\n\narg0: array with length on input in arg2, and output in return value",
+            "void array(in int arg0);\n\n"
+            "arg0: array with length on input in arg2, and output "
+            "in return value",
         )
         self.assertEqual(
             mod.describe_callable_metadata(
@@ -773,7 +787,8 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=True,
             ),
-            "- (void)array:(in int)arg0;\n\narg0: array with length on input in arg0, and output in arg1",
+            "- (void)array:(in int)arg0;\n\n"
+            "arg0: array with length on input in arg0, and output in arg1",
         )
         self.assertEqual(
             mod.describe_callable_metadata(
@@ -793,7 +808,9 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=True,
             ),
-            "- (void)array:(in int)arg0;\n\narg0: array with length on input in arg0, and output in return value",
+            "- (void)array:(in int)arg0;\n\n"
+            "arg0: array with length on input in arg0, and "
+            "output in return value",
         )
 
         # - warnings
@@ -819,7 +836,9 @@ class TestDescribeCallable(TestCase):
                 },
                 ismethod=False,
             ),
-            "void array(in int arg0);\n\nWARNING: Please don't\n\narg0: pass-by-reference in argument",
+            "void array(in int arg0);\n\n"
+            "WARNING: Please don't\n\n"
+            "arg0: pass-by-reference in argument",
         )
 
     def test_docattr(self):
@@ -844,7 +863,7 @@ class TestDescribeCallable(TestCase):
 class TestCallableSignature(TestCase):
     def test_function(self):
         dct = {}
-        func = objc.loadBundleFunctions(
+        objc.loadBundleFunctions(
             None,
             dct,
             [

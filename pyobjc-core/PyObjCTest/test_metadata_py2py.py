@@ -15,10 +15,10 @@ TODO:
 import objc
 
 # To ensure we have the right metadata
-import PyObjCTest.test_metadata
-from PyObjCTest.metadata import *
+import PyObjCTest.test_metadata  # noqa: F401
+from PyObjCTest.metadata import OC_MetaDataTest
 from PyObjCTest.test_metadata_py import Py_MetaDataTest_AllArgs
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 if 0:
     from PyObjCTest.test_metadata_py2 import Py_MetaDataTest_OutputOptional
@@ -132,7 +132,7 @@ if 0:
             # self.assertIs(v, objc.NULL)
 
         def testNullTerminated(self):
-            o = Py_MetaDataTest_OutputOptional.new()
+            _ = Py_MetaDataTest_OutputOptional.new()
 
             # Output only arrays of null-terminated arrays cannot be
             # wrapped automaticly. How is the bridge supposed to know

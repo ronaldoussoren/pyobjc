@@ -2,7 +2,21 @@
 Helper module for KeyValue tests
 """
 import objc
-from PyObjCTest.testbndl import PyObjCTest_KVBaseClass, PyObjCTest_KVPathClass
+from PyObjCTest.testbndl import (  # noqa: F401
+    PyObjCTest_KVBaseClass,
+    PyObjCTest_KVPathClass,
+    DO_SETVALUE_FORKEYPATH,
+    DO_SETVALUESFORKEYSFROMDICT,
+    DO_SETVALUE_FORKEY,
+    DO_VALUEFORKEYPATH,
+    DO_VALUEFORKEY,
+    DO_STOREDVALUEFORKEY,
+    DO_TAKESTOREDVALUE_FORKEY,
+    DO_TAKEVALUESFROMDICT,
+    DO_TAKEVALUE_FORKEY,
+    DO_TAKEVALUE_FORKEYPATH,
+    DO_VALUESFORKEYS,
+)
 
 NSObject = objc.lookUpClass("NSObject")
 

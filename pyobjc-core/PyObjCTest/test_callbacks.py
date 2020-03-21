@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 objc.registerMetaDataForSelector(
     b"OC_CallbackTest",
@@ -147,9 +147,6 @@ class TestCallbackFor(TestCase):
         )
 
     def testCreatingCallbacks(self):
-        def function(*arg):
-            pass
-
         @objc.callbackFor(OC_CallbackTest.selWithCallback_)
         def function(arg1, arg2):
             pass

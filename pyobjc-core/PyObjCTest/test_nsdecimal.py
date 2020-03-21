@@ -3,11 +3,10 @@ Tests for the NSDecimal wrapper type
 """
 import decimal
 import operator
-import sys
 
 import objc
 from PyObjCTest.decimal import OC_TestDecimal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestNSDecimalWrapper(TestCase):
@@ -246,17 +245,16 @@ class TestDecimalByReference(TestCase):
         objc.registerMetaDataForSelector(
             b"OC_TestDecimal",
             b"getDecimal:",
-            dict(
-                arguments={
+            {
+                "arguments": {
                     2
-                    + 0: dict(
-                        type_modifier=objc._C_OUT,
-                        type=b"^{_NSDecimal=b8b4b1b1b18[8S]}",
-                        null_accepted=False,
-                    ),
-                    # 2+0:  dict(type=b'o^{_NSDecimal=b8b4b1b1b18[8S]}', null_accepted=False),
+                    + 0: {
+                        "type_modifier": objc._C_OUT,
+                        "type": b"^{_NSDecimal=b8b4b1b1b18[8S]}",
+                        "null_accepted": False,
+                    },
                 }
-            ),
+            },
         )
         objc._updatingMetadata(False)
         self.assertArgIsOut(o.getDecimal_, 0)

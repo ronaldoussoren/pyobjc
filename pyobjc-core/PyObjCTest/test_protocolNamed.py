@@ -1,7 +1,7 @@
 import objc
 import objc._objc
 from objc._protocols import PROTOCOL_CACHE
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestProtocols(TestCase):

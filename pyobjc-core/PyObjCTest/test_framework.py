@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestFramework(TestCase):
@@ -49,25 +49,25 @@ class TestFramework(TestCase):
         self.assertEqual(
             ("/System/Library/Frameworks/CoreServices.framework/Frameworks", "AE", "A"),
             objc.infoForFramework(
-                "/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Versions/A/AE"
+                "/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Versions/A/AE"  # noqa: B950
             ),
         )
 
         self.assertEqual(
             ("/System/Library/Frameworks/CoreServices.framework/Frameworks", "AE", ""),
             objc.infoForFramework(
-                "/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/AE"
+                "/System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/AE"  # noqa: B950
             ),
         )
 
         self.assertEqual(
             (
-                "/System/Library/Frameworks/CoreServices.framework/Versions/B/Frameworks",
+                "/System/Library/Frameworks/CoreServices.framework/Versions/B/Frameworks",  # noqa: B950
                 "AE",
                 "A",
             ),
             objc.infoForFramework(
-                "/System/Library/Frameworks/CoreServices.framework/Versions/B/Frameworks/AE.framework/Versions/A/AE"
+                "/System/Library/Frameworks/CoreServices.framework/Versions/B/Frameworks/AE.framework/Versions/A/AE"  # noqa: B950
             ),
         )
 

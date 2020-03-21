@@ -1,18 +1,18 @@
 import copy
 
 import objc
-from PyObjCTest.fnd import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.fnd import NSObject
+from PyObjCTools.TestSupport import TestCase, main
 
 objc.registerMetaDataForSelector(
     b"NSObject",
     b"validateValue:forKey:error:",
-    dict(
-        arguments={
-            2: dict(type_modifier=objc._C_INOUT),
-            4: dict(type_modifier=objc._C_OUT),
+    {
+        "arguments": {
+            2: {"type_modifier": objc._C_INOUT},
+            4: {"type_modifier": objc._C_OUT},
         }
-    ),
+    },
 )
 
 
@@ -37,16 +37,16 @@ class OCObserve(NSObject):
         return {v[1]: v[2]["new"] for v in self.values}
 
     @objc.python_method
-    def register(self, object, keypath):
-        object.addObserver_forKeyPath_options_context_(self, keypath, 0x3, None)
-        self.registrations.append((object, keypath))
+    def register(self, value, keypath):
+        value.addObserver_forKeyPath_options_context_(self, keypath, 0x3, None)
+        self.registrations.append((value, keypath))
 
     @objc.python_method
-    def unregister(self, object, keypath):
-        object.removeObserver_forKeyPath_(self, keypath)
+    def unregister(self, value, keypath):
+        value.removeObserver_forKeyPath_(self, keypath)
 
     def observeValueForKeyPath_ofObject_change_context_(
-        self, keypath, object, change, context
+        self, keypath, value, change, context
     ):
 
         # We don't get to keep the 'change' dictionary, make
@@ -57,12 +57,12 @@ class OCObserve(NSObject):
             if isinstance(v, (list, tuple, set)):
                 v = copy.copy(v)
             new_change[k] = v
-        self.values.append((object, keypath, new_change))
+        self.values.append((value, keypath, new_change))
 
     def __enter__(self):
         return self
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, exc_type, value, traceback):
         for o, k in self.registrations:
             self.unregister(o, k)
         self.registrations = []
@@ -354,7 +354,7 @@ class TestObjectProperty(TestCase):
             observer2.unregister(object2, "p4")
 
     def testMethods(self):
-        l = []
+        lst = []
 
         class OCTestObjectProperty4(NSObject):
 
@@ -362,12 +362,12 @@ class TestObjectProperty(TestCase):
 
             @p1.getter
             def p1(self):
-                l.append(("get",))
+                lst.append(("get",))
                 return self._p1 + "!"
 
             @p1.setter
             def p1(self, v):
-                l.append(("set", v))
+                lst.append(("set", v))
                 self._p1 = v + "?"
 
             @p1.validate
@@ -389,7 +389,7 @@ class TestObjectProperty(TestCase):
         o.p1 = "f"
         self.assertEqual(o.p1, "f?!")
         self.assertEqual(o._p1, "f?")
-        self.assertEqual(l, [("set", "f"), ("get",)])
+        self.assertEqual(lst, [("set", "f"), ("get",)])
 
         ok, value, error = o.validateValue_forKey_error_(1, "p1", None)
         self.assertTrue(ok)
@@ -401,12 +401,12 @@ class TestObjectProperty(TestCase):
         self.assertEqual(value, 2)
         self.assertEqual(error, "snake")
 
-        l = []
+        lst = []
         o = OCTestObjectProperty4b.alloc().init()
         o.p1 = "f"
         self.assertEqual(o.p1, "f?!")
         self.assertEqual(o._p1, "f?")
-        self.assertEqual(l, [("set", "f"), ("get",)])
+        self.assertEqual(lst, [("set", "f"), ("get",)])
 
         ok, value, error = o.validateValue_forKey_error_(2, "p1", None)
         self.assertTrue(ok)
@@ -419,19 +419,19 @@ class TestObjectProperty(TestCase):
         self.assertEqual(error, "monty")
 
     def testNative(self):
-        l = []
+        lst = []
 
         class OCTestObjectProperty7(NSObject):
             p1 = objc.object_property()
 
             @p1.getter
             def p1(self):
-                l.append("get")
+                lst.append("get")
                 return self._p1
 
             @p1.setter
             def p1(self, value):
-                l.append("set")
+                lst.append("set")
                 self._p1 = value
 
         o = OCTestObjectProperty7.alloc().init()
@@ -442,7 +442,7 @@ class TestObjectProperty(TestCase):
         v = o.valueForKey_("p1")
         self.assertEqual(v, "monkey")
 
-        self.assertEqual(l, ["set", "get"])
+        self.assertEqual(lst, ["set", "get"])
 
     def testDynamic(self):
         class OCTestObjectProperty8(NSObject):
@@ -593,7 +593,7 @@ class TestObjectProperty(TestCase):
 
         try:
 
-            class OCTestObjectProperty9(NSObject):
+            class OCTestObjectProperty10(NSObject):
                 p1 = objc.object_property(read_only=True)
 
                 @p1.validate

@@ -2,7 +2,7 @@ import ctypes
 
 import objc
 from PyObjCTest.pointersupport import object_capsule, opaque_capsule
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 OpaqueType = objc.createOpaquePointerType("OpaqueType", b"^{OpaqueType}", None)
 

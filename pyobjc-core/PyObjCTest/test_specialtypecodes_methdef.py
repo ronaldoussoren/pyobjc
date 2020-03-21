@@ -8,11 +8,11 @@ while at the same time getting a higher fidelity bridge.
 
 These tests ensure that private type codes don't leak into the Objective-C runtime.
 """
-import weakref
+import objc
 
 from PyObjCTest.fnd import NSObject
-from PyObjCTest.specialtypecodes import *
-from PyObjCTools.TestSupport import *
+import PyObjCTest.specialtypecodes  # noqa: F401
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class TestTypeCodeLeaks(TestCase):

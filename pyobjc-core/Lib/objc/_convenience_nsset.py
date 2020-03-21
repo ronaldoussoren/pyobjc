@@ -268,8 +268,6 @@ class nsset__iter__(object):
         self._size -= 1
         return container_unwrap(self._enum.nextObject(), StopIteration)
 
-    next = __next__
-
 
 addConvenienceForClass(
     "NSSet",

@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 
 import objc
 import objc._bridgesupport as bridgesupport
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, os_release, expectedFailure
 
 from importlib import reload
 
@@ -41,11 +41,13 @@ TEST_XML = b"""\
   <string_constant name='strconst1' value='string constant1' />
   <string_constant name='strconst2' value='string constant 2' value64='string constant two' />
   <string_constant name='strconst1u' value='string constant1 unicode' nsstring='true' />
-  <string_constant name='strconst2u' value='string constant 2 unicode' value64='string constant two unicode' nsstring='true' />
+  <string_constant name='strconst2u' value='string constant 2 unicode'
+      value64='string constant two unicode' nsstring='true' />
   <string_constant name='strconst3' /><!-- ignore -->
   <string_constant name='strconst4' nsstring='true' /><!-- ignore -->
   <string_constant name='strconst5' value64='string five' /><!-- ignore 32-bit -->
-  <string_constant name='strconst6' value64='string five unicode' nsstring='true' /><!-- ignore 32-bit -->
+  <string_constant name='strconst6' value64='string five unicode'
+     nsstring='true' /><!-- ignore 32-bit -->
   <string_constant name='strconst7' value='zee&#0235;n' nsstring='true' />
   <string_constant /><!-- ignore -->
   <enum name='enum1' value='1' />
@@ -67,15 +69,19 @@ TEST_XML = b"""\
   <function_pointer original='func3' /><!-- ignore -->
   <function_pointer /><!-- ignore -->
   <cftype name='CFProxy1Ref' type='^{CFProxy}' gettypeid_func='CFArrayGetTypeID' />
-  <cftype name='CFProxy2Ref' type='^{CFProxy32}' type64='^{CFProxy64}' gettypeid_func='CFArrayGetTypeID' />
-  <cftype name='CFProxy3Ref' type='^{CFProxy3}' tollfree='NSProxy' gettypeid_func='CFArrayGetTypeID' />
+  <cftype name='CFProxy2Ref' type='^{CFProxy32}'
+    type64='^{CFProxy64}' gettypeid_func='CFArrayGetTypeID' />
+  <cftype name='CFProxy3Ref' type='^{CFProxy3}'
+    tollfree='NSProxy' gettypeid_func='CFArrayGetTypeID' />
   <cftype name='CFProxy4Ref' type='^{CFProxy4}' tollfree='NSProxy2' />
-  <cftype name='CFProxy5Ref' type='^{CFProxy}' gettypeid_func='NoSuchFunction' /><!-- tollfree to CFTypeRef -->
+  <cftype name='CFProxy5Ref' type='^{CFProxy}'
+    gettypeid_func='NoSuchFunction' /><!-- tollfree to CFTypeRef -->
   <cftype name='CFProxy6Ref' type='^{CFProxy}' />
   <cftype name='CFProxy7Ref' type='^{CFProxy32}' type64='^{CFProxy64}' />
   <cftype type='^{CFProxy}' gettypeid_func='CFArrayGetTypeID' /><!-- ignore -->
   <cftype name='CFProxy8Ref' gettypeid_func='CFArrayGetTypeID' /><!-- ignore -->
-  <cftype name='CFProxy9Ref' type64='^{CFProxy64}' gettypeid_func='CFArrayGetTypeID' /><!-- ignore 32-bit -->
+  <cftype name='CFProxy9Ref' type64='^{CFProxy64}'
+    gettypeid_func='CFArrayGetTypeID' /><!-- ignore 32-bit -->
   <cftype/><!-- ignore -->
   <class name='MyClass1'></class>
   <class /><!-- ignore -->
@@ -84,12 +90,17 @@ TEST_XML = b"""\
     <method selector='method1' classmethod='true' ></method>
     <method selector='method2' variadic='true' ></method>
     <method selector='method3' variadic='true' c_array_delimited_by_null='true'></method>
-    <method selector='method4' variadic='true' c_array_length_in_arg='4'></method>
-    <method selector='method5' c_array_delimited_by_null='true'><retval type='d'/></method><!-- c_array... ignored -->
-    <method selector='method6' c_array_length_in_arg='4'><retval type='d' /><dummy/></method><!-- c_array... ignored -->
+    <method selector='method4' variadic='true' c_array_length_in_arg='4'>
+    </method>
+    <method selector='method5' c_array_delimited_by_null='true'><retval type='d'/>
+    </method><!-- c_array... ignored -->
+    <method selector='method6' c_array_length_in_arg='4'><retval type='d' /><dummy/>
+    </method><!-- c_array... ignored -->
     <method selector='method7' ignore='true'></method>
-    <method selector='method8' ignore='true' suggestion='ignore me'></method>
-    <method selector='method9' suggestion='ignore me'><retval type='d'/></method><!-- suggestion ignored -->
+    <method selector='method8' ignore='true' suggestion='ignore me'>
+    </method>
+    <method selector='method9' suggestion='ignore me'><retval type='d'/>
+    </method><!-- suggestion ignored -->
     <method selector='method10'>
        <retval type='d'/>
     </method>
@@ -109,10 +120,12 @@ TEST_XML = b"""\
        <retval sel_of_type='v@:f' sel_of_type64='v@:d' />
     </method>
     <method selector='method15'>
-       <retval null_accepted='false' already_retained='true' c_array_length_in_result='true' />
+       <retval null_accepted='false' already_retained='true'
+         c_array_length_in_result='true' />
     </method>
     <method selector='method16'>
-       <retval c_array_delimited_by_null='true' already_cfretained='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
+       <retval c_array_delimited_by_null='true' already_cfretained='true'
+         c_array_of_variable_length='true' printf_format='true' free_result='true' />
     </method>
     <method selector='method17'>
        <retval c_array_length_in_arg='1'/>
@@ -124,7 +137,8 @@ TEST_XML = b"""\
        <retval c_array_length_in_arg='4, 5'/>
     </method>
     <method selector='method20'>
-       <retval function_pointer_retained='false'/><!-- ignored, no function data -->
+       <retval function_pointer_retained='false'/>
+          <!-- ignored, no function data -->
     </method>
     <method selector='method21'>
        <retval function_pointer_retained='false' function_pointer='true'>
@@ -191,10 +205,13 @@ TEST_XML = b"""\
        <arg index='1' sel_of_type='v@:f' sel_of_type64='v@:d' />
     </method>
     <method selector='method15'>
-       <arg index='1' null_accepted='false' already_retained='true' c_array_length_in_result='true' />
+       <arg index='1' null_accepted='false' already_retained='true'
+          c_array_length_in_result='true' />
     </method>
     <method selector='method16'>
-       <arg index='1' c_array_delimited_by_null='true' already_cfretained='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
+       <arg index='1' c_array_delimited_by_null='true'
+          already_cfretained='true' c_array_of_variable_length='true'
+          printf_format='true' free_result='true' />
     </method>
     <method selector='method17'>
        <arg index='1' c_array_length_in_arg='1'/>
@@ -206,7 +223,8 @@ TEST_XML = b"""\
        <arg index='1' c_array_length_in_arg='4, 5'/>
     </method>
     <method selector='method20'>
-       <arg index='1' function_pointer_retained='false'/><!-- ignored, no function data -->
+       <arg index='1' function_pointer_retained='false'/>
+         <!-- ignored, no function data -->
     </method>
     <method selector='method21'>
        <arg index='1' function_pointer_retained='false' function_pointer='true'>
@@ -247,13 +265,18 @@ TEST_XML = b"""\
     <retval type="@" />
   </function>
   <function name='function2' variadic='true' ></function>
-  <function name='function3' variadic='true' c_array_delimited_by_null='true'></function>
-  <function name='function4' variadic='true' c_array_length_in_arg='4'></function>
-  <function name='function5' c_array_delimited_by_null='true'><retval type='d'/></function><!-- c_array... ignored -->
-  <function name='function6' c_array_length_in_arg='4'><retval type='d' /></function><!-- c_array... ignored -->
+  <function name='function3' variadic='true' c_array_delimited_by_null='true'>
+  </function>
+  <function name='function4' variadic='true' c_array_length_in_arg='4'>
+  </function>
+  <function name='function5' c_array_delimited_by_null='true'><retval type='d'/>
+  </function><!-- c_array... ignored -->
+  <function name='function6' c_array_length_in_arg='4'><retval type='d' />
+  </function><!-- c_array... ignored -->
   <function name='function7' ignore='true'></function>
   <function name='function8' ignore='true' suggestion='ignore me'></function>
-  <function name='function9' suggestion='ignore me'><retval type='d'/></function><!-- suggestion ignored -->
+  <function name='function9' suggestion='ignore me'><retval type='d'/>
+  </function><!-- suggestion ignored -->
   <function name='function10'>
     <retval type='d'/>
   </function>
@@ -273,10 +296,13 @@ TEST_XML = b"""\
      <retval type=':' sel_of_type='v@:f' sel_of_type64='v@:d' />
   </function>
   <function name='function16'>
-     <retval type='i' null_accepted='false' already_retained='true' c_array_length_in_result='true' />
+     <retval type='i' null_accepted='false' already_retained='true'
+        c_array_length_in_result='true' />
   </function>
   <function name='function17'>
-     <retval type='i' already_cfretained='true' c_array_delimited_by_null='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
+     <retval type='i' already_cfretained='true' c_array_delimited_by_null='true'
+          c_array_of_variable_length='true' printf_format='true'
+          free_result='true' />
   </function>
   <function name='function18'>
      <retval type='i' c_array_length_in_arg='1'/>
@@ -288,7 +314,8 @@ TEST_XML = b"""\
      <retval type='i' c_array_length_in_arg='4, 5'/>
   </function>
   <function name='function21'>
-     <retval type='?' function_pointer_retained='false'/><!-- ignored, no function data -->
+     <retval type='?' function_pointer_retained='false'/>
+       <!-- ignored, no function data -->
   </function>
   <function name='function22'>
      <retval type='?' function_pointer_retained='false' function_pointer='true'>
@@ -343,10 +370,13 @@ TEST_XML = b"""\
      <arg type=':' sel_of_type='v@:f' sel_of_type64='v@:d' />
   </function>
   <function name='function35'>
-     <arg type='@' null_accepted='false' already_retained='true' c_array_length_in_result='true' />
+     <arg type='@' null_accepted='false' already_retained='true'
+       c_array_length_in_result='true' />
   </function>
   <function name='function36'>
-     <arg type='@' c_array_delimited_by_null='true' already_cfretained='true' c_array_of_variable_length='true' printf_format='true' free_result='true' />
+     <arg type='@' c_array_delimited_by_null='true' already_cfretained='true'
+        c_array_of_variable_length='true' printf_format='true'
+        free_result='true' />
   </function>
   <function name='function37'>
      <arg type='@' c_array_length_in_arg='1'/>
@@ -358,7 +388,8 @@ TEST_XML = b"""\
      <arg type='@' c_array_length_in_arg='4, 5'/>
   </function>
   <function name='function40'>
-     <arg type='?' function_pointer_retained='false'/><!-- ignored, no function data -->
+     <arg type='?' function_pointer_retained='false'/>
+     <!-- ignored, no function data -->
   </function>
   <function name='function41'>
      <arg type='?' function_pointer_retained='false' function_pointer='true'>
@@ -407,10 +438,12 @@ TEST_XML = b"""\
     <method selector='selector1' type='v@:f' type64='v@:d' />
     <method selector='selector2' type='v@:f' type64='v@:d' classmethod='false' />
     <method selector='selector3' type='v@:f' type64='v@:d' classmethod='true' />
-    <method selector='selector4' type='v@:f' type64='v@:d' variadic='true' /><!-- 'variadic' is ignored -->
+    <method selector='selector4' type='v@:f' type64='v@:d' variadic='true' />
+         <!-- 'variadic' is ignored -->
     <method selector='selector5' /><!-- ignore: no type -->
     <method selector='selector6' type64='v@:@' /><!-- ignore 32-bit -->
-    <method selector='selector7' type='v@:f' class_method='false' /><!-- manpage: class_method, pyobjc 2.3: classmethod -->
+    <method selector='selector7' type='v@:f' class_method='false' />
+       <!-- manpage: class_method, pyobjc 2.3: classmethod -->
     <method selector='selector8' type='v@:f' class_method='true' />
     <method/>
     <method selector='selector9'/>
@@ -473,7 +506,8 @@ class TestBridgeSupportParser(TestCase):
             "Cocoa",
         )
 
-    # I'd like to use a test method with subTests here, but that doesn't support marking some subtests as expected failures
+    # I'd like to use a test method with subTests here, but that doesn't
+    # support marking some subtests as expected failures
     BROKEN_FRAMEWORKS = (
         "AE.bridgesupport",
         "ATS.bridgesupport",
@@ -1289,7 +1323,7 @@ class TestBridgeSupportParser(TestCase):
     def assert_valid_callable(self, meta, function):
         if function:
             if "arguments" in meta:
-                indexes = list(sorted(meta["arguments"]))
+                indexes = sorted(meta["arguments"])
                 self.assertEqual(indexes, list(range(len(indexes))))
 
         valid_keys = {
@@ -1561,7 +1595,7 @@ class TestBridgeSupportParser(TestCase):
 
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
 
-        for name, typestr, alias in prs.structs:
+        for name, typestr, _alias in prs.structs:
             self.assertIsInstance(name, str)
             self.assertIsInstance(typestr, bytes)
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
@@ -1591,7 +1625,7 @@ class Patcher(object):
 
         return getattr(m, name)
 
-    def set(self, path, value):
+    def set(self, path, value):  # noqa: A003
         module, name = path.rsplit(".", 1)
         m = __import__(module)
         for p in module.split(".")[1:]:
@@ -1602,7 +1636,7 @@ class Patcher(object):
     def __enter__(self):
         return self
 
-    def __exit__(self, type, value, tp):
+    def __exit__(self, exc_type, value, tp):
         for k in self._changes:
             self.set(k, self._changes[k])
 
@@ -1776,7 +1810,8 @@ class TestParseBridgeSupport(TestCase):
             <signatures>
               <opaque name='opaque_type' type='^{opaque}'/>
               <struct name='OCPoint' type='{OCPoint=dd}' />
-              <struct name='OCPoint2' type='{OCPoint2=dd}' alias='distutils.sysconfig.get_config_var'/>
+              <struct name='OCPoint2' type='{OCPoint2=dd}'
+                alias='distutils.sysconfig.get_config_var'/>
               <enum name='enum_value' value='42' />
               <constant name='const_value' type='@' />
               <constant name='const_raise' type='@' />
@@ -1939,7 +1974,11 @@ class TestInitFrameworkWrapper(TestCase):
             update_globals = None
 
             def parseBridgeSupport(
-                xmldata, globals, frameworkName, dylib_path=None, inlineTab=None
+                xmldata,
+                globals,  # noqa: A002
+                frameworkName,
+                dylib_path=None,
+                inlineTab=None,
             ):
                 calls.append((xmldata, globals, frameworkName, dylib_path, inlineTab))
                 if update_globals is not None:
@@ -2027,9 +2066,11 @@ class TestInitFrameworkWrapper(TestCase):
                         calls = []
                     self.calls = calls
 
-                def pathForResource_ofType_inDirectory_(self, name, type, directory):
-                    self.calls.append((name, type, directory))
-                    return bundle_resources.get((name, type), None)
+                def pathForResource_ofType_inDirectory_(
+                    self, name, resource_type, directory
+                ):
+                    self.calls.append((name, resource_type, directory))
+                    return bundle_resources.get((name, resource_type), None)
 
                 def __eq__(self, other):
                     if type(self) is not type(other):
@@ -2086,7 +2127,7 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
 
             def parseBridgeSupport(
-                xml, globals, framework, dylib_path=None, inlineTab=None
+                xml, globals, framework, dylib_path=None, inlineTab=None  # noqa: A002
             ):
                 parse_calls.append((xml, globals, framework, dylib_path, inlineTab))
 
@@ -2356,7 +2397,8 @@ class TestInitFrameworkWrapper(TestCase):
                 ],
             )
 
-            # 3. No resource files, have bundle files and library files (only bundle one is used)
+            # 3. No resource files, have bundle files and library files
+            # (only bundle one is used)
             resources = {}
             bundle_resources = {
                 ("Test", "bridgesupport"): os.path.join(
@@ -2410,7 +2452,8 @@ class TestInitFrameworkWrapper(TestCase):
                 ],
             )
 
-            # 4. No resource files, have bundle files (with override) and library files (only bundle one is used)
+            # 4. No resource files, have bundle files (with override)
+            # and library files (only bundle one is used)
             resources = {
                 (
                     "Test",
@@ -2580,7 +2623,7 @@ class TestInitFrameworkWrapper(TestCase):
                 parse_calls,
                 [
                     (
-                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n',
+                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n',  # noqa: B950
                         g,
                         "Test",
                         None,
@@ -2626,7 +2669,7 @@ class TestInitFrameworkWrapper(TestCase):
                 parse_calls,
                 [
                     (
-                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport 2" /></signatures>\n',
+                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport 2" /></signatures>\n',  # noqa: B950
                         g,
                         "Test",
                         os.path.join(helper_dir, "with_data_dylib", "Test.dylib"),
@@ -2676,7 +2719,7 @@ class TestInitFrameworkWrapper(TestCase):
                 parse_calls,
                 [
                     (
-                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n',
+                        b'<signatures version=\'1\'><string_constant name="info" value="system test.bridgesupport" /></signatures>\n',  # noqa: B950
                         g,
                         "Test",
                         None,
@@ -2726,7 +2769,7 @@ class TestInitFrameworkWrapper(TestCase):
             g = {}
             inlineTab = InlineTab()
 
-            def bundle_exception(name, path, identifier):
+            def bundle_exception(name, path, identifier):  # noqa: F811
                 if identifier is not SENTINEL:
                     raise ImportError(name)
 
@@ -2759,7 +2802,7 @@ class TestInitFrameworkWrapper(TestCase):
             g = {}
             inlineTab = InlineTab()
 
-            def bundle_exception(name, path, identifier):
+            def bundle_exception(name, path, identifier):  # noqa: F811
                 if identifier is not SENTINEL:
                     raise ImportError(name)
 
@@ -2843,7 +2886,7 @@ class TestMisc(TestCase):
     def test_struct_alias(self):
         tp1 = objc.createStructType("TestStruct1", b'{TestStruct1="f1"d"f2"d}', None)
 
-        with warnings.catch_warnings(record=True) as w:
+        with warnings.catch_warnings(record=True):
             warnings.simplefilter("always")
             objc.registerStructAlias(b"{TestStruct2=dd}", tp1)
 

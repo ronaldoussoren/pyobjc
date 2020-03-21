@@ -11,8 +11,8 @@ import os
 import sys
 
 import objc
-from PyObjCTest.identity import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.identity import OC_TestIdentity
+from PyObjCTools.TestSupport import TestCase, main, os_release, os_level_key
 
 
 class TestPythonRoundTrip(TestCase):
@@ -93,7 +93,7 @@ class ObjCRoundTrip(TestCase):
         self.assertTrue(container.isSameObjectAsStored_(v), repr(v))
         self.assertTrue(isinstance(v, objc.formal_protocol))
 
-    if sys.maxsize < 2 ** 32 and os_release() < "10.7":
+    if sys.maxsize < 2 ** 32 and os_level_key(os_release()) < os_level_key("10.7"):
 
         def testObject(self):
             container = OC_TestIdentity.alloc().init()
@@ -194,6 +194,7 @@ class ObjCtoPython(TestCase):
 
         container.setStoredObjectToAProtocol()
         v = container.storedObject()
+        self.assertIsNot(v, None)
         self.assertFetchingTwice(container, "protocol")
 
     if sys.maxsize < 2 ** 32 and os_release() < "10.7":

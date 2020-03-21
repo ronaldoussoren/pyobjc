@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.initialize import OC_TestInitialize
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class OC_TestInitializePython(OC_TestInitialize):

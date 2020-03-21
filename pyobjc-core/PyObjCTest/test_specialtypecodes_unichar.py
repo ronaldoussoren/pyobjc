@@ -8,135 +8,137 @@ while at the same time getting a higher fidelity bridge.
 - Add tests for calling methods from ObjC
 """
 import array
-import sys
-import weakref
 
-from PyObjCTest.fnd import NSObject
-from PyObjCTest.specialtypecodes import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
+from PyObjCTools.TestSupport import TestCase, main
+import objc
 
 
 def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharValue",
-        dict(retval=dict(type=objc._C_UNICHAR)),
+        {"retval": {"type": objc._C_UNICHAR}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArray",
-        dict(
-            retval=dict(type=objc._C_PTR + objc._C_UNICHAR, c_array_of_fixed_length=4)
-        ),
+        {
+            "retval": {
+                "type": objc._C_PTR + objc._C_UNICHAR,
+                "c_array_of_fixed_length": 4,
+            }
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharString",
-        dict(
-            retval=dict(
-                type=objc._C_PTR + objc._C_UNICHAR, c_array_delimited_by_null=True
-            )
-        ),
+        {
+            "retval": {
+                "type": objc._C_PTR + objc._C_UNICHAR,
+                "c_array_delimited_by_null": True,
+            }
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharStringArg:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_UNICHAR,
-                    c_array_delimited_by_null=True,
-                    type_modifier=objc._C_IN,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "c_array_delimited_by_null": True,
+                    "type_modifier": objc._C_IN,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArg:andUniCharArg:",
-        dict(arguments={2: dict(type=objc._C_UNICHAR), 3: dict(type=objc._C_UNICHAR)}),
+        {"arguments": {2: {"type": objc._C_UNICHAR}, 3: {"type": objc._C_UNICHAR}}},
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArrayOf4In:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_UNICHAR,
-                    type_modifier=objc._C_IN,
-                    c_array_of_fixed_length=4,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 4,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArrayOf4Out:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_UNICHAR,
-                    type_modifier=objc._C_OUT,
-                    c_array_of_fixed_length=4,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArrayOf4InOut:",
-        dict(
-            arguments={
-                2: dict(
-                    type=objc._C_PTR + objc._C_UNICHAR,
-                    type_modifier=objc._C_INOUT,
-                    c_array_of_fixed_length=4,
-                )
+        {
+            "arguments": {
+                2: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_of_fixed_length": 4,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArrayOfCount:In:",
-        dict(
-            arguments={
-                3: dict(
-                    type=objc._C_PTR + objc._C_UNICHAR,
-                    type_modifier=objc._C_IN,
-                    c_array_of_lenght_in_arg=2,
-                )
+        {
+            "arguments": {
+                3: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_lenght_in_arg": 2,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArrayOfCount:Out:",
-        dict(
-            arguments={
-                3: dict(
-                    type=objc._C_PTR + objc._C_UNICHAR,
-                    type_modifier=objc._C_OUT,
-                    c_array_of_lenght_in_arg=2,
-                )
+        {
+            "arguments": {
+                3: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_lenght_in_arg": 2,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_TestSpecialTypeCode",
         b"UniCharArrayOfCount:InOut:",
-        dict(
-            arguments={
-                3: dict(
-                    type=objc._C_PTR + objc._C_UNICHAR,
-                    type_modifier=objc._C_INOUT,
-                    c_array_of_lenght_in_arg=2,
-                )
+        {
+            "arguments": {
+                3: {
+                    "type": objc._C_PTR + objc._C_UNICHAR,
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_of_lenght_in_arg": 2,
+                }
             }
-        ),
+        },
     )
 
 
@@ -148,18 +150,18 @@ class TestTypeCode_UniChar(TestCase):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         self.assertEqual(o.UniCharValue(), "a")
-        self.assertEqual(o.UniCharValue(), unichr(55))
-        self.assertEqual(o.UniCharValue(), unichr(9243))
+        self.assertEqual(o.UniCharValue(), chr(55))
+        self.assertEqual(o.UniCharValue(), chr(9243))
 
     def testReturnValueArray(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
         v = o.UniCharArray()
         self.assertEqual(len(v), 4)
-        self.assertEqual(v[0], unichr(100))
-        self.assertEqual(v[1], unichr(400))
-        self.assertEqual(v[2], unichr(955))
-        self.assertEqual(v[3], unichr(40000))
+        self.assertEqual(v[0], chr(100))
+        self.assertEqual(v[1], chr(400))
+        self.assertEqual(v[2], chr(955))
+        self.assertEqual(v[3], chr(40000))
 
     def testReturnValueString(self):
         o = OC_TestSpecialTypeCode.alloc().init()
@@ -171,8 +173,8 @@ class TestTypeCode_UniChar(TestCase):
     def testSimpleArg(self):
         o = OC_TestSpecialTypeCode.alloc().init()
 
-        v = o.UniCharArg_andUniCharArg_(unichr(44), unichr(450))
-        self.assertEqual(v, (unichr(44), unichr(450)))
+        v = o.UniCharArg_andUniCharArg_(chr(44), chr(450))
+        self.assertEqual(v, (chr(44), chr(450)))
 
         v = o.UniCharArg_andUniCharArg_("a", "b")
         self.assertEqual(v, ("a", "b"))
@@ -210,9 +212,7 @@ class TestTypeCode_UniChar(TestCase):
 
         a = array.array("h", [200, 300, 400, 500])
         v = o.UniCharArrayOf4In_(a)
-        self.assertEqual(
-            v, "".join([unichr(200), unichr(300), unichr(400), unichr(500)])
-        )
+        self.assertEqual(v, "".join([chr(200), chr(300), chr(400), chr(500)]))
 
     def testFixedArrayOut(self):
         o = OC_TestSpecialTypeCode.alloc().init()

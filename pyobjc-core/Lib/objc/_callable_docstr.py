@@ -98,15 +98,15 @@ def describe_type(typestr):
     return "<?>"
 
 
-def describe_callable(callable):
-    name = callable.__name__
+def describe_callable(callable_object):
+    name = callable_object.__name__
     try:
-        metadata = callable.__metadata__()
+        metadata = callable_object.__metadata__()
     except objc.internal_error:
         return None
 
     return describe_callable_metadata(
-        name, metadata, ismethod=isinstance(callable, objc.selector)
+        name, metadata, ismethod=isinstance(callable_object, objc.selector)
     )
 
 
@@ -266,18 +266,18 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
 objc.options._callable_doc = describe_callable
 
 
-def callable_signature(callable):
+def callable_signature(callable_object):
     # Create an inspect.Signature for an PyObjC callable
     # both objc.function and objc.native_selector only support positional
     # arguments, and not keyword arguments.
     try:
-        metadata = callable.__metadata__()
+        metadata = callable_object.__metadata__()
     except objc.internal_error:
         # This can happen with some private methods with undocumented
         # characters in type encodings
         return None
 
-    ismethod = isinstance(callable, objc.selector)
+    ismethod = isinstance(callable_object, objc.selector)
 
     if ismethod:
         args = metadata["arguments"][

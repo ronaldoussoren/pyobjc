@@ -20,6 +20,7 @@
 + (CFDateRef)today;
 + (NSString*)formatDate:(CFDateRef)date;
 + (int)shortStyle;
++ (int)noStyle;
 @end
 
 @implementation OC_TestCoreFoundation
@@ -106,6 +107,11 @@
 + (int)shortStyle
 {
     return kCFDateFormatterShortStyle;
+}
+
++ (int)noStyle
+{
+    return kCFDateFormatterNoStyle;
 }
 
 @end

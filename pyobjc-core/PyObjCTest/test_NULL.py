@@ -1,51 +1,55 @@
 import objc
-from PyObjCTest.NULL import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.NULL import OCTestNULL
+from PyObjCTools.TestSupport import TestCase, main
 
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"callOut:",
-    dict(arguments={2: dict(type_modifier=b"o", null_accepted=True)}),
+    {"arguments": {2: {"type_modifier": b"o", "null_accepted": True}}},
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"callList:andInOut2:",
-    dict(arguments={3: dict(type_modifier=b"o", null_accepted=True)}),
+    {"arguments": {3: {"type_modifier": b"o", "null_accepted": True}}},
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"callList:andInOut:",
-    dict(arguments={3: dict(type_modifier=b"N", null_accepted=True)}),
+    {"arguments": {3: {"type_modifier": b"N", "null_accepted": True}}},
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"callList:andIn:",
-    dict(arguments={3: dict(type_modifier=b"n", null_accepted=True)}),
+    {"arguments": {3: {"type_modifier": b"n", "null_accepted": True}}},
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"callList:andOut:",
-    dict(arguments={3: dict(type_modifier=b"o", null_accepted=True)}),
+    {"arguments": {3: {"type_modifier": b"o", "null_accepted": True}}},
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"on:callList:andInOut:",
-    dict(arguments={4: dict(type_modifier=b"N", null_accepted=True)}),
+    {"arguments": {4: {"type_modifier": b"N", "null_accepted": True}}},
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"on:callList:andIn:",
-    dict(arguments={4: dict(type_modifier=b"n", null_accepted=True)}),
+    {"arguments": {4: {"type_modifier": b"n", "null_accepted": True}}},
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"on:callList:andOut:",
-    dict(arguments={4: dict(type_modifier=b"N", null_accepted=True)}),  # N is by design
+    {
+        "arguments": {4: {"type_modifier": b"N", "null_accepted": True}}
+    },  # N is by design
 )
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
     b"on:callOut:",
-    dict(arguments={3: dict(type_modifier=b"N", null_accepted=True)}),  # N is by design
+    {
+        "arguments": {3: {"type_modifier": b"N", "null_accepted": True}}
+    },  # N is by design
 )
 
 

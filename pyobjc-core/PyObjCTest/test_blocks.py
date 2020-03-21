@@ -5,7 +5,7 @@ import sys
 
 import objc
 from PyObjCTest.block import OCTestBlock
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, onlyIf, min_os_level
 
 if sys.maxsize > 2 ** 32:
     NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
@@ -120,7 +120,7 @@ objc.parseBridgeSupport(
       </class>
     </signatures>
     """
-    % dict(NSRect_tp=NSRect_tp.decode("ascii")),
+    % {"NSRect_tp": NSRect_tp.decode("ascii")},
     globals(),
     "PyObjCTest",
 )
@@ -265,8 +265,6 @@ class TestBlocks(TestCase):
     def testBlockToObjC2(self):
         obj = OCTestBlock.alloc().init()
 
-        lst = []
-
         def callback(a, b):
             return a * b
 
@@ -281,8 +279,6 @@ class TestBlocks(TestCase):
     @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC3(self):
         obj = OCTestBlock.alloc().init()
-
-        lst = []
 
         def callback(a, b, c, d):
             return ((a, b), (c, d))

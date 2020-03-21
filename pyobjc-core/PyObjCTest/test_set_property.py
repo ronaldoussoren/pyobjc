@@ -1,9 +1,8 @@
 import pickle
-import sys
 
 import objc
 from PyObjCTest.test_object_property import OCObserve
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -17,7 +16,7 @@ class TestSetPropertyHelper(NSObject):
 class TestSetProperty(TestCase):
     def testCopying(self):
         o = TestSetPropertyHelper.alloc().init()
-        aSet = set([1, 2])
+        aSet = {1, 2}
         o.aSet = aSet
 
         self.assertEqual(len(o.aSet), 2)
@@ -28,7 +27,7 @@ class TestSetProperty(TestCase):
 
     def testRepr(self):
         o = TestSetPropertyHelper.alloc().init()
-        aSet = set([1, 2])
+        aSet = {1, 2}
         o.aSet = aSet
 
         self.assertEqual(repr(o.aSet), "<set proxy for property aSet %r>" % (aSet,))
@@ -60,7 +59,7 @@ class TestSetProperty(TestCase):
             v.sort()
             self.assertEqual(v, ["a", "b"])
 
-            self.assertEqual(o.aSet, set(["a", "b"]))
+            self.assertEqual(o.aSet, {"a", "b"})
 
             proxy = o.aSet
 
@@ -68,7 +67,7 @@ class TestSetProperty(TestCase):
             self.assertEqual(len(o.aSet), 0)
             self.assertEqual(len(proxy), 0)
 
-            self.assertEqual(observer.values[-1][-1]["old"], set(["a", "b"]))
+            self.assertEqual(observer.values[-1][-1]["old"], {"a", "b"})
             self.assertNotIn("new", observer.values[-1][-1])
 
     def testForwarding(self):
@@ -102,25 +101,25 @@ class TestSetProperty(TestCase):
 
             observer.register(o, "aSet")
 
-            o.aSet.difference_update(set([1, 4]))
-            self.assertEqual(o.aSet, set([2, 3]))
+            o.aSet.difference_update({1, 4})
+            self.assertEqual(o.aSet, {2, 3})
 
             self.assertEqual(len(observer.values), 1)
             self.assertEqual(observer.values[-1][-1]["kind"], 3)
             self.assertNotIn("new", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["old"], set([1]))
+            self.assertEqual(observer.values[-1][-1]["old"], {1})
 
     def testSymmetricDifferenceUpdate(self):
         with OCObserve.alloc().init() as observer:
             o = TestSetPropertyHelper.alloc().init()
 
-            o.aSet = set([1, 2, 3])
+            o.aSet = {1, 2, 3}
 
             observer.register(o, "aSet")
 
             self.assertEqual(len(observer.values), 0)
-            o.aSet.symmetric_difference_update(set([1, 4]))
-            self.assertEqual(o.aSet, set([2, 3, 4]))
+            o.aSet.symmetric_difference_update({1, 4})
+            self.assertEqual(o.aSet, {2, 3, 4})
 
             self.assertEqual(len(observer.values), 2)
 
@@ -131,13 +130,13 @@ class TestSetProperty(TestCase):
                 if observer.values[i][-1]["kind"] == 3:
                     # Remove
                     self.assertNotIn("new", observer.values[i][-1])
-                    self.assertEqual(observer.values[i][-1]["old"], set([1]))
+                    self.assertEqual(observer.values[i][-1]["old"], {1})
                     haveRemove = True
 
                 elif observer.values[i][-1]["kind"] == 2:
                     # Remove
                     self.assertNotIn("old", observer.values[i][-1])
-                    self.assertEqual(observer.values[i][-1]["new"], set([4]))
+                    self.assertEqual(observer.values[i][-1]["new"], {4})
                     haveAdd = True
 
                 else:
@@ -157,13 +156,13 @@ class TestSetProperty(TestCase):
             self.assertEqual(len(observer.values), 2)
             self.assertEqual(observer.values[-1][-1]["kind"], 2)
             self.assertNotIn("old", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["new"], set([1, 2, 3]))
+            self.assertEqual(observer.values[-1][-1]["new"], {1, 2, 3})
 
-            o.aSet.update(set([3, 4, 5]))
+            o.aSet.update({3, 4, 5})
             self.assertEqual(len(observer.values), 3)
             self.assertEqual(observer.values[-1][-1]["kind"], 2)
             self.assertNotIn("old", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["new"], set([4, 5]))
+            self.assertEqual(observer.values[-1][-1]["new"], {4, 5})
 
     def testAddDiscard(self):
         with OCObserve.alloc().init() as observer:
@@ -173,15 +172,15 @@ class TestSetProperty(TestCase):
             o.aSet.add(1)
             self.assertEqual(observer.seen, {"aSet": {1}})
             self.assertNotIn("old", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["new"], set([1]))
+            self.assertEqual(observer.values[-1][-1]["new"], {1})
 
             o.aSet.discard(1)
             self.assertNotIn("new", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["old"], set([1]))
+            self.assertEqual(observer.values[-1][-1]["old"], {1})
 
             o.aSet.discard(2)
             self.assertNotIn("new", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["old"], set([]))
+            self.assertEqual(observer.values[-1][-1]["old"], set())
 
     def testAddRemove(self):
         with OCObserve.alloc().init() as observer:
@@ -191,22 +190,22 @@ class TestSetProperty(TestCase):
             o.aSet.add(1)
             self.assertEqual(observer.seen, {"aSet": {1}})
             self.assertNotIn("old", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["new"], set([1]))
+            self.assertEqual(observer.values[-1][-1]["new"], {1})
 
             o.aSet.remove(1)
             self.assertNotIn("new", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["old"], set([1]))
+            self.assertEqual(observer.values[-1][-1]["old"], {1})
 
             self.assertRaises(KeyError, o.aSet.remove, 2)
             self.assertNotIn("new", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["old"], set([]))
+            self.assertEqual(observer.values[-1][-1]["old"], set())
 
             o.aSet.add(1)
             o.aSet.add(2)
             v = o.aSet.pop()
             self.assertTrue(v in (1, 2))
             self.assertNotIn("new", observer.values[-1][-1])
-            self.assertEqual(observer.values[-1][-1]["old"], set([v]))
+            self.assertEqual(observer.values[-1][-1]["old"], {v})
 
             o.aSet = set()
             self.assertRaises(KeyError, o.aSet.pop)
@@ -245,42 +244,39 @@ class TestSetProperty(TestCase):
             # we get the some KVO notificatons as when a new value is set.
 
             self.assertEqual(o.aSet, {1})
-            o.aSet |= set([2, 3])
+            o.aSet |= {2, 3}
             self.assertEqual(o.aSet, {1, 2, 3})
-            self.assertEqual(o.aSet, set([1, 2, 3]))
             self.assertEqual(len(observer.values), 2)
             self.assertEqual(observer.values[-1][-1]["kind"], 1)
-            # self.assertEqual(observer.values[-1][-1]['old'], set([1]))
-            self.assertEqual(observer.values[-1][-1]["new"], set([1, 2, 3]))
+            # self.assertEqual(observer.values[-1][-1]['old'], {1})
+            self.assertEqual(observer.values[-1][-1]["new"], {1, 2, 3})
 
             self.assertEqual(o.aSet, {1, 2, 3})
-            o.aSet &= set([3, 4])
+            o.aSet &= {3, 4}
             self.assertEqual(o.aSet, {3})
-            self.assertEqual(o.aSet, set([3]))
             self.assertEqual(len(observer.values), 4)
             self.assertEqual(observer.values[-1][-1]["kind"], 1)
-            # self.assertEqual(observer.values[-1][-1]['old'], set([1,2,3]))
-            # self.assertEqual(observer.values[-1][-1]['new'], set([3]))
+            # self.assertEqual(observer.values[-1][-1]['old'], {1,2,3})
+            # self.assertEqual(observer.values[-1][-1]['new'], {3})
 
             self.assertEqual(o.aSet, {3})
             o.aSet -= {3}
             self.assertEqual(o.aSet, set())
-            self.assertEqual(o.aSet, set([]))
             self.assertEqual(len(observer.values), 6)
             self.assertEqual(observer.values[-1][-1]["kind"], 1)
-            # self.assertEqual(observer.values[-1][-1]['old'], set([3]))
+            # self.assertEqual(observer.values[-1][-1]['old'], {3})
             # self.assertEqual(observer.values[-1][-1]['new'], set())
 
-            o.aSet = set([1, 2, 3])
+            o.aSet = {1, 2, 3}
             # self.assertEqual(len(observer.values), 8)
 
             self.assertEqual(o.aSet, {1, 2, 3})
-            o.aSet ^= set([1, 4])
+            o.aSet ^= {1, 4}
             self.assertEqual(o.aSet, {2, 3, 4})
             # self.assertEqual(len(observer.values), 9)
             self.assertEqual(observer.values[-1][-1]["kind"], 1)
-            # self.assertEqual(observer.values[-1][-1]['old'], set([1,2,3]))
-            # self.assertEqual(observer.values[-1][-1]['new'], set([2,3,4]))
+            # self.assertEqual(observer.values[-1][-1]['old'], {1,2,3})
+            # self.assertEqual(observer.values[-1][-1]['new'], {2,3,4})
 
     def testObjCAccessors(self):
         # Check that the right ObjC array accessors are defined and work properly
@@ -312,7 +308,7 @@ class TestSetProperty(TestCase):
         o.aSet.add(1)
         o.aSet.add(2)
 
-        v = list(sorted(o.pyobjc_instanceMethods.enumeratorOfASet()))
+        v = sorted(o.pyobjc_instanceMethods.enumeratorOfASet())
         self.assertEqual(v, [1, 2])
 
         class Testing(object):

@@ -13,12 +13,15 @@ test-env
 testenv
 workenv
 docs/examples
+.mypy_cache
 
 syntax: glob
 *.so
 *.egg-info
 *.dSYM
 *.pyc
+*.py-e
+*.pye
 *.pyo
 *.orig
 unittest2-*.egg

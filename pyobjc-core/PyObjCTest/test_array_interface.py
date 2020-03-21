@@ -2,10 +2,10 @@ import operator
 import sys
 
 # Import some of the stdlib tests
-from test import list_tests, mapping_tests, seq_tests
+from test import list_tests, seq_tests
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import main, onlyIf
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -164,24 +164,24 @@ class MutableArrayTest(list_tests.CommonTest):
         pass
 
     def test_pyobjc_setitem(self):
-        l = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        lst = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         a = NSMutableArray([1, 2, 3, 4, 5, 6, 7, 8, 9])
         self.assertRaises(TypeError, operator.setitem, a, "a", "b")
         self.assertRaises(ValueError, operator.setitem, a, slice(1, 4, 0), ("c", "d"))
         a[1:4] = a
-        l[1:4] = l
-        self.assertEqual(a, NSMutableArray(l))
+        lst[1:4] = lst
+        self.assertEqual(a, NSMutableArray(lst))
 
-        l = [1, 2, 3, 4]
+        lst = [1, 2, 3, 4]
         a = NSMutableArray([1, 2, 3, 4])
-        l[-2:2] = "a"
+        lst[-2:2] = "a"
         a[-2:2] = "a"
-        self.assertEqual(a, NSMutableArray(l))
+        self.assertEqual(a, NSMutableArray(lst))
 
-        l = [1, 2, 3, 4]
+        lst = [1, 2, 3, 4]
         a = NSMutableArray([1, 2, 3, 4])
         self.assertRaises(ValueError, operator.setitem, a, slice(None, None, 2), a)
-        self.assertRaises(ValueError, operator.setitem, a, slice(None, None, 2), l)
+        self.assertRaises(ValueError, operator.setitem, a, slice(None, None, 2), lst)
 
     def test_pyobjc_clear(self):
         a = NSMutableArray([1, 2, 3])
@@ -396,22 +396,22 @@ class MutableArrayTest(list_tests.CommonTest):
     def test_sort(self):
         base = [2, 1, 5, 4, 1, 3]
 
-        l = self.type2test(base)
-        l.sort()
-        self.assertEqual(l, self.type2test([1, 1, 2, 3, 4, 5]))
+        lst = self.type2test(base)
+        lst.sort()
+        self.assertEqual(lst, self.type2test([1, 1, 2, 3, 4, 5]))
 
-        l = self.type2test(base)
-        l.sort(reverse=True)
-        self.assertEqual(l, self.type2test([5, 4, 3, 2, 1, 1]))
+        lst = self.type2test(base)
+        lst.sort(reverse=True)
+        self.assertEqual(lst, self.type2test([5, 4, 3, 2, 1, 1]))
 
         base = [-2, 1, -5, 4, 3]
-        l = self.type2test(base)
-        l.sort(key=lambda x: abs(x))
-        self.assertEqual(l, self.type2test([1, -2, 3, 4, -5]))
+        lst = self.type2test(base)
+        lst.sort(key=lambda x: abs(x))
+        self.assertEqual(lst, self.type2test([1, -2, 3, 4, -5]))
 
-        l = self.type2test(base)
-        l.sort(key=lambda x: abs(x), reverse=True)
-        self.assertEqual(l, self.type2test([-5, 4, 3, -2, 1]))
+        lst = self.type2test(base)
+        lst.sort(key=lambda x: abs(x), reverse=True)
+        self.assertEqual(lst, self.type2test([-5, 4, 3, -2, 1]))
 
 
 if __name__ == "__main__":

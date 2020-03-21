@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.properties import OCPropertyDefinitions
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, min_os_level
 
 
 class TestPropertiesForClass(TestCase):

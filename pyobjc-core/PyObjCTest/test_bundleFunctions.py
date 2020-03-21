@@ -1,7 +1,7 @@
 import os
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 from . import fnd as Foundation
 
@@ -27,7 +27,7 @@ class TestBundleFunctions(TestCase):
     def testSimple(self):
         for bundle in (None, self.bundle):
             d = {}
-            objc.loadBundleFunctions(self.bundle, d, FUNCTIONS)
+            objc.loadBundleFunctions(bundle, d, FUNCTIONS)
 
             self.assertIn("NSIsFreedObject", d)
             self.assertIn("NSCountFrames", d)

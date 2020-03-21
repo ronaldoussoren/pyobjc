@@ -1,7 +1,7 @@
 import sys
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 # Most useful systems will at least have 'NSObject'.
 # NSObject = objc.lookUpClass('NSObject')

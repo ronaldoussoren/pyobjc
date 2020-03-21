@@ -1,18 +1,17 @@
 import os
 import subprocess
-import sys
 
 import objc._dyld as dyld
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, os_release, os_level_key
 
 
 class TestDyld(TestCase):
     def setUp(self):
         self.orig_environ = os.environ
-        os.environ = os.environ.copy()
+        os.environ = os.environ.copy()  # noqa: B003
 
     def tearDown(self):
-        os.environ = self.orig_environ
+        os.environ = self.orig_environ  # noqa: B003
 
     def test_inject_suffixes(self):
         if "DYLD_IMAGE_SUFFIX" in os.environ:
@@ -70,9 +69,9 @@ class TestDyld(TestCase):
 
         orig = os.path.exists
         try:
-            os.path.exists = lambda fn: l.append(fn)
+            os.path.exists = lambda fn: lst.append(fn)
 
-            l = []
+            lst = []
             self.assertRaises(
                 ValueError,
                 dyld.dyld_library,
@@ -80,7 +79,7 @@ class TestDyld(TestCase):
                 "libXSystem.dylib",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/usr/lib/libSystem.dylib",
                     os.path.expanduser("~/lib/libXSystem.dylib"),
@@ -91,7 +90,7 @@ class TestDyld(TestCase):
             )
 
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
-            l = []
+            lst = []
             self.assertRaises(
                 ValueError,
                 dyld.dyld_library,
@@ -99,7 +98,7 @@ class TestDyld(TestCase):
                 "libXSystem.dylib",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/usr/lib/libSystem_debug.dylib",
                     "/usr/lib/libSystem.dylib",
@@ -117,7 +116,7 @@ class TestDyld(TestCase):
             del os.environ["DYLD_IMAGE_SUFFIX"]
 
             os.environ["DYLD_LIBRARY_PATH"] = "/slib:/usr/slib"
-            l = []
+            lst = []
             self.assertRaises(
                 ValueError,
                 dyld.dyld_library,
@@ -125,7 +124,7 @@ class TestDyld(TestCase):
                 "libXSystem.dylib",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/slib/libXSystem.dylib",
                     "/usr/slib/libXSystem.dylib",
@@ -139,7 +138,7 @@ class TestDyld(TestCase):
             del os.environ["DYLD_LIBRARY_PATH"]
 
             os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = "/slib:/usr/slib"
-            l = []
+            lst = []
             self.assertRaises(
                 ValueError,
                 dyld.dyld_library,
@@ -147,7 +146,7 @@ class TestDyld(TestCase):
                 "libXSystem.dylib",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/usr/lib/libSystem.dylib",
                     "/slib/libXSystem.dylib",
@@ -160,7 +159,7 @@ class TestDyld(TestCase):
             os.environ["DYLD_FALLBACK_LIBRARY_PATH"] = "/lib4:/lib5"
             os.environ["DYLD_IMAGE_SUFFIX"] = "_profile"
 
-            l = []
+            lst = []
             self.assertRaises(
                 ValueError,
                 dyld.dyld_library,
@@ -168,7 +167,7 @@ class TestDyld(TestCase):
                 "libXSystem.dylib",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/lib2/libXSystem_profile.dylib",
                     "/lib2/libXSystem.dylib",
@@ -194,7 +193,8 @@ class TestDyld(TestCase):
             "/usr/lib/libSystem.dylib",
         )
 
-        # When the 'command line tools for xcode' are not installed there is no debug version of libsystem in the system wide
+        # When the 'command line tools for xcode' are not installed
+        # there is no debug version of libsystem in the system wide
         # library directory. In that case we look in the SDK instead.
         if os.path.exists("/usr/lib/libSystem_debug.dylib"):
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
@@ -210,7 +210,8 @@ class TestDyld(TestCase):
             )
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
 
-            # The OSX 10.11 SDK no longer contains ".dylib" files, which makes the test useless when running up-to-date
+            # The OSX 10.11 SDK no longer contains ".dylib" files, which
+            # makes the test useless when running up-to-date
             # tools on OSX 10.10 or later.
             if os_level_key(os_release()) < os_level_key("10.10"):
                 self.assertEqual(
@@ -231,11 +232,11 @@ class TestDyld(TestCase):
 
         orig = os.path.exists
         try:
-            os.path.exists = lambda fn: l.append(fn)
+            os.path.exists = lambda fn: lst.append(fn)
 
             self.maxDiff = None
 
-            l = []
+            lst = []
             self.assertRaises(
                 ImportError,
                 dyld.dyld_framework,
@@ -243,7 +244,7 @@ class TestDyld(TestCase):
                 "XCocoa",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/System/Library/Cocoa.framework/Cocoa",
                     os.path.expanduser("~/Library/Frameworks/XCocoa.framework/XCocoa"),
@@ -254,7 +255,7 @@ class TestDyld(TestCase):
             )
 
             os.environ["DYLD_IMAGE_SUFFIX"] = "_profile"
-            l = []
+            lst = []
             self.assertRaises(
                 ImportError,
                 dyld.dyld_framework,
@@ -262,7 +263,7 @@ class TestDyld(TestCase):
                 "XCocoa",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/System/Library/Cocoa.framework/Cocoa_profile",
                     "/System/Library/Cocoa.framework/Cocoa",
@@ -281,7 +282,7 @@ class TestDyld(TestCase):
             del os.environ["DYLD_IMAGE_SUFFIX"]
 
             os.environ["DYLD_FRAMEWORK_PATH"] = "/Projects/Frameworks:/Company"
-            l = []
+            lst = []
             self.assertRaises(
                 ImportError,
                 dyld.dyld_framework,
@@ -289,7 +290,7 @@ class TestDyld(TestCase):
                 "XCocoa",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/Projects/Frameworks/XCocoa.framework/XCocoa",
                     "/Company/XCocoa.framework/XCocoa",
@@ -303,7 +304,7 @@ class TestDyld(TestCase):
             del os.environ["DYLD_FRAMEWORK_PATH"]
 
             os.environ["DYLD_FALLBACK_FRAMEWORK_PATH"] = "/Projects/Frameworks:/Company"
-            l = []
+            lst = []
             self.assertRaises(
                 ImportError,
                 dyld.dyld_framework,
@@ -311,7 +312,7 @@ class TestDyld(TestCase):
                 "XCocoa",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/System/Library/Cocoa.framework/Cocoa",
                     "/Projects/Frameworks/XCocoa.framework/XCocoa",
@@ -324,7 +325,7 @@ class TestDyld(TestCase):
             os.environ["DYLD_FALLBACK_FRAMEWORK_PATH"] = "/Suffix1:/Suffix2"
             os.environ["DYLD_IMAGE_SUFFIX"] = "_debug"
 
-            l = []
+            lst = []
             self.assertRaises(
                 ImportError,
                 dyld.dyld_framework,
@@ -333,7 +334,7 @@ class TestDyld(TestCase):
                 "B",
             )
             self.assertEqual(
-                l,
+                lst,
                 [
                     "/Prefix1/XCocoa.framework/Versions/B/XCocoa_debug",
                     "/Prefix1/XCocoa.framework/Versions/B/XCocoa",

@@ -2,7 +2,7 @@
 Test some basic features of signature strings.
 """
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 
 class PyOCTestTypeStr(TestCase):

@@ -1,14 +1,7 @@
-from __future__ import absolute_import, print_function
-
-import glob
 import os
-import string
-import sys
 import unittest
-from distutils.command.install_lib import install_lib
-from distutils.errors import DistutilsOptionError
 from fnmatch import fnmatch
-from os.path import basename, dirname, expanduser, join, splitext
+from os.path import dirname, join
 
 from . import dejagnu
 
@@ -20,7 +13,7 @@ def recursiveGlob(root, pathPattern):
     """
     result = []
 
-    for rootpath, dirnames, filenames in os.walk(root):
+    for rootpath, _dirnames, filenames in os.walk(root):
         for fn in filenames:
             if fnmatch(fn, pathPattern):
                 result.append(join(rootpath, fn))

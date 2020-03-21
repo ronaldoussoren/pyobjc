@@ -1,21 +1,21 @@
 import objc
 from PyObjCTest.sockaddr import PyObjCTestSockAddr
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 objc.registerMetaDataForSelector(
     b"PyObjCTestSockAddr",
     b"sockAddrToValue:",
-    dict(arguments={2 + 0: dict(type_modifier=objc._C_IN)}),
+    {"arguments": {2 + 0: {"type_modifier": objc._C_IN}}},
 )
 objc.registerMetaDataForSelector(
     b"PyObjCTestSockAddr",
     b"getIPv4Addr:",
-    dict(arguments={2 + 0: dict(type_modifier=objc._C_OUT)}),
+    {"arguments": {2 + 0: {"type_modifier": objc._C_OUT}}},
 )
 objc.registerMetaDataForSelector(
     b"PyObjCTestSockAddr",
     b"getIPv6Addr:",
-    dict(arguments={2 + 0: dict(type_modifier=objc._C_OUT)}),
+    {"arguments": {2 + 0: {"type_modifier": objc._C_OUT}}},
 )
 
 

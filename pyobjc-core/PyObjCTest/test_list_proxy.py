@@ -3,12 +3,9 @@ Minimal tests for sequence proxies
 
 NOTE: this file is very, very incomplete and just tests copying at the moment.
 """
-import sys
-
 import objc
-from PyObjCTest.fnd import NSArray, NSMutableArray, NSNull, NSObject, NSPredicate
 from PyObjCTest.pythonset import OC_TestSet
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 OC_PythonArray = objc.lookUpClass("OC_PythonArray")
 OC_BuiltinPythonArray = objc.lookUpClass("OC_BuiltinPythonArray")

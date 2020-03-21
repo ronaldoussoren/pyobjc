@@ -2,11 +2,10 @@
 Testcases for the CoreFoundation wrappers introduced in 1.5
 """
 import re
-import sys
 
 import objc
-from PyObjCTest.corefoundation import *
-from PyObjCTools.TestSupport import *
+from PyObjCTest.corefoundation import OC_TestCoreFoundation
+from PyObjCTools.TestSupport import TestCase, main
 
 # registerCFSignature(name, encoding, typeId [, tollfreeName]) -> type
 
@@ -36,13 +35,10 @@ class TestCoreFoundation(TestCase):
 
         formatter = objc.lookUpClass("NSDateFormatter").new()
         formatter.setDateStyle_(OC_TestCoreFoundation.shortStyle())
-        formatter.setTimeStyle_(OC_TestCoreFoundation.shortStyle())
+        formatter.setTimeStyle_(OC_TestCoreFoundation.noStyle())
         formatter.setLocale_(objc.lookUpClass("NSLocale").currentLocale())
         v2 = formatter.stringForObjectValue_(obj)
-
-        # Arggh, I'm an idiot: the code above doesn't calculate the same
-        # string as the C code in corefoundation.m.
-        # print v , v2
+        self.assertEqual(v2, v)
 
     def testBridged(self):
 

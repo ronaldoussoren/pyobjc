@@ -10,7 +10,7 @@ import sys
 import warnings
 
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 from .testbndl import (
     CHAR_MAX,
@@ -27,7 +27,6 @@ from .testbndl import (
     LLONG_MIN,
     LONG_MAX,
     LONG_MIN,
-    SCHAR_MAX,
     SCHAR_MIN,
     SHRT_MAX,
     SHRT_MIN,

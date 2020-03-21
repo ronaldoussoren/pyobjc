@@ -1,11 +1,9 @@
-import os
 import sys
 
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass4
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
-from . import fnd as Foundation
 from .fnd import NSArray, NSAttributedString, NSObject
 
 
@@ -31,8 +29,6 @@ class TestClassLookup(TestCase):
         self.assertRaises(TypeError, objc.lookUpClass, 1)
 
     def testClassList(self):
-        ###! This test should probably be moved down to the Foundation test suite...
-
         NSObject = objc.lookUpClass("NSObject")
         NSException = objc.lookUpClass("NSException")
         NSMutableArray = objc.lookUpClass("NSMutableArray")

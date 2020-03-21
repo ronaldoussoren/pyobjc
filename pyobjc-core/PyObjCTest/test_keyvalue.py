@@ -8,15 +8,45 @@ import os
 import sys
 
 import objc
-from PyObjCTest.fnd import *
-from PyObjCTest.keyvaluehelper import *
+from PyObjCTest.fnd import (
+    NSObject,
+    NSArray,
+    NSKeyValueObservingOptionOld,
+    NSKeyValueObservingOptionNew,
+    NSAutoreleasePool,
+)
+from PyObjCTest.keyvaluehelper import (
+    PyObjCTestObserver,
+    DO_SETVALUE_FORKEYPATH,
+    DO_SETVALUESFORKEYSFROMDICT,
+    DO_SETVALUE_FORKEY,
+    DO_VALUEFORKEY,
+    DO_VALUEFORKEYPATH,
+    DO_STOREDVALUEFORKEY,
+    DO_TAKESTOREDVALUE_FORKEY,
+    DO_TAKEVALUESFROMDICT,
+    DO_TAKEVALUE_FORKEY,
+    DO_TAKEVALUE_FORKEYPATH,
+    DO_VALUESFORKEYS,
+    IndirectString,
+    IndirectNumber,
+    DirectString,
+    DirectNumber,
+    KVPySubOverObjCPath,
+    KVPySubOverObjCBase,
+    KVPySubObjCPath,
+    KVPySubObjCBase,
+    KVPyPath,
+    KVPyBase,
+    PyObjCTest_KVPathClass,
+    PyObjCTest_KVBaseClass,
+)
 
 # Native code is needed to access the python class from Objective-C, otherwise
 # the Key-Value support cannot be tested.
 from PyObjCTest.testbndl import PyObjC_TestClass3 as STUB
-from PyObjCTest.testbndl import *
 from PyObjCTest.testbndl import PyObjCTest_KeyValueObserver
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main, min_os_level
 
 
 class KeyValueClass2(object):
@@ -780,7 +810,7 @@ if PyObjCTest_KeyValueObserver is not None:
             self.assertEqual(DEALLOCS, before + 1, "Leaking an observed object")
 
         def testObserving(self):
-            outer_pool = NSAutoreleasePool.alloc().init()
+            outer_pool = NSAutoreleasePool.alloc().init()  # noqa: F841
             observer = PyObjCTestObserver.alloc().init()
 
             o = PyObjCTestObserved1.alloc().init()

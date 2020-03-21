@@ -1,7 +1,5 @@
-import sys
-
 import objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 gDict = {}
 
@@ -52,7 +50,9 @@ class SplitSignatureTest(TestCase):
 
                 if not isinstance(sel, objc.selector):
                     continue
-                elems = objc.splitSignature(sel.signature)
+
+                # Check is that the call is successfull
+                objc.splitSignature(sel.signature)
 
     def testSimple(self):
         self.assertEqual(objc.splitSignature(b"@:@"), (b"@", b":", b"@"))

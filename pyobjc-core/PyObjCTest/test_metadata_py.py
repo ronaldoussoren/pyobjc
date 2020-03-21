@@ -12,9 +12,9 @@ TODO:
 import objc
 
 # To ensure we have the right metadata
-import PyObjCTest.test_metadata
-from PyObjCTest.metadata import *
-from PyObjCTools.TestSupport import *
+import PyObjCTest.test_metadata  # noqa: F401
+from PyObjCTest.metadata import OC_MetaDataTest
+from PyObjCTools.TestSupport import TestCase, main
 
 
 def setupMetaData():
@@ -29,423 +29,423 @@ def setupMetaData():
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"make4Tuple:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_of_fixed_length=4,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"null4Tuple:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_of_fixed_length=4,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeObjectArray:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_delimited_by_null=True,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_delimited_by_null": True,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeStringArray:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_delimited_by_null=True,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_delimited_by_null": True,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullStringArray:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_delimited_by_null=True,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_delimited_by_null": True,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeIntArray:count:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_length_in_arg=2 + 1,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeIntArray:countPtr:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_length_in_arg=2 + 1,
-                    null_accepted=False,
-                ),
-                2 + 1: dict(type_modifier=objc._C_IN, null_accepted=False),
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                },
+                2 + 1: {"type_modifier": objc._C_IN, "null_accepted": False},
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullIntArray:count:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_IN,
-                    c_array_length_in_arg=2 + 1,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_IN,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"fillArray:uptoCount:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_length_in_arg=2 + 1,
-                    c_array_length_in_result=True,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "c_array_length_in_result": True,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"fillArray:count:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_length_in_arg=2 + 1,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullfillArray:count:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_length_in_arg=2 + 1,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"maybeFillArray:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_of_fixed_length=4,
-                    c_array_length_in_result=True,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
+                    "c_array_length_in_result": True,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"fill4Tuple:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_of_fixed_length=4,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullfill4Tuple:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_of_fixed_length=4,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"fillStringArray:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_delimited_by_null=True,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_delimited_by_null": True,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullfillStringArray:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_OUT,
-                    c_array_delimited_by_null=True,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_OUT,
+                    "c_array_delimited_by_null": True,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"reverseArray:uptoCount:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_length_in_arg=2 + 1,
-                    c_array_length_in_result=True,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "c_array_length_in_result": True,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"reverseArray:count:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_length_in_arg=2 + 1,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullreverseArray:count:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_length_in_arg=2 + 1,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_length_in_arg": 2 + 1,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"reverseStrings:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_delimited_by_null=True,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_delimited_by_null": True,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullreverseStrings:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_delimited_by_null=True,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_delimited_by_null": True,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"maybeReverseArray:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_of_fixed_length=4,
-                    c_array_length_in_result=True,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_of_fixed_length": 4,
+                    "c_array_length_in_result": True,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"reverse4Tuple:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_of_fixed_length=4,
-                    null_accepted=False,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": False,
+                }
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullreverse4Tuple:on:",
-        dict(
-            arguments={
+        {
+            "arguments": {
                 2
-                + 0: dict(
-                    type_modifier=objc._C_INOUT,
-                    c_array_of_fixed_length=4,
-                    null_accepted=True,
-                )
+                + 0: {
+                    "type_modifier": objc._C_INOUT,
+                    "c_array_of_fixed_length": 4,
+                    "null_accepted": True,
+                }
             }
-        ),
+        },
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeIntArrayOf5On:",
-        dict(retval=dict(c_array_of_fixed_length=5)),
+        {"retval": {"c_array_of_fixed_length": 5}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeStringArrayOn:",
-        dict(retval=dict(c_array_delimited_by_null=True)),
+        {"retval": {"c_array_delimited_by_null": True}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"makeIntArrayOf:on:",
-        dict(retval=dict(c_array_length_in_arg=2 + 0)),
+        {"retval": {"c_array_length_in_arg": 2 + 0}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullIntArrayOf5On:",
-        dict(retval=dict(c_array_of_fixed_length=5)),
+        {"retval": {"c_array_of_fixed_length": 5}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullStringArrayOn:",
-        dict(retval=dict(c_array_delimited_by_null=True)),
+        {"retval": {"c_array_delimited_by_null": True}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"nullIntArrayOf:on:",
-        dict(retval=dict(c_array_length_in_arg=2 + 0)),
+        {"retval": {"c_array_length_in_arg": 2 + 0}},
     )
 
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"sumX:andY:on:",
-        dict(
-            arguments={
-                2 + 0: dict(type_modifier=objc._C_IN, null_accepted=False),
-                2 + 1: dict(type_modifier=objc._C_IN, null_accepted=False),
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_IN, "null_accepted": False},
+                2 + 1: {"type_modifier": objc._C_IN, "null_accepted": False},
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"divBy5:remainder:on:",
-        dict(arguments={2 + 1: dict(type_modifier=objc._C_OUT, null_accepted=False)}),
+        {"arguments": {2 + 1: {"type_modifier": objc._C_OUT, "null_accepted": False}}},
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"swapX:andY:on:",
-        dict(
-            arguments={
-                2 + 0: dict(type_modifier=objc._C_INOUT, null_accepted=False),
-                2 + 1: dict(type_modifier=objc._C_INOUT, null_accepted=False),
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_INOUT, "null_accepted": False},
+                2 + 1: {"type_modifier": objc._C_INOUT, "null_accepted": False},
             }
-        ),
+        },
     )
     objc.registerMetaDataForSelector(
         b"OC_MetaDataTest",
         b"input:output:inputAndOutput:on:",
-        dict(
-            arguments={
-                2 + 0: dict(type_modifier=objc._C_IN, null_accepted=True),
-                2 + 1: dict(type_modifier=objc._C_OUT, null_accepted=True),
-                2 + 2: dict(type_modifier=objc._C_INOUT, null_accepted=True),
+        {
+            "arguments": {
+                2 + 0: {"type_modifier": objc._C_IN, "null_accepted": True},
+                2 + 1: {"type_modifier": objc._C_OUT, "null_accepted": True},
+                2 + 2: {"type_modifier": objc._C_INOUT, "null_accepted": True},
             }
-        ),
+        },
     )
 
 

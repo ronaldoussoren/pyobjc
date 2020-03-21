@@ -1,6 +1,6 @@
 import objc
 import objc._objc
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 NSObject = objc.lookUpClass("NSObject")
 NSURL = objc.lookUpClass("NSURL")
@@ -27,7 +27,7 @@ class TestMethodResolution(TestCase):
         # it can be used for NSURL objects as well.
         # NOTE: Don't check resolution of NSURL.ocmethod2 to ensure
         #       that resolution even works when there'd be a cache.
-        import PyObjCTest.methres1
+        import PyObjCTest.methres1  # noqa: F401
 
         self.assertEqual(obj.oc_method1(), "NSObject.oc_method1")
         self.assertEqual(obj.ocmethod2(), "NSObject.ocmethod2")
@@ -37,7 +37,7 @@ class TestMethodResolution(TestCase):
         # self.assertEqual(super(NSURL, url).ocmethod2(), 'NSObject.ocmethod2')
 
         # Load an NSURL category and check that it is used.
-        import PyObjCTest.methres2
+        import PyObjCTest.methres2  # noqa: F401
 
         self.assertEqual(obj.oc_method1(), "NSObject.oc_method1")
         self.assertEqual(obj.ocmethod2(), "NSObject.ocmethod2")

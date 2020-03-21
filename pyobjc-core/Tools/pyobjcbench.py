@@ -33,14 +33,16 @@ print(
 print(
     "NSObject description lookup:",
     timeit.timeit(
-        setup='import objc; NSObject = objc.lookUpClass("NSObject"); o = NSObject.alloc().init()',
+        setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+        "o = NSObject.alloc().init()",
         stmt="o.description",
     ),
 )
 print(
     "NSArray description lookup: ",
     timeit.timeit(
-        setup='import objc; NSArray = objc.lookUpClass("NSArray"); o = NSArray.alloc().init()',
+        setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+        "o = NSArray.alloc().init()",
         stmt="o.description",
     ),
 )
@@ -51,14 +53,16 @@ print(
 print(
     "NSObject description call:  ",
     timeit.timeit(
-        setup='import objc; NSObject = objc.lookUpClass("NSObject"); m = NSObject.alloc().init().description',
+        setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+        "m = NSObject.alloc().init().description",
         stmt="m()",
     ),
 )
 print(
     "NSArray description call:   ",
     timeit.timeit(
-        setup='import objc; NSArray = objc.lookUpClass("NSArray"); m = NSArray.alloc().init().description',
+        setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+        "m = NSArray.alloc().init().description",
         stmt="m()",
     ),
 )

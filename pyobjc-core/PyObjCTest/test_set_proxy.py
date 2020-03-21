@@ -1,13 +1,10 @@
 """
 Tests for the proxy of Python sets
 """
-import os
-import sys
-
 import objc
-from PyObjCTest.fnd import NSMutableSet, NSNull, NSObject, NSPredicate, NSSet
+from PyObjCTest.fnd import NSNull, NSObject, NSPredicate
 from PyObjCTest.pythonset import OC_TestSet
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, main
 
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 OC_BuiltinPythonSet = objc.lookUpClass("OC_BuiltinPythonSet")
@@ -23,8 +20,8 @@ class OC_SetPredicate(NSPredicate):
         self.pred = pred
         return self
 
-    def evaluateWithObject_(self, object):
-        return self.pred(object)
+    def evaluateWithObject_(self, value):
+        return self.pred(value)
 
 
 class OC_TestElem(NSObject):
@@ -119,22 +116,22 @@ class BasicSetTests:
         s = self.setClass(range(10))
 
         enum = OC_TestSet.objectEnumeratorOfSet_(s)
-        l = []
+        lst = []
         v = enum.nextObject()
         while v is not None:
-            l.append(v)
+            lst.append(v)
             v = enum.nextObject()
-        self.assertEqual(l, list(range(10)))
+        self.assertEqual(lst, list(range(10)))
 
         s = self.setClass([1, 2, None, 3])
         enum = OC_TestSet.objectEnumeratorOfSet_(s)
-        l = []
+        lst = []
         v = enum.nextObject()
         while v is not None:
-            l.append(v)
+            lst.append(v)
             v = enum.nextObject()
 
-        self.assertEqual(dict.fromkeys(l), dict.fromkeys([1, 2, NSNull.null(), 3]))
+        self.assertEqual(dict.fromkeys(lst), dict.fromkeys([1, 2, NSNull.null(), 3]))
 
     def testIsSubSet(self):
         s1 = self.setClass(range(10))
