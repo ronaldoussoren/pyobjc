@@ -31,10 +31,10 @@ def createURL(path):
 # that creates a PDF file at that URL and uses supplied rect
 # as its document media box.
 def myCreatePDFContext(url, mediaBox):
-    dict = {}
-    dict[Quartz.kCGPDFContextCreator] = "PDF Stamper Application"
+    options = {}
+    options[Quartz.kCGPDFContextCreator] = "PDF Stamper Application"
 
-    pdfContext = Quartz.CGPDFContextCreateWithURL(url, mediaBox, dict)
+    pdfContext = Quartz.CGPDFContextCreateWithURL(url, mediaBox, options)
     return pdfContext
 
 

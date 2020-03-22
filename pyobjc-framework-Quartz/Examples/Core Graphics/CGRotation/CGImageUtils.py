@@ -197,7 +197,9 @@ def IISaveImage(image, url, width, height):
                     # If the orientation in the original image was not the default,
                     # then we need to replace that key in a duplicate of that dictionary
                     # and then pass that dictionary to ImageIO when adding the image.
-                    prop = CFDictionaryCreateMutableCopy(None, 0, image.fProperties)
+                    prop = Cocoa.CFDictionaryCreateMutableCopy(
+                        None, 0, image.fProperties
+                    )
                     orientation = 1
                     prop[Quartz.kCGImagePropertyOrientation] = orientation
 
@@ -271,8 +273,8 @@ def IIDrawImage(image, context, bounds):
             # the image width in place of the height and vice versa.
             Quartz.CGContextTranslateCTM(
                 context,
-                floorf((bounds.size.width - imageRect.size.height) / 2.0),
-                floorf((bounds.size.height - imageRect.size.width) / 2.0),
+                math.floor((bounds.size.width - imageRect.size.height) / 2.0),
+                math.floor((bounds.size.height - imageRect.size.width) / 2.0),
             )
 
         # Finally, orient the context so that the image draws naturally.

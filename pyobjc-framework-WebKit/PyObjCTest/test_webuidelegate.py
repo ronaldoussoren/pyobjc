@@ -218,7 +218,7 @@ class TestWebUIDelegate(TestCase):
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(
-            TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_,   # noqa: B950
+            TestWebUIDelegateHelper.webView_runOpenPanelForFileButtonWithResultListener_allowMultipleFiles_,  # noqa: B950
             2,
         )
         self.assertResultIsBOOL(

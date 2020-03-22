@@ -1,5 +1,3 @@
-import sys
-
 import AppDrawing
 import DrawingBasics
 import LaunchServices
@@ -108,7 +106,7 @@ def createImageFromBitmapContext(c):
     ) * Quartz.CGBitmapContextGetHeight(c)
 
     if rasterData is None:
-        fprintf(stderr, "Context is not a bitmap context!")
+        print("Context is not a bitmap context!")
 
     # Create the data provider from the image data
     dataProvider = Quartz.CGDataProviderCreateWithData(
@@ -149,6 +147,7 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
     through MacPython. The code below is mostly there in case someone fixes
     the MacPython QuickTime bindings.
     """
+    # XXX: Finish
     return
 
     if outputFormat.lower() == LaunchServices.kUTTypeTIFF.lower():
@@ -164,27 +163,33 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
         print("Requested image export format %@s unsupported" % (outputFormat,))
         return
 
-        result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0, None, None)
+        result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(
+            url, 0, None, None
+        )
         if result == 0:
-            result, graphicsExporter = OpenADefaultComponent(
-                GraphicsExporterComponentType, imageExportType, graphicsExporter
+            result, graphicsExporter = Quartz.OpenADefaultComponent(
+                Quartz.GraphicsExporterComponentType, imageExportType, graphicsExporter  # noqa: F821
             )
             if result == 0:
-                result = GraphicsExportSetInputCGImage(graphicsExporter, image)
+                result = Quartz.GraphicsExportSetInputCGImage(graphicsExporter, image)
                 if result == 0:
-                    result = GraphicsExportSetResolution(
-                        graphicsExporter, FloatToFixed(dpi), FloatToFixed(dpi)
+                    result = Quartz.GraphicsExportSetResolution(
+                        graphicsExporter,
+                        Quartz.FloatToFixed(dpi),
+                        Quartz.FloatToFixed(dpi),
                     )
                 if result == 0:
-                    result = GraphicsExportSetOutputDataReference(
+                    result = Quartz.GraphicsExportSetOutputDataReference(
                         graphicsExporter, dataRef, dataRefType
                     )
                 if result == 0:
-                    result, sizeWritten = GraphicsExportDoExport(graphicsExporter, None)
-                CloseComponent(graphicsExporter)
+                    result, sizeWritten = Quartz.GraphicsExportDoExport(
+                        graphicsExporter, None
+                    )
+                Quartz.CloseComponent(graphicsExporter)
 
         if dataRef:
-            DisposeHandle(dataRef)
+            Quartz.DisposeHandle(dataRef)
 
         if result:
             print("QT export got bad result = %d!" % (result,))
@@ -235,7 +240,7 @@ def MakeImageDocument(url, imageType, exportInfo):
 
     if c is None:
         print("Couldn't make destination bitmap context")
-        return memFullErr
+        return -1
 
     # Scale the coordinate system based on the resolution in dots per inch.
     Quartz.CGContextScaleCTM(c, dpi / 72, dpi / 72)
@@ -268,7 +273,7 @@ def MakeImageDocument(url, imageType, exportInfo):
 
     if image is None:
         # Users of this code should update this to be an error code they find useful.
-        return memFullErr
+        return -1
 
     # Now export the image.
     if exportInfo.useQTForExport:
@@ -341,7 +346,7 @@ def doSimpleCGLayer(context):
         # Paint 4 columns of layer objects, moving
         # across the drawing canvas by skipping a
         # square on the grid each time across.
-        for i in range(4):
+        for _ in range(4):
             # Draw the layer at the current origin.
             Quartz.CGContextDrawLayerAtPoint(context, Quartz.CGPointZero, layer)
             # Translate across two layer widths.
@@ -629,7 +634,7 @@ def createLayerWithImageForContext(c, url):
     # Create the layer to draw into.
     layer = Quartz.CGLayerCreateWithContext(c, layerSize, None)
     if layer is None:
-        return NULL
+        return None
 
     # Get the context corresponding to the layer. Note
     # that this is a 'Get' function so the code must

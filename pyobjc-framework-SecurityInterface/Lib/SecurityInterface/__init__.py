@@ -10,8 +10,8 @@ import sys
 import AppKit
 import objc
 import Security
-import SecurityInterface._SecurityInterface
 from SecurityInterface import _metadata
+from SecurityInterface import _SecurityInterface
 
 sys.modules["SecurityInterface"] = mod = objc.ObjCLazyModule(
     "SecurityInterface",
@@ -25,7 +25,7 @@ sys.modules["SecurityInterface"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (AppKit, Security),
+    (_SecurityInterface, AppKit, Security),
 )
 
 

@@ -23,7 +23,7 @@ sys.modules["QTKit"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Cocoa, Quartz),
+    (_QTKit, Cocoa, Quartz),
 )
 
 

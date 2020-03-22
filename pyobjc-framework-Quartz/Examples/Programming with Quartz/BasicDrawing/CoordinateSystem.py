@@ -15,7 +15,7 @@ def doRotatedEllipses(context):
     # Place the first ellipse at a good location.
     Quartz.CGContextTranslateCTM(context, 100.0, 100.0)
 
-    for i in range(totreps):
+    for _ in range(totreps):
         # Make a snapshot the coordinate system.
         Quartz.CGContextSaveGState(context)
         # Set up the coordinate system for the rotated ellipse.

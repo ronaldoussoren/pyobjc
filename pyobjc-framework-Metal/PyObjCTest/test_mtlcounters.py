@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestMTLCountersHelper(Metal.NSObject):
@@ -19,31 +20,29 @@ class TestMTLCounters(TestCase):
 
     @min_os_level("10.15")
     def test_constants10_15(self):
-        self.assertIsInstance(Metal.MTLCommonCounterTimestamp, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterTessellationInputPatches, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterVertexInvocations, unicode)
+        self.assertIsInstance(Metal.MTLCommonCounterTimestamp, str)
+        self.assertIsInstance(Metal.MTLCommonCounterTessellationInputPatches, str)
+        self.assertIsInstance(Metal.MTLCommonCounterVertexInvocations, str)
         self.assertIsInstance(
-            Metal.MTLCommonCounterPostTessellationVertexInvocations, unicode
+            Metal.MTLCommonCounterPostTessellationVertexInvocations, str
         )
-        self.assertIsInstance(Metal.MTLCommonCounterClipperInvocations, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterClipperPrimitivesOut, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterFragmentInvocations, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterFragmentsPassed, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterComputeKernelInvocations, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterTotalCycles, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterVertexCycles, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterTessellationCycles, unicode)
-        self.assertIsInstance(
-            Metal.MTLCommonCounterPostTessellationVertexCycles, unicode
-        )
-        self.assertIsInstance(Metal.MTLCommonCounterFragmentCycles, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterRenderTargetWriteCycles, unicode)
+        self.assertIsInstance(Metal.MTLCommonCounterClipperInvocations, str)
+        self.assertIsInstance(Metal.MTLCommonCounterClipperPrimitivesOut, str)
+        self.assertIsInstance(Metal.MTLCommonCounterFragmentInvocations, str)
+        self.assertIsInstance(Metal.MTLCommonCounterFragmentsPassed, str)
+        self.assertIsInstance(Metal.MTLCommonCounterComputeKernelInvocations, str)
+        self.assertIsInstance(Metal.MTLCommonCounterTotalCycles, str)
+        self.assertIsInstance(Metal.MTLCommonCounterVertexCycles, str)
+        self.assertIsInstance(Metal.MTLCommonCounterTessellationCycles, str)
+        self.assertIsInstance(Metal.MTLCommonCounterPostTessellationVertexCycles, str)
+        self.assertIsInstance(Metal.MTLCommonCounterFragmentCycles, str)
+        self.assertIsInstance(Metal.MTLCommonCounterRenderTargetWriteCycles, str)
 
-        self.assertIsInstance(Metal.MTLCommonCounterSetTimestamp, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterSetStageUtilization, unicode)
-        self.assertIsInstance(Metal.MTLCommonCounterSetStatistic, unicode)
+        self.assertIsInstance(Metal.MTLCommonCounterSetTimestamp, str)
+        self.assertIsInstance(Metal.MTLCommonCounterSetStageUtilization, str)
+        self.assertIsInstance(Metal.MTLCommonCounterSetStatistic, str)
 
-        self.assertIsInstance(Metal.MTLCounterErrorDomain, unicode)
+        self.assertIsInstance(Metal.MTLCounterErrorDomain, str)
 
     def test_structs(self):
         v = Metal.MTLCounterResultTimestamp()

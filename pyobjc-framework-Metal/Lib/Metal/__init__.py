@@ -24,7 +24,7 @@ sys.modules["Metal"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_Metal, Foundation,),
 )
 
 

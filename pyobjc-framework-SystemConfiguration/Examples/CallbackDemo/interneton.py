@@ -6,12 +6,15 @@ framework.
 Usage:
     python internetison [address]
 """
-from __future__ import print_function
-
 import socket
 import sys
 
-from Cocoa import CFRunLoopGetCurrent, CFRunLoopRun, CFRunLoopStop
+from Cocoa import (
+    CFRunLoopGetCurrent,
+    CFRunLoopRun,
+    CFRunLoopStop,
+    kCFRunLoopCommonModes,
+)
 from SystemConfiguration import (
     SCNetworkReachabilityCreateWithAddress,
     SCNetworkReachabilityGetFlags,

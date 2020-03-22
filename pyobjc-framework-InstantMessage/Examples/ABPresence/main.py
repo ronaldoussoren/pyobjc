@@ -1,10 +1,7 @@
-import ABPersonDisplayNameAdditions
-import objc
-import PeopleDataSource
-import ServiceWatcher
+import ABPersonDisplayNameAdditions  # noqa: F401
+import PeopleDataSource  # noqa: F401
+import ServiceWatcher  # noqa: F401
 from PyObjCTools import AppHelper
-
-objc.setVerbose(True)
 
 
 AppHelper.runEventLoop()

@@ -1,13 +1,13 @@
 import sys
 
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 if sys.maxsize > 2 ** 32:
     import LinkPresentation
 
     class TestLPError(TestCase):
         def test_constants(self):
-            self.assertIsInstance(LinkPresentation.LPErrorDomain, unicode)
+            self.assertIsInstance(LinkPresentation.LPErrorDomain, str)
 
             self.assertEqual(LinkPresentation.LPErrorUnknown, 1)
             self.assertEqual(LinkPresentation.LPErrorMetadataFetchFailed, 2)

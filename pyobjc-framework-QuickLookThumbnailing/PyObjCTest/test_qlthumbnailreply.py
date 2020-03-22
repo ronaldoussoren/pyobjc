@@ -1,6 +1,6 @@
 import sys
 
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 if sys.maxsize > 2 ** 32:
     import QuickLookThumbnailing

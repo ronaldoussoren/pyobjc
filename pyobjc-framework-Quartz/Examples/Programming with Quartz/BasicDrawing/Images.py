@@ -1,10 +1,9 @@
-import sys
-
+import objc
 import Cocoa
 import DataProvidersAndConsumers
 import Quartz
 import Utilities
-from LaunchServices import *  # kUTType* constants
+from LaunchServices import kUTTypePNG
 
 
 def drawJPEGImage(context, url):
@@ -531,7 +530,7 @@ def createMyIncrementalDataFromURL(url, myDataP):
     myDataP.dataSize = 0
     myDataP.repCount = 0
 
-    success, pathString = CFURLGetFileSystemRepresentation(url, True, None, 1024)
+    success, pathString = Cocoa.CFURLGetFileSystemRepresentation(url, True, None, 1024)
     pathString = pathString.rstrip(b"\0")
 
     if success and len(pathString):
@@ -565,28 +564,32 @@ def createCGImageWithQuickTimeFromURL(url):
 
     imageRef = None
 
-    err = noErr
-    result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0, None, None)
+    err = 0
+    result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(
+        url, 0, None, None
+    )
     if dataRef is not None:
-        err, gi = GetGraphicsImporterForDataRefWithFlags(dataRef, dataRefType, None, 0)
+        err, gi = Quartz.GetGraphicsImporterForDataRefWithFlags(
+            dataRef, dataRefType, None, 0
+        )
         if not err and gi:
             # Tell the graphics importer that it shouldn't perform
             # gamma correction and it should create an image in
             # the original source color space rather than matching it to
             # a generic calibrated color space.
-            result = GraphicsImportSetFlags(
+            result = Quartz.GraphicsImportSetFlags(
                 gi,
                 (
-                    kGraphicsImporterDontDoGammaCorrection
-                    + kGraphicsImporterDontUseColorMatching
+                    Quartz.kGraphicsImporterDontDoGammaCorrection
+                    + Quartz.kGraphicsImporterDontUseColorMatching
                 ),
             )
             if result == 0:
-                result, imageRef = GraphicsImportCreateCGImage(gi, None, 0)
+                result, imageRef = Quartz.GraphicsImportCreateCGImage(gi, None, 0)
                 if result != 0:
                     print("got a bad result = %d!" % (result,))
-            DisposeHandle(dataRef)
-            CloseComponent(gi)
+            Quartz.DisposeHandle(dataRef)
+            Quartz.CloseComponent(gi)
 
     return imageRef
 
@@ -604,7 +607,7 @@ def drawQTImageWithQuartz(context, url):
 
 
 def drawJPEGDocumentWithMultipleProfiles(context, url):
-    isDeviceRGBImage = False
+    # isDeviceRGBImage = False
 
     # Create a Quartz data provider for the supplied URL.
     jpgProvider = Quartz.CGDataProviderCreateWithURL(url)
@@ -635,7 +638,7 @@ def drawJPEGDocumentWithMultipleProfiles(context, url):
 
     # Determine if the original color space is DeviceRGB. If that is
     # not the case then bail.
-    comparisonColorSpace = Quartz.CGColorSpaceCreateDeviceRGB()
+    # comparisonColorSpace = Quartz.CGColorSpaceCreateDeviceRGB()
 
     # Note that this comparison of color spaces works only on
     # Jaguar and later where a CGColorSpaceRef is a
@@ -748,7 +751,7 @@ def createRGBRampSubDataProvider(subRect):
     # Use the pointer to the first byte as the info parameter since
     # that is the pointer to the block to free when done.
     dataProvider = Quartz.CGDataProviderCreateWithData(
-        dataP, buffer(dataP, firstByteOffset), totalBytesProvided, None
+        dataP, dataP[firstByteOffset:], totalBytesProvided, None
     )
 
     if dataProvider is None:
@@ -874,24 +877,28 @@ def exportCGImageToJPEGFile(imageRef, url):
     # This doesn't actually work due to lame Python Quicktime bindings...
     return
 
-    result, dataRef, dataRefType = QTNewDataReferenceFromCFURL(url, 0, None, None)
+    result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(
+        url, 0, None, None
+    )
     if result == 0:
-        result, graphicsExporter = OpenADefaultComponent(
-            GraphicsExporterComponentType, kQTFileTypeJPEG
+        result, graphicsExporter = Quartz.OpenADefaultComponent(
+            Quartz.GraphicsExporterComponentType, Quartz.kQTFileTypeJPEG
         )
         if result == 0:
-            result = GraphicsExportSetInputCGImage(graphicsExporter, imageRef)
+            result = Quartz.GraphicsExportSetInputCGImage(graphicsExporter, imageRef)
             if result == 0:
-                result = GraphicsExportSetOutputDataReference(
+                result = Quartz.GraphicsExportSetOutputDataReference(
                     graphicsExporter, dataRef, dataRefType
                 )
             if result == 0:
-                result, sizeWritten = GraphicsExportDoExport(graphicsExporter, None)
+                result, sizeWritten = Quartz.GraphicsExportDoExport(
+                    graphicsExporter, None
+                )
 
-            CloseComponent(graphicsExporter)
+            Quartz.CloseComponent(graphicsExporter)
 
     if dataRef is not None:
-        DisposeHandle(dataRef)
+        Quartz.DisposeHandle(dataRef)
 
     if result != 0:
         print("Exporting QT image got bad result = %d!" % (result,))
@@ -934,7 +941,7 @@ def exportColorRampImageWithQT(context):
 
     # Of course this is a total hack.
     outPath = b"/tmp/imageout.jpg"
-    exportURL = CFURLCreateFromFileSystemRepresentation(
+    exportURL = Cocoa.CFURLCreateFromFileSystemRepresentation(
         None, outPath, len(outPath), False
     )
     if exportURL:

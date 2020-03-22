@@ -112,7 +112,7 @@ class MyAppController(Cocoa.NSObject):
 
     def validateMenuItem_(self, menuItem):
         if menuItem.tag == _dpi:
-            currentDPIMenuItem = menuItem
+            self.currentDPIMenuItem = menuItem
             menuItem.setState_(True)
         elif menuItem.action() == "setUseQT:":
             if _useQT:
@@ -123,7 +123,7 @@ class MyAppController(Cocoa.NSObject):
 
         elif menuItem.action() == "setUseCGImageSource:":
             if _useQT:
-                currentDPIMenuItem = menuItem
+                self.currentDPIMenuItem = menuItem
                 menuItem.setState_(True)
             else:
                 menuItem.setState_(False)

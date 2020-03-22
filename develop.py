@@ -10,7 +10,6 @@ in a setuptools using project.
 from __future__ import print_function
 
 import os
-import platform
 import plistlib
 import shlex
 import shutil
@@ -75,7 +74,7 @@ def topological_sort(items, partial_order):
     # a node may convert some of the node's direct children into roots.
     # Whenever that happens, we append the new roots to the list of
     # current roots.
-    sorted = []
+    sorted_items = []
     while len(roots) != 0:
         # If len(roots) is always 1 when we get here, it means that
         # the input describes a complete ordering and there is only
@@ -86,7 +85,7 @@ def topological_sort(items, partial_order):
         # the roots using pop(). Note that for the algorithm to be efficient,
         # this operation must be done in O(1) time.
         root = roots.pop()
-        sorted.append(root)
+        sorted_items.append(root)
         for child in graph[root][1:]:
             graph[child][0] = graph[child][0] - 1
             if graph[child][0] == 0:
@@ -95,7 +94,7 @@ def topological_sort(items, partial_order):
     if len(graph.items()) != 0:
         # There is a loop in the input.
         return None
-    return sorted
+    return sorted_items
 
 
 def get_os_level():
@@ -215,9 +214,7 @@ def version_key(version):
 
 def main():
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
-        ok = build_project(project, sys.argv[1:])
-        # if not ok:
-        #    break
+        build_project(project, sys.argv[1:])
 
 
 if __name__ == "__main__":

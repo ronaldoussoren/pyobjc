@@ -120,7 +120,7 @@ def doRotatedEllipsesWithCGPath(context):
 
     # Place the first ellipse at a good location.
     Quartz.CGContextTranslateCTM(context, 100, 100)
-    for i in range(totreps):
+    for _ in range(totreps):
         Quartz.CGContextBeginPath(context)
         # Add the CGPath object to the current path in the context.
         Quartz.CGContextAddPath(context, path)

@@ -6,8 +6,12 @@ class TestXGJob(TestCase):
     def testConstants(self):
         self.assertIsInstance(XgridFoundation.XGJobSpecificationNameKey, str)
         self.assertIsInstance(XgridFoundation.XGJobSpecificationTypeKey, str)
-        self.assertIsInstance(XgridFoundation.XGJobSpecificationSubmissionIdentifierKey, str)
-        self.assertIsInstance(XgridFoundation.XGJobSpecificationSchedulerParametersKey, str)
+        self.assertIsInstance(
+            XgridFoundation.XGJobSpecificationSubmissionIdentifierKey, str
+        )
+        self.assertIsInstance(
+            XgridFoundation.XGJobSpecificationSchedulerParametersKey, str
+        )
         self.assertIsInstance(XgridFoundation.XGJobSpecificationGridIdentifierKey, str)
         self.assertIsInstance(XgridFoundation.XGJobSpecificationDependsOnJobsKey, str)
         self.assertIsInstance(XgridFoundation.XGJobSpecificationInputFilesKey, str)
@@ -21,16 +25,26 @@ class TestXGJob(TestCase):
         self.assertIsInstance(XgridFoundation.XGJobSpecificationPathIdentifierKey, str)
         self.assertIsInstance(XgridFoundation.XGJobSpecificationEnvironmentKey, str)
         self.assertIsInstance(XgridFoundation.XGJobSpecificationInputStreamKey, str)
-        self.assertIsInstance(XgridFoundation.XGJobSpecificationTaskSpecificationsKey, str)
-        self.assertIsInstance(XgridFoundation.XGJobSpecificationTaskPrototypeIdentifierKey, str)
+        self.assertIsInstance(
+            XgridFoundation.XGJobSpecificationTaskSpecificationsKey, str
+        )
+        self.assertIsInstance(
+            XgridFoundation.XGJobSpecificationTaskPrototypeIdentifierKey, str
+        )
         self.assertIsInstance(XgridFoundation.XGJobSpecificationDependsOnTasksKey, str)
-        self.assertIsInstance(XgridFoundation.XGJobSpecificationNotificationEmailKey, str)
-        self.assertIsInstance(XgridFoundation.XGJobSpecificationApplicationIdentifierKey, str)
+        self.assertIsInstance(
+            XgridFoundation.XGJobSpecificationNotificationEmailKey, str
+        )
+        self.assertIsInstance(
+            XgridFoundation.XGJobSpecificationApplicationIdentifierKey, str
+        )
 
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(XgridFoundation.XGJobSpecificationSchedulerHintsKey, str)
-        self.assertIsInstance(XgridFoundation.XGJobSpecificationARTSpecificationsKey, str)
+        self.assertIsInstance(
+            XgridFoundation.XGJobSpecificationARTSpecificationsKey, str
+        )
         self.assertIsInstance(XgridFoundation.XGJobSpecificationARTConditionsKey, str)
         self.assertIsInstance(XgridFoundation.XGJobSpecificationARTDataKey, str)
         self.assertIsInstance(XgridFoundation.XGJobSpecificationARTMinimumKey, str)

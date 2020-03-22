@@ -419,8 +419,8 @@ class PyInterpreter(NSObject):
                 continue
 
             if (event.type() == NSKeyDown) and (event.window() == window):
-                chr = event.charactersIgnoringModifiers()
-                if chr == "c" and (event.modifierFlags() & NSControlKeyMask):
+                chars = event.charactersIgnoringModifiers()
+                if chars == "c" and (event.modifierFlags() & NSControlKeyMask):
                     raise KeyboardInterrupt
 
             app.sendEvent_(event)

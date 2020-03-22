@@ -3,7 +3,6 @@ import math
 import Cocoa
 import objc
 import Quartz
-from objc import super
 
 TRANSITION_COUNT = 9
 

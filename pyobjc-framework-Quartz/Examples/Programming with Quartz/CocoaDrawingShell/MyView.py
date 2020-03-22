@@ -18,7 +18,7 @@ def doAlphaRects(context):
 
     # ***** Part 3 *****
     tint = 1.0
-    for i in range(numRects):
+    for _ in range(numRects):
         Quartz.CGContextSetRGBFillColor(context, tint, 0.0, 0.0, tint)
         Quartz.CGContextFillRect(context, ourRect)
         Quartz.CGContextRotateCTM(context, rotateAngle)  # cumulative

@@ -7,7 +7,6 @@ documentation for details on how to use these functions and classes.
 
 import sys
 
-import AutomaticAssessmentConfiguration
 import Foundation
 import objc
 from AutomaticAssessmentConfiguration import _metadata

@@ -10,7 +10,7 @@ import sys
 import Foundation
 import objc
 from SafariServices import _metadata
-from SafariServices._SafariServices import *
+from SafariServices import _SafariServices
 
 sys.modules["SafariServices"] = mod = objc.ObjCLazyModule(
     "SafariServices",
@@ -24,7 +24,7 @@ sys.modules["SafariServices"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_SafariServices, Foundation,),
 )
 
 

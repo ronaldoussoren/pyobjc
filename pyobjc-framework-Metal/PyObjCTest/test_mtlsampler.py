@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestMTLSampler(TestCase):

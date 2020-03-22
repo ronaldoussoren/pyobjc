@@ -10,7 +10,7 @@ import sys
 import Cocoa
 import objc
 from GameKit import _metadata
-from GameKit._GameKit import *
+from GameKit import _GameKit
 
 sys.modules["GameKit"] = mod = objc.ObjCLazyModule(
     "GameKit",
@@ -24,7 +24,7 @@ sys.modules["GameKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Cocoa,),
+    (_GameKit, Cocoa,),
 )
 
 

@@ -24,6 +24,7 @@ from Cocoa import (
 )
 from objc import NO, YES, IBOutlet, super
 from PyObjCTools import AppHelper
+import objc
 
 try:
     sys.ps1
@@ -393,8 +394,8 @@ class PyInterpreter(NSObject):
                 continue
 
             if (event.type() == NSKeyDown) and (event.window() == window):
-                chr = event.charactersIgnoringModifiers()
-                if chr == "c" and (event.modifierFlags() & NSControlKeyMask):
+                char = event.charactersIgnoringModifiers()
+                if char == "c" and (event.modifierFlags() & NSControlKeyMask):
                     raise KeyboardInterrupt
 
             app.sendEvent_(event)
@@ -488,9 +489,9 @@ class PyInterpreter(NSObject):
     #
 
     def textView_completions_forPartialWordRange_indexOfSelectedItem_(
-        self, aTextView, completions, range, index
+        self, aTextView, completions, word_range, index
     ):
-        (begin, length) = range
+        (begin, length) = word_range
         txt = self.textView.textStorage().mutableString()
         end = begin + length
         while (begin > 0) and (txt[begin].isalnum() or txt[begin] in "._"):
@@ -588,7 +589,5 @@ class PyInterpreter(NSObject):
 
 
 if __name__ == "__main__":
-    import objc
-
     objc.setVerbose(1)
     AppHelper.runEventLoop()

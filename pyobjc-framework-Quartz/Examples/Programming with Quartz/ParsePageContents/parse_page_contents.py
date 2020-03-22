@@ -6,7 +6,6 @@ Usage:
 """
 from __future__ import print_function
 
-import array
 import sys
 
 import Cocoa
@@ -71,7 +70,7 @@ def checkImageType(imageDict, myScanData):
         return
 
     # If image is masked with an alpha image it has an SMask entry.
-    hasSMaskKey, object = Quartz.CGPDFDictionaryGetObject(imageDict, "SMask", None)
+    hasSMaskKey, pdf_object = Quartz.CGPDFDictionaryGetObject(imageDict, "SMask", None)
     if hasSMaskKey:
         # This object must be an XObject that is an image.
         # This code assumes the PDF is well formed in this regard.
@@ -80,15 +79,15 @@ def checkImageType(imageDict, myScanData):
 
     # If this image is masked with an image or with colors it has
     # a Mask entry.
-    hasMask, object = Quartz.CGPDFDictionaryGetObject(imageDict, "Mask", None)
+    hasMask, pdf_object = Quartz.CGPDFDictionaryGetObject(imageDict, "Mask", None)
     if hasMask:
         # If the object is an XObject then the mask is an image.
         # If it is an array, the mask is an array of colors.
-        type = Quartz.CGPDFObjectGetType(object)
+        object_type = Quartz.CGPDFObjectGetType(pdf_object)
         # Check if it is a stream type which it must be to be an XObject.
-        if type == Quartz.kCGPDFObjectTypeStream:
+        if object_type == Quartz.kCGPDFObjectTypeStream:
             myScanData.numImagesMaskedWithMaskThisPage += 1
-        elif type == Quartz.kCGPDFObjectTypeArray:
+        elif object_type == Quartz.kCGPDFObjectTypeArray:
             myScanData.numImagesMaskedWithColorsThisPage += 1
         else:
             print("Mask entry in Image object is not well formed!")
@@ -142,13 +141,13 @@ def myOperator_Do(s, info):
 
     # Streams consist of a dictionary and the data associated
     # with the stream. This code only cares about the dictionary.
-    dict = Quartz.CGPDFStreamGetDictionary(stream)
-    if dict is None:
+    info_dict = Quartz.CGPDFStreamGetDictionary(stream)
+    if info_dict is None:
         print("Couldn't obtain dictionary from stream %s!" % (name,))
         return
 
     # An XObject dict has a Subtype that indicates what kind it is.
-    res, name = Quartz.CGPDFDictionaryGetName(dict, "Subtype", None)
+    res, name = Quartz.CGPDFDictionaryGetName(info_dict, "Subtype", None)
     if not res:
         print("Couldn't get SubType of dictionary object!")
         return
@@ -161,7 +160,7 @@ def myOperator_Do(s, info):
         return
 
     # This is an Image so figure out what variety of image it is.
-    checkImageType(dict, info)
+    checkImageType(info_dict, info)
 
 
 # This callback handles inline images. Inline images end with the
@@ -179,14 +178,14 @@ def myOperator_EI(s, info):
         return
 
     # Get the image dictionary from the stream.
-    dict = Quartz.CGPDFStreamGetDictionary(stream)
-    if dict is None:
+    info_dict = Quartz.CGPDFStreamGetDictionary(stream)
+    if info_dict is None:
         print("Couldn't get dict from inline image stream!")
         return
 
     # By definition the stream passed to EI is an image so
     # pass it to the code to check the type of image.
-    checkImageType(dict, info)
+    checkImageType(info_dict, info)
 
 
 def createMyOperatorTable():

@@ -1,12 +1,7 @@
 import sys
 
 # AppHelper.runEventLoop()
-import AppKit
-import MyQuartzView
-import objc
-from PyObjCTools import AppHelper
-
-objc.setVerbose(True)
-
+import AppKit  # noqa: F401
+import MyQuartzView  # noqa: F401
 
 AppKit.NSApplicationMain(sys.argv)

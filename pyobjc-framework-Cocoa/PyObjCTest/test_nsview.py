@@ -1,6 +1,6 @@
-import objc
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestNSViewHelper(AppKit.NSObject):
@@ -12,7 +12,7 @@ class TestNSViewHelper(AppKit.NSObject):
 
 
 class ObjCTestNSView_KnowPageRange(AppKit.NSView):
-    def knowsPageRange_(self, range):
+    def knowsPageRange_(self, aRange):
         return objc.YES, (1, 10)
 
     def rectForPage_(self, page):

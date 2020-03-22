@@ -1,5 +1,3 @@
-import sys
-
 import Quartz
 import Utilities
 

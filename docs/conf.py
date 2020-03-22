@@ -53,7 +53,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "PyObjC"
-copyright = "2017, Ronald Oussoren"
+copyright = "2017, Ronald Oussoren"  # noqa: A001
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -116,7 +116,7 @@ html_baseurl = "https://pyobjc.readthedocs.io/en/latest/"
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = dict()
+html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
 # html_theme_path = []

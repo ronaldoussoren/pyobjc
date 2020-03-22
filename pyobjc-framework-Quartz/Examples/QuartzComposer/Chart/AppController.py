@@ -1,6 +1,6 @@
 import Cocoa
 import objc
-import Quartz
+import Quartz  # noqa: F401
 from objc import super
 
 # APPLICATION DATA STORAGE NOTES:
@@ -119,16 +119,16 @@ class AppController(Cocoa.NSObject):
         self.view.setValue_forInputKey_(self._data, kParameterKey_Data)
 
         # Compute the maximum value and set the chart scale accordingly
-        max = 0.0
+        max_value = 0.0
         for obj in self._data:
             value = obj[kDataKey_Value]
-            if value > max:
-                max = value
+            if value > max_value:
+                max_value = value
 
-        if max == 0.0:
+        if max_value == 0.0:
             scale = 1.0
         else:
-            scale = 1 / max
+            scale = 1 / max_value
         self.view.setValue_forInputKey_(scale, kParameterKey_Scale)
 
     @objc.IBAction

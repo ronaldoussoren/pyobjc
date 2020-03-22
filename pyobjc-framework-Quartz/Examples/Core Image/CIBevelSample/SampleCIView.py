@@ -1,6 +1,9 @@
 """
 SampleCIView - simple OpenGL based CoreImage view
 """
+
+# XXX: Fix me
+# flake8: noqa F403, F405
 import CGL
 import Cocoa
 import objc

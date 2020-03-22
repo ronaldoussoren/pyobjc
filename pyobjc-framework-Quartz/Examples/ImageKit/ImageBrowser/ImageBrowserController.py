@@ -131,7 +131,7 @@ class ImageBrowserController(Cocoa.NSWindowController):
             # Obtain the UTI using the file information.
 
             # If there is a file extension, get the UTI.
-            if info[3] != None:
+            if info[3] is not None:
                 uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(
                     LaunchServices.kUTTagClassFilenameExtension,
                     info[3],
@@ -142,7 +142,7 @@ class ImageBrowserController(Cocoa.NSWindowController):
             if uti is None:
                 # If there is an OSType, get the UTI.
                 typeString = LaunchServices.UTCreateStringForOSType(info.filetype)
-                if typeString != None:
+                if typeString is not None:
                     uti = LaunchServices.UTTypeCreatePreferredIdentifierForTag(
                         LaunchServices.kUTTagClassOSType,
                         typeString,
@@ -188,8 +188,7 @@ class ImageBrowserController(Cocoa.NSWindowController):
     #   addImagesWithPath:path:recursive
     # -------------------------------------------------------------------------
     def addImagesWithPath_recursive_(self, path, recursive):
-        dir = os.path.isdir(path)
-        if dir:
+        if os.path.isdir(path):
             content = os.listdir(path)
             # Parse the directory content.
             for fn in content:
@@ -290,13 +289,13 @@ class ImageBrowserController(Cocoa.NSWindowController):
 
         # First remove items from the data source and keep them in a
         # temporary array.
-        for index in reversed(sorted(list(indexes))):
+        for index in sorted(indexes, reverse=True):
             if index < destinationIndex:
                 destinationIndex -= 1
 
             obj = self.images[index]
             temporaryArray.append(obj)
-            del images[index]
+            del self.images[index]
 
         # Then insert the removed items at the appropriate location.
         for item in temporaryArray:
@@ -331,7 +330,7 @@ class ImageBrowserController(Cocoa.NSWindowController):
             # Retrieve  paths.
             (
                 filenames,
-                format,
+                plformat,
                 errorDescription,
             ) = Cocoa.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
                 data, Cocoa.kCFPropertyListImmutable, None, None

@@ -28,7 +28,7 @@ sys.modules["IMServicePlugIn"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Cocoa,),
+    (_IMServicePlugIn, Cocoa,),
 )
 
 

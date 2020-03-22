@@ -112,7 +112,8 @@ class TestAudioDriverPlugIn(TestCase):
 
         if sys.byteorder == "big":
             self.assertEqual(
-                CoreAudio.kAudioFormatFlagsNativeEndian, CoreAudio.kAudioFormatFlagIsBigEndian
+                CoreAudio.kAudioFormatFlagsNativeEndian,
+                CoreAudio.kAudioFormatFlagIsBigEndian,
             )
         else:
             self.assertEqual(CoreAudio.kAudioFormatFlagsNativeEndian, 0)

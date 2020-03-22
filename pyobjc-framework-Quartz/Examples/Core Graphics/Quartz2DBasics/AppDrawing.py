@@ -1,3 +1,4 @@
+import array
 import math
 
 import Cocoa
@@ -317,7 +318,9 @@ def myExportCGDrawingAsPNG(url, drawingCommand):
 
     # Create a CGImageDestination object will write PNG data to URL.
     # We specify that this object will hold 1 image.
-    imageDestination = Quartz.CGImageDestinationCreateWithURL(url, kUTTypePNG, 1, None)
+    imageDestination = Quartz.CGImageDestinationCreateWithURL(
+        url, Quartz.kUTTypePNG, 1, None
+    )
 
     properties = {
         Quartz.kCGImagePropertyDPIWidth: dpi,
@@ -375,7 +378,7 @@ def drawUncachedForLayer(context):
 
     Quartz.CGContextTranslateCTM(context, 40, 100)
 
-    for i in range(4):
+    for _ in range(4):
         # Adjust the origin as the code loops. Recall that
         # transformations are cummulative.
         Quartz.CGContextTranslateCTM(context, 2 * Quartz.CGRectGetWidth(r), 0)

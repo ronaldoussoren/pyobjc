@@ -13,7 +13,7 @@ class OC_TestConveniences(NSObject):
         self.hashValue = hashValue
         return self
 
-    def hash(self):
+    def hash(self):  # noqa: A003
         return self.hashValue
 
 

@@ -195,10 +195,10 @@ for nm in dir(Foundation._Foundation):
 
 mod.NSDecimal = objc.NSDecimal
 
-import Foundation._context  # isort:skip
-import Foundation._functiondefines  # isort:skip
-import Foundation._nsindexset  # isort:skip
-import Foundation._nsobject  # isort:skip
+import Foundation._context  # isort:skip  # noqa: F402
+import Foundation._functiondefines  # isort:skip  # noqa: F402
+import Foundation._nsindexset  # isort:skip  # noqa: F402
+import Foundation._nsobject  # isort:skip  # noqa: F402
 
 for nm in dir(Foundation._functiondefines):
     setattr(mod, nm, getattr(Foundation._functiondefines, nm))

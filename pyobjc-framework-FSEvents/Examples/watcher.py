@@ -7,7 +7,6 @@ import sys
 
 import Cocoa
 import FSEvents
-import objc
 
 
 def T_or_F(x):
@@ -252,7 +251,7 @@ def main(argv=None):
     #       FSEventStream so that there is no window
     #       during which we would miss events.
     #
-    dir_sz = get_directory_size(full_path, 1)
+    # dir_sz = get_directory_size(full_path, 1)
     print("Initial total size is: %d for path: %s" % (get_total_size(), full_path))
 
     if settings.flush_seconds >= 0:
@@ -323,7 +322,7 @@ def iterate_subdirs(dirname, recursive):
         size += st.st_size
 
         if stat.S_ISDIR(st.st_mode) and (recursive or (full_path not in dir_items)):
-            result = get_directory_size(full_path, 1)
+            size += get_directory_size(full_path, 1)
 
     dir_items[dirname] = size
     return size

@@ -26,7 +26,7 @@ sys.modules["MapKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Cocoa, CoreLocation, Quartz),
+    (_MapKit, Cocoa, CoreLocation, Quartz),
 )
 
 

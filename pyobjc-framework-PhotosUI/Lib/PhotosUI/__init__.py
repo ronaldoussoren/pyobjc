@@ -9,8 +9,8 @@ import sys
 
 import Foundation
 import objc
-import PhotosUI._PhotosUI
 from PhotosUI import _metadata
+from PhotosUI import _PhotosUI
 
 sys.modules["PhotosUI"] = mod = objc.ObjCLazyModule(
     "PhotosUI",
@@ -24,7 +24,7 @@ sys.modules["PhotosUI"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_PhotosUI, Foundation,),
 )
 
 

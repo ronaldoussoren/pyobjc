@@ -6,11 +6,11 @@ Usage:
 """
 from setuptools import setup
 
-plist = dict(NSPrincipalClass="SillyBalls")
+plist = {"NSPrincipalClass": "SillyBalls"}
 
 setup(
     plugin=["SillyBalls.py"],
     data_files=["English.lproj"],
-    options=dict(py2app=dict(extension=".saver", plist=plist)),
+    options={"py2app": {"extension": ".saver", "plist": plist}},
     setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-ScreenSaver"],
 )

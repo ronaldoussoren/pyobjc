@@ -1,7 +1,8 @@
 import sys
 
 import Cocoa
-import DataProvidersAndConsumers
+
+# import DataProvidersAndConsumers
 import Images
 import Quartz
 import Utilities
@@ -2971,7 +2972,7 @@ else:
             Utilities.getRGBOpaqueRedColor(),
         )
         maskBitsPerComponent = 8
-        bytesPerRow = ((maskwidth * maskBitsPerComponent) + 7) / 8
+        # bytesPerRow = ((maskwidth * maskBitsPerComponent) + 7) / 8
         shouldInterpolate = True
         maskDataProvider = Quartz.CGDataProviderCreateWithURL(theMaskingImageURL)
 
@@ -2999,7 +3000,7 @@ else:
         # Position for drawing the mask at the left side of the figure.
         Quartz.CGContextTranslateCTM(context, 50, 50)
         # Set the context fill color to a Quartz.CGColor object that is black.
-        Quartz.CGContextSetFillColorWithColor(context, getRGBOpaqueBlackColor())
+        Quartz.CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueBlackColor())
         # Draw the mask. It is painted with with the black fill color.
         Quartz.CGContextDrawImage(context, maskRect, mask)
 

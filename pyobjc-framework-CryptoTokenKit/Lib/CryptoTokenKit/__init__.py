@@ -10,7 +10,7 @@ import sys
 import Foundation
 import objc
 from CryptoTokenKit import _metadata
-from CryptoTokenKit._CryptoTokenKit import *
+from CryptoTokenKit import _CryptoTokenKit
 
 sys.modules["CryptoTokenKit"] = mod = objc.ObjCLazyModule(
     "CryptoTokenKit",
@@ -24,7 +24,7 @@ sys.modules["CryptoTokenKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_CryptoTokenKit, Foundation,),
 )
 
 

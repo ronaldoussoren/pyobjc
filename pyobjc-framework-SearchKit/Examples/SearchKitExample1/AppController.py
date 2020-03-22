@@ -185,7 +185,8 @@ class AppController(Cocoa.NSObject):
 
         # and then we immediately turn around and use that to create
         # a Search Kit Search Group reference.
-        searchgroup = SearchKit.SKSearchGroupCreate(searchArray)
+        # XXX: Why is this not used?
+        searchgroup = SearchKit.SKSearchGroupCreate(searchArray)  # noqa: F841
 
         # now that we have a searchgroup, we can request a result set
         # from it with our search terms.

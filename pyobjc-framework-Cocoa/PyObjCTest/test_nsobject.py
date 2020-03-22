@@ -1,5 +1,4 @@
 import Foundation
-import CoreFoundation
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 

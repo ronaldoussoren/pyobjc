@@ -23,7 +23,7 @@ sys.modules["NotificationCenter"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Cocoa,),
+    (_NotificationCenter, Cocoa,),
 )
 
 

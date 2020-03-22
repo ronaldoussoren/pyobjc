@@ -3,7 +3,6 @@ from __future__ import print_function
 import sys
 
 import Cocoa
-import objc
 import Quartz
 
 DEBUG = 1

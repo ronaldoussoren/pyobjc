@@ -9,7 +9,7 @@ import sys
 
 import Foundation
 import objc
-from CoreMedia import _CoreMedia, _macros, _metadata
+from CoreMedia import _CoreMedia, _metadata
 
 sys.modules["CoreMedia"] = mod = objc.ObjCLazyModule(
     "CoreMedia",
@@ -23,8 +23,16 @@ sys.modules["CoreMedia"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_macros, _CoreMedia, Foundation),
+    (_CoreMedia, Foundation),
 )
+
+import sys  # isort: ignore  # noqa: E402
+from CoreMedia import _macros  # isort: ignore  # noqa: E402
+
+for nm in dir(_macros):
+    if nm == "CoreMedia":
+        continue
+    setattr(mod, nm, getattr(_macros, nm))
 
 
 del sys.modules["CoreMedia._metadata"]

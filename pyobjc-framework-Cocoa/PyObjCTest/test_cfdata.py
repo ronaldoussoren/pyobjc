@@ -1,6 +1,6 @@
 import CoreFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestData(TestCase):
@@ -21,11 +21,11 @@ class TestData(TestCase):
         self.assertArgSizeInArg(CoreFoundation.CFDataCreate, 1, 2)
         data = CoreFoundation.CFDataCreate(None, b"hello", 5)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
-        bytes = b"hello world"
+        bytes_data = b"hello world"
         self.assertArgHasType(CoreFoundation.CFDataCreateWithBytesNoCopy, 1, b"n^v")
         self.assertArgSizeInArg(CoreFoundation.CFDataCreateWithBytesNoCopy, 1, 2)
         data = CoreFoundation.CFDataCreateWithBytesNoCopy(
-            None, bytes, 5, CoreFoundation.kCFAllocatorNull
+            None, bytes_data, 5, CoreFoundation.kCFAllocatorNull
         )
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
         del data
@@ -56,8 +56,8 @@ class TestData(TestCase):
         self.assertEqual(v[0], b"p")
         self.assertArgHasType(CoreFoundation.CFDataGetBytes, 2, b"o^v")
         self.assertArgSizeInArg(CoreFoundation.CFDataGetBytes, 2, 1)
-        bytes = CoreFoundation.CFDataGetBytes(data, (1, 3), None)
-        self.assertEqual(bytes, b"hello"[1:4])
+        bytes_data = CoreFoundation.CFDataGetBytes(data, (1, 3), None)
+        self.assertEqual(bytes_data, b"hello"[1:4])
 
         CoreFoundation.CFDataSetLength(mutableData, 3)
         self.assertEqual(CoreFoundation.CFDataGetLength(mutableData), 3)

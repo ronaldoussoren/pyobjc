@@ -1,4 +1,3 @@
-import os
 import sys
 
 import Cocoa
@@ -104,25 +103,25 @@ def createPasswordString(password):
     return Cocoa.CFStringCreateWithCString(None, password, Cocoa.kCFStringEncodingASCII)
 
 
-def addEncryptionKeys(dict):
+def addEncryptionKeys(info_dict):
     ownerPassword = "test"
     ownerPasswordRef = None
-    if dict is None:
+    if info_dict is None:
         return
 
     ownerPasswordRef = createPasswordString(ownerPassword)
-    if ownerPasswordRef == None:
+    if ownerPasswordRef is None:
         print("Invalid owner password %s!" % (ownerPassword,))
         return
 
     if hasattr(Quartz, "kCGPDFContextOwnerPassword"):
         # Add the owner password.
-        dict[Quartz.kCGPDFContextOwnerPassword] = ownerPasswordRef
+        info_dict[Quartz.kCGPDFContextOwnerPassword] = ownerPasswordRef
 
         # No user password supplied so Quartz will use the empty string.
 
         # Mark that printing is disallowed.
-        dict[Quartz.kCGPDFContextAllowsPrinting] = False
+        info_dict[Quartz.kCGPDFContextAllowsPrinting] = False
 
     else:
         print("Encrypted PDF not available in this version of macOS!")

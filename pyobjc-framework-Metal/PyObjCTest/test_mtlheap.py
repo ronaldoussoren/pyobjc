@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestMTLHeapHelper(Metal.NSObject):
@@ -30,7 +31,7 @@ class TestMTLHeapHelper(Metal.NSObject):
     def setPurgeableState_(self, a):
         return 1
 
-    def type(self):
+    def type(self):  # noqa: A003
         return 1
 
     def newBufferWithLength_options_offset_(self, a, b, c):

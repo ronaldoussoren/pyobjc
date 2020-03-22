@@ -1,6 +1,6 @@
 import sys
 
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 if sys.maxsize > 2 ** 32:
 
@@ -9,8 +9,8 @@ if sys.maxsize > 2 ** 32:
     class TestMTKModel(TestCase):
         @min_os_level("10.11")
         def test_constants10_11(self):
-            self.assertIsInstance(MetalKit.MTKModelErrorDomain, unicode)
-            self.assertIsInstance(MetalKit.MTKModelErrorKey, unicode)
+            self.assertIsInstance(MetalKit.MTKModelErrorDomain, str)
+            self.assertIsInstance(MetalKit.MTKModelErrorKey, str)
 
         @min_os_level("10.11")
         def test_methods10_11(self):

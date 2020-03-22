@@ -1,8 +1,8 @@
 import array
 
 import libdispatch
-import objc
 from PyObjCTools.TestSupport import TestCase
+import objc
 
 
 class TestOnceAPI(TestCase):
@@ -28,19 +28,19 @@ class TestOnceUsage(TestCase):
         pred = 0
         record = []
 
-        def callable():
+        def function():
             record.append(None)
 
-        self.assertRaises(TypeError, libdispatch.dispatch_once, pred, callable)
+        self.assertRaises(TypeError, libdispatch.dispatch_once, pred, function)
 
     def test_arrayvar(self):
         pred = array.array("l", [0])
         record = []
 
-        def callable():
+        def function():
             record.append(None)
 
-        libdispatch.dispatch_once(pred, callable)
-        libdispatch.dispatch_once(pred, callable)
+        libdispatch.dispatch_once(pred, function)
+        libdispatch.dispatch_once(pred, function)
 
         self.assertEqual(record, [None])

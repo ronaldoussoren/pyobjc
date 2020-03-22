@@ -66,10 +66,10 @@ class TestPropertyList(TestCase):
 
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateFromStream, 4)
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateFromStream, 5)
-        res, format, errorString = CoreFoundation.CFPropertyListCreateFromStream(
+        res, plist_format, errorString = CoreFoundation.CFPropertyListCreateFromStream(
             None, stream, 0, 0, None, None
         )
-        self.assertEqual(format, CoreFoundation.kCFPropertyListXMLFormat_v1_0)
+        self.assertEqual(plist_format, CoreFoundation.kCFPropertyListXMLFormat_v1_0)
         self.assertIs(errorString, None)
         self.assertEqual(res, value)
 
@@ -97,10 +97,10 @@ class TestPropertyList(TestCase):
             None, {b"key".decode("ascii"): 42, b"key2".decode("ascii"): 1}
         )
         self.assertIsInstance(dta, CoreFoundation.CFDataRef)
-        bytes = CoreFoundation.CFDataGetBytes(
+        bytes_value = CoreFoundation.CFDataGetBytes(
             dta, (0, CoreFoundation.CFDataGetLength(dta)), None
         )
-        self.assertIsNot(bytes, None)
+        self.assertIsNot(bytes_value, None)
         self.assertResultIsCFRetained(CoreFoundation.CFPropertyListCreateWithData)
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithData, 3)
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithData, 4)
@@ -111,7 +111,7 @@ class TestPropertyList(TestCase):
         self.assertIsInstance(fmt, int)
         self.assertIs(err, None)
         stream = CoreFoundation.CFReadStreamCreateWithBytesNoCopy(
-            None, bytes, len(bytes), CoreFoundation.kCFAllocatorNull
+            None, bytes_value, len(bytes_value), CoreFoundation.kCFAllocatorNull
         )
         CoreFoundation.CFReadStreamOpen(stream)
 
@@ -119,7 +119,7 @@ class TestPropertyList(TestCase):
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithStream, 4)
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateWithStream, 5)
         v, fmt, err = CoreFoundation.CFPropertyListCreateWithStream(
-            None, stream, len(bytes), 0, None, None
+            None, stream, len(bytes_value), 0, None, None
         )
         self.assertIsNot(v, None)
         self.assertIsInstance(fmt, int)

@@ -21,7 +21,9 @@ class TestXGActionMonitor(TestCase):
         self.assertEqual(XgridFoundation.XGActionMonitorOutcomeSuccess, 1)
         self.assertEqual(XgridFoundation.XGActionMonitorOutcomeFailure, 2)
 
-        self.assertIsInstance(XgridFoundation.XGActionMonitorResultsOutputStreamsKey, str)
+        self.assertIsInstance(
+            XgridFoundation.XGActionMonitorResultsOutputStreamsKey, str
+        )
         self.assertIsInstance(XgridFoundation.XGActionMonitorResultsOutputFilesKey, str)
 
     def testMethods(self):

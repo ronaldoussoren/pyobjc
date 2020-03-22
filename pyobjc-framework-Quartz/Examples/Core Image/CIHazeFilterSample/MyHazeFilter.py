@@ -52,8 +52,7 @@ class MyHazeFilter(Quartz.CIFilter):
 
     @classmethod
     def filterWithName_(cls, name):
-        filter = cls.alloc().init()
-        return filter
+        return cls.alloc().init()
 
     def init(self):
         global _hazeRemovalKernel

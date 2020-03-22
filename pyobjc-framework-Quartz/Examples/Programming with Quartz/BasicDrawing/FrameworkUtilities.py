@@ -1,4 +1,5 @@
-import AppDrawing
+import AppDrawing  # noqa: F401
+from PDFHandling import cfDataCreatePDFDocumentFromCommand
 import Cocoa
 
 
@@ -10,17 +11,17 @@ def myCreatePDFDataFromPasteBoard():
     # listed in the array supplied. Here the array of requested types contains only one type,
     # that of PDF data. If your application could handle more types, you would list them in
     # the creation of this array.
-    type = pboard.availableTypeFromArray_([Cocoa.NSPDFPboardType])
+    pboard_type = pboard.availableTypeFromArray_([Cocoa.NSPDFPboardType])
 
     # If the string is non-nil, there was data of one of our requested types
     # on the pasteboard that can be obtained.
-    if type is not None:
+    if pboard_type is not None:
         # Test that the type is the PDF data type. This code is not strictly necessary
         # for this example since we only said we could handle PDF data, but is appropriate
         # if you can handle more types than just PDF.
-        if type == Cocoa.NSPDFPboardType:
+        if pboard_type == Cocoa.NSPDFPboardType:
             # Get the PDF data from the pasteboard.
-            pdfData = pboard.dataForType_(type)
+            pdfData = pboard.dataForType_(pboard_type)
             if pdfData is not None:
                 return pdfData
             else:

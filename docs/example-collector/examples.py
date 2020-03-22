@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import os
-import sys
 import zipfile
 
 destination_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,7 +35,7 @@ def zip_directory(input_dir, output_file, verbose):
     while input_dir.endswith(os.path.sep):
         input_dir = input_dir[: -len(os.path.sep)]
 
-    for dirpath, dirnames, filenames in os.walk(input_dir):
+    for dirpath, _dirnames, filenames in os.walk(input_dir):
         relpath = os.path.join(basename, dirpath[len(input_dir) + 1 :])
 
         for fn in filenames:
@@ -121,12 +120,6 @@ def convert_example(name, input_dir, output_dir, verbose):
         print("WARNING: Example at {} does not contain a readme".format(input_dir))
         readme = "A PyObjC Example without documentation"
 
-    if os.path.exists(summary_file):
-        with open(summary_file) as fp:
-            summary = fp.read()
-    else:
-        summary = None
-
     with open(os.path.join(output_dir, "index.rst"), "w") as fp:
         print(name, file=fp)
         print("=" * len(name), file=fp)
@@ -187,7 +180,7 @@ def examples_for_project(input_dir, output_dir, verbose):
     if not os.path.exists(input_dir):
         return
 
-    for dirpath, dirnames, filenames in os.walk(input_dir):
+    for dirpath, dirnames, _filenames in os.walk(input_dir):
         to_remove = set()
 
         added_dir = False
@@ -262,7 +255,7 @@ def merge_example_zips(output_fn, input_directory, verbose):
 
     zf = zipfile.ZipFile(output_fn, "w", compression=zipfile.ZIP_DEFLATED)
 
-    for dn, dirs, files in os.walk(input_directory):
+    for dn, _dirs, files in os.walk(input_directory):
         for fn in files:
             if fn.endswith(".zip"):
                 zfpath = os.path.join(dn, fn)

@@ -2,7 +2,7 @@ import math
 
 import Cocoa
 import objc
-import Quartz
+import Quartz  # noqa: F401
 
 
 class Circle(Cocoa.NSObject):

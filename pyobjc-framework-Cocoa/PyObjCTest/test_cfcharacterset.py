@@ -1,6 +1,6 @@
 import CoreFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestCharacterSet(TestCase):
@@ -23,51 +23,53 @@ class TestCharacterSet(TestCase):
         self.assertIsInstance(v, int)
 
     def testCreation(self):
-        set = CoreFoundation.CFCharacterSetGetPredefined(
+        charset = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetLetter
         )
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
-        set = CoreFoundation.CFCharacterSetCreateWithCharactersInRange(
+        charset = CoreFoundation.CFCharacterSetCreateWithCharactersInRange(
             None, (ord("A"), ord("Z") - ord("A"))
         )
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
-        set = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
+        charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
             None, b"abcdefABCDEF0123456789".decode("latin1")
         )
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
-        bytes = b"0123" * (8192 // 4)
-        set = CoreFoundation.CFCharacterSetCreateWithBitmapRepresentation(None, bytes)
+        bytes_value = b"0123" * (8192 // 4)
+        charset = CoreFoundation.CFCharacterSetCreateWithBitmapRepresentation(
+            None, bytes_value
+        )
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
-        set = CoreFoundation.CFCharacterSetCreateInvertedSet(None, set)
+        charset = CoreFoundation.CFCharacterSetCreateInvertedSet(None, charset)
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
-        set = CoreFoundation.CFCharacterSetCreateMutable(None)
+        charset = CoreFoundation.CFCharacterSetCreateMutable(None)
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
-        set = CoreFoundation.CFCharacterSetCreateCopy(None, set)
+        charset = CoreFoundation.CFCharacterSetCreateCopy(None, charset)
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
-        set = CoreFoundation.CFCharacterSetCreateMutableCopy(None, set)
+        charset = CoreFoundation.CFCharacterSetCreateMutableCopy(None, charset)
         self.assertIsInstance(
-            set,
+            charset,
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
 
@@ -78,12 +80,12 @@ class TestCharacterSet(TestCase):
         digits = CoreFoundation.CFCharacterSetGetPredefined(
             CoreFoundation.kCFCharacterSetDecimalDigit
         )
-        set = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
+        charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
             None, b"abcdef".decode("latin1")
         )
 
-        self.assertTrue(CoreFoundation.CFCharacterSetIsSupersetOfSet(letters, set))
-        self.assertFalse(CoreFoundation.CFCharacterSetIsSupersetOfSet(digits, set))
+        self.assertTrue(CoreFoundation.CFCharacterSetIsSupersetOfSet(letters, charset))
+        self.assertFalse(CoreFoundation.CFCharacterSetIsSupersetOfSet(digits, charset))
 
         self.assertTrue(CoreFoundation.CFCharacterSetHasMemberInPlane(digits, 0))
         self.assertFalse(CoreFoundation.CFCharacterSetHasMemberInPlane(digits, 4))
@@ -99,7 +101,7 @@ class TestCharacterSet(TestCase):
             )
         )
 
-        data = CoreFoundation.CFCharacterSetCreateBitmapRepresentation(None, set)
+        data = CoreFoundation.CFCharacterSetCreateBitmapRepresentation(None, charset)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
 
     def testInspectLongUnicode(self):
@@ -131,14 +133,16 @@ class TestCharacterSet(TestCase):
         )
 
     def testMutation(self):
-        set = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
+        charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
             None, b"abcdef".decode("latin1")
         )
-        set = CoreFoundation.CFCharacterSetCreateMutableCopy(None, set)
+        charset = CoreFoundation.CFCharacterSetCreateMutableCopy(None, charset)
 
-        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(set, chr(4)))
-        CoreFoundation.CFCharacterSetAddCharactersInRange(set, (1, 10))
-        self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(set, chr(4)))
+        self.assertFalse(
+            CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4))
+        )
+        CoreFoundation.CFCharacterSetAddCharactersInRange(charset, (1, 10))
+        self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4)))
 
         CoreFoundation.CFCharacterSetRemoveCharactersInRange(set, (4, 2))
         self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(set, chr(4)))

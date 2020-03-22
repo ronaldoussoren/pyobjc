@@ -2,7 +2,7 @@ import Cocoa
 import objc
 import Quartz
 import ShadowOffsetView
-from objc import super
+from objc import super, nil
 
 
 class TLayerDemo(Cocoa.NSObject):

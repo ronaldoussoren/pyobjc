@@ -1,5 +1,3 @@
-import math
-
 import AppDrawing
 import Cocoa
 import objc
@@ -47,7 +45,7 @@ class MyView(Cocoa.NSView):
         Cocoa.NSPrintOperation.printOperationWithView_(self).runOperation()
         _drawingCommand = savedDrawingCommand
 
-    def knowsPageRange_(self, range):
+    def knowsPageRange_(self, page_range):
         return True, Cocoa.NSRange(1, 1)
 
     def rectForPage_(self, page):

@@ -271,10 +271,10 @@ def _working_compiler(executable):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
         )
-        exit = p.wait()
+        status = p.wait()
         p.stdout.close()
         p.stderr.close()
-        if exit != 0:
+        if status != 0:
             return False
 
         binfile = fp.name[:-1] + "o"
@@ -330,12 +330,12 @@ def _fixup_compiler():
     if cc != oldcc:
         print("Use '%s' instead of '%s' as the compiler" % (cc, oldcc))
 
-        vars = get_config_vars()
+        config_vars = get_config_vars()
         for env in ("BLDSHARED", "LDSHARED", "CC", "CXX"):
-            if env in vars and env not in os.environ:
-                split = vars[env].split()
+            if env in config_vars and env not in os.environ:
+                split = config_vars[env].split()
                 split[0] = cc if env != "CXX" else cc + "++"
-                vars[env] = " ".join(split)
+                config_vars[env] = " ".join(split)
 
 
 class pyobjc_build_ext(build_ext.build_ext):

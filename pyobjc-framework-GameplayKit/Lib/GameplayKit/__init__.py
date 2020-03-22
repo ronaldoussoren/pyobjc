@@ -11,7 +11,7 @@ import Cocoa
 import objc
 import SpriteKit
 from GameplayKit import _metadata
-from GameplayKit._GameplayKit import *
+from GameplayKit import _GameplayKit
 
 sys.modules["GameplayKit"] = mod = objc.ObjCLazyModule(
     "GameplayKit",
@@ -25,7 +25,7 @@ sys.modules["GameplayKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Cocoa, SpriteKit),
+    (_GameplayKit, Cocoa, SpriteKit),
 )
 
 

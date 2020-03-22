@@ -1,8 +1,8 @@
 import sys
 
-import objc
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 if sys.version_info[0] == 3:
 
@@ -457,10 +457,10 @@ class TestNSMutableArrayInteraction(TestCase):
         a.sort()
         self.assertEqual(a, (0, 1, 2, 3))
 
-        map = {0: "nul", 1: "een", 2: "twee", 3: "drie"}
+        mapping = {0: "nul", 1: "een", 2: "twee", 3: "drie"}
 
         def keyfunc(l):
-            return map[l]
+            return mapping[l]
 
         a.sort(key=keyfunc)
         self.assertEqual(a, (3, 1, 0, 2))

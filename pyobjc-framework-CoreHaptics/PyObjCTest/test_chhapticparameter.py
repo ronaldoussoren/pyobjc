@@ -1,60 +1,54 @@
 import CoreHaptics
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestCHHapticParameter(TestCase):
     @min_sdk_level("10.15")
     def test_constants10_15(self):
-        self.assertIsInstance(
-            CoreHaptics.CHHapticEventParameterIDHapticIntensity, unicode
-        )
-        self.assertIsInstance(
-            CoreHaptics.CHHapticEventParameterIDHapticSharpness, unicode
-        )
-        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAttackTime, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDDecayTime, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDReleaseTime, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDSustained, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAudioVolume, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAudioPitch, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAudioPan, unicode)
-        self.assertIsInstance(
-            CoreHaptics.CHHapticEventParameterIDAudioBrightness, unicode
-        )
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDHapticIntensity, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDHapticSharpness, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAttackTime, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDDecayTime, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDReleaseTime, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDSustained, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAudioVolume, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAudioPitch, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAudioPan, str)
+        self.assertIsInstance(CoreHaptics.CHHapticEventParameterIDAudioBrightness, str)
 
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDHapticIntensityControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDHapticIntensityControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDHapticSharpnessControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDHapticSharpnessControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDHapticAttackTimeControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDHapticAttackTimeControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDHapticDecayTimeControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDHapticDecayTimeControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDHapticReleaseTimeControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDHapticReleaseTimeControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioVolumeControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDAudioVolumeControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioPanControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDAudioPanControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioBrightnessControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDAudioBrightnessControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioPitchControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDAudioPitchControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioAttackTimeControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDAudioAttackTimeControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioDecayTimeControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDAudioDecayTimeControl, str
         )
         self.assertIsInstance(
-            CoreHaptics.CHHapticDynamicParameterIDAudioReleaseTimeControl, unicode
+            CoreHaptics.CHHapticDynamicParameterIDAudioReleaseTimeControl, str
         )

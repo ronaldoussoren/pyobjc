@@ -9,8 +9,8 @@ import sys
 
 import Foundation
 import objc
-import Photos._Photos
 from Photos import _metadata
+from Photos import _Photos
 
 sys.modules["Photos"] = mod = objc.ObjCLazyModule(
     "Photos",
@@ -24,7 +24,7 @@ sys.modules["Photos"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_Photos, Foundation,),
 )
 
 

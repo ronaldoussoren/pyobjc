@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestMTLLibraryHelper(Metal.NSObject):
@@ -51,11 +52,7 @@ class TestMTLLibrary(TestCase):
 
     @min_os_level("10.11")
     def test_constants10_11(self):
-        self.assertIsInstance(Metal.MTLLibraryErrorDomain, unicode)
-
-    @min_os_level("10.11")
-    def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLVertexAttribute.isActive)
+        self.assertIsInstance(Metal.MTLLibraryErrorDomain, str)
 
     @min_sdk_level("10.11")
     def test_protocols(self):
@@ -91,6 +88,8 @@ class TestMTLLibrary(TestCase):
 
     @min_os_level("10.11")
     def test_methods10_11(self):
+        self.assertResultIsBOOL(Metal.MTLVertexAttribute.isActive)
+
         self.assertResultIsBOOL(Metal.MTLCompileOptions.alloc().init().fastMathEnabled)
         self.assertArgIsBOOL(
             Metal.MTLCompileOptions.alloc().init().setFastMathEnabled_, 0

@@ -8,8 +8,8 @@ import sys
 
 import Cocoa
 import objc
-import Quartz.QuickLookUI._QuickLookUI
 from Quartz.QuickLookUI import _metadata
+from Quartz.QuickLookUI import _QuickLookUI
 
 sys.modules["Quartz.QuickLookUI"] = mod = objc.ObjCLazyModule(
     "Quartz.QuickLookUI",
@@ -25,7 +25,7 @@ sys.modules["Quartz.QuickLookUI"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Cocoa,),
+    (_QuickLookUI, Cocoa,),
 )
 
 

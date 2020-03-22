@@ -8,8 +8,8 @@ import sys
 
 import Foundation
 import objc
-import Quartz.QuartzCore._quartzcore
 from Quartz.QuartzCore import _metadata
+from Quartz.QuartzCore import _quartzcore
 
 
 # XXX: addConvenienceFor... should be metadata
@@ -63,7 +63,7 @@ sys.modules["Quartz.QuartzCore"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Foundation,),
+    (_quartzcore, Foundation,),
 )
 
 

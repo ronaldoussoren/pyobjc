@@ -8,9 +8,9 @@ documentation for details on how to use these functions and classes.
 import sys
 
 import Foundation
-import MultipeerConnectivity._MultipeerConnectivity
 import objc
 from MultipeerConnectivity import _metadata
+from MultipeerConnectivity import _MultipeerConnectivity
 
 sys.modules["MultipeerConnectivity"] = mod = objc.ObjCLazyModule(
     "MultipeerConnectivity",
@@ -24,7 +24,7 @@ sys.modules["MultipeerConnectivity"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_MultipeerConnectivity, Foundation,),
 )
 
 

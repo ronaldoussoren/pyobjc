@@ -12,7 +12,7 @@ import Foundation
 # make the minimal amount of AppleScript calls.
 import objc
 from ScriptingBridge import _metadata
-from ScriptingBridge._ScriptingBridge import *
+from ScriptingBridge import _ScriptingBridge
 
 sys.modules["ScriptingBridge"] = mod = objc.ObjCLazyModule(
     "ScriptingBridge",
@@ -26,7 +26,7 @@ sys.modules["ScriptingBridge"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Foundation,),
+    (_ScriptingBridge, Foundation,),
 )
 
 

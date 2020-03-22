@@ -1,11 +1,8 @@
-import sys
-
 import AppDrawing
 import Cocoa
 import DataProvidersAndConsumers
 import FrameworkUtilities
 import Quartz
-import Utilities
 
 
 def createNewPDFRefFromPasteBoard():
@@ -22,7 +19,7 @@ def createNewPDFRefFromPasteBoard():
         return None
 
     # Create a data provider from the pasteboard data.
-    dataProvider = myCGDataProviderCreateWithCFData(pasteBoardData)
+    dataProvider = Quartz.CGDataProviderCreateWithCFData(pasteBoardData)
     # Release the pasteboard data since the data provider retains
     # it and this code owns a reference but no longer requires it.
     del pasteBoardData
@@ -78,11 +75,11 @@ def cfDataCreatePDFDocumentFromCommand(command):
     mediaRect = Quartz.CGRectMake(0, 0, 612, 792)
 
     # Create a dictionary to hold the optional information describing the PDF data.
-    dict = {}
+    info_dict = {}
 
     # Add the creator and title information to the PDF content.
-    dict[Quartz.kCGPDFContextTitle] = "Pasted From Sample Quartz Application"
-    dict[Quartz.kCGPDFContextCreator] = "Sample Quartz Application"
+    info_dict[Quartz.kCGPDFContextTitle] = "Pasted From Sample Quartz Application"
+    info_dict[Quartz.kCGPDFContextCreator] = "Sample Quartz Application"
 
     # Create a mutable CFData object with unlimited capacity.
     data = Cocoa.CFDataCreateMutable(None, 0)
@@ -96,9 +93,9 @@ def cfDataCreatePDFDocumentFromCommand(command):
         print("Couldn't create data consumer!")
         return None
 
-    pdfContext, mediaRect = Quartz.CGPDFContextCreate(consumer, None, dict)
+    pdfContext, mediaRect = Quartz.CGPDFContextCreate(consumer, None, info_dict)
     del consumer
-    del dict
+    del info_dict
 
     if pdfContext is None:
         print("Couldn't create pdf context!")

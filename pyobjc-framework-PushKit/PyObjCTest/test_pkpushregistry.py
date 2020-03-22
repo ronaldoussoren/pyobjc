@@ -1,6 +1,7 @@
 import sys
 
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 if sys.maxsize > 2 ** 32:
     import PushKit
@@ -14,7 +15,7 @@ if sys.maxsize > 2 ** 32:
     class TestPKPushRegistry(TestCase):
         @min_os_level("10.15")
         def test_constants(self):
-            self.assertIsInstance(PushKit.PKPushTypeFileProvider, unicode)
+            self.assertIsInstance(PushKit.PKPushTypeFileProvider, str)
 
         @min_sdk_level("10.15")
         def test_methods(self):

@@ -121,7 +121,7 @@ class MyPDFDocument(Cocoa.NSDocument):
 
     def pageChanged_(self, notification):
         # Skip out if there is no outline.
-        if selfl_pdfView.document().outlineRoot() is None:
+        if self.pdfView.document().outlineRoot() is None:
             return
 
         # What is the new page number (zero-based).

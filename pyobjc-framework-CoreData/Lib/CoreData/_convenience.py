@@ -40,7 +40,7 @@ def NSMOsetValue_ForKey_(self, name, value):
         else:
             self.setValue_forKey_(value, name)
 
-    except KeyError as msg:
+    except KeyError:
         NSObject.__setattr__(self, name, value)
 
 
@@ -52,7 +52,7 @@ def NSMOgetValueForKey_(self, name):
         else:
             return self.valueForKey_(name)
 
-    except KeyError as msg:
+    except KeyError:
         raise AttributeError(name)
 
 

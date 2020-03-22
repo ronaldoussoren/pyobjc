@@ -107,7 +107,7 @@ class PeopleDataSource(Cocoa.NSObject):
         # Assume everyone is offline.
         self._imPersonStatus.removeAllObjects()
         offlineNumber = InstantMessage.IMPersonStatusOffline
-        for i in range(len(self._abPeople)):
+        for _ in range(len(self._abPeople)):
             self._imPersonStatus.append(offlineNumber)
 
     # This will do a full flush of people in our AB Cache, along with

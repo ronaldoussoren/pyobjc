@@ -5,7 +5,7 @@ import Quartz
 
 
 class HazeFilterView(Cocoa.NSView):
-    filter = objc.ivar()
+    filter = objc.ivar()  # noqa: A003
     distance = objc.ivar(type=objc._C_FLT)
     slope = objc.ivar(type=objc._C_FLT)
 

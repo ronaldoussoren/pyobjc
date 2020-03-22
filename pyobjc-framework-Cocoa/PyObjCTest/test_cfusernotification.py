@@ -8,8 +8,8 @@ class TestUserNotification(TestCase):
         self.assertIsCFType(CoreFoundation.CFUserNotificationRef)
 
     def testTypeID(self):
-        id = CoreFoundation.CFUserNotificationGetTypeID()
-        self.assertIsInstance(id, int)
+        value = CoreFoundation.CFUserNotificationGetTypeID()
+        self.assertIsInstance(value, int)
 
     def testCreation(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode

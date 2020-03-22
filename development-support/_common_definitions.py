@@ -37,15 +37,22 @@ def mac_ver():
 
 
 def repository_id():
-    return subprocess.check_output(["git", "describe", "--abbrev=12", "--always", "--dirty=+"], cwd=TOP_DIR).decode("utf-8").strip()
+    return (
+        subprocess.check_output(
+            ["git", "describe", "--abbrev=12", "--always", "--dirty=+"], cwd=TOP_DIR
+        )
+        .decode("utf-8")
+        .strip()
+    )
 
 
 def repository_commit_state():
     summary = subprocess.check_output(["git", "status"], cwd=TOP_DIR).decode("utf-8")
     for ln in summary.splitlines():
-        if "Changes not staged for commit"  in ln:
+        if "Changes not staged for commit" in ln:
             return "(dirty)"
     return "(clean)"
+
 
 def xcode_version():
     data = subprocess.check_output(["xcodebuild", "-version"])
@@ -104,7 +111,7 @@ def virtualenv(interpreter):
         shutil.rmtree("test-env")
 
 
-def variants(ver, permitted_variants={"64bit"}):
+def variants(ver, permitted_variants=("64bit",)):
     if os.path.islink(
         os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
     ):

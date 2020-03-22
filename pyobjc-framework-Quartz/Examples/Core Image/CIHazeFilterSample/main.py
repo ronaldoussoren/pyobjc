@@ -1,8 +1,5 @@
-import HazeFilterView
-import MyHazeFilter
-import objc
+import HazeFilterView  # noqa: F401
+import MyHazeFilter  # noqa: F401
 from PyObjCTools import AppHelper
-
-objc.setVerbose(True)
 
 AppHelper.runEventLoop()

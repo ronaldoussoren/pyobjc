@@ -38,7 +38,7 @@ def randomPoint():
     return Quartz.CGPoint(random.random(), random.random())
 
 
-def evaluate1(components, input, output):
+def evaluate1(components, input_value, output_value):
     out = []
     for k in range(components - 1):
         out.append(1 + (math.sin(input[0] * frequency[k])) / 2)
@@ -52,16 +52,18 @@ def getFunction1(colorspace):
     else:
         a_type = "f"
     domain = array.array(a_type, [-2 * math.pi, 2 * math.pi])
-    range = array.array(a_type, [0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
+    function_range = array.array(a_type, [0, 1, 0, 1, 0, 1, 0, 1, 0, 1])
     components = 1 + Quartz.CGColorSpaceGetNumberOfComponents(colorspace)
 
-    return Quartz.CGFunctionCreate(components, 1, domain, components, range, evaluate1)
+    return Quartz.CGFunctionCreate(
+        components, 1, domain, components, function_range, evaluate1
+    )
 
 
-def evaluate2(components, input, output):
+def evaluate2(components, input_value, output_value):
     c = [0.510, 0.188, 0.910, 0.122]
 
-    v = input[0]
+    v = input_value[0]
     out = []
     for k in range(components - 1):
         if v < 0.5:
@@ -74,28 +76,32 @@ def evaluate2(components, input, output):
 
 def getFunction2(colorspace):
     domain = [0, 1]
-    range = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+    function_range = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
 
     components = 1 + Quartz.CGColorSpaceGetNumberOfComponents(colorspace)
-    return Quartz.CGFunctionCreate(components, 1, domain, components, range, evaluate2)
+    return Quartz.CGFunctionCreate(
+        components, 1, domain, components, function_range, evaluate2
+    )
 
 
-def evaluate3(components, input, output):
+def evaluate3(components, input_value, output_value):
     c = [0.3, 0, 0, 0]
 
     out = []
     for k in range(components - 1):
-        out.append(c[k] * input[0])
+        out.append(c[k] * input_value[0])
     out.append(1)
     return out
 
 
 def getFunction3(colorspace):
     domain = [0, 1]
-    range = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
+    function_range = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]
 
     components = 1 + Quartz.CGColorSpaceGetNumberOfComponents(colorspace)
-    return Quartz.CGFunctionCreate(components, 1, domain, components, range, evaluate3)
+    return Quartz.CGFunctionCreate(
+        components, 1, domain, components, function_range, evaluate3
+    )
 
 
 def getAxialShading(colorspace, function):

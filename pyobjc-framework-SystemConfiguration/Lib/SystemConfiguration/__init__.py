@@ -22,14 +22,15 @@ sys.modules["SystemConfiguration"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Foundation, ),
+    (Foundation,),
 )
 
 
 del sys.modules["SystemConfiguration._metadata"]
 
 
-import SystemConfiguration._manual as m  # isort:skip
+import SystemConfiguration._manual as m  # isort:skip  # noqa: E402
+
 for nm in dir(m):
     setattr(mod, nm, getattr(m, nm))
 

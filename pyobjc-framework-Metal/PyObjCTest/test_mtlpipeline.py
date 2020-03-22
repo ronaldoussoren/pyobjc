@@ -1,5 +1,5 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestMTLPipeline(TestCase):

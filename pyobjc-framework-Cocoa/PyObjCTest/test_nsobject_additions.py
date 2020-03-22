@@ -30,54 +30,54 @@ class TheadingHelperTestHelper(Foundation.NSObject):
         return self
 
     def performSelector_onThread_withObject_waitUntilDone_(
-        self, selector, thread, object, wait
+        self, selector, thread, value, wait
     ):
         assert isinstance(selector, bytes)
         assert isinstance(thread, Foundation.NSThread)
         assert isinstance(wait, bool)
 
-        self.calls.append((selector, thread, object, wait))
-        getattr(self, _str(selector))(object)
+        self.calls.append((selector, thread, value, wait))
+        getattr(self, _str(selector))(value)
 
     def performSelector_onThread_withObject_waitUntilDone_modes_(
-        self, selector, thread, object, wait, modes
+        self, selector, thread, value, wait, modes
     ):
         assert isinstance(selector, bytes)
         assert isinstance(thread, Foundation.NSThread)
         assert isinstance(wait, bool)
 
-        self.calls.append((selector, thread, object, wait, modes))
-        getattr(self, _str(selector))(object)
+        self.calls.append((selector, thread, value, wait, modes))
+        getattr(self, _str(selector))(value)
 
-    def performSelector_withObject_afterDelay_(self, selector, object, delay):
+    def performSelector_withObject_afterDelay_(self, selector, value, delay):
         assert isinstance(selector, bytes)
 
-        self.calls.append((selector, object, delay))
-        getattr(self, _str(selector))(object)
+        self.calls.append((selector, value, delay))
+        getattr(self, _str(selector))(value)
 
     def performSelector_withObject_afterDelay_inModes_(
-        self, selector, object, delay, modes
+        self, selector, value, delay, modes
     ):
         assert isinstance(selector, bytes)
 
-        self.calls.append((selector, object, delay, modes))
-        getattr(self, _str(selector))(object)
+        self.calls.append((selector, value, delay, modes))
+        getattr(self, _str(selector))(value)
 
-    def performSelectorInBackground_withObject_(self, selector, object):
-        self.calls.append((selector, object))
-        getattr(self, _str(selector))(object)
+    def performSelectorInBackground_withObject_(self, selector, value):
+        self.calls.append((selector, value))
+        getattr(self, _str(selector))(value)
 
     def performSelectorOnMainThread_withObject_waitUntilDone_(
-        self, selector, object, wait
+        self, selector, value, wait
     ):
-        self.calls.append((selector, object, wait))
-        getattr(self, _str(selector))(object)
+        self.calls.append((selector, value, wait))
+        getattr(self, _str(selector))(value)
 
     def performSelectorOnMainThread_withObject_waitUntilDone_modes_(
-        self, selector, object, wait, modes
+        self, selector, value, wait, modes
     ):
-        self.calls.append((selector, object, wait, modes))
-        getattr(self, _str(selector))(object)
+        self.calls.append((selector, value, wait, modes))
+        getattr(self, _str(selector))(value)
 
     def sel1_(self, arg):
         pass

@@ -1,6 +1,6 @@
 import CoreFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase
+import objc
 
 
 class TestNotificationCenter(TestCase):
@@ -24,8 +24,8 @@ class TestNotificationCenter(TestCase):
         notifications = []
 
         @objc.callbackFor(CoreFoundation.CFNotificationCenterAddObserver)
-        def observe(center, observer, name, object, userInfo):
-            notifications.append((center, observer, name, object, userInfo))
+        def observe(center, observer, name, value, userInfo):
+            notifications.append((center, observer, name, value, userInfo))
 
         self.assertArgHasType(CoreFoundation.CFNotificationCenterAddObserver, 1, b"@")
         self.assertArgIsFunction(

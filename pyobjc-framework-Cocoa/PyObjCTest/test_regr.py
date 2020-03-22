@@ -103,7 +103,7 @@ class TestRegr(TestCase):
                 )
             (
                 restored,
-                format,
+                plformat,
                 error,
             ) = Foundation.NSPropertyListSerialization.propertyListWithData_options_format_error_(  # noqa: B950
                 data, 0, None, None

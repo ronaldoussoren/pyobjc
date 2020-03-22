@@ -156,7 +156,7 @@ class MyWindowController(Cocoa.NSWindowController):
 
         elif isinstance(predicate, Cocoa.NSCompoundPredicate):
 
-            type = predicate.compoundPredicateType()
+            predicate_type = predicate.compoundPredicateType()
             cleanSubpredicates = []
             for dirtySubpredicate in predicate.subpredicates():
                 cleanSubpredicate = self.spotlightFriendlyPredicate_(dirtySubpredicate)
@@ -167,12 +167,15 @@ class MyWindowController(Cocoa.NSWindowController):
                 return None
 
             else:
-                if len(cleanSubpredicates) == 1 and type != Cocoa.NSNotPredicateType:
+                if (
+                    len(cleanSubpredicates) == 1
+                    and predicate_type != Cocoa.NSNotPredicateType
+                ):
                     return cleanSubpredicates[0]
 
                 else:
                     return Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(
-                        type, cleanSubpredicates
+                        predicate_type, cleanSubpredicates
                     )
 
         else:

@@ -7,11 +7,10 @@ documentation for details on how to use these functions and classes.
 
 import sys
 
-import CoreData._convenience
 import Foundation
 import objc
 from CoreData import _metadata
-from CoreData._CoreData import *
+from CoreData import _CoreData
 
 sys.modules["CoreData"] = objc.ObjCLazyModule(
     "CoreData",
@@ -25,8 +24,9 @@ sys.modules["CoreData"] = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Foundation,),
+    (_CoreData, Foundation,),
 )
 
+from CoreData import _convenience  # isort: ignore  # noqa: E402, F401
 
 del sys.modules["CoreData._metadata"]

@@ -162,7 +162,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
         """
         i = 0
         name = NEWTMPL % (i,)
-        while self.environ.has_key(name):
+        while name in self.environ:
             i += 1
             name = NEWTMPL % (i,)
         self.environ[name] = Cocoa.NSLocalizedString("New Value", "")
@@ -198,7 +198,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
 
         if name == "name":
             if value != envname:
-                if self.environ.has_key(value):
+                if value in self.environ:
                     self.runAlertSheet(
                         Cocoa.NSLocalizedString("Name exists", ""),
                         Cocoa.NSLocalizedString("The name %s is already used", "")

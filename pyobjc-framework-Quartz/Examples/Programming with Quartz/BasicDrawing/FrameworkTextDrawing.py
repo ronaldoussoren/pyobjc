@@ -1,5 +1,3 @@
-import sys
-
 import Cocoa
 import objc
 import Quartz
@@ -220,7 +218,7 @@ class MyNSLayoutManager(Cocoa.NSLayoutManager):
         # This ensures the text baseline is at the starting position
         # passed to drawGlyphsForGlyphRange. This technique won't work
         # for super, subscripts, or underlines but that's OK for this example.
-        point.y = _yStartPosition
+        point.y = self._yStartPosition
 
         # The Quartz graphics state should be preserved by showPackedGlyphs.
         Quartz.CGContextSaveGState(context)
@@ -231,9 +229,9 @@ class MyNSLayoutManager(Cocoa.NSLayoutManager):
         # Set the fill color if needed.
         if (
             self._textMode == Quartz.kCGTextFill
-            or _self.textMode == Quartz.kCGTextFillStroke
+            or self.textMode == Quartz.kCGTextFillStroke
             or self._textMode == Quartz.kCGTextFillClip
-            or _textMode == Quartz.kCGTextFillStrokeClip
+            or self._textMode == Quartz.kCGTextFillStrokeClip
         ):
             if self._fColor is not None:
                 Quartz.CGContextSetFillColorWithColor(context, self._fColor)

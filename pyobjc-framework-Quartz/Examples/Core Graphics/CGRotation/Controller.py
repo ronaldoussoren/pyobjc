@@ -92,13 +92,13 @@ class Controller(Cocoa.NSObject):
                     if filenameExtensions is not None:
                         # It is valid for a UTI to export either an Array (of Strings) representing
                         # multiple tags, or a String representing a single tag.
-                        type = Cocoa.CFGetTypeID(filenameExtensions)
-                        if type == Cocoa.CFStringGetTypeID():
+                        type_id = Cocoa.CFGetTypeID(filenameExtensions)
+                        if type_id == Cocoa.CFStringGetTypeID():
                             # If a string was exported, then wrap it up in an array.
                             extensions = Cocoa.NSArray.arrayWithObject_(
                                 filenameExtensions
                             )
-                        elif type == Cocoa.CFArrayGetTypeID():
+                        elif type_id == Cocoa.CFArrayGetTypeID():
                             # If an array was exported, then just return that array.
                             extensions = filenameExtensions.copy()
 

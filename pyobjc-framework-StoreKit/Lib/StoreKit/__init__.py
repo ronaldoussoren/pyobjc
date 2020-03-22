@@ -9,8 +9,8 @@ import sys
 
 import Foundation
 import objc
-import StoreKit._StoreKit
 from StoreKit import _metadata
+from StoreKit import _StoreKit
 
 sys.modules["StoreKit"] = mod = objc.ObjCLazyModule(
     "StoreKit",
@@ -24,7 +24,7 @@ sys.modules["StoreKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_StoreKit, Foundation,),
 )
 
 

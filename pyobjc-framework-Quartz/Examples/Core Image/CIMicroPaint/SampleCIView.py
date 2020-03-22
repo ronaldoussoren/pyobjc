@@ -2,6 +2,9 @@
 SampleCIView - simple OpenGL based CoreImage view
 """
 
+# XXX: FIXME
+# flake8: noqa F403, F405
+
 import CGL
 import Cocoa
 import objc

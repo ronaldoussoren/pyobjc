@@ -1,6 +1,6 @@
 import CoreFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestBase(TestCase):
@@ -177,8 +177,8 @@ class TestBase(TestCase):
         self.assertGreaterEqual(r, 15)
 
     def testGenericFunctions(self):
-        id = CoreFoundation.CFGetTypeID(CoreFoundation.kCFAllocatorMalloc)
-        self.assertEqual(id, CoreFoundation.CFAllocatorGetTypeID())
+        value = CoreFoundation.CFGetTypeID(CoreFoundation.kCFAllocatorMalloc)
+        self.assertEqual(value, CoreFoundation.CFAllocatorGetTypeID())
 
         v = CoreFoundation.CFCopyTypeIDDescription(
             CoreFoundation.CFAllocatorGetTypeID()

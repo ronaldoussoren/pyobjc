@@ -1,6 +1,6 @@
 import CoreFoundation
-import objc
 from PyObjCTools.TestSupport import TestCase
+import objc
 
 
 class TestCFBinaryHeap(TestCase):
@@ -92,16 +92,11 @@ class TestCFBinaryHeap(TestCase):
         self.assertTrue(CoreFoundation.CFBinaryHeapContainsValue(heap, "hello"))
         self.assertFalse(CoreFoundation.CFBinaryHeapContainsValue(heap, "foobar"))
 
-        min = CoreFoundation.CFBinaryHeapGetMinimum(heap)
-        self.assertEqual(min, "aapjes")
+        min_value = CoreFoundation.CFBinaryHeapGetMinimum(heap)
+        self.assertEqual(min_value, "aapjes")
 
         count = CoreFoundation.CFBinaryHeapGetCount(heap)
         self.assertEqual(count, 3)
-
-        # ok, min = CoreFoundation.CFBinaryHeapGetMinimumIfPresent(heap, None)
-        # self.assertTrue(ok)
-        # self.assertEqual(min, "aapjes")
-        # self.fail()
 
         values = CoreFoundation.CFBinaryHeapGetValues(heap)
         self.assertEqual(values, ("aapjes", "hello", "world"))

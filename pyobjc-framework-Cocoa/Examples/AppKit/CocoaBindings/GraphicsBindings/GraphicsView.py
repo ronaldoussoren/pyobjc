@@ -134,13 +134,13 @@ class GraphicsView(NSView):
         self.setNeedsDisplay_(True)
 
     def observeValueForKeyPath_ofObject_change_context_(
-        self, keyPath, object, change, context
+        self, keyPath, an_object, change, context
     ):
         if context == GraphicsObservationContext:
             # Should be able to use
             # NSArray *oldGraphics = [change objectForKey:NSKeyValueChangeOldKey];
             # etc. but the dictionary doesn't contain old and new arrays...??
-            newGraphics = set(object.valueForKeyPath_(self.graphicsKeyPath))
+            newGraphics = set(an_object.valueForKeyPath_(self.graphicsKeyPath))
             onlyNew = newGraphics - set(self.oldGraphics or [])
             self.startObservingGraphics_(onlyNew)
 
@@ -163,7 +163,7 @@ class GraphicsView(NSView):
                 oldBounds = change.objectForKey_(NSKeyValueChangeOldKey)
                 updateRect = NSUnionRect(newBounds, oldBounds)
             else:
-                updateRect = object.drawingBounds()
+                updateRect = an_object.drawingBounds()
             updateRect = NSMakeRect(
                 updateRect.origin.x - 1.0,
                 updateRect.origin.y - 1.0,

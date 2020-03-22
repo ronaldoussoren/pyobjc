@@ -1,8 +1,11 @@
 import AppDrawing
 import Cocoa
+import Quartz
 import FrameworkTextDrawing
+import FrameworkUtilities
 import objc
 import UIHandling
+import PDFHandling
 from objc import super
 
 # XXX: Why are these global?
@@ -49,9 +52,9 @@ class MyView(Cocoa.NSView):
                 AppDrawing.DispatchDrawing(context, _drawingCommand)
 
         else:
-            mediaRect = CGPDFDocumentGetMediaBox(_pdfDocument, 1)
+            mediaRect = Quartz.CGPDFDocumentGetMediaBox(_pdfDocument, 1)
             mediaRect.origin.x = mediaRect.origin.y = 0
-            CGContextDrawPDFDocument(context, mediaRect, _pdfDocument, 1)
+            Quartz.CGContextDrawPDFDocument(context, mediaRect, _pdfDocument, 1)
 
     @objc.IBAction
     def setDrawCommand_(self, sender):
@@ -105,13 +108,13 @@ class MyView(Cocoa.NSView):
 
     @objc.IBAction
     def copy_(self, sender):
-        addPDFDataToPasteBoard(_drawingCommand)
+        FrameworkUtilities.addPDFDataToPasteBoard(_drawingCommand)
 
     @objc.IBAction
     def paste_(self, sender):
         global _pdfDocument
 
-        newPDFDocument = createNewPDFRefFromPasteBoard()
+        newPDFDocument = PDFHandling.createNewPDFRefFromPasteBoard()
         if newPDFDocument is not None:
             _pdfDocument = newPDFDocument
             # The view needs to be redisplayed since there is

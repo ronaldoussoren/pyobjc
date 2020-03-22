@@ -10,7 +10,7 @@ import sys
 import Foundation
 import objc
 from CoreML import _metadata
-from CoreML._CoreML import *
+from CoreML import _CoreML
 
 sys.modules["CoreML"] = mod = objc.ObjCLazyModule(
     "CoreML",
@@ -24,7 +24,7 @@ sys.modules["CoreML"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_CoreML, Foundation,),
 )
 
 

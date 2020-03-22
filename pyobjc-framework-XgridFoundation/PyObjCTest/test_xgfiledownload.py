@@ -4,4 +4,6 @@ import XgridFoundation
 
 class TestXGFileDownload(TestCase):
     def testMethods(self):
-        self.assertArgIsBOOL(XgridFoundation.XGFileDownload.setDestination_allowOverwrite_, 1)
+        self.assertArgIsBOOL(
+            XgridFoundation.XGFileDownload.setDestination_allowOverwrite_, 1
+        )

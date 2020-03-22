@@ -1,5 +1,4 @@
 import array
-import sys
 
 import Quartz
 import Utilities
@@ -160,7 +159,7 @@ def drawWithGlobalAlpha(context):
     )
 
     Quartz.CGContextSetFillColor(context, color)
-    for i in range(2):
+    for _ in range(2):
         Quartz.CGContextSaveGState(context)
         # Paint the leftmost rect on this row with 100% opaque red.
         Quartz.CGContextFillRect(context, rect)

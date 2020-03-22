@@ -123,20 +123,20 @@ class DragSupportDataSource(Cocoa.NSObject):
                         url
                     )
                     if objectID is not None:
-                        object = context.objectRegisteredForID_(objectID)
+                        value = context.objectRegisteredForID_(objectID)
 
                         # make sure objects match the entity expected by
                         # the destination controller, and not already there
                         if (
-                            object is not None
-                            and (object.entity() is destinationControllerEntity)
+                            value is not None
+                            and (value.entity() is destinationControllerEntity)
                             and not (
                                 destinationArrayController.arrangedObjects().containsObject_(
-                                    object
+                                    value
                                 )
                             )
                         ):
-                            itemsToAdd.append(object)
+                            itemsToAdd.append(value)
 
                 if len(itemsToAdd) > 0:
                     destinationArrayController.addObjects_(itemsToAdd)

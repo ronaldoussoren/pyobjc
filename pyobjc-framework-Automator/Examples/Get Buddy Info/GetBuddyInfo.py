@@ -23,15 +23,15 @@ keyAEKeyData = struct.unpack(">i", b"seld")[0]
 
 
 class GetBuddyInfo(AMBundleAction):
-    def runWithInput_fromAction_error_(self, input, anAction, errorInfo):
+    def runWithInput_fromAction_error_(self, value, anAction, errorInfo):
         people = []
 
         # convert the input to a list of ABPerson objects
-        if isinstance(input, NSAppleEventDescriptor):
-            count = input.numberOfItems()
+        if isinstance(value, NSAppleEventDescriptor):
+            count = value.numberOfItems()
 
             for i in range(1, count + 1):
-                personDescriptor = input.descriptorAtIndex_(i)
+                personDescriptor = value.descriptorAtIndex_(i)
                 if personDescriptor is not None:
                     # get the uid of the person from this descriptor
                     if personDescriptor.descriptorType() == typeObjectSpecifier:
@@ -59,35 +59,35 @@ class GetBuddyInfo(AMBundleAction):
                     screenNames = service.screenNamesForPerson_(person)
                     if screenNames is not None:
                         for screenName in screenNames:
-                            dict = service.infoForScreenName_(screenName)
-                            if dict is not None:
+                            info_dict = service.infoForScreenName_(screenName)
+                            if info_dict is not None:
                                 # build the description
                                 description = "\rName: "
 
-                                firstName = dict[IMPersonFirstNameKey]
+                                firstName = info_dict[IMPersonFirstNameKey]
                                 if firstName is not None:
                                     description += firstName
                                     description += " "
 
-                                lastName = dict[IMPersonLastNameKey]
+                                lastName = info_dict[IMPersonLastNameKey]
                                 if lastName is not None:
                                     description += lastName
 
                                 description += "\r"
 
-                                serviceName = dict[IMPersonServiceNameKey]
+                                serviceName = info_dict[IMPersonServiceNameKey]
                                 if serviceName is not None:
                                     description += "Service: "
                                     description += serviceName
                                     description += "\r"
 
-                                screenName = dict[IMPersonScreenNameKey]
+                                screenName = info_dict[IMPersonScreenNameKey]
                                 if screenName is not None:
                                     description += "Screen Name: "
                                     description += screenName
                                     description += "\r"
 
-                                status = dict[IMPersonStatusKey]
+                                status = info_dict[IMPersonStatusKey]
                                 if status is not None:
                                     description += "Status: "
 
@@ -104,7 +104,7 @@ class GetBuddyInfo(AMBundleAction):
 
                                     description += "\r"
 
-                                message = dict[IMPersonStatusMessageKey]
+                                message = info_dict[IMPersonStatusMessageKey]
                                 if message is not None:
                                     description += "Message: "
                                     description += message

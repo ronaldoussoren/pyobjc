@@ -10,7 +10,7 @@ import sys
 import Foundation
 import objc
 from Intents import _metadata
-from Intents._Intents import *
+from Intents import _Intents
 
 sys.modules["Intents"] = mod = objc.ObjCLazyModule(
     "Intents",
@@ -24,7 +24,7 @@ sys.modules["Intents"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_Intents, Foundation,),
 )
 
 

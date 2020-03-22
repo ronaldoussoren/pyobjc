@@ -10,6 +10,6 @@ setup(
     name="PDFKitViewer",
     app=["main.py"],
     data_files=["English.lproj", "pdfkitviewer.icns"],
-    options=dict(py2app=dict(plist="Info.plist")),
+    options={"py2app": {"plist": "Info.plist"}},
     setup_requires=["py2app", "pyobjc-framework-Cocoa", "pyobjc-framework-Quartz"],
 )

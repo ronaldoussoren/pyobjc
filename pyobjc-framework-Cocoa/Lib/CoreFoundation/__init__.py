@@ -25,12 +25,12 @@ sys.modules["CoreFoundation"] = mod = objc.ObjCLazyModule(
 )
 
 
-import CoreFoundation._CoreFoundation  # isort:skip
+import CoreFoundation._CoreFoundation  # isort:skip  # noqa: F402
 
 for nm in dir(CoreFoundation._CoreFoundation):
     setattr(mod, nm, getattr(CoreFoundation._CoreFoundation, nm))
 
-import CoreFoundation._static  # isort:skip
+import CoreFoundation._static  # isort:skip  # noqa: F402
 
 for nm in dir(CoreFoundation._static):
     setattr(mod, nm, getattr(CoreFoundation._static, nm))

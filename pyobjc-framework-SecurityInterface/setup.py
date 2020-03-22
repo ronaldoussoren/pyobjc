@@ -7,8 +7,6 @@ for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
-import os
-
 from pyobjc_setup import Extension, setup
 
 VERSION = "6.2b1"
@@ -32,5 +30,5 @@ setup(
         "pyobjc-framework-Security>=" + VERSION,
     ],
     long_description=__doc__,
-    options=dict(bdist_wheel=dict(py_limited_api="cp36")),
+    options={"bdist_wheel": {"py_limited_api": "cp36"}},
 )

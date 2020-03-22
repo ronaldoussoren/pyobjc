@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 
 class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
@@ -7,11 +8,6 @@ class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
         pass
 
     def copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_(
-        self, a, b, c, d, e, f, g, h, i
-    ):
-        pass
-
-    def copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_(
         self, a, b, c, d, e, f, g, h, i
     ):
         pass

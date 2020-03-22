@@ -17,11 +17,13 @@ def DEGREES_TO_RADIANS(degrees):
 
 gScalingFactor = 1.0
 
+
 # These routines are used for getting the correct results when
 # drawing shadows and patterns with Quartz and exporting the
 # results as bits. This is a hack; in principle the scaling
 # factor should be passed to the draw proc.
 def setScalingFactor(scalingFactor):
+    global gScalingFactor
     if scalingFactor > 0:
         gScalingFactor = scalingFactor
 
@@ -323,7 +325,7 @@ def drawCoordinateAxes(context):
 
         # Paint the x-axis tick marks in red.
         Quartz.CGContextSetRGBStrokeColor(context, 1, 0, 0, 1)
-        for i in range(2):
+        for _ in range(2):
             for t in range(0, kAxesLength, kTickDistance):
                 Quartz.CGContextMoveToPoint(context, t, -tickLength)
                 Quartz.CGContextAddLineToPoint(context, t, tickLength)

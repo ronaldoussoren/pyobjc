@@ -1,27 +1,27 @@
 import CoreMedia
 
 
-def CMTIMERANGE_IS_VALID(range):
+def CMTIMERANGE_IS_VALID(aRange):
     return (
-        CMTIME_IS_VALID(range.start)
-        and CMTIME_IS_VALID(range.duration)
-        and range.duration.epoch == 0
-        and range.duration.value >= 0
+        CMTIME_IS_VALID(aRange.start)
+        and CMTIME_IS_VALID(aRange.duration)
+        and aRange.duration.epoch == 0
+        and aRange.duration.value >= 0
     )
 
 
-def CMTIMERANGE_IS_INVALID(range):
-    return not CMTIMERANGE_IS_VALID(range)
+def CMTIMERANGE_IS_INVALID(aRange):
+    return not CMTIMERANGE_IS_VALID(aRange)
 
 
-def CMTIMERANGE_IS_INDEFINITE(range):
-    return CMTIMERANGE_IS_VALID(range) and (
-        CMTIME_IS_INDEFINITE(range.start) or CMTIME_IS_INDEFINITE(range.duration)
+def CMTIMERANGE_IS_INDEFINITE(aRange):
+    return CMTIMERANGE_IS_VALID(aRange) and (
+        CMTIME_IS_INDEFINITE(aRange.start) or CMTIME_IS_INDEFINITE(aRange.duration)
     )
 
 
-def CMTIMERANGE_IS_EMPTY(range):
-    return CMTIMERANGE_IS_VALID(range) and range.duration == kCMTimeZero
+def CMTIMERANGE_IS_EMPTY(aRange):
+    return CMTIMERANGE_IS_VALID(aRange) and aRange.duration == CoreMedia.kCMTimeZero
 
 
 def CMTIMEMAPPING_IS_VALID(mapping):
@@ -39,8 +39,10 @@ def CMTIMEMAPPING_IS_EMPTY(mapping):
 
 
 def CMSimpleQueueGetFullness(queue):
-    if CMSimpleQueueGetCapacity(queue):
-        return CMSimpleQueueGetCount(queue) / CMSimpleQueueGetCapacity(queue)
+    if CoreMedia.CMSimpleQueueGetCapacity(queue):
+        return CoreMedia.CMSimpleQueueGetCount(
+            queue
+        ) / CoreMedia.CMSimpleQueueGetCapacity(queue)
     else:
         return 0.0
 

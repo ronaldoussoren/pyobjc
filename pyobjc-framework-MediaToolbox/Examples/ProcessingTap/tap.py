@@ -1,5 +1,5 @@
 import AVFoundation
-import CoreAudio
+import CoreAudio  # noqa: F401
 import Foundation
 import MediaToolbox
 import objc
@@ -19,7 +19,7 @@ def finalize(tap):
 def prepare(tap, maxFrames, processingFormat):
     print(f"prepare {tap}, maxFrames={maxFrames}")
 
-    format4cc = Foundation.CFSwapInt32HostToBig(processingFormat.mFormatID)
+    # format4cc = Foundation.CFSwapInt32HostToBig(processingFormat.mFormatID)
 
     print(f"Sample Rate: {processingFormat.mSampleRate}")
     print(f"Channels: {processingFormat.mChannelsPerFrame}")

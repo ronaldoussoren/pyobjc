@@ -68,8 +68,8 @@ class TestCFBundle(TestCase):
         v = CoreFoundation.CFBundleGetLocalInfoDictionary(bundle)
         if v is not None:
             self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
-        type, creator = CoreFoundation.CFBundleGetPackageInfo(bundle, None, None)
-        self.assertIsInstance(type, int)
+        package_type, creator = CoreFoundation.CFBundleGetPackageInfo(bundle, None, None)
+        self.assertIsInstance(package_type, int)
         self.assertIsInstance(creator, int)
         identifier = CoreFoundation.CFBundleGetIdentifier(bundle)
         self.assertEqual(identifier, b"com.apple.CoreFoundation".decode("ascii"))
@@ -110,11 +110,11 @@ class TestCFBundle(TestCase):
             v[b"CFBundleIdentifier".decode("ascii")],
             b"com.apple.Foundation".decode("ascii"),
         )
-        ok, type, creator = CoreFoundation.CFBundleGetPackageInfoInDirectory(
+        ok, bundle_type, creator = CoreFoundation.CFBundleGetPackageInfoInDirectory(
             url, None, None
         )
         self.assertIs(ok, True)
-        self.assertIsInstance(type, int)
+        self.assertIsInstance(bundle_type, int)
         self.assertIsInstance(creator, int)
 
     def testResources(self):
@@ -247,9 +247,9 @@ class TestCFBundle(TestCase):
 
         url = CoreFoundation.CFBundleCopyAuxiliaryExecutableURL(bundle, "Foundation")
         self.assertIsInstance(url, CoreFoundation.CFURLRef)
-        id = CoreFoundation.CFBundleOpenBundleResourceMap(bundle)
-        self.assertIsInstance(id, int)
-        CoreFoundation.CFBundleCloseBundleResourceMap(bundle, id)
+        map_id = CoreFoundation.CFBundleOpenBundleResourceMap(bundle)
+        self.assertIsInstance(map_id, int)
+        CoreFoundation.CFBundleCloseBundleResourceMap(bundle, map_id)
 
         err, id1, id2 = CoreFoundation.CFBundleOpenBundleResourceFiles(
             bundle, None, None

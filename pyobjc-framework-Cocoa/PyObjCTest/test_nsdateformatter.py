@@ -20,12 +20,12 @@ class TestNSDateFormatter(TestCase):
         self.assertArgIsOut(
             Foundation.NSDateFormatter.getObjectValue_forString_range_error_, 3
         )
-        ok, val, range, err = formatter.getObjectValue_forString_range_error_(
+        ok, val, text_range, err = formatter.getObjectValue_forString_range_error_(
             None, "2008/10/12", Foundation.NSRange(0, 10), None
         )
         self.assertTrue(ok)
         self.assertIsInstance(val, Foundation.NSDate)
-        self.assertEqual(range, Foundation.NSRange(0, 10))
+        self.assertEqual(text_range, Foundation.NSRange(0, 10))
         self.assertIs(err, None)
         self.assertResultIsBOOL(
             Foundation.NSDateFormatter.getObjectValue_forString_range_error_

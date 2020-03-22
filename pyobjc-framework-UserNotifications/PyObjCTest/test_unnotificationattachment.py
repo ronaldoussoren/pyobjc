@@ -19,8 +19,7 @@ if sys.maxsize > 2 ** 32:
                 str,
             )
             self.assertIsInstance(
-                UserNotifications.UNNotificationAttachmentOptionsThumbnailTimeKey,
-                str,
+                UserNotifications.UNNotificationAttachmentOptionsThumbnailTimeKey, str,
             )
 
         def test_methods(self):

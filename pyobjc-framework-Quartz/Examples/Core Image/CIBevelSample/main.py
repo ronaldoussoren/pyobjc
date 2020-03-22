@@ -1,8 +1,5 @@
-import CIBevelView
-import objc
-import SampleCIView
+import CIBevelView  # noqa: F401
+import SampleCIView  # noqa: F401
 from PyObjCTools import AppHelper
-
-objc.setVerbose(True)
 
 AppHelper.runEventLoop()

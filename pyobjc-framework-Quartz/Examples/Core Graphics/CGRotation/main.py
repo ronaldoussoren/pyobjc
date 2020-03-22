@@ -1,10 +1,7 @@
-import CGImageUtils
-import CGImageView
-import Controller
-import objc
+import CGImageUtils  # noqa: F401
+import CGImageView  # noqa: F401
+import Controller  # noqa: F401
 from PyObjCTools import AppHelper
-
-objc.setVerbose(True)
 
 
 AppHelper.runEventLoop()

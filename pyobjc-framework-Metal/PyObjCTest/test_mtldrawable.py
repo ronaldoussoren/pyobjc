@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 MTLDrawablePresentedHandler = b"v@"
 

@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 MTLDeviceNotificationHandler = b"v@@"
 MTLNewLibraryCompletionHandler = b"v@@"
@@ -265,9 +266,9 @@ class TestMTLDevice(TestCase):
 
     @min_os_level("10.13")
     def test_constants10_13(self):
-        self.assertIsInstance(Metal.MTLDeviceWasAddedNotification, unicode)
-        self.assertIsInstance(Metal.MTLDeviceRemovalRequestedNotification, unicode)
-        self.assertIsInstance(Metal.MTLDeviceWasRemovedNotification, unicode)
+        self.assertIsInstance(Metal.MTLDeviceWasAddedNotification, str)
+        self.assertIsInstance(Metal.MTLDeviceRemovalRequestedNotification, str)
+        self.assertIsInstance(Metal.MTLDeviceWasRemovedNotification, str)
 
     def test_structs(self):
         v = Metal.MTLSizeAndAlign()

@@ -7,8 +7,8 @@ documentation for details on how to use these functions and classes.
 
 import sys
 
-import FileProvider
 import objc
+import FileProvider
 from FileProviderUI import _metadata
 
 sys.modules["FileProviderUI"] = mod = objc.ObjCLazyModule(

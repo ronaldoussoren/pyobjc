@@ -1,24 +1,24 @@
 import CoreHaptics
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestCHHapticParameter(TestCase):
     @min_sdk_level("10.15")
     def test_constants10_15(self):
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyVersion, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyPattern, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEvent, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventType, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyTime, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventDuration, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventWaveformPath, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventParameters, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameter, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterID, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterValue, unicode)
-        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterCurve, unicode)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyVersion, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyPattern, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEvent, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventType, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyTime, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventDuration, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventWaveformPath, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyEventParameters, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameter, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterID, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterValue, str)
+        self.assertIsInstance(CoreHaptics.CHHapticPatternKeyParameterCurve, str)
         self.assertIsInstance(
-            CoreHaptics.CHHapticPatternKeyParameterCurveControlPoints, unicode
+            CoreHaptics.CHHapticPatternKeyParameterCurveControlPoints, str
         )
 
     @min_sdk_level("10.15")

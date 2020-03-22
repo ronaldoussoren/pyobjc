@@ -1,8 +1,5 @@
-import CIMicroPaintView
-import objc
-import SampleCIView
+import CIMicroPaintView  # noqa: F401
+import SampleCIView  # noqa: F401
 from PyObjCTools import AppHelper
-
-objc.setVerbose(True)
 
 AppHelper.runEventLoop()

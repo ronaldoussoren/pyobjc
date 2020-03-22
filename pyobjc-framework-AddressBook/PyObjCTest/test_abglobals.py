@@ -30,9 +30,7 @@ class TestABGlobals(TestCase):
         self.assertIsInstance(AddressBook.kABInstantMessageUsernameKey, str)
         self.assertIsInstance(AddressBook.kABInstantMessageServiceKey, str)
         self.assertIsInstance(AddressBook.kABInstantMessageServiceAIM, str)
-        self.assertIsInstance(
-            AddressBook.kABInstantMessageServiceFacebook, str
-        )
+        self.assertIsInstance(AddressBook.kABInstantMessageServiceFacebook, str)
         self.assertIsInstance(AddressBook.kABInstantMessageServiceGaduGadu, str)
         self.assertIsInstance(AddressBook.kABInstantMessageServiceGoogleTalk, str)
         self.assertIsInstance(AddressBook.kABInstantMessageServiceICQ, str)

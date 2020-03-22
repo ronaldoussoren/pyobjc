@@ -15,8 +15,8 @@ class TestTimeZone(TestCase):
         self.assertIsCFType(CoreFoundation.CFTimeZoneRef)
 
     def testTypeID(self):
-        id = CoreFoundation.CFTimeZoneGetTypeID()
-        self.assertIsInstance(id, int)
+        value = CoreFoundation.CFTimeZoneGetTypeID()
+        self.assertIsInstance(value, int)
 
     def testSystemZone(self):
         zone = CoreFoundation.CFTimeZoneCopySystem()
@@ -41,9 +41,9 @@ class TestTimeZone(TestCase):
             self.assertIsInstance(nm, str)
 
     def testAbbreviationDict(self):
-        map = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
-        self.assertIsInstance(map, CoreFoundation.CFDictionaryRef)
-        for key, value in map.items():
+        abbrevs = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
+        self.assertIsInstance(abbrevs, CoreFoundation.CFDictionaryRef)
+        for key, value in abbrevs.items():
             self.assertIsInstance(key, str)
             self.assertIsInstance(value, str)
 
@@ -52,8 +52,8 @@ class TestTimeZone(TestCase):
         # Setting the dictionary is technically also possible
         # on 10.5, but the code below causes a crash, even when
         # rewritten als plan Objective-C.
-        map = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
-        newmap = map.mutableCopy()
+        abbrevs = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
+        newmap = abbrevs.mutableCopy()
         newmap[b"AAA".decode("ascii")] = b"Europe/Amsterdam".decode("ascii")
 
         v = CoreFoundation.CFTimeZoneSetAbbreviationDictionary(newmap)

@@ -1,5 +1,6 @@
 import Speech
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 
 class TestSFSpeechRecognitionTaskHelper(Speech.NSObject):

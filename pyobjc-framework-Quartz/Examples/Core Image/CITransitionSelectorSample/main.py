@@ -1,6 +1,4 @@
-import objc
-import TransitionSelectorView
+import TransitionSelectorView  # noqa: F401
 from PyObjCTools import AppHelper
 
-objc.setVerbose(True)
 AppHelper.runEventLoop()

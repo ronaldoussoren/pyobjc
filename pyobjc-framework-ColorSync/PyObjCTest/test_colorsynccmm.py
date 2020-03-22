@@ -31,6 +31,4 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kCMMInitializeLinkProfileProcName, str)
             self.assertIsInstance(ColorSync.kCMMInitializeTransformProcName, str)
             self.assertIsInstance(ColorSync.kCMMApplyTransformProcName, str)
-            self.assertIsInstance(
-                ColorSync.kCMMCreateTransformPropertyProcName, str
-            )
+            self.assertIsInstance(ColorSync.kCMMCreateTransformPropertyProcName, str)

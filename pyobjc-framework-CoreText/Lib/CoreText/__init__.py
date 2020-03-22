@@ -28,7 +28,8 @@ sys.modules["CoreText"] = mod = objc.ObjCLazyModule(
     (CoreFoundation, Quartz),
 )
 
-import CoreText._manual as m  # isort:skip
+import CoreText._manual as m  # isort:skip # noqa: E402
+
 for nm in dir(m):
     setattr(mod, nm, getattr(m, nm))
 

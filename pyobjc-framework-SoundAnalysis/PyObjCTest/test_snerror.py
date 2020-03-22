@@ -1,5 +1,5 @@
 import SoundAnalysis
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestSNError(TestCase):

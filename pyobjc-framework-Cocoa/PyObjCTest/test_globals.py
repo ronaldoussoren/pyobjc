@@ -43,16 +43,16 @@ class GlobalFunctionTest(TestCase):
     def test_NSDivideRect(self):
         rect1 = Foundation.NSMakeRect(1.0, 2.0, 3.0, 4.0)
 
-        slice, rem = Foundation.NSDivideRect(
+        slice_value, rem = Foundation.NSDivideRect(
             rect1, None, None, 0.5, Foundation.NSMinXEdge
         )
-        self.assertEqual(slice, ((1.0, 2.0), (0.5, 4.0)))
+        self.assertEqual(slice_value, ((1.0, 2.0), (0.5, 4.0)))
         self.assertEqual(rem, ((1.5, 2.0), (2.5, 4.0)))
 
-        slice, rem = Foundation.NSDivideRect(
+        slice_value, rem = Foundation.NSDivideRect(
             rect1, None, None, 0.5, Foundation.NSMinYEdge
         )
-        self.assertEqual(slice, ((1.0, 2.0), (3.0, 0.5)))
+        self.assertEqual(slice_value, ((1.0, 2.0), (3.0, 0.5)))
         self.assertEqual(rem, ((1.0, 2.5), (3.0, 3.5)))
 
     def testMisc(self):

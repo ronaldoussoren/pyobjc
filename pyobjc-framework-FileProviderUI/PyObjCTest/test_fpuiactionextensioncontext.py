@@ -1,5 +1,5 @@
 import FileProviderUI
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestFPUIActionExtensionContext(TestCase):
@@ -9,7 +9,7 @@ class TestFPUIActionExtensionContext(TestCase):
 
     @min_os_level("10.15")
     def test_constants10_15(self):
-        self.assertIsInstance(FileProviderUI.FPUIErrorDomain, unicode)
+        self.assertIsInstance(FileProviderUI.FPUIErrorDomain, str)
 
     @min_os_level("10.15")
     def test_methods10_15(self):

@@ -69,7 +69,7 @@ FORMATS = {
 }
 
 
-def serializePropertyList(aPropertyList, format="xml"):
+def serializePropertyList(aPropertyList, format="xml"):  # noqa: A002
     """
     Serialize a property list to an NSData object.  Format is one of the
     following strings:

@@ -8,8 +8,8 @@ import sys
 
 import Cocoa
 import objc
-import Quartz.ImageKit._imagekit
 from Quartz.ImageKit import _metadata
+from Quartz.ImageKit import _imagekit
 
 objc.addConvenienceForBasicMapping("IKImageBrowserGridGroup", False)
 objc.addConvenienceForBasicMapping("IKImageCell", False)
@@ -30,7 +30,7 @@ sys.modules["Quartz.ImageKit"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Cocoa,),
+    (_imagekit, Cocoa,),
 )
 
 

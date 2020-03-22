@@ -1,10 +1,8 @@
-import sys
-
 import Quartz
 import Utilities
 
 
-def RedBlackRedRampEvaluate(info, input, output):
+def RedBlackRedRampEvaluate(info, input_value, output_value):
     # The domain of this function is 0 - 1. For an input value of 0
     # this function returns the color to paint at the start point
     # of the shading. For an input value of 1 this function returns
@@ -23,7 +21,7 @@ def RedBlackRedRampEvaluate(info, input, output):
         # to zero at the midpoint of the shading (input value 0.5)
         # and increases up to 1 at the endpoint of the shading (input
         # value 1.0).
-        abs(1.0 - input[0] * 2),
+        abs(1.0 - input_value[0] * 2),
         # The green and blue components are always 0.
         0,
         0,
@@ -44,7 +42,7 @@ def createFunctionForRGB(evaluationFunction):
     # color space the values range from 0-1 for the r,g,b, and a
     # components.
 
-    range = (
+    function_range = (
         # The red component, min and max.
         0,
         1,
@@ -60,7 +58,9 @@ def createFunctionForRGB(evaluationFunction):
     )
 
     # Dimension of domain is 1 and dimension of range is 4.
-    function = Quartz.CGFunctionCreate(None, 1, domain, 4, range, evaluationFunction)
+    function = Quartz.CGFunctionCreate(
+        None, 1, domain, 4, function_range, evaluationFunction
+    )
 
     if function is None:
         print("Couldn't create the CGFunction!")
@@ -106,7 +106,7 @@ def doSimpleAxialShading(context):
     Quartz.CGContextDrawShading(context, shading)
 
 
-def RedGreenRampEvaluate(info, input, output):
+def RedGreenRampEvaluate(info, input_value, output_value):
     # The domain of this function is 0 - 1. For an input value of 0
     # this function returns the color to paint at the start point
     # of the shading. For an input value of 1 this function returns
@@ -122,11 +122,11 @@ def RedGreenRampEvaluate(info, input, output):
         # The red component starts at 1 and reduces to zero as the input
         # goes from 0 (the start point of the shading) and increases
         # to 1 (the end point of the shading).
-        1.0 - input[0],
+        1.0 - input_value[0],
         # The green component starts at 0 for an input of 0
         # (the start point of the shading) and increases to 1
         # for an input value of 1 (the end point of the shading).
-        input[0],
+        input_value[0],
         # The blue component is always 0.
         0,
         # The alpha component is always 1, the shading is always opaque.
@@ -261,7 +261,7 @@ class MyStartEndColor(object):
         self.endColor = [0.0] * 3
 
 
-def StartColorEndColorEvaluate(info, input, output):
+def StartColorEndColorEvaluate(info, input_value, output_value):
     # The domain of this function is 0 - 1. For an input value of 0
     # this function returns the color to paint at the start point
     # of the shading. For an input value of 1 this function returns
@@ -278,9 +278,9 @@ def StartColorEndColorEvaluate(info, input, output):
     # Weight the starting and ending color components depending
     # on what position in the blend the input value specifies.
     return (
-        (info.startColor[0] * (1 - input[0]) + info.endColor[0] * input[0]),
-        (info.startColor[1] * (1 - input[0]) + info.endColor[1] * input[0]),
-        (info.startColor[2] * (1 - input[0]) + info.endColor[2] * input[0]),
+        (info.startColor[0] * (1 - input_value[0]) + info.endColor[0] * input_value[0]),
+        (info.startColor[1] * (1 - input_value[0]) + info.endColor[1] * input_value[0]),
+        (info.startColor[2] * (1 - input_value[0]) + info.endColor[2] * input_value[0]),
         # The alpha component is always 1, the shading is always opaque.
         1,
     )
@@ -311,7 +311,7 @@ def createFunctionWithStartEndColorRamp(startColor, endColor):
     # color space the values range from 0-1 for the r,g,b, and a
     # components.
 
-    range = (
+    function_range = (
         # The red component, min and max.
         0,
         1,
@@ -328,7 +328,7 @@ def createFunctionWithStartEndColorRamp(startColor, endColor):
 
     # Pass startEndColorP as the info parameter.
     function = Quartz.CGFunctionCreate(
-        startEndColorP, 1, domain, 4, range, StartColorEndColorEvaluate
+        startEndColorP, 1, domain, 4, function_range, StartColorEndColorEvaluate
     )
 
     if function is None:

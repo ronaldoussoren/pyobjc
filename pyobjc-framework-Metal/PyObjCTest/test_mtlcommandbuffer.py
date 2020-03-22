@@ -1,5 +1,6 @@
 import Metal
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 MTLCommandBufferHandler = b"v@"
 
@@ -71,7 +72,7 @@ class TestMTLCommandBuffer(TestCase):
 
     @min_os_level("10.11")
     def test_constants10_11(self):
-        self.assertIsInstance(Metal.MTLCommandBufferErrorDomain, unicode)
+        self.assertIsInstance(Metal.MTLCommandBufferErrorDomain, str)
 
     def test_methods(self):
         self.assertResultIsBOOL(TestMTLCommandBufferHelper.retainedReferences)

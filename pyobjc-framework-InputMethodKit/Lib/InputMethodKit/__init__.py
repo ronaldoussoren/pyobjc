@@ -9,7 +9,7 @@ import sys
 import Foundation
 import objc
 from InputMethodKit import _metadata
-from InputMethodKit._InputMethodKit import *
+from InputMethodKit import _InputMethodKit
 
 sys.modules["InputMethodKit"] = mod = objc.ObjCLazyModule(
     "InputMethodKit",
@@ -23,7 +23,7 @@ sys.modules["InputMethodKit"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Foundation,),
+    (_InputMethodKit, Foundation,),
 )
 
 

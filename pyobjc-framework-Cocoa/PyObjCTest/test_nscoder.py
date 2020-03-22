@@ -1,7 +1,7 @@
 import Foundation
-import objc
 from PyObjCTest.testhelper import PyObjC_TestClass4
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestNSCoderUsage(TestCase):
@@ -64,8 +64,8 @@ class MyCoder(Foundation.NSCoder):
     def encodeArrayOfObjCType_count_at_(self, tp, cnt, value):
         self.coded.append(("array", tp, cnt, value))
 
-    def encodeBytes_length_(self, bytes, length):
-        self.coded.append(("bytes", bytes, length))
+    def encodeBytes_length_(self, value, length):
+        self.coded.append(("bytes", value, length))
 
     def decodeValueOfObjCType_at_(self, tp):
         if tp == b"i":

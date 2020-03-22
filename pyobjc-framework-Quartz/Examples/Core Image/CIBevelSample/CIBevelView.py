@@ -2,6 +2,7 @@ from math import sin
 
 import objc
 import Quartz
+import Cocoa
 from objc import super
 from SampleCIView import SampleCIView
 
@@ -117,7 +118,7 @@ class CIBevelView(SampleCIView):
                 Quartz.CGContextAddLineToPoint(cg, self.points[i].x, self.points[i].y)
             Quartz.CGContextStrokePath(cg)
 
-            self.lineImage = CIImage.alloc().initWithCGLayer_(layer)
+            self.lineImage = Quartz.CIImage.alloc().initWithCGLayer_(layer)
 
         self.heightFieldFilter.setValue_forKey_(self.lineImage, "inputImage")
         self.twirlFilter.setValue_forKey_(

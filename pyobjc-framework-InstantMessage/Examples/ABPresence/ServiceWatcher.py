@@ -1,7 +1,6 @@
-import AddressBook
+import AddressBook  # noqa: F401
 import Cocoa
 import InstantMessage
-import objc
 
 kAddressBookPersonStatusChanged = "AddressBookPersonStatusChanged"
 kStatusImagesChanged = "StatusImagesChanged"

@@ -1,11 +1,10 @@
 import array
 import sys
 
-import objc
 import Foundation
 from PyObjCTest.testhelper import PyObjC_TestClass3
 from PyObjCTools.TestSupport import TestCase, min_os_level
-
+import objc
 
 rawBytes = b"a\x13b\x00cd\xFFef\xEFgh"
 otherBytes = array.array("B")
@@ -258,13 +257,13 @@ class TestNSData(TestCase):
             self.assertDataContents(data, mutableData, bigRawBytes)
 
             mutableBytes = mutableData.mutableBytes()
-            bytes = data.bytes()
+            bytes_value = data.bytes()
 
-            self.assertEqual(len(bytes), data.length())
+            self.assertEqual(len(bytes_value), data.length())
             self.assertEqual(len(mutableBytes), mutableData.length())
             self.assertEqual(bytes, mutableBytes)
 
-            mutableBytes[0 : len(mutableBytes)] = bytes[0 : len(bytes)]
+            mutableBytes[0 : len(mutableBytes)] = bytes_value[0 : len(bytes_value)]
 
     def testInitWithContents(self):
         b, err = Foundation.NSData.alloc().initWithContentsOfFile_options_error_(
@@ -294,31 +293,31 @@ class TestNSData(TestCase):
 
 
 class MyData(Foundation.NSData):
-    def dataWithBytes_length_(self, bytes, length):
-        return ("data", bytes, length)
+    def dataWithBytes_length_(self, data, length):
+        return ("data", data, length)
 
 
 BYTES = "dummy bytes"
 
 
 class MyData2(Foundation.NSData):
-    def initWithBytes_length_(self, bytes, length):
-        return ("init", bytes, length)
+    def initWithBytes_length_(self, data, length):
+        return ("init", data, length)
 
     def length(self):
         return 42
 
-    def bytes(self):
+    def bytes(self):  # noqa: A003
         return BYTES
 
 
 class MyData3(Foundation.NSData):
-    def initWithBytes_length_(self, bytes, length):
-        self._bytes = bytes
+    def initWithBytes_length_(self, value, length):
+        self._bytes = value
         self._length = length
         return self
 
-    def bytes(self):
+    def bytes(self):  # noqa: A003
         return self._bytes
 
     def length(self):
@@ -328,10 +327,10 @@ class MyData3(Foundation.NSData):
 
 
 class MyData4(Foundation.NSData):
-    def initWithBytes_length_(self, bytes, length):
+    def initWithBytes_length_(self, value, length):
         return self
 
-    def bytes(self):
+    def bytes(self):  # noqa: A003
         return None
 
     def length(self):
@@ -339,10 +338,10 @@ class MyData4(Foundation.NSData):
 
 
 class MyData5(Foundation.NSData):
-    def initWithBytes_length_(self, bytes, length):
+    def initWithBytes_length_(self, value, length):
         return self
 
-    def bytes(self):
+    def bytes(self):  # noqa: A003
         raise ValueError("No bytes available")
 
     def length(self):
@@ -406,8 +405,8 @@ class TestBuffer(TestCase):
 
 class TestRegressions(TestCase):
     def testDataStr(self):
-        input = b"hello"
-        input_str = str(input)
+        input_bytes = b"hello"
+        input_str = str(input_bytes)
 
-        buf = Foundation.NSData.dataWithData_(input)
+        buf = Foundation.NSData.dataWithData_(input_bytes)
         self.assertEqual(str(buf), input_str)

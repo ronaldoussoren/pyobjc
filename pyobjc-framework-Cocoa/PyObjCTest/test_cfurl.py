@@ -1,10 +1,10 @@
 import array
 import os
-import objc
 
 import CoreFoundation
 from Foundation import NSURL
 from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
 
 
 class TestURL(TestCase):
@@ -144,10 +144,10 @@ class TestURL(TestCase):
         self.assertIsInstance(ref, CoreFoundation.CFURLRef)
 
         self.assertEqual(CoreFoundation.CFURLGetString(ref), b"/sport".decode("ascii"))
-        abs = CoreFoundation.CFURLCopyAbsoluteURL(ref)
-        self.assertIsInstance(abs, CoreFoundation.CFURLRef)
+        abs_url = CoreFoundation.CFURLCopyAbsoluteURL(ref)
+        self.assertIsInstance(abs_url, CoreFoundation.CFURLRef)
         self.assertEqual(
-            CoreFoundation.CFURLGetString(abs),
+            CoreFoundation.CFURLGetString(abs_url),
             b"http://www.omroep.nl/sport".decode("ascii"),
         )
 
@@ -309,15 +309,16 @@ class TestURL(TestCase):
         v = CoreFoundation.CFURLCopyPathExtension(ref)
         self.assertEqual(v, "cgi")
 
-        cnt, bytes = CoreFoundation.CFURLGetBytes(ref, None, 100)
+        cnt, bytes_value = CoreFoundation.CFURLGetBytes(ref, None, 100)
         self.assertEqual(cnt, 62)
         self.assertEqual(
-            bytes, b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor"
+            bytes_value,
+            b"https://ronald:test@www.nu.nl:42/sport/results.cgi?qs=1#anchor",
         )
 
-        cnt, bytes = CoreFoundation.CFURLGetBytes(ref, objc.NULL, 0)
+        cnt, bytes_value = CoreFoundation.CFURLGetBytes(ref, objc.NULL, 0)
         self.assertEqual(cnt, 62)
-        self.assertEqual(bytes, objc.NULL)
+        self.assertEqual(bytes_value, objc.NULL)
 
         rng1, rng2 = CoreFoundation.CFURLGetByteRangeForComponent(
             ref, CoreFoundation.kCFURLComponentHost, None

@@ -10,7 +10,7 @@ import sys
 import Foundation
 import objc
 from CoreSpotlight import _metadata
-from CoreSpotlight._CoreSpotlight import *
+from CoreSpotlight import _CoreSpotlight
 
 sys.modules["CoreSpotlight"] = mod = objc.ObjCLazyModule(
     "CoreSpotlight",
@@ -24,7 +24,7 @@ sys.modules["CoreSpotlight"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_CoreSpotlight, Foundation,),
 )
 
 

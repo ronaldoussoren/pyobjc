@@ -15,7 +15,9 @@ class RegistrationPane(InstallerPlugins.InstallerPane):
     uiSerialNumberField = objc.IBOutlet()
 
     def _entriesAreValid(self):
-        "test all textfields to if they all have at least one character in them"
+        """
+        test all textfields to if they all have at least one character in them
+        """
         if (
             len(self.uiFirstNameField.stringValue()) == 0
             or len(self.uiLastNameField.stringValue()) == 0
@@ -34,7 +36,9 @@ class RegistrationPane(InstallerPlugins.InstallerPane):
         return self.uiSerialNumberField.stringValue() == "123-456-789"
 
     def _updateNextButtonState(self):
-        "enable the 'Continue' button if '_entriesAreValid' returns 'True'"
+        """
+        enable the 'Continue' button if '_entriesAreValid' returns 'True'
+        """
         self.setNextEnabled_(self._entriesAreValid())
 
     def _localizedStringForKey_(self, key):
@@ -47,21 +51,25 @@ class RegistrationPane(InstallerPlugins.InstallerPane):
         ).localizedStringForKey_value_table_(key, "", None)
 
     def title(self):
-        """ return the title of this pane """
+        """
+        return the title of this pane
+        """
         return self._localizedStringForKey_("Title")
 
-    def didEnterPane_(self, dir):
-        """ pane's entry point: code called when user enters this pane """
+    def didEnterPane_(self, direction):
+        """
+        pane's entry point: code called when user enters this pane
+        """
         Cocoa.NSLog("DIDENTER")
         self._updateNextButtonState()
 
-    def shouldExitPane_(self, dir):
+    def shouldExitPane_(self, direction):
         """
         called when user clicks "Continue" -- return value indicates
         if application should exit pane
         """
         if (
-            dir == InstallerPlugins.InstallerDirectionForward
+            direction == InstallerPlugins.InstallerDirectionForward
             and not self._serialNumberIsValid()
         ):
             self._updateNextButtonState()

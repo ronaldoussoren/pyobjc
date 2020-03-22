@@ -52,7 +52,7 @@ class CIMicroPaintView(SampleCIView):
         # Create a new accumulator and composite the old one over the it.
 
         c = Quartz.CIImageAccumulator.alloc().initWithExtent_format_(
-            bounds, kCIFormatRGBA16
+            bounds, Quartz.kCIFormatRGBA16
         )
         f = Quartz.CIFilter.filterWithName_("CIConstantColorGenerator")
         f.setDefaults()

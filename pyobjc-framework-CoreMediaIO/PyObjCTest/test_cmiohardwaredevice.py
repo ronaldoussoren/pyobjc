@@ -1,5 +1,6 @@
 import CoreMediaIO
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, fourcc
+import objc
 
 CMIODeviceGetSMPTETimeProc = b"d^v^Q^Z^I"
 

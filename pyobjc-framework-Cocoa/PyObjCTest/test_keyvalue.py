@@ -9,10 +9,10 @@ TODO:
     - Tests that access properties in the parent Objective-C class!
     - More key-error tests, the tests don't cover all relevant code yet.
 """
-import objc
 import Foundation
 from PyObjCTest.testhelper import PyObjC_TestClass3 as STUB
 from PyObjCTools.TestSupport import TestCase, max_os_level
+import objc
 
 
 class KeyValueClass1(Foundation.NSObject):
@@ -143,9 +143,9 @@ class KeyValueObserver(Foundation.NSObject):
         return self
 
     def observeValueForKeyPath_ofObject_change_context_(
-        self, keyPath, object, change, context
+        self, keyPath, value, change, context
     ):
-        self.observed.append((keyPath, object, change))
+        self.observed.append((keyPath, value, change))
 
 
 class PyKeyValueCoding(TestCase):
@@ -529,9 +529,9 @@ class PyKeyValueCoding(TestCase):
 
                 self.assertEqual(len(observer.observed), 1)
 
-                keyPath, object, change = observer.observed[0]
+                keyPath, value, change = observer.observed[0]
                 self.assertEqual(keyPath, b"key3".decode("ascii"))
-                self.assertIs(object, o)
+                self.assertIs(value, o)
                 self.assertEqual(change, {Foundation.NSKeyValueChangeKindKey: 1})
 
             finally:
@@ -564,9 +564,9 @@ class PyKeyValueCoding(TestCase):
 
                 self.assertEqual(len(observer.observed), 1)
 
-                keyPath, object, change = observer.observed[0]
+                keyPath, value, change = observer.observed[0]
                 self.assertEqual(keyPath, b"key3".decode("ascii"))
-                self.assertIs(object, o)
+                self.assertIs(value, o)
                 self.assertEqual(
                     change,
                     {

@@ -79,11 +79,11 @@ class CGContextPage(object):
 
     Usage::
 
-        with CGContextPage(context):
+        with CGContextPage(context) as mediaRect:
             statement
 
     This is equivalent to:
-        CGContextBeginPage(context, None)
+        mediaRect = CGContextBeginPage(context, None)
         try:
             statement
 
@@ -97,6 +97,7 @@ class CGContextPage(object):
 
     def __enter__(self):
         mediaRect = CG.CGContextBeginPage(self.context, self.mediaBox)
+        return mediaRect
 
     def __exit__(self, exc_type, exc_value, exc_tp):
         CG.CGContextEndPage(self.context)

@@ -1,5 +1,3 @@
-import sys
-
 import BitmapContext
 import Cocoa
 import objc
@@ -24,7 +22,7 @@ if not hasattr(Quartz, "PMCGImageCreateWithEPSDataProvider"):
 def getEPSBBox(epspath):
     try:
         fp = open(epspath, "rU")
-    except IOError as msg:
+    except IOError:
         return Quartz.CGRectZero
 
     try:

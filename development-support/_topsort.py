@@ -54,7 +54,7 @@ def topological_sort(items, partial_order):
     # a node may convert some of the node's direct children into roots.
     # Whenever that happens, we append the new roots to the list of
     # current roots.
-    sorted = []
+    sorted_items = []
     while len(roots) != 0:
         # If len(roots) is always 1 when we get here, it means that
         # the input describes a complete ordering and there is only
@@ -66,7 +66,7 @@ def topological_sort(items, partial_order):
         # this operation must be done in O(1) time.
         roots.sort(reverse=True)
         root = roots.pop()
-        sorted.append(root)
+        sorted_items.append(root)
         for child in graph[root][1:]:
             graph[child][0] = graph[child][0] - 1
             if graph[child][0] == 0:
@@ -75,4 +75,4 @@ def topological_sort(items, partial_order):
     if len(graph.items()) != 0:
         # There is a loop in the input.
         return None
-    return sorted
+    return sorted_items

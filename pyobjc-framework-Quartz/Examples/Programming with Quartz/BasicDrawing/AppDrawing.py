@@ -8,7 +8,6 @@ import ImageMasking
 import Images
 import PathDrawing
 import PatternDrawing
-import Quartz
 import QuartzTextDrawing
 import Shadings
 import ShadowsAndTransparencyLayers

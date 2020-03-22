@@ -1,8 +1,5 @@
-import MyAppController
-import MyView
-import objc
+import MyAppController  # noqa: F401
+import MyView  # noqa: F401
 from PyObjCTools import AppHelper
-
-objc.setVerbose(True)
 
 AppHelper.runEventLoop()

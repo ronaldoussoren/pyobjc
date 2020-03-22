@@ -1,5 +1,3 @@
-import sys
-
 import Quartz
 import Utilities
 
@@ -38,7 +36,7 @@ def drawQuartzRomanText(context):
     # Draw the next piece of text where the previous one left off.
     Quartz.CGContextShowText(context, text, textlen)
 
-    for i in range(3):
+    for _ in range(3):
         # Get the current text pen position.
         p = Quartz.CGContextGetTextPosition(context)
         # Translate to the current text pen position.
@@ -81,13 +79,13 @@ def drawGridLines(context):
     if not _gridLines:
         stepsize = 4.0
         val = 0
-        for i in range(0, 2 * numlines, 2):
+        for _ in range(0, 2 * numlines, 2):
             _gridLines.append(Quartz.CGPointMake(val, -60))
             _gridLines.append(Quartz.CGPointMake(val, 200))
             val += stepsize
 
         val = -20
-        for i in range(2 * numlines, 4 * numlines, 2):
+        for _ in range(2 * numlines, 4 * numlines, 2):
             _gridLines.append(Quartz.CGPointMake(0, val))
             _gridLines.append(Quartz.CGPointMake(400, val))
             val += stepsize

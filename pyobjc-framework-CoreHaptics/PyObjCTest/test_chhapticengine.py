@@ -1,5 +1,6 @@
 import CoreHaptics
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
+import objc
 
 CHHapticCompletionHandler = b"v@"
 CHHapticEngineFinishedHandler = objc._C_NSInteger + b"@"

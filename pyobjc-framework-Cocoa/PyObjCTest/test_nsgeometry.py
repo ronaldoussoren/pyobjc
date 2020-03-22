@@ -88,9 +88,10 @@ class TestNSGeometry(TestCase):
         ra = AppKit.NSOffsetRect(r1, 5, 6)
         self.assertEqual(ra, AppKit.NSRect(AppKit.NSPoint(5, 7), AppKit.NSSize(4, 5)))
 
-        slice, rem = AppKit.NSDivideRect(r2, None, None, 1.5, AppKit.NSMaxYEdge)
+        slice_value, rem = AppKit.NSDivideRect(r2, None, None, 1.5, AppKit.NSMaxYEdge)
         self.assertEqual(
-            slice, AppKit.NSRect(AppKit.NSPoint(4.5, 12.5), AppKit.NSSize(7.5, 1.5))
+            slice_value,
+            AppKit.NSRect(AppKit.NSPoint(4.5, 12.5), AppKit.NSSize(7.5, 1.5)),
         )
         self.assertEqual(
             rem, AppKit.NSRect(AppKit.NSPoint(4.5, 5.5), AppKit.NSSize(7.5, 7.0))

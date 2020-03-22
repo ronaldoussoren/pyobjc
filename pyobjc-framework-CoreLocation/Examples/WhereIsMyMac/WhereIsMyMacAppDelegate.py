@@ -14,10 +14,9 @@ copy-right:
 import math
 
 import Cocoa
+import WebKit  # noqa: F401
 import CoreLocation
 import objc
-import WebKit
-from CoreLocation import *
 
 
 class WhereIsMyMacAppDelegate(Cocoa.NSObject):
@@ -104,7 +103,7 @@ class WhereIsMyMacAppDelegate(Cocoa.NSObject):
 
     def locationManager_didFailWithError_(self, manager, error):
         self.webView.mainFrame.loadHTMLString_baseURL_(
-            Cocoa.NSLocalizedString("Location manager failed with error: %s", nil)
+            Cocoa.NSLocalizedString("Location manager failed with error: %s", objc.nil)
             % (error.localizedDescription()),
             None,
         )

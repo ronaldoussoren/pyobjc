@@ -10,7 +10,7 @@ import sys
 import Foundation
 import objc
 from ExternalAccessory import _metadata
-from ExternalAccessory._ExternalAccessory import *
+from ExternalAccessory import _ExternalAccessory
 
 sys.modules["ExternalAccessory"] = mod = objc.ObjCLazyModule(
     "ExternalAccessory",
@@ -24,7 +24,7 @@ sys.modules["ExternalAccessory"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_ExternalAccessory, Foundation,),
 )
 
 

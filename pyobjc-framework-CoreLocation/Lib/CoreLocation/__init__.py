@@ -11,7 +11,7 @@ import sys
 import Foundation
 import objc
 from CoreLocation import _metadata
-from CoreLocation._CoreLocation import *
+from CoreLocation import _CoreLocation
 
 if int(os.uname()[2].split(".")[0]) < 12:
     # OSX <= 10.7
@@ -36,7 +36,7 @@ sys.modules["CoreLocation"] = mod = objc.ObjCLazyModule(
         "kCLErrorGeocodeFoundNoResult": kCLErrorGeocodeFoundNoResult,
         "kCLErrorGeocodeCanceled": kCLErrorGeocodeCanceled,
     },
-    (Foundation,),
+    (_CoreLocation, Foundation,),
 )
 
 

@@ -2,7 +2,7 @@ import pprint
 
 from PyObjCTools.Conversion import propertyListFromPythonCollection
 
-input = {
+input_value = {
     "a": [1, 2, 3, 4],
     "b": "c",
     "d": 3,
@@ -13,9 +13,9 @@ input = {
 }
 
 print("Converting (Python Collection):")
-pprint.pprint(input)
+pprint.pprint(input_value)
 
-convertedCollection = propertyListFromPythonCollection(input)
+convertedCollection = propertyListFromPythonCollection(input_value)
 
 print()
 print()

@@ -52,13 +52,9 @@ if sys.maxsize > 2 ** 32:
 
             self.assertIsInstance(ColorSync.kColorSyncProfile, str)
             self.assertIsInstance(ColorSync.kColorSyncRenderingIntent, str)
-            self.assertIsInstance(
-                ColorSync.kColorSyncRenderingIntentPerceptual, str
-            )
+            self.assertIsInstance(ColorSync.kColorSyncRenderingIntentPerceptual, str)
             self.assertIsInstance(ColorSync.kColorSyncRenderingIntentRelative, str)
-            self.assertIsInstance(
-                ColorSync.kColorSyncRenderingIntentSaturation, str
-            )
+            self.assertIsInstance(ColorSync.kColorSyncRenderingIntentSaturation, str)
             self.assertIsInstance(ColorSync.kColorSyncRenderingIntentAbsolute, str)
             self.assertIsInstance(
                 ColorSync.kColorSyncRenderingIntentUseProfileHeader, str
@@ -81,13 +77,9 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncTransformCreator, str)
             self.assertIsInstance(ColorSync.kColorSyncTransformSrcSpace, str)
             self.assertIsInstance(ColorSync.kColorSyncTransformDstSpace, str)
-            self.assertIsInstance(
-                ColorSync.kColorSyncTransformCodeFragmentType, str
-            )
+            self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentType, str)
             self.assertIsInstance(ColorSync.kColorSyncTransformCodeFragmentMD5, str)
-            self.assertIsInstance(
-                ColorSync.kColorSyncTransformFullConversionData, str
-            )
+            self.assertIsInstance(ColorSync.kColorSyncTransformFullConversionData, str)
             self.assertIsInstance(
                 ColorSync.kColorSyncTransformSimplifiedConversionData, str
             )

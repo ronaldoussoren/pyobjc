@@ -105,9 +105,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.13")
         def testConstants(self):
             self.assertIsInstance(ColorSync.kColorSyncGenericGrayProfile, str)
-            self.assertIsInstance(
-                ColorSync.kColorSyncGenericGrayGamma22Profile, str
-            )
+            self.assertIsInstance(ColorSync.kColorSyncGenericGrayGamma22Profile, str)
             self.assertIsInstance(ColorSync.kColorSyncGenericRGBProfile, str)
             self.assertIsInstance(ColorSync.kColorSyncGenericCMYKProfile, str)
             self.assertIsInstance(ColorSync.kColorSyncDisplayP3Profile, str)
@@ -158,9 +156,7 @@ if sys.maxsize > 2 ** 32:
             self.assertIsInstance(ColorSync.kColorSyncSigPreview1Tag, str)
             self.assertIsInstance(ColorSync.kColorSyncSigPreview2Tag, str)
             self.assertIsInstance(ColorSync.kColorSyncSigOutputClass, str)
-            self.assertIsInstance(
-                ColorSync.kColorSyncSigProfileSequenceDescTag, str
-            )
+            self.assertIsInstance(ColorSync.kColorSyncSigProfileSequenceDescTag, str)
             self.assertIsInstance(ColorSync.kColorSyncSigRedTRCTag, str)
             self.assertIsInstance(ColorSync.kColorSyncSigRedColorantTag, str)
             self.assertIsInstance(ColorSync.kColorSyncSigInputClass, str)

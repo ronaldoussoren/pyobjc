@@ -1,6 +1,6 @@
 import sys
 
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 if sys.maxsize > 2 ** 32:
     import MetalKit
@@ -11,34 +11,28 @@ if sys.maxsize > 2 ** 32:
     class TestMTKTextureLoading(TestCase):
         @min_os_level("10.11")
         def test_constants10_11(self):
-            self.assertIsInstance(MetalKit.MTKTextureLoaderErrorDomain, unicode)
-            self.assertIsInstance(MetalKit.MTKTextureLoaderErrorKey, unicode)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderErrorDomain, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderErrorKey, str)
 
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionAllocateMipmaps, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionSRGB, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionTextureUsage, str)
             self.assertIsInstance(
-                MetalKit.MTKTextureLoaderOptionAllocateMipmaps, unicode
-            )
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionSRGB, unicode)
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionTextureUsage, unicode)
-            self.assertIsInstance(
-                MetalKit.MTKTextureLoaderOptionTextureCPUCacheMode, unicode
+                MetalKit.MTKTextureLoaderOptionTextureCPUCacheMode, str
             )
 
         @min_os_level("10.12")
         def test_constants10_12(self):
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionGenerateMipmaps, str)
             self.assertIsInstance(
-                MetalKit.MTKTextureLoaderOptionGenerateMipmaps, unicode
+                MetalKit.MTKTextureLoaderOptionTextureStorageMode, str
             )
-            self.assertIsInstance(
-                MetalKit.MTKTextureLoaderOptionTextureStorageMode, unicode
-            )
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionCubeLayout, unicode)
-            self.assertIsInstance(MetalKit.MTKTextureLoaderCubeLayoutVertical, unicode)
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionOrigin, unicode)
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOriginTopLeft, unicode)
-            self.assertIsInstance(MetalKit.MTKTextureLoaderOriginBottomLeft, unicode)
-            self.assertIsInstance(
-                MetalKit.MTKTextureLoaderOriginFlippedVertically, unicode
-            )
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionCubeLayout, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderCubeLayoutVertical, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOptionOrigin, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOriginTopLeft, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOriginBottomLeft, str)
+            self.assertIsInstance(MetalKit.MTKTextureLoaderOriginFlippedVertically, str)
 
         @min_os_level("10.11")
         def test_methods10_11(self):

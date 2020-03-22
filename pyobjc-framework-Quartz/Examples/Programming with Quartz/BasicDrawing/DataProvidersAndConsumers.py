@@ -166,7 +166,7 @@ def myCGDataProviderCreateWithCFData(data):
     #    return CGDataProviderCreateWithCFData(data)
 
     dataSize = Cocoa.CFDataGetLength(data)
-    provider = Quartz.CGDataProviderCreateWithData(data, buffer(data), dataSize, None)
+    provider = Quartz.CGDataProviderCreateWithData(data, data, dataSize, None)
     return provider
 
 

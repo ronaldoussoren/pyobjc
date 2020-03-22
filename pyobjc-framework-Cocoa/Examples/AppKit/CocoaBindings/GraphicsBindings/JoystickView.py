@@ -123,7 +123,7 @@ class JoystickView(NSView):
             self.observedKeyPathForOffset = None
 
     def observeValueForKeyPath_ofObject_change_context_(
-        self, keyPath, object, change, context
+        self, keyPath, an_object, change, context
     ):
         # we passed the binding as the context when we added ourselves
         # as an observer -- use that to decide what to update...

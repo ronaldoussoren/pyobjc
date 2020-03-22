@@ -1,6 +1,7 @@
 import sys
 
-from PyObjCTools.TestSupport import *
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
 
 if sys.maxsize > 2 ** 32:
 
