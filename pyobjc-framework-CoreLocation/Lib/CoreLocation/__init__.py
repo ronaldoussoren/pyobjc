@@ -36,7 +36,7 @@ sys.modules["CoreLocation"] = mod = objc.ObjCLazyModule(
         "kCLErrorGeocodeFoundNoResult": kCLErrorGeocodeFoundNoResult,
         "kCLErrorGeocodeCanceled": kCLErrorGeocodeCanceled,
     },
-    (_CoreLocation, Foundation,),
+    (_CoreLocation, Foundation),
 )
 
 

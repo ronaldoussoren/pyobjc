@@ -9,7 +9,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.15")
         def test_methods(self):
             self.assertArgIsBlock(
-                    QuickLookThumbnailing.QLThumbnailProvider.provideThumbnailForFileRequest_completionHandler_,  # noqa:  B950
+                QuickLookThumbnailing.QLThumbnailProvider.provideThumbnailForFileRequest_completionHandler_,  # noqa:  B950
                 1,
                 b"v@@",
             )

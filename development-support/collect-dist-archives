@@ -12,14 +12,23 @@ import shutil
 import subprocess
 import sys
 
-from _common_definitions import (DIST_DIR, PY_VERSIONS, TOP_DIR, setup_variant,
-                                 system_report, variants)
+from _common_definitions import (
+    DIST_DIR,
+    PY_VERSIONS,
+    TOP_DIR,
+    setup_variant,
+    system_report,
+    variants,
+)
 
 
 def files_matching(pattern, dirname):
     return fnmatch.filter(os.listdir(dirname), pattern)
 
+
 _detected_versions = None
+
+
 def detect_pyversions():
     global _detected_versions
     if _detected_versions is not None:
@@ -27,8 +36,9 @@ def detect_pyversions():
 
     result = []
     for ver in PY_VERSIONS:
-        if os.path.exists(os.path.join(
-            '/Library/Frameworks/Python.framework/Versions', ver)):
+        if os.path.exists(
+            os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
+        ):
 
             result.append(ver)
 
@@ -38,55 +48,67 @@ def detect_pyversions():
 
 def main():
     if os.path.exists(DIST_DIR):
-       shutil.rmtree(DIST_DIR)
+        shutil.rmtree(DIST_DIR)
     os.mkdir(DIST_DIR)
 
     # Information about this build:
     system_report(os.path.join(TOP_DIR, "build-info.txt"), detect_pyversions())
 
     # Collect the list of subprojects to build
-    names = ['pyobjc', 'pyobjc-core']
+    names = ["pyobjc", "pyobjc-core"]
     for nm in sorted(os.listdir(TOP_DIR)):
-        if nm.startswith('pyobjc-framework-'):
+        if nm.startswith("pyobjc-framework-"):
             names.append(nm)
 
     failed = []
     for nm in names:
         # Collect sdist archive with most recent python version.
-        status = subprocess.call([
-            'python{}'.format(detect_pyversions()[-1]), 'setup.py',
-                'sdist', '--dist-dir={}'.format(DIST_DIR),
+        status = subprocess.call(
+            [
+                "python{}".format(detect_pyversions()[-1]),
+                "setup.py",
+                "sdist",
+                "--dist-dir={}".format(DIST_DIR),
             ],
-            cwd=os.path.join(TOP_DIR, nm))
+            cwd=os.path.join(TOP_DIR, nm),
+        )
         if status != 0:
             print("WARNING: Building wheel for {} failed".format(nm))
-            failed.append((nm, 'sdist', ''))
+            failed.append((nm, "sdist", ""))
 
         for ver in detect_pyversions():
             for variant in variants(ver):
                 setup_variant(ver, variant)
-                status = subprocess.call([
-                    'python{}'.format(ver), 'setup.py',
-                        'bdist_wheel', '--dist-dir={}'.format(DIST_DIR),
+                status = subprocess.call(
+                    [
+                        "python{}".format(ver),
+                        "setup.py",
+                        "bdist_wheel",
+                        "--dist-dir={}".format(DIST_DIR),
                     ],
-                    cwd=os.path.join(TOP_DIR, nm))
+                    cwd=os.path.join(TOP_DIR, nm),
+                )
 
             if status != 0:
-                print("WARNING: Building wheel for {} failed (python {})".format(nm, variant))
-                failed.append((nm, 'wheel', variant))
+                print(
+                    "WARNING: Building wheel for {} failed (python {})".format(
+                        nm, variant
+                    )
+                )
+                failed.append((nm, "wheel", variant))
 
     print()
     print("Collected files")
     print("===============")
     print()
     for nm in names:
-        if nm == 'pyobjc': continue
-        pattern = nm.replace('-', '?') + '-*'
+        if nm == "pyobjc":
+            continue
+        pattern = nm.replace("-", "?") + "-*"
         print("{}:".format(nm))
         for fn in sorted(files_matching(pattern, DIST_DIR)):
             print("  {}".format(fn))
         print()
-
 
     if failed:
         print()
@@ -102,6 +124,7 @@ def main():
         sys.exit(0)
 
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

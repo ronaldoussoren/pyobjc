@@ -24,7 +24,7 @@ sys.modules["ExternalAccessory"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_ExternalAccessory, Foundation,),
+    (_ExternalAccessory, Foundation),
 )
 
 

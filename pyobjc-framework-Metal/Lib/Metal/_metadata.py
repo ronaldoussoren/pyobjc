@@ -7,418 +7,2938 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
-}
-misc.update({'MTLIndirectCommandBufferExecutionRange': objc.createStructType('MTLIndirectCommandBufferExecutionRange', b'{_MTLIndirectCommandBufferExecutionRange=II}', ['location', 'length']), 'MTLTextureSwizzleChannels': objc.createStructType('MTLTextureSwizzleChannels', b'{_MTLTextureSwizzleChannels=CCCC}', ['red', 'green', 'blue', 'alpha']), 'MTLQuadTessellationFactorsHalf': objc.createStructType('MTLQuadTessellationFactorsHalf', b'{_MTLQuadTessellationFactorsHalf=[4S][2S]}', ['edgeTessellationFactor', 'insideTessellationFactor']), 'MTLSize': objc.createStructType('MTLSize', b'{_MTLSize=QQQ}', ['width', 'height', 'depth']), 'MTLDrawPrimitivesIndirectArguments': objc.createStructType('MTLDrawPrimitivesIndirectArguments', b'{_MTLDrawPrimitivesIndirectArguments=IIII}', ['vertexCount', 'instanceCount', 'vertexStart', 'baseInstance']), 'MTLVertexAmplificationViewMapping': objc.createStructType('MTLVertexAmplificationViewMapping', b'{_MTLVertexAmplificationViewMapping=II}', ['viewportArrayIndexOffset', 'renderTargetArrayIndexOffset']), 'MTLCounterResultStageUtilization': objc.createStructType('MTLCounterResultStageUtilization', b'{_MTLCounterResultStageUtilization=QQQQQQ}', ['totalCycles', 'vertexCycles', 'tessellationCycles', 'postTessellationVertexCycles', 'fragmentCycles', 'renderTargetCycles']), 'MTLDrawPatchIndirectArguments': objc.createStructType('MTLDrawPatchIndirectArguments', b'{_MTLDrawPatchIndirectArguments=IIII}', ['patchCount', 'instanceCount', 'patchStart', 'baseInstance']), 'MTLTriangleTessellationFactorsHalf': objc.createStructType('MTLTriangleTessellationFactorsHalf', b'{_MTLTriangleTessellationFactorsHalf=[3S]S}', ['edgeTessellationFactor', 'insideTessellationFactor']), 'MTLCounterResultStatistic': objc.createStructType('MTLCounterResultStatistic', b'{_MTLCounterResultStatistic=QQQQQQQQ}', ['tessellationInputPatches', 'vertexInvocations', 'postTessellationVertexInvocations', 'clipperInvocations', 'clipperPrimitivesOut', 'fragmentInvocations', 'fragmentsPassed', 'computeKernelInvocations']), 'MTLStageInRegionIndirectArguments': objc.createStructType('MTLStageInRegionIndirectArguments', b'{_MTLStageInRegionIndirectArguments=[3I][3I]}', ['stageInOrigin', 'stageInSize']), 'MTLOrigin': objc.createStructType('MTLOrigin', b'{_MTLOrigin=QQQ}', ['x', 'y', 'z']), 'MTLDispatchThreadgroupsIndirectArguments': objc.createStructType('MTLDispatchThreadgroupsIndirectArguments', b'{_MTLDispatchThreadgroupsIndirectArguments=[3I]}', ['threadgroupsPerGrid']), 'MTLViewport': objc.createStructType('MTLViewport', b'{_MTLViewport=dddddd}', ['originX', 'originY', 'width', 'height', 'znear', 'zfar']), 'MTLRegion': objc.createStructType('MTLRegion', b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}', ['origin', 'size']), 'MTLSamplePosition': objc.createStructType('MTLSamplePosition', b'{_MTLSamplePosition=ff}', ['x', 'y']), 'MTLDrawIndexedPrimitivesIndirectArguments': objc.createStructType('MTLDrawIndexedPrimitivesIndirectArguments', b'{_MTLDrawIndexedPrimitivesIndirectArguments=IIIiI}', ['indexCount', 'instanceCount', 'indexStart', 'baseVertex', 'baseInstance']), 'MTLClearColor': objc.createStructType('MTLClearColor', b'{_MTLClearColor=dddd}', ['red', 'green', 'blue', 'alpha']), 'MTLCoordinate2D': objc.createStructType('MTLCoordinate2D', b'{_MTLCoordinate2D=ff}', ['x', 'y']), 'MTLSizeAndAlign': objc.createStructType('MTLSizeAndAlign', b'{_MTLSizeAndAlign=QQ}', ['size', 'align']), 'MTLScissorRect': objc.createStructType('MTLScissorRect', b'{_MTLScissorRect=QQQQ}', ['x', 'y', 'width', 'height']), 'MTLCounterResultTimestamp': objc.createStructType('MTLCounterResultTimestamp', b'{_MTLCounterResultTimestamp=Q}', ['timestamp'])})
-constants = '''$MTLCaptureErrorDomain$MTLCommandBufferErrorDomain$MTLCommonCounterClipperInvocations$MTLCommonCounterClipperPrimitivesOut$MTLCommonCounterComputeKernelInvocations$MTLCommonCounterFragmentCycles$MTLCommonCounterFragmentInvocations$MTLCommonCounterFragmentsPassed$MTLCommonCounterPostTessellationVertexCycles$MTLCommonCounterPostTessellationVertexInvocations$MTLCommonCounterRenderTargetWriteCycles$MTLCommonCounterSetStageUtilization$MTLCommonCounterSetStatistic$MTLCommonCounterSetTimestamp$MTLCommonCounterTessellationCycles$MTLCommonCounterTessellationInputPatches$MTLCommonCounterTimestamp$MTLCommonCounterTotalCycles$MTLCommonCounterVertexCycles$MTLCommonCounterVertexInvocations$MTLCounterErrorDomain$MTLDeviceRemovalRequestedNotification$MTLDeviceWasAddedNotification$MTLDeviceWasRemovedNotification$MTLLibraryErrorDomain$'''
-enums = '''$MTLArgumentAccessReadOnly@0$MTLArgumentAccessReadWrite@1$MTLArgumentAccessWriteOnly@2$MTLArgumentBuffersTier1@0$MTLArgumentBuffersTier2@1$MTLArgumentTypeBuffer@0$MTLArgumentTypeSampler@3$MTLArgumentTypeTexture@2$MTLArgumentTypeThreadgroupMemory@1$MTLAttributeFormatChar@46$MTLAttributeFormatChar2@4$MTLAttributeFormatChar2Normalized@10$MTLAttributeFormatChar3@5$MTLAttributeFormatChar3Normalized@11$MTLAttributeFormatChar4@6$MTLAttributeFormatChar4Normalized@12$MTLAttributeFormatCharNormalized@48$MTLAttributeFormatFloat@28$MTLAttributeFormatFloat2@29$MTLAttributeFormatFloat3@30$MTLAttributeFormatFloat4@31$MTLAttributeFormatHalf@53$MTLAttributeFormatHalf2@25$MTLAttributeFormatHalf3@26$MTLAttributeFormatHalf4@27$MTLAttributeFormatInt@32$MTLAttributeFormatInt1010102Normalized@40$MTLAttributeFormatInt2@33$MTLAttributeFormatInt3@34$MTLAttributeFormatInt4@35$MTLAttributeFormatInvalid@0$MTLAttributeFormatShort@50$MTLAttributeFormatShort2@16$MTLAttributeFormatShort2Normalized@22$MTLAttributeFormatShort3@17$MTLAttributeFormatShort3Normalized@23$MTLAttributeFormatShort4@18$MTLAttributeFormatShort4Normalized@24$MTLAttributeFormatShortNormalized@52$MTLAttributeFormatUChar@45$MTLAttributeFormatUChar2@1$MTLAttributeFormatUChar2Normalized@7$MTLAttributeFormatUChar3@2$MTLAttributeFormatUChar3Normalized@8$MTLAttributeFormatUChar4@3$MTLAttributeFormatUChar4Normalized@9$MTLAttributeFormatUChar4Normalized_BGRA@42$MTLAttributeFormatUCharNormalized@47$MTLAttributeFormatUInt@36$MTLAttributeFormatUInt1010102Normalized@41$MTLAttributeFormatUInt2@37$MTLAttributeFormatUInt3@38$MTLAttributeFormatUInt4@39$MTLAttributeFormatUShort@49$MTLAttributeFormatUShort2@13$MTLAttributeFormatUShort2Normalized@19$MTLAttributeFormatUShort3@14$MTLAttributeFormatUShort3Normalized@20$MTLAttributeFormatUShort4@15$MTLAttributeFormatUShort4Normalized@21$MTLAttributeFormatUShortNormalized@51$MTLBarrierScopeBuffers@1$MTLBarrierScopeRenderTargets@4$MTLBarrierScopeTextures@2$MTLBlendFactorBlendAlpha@13$MTLBlendFactorBlendColor@11$MTLBlendFactorDestinationAlpha@8$MTLBlendFactorDestinationColor@6$MTLBlendFactorOne@1$MTLBlendFactorOneMinusBlendAlpha@14$MTLBlendFactorOneMinusBlendColor@12$MTLBlendFactorOneMinusDestinationAlpha@9$MTLBlendFactorOneMinusDestinationColor@7$MTLBlendFactorOneMinusSource1Alpha@18$MTLBlendFactorOneMinusSource1Color@16$MTLBlendFactorOneMinusSourceAlpha@5$MTLBlendFactorOneMinusSourceColor@3$MTLBlendFactorSource1Alpha@17$MTLBlendFactorSource1Color@15$MTLBlendFactorSourceAlpha@4$MTLBlendFactorSourceAlphaSaturated@10$MTLBlendFactorSourceColor@2$MTLBlendFactorZero@0$MTLBlendOperationAdd@0$MTLBlendOperationMax@4$MTLBlendOperationMin@3$MTLBlendOperationReverseSubtract@2$MTLBlendOperationSubtract@1$MTLBlitOptionDepthFromDepthStencil@1$MTLBlitOptionNone@0$MTLBlitOptionRowLinearPVRTC@4$MTLBlitOptionStencilFromDepthStencil@2$MTLCPUCacheModeDefaultCache@0$MTLCPUCacheModeWriteCombined@1$MTLCaptureDestinationDeveloperTools@1$MTLCaptureDestinationGPUTraceDocument@2$MTLCaptureErrorAlreadyCapturing@2$MTLCaptureErrorInvalidDescriptor@3$MTLCaptureErrorNotSupported@1$MTLColorWriteMaskAll@15$MTLColorWriteMaskAlpha@1$MTLColorWriteMaskBlue@2$MTLColorWriteMaskGreen@4$MTLColorWriteMaskNone@0$MTLColorWriteMaskRed@8$MTLCommandBufferErrorBlacklisted@4$MTLCommandBufferErrorDeviceRemoved@11$MTLCommandBufferErrorInternal@1$MTLCommandBufferErrorInvalidResource@9$MTLCommandBufferErrorMemoryless@10$MTLCommandBufferErrorNone@0$MTLCommandBufferErrorNotPermitted@7$MTLCommandBufferErrorOutOfMemory@8$MTLCommandBufferErrorPageFault@3$MTLCommandBufferErrorTimeout@2$MTLCommandBufferStatusCommitted@2$MTLCommandBufferStatusCompleted@4$MTLCommandBufferStatusEnqueued@1$MTLCommandBufferStatusError@5$MTLCommandBufferStatusNotEnqueued@0$MTLCommandBufferStatusScheduled@3$MTLCompareFunctionAlways@7$MTLCompareFunctionEqual@2$MTLCompareFunctionGreater@4$MTLCompareFunctionGreaterEqual@6$MTLCompareFunctionLess@1$MTLCompareFunctionLessEqual@3$MTLCompareFunctionNever@0$MTLCompareFunctionNotEqual@5$MTLCounterDontSample@18446744073709551615$MTLCounterErrorValue@18446744073709551615$MTLCounterSampleBufferErrorInternal@1$MTLCounterSampleBufferErrorOutOfMemory@0$MTLCullModeBack@2$MTLCullModeFront@1$MTLCullModeNone@0$MTLDataTypeArray@2$MTLDataTypeBool@53$MTLDataTypeBool2@54$MTLDataTypeBool3@55$MTLDataTypeBool4@56$MTLDataTypeChar@45$MTLDataTypeChar2@46$MTLDataTypeChar3@47$MTLDataTypeChar4@48$MTLDataTypeFloat@3$MTLDataTypeFloat2@4$MTLDataTypeFloat2x2@7$MTLDataTypeFloat2x3@8$MTLDataTypeFloat2x4@9$MTLDataTypeFloat3@5$MTLDataTypeFloat3x2@10$MTLDataTypeFloat3x3@11$MTLDataTypeFloat3x4@12$MTLDataTypeFloat4@6$MTLDataTypeFloat4x2@13$MTLDataTypeFloat4x3@14$MTLDataTypeFloat4x4@15$MTLDataTypeHalf@16$MTLDataTypeHalf2@17$MTLDataTypeHalf2x2@20$MTLDataTypeHalf2x3@21$MTLDataTypeHalf2x4@22$MTLDataTypeHalf3@18$MTLDataTypeHalf3x2@23$MTLDataTypeHalf3x3@24$MTLDataTypeHalf3x4@25$MTLDataTypeHalf4@19$MTLDataTypeHalf4x2@26$MTLDataTypeHalf4x3@27$MTLDataTypeHalf4x4@28$MTLDataTypeIndirectCommandBuffer@80$MTLDataTypeInt@29$MTLDataTypeInt2@30$MTLDataTypeInt3@31$MTLDataTypeInt4@32$MTLDataTypeNone@0$MTLDataTypePointer@60$MTLDataTypeRenderPipeline@78$MTLDataTypeSampler@59$MTLDataTypeShort@37$MTLDataTypeShort2@38$MTLDataTypeShort3@39$MTLDataTypeShort4@40$MTLDataTypeStruct@1$MTLDataTypeTexture@58$MTLDataTypeUChar@49$MTLDataTypeUChar2@50$MTLDataTypeUChar3@51$MTLDataTypeUChar4@52$MTLDataTypeUInt@33$MTLDataTypeUInt2@34$MTLDataTypeUInt3@35$MTLDataTypeUInt4@36$MTLDataTypeUShort@41$MTLDataTypeUShort2@42$MTLDataTypeUShort3@43$MTLDataTypeUShort4@44$MTLDepthClipModeClamp@1$MTLDepthClipModeClip@0$MTLDeviceLocationBuiltIn@0$MTLDeviceLocationExternal@2$MTLDeviceLocationSlot@1$MTLDeviceLocationUnspecified@18446744073709551615$MTLDispatchTypeConcurrent@1$MTLDispatchTypeSerial@0$MTLFeatureSet_OSX_GPUFamily1_v1@10000$MTLFeatureSet_OSX_GPUFamily1_v2@10001$MTLFeatureSet_OSX_ReadWriteTextureTier2@10002$MTLFeatureSet_TVOS_GPUFamily1_v1@30000$MTLFeatureSet_iOS_GPUFamily1_v1@0$MTLFeatureSet_iOS_GPUFamily1_v2@2$MTLFeatureSet_iOS_GPUFamily1_v3@5$MTLFeatureSet_iOS_GPUFamily1_v4@8$MTLFeatureSet_iOS_GPUFamily1_v5@12$MTLFeatureSet_iOS_GPUFamily2_v1@1$MTLFeatureSet_iOS_GPUFamily2_v2@3$MTLFeatureSet_iOS_GPUFamily2_v3@6$MTLFeatureSet_iOS_GPUFamily2_v4@9$MTLFeatureSet_iOS_GPUFamily2_v5@13$MTLFeatureSet_iOS_GPUFamily3_v1@4$MTLFeatureSet_iOS_GPUFamily3_v2@7$MTLFeatureSet_iOS_GPUFamily3_v3@10$MTLFeatureSet_iOS_GPUFamily3_v4@14$MTLFeatureSet_iOS_GPUFamily4_v1@11$MTLFeatureSet_iOS_GPUFamily4_v2@15$MTLFeatureSet_macOS_GPUFamily1_v1@10000$MTLFeatureSet_macOS_GPUFamily1_v2@10001$MTLFeatureSet_macOS_GPUFamily1_v3@10003$MTLFeatureSet_macOS_GPUFamily1_v4@10004$MTLFeatureSet_macOS_GPUFamily2_v1@10005$MTLFeatureSet_macOS_ReadWriteTextureTier2@10002$MTLFeatureSet_tvOS_GPUFamily1_v1@30000$MTLFeatureSet_tvOS_GPUFamily1_v2@30001$MTLFeatureSet_tvOS_GPUFamily1_v3@30002$MTLFeatureSet_tvOS_GPUFamily1_v4@30004$MTLFunctionTypeFragment@2$MTLFunctionTypeKernel@3$MTLFunctionTypeVertex@1$MTLGPUFamilyApple1@1001$MTLGPUFamilyApple2@1002$MTLGPUFamilyApple3@1003$MTLGPUFamilyApple4@1004$MTLGPUFamilyApple5@1005$MTLGPUFamilyCommon1@3001$MTLGPUFamilyCommon2@3002$MTLGPUFamilyCommon3@3003$MTLGPUFamilyMac1@2001$MTLGPUFamilyMac2@2002$MTLGPUFamilyMacCatalyst1@4001$MTLGPUFamilyMacCatalyst2@4002$MTLHazardTrackingModeDefault@0$MTLHazardTrackingModeTracked@2$MTLHazardTrackingModeUntracked@1$MTLHeapTypeAutomatic@0$MTLHeapTypePlacement@1$MTLIndexTypeUInt16@0$MTLIndexTypeUInt32@1$MTLIndirectCommandTypeDraw@1$MTLIndirectCommandTypeDrawIndexed@2$MTLIndirectCommandTypeDrawIndexedPatches@8$MTLIndirectCommandTypeDrawPatches@4$MTLLanguageVersion1_0@65536$MTLLanguageVersion1_1@65537$MTLLanguageVersion1_2@65538$MTLLanguageVersion2_0@131072$MTLLanguageVersion2_1@131073$MTLLanguageVersion2_2@131074$MTLLibraryErrorCompileFailure@3$MTLLibraryErrorCompileWarning@4$MTLLibraryErrorFileNotFound@6$MTLLibraryErrorFunctionNotFound@5$MTLLibraryErrorInternal@2$MTLLibraryErrorUnsupported@1$MTLLoadActionClear@2$MTLLoadActionDontCare@0$MTLLoadActionLoad@1$MTLMaxRenderPassSampleBuffers@4$MTLMultisampleDepthResolveFilterMax@2$MTLMultisampleDepthResolveFilterMin@1$MTLMultisampleDepthResolveFilterSample0@0$MTLMultisampleStencilResolveFilterDepthResolvedSample@1$MTLMultisampleStencilResolveFilterSample0@0$MTLMutabilityDefault@0$MTLMutabilityImmutable@2$MTLMutabilityMutable@1$MTLPatchTypeNone@0$MTLPatchTypeQuad@2$MTLPatchTypeTriangle@1$MTLPipelineOptionArgumentInfo@1$MTLPipelineOptionBufferTypeInfo@2$MTLPipelineOptionNone@0$MTLPixelFormatA1BGR5Unorm@41$MTLPixelFormatA8Unorm@1$MTLPixelFormatABGR4Unorm@42$MTLPixelFormatASTC_10x10_LDR@216$MTLPixelFormatASTC_10x10_sRGB@198$MTLPixelFormatASTC_10x5_LDR@213$MTLPixelFormatASTC_10x5_sRGB@195$MTLPixelFormatASTC_10x6_LDR@214$MTLPixelFormatASTC_10x6_sRGB@196$MTLPixelFormatASTC_10x8_LDR@215$MTLPixelFormatASTC_10x8_sRGB@197$MTLPixelFormatASTC_12x10_LDR@217$MTLPixelFormatASTC_12x10_sRGB@199$MTLPixelFormatASTC_12x12_LDR@218$MTLPixelFormatASTC_12x12_sRGB@200$MTLPixelFormatASTC_4x4_LDR@204$MTLPixelFormatASTC_4x4_sRGB@186$MTLPixelFormatASTC_5x4_LDR@205$MTLPixelFormatASTC_5x4_sRGB@187$MTLPixelFormatASTC_5x5_LDR@206$MTLPixelFormatASTC_5x5_sRGB@188$MTLPixelFormatASTC_6x5_LDR@207$MTLPixelFormatASTC_6x5_sRGB@189$MTLPixelFormatASTC_6x6_LDR@208$MTLPixelFormatASTC_6x6_sRGB@190$MTLPixelFormatASTC_8x5_LDR@210$MTLPixelFormatASTC_8x5_sRGB@192$MTLPixelFormatASTC_8x6_LDR@211$MTLPixelFormatASTC_8x6_sRGB@193$MTLPixelFormatASTC_8x8_LDR@212$MTLPixelFormatASTC_8x8_sRGB@194$MTLPixelFormatB5G6R5Unorm@40$MTLPixelFormatBC1_RGBA@130$MTLPixelFormatBC1_RGBA_sRGB@131$MTLPixelFormatBC2_RGBA@132$MTLPixelFormatBC2_RGBA_sRGB@133$MTLPixelFormatBC3_RGBA@134$MTLPixelFormatBC3_RGBA_sRGB@135$MTLPixelFormatBC4_RSnorm@141$MTLPixelFormatBC4_RUnorm@140$MTLPixelFormatBC5_RGSnorm@143$MTLPixelFormatBC5_RGUnorm@142$MTLPixelFormatBC6H_RGBFloat@150$MTLPixelFormatBC6H_RGBUfloat@151$MTLPixelFormatBC7_RGBAUnorm@152$MTLPixelFormatBC7_RGBAUnorm_sRGB@153$MTLPixelFormatBGR10A2Unorm@94$MTLPixelFormatBGR10_XR@554$MTLPixelFormatBGR10_XR_sRGB@555$MTLPixelFormatBGR5A1Unorm@43$MTLPixelFormatBGRA10_XR@552$MTLPixelFormatBGRA10_XR_sRGB@553$MTLPixelFormatBGRA8Unorm@80$MTLPixelFormatBGRA8Unorm_sRGB@81$MTLPixelFormatBGRG422@241$MTLPixelFormatDepth16Unorm@250$MTLPixelFormatDepth24Unorm_Stencil8@255$MTLPixelFormatDepth32Float@252$MTLPixelFormatDepth32Float_Stencil8@260$MTLPixelFormatEAC_R11Snorm@172$MTLPixelFormatEAC_R11Unorm@170$MTLPixelFormatEAC_RG11Snorm@176$MTLPixelFormatEAC_RG11Unorm@174$MTLPixelFormatEAC_RGBA8@178$MTLPixelFormatEAC_RGBA8_sRGB@179$MTLPixelFormatETC2_RGB8@180$MTLPixelFormatETC2_RGB8A1@182$MTLPixelFormatETC2_RGB8A1_sRGB@183$MTLPixelFormatETC2_RGB8_sRGB@181$MTLPixelFormatGBGR422@240$MTLPixelFormatInvalid@0$MTLPixelFormatPVRTC_RGBA_2BPP@164$MTLPixelFormatPVRTC_RGBA_2BPP_sRGB@165$MTLPixelFormatPVRTC_RGBA_4BPP@166$MTLPixelFormatPVRTC_RGBA_4BPP_sRGB@167$MTLPixelFormatPVRTC_RGB_2BPP@160$MTLPixelFormatPVRTC_RGB_2BPP_sRGB@161$MTLPixelFormatPVRTC_RGB_4BPP@162$MTLPixelFormatPVRTC_RGB_4BPP_sRGB@163$MTLPixelFormatR16Float@25$MTLPixelFormatR16Sint@24$MTLPixelFormatR16Snorm@22$MTLPixelFormatR16Uint@23$MTLPixelFormatR16Unorm@20$MTLPixelFormatR32Float@55$MTLPixelFormatR32Sint@54$MTLPixelFormatR32Uint@53$MTLPixelFormatR8Sint@14$MTLPixelFormatR8Snorm@12$MTLPixelFormatR8Uint@13$MTLPixelFormatR8Unorm@10$MTLPixelFormatR8Unorm_sRGB@11$MTLPixelFormatRG11B10Float@92$MTLPixelFormatRG16Float@65$MTLPixelFormatRG16Sint@64$MTLPixelFormatRG16Snorm@62$MTLPixelFormatRG16Uint@63$MTLPixelFormatRG16Unorm@60$MTLPixelFormatRG32Float@105$MTLPixelFormatRG32Sint@104$MTLPixelFormatRG32Uint@103$MTLPixelFormatRG8Sint@34$MTLPixelFormatRG8Snorm@32$MTLPixelFormatRG8Uint@33$MTLPixelFormatRG8Unorm@30$MTLPixelFormatRG8Unorm_sRGB@31$MTLPixelFormatRGB10A2Uint@91$MTLPixelFormatRGB10A2Unorm@90$MTLPixelFormatRGB9E5Float@93$MTLPixelFormatRGBA16Float@115$MTLPixelFormatRGBA16Sint@114$MTLPixelFormatRGBA16Snorm@112$MTLPixelFormatRGBA16Uint@113$MTLPixelFormatRGBA16Unorm@110$MTLPixelFormatRGBA32Float@125$MTLPixelFormatRGBA32Sint@124$MTLPixelFormatRGBA32Uint@123$MTLPixelFormatRGBA8Sint@74$MTLPixelFormatRGBA8Snorm@72$MTLPixelFormatRGBA8Uint@73$MTLPixelFormatRGBA8Unorm@70$MTLPixelFormatRGBA8Unorm_sRGB@71$MTLPixelFormatStencil8@253$MTLPixelFormatX24_Stencil8@262$MTLPixelFormatX32_Stencil8@261$MTLPrimitiveTopologyClassLine@2$MTLPrimitiveTopologyClassPoint@1$MTLPrimitiveTopologyClassTriangle@3$MTLPrimitiveTopologyClassUnspecified@0$MTLPrimitiveTypeLine@1$MTLPrimitiveTypeLineStrip@2$MTLPrimitiveTypePoint@0$MTLPrimitiveTypeTriangle@3$MTLPrimitiveTypeTriangleStrip@4$MTLPurgeableStateEmpty@4$MTLPurgeableStateKeepCurrent@1$MTLPurgeableStateNonVolatile@2$MTLPurgeableStateVolatile@3$MTLReadWriteTextureTier1@1$MTLReadWriteTextureTier2@2$MTLReadWriteTextureTierNone@0$MTLRenderStageFragment@2$MTLRenderStageVertex@1$MTLResourceCPUCacheModeDefaultCache@0$MTLResourceCPUCacheModeShift@0$MTLResourceCPUCacheModeWriteCombined@1$MTLResourceHazardTrackingModeDefault@0$MTLResourceHazardTrackingModeShift@8$MTLResourceHazardTrackingModeTracked@512$MTLResourceHazardTrackingModeUntracked@256$MTLResourceOptionCPUCacheModeDefault@0$MTLResourceOptionCPUCacheModeWriteCombined@1$MTLResourceStorageModeManaged@16$MTLResourceStorageModeMemoryless@48$MTLResourceStorageModePrivate@32$MTLResourceStorageModeShared@0$MTLResourceStorageModeShift@4$MTLResourceUsageRead@1$MTLResourceUsageSample@4$MTLResourceUsageWrite@2$MTLSamplerAddressModeClampToBorderColor@5$MTLSamplerAddressModeClampToEdge@0$MTLSamplerAddressModeClampToZero@4$MTLSamplerAddressModeMirrorClampToEdge@1$MTLSamplerAddressModeMirrorRepeat@3$MTLSamplerAddressModeRepeat@2$MTLSamplerBorderColorOpaqueBlack@1$MTLSamplerBorderColorOpaqueWhite@2$MTLSamplerBorderColorTransparentBlack@0$MTLSamplerMinMagFilterLinear@1$MTLSamplerMinMagFilterNearest@0$MTLSamplerMipFilterLinear@2$MTLSamplerMipFilterNearest@1$MTLSamplerMipFilterNotMipmapped@0$MTLStencilOperationDecrementClamp@4$MTLStencilOperationDecrementWrap@7$MTLStencilOperationIncrementClamp@3$MTLStencilOperationIncrementWrap@6$MTLStencilOperationInvert@5$MTLStencilOperationKeep@0$MTLStencilOperationReplace@2$MTLStencilOperationZero@1$MTLStepFunctionConstant@0$MTLStepFunctionPerInstance@2$MTLStepFunctionPerPatch@3$MTLStepFunctionPerPatchControlPoint@4$MTLStepFunctionPerVertex@1$MTLStepFunctionThreadPositionInGridX@5$MTLStepFunctionThreadPositionInGridXIndexed@7$MTLStepFunctionThreadPositionInGridY@6$MTLStepFunctionThreadPositionInGridYIndexed@8$MTLStorageModeManaged@1$MTLStorageModeMemoryless@3$MTLStorageModePrivate@2$MTLStorageModeShared@0$MTLStoreActionCustomSampleDepthStore@5$MTLStoreActionDontCare@0$MTLStoreActionMultisampleResolve@2$MTLStoreActionOptionCustomSamplePositions@1$MTLStoreActionOptionNone@0$MTLStoreActionStore@1$MTLStoreActionStoreAndMultisampleResolve@3$MTLStoreActionUnknown@4$MTLTessellationControlPointIndexTypeNone@0$MTLTessellationControlPointIndexTypeUInt16@1$MTLTessellationControlPointIndexTypeUInt32@2$MTLTessellationFactorFormatHalf@0$MTLTessellationFactorStepFunctionConstant@0$MTLTessellationFactorStepFunctionPerInstance@2$MTLTessellationFactorStepFunctionPerPatch@1$MTLTessellationFactorStepFunctionPerPatchAndPerInstance@3$MTLTessellationPartitionModeFractionalEven@3$MTLTessellationPartitionModeFractionalOdd@2$MTLTessellationPartitionModeInteger@1$MTLTessellationPartitionModePow2@0$MTLTextureSwizzleAlpha@5$MTLTextureSwizzleBlue@4$MTLTextureSwizzleGreen@3$MTLTextureSwizzleOne@1$MTLTextureSwizzleRed@2$MTLTextureSwizzleZero@0$MTLTextureType1D@0$MTLTextureType1DArray@1$MTLTextureType2D@2$MTLTextureType2DArray@3$MTLTextureType2DMultisample@4$MTLTextureType2DMultisampleArray@8$MTLTextureType3D@7$MTLTextureTypeCube@5$MTLTextureTypeCubeArray@6$MTLTextureTypeTextureBuffer@9$MTLTextureUsagePixelFormatView@16$MTLTextureUsageRenderTarget@4$MTLTextureUsageShaderRead@1$MTLTextureUsageShaderWrite@2$MTLTextureUsageUnknown@0$MTLTriangleFillModeFill@0$MTLTriangleFillModeLines@1$MTLVertexFormatChar@46$MTLVertexFormatChar2@4$MTLVertexFormatChar2Normalized@10$MTLVertexFormatChar3@5$MTLVertexFormatChar3Normalized@11$MTLVertexFormatChar4@6$MTLVertexFormatChar4Normalized@12$MTLVertexFormatCharNormalized@48$MTLVertexFormatFloat@28$MTLVertexFormatFloat2@29$MTLVertexFormatFloat3@30$MTLVertexFormatFloat4@31$MTLVertexFormatHalf@53$MTLVertexFormatHalf2@25$MTLVertexFormatHalf3@26$MTLVertexFormatHalf4@27$MTLVertexFormatInt@32$MTLVertexFormatInt1010102Normalized@40$MTLVertexFormatInt2@33$MTLVertexFormatInt3@34$MTLVertexFormatInt4@35$MTLVertexFormatInvalid@0$MTLVertexFormatShort@50$MTLVertexFormatShort2@16$MTLVertexFormatShort2Normalized@22$MTLVertexFormatShort3@17$MTLVertexFormatShort3Normalized@23$MTLVertexFormatShort4@18$MTLVertexFormatShort4Normalized@24$MTLVertexFormatShortNormalized@52$MTLVertexFormatUChar@45$MTLVertexFormatUChar2@1$MTLVertexFormatUChar2Normalized@7$MTLVertexFormatUChar3@2$MTLVertexFormatUChar3Normalized@8$MTLVertexFormatUChar4@3$MTLVertexFormatUChar4Normalized@9$MTLVertexFormatUChar4Normalized_BGRA@42$MTLVertexFormatUCharNormalized@47$MTLVertexFormatUInt@36$MTLVertexFormatUInt1010102Normalized@41$MTLVertexFormatUInt2@37$MTLVertexFormatUInt3@38$MTLVertexFormatUInt4@39$MTLVertexFormatUShort@49$MTLVertexFormatUShort2@13$MTLVertexFormatUShort2Normalized@19$MTLVertexFormatUShort3@14$MTLVertexFormatUShort3Normalized@20$MTLVertexFormatUShort4@15$MTLVertexFormatUShort4Normalized@21$MTLVertexFormatUShortNormalized@51$MTLVertexStepFunctionConstant@0$MTLVertexStepFunctionPerInstance@2$MTLVertexStepFunctionPerPatch@3$MTLVertexStepFunctionPerPatchControlPoint@4$MTLVertexStepFunctionPerVertex@1$MTLVisibilityResultModeBoolean@1$MTLVisibilityResultModeCounting@2$MTLVisibilityResultModeDisabled@0$MTLWindingClockwise@0$MTLWindingCounterClockwise@1$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+misc.update(
+    {
+        "MTLIndirectCommandBufferExecutionRange": objc.createStructType(
+            "MTLIndirectCommandBufferExecutionRange",
+            b"{_MTLIndirectCommandBufferExecutionRange=II}",
+            ["location", "length"],
+        ),
+        "MTLTextureSwizzleChannels": objc.createStructType(
+            "MTLTextureSwizzleChannels",
+            b"{_MTLTextureSwizzleChannels=CCCC}",
+            ["red", "green", "blue", "alpha"],
+        ),
+        "MTLQuadTessellationFactorsHalf": objc.createStructType(
+            "MTLQuadTessellationFactorsHalf",
+            b"{_MTLQuadTessellationFactorsHalf=[4S][2S]}",
+            ["edgeTessellationFactor", "insideTessellationFactor"],
+        ),
+        "MTLSize": objc.createStructType(
+            "MTLSize", b"{_MTLSize=QQQ}", ["width", "height", "depth"]
+        ),
+        "MTLDrawPrimitivesIndirectArguments": objc.createStructType(
+            "MTLDrawPrimitivesIndirectArguments",
+            b"{_MTLDrawPrimitivesIndirectArguments=IIII}",
+            ["vertexCount", "instanceCount", "vertexStart", "baseInstance"],
+        ),
+        "MTLVertexAmplificationViewMapping": objc.createStructType(
+            "MTLVertexAmplificationViewMapping",
+            b"{_MTLVertexAmplificationViewMapping=II}",
+            ["viewportArrayIndexOffset", "renderTargetArrayIndexOffset"],
+        ),
+        "MTLCounterResultStageUtilization": objc.createStructType(
+            "MTLCounterResultStageUtilization",
+            b"{_MTLCounterResultStageUtilization=QQQQQQ}",
+            [
+                "totalCycles",
+                "vertexCycles",
+                "tessellationCycles",
+                "postTessellationVertexCycles",
+                "fragmentCycles",
+                "renderTargetCycles",
+            ],
+        ),
+        "MTLDrawPatchIndirectArguments": objc.createStructType(
+            "MTLDrawPatchIndirectArguments",
+            b"{_MTLDrawPatchIndirectArguments=IIII}",
+            ["patchCount", "instanceCount", "patchStart", "baseInstance"],
+        ),
+        "MTLTriangleTessellationFactorsHalf": objc.createStructType(
+            "MTLTriangleTessellationFactorsHalf",
+            b"{_MTLTriangleTessellationFactorsHalf=[3S]S}",
+            ["edgeTessellationFactor", "insideTessellationFactor"],
+        ),
+        "MTLCounterResultStatistic": objc.createStructType(
+            "MTLCounterResultStatistic",
+            b"{_MTLCounterResultStatistic=QQQQQQQQ}",
+            [
+                "tessellationInputPatches",
+                "vertexInvocations",
+                "postTessellationVertexInvocations",
+                "clipperInvocations",
+                "clipperPrimitivesOut",
+                "fragmentInvocations",
+                "fragmentsPassed",
+                "computeKernelInvocations",
+            ],
+        ),
+        "MTLStageInRegionIndirectArguments": objc.createStructType(
+            "MTLStageInRegionIndirectArguments",
+            b"{_MTLStageInRegionIndirectArguments=[3I][3I]}",
+            ["stageInOrigin", "stageInSize"],
+        ),
+        "MTLOrigin": objc.createStructType(
+            "MTLOrigin", b"{_MTLOrigin=QQQ}", ["x", "y", "z"]
+        ),
+        "MTLDispatchThreadgroupsIndirectArguments": objc.createStructType(
+            "MTLDispatchThreadgroupsIndirectArguments",
+            b"{_MTLDispatchThreadgroupsIndirectArguments=[3I]}",
+            ["threadgroupsPerGrid"],
+        ),
+        "MTLViewport": objc.createStructType(
+            "MTLViewport",
+            b"{_MTLViewport=dddddd}",
+            ["originX", "originY", "width", "height", "znear", "zfar"],
+        ),
+        "MTLRegion": objc.createStructType(
+            "MTLRegion",
+            b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}",
+            ["origin", "size"],
+        ),
+        "MTLSamplePosition": objc.createStructType(
+            "MTLSamplePosition", b"{_MTLSamplePosition=ff}", ["x", "y"]
+        ),
+        "MTLDrawIndexedPrimitivesIndirectArguments": objc.createStructType(
+            "MTLDrawIndexedPrimitivesIndirectArguments",
+            b"{_MTLDrawIndexedPrimitivesIndirectArguments=IIIiI}",
+            ["indexCount", "instanceCount", "indexStart", "baseVertex", "baseInstance"],
+        ),
+        "MTLClearColor": objc.createStructType(
+            "MTLClearColor", b"{_MTLClearColor=dddd}", ["red", "green", "blue", "alpha"]
+        ),
+        "MTLCoordinate2D": objc.createStructType(
+            "MTLCoordinate2D", b"{_MTLCoordinate2D=ff}", ["x", "y"]
+        ),
+        "MTLSizeAndAlign": objc.createStructType(
+            "MTLSizeAndAlign", b"{_MTLSizeAndAlign=QQ}", ["size", "align"]
+        ),
+        "MTLScissorRect": objc.createStructType(
+            "MTLScissorRect", b"{_MTLScissorRect=QQQQ}", ["x", "y", "width", "height"]
+        ),
+        "MTLCounterResultTimestamp": objc.createStructType(
+            "MTLCounterResultTimestamp",
+            b"{_MTLCounterResultTimestamp=Q}",
+            ["timestamp"],
+        ),
+    }
+)
+constants = """$MTLCaptureErrorDomain$MTLCommandBufferErrorDomain$MTLCommonCounterClipperInvocations$MTLCommonCounterClipperPrimitivesOut$MTLCommonCounterComputeKernelInvocations$MTLCommonCounterFragmentCycles$MTLCommonCounterFragmentInvocations$MTLCommonCounterFragmentsPassed$MTLCommonCounterPostTessellationVertexCycles$MTLCommonCounterPostTessellationVertexInvocations$MTLCommonCounterRenderTargetWriteCycles$MTLCommonCounterSetStageUtilization$MTLCommonCounterSetStatistic$MTLCommonCounterSetTimestamp$MTLCommonCounterTessellationCycles$MTLCommonCounterTessellationInputPatches$MTLCommonCounterTimestamp$MTLCommonCounterTotalCycles$MTLCommonCounterVertexCycles$MTLCommonCounterVertexInvocations$MTLCounterErrorDomain$MTLDeviceRemovalRequestedNotification$MTLDeviceWasAddedNotification$MTLDeviceWasRemovedNotification$MTLLibraryErrorDomain$"""
+enums = """$MTLArgumentAccessReadOnly@0$MTLArgumentAccessReadWrite@1$MTLArgumentAccessWriteOnly@2$MTLArgumentBuffersTier1@0$MTLArgumentBuffersTier2@1$MTLArgumentTypeBuffer@0$MTLArgumentTypeSampler@3$MTLArgumentTypeTexture@2$MTLArgumentTypeThreadgroupMemory@1$MTLAttributeFormatChar@46$MTLAttributeFormatChar2@4$MTLAttributeFormatChar2Normalized@10$MTLAttributeFormatChar3@5$MTLAttributeFormatChar3Normalized@11$MTLAttributeFormatChar4@6$MTLAttributeFormatChar4Normalized@12$MTLAttributeFormatCharNormalized@48$MTLAttributeFormatFloat@28$MTLAttributeFormatFloat2@29$MTLAttributeFormatFloat3@30$MTLAttributeFormatFloat4@31$MTLAttributeFormatHalf@53$MTLAttributeFormatHalf2@25$MTLAttributeFormatHalf3@26$MTLAttributeFormatHalf4@27$MTLAttributeFormatInt@32$MTLAttributeFormatInt1010102Normalized@40$MTLAttributeFormatInt2@33$MTLAttributeFormatInt3@34$MTLAttributeFormatInt4@35$MTLAttributeFormatInvalid@0$MTLAttributeFormatShort@50$MTLAttributeFormatShort2@16$MTLAttributeFormatShort2Normalized@22$MTLAttributeFormatShort3@17$MTLAttributeFormatShort3Normalized@23$MTLAttributeFormatShort4@18$MTLAttributeFormatShort4Normalized@24$MTLAttributeFormatShortNormalized@52$MTLAttributeFormatUChar@45$MTLAttributeFormatUChar2@1$MTLAttributeFormatUChar2Normalized@7$MTLAttributeFormatUChar3@2$MTLAttributeFormatUChar3Normalized@8$MTLAttributeFormatUChar4@3$MTLAttributeFormatUChar4Normalized@9$MTLAttributeFormatUChar4Normalized_BGRA@42$MTLAttributeFormatUCharNormalized@47$MTLAttributeFormatUInt@36$MTLAttributeFormatUInt1010102Normalized@41$MTLAttributeFormatUInt2@37$MTLAttributeFormatUInt3@38$MTLAttributeFormatUInt4@39$MTLAttributeFormatUShort@49$MTLAttributeFormatUShort2@13$MTLAttributeFormatUShort2Normalized@19$MTLAttributeFormatUShort3@14$MTLAttributeFormatUShort3Normalized@20$MTLAttributeFormatUShort4@15$MTLAttributeFormatUShort4Normalized@21$MTLAttributeFormatUShortNormalized@51$MTLBarrierScopeBuffers@1$MTLBarrierScopeRenderTargets@4$MTLBarrierScopeTextures@2$MTLBlendFactorBlendAlpha@13$MTLBlendFactorBlendColor@11$MTLBlendFactorDestinationAlpha@8$MTLBlendFactorDestinationColor@6$MTLBlendFactorOne@1$MTLBlendFactorOneMinusBlendAlpha@14$MTLBlendFactorOneMinusBlendColor@12$MTLBlendFactorOneMinusDestinationAlpha@9$MTLBlendFactorOneMinusDestinationColor@7$MTLBlendFactorOneMinusSource1Alpha@18$MTLBlendFactorOneMinusSource1Color@16$MTLBlendFactorOneMinusSourceAlpha@5$MTLBlendFactorOneMinusSourceColor@3$MTLBlendFactorSource1Alpha@17$MTLBlendFactorSource1Color@15$MTLBlendFactorSourceAlpha@4$MTLBlendFactorSourceAlphaSaturated@10$MTLBlendFactorSourceColor@2$MTLBlendFactorZero@0$MTLBlendOperationAdd@0$MTLBlendOperationMax@4$MTLBlendOperationMin@3$MTLBlendOperationReverseSubtract@2$MTLBlendOperationSubtract@1$MTLBlitOptionDepthFromDepthStencil@1$MTLBlitOptionNone@0$MTLBlitOptionRowLinearPVRTC@4$MTLBlitOptionStencilFromDepthStencil@2$MTLCPUCacheModeDefaultCache@0$MTLCPUCacheModeWriteCombined@1$MTLCaptureDestinationDeveloperTools@1$MTLCaptureDestinationGPUTraceDocument@2$MTLCaptureErrorAlreadyCapturing@2$MTLCaptureErrorInvalidDescriptor@3$MTLCaptureErrorNotSupported@1$MTLColorWriteMaskAll@15$MTLColorWriteMaskAlpha@1$MTLColorWriteMaskBlue@2$MTLColorWriteMaskGreen@4$MTLColorWriteMaskNone@0$MTLColorWriteMaskRed@8$MTLCommandBufferErrorBlacklisted@4$MTLCommandBufferErrorDeviceRemoved@11$MTLCommandBufferErrorInternal@1$MTLCommandBufferErrorInvalidResource@9$MTLCommandBufferErrorMemoryless@10$MTLCommandBufferErrorNone@0$MTLCommandBufferErrorNotPermitted@7$MTLCommandBufferErrorOutOfMemory@8$MTLCommandBufferErrorPageFault@3$MTLCommandBufferErrorTimeout@2$MTLCommandBufferStatusCommitted@2$MTLCommandBufferStatusCompleted@4$MTLCommandBufferStatusEnqueued@1$MTLCommandBufferStatusError@5$MTLCommandBufferStatusNotEnqueued@0$MTLCommandBufferStatusScheduled@3$MTLCompareFunctionAlways@7$MTLCompareFunctionEqual@2$MTLCompareFunctionGreater@4$MTLCompareFunctionGreaterEqual@6$MTLCompareFunctionLess@1$MTLCompareFunctionLessEqual@3$MTLCompareFunctionNever@0$MTLCompareFunctionNotEqual@5$MTLCounterDontSample@18446744073709551615$MTLCounterErrorValue@18446744073709551615$MTLCounterSampleBufferErrorInternal@1$MTLCounterSampleBufferErrorOutOfMemory@0$MTLCullModeBack@2$MTLCullModeFront@1$MTLCullModeNone@0$MTLDataTypeArray@2$MTLDataTypeBool@53$MTLDataTypeBool2@54$MTLDataTypeBool3@55$MTLDataTypeBool4@56$MTLDataTypeChar@45$MTLDataTypeChar2@46$MTLDataTypeChar3@47$MTLDataTypeChar4@48$MTLDataTypeFloat@3$MTLDataTypeFloat2@4$MTLDataTypeFloat2x2@7$MTLDataTypeFloat2x3@8$MTLDataTypeFloat2x4@9$MTLDataTypeFloat3@5$MTLDataTypeFloat3x2@10$MTLDataTypeFloat3x3@11$MTLDataTypeFloat3x4@12$MTLDataTypeFloat4@6$MTLDataTypeFloat4x2@13$MTLDataTypeFloat4x3@14$MTLDataTypeFloat4x4@15$MTLDataTypeHalf@16$MTLDataTypeHalf2@17$MTLDataTypeHalf2x2@20$MTLDataTypeHalf2x3@21$MTLDataTypeHalf2x4@22$MTLDataTypeHalf3@18$MTLDataTypeHalf3x2@23$MTLDataTypeHalf3x3@24$MTLDataTypeHalf3x4@25$MTLDataTypeHalf4@19$MTLDataTypeHalf4x2@26$MTLDataTypeHalf4x3@27$MTLDataTypeHalf4x4@28$MTLDataTypeIndirectCommandBuffer@80$MTLDataTypeInt@29$MTLDataTypeInt2@30$MTLDataTypeInt3@31$MTLDataTypeInt4@32$MTLDataTypeNone@0$MTLDataTypePointer@60$MTLDataTypeRenderPipeline@78$MTLDataTypeSampler@59$MTLDataTypeShort@37$MTLDataTypeShort2@38$MTLDataTypeShort3@39$MTLDataTypeShort4@40$MTLDataTypeStruct@1$MTLDataTypeTexture@58$MTLDataTypeUChar@49$MTLDataTypeUChar2@50$MTLDataTypeUChar3@51$MTLDataTypeUChar4@52$MTLDataTypeUInt@33$MTLDataTypeUInt2@34$MTLDataTypeUInt3@35$MTLDataTypeUInt4@36$MTLDataTypeUShort@41$MTLDataTypeUShort2@42$MTLDataTypeUShort3@43$MTLDataTypeUShort4@44$MTLDepthClipModeClamp@1$MTLDepthClipModeClip@0$MTLDeviceLocationBuiltIn@0$MTLDeviceLocationExternal@2$MTLDeviceLocationSlot@1$MTLDeviceLocationUnspecified@18446744073709551615$MTLDispatchTypeConcurrent@1$MTLDispatchTypeSerial@0$MTLFeatureSet_OSX_GPUFamily1_v1@10000$MTLFeatureSet_OSX_GPUFamily1_v2@10001$MTLFeatureSet_OSX_ReadWriteTextureTier2@10002$MTLFeatureSet_TVOS_GPUFamily1_v1@30000$MTLFeatureSet_iOS_GPUFamily1_v1@0$MTLFeatureSet_iOS_GPUFamily1_v2@2$MTLFeatureSet_iOS_GPUFamily1_v3@5$MTLFeatureSet_iOS_GPUFamily1_v4@8$MTLFeatureSet_iOS_GPUFamily1_v5@12$MTLFeatureSet_iOS_GPUFamily2_v1@1$MTLFeatureSet_iOS_GPUFamily2_v2@3$MTLFeatureSet_iOS_GPUFamily2_v3@6$MTLFeatureSet_iOS_GPUFamily2_v4@9$MTLFeatureSet_iOS_GPUFamily2_v5@13$MTLFeatureSet_iOS_GPUFamily3_v1@4$MTLFeatureSet_iOS_GPUFamily3_v2@7$MTLFeatureSet_iOS_GPUFamily3_v3@10$MTLFeatureSet_iOS_GPUFamily3_v4@14$MTLFeatureSet_iOS_GPUFamily4_v1@11$MTLFeatureSet_iOS_GPUFamily4_v2@15$MTLFeatureSet_macOS_GPUFamily1_v1@10000$MTLFeatureSet_macOS_GPUFamily1_v2@10001$MTLFeatureSet_macOS_GPUFamily1_v3@10003$MTLFeatureSet_macOS_GPUFamily1_v4@10004$MTLFeatureSet_macOS_GPUFamily2_v1@10005$MTLFeatureSet_macOS_ReadWriteTextureTier2@10002$MTLFeatureSet_tvOS_GPUFamily1_v1@30000$MTLFeatureSet_tvOS_GPUFamily1_v2@30001$MTLFeatureSet_tvOS_GPUFamily1_v3@30002$MTLFeatureSet_tvOS_GPUFamily1_v4@30004$MTLFunctionTypeFragment@2$MTLFunctionTypeKernel@3$MTLFunctionTypeVertex@1$MTLGPUFamilyApple1@1001$MTLGPUFamilyApple2@1002$MTLGPUFamilyApple3@1003$MTLGPUFamilyApple4@1004$MTLGPUFamilyApple5@1005$MTLGPUFamilyCommon1@3001$MTLGPUFamilyCommon2@3002$MTLGPUFamilyCommon3@3003$MTLGPUFamilyMac1@2001$MTLGPUFamilyMac2@2002$MTLGPUFamilyMacCatalyst1@4001$MTLGPUFamilyMacCatalyst2@4002$MTLHazardTrackingModeDefault@0$MTLHazardTrackingModeTracked@2$MTLHazardTrackingModeUntracked@1$MTLHeapTypeAutomatic@0$MTLHeapTypePlacement@1$MTLIndexTypeUInt16@0$MTLIndexTypeUInt32@1$MTLIndirectCommandTypeDraw@1$MTLIndirectCommandTypeDrawIndexed@2$MTLIndirectCommandTypeDrawIndexedPatches@8$MTLIndirectCommandTypeDrawPatches@4$MTLLanguageVersion1_0@65536$MTLLanguageVersion1_1@65537$MTLLanguageVersion1_2@65538$MTLLanguageVersion2_0@131072$MTLLanguageVersion2_1@131073$MTLLanguageVersion2_2@131074$MTLLibraryErrorCompileFailure@3$MTLLibraryErrorCompileWarning@4$MTLLibraryErrorFileNotFound@6$MTLLibraryErrorFunctionNotFound@5$MTLLibraryErrorInternal@2$MTLLibraryErrorUnsupported@1$MTLLoadActionClear@2$MTLLoadActionDontCare@0$MTLLoadActionLoad@1$MTLMaxRenderPassSampleBuffers@4$MTLMultisampleDepthResolveFilterMax@2$MTLMultisampleDepthResolveFilterMin@1$MTLMultisampleDepthResolveFilterSample0@0$MTLMultisampleStencilResolveFilterDepthResolvedSample@1$MTLMultisampleStencilResolveFilterSample0@0$MTLMutabilityDefault@0$MTLMutabilityImmutable@2$MTLMutabilityMutable@1$MTLPatchTypeNone@0$MTLPatchTypeQuad@2$MTLPatchTypeTriangle@1$MTLPipelineOptionArgumentInfo@1$MTLPipelineOptionBufferTypeInfo@2$MTLPipelineOptionNone@0$MTLPixelFormatA1BGR5Unorm@41$MTLPixelFormatA8Unorm@1$MTLPixelFormatABGR4Unorm@42$MTLPixelFormatASTC_10x10_LDR@216$MTLPixelFormatASTC_10x10_sRGB@198$MTLPixelFormatASTC_10x5_LDR@213$MTLPixelFormatASTC_10x5_sRGB@195$MTLPixelFormatASTC_10x6_LDR@214$MTLPixelFormatASTC_10x6_sRGB@196$MTLPixelFormatASTC_10x8_LDR@215$MTLPixelFormatASTC_10x8_sRGB@197$MTLPixelFormatASTC_12x10_LDR@217$MTLPixelFormatASTC_12x10_sRGB@199$MTLPixelFormatASTC_12x12_LDR@218$MTLPixelFormatASTC_12x12_sRGB@200$MTLPixelFormatASTC_4x4_LDR@204$MTLPixelFormatASTC_4x4_sRGB@186$MTLPixelFormatASTC_5x4_LDR@205$MTLPixelFormatASTC_5x4_sRGB@187$MTLPixelFormatASTC_5x5_LDR@206$MTLPixelFormatASTC_5x5_sRGB@188$MTLPixelFormatASTC_6x5_LDR@207$MTLPixelFormatASTC_6x5_sRGB@189$MTLPixelFormatASTC_6x6_LDR@208$MTLPixelFormatASTC_6x6_sRGB@190$MTLPixelFormatASTC_8x5_LDR@210$MTLPixelFormatASTC_8x5_sRGB@192$MTLPixelFormatASTC_8x6_LDR@211$MTLPixelFormatASTC_8x6_sRGB@193$MTLPixelFormatASTC_8x8_LDR@212$MTLPixelFormatASTC_8x8_sRGB@194$MTLPixelFormatB5G6R5Unorm@40$MTLPixelFormatBC1_RGBA@130$MTLPixelFormatBC1_RGBA_sRGB@131$MTLPixelFormatBC2_RGBA@132$MTLPixelFormatBC2_RGBA_sRGB@133$MTLPixelFormatBC3_RGBA@134$MTLPixelFormatBC3_RGBA_sRGB@135$MTLPixelFormatBC4_RSnorm@141$MTLPixelFormatBC4_RUnorm@140$MTLPixelFormatBC5_RGSnorm@143$MTLPixelFormatBC5_RGUnorm@142$MTLPixelFormatBC6H_RGBFloat@150$MTLPixelFormatBC6H_RGBUfloat@151$MTLPixelFormatBC7_RGBAUnorm@152$MTLPixelFormatBC7_RGBAUnorm_sRGB@153$MTLPixelFormatBGR10A2Unorm@94$MTLPixelFormatBGR10_XR@554$MTLPixelFormatBGR10_XR_sRGB@555$MTLPixelFormatBGR5A1Unorm@43$MTLPixelFormatBGRA10_XR@552$MTLPixelFormatBGRA10_XR_sRGB@553$MTLPixelFormatBGRA8Unorm@80$MTLPixelFormatBGRA8Unorm_sRGB@81$MTLPixelFormatBGRG422@241$MTLPixelFormatDepth16Unorm@250$MTLPixelFormatDepth24Unorm_Stencil8@255$MTLPixelFormatDepth32Float@252$MTLPixelFormatDepth32Float_Stencil8@260$MTLPixelFormatEAC_R11Snorm@172$MTLPixelFormatEAC_R11Unorm@170$MTLPixelFormatEAC_RG11Snorm@176$MTLPixelFormatEAC_RG11Unorm@174$MTLPixelFormatEAC_RGBA8@178$MTLPixelFormatEAC_RGBA8_sRGB@179$MTLPixelFormatETC2_RGB8@180$MTLPixelFormatETC2_RGB8A1@182$MTLPixelFormatETC2_RGB8A1_sRGB@183$MTLPixelFormatETC2_RGB8_sRGB@181$MTLPixelFormatGBGR422@240$MTLPixelFormatInvalid@0$MTLPixelFormatPVRTC_RGBA_2BPP@164$MTLPixelFormatPVRTC_RGBA_2BPP_sRGB@165$MTLPixelFormatPVRTC_RGBA_4BPP@166$MTLPixelFormatPVRTC_RGBA_4BPP_sRGB@167$MTLPixelFormatPVRTC_RGB_2BPP@160$MTLPixelFormatPVRTC_RGB_2BPP_sRGB@161$MTLPixelFormatPVRTC_RGB_4BPP@162$MTLPixelFormatPVRTC_RGB_4BPP_sRGB@163$MTLPixelFormatR16Float@25$MTLPixelFormatR16Sint@24$MTLPixelFormatR16Snorm@22$MTLPixelFormatR16Uint@23$MTLPixelFormatR16Unorm@20$MTLPixelFormatR32Float@55$MTLPixelFormatR32Sint@54$MTLPixelFormatR32Uint@53$MTLPixelFormatR8Sint@14$MTLPixelFormatR8Snorm@12$MTLPixelFormatR8Uint@13$MTLPixelFormatR8Unorm@10$MTLPixelFormatR8Unorm_sRGB@11$MTLPixelFormatRG11B10Float@92$MTLPixelFormatRG16Float@65$MTLPixelFormatRG16Sint@64$MTLPixelFormatRG16Snorm@62$MTLPixelFormatRG16Uint@63$MTLPixelFormatRG16Unorm@60$MTLPixelFormatRG32Float@105$MTLPixelFormatRG32Sint@104$MTLPixelFormatRG32Uint@103$MTLPixelFormatRG8Sint@34$MTLPixelFormatRG8Snorm@32$MTLPixelFormatRG8Uint@33$MTLPixelFormatRG8Unorm@30$MTLPixelFormatRG8Unorm_sRGB@31$MTLPixelFormatRGB10A2Uint@91$MTLPixelFormatRGB10A2Unorm@90$MTLPixelFormatRGB9E5Float@93$MTLPixelFormatRGBA16Float@115$MTLPixelFormatRGBA16Sint@114$MTLPixelFormatRGBA16Snorm@112$MTLPixelFormatRGBA16Uint@113$MTLPixelFormatRGBA16Unorm@110$MTLPixelFormatRGBA32Float@125$MTLPixelFormatRGBA32Sint@124$MTLPixelFormatRGBA32Uint@123$MTLPixelFormatRGBA8Sint@74$MTLPixelFormatRGBA8Snorm@72$MTLPixelFormatRGBA8Uint@73$MTLPixelFormatRGBA8Unorm@70$MTLPixelFormatRGBA8Unorm_sRGB@71$MTLPixelFormatStencil8@253$MTLPixelFormatX24_Stencil8@262$MTLPixelFormatX32_Stencil8@261$MTLPrimitiveTopologyClassLine@2$MTLPrimitiveTopologyClassPoint@1$MTLPrimitiveTopologyClassTriangle@3$MTLPrimitiveTopologyClassUnspecified@0$MTLPrimitiveTypeLine@1$MTLPrimitiveTypeLineStrip@2$MTLPrimitiveTypePoint@0$MTLPrimitiveTypeTriangle@3$MTLPrimitiveTypeTriangleStrip@4$MTLPurgeableStateEmpty@4$MTLPurgeableStateKeepCurrent@1$MTLPurgeableStateNonVolatile@2$MTLPurgeableStateVolatile@3$MTLReadWriteTextureTier1@1$MTLReadWriteTextureTier2@2$MTLReadWriteTextureTierNone@0$MTLRenderStageFragment@2$MTLRenderStageVertex@1$MTLResourceCPUCacheModeDefaultCache@0$MTLResourceCPUCacheModeShift@0$MTLResourceCPUCacheModeWriteCombined@1$MTLResourceHazardTrackingModeDefault@0$MTLResourceHazardTrackingModeShift@8$MTLResourceHazardTrackingModeTracked@512$MTLResourceHazardTrackingModeUntracked@256$MTLResourceOptionCPUCacheModeDefault@0$MTLResourceOptionCPUCacheModeWriteCombined@1$MTLResourceStorageModeManaged@16$MTLResourceStorageModeMemoryless@48$MTLResourceStorageModePrivate@32$MTLResourceStorageModeShared@0$MTLResourceStorageModeShift@4$MTLResourceUsageRead@1$MTLResourceUsageSample@4$MTLResourceUsageWrite@2$MTLSamplerAddressModeClampToBorderColor@5$MTLSamplerAddressModeClampToEdge@0$MTLSamplerAddressModeClampToZero@4$MTLSamplerAddressModeMirrorClampToEdge@1$MTLSamplerAddressModeMirrorRepeat@3$MTLSamplerAddressModeRepeat@2$MTLSamplerBorderColorOpaqueBlack@1$MTLSamplerBorderColorOpaqueWhite@2$MTLSamplerBorderColorTransparentBlack@0$MTLSamplerMinMagFilterLinear@1$MTLSamplerMinMagFilterNearest@0$MTLSamplerMipFilterLinear@2$MTLSamplerMipFilterNearest@1$MTLSamplerMipFilterNotMipmapped@0$MTLStencilOperationDecrementClamp@4$MTLStencilOperationDecrementWrap@7$MTLStencilOperationIncrementClamp@3$MTLStencilOperationIncrementWrap@6$MTLStencilOperationInvert@5$MTLStencilOperationKeep@0$MTLStencilOperationReplace@2$MTLStencilOperationZero@1$MTLStepFunctionConstant@0$MTLStepFunctionPerInstance@2$MTLStepFunctionPerPatch@3$MTLStepFunctionPerPatchControlPoint@4$MTLStepFunctionPerVertex@1$MTLStepFunctionThreadPositionInGridX@5$MTLStepFunctionThreadPositionInGridXIndexed@7$MTLStepFunctionThreadPositionInGridY@6$MTLStepFunctionThreadPositionInGridYIndexed@8$MTLStorageModeManaged@1$MTLStorageModeMemoryless@3$MTLStorageModePrivate@2$MTLStorageModeShared@0$MTLStoreActionCustomSampleDepthStore@5$MTLStoreActionDontCare@0$MTLStoreActionMultisampleResolve@2$MTLStoreActionOptionCustomSamplePositions@1$MTLStoreActionOptionNone@0$MTLStoreActionStore@1$MTLStoreActionStoreAndMultisampleResolve@3$MTLStoreActionUnknown@4$MTLTessellationControlPointIndexTypeNone@0$MTLTessellationControlPointIndexTypeUInt16@1$MTLTessellationControlPointIndexTypeUInt32@2$MTLTessellationFactorFormatHalf@0$MTLTessellationFactorStepFunctionConstant@0$MTLTessellationFactorStepFunctionPerInstance@2$MTLTessellationFactorStepFunctionPerPatch@1$MTLTessellationFactorStepFunctionPerPatchAndPerInstance@3$MTLTessellationPartitionModeFractionalEven@3$MTLTessellationPartitionModeFractionalOdd@2$MTLTessellationPartitionModeInteger@1$MTLTessellationPartitionModePow2@0$MTLTextureSwizzleAlpha@5$MTLTextureSwizzleBlue@4$MTLTextureSwizzleGreen@3$MTLTextureSwizzleOne@1$MTLTextureSwizzleRed@2$MTLTextureSwizzleZero@0$MTLTextureType1D@0$MTLTextureType1DArray@1$MTLTextureType2D@2$MTLTextureType2DArray@3$MTLTextureType2DMultisample@4$MTLTextureType2DMultisampleArray@8$MTLTextureType3D@7$MTLTextureTypeCube@5$MTLTextureTypeCubeArray@6$MTLTextureTypeTextureBuffer@9$MTLTextureUsagePixelFormatView@16$MTLTextureUsageRenderTarget@4$MTLTextureUsageShaderRead@1$MTLTextureUsageShaderWrite@2$MTLTextureUsageUnknown@0$MTLTriangleFillModeFill@0$MTLTriangleFillModeLines@1$MTLVertexFormatChar@46$MTLVertexFormatChar2@4$MTLVertexFormatChar2Normalized@10$MTLVertexFormatChar3@5$MTLVertexFormatChar3Normalized@11$MTLVertexFormatChar4@6$MTLVertexFormatChar4Normalized@12$MTLVertexFormatCharNormalized@48$MTLVertexFormatFloat@28$MTLVertexFormatFloat2@29$MTLVertexFormatFloat3@30$MTLVertexFormatFloat4@31$MTLVertexFormatHalf@53$MTLVertexFormatHalf2@25$MTLVertexFormatHalf3@26$MTLVertexFormatHalf4@27$MTLVertexFormatInt@32$MTLVertexFormatInt1010102Normalized@40$MTLVertexFormatInt2@33$MTLVertexFormatInt3@34$MTLVertexFormatInt4@35$MTLVertexFormatInvalid@0$MTLVertexFormatShort@50$MTLVertexFormatShort2@16$MTLVertexFormatShort2Normalized@22$MTLVertexFormatShort3@17$MTLVertexFormatShort3Normalized@23$MTLVertexFormatShort4@18$MTLVertexFormatShort4Normalized@24$MTLVertexFormatShortNormalized@52$MTLVertexFormatUChar@45$MTLVertexFormatUChar2@1$MTLVertexFormatUChar2Normalized@7$MTLVertexFormatUChar3@2$MTLVertexFormatUChar3Normalized@8$MTLVertexFormatUChar4@3$MTLVertexFormatUChar4Normalized@9$MTLVertexFormatUChar4Normalized_BGRA@42$MTLVertexFormatUCharNormalized@47$MTLVertexFormatUInt@36$MTLVertexFormatUInt1010102Normalized@41$MTLVertexFormatUInt2@37$MTLVertexFormatUInt3@38$MTLVertexFormatUInt4@39$MTLVertexFormatUShort@49$MTLVertexFormatUShort2@13$MTLVertexFormatUShort2Normalized@19$MTLVertexFormatUShort3@14$MTLVertexFormatUShort3Normalized@20$MTLVertexFormatUShort4@15$MTLVertexFormatUShort4Normalized@21$MTLVertexFormatUShortNormalized@51$MTLVertexStepFunctionConstant@0$MTLVertexStepFunctionPerInstance@2$MTLVertexStepFunctionPerPatch@3$MTLVertexStepFunctionPerPatchControlPoint@4$MTLVertexStepFunctionPerVertex@1$MTLVisibilityResultModeBoolean@1$MTLVisibilityResultModeCounting@2$MTLVisibilityResultModeDisabled@0$MTLWindingClockwise@0$MTLWindingCounterClockwise@1$"""
 misc.update({})
-functions={'MTLTextureSwizzleChannelsMake': (b'{_MTLTextureSwizzleChannels=CCCC}CCCC',), 'MTLOriginMake': (b'{_MTLOrigin=QQQ}QQQ',), 'MTLRegionMake3D': (b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}QQQQQQ',), 'MTLRegionMake1D': (b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}QQ',), 'MTLSamplePositionMake': (b'{_MTLSamplePosition=ff}ff',), 'MTLRegionMake2D': (b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}QQQQ',), 'MTLRemoveDeviceObserver': (b'v@',), 'MTLCopyAllDevicesWithObserver': (b'@^@@?', '', {'retval': {'already_retained': True, 'already_cfretained': True}, 'arguments': {0: {'type_modifier': 'o'}, 1: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': '^v'}, 1: {'type': '@'}, 2: {'type': '@'}}}}}}), 'MTLCoordinate2DMake': (b'{_MTLCoordinate2D=ff}ff',), 'MTLIndirectCommandBufferExecutionRangeMake': (b'{_MTLIndirectCommandBufferExecutionRange=II}II',), 'MTLClearColorMake': (b'{_MTLClearColor=dddd}dddd',), 'MTLCreateSystemDefaultDevice': (b'@', '', {'retval': {'already_retained': True, 'already_cfretained': True}}), 'MTLCopyAllDevices': (b'@', '', {'retval': {'already_retained': True, 'already_cfretained': True}}), 'MTLSizeMake': (b'{_MTLSize=QQQ}QQQ',)}
-aliases = {'MTLFeatureSet_OSX_GPUFamily1_v2': 'MTLFeatureSet_macOS_GPUFamily1_v2', 'MTLFeatureSet_OSX_GPUFamily1_v1': 'MTLFeatureSet_macOS_GPUFamily1_v1', 'MTLResourceOptionCPUCacheModeDefault': 'MTLResourceCPUCacheModeDefaultCache', 'MTLFeatureSet_OSX_ReadWriteTextureTier2': 'MTLFeatureSet_macOS_ReadWriteTextureTier2', 'MTLResourceOptionCPUCacheModeWriteCombined': 'MTLResourceCPUCacheModeWriteCombined', 'MTLFeatureSet_TVOS_GPUFamily1_v1': 'MTLFeatureSet_tvOS_GPUFamily1_v1'}
+functions = {
+    "MTLTextureSwizzleChannelsMake": (b"{_MTLTextureSwizzleChannels=CCCC}CCCC",),
+    "MTLOriginMake": (b"{_MTLOrigin=QQQ}QQQ",),
+    "MTLRegionMake3D": (b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}QQQQQQ",),
+    "MTLRegionMake1D": (b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}QQ",),
+    "MTLSamplePositionMake": (b"{_MTLSamplePosition=ff}ff",),
+    "MTLRegionMake2D": (b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}QQQQ",),
+    "MTLRemoveDeviceObserver": (b"v@",),
+    "MTLCopyAllDevicesWithObserver": (
+        b"@^@@?",
+        "",
+        {
+            "retval": {"already_retained": True, "already_cfretained": True},
+            "arguments": {
+                0: {"type_modifier": "o"},
+                1: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": "^v"},
+                            1: {"type": "@"},
+                            2: {"type": "@"},
+                        },
+                    }
+                },
+            },
+        },
+    ),
+    "MTLCoordinate2DMake": (b"{_MTLCoordinate2D=ff}ff",),
+    "MTLIndirectCommandBufferExecutionRangeMake": (
+        b"{_MTLIndirectCommandBufferExecutionRange=II}II",
+    ),
+    "MTLClearColorMake": (b"{_MTLClearColor=dddd}dddd",),
+    "MTLCreateSystemDefaultDevice": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True, "already_cfretained": True}},
+    ),
+    "MTLCopyAllDevices": (
+        b"@",
+        "",
+        {"retval": {"already_retained": True, "already_cfretained": True}},
+    ),
+    "MTLSizeMake": (b"{_MTLSize=QQQ}QQQ",),
+}
+aliases = {
+    "MTLFeatureSet_OSX_GPUFamily1_v2": "MTLFeatureSet_macOS_GPUFamily1_v2",
+    "MTLFeatureSet_OSX_GPUFamily1_v1": "MTLFeatureSet_macOS_GPUFamily1_v1",
+    "MTLResourceOptionCPUCacheModeDefault": "MTLResourceCPUCacheModeDefaultCache",
+    "MTLFeatureSet_OSX_ReadWriteTextureTier2": "MTLFeatureSet_macOS_ReadWriteTextureTier2",
+    "MTLResourceOptionCPUCacheModeWriteCombined": "MTLResourceCPUCacheModeWriteCombined",
+    "MTLFeatureSet_TVOS_GPUFamily1_v1": "MTLFeatureSet_tvOS_GPUFamily1_v1",
+}
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
-    r(b'MTLArgument', b'isActive', {'retval': {'type': b'Z'}})
-    r(b'MTLArgument', b'isDepthTexture', {'retval': {'type': b'Z'}})
-    r(b'MTLAttribute', b'isActive', {'retval': {'type': b'Z'}})
-    r(b'MTLAttribute', b'isPatchControlPointData', {'retval': {'type': b'Z'}})
-    r(b'MTLAttribute', b'isPatchData', {'retval': {'type': b'Z'}})
-    r(b'MTLCaptureManager', b'isCapturing', {'retval': {'type': b'Z'}})
-    r(b'MTLCaptureManager', b'startCaptureWithDescriptor:error:', {'retval': {'type': b'Z'}, 'arguments': {3: {'type_modifier': b'o'}}})
-    r(b'MTLCaptureManager', b'supportsDestination:', {'retval': {'type': b'Z'}})
-    r(b'MTLCompileOptions', b'fastMathEnabled', {'retval': {'type': b'Z'}})
-    r(b'MTLCompileOptions', b'setFastMathEnabled:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLComputePipelineDescriptor', b'setThreadGroupSizeIsMultipleOfThreadExecutionWidth:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLComputePipelineDescriptor', b'threadGroupSizeIsMultipleOfThreadExecutionWidth', {'retval': {'type': b'Z'}})
-    r(b'MTLDepthStencilDescriptor', b'isDepthWriteEnabled', {'retval': {'type': b'Z'}})
-    r(b'MTLDepthStencilDescriptor', b'setDepthWriteEnabled:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLFunctionConstant', b'required', {'retval': {'type': b'Z'}})
-    r(b'MTLIndirectCommandBufferDescriptor', b'inheritBuffers', {'retval': {'type': b'Z'}})
-    r(b'MTLIndirectCommandBufferDescriptor', b'inheritPipelineState', {'retval': {'type': b'Z'}})
-    r(b'MTLIndirectCommandBufferDescriptor', b'setInheritBuffers:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLIndirectCommandBufferDescriptor', b'setInheritPipelineState:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLPointerType', b'elementIsArgumentBuffer', {'retval': {'type': b'Z'}})
-    r(b'MTLRasterizationRateLayerDescriptor', b'horizontalSampleStorage', {'retval': {'c_array_of_variable_length': True}})
-    r(b'MTLRasterizationRateLayerDescriptor', b'initWithSampleCount:', {'arguments': {2: {'type': b'{_MTLSize=QQQ}'}}})
-    r(b'MTLRasterizationRateLayerDescriptor', b'initWithSampleCount:horizontal:vertical:', {'arguments': {2: {'type': b'{_MTLSize=QQQ}'}, 3: {'type_modifier': b'n', 'c_array_length_in_arg': 2}, 4: {'type_modifier': b'n', 'c_array_length_in_arg': 2}}})
-    r(b'MTLRasterizationRateLayerDescriptor', b'sampleCount', {'retval': {'type': b'{_MTLSize=QQQ}'}})
-    r(b'MTLRasterizationRateLayerDescriptor', b'verticalSampleStorage', {'retval': {'c_array_of_variable_length': True}})
-    r(b'MTLRasterizationRateMapDescriptor', b'rasterizationRateMapDescriptorWithScreenSize:', {'arguments': {2: {'type': b'{_MTLSize=QQQ}'}}})
-    r(b'MTLRasterizationRateMapDescriptor', b'rasterizationRateMapDescriptorWithScreenSize:layer:', {'arguments': {2: {'type': b'{_MTLSize=QQQ}'}}})
-    r(b'MTLRasterizationRateMapDescriptor', b'rasterizationRateMapDescriptorWithScreenSize:layerCount:layers:', {'arguments': {4: {'type_modifier': b'n', 'c_array_length_in_arg': 3}}})
-    r(b'MTLRasterizationRateMapDescriptor', b'screenSize', {'retval': {'type': b'{_MTLSize=QQQ}'}})
-    r(b'MTLRasterizationRateMapDescriptor', b'setScreenSize:', {'arguments': {2: {'type': b'{_MTLSize=QQQ}'}}})
-    r(b'MTLRenderPassColorAttachmentDescriptor', b'clearColor', {'retval': {'type': b'{_MTLClearColor=dddd}'}})
-    r(b'MTLRenderPassColorAttachmentDescriptor', b'setClearColor:', {'arguments': {2: {'type': b'{_MTLClearColor=dddd}'}}})
-    r(b'MTLRenderPassDescriptor', b'getSamplePositions:count:', {'arguments': {2: {'c_array_length_in_arg': 3, 'type': b'^{_MTLSamplePosition=ff}', 'type_modifier': b'o', 'c_array_length_in_result': True}}})
-    r(b'MTLRenderPassDescriptor', b'setSamplePositions:count:', {'arguments': {2: {'type': b'^{_MTLSamplePosition=ff}', 'type_modifier': b'n', 'c_array_length_in_arg': 3}}})
-    r(b'MTLRenderPipelineColorAttachmentDescriptor', b'isBlendingEnabled', {'retval': {'type': b'Z'}})
-    r(b'MTLRenderPipelineColorAttachmentDescriptor', b'setBlendingEnabled:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLRenderPipelineDescriptor', b'isAlphaToCoverageEnabled', {'retval': {'type': b'Z'}})
-    r(b'MTLRenderPipelineDescriptor', b'isAlphaToOneEnabled', {'retval': {'type': b'Z'}})
-    r(b'MTLRenderPipelineDescriptor', b'isRasterizationEnabled', {'retval': {'type': b'Z'}})
-    r(b'MTLRenderPipelineDescriptor', b'isTessellationFactorScaleEnabled', {'retval': {'type': b'Z'}})
-    r(b'MTLRenderPipelineDescriptor', b'setAlphaToCoverageEnabled:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLRenderPipelineDescriptor', b'setAlphaToOneEnabled:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLRenderPipelineDescriptor', b'setRasterizationEnabled:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLRenderPipelineDescriptor', b'setSupportIndirectCommandBuffers:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLRenderPipelineDescriptor', b'setTessellationFactorScaleEnabled:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLRenderPipelineDescriptor', b'supportIndirectCommandBuffers', {'retval': {'type': b'Z'}})
-    r(b'MTLSamplerDescriptor', b'lodAverage', {'retval': {'type': b'Z'}})
-    r(b'MTLSamplerDescriptor', b'normalizedCoordinates', {'retval': {'type': b'Z'}})
-    r(b'MTLSamplerDescriptor', b'setLodAverage:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLSamplerDescriptor', b'setNormalizedCoordinates:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLSamplerDescriptor', b'setSupportArgumentBuffers:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLSamplerDescriptor', b'supportArgumentBuffers', {'retval': {'type': b'Z'}})
-    r(b'MTLTextureDescriptor', b'allowGPUOptimizedContents', {'retval': {'type': b'Z'}})
-    r(b'MTLTextureDescriptor', b'setAllowGPUOptimizedContents:', {'arguments': {2: {'type': b'Z'}}})
-    r(b'MTLTextureDescriptor', b'setSwizzle:', {'arguments': {2: {'type': b'{_MTLTextureSwizzleChannels=CCCC}'}}})
-    r(b'MTLTextureDescriptor', b'swizzle', {'retval': {'type': b'{_MTLTextureSwizzleChannels=CCCC}'}})
-    r(b'MTLTextureDescriptor', b'texture2DDescriptorWithPixelFormat:width:height:mipmapped:', {'arguments': {5: {'type': b'Z'}}})
-    r(b'MTLTextureDescriptor', b'textureCubeDescriptorWithPixelFormat:size:mipmapped:', {'arguments': {4: {'type': b'Z'}}})
-    r(b'MTLTextureReferenceType', b'isDepthTexture', {'retval': {'type': b'Z'}})
-    r(b'MTLVertexAttribute', b'isActive', {'retval': {'type': b'Z'}})
-    r(b'MTLVertexAttribute', b'isPatchControlPointData', {'retval': {'type': b'Z'}})
-    r(b'MTLVertexAttribute', b'isPatchData', {'retval': {'type': b'Z'}})
-    r(b'NSObject', b'GPUEndTime', {'required': True, 'retval': {'type': b'd'}})
-    r(b'NSObject', b'GPUStartTime', {'required': True, 'retval': {'type': b'd'}})
-    r(b'NSObject', b'addCompletedHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'addDebugMarker:range:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'addPresentedHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'addScheduledHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'alignment', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'allocatedSize', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'allowGPUOptimizedContents', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'areBarycentricCoordsSupported', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'areProgrammableSamplePositionsSupported', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'areRasterOrderGroupsSupported', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'argumentBuffersSupport', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'arrayLength', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'beginScope', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'blitCommandEncoder', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'buffer', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'bufferBytesPerRow', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'bufferOffset', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'commandBuffer', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'commandBufferWithUnretainedReferences', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'commandQueue', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'commit', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'computeCommandEncoder', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'computeCommandEncoderWithDispatchType:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'constantDataAtIndex:', {'required': True, 'retval': {'type': b'^v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'contents', {'required': True, 'retval': {'type': b'^v', 'c_array_of_variable_length': True}})
-    r(b'NSObject', b'copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'Q'}, 6: {'type': b'{_MTLSize=QQQ}'}, 7: {'type': b'@'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}, 10: {'type': b'{_MTLOrigin=QQQ}'}}})
-    r(b'NSObject', b'copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:options:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'Q'}, 6: {'type': b'{_MTLSize=QQQ}'}, 7: {'type': b'@'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}, 10: {'type': b'{_MTLOrigin=QQQ}'}, 11: {'type': b'Q'}}})
-    r(b'NSObject', b'copyFromBuffer:sourceOffset:toBuffer:destinationOffset:size:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'@'}, 5: {'type': b'Q'}, 6: {'type': b'Q'}}})
-    r(b'NSObject', b'copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'{_MTLOrigin=QQQ}'}, 6: {'type': b'{_MTLSize=QQQ}'}, 7: {'type': b'@'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}, 10: {'type': b'Q'}}})
-    r(b'NSObject', b'copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:options:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'{_MTLOrigin=QQQ}'}, 6: {'type': b'{_MTLSize=QQQ}'}, 7: {'type': b'@'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}, 10: {'type': b'Q'}, 11: {'type': b'Q'}}})
-    r(b'NSObject', b'copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'{_MTLOrigin=QQQ}'}, 6: {'type': b'{_MTLSize=QQQ}'}, 7: {'type': b'@'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}, 10: {'type': b'{_MTLOrigin=QQQ}'}}})
-    r(b'NSObject', b'copyFromTexture:sourceSlice:sourceLevel:toTexture:destinationSlice:destinationLevel:sliceCount:levelCount:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'Q'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}}})
-    r(b'NSObject', b'copyFromTexture:toTexture:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}}})
-    r(b'NSObject', b'copyIndirectCommandBuffer:sourceRange:destination:destinationIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'{_NSRange=QQ}'}, 4: {'type': b'@'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'copyParameterDataToBuffer:offset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'counterSets', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'counters', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'cpuCacheMode', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'currentAllocatedSize', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'depth', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'device', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'didModifyRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'dispatchThreadgroups:threadsPerThreadgroup:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_MTLSize=QQQ}'}, 3: {'type': b'{_MTLSize=QQQ}'}}})
-    r(b'NSObject', b'dispatchThreadgroupsWithIndirectBuffer:indirectBufferOffset:threadsPerThreadgroup:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'{_MTLSize=QQQ}'}}})
-    r(b'NSObject', b'dispatchThreads:threadsPerThreadgroup:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_MTLSize=QQQ}'}, 3: {'type': b'{_MTLSize=QQQ}'}}})
-    r(b'NSObject', b'dispatchType', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'drawIndexedPatches:patchIndexBuffer:patchIndexBufferOffset:controlPointIndexBuffer:controlPointIndexBufferOffset:indirectBuffer:indirectBufferOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'@'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'@'}, 8: {'type': b'Q'}}})
-    r(b'NSObject', b'drawIndexedPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:controlPointIndexBuffer:controlPointIndexBufferOffset:instanceCount:baseInstance:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'@'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}, 10: {'type': b'Q'}}})
-    r(b'NSObject', b'drawIndexedPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:controlPointIndexBuffer:controlPointIndexBufferOffset:instanceCount:baseInstance:tessellationFactorBuffer:tessellationFactorBufferOffset:tessellationFactorBufferInstanceStride:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'@'}, 8: {'type': b'Q'}, 9: {'type': b'Q'}, 10: {'type': b'Q'}, 11: {'type': b'@'}, 12: {'type': b'Q'}, 13: {'type': b'Q'}}})
-    r(b'NSObject', b'drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}}})
-    r(b'NSObject', b'drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'Q'}}})
-    r(b'NSObject', b'drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:baseVertex:baseInstance:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'Q'}, 8: {'type': b'q'}, 9: {'type': b'Q'}}})
-    r(b'NSObject', b'drawIndexedPrimitives:indexType:indexBuffer:indexBufferOffset:indirectBuffer:indirectBufferOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'@'}, 5: {'type': b'Q'}, 6: {'type': b'@'}, 7: {'type': b'Q'}}})
-    r(b'NSObject', b'drawPatches:patchIndexBuffer:patchIndexBufferOffset:indirectBuffer:indirectBufferOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'@'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}}})
-    r(b'NSObject', b'drawPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:instanceCount:baseInstance:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'Q'}, 8: {'type': b'Q'}}})
-    r(b'NSObject', b'drawPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:instanceCount:baseInstance:tessellationFactorBuffer:tessellationFactorBufferOffset:tessellationFactorBufferInstanceStride:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'@'}, 6: {'type': b'Q'}, 7: {'type': b'Q'}, 8: {'type': b'Q'}, 9: {'type': b'@'}, 10: {'type': b'Q'}, 11: {'type': b'Q'}}})
-    r(b'NSObject', b'drawPrimitives:indirectBuffer:indirectBufferOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'@'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'drawPrimitives:vertexStart:vertexCount:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'drawPrimitives:vertexStart:vertexCount:instanceCount:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'drawPrimitives:vertexStart:vertexCount:instanceCount:baseInstance:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'Q'}, 6: {'type': b'Q'}}})
-    r(b'NSObject', b'drawableID', {'required': True, 'retval': {'type': 'Q'}})
-    r(b'NSObject', b'encodeSignalEvent:value:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'encodeWaitForEvent:value:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'encodedLength', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'endEncoding', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'endScope', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'enqueue', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'error', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'executeCommandsInBuffer:indirectBuffer:indirectBufferOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'executeCommandsInBuffer:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'fillBuffer:range:value:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'{_NSRange=QQ}'}, 4: {'type': 'z'}}})
-    r(b'NSObject', b'functionConstantsDictionary', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'functionNames', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'functionType', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'generateMipmapsForTexture:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'getBytes:bytesPerRow:bytesPerImage:fromRegion:mipmapLevel:slice:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^v', 'type_modifier': b'o', 'c_array_of_variable_length': True}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}'}, 6: {'type': b'Q'}, 7: {'type': b'Q'}}})
-    r(b'NSObject', b'getBytes:bytesPerRow:fromRegion:mipmapLevel:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^v', 'type_modifier': b'o', 'c_array_of_variable_length': True}, 3: {'type': b'Q'}, 4: {'type': b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'getDefaultSamplePositions:count:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^{_MTLSamplePosition=ff}', 'type_modifier': b'o', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'hasUnifiedMemory', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'hazardTrackingMode', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'heap', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'heapBufferSizeAndAlignWithLength:options:', {'required': True, 'retval': {'type': b'{_MTLSizeAndAlign=QQ}'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'heapOffset', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'heapTextureSizeAndAlignWithDescriptor:', {'required': True, 'retval': {'type': b'{_MTLSizeAndAlign=QQ}'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'height', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'indirectRenderCommandAtIndex:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'insertDebugCaptureBoundary', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'insertDebugSignpost:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'iosurface', {'required': True, 'retval': {'type': b'^{__IOSurface=}'}})
-    r(b'NSObject', b'iosurfacePlane', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'isAliasable', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'isDepth24Stencil8PixelFormatSupported', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'isFramebufferOnly', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'isHeadless', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'isLowPower', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'isRemovable', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'isShareable', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'kernelEndTime', {'required': True, 'retval': {'type': b'd'}})
-    r(b'NSObject', b'kernelStartTime', {'required': True, 'retval': {'type': b'd'}})
-    r(b'NSObject', b'label', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'layerCount', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'length', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'location', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'locationNumber', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'makeAliasable', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'mapPhysicalToScreenCoordinates:forLayer:', {'required': True, 'retval': {'type': b'{_MTLCoordinate2D=ff}'}, 'arguments': {2: {'type': b'{_MTLCoordinate2D=ff}'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'mapScreenToPhysicalCoordinates:forLayer:', {'required': True, 'retval': {'type': b'{_MTLCoordinate2D=ff}'}, 'arguments': {2: {'type': b'{_MTLCoordinate2D=ff}'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'maxArgumentBufferSamplerCount', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'maxAvailableSizeWithAlignment:', {'required': True, 'retval': {'type': b'Q'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'maxBufferLength', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'maxThreadgroupMemoryLength', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'maxThreadsPerThreadgroup', {'required': True, 'retval': {'type': b'{_MTLSize=QQQ}'}})
-    r(b'NSObject', b'maxTotalThreadsPerThreadgroup', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'maxTransferRate', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'memoryBarrierWithResources:count:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'memoryBarrierWithResources:count:afterStages:beforeStages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'memoryBarrierWithScope:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'memoryBarrierWithScope:afterStages:beforeStages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'minimumLinearTextureAlignmentForPixelFormat:', {'required': True, 'retval': {'type': b'Q'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'minimumTextureBufferAlignmentForPixelFormat:', {'required': True, 'retval': {'type': b'Q'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'mipmapLevelCount', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'name', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newArgumentEncoderForBufferAtIndex:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'newArgumentEncoderWithArguments:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newArgumentEncoderWithBufferIndex:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'newArgumentEncoderWithBufferIndex:reflection:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'^@'}}})
-    r(b'NSObject', b'newBufferWithBytes:length:options:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'^v', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'newBufferWithBytesNoCopy:length:options:deallocator:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'^v', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'n^v'}, 2: {'type': b'Q'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newBufferWithLength:options:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'newBufferWithLength:options:offset:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'newCommandQueue', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newCommandQueueWithMaxCommandBufferCount:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'newComputePipelineStateWithDescriptor:options:completionHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newComputePipelineStateWithDescriptor:options:reflection:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'^@'}, 5: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newComputePipelineStateWithFunction:completionHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newComputePipelineStateWithFunction:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newComputePipelineStateWithFunction:options:completionHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newComputePipelineStateWithFunction:options:reflection:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'^@'}, 5: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newCounterSampleBufferWithDescriptor:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newDefaultLibrary', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newDefaultLibraryWithBundle:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newDepthStencilStateWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newEvent', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newFence', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newFunctionWithName:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newFunctionWithName:constantValues:completionHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newFunctionWithName:constantValues:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newHeapWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newIndirectCommandBufferWithDescriptor:maxCommandCount:options:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'newLibraryWithData:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newLibraryWithFile:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newLibraryWithSource:options:completionHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newLibraryWithSource:options:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'@'}, 4: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newLibraryWithURL:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newRasterizationRateMapWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newRemoteBufferViewForDevice:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newRemoteTextureViewForDevice:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newRenderPipelineStateWithDescriptor:completionHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newRenderPipelineStateWithDescriptor:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newRenderPipelineStateWithDescriptor:options:completionHandler:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'@'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'newRenderPipelineStateWithDescriptor:options:reflection:error:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'^@'}, 5: {'type': b'^@', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'newSamplerStateWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newSharedEvent', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newSharedEventHandle', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newSharedEventWithHandle:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newSharedTextureHandle', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'newSharedTextureWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newSharedTextureWithHandle:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newTextureViewWithPixelFormat:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'newTextureViewWithPixelFormat:textureType:levels:slices:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'{_NSRange=QQ}'}, 5: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'newTextureViewWithPixelFormat:textureType:levels:slices:swizzle:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}, 4: {'type': b'{_NSRange=QQ}'}, 5: {'type': b'{_NSRange=QQ}'}, 6: {'type': b'{_MTLTextureSwizzleChannels=CCCC}'}}})
-    r(b'NSObject', b'newTextureWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'newTextureWithDescriptor:iosurface:plane:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'^{__IOSurface=}'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'newTextureWithDescriptor:offset:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'newTextureWithDescriptor:offset:bytesPerRow:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'notifyListener:atValue:block:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}, 2: {'type': b'Q'}}}, 'type': b'@?'}}})
-    r(b'NSObject', b'optimizeContentsForCPUAccess:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'optimizeContentsForCPUAccess:slice:level:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'optimizeContentsForGPUAccess:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'optimizeContentsForGPUAccess:slice:level:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'optimizeIndirectCommandBuffer:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'parallelRenderCommandEncoderWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'parameterBufferSizeAndAlign', {'required': True, 'retval': {'type': b'{_MTLSizeAndAlign=QQ}'}})
-    r(b'NSObject', b'parentRelativeLevel', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'parentRelativeSlice', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'parentTexture', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'patchControlPointCount', {'required': True, 'retval': {'type': b'q'}})
-    r(b'NSObject', b'patchType', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'peerCount', {'required': True, 'retval': {'type': b'I'}})
-    r(b'NSObject', b'peerGroupID', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'peerIndex', {'required': True, 'retval': {'type': b'I'}})
-    r(b'NSObject', b'physicalGranularity', {'required': True, 'retval': {'type': b'{_MTLSize=QQQ}'}})
-    r(b'NSObject', b'physicalSizeForLayer:', {'required': True, 'retval': {'type': b'{_MTLSize=QQQ}'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'pixelFormat', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'popDebugGroup', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'present', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'presentAfterMinimumDuration:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': 'd'}}})
-    r(b'NSObject', b'presentAtTime:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'd'}}})
-    r(b'NSObject', b'presentDrawable:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'presentDrawable:afterMinimumDuration:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'd'}}})
-    r(b'NSObject', b'presentDrawable:atTime:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'd'}}})
-    r(b'NSObject', b'presentedTime', {'required': True, 'retval': {'type': 'd'}})
-    r(b'NSObject', b'pushDebugGroup:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'readWriteTextureSupport', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'recommendedMaxWorkingSetSize', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'registryID', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'remoteStorageBuffer', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'remoteStorageTexture', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'removeAllDebugMarkers', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'renderCommandEncoder', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'renderCommandEncoderWithDescriptor:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'replaceRegion:mipmapLevel:slice:withBytes:bytesPerRow:bytesPerImage:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'^v', 'type_modifier': b'n', 'c_array_of_variable_length': True}, 6: {'type': b'Q'}, 7: {'type': b'Q'}}})
-    r(b'NSObject', b'replaceRegion:mipmapLevel:withBytes:bytesPerRow:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}'}, 3: {'type': b'Q'}, 4: {'type': b'^v', 'type_modifier': b'n', 'c_array_of_variable_length': True}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'reset', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'resetCommandsInBuffer:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'resetWithRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'resolveCounterRange:', {'required': True, 'retval': {'type': b'@'}, 'arguments': {2: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'resolveCounters:inRange:destinationBuffer:destinationOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'{_NSRange=QQ}'}, 4: {'type': b'@'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'resourceOptions', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'retainedReferences', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'rootResource', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'sampleCount', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'sampleCountersInBuffer:atSampleIndex:withBarrier:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Z'}}})
-    r(b'NSObject', b'sampleTimestamps:gpuTimestamp:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^Q', 'type_modifier': b'o'}, 3: {'type': b'^Q', 'type_modifier': b'o'}}})
-    r(b'NSObject', b'screenSize', {'required': True, 'retval': {'type': b'{_MTLSize=QQQ}'}})
-    r(b'NSObject', b'setArgumentBuffer:offset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setArgumentBuffer:startOffset:arrayElement:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setBlendColorRed:green:blue:alpha:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'f'}, 3: {'type': b'f'}, 4: {'type': b'f'}, 5: {'type': b'f'}}})
-    r(b'NSObject', b'setBuffer:offset:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setBufferOffset:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setBuffers:offsets:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 4}, 3: {'type': b'^Q', 'type_modifier': b'n', 'c_array_length_in_arg': 4}, 4: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setBytes:length:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^v', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setColorStoreAction:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setColorStoreActionOptions:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setComputePipelineState:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'setCullMode:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setDepthBias:slopeScale:clamp:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'f'}, 3: {'type': b'f'}, 4: {'type': b'f'}}})
-    r(b'NSObject', b'setDepthClipMode:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setDepthStencilState:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'setDepthStoreAction:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setDepthStoreActionOptions:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setFragmentBuffer:offset:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setFragmentBufferOffset:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setFragmentBuffers:offsets:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 4}, 3: {'type': b'^Q', 'type_modifier': b'n', 'c_array_length_in_arg': 4}, 4: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setFragmentBytes:length:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^v', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setFragmentSamplerState:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setFragmentSamplerState:lodMinClamp:lodMaxClamp:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'f'}, 4: {'type': b'f'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'setFragmentSamplerStates:lodMinClamps:lodMaxClamps:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 3: {'type': b'^f', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 4: {'type': b'^f', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 5: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setFragmentSamplerStates:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setFragmentTexture:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setFragmentTextures:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setFrontFacingWinding:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setIndirectCommandBuffer:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setIndirectCommandBuffers:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setLabel:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'setPurgeableState:', {'required': True, 'retval': {'type': b'Q'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setRenderPipelineState:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'setRenderPipelineState:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setRenderPipelineStates:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setSamplerState:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setSamplerState:lodMinClamp:lodMaxClamp:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'f'}, 4: {'type': b'f'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'setSamplerStates:lodMinClamps:lodMaxClamps:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 3: {'type': b'^f', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 4: {'type': b'^f', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 5: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setSamplerStates:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setScissorRect:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_MTLScissorRect=QQQQ}'}}})
-    r(b'NSObject', b'setScissorRects:count:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^{_MTLScissorRect=QQQQ}', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setSignaledValue:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setStageInRegion:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}'}}})
-    r(b'NSObject', b'setStageInRegionWithIndirectBuffer:indirectBufferOffset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setStencilFrontReferenceValue:backReferenceValue:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'I'}, 3: {'type': b'I'}}})
-    r(b'NSObject', b'setStencilReferenceValue:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'I'}}})
-    r(b'NSObject', b'setStencilStoreAction:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setStencilStoreActionOptions:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setTessellationFactorBuffer:offset:instanceStride:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setTessellationFactorScale:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'f'}}})
-    r(b'NSObject', b'setTexture:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setTextures:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setThreadgroupMemoryLength:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setTriangleFillMode:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'setVertexAmplificationCount:viewMapping:', {'arguments': {2: {'type': 'Q'}, 3: {'type': '{_MTLVertexAmplificationViewMapping=II}'}}})
-    r(b'NSObject', b'setVertexAmplificationCount:viewMappings:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'^{_MTLVertexAmplificationViewMapping=II}'}}})
-    r(b'NSObject', b'setVertexBuffer:offset:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setVertexBufferOffset:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setVertexBuffers:offsets:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 4}, 3: {'type': b'^Q', 'type_modifier': b'n', 'c_array_length_in_arg': 4}, 4: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setVertexBytes:length:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^v', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'setVertexSamplerState:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setVertexSamplerState:lodMinClamp:lodMaxClamp:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'f'}, 4: {'type': b'f'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'setVertexSamplerStates:lodMinClamps:lodMaxClamps:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 3: {'type': b'^f', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 4: {'type': b'^f', 'type_modifier': b'n', 'c_array_length_in_arg': 5}, 5: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setVertexSamplerStates:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setVertexTexture:atIndex:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setVertexTextures:withRange:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'{_NSRange=QQ}'}}})
-    r(b'NSObject', b'setViewport:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'{_MTLViewport=dddddd}'}}})
-    r(b'NSObject', b'setViewports:count:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^{_MTLViewport=dddddd}', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'setVisibilityResultMode:offset:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'Q'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'signaledValue', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'size', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'stageInputAttributes', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'staticThreadgroupMemoryLength', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'status', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'storageMode', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'supportIndirectCommandBuffers', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'supportsFamily:', {'required': True, 'retval': {'type': b'Z'}, 'arguments': {2: {'type': b'q'}}})
-    r(b'NSObject', b'supportsFeatureSet:', {'required': True, 'retval': {'type': b'Z'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'supportsRasterizationRateMapWithLayerCount:', {'required': True, 'retval': {'type': 'Z'}, 'arguments': {2: {'type': 'Q'}}})
-    r(b'NSObject', b'supportsShaderBarycentricCoordinates', {'required': True, 'retval': {'type': b'Z'}})
-    r(b'NSObject', b'supportsTextureSampleCount:', {'required': True, 'retval': {'type': b'Z'}, 'arguments': {2: {'type': b'Q'}}})
-    r(b'NSObject', b'supportsVertexAmplificationCount:', {'required': True, 'retval': {'type': 'Z'}, 'arguments': {2: {'type': 'Q'}}})
-    r(b'NSObject', b'swizzle', {'required': True, 'retval': {'type': b'{_MTLTextureSwizzleChannels=CCCC}'}})
-    r(b'NSObject', b'synchronizeResource:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'synchronizeTexture:slice:level:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'textureBarrier', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'textureType', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'threadExecutionWidth', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'type', {'required': True, 'retval': {'type': b'q'}})
-    r(b'NSObject', b'updateFence:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'updateFence:afterStages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'usage', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'useHeap:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'useHeap:stages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'useHeaps:count:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'useHeaps:count:stages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'useResource:usage:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'useResource:usage:stages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'useResources:count:usage:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@', 'type_modifier': b'n', 'c_array_length_in_arg': 3}, 3: {'type': b'Q'}, 4: {'type': b'Q'}}})
-    r(b'NSObject', b'useResources:count:usage:stages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'^@'}, 3: {'type': b'Q'}, 4: {'type': b'Q'}, 5: {'type': b'Q'}}})
-    r(b'NSObject', b'usedSize', {'required': True, 'retval': {'type': b'Q'}})
-    r(b'NSObject', b'vertexAttributes', {'required': True, 'retval': {'type': b'@'}})
-    r(b'NSObject', b'waitForFence:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}}})
-    r(b'NSObject', b'waitForFence:beforeStages:', {'required': True, 'retval': {'type': b'v'}, 'arguments': {2: {'type': b'@'}, 3: {'type': b'Q'}}})
-    r(b'NSObject', b'waitUntilCompleted', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'waitUntilScheduled', {'required': True, 'retval': {'type': b'v'}})
-    r(b'NSObject', b'width', {'required': True, 'retval': {'type': b'Q'}})
+    r(b"MTLArgument", b"isActive", {"retval": {"type": b"Z"}})
+    r(b"MTLArgument", b"isDepthTexture", {"retval": {"type": b"Z"}})
+    r(b"MTLAttribute", b"isActive", {"retval": {"type": b"Z"}})
+    r(b"MTLAttribute", b"isPatchControlPointData", {"retval": {"type": b"Z"}})
+    r(b"MTLAttribute", b"isPatchData", {"retval": {"type": b"Z"}})
+    r(b"MTLCaptureManager", b"isCapturing", {"retval": {"type": b"Z"}})
+    r(
+        b"MTLCaptureManager",
+        b"startCaptureWithDescriptor:error:",
+        {"retval": {"type": b"Z"}, "arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(b"MTLCaptureManager", b"supportsDestination:", {"retval": {"type": b"Z"}})
+    r(b"MTLCompileOptions", b"fastMathEnabled", {"retval": {"type": b"Z"}})
+    r(b"MTLCompileOptions", b"setFastMathEnabled:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"MTLComputePipelineDescriptor",
+        b"setThreadGroupSizeIsMultipleOfThreadExecutionWidth:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLComputePipelineDescriptor",
+        b"threadGroupSizeIsMultipleOfThreadExecutionWidth",
+        {"retval": {"type": b"Z"}},
+    )
+    r(b"MTLDepthStencilDescriptor", b"isDepthWriteEnabled", {"retval": {"type": b"Z"}})
+    r(
+        b"MTLDepthStencilDescriptor",
+        b"setDepthWriteEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(b"MTLFunctionConstant", b"required", {"retval": {"type": b"Z"}})
+    r(
+        b"MTLIndirectCommandBufferDescriptor",
+        b"inheritBuffers",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLIndirectCommandBufferDescriptor",
+        b"inheritPipelineState",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLIndirectCommandBufferDescriptor",
+        b"setInheritBuffers:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLIndirectCommandBufferDescriptor",
+        b"setInheritPipelineState:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(b"MTLPointerType", b"elementIsArgumentBuffer", {"retval": {"type": b"Z"}})
+    r(
+        b"MTLRasterizationRateLayerDescriptor",
+        b"horizontalSampleStorage",
+        {"retval": {"c_array_of_variable_length": True}},
+    )
+    r(
+        b"MTLRasterizationRateLayerDescriptor",
+        b"initWithSampleCount:",
+        {"arguments": {2: {"type": b"{_MTLSize=QQQ}"}}},
+    )
+    r(
+        b"MTLRasterizationRateLayerDescriptor",
+        b"initWithSampleCount:horizontal:vertical:",
+        {
+            "arguments": {
+                2: {"type": b"{_MTLSize=QQQ}"},
+                3: {"type_modifier": b"n", "c_array_length_in_arg": 2},
+                4: {"type_modifier": b"n", "c_array_length_in_arg": 2},
+            }
+        },
+    )
+    r(
+        b"MTLRasterizationRateLayerDescriptor",
+        b"sampleCount",
+        {"retval": {"type": b"{_MTLSize=QQQ}"}},
+    )
+    r(
+        b"MTLRasterizationRateLayerDescriptor",
+        b"verticalSampleStorage",
+        {"retval": {"c_array_of_variable_length": True}},
+    )
+    r(
+        b"MTLRasterizationRateMapDescriptor",
+        b"rasterizationRateMapDescriptorWithScreenSize:",
+        {"arguments": {2: {"type": b"{_MTLSize=QQQ}"}}},
+    )
+    r(
+        b"MTLRasterizationRateMapDescriptor",
+        b"rasterizationRateMapDescriptorWithScreenSize:layer:",
+        {"arguments": {2: {"type": b"{_MTLSize=QQQ}"}}},
+    )
+    r(
+        b"MTLRasterizationRateMapDescriptor",
+        b"rasterizationRateMapDescriptorWithScreenSize:layerCount:layers:",
+        {"arguments": {4: {"type_modifier": b"n", "c_array_length_in_arg": 3}}},
+    )
+    r(
+        b"MTLRasterizationRateMapDescriptor",
+        b"screenSize",
+        {"retval": {"type": b"{_MTLSize=QQQ}"}},
+    )
+    r(
+        b"MTLRasterizationRateMapDescriptor",
+        b"setScreenSize:",
+        {"arguments": {2: {"type": b"{_MTLSize=QQQ}"}}},
+    )
+    r(
+        b"MTLRenderPassColorAttachmentDescriptor",
+        b"clearColor",
+        {"retval": {"type": b"{_MTLClearColor=dddd}"}},
+    )
+    r(
+        b"MTLRenderPassColorAttachmentDescriptor",
+        b"setClearColor:",
+        {"arguments": {2: {"type": b"{_MTLClearColor=dddd}"}}},
+    )
+    r(
+        b"MTLRenderPassDescriptor",
+        b"getSamplePositions:count:",
+        {
+            "arguments": {
+                2: {
+                    "c_array_length_in_arg": 3,
+                    "type": b"^{_MTLSamplePosition=ff}",
+                    "type_modifier": b"o",
+                    "c_array_length_in_result": True,
+                }
+            }
+        },
+    )
+    r(
+        b"MTLRenderPassDescriptor",
+        b"setSamplePositions:count:",
+        {
+            "arguments": {
+                2: {
+                    "type": b"^{_MTLSamplePosition=ff}",
+                    "type_modifier": b"n",
+                    "c_array_length_in_arg": 3,
+                }
+            }
+        },
+    )
+    r(
+        b"MTLRenderPipelineColorAttachmentDescriptor",
+        b"isBlendingEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLRenderPipelineColorAttachmentDescriptor",
+        b"setBlendingEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"isAlphaToCoverageEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"isAlphaToOneEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"isRasterizationEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"isTessellationFactorScaleEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"setAlphaToCoverageEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"setAlphaToOneEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"setRasterizationEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"setSupportIndirectCommandBuffers:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"setTessellationFactorScaleEnabled:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLRenderPipelineDescriptor",
+        b"supportIndirectCommandBuffers",
+        {"retval": {"type": b"Z"}},
+    )
+    r(b"MTLSamplerDescriptor", b"lodAverage", {"retval": {"type": b"Z"}})
+    r(b"MTLSamplerDescriptor", b"normalizedCoordinates", {"retval": {"type": b"Z"}})
+    r(b"MTLSamplerDescriptor", b"setLodAverage:", {"arguments": {2: {"type": b"Z"}}})
+    r(
+        b"MTLSamplerDescriptor",
+        b"setNormalizedCoordinates:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLSamplerDescriptor",
+        b"setSupportArgumentBuffers:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(b"MTLSamplerDescriptor", b"supportArgumentBuffers", {"retval": {"type": b"Z"}})
+    r(b"MTLTextureDescriptor", b"allowGPUOptimizedContents", {"retval": {"type": b"Z"}})
+    r(
+        b"MTLTextureDescriptor",
+        b"setAllowGPUOptimizedContents:",
+        {"arguments": {2: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLTextureDescriptor",
+        b"setSwizzle:",
+        {"arguments": {2: {"type": b"{_MTLTextureSwizzleChannels=CCCC}"}}},
+    )
+    r(
+        b"MTLTextureDescriptor",
+        b"swizzle",
+        {"retval": {"type": b"{_MTLTextureSwizzleChannels=CCCC}"}},
+    )
+    r(
+        b"MTLTextureDescriptor",
+        b"texture2DDescriptorWithPixelFormat:width:height:mipmapped:",
+        {"arguments": {5: {"type": b"Z"}}},
+    )
+    r(
+        b"MTLTextureDescriptor",
+        b"textureCubeDescriptorWithPixelFormat:size:mipmapped:",
+        {"arguments": {4: {"type": b"Z"}}},
+    )
+    r(b"MTLTextureReferenceType", b"isDepthTexture", {"retval": {"type": b"Z"}})
+    r(b"MTLVertexAttribute", b"isActive", {"retval": {"type": b"Z"}})
+    r(b"MTLVertexAttribute", b"isPatchControlPointData", {"retval": {"type": b"Z"}})
+    r(b"MTLVertexAttribute", b"isPatchData", {"retval": {"type": b"Z"}})
+    r(b"NSObject", b"GPUEndTime", {"required": True, "retval": {"type": b"d"}})
+    r(b"NSObject", b"GPUStartTime", {"required": True, "retval": {"type": b"d"}})
+    r(
+        b"NSObject",
+        b"addCompletedHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    },
+                    "type": b"@?",
+                }
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"addDebugMarker:range:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"{_NSRange=QQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"addPresentedHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    },
+                    "type": b"@?",
+                }
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"addScheduledHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    },
+                    "type": b"@?",
+                }
+            },
+        },
+    )
+    r(b"NSObject", b"alignment", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"allocatedSize", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"allowGPUOptimizedContents",
+        {"required": True, "retval": {"type": b"Z"}},
+    )
+    r(
+        b"NSObject",
+        b"areBarycentricCoordsSupported",
+        {"required": True, "retval": {"type": b"Z"}},
+    )
+    r(
+        b"NSObject",
+        b"areProgrammableSamplePositionsSupported",
+        {"required": True, "retval": {"type": b"Z"}},
+    )
+    r(
+        b"NSObject",
+        b"areRasterOrderGroupsSupported",
+        {"required": True, "retval": {"type": b"Z"}},
+    )
+    r(
+        b"NSObject",
+        b"argumentBuffersSupport",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(b"NSObject", b"arrayLength", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"beginScope", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"blitCommandEncoder", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"buffer", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"bufferBytesPerRow", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"bufferOffset", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"commandBuffer", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"commandBufferWithUnretainedReferences",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(b"NSObject", b"commandQueue", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"commit", {"required": True, "retval": {"type": b"v"}})
+    r(
+        b"NSObject",
+        b"computeCommandEncoder",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"computeCommandEncoderWithDispatchType:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"constantDataAtIndex:",
+        {"required": True, "retval": {"type": b"^v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"contents",
+        {
+            "required": True,
+            "retval": {"type": b"^v", "c_array_of_variable_length": True},
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"Q"},
+                6: {"type": b"{_MTLSize=QQQ}"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+                10: {"type": b"{_MTLOrigin=QQQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:options:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"Q"},
+                6: {"type": b"{_MTLSize=QQQ}"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+                10: {"type": b"{_MTLOrigin=QQQ}"},
+                11: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromBuffer:sourceOffset:toBuffer:destinationOffset:size:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"@"},
+                5: {"type": b"Q"},
+                6: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"{_MTLOrigin=QQQ}"},
+                6: {"type": b"{_MTLSize=QQQ}"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+                10: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:options:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"{_MTLOrigin=QQQ}"},
+                6: {"type": b"{_MTLSize=QQQ}"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+                10: {"type": b"Q"},
+                11: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"{_MTLOrigin=QQQ}"},
+                6: {"type": b"{_MTLSize=QQQ}"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+                10: {"type": b"{_MTLOrigin=QQQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromTexture:sourceSlice:sourceLevel:toTexture:destinationSlice:destinationLevel:sliceCount:levelCount:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"Q"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyFromTexture:toTexture:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyIndirectCommandBuffer:sourceRange:destination:destinationIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"{_NSRange=QQ}"},
+                4: {"type": b"@"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"copyParameterDataToBuffer:offset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"counterSets", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"counters", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"cpuCacheMode", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"currentAllocatedSize",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(b"NSObject", b"depth", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"device", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"didModifyRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"{_NSRange=QQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"dispatchThreadgroups:threadsPerThreadgroup:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"{_MTLSize=QQQ}"},
+                3: {"type": b"{_MTLSize=QQQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"dispatchThreadgroupsWithIndirectBuffer:indirectBufferOffset:threadsPerThreadgroup:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"{_MTLSize=QQQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"dispatchThreads:threadsPerThreadgroup:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"{_MTLSize=QQQ}"},
+                3: {"type": b"{_MTLSize=QQQ}"},
+            },
+        },
+    )
+    r(b"NSObject", b"dispatchType", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"drawIndexedPatches:patchIndexBuffer:patchIndexBufferOffset:controlPointIndexBuffer:controlPointIndexBufferOffset:indirectBuffer:indirectBufferOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"@"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawIndexedPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:controlPointIndexBuffer:controlPointIndexBufferOffset:instanceCount:baseInstance:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+                10: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawIndexedPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:controlPointIndexBuffer:controlPointIndexBufferOffset:instanceCount:baseInstance:tessellationFactorBuffer:tessellationFactorBufferOffset:tessellationFactorBufferInstanceStride:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"@"},
+                8: {"type": b"Q"},
+                9: {"type": b"Q"},
+                10: {"type": b"Q"},
+                11: {"type": b"@"},
+                12: {"type": b"Q"},
+                13: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:baseVertex:baseInstance:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"Q"},
+                8: {"type": b"q"},
+                9: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawIndexedPrimitives:indexType:indexBuffer:indexBufferOffset:indirectBuffer:indirectBufferOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"@"},
+                5: {"type": b"Q"},
+                6: {"type": b"@"},
+                7: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawPatches:patchIndexBuffer:patchIndexBufferOffset:indirectBuffer:indirectBufferOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"@"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:instanceCount:baseInstance:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"Q"},
+                8: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:instanceCount:baseInstance:tessellationFactorBuffer:tessellationFactorBufferOffset:tessellationFactorBufferInstanceStride:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"@"},
+                6: {"type": b"Q"},
+                7: {"type": b"Q"},
+                8: {"type": b"Q"},
+                9: {"type": b"@"},
+                10: {"type": b"Q"},
+                11: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawPrimitives:indirectBuffer:indirectBufferOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"@"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawPrimitives:vertexStart:vertexCount:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawPrimitives:vertexStart:vertexCount:instanceCount:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"drawPrimitives:vertexStart:vertexCount:instanceCount:baseInstance:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"Q"},
+                6: {"type": b"Q"},
+            },
+        },
+    )
+    r(b"NSObject", b"drawableID", {"required": True, "retval": {"type": "Q"}})
+    r(
+        b"NSObject",
+        b"encodeSignalEvent:value:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"encodeWaitForEvent:value:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"encodedLength", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"endEncoding", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"endScope", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"enqueue", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"error", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"executeCommandsInBuffer:indirectBuffer:indirectBufferOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"@"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"executeCommandsInBuffer:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"{_NSRange=QQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"fillBuffer:range:value:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"{_NSRange=QQ}"},
+                4: {"type": "z"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"functionConstantsDictionary",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(b"NSObject", b"functionNames", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"functionType", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"generateMipmapsForTexture:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"getBytes:bytesPerRow:bytesPerImage:fromRegion:mipmapLevel:slice:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "type": b"^v",
+                    "type_modifier": b"o",
+                    "c_array_of_variable_length": True,
+                },
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"},
+                6: {"type": b"Q"},
+                7: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"getBytes:bytesPerRow:fromRegion:mipmapLevel:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "type": b"^v",
+                    "type_modifier": b"o",
+                    "c_array_of_variable_length": True,
+                },
+                3: {"type": b"Q"},
+                4: {"type": b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"getDefaultSamplePositions:count:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "type": b"^{_MTLSamplePosition=ff}",
+                    "type_modifier": b"o",
+                    "c_array_length_in_arg": 3,
+                },
+                3: {"type": b"Q"},
+            },
+        },
+    )
+    r(b"NSObject", b"hasUnifiedMemory", {"required": True, "retval": {"type": b"Z"}})
+    r(b"NSObject", b"hazardTrackingMode", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"heap", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"heapBufferSizeAndAlignWithLength:options:",
+        {
+            "required": True,
+            "retval": {"type": b"{_MTLSizeAndAlign=QQ}"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"heapOffset", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"heapTextureSizeAndAlignWithDescriptor:",
+        {
+            "required": True,
+            "retval": {"type": b"{_MTLSizeAndAlign=QQ}"},
+            "arguments": {2: {"type": b"@"}},
+        },
+    )
+    r(b"NSObject", b"height", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"indirectRenderCommandAtIndex:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"insertDebugCaptureBoundary",
+        {"required": True, "retval": {"type": b"v"}},
+    )
+    r(
+        b"NSObject",
+        b"insertDebugSignpost:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"iosurface",
+        {"required": True, "retval": {"type": b"^{__IOSurface=}"}},
+    )
+    r(b"NSObject", b"iosurfacePlane", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"isAliasable", {"required": True, "retval": {"type": b"Z"}})
+    r(
+        b"NSObject",
+        b"isDepth24Stencil8PixelFormatSupported",
+        {"required": True, "retval": {"type": b"Z"}},
+    )
+    r(b"NSObject", b"isFramebufferOnly", {"required": True, "retval": {"type": b"Z"}})
+    r(b"NSObject", b"isHeadless", {"required": True, "retval": {"type": b"Z"}})
+    r(b"NSObject", b"isLowPower", {"required": True, "retval": {"type": b"Z"}})
+    r(b"NSObject", b"isRemovable", {"required": True, "retval": {"type": b"Z"}})
+    r(b"NSObject", b"isShareable", {"required": True, "retval": {"type": b"Z"}})
+    r(b"NSObject", b"kernelEndTime", {"required": True, "retval": {"type": b"d"}})
+    r(b"NSObject", b"kernelStartTime", {"required": True, "retval": {"type": b"d"}})
+    r(b"NSObject", b"label", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"layerCount", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"length", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"location", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"locationNumber", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"makeAliasable", {"required": True, "retval": {"type": b"v"}})
+    r(
+        b"NSObject",
+        b"mapPhysicalToScreenCoordinates:forLayer:",
+        {
+            "required": True,
+            "retval": {"type": b"{_MTLCoordinate2D=ff}"},
+            "arguments": {2: {"type": b"{_MTLCoordinate2D=ff}"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"mapScreenToPhysicalCoordinates:forLayer:",
+        {
+            "required": True,
+            "retval": {"type": b"{_MTLCoordinate2D=ff}"},
+            "arguments": {2: {"type": b"{_MTLCoordinate2D=ff}"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"maxArgumentBufferSamplerCount",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(
+        b"NSObject",
+        b"maxAvailableSizeWithAlignment:",
+        {"required": True, "retval": {"type": b"Q"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(b"NSObject", b"maxBufferLength", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"maxThreadgroupMemoryLength",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(
+        b"NSObject",
+        b"maxThreadsPerThreadgroup",
+        {"required": True, "retval": {"type": b"{_MTLSize=QQQ}"}},
+    )
+    r(
+        b"NSObject",
+        b"maxTotalThreadsPerThreadgroup",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(b"NSObject", b"maxTransferRate", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"memoryBarrierWithResources:count:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"memoryBarrierWithResources:count:afterStages:beforeStages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"memoryBarrierWithScope:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"memoryBarrierWithScope:afterStages:beforeStages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"minimumLinearTextureAlignmentForPixelFormat:",
+        {"required": True, "retval": {"type": b"Q"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"minimumTextureBufferAlignmentForPixelFormat:",
+        {"required": True, "retval": {"type": b"Q"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(b"NSObject", b"mipmapLevelCount", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"name", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newArgumentEncoderForBufferAtIndex:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"newArgumentEncoderWithArguments:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newArgumentEncoderWithBufferIndex:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"newArgumentEncoderWithBufferIndex:reflection:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"^@"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newBufferWithBytes:length:options:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newBufferWithBytesNoCopy:length:options:deallocator:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"n^v"},
+                            2: {"type": b"Q"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newBufferWithLength:options:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newBufferWithLength:options:offset:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"newCommandQueue", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newCommandQueueWithMaxCommandBufferCount:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"newComputePipelineStateWithDescriptor:options:completionHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newComputePipelineStateWithDescriptor:options:reflection:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"^@"},
+                5: {"type": b"^@", "type_modifier": b"o"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newComputePipelineStateWithFunction:completionHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newComputePipelineStateWithFunction:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newComputePipelineStateWithFunction:options:completionHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newComputePipelineStateWithFunction:options:reflection:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"^@"},
+                5: {"type": b"^@", "type_modifier": b"o"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newCounterSampleBufferWithDescriptor:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
+        },
+    )
+    r(b"NSObject", b"newDefaultLibrary", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newDefaultLibraryWithBundle:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newDepthStencilStateWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(b"NSObject", b"newEvent", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"newFence", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newFunctionWithName:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newFunctionWithName:constantValues:completionHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"@"},
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newFunctionWithName:constantValues:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"@"},
+                4: {"type": b"^@", "type_modifier": b"o"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newHeapWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newIndirectCommandBufferWithDescriptor:maxCommandCount:options:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newLibraryWithData:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newLibraryWithFile:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newLibraryWithSource:options:completionHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"@"},
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newLibraryWithSource:options:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"@"},
+                4: {"type": b"^@", "type_modifier": b"o"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newLibraryWithURL:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newRasterizationRateMapWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newRemoteBufferViewForDevice:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newRemoteTextureViewForDevice:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newRenderPipelineStateWithDescriptor:completionHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newRenderPipelineStateWithDescriptor:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"^@", "type_modifier": b"o"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newRenderPipelineStateWithDescriptor:options:completionHandler:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newRenderPipelineStateWithDescriptor:options:reflection:error:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {"type": b"^@"},
+                5: {"type": b"^@", "type_modifier": b"o"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newSamplerStateWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(b"NSObject", b"newSharedEvent", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"newSharedEventHandle",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"newSharedEventWithHandle:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newSharedTextureHandle",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"newSharedTextureWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newSharedTextureWithHandle:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newTextureViewWithPixelFormat:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"newTextureViewWithPixelFormat:textureType:levels:slices:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"{_NSRange=QQ}"},
+                5: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newTextureViewWithPixelFormat:textureType:levels:slices:swizzle:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"Q"},
+                4: {"type": b"{_NSRange=QQ}"},
+                5: {"type": b"{_NSRange=QQ}"},
+                6: {"type": b"{_MTLTextureSwizzleChannels=CCCC}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newTextureWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"newTextureWithDescriptor:iosurface:plane:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"^{__IOSurface=}"},
+                4: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"newTextureWithDescriptor:offset:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"newTextureWithDescriptor:offset:bytesPerRow:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"notifyListener:atValue:block:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"Q"},
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"Q"},
+                        },
+                    },
+                    "type": b"@?",
+                },
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"optimizeContentsForCPUAccess:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"optimizeContentsForCPUAccess:slice:level:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"optimizeContentsForGPUAccess:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"optimizeContentsForGPUAccess:slice:level:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"optimizeIndirectCommandBuffer:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"{_NSRange=QQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"parallelRenderCommandEncoderWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"parameterBufferSizeAndAlign",
+        {"required": True, "retval": {"type": b"{_MTLSizeAndAlign=QQ}"}},
+    )
+    r(b"NSObject", b"parentRelativeLevel", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"parentRelativeSlice", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"parentTexture", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"patchControlPointCount",
+        {"required": True, "retval": {"type": b"q"}},
+    )
+    r(b"NSObject", b"patchType", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"peerCount", {"required": True, "retval": {"type": b"I"}})
+    r(b"NSObject", b"peerGroupID", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"peerIndex", {"required": True, "retval": {"type": b"I"}})
+    r(
+        b"NSObject",
+        b"physicalGranularity",
+        {"required": True, "retval": {"type": b"{_MTLSize=QQQ}"}},
+    )
+    r(
+        b"NSObject",
+        b"physicalSizeForLayer:",
+        {
+            "required": True,
+            "retval": {"type": b"{_MTLSize=QQQ}"},
+            "arguments": {2: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"pixelFormat", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"popDebugGroup", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"present", {"required": True, "retval": {"type": b"v"}})
+    r(
+        b"NSObject",
+        b"presentAfterMinimumDuration:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": "d"}}},
+    )
+    r(
+        b"NSObject",
+        b"presentAtTime:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"d"}}},
+    )
+    r(
+        b"NSObject",
+        b"presentDrawable:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"presentDrawable:afterMinimumDuration:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"d"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"presentDrawable:atTime:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"d"}},
+        },
+    )
+    r(b"NSObject", b"presentedTime", {"required": True, "retval": {"type": "d"}})
+    r(
+        b"NSObject",
+        b"pushDebugGroup:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"readWriteTextureSupport",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(
+        b"NSObject",
+        b"recommendedMaxWorkingSetSize",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(b"NSObject", b"registryID", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"remoteStorageBuffer", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"remoteStorageTexture",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"removeAllDebugMarkers",
+        {"required": True, "retval": {"type": b"v"}},
+    )
+    r(
+        b"NSObject",
+        b"renderCommandEncoder",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"renderCommandEncoderWithDescriptor:",
+        {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"replaceRegion:mipmapLevel:slice:withBytes:bytesPerRow:bytesPerImage:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {
+                    "type": b"^v",
+                    "type_modifier": b"n",
+                    "c_array_of_variable_length": True,
+                },
+                6: {"type": b"Q"},
+                7: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"replaceRegion:mipmapLevel:withBytes:bytesPerRow:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"},
+                3: {"type": b"Q"},
+                4: {
+                    "type": b"^v",
+                    "type_modifier": b"n",
+                    "c_array_of_variable_length": True,
+                },
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(b"NSObject", b"reset", {"required": True, "retval": {"type": b"v"}})
+    r(
+        b"NSObject",
+        b"resetCommandsInBuffer:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"{_NSRange=QQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"resetWithRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"{_NSRange=QQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"resolveCounterRange:",
+        {
+            "required": True,
+            "retval": {"type": b"@"},
+            "arguments": {2: {"type": b"{_NSRange=QQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"resolveCounters:inRange:destinationBuffer:destinationOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"{_NSRange=QQ}"},
+                4: {"type": b"@"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(b"NSObject", b"resourceOptions", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"retainedReferences", {"required": True, "retval": {"type": b"Z"}})
+    r(b"NSObject", b"rootResource", {"required": True, "retval": {"type": b"@"}})
+    r(b"NSObject", b"sampleCount", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"sampleCountersInBuffer:atSampleIndex:withBarrier:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Z"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"sampleTimestamps:gpuTimestamp:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^Q", "type_modifier": b"o"},
+                3: {"type": b"^Q", "type_modifier": b"o"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"screenSize",
+        {"required": True, "retval": {"type": b"{_MTLSize=QQQ}"}},
+    )
+    r(
+        b"NSObject",
+        b"setArgumentBuffer:offset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setArgumentBuffer:startOffset:arrayElement:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setBlendColorRed:green:blue:alpha:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"f"},
+                3: {"type": b"f"},
+                4: {"type": b"f"},
+                5: {"type": b"f"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setBuffer:offset:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setBufferOffset:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setBuffers:offsets:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 4},
+                3: {"type": b"^Q", "type_modifier": b"n", "c_array_length_in_arg": 4},
+                4: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setBytes:length:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setColorStoreAction:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setColorStoreActionOptions:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setComputePipelineState:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"setCullMode:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setDepthBias:slopeScale:clamp:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"f"}, 3: {"type": b"f"}, 4: {"type": b"f"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setDepthClipMode:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setDepthStencilState:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"setDepthStoreAction:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setDepthStoreActionOptions:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setFragmentBuffer:offset:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentBufferOffset:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentBuffers:offsets:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 4},
+                3: {"type": b"^Q", "type_modifier": b"n", "c_array_length_in_arg": 4},
+                4: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentBytes:length:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentSamplerState:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentSamplerState:lodMinClamp:lodMaxClamp:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"f"},
+                4: {"type": b"f"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentSamplerStates:lodMinClamps:lodMaxClamps:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                3: {"type": b"^f", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                4: {"type": b"^f", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                5: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentSamplerStates:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentTexture:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFragmentTextures:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setFrontFacingWinding:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setIndirectCommandBuffer:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setIndirectCommandBuffers:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setLabel:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"setPurgeableState:",
+        {"required": True, "retval": {"type": b"Q"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setRenderPipelineState:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"setRenderPipelineState:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setRenderPipelineStates:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setSamplerState:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setSamplerState:lodMinClamp:lodMaxClamp:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"f"},
+                4: {"type": b"f"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setSamplerStates:lodMinClamps:lodMaxClamps:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                3: {"type": b"^f", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                4: {"type": b"^f", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                5: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setSamplerStates:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setScissorRect:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"{_MTLScissorRect=QQQQ}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setScissorRects:count:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "type": b"^{_MTLScissorRect=QQQQ}",
+                    "type_modifier": b"n",
+                    "c_array_length_in_arg": 3,
+                },
+                3: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setSignaledValue:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setStageInRegion:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"{_MTLRegion={_MTLOrigin=QQQ}{_MTLSize=QQQ}}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setStageInRegionWithIndirectBuffer:indirectBufferOffset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setStencilFrontReferenceValue:backReferenceValue:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"I"}, 3: {"type": b"I"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setStencilReferenceValue:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"I"}}},
+    )
+    r(
+        b"NSObject",
+        b"setStencilStoreAction:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setStencilStoreActionOptions:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setTessellationFactorBuffer:offset:instanceStride:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setTessellationFactorScale:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"f"}}},
+    )
+    r(
+        b"NSObject",
+        b"setTexture:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setTextures:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setThreadgroupMemoryLength:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setTriangleFillMode:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"setVertexAmplificationCount:viewMapping:",
+        {
+            "arguments": {
+                2: {"type": "Q"},
+                3: {"type": "{_MTLVertexAmplificationViewMapping=II}"},
+            }
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexAmplificationCount:viewMappings:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"Q"},
+                3: {"type": b"^{_MTLVertexAmplificationViewMapping=II}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexBuffer:offset:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexBufferOffset:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexBuffers:offsets:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 4},
+                3: {"type": b"^Q", "type_modifier": b"n", "c_array_length_in_arg": 4},
+                4: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexBytes:length:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^v", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexSamplerState:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexSamplerState:lodMinClamp:lodMaxClamp:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"@"},
+                3: {"type": b"f"},
+                4: {"type": b"f"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexSamplerStates:lodMinClamps:lodMaxClamps:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                3: {"type": b"^f", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                4: {"type": b"^f", "type_modifier": b"n", "c_array_length_in_arg": 5},
+                5: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexSamplerStates:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexTexture:atIndex:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVertexTextures:withRange:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"{_NSRange=QQ}"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setViewport:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"{_MTLViewport=dddddd}"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"setViewports:count:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {
+                    "type": b"^{_MTLViewport=dddddd}",
+                    "type_modifier": b"n",
+                    "c_array_length_in_arg": 3,
+                },
+                3: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"setVisibilityResultMode:offset:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"Q"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"signaledValue", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"size", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"stageInputAttributes",
+        {"required": True, "retval": {"type": b"@"}},
+    )
+    r(
+        b"NSObject",
+        b"staticThreadgroupMemoryLength",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(b"NSObject", b"status", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"storageMode", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"supportIndirectCommandBuffers",
+        {"required": True, "retval": {"type": b"Z"}},
+    )
+    r(
+        b"NSObject",
+        b"supportsFamily:",
+        {"required": True, "retval": {"type": b"Z"}, "arguments": {2: {"type": b"q"}}},
+    )
+    r(
+        b"NSObject",
+        b"supportsFeatureSet:",
+        {"required": True, "retval": {"type": b"Z"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"supportsRasterizationRateMapWithLayerCount:",
+        {"required": True, "retval": {"type": "Z"}, "arguments": {2: {"type": "Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"supportsShaderBarycentricCoordinates",
+        {"required": True, "retval": {"type": b"Z"}},
+    )
+    r(
+        b"NSObject",
+        b"supportsTextureSampleCount:",
+        {"required": True, "retval": {"type": b"Z"}, "arguments": {2: {"type": b"Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"supportsVertexAmplificationCount:",
+        {"required": True, "retval": {"type": "Z"}, "arguments": {2: {"type": "Q"}}},
+    )
+    r(
+        b"NSObject",
+        b"swizzle",
+        {"required": True, "retval": {"type": b"{_MTLTextureSwizzleChannels=CCCC}"}},
+    )
+    r(
+        b"NSObject",
+        b"synchronizeResource:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"synchronizeTexture:slice:level:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"textureBarrier", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"textureType", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"threadExecutionWidth",
+        {"required": True, "retval": {"type": b"Q"}},
+    )
+    r(b"NSObject", b"type", {"required": True, "retval": {"type": b"q"}})
+    r(
+        b"NSObject",
+        b"updateFence:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"updateFence:afterStages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"usage", {"required": True, "retval": {"type": b"Q"}})
+    r(
+        b"NSObject",
+        b"useHeap:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"useHeap:stages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"useHeaps:count:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"useHeaps:count:stages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"useResource:usage:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"useResource:usage:stages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}, 4: {"type": b"Q"}},
+        },
+    )
+    r(
+        b"NSObject",
+        b"useResources:count:usage:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@", "type_modifier": b"n", "c_array_length_in_arg": 3},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+            },
+        },
+    )
+    r(
+        b"NSObject",
+        b"useResources:count:usage:stages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {
+                2: {"type": b"^@"},
+                3: {"type": b"Q"},
+                4: {"type": b"Q"},
+                5: {"type": b"Q"},
+            },
+        },
+    )
+    r(b"NSObject", b"usedSize", {"required": True, "retval": {"type": b"Q"}})
+    r(b"NSObject", b"vertexAttributes", {"required": True, "retval": {"type": b"@"}})
+    r(
+        b"NSObject",
+        b"waitForFence:",
+        {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
+    )
+    r(
+        b"NSObject",
+        b"waitForFence:beforeStages:",
+        {
+            "required": True,
+            "retval": {"type": b"v"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": b"Q"}},
+        },
+    )
+    r(b"NSObject", b"waitUntilCompleted", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"waitUntilScheduled", {"required": True, "retval": {"type": b"v"}})
+    r(b"NSObject", b"width", {"required": True, "retval": {"type": b"Q"}})
 finally:
     objc._updatingMetadata(False)
-expressions = {'MTLResourceHazardTrackingModeMask': '0x3 << MTLResourceHazardTrackingModeShift', 'MTLResourceCPUCacheModeMask': '0xf << MTLResourceCPUCacheModeShift', 'MTLTextureSwizzleChannelsDefault': 'MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)', 'MTLResourceStorageModeMask': '0xf << MTLResourceStorageModeShift'}
+expressions = {
+    "MTLResourceHazardTrackingModeMask": "0x3 << MTLResourceHazardTrackingModeShift",
+    "MTLResourceCPUCacheModeMask": "0xf << MTLResourceCPUCacheModeShift",
+    "MTLTextureSwizzleChannelsDefault": "MTLTextureSwizzleChannelsMake(MTLTextureSwizzleRed, MTLTextureSwizzleGreen, MTLTextureSwizzleBlue, MTLTextureSwizzleAlpha)",
+    "MTLResourceStorageModeMask": "0xf << MTLResourceStorageModeShift",
+}
 
 # END OF FILE

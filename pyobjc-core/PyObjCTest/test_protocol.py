@@ -235,7 +235,7 @@ class TestFormalProtocols(TestCase):
             MyClassImplementingMyOtherProtocol.protoMethod.signature, b"I@:"
         )
         self.assertEqual(
-            MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, b"v@:ii",
+            MyClassImplementingMyOtherProtocol.anotherProto_with_.signature, b"v@:ii"
         )
         self.assertEqual(
             MyClassImplementingMyOtherProtocol.yetAnother_.signature, b"i@:I"

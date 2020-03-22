@@ -2,27 +2,31 @@
 
 import configparser
 import os
-import shutil
 import subprocess
 
 from _common_definitions import TOP_DIR
 
 
 def contents(path):
-    with open(path, 'rb') as fp:
+    with open(path, "rb") as fp:
         return fp.read()
 
+
 def main():
-    for nm in sorted(os.listdir(TOP_DIR), key=lambda x:x.lower()):
-        if not nm.startswith('pyobjc-framework-'): continue
-        if nm == 'pyobjc-framework-InterfaceBuilderKit': continue
+    for nm in sorted(os.listdir(TOP_DIR), key=lambda x: x.lower()):
+        if not nm.startswith("pyobjc-framework-"):
+            continue
+        if nm == "pyobjc-framework-InterfaceBuilderKit":
+            continue
 
         p = configparser.ConfigParser()
         p.read(os.path.join(TOP_DIR, nm, "metadata", "metadata.ini"))
         for s in p.sections():
             subprocess.check_call(
-                ["objective-metadata-tool", "--ini-section="+s, "compile"],
-                cwd=os.path.join(TOP_DIR, nm))
+                ["objective-metadata-tool", "--ini-section=" + s, "compile"],
+                cwd=os.path.join(TOP_DIR, nm),
+            )
+
 
 if __name__ == "__main__":
     main()

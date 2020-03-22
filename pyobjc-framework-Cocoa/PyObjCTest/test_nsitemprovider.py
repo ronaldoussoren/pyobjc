@@ -92,7 +92,7 @@ class TestNSItemProvider(TestCase):
             AppKit.NSItemProvider.previewImageHandler, NSItemProviderLoadHandler
         )
         self.assertArgIsBlock(
-            AppKit.NSItemProvider.setPreviewImageHandler_, 0, NSItemProviderLoadHandler,
+            AppKit.NSItemProvider.setPreviewImageHandler_, 0, NSItemProviderLoadHandler
         )
         self.assertArgIsBlock(
             AppKit.NSItemProvider.loadPreviewImageWithOptions_completionHandler_,

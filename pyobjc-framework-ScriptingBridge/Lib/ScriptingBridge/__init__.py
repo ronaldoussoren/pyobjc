@@ -26,7 +26,7 @@ sys.modules["ScriptingBridge"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (_ScriptingBridge, Foundation,),
+    (_ScriptingBridge, Foundation),
 )
 
 

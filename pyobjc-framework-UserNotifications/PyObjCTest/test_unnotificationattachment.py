@@ -11,15 +11,14 @@ if sys.maxsize > 2 ** 32:
                 UserNotifications.UNNotificationAttachmentOptionsTypeHintKey, str
             )
             self.assertIsInstance(
-                UserNotifications.UNNotificationAttachmentOptionsThumbnailHiddenKey,
-                str,
+                UserNotifications.UNNotificationAttachmentOptionsThumbnailHiddenKey, str
             )
             self.assertIsInstance(
                 UserNotifications.UNNotificationAttachmentOptionsThumbnailClippingRectKey,
                 str,
             )
             self.assertIsInstance(
-                UserNotifications.UNNotificationAttachmentOptionsThumbnailTimeKey, str,
+                UserNotifications.UNNotificationAttachmentOptionsThumbnailTimeKey, str
             )
 
         def test_methods(self):

@@ -24,7 +24,7 @@ sys.modules["CoreSpotlight"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_CoreSpotlight, Foundation,),
+    (_CoreSpotlight, Foundation),
 )
 
 

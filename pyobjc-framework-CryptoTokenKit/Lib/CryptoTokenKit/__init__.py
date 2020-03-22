@@ -24,7 +24,7 @@ sys.modules["CryptoTokenKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_CryptoTokenKit, Foundation,),
+    (_CryptoTokenKit, Foundation),
 )
 
 

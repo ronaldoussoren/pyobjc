@@ -23,7 +23,7 @@ sys.modules["InputMethodKit"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (_InputMethodKit, Foundation,),
+    (_InputMethodKit, Foundation),
 )
 
 

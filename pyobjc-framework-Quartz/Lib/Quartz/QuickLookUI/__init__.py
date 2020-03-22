@@ -25,7 +25,7 @@ sys.modules["Quartz.QuickLookUI"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (_QuickLookUI, Cocoa,),
+    (_QuickLookUI, Cocoa),
 )
 
 

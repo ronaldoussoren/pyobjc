@@ -168,7 +168,9 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
         )
         if result == 0:
             result, graphicsExporter = Quartz.OpenADefaultComponent(
-                Quartz.GraphicsExporterComponentType, imageExportType, graphicsExporter  # noqa: F821
+                Quartz.GraphicsExporterComponentType,
+                imageExportType,
+                graphicsExporter,  # noqa: F821
             )
             if result == 0:
                 result = Quartz.GraphicsExportSetInputCGImage(graphicsExporter, image)

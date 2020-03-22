@@ -24,7 +24,7 @@ sys.modules["CoreData"] = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (_CoreData, Foundation,),
+    (_CoreData, Foundation),
 )
 
 from CoreData import _convenience  # isort: ignore  # noqa: E402, F401

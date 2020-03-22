@@ -22,7 +22,7 @@ sys.modules["ImageCaptureCore"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (_ImageCaptureCore, Foundation,),
+    (_ImageCaptureCore, Foundation),
 )
 
 

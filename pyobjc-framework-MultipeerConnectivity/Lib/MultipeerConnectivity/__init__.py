@@ -24,7 +24,7 @@ sys.modules["MultipeerConnectivity"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_MultipeerConnectivity, Foundation,),
+    (_MultipeerConnectivity, Foundation),
 )
 
 

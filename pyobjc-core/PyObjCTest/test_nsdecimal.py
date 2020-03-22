@@ -252,7 +252,7 @@ class TestDecimalByReference(TestCase):
                         "type_modifier": objc._C_OUT,
                         "type": b"^{_NSDecimal=b8b4b1b1b18[8S]}",
                         "null_accepted": False,
-                    },
+                    }
                 }
             },
         )

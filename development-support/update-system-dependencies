@@ -16,28 +16,45 @@ from _common_definitions import PY_VERSIONS
 
 
 def main():
-    if  socket.gethostname() != 'build-machine.local':
+    if socket.gethostname() != "build-machine.local":
         print("Not on build server")
         sys.exit(1)
 
     # Normal python installation in framework:
     for ver in PY_VERSIONS:
-        subprocess.check_call([
-            'python{}'.format(ver), '-mpip', 'install', '--upgrade',
-            'pip', 'setuptools', 'virtualenv', 'wheel'
-        ])
+        subprocess.check_call(
+            [
+                "python{}".format(ver),
+                "-mpip",
+                "install",
+                "--upgrade",
+                "pip",
+                "setuptools",
+                "virtualenv",
+                "wheel",
+            ]
+        )
 
     # Homebrew:
-    for path in ('/usr/local/bin/python', '/usr/local/bin/python3'):
+    for path in ("/usr/local/bin/python", "/usr/local/bin/python3"):
         if not os.path.exists(path):
-            print("WARNING: No %r"%(path,))
+            print("WARNING: No %r" % (path,))
 
-        subprocess.check_call([
-            path, '-mpip', 'install', '--upgrade',
-                'pip', 'setuptools', 'virtualenv', 'wheel'
-        ])
+        subprocess.check_call(
+            [
+                path,
+                "-mpip",
+                "install",
+                "--upgrade",
+                "pip",
+                "setuptools",
+                "virtualenv",
+                "wheel",
+            ]
+        )
 
     subprocess.check_call(["brew", "upgrade"])
+
 
 if __name__ == "__main__":
     main()

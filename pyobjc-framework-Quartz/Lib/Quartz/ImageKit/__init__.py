@@ -30,7 +30,7 @@ sys.modules["Quartz.ImageKit"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (_imagekit, Cocoa,),
+    (_imagekit, Cocoa),
 )
 
 

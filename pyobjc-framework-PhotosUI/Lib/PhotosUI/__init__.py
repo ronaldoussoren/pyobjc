@@ -24,7 +24,7 @@ sys.modules["PhotosUI"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_PhotosUI, Foundation,),
+    (_PhotosUI, Foundation),
 )
 
 

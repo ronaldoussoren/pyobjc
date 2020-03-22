@@ -3000,7 +3000,9 @@ else:
         # Position for drawing the mask at the left side of the figure.
         Quartz.CGContextTranslateCTM(context, 50, 50)
         # Set the context fill color to a Quartz.CGColor object that is black.
-        Quartz.CGContextSetFillColorWithColor(context, Utilities.getRGBOpaqueBlackColor())
+        Quartz.CGContextSetFillColorWithColor(
+            context, Utilities.getRGBOpaqueBlackColor()
+        )
         # Draw the mask. It is painted with with the black fill color.
         Quartz.CGContextDrawImage(context, maskRect, mask)
 
