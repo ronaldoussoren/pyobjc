@@ -441,12 +441,12 @@ class TestMTLDevice(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_completionHandler_,
+            TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_completionHandler_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgIsBlock(
-            TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_completionHandler_,
+            TestMTLDeviceHelper.newRenderPipelineStateWithDescriptor_options_completionHandler_,  # noqa: B950
             2,
             b"v@@",
         )
@@ -472,34 +472,34 @@ class TestMTLDevice(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_completionHandler_,
+            TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_completionHandler_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgIsBlock(
-            TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_completionHandler_,
+            TestMTLDeviceHelper.newComputePipelineStateWithFunction_options_completionHandler_,  # noqa: B950
             2,
             b"v@@",
         )
 
         self.assertArgHasType(
-            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_,
+            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_,
+            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_reflection_error_,  # noqa: B950
             3,
             b"o^@",
         )
 
         self.assertArgHasType(
-            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_completionHandler_,
+            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_completionHandler_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgIsBlock(
-            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_completionHandler_,
+            TestMTLDeviceHelper.newComputePipelineStateWithDescriptor_options_completionHandler_,  # noqa: B950
             2,
             b"v@@",
         )

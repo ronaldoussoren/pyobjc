@@ -126,11 +126,11 @@ class TestMTLRasterizationRate(TestCase):
         )
 
         self.assertArgIsIn(
-            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,
+            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,  # noqa: B950
             2,
         )
         self.assertArgSizeInArg(
-            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,
+            Metal.MTLRasterizationRateMapDescriptor.rasterizationRateMapDescriptorWithScreenSize_layerCount_layers_,  # noqa: B950
             2,
             1,
         )

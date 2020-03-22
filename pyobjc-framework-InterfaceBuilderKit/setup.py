@@ -17,7 +17,7 @@ and (Objective-)C frameworks
 
 NOTE: To run the unittests for this framework use::
 
-    $ env DYLD_FRAMEWORK_PATH="$(xcode-select -print-path)/Library/PrivateFrameworks/" python setup.py test
+    $ env DYLD_FRAMEWORK_PATH="$(xcode-select -print-path)/Library/PrivateFrameworks/" python setup.py test  # noqa: B950
 
 This is needed because the InterfaceBuilderKit framework won't load otherwise.
 """

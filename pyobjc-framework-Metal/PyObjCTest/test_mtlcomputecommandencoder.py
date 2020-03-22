@@ -189,32 +189,32 @@ class TestMTLComputeCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             0,
             b"n^@",
         )
         self.assertArgSizeInArg(
-            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             0,
             3,
         )
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             1,
             b"n^f",
         )
         self.assertArgSizeInArg(
-            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             1,
             3,
         )
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             2,
             b"n^f",
         )
         self.assertArgSizeInArg(
-            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLComputeCommandEncoderHelper.setSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             2,
             3,
         )
@@ -237,7 +237,7 @@ class TestMTLComputeCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.setStageInRegionWithIndirectBuffer_indirectBufferOffset_,
+            TestMTLComputeCommandEncoderHelper.setStageInRegionWithIndirectBuffer_indirectBufferOffset_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
@@ -254,12 +254,12 @@ class TestMTLComputeCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.dispatchThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerThreadgroup_,
+            TestMTLComputeCommandEncoderHelper.dispatchThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerThreadgroup_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.dispatchThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerThreadgroup_,
+            TestMTLComputeCommandEncoderHelper.dispatchThreadgroupsWithIndirectBuffer_indirectBufferOffset_threadsPerThreadgroup_,  # noqa: B950
             2,
             Metal.MTLSize.__typestr__,
         )
@@ -327,12 +327,12 @@ class TestMTLComputeCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,
+            TestMTLComputeCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,
+            TestMTLComputeCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,  # noqa: B950
             2,
             objc._C_NSBOOL,
         )

@@ -289,53 +289,53 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerState_lodMinClamp_lodMaxClamp_atIndex_,  # noqa: B950
             1,
             objc._C_FLT,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerState_lodMinClamp_lodMaxClamp_atIndex_,  # noqa: B950
             2,
             objc._C_FLT,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerState_lodMinClamp_lodMaxClamp_atIndex_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             0,
             b"n^@",
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             0,
             3,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             1,
             b"n^f",
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             1,
             3,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             2,
             b"n^f",
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             2,
             3,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexSamplerStates_lodMinClamps_lodMaxClamps_withRange_,  # noqa: B950
             3,
             Metal.NSRange.__typestr__,
         )
@@ -563,7 +563,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.executeCommandsInBuffer_indirectBuffer_indirectBufferOffset_,
+            TestMTLRenderCommandEncoderHelper.executeCommandsInBuffer_indirectBuffer_indirectBufferOffset_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )

@@ -9,12 +9,12 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.15")
         def test_methods(self):
             self.assertArgIsBlock(
-                QuickLookThumbnailing.QLThumbnailReply.replyWithContextSize_drawingBlock_,
+                QuickLookThumbnailing.QLThumbnailReply.replyWithContextSize_drawingBlock_,  # noqa: B950
                 1,
                 b"Z^{CGContext=}",
             )
             self.assertArgIsBlock(
-                QuickLookThumbnailing.QLThumbnailReply.replyWithContextSize_currentContextDrawingBlock_,
+                QuickLookThumbnailing.QLThumbnailReply.replyWithContextSize_currentContextDrawingBlock_,  # noqa: B950
                 1,
                 b"Z",
             )

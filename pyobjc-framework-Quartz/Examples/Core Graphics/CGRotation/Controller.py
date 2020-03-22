@@ -69,13 +69,17 @@ class Controller(Cocoa.NSObject):
 
         self.imageView.setNeedsDisplay_(True)
 
-    # Returns an array with the extensions that match the given Uniform Type Identifier (UTI).
     def extensionsForUTI_(self, uti):
-        # If anything goes wrong, we'll return None, otherwise this will be the array of extensions
-        # for this image type.
+        """
+        Returns an array with the extensions that match the given
+        Uniform Type Identifier (UTI).
+        """
+        # If anything goes wrong, we'll return None, otherwise this will be the array
+        # of extensions for this image type.
         extensions = None
-        # Only get extensions for UTIs that are images (i.e. conforms to public.image aka kUTTypeImage)
-        # This excludes PDF support that ImageIO advertises, but won't actually use.
+        # Only get extensions for UTIs that are images (i.e. conforms to
+        # public.image aka kUTTypeImage) This excludes PDF support that ImageIO
+        # advertises, but won't actually use.
         if LaunchServices.UTTypeConformsTo(uti, LaunchServices.kUTTypeImage):
             # Copy the decleration for the UTI (if it exists)
             decleration = LaunchServices.UTTypeCopyDeclaration(uti)
@@ -90,8 +94,9 @@ class Controller(Cocoa.NSObject):
                         LaunchServices.kUTTagClassFilenameExtension
                     )
                     if filenameExtensions is not None:
-                        # It is valid for a UTI to export either an Array (of Strings) representing
-                        # multiple tags, or a String representing a single tag.
+                        # It is valid for a UTI to export either an Array
+                        # (of Strings) representing multiple tags, or a String
+                        # representing a single tag.
                         type_id = Cocoa.CFGetTypeID(filenameExtensions)
                         if type_id == Cocoa.CFStringGetTypeID():
                             # If a string was exported, then wrap it up in an array.
@@ -104,8 +109,9 @@ class Controller(Cocoa.NSObject):
 
         return extensions
 
-    # On Tiger NSOpenPanel only understands extensions, not UTIs, so we have to obtain a list of extentions
-    # from the UTIs that Image IO tells us it can handle.
+    # On Tiger NSOpenPanel only understands extensions, not UTIs, so we have to
+    # obtain a list of extentions from the UTIs that Image IO tells us it can
+    # handle.
     def createOpenTypesArray(self):
         if self.openImageIOSupportedTypes is None:
             imageIOUTIs = Quartz.CGImageSourceCopyTypeIdentifiers()
@@ -127,7 +133,7 @@ class Controller(Cocoa.NSObject):
 
         self.createOpenTypesArray()
 
-        panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+        panel.beginSheetForDirectory_file_types_modalForWindow_modalDelegate_didEndSelector_contextInfo_(  # noqa: B950
             None,
             None,
             self.openImageIOSupportedTypes,
@@ -156,7 +162,7 @@ class Controller(Cocoa.NSObject):
         panel.setAllowsOtherFileTypes_(False)
         panel.setTreatsFilePackagesAsDirectories_(True)
 
-        panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
+        panel.beginSheetForDirectory_file_modalForWindow_modalDelegate_didEndSelector_contextInfo_(  # noqa: B950
             None,
             "untitled image",
             self.imageView.window(),

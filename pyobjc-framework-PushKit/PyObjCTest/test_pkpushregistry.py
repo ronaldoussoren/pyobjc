@@ -20,7 +20,7 @@ if sys.maxsize > 2 ** 32:
         @min_sdk_level("10.15")
         def test_methods(self):
             self.assertArgIsBlock(
-                TestPKPushRegistryHelper.pushRegistry_didReceiveIncomingPushWithPayload_forType_withCompletionHandler_,
+                TestPKPushRegistryHelper.pushRegistry_didReceiveIncomingPushWithPayload_forType_withCompletionHandler_,  # noqa: B950
                 3,
                 b"v",
             )

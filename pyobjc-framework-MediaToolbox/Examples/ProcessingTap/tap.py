@@ -4,7 +4,7 @@ import Foundation
 import MediaToolbox
 import objc
 
-MEDIAPATH = "/System/Library/CoreServices/Language Chooser.app/Contents/Resources/VOInstructions-en.m4a"
+MEDIAPATH = "/System/Library/CoreServices/Language Chooser.app/Contents/Resources/VOInstructions-en.m4a"  # noqa: B950
 
 
 def init(tap, info, storage):
@@ -68,7 +68,8 @@ def main():
         unprepare,
         process,
     )
-    # callbacks = (MediaToolbox.kMTAudioProcessingTapCallbacksVersion_0, 42, None, None, None, None, process)
+    # callbacks = (MediaToolbox.kMTAudioProcessingTapCallbacksVersion_0, 42,
+    #     None, None, None, None, process)
     err, tap = MediaToolbox.MTAudioProcessingTapCreate(
         None,
         callbacks,
@@ -78,7 +79,7 @@ def main():
 
     print("Creating tap", err, tap)
 
-    inputParams = AVFoundation.AVMutableAudioMixInputParameters.audioMixInputParametersWithTrack_(
+    inputParams = AVFoundation.AVMutableAudioMixInputParameters.audioMixInputParametersWithTrack_(  # noqa: B950
         asset.tracks()[0]
     )
     inputParams.setAudioTapProcessor_(tap)

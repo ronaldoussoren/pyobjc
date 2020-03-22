@@ -6,12 +6,12 @@ class TestNSFileProviderManager(TestCase):
     @min_os_level("10.15")
     def test_methods10_15(self):
         self.assertArgIsBlock(
-            FileProvider.NSFileProviderManager.signalEnumeratorForContainerItemIdentifier_completionHandler_,
+            FileProvider.NSFileProviderManager.signalEnumeratorForContainerItemIdentifier_completionHandler_,  # noqa:  B950
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            FileProvider.NSFileProviderManager.registerURLSessionTask_forItemWithIdentifier_completionHandler_,
+            FileProvider.NSFileProviderManager.registerURLSessionTask_forItemWithIdentifier_completionHandler_,  # noqa: B950
             2,
             b"v@",
         )
@@ -41,7 +41,7 @@ class TestNSFileProviderManager(TestCase):
             b"v@",
         )
         self.assertArgIsBlock(
-            FileProvider.NSFileProviderManager.importDomain_fromDirectoryAtURL_completionHandler_,
+            FileProvider.NSFileProviderManager.importDomain_fromDirectoryAtURL_completionHandler_,  # noqa: B950
             2,
             b"v@",
         )

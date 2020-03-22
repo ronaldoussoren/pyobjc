@@ -10,12 +10,12 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
     def setFragmentBuffer_offset_atIndex_(self, a, b, c):
         pass
 
-    def drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_(
+    def drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_(  # noqa: B950
         self, a, b, c, d, e, f, g, h, i, j
     ):
         pass
 
-    def drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_(
+    def drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_(  # noqa: B950
         self, a, b, c, d, e, f, g, h, i, j, k, l
     ):
         pass
@@ -25,7 +25,7 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
     ):
         pass
 
-    def drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_(
+    def drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_(  # noqa: B950
         self, a, b, c, d, e, f, g, h
     ):
         pass
@@ -60,145 +60,145 @@ class TestMTLIndirectCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             5,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             8,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             9,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             8,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             10,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_,  # noqa: B950
             11,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,  # noqa: B950
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawPrimitives_vertexStart_vertexCount_instanceCount_baseInstance_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,  # noqa: B950
             0,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,  # noqa: B950
             5,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,
+            TestMTLIndirectCommandEncoderHelper.drawIndexedPrimitives_indexCount_indexType_indexBuffer_indexBufferOffset_instanceCount_baseVertex_baseInstance_,  # noqa: B950
             6,
             objc._C_NSInteger,
         )

@@ -37,7 +37,7 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.11")
         def test_methods10_11(self):
             self.assertArgIsBlock(
-                MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_completionHandler_,
+                MetalKit.MTKTextureLoader.newTextureWithContentsOfURL_options_completionHandler_,  # noqa: B950
                 2,
                 MTKTextureLoaderCallback,
             )
@@ -65,27 +65,27 @@ if sys.maxsize > 2 ** 32:
         @min_os_level("10.12")
         def test_methods10_12(self):
             self.assertArgIsBlock(
-                MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_completionHandler_,
+                MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_bundle_options_completionHandler_,  # noqa: B950
                 4,
                 MTKTextureLoaderCallback,
             )
             self.assertArgIsBlock(
-                MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_completionHandler_,
+                MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_completionHandler_,  # noqa: B950
                 5,
                 MTKTextureLoaderCallback,
             )
             self.assertArgIsBlock(
-                MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_completionHandler_,
+                MetalKit.MTKTextureLoader.newTexturesWithContentsOfURLs_options_completionHandler_,  # noqa: B950
                 2,
                 MTKTextureLoaderArrayCallback,
             )
             self.assertArgIsBlock(
-                MetalKit.MTKTextureLoader.newTexturesWithNames_scaleFactor_bundle_options_completionHandler_,
+                MetalKit.MTKTextureLoader.newTexturesWithNames_scaleFactor_bundle_options_completionHandler_,  # noqa: B950
                 4,
                 MTKTextureLoaderArrayCallback,
             )
             self.assertArgIsBlock(
-                MetalKit.MTKTextureLoader.newTexturesWithNames_scaleFactor_displayGamut_bundle_options_completionHandler_,
+                MetalKit.MTKTextureLoader.newTexturesWithNames_scaleFactor_displayGamut_bundle_options_completionHandler_,  # noqa: B950
                 5,
                 MTKTextureLoaderArrayCallback,
             )
@@ -107,6 +107,6 @@ if sys.maxsize > 2 ** 32:
                 4,
             )
             self.assertArgIsOut(
-                MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_error_,
+                MetalKit.MTKTextureLoader.newTextureWithName_scaleFactor_displayGamut_bundle_options_error_,  # noqa: B950
                 5,
             )

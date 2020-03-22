@@ -29,7 +29,7 @@ class TestNSFileProviderEnumeration(TestCase):
 
     def test_methods(self):
         self.assertArgIsBOOL(
-            TestNSFileProviderEnumerationHelper.finishEnumeratingChangesUpToSyncAnchor_moreComing_,
+            TestNSFileProviderEnumerationHelper.finishEnumeratingChangesUpToSyncAnchor_moreComing_,  # noqa: B950
             1,
         )
         self.assertArgIsBlock(

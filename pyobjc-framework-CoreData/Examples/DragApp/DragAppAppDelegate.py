@@ -57,7 +57,7 @@ class DragAppAppDelegate(Cocoa.NSObject):
                 applicationSupportFolder.stringByAppendingPathComponent_("DragApp.xml")
             )
 
-            coordinator = CoreData.NSPersistentStoreCoordinator.alloc().initWithManagedObjectModel_(
+            coordinator = CoreData.NSPersistentStoreCoordinator.alloc().initWithManagedObjectModel_(  # noqa: B950
                 self.managedObjectModel()
             )
             (

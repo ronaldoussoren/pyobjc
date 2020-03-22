@@ -11,7 +11,8 @@ import Foundation
 import objc
 from CFOpenDirectory import _metadata
 
-# This actually loads the OpenDirectory framework instead of the embedded CFOpenDirectory framework
+# This actually loads the OpenDirectory framework instead of the embedded
+# CFOpenDirectory framework
 sys.modules["CFOpenDirectory"] = mod = objc.ObjCLazyModule(
     "CFOpenDirectory",
     "com.apple.OpenDirectory",

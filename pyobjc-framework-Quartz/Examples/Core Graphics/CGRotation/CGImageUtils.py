@@ -54,8 +54,8 @@ def IICreateImage(url):
             ii.fProperties = Quartz.CGImageSourceCopyPropertiesAtIndex(
                 imageSrc, 0, None
             )
-            # Setup the orientation transformation matrix so that the image will display with the
-            # proper orientation
+            # Setup the orientation transformation matrix so that the image will
+            # display with the proper orientation
             IIGetOrientationTransform(ii)
 
     return ii
@@ -229,14 +229,16 @@ def IISaveImage(image, url, width, height):
 # Applies the transformations specified in the ImageInfo struct without drawing the actual image
 def IIApplyTransformation(image, context, bounds):
     if image is not None:
-        # Whenever you do multiple CTM changes, you have to be very careful with order.
-        # Changing the order of your CTM changes changes the outcome of the drawing operation.
-        # For example, if you scale a context by 2.0 along the x-axis, and then translate
-        # the context by 10.0 along the x-axis, then you will see your drawing will be
-        # in a different position than if you had done the operations in the opposite order.
-
-        # Our intent with this operation is that we want to change the location from which we start drawing
-        # (translation), then rotate our axies so that our image appears at an angle (rotation), and finally
+        # Whenever you do multiple CTM changes, you have to be very careful with
+        # order.  Changing the order of your CTM changes changes the outcome of
+        # the drawing operation. For example, if you scale a context by 2.0 along
+        # the x-axis, and then translate the context by 10.0 along the x-axis,
+        # then you will see your drawing will be in a different position than if
+        # you had done the operations in the opposite order.
+        #
+        # Our intent with this operation is that we want to change the location
+        # from which we start drawing (translation), then rotate our axies so
+        # that our image appears at an angle (rotation), and finally
         # scale our axies so that our image has a different size (scale).
         # Changing the order of operations will markedly change the results.
         IITranslateContext(image, context)
@@ -248,7 +250,8 @@ def IIApplyTransformation(image, context, bounds):
 def IIDrawImage(image, context, bounds):
     imageRect = Cocoa.NSRect()
     if image is not None and context is not None:
-        # Setup the image rect so that the image fills it's natural boudaries in the base coordinate system.
+        # Setup the image rect so that the image fills it's natural boudaries
+        # in the base coordinate system.
         imageRect.origin.x = 0.0
         imageRect.origin.y = 0.0
         imageRect.size.width = Quartz.CGImageGetWidth(image.fImageRef)
@@ -257,11 +260,13 @@ def IIDrawImage(image, context, bounds):
         # Obtain the orientation matrix for this image
         ctm = image.fOrientation
 
-        # Before we can apply the orientation matrix, we need to translate the coordinate system
-        # so the center of the rectangle matces the center of the image.
+        # Before we can apply the orientation matrix, we need to translate the
+        # coordinate system so the center of the rectangle matces the center of
+        # the image.
         if image.fProperties is None or IIGetImageOrientation(image) < 5:
-            # For orientations 1-4, the images are unrotated, so the width and height of the base image
-            # can be used as the width and height of the coordinate translation calculation.
+            # For orientations 1-4, the images are unrotated, so the width and
+            # height of the base image can be used as the width and height of
+            # the coordinate translation calculation.
             Quartz.CGContextTranslateCTM(
                 context,
                 math.floor((bounds.size.width - imageRect.size.width) / 2.0),
@@ -269,8 +274,9 @@ def IIDrawImage(image, context, bounds):
             )
 
         else:
-            # For orientations 5-8, the images are rotated 90 or -90 degrees, so we need to use
-            # the image width in place of the height and vice versa.
+            # For orientations 5-8, the images are rotated 90 or -90 degrees,
+            # so we need to use the image width in place of the height and
+            # vice versa.
             Quartz.CGContextTranslateCTM(
                 context,
                 math.floor((bounds.size.width - imageRect.size.height) / 2.0),

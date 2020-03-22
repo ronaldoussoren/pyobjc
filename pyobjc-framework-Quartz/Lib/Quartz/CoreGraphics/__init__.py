@@ -15,7 +15,7 @@ sys.modules["Quartz.CoreGraphics"] = mod = objc.ObjCLazyModule(
     "Quartz.CoreGraphics",
     "com.apple.CoreGraphics",
     objc.pathForFramework(
-        "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework"
+        "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework"  # noqa: B950
     ),
     _metadata.__dict__,
     _inline_list_,

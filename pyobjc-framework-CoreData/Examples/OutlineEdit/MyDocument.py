@@ -19,7 +19,7 @@ class MyDocument(CoreData.NSPersistentDocument):
         managedObjectContext = self.managedObjectContext()
 
         for aPriorityValue in range(5):
-            aPriority = CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_(
+            aPriority = CoreData.NSEntityDescription.insertNewObjectForEntityForName_inManagedObjectContext_(  # noqa:  B950
                 "Priority", managedObjectContext
             )
             aPriority.setValue_forKey_(aPriorityValue + 1, "value")

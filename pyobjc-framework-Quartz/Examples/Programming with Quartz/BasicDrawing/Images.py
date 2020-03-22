@@ -653,7 +653,8 @@ def drawJPEGDocumentWithMultipleProfiles(context, url):
     # del comparisonColorSpace
 
     # if not isDeviceRGBImage:
-    #    print("The color space for the JPEG image is not DeviceRGB!", comparisonColorSpace, originalColorSpace)
+    #    print("The color space for the JPEG image is not DeviceRGB!",
+    #       comparisonColorSpace, originalColorSpace)
     #    #return
 
     # Might need to adjust this based on the size of the original image.

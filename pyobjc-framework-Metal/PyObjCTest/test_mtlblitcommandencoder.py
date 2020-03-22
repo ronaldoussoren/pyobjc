@@ -7,27 +7,27 @@ class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
     def synchronizeTexture_slice_level_(self, a, b, c):
         pass
 
-    def copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_(
+    def copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_(  # noqa: B950
         self, a, b, c, d, e, f, g, h, i
     ):
         pass
 
-    def copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_(
+    def copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_(  # noqa: B950
         self, a, b, c, d, e, f, g, h, i
     ):
         pass
 
-    def copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_(
+    def copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_(  # noqa: B950
         self, a, b, c, d, e, f, g, h, i, j
     ):
         pass
 
-    def copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_(
+    def copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_(  # noqa: B950
         self, a, b, c, d, e, f, g, h, i
     ):
         pass
 
-    def copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_(
+    def copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_(  # noqa: B950
         self, a, b, c, d, e, f, g, h, i, j
     ):
         pass
@@ -35,7 +35,7 @@ class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
     def fillBuffer_range_value_(self, a, b, c):
         pass
 
-    def copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_(
+    def copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_(  # noqa: B950
         self, a, b, c, d, e, f, g, h
     ):
         pass
@@ -88,227 +88,227 @@ class TestMTLBlitCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             3,
             Metal.MTLOrigin.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             4,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             8,
             Metal.MTLOrigin.__typestr__,
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             4,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             8,
             Metal.MTLOrigin.__typestr__,
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             4,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_,  # noqa: B950
             8,
             Metal.MTLOrigin.__typestr__,
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             4,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             8,
             Metal.MTLOrigin.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_sourceBytesPerRow_sourceBytesPerImage_sourceSize_toTexture_destinationSlice_destinationLevel_destinationOrigin_options_,  # noqa: B950
             9,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,  # noqa: B950
             3,
             Metal.MTLOrigin.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,  # noqa: B950
             4,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_,  # noqa: B950
             8,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             3,
             Metal.MTLOrigin.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             4,
             Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             8,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_sourceOrigin_sourceSize_toBuffer_destinationOffset_destinationBytesPerRow_destinationBytesPerImage_options_,  # noqa: B950
             9,
             objc._C_NSUInteger,
         )
@@ -325,48 +325,48 @@ class TestMTLBlitCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,  # noqa: B950
             5,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,  # noqa: B950
             6,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,
+            TestMTLBlitCommandEncoderHelper.copyFromTexture_sourceSlice_sourceLevel_toTexture_destinationSlice_destinationLevel_sliceCount_levelCount_,  # noqa: B950
             7,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_,
+            TestMTLBlitCommandEncoderHelper.copyFromBuffer_sourceOffset_toBuffer_destinationOffset_size_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
@@ -406,23 +406,23 @@ class TestMTLBlitCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,
+            TestMTLBlitCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,
+            TestMTLBlitCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,  # noqa: B950
             2,
             objc._C_NSBOOL,
         )
 
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.resolveCounters_inRange_destinationBuffer_destinationOffset_,
+            TestMTLBlitCommandEncoderHelper.resolveCounters_inRange_destinationBuffer_destinationOffset_,  # noqa: B950
             1,
             Metal.NSRange.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLBlitCommandEncoderHelper.resolveCounters_inRange_destinationBuffer_destinationOffset_,
+            TestMTLBlitCommandEncoderHelper.resolveCounters_inRange_destinationBuffer_destinationOffset_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )

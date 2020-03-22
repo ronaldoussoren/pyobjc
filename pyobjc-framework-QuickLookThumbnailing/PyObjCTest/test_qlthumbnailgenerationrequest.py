@@ -13,7 +13,7 @@ if sys.maxsize > 2 ** 32:
                 1 << 0,
             )
             self.assertEqual(
-                QuickLookThumbnailing.QLThumbnailGenerationRequestRepresentationTypeLowQualityThumbnail,
+                QuickLookThumbnailing.QLThumbnailGenerationRequestRepresentationTypeLowQualityThumbnail,  # noqa: B950
                 1 << 1,
             )
             self.assertEqual(

@@ -128,12 +128,14 @@ def usage(progname):
     settings.mesg("Usage: %s <flags> <path>", progname)
     settings.mesg("Flags:")
     settings.mesg(
-        "       -sinceWhen <when>          Specify a time from whence to search for applicable events"
+        "       -sinceWhen <when>          "
+        "Specify a time from whence to search for applicable events"
     )
     settings.mesg("       -latency <seconds>         Specify latency")
     settings.mesg("       -flags <flags>             Specify flags as a number")
     settings.mesg(
-        "       -flush <seconds>           Invoke FSEventStreamFlushAsync() after the specified number of seconds."
+        "       -flush <seconds>           "
+        "Invoke FSEventStreamFlushAsync() after the specified number of seconds."
     )
     settings.mesg("")
     sys.exit(1)

@@ -101,12 +101,14 @@ class DragSupportDataSource(Cocoa.NSObject):
                     Cocoa.NSObservedObjectKey
                 )
 
-            # there should be exactly one item selected in the source controller, otherwise the destination controller won't be able to manipulate the relationship when we do addObject:
+            # there should be exactly one item selected in the source controller, otherwise
+            # the destination controller won't be able to manipulate the relationship when
+            # we do addObject:
             if (sourceArrayController is not None) and (
                 sourceArrayController.selectedObjects().count() == 1
             ):
                 context = destinationArrayController.managedObjectContext()
-                destinationControllerEntity = Cocoa.NSEntityDescription.entityForName_inManagedObjectContext_(
+                destinationControllerEntity = Cocoa.NSEntityDescription.entityForName_inManagedObjectContext_(  # noqa: B950
                     destinationArrayController.entityName(), context
                 )
 
@@ -119,7 +121,7 @@ class DragSupportDataSource(Cocoa.NSObject):
                     # take the URL and get the managed object - assume
                     # all controllers using the same context
                     url = Cocoa.NSURL.URLWithString_(urlString)
-                    objectID = context.persistentStoreCoordinator().managedObjectIDForURIRepresentation_(
+                    objectID = context.persistentStoreCoordinator().managedObjectIDForURIRepresentation_(  # noqa: B950
                         url
                     )
                     if objectID is not None:

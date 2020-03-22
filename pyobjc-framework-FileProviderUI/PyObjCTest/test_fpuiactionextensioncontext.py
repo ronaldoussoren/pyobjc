@@ -14,7 +14,7 @@ class TestFPUIActionExtensionContext(TestCase):
     @min_os_level("10.15")
     def test_methods10_15(self):
         self.assertArgIsBlock(
-            FileProviderUI.FPUIActionExtensionContext.completeRequestReturningItems_completionHandler_,
+            FileProviderUI.FPUIActionExtensionContext.completeRequestReturningItems_completionHandler_,  # noqa: B950
             1,
             b"vZ",
         )

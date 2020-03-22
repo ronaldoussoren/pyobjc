@@ -170,65 +170,65 @@ class TestMTLArgument(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,
+            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             0,
             b"o^v",
         )
         # XXX: Buffer size?
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,
+            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,
+            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,
+            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             3,
             Metal.MTLRegion.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,
+            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,
+            TestMTLArgumentHelper.getBytes_bytesPerRow_bytesPerImage_fromRegion_mipmapLevel_slice_,  # noqa: B950
             5,
             objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,
+            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             0,
             Metal.MTLRegion.__typestr__,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,
+            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,
+            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,
+            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             3,
             b"n^v",
         )
         # XXX: Buffer size?
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,
+            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,
+            TestMTLArgumentHelper.replaceRegion_mipmapLevel_slice_withBytes_bytesPerRow_bytesPerImage_,  # noqa: B950
             5,
             objc._C_NSUInteger,
         )

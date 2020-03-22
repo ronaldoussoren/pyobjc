@@ -266,7 +266,8 @@ class ImageBrowserController(Cocoa.NSWindowController):
     def imageBrowser_itemAtIndex_(self, view, index):
         return self.images[index]
 
-    # Implement some optional methods of the image browser  datasource protocol to allow for removing and reodering items.
+    # Implement some optional methods of the image browser  datasource protocol
+    # to allow for removing and reodering items.
 
     # -------------------------------------------------------------------------
     #   removeItemsAtIndexes:
@@ -332,7 +333,7 @@ class ImageBrowserController(Cocoa.NSWindowController):
                 filenames,
                 plformat,
                 errorDescription,
-            ) = Cocoa.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(
+            ) = Cocoa.NSPropertyListSerialization.propertyListFromData_mutabilityOption_format_errorDescription_(  # noqa: B950
                 data, Cocoa.kCFPropertyListImmutable, None, None
             )
 

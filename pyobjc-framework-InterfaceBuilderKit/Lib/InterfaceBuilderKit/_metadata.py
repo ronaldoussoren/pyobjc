@@ -1,6 +1,8 @@
 # Generated file, don't edit
 # Source: BridgeSupport/InterfaceBuilderKit.bridgesupport
 # Last update: Thu Jul 21 08:47:20 2011
+#
+# flake8: noqa
 
 import sys
 

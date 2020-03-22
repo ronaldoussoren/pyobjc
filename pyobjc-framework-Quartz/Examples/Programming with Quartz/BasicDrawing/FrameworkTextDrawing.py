@@ -45,7 +45,7 @@ def drawNSStringWithAttributes():
         # Use the font with the PostScript name "Times-Roman" at 40 point.
         Cocoa.NSFontAttributeName: Cocoa.NSFont.fontWithName_size_("Times-Roman", 40),
         # Set the color attribute to an opaque red.
-        Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(
+        Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(  # noqa: B950
             0.663, 0, 0.031, 1.0
         ),
     }
@@ -131,7 +131,7 @@ def drawWithNSLayout():
                 "Times-Roman", 40
             ),
             # Set the text color attribute to an opaque red.
-            Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(
+            Cocoa.NSForegroundColorAttributeName: Cocoa.NSColor.colorWithCalibratedRed_green_blue_alpha_(  # noqa: B950
                 0.663, 0, 0.031, 1.0
             ),
         }

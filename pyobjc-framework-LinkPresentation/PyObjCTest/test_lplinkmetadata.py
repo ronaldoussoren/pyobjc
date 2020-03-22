@@ -8,7 +8,7 @@ if sys.maxsize > 2 ** 32:
     class TestLPMetadataProvider(TestCase):
         def test_methods(self):
             self.assertArgIsBlock(
-                LinkPresentation.LPMetadataProvider.startFetchingMetadataForURL_completionHandler_,
+                LinkPresentation.LPMetadataProvider.startFetchingMetadataForURL_completionHandler_,  # noqa: B950
                 1,
                 b"v@@",
             )
