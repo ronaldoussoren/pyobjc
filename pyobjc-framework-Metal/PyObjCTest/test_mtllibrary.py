@@ -88,7 +88,7 @@ class TestMTLLibrary(TestCase):
 
     @min_os_level("10.11")
     def test_methods10_11(self):
-        self.assertResultIsBOOL(Metal.MTLVertexAttribute.isActive)
+        self.assertResultIsBOOL(Metal.MTLVertexAttribute.alloc().init().isActive)
 
         self.assertResultIsBOOL(Metal.MTLCompileOptions.alloc().init().fastMathEnabled)
         self.assertArgIsBOOL(

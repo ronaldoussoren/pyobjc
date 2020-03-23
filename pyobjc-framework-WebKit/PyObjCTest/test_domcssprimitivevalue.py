@@ -12,7 +12,7 @@ class TestDOMCSSPrimitiveValue(TestCase):
         self.assertEqual(WebKit.DOM_CSS_PX, 5)
         self.assertEqual(WebKit.DOM_CSS_CM, 6)
         self.assertEqual(WebKit.DOM_CSS_MM, 7)
-        self.assertEqual(WebKit.DOM_CSWebKit.S_IN, 8)
+        self.assertEqual(WebKit.DOM_CSS_IN, 8)
         self.assertEqual(WebKit.DOM_CSS_PT, 9)
         self.assertEqual(WebKit.DOM_CSS_PC, 10)
         self.assertEqual(WebKit.DOM_CSS_DEG, 11)

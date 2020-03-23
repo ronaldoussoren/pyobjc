@@ -144,58 +144,78 @@ class TestCharacterSet(TestCase):
         CoreFoundation.CFCharacterSetAddCharactersInRange(charset, (1, 10))
         self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4)))
 
-        CoreFoundation.CFCharacterSetRemoveCharactersInRange(set, (4, 2))
-        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(set, chr(4)))
+        CoreFoundation.CFCharacterSetRemoveCharactersInRange(charset, (4, 2))
+        self.assertFalse(
+            CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4))
+        )
 
         self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"5".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"5".decode("latin1")
+            )
         )
         CoreFoundation.CFCharacterSetAddCharactersInString(
-            set, b"012345".decode("latin1")
+            charset, b"012345".decode("latin1")
         )
         self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"5".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"5".decode("latin1")
+            )
         )
 
         self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"a".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"a".decode("latin1")
+            )
         )
         CoreFoundation.CFCharacterSetRemoveCharactersInString(
-            set, b"ab".decode("latin1")
+            charset, b"ab".decode("latin1")
         )
         self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"a".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"a".decode("latin1")
+            )
         )
 
         self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"9".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"9".decode("latin1")
+            )
         )
         CoreFoundation.CFCharacterSetUnion(
-            set,
+            charset,
             CoreFoundation.CFCharacterSetGetPredefined(
                 CoreFoundation.kCFCharacterSetDecimalDigit
             ),
         )
         self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"9".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"9".decode("latin1")
+            )
         )
 
         CoreFoundation.CFCharacterSetIntersect(
-            set,
+            charset,
             CoreFoundation.CFCharacterSetGetPredefined(
                 CoreFoundation.kCFCharacterSetLetter
             ),
         )
         self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"9".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"9".decode("latin1")
+            )
         )
 
-        CoreFoundation.CFCharacterSetInvert(set)
+        CoreFoundation.CFCharacterSetInvert(charset)
         self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"9".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"9".decode("latin1")
+            )
         )
         self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(set, b"e".decode("latin1"))
+            CoreFoundation.CFCharacterSetIsCharacterMember(
+                charset, b"e".decode("latin1")
+            )
         )
 
     def testConstants(self):

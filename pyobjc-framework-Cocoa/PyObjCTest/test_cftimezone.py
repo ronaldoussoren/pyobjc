@@ -65,7 +65,7 @@ class TestTimeZone(TestCase):
                 map2[b"AAA".decode("ascii")], b"Europe/Amsterdam".decode("ascii")
             )
         finally:
-            CoreFoundation.CFTimeZoneSetAbbreviationDictionary(map)
+            CoreFoundation.CFTimeZoneSetAbbreviationDictionary(abbrevs)
 
     def testZoneObject(self):
         with open("/usr/share/zoneinfo/posixrules", "rb") as fp:

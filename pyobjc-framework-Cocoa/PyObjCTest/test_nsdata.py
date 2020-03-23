@@ -261,7 +261,7 @@ class TestNSData(TestCase):
 
             self.assertEqual(len(bytes_value), data.length())
             self.assertEqual(len(mutableBytes), mutableData.length())
-            self.assertEqual(bytes, mutableBytes)
+            self.assertEqual(bytes_value, mutableBytes)
 
             mutableBytes[0 : len(mutableBytes)] = bytes_value[0 : len(bytes_value)]
 
