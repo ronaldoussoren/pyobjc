@@ -16,7 +16,7 @@ in pure Python. See our tutorial for an example of this.
 Release information
 -------------------
 
-PyObjC 6.1 was released on 2019-11-06. See the :doc:`changelog <changelog>` for more information. PyObjC 6.1 supports Python 3.6 and later.
+PyObjC 6.2 was released on 2020-03-25. See the :doc:`changelog <changelog>` for more information. PyObjC 6.2 supports Python 3.6 and later.
 
 PyObjC 5.3 was released on 2019-10-16. See the :doc:`changelog <changelog>` for more information.
 
@@ -30,7 +30,7 @@ PyObjC is regularly tested on macOS 10.14 and should work on macOS
 10.9 or later for the i386 and x86_64 architectures.
 
 PyObjC only supports macOS, and is not supported on other platforms (iOS,
-Linux, ...)
+Linux, ...).
 
 General documentation
 =====================

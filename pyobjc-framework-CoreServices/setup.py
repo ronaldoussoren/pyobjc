@@ -10,7 +10,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "6.2b1"
+VERSION = "6.2"
 
 subpackages = [
     "CoreServices.%s" % (fn,)

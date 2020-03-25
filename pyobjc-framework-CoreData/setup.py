@@ -12,7 +12,7 @@ import os
 
 from pyobjc_setup import setup, Extension
 
-VERSION = "6.2b1"
+VERSION = "6.2"
 
 setup(
     name="pyobjc-framework-CoreData",

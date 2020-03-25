@@ -3,14 +3,14 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 6.3
+Version 6.2
 -----------
 
 * The project has moved from Bitbucket to Github
 
 * Remove most remnants of Python 2 support
 
-* [in progress] clean up code quality issues found using flake8
+* Clean up code quality issues found using flake8
 
 * Add pre-commit hook to run black on all Python code.
 
@@ -42,10 +42,6 @@ Version 6.3
   instead of "@".
 
   Reported by Georg Seifert.
-
-
-Version 6.2
------------
 
 * #264: Added bindings for the Metal framework (new in macOS 10.11)
 

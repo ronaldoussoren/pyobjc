@@ -14,7 +14,7 @@ and (Objective-)C frameworks
 """
 from pyobjc_setup import Extension, setup
 
-VERSION = "6.2b1"
+VERSION = "6.2"
 
 setup(
     name="pyobjc-framework-CFNetwork",
