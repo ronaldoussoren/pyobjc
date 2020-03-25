@@ -26,3 +26,4 @@ syntax: glob
 *.orig
 unittest2-*.egg
 *.swp
+.coverage.*
