@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.2.1
+-------------
+
+* Issue #299: Ensure package 'pyobjc' won't try to build the PubSub bindings on macOS 10.15
+
+  Reported by Thomas Buchberger
+
 Version 6.2
 -----------
 

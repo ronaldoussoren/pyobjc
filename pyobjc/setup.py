@@ -109,7 +109,7 @@ FRAMEWORK_WRAPPERS = [
     ("Photos", "10.11", None),
     ("PhotosUI", "10.11", None),
     ("PreferencePanes", None, None),
-    ("PubSub", "10.5", None),
+    ("PubSub", "10.5", "10.14"),
     ("PushKit", "10.15", None),
     ("QTKit", "10.5", "10.15"),
     ("Quartz", None, None),
