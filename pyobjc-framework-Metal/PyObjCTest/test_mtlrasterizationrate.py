@@ -1,5 +1,5 @@
 import Metal
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -135,6 +135,6 @@ class TestMTLRasterizationRate(TestCase):
             1,
         )
 
-    @min_sdk_level("10.15")
+    @min_os_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("MTLRasterizationRateMap")

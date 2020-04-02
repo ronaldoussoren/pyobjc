@@ -1,6 +1,6 @@
 import AVFoundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVAssetDownloadTaskHelper(AVFoundation.NSObject):
@@ -52,6 +52,6 @@ class TestAVAssetDownloadTask(TestCase):
             AVFoundation.CMTimeRange.__typestr__,
         )
 
-    @min_sdk_level("10.15")
+    @min_os_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("AVAssetDownloadDelegate")

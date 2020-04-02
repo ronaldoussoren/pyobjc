@@ -1,5 +1,5 @@
 import Metal
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, os_release, os_level_key
 
 
 class TestMTLTypes(TestCase):
@@ -44,6 +44,13 @@ class TestMTLTypes(TestCase):
         self.assertIsInstance(v, Metal.MTLSamplePosition)
         self.assertEqual(v, (0.5, 1.5))
 
+    @min_sdk_level("10.15")
+    def test_functions10_15(self):
+        if os_level_key(os_release()) < os_level_key("10.15"):
+            # The latest Xcode that supports macOS 10.14 supports
+            # the 10.15 SDK, but not this API
+            if not hasattr(Metal, "MTLCoordinate2DMake"):
+                return
         v = Metal.MTLCoordinate2DMake(0.5, 1.5)
         self.assertIsInstance(v, Metal.MTLCoordinate2D)
         self.assertEqual(v, (0.5, 1.5))

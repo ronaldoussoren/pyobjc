@@ -38,7 +38,7 @@ static PyObjC_function_map function_map[] = {
     {"MTLIndirectCommandBufferExecutionRangeMake",
      (PyObjC_Function_Pointer)&MTLIndirectCommandBufferExecutionRangeMake},
 #endif
-#if PyObjC_BUILD_RELEASE >= 1015
+#if PyObjC_BUILD_RELEASE >= 1015 && __apple_build_version__ >= 11030000
     {"MTLCoordinate2DMake",
      (PyObjC_Function_Pointer)&MTLCoordinate2DMake},
 #endif

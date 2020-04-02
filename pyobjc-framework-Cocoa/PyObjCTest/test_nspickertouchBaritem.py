@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSPickerTouchBarItem(TestCase):
@@ -12,7 +12,7 @@ class TestNSPickerTouchBarItem(TestCase):
         self.assertEqual(AppKit.NSPickerTouchBarItemControlRepresentationExpanded, 1)
         self.assertEqual(AppKit.NSPickerTouchBarItemControlRepresentationCollapsed, 2)
 
-    @min_sdk_level("10.15")
+    @min_os_level("10.15")
     def test_nethods10_15(self):
         self.assertArgIsSEL(
             AppKit.NSPickerTouchBarItem.pickerTouchBarItemWithIdentifier_labels_selectionMode_target_action_,  # noqa: B950
