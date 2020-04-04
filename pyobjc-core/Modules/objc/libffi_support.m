@@ -2077,6 +2077,13 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
         if (!PyMethod_Check(callable) || PyMethod_Self(callable) == NULL) {
             return func_code->co_argcount;
         } else {
+            if (func_code->co_argcount == 0) {
+                if (!*haveVarArgs) {
+                    PyErr_SetString(PyExc_TypeError, "Method without possitional arguments");
+                    return -1;
+                }
+                return 0;
+            }
             return func_code->co_argcount - 1;
         }
 
@@ -2394,7 +2401,7 @@ PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo, PyObject* callable)
             !haveVarKwds) {
             /* OK */
 
-        } else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
+        } else if ((stubUserdata->argCount <= 1) && haveVarArgs) {
             /* OK */
 
         } else {

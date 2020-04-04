@@ -226,6 +226,32 @@ class TestBlocks(TestCase):
 
     @min_os_level("10.6")
     @onlyIf(blocksEnabled, "no blocks")
+    def test_block_with_varargs(self):
+        obj = OCTestBlock.alloc().init()
+
+        class C:
+            def __init__(self):
+                self._called = 0
+
+            def callback(*args):
+                args[0]._called += 1
+
+        helper = C()
+        obj.callIntBlock_withValue_(helper.callback, 43)
+        self.assertEqual(helper._called, 1)
+
+        class D:
+            def __init__(self):
+                self._called = 0
+
+            def callback():
+                pass
+
+        helper = D()
+        self.assertRaises(TypeError, obj.callIntBlock_withValue_, helper.callback, 43)
+
+    @min_os_level("10.6")
+    @onlyIf(blocksEnabled, "no blocks")
     def testStackBlocksWithDirectUse(self):
         obj = OCTestBlock.alloc().init()
         tester = BlocksCompletion.alloc().init()

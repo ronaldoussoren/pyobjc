@@ -13,6 +13,12 @@ Version 6.2.1
 * Minor tweaks to build and pass tests on macOS 10.14 with the latest Xcode
   that can be installed on that version of macOS.
 
+* Issue #300: Fix SystemError in block edge case
+
+  PyObjC raised a SystemError when converting a callable into
+  an ObjC block when the callable is a bound method without
+  positional arguments.
+
 Version 6.2
 -----------
 
