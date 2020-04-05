@@ -63,6 +63,7 @@ def parseDG(fdata):
             value = item[3]
             value = value.replace(r"\\-", "-")
             value = value.replace(r"\-", "-")
+            value = value.replace("\n    //", "")
             value = codecs.decode(value, "unicode_escape")
             result.append(("expect", value))
 
