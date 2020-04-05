@@ -214,12 +214,13 @@ def get_sdk():
                 sdk = cflags[i + 1]
                 break
             elif val.find("-isysroot") == 0:
-                sdk = val[len("-isysroot"):]
+                sdk = val[len("-isysroot") :]
                 break
         if sdk:
             break
 
     return sdk
+
 
 def get_sdk_level():
     sdk = get_sdk()
@@ -237,7 +238,7 @@ def get_sdk_level():
         try:
             pl = plistlib.readPlist(os.path.join(sdk, "SDKSettings.plist"))
             return pl["Version"]
-        except:
+        except Exception:
             raise SystemExit("Cannot determine SDK version")
     else:
         return sdkname[6:-4]
@@ -416,7 +417,7 @@ def Extension(*args, **kwds):
         cflags.append("-Wno-deprecated-declarations")
 
     sdk = get_sdk()
-    if not sdk: # and os.path.exists('/usr/include/stdio.h'):
+    if not sdk:  # and os.path.exists('/usr/include/stdio.h'):
         # We're likely on a system with the Xcode Command Line Tools.
         # Explicitly use the most recent SDK to avoid compile problems.
         data = subprocess.check_output(

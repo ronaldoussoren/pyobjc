@@ -19,9 +19,13 @@ Version 6.2.1
   an ObjC block when the callable is a bound method without
   positional arguments.
 
-** Issue #275: Fix crash on catalina caused by writing to read-only memory.
+* Issue #275: Fix crash on catalina caused by writing to read-only memory.
 
    Patch by Dan Villiom Podlaski Christiansen
+
+* PR #302: Make sure the SDK detection works when the version is not in the SDK name
+
+  Patch by Joshua Root
 
 Version 6.2
 -----------
