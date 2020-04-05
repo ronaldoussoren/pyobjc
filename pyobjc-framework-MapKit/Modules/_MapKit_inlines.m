@@ -3,8 +3,8 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#if defined(MAC_OS_X_VERSION_10_5) &&                                                    \
-    MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_6
+#if defined(MAC_OS_X_VERSION_10_5)                                                       \
+    && MAC_OS_X_VERSION_MIN_REQUIRED <= MAC_OS_X_VERSION_10_6
 /* For some reason the CoreLocation headers don't work properly when
  *   * the deployment target is 10.5 (using the 10.11 SDK).
  *     */
@@ -99,8 +99,8 @@ init_inlines(void)
         INITERROR();
     }
 
-    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map)) <
-        0) {
+    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))
+        < 0) {
         INITERROR();
     }
 

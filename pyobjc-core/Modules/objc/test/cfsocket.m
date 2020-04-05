@@ -41,7 +41,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_cfsocket(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestCFSocket",
-                           PyObjC_IdToPython([OC_TestCFSocket class])) < 0) {
+                           PyObjC_IdToPython([OC_TestCFSocket class]))
+        < 0) {
         return NULL;
     }
 

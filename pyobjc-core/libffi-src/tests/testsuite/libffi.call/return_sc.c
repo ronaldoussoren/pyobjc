@@ -7,32 +7,31 @@
 /* { dg-do run } */
 #include "ffitest.h"
 
-static signed char return_sc(signed char sc)
+static signed char
+return_sc(signed char sc)
 {
-  return sc;
+    return sc;
 }
-int main (void)
+int
+main(void)
 {
-  ffi_cif cif;
-  ffi_type *args[MAX_ARGS];
-  void *values[MAX_ARGS];
-  ffi_arg rint;
-  signed char sc;
-  unsigned long ul;
+    ffi_cif       cif;
+    ffi_type*     args[MAX_ARGS];
+    void*         values[MAX_ARGS];
+    ffi_arg       rint;
+    signed char   sc;
+    unsigned long ul;
 
-  args[0] = &ffi_type_schar;
-  values[0] = &sc;
+    args[0]   = &ffi_type_schar;
+    values[0] = &sc;
 
-  /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
-		     &ffi_type_schar, args) == FFI_OK);
+    /* Initialize the cif */
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ffi_type_schar, args) == FFI_OK);
 
-  for (sc = (signed char) -127;
-       sc < (signed char) 127; sc++)
-    {
-      ul++;
-      ffi_call(&cif, FFI_FN(return_sc), &rint, values);
-      CHECK(rint == (ffi_arg) sc);
+    for (sc = (signed char)-127; sc < (signed char)127; sc++) {
+        ul++;
+        ffi_call(&cif, FFI_FN(return_sc), &rint, values);
+        CHECK(rint == (ffi_arg)sc);
     }
-  exit(0);
+    exit(0);
 }

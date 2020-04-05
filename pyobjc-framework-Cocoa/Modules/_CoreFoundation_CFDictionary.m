@@ -2,14 +2,14 @@ static PyObject*
 mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
                                  PyObject* args)
 {
-    PyObject* pyDict;
-    PyObject* pyKeys;
-    PyObject* pyValues;
-    PyObject* result;
+    PyObject*       pyDict;
+    PyObject*       pyKeys;
+    PyObject*       pyValues;
+    PyObject*       result;
     CFDictionaryRef dict;
-    void* keys;
-    void* values;
-    CFIndex count;
+    void*           keys;
+    void*           values;
+    CFIndex         count;
 
     if (!PyArg_ParseTuple(args, "OOO", &pyDict, &pyKeys, &pyValues)) {
         return NULL;
@@ -24,7 +24,7 @@ mod_CFDictionaryGetKeysAndValues(PyObject* self __attribute__((__unused__)),
         keys = NULL;
     } else if (pyKeys == Py_None) {
         count = CFDictionaryGetCount(dict);
-        keys = malloc(sizeof(void*) * count);
+        keys  = malloc(sizeof(void*) * count);
         if (keys == NULL) {
             PyErr_NoMemory();
             return NULL;

@@ -22,7 +22,7 @@ use_map_jit(void)
     static int cached_result = -1;
 
     if (cached_result == -1) {
-        char buf[256];
+        char   buf[256];
         size_t buflen = 256;
 
         /*
@@ -34,7 +34,7 @@ use_map_jit(void)
         if (sysctlbyname("kern.osrelease", buf, &buflen, NULL, 0) == -1) {
             cached_result = 0;
         } else {
-            long ver = strtol(buf, NULL, 10);
+            long ver      = strtol(buf, NULL, 10);
             cached_result = (ver >= 18);
         }
     }
@@ -87,7 +87,7 @@ PyObjC_malloc_closure(void)
         }
     }
     ffi_closure* result = (ffi_closure*)closure_freelist;
-    closure_freelist = closure_freelist->next;
+    closure_freelist    = closure_freelist->next;
     return result;
 }
 
@@ -95,6 +95,6 @@ int
 PyObjC_free_closure(ffi_closure* cl)
 {
     ((freelist*)cl)->next = closure_freelist;
-    closure_freelist = (freelist*)cl;
+    closure_freelist      = (freelist*)cl;
     return 0;
 }

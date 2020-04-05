@@ -3,9 +3,9 @@ mod_CFSetGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* pySet;
     PyObject* pyValues;
-    CFSetRef set;
-    void* values;
-    CFIndex count;
+    CFSetRef  set;
+    void*     values;
+    CFIndex   count;
 
     if (!PyArg_ParseTuple(args, "OO", &pySet, &pyValues)) {
 
@@ -18,9 +18,9 @@ mod_CFSetGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 
     if (pyValues == PyObjC_NULL) {
         values = NULL;
-        count = 0;
+        count  = 0;
     } else if (pyValues == Py_None) {
-        count = CFSetGetCount(set);
+        count  = CFSetGetCount(set);
         values = malloc(sizeof(void*) * count);
         if (values == NULL) {
             PyErr_NoMemory();

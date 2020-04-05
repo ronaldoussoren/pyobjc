@@ -106,7 +106,7 @@ func9(void)
 typedef void (*F)(void);
 static struct function {
     char* name;
-    F function;
+    F     function;
 } gFunctionMap[] = {{"func1", (F)func1}, {"func2", (F)func2}, {"func3", (F)func3},
                     {"func4", (F)func4}, {"func5", (F)func5}, {"func6", (F)func6},
                     {"func7", (F)func7}, {"func8", (F)func8}, {"func9", (F)func9},
@@ -134,7 +134,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_deprecations(void)
     }
 
     if (PyModule_AddObject(m, "OCTestDeprecations",
-                           PyObjC_IdToPython([OCTestDeprecations class])) < 0) {
+                           PyObjC_IdToPython([OCTestDeprecations class]))
+        < 0) {
         return NULL;
     }
 

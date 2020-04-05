@@ -34,8 +34,8 @@ static CFStringRef
 m_copyDescription_python(const void* value)
 {
     CFStringRef result;
-    PyObject* description;
-    int r;
+    PyObject*   description;
+    int         r;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -66,21 +66,21 @@ static void
 m_FSEVentStreamCallback(ConstFSEventStreamRef streamRef, void* clientCallbackInfo,
                         size_t numEvents, void* eventPaths,
                         const FSEventStreamEventFlags eventFlags[],
-                        const FSEventStreamEventId eventIds[])
+                        const FSEventStreamEventId    eventIds[])
 {
-    PyGILState_STATE state = PyGILState_Ensure();
+    PyGILState_STATE         state = PyGILState_Ensure();
     FSEventStreamCreateFlags flags;
-    PyObject* callback;
-    PyObject* info;
-    PyObject* v;
-    PyObject* paths;
+    PyObject*                callback;
+    PyObject*                info;
+    PyObject*                v;
+    PyObject*                paths;
 
     v = PyTuple_GetItem((PyObject*)clientCallbackInfo, 0);
     if (PyObjC_PythonToObjC(@encode(FSEventStreamCreateFlags), v, &flags) < 0) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    info = PyTuple_GetItem((PyObject*)clientCallbackInfo, 1);
+    info     = PyTuple_GetItem((PyObject*)clientCallbackInfo, 1);
     callback = PyTuple_GetItem((PyObject*)clientCallbackInfo, 2);
 
     if (flags & kFSEventStreamCreateFlagUseCFTypes) {
@@ -168,8 +168,8 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     }
 
     FSEventStreamEventId sinceWhen;
-    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen) <
-        0) {
+    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen)
+        < 0) {
         return NULL;
     }
 
@@ -194,7 +194,7 @@ m_FSEventStreamCreate(PyObject* self __attribute__((__unused__)), PyObject* args
     }
 
     FSEventStreamContext context = m_python_context_template;
-    context.info = info;
+    context.info                 = info;
 
     FSEventStreamRef stream = NULL;
 
@@ -270,8 +270,8 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
     }
 
     FSEventStreamEventId sinceWhen;
-    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen) <
-        0) {
+    if (PyObjC_PythonToObjC(@encode(FSEventStreamEventId), py_sinceWhen, &sinceWhen)
+        < 0) {
         return NULL;
     }
 
@@ -296,7 +296,7 @@ m_FSEventStreamCreateRelativeToDevice(PyObject* self __attribute__((__unused__))
     }
 
     FSEventStreamContext context = m_python_context_template;
-    context.info = info;
+    context.info                 = info;
 
     FSEventStreamRef stream = NULL;
 

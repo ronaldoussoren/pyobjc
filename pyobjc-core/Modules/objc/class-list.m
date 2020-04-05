@@ -13,11 +13,11 @@ PyObjC_ClassCount(void)
 PyObject*
 PyObjC_GetClassList(void)
 {
-    PyObject* result = NULL;
-    Class* buffer = NULL;
-    int bufferLen = 0;
-    int neededLen = 0;
-    int i;
+    PyObject* result    = NULL;
+    Class*    buffer    = NULL;
+    int       bufferLen = 0;
+    int       neededLen = 0;
+    int       i;
 
     /*
      * objc_getClassList returns the number of classes known in the runtime,
@@ -32,7 +32,7 @@ PyObjC_GetClassList(void)
      */
     neededLen = objc_getClassList(NULL, 0);
     bufferLen = 0;
-    buffer = NULL;
+    buffer    = NULL;
 
     while (bufferLen < neededLen) {
         Class* newBuffer;
@@ -53,7 +53,7 @@ PyObjC_GetClassList(void)
             goto error;
         }
 
-        buffer = newBuffer;
+        buffer    = newBuffer;
         newBuffer = NULL;
         neededLen = objc_getClassList(buffer, bufferLen);
     }

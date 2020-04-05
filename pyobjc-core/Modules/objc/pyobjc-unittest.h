@@ -57,7 +57,7 @@
 static inline void
 unittest_assert_failed(const char* file, int line, char* msg, ...)
 {
-    char buf[10240];
+    char    buf[10240];
     va_list ap;
 
     va_start(ap, msg);

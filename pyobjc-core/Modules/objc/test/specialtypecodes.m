@@ -14,12 +14,12 @@ typedef unsigned int NSUInteger;
 #endif
 
 typedef struct _EmbeddedBool {
-    int count;
+    int  count;
     BOOL isValid;
 } EmbeddedBoolStruct;
 
 typedef struct _EmbeddedBoolArray {
-    int count;
+    int  count;
     BOOL valid[4];
 } EmbeddedBoolArrayStruct;
 
@@ -30,10 +30,10 @@ typedef struct _EmbeddedBoolArray {
 
 @implementation OC_TestSpecialTypeCode
 
-static BOOL gBOOLValues[] = {YES, NO};
-static UniChar gUniCharValues[] = {'a', 55, 9243, 'b'};
-static char gTextCharValues[] = {'a', 55, 'z'};
-static char gNumCharValues[] = {1, 2, 3, 4};
+static BOOL    gBOOLValues[]     = {YES, NO};
+static UniChar gUniCharValues[]  = {'a', 55, 9243, 'b'};
+static char    gTextCharValues[] = {'a', 55, 'z'};
+static char    gNumCharValues[]  = {1, 2, 3, 4};
 
 - (instancetype)init
 {
@@ -48,28 +48,28 @@ static char gNumCharValues[] = {1, 2, 3, 4};
 - (BOOL)BOOLValue
 {
     BOOL result = gBOOLValues[_idx];
-    _idx = (_idx + 1) % (sizeof(gBOOLValues) / sizeof(BOOL));
+    _idx        = (_idx + 1) % (sizeof(gBOOLValues) / sizeof(BOOL));
     return result;
 }
 
 - (UniChar)UniCharValue
 {
     UniChar result = gUniCharValues[_idx];
-    _idx = (_idx + 1) % (sizeof(gUniCharValues) / sizeof(UniChar));
+    _idx           = (_idx + 1) % (sizeof(gUniCharValues) / sizeof(UniChar));
     return result;
 }
 
 - (char)byteValue
 {
     char result = gTextCharValues[_idx];
-    _idx = (_idx + 1) % (sizeof(gTextCharValues) / sizeof(char));
+    _idx        = (_idx + 1) % (sizeof(gTextCharValues) / sizeof(char));
     return result;
 }
 
 - (char)int8Value
 {
     char result = gNumCharValues[_idx];
-    _idx = (_idx + 1) % (sizeof(gNumCharValues) / sizeof(char));
+    _idx        = (_idx + 1) % (sizeof(gNumCharValues) / sizeof(char));
     return result;
 }
 
@@ -236,10 +236,10 @@ static char gNumCharValues[] = {1, 2, 3, 4};
 - (NSObject*)UniCharArrayOf4InOut:(UniChar*)buffer
 {
     NSObject* result = [NSString stringWithCharacters:buffer length:4];
-    buffer[0] = 'h';
-    buffer[1] = 'a';
-    buffer[2] = 'n';
-    buffer[3] = 'd';
+    buffer[0]        = 'h';
+    buffer[1]        = 'a';
+    buffer[2]        = 'n';
+    buffer[3]        = 'd';
     return result;
 }
 - (NSObject*)UniCharArrayOf4In:(UniChar*)buffer
@@ -281,24 +281,24 @@ static char gNumCharValues[] = {1, 2, 3, 4};
 - (NSObject*)byteArrayOf4InOut:(char*)buffer
 {
     char tmp[5];
-    int i;
+    int  i;
     for (i = 0; i < 4; i++) {
         tmp[i] = buffer[i];
     }
-    tmp[4] = 0;
+    tmp[4]           = 0;
     NSObject* result = [NSString stringWithCString:tmp
                                           encoding:NSISOLatin1StringEncoding];
-    buffer[0] = 'h';
-    buffer[1] = 'a';
-    buffer[2] = 'n';
-    buffer[3] = 'd';
+    buffer[0]        = 'h';
+    buffer[1]        = 'a';
+    buffer[2]        = 'n';
+    buffer[3]        = 'd';
     return result;
 }
 
 - (NSObject*)byteArrayOf4In:(char*)buffer
 {
     char tmp[5];
-    int i;
+    int  i;
     for (i = 0; i < 4; i++) {
         tmp[i] = buffer[i];
     }
@@ -309,7 +309,7 @@ static char gNumCharValues[] = {1, 2, 3, 4};
 - (NSObject*)int8StringArg:(char*)value
 {
     NSMutableArray* a = [[NSMutableArray alloc] init];
-    int i;
+    int             i;
 
     for (i = 0; value[i] != 0; i++) {
         [a addObject:[NSNumber numberWithInt:value[i]]];
@@ -337,10 +337,10 @@ static char gNumCharValues[] = {1, 2, 3, 4};
                                                  [NSNumber numberWithInt:buffer[1]],
                                                  [NSNumber numberWithInt:buffer[2]],
                                                  [NSNumber numberWithInt:buffer[3]], nil];
-    buffer[0] = 'h';
-    buffer[1] = 'a';
-    buffer[2] = 'n';
-    buffer[3] = 'd';
+    buffer[0]        = 'h';
+    buffer[1]        = 'a';
+    buffer[2]        = 'n';
+    buffer[3]        = 'd';
     return result;
 }
 
@@ -383,7 +383,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_specialtypecodes(voi
     }
 
     if (PyModule_AddObject(m, "OC_TestSpecialTypeCode",
-                           PyObjC_IdToPython([OC_TestSpecialTypeCode class])) < 0) {
+                           PyObjC_IdToPython([OC_TestSpecialTypeCode class]))
+        < 0) {
         return NULL;
     }
 

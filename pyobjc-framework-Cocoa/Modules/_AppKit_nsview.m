@@ -2,12 +2,12 @@ static PyObject*
 call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
                                       PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
-    PyObject* v;
-    NSRect* rects;
-    PyObject *arg1, *arg2;
-    NSInteger count;
+    PyObject*         v;
+    NSRect*           rects;
+    PyObject *        arg1, *arg2;
+    NSInteger         count;
 
     if (!PyArg_ParseTuple(arguments, "OO", &arg1, &arg2)) {
         return NULL;
@@ -63,7 +63,8 @@ setup_nsview(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(classNSView, @selector(getRectsBeingDrawn:count:),
                                      call_NSView_getRectsBeingDrawn_count_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }

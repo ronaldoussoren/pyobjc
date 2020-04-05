@@ -1,6 +1,6 @@
 
 @interface OCReleasedBuffer : NSObject {
-    BOOL have_buffer;
+    BOOL      have_buffer;
     Py_buffer buffer;
 }
 - (instancetype)initWithPythonBuffer:(PyObject*)object writable:(BOOL)writable;

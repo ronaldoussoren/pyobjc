@@ -88,8 +88,8 @@
         Py_CLEAR(value);
 
 #ifdef PyObjC_STR_CACHE_IMP
-        imp_length = 0xDEADBEEF;
-        imp_charAtIndex = 0xDEADBEEF;
+        imp_length        = 0xDEADBEEF;
+        imp_charAtIndex   = 0xDEADBEEF;
         imp_getCharacters = 0xDEADBEEF;
 #endif /* PyObjC_STR_CACHE_IMP */
 
@@ -207,7 +207,7 @@
            encoding:(NSStringEncoding)encoding
 {
     char* py_encoding = NULL;
-    int byteorder = 0;
+    int   byteorder   = 0;
 
     /*
      * Call the super initializer first.
@@ -276,7 +276,7 @@
      * Python 3.3 or later anyway.
      */
 
-    NSString* tmpval = [[NSString alloc] initWithBytes:bytes
+    NSString*  tmpval    = [[NSString alloc] initWithBytes:bytes
                                                 length:length
                                               encoding:encoding];
     Py_ssize_t charcount = [tmpval length];
@@ -348,7 +348,7 @@
                 }
 
                 selfAsPython = PyObjCObject_New(self, 0, YES);
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+                setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
                 v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
                 Py_DECREF(cdr);

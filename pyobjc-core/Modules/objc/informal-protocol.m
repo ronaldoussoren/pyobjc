@@ -16,7 +16,7 @@ PyDoc_STRVAR(
 typedef struct {
     PyObject_HEAD
 
-        PyObject* name;
+    PyObject* name;
     PyObject* selectors;
 } PyObjCInformalProtocol;
 
@@ -35,8 +35,8 @@ proto_dealloc(PyObject* object)
 
     if (selToProtocolMapping) {
         for (i = 0; i < len; i++) {
-            PyObject* cur;
-            int r;
+            PyObject*       cur;
+            int             r;
             PyObjCSelector* tmp = (PyObjCSelector*)PyTuple_GET_ITEM(self->selectors, i);
 
             /* Remove method from the selector to protocol mappping,
@@ -65,7 +65,7 @@ static PyObject*
 proto_repr(PyObject* object)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;
-    PyObject* b = NULL;
+    PyObject*               b    = NULL;
 
     if (PyUnicode_Check(self->name)) {
         b = PyUnicode_AsEncodedString(self->name, NULL, NULL);
@@ -90,9 +90,9 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     static char* keywords[] = {"name", "selectors", NULL};
 
     PyObjCInformalProtocol* result;
-    PyObject* name;
-    PyObject* selectors;
-    Py_ssize_t i, len;
+    PyObject*               name;
+    PyObject*               selectors;
+    Py_ssize_t              i, len;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO:informal_protocol", keywords, &name,
                                      &selectors)) {
@@ -161,16 +161,16 @@ proto_traverse(PyObject* _self, visitproc visit, void* arg)
 
 static PyMemberDef proto_members[] = {
     {
-        .name = "__name__",
-        .type = T_OBJECT,
+        .name   = "__name__",
+        .type   = T_OBJECT,
         .offset = offsetof(PyObjCInformalProtocol, name),
-        .flags = READONLY,
+        .flags  = READONLY,
     },
     {
-        .name = "selectors",
-        .type = T_OBJECT,
+        .name   = "selectors",
+        .type   = T_OBJECT,
         .offset = offsetof(PyObjCInformalProtocol, selectors),
-        .flags = READONLY,
+        .flags  = READONLY,
     },
     {
         .name = NULL /* SENTINEL */
@@ -178,16 +178,16 @@ static PyMemberDef proto_members[] = {
 
 PyTypeObject PyObjCInformalProtocol_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.informal_protocol",
-    .tp_basicsize = sizeof(PyObjCInformalProtocol),
-    .tp_itemsize = 0,
-    .tp_dealloc = proto_dealloc,
-    .tp_repr = proto_repr,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = proto_cls_doc,
-    .tp_traverse = proto_traverse,
-    .tp_members = proto_members,
-    .tp_new = proto_new,
+    .tp_basicsize                                  = sizeof(PyObjCInformalProtocol),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = proto_dealloc,
+    .tp_repr                                       = proto_repr,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_doc                                        = proto_cls_doc,
+    .tp_traverse                                   = proto_traverse,
+    .tp_members                                    = proto_members,
+    .tp_new                                        = proto_new,
 };
 
 /*
@@ -200,9 +200,9 @@ PyObject*
 PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMethod)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;
-    Py_ssize_t i, len;
-    PyObject* cur;
-    PyObject* seq;
+    Py_ssize_t              i, len;
+    PyObject*               cur;
+    PyObject*               seq;
 
     if (!PyObjCInformalProtocol_Check(obj)) {
         PyErr_Format(PyExc_TypeError,
@@ -251,9 +251,9 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
                                   PyObject* clsdict)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;
-    Py_ssize_t i, len;
-    PyObject* cur;
-    PyObject* seq;
+    Py_ssize_t              i, len;
+    PyObject*               cur;
+    PyObject*               seq;
 
     if (!PyObjCInformalProtocol_Check(obj)) {
         PyErr_Format(PyExc_TypeError,
@@ -284,7 +284,7 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
 
     len = PySequence_Fast_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
-        SEL sel;
+        SEL       sel;
         PyObject* m;
 
         cur = PySequence_Fast_GET_ITEM(seq, i);

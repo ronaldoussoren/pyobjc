@@ -25,7 +25,7 @@ struct options {
     Py_ssize_t VAR = DFLT;                                                               \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
-                                void* c __attribute__((__unused__)))                     \
+                                void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
         return Py_BuildValue("n", VAR);                                                  \
     }                                                                                    \
@@ -48,7 +48,7 @@ struct options {
     int VAR = DFLT;                                                                      \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
-                                void* c __attribute__((__unused__)))                     \
+                                void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
         return Py_BuildValue("i", VAR);                                                  \
     }                                                                                    \
@@ -71,7 +71,7 @@ struct options {
     BOOL VAR = DFLT;                                                                     \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
-                                void* c __attribute__((__unused__)))                     \
+                                void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
         return PyBool_FromLong(VAR);                                                     \
     }                                                                                    \
@@ -91,7 +91,7 @@ struct options {
     PyObject* VAR = DFLT;                                                                \
                                                                                          \
     static PyObject* NAME##_get(PyObject* s __attribute__((__unused__)),                 \
-                                void* c __attribute__((__unused__)))                     \
+                                void*     c __attribute__((__unused__)))                 \
     {                                                                                    \
         if (VAR != NULL) {                                                               \
             Py_INCREF(VAR);                                                              \
@@ -179,8 +179,8 @@ static PyGetSetDef object_getset[] = {
 
 static PyObject*
 object_new(PyTypeObject* tp __attribute__((__unused__)),
-           PyObject* args __attribute__((__unused__)),
-           PyObject* kwds __attribute__((__unused__)))
+           PyObject*     args __attribute__((__unused__)),
+           PyObject*     kwds __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_ValueError, "Cannot create instances of this type");
     return NULL;
@@ -196,13 +196,13 @@ object_dont_call(PyObject* self __attribute__((__unused__)),
 }
 
 static PyMethodDef object_methods[] = {{
-                                           .ml_name = "__copy__",
-                                           .ml_meth = (PyCFunction)object_dont_call,
+                                           .ml_name  = "__copy__",
+                                           .ml_meth  = (PyCFunction)object_dont_call,
                                            .ml_flags = METH_VARARGS | METH_KEYWORDS,
                                        },
                                        {
-                                           .ml_name = "__reduce__",
-                                           .ml_meth = (PyCFunction)object_dont_call,
+                                           .ml_name  = "__reduce__",
+                                           .ml_meth  = (PyCFunction)object_dont_call,
                                            .ml_flags = METH_VARARGS | METH_KEYWORDS,
                                        },
                                        {
@@ -211,12 +211,12 @@ static PyMethodDef object_methods[] = {{
 
 static PyTypeObject PyObjCOptions_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc._OptionsType",
-    .tp_basicsize = sizeof(struct options),
-    .tp_itemsize = 0,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_methods = object_methods,
-    .tp_getset = object_getset,
-    .tp_new = object_new,
+    .tp_basicsize                                  = sizeof(struct options),
+    .tp_itemsize                                   = 0,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_methods                                    = object_methods,
+    .tp_getset                                     = object_getset,
+    .tp_new                                        = object_new,
 };
 
 int

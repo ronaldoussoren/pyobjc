@@ -11,19 +11,19 @@ m_CMIODeviceProcessAVCCommand(PyObject* self __attribute__((__unused__)), PyObje
 {
     static char* keywords[] = {"deviceID", "ioAVCCommand", NULL};
 
-    CMIODeviceID deviceID;
+    CMIODeviceID         deviceID;
     CMIODeviceAVCCommand avcCommand;
-    PyObject* py_avcCommand;
-    PyObject* t;
-    OSStatus r;
+    PyObject*            py_avcCommand;
+    PyObject*            t;
+    OSStatus             r;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID,
                                      &py_avcCommand)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CMIODeviceAVCCommand), py_avcCommand, &avcCommand) ==
-        -1) {
+    if (PyObjC_PythonToObjC(@encode(CMIODeviceAVCCommand), py_avcCommand, &avcCommand)
+        == -1) {
         return NULL;
     }
 
@@ -49,11 +49,11 @@ m_CMIODeviceProcessRS422Command(PyObject* self __attribute__((__unused__)),
 {
     static char* keywords[] = {"deviceID", "ioRS422Command", NULL};
 
-    CMIODeviceID deviceID;
+    CMIODeviceID           deviceID;
     CMIODeviceRS422Command rs422Command;
-    PyObject* py_rs422Command;
-    PyObject* t;
-    OSStatus r;
+    PyObject*              py_rs422Command;
+    PyObject*              t;
+    OSStatus               r;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "IO", keywords, &deviceID,
                                      &py_rs422Command)) {
@@ -61,7 +61,8 @@ m_CMIODeviceProcessRS422Command(PyObject* self __attribute__((__unused__)),
     }
 
     if (PyObjC_PythonToObjC(@encode(CMIODeviceRS422Command), py_rs422Command,
-                            &rs422Command) == -1) {
+                            &rs422Command)
+        == -1) {
         return NULL;
     }
 

@@ -8,7 +8,7 @@
 
 @interface OC_TestIdentity : NSObject {
     NSObject* storedObject;
-    int isClassic;
+    int       isClassic;
 }
 
 - (NSObject*)storedObject;
@@ -60,7 +60,7 @@
     }
     [object retain];
     storedObject = object;
-    isClassic = 0;
+    isClassic    = 0;
 }
 
 - (void)setStoredClassicObject:(NSObject*)object
@@ -69,7 +69,7 @@
         [storedObject release];
     }
     storedObject = object;
-    isClassic = 1;
+    isClassic    = 1;
 }
 
 - (void)setStoredObjectToResultOf:(SEL)aSelector on:(NSObject*)object
@@ -153,7 +153,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_identity(void)
         return NULL;
     }
     if (PyModule_AddObject(m, "OC_TestIdentity",
-                           PyObjC_IdToPython([OC_TestIdentity class])) < 0) {
+                           PyObjC_IdToPython([OC_TestIdentity class]))
+        < 0) {
         return NULL;
     }
 

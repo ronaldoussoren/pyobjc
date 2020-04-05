@@ -37,11 +37,11 @@ static CFMachPortContext mod_CFMachPortContext = {
 static void
 mod_CFMachPortCallBack(CFMachPortRef f, void* msg, CFIndex size, void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject*        info  = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_f = PyObjC_ObjCToPython(@encode(CFMachPortRef), &f);
-    PyObject* py_msg = PyBytes_FromStringAndSize(msg, size);
+    PyObject* py_f    = PyObjC_ObjCToPython(@encode(CFMachPortRef), &f);
+    PyObject* py_msg  = PyBytes_FromStringAndSize(msg, size);
     PyObject* py_size = PyLong_FromLongLong(size);
 
     PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNNO", py_f,
@@ -56,7 +56,7 @@ mod_CFMachPortCallBack(CFMachPortRef f, void* msg, CFIndex size, void* _info)
 static void
 mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject*        info  = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFMachPortRef), &f);
@@ -73,12 +73,12 @@ mod_CFMachPortInvalidationCallBack(CFMachPortRef f, void* _info)
 static PyObject*
 mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* callout;
-    PyObject* info;
-    PyObject* py_shouldFree;
+    PyObject*      py_allocator;
+    PyObject*      callout;
+    PyObject*      info;
+    PyObject*      py_shouldFree;
     CFAllocatorRef allocator;
-    Boolean shouldFree;
+    Boolean        shouldFree;
 
     if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &callout, &info, &py_shouldFree)) {
         return NULL;
@@ -94,7 +94,7 @@ mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     }
 
     CFMachPortContext context = mod_CFMachPortContext;
-    context.info = Py_BuildValue("OOO", callout, info, Py_None);
+    context.info              = Py_BuildValue("OOO", callout, info, Py_None);
     if (context.info == NULL) {
         return NULL;
     }
@@ -130,14 +130,14 @@ mod_CFMachPortCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_port;
-    PyObject* callout;
-    PyObject* info;
-    PyObject* py_shouldFree;
+    PyObject*      py_allocator;
+    PyObject*      py_port;
+    PyObject*      callout;
+    PyObject*      info;
+    PyObject*      py_shouldFree;
     CFAllocatorRef allocator;
-    mach_port_t port;
-    Boolean shouldFree;
+    mach_port_t    port;
+    Boolean        shouldFree;
 
     if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_port, &callout, &info,
                           &py_shouldFree)) {
@@ -158,7 +158,7 @@ mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObjec
     }
 
     CFMachPortContext context = mod_CFMachPortContext;
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info              = Py_BuildValue("OO", callout, info);
     if (context.info == NULL) {
         return NULL;
     }
@@ -194,9 +194,9 @@ mod_CFMachPortCreateWithPort(PyObject* self __attribute__((__unused__)), PyObjec
 static PyObject*
 mod_CFMachPortGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_f;
-    PyObject* py_context;
-    CFMachPortRef f;
+    PyObject*         py_f;
+    PyObject*         py_context;
+    CFMachPortRef     f;
     CFMachPortContext context = {.version = 0};
 
     if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {
@@ -246,8 +246,8 @@ static PyObject*
 mod_CFMachPortSetInvalidationCallBack(PyObject* self __attribute__((__unused__)),
                                       PyObject* args)
 {
-    PyObject* py_port;
-    PyObject* callout;
+    PyObject*     py_port;
+    PyObject*     callout;
     CFMachPortRef port;
 
     if (!PyArg_ParseTuple(args, "OO", &py_port, &callout)) {
@@ -304,7 +304,7 @@ static PyObject*
 mod_CFMachPortGetInvalidationCallBack(PyObject* self __attribute__((__unused__)),
                                       PyObject* args)
 {
-    PyObject* py_port;
+    PyObject*     py_port;
     CFMachPortRef port;
 
     if (!PyArg_ParseTuple(args, "O", &py_port)) {

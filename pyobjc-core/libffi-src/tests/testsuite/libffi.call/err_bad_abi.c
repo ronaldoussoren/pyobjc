@@ -9,36 +9,36 @@
 
 static void
 dummy_fn(ffi_cif* cif, void* resp, void** args, void* userdata)
-{}
-
-int main (void)
 {
-	ffi_cif cif;
+}
+
+int
+main(void)
+{
+    ffi_cif cif;
 #ifndef USING_MMAP
-	static ffi_closure cl;
+    static ffi_closure cl;
 #endif
-	ffi_closure *pcl;
-	void* args[1];
-	ffi_type* arg_types[1];
+    ffi_closure* pcl;
+    void*        args[1];
+    ffi_type*    arg_types[1];
 
 #ifdef USING_MMAP
-	pcl = allocate_mmap (sizeof(ffi_closure));
+    pcl = allocate_mmap(sizeof(ffi_closure));
 #else
-	pcl = &cl;
+    pcl = &cl;
 #endif
 
-	arg_types[0] = NULL;
-	args[0] = NULL;
+    arg_types[0] = NULL;
+    args[0]      = NULL;
 
-	CHECK(ffi_prep_cif(&cif, 255, 0, &ffi_type_void,
-		arg_types) == FFI_BAD_ABI);
+    CHECK(ffi_prep_cif(&cif, 255, 0, &ffi_type_void, arg_types) == FFI_BAD_ABI);
 
-	CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, &ffi_type_void,
-		arg_types) == FFI_OK);
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, &ffi_type_void, arg_types) == FFI_OK);
 
-	cif.abi= 255;
+    cif.abi = 255;
 
-	CHECK(ffi_prep_closure(pcl, &cif, dummy_fn, NULL) == FFI_BAD_ABI);
+    CHECK(ffi_prep_closure(pcl, &cif, dummy_fn, NULL) == FFI_BAD_ABI);
 
-	exit(0);
+    exit(0);
 }

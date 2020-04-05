@@ -17,7 +17,7 @@
 - (int)getDecimal:(out NSDecimal*)value
 {
     NSDecimalNumber* num = [NSDecimalNumber decimalNumberWithString:@"2.5"];
-    *value = [num decimalValue];
+    *value               = [num decimalValue];
     return 1;
 }
 
@@ -55,8 +55,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_decimal(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_TestDecimal",
-                           PyObjC_IdToPython([OC_TestDecimal class])) < 0) {
+    if (PyModule_AddObject(m, "OC_TestDecimal", PyObjC_IdToPython([OC_TestDecimal class]))
+        < 0) {
         return NULL;
     }
 

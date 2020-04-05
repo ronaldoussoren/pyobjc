@@ -64,7 +64,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_structpointer1(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestStructPointer",
-                           PyObjC_IdToPython([OC_TestStructPointer class])) < 0) {
+                           PyObjC_IdToPython([OC_TestStructPointer class]))
+        < 0) {
         return NULL;
     }
 

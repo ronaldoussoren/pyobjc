@@ -7,11 +7,11 @@
 #import <Foundation/Foundation.h>
 
 @interface ClassWithVariables : NSObject {
-    int intValue;
-    double floatValue;
-    char charValue;
-    char* strValue;
-    NSRect rectValue;
+    int       intValue;
+    double    floatValue;
+    char      charValue;
+    char*     strValue;
+    NSRect    rectValue;
     NSObject* nilValue;
     PyObject* pyValue;
     NSObject* objValue;
@@ -27,14 +27,15 @@
     if (self == nil)
         return nil;
 
-    intValue = 42;
+    intValue   = 42;
     floatValue = -10.055;
-    charValue = 'a';
-    strValue = "hello world";
-    rectValue = NSMakeRect(1, 2, 3, 4);
-    nilValue = nil;
+    charValue  = 'a';
+    strValue   = "hello world";
+    rectValue  = NSMakeRect(1, 2, 3, 4);
+    nilValue   = nil;
     PyObjC_BEGIN_WITH_GIL
-        pyValue = PySlice_New(PyLong_FromLong(1), PyLong_FromLong(10), PyLong_FromLong(4));
+        pyValue =
+            PySlice_New(PyLong_FromLong(1), PyLong_FromLong(10), PyLong_FromLong(4));
     PyObjC_END_WITH_GIL
     objValue = [[NSObject alloc] init];
     return self;
@@ -80,7 +81,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_instanceVariables(vo
     }
 
     if (PyModule_AddObject(m, "ClassWithVariables",
-                           PyObjC_IdToPython([ClassWithVariables class])) < 0) {
+                           PyObjC_IdToPython([ClassWithVariables class]))
+        < 0) {
         return NULL;
     }
 

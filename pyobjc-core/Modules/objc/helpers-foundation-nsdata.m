@@ -3,9 +3,9 @@
 static PyObject*
 call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    const void* bytes;
-    NSUInteger bytes_len;
-    PyObject* result;
+    const void*       bytes;
+    NSUInteger        bytes_len;
+    PyObject*         result;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "")) {
@@ -23,8 +23,8 @@ call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
-            result = NULL;
-            bytes = NULL;
+            result    = NULL;
+            bytes     = NULL;
             bytes_len = 0;
         }
     Py_END_ALLOW_THREADS
@@ -60,8 +60,8 @@ imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** ar
 
     PyObject* result;
     PyObject* arglist = NULL;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject* pyself  = NULL;
+    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -115,9 +115,9 @@ error:
 static PyObject*
 call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    void* bytes;
-    NSUInteger bytes_len;
-    PyObject* result;
+    void*             bytes;
+    NSUInteger        bytes_len;
+    PyObject*         result;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "")) {
@@ -136,8 +136,8 @@ call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* argu
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
-            result = NULL;
-            bytes = NULL;
+            result    = NULL;
+            bytes     = NULL;
             bytes_len = 0;
         }
     Py_END_ALLOW_THREADS
@@ -169,11 +169,11 @@ imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* r
 {
     id self = *(id*)args[0];
     // SEL _meth = *(SEL*)args[1];
-    void** pretval = (void**)resp;
+    void**    pretval = (void**)resp;
     PyObject* result;
     PyObject* arglist = NULL;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject* pyself  = NULL;
+    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -225,13 +225,14 @@ error:
 int
 PyObjC_setup_nsdata(void)
 {
-    Class classNSData = objc_lookUpClass("NSData");
+    Class classNSData        = objc_lookUpClass("NSData");
     Class classNSMutableData = objc_lookUpClass("NSMutableData");
 
     if (classNSData != NULL) {
 
         if (PyObjC_RegisterMethodMapping(classNSData, @selector(bytes), call_NSData_bytes,
-                                         imp_NSData_bytes) < 0) {
+                                         imp_NSData_bytes)
+            < 0) {
             return -1;
         }
     }
@@ -240,7 +241,8 @@ PyObjC_setup_nsdata(void)
 
         if (PyObjC_RegisterMethodMapping(classNSMutableData, @selector(mutableBytes),
                                          call_NSMutableData_mutableBytes,
-                                         imp_NSMutableData_mutableBytes) < 0) {
+                                         imp_NSMutableData_mutableBytes)
+            < 0) {
             return -1;
         }
     }

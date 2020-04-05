@@ -7,12 +7,12 @@ objc_NSApplicationMain(PyObject* self __attribute__((__unused__)), PyObject* arg
                        PyObject* kwds)
 {
     static char* keywords[] = {"argv", NULL};
-    char** argv = NULL;
-    int argc;
-    PyObject* arglist;
-    int i;
-    PyObject* v;
-    int res;
+    char**       argv       = NULL;
+    int          argc;
+    PyObject*    arglist;
+    int          i;
+    PyObject*    v;
+    int          res;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O:NSApplicationMain", keywords,
                                      &arglist)) {

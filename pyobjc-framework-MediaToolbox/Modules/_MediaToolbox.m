@@ -92,9 +92,9 @@ prepare_callback(MTAudioProcessingTapRef tap, CMItemCount maxFrames,
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (cb != Py_None) {
-        int have_error = 0;
+        int       have_error = 0;
         PyObject* py_tap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
-        PyObject* py_maxFrames = NULL;
+        PyObject* py_maxFrames        = NULL;
         PyObject* py_processingFormat = NULL;
         if (tap == NULL) {
             fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
@@ -179,10 +179,10 @@ process_callback(MTAudioProcessingTapRef tap, CMItemCount numberFrames,
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (cb != Py_None) {
-        int have_error = 0;
+        int       have_error = 0;
         PyObject* py_tap = PyObjC_ObjCToPython(@encode(MTAudioProcessingTapRef), &tap);
-        PyObject* py_numberFrames = NULL;
-        PyObject* py_flags = NULL;
+        PyObject* py_numberFrames    = NULL;
+        PyObject* py_flags           = NULL;
         PyObject* py_bufferListInOut = NULL;
         if (tap == NULL) {
             fprintf(stderr, "Ignoring exception in MTAudioProcessing callback\n");
@@ -253,13 +253,13 @@ process_callback(MTAudioProcessingTapRef tap, CMItemCount numberFrames,
 }
 
 static MTAudioProcessingTapCallbacks callback_template = {
-    .version = kMTAudioProcessingTapCallbacksVersion_0,
+    .version    = kMTAudioProcessingTapCallbacksVersion_0,
     .clientInfo = NULL,
-    .init = init_callback,
-    .finalize = finalize_callback,
-    .prepare = prepare_callback,
-    .unprepare = unprepare_callback,
-    .process = process_callback};
+    .init       = init_callback,
+    .finalize   = finalize_callback,
+    .prepare    = prepare_callback,
+    .unprepare  = unprepare_callback,
+    .process    = process_callback};
 
 static PyObject*
 m_MTAudioProcessingTapCreate(PyObject* self __attribute__((__unused__)), PyObject* args,
@@ -267,17 +267,17 @@ m_MTAudioProcessingTapCreate(PyObject* self __attribute__((__unused__)), PyObjec
 {
     static char* keywords[] = {"allocator", "callbacks", "flags", "tapOut", NULL};
 
-    PyObject* py_allocator;
-    PyObject* py_callbacks;
+    PyObject*    py_allocator;
+    PyObject*    py_callbacks;
     unsigned int flags;
-    PyObject* py_tapOut;
+    PyObject*    py_tapOut;
 
-    CFAllocatorRef allocator;
+    CFAllocatorRef                allocator;
     MTAudioProcessingTapCallbacks callbacks = callback_template;
-    MTAudioProcessingTapRef tap;
-    PyObject* info;
-    int i;
-    OSStatus rv;
+    MTAudioProcessingTapRef       tap;
+    PyObject*                     info;
+    int                           i;
+    OSStatus                      rv;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOIO", keywords, &py_allocator,
                                      &py_callbacks, &flags, &py_tapOut)) {
@@ -363,10 +363,10 @@ static PyObject*
 m_MTAudioProcessingTapGetStorage(PyObject* self __attribute__((__unused__)),
                                  PyObject* args, PyObject* kwds)
 {
-    static char* keywords[] = {"tap", NULL};
-    PyObject* py_tap;
+    static char*            keywords[] = {"tap", NULL};
+    PyObject*               py_tap;
     MTAudioProcessingTapRef tap;
-    PyObject* cb_info;
+    PyObject*               cb_info;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &py_tap)) {
         return NULL;

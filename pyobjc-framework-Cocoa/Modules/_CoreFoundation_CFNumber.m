@@ -1,25 +1,25 @@
 static PyObject*
 mod_CFNumberGetValue(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_number;
+    PyObject*   py_number;
     CFNumberRef number;
-    Py_ssize_t type;
-    PyObject* py_buf = Py_None;
+    Py_ssize_t  type;
+    PyObject*   py_buf = Py_None;
     union {
-        SInt8 sint8;
-        SInt16 sint16;
-        SInt32 sint32;
-        SInt64 sint64;
-        Float32 float32;
-        Float64 float64;
-        char charv;
-        short shortv;
-        int intv;
-        long longv;
+        SInt8     sint8;
+        SInt16    sint16;
+        SInt32    sint32;
+        SInt64    sint64;
+        Float32   float32;
+        Float64   float64;
+        char      charv;
+        short     shortv;
+        int       intv;
+        long      longv;
         long long longlongv;
-        float floatv;
-        double doublev;
-        CFIndex indexv;
+        float     floatv;
+        double    doublev;
+        CFIndex   indexv;
     } buf;
 
     if (!PyArg_ParseTuple(args, "OnO", &py_number, &type, &py_buf)) {
@@ -121,26 +121,26 @@ mod_CFNumberGetValue(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 mod_CFNumberCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
+    PyObject*      py_allocator;
     CFAllocatorRef allocator;
-    Py_ssize_t type;
-    PyObject* py_value;
-    int n;
+    Py_ssize_t     type;
+    PyObject*      py_value;
+    int            n;
     union {
-        SInt8 sint8;
-        SInt16 sint16;
-        SInt32 sint32;
-        SInt64 sint64;
-        Float32 float32;
-        Float64 float64;
-        char charv;
-        short shortv;
-        int intv;
-        long longv;
+        SInt8     sint8;
+        SInt16    sint16;
+        SInt32    sint32;
+        SInt64    sint64;
+        Float32   float32;
+        Float64   float64;
+        char      charv;
+        short     shortv;
+        int       intv;
+        long      longv;
         long long longlongv;
-        float floatv;
-        double doublev;
-        CFIndex indexv;
+        float     floatv;
+        double    doublev;
+        CFIndex   indexv;
     } buf;
 
     if (!PyArg_ParseTuple(args, "OnO", &py_allocator, &type, &py_value)) {

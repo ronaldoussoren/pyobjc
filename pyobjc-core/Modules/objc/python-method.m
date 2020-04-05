@@ -3,7 +3,7 @@
 typedef struct {
     PyObject_HEAD
 
-        PyObject* callable;
+    PyObject* callable;
 } PyObjCPythonMethod;
 
 PyObject*
@@ -18,10 +18,10 @@ PyObjCPythonMethod_GetMethod(PyObject* value)
 }
 
 static PyMemberDef meth_members[] = {{
-                                         .name = "callable",
-                                         .type = T_OBJECT,
+                                         .name   = "callable",
+                                         .type   = T_OBJECT,
                                          .offset = offsetof(PyObjCPythonMethod, callable),
-                                         .flags = READONLY,
+                                         .flags  = READONLY,
                                      },
                                      {
                                          .name = NULL /* SENTINEL */
@@ -30,8 +30,8 @@ static PyMemberDef meth_members[] = {{
 static PyObject*
 meth_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-    static char* keywords[] = {"callable", NULL};
-    PyObject* callable;
+    static char*        keywords[] = {"callable", NULL};
+    PyObject*           callable;
     PyObjCPythonMethod* result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &callable)) {
@@ -53,7 +53,7 @@ static PyObject*
 meth_descr_get(PyObject* self, PyObject* obj, PyObject* class)
 {
     descrgetfunc f;
-    PyObject* result;
+    PyObject*    result;
 
     result = ((PyObjCPythonMethod*)self)->callable;
     if (unlikely(result == NULL)) {
@@ -102,16 +102,16 @@ PyDoc_STRVAR(meth_doc,
 
 PyTypeObject PyObjCPythonMethod_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.python_method",
-    .tp_basicsize = sizeof(PyObjCPythonMethod),
-    .tp_itemsize = 0,
-    .tp_dealloc = meth_dealloc,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = meth_doc,
-    .tp_members = meth_members,
-    .tp_new = meth_new,
-    .tp_descr_get = meth_descr_get,
-    .tp_traverse = meth_traverse,
-    .tp_clear = meth_clear,
-    .tp_call = meth_call,
+    .tp_basicsize                                  = sizeof(PyObjCPythonMethod),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = meth_dealloc,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_doc                                        = meth_doc,
+    .tp_members                                    = meth_members,
+    .tp_new                                        = meth_new,
+    .tp_descr_get                                  = meth_descr_get,
+    .tp_traverse                                   = meth_traverse,
+    .tp_clear                                      = meth_clear,
+    .tp_call                                       = meth_call,
 };

@@ -7,34 +7,33 @@
 /* { dg-do run } */
 #include "ffitest.h"
 
-static unsigned char return_uc(unsigned char uc)
+static unsigned char
+return_uc(unsigned char uc)
 {
-  return uc;
+    return uc;
 }
 
-int main (void)
+int
+main(void)
 {
-  ffi_cif cif;
-  ffi_type *args[MAX_ARGS];
-  void *values[MAX_ARGS];
-  ffi_arg rint;
+    ffi_cif   cif;
+    ffi_type* args[MAX_ARGS];
+    void*     values[MAX_ARGS];
+    ffi_arg   rint;
 
-  unsigned char uc;
-  unsigned long ul;
+    unsigned char uc;
+    unsigned long ul;
 
-  args[0] = &ffi_type_uchar;
-  values[0] = &uc;
+    args[0]   = &ffi_type_uchar;
+    values[0] = &uc;
 
-  /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
-		     &ffi_type_uchar, args) == FFI_OK);
+    /* Initialize the cif */
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ffi_type_uchar, args) == FFI_OK);
 
-  for (uc = (unsigned char) '\x00';
-       uc < (unsigned char) '\xff'; uc++)
-    {
-      ul++;
-      ffi_call(&cif, FFI_FN(return_uc), &rint, values);
-      CHECK(rint == (signed int) uc);
+    for (uc = (unsigned char)'\x00'; uc < (unsigned char)'\xff'; uc++) {
+        ul++;
+        ffi_call(&cif, FFI_FN(return_uc), &rint, values);
+        CHECK(rint == (signed int)uc);
     }
-  exit(0);
+    exit(0);
 }

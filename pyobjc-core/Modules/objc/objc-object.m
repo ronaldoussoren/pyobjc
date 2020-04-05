@@ -13,8 +13,8 @@ static PyObject*
 object_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"cobject", "c_void_p", NULL};
-    PyObject* cobject = NULL;
-    PyObject* c_void_p = NULL;
+    PyObject*    cobject    = NULL;
+    PyObject*    c_void_p   = NULL;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", keywords, &cobject, &c_void_p)) {
         return NULL;
@@ -74,15 +74,15 @@ static PyObject*
 object_repr(PyObject* _self)
 {
     PyObjCObject* self = (PyObjCObject*)_self;
-    PyObject* res;
+    PyObject*     res;
 
     if (self->flags & PyObjCObject_kMAGIC_COOKIE) {
         return PyUnicode_FromFormat("<%s objective-c magic instance %p>",
                                     Py_TYPE(self)->tp_name, self->objc_object);
     }
 
-    if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0 &&
-        !PyObjCObject_IsClassic(self)) {
+    if ((self->flags & PyObjCObject_kUNINITIALIZED) == 0
+        && !PyObjCObject_IsClassic(self)) {
         /* Try to call the method 'description', which is the ObjC
          * equivalent of __repr__. If that fails we'll fall back to
          * the default repr.
@@ -122,8 +122,8 @@ object_dealloc(PyObject* obj)
         Py_XDECREF(v);
     }
 
-    if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER &&
-        PyObjCObject_GetObject(obj) != nil) {
+    if (PyObjCObject_GetFlags(obj) != PyObjCObject_kDEALLOC_HELPER
+        && PyObjCObject_GetObject(obj) != nil) {
         /* Release the proxied object, we don't have to do this when
          * there is no proxied object.
          */
@@ -217,7 +217,7 @@ object_verify_type(PyObject* obj)
                 return -1;
             }
 
-            tmp = Py_TYPE(obj);
+            tmp          = Py_TYPE(obj);
             Py_TYPE(obj) = tp;
             Py_INCREF(tp);
             Py_DECREF(tmp);
@@ -247,12 +247,12 @@ object_verify_not_nil(PyObject* obj, PyObject* name)
 PyObject*
 PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 {
-    Class cls = PyObjCClass_GetClass(base);
+    Class     cls  = PyObjCClass_GetClass(base);
     PyObject* dict = ((PyTypeObject*)base)->tp_dict;
-    Method m = class_getInstanceMethod(cls, sel);
+    Method    m    = class_getInstanceMethod(cls, sel);
     if (m) {
 #ifndef PyObjC_FAST_BUT_INEXACT
-        int use = 1;
+        int   use = 1;
         Class sup = class_getSuperclass(cls);
         if (sup) {
             Method m_sup = class_getInstanceMethod(sup, sel);
@@ -288,7 +288,7 @@ static PyObject**
 _get_dictptr(PyObject* obj)
 {
     Py_ssize_t dictoffset;
-    id obj_object;
+    id         obj_object;
     dictoffset = PyObjCClass_DictOffset((PyObject*)Py_TYPE(obj));
     if (dictoffset == 0)
         return NULL;
@@ -301,10 +301,10 @@ static inline PyObject*
 _type_lookup(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
-    PyObject *mro, *base, *dict;
-    PyObject* descr = NULL;
-    PyObject* res;
-    SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    PyObject * mro, *base, *dict;
+    PyObject*  descr = NULL;
+    PyObject*  res;
+    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -365,11 +365,11 @@ static inline PyObject*
 _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
-    PyObject *mro, *base;
-    PyObject* descr = NULL;
-    PyObject* res;
-    char selbuf[2048];
-    char* sel_name;
+    PyObject * mro, *base;
+    PyObject*  descr = NULL;
+    PyObject*  res;
+    char       selbuf[2048];
+    char*      sel_name;
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -382,8 +382,8 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
     n = PyTuple_GET_SIZE(mro);
 
     for (i = 0; i < n; i++) {
-        Class cls;
-        Method* methods;
+        Class        cls;
+        Method*      methods;
         unsigned int method_count, j;
         base = PyTuple_GET_ITEM(mro, i);
 
@@ -435,12 +435,12 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 static PyObject*
 object_getattro(PyObject* obj, PyObject* name)
 {
-    PyTypeObject* tp = NULL;
-    PyObject* descr = NULL;
-    PyObject* res = NULL;
-    descrgetfunc f;
-    PyObject** dictptr;
-    const char* namestr;
+    PyTypeObject* tp    = NULL;
+    PyObject*     descr = NULL;
+    PyObject*     res   = NULL;
+    descrgetfunc  f;
+    PyObject**    dictptr;
+    const char*   namestr;
 
     if (name == NULL) {
         PyErr_SetString(PyExc_TypeError, "<nil> name");
@@ -600,12 +600,12 @@ static int
 object_setattro(PyObject* obj, PyObject* name, PyObject* value)
 {
     PyTypeObject* tp = Py_TYPE(obj);
-    PyObject* descr;
-    descrsetfunc f;
-    PyObject** dictptr;
-    int res;
-    id obj_inst;
-    NSString* obj_name;
+    PyObject*     descr;
+    descrsetfunc  f;
+    PyObject**    dictptr;
+    int           res;
+    id            obj_inst;
+    NSString*     obj_name;
 
     if (PyUnicode_Check(name)) {
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL)
@@ -719,7 +719,7 @@ PyDoc_STRVAR(objc_get_real_class_doc, "Return the current ISA of the object");
 static PyObject*
 objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
 {
-    id obj_object;
+    id        obj_object;
     PyObject* ret;
 
     obj_object = PyObjCObject_GetObject(self);
@@ -809,23 +809,23 @@ obj_set_blocksignature(PyObject* self, PyObject* newVal,
 
 static PyGetSetDef obj_getset[] = {{
                                        .name = "pyobjc_ISA",
-                                       .get = objc_get_real_class,
-                                       .doc = objc_get_real_class_doc,
+                                       .get  = objc_get_real_class,
+                                       .doc  = objc_get_real_class_doc,
                                    },
                                    {
                                        .name = "pyobjc_instanceMethods",
-                                       .get = obj_get_instanceMethods,
-                                       .doc = obj_get_instanceMethods_doc,
+                                       .get  = obj_get_instanceMethods,
+                                       .doc  = obj_get_instanceMethods_doc,
                                    },
                                    {
                                        .name = "__block_signature__",
-                                       .get = obj_get_blocksignature,
-                                       .set = obj_set_blocksignature,
-                                       .doc = "Call signature for a block, or None",
+                                       .get  = obj_get_blocksignature,
+                                       .set  = obj_set_blocksignature,
+                                       .doc  = "Call signature for a block, or None",
                                    },
                                    {
                                        .name = "__flags__",
-                                       .get = obj_get_flags,
+                                       .get  = obj_get_flags,
                                    },
                                    {
                                        .name = NULL /* SENTINEL */
@@ -856,8 +856,8 @@ meth_sizeof(PyObject* self __attribute__((__unused__)))
 
     } else {
         return PyLong_FromSize_t(
-            Py_TYPE(self)->tp_basicsize +
-            class_getInstanceSize(object_getClass(PyObjCObject_GetObject(self))));
+            Py_TYPE(self)->tp_basicsize
+            + class_getInstanceSize(object_getClass(PyObjCObject_GetObject(self))));
     }
 }
 
@@ -927,11 +927,11 @@ as_ctypes_voidp(PyObject* self)
 static PyObject*
 meth_dir(PyObject* self)
 {
-    PyObject* result;
-    Class cls;
-    Method* methods;
+    PyObject*    result;
+    Class        cls;
+    Method*      methods;
     unsigned int method_count, i;
-    char selbuf[2048];
+    char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(Py_TYPE(self)->tp_dict);
@@ -949,7 +949,7 @@ meth_dir(PyObject* self)
         /* Now add all instance method names */
         methods = class_copyMethodList(cls, &method_count);
         for (i = 0; i < method_count; i++) {
-            char* name;
+            char*     name;
             PyObject* item;
 
             /* Check if the selector should be hidden */
@@ -986,32 +986,32 @@ meth_dir(PyObject* self)
 }
 
 static PyMethodDef obj_methods[] = {
-    {.ml_name = "__reduce__",
-     .ml_meth = (PyCFunction)meth_reduce,
+    {.ml_name  = "__reduce__",
+     .ml_meth  = (PyCFunction)meth_reduce,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "Used for pickling"},
-    {.ml_name = "__cobject__",
-     .ml_meth = (PyCFunction)as_cobject,
+     .ml_doc   = "Used for pickling"},
+    {.ml_name  = "__cobject__",
+     .ml_meth  = (PyCFunction)as_cobject,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "Return a CObject representing this object"},
-    {.ml_name = "__c_void_p__",
-     .ml_meth = (PyCFunction)as_ctypes_voidp,
+     .ml_doc   = "Return a CObject representing this object"},
+    {.ml_name  = "__c_void_p__",
+     .ml_meth  = (PyCFunction)as_ctypes_voidp,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "Return a ctypes.c_void_p representing this object"},
+     .ml_doc   = "Return a ctypes.c_void_p representing this object"},
     {
-        .ml_name = "__sizeof__",
-        .ml_meth = (PyCFunction)meth_sizeof,
+        .ml_name  = "__sizeof__",
+        .ml_meth  = (PyCFunction)meth_sizeof,
         .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name = "__is_magic",
-        .ml_meth = (PyCFunction)meth_is_magic,
+        .ml_name  = "__is_magic",
+        .ml_meth  = (PyCFunction)meth_is_magic,
         .ml_flags = METH_NOARGS,
     },
-    {.ml_name = "__dir__",
-     .ml_meth = (PyCFunction)meth_dir,
+    {.ml_name  = "__dir__",
+     .ml_meth  = (PyCFunction)meth_dir,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "dir() hook, don't call directly"},
+     .ml_doc   = "dir() hook, don't call directly"},
     {
         .ml_name = NULL /* SENTINEL */
     }};
@@ -1022,18 +1022,18 @@ PyObjCClassObject PyObjCObject_Type = {
             {
                 PyVarObject_HEAD_INIT(&PyObjCClass_Type, 0).tp_name = "objc_object",
                 .tp_basicsize = sizeof(PyObjCObject),
-                .tp_itemsize = 0,
-                .tp_dealloc = object_dealloc,
-                .tp_repr = object_repr,
-                .tp_getattro = object_getattro,
-                .tp_setattro = object_setattro,
-                .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
-                .tp_methods = obj_methods,
-                .tp_getset = obj_getset,
-                .tp_alloc = PyType_GenericAlloc,
-                .tp_new = object_new,
-                .tp_del = (destructor)object_del,
-                .tp_doc = "objc_object()",
+                .tp_itemsize  = 0,
+                .tp_dealloc   = object_dealloc,
+                .tp_repr      = object_repr,
+                .tp_getattro  = object_getattro,
+                .tp_setattro  = object_setattro,
+                .tp_flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
+                .tp_methods   = obj_methods,
+                .tp_getset    = obj_getset,
+                .tp_alloc     = PyType_GenericAlloc,
+                .tp_new       = object_new,
+                .tp_del       = (destructor)object_del,
+                .tp_doc       = "objc_object()",
             },
     }};
 
@@ -1044,7 +1044,7 @@ PyObjCClassObject PyObjCObject_Type = {
 PyObject*
 _PyObjCObject_NewDeallocHelper(id objc_object)
 {
-    PyObject* res;
+    PyObject*     res;
     PyTypeObject* cls_type;
 
     PyObjC_Assert(objc_object != nil, NULL);
@@ -1110,9 +1110,9 @@ _PyObjCObject_FreeDeallocHelper(PyObject* obj)
 PyObject*
 PyObjCObject_New(id objc_object, int flags, int retain)
 {
-    Class cls = object_getClass(objc_object);
+    Class         cls = object_getClass(objc_object);
     PyTypeObject* cls_type;
-    PyObject* res;
+    PyObject*     res;
 
     res = PyObjC_FindPythonProxy(objc_object);
     if (res)
@@ -1144,7 +1144,7 @@ PyObjCObject_New(id objc_object, int flags, int retain)
     }
 
     ((PyObjCObject*)res)->objc_object = objc_object;
-    ((PyObjCObject*)res)->flags = flags;
+    ((PyObjCObject*)res)->flags       = flags;
 
     if (flags & PyObjCObject_kBLOCK) {
         ((PyObjCBlockObject*)res)->signature = NULL;

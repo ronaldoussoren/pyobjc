@@ -184,11 +184,13 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_methodlookup(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_MethodLookup1",
-                           PyObjC_IdToPython([PyObjC_MethodLookup1 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_MethodLookup1 class]))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_MethodLookup2",
-                           PyObjC_IdToPython([PyObjC_MethodLookup2 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_MethodLookup2 class]))
+        < 0) {
         return NULL;
     }
 

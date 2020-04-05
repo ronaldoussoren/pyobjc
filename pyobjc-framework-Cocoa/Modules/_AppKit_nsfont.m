@@ -7,13 +7,13 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
     PyObject* py_packing;
     PyObject* py_packedGlyphs;
 
-    NSGlyph* glBuf;
-    int bufCode;
-    PyObject* buffer = NULL;
-    NSInteger count;
-    Py_ssize_t c;
+    NSGlyph*                glBuf;
+    int                     bufCode;
+    PyObject*               buffer = NULL;
+    NSInteger               count;
+    Py_ssize_t              c;
     NSMultibyteGlyphPacking packing;
-    char* packedGlyphs;
+    char*                   packedGlyphs;
 
     if (!PyArg_ParseTuple(arguments, "OOOO", &py_glBuf, &py_count, &py_packing,
                           &py_packedGlyphs)) {
@@ -28,12 +28,12 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
     if (PyObjC_PythonToObjC(@encode(NSInteger), py_count, &count) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(NSMultibyteGlyphPacking), py_packing, &packing) ==
-        -1) {
+    if (PyObjC_PythonToObjC(@encode(NSMultibyteGlyphPacking), py_packing, &packing)
+        == -1) {
         return NULL;
     }
 
-    c = count;
+    c       = count;
     bufCode = PyObjC_PythonToCArray(NO, NO, @encode(NSGlyph), py_glBuf, (void**)&glBuf,
                                     &c, &buffer);
     if (bufCode == -1) {

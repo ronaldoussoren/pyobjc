@@ -107,8 +107,8 @@ init_inlines(void)
     m = Py_InitModule4("_inlines", mod_methods, NULL, NULL, PYTHON_API_VERSION);
 #endif
 
-    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map)) <
-        0) {
+    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))
+        < 0) {
         INITERROR();
     }
 

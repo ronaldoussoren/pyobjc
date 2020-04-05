@@ -84,8 +84,8 @@ typedef struct _PyObjCClassObject {
     PyObject* hiddenSelectors;
     PyObject* hiddenClassSelectors;
 
-    Py_ssize_t dictoffset;
-    Py_ssize_t generation;
+    Py_ssize_t   dictoffset;
+    Py_ssize_t   generation;
     unsigned int useKVO : 1;
     unsigned int hasPythonImpl : 1;
     unsigned int isCFWrapper : 1;
@@ -93,20 +93,20 @@ typedef struct _PyObjCClassObject {
 
 extern PyObject* PyObjCClass_DefaultModule;
 extern PyObject* PyObjCClass_New(Class objc_class);
-extern Class PyObjCClass_GetClass(PyObject* object);
+extern Class     PyObjCClass_GetClass(PyObject* object);
 extern PyObject* PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method);
-extern void PyObjCClass_MaybeRescan(PyObject* class);
-extern int ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
-extern int PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
+extern void      PyObjCClass_MaybeRescan(PyObject* class);
+extern int       ObjC_RegisterClassProxy(Class cls, PyObject* classProxy);
+extern int       PyObjCClass_CheckMethodList(PyObject* cls, int recursive);
 extern Py_ssize_t PyObjCClass_DictOffset(PyObject* cls);
-extern PyObject* PyObjCClass_GetDelMethod(PyObject* cls);
-extern void PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
-extern int PyObjCClass_HasPythonImplementation(PyObject* cls);
-extern PyObject* PyObjCClass_ClassForMetaClass(PyObject* meta);
-extern PyObject* PyObjCClass_HiddenSelector(PyObject* tp, SEL sel,
-                                            BOOL classMethod); /* returns borrowed */
-extern int PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod,
-                                 PyObject* metadata);
+extern PyObject*  PyObjCClass_GetDelMethod(PyObject* cls);
+extern void       PyObjCClass_SetDelMethod(PyObject* cls, PyObject* newval);
+extern int        PyObjCClass_HasPythonImplementation(PyObject* cls);
+extern PyObject*  PyObjCClass_ClassForMetaClass(PyObject* meta);
+extern PyObject*  PyObjCClass_HiddenSelector(PyObject* tp, SEL sel,
+                                             BOOL classMethod); /* returns borrowed */
+extern int        PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod,
+                                        PyObject* metadata);
 extern int PyObjCClass_AddMethods(PyObject* cls, PyObject** methods, Py_ssize_t count);
 extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
 

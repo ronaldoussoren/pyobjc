@@ -4,9 +4,9 @@
 static PyObject*
 mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_bytes;
-    Py_ssize_t count;
+    PyObject*      py_allocator;
+    PyObject*      py_bytes;
+    Py_ssize_t     count;
     CFAllocatorRef allocator;
     CFBitVectorRef vector;
 
@@ -18,9 +18,9 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args
         return NULL;
     }
 
-    PyObject* buf;
-    void* bytes;
-    int r;
+    PyObject*  buf;
+    void*      bytes;
+    int        r;
     Py_ssize_t byteCount;
 
     if (count == -1) {
@@ -53,11 +53,11 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args
 static PyObject*
 mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_vector;
-    PyObject* py_range;
-    PyObject* py_bytes;
+    PyObject*      py_vector;
+    PyObject*      py_range;
+    PyObject*      py_bytes;
     CFBitVectorRef vector;
-    CFRange range;
+    CFRange        range;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_vector, &py_range, &py_bytes)) {
         return NULL;
@@ -70,8 +70,7 @@ mod_CFBitVectorGetBits(PyObject* self __attribute__((__unused__)), PyObject* arg
         return NULL;
     }
     if (py_bytes != Py_None) {
-        PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got %R",
-                py_bytes);
+        PyErr_Format(PyExc_ValueError, "argument 3: expecting None, got %R", py_bytes);
         return NULL;
     }
 

@@ -89,7 +89,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_exceptions(void)
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTestExceptions",
-                           PyObjC_IdToPython([PyObjCTestExceptions class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTestExceptions class]))
+        < 0) {
         return NULL;
     }
     return m;

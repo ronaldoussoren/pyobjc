@@ -25,7 +25,7 @@ mod_schedule(void* info, CFRunLoopRef rl, CFStringRef mode)
     PyGILState_STATE state = PyGILState_Ensure();
     if (PyTuple_GetItem(info, 1) != Py_None) {
         PyObject* py_info = PyTuple_GetItem(info, 4);
-        PyObject* py_rl = PyObjC_ObjCToPython(@encode(CFRunLoopRef), &rl);
+        PyObject* py_rl   = PyObjC_ObjCToPython(@encode(CFRunLoopRef), &rl);
         if (py_rl == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -53,7 +53,7 @@ mod_cancel(void* info, CFRunLoopRef rl, CFStringRef mode)
     PyGILState_STATE state = PyGILState_Ensure();
     if (PyTuple_GetItem(info, 2) != Py_None) {
         PyObject* py_info = PyTuple_GetItem(info, 4);
-        PyObject* py_rl = PyObjC_ObjCToPython(@encode(CFRunLoopRef), &rl);
+        PyObject* py_rl   = PyObjC_ObjCToPython(@encode(CFRunLoopRef), &rl);
         if (py_rl == NULL) {
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -98,11 +98,11 @@ static CFRunLoopSourceContext mod_CFRunLoopSourceContext = {
 static PyObject*
 mod_CFRunLoopSourceCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_order;
-    PyObject* py_context;
-    CFAllocatorRef allocator;
-    CFIndex order;
+    PyObject*              py_allocator;
+    PyObject*              py_order;
+    PyObject*              py_context;
+    CFAllocatorRef         allocator;
+    CFIndex                order;
     CFRunLoopSourceContext context = mod_CFRunLoopSourceContext;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_allocator, &py_order, &py_context)) {
@@ -161,9 +161,9 @@ mod_CFRunLoopSourceCreate(PyObject* self __attribute__((__unused__)), PyObject* 
 static PyObject*
 mod_CFRunLoopSourceGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_f;
-    PyObject* py_context;
-    CFRunLoopSourceRef f;
+    PyObject*              py_f;
+    PyObject*              py_context;
+    CFRunLoopSourceRef     f;
     CFRunLoopSourceContext context;
 
     if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {

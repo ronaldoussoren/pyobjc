@@ -10,7 +10,7 @@
 #include "pyobjc.h"
 
 struct registry {
-    PyObjC_CallFunc call_to_objc;
+    PyObjC_CallFunc       call_to_objc;
     PyObjCFFI_ClosureFunc call_to_python;
 };
 
@@ -55,9 +55,9 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel, PyObjC_CallFunc call_to_objc,
                              PyObjCFFI_ClosureFunc call_to_python)
 {
     struct registry* v;
-    PyObject* pyclass;
-    PyObject* entry;
-    PyObject* lst;
+    PyObject*        pyclass;
+    PyObject*        entry;
+    PyObject*        lst;
 
     if (signature_registry == NULL) {
         if (init_registry() < 0) {
@@ -90,7 +90,7 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel, PyObjC_CallFunc call_to_objc,
         PyErr_NoMemory();
         return -1;
     }
-    v->call_to_objc = call_to_objc;
+    v->call_to_objc   = call_to_objc;
     v->call_to_python = call_to_python;
 
     entry = PyTuple_New(2);
@@ -139,9 +139,9 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
                                 PyObjCFFI_ClosureFunc call_to_python)
 {
     struct registry* v;
-    PyObject* entry;
-    char signature_buf[1024];
-    int r;
+    PyObject*        entry;
+    char             signature_buf[1024];
+    int              r;
 
     if (signature_registry == NULL) {
         if (init_registry() < 0)
@@ -165,7 +165,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
         PyErr_NoMemory();
         return -1;
     }
-    v->call_to_objc = call_to_objc;
+    v->call_to_objc   = call_to_objc;
     v->call_to_python = call_to_python;
 
     entry = PyCapsule_New(v, "objc.__memblock__", memblock_capsule_cleanup);
@@ -194,10 +194,10 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 static struct registry*
 search_special(Class class, SEL sel)
 {
-    PyObject* result = NULL;
-    PyObject* special_class = NULL;
-    PyObject* search_class = NULL;
-    PyObject* lst;
+    PyObject*  result        = NULL;
+    PyObject*  special_class = NULL;
+    PyObject*  search_class  = NULL;
+    PyObject*  lst;
     Py_ssize_t i;
 
     if (special_registry == NULL)
@@ -226,20 +226,20 @@ search_special(Class class, SEL sel)
      *   was added later).
      */
     for (i = 0; i < PyList_GET_SIZE(lst); i++) {
-        PyObject* entry = PyList_GET_ITEM(lst, i);
+        PyObject* entry   = PyList_GET_ITEM(lst, i);
         PyObject* pyclass = PyTuple_GET_ITEM(entry, 0);
 
         if (pyclass == NULL)
             continue;
-        if (pyclass != Py_None &&
-            !PyType_IsSubtype((PyTypeObject*)search_class, (PyTypeObject*)pyclass)) {
+        if (pyclass != Py_None
+            && !PyType_IsSubtype((PyTypeObject*)search_class, (PyTypeObject*)pyclass)) {
             continue;
         }
 
         if (!special_class) {
             /* No match yet, use */
             special_class = pyclass;
-            result = PyTuple_GET_ITEM(entry, 1);
+            result        = PyTuple_GET_ITEM(entry, 1);
 
         } else if (pyclass == Py_None) {
             /* Already have a match, Py_None is less specific */
@@ -253,7 +253,7 @@ search_special(Class class, SEL sel)
              * list.
              */
             special_class = pyclass;
-            result = PyTuple_GET_ITEM(entry, 1);
+            result        = PyTuple_GET_ITEM(entry, 1);
         }
     }
     Py_XDECREF(search_class);
@@ -291,10 +291,10 @@ PyObjC_FindCallFunc(Class class, SEL sel)
 static struct registry*
 find_signature(const char* signature)
 {
-    PyObject* o;
+    PyObject*        o;
     struct registry* r;
-    char signature_buf[1024];
-    int res;
+    char             signature_buf[1024];
+    int              res;
 
     res = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
     if (res == -1) {
@@ -330,11 +330,11 @@ error:
 extern IMP
 PyObjC_MakeIMP(Class class, Class super_class, PyObject* sel, PyObject* imp)
 {
-    struct registry* generic;
-    struct registry* special;
-    SEL aSelector = PyObjCSelector_GetSelector(sel);
-    PyObjCFFI_ClosureFunc func = NULL;
-    IMP retval;
+    struct registry*       generic;
+    struct registry*       special;
+    SEL                    aSelector = PyObjCSelector_GetSelector(sel);
+    PyObjCFFI_ClosureFunc  func      = NULL;
+    IMP                    retval;
     PyObjCMethodSignature* methinfo;
 
     if (super_class != nil) {

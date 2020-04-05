@@ -49,9 +49,9 @@ m_CGPDFDictionaryApplierFunction(const char* key, CGPDFObjectRef value, void* _i
 static PyObject*
 m_CGPDFDictionaryApplyFunction(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* d;
-    PyObject* f;
-    PyObject* i;
+    PyObject*          d;
+    PyObject*          f;
+    PyObject*          i;
     CGPDFDictionaryRef dictionary;
 
     if (!PyArg_ParseTuple(args, "OOO", &d, &f, &i)) {

@@ -19,7 +19,7 @@ extern int PyObjC_RegisterObjCProxy(PyObject* original, id proxy);
 extern void PyObjC_UnregisterPythonProxy(id original, PyObject* proxy);
 extern void PyObjC_UnregisterObjCProxy(PyObject* original, id proxy);
 
-extern id PyObjC_FindObjCProxy(PyObject* original);
+extern id        PyObjC_FindObjCProxy(PyObject* original);
 extern PyObject* PyObjC_FindPythonProxy(id original);
 
 extern id PyObjC_FindOrRegisterObjCProxy(PyObject* original, id proxy);

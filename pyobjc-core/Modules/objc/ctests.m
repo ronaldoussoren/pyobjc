@@ -10,23 +10,23 @@
 #include <fcntl.h>
 
 struct Struct1 {
-    int f1;
+    int    f1;
     double f2;
 };
 
 struct Struct2 {
-    int f1;
+    int    f1;
     double f2;
-    short s[5];
+    short  s[5];
 };
 
 struct Struct3 {
     char ch;
-    int i;
+    int  i;
 };
 
 struct Struct4 {
-    char ch;
+    char      ch;
     long long i;
 };
 
@@ -68,9 +68,9 @@ ASSERT_EQUALS(0, 1, "%d");
 #endif
 
 PyObjCTest_NSInvoke* obj = [[PyObjCTest_NSInvoke alloc] init];
-NSInvocation* inv;
-struct Struct2 v1 = {1, 2, {3, 4, 5, 6, 7}};
-short v2 = 8;
+NSInvocation*        inv;
+struct Struct2       v1 = {1, 2, {3, 4, 5, 6, 7}};
+short                v2 = 8;
 
 [obj methodWithMyStruct:v1 andShort:v2];
 inv =
@@ -125,9 +125,9 @@ END_UNITTEST
 
 BEGIN_UNITTEST(FillStruct1)
 
-PyObject* input;
+PyObject*      input;
 struct Struct1 output;
-int r;
+int            r;
 
 input = PyTuple_New(2);
 FAIL_IF(input == NULL);
@@ -147,10 +147,10 @@ END_UNITTEST
 
 BEGIN_UNITTEST(FillStruct2)
 
-PyObject* input;
-PyObject* v;
+PyObject*      input;
+PyObject*      v;
 struct Struct2 output;
-int r;
+int            r;
 
 input = PyTuple_New(3);
 FAIL_IF(input == NULL);
@@ -183,9 +183,9 @@ END_UNITTEST
 
 BEGIN_UNITTEST(FillStruct3)
 
-PyObject* input;
+PyObject*      input;
 struct Struct3 output;
-int r;
+int            r;
 
 input = PyTuple_New(2);
 FAIL_IF(input == NULL);
@@ -205,9 +205,9 @@ END_UNITTEST
 
 BEGIN_UNITTEST(FillStruct4)
 
-PyObject* input;
+PyObject*      input;
 struct Struct4 output;
-int r;
+int            r;
 
 input = PyTuple_New(2);
 FAIL_IF(input == NULL);
@@ -227,10 +227,10 @@ END_UNITTEST
 
 BEGIN_UNITTEST(FillStruct5Array)
 
-PyObject* input;
-PyObject* v;
+PyObject*    input;
+PyObject*    v;
 Struct5Array output;
-int r;
+int          r;
 
 input = PyTuple_New(2);
 FAIL_IF(input == NULL);
@@ -260,7 +260,7 @@ END_UNITTEST
 BEGIN_UNITTEST(ExtractStruct1)
 
 struct Struct1 input;
-PyObject* output;
+PyObject*      output;
 
 input.f1 = 1;
 input.f2 = 2;
@@ -280,12 +280,12 @@ END_UNITTEST
 BEGIN_UNITTEST(ExtractStruct2)
 
 struct Struct2 input;
-PyObject* output;
-PyObject* tup;
-PyObject* v;
+PyObject*      output;
+PyObject*      tup;
+PyObject*      v;
 
-input.f1 = 1;
-input.f2 = 2;
+input.f1   = 1;
+input.f2   = 2;
 input.s[0] = 3;
 input.s[1] = 4;
 input.s[2] = 5;
@@ -331,10 +331,10 @@ END_UNITTEST
 BEGIN_UNITTEST(ExtractStruct3)
 
 struct Struct3 input;
-PyObject* output;
+PyObject*      output;
 
 input.ch = 1;
-input.i = 2;
+input.i  = 2;
 
 output = pythonify_c_value(@encode(struct Struct3), &input);
 FAIL_IF(output == NULL);
@@ -351,10 +351,10 @@ END_UNITTEST
 BEGIN_UNITTEST(ExtractStruct4)
 
 struct Struct4 input;
-PyObject* output;
+PyObject*      output;
 
 input.ch = 1;
-input.i = 500000;
+input.i  = 500000;
 
 output = pythonify_c_value(@encode(struct Struct4), &input);
 FAIL_IF(output == NULL);
@@ -372,13 +372,13 @@ END_UNITTEST
 BEGIN_UNITTEST(ExtractStruct5Array)
 
 Struct5Array input;
-PyObject* output;
-PyObject* v;
+PyObject*    output;
+PyObject*    v;
 
 input[0].ch = 1;
-input[0].i = 500000;
+input[0].i  = 500000;
 input[1].ch = 2;
-input[1].i = 1000000;
+input[1].i  = 1000000;
 
 output = pythonify_c_value(@encode(Struct5Array), &input);
 FAIL_IF(output == NULL);
@@ -430,7 +430,7 @@ END_UNITTEST
 BEGIN_UNITTEST(TestSimplifySignature)
 /* Make sure PyObjCRT_SimplifySignature works */
 char b[1024];
-int r;
+int  r;
 
 r = PyObjCRT_SimplifySignature("@1234@0:{_NSPoint=ff}02i22", b, sizeof(b));
 ASSERT(r != -1);
@@ -453,9 +453,9 @@ BEGIN_UNITTEST(TestArrayCoding)
  */
 
 NSMutableDictionary* d;
-NSMutableArray* a;
-NSObject* v;
-int haveException;
+NSMutableArray*      a;
+NSObject*            v;
+int                  haveException;
 
 NSAutoreleasePool* p;
 
@@ -468,10 +468,10 @@ d = [NSMutableDictionary dictionary];
 a = [NSMutableArray arrayWithObjects:d, nil];
 
 @try {
-    v = [a valueForKey:@"keyM"];
+    v             = [a valueForKey:@"keyM"];
     haveException = 0;
 } @catch (NSObject* localException) {
-    v = nil;
+    v             = nil;
     haveException = 1;
 }
 
@@ -481,9 +481,9 @@ ASSERT(!haveException);
 END_UNITTEST
 
 BEGIN_UNITTEST(PythonListAsNSArray)
-PyObject* aList;
+PyObject*       aList;
 NSMutableArray* array;
-NSArray* array2;
+NSArray*        array2;
 
 aList = Py_BuildValue("[iiiii]", 0, 1, 2, 3, 4);
 FAIL_IF(aList == NULL);
@@ -544,8 +544,8 @@ END_UNITTEST
 
 BEGIN_UNITTEST(PythonTupleAsNSArray)
 PyObject* aTuple;
-NSArray* array;
-NSArray* array2;
+NSArray*  array;
+NSArray*  array2;
 
 aTuple = Py_BuildValue("(iiiii)", 0, 1, 2, 3, 4);
 FAIL_IF(aTuple == NULL);
@@ -585,10 +585,10 @@ END_UNITTEST
 BEGIN_UNITTEST(PythonDictAsNSDictionary)
 // count, objectForKey:, keyEnumerator
 // setObject:forKey: removeObjectForKey:
-PyObject* aDictionary;
+PyObject*            aDictionary;
 NSMutableDictionary* dict;
-NSEnumerator* iter;
-NSArray* keys;
+NSEnumerator*        iter;
+NSArray*             keys;
 
 aDictionary = Py_BuildValue("{iiiiiiii}", 1, 2, 2, 4, 3, 6, 4, 8);
 FAIL_IF(aDictionary == NULL);
@@ -629,9 +629,9 @@ BEGIN_UNITTEST(NSLogging)
  */
 PyObject* o = (PyObject*)(Py_BuildValue("i", 10)->ob_type);
 NSObject* value;
-int fd;
-int stderr_orig;
-int r;
+int       fd;
+int       stderr_orig;
+int       r;
 
 value = PyObjC_PythonToId(o);
 FAIL_IF(value == nil);
@@ -653,18 +653,18 @@ BEGIN_UNITTEST(FillNSRect)
 
 struct output {
     unsigned int before;
-    NSRect rect;
+    NSRect       rect;
     unsigned int after;
 };
 
-PyObject* input;
-PyObject* v;
-PyObject* t;
+PyObject*     input;
+PyObject*     v;
+PyObject*     t;
 struct output output;
-int r;
+int           r;
 
 output.before = 0xDEADBEEF;
-output.after = 0xBEEFDEAD;
+output.after  = 0xBEEFDEAD;
 
 input = PyTuple_New(2);
 FAIL_IF(input == NULL);
@@ -695,9 +695,9 @@ ASSERT_EQUALS(output.after, 0xBEEFDEAD, "%x");
 END_UNITTEST
 
 BEGIN_UNITTEST(RemoveFieldNames)
-char buffer[2048];
+char        buffer[2048];
 const char* end;
-size_t i;
+size_t      i;
 
 /* Simple type */
 memset(buffer, '\xab', sizeof(buffer));
@@ -771,7 +771,7 @@ END_UNITTEST
 
 BEGIN_UNITTEST(UnicodeFunctions)
 PyObject* unicode = PyUnicode_FromString("hello world");
-int ok;
+int       ok;
 
 ok = PyObjC_is_ascii_string(unicode, "hello world");
 ASSERT(ok);
@@ -801,7 +801,7 @@ END_UNITTEST
 
 BEGIN_UNITTEST(DecimalSize)
 long encoded_size = (long)PyObjCRT_SizeOfType(@encode(NSDecimal));
-long actual_size = (long)sizeof(NSDecimal);
+long actual_size  = (long)sizeof(NSDecimal);
 
 ASSERT_EQUALS(encoded_size, actual_size, "%ld");
 
@@ -809,7 +809,7 @@ END_UNITTEST
 
 BEGIN_UNITTEST(DecimalAlign)
 long encoded_align = (long)PyObjCRT_AlignOfType(@encode(NSDecimal));
-long actual_align = (long)__alignof__(NSDecimal);
+long actual_align  = (long)__alignof__(NSDecimal);
 
 ASSERT_EQUALS(encoded_align, actual_align, "%ld");
 END_UNITTEST

@@ -7,7 +7,7 @@
 
 struct BufferStruct {
     char* buffer;
-    int buffer_size;
+    int   buffer_size;
 };
 
 @interface StructArgClass : NSObject {
@@ -88,8 +88,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_structargs(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "StructArgClass",
-                           PyObjC_IdToPython([StructArgClass class])) < 0) {
+    if (PyModule_AddObject(m, "StructArgClass", PyObjC_IdToPython([StructArgClass class]))
+        < 0) {
         return NULL;
     }
 

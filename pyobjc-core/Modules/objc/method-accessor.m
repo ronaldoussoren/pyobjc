@@ -9,13 +9,13 @@
 static PyObject*
 find_selector(PyObject* self, const char* name, int class_method)
 {
-    SEL sel = PyObjCSelector_DefaultSelector(name);
-    id objc_object;
+    SEL                sel = PyObjCSelector_DefaultSelector(name);
+    id                 objc_object;
     NSMethodSignature* methsig;
-    char buf[1024];
-    int unbound_instance_method = 0;
-    char* flattened = NULL;
-    PyObject* class_object;
+    char               buf[1024];
+    int                unbound_instance_method = 0;
+    char*              flattened               = NULL;
+    PyObject*          class_object;
 
     if (name[0] == '_' && name[1] == '_') {
         /* There are no public methods that start with a double underscore,
@@ -26,7 +26,7 @@ find_selector(PyObject* self, const char* name, int class_method)
     }
 
     if (PyObjCClass_Check(self)) {
-        objc_object = (id)PyObjCClass_GetClass(self);
+        objc_object  = (id)PyObjCClass_GetClass(self);
         class_object = self;
 
         if (!class_method) {
@@ -113,13 +113,13 @@ find_selector(PyObject* self, const char* name, int class_method)
 static PyObject*
 make_dict(PyObject* self, int class_method)
 {
-    Class cls;
-    PyObject* res;
-    Method* methods;
+    Class        cls;
+    PyObject*    res;
+    Method*      methods;
     unsigned int i, method_count;
-    void* iterator;
-    char buf[256];
-    Class objc_class;
+    void*        iterator;
+    char         buf[256];
+    Class        objc_class;
 
     if (PyObjCObject_Check(self)) {
         id obj = PyObjCObject_GetObject(self);
@@ -129,16 +129,16 @@ make_dict(PyObject* self, int class_method)
         }
 
         if (class_method) {
-            cls = object_getClass(obj);
+            cls        = object_getClass(obj);
             objc_class = object_getClass(cls);
 
         } else {
-            cls = object_getClass(obj);
+            cls        = object_getClass(obj);
             objc_class = cls;
         }
 
     } else if (PyObjCClass_Check(self)) {
-        cls = PyObjCClass_GetClass(self);
+        cls        = PyObjCClass_GetClass(self);
         objc_class = cls;
 
         if (class_method) {
@@ -157,17 +157,17 @@ make_dict(PyObject* self, int class_method)
 
     while (objc_class != NULL && cls != NULL) {
         iterator = NULL;
-        methods = class_copyMethodList(objc_class, &method_count);
+        methods  = class_copyMethodList(objc_class, &method_count);
 
         if (methods == NULL) {
             objc_class = class_getSuperclass((Class)objc_class);
-            cls = class_getSuperclass((Class)cls);
+            cls        = class_getSuperclass((Class)cls);
             continue;
         }
 
         for (i = 0; i < method_count; i++) {
             PyObject* v;
-            char* name;
+            char*     name;
 
             name = PyObjC_SELToPythonName(method_getName(methods[i]), buf, sizeof(buf));
 
@@ -214,15 +214,16 @@ make_dict(PyObject* self, int class_method)
         free(methods);
 
         objc_class = class_getSuperclass((Class)objc_class);
-        cls = class_getSuperclass((Class)cls);
+        cls        = class_getSuperclass((Class)cls);
     }
 
     return res;
 }
 
 typedef struct {
-    PyObject_HEAD PyObject* base;
-    int class_method;
+    PyObject_HEAD
+    PyObject* base;
+    int       class_method;
 } ObjCMethodAccessor;
 
 static void
@@ -243,8 +244,8 @@ obj_dealloc(PyObject* _self)
 static PyObject*
 obj_getattro(PyObject* _self, PyObject* name)
 {
-    ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
-    PyObject* result = NULL;
+    ObjCMethodAccessor* self   = (ObjCMethodAccessor*)_self;
+    PyObject*           result = NULL;
 
     if (PyUnicode_Check(name)) {
         if (PyObjC_Unicode_Fast_Bytes(name) == NULL) {
@@ -293,10 +294,10 @@ obj_getattro(PyObject* _self, PyObject* name)
             PyObject* descr_arg;
 
             if (PyObjCClass_Check(self->base)) {
-                mro = ((PyTypeObject*)self->base)->tp_mro;
+                mro       = ((PyTypeObject*)self->base)->tp_mro;
                 descr_arg = NULL;
             } else {
-                mro = (Py_TYPE(self->base))->tp_mro;
+                mro       = (Py_TYPE(self->base))->tp_mro;
                 descr_arg = self->base;
             }
             Py_ssize_t i, len;
@@ -308,7 +309,7 @@ obj_getattro(PyObject* _self, PyObject* name)
                     continue;
 
                 PyObject* dict = ((PyTypeObject*)c)->tp_dict;
-                PyObject* v = PyDict_GetItemWithError(dict, name);
+                PyObject* v    = PyDict_GetItemWithError(dict, name);
                 if (v == NULL && PyErr_Occurred()) {
                     return NULL;
 
@@ -386,7 +387,7 @@ static PyObject*
 obj_repr(PyObject* _self)
 {
     ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
-    PyObject* rval;
+    PyObject*           rval;
 
     rval = PyUnicode_FromFormat("<%s method-accessor for %R>",
                                 self->class_method ? "class" : "instance", self->base);
@@ -412,8 +413,8 @@ obj_dir(PyObject* self)
 }
 
 static PyMethodDef obj_methods[] = {{
-                                        .ml_name = "__dir__",
-                                        .ml_meth = (PyCFunction)obj_dir,
+                                        .ml_name  = "__dir__",
+                                        .ml_meth  = (PyCFunction)obj_dir,
                                         .ml_flags = METH_NOARGS,
                                     },
                                     {
@@ -422,13 +423,13 @@ static PyMethodDef obj_methods[] = {{
 
 PyTypeObject PyObjCMethodAccessor_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.method_acces",
-    .tp_basicsize = sizeof(ObjCMethodAccessor),
-    .tp_itemsize = 0,
-    .tp_dealloc = obj_dealloc,
-    .tp_repr = obj_repr,
-    .tp_getattro = obj_getattro,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_methods = obj_methods,
+    .tp_basicsize                                  = sizeof(ObjCMethodAccessor),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = obj_dealloc,
+    .tp_repr                                       = obj_repr,
+    .tp_getattro                                   = obj_getattro,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_methods                                    = obj_methods,
 };
 
 PyObject*

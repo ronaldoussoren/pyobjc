@@ -12,7 +12,7 @@ PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadat
 {
     PyObject* hidden;
     PyObject* v;
-    int r;
+    int       r;
 
     if (classMethod) {
         hidden = ((PyObjCClassObject*)tp)->hiddenClassSelectors;
@@ -49,7 +49,7 @@ PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadat
 PyObject*
 PyObjCClass_HiddenSelector(PyObject* tp, SEL sel, BOOL classMethod)
 {
-    PyObject* mro;
+    PyObject*  mro;
     Py_ssize_t i, n;
     if (tp == NULL) {
         return NULL;
@@ -115,7 +115,7 @@ static int
 nsmutabledata_getbuffer(PyObject* obj, Py_buffer* view, int flags)
 {
     NSMutableData* self = (NSMutableData*)PyObjCObject_GetObject(obj);
-    int r;
+    int            r;
     if ((flags & PyBUF_WRITABLE) == PyBUF_WRITABLE) {
         r = PyBuffer_FillInfo(view, obj, (void*)[self mutableBytes], [self length], 0,
                               flags);
@@ -163,7 +163,7 @@ static int update_convenience_methods(PyObject* cls);
  *
  *    The key is the Objective-C class, the value is its wrapper.
  */
-static NSMapTable* class_registry = NULL;
+static NSMapTable* class_registry     = NULL;
 static NSMapTable* metaclass_to_class = NULL;
 
 /*!
@@ -267,7 +267,7 @@ static PyTypeObject*
 PyObjCClass_NewMetaClass(Class objc_class)
 {
     PyTypeObject* result;
-    Class objc_meta_class = object_getClass(objc_class);
+    Class         objc_meta_class = object_getClass(objc_class);
 
     if (unlikely(class_isMetaClass(objc_class))) {
         objc_meta_class = objc_class;
@@ -313,7 +313,7 @@ PyObjCClass_NewMetaClass(Class objc_class)
     /* We now know the superclass of our metaclass, build the actual
      * metaclass.
      */
-    PyObject* dict = PyDict_New();
+    PyObject* dict  = PyDict_New();
     PyObject* bases = PyTuple_New(1);
 
     PyTuple_SET_ITEM(bases, 0, (PyObject*)py_super_class);
@@ -375,33 +375,33 @@ class_init(PyObject* cls, PyObject* args, PyObject* kwds)
 static PyObject*
 class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
-    static PyObject* all_python_classes = NULL;
-    static char* keywords[] = {"name", "bases", "dict", "protocols", NULL};
-    char* name;
-    PyObject* bases;
-    PyObject* dict;
-    PyObject* old_dict;
-    PyObject* res;
-    PyObject* k;
-    PyObject* metadict;
-    PyObject* v;
-    Py_ssize_t i;
-    Py_ssize_t len;
-    Class objc_class = NULL;
-    Class super_class = NULL;
-    PyObject* py_super_class = NULL;
+    static PyObject*   all_python_classes = NULL;
+    static char*       keywords[]         = {"name", "bases", "dict", "protocols", NULL};
+    char*              name;
+    PyObject*          bases;
+    PyObject*          dict;
+    PyObject*          old_dict;
+    PyObject*          res;
+    PyObject*          k;
+    PyObject*          metadict;
+    PyObject*          v;
+    Py_ssize_t         i;
+    Py_ssize_t         len;
+    Class              objc_class     = NULL;
+    Class              super_class    = NULL;
+    PyObject*          py_super_class = NULL;
     PyObjCClassObject* info;
-    PyObject* keys;
-    PyObject* protocols;
-    PyObject* real_bases;
-    PyObject* delmethod;
-    PyObject* useKVOObj;
-    Ivar var;
-    PyObject* hiddenSelectors = NULL;
-    PyObject* hiddenClassSelectors = NULL;
-    PyObject* arg_protocols = NULL;
-    BOOL isCFProxyClass = NO;
-    int r;
+    PyObject*          keys;
+    PyObject*          protocols;
+    PyObject*          real_bases;
+    PyObject*          delmethod;
+    PyObject*          useKVOObj;
+    Ivar               var;
+    PyObject*          hiddenSelectors      = NULL;
+    PyObject*          hiddenClassSelectors = NULL;
+    PyObject*          arg_protocols        = NULL;
+    BOOL               isCFProxyClass       = NO;
+    int                r;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO|O", keywords, &name, &bases, &dict,
                                      &arg_protocols)) {
@@ -470,7 +470,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         }
 
     } else {
-        PyObject* seq;
+        PyObject*  seq;
         Py_ssize_t protocols_len;
 
         seq = PySequence_Fast(protocols, "__pyobjc_protocols__ not a sequence?");
@@ -484,7 +484,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         Py_DECREF(protocols);
 
         protocols_len = PySequence_Fast_GET_SIZE(seq);
-        protocols = PyList_New(protocols_len);
+        protocols     = PyList_New(protocols_len);
         if (protocols == NULL) {
             Py_DECREF(hiddenSelectors);
             Py_DECREF(hiddenClassSelectors);
@@ -565,7 +565,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     }
 
     if (arg_protocols != NULL) {
-        PyObject* seq;
+        PyObject*  seq;
         Py_ssize_t i, seqlen;
 
         seq = PySequence_Fast(arg_protocols, "'protocols' not a sequence?");
@@ -579,8 +579,8 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
 
         seqlen = PySequence_Fast_GET_SIZE(seq);
         for (i = 0; i < seqlen; i++) {
-            if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i)) ||
-                PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
+            if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
+                || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
                 r = PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i));
                 if (r == -1) {
                     Py_DECREF(seq);
@@ -613,7 +613,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
      */
     arg_protocols = PyDict_GetItemString(dict, "__pyobjc_protocols__");
     if (arg_protocols != NULL) {
-        PyObject* seq;
+        PyObject*  seq;
         Py_ssize_t i, seqlen;
 
         seq = PySequence_Fast(arg_protocols, "'__pyobjc_protocols__' not a sequence?");
@@ -627,8 +627,8 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
 
         seqlen = PySequence_Fast_GET_SIZE(seq);
         for (i = 0; i < seqlen; i++) {
-            if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i)) ||
-                PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
+            if (PyObjCInformalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))
+                || PyObjCFormalProtocol_Check(PySequence_Fast_GET_ITEM(seq, i))) {
                 r = PyList_Append(protocols, PySequence_Fast_GET_ITEM(seq, i));
                 if (r == -1) {
                     Py_DECREF(seq);
@@ -683,7 +683,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         }
 
         /* PyObjCClass_BuildClass may have changed the super_class */
-        super_class = class_getSuperclass(objc_class);
+        super_class    = class_getSuperclass(objc_class);
         py_super_class = PyObjCClass_New(super_class);
         if (py_super_class == NULL) {
             (void)PyObjCClass_UnbuildClass(objc_class);
@@ -915,7 +915,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     }
     Py_DECREF(args);
     Py_DECREF(real_bases);
-    args = NULL;
+    args       = NULL;
     real_bases = NULL;
 
     Py_DECREF(protocols);
@@ -940,18 +940,18 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         PyObjCClass_FinishClass(objc_class);
     }
 
-    info = (PyObjCClassObject*)res;
+    info        = (PyObjCClassObject*)res;
     info->class = objc_class;
     if (isCFProxyClass) {
         info->class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
     }
-    info->sel_to_py = NULL;
-    info->dictoffset = 0;
-    info->useKVO = 0;
-    info->delmethod = delmethod;
-    info->hasPythonImpl = 1;
-    info->isCFWrapper = 0;
-    info->hiddenSelectors = hiddenSelectors;
+    info->sel_to_py            = NULL;
+    info->dictoffset           = 0;
+    info->useKVO               = 0;
+    info->delmethod            = delmethod;
+    info->hasPythonImpl        = 1;
+    info->isCFWrapper          = 0;
+    info->hiddenSelectors      = hiddenSelectors;
     info->hiddenClassSelectors = hiddenClassSelectors;
 
     var = class_getInstanceVariable(objc_class, "__dict__");
@@ -1083,11 +1083,11 @@ PyObjCClass_CheckMethodList(PyObject* cls, int recursive)
 static PyObject*
 metaclass_dir(PyObject* self)
 {
-    PyObject* result;
-    Class cls;
-    Method* methods;
+    PyObject*    result;
+    Class        cls;
+    Method*      methods;
     unsigned int method_count, i;
-    char selbuf[2048];
+    char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
@@ -1101,7 +1101,7 @@ metaclass_dir(PyObject* self)
         /* Now add all method names */
         methods = class_copyMethodList(object_getClass(cls), &method_count);
         for (i = 0; i < method_count; i++) {
-            char* name;
+            char*     name;
             PyObject* item;
 
             /* Check if the selector should be hidden */
@@ -1143,10 +1143,10 @@ static inline PyObject*
 _type_lookup(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
-    PyObject *mro, *base, *dict;
-    PyObject* descr = NULL;
-    PyObject* res;
-    SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    PyObject * mro, *base, *dict;
+    PyObject*  descr = NULL;
+    PyObject*  res;
+    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1197,9 +1197,9 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 /* See function of same name in objc-object.m for an explanation */
 {
     Py_ssize_t i, n;
-    PyObject *mro, *base;
-    PyObject* descr = NULL;
-    PyObject* res;
+    PyObject * mro, *base;
+    PyObject*  descr = NULL;
+    PyObject*  res;
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -1210,11 +1210,11 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
-        Class cls;
-        Method* methods;
+        Class        cls;
+        Method*      methods;
         unsigned int method_count, j;
-        char selbuf[2048];
-        char* sel_name;
+        char         selbuf[2048];
+        char*        sel_name;
 
         base = PyTuple_GET_ITEM(mro, i);
 
@@ -1222,7 +1222,7 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
             continue;
         }
 
-        cls = objc_metaclass_locate(base);
+        cls     = objc_metaclass_locate(base);
         methods = class_copyMethodList(object_getClass(cls), &method_count);
         for (j = 0; j < method_count; j++) {
             Method m = methods[j];
@@ -1263,14 +1263,14 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 PyObject*
 PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 {
-    Class cls;
-    Method m;
+    Class     cls;
+    Method    m;
     PyObject* dict = ((PyTypeObject*)base)->tp_dict;
 
     Py_BEGIN_ALLOW_THREADS
         @try {
             cls = objc_metaclass_locate(base);
-            m = class_getClassMethod(cls, sel);
+            m   = class_getClassMethod(cls, sel);
 
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
@@ -1287,7 +1287,7 @@ PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 
     if (m) {
 #ifndef PyObjC_FAST_BUT_INEXACT
-        int use = 1;
+        int   use = 1;
         Class sup = class_getSuperclass(cls);
 
         if (sup) {
@@ -1327,10 +1327,10 @@ static inline PyObject*
 _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
-    PyObject *mro, *base, *dict;
-    PyObject* descr = NULL;
-    PyObject* res;
-    SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    PyObject * mro, *base, *dict;
+    PyObject*  descr = NULL;
+    PyObject*  res;
+    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1358,7 +1358,7 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 
         if (PyObjCClass_Check(base)) {
             /*Class cls = objc_metaclass_locate(base);*/
-            Class cls = PyObjCClass_GetClass(base);
+            Class  cls = PyObjCClass_GetClass(base);
             Method m;
 
             Py_BEGIN_ALLOW_THREADS
@@ -1375,7 +1375,7 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 
             if (m) {
 #ifndef PyObjC_FAST_BUT_INEXACT
-                int use = 1;
+                int   use = 1;
                 Class sup = class_getSuperclass(cls);
                 if (sup) {
                     Method m_sup = class_getInstanceMethod(sup, sel);
@@ -1414,10 +1414,10 @@ static inline PyObject*
 _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
-    PyObject *mro, *base;
-    PyObject* descr = NULL;
-    PyObject* res;
-    SEL sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    PyObject * mro, *base;
+    PyObject*  descr = NULL;
+    PyObject*  res;
+    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -1428,18 +1428,18 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
     PyObjC_Assert(PyTuple_Check(mro), NULL);
     n = PyTuple_GET_SIZE(mro);
     for (i = 0; i < n; i++) {
-        Class cls;
-        Method* methods;
+        Class        cls;
+        Method*      methods;
         unsigned int method_count, j;
-        char selbuf[2048];
-        char* sel_name;
+        char         selbuf[2048];
+        char*        sel_name;
 
         base = PyTuple_GET_ITEM(mro, i);
         if (!PyObjCClass_Check(base)) {
             continue;
         }
 
-        cls = PyObjCClass_GetClass(base);
+        cls     = PyObjCClass_GetClass(base);
         methods = class_copyMethodList(cls, &method_count);
         for (j = 0; j < method_count; j++) {
             Method m = methods[j];
@@ -1476,8 +1476,8 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
 static PyObject*
 class_getattro(PyObject* self, PyObject* name)
 {
-    PyObject* descr = NULL;
-    PyObject* result = NULL;
+    PyObject*    descr  = NULL;
+    PyObject*    result = NULL;
     descrgetfunc f;
 
     /* Python will look for a number of "private" attributes during
@@ -1495,8 +1495,8 @@ class_getattro(PyObject* self, PyObject* name)
      *
      */
     if (PyUnicode_Check(name)) {
-        if (PyObjC_is_ascii_prefix(name, "__", 2) &&
-            !PyObjC_is_ascii_string(name, "__dict__")) {
+        if (PyObjC_is_ascii_prefix(name, "__", 2)
+            && !PyObjC_is_ascii_string(name, "__dict__")) {
             result = PyType_Type.tp_getattro(self, name);
             if (result != NULL) {
                 return result;
@@ -1650,17 +1650,18 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
          * ones).
          */
 
-    } else if (PyObjCSelector_Check(value) || PyFunction_Check(value) ||
-               PyMethod_Check(value) || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
+    } else if (PyObjCSelector_Check(value) || PyFunction_Check(value)
+               || PyMethod_Check(value)
+               || PyObject_TypeCheck(value, &PyClassMethod_Type)) {
         /*
          * Assignment of a function: create a new method in the ObjC
          * runtime.
          */
         PyObject* newVal;
-        Method curMethod;
-        Class curClass;
-        int r;
-        BOOL b;
+        Method    curMethod;
+        Class     curClass;
+        int       r;
+        BOOL      b;
 
         newVal = PyObjCSelector_FromFunction(name, value, self, NULL);
         if (newVal == NULL) {
@@ -1675,11 +1676,11 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
         if (PyObjCSelector_IsClassMethod(newVal)) {
             curMethod = class_getClassMethod(PyObjCClass_GetClass(self),
                                              PyObjCSelector_GetSelector(newVal));
-            curClass = object_getClass(PyObjCClass_GetClass(self));
+            curClass  = object_getClass(PyObjCClass_GetClass(self));
         } else {
             curMethod = class_getInstanceMethod(PyObjCClass_GetClass(self),
                                                 PyObjCSelector_GetSelector(newVal));
-            curClass = PyObjCClass_GetClass(self);
+            curClass  = PyObjCClass_GetClass(self);
         }
 
         if (curMethod) {
@@ -1733,9 +1734,9 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
 static PyObject*
 class_richcompare(PyObject* self, PyObject* other, int op)
 {
-    Class self_class;
-    Class other_class;
-    int v;
+    Class     self_class;
+    Class     other_class;
+    int       v;
     PyObject* result;
 
     if (!PyObjCClass_Check(other)) {
@@ -1756,7 +1757,7 @@ class_richcompare(PyObject* self, PyObject* other, int op)
     /* This is as arbitrary as the default tp_compare, but nicer for
      * the user
      */
-    self_class = PyObjCClass_GetClass(self);
+    self_class  = PyObjCClass_GetClass(self);
     other_class = PyObjCClass_GetClass(other);
 
     if (self_class == other_class) {
@@ -1885,8 +1886,8 @@ cls_set_version(PyObject* self, PyObject* newVal,
                 void* closure __attribute__((__unused__)))
 {
     Class cls = PyObjCClass_GetClass(self);
-    int val;
-    int r;
+    int   val;
+    int   r;
 
     if (newVal == NULL) {
         PyErr_SetString(PyExc_TypeError, "Cannot delete __version__ attribute");
@@ -1924,32 +1925,32 @@ cls_set_useKVO(PyObject* self, PyObject* newVal,
 static PyGetSetDef class_getset[] = {
     {
         .name = "pyobjc_classMethods",
-        .get = cls_get_classMethods,
-        .doc = cls_get_classMethods_doc,
+        .get  = cls_get_classMethods,
+        .doc  = cls_get_classMethods_doc,
     },
     {
         .name = "pyobjc_instanceMethods",
-        .get = cls_get_instanceMethods,
-        .doc = cls_get_instanceMethods_doc,
+        .get  = cls_get_instanceMethods,
+        .doc  = cls_get_instanceMethods_doc,
     },
     {
         .name = "__version__",
-        .get = cls_get_version,
-        .set = cls_set_version,
-        .doc = cls_version_doc,
+        .get  = cls_get_version,
+        .set  = cls_set_version,
+        .doc  = cls_version_doc,
     },
     {
         .name = "__useKVO__",
-        .get = cls_get_useKVO,
-        .set = cls_set_useKVO,
-        .doc = "Use KVO notifications when setting attributes from Python",
+        .get  = cls_get_useKVO,
+        .set  = cls_set_useKVO,
+        .doc  = "Use KVO notifications when setting attributes from Python",
     },
     {
         /* Access __name__ through a property: Objective-C name
          * might change due to posing.
          */
         .name = "__name__",
-        .get = cls_get__name__,
+        .get  = cls_get__name__,
     },
     {
         .name = NULL /* SENTINEL */
@@ -1958,11 +1959,11 @@ static PyGetSetDef class_getset[] = {
 static PyObject*
 meth_dir(PyObject* self)
 {
-    PyObject* result;
-    Class cls;
-    Method* methods;
+    PyObject*    result;
+    Class        cls;
+    Method*      methods;
     unsigned int method_count, i;
-    char selbuf[2048];
+    char         selbuf[2048];
 
     /* Start of with keys in __dict__ */
     result = PyDict_Keys(((PyTypeObject*)self)->tp_dict);
@@ -1976,7 +1977,7 @@ meth_dir(PyObject* self)
         /* Now add all method names */
         methods = class_copyMethodList(cls, &method_count);
         for (i = 0; i < method_count; i++) {
-            char* name;
+            char*     name;
             PyObject* item;
 
             /* Check if the selector should be hidden */
@@ -2012,18 +2013,18 @@ meth_dir(PyObject* self)
     return result;
 }
 
-static PyMethodDef metaclass_methods[] = {{.ml_name = "__dir__",
-                                           .ml_meth = (PyCFunction)metaclass_dir,
+static PyMethodDef metaclass_methods[] = {{.ml_name  = "__dir__",
+                                           .ml_meth  = (PyCFunction)metaclass_dir,
                                            .ml_flags = METH_NOARGS,
-                                           .ml_doc = "dir() hook, don't call directly"},
+                                           .ml_doc   = "dir() hook, don't call directly"},
                                           {
                                               .ml_name = NULL /* SENTINEL */
                                           }};
 
-static PyMethodDef class_methods[] = {{.ml_name = "__dir__",
-                                       .ml_meth = (PyCFunction)meth_dir,
+static PyMethodDef class_methods[] = {{.ml_name  = "__dir__",
+                                       .ml_meth  = (PyCFunction)meth_dir,
                                        .ml_flags = METH_NOARGS,
-                                       .ml_doc = "dir() hook, don't call directly"},
+                                       .ml_doc   = "dir() hook, don't call directly"},
                                       {
                                           .ml_name = NULL /* SENTINEL */
                                       }};
@@ -2035,31 +2036,31 @@ static PyMethodDef class_methods[] = {{.ml_name = "__dir__",
  */
 PyTypeObject PyObjCMetaClass_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc_meta_class",
-    .tp_basicsize = sizeof(PyHeapTypeObject),
-    .tp_itemsize = sizeof(PyMemberDef),
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_methods = metaclass_methods,
-    .tp_base = &PyType_Type,
-    .tp_dictoffset = offsetof(PyTypeObject, tp_dict),
+    .tp_basicsize                                  = sizeof(PyHeapTypeObject),
+    .tp_itemsize                                   = sizeof(PyMemberDef),
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_methods                                    = metaclass_methods,
+    .tp_base                                       = &PyType_Type,
+    .tp_dictoffset                                 = offsetof(PyTypeObject, tp_dict),
 };
 
 PyTypeObject PyObjCClass_Type = {
     PyVarObject_HEAD_INIT(&PyObjCMetaClass_Type, 0).tp_name = "objc_class",
-    .tp_basicsize = sizeof(PyObjCClassObject),
-    .tp_itemsize = 0,
-    .tp_dealloc = class_dealloc,
-    .tp_repr = class_repr,
-    .tp_hash = class_hash,
-    .tp_getattro = class_getattro,
-    .tp_setattro = class_setattro,
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
-    .tp_doc = class_doc,
+    .tp_basicsize                                           = sizeof(PyObjCClassObject),
+    .tp_itemsize                                            = 0,
+    .tp_dealloc                                             = class_dealloc,
+    .tp_repr                                                = class_repr,
+    .tp_hash                                                = class_hash,
+    .tp_getattro                                            = class_getattro,
+    .tp_setattro                                            = class_setattro,
+    .tp_flags       = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
+    .tp_doc         = class_doc,
     .tp_richcompare = class_richcompare,
-    .tp_methods = class_methods,
-    .tp_getset = class_getset,
-    .tp_base = &PyObjCMetaClass_Type,
-    .tp_init = class_init,
-    .tp_new = class_new,
+    .tp_methods     = class_methods,
+    .tp_getset      = class_getset,
+    .tp_base        = &PyObjCMetaClass_Type,
+    .tp_init        = class_init,
+    .tp_new         = class_new,
 };
 
 /*
@@ -2076,15 +2077,15 @@ PyTypeObject PyObjCClass_Type = {
 PyObject*
 PyObjCClass_New(Class objc_class)
 {
-    PyObject* args;
-    PyObject* dict;
-    PyObject* result;
-    PyObject* bases;
+    PyObject*          args;
+    PyObject*          dict;
+    PyObject*          result;
+    PyObject*          bases;
     PyObjCClassObject* info;
-    Ivar var;
-    PyObject* hiddenSelectors;
-    PyTypeObject* metaclass;
-    const char* className;
+    Ivar               var;
+    PyObject*          hiddenSelectors;
+    PyTypeObject*      metaclass;
+    const char*        className;
 
     if (objc_class == Nil) {
         return NULL;
@@ -2122,13 +2123,13 @@ PyObjCClass_New(Class objc_class)
     } else {
         PyTuple_SET_ITEM(bases, 0, PyObjCClass_New(class_getSuperclass(objc_class)));
     }
-    args = PyTuple_New(3);
+    args      = PyTuple_New(3);
     className = class_getName(objc_class);
     PyTuple_SetItem(args, 0, PyUnicode_FromString(className));
     PyTuple_SetItem(args, 1, bases);
     PyTuple_SetItem(args, 2, dict);
     bases = NULL;
-    dict = NULL;
+    dict  = NULL;
 
     result = PyType_Type.tp_new(metaclass, args, NULL);
     Py_DECREF(args);
@@ -2138,14 +2139,14 @@ PyObjCClass_New(Class objc_class)
         return NULL;
     }
 
-    info = (PyObjCClassObject*)result;
-    info->class = objc_class;
-    info->sel_to_py = NULL;
-    info->dictoffset = 0;
-    info->useKVO = 1;
-    info->delmethod = NULL;
-    info->hasPythonImpl = 0;
-    info->isCFWrapper = 0;
+    info                  = (PyObjCClassObject*)result;
+    info->class           = objc_class;
+    info->sel_to_py       = NULL;
+    info->dictoffset      = 0;
+    info->useKVO          = 1;
+    info->delmethod       = NULL;
+    info->hasPythonImpl   = 0;
+    info->isCFWrapper     = 0;
     info->hiddenSelectors = hiddenSelectors;
 
     objc_class_register(objc_class, result);
@@ -2197,7 +2198,7 @@ PyObjCClass_New(Class objc_class)
 PyObject*
 PyObjCClass_ListProperties(PyObject* aClass)
 {
-    Class cls = Nil;
+    Class     cls   = Nil;
     Protocol* proto = nil;
 
     if (PyObjCClass_Check(aClass)) {
@@ -2219,8 +2220,8 @@ PyObjCClass_ListProperties(PyObject* aClass)
     }
 
     objc_property_t* props;
-    unsigned int propcount, i;
-    char buf[128];
+    unsigned int     propcount, i;
+    char             buf[128];
 
     if (cls == Nil) {
         return NULL;
@@ -2250,8 +2251,8 @@ PyObjCClass_ListProperties(PyObject* aClass)
     }
 
     for (i = 0; i < propcount; i++) {
-        PyObject* item;
-        PyObject* v;
+        PyObject*   item;
+        PyObject*   v;
         const char* name = property_getName(props[i]);
         const char* attr = property_getAttributes(props[i]);
         const char* e;
@@ -2306,7 +2307,7 @@ PyObjCClass_ListProperties(PyObject* aClass)
                 goto error;
             }
             Py_DECREF(v);
-            v = NULL;
+            v    = NULL;
             attr = e + 1;
         }
 
@@ -2362,11 +2363,11 @@ PyObjCClass_ListProperties(PyObject* aClass)
             case 'G':
                 e = strchr(attr, ',');
                 if (e == NULL) {
-                    v = PyBytes_FromString(attr);
+                    v    = PyBytes_FromString(attr);
                     attr = e;
 
                 } else {
-                    v = PyBytes_FromStringAndSize(attr, e - attr);
+                    v    = PyBytes_FromStringAndSize(attr, e - attr);
                     attr = e;
                 }
 
@@ -2383,11 +2384,11 @@ PyObjCClass_ListProperties(PyObject* aClass)
             case 'S':
                 e = strchr(attr, ',');
                 if (e == NULL) {
-                    v = PyBytes_FromString(attr);
+                    v    = PyBytes_FromString(attr);
                     attr = e;
 
                 } else {
-                    v = PyBytes_FromStringAndSize(attr, e - attr);
+                    v    = PyBytes_FromStringAndSize(attr, e - attr);
                     attr = e;
                 }
 
@@ -2441,7 +2442,7 @@ PyObject*
 PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
 {
     PyObjCClassObject* info;
-    PyObject* result;
+    PyObject*          result;
 
     if (!PyObjCClass_Check(cls)) {
         PyErr_Format(PyObjCExc_InternalError,
@@ -2491,7 +2492,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
      * method doesn't exist or isn't good enough)
      */
 
-    PyObject* mro = ((PyTypeObject*)cls)->tp_mro;
+    PyObject*  mro = ((PyTypeObject*)cls)->tp_mro;
     Py_ssize_t i, n;
 
     n = PyTuple_GET_SIZE(mro);
@@ -2510,7 +2511,7 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
             dict = ((PyTypeObject*)c)->tp_dict;
         }
 
-        PyObject* value;
+        PyObject*  value;
         Py_ssize_t pos = 0;
 
         while (PyDict_Next(dict, &pos, NULL, &value)) {
@@ -2525,8 +2526,8 @@ PyObjCClass_FindSelector(PyObject* cls, SEL selector, BOOL class_method)
             }
         }
         {
-            char selbuf[2048];
-            char* name;
+            char      selbuf[2048];
+            char*     name;
             PyObject* py_name;
             name = PyObjC_SELToPythonName(selector, selbuf, sizeof(selbuf));
             if (!name)
@@ -2617,11 +2618,11 @@ PyObjCClass_HasPythonImplementation(PyObject* cls)
 static int
 update_convenience_methods(PyObject* cls)
 {
-    PyObject* res;
-    PyObject* args;
-    PyObject* dict;
-    PyObject* k;
-    PyObject* v;
+    PyObject*  res;
+    PyObject*  args;
+    PyObject*  dict;
+    PyObject*  k;
+    PyObject*  v;
     Py_ssize_t pos;
 
     if (PyObjC_ClassExtender == NULL || cls == NULL)
@@ -2657,10 +2658,10 @@ update_convenience_methods(PyObject* cls)
     pos = 0;
     while (PyDict_Next(dict, &pos, &k, &v)) {
         if (PyUnicode_Check(k)) {
-            if (PyObjC_is_ascii_string(k, "__dict__") ||
-                PyObjC_is_ascii_string(k, "__bases__") ||
-                PyObjC_is_ascii_string(k, "__slots__") ||
-                PyObjC_is_ascii_string(k, "__mro__")) {
+            if (PyObjC_is_ascii_string(k, "__dict__")
+                || PyObjC_is_ascii_string(k, "__bases__")
+                || PyObjC_is_ascii_string(k, "__slots__")
+                || PyObjC_is_ascii_string(k, "__mro__")) {
 
                 continue;
             }
@@ -2695,15 +2696,15 @@ PyObjCClass_ClassForMetaClass(PyObject* meta)
 int
 PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t methodCount)
 {
-    Class targetClass;
-    Py_ssize_t methodIndex;
-    int r;
+    Class                 targetClass;
+    Py_ssize_t            methodIndex;
+    int                   r;
     struct PyObjC_method* methodsToAdd;
-    size_t curMethodIndex;
+    size_t                curMethodIndex;
     struct PyObjC_method* classMethodsToAdd;
-    size_t curClassMethodIndex;
-    PyObject* extraDict = NULL;
-    PyObject* metaDict = NULL;
+    size_t                curClassMethodIndex;
+    PyObject*             extraDict = NULL;
+    PyObject*             metaDict  = NULL;
 
     targetClass = PyObjCClass_GetClass(classObject);
     if (targetClass == NULL) {
@@ -2742,12 +2743,12 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
         return -1;
     }
 
-    curMethodIndex = 0;
+    curMethodIndex      = 0;
     curClassMethodIndex = 0;
 
     for (methodIndex = 0; methodIndex < methodCount; methodIndex++) {
-        PyObject* aMethod = methods[methodIndex];
-        PyObject* name;
+        PyObject*             aMethod = methods[methodIndex];
+        PyObject*             name;
         struct PyObjC_method* objcMethod;
 
         if (PyObjCNativeSelector_Check(aMethod)) {

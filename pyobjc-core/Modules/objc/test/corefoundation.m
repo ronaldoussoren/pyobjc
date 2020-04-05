@@ -89,8 +89,8 @@
 
 + (NSString*)formatDate:(CFDateRef)date
 {
-    CFLocaleRef currentLocale = CFLocaleCopyCurrent();
-    CFDateFormatterRef formatter = CFDateFormatterCreate(
+    CFLocaleRef        currentLocale = CFLocaleCopyCurrent();
+    CFDateFormatterRef formatter     = CFDateFormatterCreate(
         NULL, currentLocale, kCFDateFormatterShortStyle, kCFDateFormatterNoStyle);
 
     if (currentLocale != NULL) {
@@ -144,7 +144,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_corefoundation(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestCoreFoundation",
-                           PyObjC_IdToPython([OC_TestCoreFoundation class])) < 0) {
+                           PyObjC_IdToPython([OC_TestCoreFoundation class]))
+        < 0) {
         return NULL;
     }
 

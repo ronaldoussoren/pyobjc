@@ -10,9 +10,9 @@
 
 typedef struct {
     PyUnicodeObject base;
-    PyObject* weakrefs;
-    id nsstr;
-    PyObject* py_nsstr;
+    PyObject*       weakrefs;
+    id              nsstr;
+    PyObject*       py_nsstr;
 
 } PyObjCUnicodeObject;
 
@@ -27,9 +27,9 @@ PyDoc_STRVAR(class_doc, "objc.pyobjc_unicode\n"
 static void
 class_dealloc(PyObject* obj)
 {
-    PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)obj;
-    PyObject* weakrefs = uobj->weakrefs;
-    PyObject* py_nsstr = uobj->py_nsstr;
+    PyObjCUnicodeObject* uobj     = (PyObjCUnicodeObject*)obj;
+    PyObject*            weakrefs = uobj->weakrefs;
+    PyObject*            py_nsstr = uobj->py_nsstr;
 
     PyObjC_UnregisterPythonProxy(uobj->nsstr, obj);
     Py_CLEAR(py_nsstr);
@@ -81,8 +81,8 @@ static PyObject*
 meth_reduce(PyObject* self)
 {
     PyObject* retVal = NULL;
-    PyObject* v = NULL;
-    PyObject* v2 = NULL;
+    PyObject* v      = NULL;
+    PyObject* v2     = NULL;
 
     retVal = PyTuple_New(2);
     if (retVal == NULL)
@@ -110,13 +110,13 @@ error:
     return NULL;
 }
 
-static PyMethodDef class_methods[] = {{.ml_name = "nsstring",
-                                       .ml_meth = (PyCFunction)meth_nsstring,
+static PyMethodDef class_methods[] = {{.ml_name  = "nsstring",
+                                       .ml_meth  = (PyCFunction)meth_nsstring,
                                        .ml_flags = METH_NOARGS,
-                                       .ml_doc = "directly access NSString instance"},
+                                       .ml_doc   = "directly access NSString instance"},
                                       {
-                                          .ml_name = "__reduce__",
-                                          .ml_meth = (PyCFunction)meth_reduce,
+                                          .ml_name  = "__reduce__",
+                                          .ml_meth  = (PyCFunction)meth_reduce,
                                           .ml_flags = METH_NOARGS,
                                       },
                                       {
@@ -132,8 +132,8 @@ nsstring_get__pyobjc_object__(PyObject* self, void* closure __attribute__((__unu
 static PyGetSetDef nsstring_getsetters[] = {
     {
         .name = "__pyobjc_object__",
-        .get = (getter)nsstring_get__pyobjc_object__,
-        .doc = "raw NSString instance",
+        .get  = (getter)nsstring_get__pyobjc_object__,
+        .doc  = "raw NSString instance",
     },
     {
         .name = NULL /* SENTINEL */
@@ -141,8 +141,8 @@ static PyGetSetDef nsstring_getsetters[] = {
 
 static PyObject*
 class_new(PyTypeObject* type __attribute__((__unused__)),
-          PyObject* args __attribute__((__unused__)),
-          PyObject* kwds __attribute__((__unused__)))
+          PyObject*     args __attribute__((__unused__)),
+          PyObject*     kwds __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_TypeError,
                     "Cannot create instances of 'objc.unicode' in Python");
@@ -151,17 +151,17 @@ class_new(PyTypeObject* type __attribute__((__unused__)),
 
 PyTypeObject PyObjCUnicode_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.pyobjc_unicode",
-    .tp_basicsize = sizeof(PyObjCUnicodeObject),
-    .tp_itemsize = 0,
-    .tp_dealloc = class_dealloc,
-    .tp_getattro = meth_getattro,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = class_doc,
+    .tp_basicsize                                  = sizeof(PyObjCUnicodeObject),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = class_dealloc,
+    .tp_getattro                                   = meth_getattro,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_doc                                        = class_doc,
     .tp_weaklistoffset = offsetof(PyObjCUnicodeObject, weakrefs),
-    .tp_methods = class_methods,
-    .tp_getset = nsstring_getsetters,
-    .tp_base = &PyUnicode_Type,
-    .tp_new = class_new,
+    .tp_methods        = class_methods,
+    .tp_getset         = nsstring_getsetters,
+    .tp_base           = &PyUnicode_Type,
+    .tp_new            = class_new,
 };
 
 /*
@@ -184,15 +184,15 @@ PyTypeObject PyObjCUnicode_Type = {
 PyObject*
 PyObjCUnicode_New(NSString* value)
 {
-    PyObjCUnicodeObject* result;
-    PyASCIIObject* ascii;
+    PyObjCUnicodeObject*    result;
+    PyASCIIObject*          ascii;
     PyCompactUnicodeObject* compact;
 
     NSInteger i, length;
-    unichar* characters = NULL;
-    NSRange range;
-    Py_UCS4 maxchar;
-    int nr_surrogates;
+    unichar*  characters = NULL;
+    NSRange   range;
+    Py_UCS4   maxchar;
+    int       nr_surrogates;
 
     length = [value length];
 
@@ -222,35 +222,35 @@ PyObjCUnicode_New(NSString* value)
         return NULL;
     }
 
-    result = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
+    result           = PyObject_New(PyObjCUnicodeObject, &PyObjCUnicode_Type);
     result->weakrefs = NULL;
     result->py_nsstr = NULL;
-    result->nsstr = nil;
+    result->nsstr    = nil;
 
-    ascii = (PyASCIIObject*)result;
+    ascii   = (PyASCIIObject*)result;
     compact = (PyCompactUnicodeObject*)result;
 
-    ascii->hash = -1;
-    ascii->wstr = NULL;
+    ascii->hash   = -1;
+    ascii->wstr   = NULL;
     ascii->length = length;
 
-    ascii->state.compact = 0;
-    ascii->state.ready = 1;
+    ascii->state.compact  = 0;
+    ascii->state.ready    = 1;
     ascii->state.interned = SSTATE_NOT_INTERNED;
 
     compact->utf8_length = 0;
-    compact->utf8 = NULL;
+    compact->utf8        = NULL;
     compact->wstr_length = 0;
 
     result->base.data.any = NULL;
 
-    maxchar = 0;
+    maxchar       = 0;
     nr_surrogates = 0;
     for (i = 0; i < length; i++) {
         Py_UCS4 cur = (Py_UCS4)characters[i];
 
-        if (Py_UNICODE_IS_HIGH_SURROGATE(cur) && (i < length - 1) &&
-            (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
+        if (Py_UNICODE_IS_HIGH_SURROGATE(cur) && (i < length - 1)
+            && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
 
             Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
             i++;
@@ -267,19 +267,19 @@ PyObjCUnicode_New(NSString* value)
 
     if (maxchar <= 128) {
         ascii->state.ascii = 1;
-        ascii->state.kind = PyUnicode_1BYTE_KIND;
+        ascii->state.kind  = PyUnicode_1BYTE_KIND;
 
     } else if (maxchar <= 255) {
         ascii->state.ascii = 0;
-        ascii->state.kind = PyUnicode_1BYTE_KIND;
+        ascii->state.kind  = PyUnicode_1BYTE_KIND;
 
     } else if (maxchar <= 0xFFFF) {
         ascii->state.ascii = 0;
-        ascii->state.kind = PyUnicode_2BYTE_KIND;
+        ascii->state.kind  = PyUnicode_2BYTE_KIND;
 
     } else {
         ascii->state.ascii = 0;
-        ascii->state.kind = PyUnicode_4BYTE_KIND;
+        ascii->state.kind  = PyUnicode_4BYTE_KIND;
     }
 
     /* Create storage for the code points and copy the data */
@@ -295,8 +295,8 @@ PyObjCUnicode_New(NSString* value)
 
         latin1_cur = result->base.data.latin1;
         for (i = 0; i < length; i++) {
-            if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1) &&
-                (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
+            if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
+                && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
                 Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
                 *latin1_cur++ = (Py_UCS1)ch;
                 i++;
@@ -306,7 +306,7 @@ PyObjCUnicode_New(NSString* value)
             }
         }
 
-        *latin1_cur = 0;
+        *latin1_cur   = 0;
         ascii->length = length - nr_surrogates;
         if (ascii->state.ascii) {
             /* With ASCII representation the UTF8 representation is
@@ -314,7 +314,7 @@ PyObjCUnicode_New(NSString* value)
              * filled according to the spec
              */
             compact->utf8_length = length - nr_surrogates;
-            compact->utf8 = (char*)result->base.data.latin1;
+            compact->utf8        = (char*)result->base.data.latin1;
         }
 
     } else if (ascii->state.kind == PyUnicode_2BYTE_KIND) {
@@ -322,9 +322,9 @@ PyObjCUnicode_New(NSString* value)
             /* No surrogates and 2BYTE_KIND, this means the unichar buffer
              * can be reused as storage for the python unicode string
              */
-            ascii->length = length;
+            ascii->length          = length;
             result->base.data.ucs2 = (Py_UCS2*)characters;
-            characters = NULL;
+            characters             = NULL;
 
         } else {
             Py_UCS2* ucs2_cur;
@@ -337,8 +337,8 @@ PyObjCUnicode_New(NSString* value)
 
             ucs2_cur = result->base.data.ucs2;
             for (i = 0; i < length; i++) {
-                if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1) &&
-                    (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
+                if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
+                    && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
                     Py_UCS4 ch =
                         Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
                     *ucs2_cur++ = (Py_UCS2)ch;
@@ -348,7 +348,7 @@ PyObjCUnicode_New(NSString* value)
                 }
             }
             ascii->length = length - nr_surrogates;
-            *ucs2_cur = 0;
+            *ucs2_cur     = 0;
         }
 
     } else { /* 4BYTE_KIND */
@@ -362,8 +362,8 @@ PyObjCUnicode_New(NSString* value)
 
         ucs4_cur = result->base.data.ucs4;
         for (i = 0; i < length; i++) {
-            if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1) &&
-                (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
+            if (Py_UNICODE_IS_HIGH_SURROGATE(characters[i]) && (i < length - 1)
+                && (Py_UNICODE_IS_LOW_SURROGATE(characters[i + 1]))) {
                 Py_UCS4 ch = Py_UNICODE_JOIN_SURROGATES(characters[i], characters[i + 1]);
 
                 if (ch > 0x10ffff) {
@@ -380,7 +380,7 @@ PyObjCUnicode_New(NSString* value)
                 *ucs4_cur++ = (Py_UCS4)characters[i];
             }
         }
-        *ucs4_cur = 0;
+        *ucs4_cur     = 0;
         ascii->length = length - nr_surrogates;
     }
 

@@ -7,7 +7,7 @@
 #define IS_FSREF(typestr)                                                                \
     (strncmp(typestr, @encode(FSRef), sizeof(@encode(FSRef)) - 1) == 0)
 
-extern int PyObjC_encode_fsref(PyObject*, void*);
+extern int       PyObjC_encode_fsref(PyObject*, void*);
 extern PyObject* PyObjC_decode_fsref(void*);
 
 extern PyTypeObject PyObjC_FSRefType;

@@ -6,9 +6,9 @@
 #import "pyobjc.h"
 
 struct auth_item_set {
-    char* name;
-    size_t valueLength;
-    void* value;
+    char*        name;
+    size_t       valueLength;
+    void*        value;
     unsigned int flags;
 };
 
@@ -22,18 +22,18 @@ PyObject*
 pythonify_authorizationitem(void* _value)
 {
     struct auth_item_set* value = (struct auth_item_set*)_value;
-    PyObject* result;
-    const char* oc_typestr;
-    Py_ssize_t pack;
-    int have_tuple = 0;
-    PyObject* t;
-    int r;
+    PyObject*             result;
+    const char*           oc_typestr;
+    Py_ssize_t            pack;
+    int                   have_tuple = 0;
+    PyObject*             t;
+    int                   r;
 
     result = PyObjC_CreateRegisteredStruct("{_AuthorizationItem=^cL^vI}", 27, &oc_typestr,
                                            &pack);
     if (result == NULL) {
         have_tuple = 1;
-        result = PyTuple_New(4);
+        result     = PyTuple_New(4);
         if (result == NULL) {
             return NULL;
         }
@@ -116,7 +116,7 @@ int
 depythonify_authorizationitem(PyObject* value, void* _out)
 {
     struct auth_item_set* out = (struct auth_item_set*)_out;
-    PyObject* seq;
+    PyObject*             seq;
 
     if (PyObjCStruct_Check(value)) {
         seq = StructAsTuple(value);
@@ -170,7 +170,8 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     } else if (PyBytes_Check(PySequence_Fast_GET_ITEM(seq, 2))) {
         Py_ssize_t len;
         if (PyBytes_AsStringAndSize(PySequence_Fast_GET_ITEM(seq, 2), (char**)&out->value,
-                                    &len) == -1) {
+                                    &len)
+            == -1) {
             Py_DECREF(seq);
             return -1;
         } else if ((size_t)len < out->valueLength) {

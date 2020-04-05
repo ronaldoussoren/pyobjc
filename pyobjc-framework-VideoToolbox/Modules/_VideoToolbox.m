@@ -10,21 +10,21 @@ m_VTCompressionSessionGetTimeRangesForNextPass(PyObject* self __attribute__((__u
                                                PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"session", "timeRangeCountOut", "timeRangeArrayOut", NULL};
-    PyObject* py_session;
-    PyObject* py_timeRangeCount;
-    PyObject* py_timeRangeArray;
-    OSStatus rv;
+    PyObject*    py_session;
+    PyObject*    py_timeRangeCount;
+    PyObject*    py_timeRangeArray;
+    OSStatus     rv;
     VTCompressionSessionRef session;
-    CMItemCount timeRangeCount;
-    const CMTimeRange* timeRangeArray;
+    CMItemCount             timeRangeCount;
+    const CMTimeRange*      timeRangeArray;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO", keywords, &py_session,
                                      &py_timeRangeCount, &py_timeRangeArray)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(VTCompressionSessionRef), py_session, &session) ==
-        -1) {
+    if (PyObjC_PythonToObjC(@encode(VTCompressionSessionRef), py_session, &session)
+        == -1) {
         return NULL;
     }
     if (py_timeRangeCount != Py_None) {
@@ -63,20 +63,20 @@ m_VTDecompressionSessionCreate(PyObject* self __attribute__((__unused__)), PyObj
                                "decompressionSessionOut",
                                NULL};
 
-    PyObject* py_allocator;
-    CFAllocatorRef allocator;
-    PyObject* py_videoFormatDescription;
-    CMVideoFormatDescriptionRef videoFormatDescription;
-    PyObject* py_videoDecoderSpecification;
-    CFDictionaryRef videoDecoderSpecification;
-    PyObject* py_destinationImageBufferAttributes;
-    CFDictionaryRef destinationImageBufferAttributes;
-    PyObject* py_outputCallback;
+    PyObject*                           py_allocator;
+    CFAllocatorRef                      allocator;
+    PyObject*                           py_videoFormatDescription;
+    CMVideoFormatDescriptionRef         videoFormatDescription;
+    PyObject*                           py_videoDecoderSpecification;
+    CFDictionaryRef                     videoDecoderSpecification;
+    PyObject*                           py_destinationImageBufferAttributes;
+    CFDictionaryRef                     destinationImageBufferAttributes;
+    PyObject*                           py_outputCallback;
     VTDecompressionOutputCallbackRecord outputCallback;
-    PyObject* py_decompressionSessionOut;
-    VTDecompressionSessionRef decompressionSessionOut;
-    OSStatus rv;
-    int have_outputCallback;
+    PyObject*                           py_decompressionSessionOut;
+    VTDecompressionSessionRef           decompressionSessionOut;
+    OSStatus                            rv;
+    int                                 have_outputCallback;
 
     if (!PyArg_ParseTupleAndKeywords(
             args, kwds, "OOOOOO", keywords, &py_allocator, &py_videoFormatDescription,
@@ -89,15 +89,18 @@ m_VTDecompressionSessionCreate(PyObject* self __attribute__((__unused__)), PyObj
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CMVideoFormatDescriptionRef),
-                            py_videoFormatDescription, &videoFormatDescription) == -1) {
+                            py_videoFormatDescription, &videoFormatDescription)
+        == -1) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), py_videoDecoderSpecification,
-                            &videoDecoderSpecification) == -1) {
+                            &videoDecoderSpecification)
+        == -1) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), py_destinationImageBufferAttributes,
-                            &destinationImageBufferAttributes) == -1) {
+                            &destinationImageBufferAttributes)
+        == -1) {
         return NULL;
     }
     if (py_decompressionSessionOut != Py_None) {
@@ -106,8 +109,8 @@ m_VTDecompressionSessionCreate(PyObject* self __attribute__((__unused__)), PyObj
     }
     if (py_outputCallback == Py_None) {
         have_outputCallback = 0;
-    } else if (!PyTuple_Check(py_outputCallback) ||
-               PyTuple_Size(py_outputCallback) != 2) {
+    } else if (!PyTuple_Check(py_outputCallback)
+               || PyTuple_Size(py_outputCallback) != 2) {
         PyErr_SetString(PyExc_TypeError, "outputCallback should be a tuple of 2 items");
         return NULL;
     } else {

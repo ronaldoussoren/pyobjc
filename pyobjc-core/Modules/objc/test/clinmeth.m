@@ -90,11 +90,13 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_clinmeth(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_ClsInst1",
-                           PyObjC_IdToPython([PyObjC_ClsInst1 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_ClsInst1 class]))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_ClsInst2",
-                           PyObjC_IdToPython([PyObjC_ClsInst2 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_ClsInst2 class]))
+        < 0) {
         return NULL;
     }
 

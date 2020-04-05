@@ -18,7 +18,7 @@ static NSString*
 addr2string(void* addr, int addrlen)
 {
     char buf[NI_MAXHOST];
-    int error;
+    int  error;
 
     error = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
     if (error) {
@@ -62,28 +62,28 @@ addr2string(void* addr, int addrlen)
 + (void)getIPv4Addr:(struct sockaddr*)buf
 {
     struct sockaddr_in* addr = (struct sockaddr_in*)buf;
-    addr->sin_family = AF_INET;
-    addr->sin_port = htons(80);
+    addr->sin_family         = AF_INET;
+    addr->sin_port           = htons(80);
     ascii2addr(AF_INET, "127.0.0.1", &addr->sin_addr);
 }
 
 + (void)getIPv6Addr:(struct sockaddr*)buf
 {
-    struct sockaddr_in6* addr = (struct sockaddr_in6*)buf;
-    addr->sin6_family = AF_INET6;
-    addr->sin6_port = htons(443);
-    addr->sin6_flowinfo = 2;
-    addr->sin6_scope_id = 3;
-    ((char*)&addr->sin6_addr)[0] = 0;
-    ((char*)&addr->sin6_addr)[1] = 0;
-    ((char*)&addr->sin6_addr)[2] = 0;
-    ((char*)&addr->sin6_addr)[3] = 0;
-    ((char*)&addr->sin6_addr)[4] = 0;
-    ((char*)&addr->sin6_addr)[5] = 0;
-    ((char*)&addr->sin6_addr)[6] = 0;
-    ((char*)&addr->sin6_addr)[7] = 0;
-    ((char*)&addr->sin6_addr)[8] = 0;
-    ((char*)&addr->sin6_addr)[9] = 0;
+    struct sockaddr_in6* addr     = (struct sockaddr_in6*)buf;
+    addr->sin6_family             = AF_INET6;
+    addr->sin6_port               = htons(443);
+    addr->sin6_flowinfo           = 2;
+    addr->sin6_scope_id           = 3;
+    ((char*)&addr->sin6_addr)[0]  = 0;
+    ((char*)&addr->sin6_addr)[1]  = 0;
+    ((char*)&addr->sin6_addr)[2]  = 0;
+    ((char*)&addr->sin6_addr)[3]  = 0;
+    ((char*)&addr->sin6_addr)[4]  = 0;
+    ((char*)&addr->sin6_addr)[5]  = 0;
+    ((char*)&addr->sin6_addr)[6]  = 0;
+    ((char*)&addr->sin6_addr)[7]  = 0;
+    ((char*)&addr->sin6_addr)[8]  = 0;
+    ((char*)&addr->sin6_addr)[9]  = 0;
     ((char*)&addr->sin6_addr)[10] = 0;
     ((char*)&addr->sin6_addr)[11] = 0;
     ((char*)&addr->sin6_addr)[12] = 0;
@@ -114,7 +114,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_sockaddr(void)
     }
 
     if (PyModule_AddObject(m, "PyObjCTestSockAddr",
-                           PyObjC_IdToPython([PyObjCTestSockAddr class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTestSockAddr class]))
+        < 0) {
         return NULL;
     }
 

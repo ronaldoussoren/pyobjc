@@ -39,29 +39,29 @@ sel_getName(SEL sel)
 #endif
 
 struct TestStruct1 {
-    int i;
-    int d;
+    int   i;
+    int   d;
     short s[5];
 };
 
 struct TestStruct2 {
-    int i;
+    int    i;
     double d;
-    short s[5];
+    short  s[5];
 };
 
 struct TestStruct3 {
     char ch;
-    int i;
+    int  i;
 };
 
 struct TestStruct4 {
-    char ch;
+    char      ch;
     long long l;
 };
 
 struct TestStruct5 {
-    char ch;
+    char   ch;
     double d;
 };
 @interface PyObjC_TestClass1 : NSObject {
@@ -4105,7 +4105,7 @@ static float g_float_values[] = {0.128, 1.0, 42.0, 1e10};
 
 static double g_double_values[] = {0.128, 1.0, 42.0, 1e10};
 
-static id g_id_values[1];
+static id    g_id_values[1];
 static char* g_charPtr_values[] = {"hello", "world", "foobar"};
 
 static NSPoint g_NSPoint_values[] = {{1, 2}, {3, 4}};
@@ -4127,10 +4127,10 @@ static struct TestStruct5 g_structTestStruct5_values[] = {{1, 2.5}, {2, 4.5}};
 static id
 arg2id(const char* argtype, void* argptr)
 {
-    id res;
-    PyObject* tmp;
+    id               res;
+    PyObject*        tmp;
     PyGILState_STATE state = PyGILState_Ensure();
-    tmp = PyObjC_ObjCToPython(argtype, argptr);
+    tmp                    = PyObjC_ObjCToPython(argtype, argptr);
     if (tmp == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
         return nil;
@@ -10021,7 +10021,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (bool)invokeboolMethodOf:(PyObjC_TestClass1*)obj
 {
-    bool res;
+    bool          res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(boolMethod))[obj forwardInvocation:inv];
@@ -10037,7 +10037,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (BOOL)invokeBOOLMethodOf:(PyObjC_TestClass1*)obj
 {
-    BOOL res;
+    BOOL          res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(BOOLMethod))[obj forwardInvocation:inv];
@@ -10052,7 +10052,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (char)invokecharMethodOf:(PyObjC_TestClass1*)obj
 {
-    char res;
+    char          res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charMethod))[obj forwardInvocation:inv];
@@ -10067,7 +10067,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (signed short)invokesignedshortMethodOf:(PyObjC_TestClass1*)obj
 {
-    signed short res;
+    signed short  res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedshortMethod))[obj forwardInvocation:inv];
@@ -10082,7 +10082,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (signed int)invokesignedintMethodOf:(PyObjC_TestClass1*)obj
 {
-    signed int res;
+    signed int    res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedintMethod))[obj forwardInvocation:inv];
@@ -10097,7 +10097,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (signed long)invokesignedlongMethodOf:(PyObjC_TestClass1*)obj
 {
-    signed long res;
+    signed long   res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedlongMethod))[obj forwardInvocation:inv];
@@ -10113,7 +10113,7 @@ arg2id(const char* argtype, void* argptr)
 + (signed long long)invokesignedlonglongMethodOf:(PyObjC_TestClass1*)obj
 {
     signed long long res;
-    NSInvocation* inv;
+    NSInvocation*    inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(signedlonglongMethod))[obj forwardInvocation:inv];
@@ -10144,7 +10144,7 @@ arg2id(const char* argtype, void* argptr)
 + (unsigned short)invokeunsignedshortMethodOf:(PyObjC_TestClass1*)obj
 {
     unsigned short res;
-    NSInvocation* inv;
+    NSInvocation*  inv;
 
     SETUP_INVOCATION(inv, obj, @selector(unsignedshortMethod))[obj forwardInvocation:inv];
     [inv getReturnValue:&res];
@@ -10158,7 +10158,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (unsigned int)invokeunsignedintMethodOf:(PyObjC_TestClass1*)obj
 {
-    unsigned int res;
+    unsigned int  res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(unsignedintMethod))[obj forwardInvocation:inv];
@@ -10189,7 +10189,7 @@ arg2id(const char* argtype, void* argptr)
 + (unsigned long long)invokeunsignedlonglongMethodOf:(PyObjC_TestClass1*)obj
 {
     unsigned long long res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(unsignedlonglongMethod))[obj forwardInvocation:inv];
@@ -10204,7 +10204,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (float)invokefloatMethodOf:(PyObjC_TestClass1*)obj
 {
-    float res;
+    float         res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(floatMethod))[obj forwardInvocation:inv];
@@ -10219,7 +10219,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (double)invokedoubleMethodOf:(PyObjC_TestClass1*)obj
 {
-    double res;
+    double        res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(doubleMethod))[obj forwardInvocation:inv];
@@ -10234,7 +10234,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidMethodOf:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idMethod))[obj forwardInvocation:inv];
@@ -10249,7 +10249,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (char*)invokecharPtrMethodOf:(PyObjC_TestClass1*)obj
 {
-    char* res;
+    char*         res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charPtrMethod))[obj forwardInvocation:inv];
@@ -10264,7 +10264,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (NSPoint)invokeNSPointMethodOf:(PyObjC_TestClass1*)obj
 {
-    NSPoint res;
+    NSPoint       res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSPointMethod))[obj forwardInvocation:inv];
@@ -10279,7 +10279,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (NSRect)invokeNSRectMethodOf:(PyObjC_TestClass1*)obj
 {
-    NSRect res;
+    NSRect        res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSRectMethod))[obj forwardInvocation:inv];
@@ -10295,7 +10295,7 @@ arg2id(const char* argtype, void* argptr)
 + (struct TestStruct1)invokestructTestStruct1MethodOf:(PyObjC_TestClass1*)obj
 {
     struct TestStruct1 res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(structTestStruct1Method))[obj forwardInvocation:inv];
@@ -10311,7 +10311,7 @@ arg2id(const char* argtype, void* argptr)
 + (struct TestStruct2)invokestructTestStruct2MethodOf:(PyObjC_TestClass1*)obj
 {
     struct TestStruct2 res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(structTestStruct2Method))[obj forwardInvocation:inv];
@@ -10327,7 +10327,7 @@ arg2id(const char* argtype, void* argptr)
 + (struct TestStruct3)invokestructTestStruct3MethodOf:(PyObjC_TestClass1*)obj
 {
     struct TestStruct3 res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(structTestStruct3Method))[obj forwardInvocation:inv];
@@ -10343,7 +10343,7 @@ arg2id(const char* argtype, void* argptr)
 + (struct TestStruct4)invokestructTestStruct4MethodOf:(PyObjC_TestClass1*)obj
 {
     struct TestStruct4 res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(structTestStruct4Method))[obj forwardInvocation:inv];
@@ -10359,7 +10359,7 @@ arg2id(const char* argtype, void* argptr)
 + (struct TestStruct5)invokestructTestStruct5MethodOf:(PyObjC_TestClass1*)obj
 {
     struct TestStruct5 res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(structTestStruct5Method))[obj forwardInvocation:inv];
@@ -10375,7 +10375,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(boolArg:))[inv setArgument:&arg atIndex:2];
@@ -10392,7 +10392,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(BOOLArg:))[inv setArgument:&arg atIndex:2];
@@ -10408,7 +10408,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charArg:))[inv setArgument:&arg atIndex:2];
@@ -10424,7 +10424,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedshortArg:(signed short)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10441,7 +10441,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedintArg:(signed int)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedintArg:))[inv setArgument:&arg atIndex:2];
@@ -10457,7 +10457,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedlongArg:(signed long)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedlongArg:))[inv setArgument:&arg atIndex:2];
@@ -10473,7 +10473,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedlonglongArg:(signed long long)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10490,7 +10490,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedcharArg:(unsigned char)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10507,7 +10507,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedshortArg:(unsigned short)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10524,7 +10524,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedintArg:(unsigned int)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10541,7 +10541,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedlongArg:(unsigned long)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10558,7 +10558,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedlonglongArg:(unsigned long long)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10575,7 +10575,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(floatArg:))[inv setArgument:&arg atIndex:2];
@@ -10591,7 +10591,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(doubleArg:))[inv setArgument:&arg atIndex:2];
@@ -10607,7 +10607,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idArg:))[inv setArgument:&arg atIndex:2];
@@ -10623,7 +10623,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charPtrArg:))[inv setArgument:&arg atIndex:2];
@@ -10639,7 +10639,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSPointArg:))[inv setArgument:&arg atIndex:2];
@@ -10655,7 +10655,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSRectArg:))[inv setArgument:&arg atIndex:2];
@@ -10671,7 +10671,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct1Arg:(struct TestStruct1)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10688,7 +10688,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct2Arg:(struct TestStruct2)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10705,7 +10705,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct3Arg:(struct TestStruct3)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10722,7 +10722,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct4Arg:(struct TestStruct4)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10739,7 +10739,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct5Arg:(struct TestStruct5)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10757,7 +10757,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10777,7 +10777,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10797,7 +10797,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10821,7 +10821,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedshortArg:(signed short)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -10841,7 +10841,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedintArg:))[inv setArgument:&arg1
@@ -10863,7 +10863,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlongArg:(signed long)arg2
                   of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(boolArg:andsignedlongArg:))[inv setArgument:&arg1
@@ -10887,7 +10887,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10912,7 +10912,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10937,7 +10937,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -10962,7 +10962,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedintArg:(unsigned int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -10986,7 +10986,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11011,7 +11011,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11032,7 +11032,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11052,7 +11052,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11072,7 +11072,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11092,7 +11092,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11112,7 +11112,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11132,7 +11132,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolArg:(bool)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11156,7 +11156,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11181,7 +11181,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11206,7 +11206,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11231,7 +11231,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11256,7 +11256,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11277,7 +11277,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11296,7 +11296,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11314,7 +11314,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11336,7 +11336,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedshortArg:(signed short)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -11354,7 +11354,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedintArg:))[inv setArgument:&arg1
@@ -11374,7 +11374,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlongArg:(signed long)arg2
                   of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(BOOLArg:andsignedlongArg:))[inv setArgument:&arg1
@@ -11396,7 +11396,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11419,7 +11419,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11442,7 +11442,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11465,7 +11465,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedintArg:(unsigned int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -11487,7 +11487,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11510,7 +11510,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11529,7 +11529,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11547,7 +11547,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11565,7 +11565,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11583,7 +11583,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11601,7 +11601,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11619,7 +11619,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLArg:(BOOL)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11641,7 +11641,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11664,7 +11664,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11687,7 +11687,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11710,7 +11710,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11733,7 +11733,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11753,7 +11753,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11772,7 +11772,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11790,7 +11790,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11812,7 +11812,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedshortArg:(signed short)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -11830,7 +11830,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedintArg:))[inv setArgument:&arg1
@@ -11850,7 +11850,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlongArg:(signed long)arg2
                   of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charArg:andsignedlongArg:))[inv setArgument:&arg1
@@ -11872,7 +11872,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11895,7 +11895,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11918,7 +11918,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11941,7 +11941,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedintArg:(unsigned int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -11963,7 +11963,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -11986,7 +11986,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12005,7 +12005,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12023,7 +12023,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12041,7 +12041,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12059,7 +12059,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12077,7 +12077,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12095,7 +12095,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharArg:(char)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12117,7 +12117,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12140,7 +12140,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12163,7 +12163,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12186,7 +12186,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12209,7 +12209,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12233,7 +12233,7 @@ arg2id(const char* argtype, void* argptr)
                 andboolArg:(bool)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -12256,7 +12256,7 @@ arg2id(const char* argtype, void* argptr)
                 andBOOLArg:(BOOL)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -12278,7 +12278,7 @@ arg2id(const char* argtype, void* argptr)
                 andcharArg:(char)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -12300,7 +12300,7 @@ arg2id(const char* argtype, void* argptr)
          andsignedshortArg:(signed short)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12323,7 +12323,7 @@ arg2id(const char* argtype, void* argptr)
            andsignedintArg:(signed int)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12346,7 +12346,7 @@ arg2id(const char* argtype, void* argptr)
           andsignedlongArg:(signed long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12369,7 +12369,7 @@ arg2id(const char* argtype, void* argptr)
       andsignedlonglongArg:(signed long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12392,7 +12392,7 @@ arg2id(const char* argtype, void* argptr)
         andunsignedcharArg:(unsigned char)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12415,7 +12415,7 @@ arg2id(const char* argtype, void* argptr)
        andunsignedshortArg:(unsigned short)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12438,7 +12438,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedintArg:(unsigned int)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12461,7 +12461,7 @@ arg2id(const char* argtype, void* argptr)
         andunsignedlongArg:(unsigned long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12484,7 +12484,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12507,7 +12507,7 @@ arg2id(const char* argtype, void* argptr)
                andfloatArg:(float)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12530,7 +12530,7 @@ arg2id(const char* argtype, void* argptr)
               anddoubleArg:(double)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12549,7 +12549,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedshortArg:(signed short)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedshortArg:andidArg:))[inv setArgument:&arg1
@@ -12571,7 +12571,7 @@ arg2id(const char* argtype, void* argptr)
              andcharPtrArg:(char*)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12594,7 +12594,7 @@ arg2id(const char* argtype, void* argptr)
              andNSPointArg:(NSPoint)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12617,7 +12617,7 @@ arg2id(const char* argtype, void* argptr)
               andNSRectArg:(NSRect)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12640,7 +12640,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12663,7 +12663,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12686,7 +12686,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12709,7 +12709,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12732,7 +12732,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12752,7 +12752,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedintArg:(signed int)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedintArg:andboolArg:))[inv setArgument:&arg1
@@ -12771,7 +12771,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedintArg:(signed int)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedintArg:andBOOLArg:))[inv setArgument:&arg1
@@ -12789,7 +12789,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedintArg:(signed int)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedintArg:andcharArg:))[inv setArgument:&arg1
@@ -12811,7 +12811,7 @@ arg2id(const char* argtype, void* argptr)
        andsignedshortArg:(signed short)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12834,7 +12834,7 @@ arg2id(const char* argtype, void* argptr)
          andsignedintArg:(signed int)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12857,7 +12857,7 @@ arg2id(const char* argtype, void* argptr)
         andsignedlongArg:(signed long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12880,7 +12880,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12903,7 +12903,7 @@ arg2id(const char* argtype, void* argptr)
       andunsignedcharArg:(unsigned char)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12926,7 +12926,7 @@ arg2id(const char* argtype, void* argptr)
      andunsignedshortArg:(unsigned short)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12949,7 +12949,7 @@ arg2id(const char* argtype, void* argptr)
        andunsignedintArg:(unsigned int)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12972,7 +12972,7 @@ arg2id(const char* argtype, void* argptr)
       andunsignedlongArg:(unsigned long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -12995,7 +12995,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13016,7 +13016,7 @@ arg2id(const char* argtype, void* argptr)
              andfloatArg:(float)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedintArg:andfloatArg:))[inv setArgument:&arg1
@@ -13038,7 +13038,7 @@ arg2id(const char* argtype, void* argptr)
             anddoubleArg:(double)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -13056,7 +13056,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedintArg:(signed int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13078,7 +13078,7 @@ arg2id(const char* argtype, void* argptr)
            andcharPtrArg:(char*)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13101,7 +13101,7 @@ arg2id(const char* argtype, void* argptr)
            andNSPointArg:(NSPoint)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13124,7 +13124,7 @@ arg2id(const char* argtype, void* argptr)
             andNSRectArg:(NSRect)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -13146,7 +13146,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13169,7 +13169,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13192,7 +13192,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13215,7 +13215,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13238,7 +13238,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13260,7 +13260,7 @@ arg2id(const char* argtype, void* argptr)
                andboolArg:(bool)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andboolArg:))[inv setArgument:&arg1
@@ -13281,7 +13281,7 @@ arg2id(const char* argtype, void* argptr)
                andBOOLArg:(BOOL)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andBOOLArg:))[inv setArgument:&arg1
@@ -13301,7 +13301,7 @@ arg2id(const char* argtype, void* argptr)
                andcharArg:(char)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(signedlongArg:andcharArg:))[inv setArgument:&arg1
@@ -13323,7 +13323,7 @@ arg2id(const char* argtype, void* argptr)
         andsignedshortArg:(signed short)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13346,7 +13346,7 @@ arg2id(const char* argtype, void* argptr)
           andsignedintArg:(signed int)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13369,7 +13369,7 @@ arg2id(const char* argtype, void* argptr)
          andsignedlongArg:(signed long)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13392,7 +13392,7 @@ arg2id(const char* argtype, void* argptr)
      andsignedlonglongArg:(signed long long)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13415,7 +13415,7 @@ arg2id(const char* argtype, void* argptr)
        andunsignedcharArg:(unsigned char)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13438,7 +13438,7 @@ arg2id(const char* argtype, void* argptr)
       andunsignedshortArg:(unsigned short)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13461,7 +13461,7 @@ arg2id(const char* argtype, void* argptr)
         andunsignedintArg:(unsigned int)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13484,7 +13484,7 @@ arg2id(const char* argtype, void* argptr)
        andunsignedlongArg:(unsigned long)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13507,7 +13507,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13530,7 +13530,7 @@ arg2id(const char* argtype, void* argptr)
               andfloatArg:(float)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -13552,7 +13552,7 @@ arg2id(const char* argtype, void* argptr)
              anddoubleArg:(double)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13571,7 +13571,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedlongArg:(signed long)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13593,7 +13593,7 @@ arg2id(const char* argtype, void* argptr)
             andcharPtrArg:(char*)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13616,7 +13616,7 @@ arg2id(const char* argtype, void* argptr)
             andNSPointArg:(NSPoint)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13639,7 +13639,7 @@ arg2id(const char* argtype, void* argptr)
              andNSRectArg:(NSRect)arg2
                        of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13662,7 +13662,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13685,7 +13685,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13708,7 +13708,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13731,7 +13731,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13754,7 +13754,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13778,7 +13778,7 @@ arg2id(const char* argtype, void* argptr)
                    andboolArg:(bool)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13802,7 +13802,7 @@ arg2id(const char* argtype, void* argptr)
                    andBOOLArg:(BOOL)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13825,7 +13825,7 @@ arg2id(const char* argtype, void* argptr)
                    andcharArg:(char)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13848,7 +13848,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedshortArg:(signed short)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13871,7 +13871,7 @@ arg2id(const char* argtype, void* argptr)
               andsignedintArg:(signed int)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13894,7 +13894,7 @@ arg2id(const char* argtype, void* argptr)
              andsignedlongArg:(signed long)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13917,7 +13917,7 @@ arg2id(const char* argtype, void* argptr)
          andsignedlonglongArg:(signed long long)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13940,7 +13940,7 @@ arg2id(const char* argtype, void* argptr)
            andunsignedcharArg:(unsigned char)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13963,7 +13963,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedshortArg:(unsigned short)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -13986,7 +13986,7 @@ arg2id(const char* argtype, void* argptr)
             andunsignedintArg:(unsigned int)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14009,7 +14009,7 @@ arg2id(const char* argtype, void* argptr)
            andunsignedlongArg:(unsigned long)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14032,7 +14032,7 @@ arg2id(const char* argtype, void* argptr)
        andunsignedlonglongArg:(unsigned long long)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14055,7 +14055,7 @@ arg2id(const char* argtype, void* argptr)
                   andfloatArg:(float)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14078,7 +14078,7 @@ arg2id(const char* argtype, void* argptr)
                  anddoubleArg:(double)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14101,7 +14101,7 @@ arg2id(const char* argtype, void* argptr)
                      andidArg:(id)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14124,7 +14124,7 @@ arg2id(const char* argtype, void* argptr)
                 andcharPtrArg:(char*)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14147,7 +14147,7 @@ arg2id(const char* argtype, void* argptr)
                 andNSPointArg:(NSPoint)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14170,7 +14170,7 @@ arg2id(const char* argtype, void* argptr)
                  andNSRectArg:(NSRect)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14193,7 +14193,7 @@ arg2id(const char* argtype, void* argptr)
       andstructTestStruct1Arg:(struct TestStruct1)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14216,7 +14216,7 @@ arg2id(const char* argtype, void* argptr)
       andstructTestStruct2Arg:(struct TestStruct2)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14239,7 +14239,7 @@ arg2id(const char* argtype, void* argptr)
       andstructTestStruct3Arg:(struct TestStruct3)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14262,7 +14262,7 @@ arg2id(const char* argtype, void* argptr)
       andstructTestStruct4Arg:(struct TestStruct4)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14285,7 +14285,7 @@ arg2id(const char* argtype, void* argptr)
       andstructTestStruct5Arg:(struct TestStruct5)arg2
                            of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14309,7 +14309,7 @@ arg2id(const char* argtype, void* argptr)
                  andboolArg:(bool)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14333,7 +14333,7 @@ arg2id(const char* argtype, void* argptr)
                  andBOOLArg:(BOOL)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14356,7 +14356,7 @@ arg2id(const char* argtype, void* argptr)
                  andcharArg:(char)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14379,7 +14379,7 @@ arg2id(const char* argtype, void* argptr)
           andsignedshortArg:(signed short)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14402,7 +14402,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedintArg:(signed int)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14425,7 +14425,7 @@ arg2id(const char* argtype, void* argptr)
            andsignedlongArg:(signed long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14448,7 +14448,7 @@ arg2id(const char* argtype, void* argptr)
        andsignedlonglongArg:(signed long long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14471,7 +14471,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedcharArg:(unsigned char)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14494,7 +14494,7 @@ arg2id(const char* argtype, void* argptr)
         andunsignedshortArg:(unsigned short)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14517,7 +14517,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedintArg:(unsigned int)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14540,7 +14540,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedlongArg:(unsigned long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14563,7 +14563,7 @@ arg2id(const char* argtype, void* argptr)
      andunsignedlonglongArg:(unsigned long long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14586,7 +14586,7 @@ arg2id(const char* argtype, void* argptr)
                 andfloatArg:(float)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14609,7 +14609,7 @@ arg2id(const char* argtype, void* argptr)
                anddoubleArg:(double)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14630,7 +14630,7 @@ arg2id(const char* argtype, void* argptr)
                    andidArg:(id)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(unsignedcharArg:andidArg:))[inv setArgument:&arg1
@@ -14652,7 +14652,7 @@ arg2id(const char* argtype, void* argptr)
               andcharPtrArg:(char*)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14675,7 +14675,7 @@ arg2id(const char* argtype, void* argptr)
               andNSPointArg:(NSPoint)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14698,7 +14698,7 @@ arg2id(const char* argtype, void* argptr)
                andNSRectArg:(NSRect)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14721,7 +14721,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14744,7 +14744,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14767,7 +14767,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14790,7 +14790,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14813,7 +14813,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14837,7 +14837,7 @@ arg2id(const char* argtype, void* argptr)
                   andboolArg:(bool)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14861,7 +14861,7 @@ arg2id(const char* argtype, void* argptr)
                   andBOOLArg:(BOOL)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14884,7 +14884,7 @@ arg2id(const char* argtype, void* argptr)
                   andcharArg:(char)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14907,7 +14907,7 @@ arg2id(const char* argtype, void* argptr)
            andsignedshortArg:(signed short)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14930,7 +14930,7 @@ arg2id(const char* argtype, void* argptr)
              andsignedintArg:(signed int)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14953,7 +14953,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedlongArg:(signed long)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -14976,7 +14976,7 @@ arg2id(const char* argtype, void* argptr)
         andsignedlonglongArg:(signed long long)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
     SETUP_INVOCATION(inv, obj,
                      @selector(unsignedshortArg:
@@ -14998,7 +14998,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedcharArg:(unsigned char)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15021,7 +15021,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedshortArg:(unsigned short)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15044,7 +15044,7 @@ arg2id(const char* argtype, void* argptr)
            andunsignedintArg:(unsigned int)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15067,7 +15067,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedlongArg:(unsigned long)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15090,7 +15090,7 @@ arg2id(const char* argtype, void* argptr)
       andunsignedlonglongArg:(unsigned long long)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15113,7 +15113,7 @@ arg2id(const char* argtype, void* argptr)
                  andfloatArg:(float)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15136,7 +15136,7 @@ arg2id(const char* argtype, void* argptr)
                 anddoubleArg:(double)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15159,7 +15159,7 @@ arg2id(const char* argtype, void* argptr)
                     andidArg:(id)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -15181,7 +15181,7 @@ arg2id(const char* argtype, void* argptr)
                andcharPtrArg:(char*)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15204,7 +15204,7 @@ arg2id(const char* argtype, void* argptr)
                andNSPointArg:(NSPoint)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15227,7 +15227,7 @@ arg2id(const char* argtype, void* argptr)
                 andNSRectArg:(NSRect)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15250,7 +15250,7 @@ arg2id(const char* argtype, void* argptr)
      andstructTestStruct1Arg:(struct TestStruct1)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15273,7 +15273,7 @@ arg2id(const char* argtype, void* argptr)
      andstructTestStruct2Arg:(struct TestStruct2)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15296,7 +15296,7 @@ arg2id(const char* argtype, void* argptr)
      andstructTestStruct3Arg:(struct TestStruct3)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15319,7 +15319,7 @@ arg2id(const char* argtype, void* argptr)
      andstructTestStruct4Arg:(struct TestStruct4)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15342,7 +15342,7 @@ arg2id(const char* argtype, void* argptr)
      andstructTestStruct5Arg:(struct TestStruct5)arg2
                           of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15366,7 +15366,7 @@ arg2id(const char* argtype, void* argptr)
                 andboolArg:(bool)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -15389,7 +15389,7 @@ arg2id(const char* argtype, void* argptr)
                 andBOOLArg:(BOOL)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -15411,7 +15411,7 @@ arg2id(const char* argtype, void* argptr)
                 andcharArg:(char)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -15433,7 +15433,7 @@ arg2id(const char* argtype, void* argptr)
          andsignedshortArg:(signed short)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15456,7 +15456,7 @@ arg2id(const char* argtype, void* argptr)
            andsignedintArg:(signed int)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15479,7 +15479,7 @@ arg2id(const char* argtype, void* argptr)
           andsignedlongArg:(signed long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15502,7 +15502,7 @@ arg2id(const char* argtype, void* argptr)
       andsignedlonglongArg:(signed long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15525,7 +15525,7 @@ arg2id(const char* argtype, void* argptr)
         andunsignedcharArg:(unsigned char)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15548,7 +15548,7 @@ arg2id(const char* argtype, void* argptr)
        andunsignedshortArg:(unsigned short)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15571,7 +15571,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedintArg:(unsigned int)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15594,7 +15594,7 @@ arg2id(const char* argtype, void* argptr)
         andunsignedlongArg:(unsigned long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15617,7 +15617,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15640,7 +15640,7 @@ arg2id(const char* argtype, void* argptr)
                andfloatArg:(float)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15663,7 +15663,7 @@ arg2id(const char* argtype, void* argptr)
               anddoubleArg:(double)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15682,7 +15682,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedintArg:(unsigned int)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(unsignedintArg:andidArg:))[inv setArgument:&arg1
@@ -15704,7 +15704,7 @@ arg2id(const char* argtype, void* argptr)
              andcharPtrArg:(char*)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15727,7 +15727,7 @@ arg2id(const char* argtype, void* argptr)
              andNSPointArg:(NSPoint)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15750,7 +15750,7 @@ arg2id(const char* argtype, void* argptr)
               andNSRectArg:(NSRect)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15773,7 +15773,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15796,7 +15796,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15819,7 +15819,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15842,7 +15842,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15865,7 +15865,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15889,7 +15889,7 @@ arg2id(const char* argtype, void* argptr)
                  andboolArg:(bool)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15913,7 +15913,7 @@ arg2id(const char* argtype, void* argptr)
                  andBOOLArg:(BOOL)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15936,7 +15936,7 @@ arg2id(const char* argtype, void* argptr)
                  andcharArg:(char)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15959,7 +15959,7 @@ arg2id(const char* argtype, void* argptr)
           andsignedshortArg:(signed short)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -15982,7 +15982,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedintArg:(signed int)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16005,7 +16005,7 @@ arg2id(const char* argtype, void* argptr)
            andsignedlongArg:(signed long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16028,7 +16028,7 @@ arg2id(const char* argtype, void* argptr)
        andsignedlonglongArg:(signed long long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16051,7 +16051,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedcharArg:(unsigned char)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16074,7 +16074,7 @@ arg2id(const char* argtype, void* argptr)
         andunsignedshortArg:(unsigned short)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16097,7 +16097,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedintArg:(unsigned int)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16120,7 +16120,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedlongArg:(unsigned long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16143,7 +16143,7 @@ arg2id(const char* argtype, void* argptr)
      andunsignedlonglongArg:(unsigned long long)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16166,7 +16166,7 @@ arg2id(const char* argtype, void* argptr)
                 andfloatArg:(float)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16189,7 +16189,7 @@ arg2id(const char* argtype, void* argptr)
                anddoubleArg:(double)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16210,7 +16210,7 @@ arg2id(const char* argtype, void* argptr)
                    andidArg:(id)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(unsignedlongArg:andidArg:))[inv setArgument:&arg1
@@ -16232,7 +16232,7 @@ arg2id(const char* argtype, void* argptr)
               andcharPtrArg:(char*)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16255,7 +16255,7 @@ arg2id(const char* argtype, void* argptr)
               andNSPointArg:(NSPoint)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16278,7 +16278,7 @@ arg2id(const char* argtype, void* argptr)
                andNSRectArg:(NSRect)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16301,7 +16301,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16324,7 +16324,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16347,7 +16347,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16370,7 +16370,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16393,7 +16393,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16417,7 +16417,7 @@ arg2id(const char* argtype, void* argptr)
                      andboolArg:(bool)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16441,7 +16441,7 @@ arg2id(const char* argtype, void* argptr)
                      andBOOLArg:(BOOL)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16464,7 +16464,7 @@ arg2id(const char* argtype, void* argptr)
                      andcharArg:(char)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16487,7 +16487,7 @@ arg2id(const char* argtype, void* argptr)
               andsignedshortArg:(signed short)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16510,7 +16510,7 @@ arg2id(const char* argtype, void* argptr)
                 andsignedintArg:(signed int)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16533,7 +16533,7 @@ arg2id(const char* argtype, void* argptr)
                andsignedlongArg:(signed long)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16556,7 +16556,7 @@ arg2id(const char* argtype, void* argptr)
            andsignedlonglongArg:(signed long long)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16579,7 +16579,7 @@ arg2id(const char* argtype, void* argptr)
              andunsignedcharArg:(unsigned char)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16602,7 +16602,7 @@ arg2id(const char* argtype, void* argptr)
             andunsignedshortArg:(unsigned short)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16625,7 +16625,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedintArg:(unsigned int)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16648,7 +16648,7 @@ arg2id(const char* argtype, void* argptr)
              andunsignedlongArg:(unsigned long)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16671,7 +16671,7 @@ arg2id(const char* argtype, void* argptr)
          andunsignedlonglongArg:(unsigned long long)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16694,7 +16694,7 @@ arg2id(const char* argtype, void* argptr)
                     andfloatArg:(float)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16717,7 +16717,7 @@ arg2id(const char* argtype, void* argptr)
                    anddoubleArg:(double)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16740,7 +16740,7 @@ arg2id(const char* argtype, void* argptr)
                        andidArg:(id)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16763,7 +16763,7 @@ arg2id(const char* argtype, void* argptr)
                   andcharPtrArg:(char*)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16786,7 +16786,7 @@ arg2id(const char* argtype, void* argptr)
                   andNSPointArg:(NSPoint)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16809,7 +16809,7 @@ arg2id(const char* argtype, void* argptr)
                    andNSRectArg:(NSRect)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16832,7 +16832,7 @@ arg2id(const char* argtype, void* argptr)
         andstructTestStruct1Arg:(struct TestStruct1)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16855,7 +16855,7 @@ arg2id(const char* argtype, void* argptr)
         andstructTestStruct2Arg:(struct TestStruct2)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16878,7 +16878,7 @@ arg2id(const char* argtype, void* argptr)
         andstructTestStruct3Arg:(struct TestStruct3)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16901,7 +16901,7 @@ arg2id(const char* argtype, void* argptr)
         andstructTestStruct4Arg:(struct TestStruct4)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16924,7 +16924,7 @@ arg2id(const char* argtype, void* argptr)
         andstructTestStruct5Arg:(struct TestStruct5)arg2
                              of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16944,7 +16944,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16963,7 +16963,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -16981,7 +16981,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17003,7 +17003,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedshortArg:(signed short)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17024,7 +17024,7 @@ arg2id(const char* argtype, void* argptr)
      andsignedintArg:(signed int)arg2
                   of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(floatArg:andsignedintArg:))[inv setArgument:&arg1
@@ -17046,7 +17046,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlongArg:(signed long)arg2
                   of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -17068,7 +17068,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17091,7 +17091,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17114,7 +17114,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17137,7 +17137,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedintArg:(unsigned int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17160,7 +17160,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17183,7 +17183,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17202,7 +17202,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17220,7 +17220,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17238,7 +17238,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17256,7 +17256,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17274,7 +17274,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17292,7 +17292,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatArg:(float)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17314,7 +17314,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17337,7 +17337,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17360,7 +17360,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17383,7 +17383,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17406,7 +17406,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17426,7 +17426,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17445,7 +17445,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17463,7 +17463,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17485,7 +17485,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedshortArg:(signed short)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17508,7 +17508,7 @@ arg2id(const char* argtype, void* argptr)
       andsignedintArg:(signed int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -17530,7 +17530,7 @@ arg2id(const char* argtype, void* argptr)
      andsignedlongArg:(signed long)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17553,7 +17553,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17576,7 +17576,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17599,7 +17599,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17622,7 +17622,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedintArg:(unsigned int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17645,7 +17645,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17668,7 +17668,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17687,7 +17687,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17705,7 +17705,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17723,7 +17723,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17741,7 +17741,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(doubleArg:andcharPtrArg:))[inv setArgument:&arg1
@@ -17759,7 +17759,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(doubleArg:andNSPointArg:))[inv setArgument:&arg1
@@ -17777,7 +17777,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleArg:(double)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17799,7 +17799,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17822,7 +17822,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17845,7 +17845,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17868,7 +17868,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17891,7 +17891,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17911,7 +17911,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17930,7 +17930,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17948,7 +17948,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -17966,7 +17966,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andsignedshortArg:(signed short)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idArg:andsignedshortArg:))[inv setArgument:&arg1
@@ -17984,7 +17984,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andsignedintArg:(signed int)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18002,7 +18002,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andsignedlongArg:(signed long)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18024,7 +18024,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18045,7 +18045,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedcharArg:))[inv setArgument:&arg1
@@ -18067,7 +18067,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -18085,7 +18085,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andunsignedintArg:(unsigned int)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedintArg:))[inv setArgument:&arg1
@@ -18105,7 +18105,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idArg:andunsignedlongArg:))[inv setArgument:&arg1
@@ -18127,7 +18127,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18146,7 +18146,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18164,7 +18164,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18182,7 +18182,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18200,7 +18200,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18218,7 +18218,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18236,7 +18236,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidArg:(id)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18258,7 +18258,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18281,7 +18281,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18304,7 +18304,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18327,7 +18327,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18350,7 +18350,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18370,7 +18370,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18389,7 +18389,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18407,7 +18407,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18429,7 +18429,7 @@ arg2id(const char* argtype, void* argptr)
      andsignedshortArg:(signed short)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18452,7 +18452,7 @@ arg2id(const char* argtype, void* argptr)
        andsignedintArg:(signed int)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18475,7 +18475,7 @@ arg2id(const char* argtype, void* argptr)
       andsignedlongArg:(signed long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18498,7 +18498,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18521,7 +18521,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18544,7 +18544,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18567,7 +18567,7 @@ arg2id(const char* argtype, void* argptr)
      andunsignedintArg:(unsigned int)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18590,7 +18590,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18613,7 +18613,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18632,7 +18632,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18650,7 +18650,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charPtrArg:anddoubleArg:))[inv setArgument:&arg1
@@ -18668,7 +18668,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18686,7 +18686,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andcharPtrArg:))[inv setArgument:&arg1
@@ -18704,7 +18704,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andNSPointArg:))[inv setArgument:&arg1
@@ -18722,7 +18722,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrArg:(char*)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charPtrArg:andNSRectArg:))[inv setArgument:&arg1
@@ -18744,7 +18744,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18767,7 +18767,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18790,7 +18790,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18813,7 +18813,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18836,7 +18836,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18856,7 +18856,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18875,7 +18875,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18893,7 +18893,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18915,7 +18915,7 @@ arg2id(const char* argtype, void* argptr)
      andsignedshortArg:(signed short)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18938,7 +18938,7 @@ arg2id(const char* argtype, void* argptr)
        andsignedintArg:(signed int)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18961,7 +18961,7 @@ arg2id(const char* argtype, void* argptr)
       andsignedlongArg:(signed long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -18984,7 +18984,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19007,7 +19007,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19030,7 +19030,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19053,7 +19053,7 @@ arg2id(const char* argtype, void* argptr)
      andunsignedintArg:(unsigned int)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19076,7 +19076,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19099,7 +19099,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19118,7 +19118,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19136,7 +19136,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSPointArg:anddoubleArg:))[inv setArgument:&arg1
@@ -19154,7 +19154,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19172,7 +19172,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andcharPtrArg:))[inv setArgument:&arg1
@@ -19192,7 +19192,7 @@ arg2id(const char* argtype, void* argptr)
          andNSPointArg:(NSPoint)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andNSPointArg:))[inv setArgument:&arg1
@@ -19210,7 +19210,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointArg:(NSPoint)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSPointArg:andNSRectArg:))[inv setArgument:&arg1
@@ -19232,7 +19232,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19255,7 +19255,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19278,7 +19278,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19301,7 +19301,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19324,7 +19324,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19344,7 +19344,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andboolArg:(bool)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19363,7 +19363,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andBOOLArg:(BOOL)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19381,7 +19381,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andcharArg:(char)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19403,7 +19403,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedshortArg:(signed short)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19426,7 +19426,7 @@ arg2id(const char* argtype, void* argptr)
       andsignedintArg:(signed int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(
@@ -19448,7 +19448,7 @@ arg2id(const char* argtype, void* argptr)
      andsignedlongArg:(signed long)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19471,7 +19471,7 @@ arg2id(const char* argtype, void* argptr)
     andsignedlonglongArg:(signed long long)arg2
                       of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19494,7 +19494,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedcharArg:(unsigned char)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19517,7 +19517,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedshortArg:(unsigned short)arg2
                      of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19540,7 +19540,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedintArg:(unsigned int)arg2
                    of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19563,7 +19563,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlongArg:(unsigned long)arg2
                     of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19586,7 +19586,7 @@ arg2id(const char* argtype, void* argptr)
     andunsignedlonglongArg:(unsigned long long)arg2
                         of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19605,7 +19605,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andfloatArg:(float)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19623,7 +19623,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 anddoubleArg:(double)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19641,7 +19641,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andidArg:(id)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19659,7 +19659,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andcharPtrArg:(char*)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andcharPtrArg:))[inv setArgument:&arg1
@@ -19677,7 +19677,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andNSPointArg:(NSPoint)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSRectArg:andNSPointArg:))[inv setArgument:&arg1
@@ -19695,7 +19695,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectArg:(NSRect)arg1 andNSRectArg:(NSRect)arg2 of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19717,7 +19717,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct1Arg:(struct TestStruct1)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19740,7 +19740,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct2Arg:(struct TestStruct2)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19763,7 +19763,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct3Arg:(struct TestStruct3)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19786,7 +19786,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct4Arg:(struct TestStruct4)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19809,7 +19809,7 @@ arg2id(const char* argtype, void* argptr)
     andstructTestStruct5Arg:(struct TestStruct5)arg2
                          of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19833,7 +19833,7 @@ arg2id(const char* argtype, void* argptr)
                       andboolArg:(bool)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19857,7 +19857,7 @@ arg2id(const char* argtype, void* argptr)
                       andBOOLArg:(BOOL)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19880,7 +19880,7 @@ arg2id(const char* argtype, void* argptr)
                       andcharArg:(char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19903,7 +19903,7 @@ arg2id(const char* argtype, void* argptr)
                andsignedshortArg:(signed short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19926,7 +19926,7 @@ arg2id(const char* argtype, void* argptr)
                  andsignedintArg:(signed int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19949,7 +19949,7 @@ arg2id(const char* argtype, void* argptr)
                 andsignedlongArg:(signed long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19972,7 +19972,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedlonglongArg:(signed long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -19995,7 +19995,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedcharArg:(unsigned char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20018,7 +20018,7 @@ arg2id(const char* argtype, void* argptr)
              andunsignedshortArg:(unsigned short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20041,7 +20041,7 @@ arg2id(const char* argtype, void* argptr)
                andunsignedintArg:(unsigned int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20064,7 +20064,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedlongArg:(unsigned long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20087,7 +20087,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedlonglongArg:(unsigned long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20110,7 +20110,7 @@ arg2id(const char* argtype, void* argptr)
                      andfloatArg:(float)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20133,7 +20133,7 @@ arg2id(const char* argtype, void* argptr)
                     anddoubleArg:(double)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20156,7 +20156,7 @@ arg2id(const char* argtype, void* argptr)
                         andidArg:(id)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20179,7 +20179,7 @@ arg2id(const char* argtype, void* argptr)
                    andcharPtrArg:(char*)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20202,7 +20202,7 @@ arg2id(const char* argtype, void* argptr)
                    andNSPointArg:(NSPoint)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20225,7 +20225,7 @@ arg2id(const char* argtype, void* argptr)
                     andNSRectArg:(NSRect)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20248,7 +20248,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct1Arg:(struct TestStruct1)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20271,7 +20271,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct2Arg:(struct TestStruct2)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20294,7 +20294,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct3Arg:(struct TestStruct3)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20317,7 +20317,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct4Arg:(struct TestStruct4)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20340,7 +20340,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct5Arg:(struct TestStruct5)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20364,7 +20364,7 @@ arg2id(const char* argtype, void* argptr)
                       andboolArg:(bool)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20388,7 +20388,7 @@ arg2id(const char* argtype, void* argptr)
                       andBOOLArg:(BOOL)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20411,7 +20411,7 @@ arg2id(const char* argtype, void* argptr)
                       andcharArg:(char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20434,7 +20434,7 @@ arg2id(const char* argtype, void* argptr)
                andsignedshortArg:(signed short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20457,7 +20457,7 @@ arg2id(const char* argtype, void* argptr)
                  andsignedintArg:(signed int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20480,7 +20480,7 @@ arg2id(const char* argtype, void* argptr)
                 andsignedlongArg:(signed long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20503,7 +20503,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedlonglongArg:(signed long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20526,7 +20526,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedcharArg:(unsigned char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20549,7 +20549,7 @@ arg2id(const char* argtype, void* argptr)
              andunsignedshortArg:(unsigned short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20572,7 +20572,7 @@ arg2id(const char* argtype, void* argptr)
                andunsignedintArg:(unsigned int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20595,7 +20595,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedlongArg:(unsigned long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20618,7 +20618,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedlonglongArg:(unsigned long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20641,7 +20641,7 @@ arg2id(const char* argtype, void* argptr)
                      andfloatArg:(float)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20664,7 +20664,7 @@ arg2id(const char* argtype, void* argptr)
                     anddoubleArg:(double)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20687,7 +20687,7 @@ arg2id(const char* argtype, void* argptr)
                         andidArg:(id)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20710,7 +20710,7 @@ arg2id(const char* argtype, void* argptr)
                    andcharPtrArg:(char*)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20733,7 +20733,7 @@ arg2id(const char* argtype, void* argptr)
                    andNSPointArg:(NSPoint)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20756,7 +20756,7 @@ arg2id(const char* argtype, void* argptr)
                     andNSRectArg:(NSRect)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20779,7 +20779,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct1Arg:(struct TestStruct1)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20802,7 +20802,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct2Arg:(struct TestStruct2)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20825,7 +20825,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct3Arg:(struct TestStruct3)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20848,7 +20848,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct4Arg:(struct TestStruct4)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20871,7 +20871,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct5Arg:(struct TestStruct5)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20895,7 +20895,7 @@ arg2id(const char* argtype, void* argptr)
                       andboolArg:(bool)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20919,7 +20919,7 @@ arg2id(const char* argtype, void* argptr)
                       andBOOLArg:(BOOL)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20942,7 +20942,7 @@ arg2id(const char* argtype, void* argptr)
                       andcharArg:(char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20965,7 +20965,7 @@ arg2id(const char* argtype, void* argptr)
                andsignedshortArg:(signed short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -20988,7 +20988,7 @@ arg2id(const char* argtype, void* argptr)
                  andsignedintArg:(signed int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21011,7 +21011,7 @@ arg2id(const char* argtype, void* argptr)
                 andsignedlongArg:(signed long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21034,7 +21034,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedlonglongArg:(signed long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21057,7 +21057,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedcharArg:(unsigned char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21080,7 +21080,7 @@ arg2id(const char* argtype, void* argptr)
              andunsignedshortArg:(unsigned short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21103,7 +21103,7 @@ arg2id(const char* argtype, void* argptr)
                andunsignedintArg:(unsigned int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21126,7 +21126,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedlongArg:(unsigned long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21149,7 +21149,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedlonglongArg:(unsigned long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21172,7 +21172,7 @@ arg2id(const char* argtype, void* argptr)
                      andfloatArg:(float)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21195,7 +21195,7 @@ arg2id(const char* argtype, void* argptr)
                     anddoubleArg:(double)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21218,7 +21218,7 @@ arg2id(const char* argtype, void* argptr)
                         andidArg:(id)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21241,7 +21241,7 @@ arg2id(const char* argtype, void* argptr)
                    andcharPtrArg:(char*)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21264,7 +21264,7 @@ arg2id(const char* argtype, void* argptr)
                    andNSPointArg:(NSPoint)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21287,7 +21287,7 @@ arg2id(const char* argtype, void* argptr)
                     andNSRectArg:(NSRect)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21310,7 +21310,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct1Arg:(struct TestStruct1)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21333,7 +21333,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct2Arg:(struct TestStruct2)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21356,7 +21356,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct3Arg:(struct TestStruct3)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21379,7 +21379,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct4Arg:(struct TestStruct4)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21402,7 +21402,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct5Arg:(struct TestStruct5)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21426,7 +21426,7 @@ arg2id(const char* argtype, void* argptr)
                       andboolArg:(bool)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21450,7 +21450,7 @@ arg2id(const char* argtype, void* argptr)
                       andBOOLArg:(BOOL)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21473,7 +21473,7 @@ arg2id(const char* argtype, void* argptr)
                       andcharArg:(char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21496,7 +21496,7 @@ arg2id(const char* argtype, void* argptr)
                andsignedshortArg:(signed short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21519,7 +21519,7 @@ arg2id(const char* argtype, void* argptr)
                  andsignedintArg:(signed int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21542,7 +21542,7 @@ arg2id(const char* argtype, void* argptr)
                 andsignedlongArg:(signed long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21565,7 +21565,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedlonglongArg:(signed long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21588,7 +21588,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedcharArg:(unsigned char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21611,7 +21611,7 @@ arg2id(const char* argtype, void* argptr)
              andunsignedshortArg:(unsigned short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21634,7 +21634,7 @@ arg2id(const char* argtype, void* argptr)
                andunsignedintArg:(unsigned int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21657,7 +21657,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedlongArg:(unsigned long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21680,7 +21680,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedlonglongArg:(unsigned long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21703,7 +21703,7 @@ arg2id(const char* argtype, void* argptr)
                      andfloatArg:(float)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21726,7 +21726,7 @@ arg2id(const char* argtype, void* argptr)
                     anddoubleArg:(double)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21749,7 +21749,7 @@ arg2id(const char* argtype, void* argptr)
                         andidArg:(id)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21772,7 +21772,7 @@ arg2id(const char* argtype, void* argptr)
                    andcharPtrArg:(char*)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21795,7 +21795,7 @@ arg2id(const char* argtype, void* argptr)
                    andNSPointArg:(NSPoint)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21818,7 +21818,7 @@ arg2id(const char* argtype, void* argptr)
                     andNSRectArg:(NSRect)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21841,7 +21841,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct1Arg:(struct TestStruct1)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21864,7 +21864,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct2Arg:(struct TestStruct2)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21887,7 +21887,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct3Arg:(struct TestStruct3)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21910,7 +21910,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct4Arg:(struct TestStruct4)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21933,7 +21933,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct5Arg:(struct TestStruct5)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21957,7 +21957,7 @@ arg2id(const char* argtype, void* argptr)
                       andboolArg:(bool)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -21981,7 +21981,7 @@ arg2id(const char* argtype, void* argptr)
                       andBOOLArg:(BOOL)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22004,7 +22004,7 @@ arg2id(const char* argtype, void* argptr)
                       andcharArg:(char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22027,7 +22027,7 @@ arg2id(const char* argtype, void* argptr)
                andsignedshortArg:(signed short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22050,7 +22050,7 @@ arg2id(const char* argtype, void* argptr)
                  andsignedintArg:(signed int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22073,7 +22073,7 @@ arg2id(const char* argtype, void* argptr)
                 andsignedlongArg:(signed long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22096,7 +22096,7 @@ arg2id(const char* argtype, void* argptr)
             andsignedlonglongArg:(signed long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22119,7 +22119,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedcharArg:(unsigned char)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22142,7 +22142,7 @@ arg2id(const char* argtype, void* argptr)
              andunsignedshortArg:(unsigned short)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22165,7 +22165,7 @@ arg2id(const char* argtype, void* argptr)
                andunsignedintArg:(unsigned int)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22188,7 +22188,7 @@ arg2id(const char* argtype, void* argptr)
               andunsignedlongArg:(unsigned long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22211,7 +22211,7 @@ arg2id(const char* argtype, void* argptr)
           andunsignedlonglongArg:(unsigned long long)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22234,7 +22234,7 @@ arg2id(const char* argtype, void* argptr)
                      andfloatArg:(float)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22257,7 +22257,7 @@ arg2id(const char* argtype, void* argptr)
                     anddoubleArg:(double)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22280,7 +22280,7 @@ arg2id(const char* argtype, void* argptr)
                         andidArg:(id)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22303,7 +22303,7 @@ arg2id(const char* argtype, void* argptr)
                    andcharPtrArg:(char*)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22326,7 +22326,7 @@ arg2id(const char* argtype, void* argptr)
                    andNSPointArg:(NSPoint)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22349,7 +22349,7 @@ arg2id(const char* argtype, void* argptr)
                     andNSRectArg:(NSRect)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22372,7 +22372,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct1Arg:(struct TestStruct1)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22395,7 +22395,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct2Arg:(struct TestStruct2)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22418,7 +22418,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct3Arg:(struct TestStruct3)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22441,7 +22441,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct4Arg:(struct TestStruct4)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22464,7 +22464,7 @@ arg2id(const char* argtype, void* argptr)
          andstructTestStruct5Arg:(struct TestStruct5)arg2
                               of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22494,7 +22494,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolInArg:(bool*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(boolInArg:))[inv setArgument:&arg atIndex:2];
@@ -22513,7 +22513,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeboolInOutArg:(bool*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(boolInOutArg:))[inv setArgument:&arg atIndex:2];
@@ -22540,7 +22540,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLInArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(BOOLInArg:))[inv setArgument:&arg atIndex:2];
@@ -22559,7 +22559,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeBOOLInOutArg:(BOOL*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(BOOLInOutArg:))[inv setArgument:&arg atIndex:2];
@@ -22585,7 +22585,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharInArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charInArg:))[inv setArgument:&arg atIndex:2];
@@ -22604,7 +22604,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharInOutArg:(char*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charInOutArg:))[inv setArgument:&arg atIndex:2];
@@ -22630,7 +22630,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedshortInArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22651,7 +22651,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedshortInOutArg:(signed short*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22678,7 +22678,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedintInArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22699,7 +22699,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedintInOutArg:(signed int*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22726,7 +22726,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedlongInArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22747,7 +22747,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedlongInOutArg:(signed long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22774,7 +22774,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedlonglongInArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22795,7 +22795,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokesignedlonglongInOutArg:(signed long long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22822,7 +22822,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedcharInArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22843,7 +22843,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedcharInOutArg:(unsigned char*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22870,7 +22870,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedshortInArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22891,7 +22891,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedshortInOutArg:(unsigned short*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22918,7 +22918,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedintInArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22939,7 +22939,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedintInOutArg:(unsigned int*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22966,7 +22966,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedlongInArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -22987,7 +22987,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedlongInOutArg:(unsigned long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23014,7 +23014,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedlonglongInArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23035,7 +23035,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeunsignedlonglongInOutArg:(unsigned long long*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(unsignedlonglongInOutArg:))[inv setArgument:&arg
@@ -23062,7 +23062,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatInArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(floatInArg:))[inv setArgument:&arg atIndex:2];
@@ -23081,7 +23081,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokefloatInOutArg:(float*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(floatInOutArg:))[inv setArgument:&arg atIndex:2];
@@ -23107,7 +23107,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleInArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(doubleInArg:))[inv setArgument:&arg atIndex:2];
@@ -23126,7 +23126,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokedoubleInOutArg:(double*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23153,7 +23153,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidInArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idInArg:))[inv setArgument:&arg atIndex:2];
@@ -23172,7 +23172,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeidInOutArg:(id*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(idInOutArg:))[inv setArgument:&arg atIndex:2];
@@ -23198,7 +23198,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrInArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(charPtrInArg:))[inv setArgument:&arg atIndex:2];
@@ -23217,7 +23217,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokecharPtrInOutArg:(char**)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23244,7 +23244,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointInArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSPointInArg:))[inv setArgument:&arg atIndex:2];
@@ -23263,7 +23263,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSPointInOutArg:(NSPoint*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23290,7 +23290,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectInArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(NSRectInArg:))[inv setArgument:&arg atIndex:2];
@@ -23309,7 +23309,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokeNSRectInOutArg:(NSRect*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23336,7 +23336,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct1InArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23357,7 +23357,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct1InOutArg:(struct TestStruct1*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(structTestStruct1InOutArg:))[inv setArgument:&arg
@@ -23384,7 +23384,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct2InArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23405,7 +23405,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct2InOutArg:(struct TestStruct2*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(structTestStruct2InOutArg:))[inv setArgument:&arg
@@ -23432,7 +23432,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct3InArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23453,7 +23453,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct3InOutArg:(struct TestStruct3*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(structTestStruct3InOutArg:))[inv setArgument:&arg
@@ -23480,7 +23480,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct4InArg:(struct TestStruct4*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23501,7 +23501,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct4InOutArg:(struct TestStruct4*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(structTestStruct4InOutArg:))[inv setArgument:&arg
@@ -23528,7 +23528,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct5InArg:(struct TestStruct5*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -23549,7 +23549,7 @@ arg2id(const char* argtype, void* argptr)
 
 + (id)invokestructTestStruct5InOutArg:(struct TestStruct5*)arg of:(PyObjC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj, @selector(structTestStruct5InOutArg:))[inv setArgument:&arg
@@ -23596,11 +23596,13 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl2(void)
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestClass1",
-                           PyObjC_IdToPython([PyObjC_TestClass1 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestClass1 class]))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass2",
-                           PyObjC_IdToPython([PyObjC_TestClass2 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestClass2 class]))
+        < 0) {
         return NULL;
     }
 #ifdef HAVE_BOOL

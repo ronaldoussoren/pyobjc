@@ -14,7 +14,7 @@ static int*
 makeIntArrayOf5(void)
 {
     static int result[5];
-    int i;
+    int        i;
     for (i = 0; i < 5; i++) {
         result[i] = i * i;
     }
@@ -32,7 +32,7 @@ static int*
 makeIntArrayOf_(int count)
 {
     static int* result = NULL;
-    int i;
+    int         i;
 
     if (result) {
         free(result);
@@ -69,7 +69,7 @@ static NSArray*
 makeIntArray_count_(int* data, unsigned count)
 {
     NSMutableArray* array;
-    unsigned i;
+    unsigned        i;
 
     array = [NSMutableArray arrayWithCapacity:count];
 
@@ -99,7 +99,7 @@ static NSArray*
 make4Tuple_(double* data)
 {
     NSMutableArray* array;
-    unsigned i;
+    unsigned        i;
 
     array = [NSMutableArray array];
 
@@ -216,10 +216,10 @@ static void
 reverseArray_count_(float* data, int count)
 {
     float t;
-    int i;
+    int   i;
     for (i = 0; i < count / 2; i++) {
-        t = data[i];
-        data[i] = data[count - 1 - i];
+        t                   = data[i];
+        data[i]             = data[count - 1 - i];
         data[count - 1 - i] = t;
     }
 }
@@ -236,7 +236,7 @@ nullreverseArray_count_(float* data, int count)
 static void
 reverseStrings_(char** data)
 {
-    int count, i;
+    int   count, i;
     char* t;
 
     for (count = 0; data[count] != NULL; count++) {
@@ -244,8 +244,8 @@ reverseStrings_(char** data)
     }
 
     for (i = 0; i < count / 2; i++) {
-        t = data[i];
-        data[i] = data[count - 1 - i];
+        t                   = data[i];
+        data[i]             = data[count - 1 - i];
         data[count - 1 - i] = t;
     }
 }
@@ -264,11 +264,11 @@ reverse4Tuple_(short* data)
 {
     short t;
 
-    t = data[0];
+    t       = data[0];
     data[0] = data[3];
     data[3] = t;
 
-    t = data[1];
+    t       = data[1];
     data[1] = data[2];
     data[2] = t;
 }
@@ -299,14 +299,14 @@ static void
 swapX_andY_(double* x, double* y)
 {
     double t = *x;
-    *x = *y;
-    *y = t;
+    *x       = *y;
+    *y       = t;
 }
 
 static NSArray*
 input_output_inputAndOutput_(int* x, int* y, int* z)
 {
-    char buf[64];
+    char            buf[64];
     NSMutableArray* result = [NSMutableArray array];
 
     snprintf(buf, sizeof(buf), "%p", x);
@@ -387,7 +387,7 @@ static NSArray*
 makeArrayWithFormat_(NSString* fmt, ...)
 {
     va_list ap;
-    char buffer[2048];
+    char    buffer[2048];
 
     va_start(ap, fmt);
 #pragma clang diagnostic push
@@ -409,7 +409,7 @@ static NSArray*
 makeArrayWithCFormat_(char* fmt, ...)
 {
     va_list ap;
-    char buffer[2048];
+    char    buffer[2048];
 
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
@@ -438,7 +438,7 @@ maybeFillArray_(int* data)
 typedef void (*F)(void);
 static struct function {
     char* name;
-    F function;
+    F     function;
 } gFunctionMap[] = {{"makeIntArrayOf5", (F)makeIntArrayOf5},
                     {"makeStringArray", (F)makeStringArray},
                     {"makeIntArrayOf_", (F)makeIntArrayOf_},

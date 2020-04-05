@@ -30,19 +30,19 @@
 static PyMethodDef mod_methods[] = {
     COREFOUNDATION_CFBAG_METHODS COREFOUNDATION_CFBINARYHEAP_METHODS
         COREFOUNDATION_BITVECTOR_METHODS COREFOUNDATION_CALENDAR_METHODS
-            COREFOUNDATION_DICTIONARY_METHODS
+                                         COREFOUNDATION_DICTIONARY_METHODS
 #if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
                 COREFOUNDATION_FILEDESCRIPTOR_METHODS
 #endif
                     COREFOUNDATION_MACHPORT_METHODS COREFOUNDATION_MESSAGEPORT_METHODS
                         COREFOUNDATION_NUMBER_METHODS COREFOUNDATION_NUMBERFORMATTER_METHODS
-                            COREFOUNDATION_READSTREAM_METHODS
-                                COREFOUNDATION_RUNLOOP_METHODS
-                                    COREFOUNDATION_RUNLOOPSOURCE_METHODS
-                                        COREFOUNDATION_RUNLOOPTIMER_METHODS
-                                            COREFOUNDATION_SET_METHODS
-                                                COREFOUNDATION_SOCKET_METHODS
-                                                    COREFOUNDATION_TREE_METHODS
+                                                      COREFOUNDATION_READSTREAM_METHODS
+                                                      COREFOUNDATION_RUNLOOP_METHODS
+                                                      COREFOUNDATION_RUNLOOPSOURCE_METHODS
+                                                      COREFOUNDATION_RUNLOOPTIMER_METHODS
+                                                      COREFOUNDATION_SET_METHODS
+                                                      COREFOUNDATION_SOCKET_METHODS
+                                                      COREFOUNDATION_TREE_METHODS
                                                         COREFOUNDATION_WRITESTREAM_METHODS
 
     {0, 0, 0, 0} /* sentinel */

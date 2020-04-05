@@ -12,9 +12,9 @@
 static PyObject*
 m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    CGRect* rectArray = NULL;
-    CGRectCount count = 0;
-    CGError err;
+    CGRect*     rectArray = NULL;
+    CGRectCount count     = 0;
+    CGError     err;
 
     if (PyTuple_Size(args) == 2) {
         if (PyTuple_GetItem(args, 0) != Py_None) {
@@ -70,13 +70,13 @@ m_CGWaitForScreenRefreshRects(PyObject* self __attribute__((__unused__)), PyObje
 static PyObject*
 m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    CGRect* rectArray = NULL;
-    size_t count = 0;
+    CGRect*                 rectArray = NULL;
+    size_t                  count     = 0;
     CGScreenUpdateOperation requestedOperations;
     CGScreenUpdateOperation currentOperation;
     CGScreenUpdateMoveDelta delta;
-    CGError err;
-    PyObject* py_ops;
+    CGError                 err;
+    PyObject*               py_ops;
 
     if (!PyArg_ParseTuple(args, "O", &py_ops)) {
         PyObject* py_curop;
@@ -108,7 +108,8 @@ m_CGWaitForScreenUpdateRects(PyObject* self __attribute__((__unused__)), PyObjec
     }
 
     if (PyObjC_PythonToObjC(@encode(CGScreenUpdateOperation), py_ops,
-                            &requestedOperations) < 0) {
+                            &requestedOperations)
+        < 0) {
         return NULL;
     }
 

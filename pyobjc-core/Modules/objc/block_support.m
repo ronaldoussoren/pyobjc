@@ -19,9 +19,9 @@
 
 enum {
     BLOCK_HAS_COPY_DISPOSE = (1 << 25),
-    BLOCK_IS_GLOBAL = (1 << 28),
-    BLOCK_HAS_STRET = (1 << 29),
-    BLOCK_HAS_SIGNATURE = (1 << 30)
+    BLOCK_IS_GLOBAL        = (1 << 28),
+    BLOCK_HAS_STRET        = (1 << 29),
+    BLOCK_HAS_SIGNATURE    = (1 << 30)
 };
 
 /*
@@ -41,16 +41,16 @@ struct block_descriptor {
 struct block_descriptor_basic {
     unsigned long int reserved;
     unsigned long int size;
-    void* rest[1];
+    void*             rest[1];
 };
 
 struct block_literal {
     void* isa;
-    int flags;
-    int reserved;
+    int   flags;
+    int   reserved;
     void (*invoke)(void*, ...);
     struct block_descriptor* descriptor;
-    PyObject* invoke_cleanup;
+    PyObject*                invoke_cleanup;
 };
 
 const char*
@@ -126,26 +126,26 @@ static struct block_literal gLiteralTemplate = {0, /* ISA */
 PyObject*
 PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_args)
 {
-    PyObject* self;
+    PyObject*              self;
     PyObjCMethodSignature* signature;
-    PyObject* args;
-    PyObject* kwds;
-    NSObject* block_ptr;
-    _block_func_ptr call_func;
-    Py_ssize_t byref_in_count;
-    Py_ssize_t byref_out_count;
-    Py_ssize_t plain_count;
-    Py_ssize_t argbuf_len;
-    Py_ssize_t cif_arg_count;
-    BOOL variadicAllArgs = NO;
-    int r;
-    unsigned char* argbuf = NULL;
-    ffi_type* arglist[MAX_ARGCOUNT];
-    void* values[MAX_ARGCOUNT];
-    void* byref[MAX_ARGCOUNT] = {0};
-    struct byref_attr byref_attr[MAX_ARGCOUNT] = {{0, 0}};
-    ffi_cif cif;
-    PyObject* retval;
+    PyObject*              args;
+    PyObject*              kwds;
+    NSObject*              block_ptr;
+    _block_func_ptr        call_func;
+    Py_ssize_t             byref_in_count;
+    Py_ssize_t             byref_out_count;
+    Py_ssize_t             plain_count;
+    Py_ssize_t             argbuf_len;
+    Py_ssize_t             cif_arg_count;
+    BOOL                   variadicAllArgs = NO;
+    int                    r;
+    unsigned char*         argbuf = NULL;
+    ffi_type*              arglist[MAX_ARGCOUNT];
+    void*                  values[MAX_ARGCOUNT];
+    void*                  byref[MAX_ARGCOUNT]      = {0};
+    struct byref_attr      byref_attr[MAX_ARGCOUNT] = {{0, 0}};
+    ffi_cif                cif;
+    PyObject*              retval;
 
     if (!PyArg_ParseTuple(func_args, "OOOO", &self, &signature, &args, &kwds)) {
         return NULL;
@@ -189,8 +189,8 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         return NULL;
     }
 
-    variadicAllArgs |= signature->variadic &&
-                       (signature->null_terminated_array || signature->arrayArg != -1);
+    variadicAllArgs |= signature->variadic
+                       && (signature->null_terminated_array || signature->arrayArg != -1);
 
     if (variadicAllArgs) {
         if (byref_in_count != 0 || byref_out_count != 0) {
@@ -238,8 +238,8 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
     cif_arg_count = PyObjCFFI_ParseArguments(
         signature, 1, args,
-        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*)) +
-            sizeof(void*),
+        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
+            + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist,
         useStret ? values + 1 : values);
 
@@ -249,13 +249,13 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
     if (useStret) {
         arglist[0] = &ffi_type_pointer;
-        byref[0] = argbuf;
-        values[0] = byref;
+        byref[0]   = argbuf;
+        values[0]  = byref;
         arglist[1] = &ffi_type_pointer;
-        values[1] = &block_ptr;
+        values[1]  = &block_ptr;
     } else {
         arglist[0] = &ffi_type_pointer;
-        values[0] = &block_ptr;
+        values[0]  = &block_ptr;
     }
 
     r = ffi_prep_cif(
@@ -290,7 +290,8 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
     if (variadicAllArgs) {
         if (PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref,
-                                byref_attr) < 0) {
+                                byref_attr)
+            < 0) {
             goto error;
         }
 
@@ -327,8 +328,8 @@ block_signature(PyObjCMethodSignature* signature)
 {
     Py_ssize_t i;
     Py_ssize_t buflen = 1;
-    char* buf;
-    char* cur;
+    char*      buf;
+    char*      cur;
 
     buflen += strlen(signature->rettype->type);
     for (i = 0; i < Py_SIZE(signature); i++) {
@@ -381,7 +382,7 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
         return NULL;
     }
     block->flags |= BLOCK_HAS_SIGNATURE;
-    block->isa = gGlobalBlockClass;
+    block->isa    = gGlobalBlockClass;
     block->invoke = PyObjCFFI_MakeBlockFunction(signature, callable);
     if (block->invoke == NULL) {
         PyMem_Free(block);
@@ -465,7 +466,7 @@ pyobjc_PythonTransient(NSObject* self, SEL _sel __attribute__((__unused__)), int
     }
 
     *cookie = 1;
-    result = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
+    result  = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
     [self release];
     return result;
 }

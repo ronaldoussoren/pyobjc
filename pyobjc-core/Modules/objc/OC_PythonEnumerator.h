@@ -3,7 +3,7 @@
 
 @interface OC_PythonEnumerator : NSEnumerator {
     PyObject* value;
-    BOOL valid;
+    BOOL      valid;
 }
 
 + (instancetype)enumeratorWithPythonObject:(PyObject*)object;

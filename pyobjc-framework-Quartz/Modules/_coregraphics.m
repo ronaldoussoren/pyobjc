@@ -12,8 +12,8 @@
 static PyObject*
 m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_font;
-    CGFontRef font;
+    PyObject*  py_font;
+    CGFontRef  font;
     CFArrayRef tags;
 
     if (!PyArg_ParseTuple(args, "O", &py_font)) {
@@ -46,15 +46,15 @@ m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), PyObject* args
 
     Py_ssize_t len = CFArrayGetCount(tags);
     Py_ssize_t i;
-    PyObject* result = PyTuple_New(len);
+    PyObject*  result = PyTuple_New(len);
     if (result == NULL) {
         CFRelease(tags);
         return NULL;
     }
 
     for (i = 0; i < len; i++) {
-        uint32_t cur = (uint32_t)(uintptr_t)CFArrayGetValueAtIndex(tags, i);
-        PyObject* v = PyObjC_ObjCToPython(@encode(uint32_t), &cur);
+        uint32_t  cur = (uint32_t)(uintptr_t)CFArrayGetValueAtIndex(tags, i);
+        PyObject* v   = PyObjC_ObjCToPython(@encode(uint32_t), &cur);
         if (v == NULL) {
             CFRelease(tags);
             return NULL;
@@ -68,11 +68,11 @@ m_CGFontCopyTableTags(PyObject* self __attribute__((__unused__)), PyObject* args
 static PyObject*
 m_CGWindowListCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_option;
-    PyObject* py_relativeToWindow;
+    PyObject*          py_option;
+    PyObject*          py_relativeToWindow;
     CGWindowListOption option;
-    CGWindowID relativeToWindow;
-    CFArrayRef windowList;
+    CGWindowID         relativeToWindow;
+    CFArrayRef         windowList;
 
     if (!PyArg_ParseTuple(args, "OO", &py_option, &py_relativeToWindow)) {
         return NULL;
@@ -82,8 +82,8 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CGWindowID), py_relativeToWindow,
-                            &relativeToWindow) == -1) {
+    if (PyObjC_PythonToObjC(@encode(CGWindowID), py_relativeToWindow, &relativeToWindow)
+        == -1) {
         return NULL;
     }
 
@@ -109,7 +109,7 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 
     Py_ssize_t len = CFArrayGetCount(windowList);
     Py_ssize_t i;
-    PyObject* result = PyTuple_New(len);
+    PyObject*  result = PyTuple_New(len);
     if (result == NULL) {
         CFRelease(windowList);
         return NULL;
@@ -117,7 +117,7 @@ m_CGWindowListCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 
     for (i = 0; i < len; i++) {
         CGWindowID cur = (CGWindowID)(NSInteger)CFArrayGetValueAtIndex(windowList, i);
-        PyObject* v = PyObjC_ObjCToPython(@encode(CGWindowID), &cur);
+        PyObject*  v   = PyObjC_ObjCToPython(@encode(CGWindowID), &cur);
         if (v == NULL) {
             CFRelease(windowList);
             return NULL;
@@ -150,7 +150,8 @@ createWindowList(PyObject* items)
         CGWindowID windowID;
 
         if (PyObjC_PythonToObjC(@encode(CGWindowID), PySequence_Fast_GET_ITEM(seq, i),
-                                &windowID) == -1) {
+                                &windowID)
+            == -1) {
             Py_DECREF(seq);
             CFRelease(array);
             return NULL;
@@ -165,7 +166,7 @@ static PyObject*
 m_CGWindowListCreateDescriptionFromArray(PyObject* self __attribute__((__unused__)),
                                          PyObject* args)
 {
-    PyObject* py_windowArray;
+    PyObject*  py_windowArray;
     CFArrayRef windowArray;
 
     if (!PyArg_ParseTuple(args, "O", &py_windowArray)) {
@@ -208,11 +209,11 @@ static PyObject*
 m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
                                    PyObject* args)
 {
-    PyObject* py_screenBounds;
-    PyObject* py_windowArray;
-    PyObject* py_imageOption;
-    CGRect screenBounds;
-    CFArrayRef windowArray;
+    PyObject*           py_screenBounds;
+    PyObject*           py_windowArray;
+    PyObject*           py_imageOption;
+    CGRect              screenBounds;
+    CFArrayRef          windowArray;
     CGWindowImageOption imageOption;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_screenBounds, &py_windowArray,
@@ -224,8 +225,8 @@ m_CGWindowListCreateImageFromArray(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(CGWindowImageOption), py_imageOption, &imageOption) ==
-        -1) {
+    if (PyObjC_PythonToObjC(@encode(CGWindowImageOption), py_imageOption, &imageOption)
+        == -1) {
         return NULL;
     }
 
@@ -274,13 +275,13 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     PyObject* py_colorSpace;
     PyObject* py_bitmapInfo;
 
-    void* data;
-    size_t width;
-    size_t height;
-    size_t bitsPerComponent;
-    size_t bytesPerRow;
+    void*           data;
+    size_t          width;
+    size_t          height;
+    size_t          bitsPerComponent;
+    size_t          bytesPerRow;
     CGColorSpaceRef colorSpace;
-    CGBitmapInfo bitmapInfo;
+    CGBitmapInfo    bitmapInfo;
 
     if (!PyArg_ParseTuple(args, "OOOOOOO", &py_data, &py_width, &py_height,
                           &py_bitsPerComponent, &py_bytesPerRow, &py_colorSpace,
@@ -294,8 +295,8 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     if (PyObjC_PythonToObjC(@encode(size_t), py_height, &height) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) ==
-        -1) {
+    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent)
+        == -1) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(size_t), py_bytesPerRow, &bytesPerRow) == -1) {
@@ -392,13 +393,13 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     PyObject* py_releaseCallback;
     PyObject* py_releaseInfo;
 
-    void* data;
-    size_t width;
-    size_t height;
-    size_t bitsPerComponent;
-    size_t bytesPerRow;
+    void*           data;
+    size_t          width;
+    size_t          height;
+    size_t          bitsPerComponent;
+    size_t          bytesPerRow;
     CGColorSpaceRef colorSpace;
-    CGBitmapInfo bitmapInfo;
+    CGBitmapInfo    bitmapInfo;
 
     if (!PyArg_ParseTuple(args, "OOOOOOOOO", &py_data, &py_width, &py_height,
                           &py_bitsPerComponent, &py_bytesPerRow, &py_colorSpace,
@@ -412,8 +413,8 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     if (PyObjC_PythonToObjC(@encode(size_t), py_height, &height) == -1) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent) ==
-        -1) {
+    if (PyObjC_PythonToObjC(@encode(size_t), py_bitsPerComponent, &bitsPerComponent)
+        == -1) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(size_t), py_bytesPerRow, &bytesPerRow) == -1) {
@@ -488,12 +489,12 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
 static PyObject*
 m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    bool res;
-    CGPDFObjectRef obj;
+    bool            res;
+    CGPDFObjectRef  obj;
     CGPDFObjectType type;
-    PyObject* p_obj;
-    PyObject* p_type;
-    PyObject* p_val;
+    PyObject*       p_obj;
+    PyObject*       p_type;
+    PyObject*       p_val;
 
     if (!PyArg_ParseTuple(args, "OOO", &p_obj, &p_type, &p_val)) {
         return NULL;
@@ -644,8 +645,8 @@ PyObjC_MODULE_INIT(_coregraphics)
     if (PyObjC_ImportAPI(m) < 0)
         PyObjC_INITERROR();
 
-#if PyObjC_BUILD_RELEASE >= 1005 &&                                                      \
-    (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
+#if PyObjC_BUILD_RELEASE >= 1005                                                         \
+    && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
     if (CGFontCopyTableTags == NULL) {
         if (PyDict_DelItemString(d, "CGFontCopyTableTags") < 0) {
             PyObjC_INITERROR();
@@ -671,8 +672,8 @@ PyObjC_MODULE_INIT(_coregraphics)
     }
 #endif
 
-#if (PyObjC_BUILD_RELEASE >= 1006) &&                                                    \
-    (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6)
+#if (PyObjC_BUILD_RELEASE >= 1006)                                                       \
+    && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6)
     CHECK_WEAK_LINK_10_6(m, CGBitmapContextCreateWithData);
 #endif
 

@@ -195,7 +195,7 @@
             return nil;
 
         const void* bytes;
-        NSUInteger length;
+        NSUInteger  length;
 
         if ([coder allowsKeyedCoding]) {
             bytes = [coder decodeBytesForKey:@"pybytes" returnedLength:&length];
@@ -227,7 +227,7 @@
                 }
 
                 selfAsPython = PyObjCObject_New(self, 0, YES);
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+                setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
                 v2 = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
                 Py_DECREF(cdr);

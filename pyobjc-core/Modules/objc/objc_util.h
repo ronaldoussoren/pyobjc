@@ -30,19 +30,19 @@ extern PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
 
 extern char* PyObjCUtil_Strdup(const char* value);
 
-extern NSMapTableKeyCallBacks PyObjCUtil_PointerKeyCallBacks;
+extern NSMapTableKeyCallBacks   PyObjCUtil_PointerKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks;
 
-extern NSMapTableKeyCallBacks PyObjCUtil_ObjCIdentityKeyCallBacks;
+extern NSMapTableKeyCallBacks   PyObjCUtil_ObjCIdentityKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks;
 
 extern void PyObjC_FreeCArray(int, void*);
-extern int PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
-                                 PyObject**);
+extern int  PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
+                                  PyObject**);
 extern PyObject* PyObjC_CArrayToPython(const char*, void*, Py_ssize_t);
 extern PyObject* PyObjC_CArrayToPython2(const char*, void*, Py_ssize_t,
                                         bool already_retained, bool already_cfretained);
-extern int PyObjC_IsPythonKeyword(const char* word) __attribute__((__pure__));
+extern int       PyObjC_IsPythonKeyword(const char* word) __attribute__((__pure__));
 
 extern int PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen);
 
@@ -82,7 +82,7 @@ align(Py_ssize_t offset, Py_ssize_t alignment)
 #define SET_FIELD(op, value)                                                             \
     do {                                                                                 \
         PyObject* _py_tmp = (PyObject*)(op);                                             \
-        (op) = value;                                                                    \
+        (op)              = value;                                                       \
         Py_XDECREF(_py_tmp);                                                             \
     } while (0)
 

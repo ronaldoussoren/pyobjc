@@ -10,30 +10,30 @@ static PyTypeObject audio_value_translation_type; /* Forward definition */
 struct audio_value_translation {
     PyObject_HEAD
 
-    char avt_ownsstorage;
-    char avt_owns_input_buffer;
-    char avt_owns_output_buffer;
-    void* avt_input_buffer;  /* for owned sample storage */
-    void* avt_output_buffer; /* for owned sample storage */
+    char                   avt_ownsstorage;
+    char                   avt_owns_input_buffer;
+    char                   avt_owns_output_buffer;
+    void*                  avt_input_buffer;  /* for owned sample storage */
+    void*                  avt_output_buffer; /* for owned sample storage */
     AudioValueTranslation* avt_translation;
 };
 
 static PyMemberDef avt_members[] = {
-    {.name = "_owns_storage",
-     .type = T_BOOL,
+    {.name   = "_owns_storage",
+     .type   = T_BOOL,
      .offset = offsetof(struct audio_value_translation, avt_ownsstorage),
-     .flags = READONLY,
-     .doc = "True iff this buffer owns storage for the AudioBufer"},
-    {.name = "_owns_input_buffer",
-     .type = T_BOOL,
+     .flags  = READONLY,
+     .doc    = "True iff this buffer owns storage for the AudioBufer"},
+    {.name   = "_owns_input_buffer",
+     .type   = T_BOOL,
      .offset = offsetof(struct audio_value_translation, avt_owns_input_buffer),
-     .flags = READONLY,
-     .doc = "True iff this buffer owns storage for the input buffer"},
-    {.name = "_owns_output_buffer",
-     .type = T_BOOL,
+     .flags  = READONLY,
+     .doc    = "True iff this buffer owns storage for the input buffer"},
+    {.name   = "_owns_output_buffer",
+     .type   = T_BOOL,
      .offset = offsetof(struct audio_value_translation, avt_owns_output_buffer),
-     .flags = READONLY,
-     .doc = "True iff this buffer owns storage for the output buffer"},
+     .flags  = READONLY,
+     .doc    = "True iff this buffer owns storage for the output buffer"},
 
     {.name = NULL} /* Sentinel */
 };
@@ -93,25 +93,25 @@ avt_get_mOutputData(PyObject* _self, void* closure __attribute__((__unused__)))
 }
 
 static PyGetSetDef avt_getset[] = {
-    {.name = "mInputData",
-     .get = avt_get_mInputData,
-     .set = NULL,
-     .doc = NULL,
+    {.name    = "mInputData",
+     .get     = avt_get_mInputData,
+     .set     = NULL,
+     .doc     = NULL,
      .closure = NULL},
-    {.name = "mInputDataSize",
-     .get = avt_get_mInputDataSize,
-     .set = NULL,
-     .doc = NULL,
+    {.name    = "mInputDataSize",
+     .get     = avt_get_mInputDataSize,
+     .set     = NULL,
+     .doc     = NULL,
      .closure = NULL},
-    {.name = "mOutputData",
-     .get = avt_get_mOutputData,
-     .set = NULL,
-     .doc = NULL,
+    {.name    = "mOutputData",
+     .get     = avt_get_mOutputData,
+     .set     = NULL,
+     .doc     = NULL,
      .closure = NULL},
-    {.name = "mOutputDataSize",
-     .get = avt_get_mOutputDataSize,
-     .set = NULL,
-     .doc = NULL,
+    {.name    = "mOutputDataSize",
+     .get     = avt_get_mOutputDataSize,
+     .set     = NULL,
+     .doc     = NULL,
      .closure = NULL},
 
     {.name = NULL} /* Sentinel */
@@ -128,8 +128,8 @@ avt_create_input_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     static char* keywords[] = {"buffer_size", NULL};
 
     struct audio_value_translation* self = (struct audio_value_translation*)_self;
-    unsigned int buf_size;
-    void* new_buf;
+    unsigned int                    buf_size;
+    void*                           new_buf;
 
     if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
         return NULL;
@@ -145,8 +145,8 @@ avt_create_input_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     }
 
     self->avt_input_buffer = self->avt_translation->mInputData = new_buf;
-    self->avt_owns_input_buffer = 1;
-    self->avt_translation->mInputDataSize = buf_size;
+    self->avt_owns_input_buffer                                = 1;
+    self->avt_translation->mInputDataSize                      = buf_size;
 
     Py_INCREF(Py_None);
     return Py_None;
@@ -163,8 +163,8 @@ avt_create_output_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     static char* keywords[] = {"buffer_size", NULL};
 
     struct audio_value_translation* self = (struct audio_value_translation*)_self;
-    unsigned int buf_size;
-    void* new_buf;
+    unsigned int                    buf_size;
+    void*                           new_buf;
 
     if (PyArg_ParseTupleAndKeywords(args, kwds, "I", keywords, &buf_size) == -1) {
         return NULL;
@@ -180,22 +180,22 @@ avt_create_output_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     }
 
     self->avt_output_buffer = self->avt_translation->mOutputData = new_buf;
-    self->avt_owns_output_buffer = 1;
-    self->avt_translation->mOutputDataSize = buf_size;
+    self->avt_owns_output_buffer                                 = 1;
+    self->avt_translation->mOutputDataSize                       = buf_size;
 
     Py_INCREF(Py_None);
     return Py_None;
 }
 
 static PyMethodDef avt_methods[] = {
-    {.ml_name = "create_input_buffer",
-     .ml_meth = (PyCFunction)avt_create_input_buffer,
+    {.ml_name  = "create_input_buffer",
+     .ml_meth  = (PyCFunction)avt_create_input_buffer,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
-     .ml_doc = avt_create_input_buffer_doc},
-    {.ml_name = "create_output_buffer",
-     .ml_meth = (PyCFunction)avt_create_output_buffer,
+     .ml_doc   = avt_create_input_buffer_doc},
+    {.ml_name  = "create_output_buffer",
+     .ml_meth  = (PyCFunction)avt_create_output_buffer,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
-     .ml_doc = avt_create_output_buffer_doc},
+     .ml_doc   = avt_create_output_buffer_doc},
 
     {.ml_name = NULL} /* Sentinel */
 };
@@ -206,8 +206,8 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     static char* keywords[] = {"input_buffer_size", "output_buffer_size", NULL};
     /* Args: channels (default to 1), size (default: no buffer) */
     struct audio_value_translation* result;
-    Py_ssize_t input_bufsize = -1;
-    Py_ssize_t output_bufsize = -1;
+    Py_ssize_t                      input_bufsize  = -1;
+    Py_ssize_t                      output_bufsize = -1;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
                                      "|"
@@ -241,7 +241,7 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    result->avt_ownsstorage = 1;
+    result->avt_ownsstorage       = 1;
     result->avt_owns_input_buffer = result->avt_owns_output_buffer = 0;
     result->avt_input_buffer = result->avt_output_buffer = NULL;
     result->avt_translation = PyMem_Malloc(sizeof(AudioValueTranslation));
@@ -250,9 +250,9 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    result->avt_translation->mInputData = NULL;
-    result->avt_translation->mInputDataSize = 0;
-    result->avt_translation->mOutputData = NULL;
+    result->avt_translation->mInputData      = NULL;
+    result->avt_translation->mInputDataSize  = 0;
+    result->avt_translation->mOutputData     = NULL;
     result->avt_translation->mOutputDataSize = 0;
 
     if (input_bufsize != -1) {
@@ -262,7 +262,7 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
             return NULL;
         }
         result->avt_translation->mInputDataSize = (unsigned int)input_bufsize;
-        result->avt_owns_input_buffer = 1;
+        result->avt_owns_input_buffer           = 1;
     }
 
     if (output_bufsize != -1) {
@@ -272,7 +272,7 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
             return NULL;
         }
         result->avt_translation->mOutputDataSize = (unsigned int)output_bufsize;
-        result->avt_owns_output_buffer = 1;
+        result->avt_owns_output_buffer           = 1;
     }
 
     return (PyObject*)result;
@@ -305,21 +305,21 @@ PyDoc_STRVAR(
 static PyTypeObject audio_value_translation_type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioValueTranslation",
     .tp_basicsize = sizeof(struct audio_value_translation),
-    .tp_itemsize = 0,
-    .tp_dealloc = avt_dealloc,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = avt_doc,
-    .tp_methods = avt_methods,
-    .tp_getset = avt_getset,
-    .tp_members = avt_members,
-    .tp_new = avt_new,
+    .tp_itemsize  = 0,
+    .tp_dealloc   = avt_dealloc,
+    .tp_getattro  = PyObject_GenericGetAttr,
+    .tp_flags     = Py_TPFLAGS_DEFAULT,
+    .tp_doc       = avt_doc,
+    .tp_methods   = avt_methods,
+    .tp_getset    = avt_getset,
+    .tp_members   = avt_members,
+    .tp_new       = avt_new,
 };
 
 static PyObject*
 pythonify_audio_value_translation(void* pointer)
 {
-    AudioValueTranslation* buf_pointer = (AudioValueTranslation*)pointer;
+    AudioValueTranslation*          buf_pointer = (AudioValueTranslation*)pointer;
     struct audio_value_translation* result;
 
     if (buf_pointer == NULL) {
@@ -332,7 +332,7 @@ pythonify_audio_value_translation(void* pointer)
         return NULL;
     }
 
-    result->avt_ownsstorage = 0;
+    result->avt_ownsstorage       = 0;
     result->avt_owns_input_buffer = result->avt_owns_output_buffer = 0;
     result->avt_input_buffer = result->avt_output_buffer = NULL;
 

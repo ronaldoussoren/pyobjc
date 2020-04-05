@@ -6,10 +6,10 @@ static PyObject*
 call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
                                        PyObject* arguments)
 {
-    float** res;
-    AVAudioFormat* format;
-    Py_ssize_t i, channel_count;
-    PyObject* result;
+    float**           res;
+    AVAudioFormat*    format;
+    Py_ssize_t        i, channel_count;
+    PyObject*         result;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "")) {
@@ -42,7 +42,7 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
         return Py_None;
     }
 
-    format = [(AVAudioPCMBuffer*)PyObjCObject_GetObject(self) format];
+    format        = [(AVAudioPCMBuffer*)PyObjCObject_GetObject(self) format];
     channel_count = [format channelCount];
 
     result = PyTuple_New(channel_count);
@@ -66,10 +66,10 @@ static PyObject*
 call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
                                        PyObject* arguments)
 {
-    int16_t** res;
-    AVAudioFormat* format;
-    Py_ssize_t i, channel_count;
-    PyObject* result;
+    int16_t**         res;
+    AVAudioFormat*    format;
+    Py_ssize_t        i, channel_count;
+    PyObject*         result;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "")) {
@@ -102,7 +102,7 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
         return Py_None;
     }
 
-    format = [(AVAudioPCMBuffer*)PyObjCObject_GetObject(self) format];
+    format        = [(AVAudioPCMBuffer*)PyObjCObject_GetObject(self) format];
     channel_count = [format channelCount];
 
     result = PyTuple_New(channel_count);
@@ -126,10 +126,10 @@ static PyObject*
 call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
                                        PyObject* arguments)
 {
-    int32_t** res;
-    AVAudioFormat* format;
-    Py_ssize_t i, channel_count;
-    PyObject* result;
+    int32_t**         res;
+    AVAudioFormat*    format;
+    Py_ssize_t        i, channel_count;
+    PyObject*         result;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "")) {
@@ -162,7 +162,7 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
         return Py_None;
     }
 
-    format = [(AVAudioPCMBuffer*)PyObjCObject_GetObject(self) format];
+    format        = [(AVAudioPCMBuffer*)PyObjCObject_GetObject(self) format];
     channel_count = [format channelCount];
 
     result = PyTuple_New(channel_count);
@@ -192,21 +192,24 @@ init_avaudiobuffer(void)
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(floatChannelData),
                                      call_AVAudioPCMBuffer_floatChannelData,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(int16ChannelData),
                                      call_AVAudioPCMBuffer_int16ChannelData,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(int32ChannelData),
                                      call_AVAudioPCMBuffer_int32ChannelData,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }

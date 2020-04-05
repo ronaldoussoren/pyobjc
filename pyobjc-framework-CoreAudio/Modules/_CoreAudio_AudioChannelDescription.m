@@ -13,16 +13,16 @@ static PyTypeObject audio_channel_description_type; /* Forward definition */
 struct audio_channel_description {
     PyObject_HEAD
 
-    char acd_owns_storage;
+    char                     acd_owns_storage;
     AudioChannelDescription* acd_description;
 };
 
 static PyMemberDef acd_members[] = {
-    {.name = "_owns_storage",
-     .type = T_BOOL,
+    {.name   = "_owns_storage",
+     .type   = T_BOOL,
      .offset = offsetof(struct audio_channel_description, acd_owns_storage),
-     .flags = READONLY,
-     .doc = "True iff this buffer owns storage for the AudioBufer"},
+     .flags  = READONLY,
+     .doc    = "True iff this buffer owns storage for the AudioBufer"},
 
     {.name = NULL} /* Sentinel */
 };
@@ -101,20 +101,20 @@ acd_set_mCoordinates(PyObject* _self, PyObject* value,
 }
 
 static PyGetSetDef acd_getset[] = {
-    {.name = "mChannelLabel",
-     .get = acd_get_mChannelLabel,
-     .set = acd_set_mChannelLabel,
-     .doc = NULL,
+    {.name    = "mChannelLabel",
+     .get     = acd_get_mChannelLabel,
+     .set     = acd_set_mChannelLabel,
+     .doc     = NULL,
      .closure = NULL},
-    {.name = "mChannelFlags",
-     .get = acd_get_mChannelFlags,
-     .set = acd_set_mChannelFlags,
-     .doc = NULL,
+    {.name    = "mChannelFlags",
+     .get     = acd_get_mChannelFlags,
+     .set     = acd_set_mChannelFlags,
+     .doc     = NULL,
      .closure = NULL},
-    {.name = "mCoordinates",
-     .get = acd_get_mCoordinates,
-     .set = acd_set_mCoordinates,
-     .doc = NULL,
+    {.name    = "mCoordinates",
+     .get     = acd_get_mCoordinates,
+     .set     = acd_set_mCoordinates,
+     .doc     = NULL,
      .closure = NULL},
 
     {.name = NULL} /* Sentinel */
@@ -125,9 +125,9 @@ acd_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"mChannelLabel", "mChannelFlags", "mCoordinates", NULL};
     struct audio_channel_description* result;
-    unsigned int channel_label = 0;
-    unsigned int channel_flags = 0;
-    float coordinates[3] = {0, 0, 0};
+    unsigned int                      channel_label  = 0;
+    unsigned int                      channel_flags  = 0;
+    float                             coordinates[3] = {0, 0, 0};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
                                      "|"
@@ -147,14 +147,14 @@ acd_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     }
 
     result->acd_owns_storage = 1;
-    result->acd_description = PyMem_Malloc(sizeof(AudioChannelDescription));
+    result->acd_description  = PyMem_Malloc(sizeof(AudioChannelDescription));
     if (result == NULL) {
         Py_DECREF(result);
         return NULL;
     }
 
-    result->acd_description->mChannelLabel = channel_label;
-    result->acd_description->mChannelFlags = channel_flags;
+    result->acd_description->mChannelLabel   = channel_label;
+    result->acd_description->mChannelFlags   = channel_flags;
     result->acd_description->mCoordinates[0] = coordinates[0];
     result->acd_description->mCoordinates[1] = coordinates[1];
     result->acd_description->mCoordinates[2] = coordinates[2];
@@ -182,14 +182,14 @@ PyDoc_STRVAR(acd_doc,
 static PyTypeObject audio_channel_description_type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "CoreAudio.AudioChannelDescription",
     .tp_basicsize = sizeof(struct audio_channel_description),
-    .tp_itemsize = 0,
-    .tp_dealloc = acd_dealloc,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = acd_doc,
-    .tp_getset = acd_getset,
-    .tp_members = acd_members,
-    .tp_new = acd_new,
+    .tp_itemsize  = 0,
+    .tp_dealloc   = acd_dealloc,
+    .tp_getattro  = PyObject_GenericGetAttr,
+    .tp_flags     = Py_TPFLAGS_DEFAULT,
+    .tp_doc       = acd_doc,
+    .tp_getset    = acd_getset,
+    .tp_members   = acd_members,
+    .tp_new       = acd_new,
 };
 
 static PyObject*
@@ -204,7 +204,7 @@ acd_create(AudioChannelDescription* item)
     }
 
     result->acd_owns_storage = 0;
-    result->acd_description = item;
+    result->acd_description  = item;
 
     return (PyObject*)result;
 }

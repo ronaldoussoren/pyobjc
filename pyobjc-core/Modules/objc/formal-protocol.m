@@ -13,7 +13,7 @@ PyDoc_STRVAR(
 typedef struct {
     PyObject_HEAD
 
-        Protocol* objc;
+    Protocol* objc;
 } PyObjCFormalProtocol;
 
 static void
@@ -28,7 +28,7 @@ static PyObject*
 proto_repr(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    const char* name;
+    const char*           name;
 
     name = protocol_getName(self->objc);
     if (name == NULL) {
@@ -41,7 +41,7 @@ proto_repr(PyObject* object)
 
 static PyObject*
 proto_get__class__(PyObject* object __attribute__((__unused__)),
-                   void* closure __attribute__((__unused__)))
+                   void*     closure __attribute__((__unused__)))
 {
     return PyObjCClass_New([Protocol class]);
 }
@@ -50,7 +50,7 @@ static PyObject*
 proto_get__name__(PyObject* object, void* closure __attribute__((__unused__)))
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    const char* name = protocol_getName(self->objc);
+    const char*           name = protocol_getName(self->objc);
 
     if (name == NULL) {
         Py_INCREF(Py_None);
@@ -65,13 +65,13 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
 {
     static char* keywords[] = {"name", "supers", "selectors", NULL};
 
-    char* name;
-    PyObject* supers;
-    PyObject* selectors;
+    char*      name;
+    PyObject*  supers;
+    PyObject*  selectors;
     Py_ssize_t i, len;
 
     PyObjCFormalProtocol* result = NULL;
-    Protocol* theProtocol;
+    Protocol*             theProtocol;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO:formal_protocol", keywords, &name,
                                      &supers, &selectors)) {
@@ -146,8 +146,8 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
 
     len = PySequence_Fast_GET_SIZE(selectors);
     for (i = 0; i < len; i++) {
-        PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
-        SEL theSel = PyObjCSelector_GetSelector(sel);
+        PyObject*   sel          = PySequence_Fast_GET_ITEM(selectors, i);
+        SEL         theSel       = PyObjCSelector_GetSelector(sel);
         const char* theSignature = PyObjCSelector_Signature(sel);
 
         if (theSignature == NULL) {
@@ -184,7 +184,7 @@ static PyObject*
 proto_name(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    const char* name = protocol_getName(self->objc);
+    const char*           name = protocol_getName(self->objc);
 
     if (name == NULL) {
         Py_INCREF(Py_None);
@@ -198,8 +198,8 @@ static PyObject*
 proto_conformsTo_(PyObject* object, PyObject* args)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    PyObject* protocol;
-    Protocol* objc_protocol;
+    PyObject*             protocol;
+    Protocol*             objc_protocol;
 
     if (!PyArg_ParseTuple(args, "O", &protocol)) {
         return NULL;
@@ -222,7 +222,7 @@ static int
 append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isInstance)
 {
     struct objc_method_description* methods;
-    unsigned int method_count, i;
+    unsigned int                    method_count, i;
 
     methods = protocol_copyMethodDescriptionList(protocol, isRequired, isInstance,
                                                  &method_count);
@@ -256,7 +256,7 @@ static PyObject*
 instanceMethods(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    int r;
+    int                   r;
 
     PyObject* result = PyList_New(0);
     if (result == NULL) {
@@ -282,7 +282,7 @@ static PyObject*
 classMethods(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    int r;
+    int                   r;
 
     PyObject* result = PyList_New(0);
     if (result == NULL) {
@@ -307,8 +307,8 @@ classMethods(PyObject* object)
 static PyObject*
 descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 {
-    PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    SEL aSelector = NULL;
+    PyObjCFormalProtocol*          self      = (PyObjCFormalProtocol*)object;
+    SEL                            aSelector = NULL;
     struct objc_method_description descr;
 
     if (PyObjCSelector_Check(sel)) {
@@ -348,8 +348,8 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 static PyObject*
 descriptionForClassMethod_(PyObject* object, PyObject* sel)
 {
-    PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
-    SEL aSelector = NULL;
+    PyObjCFormalProtocol*          self      = (PyObjCFormalProtocol*)object;
+    SEL                            aSelector = NULL;
     struct objc_method_description descr;
 
     if (PyObjCSelector_Check(sel)) {
@@ -385,33 +385,33 @@ descriptionForClassMethod_(PyObject* object, PyObject* sel)
 
 static PyMethodDef proto_methods[] = {
     {
-        .ml_name = "name",
-        .ml_meth = (PyCFunction)proto_name,
+        .ml_name  = "name",
+        .ml_meth  = (PyCFunction)proto_name,
         .ml_flags = METH_NOARGS,
-        .ml_doc = "name()\n" CLINIC_SEP "\nReturn the  protocol name",
+        .ml_doc   = "name()\n" CLINIC_SEP "\nReturn the  protocol name",
     },
-    {.ml_name = "conformsTo_",
-     .ml_meth = (PyCFunction)proto_conformsTo_,
+    {.ml_name  = "conformsTo_",
+     .ml_meth  = (PyCFunction)proto_conformsTo_,
      .ml_flags = METH_VARARGS,
-     .ml_doc = "conformsTo_(other)\n" CLINIC_SEP
+     .ml_doc   = "conformsTo_(other)\n" CLINIC_SEP
                "\nDoes this protocol conform to another protocol"},
-    {.ml_name = "descriptionForInstanceMethod_",
-     .ml_meth = (PyCFunction)descriptionForInstanceMethod_,
+    {.ml_name  = "descriptionForInstanceMethod_",
+     .ml_meth  = (PyCFunction)descriptionForInstanceMethod_,
      .ml_flags = METH_O,
-     .ml_doc = "descriptionForInstanceMethod_(selector)\n" CLINIC_SEP
+     .ml_doc   = "descriptionForInstanceMethod_(selector)\n" CLINIC_SEP
                "\nDescription for an instance method in the protocol"},
-    {.ml_name = "descriptionForClassMethod_",
-     .ml_meth = (PyCFunction)descriptionForClassMethod_,
+    {.ml_name  = "descriptionForClassMethod_",
+     .ml_meth  = (PyCFunction)descriptionForClassMethod_,
      .ml_flags = METH_O,
-     .ml_doc = "descriptionForClassMethod_(selector)\n" CLINIC_SEP
+     .ml_doc   = "descriptionForClassMethod_(selector)\n" CLINIC_SEP
                "\nDescription for a class method in the protocol"},
-    {.ml_name = "instanceMethods",
-     .ml_meth = (PyCFunction)instanceMethods,
+    {.ml_name  = "instanceMethods",
+     .ml_meth  = (PyCFunction)instanceMethods,
      .ml_flags = METH_NOARGS,
      .ml_doc =
          "instanceMethods()\n" CLINIC_SEP "\nList of instance methods in this protocol"},
-    {.ml_name = "classMethods",
-     .ml_meth = (PyCFunction)classMethods,
+    {.ml_name  = "classMethods",
+     .ml_meth  = (PyCFunction)classMethods,
      .ml_flags = METH_NOARGS,
      .ml_doc = "classMethods()\n" CLINIC_SEP "\nList of class methods in this protocol"},
     {
@@ -420,11 +420,11 @@ static PyMethodDef proto_methods[] = {
 
 static PyGetSetDef proto_getset[] = {{
                                          .name = "__class__",
-                                         .get = (getter)proto_get__class__,
+                                         .get  = (getter)proto_get__class__,
                                      },
                                      {
                                          .name = "__name__",
-                                         .get = (getter)proto_get__name__,
+                                         .get  = (getter)proto_get__name__,
                                      },
                                      {
                                          .name = NULL /* SENTINEL */
@@ -432,16 +432,16 @@ static PyGetSetDef proto_getset[] = {{
 
 PyTypeObject PyObjCFormalProtocol_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.formal_protocol",
-    .tp_basicsize = sizeof(PyObjCFormalProtocol),
-    .tp_itemsize = 0,
-    .tp_dealloc = proto_dealloc,
-    .tp_repr = proto_repr,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = proto_cls_doc,
-    .tp_methods = proto_methods,
-    .tp_getset = proto_getset,
-    .tp_new = proto_new,
+    .tp_basicsize                                  = sizeof(PyObjCFormalProtocol),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = proto_dealloc,
+    .tp_repr                                       = proto_repr,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_doc                                        = proto_cls_doc,
+    .tp_methods                                    = proto_methods,
+    .tp_getset                                     = proto_getset,
+    .tp_new                                        = proto_new,
 };
 
 /*
@@ -454,7 +454,7 @@ const char*
 PyObjCFormalProtocol_FindSelectorSignature(PyObject* object, SEL selector,
                                            int isClassMethod)
 {
-    PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
+    PyObjCFormalProtocol*          self = (PyObjCFormalProtocol*)object;
     struct objc_method_description descr;
 
     descr = protocol_getMethodDescription(self->objc, selector, YES, !isClassMethod);
@@ -538,10 +538,10 @@ static int
 do_check(const char* protocol_name, Protocol* protocol, char* name, PyObject* super_class,
          PyObject* clsdict, PyObject* metadict)
 {
-    int r;
+    int      r;
     unsigned idx;
 
-    unsigned parentCount;
+    unsigned   parentCount;
     Protocol** parents = protocol_copyProtocolList(protocol, &parentCount);
     if (parents) {
         for (idx = 0; idx < parentCount; idx++) {
@@ -555,11 +555,11 @@ do_check(const char* protocol_name, Protocol* protocol, char* name, PyObject* su
         free(parents);
     }
 
-    unsigned int methCount;
+    unsigned int                    methCount;
     struct objc_method_description* methinfo;
 
     methCount = 0;
-    methinfo = protocol_copyMethodDescriptionList(protocol, YES, YES, &methCount);
+    methinfo  = protocol_copyMethodDescriptionList(protocol, YES, YES, &methCount);
     if (methinfo) {
         for (idx = 0; idx < methCount; idx++) {
             if (!do_verify(protocol_name, methinfo + idx, NO, YES, name, super_class,

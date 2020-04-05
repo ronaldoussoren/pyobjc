@@ -16,20 +16,20 @@
 static PyObject*
 call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    id result = nil;
+    id                result = nil;
     struct objc_super spr;
-    IMP anIMP;
-    NSObject* anObject;
-    SEL aSel;
+    IMP               anIMP;
+    NSObject*         anObject;
+    SEL               aSel;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
     }
 
     if (unlikely(PyObjCIMP_Check(method))) {
-        anIMP = PyObjCIMP_GetIMP(method);
+        anIMP    = PyObjCIMP_GetIMP(method);
         anObject = PyObjCObject_GetObject(self);
-        aSel = PyObjCIMP_GetSelector(method);
+        aSel     = PyObjCIMP_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -68,10 +68,10 @@ static void
 imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
                          void** args __attribute__((__unused__)), void* callable)
 {
-    int err;
+    int       err;
     PyObject* arglist = NULL;
-    PyObject* v = NULL;
-    PyObject* result = NULL;
+    PyObject* v       = NULL;
+    PyObject* result  = NULL;
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -116,11 +116,11 @@ imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
 static PyObject*
 call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    id result = nil;
+    id                result = nil;
     struct objc_super spr;
-    IMP anIMP;
-    Class aClass;
-    SEL aSel;
+    IMP               anIMP;
+    Class             aClass;
+    SEL               aSel;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
@@ -133,9 +133,9 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
     }
 
     if (unlikely(PyObjCIMP_Check(method))) {
-        anIMP = PyObjCIMP_GetIMP(method);
+        anIMP  = PyObjCIMP_GetIMP(method);
         aClass = PyObjCClass_GetClass(self);
-        aSel = PyObjCIMP_GetSelector(method);
+        aSel   = PyObjCIMP_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -174,10 +174,10 @@ static void
 imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
                    void** args __attribute__((__unused__)), void* callable)
 {
-    int err;
+    int       err;
     PyObject* arglist = NULL;
-    PyObject* v = NULL;
-    PyObject* result = NULL;
+    PyObject* v       = NULL;
+    PyObject* result  = NULL;
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -221,9 +221,9 @@ static PyObject*
 call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
-    IMP anIMP;
-    Class aClass;
-    SEL aSel;
+    IMP               anIMP;
+    Class             aClass;
+    SEL               aSel;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
@@ -237,9 +237,9 @@ call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject* arguments)
     }
 
     if (unlikely(PyObjCIMP_Check(method))) {
-        anIMP = PyObjCIMP_GetIMP(method);
+        anIMP  = PyObjCIMP_GetIMP(method);
         aClass = PyObjCClass_GetClass(self);
-        aSel = PyObjCIMP_GetSelector(method);
+        aSel   = PyObjCIMP_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -277,12 +277,12 @@ call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject* arguments)
 
 static void
 imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
-                     void* resp __attribute__((__unused__)),
+                     void*    resp __attribute__((__unused__)),
                      void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
-    PyObject* v = NULL;
-    PyObject* result = NULL;
+    PyObject* v       = NULL;
+    PyObject* result  = NULL;
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -325,9 +325,9 @@ static PyObject*
 call_NSObject_release(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
-    IMP anIMP;
-    Class aClass;
-    SEL aSel;
+    IMP               anIMP;
+    Class             aClass;
+    SEL               aSel;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
@@ -341,9 +341,9 @@ call_NSObject_release(PyObject* method, PyObject* self, PyObject* arguments)
     }
 
     if (unlikely(PyObjCIMP_Check(method))) {
-        anIMP = PyObjCIMP_GetIMP(method);
+        anIMP  = PyObjCIMP_GetIMP(method);
         aClass = PyObjCClass_GetClass(self);
-        aSel = PyObjCIMP_GetSelector(method);
+        aSel   = PyObjCIMP_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -381,10 +381,10 @@ static PyObject*
 call_NSObject_retain(PyObject* method, PyObject* self, PyObject* arguments)
 {
     struct objc_super spr;
-    IMP anIMP;
-    Class aClass;
-    SEL aSel;
-    id retval = nil;
+    IMP               anIMP;
+    Class             aClass;
+    SEL               aSel;
+    id                retval = nil;
 
     if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
         return NULL;
@@ -398,9 +398,9 @@ call_NSObject_retain(PyObject* method, PyObject* self, PyObject* arguments)
     }
 
     if (PyObjCIMP_Check(method)) {
-        anIMP = PyObjCIMP_GetIMP(method);
+        anIMP  = PyObjCIMP_GetIMP(method);
         aClass = PyObjCClass_GetClass(self);
-        aSel = PyObjCIMP_GetSelector(method);
+        aSel   = PyObjCIMP_GetSelector(method);
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -435,13 +435,13 @@ call_NSObject_retain(PyObject* method, PyObject* self, PyObject* arguments)
 
 static void
 imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
-                     void* resp __attribute__((__unused__)),
+                     void*    resp __attribute__((__unused__)),
                      void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
-    PyObject* result = NULL;
+    PyObject* result  = NULL;
     PyObject* pyself;
-    int cookie;
+    int       cookie;
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -484,14 +484,14 @@ imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
 
 static void
 imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
-                    void* resp __attribute__((__unused__)),
+                    void*    resp __attribute__((__unused__)),
                     void** args __attribute__((__unused__)), void* callable)
 {
     PyObject* arglist = NULL;
-    PyObject* result = NULL;
+    PyObject* result  = NULL;
     PyObject* pyself;
-    int cookie;
-    int err;
+    int       cookie;
+    int       err;
 
     PyObjC_BEGIN_WITH_GIL
 

@@ -2,13 +2,13 @@ static PyObject*
 call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
                                        PyObject* arguments)
 {
-    struct objc_super super;
+    struct objc_super  super;
     NSMethodSignature* signature;
-    const char* tp;
-    PyObject* py_value;
-    NSUInteger index;
-    void* buf;
-    Py_ssize_t sz;
+    const char*        tp;
+    PyObject*          py_value;
+    NSUInteger         index;
+    void*              buf;
+    Py_ssize_t         sz;
 
     if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_value, &index)) {
         return NULL;
@@ -23,7 +23,7 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             signature = NULL;
-            tp = NULL;
+            tp        = NULL;
         }
     Py_END_ALLOW_THREADS
 
@@ -78,12 +78,12 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
 static PyObject*
 call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    struct objc_super super;
+    struct objc_super  super;
     NSMethodSignature* signature;
-    const char* tp;
-    PyObject* py_value;
-    void* buf;
-    Py_ssize_t sz;
+    const char*        tp;
+    PyObject*          py_value;
+    void*              buf;
+    Py_ssize_t         sz;
 
     if (!PyArg_ParseTuple(arguments, "O", &py_value)) {
         return NULL;
@@ -98,7 +98,7 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject* ar
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             signature = NULL;
-            tp = NULL;
+            tp        = NULL;
         }
     Py_END_ALLOW_THREADS
 
@@ -153,13 +153,13 @@ static PyObject*
 call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
                                        PyObject* arguments)
 {
-    struct objc_super super;
+    struct objc_super  super;
     NSMethodSignature* signature;
-    const char* tp;
-    PyObject* py_value;
-    NSUInteger index;
-    void* buf;
-    Py_ssize_t sz;
+    const char*        tp;
+    PyObject*          py_value;
+    NSUInteger         index;
+    void*              buf;
+    Py_ssize_t         sz;
 
     if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_value, &index)) {
         return NULL;
@@ -179,7 +179,7 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             signature = NULL;
-            tp = NULL;
+            tp        = NULL;
         }
     Py_END_ALLOW_THREADS
 
@@ -233,12 +233,12 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
 static PyObject*
 call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    struct objc_super super;
+    struct objc_super  super;
     NSMethodSignature* signature;
-    const char* tp;
-    PyObject* py_value;
-    void* buf;
-    Py_ssize_t sz;
+    const char*        tp;
+    PyObject*          py_value;
+    void*              buf;
+    Py_ssize_t         sz;
 
     if (!PyArg_ParseTuple(arguments, "O", &py_value)) {
         return NULL;
@@ -258,7 +258,7 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject* ar
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             signature = NULL;
-            tp = NULL;
+            tp        = NULL;
         }
     Py_END_ALLOW_THREADS
 
@@ -315,25 +315,29 @@ setup_nsinvocation(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(setArgument:atIndex:),
                                      call_NSInvocation_setArgument_atIndex_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(setReturnValue:),
                                      call_NSInvocation_setReturnValue_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(getArgument:atIndex:),
                                      call_NSInvocation_getArgument_atIndex_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSInvocation, @selector(getReturnValue:),
                                      call_NSInvocation_getReturnValue_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
         return -1;
     }
 

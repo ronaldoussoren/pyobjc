@@ -35,62 +35,58 @@
 
 static ffi_status
 initialize_aggregate(
-/*@out@*/	ffi_type*	arg)
+    /*@out@*/ ffi_type* arg)
 {
-/*@-usedef@*/
+    /*@-usedef@*/
 
-	if (arg == NULL || arg->elements == NULL ||
-		arg->size != 0 || arg->alignment != 0)
-		return FFI_BAD_TYPEDEF;
+    if (arg == NULL || arg->elements == NULL || arg->size != 0 || arg->alignment != 0)
+        return FFI_BAD_TYPEDEF;
 
-	ffi_type**	ptr = &(arg->elements[0]);
+    ffi_type** ptr = &(arg->elements[0]);
 
-	while ((*ptr) != NULL)
-	{
-		if (((*ptr)->size == 0) && (initialize_aggregate(*ptr) != FFI_OK))
-			return FFI_BAD_TYPEDEF;
+    while ((*ptr) != NULL) {
+        if (((*ptr)->size == 0) && (initialize_aggregate(*ptr) != FFI_OK))
+            return FFI_BAD_TYPEDEF;
 
-		/* Perform a sanity check on the argument type */
-		FFI_ASSERT_VALID_TYPE(*ptr);
+        /* Perform a sanity check on the argument type */
+        FFI_ASSERT_VALID_TYPE(*ptr);
 
 #ifdef POWERPC_DARWIN
-		int curalign = (*ptr)->alignment;
+        int curalign = (*ptr)->alignment;
 
-		if (ptr != &(arg->elements[0]))
-		{
-			if (curalign > 4 && curalign != 16)
-				curalign = 4;
-		}
+        if (ptr != &(arg->elements[0])) {
+            if (curalign > 4 && curalign != 16)
+                curalign = 4;
+        }
 
-		arg->size		= ALIGN(arg->size, curalign);
-		arg->size		+= (*ptr)->size;
-		arg->alignment	= (arg->alignment > curalign) ?
-			arg->alignment : curalign;
+        arg->size = ALIGN(arg->size, curalign);
+        arg->size += (*ptr)->size;
+        arg->alignment = (arg->alignment > curalign) ? arg->alignment : curalign;
 #else
-		arg->size		= ALIGN(arg->size, (*ptr)->alignment);
-		arg->size		+= (*ptr)->size;
-		arg->alignment	= (arg->alignment > (*ptr)->alignment) ?
-			arg->alignment : (*ptr)->alignment;
+        arg->size = ALIGN(arg->size, (*ptr)->alignment);
+        arg->size += (*ptr)->size;
+        arg->alignment =
+            (arg->alignment > (*ptr)->alignment) ? arg->alignment : (*ptr)->alignment;
 #endif
 
-		ptr++;
+        ptr++;
     }
 
-  /* Structure size includes tail padding.  This is important for
-     structures that fit in one register on ABIs like the PowerPC64
-     Linux ABI that right justify small structs in a register.
-     It's also needed for nested structure layout, for example
-     struct A { long a; char b; }; struct B { struct A x; char y; };
-     should find y at an offset of 2*sizeof(long) and result in a
-     total size of 3*sizeof(long).  */
-	arg->size = ALIGN(arg->size, arg->alignment);
+    /* Structure size includes tail padding.  This is important for
+       structures that fit in one register on ABIs like the PowerPC64
+       Linux ABI that right justify small structs in a register.
+       It's also needed for nested structure layout, for example
+       struct A { long a; char b; }; struct B { struct A x; char y; };
+       should find y at an offset of 2*sizeof(long) and result in a
+       total size of 3*sizeof(long).  */
+    arg->size = ALIGN(arg->size, arg->alignment);
 
-	if (arg->size == 0)
-		return FFI_BAD_TYPEDEF;
+    if (arg->size == 0)
+        return FFI_BAD_TYPEDEF;
 
-	return FFI_OK;
+    return FFI_OK;
 
-/*@=usedef@*/
+    /*@=usedef@*/
 }
 
 #ifndef __CRIS__
@@ -104,123 +100,116 @@ initialize_aggregate(
 #if defined(X86_DARWIN) && !defined __x86_64__
 
 static inline bool
-struct_on_stack(
-	int	size)
+struct_on_stack(int size)
 {
-	if (size > 8)
-		return true;
+    if (size > 8)
+        return true;
 
-	/* This is not what the ABI says, but is what is really implemented */
-	switch (size)
-	{
-		case 1:
-		case 2:
-		case 4:
-		case 8:
-			return false;
+    /* This is not what the ABI says, but is what is really implemented */
+    switch (size) {
+    case 1:
+    case 2:
+    case 4:
+    case 8:
+        return false;
 
-		default:
-			return true;
-	}
+    default:
+        return true;
+    }
 }
 
-#endif	// defined(X86_DARWIN)
+#endif // defined(X86_DARWIN)
 
 // Arguments' ffi_type->alignment must be nonzero.
 ffi_status
 ffi_prep_cif(
-/*@out@*/ /*@partial@*/	ffi_cif*		cif,
-						ffi_abi			abi,
-						unsigned int	nargs,
-/*@dependent@*/ /*@out@*/ /*@partial@*/ ffi_type*	rtype,
-/*@dependent@*/			ffi_type**		atypes)
+    /*@out@*/ /*@partial@*/ ffi_cif* cif, ffi_abi abi, unsigned int nargs,
+    /*@dependent@*/ /*@out@*/ /*@partial@*/ ffi_type* rtype,
+    /*@dependent@*/ ffi_type**                        atypes)
 {
-	if (cif == NULL)
-		return FFI_BAD_TYPEDEF;
+    if (cif == NULL)
+        return FFI_BAD_TYPEDEF;
 
-	if (abi <= FFI_FIRST_ABI || abi > FFI_DEFAULT_ABI)
-		return FFI_BAD_ABI;
+    if (abi <= FFI_FIRST_ABI || abi > FFI_DEFAULT_ABI)
+        return FFI_BAD_ABI;
 
-	unsigned int	bytes	= 0;
-	unsigned int	i;
-	ffi_type**		ptr;
+    unsigned int bytes = 0;
+    unsigned int i;
+    ffi_type**   ptr;
 
-	cif->abi = abi;
-	cif->arg_types = atypes;
-	cif->nargs = nargs;
-	cif->rtype = rtype;
-	cif->flags = 0;
+    cif->abi       = abi;
+    cif->arg_types = atypes;
+    cif->nargs     = nargs;
+    cif->rtype     = rtype;
+    cif->flags     = 0;
 
-	/* Initialize the return type if necessary */
-	/*@-usedef@*/
-	if ((cif->rtype->size == 0) && (initialize_aggregate(cif->rtype) != FFI_OK))
-		return FFI_BAD_TYPEDEF;
-	/*@=usedef@*/
+    /* Initialize the return type if necessary */
+    /*@-usedef@*/
+    if ((cif->rtype->size == 0) && (initialize_aggregate(cif->rtype) != FFI_OK))
+        return FFI_BAD_TYPEDEF;
+    /*@=usedef@*/
 
-	/* Perform a sanity check on the return type */
-	FFI_ASSERT_VALID_TYPE(cif->rtype);
+    /* Perform a sanity check on the return type */
+    FFI_ASSERT_VALID_TYPE(cif->rtype);
 
-	/* x86-64 and s390 stack space allocation is handled in prep_machdep.  */
+    /* x86-64 and s390 stack space allocation is handled in prep_machdep.  */
 #if !defined M68K && !defined __x86_64__ && !defined S390 && !defined PA
-	/* Make space for the return structure pointer */
-	if (cif->rtype->type == FFI_TYPE_STRUCT
+    /* Make space for the return structure pointer */
+    if (cif->rtype->type == FFI_TYPE_STRUCT
 #ifdef SPARC
-		&& (cif->abi != FFI_V9 || cif->rtype->size > 32)
+        && (cif->abi != FFI_V9 || cif->rtype->size > 32)
 #endif
 #ifdef X86_DARWIN
-		&& (struct_on_stack(cif->rtype->size))
+        && (struct_on_stack(cif->rtype->size))
 #endif
-		)
-		bytes = STACK_ARG_SIZE(sizeof(void*));
+    )
+        bytes = STACK_ARG_SIZE(sizeof(void*));
 #endif
 
-	for (ptr = cif->arg_types, i = cif->nargs; i > 0; i--, ptr++)
-	{
-		/* Initialize any uninitialized aggregate type definitions */
-		if (((*ptr)->size == 0) && (initialize_aggregate((*ptr)) != FFI_OK))
-			return FFI_BAD_TYPEDEF;
+    for (ptr = cif->arg_types, i = cif->nargs; i > 0; i--, ptr++) {
+        /* Initialize any uninitialized aggregate type definitions */
+        if (((*ptr)->size == 0) && (initialize_aggregate((*ptr)) != FFI_OK))
+            return FFI_BAD_TYPEDEF;
 
-		if ((*ptr)->alignment == 0)
-			return FFI_BAD_TYPEDEF;
+        if ((*ptr)->alignment == 0)
+            return FFI_BAD_TYPEDEF;
 
-		/* Perform a sanity check on the argument type, do this
-		check after the initialization.  */
-		FFI_ASSERT_VALID_TYPE(*ptr);
+        /* Perform a sanity check on the argument type, do this
+        check after the initialization.  */
+        FFI_ASSERT_VALID_TYPE(*ptr);
 
 #if defined(X86_DARWIN)
-		{
-			int align = (*ptr)->alignment;
+        {
+            int align = (*ptr)->alignment;
 
-			if (align > 4)
-				align = 4;
+            if (align > 4)
+                align = 4;
 
-			if ((align - 1) & bytes)
-				bytes = ALIGN(bytes, align);
+            if ((align - 1) & bytes)
+                bytes = ALIGN(bytes, align);
 
-			bytes += STACK_ARG_SIZE((*ptr)->size);
-		}
+            bytes += STACK_ARG_SIZE((*ptr)->size);
+        }
 #elif !defined __x86_64__ && !defined S390 && !defined PA
 #ifdef SPARC
-		if (((*ptr)->type == FFI_TYPE_STRUCT
-			&& ((*ptr)->size > 16 || cif->abi != FFI_V9))
-			|| ((*ptr)->type == FFI_TYPE_LONGDOUBLE
-			&& cif->abi != FFI_V9))
-				bytes += sizeof(void*);
-		else
+        if (((*ptr)->type == FFI_TYPE_STRUCT && ((*ptr)->size > 16 || cif->abi != FFI_V9))
+            || ((*ptr)->type == FFI_TYPE_LONGDOUBLE && cif->abi != FFI_V9))
+            bytes += sizeof(void*);
+        else
 #endif
-		{
-			/* Add any padding if necessary */
-			if (((*ptr)->alignment - 1) & bytes)
-				bytes = ALIGN(bytes, (*ptr)->alignment);
+        {
+            /* Add any padding if necessary */
+            if (((*ptr)->alignment - 1) & bytes)
+                bytes = ALIGN(bytes, (*ptr)->alignment);
 
-			bytes += STACK_ARG_SIZE((*ptr)->size);
-		}
+            bytes += STACK_ARG_SIZE((*ptr)->size);
+        }
 #endif
-	}
+    }
 
-	cif->bytes = bytes;
+    cif->bytes = bytes;
 
-	/* Perform machine dependent cif processing */
-	return ffi_prep_cif_machdep(cif);
+    /* Perform machine dependent cif processing */
+    return ffi_prep_cif_machdep(cif);
 }
 #endif /* not __CRIS__ */

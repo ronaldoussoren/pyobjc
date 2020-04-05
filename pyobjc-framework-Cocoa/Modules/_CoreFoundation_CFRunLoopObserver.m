@@ -23,10 +23,10 @@ static void
 mod_CFRunLoopObserverCallBack(CFRunLoopObserverRef f, CFRunLoopActivity activity,
                               void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject*        info  = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_f = PyObjC_ObjCToPython(@encode(CFRunLoopObserverRef), &f);
+    PyObject* py_f        = PyObjC_ObjCToPython(@encode(CFRunLoopObserverRef), &f);
     PyObject* py_activity = PyObjC_ObjCToPython(@encode(CFRunLoopActivity), &activity);
 
     PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNO", py_f,
@@ -41,16 +41,16 @@ mod_CFRunLoopObserverCallBack(CFRunLoopObserverRef f, CFRunLoopActivity activity
 static PyObject*
 mod_CFRunLoopObserverCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_activities;
-    PyObject* py_repeats;
-    PyObject* py_order;
-    PyObject* callout;
-    PyObject* info;
+    PyObject*      py_allocator;
+    PyObject*      py_activities;
+    PyObject*      py_repeats;
+    PyObject*      py_order;
+    PyObject*      callout;
+    PyObject*      info;
     CFAllocatorRef allocator;
-    CFOptionFlags activities;
-    Boolean repeats;
-    CFIndex order;
+    CFOptionFlags  activities;
+    Boolean        repeats;
+    CFIndex        order;
 
     if (!PyArg_ParseTuple(args, "OOOOOO", &py_allocator, &py_activities, &py_repeats,
                           &py_order, &callout, &info)) {
@@ -71,7 +71,7 @@ mod_CFRunLoopObserverCreate(PyObject* self __attribute__((__unused__)), PyObject
     }
 
     CFRunLoopObserverContext context = mod_CFRunLoopObserverContext;
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info                     = Py_BuildValue("OO", callout, info);
     if (context.info == NULL) {
         return NULL;
     }
@@ -104,9 +104,9 @@ static PyObject*
 mod_CFRunLoopObserverGetContext(PyObject* self __attribute__((__unused__)),
                                 PyObject* args)
 {
-    PyObject* py_f;
-    PyObject* py_context;
-    CFRunLoopObserverRef f;
+    PyObject*                py_f;
+    PyObject*                py_context;
+    CFRunLoopObserverRef     f;
     CFRunLoopObserverContext context;
 
     if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {

@@ -53,7 +53,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_voidpointer(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestVoidPointer",
-                           PyObjC_IdToPython([OC_TestVoidPointer class])) < 0) {
+                           PyObjC_IdToPython([OC_TestVoidPointer class]))
+        < 0) {
         return NULL;
     }
 

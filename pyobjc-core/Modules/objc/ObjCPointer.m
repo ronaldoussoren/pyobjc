@@ -17,7 +17,7 @@
 typedef struct {
     PyObject_HEAD
 
-        void* ptr;
+    void*     ptr;
     PyObject* type;
 } PyObjCPointer;
 
@@ -40,16 +40,16 @@ PyObjCPointer_dealloc(PyObject* _self)
 }
 
 static PyMemberDef PyObjCPointer_members[] = {{
-                                                  .name = "type",
-                                                  .type = T_OBJECT,
+                                                  .name   = "type",
+                                                  .type   = T_OBJECT,
                                                   .offset = offsetof(PyObjCPointer, type),
-                                                  .flags = READONLY,
+                                                  .flags  = READONLY,
                                               },
                                               {
-                                                  .name = "pointerAsInteger",
-                                                  .type = T_LONG,
+                                                  .name   = "pointerAsInteger",
+                                                  .type   = T_LONG,
                                                   .offset = offsetof(PyObjCPointer, ptr),
-                                                  .flags = READONLY,
+                                                  .flags  = READONLY,
                                               },
                                               {
                                                   .name = NULL /* SENTINEL */
@@ -57,19 +57,19 @@ static PyMemberDef PyObjCPointer_members[] = {{
 
 PyTypeObject PyObjCPointer_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "PyObjCPointer",
-    .tp_basicsize = sizeof(PyObjCPointer),
-    .tp_itemsize = 0,
-    .tp_dealloc = PyObjCPointer_dealloc,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = "Wrapper around a Objective-C Pointer",
+    .tp_basicsize                                  = sizeof(PyObjCPointer),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = PyObjCPointer_dealloc,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_doc     = "Wrapper around a Objective-C Pointer",
     .tp_members = PyObjCPointer_members,
 };
 
 PyObject*
 PyObjCPointer_New(void* p, const char* t)
 {
-    Py_ssize_t size = PyObjCRT_SizeOfType(t);
+    Py_ssize_t  size    = PyObjCRT_SizeOfType(t);
     const char* typeend = PyObjCRT_SkipTypeSpec(t);
     while (isdigit(typeend[-1])) {
         typeend--;
@@ -82,7 +82,8 @@ PyObjCPointer_New(void* p, const char* t)
     }
 
     if (PyErr_WarnFormat(PyObjCExc_ObjCPointerWarning, 0,
-                         "PyObjCPointer created: at %p of type %s", p, t) == -1) {
+                         "PyObjCPointer created: at %p of type %s", p, t)
+        == -1) {
         return NULL;
     }
 
@@ -99,7 +100,7 @@ PyObjCPointer_New(void* p, const char* t)
     }
 
     self->type = PyBytes_FromStringAndSize((char*)t, typeend - t);
-    self->ptr = p;
+    self->ptr  = p;
 
     return (PyObject*)self;
 }

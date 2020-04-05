@@ -67,9 +67,9 @@ struct_sq_length(PyObject* self)
 static PyObject*
 struct_sq_item(PyObject* self, Py_ssize_t offset)
 {
-    Py_ssize_t len;
+    Py_ssize_t   len;
     PyMemberDef* member;
-    PyObject* res;
+    PyObject*    res;
 
     if (!PyObjC_StructsIndexable) {
         PyErr_Format(PyExc_TypeError, "Instances of '%.100s' are not sequences 2",
@@ -86,7 +86,7 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
     }
 
     member = Py_TYPE(self)->tp_members + offset;
-    res = GET_STRUCT_FIELD(self, member);
+    res    = GET_STRUCT_FIELD(self, member);
 
     Py_INCREF(res);
     return res;
@@ -95,7 +95,7 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
 static PyObject*
 struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 {
-    PyObject* result;
+    PyObject*  result;
     Py_ssize_t i, len;
 
     if (!PyObjC_StructsIndexable) {
@@ -117,7 +117,7 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 
     for (i = ilow; i < ihigh; i++) {
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
-        PyObject* v = GET_STRUCT_FIELD(self, member);
+        PyObject*    v      = GET_STRUCT_FIELD(self, member);
         Py_INCREF(v);
         PyTuple_SET_ITEM(result, i - ilow, v);
     }
@@ -127,7 +127,7 @@ struct_sq_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh)
 static int
 struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 {
-    Py_ssize_t len;
+    Py_ssize_t   len;
     PyMemberDef* member;
 
     if (!PyObjC_StructsIndexable) {
@@ -163,7 +163,7 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 static int
 struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject* v)
 {
-    PyObject* seq;
+    PyObject*  seq;
     Py_ssize_t i, len;
 
     if (!PyObjC_StructsIndexable) {
@@ -210,7 +210,7 @@ struct_sq_ass_slice(PyObject* self, Py_ssize_t ilow, Py_ssize_t ihigh, PyObject*
     }
 
     for (i = ilow; i < ihigh; i++) {
-        PyObject* x;
+        PyObject*    x;
         PyMemberDef* member = Py_TYPE(self)->tp_members + i;
 
         x = PySequence_Fast_GET_ITEM(seq, i - ilow);
@@ -236,7 +236,7 @@ struct_sq_contains(PyObject* self, PyObject* value)
     }
 
     while (member && member->name) {
-        int r;
+        int       r;
         PyObject* cur = GET_STRUCT_FIELD(self, member);
 
         r = PyObject_RichCompareBool(cur, value, Py_EQ);
@@ -252,11 +252,11 @@ struct_sq_contains(PyObject* self, PyObject* value)
 static PyObject*
 struct_reduce(PyObject* self)
 {
-    PyObject* result;
-    PyObject* values;
+    PyObject*  result;
+    PyObject*  values;
     Py_ssize_t i, len;
 
-    len = STRUCT_LENGTH(self);
+    len    = STRUCT_LENGTH(self);
     values = PyTuple_New(len);
     if (values == NULL)
         return NULL;
@@ -284,7 +284,7 @@ struct_sizeof(PyObject* self)
 static PyObject*
 struct_copy(PyObject* self)
 {
-    PyObject* result;
+    PyObject*    result;
     PyMemberDef* member = Py_TYPE(self)->tp_members;
 
     result = PyObject_GC_New(PyObject, Py_TYPE(self));
@@ -332,10 +332,10 @@ struct_replace(PyObject* self, PyObject* args, PyObject* kwds)
      * provides the nicest transition path to read-only structs:
      * the result of _replace is completely independent of the original.
      */
-    PyObject* result;
+    PyObject*  result;
     Py_ssize_t pos = 0;
-    PyObject* key;
-    PyObject* value;
+    PyObject*  key;
+    PyObject*  value;
 
     if (args && PySequence_Length(args) != 0) {
         PyErr_SetString(PyExc_TypeError, "_replace called with positional arguments");
@@ -361,9 +361,9 @@ struct_replace(PyObject* self, PyObject* args, PyObject* kwds)
 static PyObject*
 struct_asdict(PyObject* self)
 {
-    PyObject* result;
+    PyObject*    result;
     PyMemberDef* member = Py_TYPE(self)->tp_members;
-    int r;
+    int          r;
 
     result = PyDict_New();
     if (result == NULL) {
@@ -414,11 +414,12 @@ struct_mp_subscript(PyObject* self, PyObject* item)
 
     } else if (PySlice_Check(item)) {
         Py_ssize_t start, stop, step, slicelength, cur, i;
-        PyObject* result;
-        PyObject* it;
+        PyObject*  result;
+        PyObject*  it;
 
         if (PySlice_GetIndicesEx(item, STRUCT_LENGTH(self), &start, &stop, &step,
-                                 &slicelength) < 0) {
+                                 &slicelength)
+            < 0) {
             return NULL;
         }
 
@@ -477,7 +478,8 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
         Py_ssize_t start, stop, step, slicelength;
 
         if (PySlice_GetIndicesEx(item, STRUCT_LENGTH(self), &start, &stop, &step,
-                                 &slicelength) < 0) {
+                                 &slicelength)
+            < 0) {
             return -1;
         }
 
@@ -524,49 +526,49 @@ struct_mp_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
 }
 
 static PySequenceMethods struct_as_sequence = {
-    .sq_length = struct_sq_length,
-    .sq_item = struct_sq_item,
+    .sq_length   = struct_sq_length,
+    .sq_item     = struct_sq_item,
     .sq_ass_item = struct_sq_ass_item,
     .sq_contains = struct_sq_contains,
 };
 
 static PyMappingMethods struct_as_mapping = {
-    .mp_length = struct_sq_length,
-    .mp_subscript = struct_mp_subscript,
+    .mp_length        = struct_sq_length,
+    .mp_subscript     = struct_mp_subscript,
     .mp_ass_subscript = struct_mp_ass_subscript,
 };
 
 static PyMethodDef struct_methods[] = {
     {
-        .ml_name = "__reduce__",
-        .ml_meth = (PyCFunction)struct_reduce,
+        .ml_name  = "__reduce__",
+        .ml_meth  = (PyCFunction)struct_reduce,
         .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name = "copy",
-        .ml_meth = (PyCFunction)struct_copy,
+        .ml_name  = "copy",
+        .ml_meth  = (PyCFunction)struct_copy,
         .ml_flags = METH_NOARGS,
-        .ml_doc = "Return a copy of the struct",
+        .ml_doc   = "Return a copy of the struct",
     },
     {
-        .ml_name = "__pyobjc_copy__",
-        .ml_meth = (PyCFunction)struct_copy,
+        .ml_name  = "__pyobjc_copy__",
+        .ml_meth  = (PyCFunction)struct_copy,
         .ml_flags = METH_NOARGS,
     },
     {
-        .ml_name = "__sizeof__",
-        .ml_meth = (PyCFunction)struct_sizeof,
+        .ml_name  = "__sizeof__",
+        .ml_meth  = (PyCFunction)struct_sizeof,
         .ml_flags = METH_NOARGS,
     },
     /* NamedTuple interface */
-    {.ml_name = "_asdict",
-     .ml_meth = (PyCFunction)struct_asdict,
+    {.ml_name  = "_asdict",
+     .ml_meth  = (PyCFunction)struct_asdict,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "Return dict representation of the object"},
-    {.ml_name = "_replace",
-     .ml_meth = (PyCFunction)struct_replace,
+     .ml_doc   = "Return dict representation of the object"},
+    {.ml_name  = "_replace",
+     .ml_meth  = (PyCFunction)struct_replace,
      .ml_flags = METH_VARARGS | METH_KEYWORDS,
-     .ml_doc = "Return a copy with some fields replaced by other values"},
+     .ml_doc   = "Return a copy with some fields replaced by other values"},
     {NULL, NULL, 0, NULL}};
 
 /*
@@ -607,9 +609,9 @@ struct_dealloc(PyObject* self)
 static PyObject*
 struct_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
-    PyObject* result;
+    PyObject*    result;
     PyMemberDef* member = type->tp_members;
-    int r;
+    int          r;
 
     result = PyObject_GC_New(PyObject, type);
     if (result == NULL)
@@ -636,7 +638,7 @@ struct_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 static int
 LOCATE_MEMBER(PyTypeObject* type, const char* name)
 {
-    int i = 0;
+    int          i = 0;
     PyMemberDef* member;
 
     for (i = 0, member = type->tp_members; member->name != NULL; i++, member++) {
@@ -651,8 +653,8 @@ static int
 set_defaults(PyObject* self, const char* typestr)
 {
     Py_ssize_t i = 0;
-    int r;
-    PyObject* v;
+    int        r;
+    PyObject*  v;
 
     while (*typestr != _C_STRUCT_E && *typestr++ != '=')
         ;
@@ -681,12 +683,12 @@ set_defaults(PyObject* self, const char* typestr)
 
         case _C_CHAR_AS_TEXT: {
             char ch = 0;
-            v = PyUnicode_FromStringAndSize(&ch, 1);
+            v       = PyUnicode_FromStringAndSize(&ch, 1);
         } break;
 
         case _C_UNICHAR: {
             Py_UNICODE ch = 0;
-            v = PyUnicode_FromUnicode(&ch, 1);
+            v             = PyUnicode_FromUnicode(&ch, 1);
         } break;
 
         case _C_CHAR_AS_INT:
@@ -752,12 +754,12 @@ static void
 struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval, void** cargs,
             void* userdata)
 {
-    PyObject* self = *(PyObject**)cargs[0];
-    PyObject* args = *(PyObject**)cargs[1];
-    PyObject* kwds = *(PyObject**)cargs[2];
-    const char* typestr = (char*)userdata;
-    Py_ssize_t setUntil = -1;
-    int r;
+    PyObject*   self     = *(PyObject**)cargs[0];
+    PyObject*   args     = *(PyObject**)cargs[1];
+    PyObject*   kwds     = *(PyObject**)cargs[2];
+    const char* typestr  = (char*)userdata;
+    Py_ssize_t  setUntil = -1;
+    int         r;
 
     if (self == NULL) {
         *(int**)retval = 0;
@@ -806,7 +808,7 @@ struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval, void** cargs
     }
 
     if (kwds != NULL) {
-        PyObject* keys;
+        PyObject*  keys;
         Py_ssize_t i, len;
 
         keys = PyDict_Keys(kwds);
@@ -825,10 +827,10 @@ struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval, void** cargs
         len = PyList_GET_SIZE(keys);
         for (i = 0; i < len; i++) {
             PyMemberDef* member;
-            Py_ssize_t off;
-            PyObject* k;
-            PyObject* v;
-            PyObject* k_bytes = NULL;
+            Py_ssize_t   off;
+            PyObject*    k;
+            PyObject*    v;
+            PyObject*    k_bytes = NULL;
 
             k = PyList_GET_ITEM(keys, i);
             if (PyUnicode_Check(k)) {
@@ -869,7 +871,7 @@ struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval, void** cargs
             Py_DECREF(k_bytes);
 
             member = Py_TYPE(self)->tp_members + off;
-            v = PyDict_GetItemWithError(kwds, k);
+            v      = PyDict_GetItemWithError(kwds, k);
             if (v == NULL && PyErr_Occurred()) {
                 *(int*)retval = -1;
                 return;
@@ -887,8 +889,8 @@ static initproc
 make_init(const char* typestr)
 {
     static ffi_cif* init_cif = NULL;
-    ffi_closure* cl = NULL;
-    ffi_status rv;
+    ffi_closure*    cl       = NULL;
+    ffi_status      rv;
 
     typestr = PyObjCUtil_Strdup(typestr);
     if (typestr == NULL) {
@@ -898,7 +900,7 @@ make_init(const char* typestr)
     if (init_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_FromSignature("i^v^v^v", YES);
-        init_cif = PyObjCFFI_CIFForSignature(signature);
+        init_cif  = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (init_cif == NULL) {
             PyMem_Free((void*)typestr);
@@ -935,9 +937,9 @@ static PyObject*
 struct_richcompare(PyObject* self, PyObject* other, int op)
 {
     Py_ssize_t self_len, other_len, i, len;
-    int cmp;
-    PyObject* self_cur;
-    PyObject* other_cur;
+    int        cmp;
+    PyObject*  self_cur;
+    PyObject*  other_cur;
 
     if (Py_TYPE(self) == Py_TYPE(other)) {
         /* Other has same type, shortcut comparisions to avoid
@@ -949,7 +951,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
         for (i = 0; i < len; i++) {
             int k;
 
-            self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
+            self_cur  = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
             other_cur = GET_STRUCT_FIELD(other, Py_TYPE(other)->tp_members + i);
 
             k = PyObject_RichCompareBool(self_cur, other_cur, Py_EQ);
@@ -1027,9 +1029,9 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
         }
     }
 
-    self_len = STRUCT_LENGTH(self);
+    self_len  = STRUCT_LENGTH(self);
     other_len = PySequence_Length(other);
-    len = self_len;
+    len       = self_len;
     if (other_len < len) {
         len = other_len;
     }
@@ -1049,7 +1051,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
     for (i = 0; i < len; i++) {
         int k;
 
-        self_cur = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
+        self_cur  = GET_STRUCT_FIELD(self, Py_TYPE(self)->tp_members + i);
         other_cur = PySequence_GetItem(other, i);
         if (other_cur == NULL)
             return NULL;
@@ -1120,8 +1122,8 @@ static int
 struct_traverse(PyObject* self, visitproc visit, void* arg)
 {
     PyMemberDef* member;
-    PyObject* v;
-    int err;
+    PyObject*    v;
+    int          err;
 
     for (member = Py_TYPE(self)->tp_members; member && member->name; member++) {
         v = GET_STRUCT_FIELD(self, member);
@@ -1148,8 +1150,8 @@ struct_clear(PyObject* self)
 static PyObject*
 struct_repr(PyObject* self)
 {
-    Py_ssize_t i, len;
-    PyObject* cur;
+    Py_ssize_t   i, len;
+    PyObject*    cur;
     PyMemberDef* member;
 
     len = STRUCT_LENGTH(self);
@@ -1193,13 +1195,13 @@ done:
 
 PyTypeObject StructBase_Type = {
     PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc._structwrapper",
-    .tp_basicsize = sizeof(PyObject),
-    .tp_itemsize = 0,
+    .tp_basicsize                          = sizeof(PyObject),
+    .tp_itemsize                           = 0,
 };
 
 struct StructTypeObject {
     PyTypeObject base;
-    Py_ssize_t pack; /* struct packing, -1 for default packing */
+    Py_ssize_t   pack; /* struct packing, -1 for default packing */
 };
 
 /*
@@ -1209,21 +1211,21 @@ static struct StructTypeObject StructTemplate_Type = {
     .base =
         {
             PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc.StructTemplate",
-            .tp_basicsize = sizeof(PyObject),
-            .tp_itemsize = 0,
-            .tp_dealloc = struct_dealloc,
-            .tp_repr = struct_repr,
-            .tp_as_sequence = &struct_as_sequence,
-            .tp_as_mapping = &struct_as_mapping,
-            .tp_hash = struct_hash,
-            .tp_getattro = PyObject_GenericGetAttr,
-            .tp_setattro = struct_setattro,
-            .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
-            .tp_traverse = struct_traverse,
-            .tp_clear = struct_clear,
+            .tp_basicsize                          = sizeof(PyObject),
+            .tp_itemsize                           = 0,
+            .tp_dealloc                            = struct_dealloc,
+            .tp_repr                               = struct_repr,
+            .tp_as_sequence                        = &struct_as_sequence,
+            .tp_as_mapping                         = &struct_as_mapping,
+            .tp_hash                               = struct_hash,
+            .tp_getattro                           = PyObject_GenericGetAttr,
+            .tp_setattro                           = struct_setattro,
+            .tp_flags       = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
+            .tp_traverse    = struct_traverse,
+            .tp_clear       = struct_clear,
             .tp_richcompare = struct_richcompare,
-            .tp_methods = struct_methods,
-            .tp_new = struct_new,
+            .tp_methods     = struct_methods,
+            .tp_new         = struct_new,
         },
     .pack = -1};
 
@@ -1233,9 +1235,9 @@ PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
                       Py_ssize_t pack)
 {
     struct StructTypeObject* result;
-    PyMemberDef* members;
-    PyObject* fields;
-    Py_ssize_t i;
+    PyMemberDef*             members;
+    PyObject*                fields;
+    Py_ssize_t               i;
 
     fields = PyTuple_New(numFields);
     if (fields == NULL) {
@@ -1258,12 +1260,12 @@ PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
         }
 
         PyTuple_SET_ITEM(fields, i, nm);
-        nm = NULL;
-        members[i].name = (char*)fieldnames[i];
-        members[i].type = T_OBJECT;
+        nm                = NULL;
+        members[i].name   = (char*)fieldnames[i];
+        members[i].type   = T_OBJECT;
         members[i].offset = sizeof(PyObject) + i * sizeof(PyObject*);
-        members[i].flags = 0; /* A read-write field */
-        members[i].doc = NULL;
+        members[i].flags  = 0; /* A read-write field */
+        members[i].doc    = NULL;
     }
     members[numFields].name = NULL;
 
@@ -1275,9 +1277,9 @@ PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
         return NULL;
     }
 
-    *result = StructTemplate_Type;
+    *result              = StructTemplate_Type;
     result->base.tp_name = (char*)name;
-    result->base.tp_doc = (char*)doc;
+    result->base.tp_doc  = (char*)doc;
     result->base.tp_dict = PyDict_New();
 
     if (result->base.tp_dict == NULL) {
@@ -1287,8 +1289,8 @@ PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
         return NULL;
     }
 
-    Py_REFCNT(result) = 1;
-    result->base.tp_members = members;
+    Py_REFCNT(result)         = 1;
+    result->base.tp_members   = members;
     result->base.tp_basicsize = sizeof(PyObject) + (numFields * sizeof(PyObject*));
     if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields) == -1) {
         Py_DECREF(fields);
@@ -1358,9 +1360,9 @@ PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len,
                               const char** objc_encoding, Py_ssize_t* ppack)
 {
     PyTypeObject* type;
-    PyObject* result;
-    PyObject* v;
-    PyMemberDef* member;
+    PyObject*     result;
+    PyObject*     v;
+    PyMemberDef*  member;
 
     if (structRegistry == NULL)
         return NULL;
@@ -1429,14 +1431,14 @@ PyObjC_RegisterStructType(const char* signature, const char* name, const char* d
 {
     PyObject* structType;
     PyObject* v;
-    int r;
-    int freeNames = 0;
+    int       r;
+    int       freeNames = 0;
 
     if (numFields == -1) {
         /* Don't use fieldnames, but extract the names from the type signature. */
         const char* sigcur = signature;
         const char* fieldstart;
-        char* sigtmp;
+        char*       sigtmp;
 
         if (*sigcur != _C_STRUCT_B) {
             PyErr_SetString(PyExc_ValueError, "invalid signature: not a struct encoding");
@@ -1453,7 +1455,7 @@ PyObjC_RegisterStructType(const char* signature, const char* name, const char* d
         }
 
         fieldstart = ++sigcur;
-        numFields = 0;
+        numFields  = 0;
 
         while (*sigcur != _C_STRUCT_E) {
             numFields++;
@@ -1483,7 +1485,7 @@ PyObjC_RegisterStructType(const char* signature, const char* name, const char* d
         }
 
         fieldnames = PyMem_Malloc((numFields + 1) * sizeof(char*));
-        numFields = 0;
+        numFields  = 0;
 
         sigcur = fieldstart;
         while (*sigcur != _C_STRUCT_E) {
@@ -1502,13 +1504,13 @@ PyObjC_RegisterStructType(const char* signature, const char* name, const char* d
                 fieldnames[numFields] = PyMem_Malloc(end - sigcur + 1);
                 memcpy((char*)fieldnames[numFields], sigcur, end - sigcur);
                 ((char*)fieldnames[numFields])[end - sigcur] = '\0';
-                sigcur = end + 1;
+                sigcur                                       = end + 1;
             }
             numFields++;
             sigcur = PyObjCRT_NextField(sigcur);
         }
         fieldnames[numFields] = NULL;
-        freeNames = 1;
+        freeNames             = 1;
 
         /*
          * The signature string still contains embedded field names,
@@ -1605,7 +1607,7 @@ int
 PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
 {
     char buf[1024];
-    int r;
+    int  r;
 
     if (strlen(signature) > 1023) {
         PyErr_SetString(PyExc_ValueError, "typestr too long");
@@ -1642,7 +1644,7 @@ PyObjC_RegisterStructAlias(const char* signature, PyObject* structType)
 int
 PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
 {
-    Py_ssize_t len;
+    Py_ssize_t   len;
     PyMemberDef* member;
 
     if (newVal == NULL) {
@@ -1668,7 +1670,7 @@ PyObject*
 StructAsTuple(PyObject* strval)
 {
     Py_ssize_t i, len = STRUCT_LENGTH(strval);
-    PyObject* retval = PyTuple_New(len);
+    PyObject*  retval = PyTuple_New(len);
     if (retval == NULL) {
         return 0;
     }

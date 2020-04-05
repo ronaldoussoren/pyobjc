@@ -6,7 +6,7 @@
 /* inline definition of PyMac_GetOSType pymactoolbox.h doesn't work in 64-bit mode */
 
 #if PY_MAJOR_VERSION == 2 && defined(USE_TOOLBOX_OBJECT_GLUE)
-extern int PyMac_GetOSType(PyObject* v, OSType* pr);
+extern int       PyMac_GetOSType(PyObject* v, OSType* pr);
 extern PyObject* PyMac_BuildOSType(OSType t);
 
 #else
@@ -39,9 +39,9 @@ objc_NSFileTypeForHFSTypeCode(PyObject* self __attribute__((__unused__)), PyObje
                               PyObject* kwds)
 {
     static char* keywords[] = {"hfsTypeCode", NULL};
-    PyObject* result;
-    NSString* oc_result;
-    OSType hfsTypeCode;
+    PyObject*    result;
+    NSString*    oc_result;
+    OSType       hfsTypeCode;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "i:NSFileTypeForHFSTypeCode", keywords,
                                      &hfsTypeCode)) {
@@ -75,8 +75,8 @@ objc_NSHFSTypeCodeFromFileType(PyObject* self __attribute__((__unused__)), PyObj
                                PyObject* kwds)
 {
     static char* keywords[] = {"hfsTypeCode", NULL};
-    NSString* fileType;
-    OSType hfsTypeCode;
+    NSString*    fileType;
+    OSType       hfsTypeCode;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&:NSHFSTypeCodeFromFileType", keywords,
                                      PyObjCObject_Convert, &fileType)) {

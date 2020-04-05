@@ -6,15 +6,15 @@
 typedef struct {
     PyObject_HEAD
 
-        void* pointer_value;
+    void* pointer_value;
 } OpaquePointerObject;
 
 static PyMemberDef opaque_members[] = {
-    {.name = "__pointer__",
-     .type = T_LONG,
+    {.name   = "__pointer__",
+     .type   = T_LONG,
      .offset = offsetof(OpaquePointerObject, pointer_value),
-     .flags = READONLY,
-     .doc = "raw value of the pointer"},
+     .flags  = READONLY,
+     .doc    = "raw value of the pointer"},
     {
         .name = NULL /* SENTINEL */
     }};
@@ -57,17 +57,17 @@ opaque_sizeof(PyObject* self)
 }
 
 static PyMethodDef opaque_methods[] = {
-    {.ml_name = "__cobject__",
-     .ml_meth = (PyCFunction)as_cobject,
+    {.ml_name  = "__cobject__",
+     .ml_meth  = (PyCFunction)as_cobject,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "get a CObject representing this object"},
-    {.ml_name = "__c_void_p__",
-     .ml_meth = (PyCFunction)as_ctypes_voidp,
+     .ml_doc   = "get a CObject representing this object"},
+    {.ml_name  = "__c_void_p__",
+     .ml_meth  = (PyCFunction)as_ctypes_voidp,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "get a ctypes.void_p representing this object"},
+     .ml_doc   = "get a ctypes.void_p representing this object"},
     {
-        .ml_name = "__sizeof__",
-        .ml_meth = (PyCFunction)opaque_sizeof,
+        .ml_name  = "__sizeof__",
+        .ml_meth  = (PyCFunction)opaque_sizeof,
         .ml_flags = METH_NOARGS,
     },
     {
@@ -78,8 +78,8 @@ static PyObject*
 opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"cobject", "c_void_p", NULL};
-    PyObject* cobject = NULL;
-    PyObject* c_void_p = NULL;
+    PyObject*    cobject    = NULL;
+    PyObject*    c_void_p   = NULL;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|OO", keywords, &cobject, &c_void_p)) {
         return NULL;
@@ -92,7 +92,7 @@ opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 
     if (cobject != NULL) {
         OpaquePointerObject* result;
-        void* p;
+        void*                p;
 
         if (!PyCapsule_CheckExact(cobject)) {
             PyErr_SetString(PyExc_TypeError, "'cobject' argument is not a PyCapsule");
@@ -114,8 +114,8 @@ opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 
     } else if (c_void_p != NULL) {
         OpaquePointerObject* result;
-        void* p;
-        PyObject* attrval;
+        void*                p;
+        PyObject*            attrval;
 
         if (PyLong_Check(c_void_p)) {
             attrval = c_void_p;
@@ -165,8 +165,8 @@ static void
 opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
               void* userdata)
 {
-    void* pointer_value = *(void**)args[0];
-    PyTypeObject* opaque_type = (PyTypeObject*)userdata;
+    void*                pointer_value = *(void**)args[0];
+    PyTypeObject*        opaque_type   = (PyTypeObject*)userdata;
     OpaquePointerObject* result;
 
     result = PyObject_New(OpaquePointerObject, opaque_type);
@@ -176,15 +176,15 @@ opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** arg
     }
 
     result->pointer_value = pointer_value;
-    *(PyObject**)retval = (PyObject*)result;
+    *(PyObject**)retval   = (PyObject*)result;
 }
 
 static void
 opaque_to_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
             void* userdata)
 {
-    PyObject* obj = *(PyObject**)args[0];
-    void* pObj = *(void**)args[1];
+    PyObject*     obj         = *(PyObject**)args[0];
+    void*         pObj        = *(void**)args[1];
     PyTypeObject* opaque_type = (PyTypeObject*)userdata;
 
     if (!PyObject_TypeCheck((obj), opaque_type)) {
@@ -212,24 +212,24 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
 {
     static const char convert_cif_signature[] = {_C_INT, _C_PTR,  _C_VOID,
                                                  _C_PTR, _C_VOID, 0};
-    static const char new_cif_signature[] = {_C_PTR, _C_VOID, _C_PTR, _C_VOID, 0};
-    static ffi_cif* convert_cif = NULL;
-    static ffi_cif* new_cif = NULL;
+    static const char new_cif_signature[]     = {_C_PTR, _C_VOID, _C_PTR, _C_VOID, 0};
+    static ffi_cif*   convert_cif             = NULL;
+    static ffi_cif*   new_cif                 = NULL;
 
-    PyHeapTypeObject* newType = NULL;
-    PyObjCPointerWrapper_ToPythonFunc from_c = NULL;
-    PyObjCPointerWrapper_FromPythonFunc to_c = NULL;
-    ffi_closure* cl = NULL;
-    ffi_status rv;
-    int r;
-    PyObject* v = NULL;
-    PyObject* w = NULL;
-    const char* name_dot;
+    PyHeapTypeObject*                   newType = NULL;
+    PyObjCPointerWrapper_ToPythonFunc   from_c  = NULL;
+    PyObjCPointerWrapper_FromPythonFunc to_c    = NULL;
+    ffi_closure*                        cl      = NULL;
+    ffi_status                          rv;
+    int                                 r;
+    PyObject*                           v = NULL;
+    PyObject*                           w = NULL;
+    const char*                         name_dot;
 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_FromSignature(new_cif_signature, NO);
-        new_cif = PyObjCFFI_CIFForSignature(signature);
+        new_cif   = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (new_cif == NULL) {
             return NULL;
@@ -238,7 +238,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
 
     if (convert_cif == NULL) {
         PyObjCMethodSignature* signature;
-        signature = PyObjCMethodSignature_FromSignature(convert_cif_signature, YES);
+        signature   = PyObjCMethodSignature_FromSignature(convert_cif_signature, YES);
         convert_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (convert_cif == NULL) {
@@ -252,17 +252,17 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     }
 
     newType->ht_type.tp_basicsize = sizeof(OpaquePointerObject);
-    newType->ht_type.tp_dealloc = opaque_dealloc;
-    newType->ht_type.tp_getattro = PyObject_GenericGetAttr;
-    newType->ht_type.tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE;
-    newType->ht_type.tp_methods = opaque_methods;
-    newType->ht_type.tp_members = opaque_members;
-    newType->ht_type.tp_new = opaque_new;
+    newType->ht_type.tp_dealloc   = opaque_dealloc;
+    newType->ht_type.tp_getattro  = PyObject_GenericGetAttr;
+    newType->ht_type.tp_flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE;
+    newType->ht_type.tp_methods   = opaque_methods;
+    newType->ht_type.tp_members   = opaque_members;
+    newType->ht_type.tp_new       = opaque_new;
 
-    newType->ht_type.tp_as_number = &newType->as_number;
-    newType->ht_type.tp_as_mapping = &newType->as_mapping;
+    newType->ht_type.tp_as_number   = &newType->as_number;
+    newType->ht_type.tp_as_mapping  = &newType->as_mapping;
     newType->ht_type.tp_as_sequence = &newType->as_sequence;
-    newType->ht_type.tp_as_buffer = &newType->as_buffer;
+    newType->ht_type.tp_as_buffer   = &newType->as_buffer;
 
     /* Force type to be a heap type. Not only is that technically correct,
      * it also makes the type mutable (annoyingly enough all heap types
@@ -333,7 +333,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     }
 
     newType->ht_type.tp_dict = v;
-    v = NULL;
+    v                        = NULL;
 
     if (docstr != NULL) {
         newType->ht_type.tp_doc = PyObjCUtil_Strdup(docstr);
@@ -360,7 +360,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
     to_c = (PyObjCPointerWrapper_FromPythonFunc)cl;
-    cl = NULL;
+    cl   = NULL;
 
     cl = PyObjC_malloc_closure();
     if (cl == NULL) {
@@ -375,7 +375,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
     from_c = (PyObjCPointerWrapper_ToPythonFunc)cl;
-    cl = NULL;
+    cl     = NULL;
 
     r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);
     if (r == -1) {

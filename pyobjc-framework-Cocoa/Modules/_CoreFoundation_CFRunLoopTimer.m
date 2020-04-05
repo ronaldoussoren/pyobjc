@@ -21,7 +21,7 @@ static CFRunLoopTimerContext mod_CFRunLoopTimerContext = {0, NULL, mod_timer_ret
 static void
 mod_CFRunLoopTimerCallBack(CFRunLoopTimerRef f, void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject*        info  = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFRunLoopTimerRef), &f);
@@ -38,18 +38,18 @@ mod_CFRunLoopTimerCallBack(CFRunLoopTimerRef f, void* _info)
 static PyObject*
 mod_CFRunLoopTimerCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_fireDate;
-    PyObject* py_interval;
-    PyObject* py_flags;
-    PyObject* py_order;
-    PyObject* callout;
-    PyObject* info;
+    PyObject*      py_allocator;
+    PyObject*      py_fireDate;
+    PyObject*      py_interval;
+    PyObject*      py_flags;
+    PyObject*      py_order;
+    PyObject*      callout;
+    PyObject*      info;
     CFAllocatorRef allocator;
     CFAbsoluteTime fireDate;
     CFTimeInterval interval;
-    CFOptionFlags flags;
-    CFIndex order;
+    CFOptionFlags  flags;
+    CFIndex        order;
 
     if (!PyArg_ParseTuple(args, "OOOOOOO", &py_allocator, &py_fireDate, &py_interval,
                           &py_flags, &py_order, &callout, &info)) {
@@ -73,7 +73,7 @@ mod_CFRunLoopTimerCreate(PyObject* self __attribute__((__unused__)), PyObject* a
     }
 
     CFRunLoopTimerContext context = mod_CFRunLoopTimerContext;
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info                  = Py_BuildValue("OO", callout, info);
     if (context.info == NULL) {
         return NULL;
     }
@@ -105,9 +105,9 @@ mod_CFRunLoopTimerCreate(PyObject* self __attribute__((__unused__)), PyObject* a
 static PyObject*
 mod_CFRunLoopTimerGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_f;
-    PyObject* py_context = NULL;
-    CFRunLoopTimerRef f;
+    PyObject*             py_f;
+    PyObject*             py_context = NULL;
+    CFRunLoopTimerRef     f;
     CFRunLoopTimerContext context;
 
     if (!PyArg_ParseTuple(args, "O|O", &py_f, &py_context)) {

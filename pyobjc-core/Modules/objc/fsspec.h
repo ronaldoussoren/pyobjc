@@ -7,7 +7,7 @@
 #define IS_FSSPEC(typestr)                                                               \
     (strncmp(typestr, @encode(FSSpec), sizeof(@encode(FSSpec)) - 1) == 0)
 
-extern int PyObjC_encode_fsspec(PyObject*, void*);
+extern int       PyObjC_encode_fsspec(PyObject*, void*);
 extern PyObject* PyObjC_decode_fsspec(void*);
 
 extern PyTypeObject PyObjC_FSSpecType;

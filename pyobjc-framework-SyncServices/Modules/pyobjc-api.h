@@ -44,8 +44,8 @@ typedef int(RegisterMethodMappingFunctionType)(Class, SEL,
                                                void (*)(void*, void*, void**, void*));
 
 struct pyobjc_api {
-    int api_version;   /* API version */
-    size_t struct_len; /* Length of this struct */
+    int                                api_version; /* API version */
+    size_t                             struct_len;  /* Length of this struct */
     RegisterMethodMappingFunctionType* register_method_mapping;
     id (*obj_get_object)(PyObject*);
     Class (*cls_get_class)(PyObject*);
@@ -122,7 +122,7 @@ static struct pyobjc_api* PyObjC_API;
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {
-    const char* name;
+    const char*             name;
     PyObjC_Function_Pointer function;
 } PyObjC_function_map;
 
@@ -193,7 +193,7 @@ PyObjC_ImportAPI(PyObject* calling_module)
 #else /* PyObjC_BUILD */
 
 extern struct pyobjc_api objc_api;
-extern int PyObjCAPI_Register(PyObject* module);
+extern int               PyObjCAPI_Register(PyObject* module);
 
 #endif /* !PYOBJC_BUILD */
 

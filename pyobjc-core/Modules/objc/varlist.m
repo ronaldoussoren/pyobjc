@@ -4,7 +4,7 @@
 typedef struct {
     PyObject_HEAD
 
-        void* array;
+    void*      array;
     Py_ssize_t itemsize;
 } PyObjC_VarList;
 
@@ -21,7 +21,7 @@ object_as_tuple(PyObject* _self, PyObject* args, PyObject* kwds)
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
 
     Py_ssize_t i, length;
-    PyObject* result;
+    PyObject*  result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &length)) {
         return NULL;
@@ -33,8 +33,8 @@ object_as_tuple(PyObject* _self, PyObject* args, PyObject* kwds)
     }
 
     for (i = 0; i < length; i++) {
-        PyObject* v = pythonify_c_value(
-            VARLIST_TYPE(self), ((unsigned char*)self->array) + (i * self->itemsize));
+        PyObject* v = pythonify_c_value(VARLIST_TYPE(self), ((unsigned char*)self->array)
+                                                                + (i * self->itemsize));
         if (v == NULL) {
             Py_DECREF(result);
             return NULL;
@@ -57,7 +57,7 @@ object_as_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
 
     Py_ssize_t buffer_size, length;
-    Py_buffer info;
+    Py_buffer  info;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "n", keywords, &length)) {
         return NULL;
@@ -104,8 +104,8 @@ static PyObject*
 object__getslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop)
 {
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
-    PyObject* result;
-    Py_ssize_t idx;
+    PyObject*       result;
+    Py_ssize_t      idx;
 
     if (start < 0 || stop < 0) {
         PyErr_SetString(PyExc_ValueError,
@@ -119,8 +119,8 @@ object__getslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop)
     result = PyTuple_New(stop - start);
 
     for (idx = start; idx < stop; idx++) {
-        PyObject* v = pythonify_c_value(
-            VARLIST_TYPE(self), ((unsigned char*)self->array) + (idx * self->itemsize));
+        PyObject* v = pythonify_c_value(VARLIST_TYPE(self), ((unsigned char*)self->array)
+                                                                + (idx * self->itemsize));
         if (v == NULL) {
             Py_DECREF(result);
             return NULL;
@@ -135,8 +135,8 @@ static int
 object__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject* newval)
 {
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
-    Py_ssize_t idx;
-    PyObject* seq;
+    Py_ssize_t      idx;
+    PyObject*       seq;
 
     if (start < 0 || stop < 0) {
         PyErr_SetString(PyExc_ValueError,
@@ -161,7 +161,7 @@ object__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject*
 
     for (idx = start; idx < stop; idx++) {
         PyObject* v = PySequence_Fast_GET_ITEM(seq, idx - start);
-        int r =
+        int       r =
             depythonify_c_value(VARLIST_TYPE(self), v,
                                 ((unsigned char*)self->array) + (idx * self->itemsize));
         if (r == -1) {
@@ -196,7 +196,7 @@ object__setitem__(PyObject* _self, Py_ssize_t idx, PyObject* value)
 }
 
 static PySequenceMethods object_tp_as_list = {
-    .sq_item = object__getitem__,
+    .sq_item     = object__getitem__,
     .sq_ass_item = object__setitem__,
 };
 
@@ -233,7 +233,7 @@ object_subscript(PyObject* self, PyObject* item)
         return object__getitem__(self, i);
 
     } else if (PySlice_Check(item)) {
-        Py_ssize_t start, stop, step;
+        Py_ssize_t     start, stop, step;
         PySliceObject* sl = (PySliceObject*)item;
 
         start = sl_ind_get(sl->start);
@@ -281,7 +281,7 @@ object_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
         return object__setitem__(self, i, value);
 
     } else if (PySlice_Check(item)) {
-        Py_ssize_t start, stop, step;
+        Py_ssize_t     start, stop, step;
         PySliceObject* sl = (PySliceObject*)item;
 
         start = sl_ind_get(sl->start);
@@ -318,13 +318,13 @@ object_ass_subscript(PyObject* self, PyObject* item, PyObject* value)
     }
 }
 
-static PyMappingMethods object_tp_as_mapping = {.mp_subscript = object_subscript,
+static PyMappingMethods object_tp_as_mapping = {.mp_subscript     = object_subscript,
                                                 .mp_ass_subscript = object_ass_subscript};
 
 static PyObject*
 object_new(PyTypeObject* type __attribute__((__unused__)),
-           PyObject* args __attribute__((__unused__)),
-           PyObject* kwds __attribute__((__unused__)))
+           PyObject*     args __attribute__((__unused__)),
+           PyObject*     kwds __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_TypeError,
                     "Cannot create instances of 'objc.varlist' in Python");
@@ -352,60 +352,60 @@ object_typestr_get(PyObject* self, void* closure __attribute__((__unused__)))
 static PyGetSetDef object_getset[] = {
     {
         .name = "__typestr__",
-        .get = object_typestr_get,
-        .doc = "type encoding for elements of the array",
+        .get  = object_typestr_get,
+        .doc  = "type encoding for elements of the array",
     },
     {
         .name = NULL /* SENTINEL */
     }};
 
-static PyMethodDef object_methods[] = {{.ml_name = "as_tuple",
-                                        .ml_meth = (PyCFunction)object_as_tuple,
+static PyMethodDef object_methods[] = {{.ml_name  = "as_tuple",
+                                        .ml_meth  = (PyCFunction)object_as_tuple,
                                         .ml_flags = METH_VARARGS | METH_KEYWORDS,
-                                        .ml_doc = object_as_tuple_doc},
-                                       {.ml_name = "as_buffer",
-                                        .ml_meth = (PyCFunction)object_as_buffer,
+                                        .ml_doc   = object_as_tuple_doc},
+                                       {.ml_name  = "as_buffer",
+                                        .ml_meth  = (PyCFunction)object_as_buffer,
                                         .ml_flags = METH_VARARGS | METH_KEYWORDS,
-                                        .ml_doc = object_as_buffer_doc},
+                                        .ml_doc   = object_as_buffer_doc},
                                        {
                                            .ml_name = NULL /* SENTINEL */
                                        }};
 
 PyTypeObject PyObjC_VarList_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.varlist",
-    .tp_basicsize = sizeof(PyObjC_VarList),
-    .tp_itemsize = 0,
-    .tp_dealloc = object_dealloc,
-    .tp_as_sequence = &object_tp_as_list,
-    .tp_as_mapping = &object_tp_as_mapping,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = object_doc,
-    .tp_methods = object_methods,
-    .tp_getset = object_getset,
-    .tp_new = object_new,
+    .tp_basicsize                                  = sizeof(PyObjC_VarList),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = object_dealloc,
+    .tp_as_sequence                                = &object_tp_as_list,
+    .tp_as_mapping                                 = &object_tp_as_mapping,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_doc                                        = object_doc,
+    .tp_methods                                    = object_methods,
+    .tp_getset                                     = object_getset,
+    .tp_new                                        = object_new,
 };
 
 PyObject*
 PyObjC_VarList_New(const char* tp, void* array)
 {
     PyObjC_VarList* result;
-    const char* end;
-    char* tp_buf;
+    const char*     end;
+    char*           tp_buf;
 
     end = PyObjCRT_SkipTypeSpec(tp);
     while (end > tp && isdigit(end[-1])) {
         end--;
     }
 
-    result = (PyObjC_VarList*)PyObject_Malloc(_PyObject_SIZE(&PyObjC_VarList_Type) +
-                                              (end - tp) + 1);
+    result = (PyObjC_VarList*)PyObject_Malloc(_PyObject_SIZE(&PyObjC_VarList_Type)
+                                              + (end - tp) + 1);
     if (result == NULL) {
         return NULL;
     }
     PyObject_Init((PyObject*)result, &PyObjC_VarList_Type);
-    tp_buf = VARLIST_TYPE(result);
-    result->array = array;
+    tp_buf           = VARLIST_TYPE(result);
+    result->array    = array;
     result->itemsize = PyObjCRT_AlignedSize(tp);
     memcpy(tp_buf, tp, end - tp);
     tp_buf[end - tp] = '\0';

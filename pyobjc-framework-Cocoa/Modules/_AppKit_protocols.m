@@ -240,8 +240,8 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSAccessibilityCustomRotorItemSearchDelegate));
     Py_XDECREF(p);
-    //p = PyObjC_IdToPython(@protocol(NSAccessibilityCustomRotorItemLoadDelegate));
-    //Py_XDECREF(p);
+    // p = PyObjC_IdToPython(@protocol(NSAccessibilityCustomRotorItemLoadDelegate));
+    // Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSCollectionViewPrefetching));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSUserInterfaceCompression));

@@ -88,7 +88,7 @@
 - (NSArray*)allObjects
 {
     NSMutableArray* array;
-    NSObject* cur;
+    NSObject*       cur;
 
     array = [NSMutableArray array];
     if (array == nil)

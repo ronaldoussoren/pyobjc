@@ -5,9 +5,10 @@
 #import <Foundation/Foundation.h>
 #include <stdio.h>
 
-int main(int argc, char** argv)
+int
+main(int argc, char** argv)
 {
-    int keyed;
+    int                keyed;
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
     if (argc != 3) {
@@ -29,23 +30,24 @@ int main(int argc, char** argv)
 
     @try {
         if (keyed) {
-            /* NSUnarchiver is deprecated as of the macOS 10.13 SDK */
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+/* NSUnarchiver is deprecated as of the macOS 10.13 SDK */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             value = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
 
-            #pragma clang diagnostic pop
+#pragma clang diagnostic pop
         } else {
-            /* NSUnarchiver is deprecated as of the macOS 10.13 SDK */
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+/* NSUnarchiver is deprecated as of the macOS 10.13 SDK */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
             value = [NSUnarchiver unarchiveObjectWithFile:path];
 
-            #pragma clang diagnostic pop
+#pragma clang diagnostic pop
         }
     } @catch (NSException* localException) {
-        printf("Exception during unarchiving: %s\n", [[localException description] UTF8String]);
+        printf("Exception during unarchiving: %s\n",
+               [[localException description] UTF8String]);
         return 2;
     }
 
@@ -58,17 +60,17 @@ int main(int argc, char** argv)
 
 #if PyObjC_BUILD_RELEASE >= 1006
     NSError* error = nil;
-    NSData* data = [NSPropertyListSerialization
+    NSData*  data  = [NSPropertyListSerialization
         dataWithPropertyList:value
                       format:NSPropertyListXMLFormat_v1_0
                      options:NSPropertyListMutableContainersAndLeaves
                        error:&error];
-#else /* PyObjC_BUILD_RELEASE < 1006 */
+#else  /* PyObjC_BUILD_RELEASE < 1006 */
     NSString* error = nil;
-    NSData* data = [NSPropertyListSerialization
-        dataFromPropertyList:value
-                      format:NSPropertyListXMLFormat_v1_0
-                       errorDescription:&error];
+    NSData*   data =
+        [NSPropertyListSerialization dataFromPropertyList:value
+                                                   format:NSPropertyListXMLFormat_v1_0
+                                         errorDescription:&error];
 #endif /* PyObjC_BUILD_RELEASE < 1006 */
 
     if (data == nil) {

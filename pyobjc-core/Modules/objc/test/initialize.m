@@ -108,7 +108,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_initialize(void)
         return NULL;
     }
     if (PyModule_AddObject(m, "OC_TestInitialize",
-                           PyObjC_IdToPython([OC_TestInitialize class])) < 0) {
+                           PyObjC_IdToPython([OC_TestInitialize class]))
+        < 0) {
         return NULL;
     }
 

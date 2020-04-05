@@ -24,7 +24,7 @@ PyDoc_STRVAR(weakref_cls_doc,
 typedef struct {
     PyObject_HEAD
 
-        NSObject* object;
+    NSObject* object;
 } PyObjC_WeakRef;
 
 static void
@@ -39,9 +39,9 @@ weakref_dealloc(PyObject* object)
 static PyObject*
 weakref_call(PyObject* object, PyObject* args, PyObject* kwds)
 {
-    static char* keywords[] = {NULL};
-    PyObjC_WeakRef* self = (PyObjC_WeakRef*)object;
-    NSObject* tmp;
+    static char*    keywords[] = {NULL};
+    PyObjC_WeakRef* self       = (PyObjC_WeakRef*)object;
+    NSObject*       tmp;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
         return NULL;
@@ -58,7 +58,7 @@ weakref_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args,
     static char* keywords[] = {"object", NULL};
 
     PyObjC_WeakRef* result;
-    PyObject* tmp;
+    PyObject*       tmp;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &tmp)) {
         return NULL;
@@ -92,14 +92,14 @@ weakref_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args,
 
 PyTypeObject PyObjCWeakRef_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.WeakRef",
-    .tp_basicsize = sizeof(PyObjC_WeakRef),
-    .tp_itemsize = 0,
-    .tp_dealloc = weakref_dealloc,
-    .tp_call = weakref_call,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_doc = weakref_cls_doc,
-    .tp_new = weakref_new,
+    .tp_basicsize                                  = sizeof(PyObjC_WeakRef),
+    .tp_itemsize                                   = 0,
+    .tp_dealloc                                    = weakref_dealloc,
+    .tp_call                                       = weakref_call,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_doc                                        = weakref_cls_doc,
+    .tp_new                                        = weakref_new,
 };
 
 #endif /* PyObjC_BUILD_RELEASE >= 1007 */

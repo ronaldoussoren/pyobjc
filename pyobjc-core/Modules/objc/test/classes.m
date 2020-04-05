@@ -37,8 +37,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_classes(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OCTestClasses", PyObjC_IdToPython([OCTestClasses class])) <
-        0) {
+    if (PyModule_AddObject(m, "OCTestClasses", PyObjC_IdToPython([OCTestClasses class]))
+        < 0) {
         return NULL;
     }
 

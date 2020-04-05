@@ -7,15 +7,15 @@ static PyObject*
 call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObject* self,
                                                          PyObject* arguments)
 {
-    PyObject* rangeObj;
-    NSRange aRange;
-    NSRange leftoverRange;
-    NSRange* leftoverPtr;
-    char* buf;
-    NSUInteger maxLength;
+    PyObject*         rangeObj;
+    NSRange           aRange;
+    NSRange           leftoverRange;
+    NSRange*          leftoverPtr;
+    char*             buf;
+    NSUInteger        maxLength;
     struct objc_super super;
-    PyObject* res;
-    PyObject *buf1, *buf2;
+    PyObject*         res;
+    PyObject *        buf1, *buf2;
 
     if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger "OO", &buf1, &maxLength,
                           &rangeObj, &buf2)) {
@@ -96,11 +96,11 @@ call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObj
 static PyObject*
 call_NSString_getCString_maxLength_(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    char* buf;
-    NSUInteger maxLength;
+    char*             buf;
+    NSUInteger        maxLength;
     struct objc_super super;
-    PyObject* res;
-    PyObject* py_buf;
+    PyObject*         res;
+    PyObject*         py_buf;
 
     if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_buf, &maxLength)) {
         return NULL;
@@ -153,14 +153,16 @@ setup_nssstring(PyObject* m __attribute__((__unused__)))
     if (PyObjC_RegisterMethodMapping(
             classNSString, @selector(getCString:maxLength:range:remainingRange:),
             call_NSString_getCString_maxLength_range_remainingRange_,
-            PyObjCUnsupportedMethod_IMP) < 0) {
+            PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSString, @selector(getCString:maxLength:),
                                      call_NSString_getCString_maxLength_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }

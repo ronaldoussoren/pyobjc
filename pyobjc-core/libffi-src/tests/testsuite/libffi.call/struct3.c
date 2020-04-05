@@ -7,53 +7,52 @@
 /* { dg-do run } */
 #include "ffitest.h"
 
-typedef struct
-{
-  int si;
+typedef struct {
+    int si;
 } test_structure_3;
 
-static test_structure_3 struct3(test_structure_3 ts)
+static test_structure_3
+struct3(test_structure_3 ts)
 {
-  ts.si = -(ts.si*2);
+    ts.si = -(ts.si * 2);
 
-  return ts;
+    return ts;
 }
 
-int main (void)
+int
+main(void)
 {
-  ffi_cif cif;
-  ffi_type *args[MAX_ARGS];
-  void *values[MAX_ARGS];
-  int compare_value;
-  ffi_type ts3_type;
-  ffi_type *ts3_type_elements[2];
-  ts3_type.size = 0;
-  ts3_type.alignment = 0;
-  ts3_type.type = FFI_TYPE_STRUCT;
-  ts3_type.elements = ts3_type_elements;
-  ts3_type_elements[0] = &ffi_type_sint;
-  ts3_type_elements[1] = NULL;
+    ffi_cif   cif;
+    ffi_type* args[MAX_ARGS];
+    void*     values[MAX_ARGS];
+    int       compare_value;
+    ffi_type  ts3_type;
+    ffi_type* ts3_type_elements[2];
+    ts3_type.size        = 0;
+    ts3_type.alignment   = 0;
+    ts3_type.type        = FFI_TYPE_STRUCT;
+    ts3_type.elements    = ts3_type_elements;
+    ts3_type_elements[0] = &ffi_type_sint;
+    ts3_type_elements[1] = NULL;
 
-  test_structure_3 ts3_arg;
-  test_structure_3 *ts3_result =
-    (test_structure_3 *) malloc (sizeof(test_structure_3));
+    test_structure_3  ts3_arg;
+    test_structure_3* ts3_result = (test_structure_3*)malloc(sizeof(test_structure_3));
 
-  args[0] = &ts3_type;
-  values[0] = &ts3_arg;
+    args[0]   = &ts3_type;
+    values[0] = &ts3_arg;
 
-  /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
-		     &ts3_type, args) == FFI_OK);
+    /* Initialize the cif */
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ts3_type, args) == FFI_OK);
 
-  ts3_arg.si = -123;
-  compare_value = ts3_arg.si;
+    ts3_arg.si    = -123;
+    compare_value = ts3_arg.si;
 
-  ffi_call(&cif, FFI_FN(struct3), ts3_result, values);
+    ffi_call(&cif, FFI_FN(struct3), ts3_result, values);
 
-  printf ("%d %d\n", ts3_result->si, -(compare_value*2));
+    printf("%d %d\n", ts3_result->si, -(compare_value * 2));
 
-  CHECK(ts3_result->si == -(compare_value*2));
+    CHECK(ts3_result->si == -(compare_value * 2));
 
-  free (ts3_result);
-  exit(0);
+    free(ts3_result);
+    exit(0);
 }

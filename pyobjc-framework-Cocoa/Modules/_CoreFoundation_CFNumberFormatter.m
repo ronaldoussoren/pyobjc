@@ -2,29 +2,29 @@ static PyObject*
 mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__)),
                                         PyObject* args)
 {
-    PyObject* py_formatter;
+    PyObject*            py_formatter;
     CFNumberFormatterRef formatter;
-    Py_ssize_t type;
-    PyObject* py_string;
-    CFStringRef string;
-    PyObject* py_range;
-    CFRange range;
-    PyObject* py_buf;
+    Py_ssize_t           type;
+    PyObject*            py_string;
+    CFStringRef          string;
+    PyObject*            py_range;
+    CFRange              range;
+    PyObject*            py_buf;
     union {
-        SInt8 sint8;
-        SInt16 sint16;
-        SInt32 sint32;
-        SInt64 sint64;
-        Float32 float32;
-        Float64 float64;
-        char charv;
-        short shortv;
-        int intv;
-        long longv;
+        SInt8     sint8;
+        SInt16    sint16;
+        SInt32    sint32;
+        SInt64    sint64;
+        Float32   float32;
+        Float64   float64;
+        char      charv;
+        short     shortv;
+        int       intv;
+        long      longv;
         long long longlongv;
-        float floatv;
-        double doublev;
-        CFIndex indexv;
+        float     floatv;
+        double    doublev;
+        CFIndex   indexv;
     } buf;
 
     if (!PyArg_ParseTuple(args, "OOOnO", &py_formatter, &py_string, &py_range, &type,
@@ -35,8 +35,8 @@ mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__
         PyErr_SetString(PyExc_ValueError, "Bad value for buffer");
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter) <
-        0) {
+    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter)
+        < 0) {
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CFStringRef), py_string, &string) < 0) {
@@ -137,28 +137,28 @@ static PyObject*
 mod_CFNumberFormatterCreateStringWithValue(PyObject* self __attribute__((__unused__)),
                                            PyObject* args)
 {
-    PyObject* py_allocator;
-    CFAllocatorRef allocator;
-    PyObject* py_formatter;
+    PyObject*            py_allocator;
+    CFAllocatorRef       allocator;
+    PyObject*            py_formatter;
     CFNumberFormatterRef formatter;
-    Py_ssize_t type;
-    PyObject* py_value;
-    int n;
+    Py_ssize_t           type;
+    PyObject*            py_value;
+    int                  n;
     union {
-        SInt8 sint8;
-        SInt16 sint16;
-        SInt32 sint32;
-        SInt64 sint64;
-        Float32 float32;
-        Float64 float64;
-        char charv;
-        short shortv;
-        int intv;
-        long longv;
+        SInt8     sint8;
+        SInt16    sint16;
+        SInt32    sint32;
+        SInt64    sint64;
+        Float32   float32;
+        Float64   float64;
+        char      charv;
+        short     shortv;
+        int       intv;
+        long      longv;
         long long longlongv;
-        float floatv;
-        double doublev;
-        CFIndex indexv;
+        float     floatv;
+        double    doublev;
+        CFIndex   indexv;
     } buf;
 
     if (!PyArg_ParseTuple(args, "OOnO", &py_allocator, &py_formatter, &type, &py_value)) {
@@ -167,8 +167,8 @@ mod_CFNumberFormatterCreateStringWithValue(PyObject* self __attribute__((__unuse
     if (PyObjC_PythonToObjC(@encode(CFAllocatorRef), py_allocator, &allocator) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter) <
-        0) {
+    if (PyObjC_PythonToObjC(@encode(CFNumberFormatterRef), py_formatter, &formatter)
+        < 0) {
         return NULL;
     }
 

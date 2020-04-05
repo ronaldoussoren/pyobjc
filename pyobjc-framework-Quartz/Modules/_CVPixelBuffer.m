@@ -13,7 +13,7 @@
 static void
 mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddress)
 {
-    PyObject* info = (PyObject*)releaseRefCon;
+    PyObject*        info  = (PyObject*)releaseRefCon;
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (PyTuple_GetItem(info, 0) != Py_None) {
@@ -37,25 +37,25 @@ static PyObject*
 mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
                                  PyObject* args)
 {
-    CFAllocatorRef allocator;
-    size_t width;
-    size_t height;
-    OSType pixelFormatType;
-    void* baseAddress;
-    size_t bytesPerRow;
-    CFDictionaryRef pixelBufferAttributes;
+    CFAllocatorRef   allocator;
+    size_t           width;
+    size_t           height;
+    OSType           pixelFormatType;
+    void*            baseAddress;
+    size_t           bytesPerRow;
+    CFDictionaryRef  pixelBufferAttributes;
     CVPixelBufferRef pixelBuffer;
-    PyObject* py_allocator;
-    PyObject* py_width;
-    PyObject* py_height;
-    PyObject* py_pixelFormatType;
-    PyObject* py_buffer;
-    Py_ssize_t buflen;
-    PyObject* py_bytesPerRow;
-    PyObject* releaseCallback;
-    PyObject* info;
-    PyObject* py_pixelBufferAttributes;
-    PyObject* py_pixelBuffer = Py_None;
+    PyObject*        py_allocator;
+    PyObject*        py_width;
+    PyObject*        py_height;
+    PyObject*        py_pixelFormatType;
+    PyObject*        py_buffer;
+    Py_ssize_t       buflen;
+    PyObject*        py_bytesPerRow;
+    PyObject*        releaseCallback;
+    PyObject*        info;
+    PyObject*        py_pixelBufferAttributes;
+    PyObject*        py_pixelBuffer = Py_None;
 
     if (!PyArg_ParseTuple(args, "OOOOOOOOO|O", &py_allocator, &py_width, &py_height,
                           &py_pixelFormatType, &py_buffer, &py_bytesPerRow,
@@ -81,7 +81,8 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CFDictionaryRef), py_pixelBufferAttributes,
-                            &pixelBufferAttributes) < 0) {
+                            &pixelBufferAttributes)
+        < 0) {
         return NULL;
     }
 

@@ -16,7 +16,7 @@
  */
 @interface OC_PythonUnicode : NSString {
     PyObject* value;
-    id realObject;
+    id        realObject;
 }
 
 /*!

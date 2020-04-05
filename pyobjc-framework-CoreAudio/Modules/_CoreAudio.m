@@ -18,14 +18,14 @@ static PyObject*
 m_TestAudioFormatNativeEndian(PyObject* mod __attribute__((__unused__)), PyObject* args)
 {
     AudioStreamBasicDescription description;
-    PyObject* o;
+    PyObject*                   o;
 
     if (!PyArg_ParseTuple(args, "O", &o)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AudioStreamBasicDescription), o, &description) ==
-        -1) {
+    if (PyObjC_PythonToObjC(@encode(AudioStreamBasicDescription), o, &description)
+        == -1) {
         return NULL;
     }
 

@@ -17,7 +17,7 @@
 static id
 python_to_id(PyObject* object)
 {
-    id result;
+    id  result;
     int err;
 
     err = depythonify_c_value(@encode(id), object, &result);
@@ -82,39 +82,39 @@ depythonify_c_array_count2(const char* type, Py_ssize_t count, BOOL strict,
 
 struct pyobjc_api objc_api = {
     .api_version = PYOBJC_API_VERSION,
-    .struct_len = sizeof(struct pyobjc_api),
+    .struct_len  = sizeof(struct pyobjc_api),
     .register_method_mapping =
         (RegisterMethodMappingFunctionType*)PyObjC_RegisterMethodMapping,
-    .obj_get_object = PyObjCObject_GetObject,
-    .cls_get_class = PyObjCClass_GetClass,
-    .python_to_id = python_to_id,
-    .id_to_python = id_to_python,
-    .err_objc_to_python = PyObjCErr_FromObjC,
-    .py_to_objc = depythonify_c_value,
-    .objc_to_py = pythonify_c_value,
-    .sizeof_type = PyObjCRT_SizeOfType,
-    .sel_get_class = sel_get_class,
-    .sel_get_sel = sel_get_sel,
-    .fill_super = fill_super,
-    .fill_super_cls = fill_super_cls,
+    .obj_get_object           = PyObjCObject_GetObject,
+    .cls_get_class            = PyObjCClass_GetClass,
+    .python_to_id             = python_to_id,
+    .id_to_python             = id_to_python,
+    .err_objc_to_python       = PyObjCErr_FromObjC,
+    .py_to_objc               = depythonify_c_value,
+    .objc_to_py               = pythonify_c_value,
+    .sizeof_type              = PyObjCRT_SizeOfType,
+    .sel_get_class            = sel_get_class,
+    .sel_get_sel              = sel_get_sel,
+    .fill_super               = fill_super,
+    .fill_super_cls           = fill_super_cls,
     .register_pointer_wrapper = PyObjCPointerWrapper_Register,
     .unsupported_method_imp =
         (void (*)(void*, void*, void**, void*))PyObjCUnsupportedMethod_IMP,
     .unsupported_method_caller = PyObjCUnsupportedMethod_Caller,
-    .err_python_to_objc_gil = PyObjCErr_ToObjCWithGILState,
-    .free_c_array = PyObjC_FreeCArray,
-    .py_to_c_array = PyObjC_PythonToCArray,
-    .c_array_to_py = PyObjC_CArrayToPython,
-    .imp_type = &PyObjCIMP_Type,
-    .imp_get_imp = PyObjCIMP_GetIMP,
-    .imp_get_sel = PyObjCIMP_GetSelector,
-    .newtransient = PyObjCObject_NewTransient,
-    .releasetransient = PyObjCObject_ReleaseTransient,
-    .pyobjc_null = &PyObjC_NULL,
-    .dep_c_array_count = depythonify_c_array_count2,
-    .varlistnew = PyObjC_VarList_New,
-    .pyobjcobject_convert = PyObjCObject_Convert,
-    .register_id_alias = PyObjCPointerWrapper_RegisterID,
+    .err_python_to_objc_gil    = PyObjCErr_ToObjCWithGILState,
+    .free_c_array              = PyObjC_FreeCArray,
+    .py_to_c_array             = PyObjC_PythonToCArray,
+    .c_array_to_py             = PyObjC_CArrayToPython,
+    .imp_type                  = &PyObjCIMP_Type,
+    .imp_get_imp               = PyObjCIMP_GetIMP,
+    .imp_get_sel               = PyObjCIMP_GetSelector,
+    .newtransient              = PyObjCObject_NewTransient,
+    .releasetransient          = PyObjCObject_ReleaseTransient,
+    .pyobjc_null               = &PyObjC_NULL,
+    .dep_c_array_count         = depythonify_c_array_count2,
+    .varlistnew                = PyObjC_VarList_New,
+    .pyobjcobject_convert      = PyObjCObject_Convert,
+    .register_id_alias         = PyObjCPointerWrapper_RegisterID,
 };
 
 int

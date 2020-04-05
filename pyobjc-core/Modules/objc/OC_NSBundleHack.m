@@ -13,9 +13,9 @@ static id (*bundleForClassIMP)(id, SEL, Class);
 @implementation OC_NSBundleHack
 + (NSBundle*)bundleForClass:(Class)aClass
 {
-    static NSBundle* mainBundle = nil;
+    static NSBundle*   mainBundle  = nil;
     static NSMapTable* bundleCache = nil;
-    id rval;
+    id                 rval;
 
     if (unlikely(!mainBundle)) {
         mainBundle = [[NSBundle mainBundle] retain];
@@ -38,7 +38,7 @@ static id (*bundleForClassIMP)(id, SEL, Class);
 
     rval = bundleForClassIMP(self, @selector(bundleForClass:), aClass);
     if (rval == mainBundle) {
-        Class base_isa = aClass;
+        Class base_isa     = aClass;
         Class nsobject_isa = object_getClass([NSObject class]);
 
         while (base_isa != nsobject_isa) {

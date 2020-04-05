@@ -15,9 +15,9 @@
  */
 /*#include "pymactoolbox.h"*/
 
-extern int PyMac_GetFSRef(PyObject*, FSRef*); /* argument parser for FSRef */
-extern PyObject* PyMac_BuildFSRef(FSRef*);    /* Convert FSRef to PyObject */
-extern PyObject* PyMac_Error(OSErr);          /* Uses PyMac_GetOSErrException */
+extern int       PyMac_GetFSRef(PyObject*, FSRef*); /* argument parser for FSRef */
+extern PyObject* PyMac_BuildFSRef(FSRef*);          /* Convert FSRef to PyObject */
+extern PyObject* PyMac_Error(OSErr);                /* Uses PyMac_GetOSErrException */
 
 #endif
 
@@ -44,7 +44,7 @@ extern PyObject* PyMac_Error(OSErr);          /* Uses PyMac_GetOSErrException */
 typedef struct {
     PyObject_HEAD
 
-        FSRef ref;
+    FSRef ref;
 } PyObjC_FSRefObject;
 
 static PyObject*
@@ -80,7 +80,7 @@ static PyObject*
 fsref_as_path(PyObject* ref)
 {
     OSStatus rc;
-    UInt8 buffer[1024];
+    UInt8    buffer[1024];
 
     if (!PyObjC_FSRefCheck(ref)) {
         PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
@@ -100,9 +100,9 @@ static PyObject*
 fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
 {
     PyObject* value;
-    FSRef result;
-    Boolean isDirectory;
-    OSStatus rc;
+    FSRef     result;
+    Boolean   isDirectory;
+    OSStatus  rc;
 
     if (PyUnicode_Check(path)) {
         value = PyUnicode_AsEncodedString(path, NULL, NULL);
@@ -128,36 +128,36 @@ fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
 
 static PyGetSetDef fsref_getset[] = {{
                                          .name = "data",
-                                         .get = fsref_as_bytes,
-                                         .doc = "bytes in the FSRef",
+                                         .get  = fsref_as_bytes,
+                                         .doc  = "bytes in the FSRef",
                                      },
                                      {
                                          .name = NULL /* SENTINEL */
                                      }};
 
 static PyMethodDef fsref_methods[] = {
-    {.ml_name = "as_pathname",
-     .ml_meth = (PyCFunction)fsref_as_path,
+    {.ml_name  = "as_pathname",
+     .ml_meth  = (PyCFunction)fsref_as_path,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "as_pathname()\n" CLINIC_SEP
+     .ml_doc   = "as_pathname()\n" CLINIC_SEP
                "\nReturn POSIX path for this object (Unicode string)"},
-    {.ml_name = "from_pathname",
-     .ml_meth = (PyCFunction)fsref_from_path,
+    {.ml_name  = "from_pathname",
+     .ml_meth  = (PyCFunction)fsref_from_path,
      .ml_flags = METH_O | METH_CLASS,
      .ml_doc =
          "from_pathname(path)\n" CLINIC_SEP "\nCreate FSRef instance for an POSIX path"},
 
 #if USE_TOOLBOX_OBJECT_GLUE
-    {.ml_name = "as_carbon",
-     .ml_meth = (PyCFunction)fsref_as_carbon,
+    {.ml_name  = "as_carbon",
+     .ml_meth  = (PyCFunction)fsref_as_carbon,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "as_carbon()\n" CLINIC_SEP
+     .ml_doc   = "as_carbon()\n" CLINIC_SEP
                "\nReturn Carbon.File.FSRef instance for this object"},
 #endif /* USE_TOOLBOX_OBJECT_GLUE */
 
     {
-        .ml_name = "__sizeof__",
-        .ml_meth = (PyCFunction)fsref_sizeof,
+        .ml_name  = "__sizeof__",
+        .ml_meth  = (PyCFunction)fsref_sizeof,
         .ml_flags = METH_NOARGS,
     },
     {
@@ -166,13 +166,13 @@ static PyMethodDef fsref_methods[] = {
 
 PyTypeObject PyObjC_FSRefType = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.FSRef",
-    .tp_basicsize = sizeof(PyObjC_FSRefObject),
-    .tp_itemsize = 0,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_setattro = PyObject_GenericSetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_methods = fsref_methods,
-    .tp_getset = fsref_getset,
+    .tp_basicsize                                  = sizeof(PyObjC_FSRefObject),
+    .tp_itemsize                                   = 0,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_setattro                                   = PyObject_GenericSetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_methods                                    = fsref_methods,
+    .tp_getset                                     = fsref_getset,
 };
 
 int

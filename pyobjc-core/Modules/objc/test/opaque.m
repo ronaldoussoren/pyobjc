@@ -47,8 +47,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_opaque(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_OpaqueTest", PyObjC_IdToPython([OC_OpaqueTest class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_OpaqueTest", PyObjC_IdToPython([OC_OpaqueTest class]))
+        < 0) {
         return NULL;
     }
 
@@ -115,7 +115,7 @@ struct _Bar {
     if (result == NULL)
         return NULL;
 
-    result->first = first;
+    result->first  = first;
     result->second = second;
     return result;
 }
@@ -127,13 +127,13 @@ struct _Bar {
 
 + (void)getFirst:(double*)first andSecond:(double*)second of:(BarHandle)bar
 {
-    *first = bar->first;
+    *first  = bar->first;
     *second = bar->second;
 }
 
 + (void)setFirst:(double)first andSecond:(double)second of:(BarHandle)bar
 {
-    bar->first = first;
+    bar->first  = first;
     bar->second = second;
 }
 

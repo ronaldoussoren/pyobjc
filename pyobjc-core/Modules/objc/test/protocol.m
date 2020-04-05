@@ -49,7 +49,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_protocol(void)
         return NULL;
     }
 
-    p = @protocol(OC_TestProtocol);
+    p              = @protocol(OC_TestProtocol);
     PyObject* prot = PyObjC_ObjCToPython("@", &p);
     if (!prot) {
         return NULL;

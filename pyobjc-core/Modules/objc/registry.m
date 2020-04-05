@@ -18,7 +18,7 @@ int
 PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selector,
                      PyObject* value)
 {
-    int result;
+    int       result;
     PyObject* sublist;
     PyObject* item = Py_BuildValue("(OO)", class_name, value);
     if (item == NULL) {
@@ -32,7 +32,7 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     }
     if (sublist == NULL) {
         sublist = PyList_New(0);
-        result = PyDict_SetItem(registry, selector, sublist);
+        result  = PyDict_SetItem(registry, selector, sublist);
         Py_DECREF(sublist);
         if (result == -1) {
             Py_DECREF(item);
@@ -53,10 +53,10 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 {
     Py_ssize_t i;
     Py_ssize_t len;
-    PyObject* cur;
-    Class found_class = nil;
-    PyObject* found_value = NULL;
-    PyObject* sublist;
+    PyObject*  cur;
+    Class      found_class = nil;
+    PyObject*  found_value = NULL;
+    PyObject*  sublist;
 
     if (registry == NULL) {
         return NULL;
@@ -106,8 +106,8 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
             continue;
         }
 
-        if (!class_isSubclassOf(cls, cur_class) &&
-            !class_isSubclassOf(cls, object_getClass(cur_class))) {
+        if (!class_isSubclassOf(cls, cur_class)
+            && !class_isSubclassOf(cls, object_getClass(cur_class))) {
             continue;
         }
 
@@ -129,9 +129,9 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 PyObject*
 PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
 {
-    PyObject* result = PyDict_New();
-    PyObject* key;
-    PyObject* sublist;
+    PyObject*  result = PyDict_New();
+    PyObject*  key;
+    PyObject*  sublist;
     Py_ssize_t pos = 0;
     if (result == NULL) {
         return NULL;
@@ -139,8 +139,8 @@ PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
 
     while (PyDict_Next(registry, &pos, &key, &sublist)) {
         Py_ssize_t i, len;
-        PyObject* sl_new;
-        len = PyList_Size(sublist);
+        PyObject*  sl_new;
+        len    = PyList_Size(sublist);
         sl_new = PyList_New(len);
         if (sl_new == NULL)
             goto error;
@@ -154,7 +154,7 @@ PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
             PyObject* item;
             PyObject* new_item;
 
-            item = PyList_GET_ITEM(sublist, i);
+            item     = PyList_GET_ITEM(sublist, i);
             new_item = Py_BuildValue("(ON)", PyTuple_GET_ITEM(item, 0),
                                      value_transform(PyTuple_GET_ITEM(item, 1)));
             if (new_item == NULL)

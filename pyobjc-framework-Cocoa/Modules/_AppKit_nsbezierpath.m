@@ -7,12 +7,12 @@ static PyObject*
 call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* self,
                                                    PyObject* arguments)
 {
-    PyObject* result;
-    PyObject* v;
-    struct objc_super super;
-    NSInteger idx;
-    int pointCount;
-    NSPoint points[3];
+    PyObject*           result;
+    PyObject*           v;
+    struct objc_super   super;
+    NSInteger           idx;
+    int                 pointCount;
+    NSPoint             points[3];
     NSBezierPathElement res;
 
     if (!PyArg_ParseTuple(arguments, Py_ARG_NSInteger, &idx)) {
@@ -87,13 +87,13 @@ static PyObject*
 call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
                                                PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
-    NSInteger idx;
-    NSPoint points[3];
-    PyObject* pointList;
-    PyObject* seq;
-    int i, len;
+    NSInteger         idx;
+    NSPoint           points[3];
+    PyObject*         pointList;
+    PyObject*         seq;
+    int               i, len;
 
     if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSInteger, &pointList, &idx)) {
         return NULL;
@@ -157,18 +157,18 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(void* cif __attribute__((__unu
 {
     id self = *(id*)args[0];
     // SEL _meth = *(SEL*)args[1];
-    NSInteger idx = *(NSInteger*)args[2];
-    NSPoint* points = *(NSPoint**)args[3];
+    NSInteger idx    = *(NSInteger*)args[2];
+    NSPoint*  points = *(NSPoint**)args[3];
 
     PyObject* result;
-    PyObject* seq = NULL;
+    PyObject* seq     = NULL;
     PyObject* arglist = NULL;
     PyObject* v;
-    int err;
-    int pointCount;
-    int i;
+    int       err;
+    int       pointCount;
+    int       i;
     PyObject* pyself = NULL;
-    int cookie = 0;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -275,15 +275,16 @@ setup_nsbezierpath(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(elementAtIndex:associatedPoints:),
                                      call_NSBezierPath_elementAtIndex_associatedPoints_,
-                                     imp_NSBezierPath_elementAtIndex_associatedPoints_) <
-        0) {
+                                     imp_NSBezierPath_elementAtIndex_associatedPoints_)
+        < 0) {
 
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(setAssociatedPoints:atIndex:),
                                      call_NSBezierPath_setAssociatedPoints_atIndex_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }

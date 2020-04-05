@@ -66,8 +66,8 @@
 #define _C_NSBOOL 'Z'
 
 struct PyObjC_method {
-    SEL name;
-    IMP imp;
+    SEL         name;
+    IMP         imp;
     const char* type;
 };
 

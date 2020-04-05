@@ -65,10 +65,10 @@ mod_SCDynamicStoreCallBack(SCDynamicStoreRef store, CFArrayRef changedKeys, void
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* info      = (PyObject*)_info;
+    PyObject* callable  = PyTuple_GetItem(info, 0);
     PyObject* real_info = PyTuple_GetItem(info, 1);
-    PyObject* py_store = PyObjC_ObjCToPython(@encode(SCDynamicStoreRef), &store);
+    PyObject* py_store  = PyObjC_ObjCToPython(@encode(SCDynamicStoreRef), &store);
     if (py_store == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -89,15 +89,15 @@ mod_SCDynamicStoreCallBack(SCDynamicStoreRef store, CFArrayRef changedKeys, void
 }
 
 static void
-mod_SCPreferencesCallBack(SCPreferencesRef prefs,
+mod_SCPreferencesCallBack(SCPreferencesRef          prefs,
                           SCPreferencesNotification notificationType, void* _info)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* info      = (PyObject*)_info;
+    PyObject* callable  = PyTuple_GetItem(info, 0);
     PyObject* real_info = PyTuple_GetItem(info, 1);
-    PyObject* py_prefs = PyObjC_ObjCToPython(@encode(SCPreferencesRef), &prefs);
+    PyObject* py_prefs  = PyObjC_ObjCToPython(@encode(SCPreferencesRef), &prefs);
     if (py_prefs == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -118,13 +118,13 @@ mod_SCPreferencesCallBack(SCPreferencesRef prefs,
 }
 
 static void
-mod_SCNetworkConnectionCallBack(SCNetworkConnectionRef connection,
+mod_SCNetworkConnectionCallBack(SCNetworkConnectionRef    connection,
                                 SCNetworkConnectionStatus status, void* _info)
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* info      = (PyObject*)_info;
+    PyObject* callable  = PyTuple_GetItem(info, 0);
     PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_connection =
         PyObjC_ObjCToPython(@encode(SCNetworkConnectionRef), &connection);
@@ -153,8 +153,8 @@ mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
 {
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* info = (PyObject*)_info;
-    PyObject* callable = PyTuple_GetItem(info, 0);
+    PyObject* info      = (PyObject*)_info;
+    PyObject* callable  = PyTuple_GetItem(info, 0);
     PyObject* real_info = PyTuple_GetItem(info, 1);
     PyObject* py_target = PyObjC_ObjCToPython(@encode(SCNetworkReachabilityRef), &target);
     if (py_target == NULL) {
@@ -180,12 +180,12 @@ mod_SCNetworkReachabilityCallBack(SCNetworkReachabilityRef target,
 static PyObject*
 mod_SCDynamicStoreCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_name;
-    PyObject* callout;
-    PyObject* context;
+    PyObject*      py_allocator;
+    PyObject*      py_name;
+    PyObject*      callout;
+    PyObject*      context;
     CFAllocatorRef allocator;
-    CFStringRef name;
+    CFStringRef    name;
 
     if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &py_name, &callout, &context)) {
         return NULL;
@@ -204,9 +204,9 @@ mod_SCDynamicStoreCreate(PyObject* self __attribute__((__unused__)), PyObject* a
         return NULL;
     }
 
-    SCDynamicStoreRef store = NULL;
+    SCDynamicStoreRef     store = NULL;
     SCDynamicStoreContext real_context;
-    real_context = mod_SCDynamicStoreContext;
+    real_context      = mod_SCDynamicStoreContext;
     real_context.info = real_info;
 
     Py_BEGIN_ALLOW_THREADS
@@ -241,14 +241,14 @@ static PyObject*
 mod_SCDynamicStoreCreateWithOptions(PyObject* self __attribute__((__unused__)),
                                     PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_name;
-    PyObject* py_options;
-    PyObject* callout;
-    PyObject* context;
-    CFAllocatorRef allocator;
+    PyObject*       py_allocator;
+    PyObject*       py_name;
+    PyObject*       py_options;
+    PyObject*       callout;
+    PyObject*       context;
+    CFAllocatorRef  allocator;
     CFDictionaryRef storeOptions;
-    CFStringRef name;
+    CFStringRef     name;
 
     if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_name, &py_options, &callout,
                           &context)) {
@@ -272,9 +272,9 @@ mod_SCDynamicStoreCreateWithOptions(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    SCDynamicStoreRef store = NULL;
+    SCDynamicStoreRef     store = NULL;
     SCDynamicStoreContext real_context;
-    real_context = mod_SCDynamicStoreContext;
+    real_context      = mod_SCDynamicStoreContext;
     real_context.info = real_info;
 
     Py_BEGIN_ALLOW_THREADS
@@ -310,9 +310,9 @@ mod_SCDynamicStoreCreateWithOptions(PyObject* self __attribute__((__unused__)),
 static PyObject*
 mod_SCPreferencesSetCallback(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_prefs;
-    PyObject* callout;
-    PyObject* context;
+    PyObject*        py_prefs;
+    PyObject*        callout;
+    PyObject*        context;
     SCPreferencesRef prefs;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_prefs, &callout, &context)) {
@@ -329,7 +329,7 @@ mod_SCPreferencesSetCallback(PyObject* self __attribute__((__unused__)), PyObjec
     }
 
     SCPreferencesContext real_context;
-    real_context = mod_SCPreferencesContext;
+    real_context      = mod_SCPreferencesContext;
     real_context.info = real_info;
 
     Boolean result = FALSE;
@@ -359,12 +359,12 @@ static PyObject*
 mod_SCNetworkConnectionCreateWithServiceID(PyObject* self __attribute__((__unused__)),
                                            PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_serviceID;
-    PyObject* callout;
-    PyObject* context;
+    PyObject*      py_allocator;
+    PyObject*      py_serviceID;
+    PyObject*      callout;
+    PyObject*      context;
     CFAllocatorRef allocator;
-    CFStringRef serviceID;
+    CFStringRef    serviceID;
 
     if (!PyArg_ParseTuple(args, "OOOO", &py_allocator, &py_serviceID, &callout,
                           &context)) {
@@ -385,7 +385,7 @@ mod_SCNetworkConnectionCreateWithServiceID(PyObject* self __attribute__((__unuse
     }
 
     SCNetworkConnectionContext real_context;
-    real_context = mod_SCNetworkConnectionContext;
+    real_context      = mod_SCNetworkConnectionContext;
     real_context.info = real_info;
 
     SCNetworkConnectionRef result = NULL;
@@ -420,9 +420,9 @@ static PyObject*
 mod_SCNetworkReachabilitySetCallback(PyObject* self __attribute__((__unused__)),
                                      PyObject* args)
 {
-    PyObject* py_target;
-    PyObject* callout;
-    PyObject* context;
+    PyObject*                py_target;
+    PyObject*                callout;
+    PyObject*                context;
     SCNetworkReachabilityRef target;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_target, &callout, &context)) {
@@ -439,7 +439,7 @@ mod_SCNetworkReachabilitySetCallback(PyObject* self __attribute__((__unused__)),
     }
 
     SCNetworkReachabilityContext real_context;
-    real_context = mod_SCNetworkReachabilityContext;
+    real_context      = mod_SCNetworkReachabilityContext;
     real_context.info = real_info;
 
     Boolean result = FALSE;

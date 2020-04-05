@@ -63,8 +63,8 @@ init_inlines(void)
         INITERROR();
     }
 
-    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map)) <
-        0) {
+    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))
+        < 0) {
         INITERROR();
     }
 

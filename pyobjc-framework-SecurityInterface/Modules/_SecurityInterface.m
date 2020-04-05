@@ -4,12 +4,11 @@
 #include "pyobjc-api.h"
 
 #undef PySequence_Fast_GET_ITEM
-#define PySequence_Fast_GET_ITEM(o, i)\
-     (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
+#define PySequence_Fast_GET_ITEM(o, i)                                                   \
+    (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
 
 #undef PySequence_Fast_GET_SIZE
-#define PySequence_Fast_GET_SIZE(o) \
-     (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
+#define PySequence_Fast_GET_SIZE(o) (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
 
 #import <Foundation/Foundation.h>
 #import <SecurityInterface/SFAuthorizationView.h>
@@ -23,7 +22,7 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
         return 1;
 
     } else {
-        PyObject* seq = PySequence_Fast(value, "itemset must be a sequence or None");
+        PyObject*  seq = PySequence_Fast(value, "itemset must be a sequence or None");
         Py_ssize_t i;
         if (seq == NULL) {
             return 0;
@@ -38,8 +37,8 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
 
         for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
             if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}",
-                                    PySequence_Fast_GET_ITEM(seq, i),
-                                    itemset->items + i) < 0) {
+                                    PySequence_Fast_GET_ITEM(seq, i), itemset->items + i)
+                < 0) {
                 PyMem_Free(itemset->items);
                 return 0;
             }
@@ -80,9 +79,9 @@ build_itemset(AuthorizationItemSet* itemset)
 static PyObject*
 call_authorizationRights(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    struct objc_super super;
+    struct objc_super    super;
     AuthorizationRights* rights;
-    PyObject* py_rights;
+    PyObject*            py_rights;
 
     if (!PyArg_ParseTuple(arguments, "")) {
         return NULL;
@@ -116,9 +115,9 @@ call_authorizationRights(PyObject* method, PyObject* self, PyObject* arguments)
 static PyObject*
 call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    struct objc_super super;
+    struct objc_super   super;
     AuthorizationRights rights;
-    PyObject* py_rights;
+    PyObject*           py_rights;
 
     rights.items = NULL;
 
@@ -161,7 +160,7 @@ static PyMethodDef mod_methods[] = {
 PyObjC_MODULE_INIT(_SecurityInterface)
 {
     PyObject* m;
-    Class cls;
+    Class     cls;
 
     m = PyObjC_MODULE_CREATE(_SecurityInterface) if (!m) { PyObjC_INITERROR(); }
 
@@ -175,14 +174,16 @@ PyObjC_MODULE_INIT(_SecurityInterface)
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationView),
                                      call_authorizationRights,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         PyObjC_INITERROR();
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationView:),
                                      call_setAuthorizationRights_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         PyObjC_INITERROR();
     }

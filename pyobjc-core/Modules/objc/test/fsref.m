@@ -30,8 +30,8 @@
 
 - (FSRef)fsrefForPath:(NSString*)path
 {
-    FSRef fsref;
-    Boolean isDirectory;
+    FSRef    fsref;
+    Boolean  isDirectory;
     OSStatus rc;
 
     rc = FSPathMakeRef((UInt8*)[path UTF8String], &fsref, &isDirectory);
@@ -44,7 +44,7 @@
 
 - (NSString*)pathForFSRef:(in FSRef*)fsref
 {
-    UInt8 buffer[256];
+    UInt8    buffer[256];
     OSStatus rc;
 
     rc = FSRefMakePath(fsref, buffer, sizeof(buffer));
@@ -57,7 +57,7 @@
 
 - (void)getFSRef:(out FSRef*)fsref forPath:(NSString*)path
 {
-    Boolean isDirectory;
+    Boolean  isDirectory;
     OSStatus rc;
 
     rc = FSPathMakeRef((UInt8*)[path UTF8String], fsref, &isDirectory);
@@ -89,7 +89,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_fsref(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestFSRefHelper",
-                           PyObjC_IdToPython([OC_TestFSRefHelper class])) < 0) {
+                           PyObjC_IdToPython([OC_TestFSRefHelper class]))
+        < 0) {
         return NULL;
     }
 

@@ -9,13 +9,13 @@
 static PyObject*
 mod_CFCalendarAddComponents(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    CFCalendarRef calendar;
+    CFCalendarRef  calendar;
     CFAbsoluteTime at;
-    CFOptionFlags flags;
-    char* componentDesc;
-    int params[10];
-    Boolean result;
-    int r;
+    CFOptionFlags  flags;
+    char*          componentDesc;
+    int            params[10];
+    Boolean        result;
+    int            r;
 
     if (PyTuple_Size(args) < 4) {
         PyErr_Format(PyExc_TypeError,
@@ -101,12 +101,12 @@ static PyObject*
 mod_CFCalendarComposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
                                   PyObject* args)
 {
-    CFCalendarRef calendar;
+    CFCalendarRef  calendar;
     CFAbsoluteTime at;
-    char* componentDesc;
-    int params[10];
-    Boolean result;
-    int r;
+    char*          componentDesc;
+    int            params[10];
+    Boolean        result;
+    int            r;
 
     if (PyTuple_Size(args) < 3) {
         PyErr_Format(PyExc_TypeError,
@@ -186,12 +186,12 @@ static PyObject*
 mod_CFCalendarDecomposeAbsoluteTime(PyObject* self __attribute__((__unused__)),
                                     PyObject* args)
 {
-    CFCalendarRef calendar;
+    CFCalendarRef  calendar;
     CFAbsoluteTime at;
-    char* componentDesc;
-    int params[10];
-    Boolean result;
-    int r;
+    char*          componentDesc;
+    int            params[10];
+    Boolean        result;
+    int            r;
 
     if (PyTuple_Size(args) < 3) {
         PyErr_Format(PyExc_TypeError,
@@ -286,14 +286,14 @@ static PyObject*
 mod_CFCalendarGetComponentDifference(PyObject* self __attribute__((__unused__)),
                                      PyObject* args)
 {
-    CFCalendarRef calendar;
+    CFCalendarRef  calendar;
     CFAbsoluteTime startingAt;
     CFAbsoluteTime resultAt;
-    CFOptionFlags options;
-    char* componentDesc;
-    int params[10];
-    Boolean result;
-    int r;
+    CFOptionFlags  options;
+    char*          componentDesc;
+    int            params[10];
+    Boolean        result;
+    int            r;
 
     if (PyTuple_Size(args) < 5) {
         PyErr_Format(PyExc_TypeError,

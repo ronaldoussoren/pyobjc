@@ -48,9 +48,9 @@ static CFBinaryHeapCallBacks mod_NSObjectBinaryHeapCallbacks = {
 static PyObject*
 mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    Py_ssize_t count = -1;
-    CFAllocatorRef allocator;
+    PyObject*       py_allocator;
+    Py_ssize_t      count = -1;
+    CFAllocatorRef  allocator;
     CFBinaryHeapRef heap;
 
     if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
@@ -73,7 +73,7 @@ mod_CFBinaryHeapCreate(PyObject* self __attribute__((__unused__)), PyObject* arg
 static PyObject*
 mod_CFBinaryHeapGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_heap;
+    PyObject*       py_heap;
     CFBinaryHeapRef heap;
 
     if (!PyArg_ParseTuple(args, "O", &py_heap)) {
@@ -84,7 +84,7 @@ mod_CFBinaryHeapGetValues(PyObject* self __attribute__((__unused__)), PyObject* 
         return NULL;
     }
 
-    CFIndex count = CFBinaryHeapGetCount(heap);
+    CFIndex    count   = CFBinaryHeapGetCount(heap);
     NSObject** members = malloc(sizeof(NSObject*) * count);
     if (members == NULL) {
         PyErr_NoMemory();

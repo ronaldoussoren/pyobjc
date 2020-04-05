@@ -18,7 +18,7 @@
 struct wrapper {
     const char* name;
     const char* signature;
-    size_t offset;
+    size_t      offset;
     PyObject* (*pythonify)(void*);
     int (*depythonify)(PyObject*, void*);
 };
@@ -27,8 +27,8 @@ struct wrapper {
  * efficient datastructure. However: As long as their is only a limited
  * number of custom wrappers this should not be a problem.
  */
-static struct wrapper* items = 0;
-static Py_ssize_t item_count = 0;
+static struct wrapper* items      = 0;
+static Py_ssize_t      item_count = 0;
 
 /*
  * If signature is a pointer to a structure return the index of the character
@@ -126,7 +126,7 @@ PyObjCPointerWrapper_RegisterID(const char* name, const char* signature)
 
 int
 PyObjCPointerWrapper_Register(const char* name, const char* signature,
-                              PyObjCPointerWrapper_ToPythonFunc pythonify,
+                              PyObjCPointerWrapper_ToPythonFunc   pythonify,
                               PyObjCPointerWrapper_FromPythonFunc depythonify)
 {
     struct wrapper* value;
@@ -143,7 +143,7 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     value = FindWrapper(signature);
 
     if (value != NULL) {
-        value->pythonify = pythonify;
+        value->pythonify   = pythonify;
         value->depythonify = depythonify;
         return 0;
     }
@@ -187,7 +187,7 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
 
     value->offset = find_end_of_structname(value->signature);
 
-    value->pythonify = pythonify;
+    value->pythonify   = pythonify;
     value->depythonify = depythonify;
 
     return 0;
@@ -197,7 +197,7 @@ PyObject*
 PyObjCPointerWrapper_ToPython(const char* type, void* datum)
 {
     struct wrapper* item;
-    PyObject* result;
+    PyObject*       result;
 
     item = FindWrapper(type);
     if (item == NULL) {
@@ -232,7 +232,7 @@ int
 PyObjCPointerWrapper_FromPython(const char* type, PyObject* value, void* datum)
 {
     struct wrapper* item;
-    int r;
+    int             r;
 
     if (value == PyObjC_NULL) {
         *(void**)datum = NULL;

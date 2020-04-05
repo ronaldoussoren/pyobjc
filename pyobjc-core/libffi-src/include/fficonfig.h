@@ -1,13 +1,13 @@
 /*	Manually created fficonfig.h for Darwin on PowerPC or Intel
 
-	This file is manually generated to do away with the need for autoconf and
-	therefore make it easier to cross-compile and build fat binaries.
+        This file is manually generated to do away with the need for autoconf and
+        therefore make it easier to cross-compile and build fat binaries.
 
-	NOTE: This file was added by PyObjC.
+        NOTE: This file was added by PyObjC.
 */
 
 #if defined(__APPLE__) && defined(__MACH__) && !defined(MACOSX)
-	#define MACOSX
+#define MACOSX
 #endif
 
 #ifndef MACOSX
@@ -15,48 +15,48 @@
 #endif
 
 #if defined(__i386__)
-#	define	BYTEORDER 1234
-#	undef	HOST_WORDS_BIG_ENDIAN
-#	undef	WORDS_BIGENDIAN
-#	define	SIZEOF_DOUBLE 8
-#	define	HAVE_LONG_DOUBLE 1
-#	define	SIZEOF_LONG_DOUBLE 16
+#define BYTEORDER 1234
+#undef HOST_WORDS_BIG_ENDIAN
+#undef WORDS_BIGENDIAN
+#define SIZEOF_DOUBLE 8
+#define HAVE_LONG_DOUBLE 1
+#define SIZEOF_LONG_DOUBLE 16
 
 #elif defined(__x86_64__)
-#	define	BYTEORDER 1234
-#	undef	HOST_WORDS_BIG_ENDIAN
-#	undef	WORDS_BIGENDIAN
-#	define	SIZEOF_DOUBLE 8
-#	define	HAVE_LONG_DOUBLE 1
-#	define	SIZEOF_LONG_DOUBLE 16
+#define BYTEORDER 1234
+#undef HOST_WORDS_BIG_ENDIAN
+#undef WORDS_BIGENDIAN
+#define SIZEOF_DOUBLE 8
+#define HAVE_LONG_DOUBLE 1
+#define SIZEOF_LONG_DOUBLE 16
 
 #elif defined(__ppc__)
-#	define	BYTEORDER 4321
-#	define	HOST_WORDS_BIG_ENDIAN 1
-#	define	WORDS_BIGENDIAN 1
-#	define	SIZEOF_DOUBLE 8
-#	if __GNUC__ >= 4
-#		define	HAVE_LONG_DOUBLE 1
-#		define	SIZEOF_LONG_DOUBLE 16
-#	else
-#		undef	HAVE_LONG_DOUBLE
-#		define	SIZEOF_LONG_DOUBLE 8
-#	endif
+#define BYTEORDER 4321
+#define HOST_WORDS_BIG_ENDIAN 1
+#define WORDS_BIGENDIAN 1
+#define SIZEOF_DOUBLE 8
+#if __GNUC__ >= 4
+#define HAVE_LONG_DOUBLE 1
+#define SIZEOF_LONG_DOUBLE 16
+#else
+#undef HAVE_LONG_DOUBLE
+#define SIZEOF_LONG_DOUBLE 8
+#endif
 
 #elif defined(__ppc64__)
-#	define	BYTEORDER 4321
-#	define	HOST_WORDS_BIG_ENDIAN 1
-#	define	WORDS_BIGENDIAN 1
-#	define	SIZEOF_DOUBLE 8
-#	define	HAVE_LONG_DOUBLE 1
-#	define	SIZEOF_LONG_DOUBLE 16
+#define BYTEORDER 4321
+#define HOST_WORDS_BIG_ENDIAN 1
+#define WORDS_BIGENDIAN 1
+#define SIZEOF_DOUBLE 8
+#define HAVE_LONG_DOUBLE 1
+#define SIZEOF_LONG_DOUBLE 16
 
 #else
 #error "Unknown CPU type"
 #endif
 
 /*	Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
-	systems. This function is required for `alloca.c' support on those systems.	*/
+        systems. This function is required for `alloca.c' support on those systems.	*/
 #undef CRAY_STACKSEG_END
 
 /*	Define to 1 if using `alloca.c'. */
@@ -123,11 +123,11 @@
 #define PACKAGE_VERSION "2.1"
 
 /*	If using the C implementation of alloca, define if you know the
-	direction of stack growth for your system; otherwise it will be
-	automatically deduced at run-time.
-	STACK_DIRECTION > 0 => grows toward higher addresses
-	STACK_DIRECTION < 0 => grows toward lower addresses
-	STACK_DIRECTION = 0 => direction of growth unknown	*/
+        direction of stack growth for your system; otherwise it will be
+        automatically deduced at run-time.
+        STACK_DIRECTION > 0 => grows toward higher addresses
+        STACK_DIRECTION < 0 => grows toward lower addresses
+        STACK_DIRECTION = 0 => direction of growth unknown	*/
 /*	#undef STACK_DIRECTION */
 
 /*	Define to 1 if you have the ANSI C header files. */
@@ -140,15 +140,15 @@
 #define VERSION "2.1-pyobjc"
 
 #ifdef HAVE_HIDDEN_VISIBILITY_ATTRIBUTE
-#	ifdef LIBFFI_ASM
-#		define FFI_HIDDEN(name) .hidden name
-#	else
-#		define FFI_HIDDEN __attribute__((visibility ("hidden")))
-#	endif
+#ifdef LIBFFI_ASM
+#define FFI_HIDDEN(name) .hidden name
 #else
-#	ifdef LIBFFI_ASM
-#		define FFI_HIDDEN(name)
-#	else
-#		define FFI_HIDDEN
-#	endif
+#define FFI_HIDDEN __attribute__((visibility("hidden")))
+#endif
+#else
+#ifdef LIBFFI_ASM
+#define FFI_HIDDEN(name)
+#else
+#define FFI_HIDDEN
+#endif
 #endif

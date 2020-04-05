@@ -157,8 +157,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_pythonnumber(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_TestNumber", PyObjC_IdToPython([OC_TestNumber class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_TestNumber", PyObjC_IdToPython([OC_TestNumber class]))
+        < 0) {
         return NULL;
     }
 

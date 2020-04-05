@@ -31,6 +31,15 @@ repos:
 #        additional_dependencies: [toml]
 #        language_version: python3.7
 #
+
+
+  - repo: git://github.com/doublify/pre-commit-clang-format
+    rev: master
+    hooks:
+    - id: clang-format
+      args: [ "-style=file" ]
+
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:

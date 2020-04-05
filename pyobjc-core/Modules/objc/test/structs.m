@@ -25,7 +25,7 @@ struct FooStruct {
 + (struct FooStruct)createWithFirst:(int)first andSecond:(int)second
 {
     struct FooStruct f;
-    f.first = first;
+    f.first  = first;
     f.second = second;
     return f;
 }
@@ -73,8 +73,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_structs(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_StructTest", PyObjC_IdToPython([OC_StructTest class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_StructTest", PyObjC_IdToPython([OC_StructTest class]))
+        < 0) {
         return NULL;
     }
 

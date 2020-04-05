@@ -2,12 +2,12 @@ static PyObject*
 call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject* self,
                                                      PyObject* arguments)
 {
-    PyObject* a1;
-    PyObject* a2;
-    PyObject* result;
-    struct objc_super super;
+    PyObject*          a1;
+    PyObject*          a2;
+    PyObject*          result;
+    struct objc_super  super;
     NSTIFFCompression* list;
-    NSInteger numTypes;
+    NSInteger          numTypes;
 
     if (!PyArg_ParseTuple(arguments, "OO", &a1, &a2)) {
         return NULL;
@@ -32,7 +32,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject*
                 &super, PyObjCSelector_GetSelector(method), &list, &numTypes);
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
-            list = NULL;
+            list     = NULL;
             numTypes = -1;
         }
     Py_END_ALLOW_THREADS
@@ -71,22 +71,22 @@ static PyObject*
 call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
                                      PyObject* arguments)
 {
-    PyObject* result;
-    PyObject* maybeNone;
-    const void* dataPlanes[5];
-    int width, height;
-    int bps, spp;
-    BOOL hasAlpha, isPlanar;
-    char* colorSpaceName;
-    NSString* colorSpaceNameString;
-    int bpr, bpp, i;
+    PyObject*         result;
+    PyObject*         maybeNone;
+    const void*       dataPlanes[5];
+    int               width, height;
+    int               bps, spp;
+    BOOL              hasAlpha, isPlanar;
+    char*             colorSpaceName;
+    NSString*         colorSpaceNameString;
+    int               bpr, bpp, i;
     NSBitmapImageRep* newImageRep;
     struct objc_super super;
-    PyObject* py_Planes[5];
-    Py_buffer planeBuffers[5];
+    PyObject*         py_Planes[5];
+    Py_buffer         planeBuffers[5];
 
     for (i = 0; i < 5; i++) {
-        py_Planes[i] = NULL;
+        py_Planes[i]        = NULL;
         planeBuffers[i].buf = NULL;
     }
 
@@ -132,8 +132,8 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
                      */
                     PyErr_Clear();
                     const void* buf;
-                    Py_ssize_t len;
-                    int r = PyObject_AsReadBuffer(py_Planes[i], &buf, &len);
+                    Py_ssize_t  len;
+                    int         r = PyObject_AsReadBuffer(py_Planes[i], &buf, &len);
                     if (r == -1) {
                         goto error_cleanup;
                     }
@@ -161,7 +161,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
-            result = NULL;
+            result      = NULL;
             newImageRep = nil;
         }
     Py_END_ALLOW_THREADS
@@ -195,23 +195,23 @@ static PyObject*
 call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
                                            PyObject* arguments)
 {
-    PyObject* result;
-    PyObject* maybeNone;
-    const void* dataPlanes[5];
-    int width, height;
-    int bps, spp;
-    BOOL hasAlpha, isPlanar;
-    char* colorSpaceName;
-    NSString* colorSpaceNameString;
-    int bpr, bpp, i;
+    PyObject*         result;
+    PyObject*         maybeNone;
+    const void*       dataPlanes[5];
+    int               width, height;
+    int               bps, spp;
+    BOOL              hasAlpha, isPlanar;
+    char*             colorSpaceName;
+    NSString*         colorSpaceNameString;
+    int               bpr, bpp, i;
     NSBitmapImageRep* newImageRep;
-    int format;
+    int               format;
     struct objc_super super;
-    PyObject* py_Planes[5];
-    Py_buffer planeBuffers[5];
+    PyObject*         py_Planes[5];
+    Py_buffer         planeBuffers[5];
 
     for (i = 0; i < 5; i++) {
-        py_Planes[i] = NULL;
+        py_Planes[i]        = NULL;
         planeBuffers[i].buf = NULL;
     }
 
@@ -258,8 +258,8 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
                      */
                     PyErr_Clear();
                     const void* buf;
-                    Py_ssize_t len;
-                    int r = PyObject_AsReadBuffer(py_Planes[i], &buf, &len);
+                    Py_ssize_t  len;
+                    int         r = PyObject_AsReadBuffer(py_Planes[i], &buf, &len);
                     if (r == -1) {
                         goto error_cleanup;
                     }
@@ -289,7 +289,7 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
-            result = NULL;
+            result      = NULL;
             newImageRep = nil;
         }
     Py_END_ALLOW_THREADS
@@ -323,11 +323,11 @@ static PyObject*
 call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
                                            PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
-    unsigned char* dataPlanes[5];
-    int i;
-    int bytesPerPlane;
+    unsigned char*    dataPlanes[5];
+    int               i;
+    int               bytesPerPlane;
 
     if (!PyArg_ParseTuple(arguments, "")) {
         return NULL;
@@ -350,7 +350,7 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
-            result = NULL;
+            result        = NULL;
             bytesPerPlane = -1;
         }
     Py_END_ALLOW_THREADS
@@ -368,7 +368,8 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
 #else
                 Py_buffer info;
                 if (PyBuffer_FillInfo(&info, NULL, dataPlanes[i], bytesPerPlane, 0,
-                                      PyBUF_FULL) < 0) {
+                                      PyBUF_FULL)
+                    < 0) {
                     return NULL;
                 }
                 PyObject* buffer = PyMemoryView_FromBuffer(&info);
@@ -393,7 +394,7 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
 static PyObject*
 call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
     unsigned char* volatile bitmapData;
     int bytesPerPlane;
@@ -416,8 +417,8 @@ call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self, PyObject* arg
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
-            result = NULL;
-            bitmapData = NULL;
+            result        = NULL;
+            bitmapData    = NULL;
             bytesPerPlane = -1;
         }
     Py_END_ALLOW_THREADS
@@ -461,7 +462,8 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
     if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep,
                                      @selector(getTIFFCompressionTypes:count:),
                                      call_NSBitmapImageRep_getTIFFCompressionTypes_count_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }
@@ -472,7 +474,8 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
             (initWithBitmapDataPlanes:
                            pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel:hasAlpha
                                      :isPlanar:colorSpaceName:bytesPerRow:bitsPerPixel:),
-            call_NSBitmapImageRep_initWithBitmap, PyObjCUnsupportedMethod_IMP) < 0) {
+            call_NSBitmapImageRep_initWithBitmap, PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }
@@ -483,23 +486,24 @@ setup_nsbitmap(PyObject* m __attribute__((__unused__)))
                                     pixelsWide:pixelsHigh:bitsPerSample:samplesPerPixel
                                               :hasAlpha:isPlanar:colorSpaceName
                                               :bitmapFormat:bytesPerRow:bitsPerPixel:),
-            call_NSBitmapImageRep_initWithBitmapFormat,
-            PyObjCUnsupportedMethod_IMP) < 0) {
+            call_NSBitmapImageRep_initWithBitmapFormat, PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }
 
-    if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep,
-                                     @selector(getBitmapDataPlanes:),
-                                     call_NSBitmapImageRep_getBitmapDataPlanes_,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+    if (PyObjC_RegisterMethodMapping(
+            class_NSBitmapImageRep, @selector(getBitmapDataPlanes:),
+            call_NSBitmapImageRep_getBitmapDataPlanes_, PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(class_NSBitmapImageRep, @selector(bitmapData),
                                      call_NSBitmapImageRep_bitmapData,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }

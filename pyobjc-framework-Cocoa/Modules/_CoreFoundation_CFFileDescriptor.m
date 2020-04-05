@@ -31,7 +31,7 @@ static void
 mod_CFFileDescriptorCallBack(CFFileDescriptorRef f, CFOptionFlags callBackType,
                              void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject*        info  = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_f = PyObjC_ObjCToPython(@encode(CFFileDescriptorRef), &f);
@@ -50,14 +50,14 @@ mod_CFFileDescriptorCallBack(CFFileDescriptorRef f, CFOptionFlags callBackType,
 static PyObject*
 mod_CFFileDescriptorCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_descriptor;
-    PyObject* py_closeOnInvalidate;
-    PyObject* callout;
-    PyObject* info;
-    CFAllocatorRef allocator;
+    PyObject*                        py_allocator;
+    PyObject*                        py_descriptor;
+    PyObject*                        py_closeOnInvalidate;
+    PyObject*                        callout;
+    PyObject*                        info;
+    CFAllocatorRef                   allocator;
     CFFileDescriptorNativeDescriptor descriptor;
-    Boolean closeOnInvalidate;
+    Boolean                          closeOnInvalidate;
 
     if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_descriptor,
                           &py_closeOnInvalidate, &callout, &info)) {
@@ -68,16 +68,17 @@ mod_CFFileDescriptorCreate(PyObject* self __attribute__((__unused__)), PyObject*
         return NULL;
     }
     if (PyObjC_PythonToObjC(@encode(CFFileDescriptorNativeDescriptor), py_descriptor,
-                            &descriptor) < 0) {
+                            &descriptor)
+        < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(bool), py_closeOnInvalidate, &closeOnInvalidate) <
-        0) {
+    if (PyObjC_PythonToObjC(@encode(bool), py_closeOnInvalidate, &closeOnInvalidate)
+        < 0) {
         return NULL;
     }
 
     CFFileDescriptorContext context = mod_CFFileDescriptorContext;
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info                    = Py_BuildValue("OO", callout, info);
     if (context.info == NULL) {
         return NULL;
     }
@@ -110,9 +111,9 @@ mod_CFFileDescriptorCreate(PyObject* self __attribute__((__unused__)), PyObject*
 static PyObject*
 mod_CFFileDescriptorGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_f;
-    PyObject* py_context;
-    CFFileDescriptorRef f;
+    PyObject*               py_f;
+    PyObject*               py_context;
+    CFFileDescriptorRef     f;
     CFFileDescriptorContext context;
 
     if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {

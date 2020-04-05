@@ -233,7 +233,7 @@
 #define USE(NAME) ptr_##NAME
 #define CHECK_WEAK_LINK(module, NAME)                                                    \
     do {                                                                                 \
-        void* dl = dlopen(NULL, RTLD_GLOBAL);                                            \
+        void* dl   = dlopen(NULL, RTLD_GLOBAL);                                          \
         ptr_##NAME = dlsym(dl, PyObjC_STR(NAME));                                        \
         dlclose(dl);                                                                     \
         if (ptr_##NAME == NULL) {                                                        \
@@ -383,7 +383,7 @@
  * "fast path"
  */
 
-extern int PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
+extern int       PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 extern PyObject* PyBytes_InternFromString(const char* v);
 extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
 

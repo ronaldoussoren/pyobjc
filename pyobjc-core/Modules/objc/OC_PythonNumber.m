@@ -126,7 +126,7 @@
 - (void)getValue:(void*)buffer
 {
     const char* encoded = [self objCType];
-    int r;
+    int         r;
     PyObjC_BEGIN_WITH_GIL
         r = depythonify_c_value(encoded, value, buffer);
         if (r == -1) {
@@ -159,7 +159,7 @@
 - (NSDecimal)decimalValue
 {
     NSDecimal result;
-    int r;
+    int       r;
 
     PyObjC_BEGIN_WITH_GIL
         r = PyObjC_number_to_decimal(value, &result);
@@ -271,7 +271,7 @@
                  * to undefined.
                  */
                 long long t = (long long)temp;
-                result = (unsigned long long)t;
+                result      = (unsigned long long)t;
             } else {
                 result = (unsigned long long)temp;
             }
@@ -377,7 +377,7 @@
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
-            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
             v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
             Py_DECREF(cdr);
@@ -417,8 +417,8 @@
      *
      * In all other cases use Python's comparison semantics.
      */
-    if ([aNumber isKindOfClass:[NSNumber class]] &&
-        ![aNumber isKindOfClass:[OC_PythonNumber class]]) {
+    if ([aNumber isKindOfClass:[NSNumber class]]
+        && ![aNumber isKindOfClass:[OC_PythonNumber class]]) {
         int use_super = 0;
 
         PyObjC_BEGIN_WITH_GIL
@@ -441,7 +441,7 @@
 
     PyObjC_BEGIN_WITH_GIL
         PyObject* other = PyObjC_IdToPython(aNumber);
-        int r, ok;
+        int       r, ok;
 
         if (other == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -469,7 +469,7 @@
     {                                                                                    \
         PyObjC_BEGIN_WITH_GIL                                                            \
             PyObject* other = PyObjC_IdToPython(aNumber);                                \
-            int r;                                                                       \
+            int       r;                                                                 \
             if (other == NULL) {                                                         \
                 PyObjC_GIL_FORWARD_EXC();                                                \
             }                                                                            \

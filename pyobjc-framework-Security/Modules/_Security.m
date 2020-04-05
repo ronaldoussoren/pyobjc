@@ -4,12 +4,11 @@
 #include "pyobjc-api.h"
 
 #undef PySequence_Fast_GET_ITEM
-#define PySequence_Fast_GET_ITEM(o, i)\
-     (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
+#define PySequence_Fast_GET_ITEM(o, i)                                                   \
+    (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
 
 #undef PySequence_Fast_GET_SIZE
-#define PySequence_Fast_GET_SIZE(o) \
-     (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
+#define PySequence_Fast_GET_SIZE(o) (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
 
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
@@ -18,39 +17,39 @@ static PyObject*
 m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
                                   PyObject* args)
 {
-    OSStatus retval;
-    id keychainOrArray;
-    PyObject* py_keychainOrArray;
-    Py_ssize_t serverName_length;
-    const char* serverName;
-    PyObject* py_serverName;
-    int serverName_token;
-    PyObject* serverName_buffer = NULL;
-    Py_ssize_t securityDomain_length;
-    const char* securityDomain;
-    PyObject* py_securityDomain;
-    int securityDomain_token;
-    PyObject* securityDomain_buffer = NULL;
-    Py_ssize_t accountName_length;
-    const char* accountName;
-    PyObject* py_accountName;
-    int accountName_token;
-    PyObject* accountName_buffer = NULL;
-    Py_ssize_t path_length;
-    const char* path;
-    PyObject* py_path;
-    int path_token;
-    PyObject* path_buffer = NULL;
-    UInt16 port;
-    SecProtocolType protocol;
+    OSStatus              retval;
+    id                    keychainOrArray;
+    PyObject*             py_keychainOrArray;
+    Py_ssize_t            serverName_length;
+    const char*           serverName;
+    PyObject*             py_serverName;
+    int                   serverName_token;
+    PyObject*             serverName_buffer = NULL;
+    Py_ssize_t            securityDomain_length;
+    const char*           securityDomain;
+    PyObject*             py_securityDomain;
+    int                   securityDomain_token;
+    PyObject*             securityDomain_buffer = NULL;
+    Py_ssize_t            accountName_length;
+    const char*           accountName;
+    PyObject*             py_accountName;
+    int                   accountName_token;
+    PyObject*             accountName_buffer = NULL;
+    Py_ssize_t            path_length;
+    const char*           path;
+    PyObject*             py_path;
+    int                   path_token;
+    PyObject*             path_buffer = NULL;
+    UInt16                port;
+    SecProtocolType       protocol;
     SecAuthenticationType authenticationType;
-    UInt32 password_length = 0;
-    PyObject* py_password_length;
-    void* passwordData = NULL;
-    PyObject* py_passwordData;
-    SecKeychainItemRef itemRef = NULL;
-    PyObject* py_itemRef;
-    const char string = 't';
+    UInt32                password_length = 0;
+    PyObject*             py_password_length;
+    void*                 passwordData = NULL;
+    PyObject*             py_passwordData;
+    SecKeychainItemRef    itemRef = NULL;
+    PyObject*             py_itemRef;
+    const char            string = 't';
 
     if (!PyArg_ParseTuple(args, "OnOnOnOnOHIIOOO", &py_keychainOrArray,
                           &serverName_length, &py_serverName, &securityDomain_length,
@@ -218,26 +217,26 @@ static PyObject*
 m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
                                  PyObject* args)
 {
-    OSStatus retval;
-    id keychainOrArray;
-    PyObject* py_keychainOrArray;
-    Py_ssize_t serviceName_length;
-    const char* serviceName;
-    PyObject* py_serviceName;
-    int serviceName_token;
-    PyObject* serviceName_buffer = NULL;
-    Py_ssize_t accountName_length;
-    const char* accountName;
-    PyObject* py_accountName;
-    int accountName_token;
-    PyObject* accountName_buffer = NULL;
-    UInt32 password_length = 0;
-    PyObject* py_password_length;
-    void* passwordData = NULL;
-    PyObject* py_passwordData;
+    OSStatus           retval;
+    id                 keychainOrArray;
+    PyObject*          py_keychainOrArray;
+    Py_ssize_t         serviceName_length;
+    const char*        serviceName;
+    PyObject*          py_serviceName;
+    int                serviceName_token;
+    PyObject*          serviceName_buffer = NULL;
+    Py_ssize_t         accountName_length;
+    const char*        accountName;
+    PyObject*          py_accountName;
+    int                accountName_token;
+    PyObject*          accountName_buffer = NULL;
+    UInt32             password_length    = 0;
+    PyObject*          py_password_length;
+    void*              passwordData = NULL;
+    PyObject*          py_passwordData;
     SecKeychainItemRef itemRef = NULL;
-    PyObject* py_itemRef;
-    const char string = 't';
+    PyObject*          py_itemRef;
+    const char         string = 't';
 
     if (!PyArg_ParseTuple(args, "OnOnOOOO", &py_keychainOrArray, &serviceName_length,
                           &py_serviceName, &accountName_length, &py_accountName,
@@ -357,7 +356,7 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
         return 1;
 
     } else {
-        PyObject* seq = PySequence_Fast(value, "itemset must be a sequence or None");
+        PyObject*  seq = PySequence_Fast(value, "itemset must be a sequence or None");
         Py_ssize_t i;
         if (seq == NULL) {
             return 0;
@@ -372,8 +371,8 @@ parse_itemset(PyObject* value, AuthorizationItemSet* itemset)
 
         for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
             if (PyObjC_PythonToObjC("{_AuthorizationItem=^cL^vI}",
-                                    PySequence_Fast_GET_ITEM(seq, i),
-                                    itemset->items + i) < 0) {
+                                    PySequence_Fast_GET_ITEM(seq, i), itemset->items + i)
+                < 0) {
                 PyMem_Free(itemset->items);
                 return 0;
             }
@@ -414,14 +413,14 @@ build_itemset(AuthorizationItemSet* itemset)
 static PyObject*
 m_AuthorizationCreate(PyObject* module __attribute__((__unused__)), PyObject* args)
 {
-    OSStatus retval;
-    AuthorizationRights rights;
-    PyObject* py_rights;
+    OSStatus                 retval;
+    AuthorizationRights      rights;
+    PyObject*                py_rights;
     AuthorizationEnvironment environment;
-    PyObject* py_environment;
-    AuthorizationFlags flags;
-    AuthorizationRef authorization = NULL;
-    PyObject* py_authorization;
+    PyObject*                py_environment;
+    AuthorizationFlags       flags;
+    AuthorizationRef         authorization = NULL;
+    PyObject*                py_authorization;
 
     rights.items = environment.items = NULL;
 
@@ -471,20 +470,20 @@ m_AuthorizationCreate(PyObject* module __attribute__((__unused__)), PyObject* ar
 static PyObject*
 m_AuthorizationCopyInfo(PyObject* module __attribute__((__unused__)), PyObject* args)
 {
-    OSStatus retval;
-    AuthorizationRef authorization;
-    PyObject* py_authorization;
-    char* tag;
-    PyObject* py_tag;
+    OSStatus              retval;
+    AuthorizationRef      authorization;
+    PyObject*             py_authorization;
+    char*                 tag;
+    PyObject*             py_tag;
     AuthorizationItemSet* info = NULL;
-    PyObject* py_info;
+    PyObject*             py_info;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_authorization, &py_tag, &py_info)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization,
-                            &authorization) == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
+        == -1) {
         return NULL;
     }
 
@@ -532,24 +531,24 @@ m_AuthorizationCopyInfo(PyObject* module __attribute__((__unused__)), PyObject* 
 static PyObject*
 m_AuthorizationCopyRights(PyObject* module __attribute__((__unused__)), PyObject* args)
 {
-    OSStatus retval;
-    AuthorizationRef authorization;
-    PyObject* py_authorization;
-    AuthorizationRights rights;
-    PyObject* py_rights;
+    OSStatus                 retval;
+    AuthorizationRef         authorization;
+    PyObject*                py_authorization;
+    AuthorizationRights      rights;
+    PyObject*                py_rights;
     AuthorizationEnvironment environment;
-    PyObject* py_environment;
-    AuthorizationFlags flags;
-    AuthorizationRights* authorizedRights = NULL;
-    PyObject* py_authorizedRights;
+    PyObject*                py_environment;
+    AuthorizationFlags       flags;
+    AuthorizationRights*     authorizedRights = NULL;
+    PyObject*                py_authorizedRights;
 
     if (!PyArg_ParseTuple(args, "OOOIO", &py_authorization, &py_rights, &py_environment,
                           &flags, &py_authorizedRights)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization,
-                            &authorization) == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
+        == -1) {
         return NULL;
     }
 
@@ -603,22 +602,22 @@ static PyObject*
 m_AuthorizationCopyRightsAsync(PyObject* module __attribute__((__unused__)),
                                PyObject* args)
 {
-    AuthorizationRef authorization;
-    PyObject* py_authorization;
-    AuthorizationRights rights;
-    PyObject* py_rights;
+    AuthorizationRef         authorization;
+    PyObject*                py_authorization;
+    AuthorizationRights      rights;
+    PyObject*                py_rights;
     AuthorizationEnvironment environment;
-    PyObject* py_environment;
-    AuthorizationFlags flags;
-    PyObject* py_callback;
+    PyObject*                py_environment;
+    AuthorizationFlags       flags;
+    PyObject*                py_callback;
 
     if (!PyArg_ParseTuple(args, "OOOIO", &py_authorization, &py_rights, &py_environment,
                           &flags, &py_callback)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization,
-                            &authorization) == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
+        == -1) {
         return NULL;
     }
 
@@ -695,26 +694,26 @@ static PyObject*
 m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)),
                                      PyObject* args)
 {
-    OSStatus retval;
-    AuthorizationRef authorization;
-    PyObject* py_authorization;
-    const char* pathToTool;
+    OSStatus           retval;
+    AuthorizationRef   authorization;
+    PyObject*          py_authorization;
+    const char*        pathToTool;
     AuthorizationFlags options;
-    PyObject* py_pathToTool;
-    char** arguments;
-    PyObject* py_arguments;
-    FILE* communicationsPipe = NULL;
-    PyObject* py_communicationsPipe;
-    PyObject* seq;
-    Py_ssize_t i;
+    PyObject*          py_pathToTool;
+    char**             arguments;
+    PyObject*          py_arguments;
+    FILE*              communicationsPipe = NULL;
+    PyObject*          py_communicationsPipe;
+    PyObject*          seq;
+    Py_ssize_t         i;
 
     if (!PyArg_ParseTuple(args, "OOIOO", &py_authorization, &py_pathToTool, &options,
                           &py_arguments, &py_communicationsPipe)) {
         return NULL;
     }
 
-    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization,
-                            &authorization) == -1) {
+    if (PyObjC_PythonToObjC(@encode(AuthorizationRef), py_authorization, &authorization)
+        == -1) {
         return NULL;
     }
 

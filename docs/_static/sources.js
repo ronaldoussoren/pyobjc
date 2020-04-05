@@ -1,3 +1,1 @@
-var tabberOptions = {
-  titleElementsStripHTML: false
-}
+var tabberOptions = {titleElementsStripHTML : false}

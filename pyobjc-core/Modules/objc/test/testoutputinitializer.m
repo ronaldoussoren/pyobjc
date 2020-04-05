@@ -23,9 +23,9 @@
 @implementation PyObjC_TestOutputInitializer
 - (instancetype)initWithBooleanOutput:(BOOL*)outBool
 {
-    self = [self init];
+    self     = [self init];
     *outBool = YES;
-    _priv = YES;
+    _priv    = YES;
     return self;
 }
 
@@ -64,7 +64,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_testoutputinitialize
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestOutputInitializer",
-                           PyObjC_IdToPython([PyObjC_TestOutputInitializer class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestOutputInitializer class]))
+        < 0) {
         return NULL;
     }
 

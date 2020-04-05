@@ -49,7 +49,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_filepointer(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestFilePointer",
-                           PyObjC_IdToPython([OC_TestFilePointer class])) < 0) {
+                           PyObjC_IdToPython([OC_TestFilePointer class]))
+        < 0) {
         return NULL;
     }
 

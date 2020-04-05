@@ -1,12 +1,12 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
-    #if 0
+#if 0
     p = PyObjC_IdToPython(@protocol(MTKViewDelegate));
     Py_XDECREF(p);
-    #endif
+#endif
 
-    #if PyObjC_BUILD_RELEASE >= 1015
+#if PyObjC_BUILD_RELEASE >= 1015
     p = PyObjC_IdToPython(@protocol(MTLCounter));
     Py_XDECREF(p);
 
@@ -16,5 +16,5 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(MTLCounterSampleBuffer));
     Py_XDECREF(p);
 
-    #endif
+#endif
 }

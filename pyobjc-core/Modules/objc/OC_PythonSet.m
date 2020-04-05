@@ -169,7 +169,7 @@
 - (id)initWithCoder:(NSCoder*)coder
 {
     int code;
-    id result;
+    id  result;
 
     if ([coder allowsKeyedCoding]) {
         code = [coder decodeInt32ForKey:@"pytype"];
@@ -212,7 +212,7 @@
             }
 
             selfAsPython = PyObjCObject_New(self, 0, YES);
-            setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+            setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
             v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
             Py_DECREF(cdr);
@@ -418,7 +418,7 @@
     NSObject* result = nil;
 
     PyObjC_BEGIN_WITH_GIL
-        int r;
+        int       r;
         PyObject* tmpMember;
 
         if (anObject == [NSNull null]) {

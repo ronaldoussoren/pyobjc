@@ -21,17 +21,17 @@
 typedef struct {
     PyObject_HEAD
 
-        PyTypeObject* type;
-    PyObject* obj;
+    PyTypeObject* type;
+    PyObject*     obj;
     PyTypeObject* obj_type;
 } superobject;
 
 static PyObject*
 super_getattro(PyObject* self, PyObject* name)
 {
-    superobject* su = (superobject*)self;
-    int skip = su->obj_type == NULL;
-    SEL sel;
+    superobject* su   = (superobject*)self;
+    int          skip = su->obj_type == NULL;
+    SEL          sel;
 
     if (!skip) {
         /* We want __class__ to return the class of the super object
@@ -60,13 +60,13 @@ super_getattro(PyObject* self, PyObject* name)
     }
 
     if (!skip) {
-        PyObject *mro, *res, *tmp, *dict;
+        PyObject *    mro, *res, *tmp, *dict;
         PyTypeObject* starttype;
-        descrgetfunc f;
-        Py_ssize_t i, n;
+        descrgetfunc  f;
+        Py_ssize_t    i, n;
 
         starttype = su->obj_type;
-        mro = starttype->tp_mro;
+        mro       = starttype->tp_mro;
 
         if (mro == NULL) {
             n = 0;
@@ -164,14 +164,14 @@ super_getattro(PyObject* self, PyObject* name)
 
 PyTypeObject PyObjCSuper_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.super",
-    .tp_basicsize = sizeof(superobject),
-    .tp_itemsize = 0,
-    .tp_getattro = super_getattro,
+    .tp_basicsize                                  = sizeof(superobject),
+    .tp_itemsize                                   = 0,
+    .tp_getattro                                   = super_getattro,
     .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
     .tp_alloc = PyType_GenericAlloc,
-    .tp_new = PyType_GenericNew,
-    .tp_free = PyObject_GC_Del,
-    .tp_base = &PySuper_Type,
+    .tp_new   = PyType_GenericNew,
+    .tp_free  = PyObject_GC_Del,
+    .tp_base  = &PySuper_Type,
 };
 
 #endif /* !Py_HAVE_LOCAL_LOOKUP */

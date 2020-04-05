@@ -26,9 +26,9 @@ static CFTreeContext mod_CFTreeContext = {0, NULL, mod_CFTreeRetainCallback,
 static PyObject*
 mod_CFTreeGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_tree;
-    PyObject* py_context;
-    CFTreeRef tree;
+    PyObject*     py_tree;
+    PyObject*     py_context;
+    CFTreeRef     tree;
     CFTreeContext context;
 
     if (!PyArg_ParseTuple(args, "OO", &py_tree, &py_context)) {
@@ -75,11 +75,11 @@ mod_CFTreeGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 mod_CFTreeSetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_tree;
-    PyObject* py_context;
-    CFTreeRef tree;
+    PyObject*     py_tree;
+    PyObject*     py_context;
+    CFTreeRef     tree;
     CFTreeContext context;
-    NSObject* info;
+    NSObject*     info;
 
     if (!PyArg_ParseTuple(args, "OO", &py_tree, &py_context)) {
         return NULL;
@@ -93,7 +93,7 @@ mod_CFTreeSetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
-    context = mod_CFTreeContext;
+    context      = mod_CFTreeContext;
     context.info = info;
 
     Py_BEGIN_ALLOW_THREADS
@@ -116,12 +116,12 @@ mod_CFTreeSetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 mod_CFTreeCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_context;
-    CFTreeRef tree;
-    CFTreeContext context;
+    PyObject*      py_allocator;
+    PyObject*      py_context;
+    CFTreeRef      tree;
+    CFTreeContext  context;
     CFAllocatorRef allocator;
-    NSObject* info;
+    NSObject*      info;
 
     if (!PyArg_ParseTuple(args, "OO", &py_allocator, &py_context)) {
         return NULL;
@@ -135,7 +135,7 @@ mod_CFTreeCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
-    context = mod_CFTreeContext;
+    context      = mod_CFTreeContext;
     context.info = info;
 
     tree = NULL;
@@ -167,12 +167,12 @@ mod_CFTreeCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 mod_CFTreeGetChildren(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_tree;
-    PyObject* py_buffer;
-    CFTreeRef tree;
-    CFIndex count;
+    PyObject*  py_tree;
+    PyObject*  py_buffer;
+    CFTreeRef  tree;
+    CFIndex    count;
     CFTreeRef* children = NULL;
-    PyObject* result;
+    PyObject*  result;
 
     if (!PyArg_ParseTuple(args, "OO", &py_tree, &py_buffer)) {
         return NULL;
@@ -190,7 +190,7 @@ mod_CFTreeGetChildren(PyObject* self __attribute__((__unused__)), PyObject* args
     children = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            count = CFTreeGetChildCount(tree);
+            count    = CFTreeGetChildCount(tree);
             children = malloc(count * sizeof(CFTreeRef));
             if (children != NULL) {
                 CFTreeGetChildren(tree, children);

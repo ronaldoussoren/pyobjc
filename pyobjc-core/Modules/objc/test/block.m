@@ -165,8 +165,8 @@ struct block_descriptor {
 
 struct block_literal {
     void* isa;
-    int flags;
-    int reserved;
+    int   flags;
+    int   reserved;
     void (*invoke)(void*, ...);
     struct block_descriptor* descriptor;
 };
@@ -241,8 +241,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_block(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OCTestBlock", PyObjC_IdToPython([OCTestBlock class])) <
-        0) {
+    if (PyModule_AddObject(m, "OCTestBlock", PyObjC_IdToPython([OCTestBlock class]))
+        < 0) {
         return NULL;
     }
 

@@ -13,8 +13,8 @@
  */
 @interface OC_PythonDictionaryEnumerator : NSEnumerator {
     OC_PythonDictionary* value;
-    Py_ssize_t pos;
-    BOOL valid;
+    Py_ssize_t           pos;
+    BOOL                 valid;
 }
 + (instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
 - (id)initWithWrappedDictionary:(OC_PythonDictionary*)value;
@@ -38,7 +38,7 @@
 
     value = [v retain];
     valid = YES;
-    pos = 0;
+    pos   = 0;
     return self;
 }
 
@@ -50,7 +50,7 @@
 
 - (id)nextObject
 {
-    id key = nil;
+    id        key   = nil;
     PyObject* pykey = NULL;
 
     PyObjC_BEGIN_WITH_GIL
@@ -179,7 +179,7 @@
 {
     PyObject* v;
     PyObject* k;
-    id result;
+    id        result;
 
     if (value == NULL) {
         return nil;
@@ -231,9 +231,9 @@
 
 - (void)setObject:val forKey:key
 {
-    PyObject* v = NULL;
-    PyObject* k = NULL;
-    id null = [NSNull null];
+    PyObject* v    = NULL;
+    PyObject* k    = NULL;
+    id        null = [NSNull null];
 
     PyObjC_BEGIN_WITH_GIL
         if (unlikely(val == null)) {
@@ -353,7 +353,7 @@
         for (i = 0; i < count; i++) {
             PyObject* k;
             PyObject* v;
-            int r;
+            int       r;
 
             if (objects[i] == [NSNull null]) {
                 v = Py_None;
@@ -447,7 +447,7 @@
                 }
 
                 selfAsPython = PyObjCObject_New(self, 0, YES);
-                setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
+                setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
                 v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
                 Py_DECREF(cdr);

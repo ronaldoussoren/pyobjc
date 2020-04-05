@@ -161,9 +161,9 @@
                  */
                 char buf[128];
 
-                NSTimeZone* zone = [NSTimeZone defaultTimeZone];
-                NSInteger offset = [zone secondsFromGMT];
-                char posneg;
+                NSTimeZone* zone   = [NSTimeZone defaultTimeZone];
+                NSInteger   offset = [zone secondsFromGMT];
+                char        posneg;
                 if (offset < 0) {
                     posneg = '-';
                     offset = -offset;
@@ -173,7 +173,7 @@
                 offset = offset / 60; /* Seconds to minutes */
 
                 NSInteger minutes = offset % 60;
-                NSInteger hours = offset / 60;
+                NSInteger hours   = offset / 60;
 
                 snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02ld%02ld", posneg,
                          (long)hours, (long)minutes);

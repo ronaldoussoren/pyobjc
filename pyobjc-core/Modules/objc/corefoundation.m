@@ -13,8 +13,8 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 
-static PyObject* gTypeid2class = NULL;
-PyObject* PyObjC_NSCFTypeClass = NULL;
+static PyObject* gTypeid2class        = NULL;
+PyObject*        PyObjC_NSCFTypeClass = NULL;
 
 static PyObject*
 cf_repr(PyObject* self)
@@ -45,11 +45,11 @@ PyObjC_TryCreateCFProxy(NSObject* value)
     PyObject* rval = NULL;
 
     if (gTypeid2class != NULL) {
-        PyObject* cfid;
+        PyObject*     cfid;
         PyTypeObject* tp;
 
         cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
-        tp = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
+        tp   = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
         Py_DECREF(cfid);
         if (tp == NULL && PyErr_Occurred()) {
             return NULL;
@@ -103,10 +103,10 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 PyObject*
 PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 {
-    PyObject* args;
-    PyObject* dict;
-    PyObject* result;
-    PyObject* bases;
+    PyObject*          args;
+    PyObject*          dict;
+    PyObject*          result;
+    PyObject*          bases;
     PyObjCClassObject* info;
 
     /*
@@ -175,16 +175,16 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     }
 
     ((PyTypeObject*)result)->tp_repr = cf_repr;
-    ((PyTypeObject*)result)->tp_str = cf_repr;
+    ((PyTypeObject*)result)->tp_str  = cf_repr;
 
-    info = (PyObjCClassObject*)result;
-    info->class = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
-    info->sel_to_py = NULL;
-    info->dictoffset = 0;
-    info->useKVO = 0;
-    info->delmethod = NULL;
+    info                = (PyObjCClassObject*)result;
+    info->class         = PyObjCClass_GetClass(PyObjC_NSCFTypeClass);
+    info->sel_to_py     = NULL;
+    info->dictoffset    = 0;
+    info->useKVO        = 0;
+    info->delmethod     = NULL;
     info->hasPythonImpl = 0;
-    info->isCFWrapper = 1;
+    info->isCFWrapper   = 1;
 
     if (PyObject_SetAttrString(result, "__module__", PyObjCClass_DefaultModule) < 0) {
         PyErr_Clear();
@@ -213,7 +213,7 @@ PyObjCCFType_Setup(void)
 #ifdef PyObjC_ENABLE_CFTYPE_CATEGORY
     static char encodingBuf[128];
 #endif
-    Class cls;
+    Class        cls;
     const char** cur;
 
     gTypeid2class = PyDict_New();
@@ -271,7 +271,7 @@ PyObject*
 PyObjCCF_NewSpecial(char* typestr, void* datum)
 {
     PyObject* rval = NULL;
-    PyObject* v = PyDict_GetItemStringWithError(PyObjC_TypeStr2CFTypeID, typestr);
+    PyObject* v    = PyDict_GetItemStringWithError(PyObjC_TypeStr2CFTypeID, typestr);
     CFTypeID typeid;
 
     if (v == NULL) {
@@ -289,11 +289,11 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
     }
 
     if (gTypeid2class != NULL) {
-        PyObject* cfid;
+        PyObject*     cfid;
         PyTypeObject* tp;
 
         cfid = PyLong_FromLong(typeid);
-        tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
+        tp   = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
         Py_DECREF(cfid);
 
         if (tp == NULL && PyErr_Occurred()) {
@@ -307,9 +307,9 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
             }
 
             ((PyObjCObject*)rval)->objc_object = (id)datum;
-            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT |
-                                           PyObjCObject_kSHOULD_NOT_RELEASE |
-                                           PyObjCObject_kMAGIC_COOKIE;
+            ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
+                                           | PyObjCObject_kSHOULD_NOT_RELEASE
+                                           | PyObjCObject_kMAGIC_COOKIE;
         }
 
     } else {
@@ -333,11 +333,11 @@ PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
     PyObject* rval = NULL;
 
     if (gTypeid2class != NULL) {
-        PyObject* cfid;
+        PyObject*     cfid;
         PyTypeObject* tp;
 
         cfid = PyLong_FromLong(typeid);
-        tp = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
+        tp   = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
         Py_DECREF(cfid);
         if (tp == NULL && PyErr_Occurred()) {
             return NULL;
@@ -350,9 +350,9 @@ PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
             }
 
             ((PyObjCObject*)rval)->objc_object = (id)datum;
-            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT |
-                                           PyObjCObject_kSHOULD_NOT_RELEASE |
-                                           PyObjCObject_kMAGIC_COOKIE;
+            ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
+                                           | PyObjCObject_kSHOULD_NOT_RELEASE
+                                           | PyObjCObject_kMAGIC_COOKIE;
         }
 
     } else {

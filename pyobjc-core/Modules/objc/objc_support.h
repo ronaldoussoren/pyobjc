@@ -44,10 +44,10 @@ extern int depythonify_c_array_count(const char* type, Py_ssize_t count, BOOL st
                                      PyObject* value, void* datum, BOOL already_retained,
                                      BOOL already_cfretained);
 extern Py_ssize_t c_array_nullterminated_size(PyObject* object, PyObject** seq);
-extern int depythonify_c_array_nullterminated(const char* type, Py_ssize_t count,
-                                              PyObject* value, void* datum,
-                                              BOOL already_retained,
-                                              BOOL already_cfretained);
+extern int        depythonify_c_array_nullterminated(const char* type, Py_ssize_t count,
+                                                     PyObject* value, void* datum,
+                                                     BOOL already_retained,
+                                                     BOOL already_cfretained);
 
 /*#F Takes a Python object @var{arg} and translate it into a C value
   pointed by @var{datum} accordingly with the type specification
@@ -66,13 +66,13 @@ extern int depythonify_c_return_array_nullterminated(const char* rettype, PyObje
                                                      void* resp, BOOL already_retained,
                                                      BOOL already_cfretained);
 
-extern Py_ssize_t PyObjCRT_SizeOfReturnType(const char* type) __attribute__((__pure__));
-extern Py_ssize_t PyObjCRT_SizeOfType(const char* type) __attribute__((__pure__));
-extern Py_ssize_t PyObjCRT_AlignOfType(const char* type) __attribute__((__pure__));
+extern Py_ssize_t  PyObjCRT_SizeOfReturnType(const char* type) __attribute__((__pure__));
+extern Py_ssize_t  PyObjCRT_SizeOfType(const char* type) __attribute__((__pure__));
+extern Py_ssize_t  PyObjCRT_AlignOfType(const char* type) __attribute__((__pure__));
 extern const char* PyObjCRT_SkipTypeSpec(const char* type);
 extern const char* PyObjCRT_NextField(const char* type);
 extern const char* PyObjCRT_SkipTypeQualifiers(const char* type);
-extern Py_ssize_t PyObjCRT_AlignedSize(const char* type) __attribute__((__pure__));
+extern Py_ssize_t  PyObjCRT_AlignedSize(const char* type) __attribute__((__pure__));
 
 extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 
@@ -82,7 +82,7 @@ extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 static inline id
 PyObjC_PythonToId(PyObject* value)
 {
-    id res;
+    id  res;
     int r;
 
     r = depythonify_c_value(@encode(id), value, &res);

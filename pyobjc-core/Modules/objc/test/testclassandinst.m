@@ -71,12 +71,14 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_testclassandinst(voi
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestClassAndInstance",
-                           PyObjC_IdToPython([PyObjC_TestClassAndInstance class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestClassAndInstance class]))
+        < 0) {
         return NULL;
     }
 
     if (PyModule_AddObject(m, "PyObjC_TestUnallocatable",
-                           PyObjC_IdToPython([PyObjC_TestUnallocatable class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestUnallocatable class]))
+        < 0) {
         return NULL;
     }
 

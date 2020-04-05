@@ -42,7 +42,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_protected(void)
     }
 
     if (PyModule_AddObject(m, "PyObjCTest_Protected",
-                           PyObjC_IdToPython([PyObjCTest_Protected class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTest_Protected class]))
+        < 0) {
         return NULL;
     }
     return m;

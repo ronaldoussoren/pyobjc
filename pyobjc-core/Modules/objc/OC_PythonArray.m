@@ -103,8 +103,8 @@
 - (id)objectAtIndex:(NSUInteger)idx
 {
     PyObject* v;
-    id result;
-    int err;
+    id        result;
+    int       err;
 
     PyObjC_BEGIN_WITH_GIL
         if (unlikely(idx > PY_SSIZE_T_MAX)) {
@@ -202,8 +202,8 @@
 - (void)insertObject:(id)anObject atIndex:(NSUInteger)idx
 {
     Py_ssize_t theIndex;
-    PyObject* v;
-    PyObject* w;
+    PyObject*  v;
+    PyObject*  w;
 
     if (unlikely(idx > PY_SSIZE_T_MAX)) {
         PyObjC_BEGIN_WITH_GIL
@@ -235,7 +235,7 @@
 
 - (void)removeLastObject
 {
-    int r;
+    int        r;
     Py_ssize_t idx;
 
     PyObjC_BEGIN_WITH_GIL
@@ -380,7 +380,7 @@
 
             for (i = 0; i < count; i++) {
                 PyObject* v;
-                int r;
+                int       r;
 
                 if (objects[i] == [NSNull null]) {
                     v = Py_None;
@@ -422,9 +422,9 @@
 
 - (id)initWithCoder:(NSCoder*)coder
 {
-    PyObject* t;
-    int code;
-    Py_ssize_t size;
+    PyObject*       t;
+    int             code;
+    Py_ssize_t      size;
     OC_PythonArray* tmpVal;
 
     if ([coder allowsKeyedCoding]) {
@@ -455,7 +455,7 @@
         self = tmpVal;
 
         PyObjC_BEGIN_WITH_GIL
-            t = value;
+            t     = value;
             value = PyList_AsTuple(t);
             Py_DECREF(t);
             if (value == NULL) {

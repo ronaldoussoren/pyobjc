@@ -2,7 +2,7 @@
 
 @interface OC_PythonDate : NSDate {
     PyObject* value;
-    NSDate* oc_value;
+    NSDate*   oc_value;
 }
 
 + (instancetype)dateWithPythonObject:(PyObject*)value;

@@ -5,7 +5,7 @@ static PyObject*
 mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
     PyObject* py_bag;
-    CFBagRef bag;
+    CFBagRef  bag;
 
     if (!PyArg_ParseTuple(args, "O", &py_bag)) {
         return NULL;
@@ -15,7 +15,7 @@ mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
         return NULL;
     }
 
-    CFIndex count = CFBagGetCount(bag);
+    CFIndex    count   = CFBagGetCount(bag);
     NSObject** members = malloc(sizeof(NSObject*) * count);
     if (members == NULL) {
         PyErr_NoMemory();
@@ -33,14 +33,14 @@ mod_CFBagGetValues(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_members;
-    Py_ssize_t count;
+    PyObject*      py_allocator;
+    PyObject*      py_members;
+    Py_ssize_t     count;
     CFAllocatorRef allocator;
-    void** members;
-    int r;
-    PyObject* buf = NULL;
-    CFBagRef bag;
+    void**         members;
+    int            r;
+    PyObject*      buf = NULL;
+    CFBagRef       bag;
 
     if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_members, &count)) {
         return NULL;
@@ -72,10 +72,10 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 mod_CFBagCreateMutable(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    Py_ssize_t count;
+    PyObject*      py_allocator;
+    Py_ssize_t     count;
     CFAllocatorRef allocator;
-    CFBagRef bag;
+    CFBagRef       bag;
 
     if (!PyArg_ParseTuple(args, "On", &py_allocator, &count)) {
         return NULL;

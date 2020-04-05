@@ -22,7 +22,7 @@
  */
 #import <Carbon/Carbon.h>
 extern PyObject* WinObj_New(WindowPtr);
-extern int WinObj_Convert(PyObject*, WindowPtr*);
+extern int       WinObj_Convert(PyObject*, WindowPtr*);
 extern PyObject* WinObj_WhichWindow(WindowPtr);
 
 #endif
@@ -30,9 +30,9 @@ extern PyObject* WinObj_WhichWindow(WindowPtr);
 static PyObject*
 call_NSWindow_windowRef(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
-    void* windowRef;
+    void*             windowRef;
 
     if (!PyArg_ParseTuple(arguments, "")) {
         return NULL;
@@ -48,7 +48,7 @@ call_NSWindow_windowRef(PyObject* method, PyObject* self, PyObject* arguments)
 
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
-            result = NULL;
+            result    = NULL;
             windowRef = NULL;
         }
     Py_END_ALLOW_THREADS
@@ -69,13 +69,13 @@ static void
 imp_NSWindow_windowRef(void* cif __attribute__((__unused__)), void* resp, void** args,
                        void* callable)
 {
-    id self = *(id*)args[0];
+    id         self    = *(id*)args[0];
     WindowPtr* pretval = (WindowPtr*)resp;
 
     PyObject* result;
     PyObject* arglist = NULL;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject* pyself  = NULL;
+    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -117,10 +117,10 @@ error:
 static PyObject*
 call_NSWindow_initWithWindowRef_(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
-    void* windowRef;
-    id objc_result;
+    void*             windowRef;
+    id                objc_result;
 
     if (!PyArg_ParseTuple(arguments, "O&", WinObj_Convert, &windowRef)) {
         return NULL;
@@ -155,13 +155,13 @@ imp_NSWindow_initWithWindowRef_(void* cif __attribute__((__unused__)), void* res
     id self = *(id*)args[0];
     // SEL _meth = *(SEL*)args[1];
     WindowPtr windowRef = *(WindowPtr*)args[2];
-    id* pretval = (id*)resp;
+    id*       pretval   = (id*)resp;
 
     PyObject* result;
     PyObject* arglist = NULL;
     PyObject* v;
     PyObject* pyself = NULL;
-    int cookie = 0;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -218,14 +218,15 @@ setup_nswindows(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(classNSWindow, @selector(initWithWindowRef:),
                                      call_NSWindow_initWithWindowRef_,
-                                     imp_NSWindow_initWithWindowRef_) < 0) {
+                                     imp_NSWindow_initWithWindowRef_)
+        < 0) {
 
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSWindow, @selector(windowRef),
-                                     call_NSWindow_windowRef,
-                                     imp_NSWindow_windowRef) < 0) {
+                                     call_NSWindow_windowRef, imp_NSWindow_windowRef)
+        < 0) {
 
         return -1;
     }

@@ -10,8 +10,8 @@
 static PyObject*
 makeipaddr(struct sockaddr* addr, int addrlen)
 {
-    char buf[NI_MAXHOST];
-    int error;
+    char      buf[NI_MAXHOST];
+    int       error;
     PyObject* v;
 
     error = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
@@ -37,10 +37,10 @@ makesockaddr(struct sockaddr* addr, int addrlen)
 
     case AF_INET: {
         struct sockaddr_in* a;
-        PyObject* addrobj = makeipaddr(addr, sizeof(*a));
-        PyObject* ret = NULL;
+        PyObject*           addrobj = makeipaddr(addr, sizeof(*a));
+        PyObject*           ret     = NULL;
         if (addrobj) {
-            a = (struct sockaddr_in*)addr;
+            a   = (struct sockaddr_in*)addr;
             ret = Py_BuildValue("Oi", addrobj, ntohs(a->sin_port));
             Py_DECREF(addrobj);
         }
@@ -54,10 +54,10 @@ makesockaddr(struct sockaddr* addr, int addrlen)
 
     case AF_INET6: {
         struct sockaddr_in6* a;
-        PyObject* addrobj = makeipaddr(addr, sizeof(*a));
-        PyObject* ret = NULL;
+        PyObject*            addrobj = makeipaddr(addr, sizeof(*a));
+        PyObject*            ret     = NULL;
         if (addrobj) {
-            a = (struct sockaddr_in6*)addr;
+            a   = (struct sockaddr_in6*)addr;
             ret = Py_BuildValue("Oiii", addrobj, ntohs(a->sin6_port), a->sin6_flowinfo,
                                 a->sin6_scope_id);
             Py_DECREF(addrobj);
@@ -78,11 +78,11 @@ makesockaddr(struct sockaddr* addr, int addrlen)
 static PyObject*
 call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
-    NSArray* res;
-    NSInteger len, i;
-    NSData* item;
+    NSArray*          res;
+    NSInteger         len, i;
+    NSData*           item;
 
     if (!PyArg_ParseTuple(arguments, "")) {
         return NULL;
@@ -110,7 +110,7 @@ call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject* argument
         return Py_None;
     }
 
-    len = [res count];
+    len    = [res count];
     result = PyTuple_New(len);
     if (result == NULL) {
         return NULL;
@@ -143,7 +143,8 @@ setup_nsnetservice(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(classNSNetService, @selector(addresses),
                                      call_NSNetService_addresses,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
 
         return -1;
     }

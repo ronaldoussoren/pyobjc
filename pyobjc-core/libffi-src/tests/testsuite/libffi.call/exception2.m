@@ -9,54 +9,48 @@
 #import <Foundation/Foundation.h>
 
 static void
-closure_raise(ffi_cif* cif,void* resp,void** args, void* userdata)
+closure_raise(ffi_cif* cif, void* resp, void** args, void* userdata)
 {
-  [NSException raise:NSInvalidArgumentException format:@"Dummy exception"];
+    [NSException raise:NSInvalidArgumentException format:@"Dummy exception"];
 }
-
 
 typedef void (*testfunc)(void);
 
-int main (void)
+int
+main(void)
 {
-  ffi_cif cif;
-  ffi_type *args[MAX_ARGS];
-  void *values[MAX_ARGS];
-  int ok;
+    ffi_cif   cif;
+    ffi_type* args[MAX_ARGS];
+    void*     values[MAX_ARGS];
+    int       ok;
 
 #ifndef USING_MMAP
-  static ffi_closure cl;
+    static ffi_closure cl;
 #endif
-  ffi_closure *pcl;
+    ffi_closure* pcl;
 
 #ifdef USING_MMAP
-  pcl = allocate_mmap (sizeof(ffi_closure));
+    pcl = allocate_mmap(sizeof(ffi_closure));
 #else
-  pcl = &cl;
+    pcl = &cl;
 #endif
 
- NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 
+    /* Initialize the cif */
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, &ffi_type_void, args) == FFI_OK);
 
+    CHECK(ffi_prep_closure(pcl, &cif, closure_raise, (void*)3 /* userdata */) == FFI_OK);
+    ok = 0;
+    NS_DURING((testfunc)pcl)
+        ();
+    NS_HANDLER
+    ok = 1;
 
+NS_ENDHANDLER
 
+CHECK(ok);
 
-  /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0,
-		     &ffi_type_void, args) == FFI_OK);
-
-  CHECK(ffi_prep_closure(pcl, &cif, closure_raise,
-                         (void *) 3 /* userdata */) == FFI_OK);
-  ok = 0;
-  NS_DURING
-	((testfunc)pcl)();
-  NS_HANDLER
- 	ok = 1;
-
-  NS_ENDHANDLER
-
-  CHECK(ok);
-
-  [pool release];
-  exit(0);
+[pool release];
+exit(0);
 }

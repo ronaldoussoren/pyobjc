@@ -1,7 +1,7 @@
 #include "pyobjc.h"
 
 static NSMapTable* python_proxies = NULL;
-static NSMapTable* objc_proxies = NULL;
+static NSMapTable* objc_proxies   = NULL;
 
 /*
  * Iff true the python->objc proxy registry uses a zero-ing weakref

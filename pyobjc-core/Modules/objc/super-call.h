@@ -24,7 +24,7 @@ extern BOOL PyObjC_UpdatingMetaData;
  * @result Returns 0 on success, -1 on error.
  */
 extern int PyObjC_RegisterMethodMapping(Class aClass, SEL sel,
-                                        PyObjC_CallFunc call_to_objc,
+                                        PyObjC_CallFunc       call_to_objc,
                                         PyObjCFFI_ClosureFunc call_to_python);
 
 /*!

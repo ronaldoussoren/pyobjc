@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 @interface OC_TestSequence : NSObject {
-    NSObject* objects[128];
+    NSObject*  objects[128];
     NSUInteger len;
 }
 - (id)initWithArray:(NSArray*)array;
@@ -97,12 +97,14 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_sequence(void)
     }
 
     if (PyModule_AddObject(m, "OC_TestSequence",
-                           PyObjC_IdToPython([OC_TestSequence class])) < 0) {
+                           PyObjC_IdToPython([OC_TestSequence class]))
+        < 0) {
         return NULL;
     }
 
     if (PyModule_AddObject(m, "OC_TestMutableSequence",
-                           PyObjC_IdToPython([OC_TestMutableSequence class])) < 0) {
+                           PyObjC_IdToPython([OC_TestMutableSequence class]))
+        < 0) {
         return NULL;
     }
 

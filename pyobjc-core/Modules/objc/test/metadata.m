@@ -132,7 +132,7 @@ static void use_id(id x __attribute__((__unused__))){};
 - (int*)makeIntArrayOf5
 {
     static int result[5];
-    int i;
+    int        i;
     for (i = 0; i < 5; i++) {
         result[i] = i * i;
     }
@@ -148,7 +148,7 @@ static void use_id(id x __attribute__((__unused__))){};
 - (int*)makeIntArrayOf:(int)count
 {
     static int* result = NULL;
-    int i;
+    int         i;
 
     if (result) {
         free(result);
@@ -200,7 +200,7 @@ static void use_id(id x __attribute__((__unused__))){};
 - (NSArray*)makeIntArray:(int*)data count:(unsigned)count
 {
     NSMutableArray* array;
-    unsigned i;
+    unsigned        i;
 
     array = [NSMutableArray arrayWithCapacity:count];
 
@@ -213,7 +213,7 @@ static void use_id(id x __attribute__((__unused__))){};
 - (NSArray*)make4Tuple:(double*)data
 {
     NSMutableArray* array;
-    unsigned i;
+    unsigned        i;
 
     array = [NSMutableArray array];
 
@@ -320,10 +320,10 @@ static void use_id(id x __attribute__((__unused__))){};
 - (void)reverseArray:(float*)data count:(int)count
 {
     float t;
-    int i;
+    int   i;
     for (i = 0; i < count / 2; i++) {
-        t = data[i];
-        data[i] = data[count - 1 - i];
+        t                   = data[i];
+        data[i]             = data[count - 1 - i];
         data[count - 1 - i] = t;
     }
 }
@@ -338,7 +338,7 @@ static void use_id(id x __attribute__((__unused__))){};
 
 - (void)reverseStrings:(char**)data
 {
-    int count, i;
+    int   count, i;
     char* t;
 
     for (count = 0; data[count] != NULL; count++) {
@@ -346,8 +346,8 @@ static void use_id(id x __attribute__((__unused__))){};
     }
 
     for (i = 0; i < count / 2; i++) {
-        t = data[i];
-        data[i] = data[count - 1 - i];
+        t                   = data[i];
+        data[i]             = data[count - 1 - i];
         data[count - 1 - i] = t;
     }
 }
@@ -364,11 +364,11 @@ static void use_id(id x __attribute__((__unused__))){};
 {
     short t;
 
-    t = data[0];
+    t       = data[0];
     data[0] = data[3];
     data[3] = t;
 
-    t = data[1];
+    t       = data[1];
     data[1] = data[2];
     data[2] = t;
 }
@@ -395,13 +395,13 @@ static void use_id(id x __attribute__((__unused__))){};
 - (void)swapX:(double*)x andY:(double*)y /* inout */
 {
     double t = *x;
-    *x = *y;
-    *y = t;
+    *x       = *y;
+    *y       = t;
 }
 
 - (NSArray*)input:(int*)x output:(int*)y inputAndOutput:(int*)z
 {
-    char buf[64];
+    char            buf[64];
     NSMutableArray* result = [NSMutableArray array];
 
     snprintf(buf, sizeof(buf), "%p", x);
@@ -647,7 +647,7 @@ static void use_id(id x __attribute__((__unused__))){};
 - (NSArray*)makeArrayWithFormat:(NSString*)fmt, ...
 {
     va_list ap;
-    char buffer[2048];
+    char    buffer[2048];
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
@@ -669,7 +669,7 @@ static void use_id(id x __attribute__((__unused__))){};
 - (NSArray*)makeArrayWithCFormat:(char*)fmt, ...
 {
     va_list ap;
-    char buffer[2048];
+    char    buffer[2048];
 
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
@@ -683,7 +683,7 @@ static void use_id(id x __attribute__((__unused__))){};
 
 - (NSArray*)makeArrayWithArguments:(id)arg, ...
 {
-    va_list ap;
+    va_list         ap;
     NSMutableArray* array = [[[NSMutableArray alloc] init] autorelease];
     if (arg == NULL) {
         return array;
@@ -762,7 +762,7 @@ static void use_id(id x __attribute__((__unused__))){};
     cnt *= 2;
 
     NSMutableArray* result;
-    int i;
+    int             i;
 
     result = [NSMutableArray arrayWithCapacity:cnt];
 
@@ -795,7 +795,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_metadata(void)
     }
 
     if (PyModule_AddObject(m, "OC_MetaDataTest",
-                           PyObjC_IdToPython([OC_MetaDataTest class])) < 0) {
+                           PyObjC_IdToPython([OC_MetaDataTest class]))
+        < 0) {
 
         return NULL;
     }

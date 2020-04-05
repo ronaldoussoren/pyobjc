@@ -21,12 +21,12 @@ static CFMessagePortContext mod_CFMessagePortContext = {0, NULL, mod_messageport
 static CFDataRef
 mod_CFMessagePortCallBack(CFMessagePortRef f, SInt32 msgid, CFDataRef data, void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject*        info  = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_f = PyObjC_ObjCToPython(@encode(CFMessagePortRef), &f);
+    PyObject* py_f     = PyObjC_ObjCToPython(@encode(CFMessagePortRef), &f);
     PyObject* py_msgid = PyObjC_ObjCToPython(@encode(SInt32), &msgid);
-    PyObject* py_data = PyObjC_ObjCToPython(@encode(CFDataRef), &data);
+    PyObject* py_data  = PyObjC_ObjCToPython(@encode(CFDataRef), &data);
 
     PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNNO", py_f,
                                              py_msgid, py_data, PyTuple_GetItem(info, 1));
@@ -49,14 +49,14 @@ mod_CFMessagePortCallBack(CFMessagePortRef f, SInt32 msgid, CFDataRef data, void
 static PyObject*
 mod_CFMessagePortCreateLocal(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_allocator;
-    PyObject* py_name;
-    PyObject* callout;
-    PyObject* info;
-    PyObject* py_shouldFree;
+    PyObject*      py_allocator;
+    PyObject*      py_name;
+    PyObject*      callout;
+    PyObject*      info;
+    PyObject*      py_shouldFree;
     CFAllocatorRef allocator;
-    CFStringRef name;
-    Boolean shouldFree;
+    CFStringRef    name;
+    Boolean        shouldFree;
 
     if (!PyArg_ParseTuple(args, "OOOOO", &py_allocator, &py_name, &callout, &info,
                           &py_shouldFree)) {
@@ -75,7 +75,7 @@ mod_CFMessagePortCreateLocal(PyObject* self __attribute__((__unused__)), PyObjec
     }
 
     CFMessagePortContext context = mod_CFMessagePortContext;
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info                 = Py_BuildValue("OO", callout, info);
     if (context.info == NULL) {
         return NULL;
     }
@@ -111,9 +111,9 @@ mod_CFMessagePortCreateLocal(PyObject* self __attribute__((__unused__)), PyObjec
 static PyObject*
 mod_CFMessagePortGetContext(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_f;
-    PyObject* py_context;
-    CFMessagePortRef f;
+    PyObject*            py_f;
+    PyObject*            py_context;
+    CFMessagePortRef     f;
     CFMessagePortContext context;
 
     if (!PyArg_ParseTuple(args, "OO", &py_f, &py_context)) {

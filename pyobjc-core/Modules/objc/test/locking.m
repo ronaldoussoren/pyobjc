@@ -61,8 +61,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_locking(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_LockTest", PyObjC_IdToPython([OC_LockTest class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_LockTest", PyObjC_IdToPython([OC_LockTest class]))
+        < 0) {
         return NULL;
     }
 

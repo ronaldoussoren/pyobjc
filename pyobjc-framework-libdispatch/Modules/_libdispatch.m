@@ -14,9 +14,9 @@ m_dispatch_data_create_map(PyObject* self __attribute__((__unused__)), PyObject*
     PyObject* py_result;
     PyObject* py_memview;
 
-    id data, result;
+    id          data, result;
     const void* buffer = NULL;
-    size_t size = 0;
+    size_t      size   = 0;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_data, &py_buffer, &py_size)) {
         return NULL;
@@ -33,7 +33,7 @@ m_dispatch_data_create_map(PyObject* self __attribute__((__unused__)), PyObject*
         return NULL;
     }
 
-    result = (id)dispatch_data_create_map((dispatch_data_t)data, &buffer, &size);
+    result    = (id)dispatch_data_create_map((dispatch_data_t)data, &buffer, &size);
     py_result = PyObjC_IdToPython(result);
     if (result) {
         [result release];
@@ -72,7 +72,7 @@ static int
 add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 {
     PyObject* v;
-    int r;
+    int       r;
 
     v = PyObjC_ObjCToPython(typestr, (void*)value);
     if (v == NULL) {
@@ -87,7 +87,7 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 /* Python glue */
 PyObjC_MODULE_INIT(_libdispatch)
 {
-    PyObject* m;
+    PyObject*              m;
     dispatch_source_type_t s;
 
     m = PyObjC_MODULE_CREATE(_libdispatch) if (!m) { PyObjC_INITERROR(); }
@@ -102,64 +102,73 @@ PyObjC_MODULE_INIT(_libdispatch)
     if (add_constant(m, "dispatch_data_empty", @encode(id), &v) != 0)
         goto error;
     if (add_constant(m, "DISPATCH_DATA_DESTRUCTOR_FREE", @encode(id),
-                     &DISPATCH_DATA_DESTRUCTOR_FREE) != 0)
+                     &DISPATCH_DATA_DESTRUCTOR_FREE)
+        != 0)
         goto error;
     if (add_constant(m, "DISPATCH_DATA_DESTRUCTOR_MUNMAP", @encode(id),
-                     &DISPATCH_DATA_DESTRUCTOR_MUNMAP) != 0)
+                     &DISPATCH_DATA_DESTRUCTOR_MUNMAP)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_DATA_ADD;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_DATA_ADD", @encode(dispatch_source_type_t),
-                     &s) != 0)
+                     &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_DATA_OR;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_DATA_OR", @encode(dispatch_source_type_t),
-                     &s) != 0)
+                     &s)
+        != 0)
         goto error;
 
 #if PyObjC_BUILD_RELEASE >= 1013
     if (@available(macOS 10.13, *)) {
         s = DISPATCH_SOURCE_TYPE_DATA_REPLACE;
         if (add_constant(m, "DISPATCH_SOURCE_TYPE_DATA_REPLACE",
-                         @encode(dispatch_source_type_t), &s) != 0)
+                         @encode(dispatch_source_type_t), &s)
+            != 0)
             goto error;
     }
 #endif
 
     s = DISPATCH_SOURCE_TYPE_WRITE;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_MACH_SEND", @encode(dispatch_source_type_t),
-                     &s) != 0)
+                     &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_MACH_RECV;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_MACH_RECV", @encode(dispatch_source_type_t),
-                     &s) != 0)
+                     &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_MEMORYPRESSURE;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_MEMORYPRESSURE",
-                     @encode(dispatch_source_type_t), &s) != 0)
+                     @encode(dispatch_source_type_t), &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_PROC;
-    if (add_constant(m, "DISPATCH_SOURCE_TYPE_PROC", @encode(dispatch_source_type_t),
-                     &s) != 0)
+    if (add_constant(m, "DISPATCH_SOURCE_TYPE_PROC", @encode(dispatch_source_type_t), &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_READ;
-    if (add_constant(m, "DISPATCH_SOURCE_TYPE_READ", @encode(dispatch_source_type_t),
-                     &s) != 0)
+    if (add_constant(m, "DISPATCH_SOURCE_TYPE_READ", @encode(dispatch_source_type_t), &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_SIGNAL;
     if (add_constant(m, "DISPATCH_SOURCE_TYPE_SIGNAL", @encode(dispatch_source_type_t),
-                     &s) != 0)
+                     &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_TIMER;
-    if (add_constant(m, "DISPATCH_SOURCE_TYPE_TIMER", @encode(dispatch_source_type_t),
-                     &s) != 0)
+    if (add_constant(m, "DISPATCH_SOURCE_TYPE_TIMER", @encode(dispatch_source_type_t), &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_VNODE;
-    if (add_constant(m, "DISPATCH_SOURCE_TYPE_VNODE", @encode(dispatch_source_type_t),
-                     &s) != 0)
+    if (add_constant(m, "DISPATCH_SOURCE_TYPE_VNODE", @encode(dispatch_source_type_t), &s)
+        != 0)
         goto error;
     s = DISPATCH_SOURCE_TYPE_WRITE;
-    if (add_constant(m, "DISPATCH_SOURCE_TYPE_WRITE", @encode(dispatch_source_type_t),
-                     &s) != 0)
+    if (add_constant(m, "DISPATCH_SOURCE_TYPE_WRITE", @encode(dispatch_source_type_t), &s)
+        != 0)
         goto error;
 
     /*
@@ -172,13 +181,15 @@ PyObjC_MODULE_INIT(_libdispatch)
     if (PyObjCPointerWrapper_RegisterID("dispatch_io_t", "^{dispatch_io_s=}") < 0)
         goto error;
     if (PyObjCPointerWrapper_RegisterID("dispatch_queue_attr_t",
-                                        "^{dispatch_queue_attr_s=}") < 0)
+                                        "^{dispatch_queue_attr_s=}")
+        < 0)
         goto error;
     if (PyObjCPointerWrapper_RegisterID("dispatch_semaphore_t",
-                                        "^{dispatch_semaphore_s=}") < 0)
+                                        "^{dispatch_semaphore_s=}")
+        < 0)
         goto error;
-    if (PyObjCPointerWrapper_RegisterID("dispatch_source_t",
-                                        "^{dispatch_source_type_s=}") < 0)
+    if (PyObjCPointerWrapper_RegisterID("dispatch_source_t", "^{dispatch_source_type_s=}")
+        < 0)
         goto error;
 
     PyObjC_INITDONE();

@@ -9,7 +9,7 @@ struct ArrayStruct {
     int second;
 };
 
-typedef int int_array_t[4];
+typedef int                int_array_t[4];
 typedef struct ArrayStruct struct_array_t[4];
 
 @interface OC_ArrayTest : NSObject {
@@ -143,7 +143,7 @@ typedef struct ArrayStruct struct_array_t[4];
 {
     int i;
     for (i = 0; i < 4; i++) {
-        array[i].first = 1 + i * i;
+        array[i].first  = 1 + i * i;
         array[i].second = -4 - i * i * i;
     }
 }
@@ -214,8 +214,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_arrays(void)
 
     PyObjC_ImportAPI(m);
 
-    if (PyModule_AddObject(m, "OC_ArrayTest", PyObjC_IdToPython([OC_ArrayTest class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_ArrayTest", PyObjC_IdToPython([OC_ArrayTest class]))
+        < 0) {
         return NULL;
     }
 

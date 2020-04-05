@@ -100,12 +100,12 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_copying(void)
     if (PyObjC_ImportAPI(m) < 0) {
         return NULL;
     }
-    if (PyModule_AddObject(m, "OC_CopyHelper", PyObjC_IdToPython([OC_CopyHelper class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_CopyHelper", PyObjC_IdToPython([OC_CopyHelper class]))
+        < 0) {
         return NULL;
     }
-    if (PyModule_AddObject(m, "OC_CopyBase", PyObjC_IdToPython([OC_CopyBase class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_CopyBase", PyObjC_IdToPython([OC_CopyBase class]))
+        < 0) {
         return NULL;
     }
 

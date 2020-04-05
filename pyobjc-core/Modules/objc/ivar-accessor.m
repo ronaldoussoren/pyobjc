@@ -4,7 +4,7 @@ static Ivar
 find_ivar(NSObject* base, const char* name)
 {
     Class cur = object_getClass((id)base);
-    Ivar ivar;
+    Ivar  ivar;
 
     while (cur != nil) {
         ivar = class_getInstanceVariable(cur, name);
@@ -19,10 +19,10 @@ find_ivar(NSObject* base, const char* name)
 PyObject*
 PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
 {
-    Class cur;
+    Class     cur;
     PyObject* v;
     PyObject* result;
-    int r;
+    int       r;
 
     if (PyObjCObject_Check(object)) {
         cur = object_getClass((id)PyObjCObject_GetObject(object));
@@ -55,8 +55,8 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
     }
 
     while (cur != nil) {
-        Ivar ivar;
-        Ivar* ivarList;
+        Ivar     ivar;
+        Ivar*    ivarList;
         unsigned i, ivarCount;
 
         ivarList = class_copyIvarList(cur, &ivarCount);
@@ -67,7 +67,7 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
         }
 
         for (i = 0; i < ivarCount; i++) {
-            ivar = ivarList[i];
+            ivar                  = ivarList[i];
             const char* ivar_name = ivar_getName(ivar);
 
             if (ivar == NULL)
@@ -107,13 +107,13 @@ PyObjCIvar_Get(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
 {
     static char* keywords[] = {"obj", "name", NULL};
 
-    PyObject* anObject;
-    char* name;
-    Ivar ivar;
-    NSObject* objcValue;
-    PyObject* result;
+    PyObject*   anObject;
+    char*       name;
+    Ivar        ivar;
+    NSObject*   objcValue;
+    PyObject*   result;
     const char* ivar_type;
-    ptrdiff_t ivar_offset;
+    ptrdiff_t   ivar_offset;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "Os", keywords, &anObject, &name)) {
         return NULL;
@@ -140,7 +140,7 @@ PyObjCIvar_Get(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
         return NULL;
     }
 
-    ivar_type = ivar_getTypeEncoding(ivar);
+    ivar_type   = ivar_getTypeEncoding(ivar);
     ivar_offset = ivar_getOffset(ivar);
 
     if (strcmp(ivar_type, @encode(PyObject*)) == 0) {
@@ -159,15 +159,15 @@ PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
 {
     static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL};
 
-    PyObject* anObject;
-    char* name;
-    Ivar ivar;
-    PyObject* value;
-    PyObject* updateRefCounts = NULL;
-    NSObject* objcValue;
-    int result;
+    PyObject*   anObject;
+    char*       name;
+    Ivar        ivar;
+    PyObject*   value;
+    PyObject*   updateRefCounts = NULL;
+    NSObject*   objcValue;
+    int         result;
     const char* ivar_type;
-    ptrdiff_t ivar_offset;
+    ptrdiff_t   ivar_offset;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OsO|O", keywords, &anObject, &name,
                                      &value, &updateRefCounts)) {
@@ -188,8 +188,8 @@ PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
          * Change the class of the object, this means we'll have to
          * update the python proxy object as well.
          */
-        Class cls;
-        PyObject* pycls;
+        Class         cls;
+        PyObject*     pycls;
         PyTypeObject* curType;
 
         result = depythonify_c_value(@encode(Class), value, &cls);
@@ -204,7 +204,7 @@ PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
             return NULL;
         }
 
-        curType = Py_TYPE(anObject);
+        curType           = Py_TYPE(anObject);
         Py_TYPE(anObject) = (PyTypeObject*)pycls;
         Py_DECREF((PyObject*)curType);
         Py_INCREF(Py_None);
@@ -217,7 +217,7 @@ PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
         return NULL;
     }
 
-    ivar_type = ivar_getTypeEncoding(ivar);
+    ivar_type   = ivar_getTypeEncoding(ivar);
     ivar_offset = ivar_getOffset(ivar);
 
     if (strcmp(ivar_type, @encode(PyObject*)) == 0) {

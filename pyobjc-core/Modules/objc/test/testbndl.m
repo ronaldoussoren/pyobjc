@@ -35,7 +35,7 @@
 #endif
 
 struct dummy {
-    int f1;
+    int   f1;
     short f2;
 };
 
@@ -44,21 +44,21 @@ struct dummy2 {
 };
 
 struct s1 {
-    int i;
+    int    i;
     double d;
 };
 
 struct complexStruct {
-    /*  0 */ char ch;
-    /*  1 */ unsigned char uch;
-    /*  4 */ int i1;
-    /*  8 */ unsigned int u;
-    /* 12 */ short s;
-    /* 20 */ double d;
-    /* 28 */ struct s1 sub1[2];
-    /* 60 */ int i2;
+    /*  0 */ char           ch;
+    /*  1 */ unsigned char  uch;
+    /*  4 */ int            i1;
+    /*  8 */ unsigned int   u;
+    /* 12 */ short          s;
+    /* 20 */ double         d;
+    /* 28 */ struct s1      sub1[2];
+    /* 60 */ int            i2;
     /* 62 */ unsigned short us;
-    /* 64 */ char* str;
+    /* 64 */ char*          str;
 };
 
 typedef NSObject<NSObject> ObjectClass;
@@ -170,26 +170,26 @@ typedef NSObject<NSObject> ObjectClass;
 - (void)passOutID:(id*)arg;
 - (void)passInOutID:(id*)arg;
 
--(ObjectClass*)returnObjectValue:(int)t;
+- (ObjectClass*)returnObjectValue:(int)t;
 
 @end
 
 @implementation OC_TestClass1
 
 #define ARRAYSIZE(a) (sizeof(a) / sizeof(a[0]))
-static size_t g_idx = 0;
+static size_t             g_idx          = 0;
 static unsigned long long g_ulonglongs[] = {0, 42, (1LL << 63)};
-static unsigned long g_ulongs[] = {0, 42, (1 << 30)};
-static long long g_longlongs[] = {-(1LL << 60), -42, 0, 42, (1LL << 60)};
-static long g_longs[] = {-(1 << 30), -42, 0, 42, (1 << 30)};
-static int g_ints[] = {-(1 << 30), -42, 0, 42, (1 << 30)};
-static unsigned int g_uints[] = {0, 42, 1 << 30};
-static short g_shorts[] = {-(1 << 14), -42, 0, 42, (1 << 14)};
-static unsigned short g_ushorts[] = {0, 42, 1 << 14};
-static char g_chars[] = {-128, 0, 127};
-static unsigned char g_uchars[] = {0, 128, 255};
-static float g_floats[] = {0.128, 1.0, 42.0, 1e10};
-static double g_doubles[] = {0.128, 1.0, 42.0, 1e10};
+static unsigned long      g_ulongs[]     = {0, 42, (1 << 30)};
+static long long          g_longlongs[]  = {-(1LL << 60), -42, 0, 42, (1LL << 60)};
+static long               g_longs[]      = {-(1 << 30), -42, 0, 42, (1 << 30)};
+static int                g_ints[]       = {-(1 << 30), -42, 0, 42, (1 << 30)};
+static unsigned int       g_uints[]      = {0, 42, 1 << 30};
+static short              g_shorts[]     = {-(1 << 14), -42, 0, 42, (1 << 14)};
+static unsigned short     g_ushorts[]    = {0, 42, 1 << 14};
+static char               g_chars[]      = {-128, 0, 127};
+static unsigned char      g_uchars[]     = {0, 128, 255};
+static float              g_floats[]     = {0.128, 1.0, 42.0, 1e10};
+static double             g_doubles[]    = {0.128, 1.0, 42.0, 1e10};
 
 static char* g_charps[] = {"hello", "world", "foobar"};
 
@@ -519,8 +519,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 - (char*)charpArg:(char*)arg
 {
     static char buf[1024];
-    size_t len = strlen(arg);
-    size_t i;
+    size_t      len = strlen(arg);
+    size_t      i;
 
     for (i = 0; i < len; i++) {
         buf[len - i - 1] = arg[i];
@@ -772,9 +772,9 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 {
     /* Yes this is leaking, but we're only testing method calling */
     size_t len = strlen(*arg);
-    char* res = malloc(len * 2 + 1);
-    char* p;
-    char* q;
+    char*  res = malloc(len * 2 + 1);
+    char*  p;
+    char*  q;
 
     for (p = *arg, q = res; *p; p++) {
         *q++ = *p;
@@ -795,15 +795,15 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 {
     /* Yes this is leaking, but we're only testing method calling */
     size_t len = strlen(*arg);
-    char* res = malloc(len * 2 + 1);
-    char* p;
-    char* q;
+    char*  res = malloc(len * 2 + 1);
+    char*  p;
+    char*  q;
 
     for (p = *arg, q = res; *p; p++) {
         *q++ = *p;
         *q++ = *p;
     }
-    *q = 0;
+    *q   = 0;
     *arg = res;
 }
 
@@ -852,13 +852,17 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     *arg = [NSArray arrayWithObject:temp];
 }
 
--(ObjectClass*)returnObjectValue:(int)t
+- (ObjectClass*)returnObjectValue:(int)t
 {
     switch (t) {
-    case 1: return [NSObject new];
-    case 2: return [NSArray array];
-    case 3: return [NSDictionary dictionary];
-    default: return nil;
+    case 1:
+        return [NSObject new];
+    case 2:
+        return [NSArray array];
+    case 3:
+        return [NSDictionary dictionary];
+    default:
+        return nil;
     }
 }
 
@@ -1014,7 +1018,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (char)invokeInstanceCharFuncOf:(OC_TestClass1*)arg
 {
-    char res;
+    char          res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(charFunc))
@@ -1038,7 +1042,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (short)invokeInstanceShortFuncOf:(OC_TestClass1*)arg
 {
-    short res;
+    short         res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(shortFunc))
@@ -1051,7 +1055,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 - (unsigned short)invokeInstanceUnsignedShortFuncOf:(OC_TestClass1*)arg
 {
     unsigned short res;
-    NSInvocation* inv;
+    NSInvocation*  inv;
 
     SETUP_INVOCATION(inv, arg, @selector(ushortFunc))
 
@@ -1062,7 +1066,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (int)invokeInstanceIntFuncOf:(OC_TestClass1*)arg
 {
-    int res;
+    int           res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(intFunc))
@@ -1074,7 +1078,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (unsigned int)invokeInstanceUnsignedIntFuncOf:(OC_TestClass1*)arg
 {
-    unsigned int res;
+    unsigned int  res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(uintFunc))
@@ -1086,7 +1090,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (long)invokeInstanceLongFuncOf:(OC_TestClass1*)arg
 {
-    long res;
+    long          res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(longFunc))
@@ -1224,7 +1228,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (long long)invokeInstanceLongLongFuncOf:(OC_TestClass1*)arg
 {
-    long long res;
+    long long     res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(longlongFunc))
@@ -1237,7 +1241,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 - (unsigned long long)invokeInstanceUnsignedLongLongFuncOf:(OC_TestClass1*)arg
 {
     unsigned long long res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, arg, @selector(ulonglongFunc))
 
@@ -1248,7 +1252,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (float)invokeInstanceFloatFuncOf:(OC_TestClass1*)arg
 {
-    float res;
+    float         res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(floatFunc))
@@ -1260,7 +1264,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (double)invokeInstanceDoubleFuncOf:(OC_TestClass1*)arg
 {
-    double res;
+    double        res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(doubleFunc))
@@ -1272,7 +1276,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (id)invokeInstanceIdFuncOf:(OC_TestClass1*)arg
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(idFunc))
@@ -1284,7 +1288,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (struct dummy)invokeInstanceDummyFuncOf:(OC_TestClass1*)arg
 {
-    struct dummy res;
+    struct dummy  res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(dummyFunc))
@@ -1308,7 +1312,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (NSPoint)invokeInstanceNSPointFuncOf:(OC_TestClass1*)arg
 {
-    NSPoint res;
+    NSPoint       res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, arg, @selector(nspointFunc))
@@ -1320,7 +1324,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (long long)invokeInstanceLongLongArg:(long long)arg on:(OC_TestClass1*)obj
 {
-    long long res;
+    long long     res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1336,7 +1340,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
                                                      on:(OC_TestClass1*)obj
 {
     unsigned long long res;
-    NSInvocation* inv;
+    NSInvocation*      inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector(ulonglongArg:))[inv setArgument:&arg
@@ -1349,7 +1353,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (long)invokeInstanceLongArg:(long)arg on:(OC_TestClass1*)obj
 {
-    long res;
+    long          res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1377,7 +1381,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (int)invokeInstanceIntArg:(int)arg on:(OC_TestClass1*)obj
 {
-    int res;
+    int           res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1391,7 +1395,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (unsigned int)invokeInstanceUnsignedIntArg:(unsigned int)arg on:(OC_TestClass1*)obj
 {
-    unsigned int res;
+    unsigned int  res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1405,7 +1409,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (short)invokeInstanceShortArg:(short)arg on:(OC_TestClass1*)obj
 {
-    short res;
+    short         res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1421,7 +1425,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
                                               on:(OC_TestClass1*)obj
 {
     unsigned short res;
-    NSInvocation* inv;
+    NSInvocation*  inv;
 
     SETUP_INVOCATION(inv, obj,
                      @selector
@@ -1434,7 +1438,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (char)invokeInstanceCharArg:(char)arg on:(OC_TestClass1*)obj
 {
-    char res;
+    char          res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1462,7 +1466,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (float)invokeInstanceFloatArg:(float)arg on:(OC_TestClass1*)obj
 {
-    float res;
+    float         res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1476,7 +1480,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (double)invokeInstanceDoubleArg:(double)arg on:(OC_TestClass1*)obj
 {
-    double res;
+    double        res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1490,7 +1494,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (char*)invokeInstanceCharpArg:(char*)arg on:(OC_TestClass1*)obj
 {
-    char* res;
+    char*         res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1504,7 +1508,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (id)invokeInstanceIdArg:(id)arg on:(OC_TestClass1*)obj
 {
-    id res;
+    id            res;
     NSInvocation* inv;
 
     SETUP_INVOCATION(inv, obj,
@@ -1557,7 +1561,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
      * cause a core-dump if the copy is not a 'new'
      * object.
      */
-    pool = [[NSAutoreleasePool alloc] init];
+    pool    = [[NSAutoreleasePool alloc] init];
     theCopy = [source copy];
     [pool release];
     pool = nil;
@@ -1595,8 +1599,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     case 3:
         [object takeValuesFromDictionary:value];
         break;
-#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
-    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3)                                                       \
+    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 
     case 4:
         [object setValue:value forKey:key];
@@ -1615,8 +1619,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
                         observer:(NSObject*)obj
                          keyPath:(NSString*)path
 {
-#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
-    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3)                                                       \
+    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     NSObject* o = [[[theClass alloc] init] autorelease];
     [o addObserver:obj
         forKeyPath:path
@@ -1660,7 +1664,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 - (void)runThread:(id)object
 {
     NSObject* pool = [[NSAutoreleasePool alloc] init];
-    returnObject = [object call];
+    returnObject   = [object call];
     [returnObject retain];
     [pool release];
 }
@@ -1672,8 +1676,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-    double d = 1.5;
-    int iArray[] = {3, 4, 5, 6};
+    double d        = 1.5;
+    int    iArray[] = {3, 4, 5, 6};
     [coder encodeValueOfObjCType:@encode(double) at:&d];
     [coder encodeArrayOfObjCType:@encode(int) count:4 at:iArray];
     [coder encodeBytes:"hello world" length:11];
@@ -1695,7 +1699,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
 + (NSData*)fetchData:(NSCoder*)coder
 {
-    void* data;
+    void*      data;
     NSUInteger length;
 
     data = [coder decodeBytesWithReturnedLength:&length];
@@ -1741,8 +1745,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     if (!self)
         return nil;
 
-    directString = [@"Direct String" retain];
-    directNumber = [[NSNumber numberWithInt:42] retain];
+    directString   = [@"Direct String" retain];
+    directNumber   = [[NSNumber numberWithInt:42] retain];
     indirectString = [@"Indirect String" retain];
     indirectNumber = [[NSNumber numberWithInt:84] retain];
 
@@ -1785,7 +1789,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     if (!self)
         return nil;
 
-    directHead = [[PyObjCTest_KVBaseClass alloc] init];
+    directHead   = [[PyObjCTest_KVBaseClass alloc] init];
     indirectHead = [[PyObjCTest_KVBaseClass alloc] init];
 
     return self;
@@ -1803,13 +1807,13 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 }
 @end
 
-#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
-    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3)                                                       \
+    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 
 @interface PyObjCTest_KeyValueObserver : NSObject {
-    id observed;
+    id        observed;
     NSString* key;
-    id value;
+    id        value;
 }
 - (instancetype)initWithInstanceOfClass:(Class)cls withKey:(NSString*)key;
 - (id)getValue;
@@ -1827,7 +1831,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
     self = [super init];
     if (self == nil)
         return nil;
-    value = nil;
+    value    = nil;
     observed = nil;
 
     observed = [[cls alloc] init];
@@ -1887,10 +1891,10 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 static PyObject*
 pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    char* signature;
+    char*     signature;
     PyObject* o;
-    char* buf;
-    int r;
+    char*     buf;
+    int       r;
 
     if (!PyArg_ParseTuple(args, "yO", &signature, &o)) {
 
@@ -1917,14 +1921,14 @@ pyobjcpy(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    char* signature;
-    PyObject* o1;
-    PyObject* o2;
-    char* buf;
-    int r;
+    char*      signature;
+    PyObject*  o1;
+    PyObject*  o2;
+    char*      buf;
+    int        r;
     Py_ssize_t buflen;
-    PyObject* res;
-    PyObject* v = NULL;
+    PyObject*  res;
+    PyObject*  v = NULL;
 
     if (!PyArg_ParseTuple(args, "yOO", &signature, &o1, &o2)) {
         return NULL;
@@ -1988,35 +1992,40 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_TestClass1", PyObjC_IdToPython([OC_TestClass1 class]))
+        < 0) {
         return NULL;
     }
-    if (PyModule_AddObject(m, "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class])) <
-        0) {
+    if (PyModule_AddObject(m, "OC_TestClass2", PyObjC_IdToPython([OC_TestClass2 class]))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass3",
-                           PyObjC_IdToPython([PyObjC_TestClass3 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestClass3 class]))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjC_TestClass4",
-                           PyObjC_IdToPython([PyObjC_TestClass4 class])) < 0) {
+                           PyObjC_IdToPython([PyObjC_TestClass4 class]))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVBaseClass",
-                           PyObjC_IdToPython([PyObjCTest_KVBaseClass class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTest_KVBaseClass class]))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "PyObjCTest_KVPathClass",
-                           PyObjC_IdToPython([PyObjCTest_KVPathClass class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTest_KVPathClass class]))
+        < 0) {
         return NULL;
     }
 
-#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
-    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3)                                                       \
+    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     if (PyModule_AddObject(m, "PyObjCTest_KeyValueObserver",
-                           PyObjC_IdToPython([PyObjCTest_KeyValueObserver class])) < 0) {
+                           PyObjC_IdToPython([PyObjCTest_KeyValueObserver class]))
+        < 0) {
         return NULL;
     }
 #else
@@ -2107,8 +2116,8 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_testbndl(void)
         return NULL;
     }
 
-    if (PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX)) <
-        0) {
+    if (PyModule_AddObject(m, "ULLONG_MAX", PyLong_FromUnsignedLongLong(ULLONG_MAX))
+        < 0) {
         return NULL;
     }
     if (PyModule_AddObject(m, "LLONG_MAX", PyLong_FromLongLong(LLONG_MAX)) < 0) {

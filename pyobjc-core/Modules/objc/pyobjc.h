@@ -18,8 +18,8 @@
 
 #include <objc/objc.h>
 
-#include "pyobjc-compat.h"
 #import "pyobjc-assert.h"
+#include "pyobjc-compat.h"
 
 /*
  * Configuration block

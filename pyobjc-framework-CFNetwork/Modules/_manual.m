@@ -41,7 +41,7 @@ m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_func = PyTuple_GetItem(context, 0);
-    PyObject* py_ctx = PyTuple_GetItem(context, 1);
+    PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
     PyObject* py_list = PyObjC_IdToPython((NSObject*)proxyList);
     if (py_list == NULL) {
@@ -76,7 +76,7 @@ m_CFHostClientCallBack(CFHostRef host, CFHostInfoType typeInfo,
     PyGILState_STATE state = PyGILState_Ensure();
 
     PyObject* py_func = PyTuple_GetItem(context, 0);
-    PyObject* py_ctx = PyTuple_GetItem(context, 1);
+    PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
     PyObject* py_host = PyObjC_IdToPython((NSObject*)host);
     if (py_host == NULL) {
@@ -124,11 +124,11 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
                                                PyObject* args)
 {
     CFStringRef script;
-    CFURLRef url;
-    PyObject* callback;
-    PyObject* ctx;
-    PyObject* py_script;
-    PyObject* py_url;
+    CFURLRef    url;
+    PyObject*   callback;
+    PyObject*   ctx;
+    PyObject*   py_script;
+    PyObject*   py_url;
 
     if (!PyArg_ParseTuple(args, "OOOO", &py_script, &py_url, &callback, &ctx)) {
         return NULL;
@@ -150,7 +150,7 @@ m_CFNetworkExecuteProxyAutoConfigurationScript(PyObject* mod __attribute__((__un
     }
 
     CFStreamClientContext context = mod_CFStreamClientContext;
-    context.info = py_context;
+    context.info                  = py_context;
 
     CFRunLoopSourceRef ref = NULL;
 
@@ -183,8 +183,8 @@ static PyObject*
 m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unused__)),
                                             PyObject* args)
 {
-    CFURLRef script;
-    CFURLRef url;
+    CFURLRef  script;
+    CFURLRef  url;
     PyObject* callback;
     PyObject* ctx;
     PyObject* py_script;
@@ -210,7 +210,7 @@ m_CFNetworkExecuteProxyAutoConfigurationURL(PyObject* mod __attribute__((__unuse
     }
 
     CFStreamClientContext context = mod_CFStreamClientContext;
-    context.info = py_context;
+    context.info                  = py_context;
 
     CFRunLoopSourceRef ref = NULL;
 
@@ -243,7 +243,7 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
     PyObject* callback;
     PyObject* ctx;
     PyObject* py_host;
-    Boolean ok = 0;
+    Boolean   ok = 0;
 
     if (!PyArg_ParseTuple(args, "OOO", &py_host, &callback, &ctx)) {
         return NULL;
@@ -276,7 +276,7 @@ m_CFHostSetClient(PyObject* mod __attribute__((__unused__)), PyObject* args)
     }
 
     CFHostClientContext context = mod_CFHostClientContext;
-    context.info = py_context;
+    context.info                = py_context;
 
     Py_BEGIN_ALLOW_THREADS
         @try {

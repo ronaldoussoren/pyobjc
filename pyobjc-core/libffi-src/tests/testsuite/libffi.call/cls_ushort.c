@@ -7,45 +7,45 @@
 /* { dg-do run { xfail mips*-*-* arm*-*-* strongarm*-*-* xscale*-*-* } } */
 #include "ffitest.h"
 
-static void cls_ret_ushort_fn(ffi_cif* cif,void* resp,void** args,
-			     void* userdata)
- {
-   *(ffi_arg*)resp = *(unsigned short *)args[0];
+static void
+cls_ret_ushort_fn(ffi_cif* cif, void* resp, void** args, void* userdata)
+{
+    *(ffi_arg*)resp = *(unsigned short*)args[0];
 
-   printf("%d: %d\n",*(unsigned short *)args[0],
-	  *(ffi_arg*)resp);
- }
+    printf("%d: %d\n", *(unsigned short*)args[0], *(ffi_arg*)resp);
+}
 typedef unsigned short (*cls_ret_ushort)(unsigned short);
 
-int main (void)
+int
+main(void)
 {
-  ffi_cif cif;
+    ffi_cif cif;
 #ifndef USING_MMAP
-  static ffi_closure cl;
+    static ffi_closure cl;
 #endif
-  ffi_closure *pcl;
-  ffi_type * cl_arg_types[2];
-  unsigned short res;
+    ffi_closure*   pcl;
+    ffi_type*      cl_arg_types[2];
+    unsigned short res;
 
 #ifdef USING_MMAP
-  pcl = allocate_mmap (sizeof(ffi_closure));
+    pcl = allocate_mmap(sizeof(ffi_closure));
 #else
-  pcl = &cl;
+    pcl = &cl;
 #endif
 
-  cl_arg_types[0] = &ffi_type_ushort;
-  cl_arg_types[1] = NULL;
+    cl_arg_types[0] = &ffi_type_ushort;
+    cl_arg_types[1] = NULL;
 
-  /* Initialize the cif */
-  CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1,
-		     &ffi_type_ushort, cl_arg_types) == FFI_OK);
+    /* Initialize the cif */
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 1, &ffi_type_ushort, cl_arg_types)
+          == FFI_OK);
 
-  CHECK(ffi_prep_closure(pcl, &cif, cls_ret_ushort_fn, NULL)  == FFI_OK);
+    CHECK(ffi_prep_closure(pcl, &cif, cls_ret_ushort_fn, NULL) == FFI_OK);
 
-  res = (*((cls_ret_ushort)pcl))(65535);
-  /* { dg-output "65535: 65535" } */
-  printf("res: %d\n",res);
-  /* { dg-output "\nres: 65535" } */
+    res = (*((cls_ret_ushort)pcl))(65535);
+    /* { dg-output "65535: 65535" } */
+    printf("res: %d\n", res);
+    /* { dg-output "\nres: 65535" } */
 
-  exit(0);
+    exit(0);
 }

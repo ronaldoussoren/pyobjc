@@ -23,10 +23,10 @@ static void
 mod_CFWriteStreamClientCallBack(CFWriteStreamRef f, CFStreamEventType eventType,
                                 void* _info)
 {
-    PyObject* info = (PyObject*)_info;
+    PyObject*        info  = (PyObject*)_info;
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* py_f = PyObjC_ObjCToPython(@encode(CFWriteStreamRef), &f);
+    PyObject* py_f         = PyObjC_ObjCToPython(@encode(CFWriteStreamRef), &f);
     PyObject* py_eventType = PyObjC_ObjCToPython(@encode(CFStreamEventType), &eventType);
 
     PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNO", py_f,
@@ -41,12 +41,12 @@ mod_CFWriteStreamClientCallBack(CFWriteStreamRef f, CFStreamEventType eventType,
 static PyObject*
 mod_CFWriteStreamSetClient(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_stream;
-    PyObject* py_streamEvents;
-    PyObject* callout;
-    PyObject* info;
+    PyObject*        py_stream;
+    PyObject*        py_streamEvents;
+    PyObject*        callout;
+    PyObject*        info;
     CFWriteStreamRef stream;
-    CFOptionFlags streamEvents;
+    CFOptionFlags    streamEvents;
 
     if (!PyArg_ParseTuple(args, "OOOO", &py_stream, &py_streamEvents, &callout, &info)) {
         return NULL;
@@ -60,7 +60,7 @@ mod_CFWriteStreamSetClient(PyObject* self __attribute__((__unused__)), PyObject*
     }
 
     CFStreamClientContext context = mod_CFStreamClientContext_Write;
-    context.info = Py_BuildValue("OO", callout, info);
+    context.info                  = Py_BuildValue("OO", callout, info);
     if (context.info == NULL) {
         return NULL;
     }

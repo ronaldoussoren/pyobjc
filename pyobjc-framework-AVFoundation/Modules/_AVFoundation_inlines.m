@@ -14,7 +14,6 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
 
-
 static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1011
     {"AVMakeBeatRange", (PyObjC_Function_Pointer)&AVMakeBeatRange},
@@ -70,8 +69,8 @@ init_inlines(void)
         INITERROR();
     }
 
-    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map)) <
-        0) {
+    if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))
+        < 0) {
         INITERROR();
     }
 

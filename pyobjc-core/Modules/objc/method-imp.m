@@ -1,11 +1,12 @@
 #include "pyobjc.h"
 
 typedef struct {
-    PyObject_HEAD IMP imp;
-    PyObjC_CallFunc callfunc;
+    PyObject_HEAD
+    IMP                    imp;
+    PyObjC_CallFunc        callfunc;
     PyObjCMethodSignature* signature;
-    SEL selector;
-    int flags;
+    SEL                    selector;
+    int                    flags;
 } PyObjCIMPObject;
 
 PyObject*
@@ -18,9 +19,9 @@ PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
     if (result == NULL)
         return NULL;
 
-    result->imp = imp;
-    result->selector = selector;
-    result->callfunc = callfunc;
+    result->imp       = imp;
+    result->selector  = selector;
+    result->callfunc  = callfunc;
     result->signature = signature;
 
     if (signature) {
@@ -92,13 +93,13 @@ static PyObject*
 imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    PyObject* pyself;
-    PyObjC_CallFunc execute = NULL;
-    PyObject* res;
-    PyObject* pyres;
-    Py_ssize_t argslen;
-    PyObject* arglist;
-    Py_ssize_t i;
+    PyObject*        pyself;
+    PyObjC_CallFunc  execute = NULL;
+    PyObject*        res;
+    PyObject*        pyres;
+    Py_ssize_t       argslen;
+    PyObject*        arglist;
+    Py_ssize_t       i;
 
     if (kwds != NULL && PyObject_Size(kwds) != 0) {
         PyErr_SetString(PyExc_TypeError,
@@ -135,13 +136,13 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
     pyres = res = execute((PyObject*)self, pyself, arglist);
     Py_DECREF(arglist);
 
-    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1 &&
-        PyTuple_GET_ITEM(pyres, 0) == pyself) {
+    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
+        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
         pyres = pyself;
     }
 
-    if (PyObjCObject_Check(pyself) &&
-        (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
+    if (PyObjCObject_Check(pyself)
+        && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
         if (pyself != pyres && !PyErr_Occurred()) {
             PyObjCObject_ClearObject(pyself);
         }
@@ -153,8 +154,8 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
 
         } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
             ((PyObjCObject*)pyres)->flags &= ~PyObjCObject_kUNINITIALIZED;
-            if (pyself && pyself != pyres && PyObjCObject_Check(pyself) &&
-                !PyErr_Occurred()) {
+            if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
+                && !PyErr_Occurred()) {
                 PyObjCObject_ClearObject(pyself);
             }
         }
@@ -225,33 +226,33 @@ imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
 
 static PyGetSetDef imp_getset[] = {{
                                        .name = "isAlloc",
-                                       .get = imp_is_alloc,
-                                       .doc = imp_is_alloc_doc,
+                                       .get  = imp_is_alloc,
+                                       .doc  = imp_is_alloc_doc,
                                    },
                                    {
                                        .name = "isClassMethod",
-                                       .get = imp_class_method,
-                                       .doc = imp_class_method_doc,
+                                       .get  = imp_class_method,
+                                       .doc  = imp_class_method_doc,
                                    },
                                    {
                                        .name = "signature",
-                                       .get = imp_signature,
-                                       .doc = imp_signature_doc,
+                                       .get  = imp_signature,
+                                       .doc  = imp_signature_doc,
                                    },
                                    {
                                        .name = "selector",
-                                       .get = imp_selector,
-                                       .doc = imp_selector_doc,
+                                       .get  = imp_selector,
+                                       .doc  = imp_selector_doc,
                                    },
                                    {
                                        .name = "__name__",
-                                       .get = imp_selector,
-                                       .doc = imp_selector_doc,
+                                       .get  = imp_selector,
+                                       .doc  = imp_selector_doc,
                                    },
                                    {
                                        .name = "__signature__",
-                                       .get = PyObjC_callable_signature_get,
-                                       .doc = "inspect.Signature for an IMP",
+                                       .get  = PyObjC_callable_signature_get,
+                                       .doc  = "inspect.Signature for an IMP",
                                    },
                                    {
                                        .name = NULL /* SENTINEL */
@@ -261,7 +262,7 @@ static PyObject*
 imp_metadata(PyObject* self)
 {
     PyObject* result = PyObjCMethodSignature_AsDict(((PyObjCIMPObject*)self)->signature);
-    int r;
+    int       r;
 
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kCLASS_METHOD) {
         r = PyDict_SetItemString(result, "classmethod", Py_True);
@@ -287,10 +288,10 @@ imp_metadata(PyObject* self)
 }
 
 static PyMethodDef imp_methods[] = {{
-                                        .ml_name = "__metadata__",
-                                        .ml_meth = (PyCFunction)imp_metadata,
+                                        .ml_name  = "__metadata__",
+                                        .ml_meth  = (PyCFunction)imp_metadata,
                                         .ml_flags = METH_NOARGS,
-                                        .ml_doc = "Return metadata for the method",
+                                        .ml_doc   = "Return metadata for the method",
                                     },
                                     {
                                         .ml_name = NULL /* SENTINEL */
@@ -298,15 +299,15 @@ static PyMethodDef imp_methods[] = {{
 
 PyTypeObject PyObjCIMP_Type = {
     PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc.IMP",
-    .tp_basicsize = sizeof(PyObjCIMPObject),
-    .tp_itemsize = 0,
-    .tp_dealloc = imp_dealloc,
-    .tp_repr = imp_repr,
-    .tp_call = imp_call,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_methods = imp_methods,
-    .tp_getset = imp_getset,
+    .tp_basicsize                          = sizeof(PyObjCIMPObject),
+    .tp_itemsize                           = 0,
+    .tp_dealloc                            = imp_dealloc,
+    .tp_repr                               = imp_repr,
+    .tp_call                               = imp_call,
+    .tp_getattro                           = PyObject_GenericGetAttr,
+    .tp_flags                              = Py_TPFLAGS_DEFAULT,
+    .tp_methods                            = imp_methods,
+    .tp_getset                             = imp_getset,
 };
 
 /* ========================================================================= */
@@ -315,8 +316,8 @@ static PyObject*
 call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 {
     PyObject* sel;
-    SEL selector;
-    IMP retval;
+    SEL       selector;
+    IMP       retval;
     PyObject* attr;
     PyObject* res;
 
@@ -389,12 +390,12 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 static PyObject*
 call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
 {
-    PyObject* sel;
-    SEL selector;
+    PyObject*         sel;
+    SEL               selector;
     struct objc_super super;
-    IMP retval;
-    PyObject* attr;
-    PyObject* res;
+    IMP               retval;
+    PyObject*         attr;
+    PyObject*         res;
 
     if (!PyArg_ParseTuple(args, "O", &sel)) {
         return NULL;

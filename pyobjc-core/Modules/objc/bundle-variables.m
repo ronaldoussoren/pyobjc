@@ -32,9 +32,9 @@ PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)), PyObject* args
     NSString* name;
     PyObject* module_globals;
     Py_ssize_t typeid;
-    Py_ssize_t skip_undefined = 1;
+    Py_ssize_t  skip_undefined = 1;
     CFBundleRef cfBundle;
-    void* value;
+    void*       value;
 
     if (!PyArg_ParseTupleAndKeywords(
             args, kwds, "O&OiO&|i", keywords, PyObjCObject_Convert, &bundle,
@@ -95,13 +95,13 @@ PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)), PyObject*
 {
     static char* keywords[] = {"bundle", "module_globals", "variableInfo",
                                "skip_undefined", NULL};
-    NSBundle* bundle;
-    PyObject* module_globals;
-    PyObject* variableInfo;
-    Py_ssize_t skip_undefined = 1;
-    CFBundleRef cfBundle;
-    PyObject* seq;
-    Py_ssize_t i, len;
+    NSBundle*    bundle;
+    PyObject*    module_globals;
+    PyObject*    variableInfo;
+    Py_ssize_t   skip_undefined = 1;
+    CFBundleRef  cfBundle;
+    PyObject*    seq;
+    Py_ssize_t   i, len;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i", keywords, PyObjCObject_Convert,
                                      &bundle, &module_globals, &variableInfo,
@@ -135,8 +135,8 @@ PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)), PyObject*
     len = PySequence_Fast_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
         PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
-        void* value;
-        char* signature;
+        void*     value;
+        char*     signature;
         PyObject* py_name;
         NSString* name;
 
@@ -202,13 +202,13 @@ PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)), PyObject*
 {
     static char* keywords[] = {"bundle", "module_globals", "functionInfo",
                                "skip_undefined", NULL};
-    NSBundle* bundle;
-    PyObject* module_globals;
-    PyObject* functionInfo;
-    int skip_undefined = 1;
-    CFBundleRef cfBundle;
-    PyObject* seq;
-    Py_ssize_t i, len;
+    NSBundle*    bundle;
+    PyObject*    module_globals;
+    PyObject*    functionInfo;
+    int          skip_undefined = 1;
+    CFBundleRef  cfBundle;
+    PyObject*    seq;
+    Py_ssize_t   i, len;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O&OO|i", keywords, PyObjCObject_Convert,
                                      &bundle, &module_globals, &functionInfo,
@@ -247,10 +247,10 @@ PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)), PyObject*
     len = PySequence_Fast_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
         PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
-        void* value;
-        char* signature;
+        void*     value;
+        char*     signature;
         NSString* name;
-        char* c_name;
+        char*     c_name;
         PyObject* doc;
         PyObject* meta = NULL;
 
@@ -327,7 +327,7 @@ PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)), PyObject*
 
 typedef void (*function)(void);
 struct functionlist {
-    char* name;
+    char*    name;
     function func;
 };
 
@@ -347,14 +347,14 @@ PyObject*
 PyObjC_loadFunctionList(PyObject* self __attribute__((__unused__)), PyObject* args,
                         PyObject* kwds)
 {
-    static char* keywords[] = {"function_list", "module_globals", "functionInfo",
+    static char*         keywords[] = {"function_list", "module_globals", "functionInfo",
                                "skip_undefined", NULL};
-    PyObject* pyFunctionsList;
-    PyObject* module_globals;
-    PyObject* functionInfo;
-    int skip_undefined = 1;
-    PyObject* seq;
-    Py_ssize_t i, len;
+    PyObject*            pyFunctionsList;
+    PyObject*            module_globals;
+    PyObject*            functionInfo;
+    int                  skip_undefined = 1;
+    PyObject*            seq;
+    Py_ssize_t           i, len;
     struct functionlist* function_list;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OOO|i", keywords, &pyFunctionsList,
@@ -381,8 +381,8 @@ PyObjC_loadFunctionList(PyObject* self __attribute__((__unused__)), PyObject* ar
     len = PySequence_Fast_GET_SIZE(seq);
     for (i = 0; i < len; i++) {
         PyObject* item = PySequence_Fast_GET_ITEM(seq, i);
-        void* value;
-        char* signature;
+        void*     value;
+        char*     signature;
         PyObject* name;
         PyObject* doc;
         PyObject* meta = NULL;

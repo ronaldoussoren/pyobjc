@@ -25,20 +25,20 @@ typedef size_t (*CGDataProviderGetBytesAtOffsetCallback)(void* info, void* buffe
                                                          size_t offset, size_t count);
 
 typedef struct CGDataProviderCallbacks {
-    CGDataProviderGetBytesCallback getBytes;
-    CGDataProviderSkipBytesCallback skipBytes;
-    CGDataProviderRewindCallback rewind;
+    CGDataProviderGetBytesCallback    getBytes;
+    CGDataProviderSkipBytesCallback   skipBytes;
+    CGDataProviderRewindCallback      rewind;
     CGDataProviderReleaseInfoCallback releaseProvider;
 } CGDataProviderCallbacks;
 
 typedef struct CGDataProviderDirectAccessCallbacks {
-    CGDataProviderGetBytePointerCallback getBytePointer;
+    CGDataProviderGetBytePointerCallback     getBytePointer;
     CGDataProviderReleaseBytePointerCallback releaseBytePointer;
-    CGDataProviderGetBytesAtOffsetCallback getBytes;
-    CGDataProviderReleaseInfoCallback releaseProvider;
+    CGDataProviderGetBytesAtOffsetCallback   getBytes;
+    CGDataProviderReleaseInfoCallback        releaseProvider;
 } CGDataProviderDirectAccessCallbacks;
 
-extern CGDataProviderRef CGDataProviderCreate(void* info,
+extern CGDataProviderRef CGDataProviderCreate(void*                          info,
                                               const CGDataProviderCallbacks* callbacks);
 extern CGDataProviderRef
 CGDataProviderCreateDirectAccess(void* info, size_t size,
@@ -55,7 +55,7 @@ CGDataProviderCreateDirectAccess(void* info, size_t size,
 static size_t
 m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 {
-    size_t retval;
+    size_t    retval;
     PyObject* info = (PyObject*)_info;
 
     PyGILState_STATE state = PyGILState_Ensure();
@@ -210,8 +210,7 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
     }
 
     size_t c_result;
-    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(result, 0), &c_result) <
-        0) {
+    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(result, 0), &c_result) < 0) {
         Py_DECREF(result);
         Py_DECREF(buf);
         PyObjCErr_ToObjCWithGILState(&state);
@@ -219,7 +218,7 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
 
     if (PyTuple_GetItem(result, 1) != buf) {
         const void* b;
-        Py_ssize_t c;
+        Py_ssize_t  c;
 
         if (PyObject_AsReadBuffer(PyTuple_GetItem(result, 1), &b, &c) < 0) {
             Py_DECREF(result);
@@ -333,7 +332,7 @@ m_CGDataProviderGetBytePointerCallback(void* _info)
     }
 
     const void* b;
-    Py_ssize_t c;
+    Py_ssize_t  c;
 
     if (PyObject_AsReadBuffer(PyTuple_GetItem(result, 1), &b, &c) < 0) {
         Py_DECREF(result);
@@ -388,8 +387,7 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer, size_t offse
     }
 
     size_t c_result;
-    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(result, 0), &c_result) <
-        0) {
+    if (PyObjC_PythonToObjC(@encode(size_t), PyTuple_GetItem(result, 0), &c_result) < 0) {
         Py_DECREF(result);
         Py_DECREF(buf);
         PyObjCErr_ToObjCWithGILState(&state);
@@ -397,7 +395,7 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer, size_t offse
 
     if (PyTuple_GetItem(result, 1) != buf) {
         const void* b;
-        Py_ssize_t c;
+        Py_ssize_t  c;
 
         if (PyObject_AsReadBuffer(PyTuple_GetItem(result, 1), &b, &c) < 0) {
             Py_DECREF(result);
@@ -438,7 +436,7 @@ static off_t
 m_CGDataProviderSkipForwardCallback(void* _info, off_t count)
 {
     PyObject* info = (PyObject*)_info;
-    off_t retval;
+    off_t     retval;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -637,7 +635,7 @@ m_CGDataProviderCreateDirectAccess(PyObject* self __attribute__((__unused__)),
     PyObject* releaseBytePointer;
     PyObject* getBytes;
     PyObject* release;
-    long size;
+    long      size;
 
     CGDataProviderDirectAccessCallbacks callbacks = m_CGDataProviderDirectAccessCallbacks;
 
@@ -717,7 +715,7 @@ static void
 m_releaseData(void* _info, const void* data, size_t size)
 {
     PyObject* info = (PyObject*)_info;
-    int tag;
+    int       tag;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -752,7 +750,7 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)), PyObj
 {
     PyObject* info;
     PyObject* data;
-    long size;
+    long      size;
     PyObject* release;
 
     if (!PyArg_ParseTuple(args, "OOlO", &info, &data, &size, &release)) {
@@ -763,10 +761,10 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)), PyObj
         return NULL;
     }
 
-    int tag;
-    PyObject* bufobj = NULL;
-    Py_ssize_t sz = (Py_ssize_t)size;
-    void* arr;
+    int        tag;
+    PyObject*  bufobj = NULL;
+    Py_ssize_t sz     = (Py_ssize_t)size;
+    void*      arr;
 
     tag = PyObjC_PythonToCArray(NO, YES, @encode(char), data, &arr, &sz, &bufobj);
     if (tag < 0) {
@@ -811,13 +809,13 @@ static void
 m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outData)
 {
     PyObject* info = (PyObject*)_info;
-    long domdim;
-    long rangedim;
+    long      domdim;
+    long      rangedim;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
 #if PY_MAJOR_VERSION == 2
-    domdim = PyInt_AsLong(PyTuple_GetItem(info, 2));
+    domdim   = PyInt_AsLong(PyTuple_GetItem(info, 2));
     rangedim = PyInt_AsLong(PyTuple_GetItem(info, 3));
 #else
     domdim = PyLong_AsLong(PyTuple_GetItem(info, 2));
@@ -839,8 +837,8 @@ m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outDat
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    if (PyObjC_DepythonifyCArray(@encode(CGFloat), rangedim, NO, result, (void*)outData) <
-        0) {
+    if (PyObjC_DepythonifyCArray(@encode(CGFloat), rangedim, NO, result, (void*)outData)
+        < 0) {
         Py_DECREF(result);
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -872,21 +870,21 @@ PyDoc_STRVAR(doc_CGFunctionCreate, "CGFunctionCreate(info, domainDimension, doma
 static PyObject*
 m_CGFunctionCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* info;
-    PyObject* domDim;
-    PyObject* domain;
-    PyObject* rangeDim;
-    PyObject* range;
-    PyObject* evaluate;
-    size_t domainDimension;
-    size_t rangeDimension;
-    CGFloat* domainArr;
-    CGFloat* rangeArr;
-    CGFunctionRef result = NULL;
-    PyObject* domainBuf = NULL;
-    PyObject* rangeBuf = NULL;
-    int rangeTag;
-    int domainTag;
+    PyObject*     info;
+    PyObject*     domDim;
+    PyObject*     domain;
+    PyObject*     rangeDim;
+    PyObject*     range;
+    PyObject*     evaluate;
+    size_t        domainDimension;
+    size_t        rangeDimension;
+    CGFloat*      domainArr;
+    CGFloat*      rangeArr;
+    CGFunctionRef result    = NULL;
+    PyObject*     domainBuf = NULL;
+    PyObject*     rangeBuf  = NULL;
+    int           rangeTag;
+    int           domainTag;
 
     if (!PyArg_ParseTuple(args, "OOOOOO", &info, &domDim, &domain, &rangeDim, &range,
                           &evaluate)) {
@@ -907,7 +905,7 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     } else {
         /* Parse Array */
         Py_ssize_t cnt = domainDimension * 2;
-        domainTag = PyObjC_PythonToCArray(NO, NO, @encode(CGFloat), domain,
+        domainTag      = PyObjC_PythonToCArray(NO, NO, @encode(CGFloat), domain,
                                           (void**)&domainArr, &cnt, &domainBuf);
         if (domainTag < 0) {
             return NULL;
@@ -1002,7 +1000,7 @@ struct callback_struct {
 };
 struct callback_info {
     struct callback_struct* list;
-    size_t count;
+    size_t                  count;
 };
 
 struct callback_info display_reconfig_callback = {NULL, 0};
@@ -1015,7 +1013,7 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
 
     for (i = 0; i < info->count; i++) {
         if (info->list[i].callback == NULL) {
-            info->list[i].callback = callback;
+            info->list[i].callback  = callback;
             info->list[i].user_info = user_info;
             info->list[i].real_info = real_info;
             Py_INCREF(callback);
@@ -1032,7 +1030,7 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
             PyErr_NoMemory();
             return -1;
         }
-        info->list[0].callback = callback;
+        info->list[0].callback  = callback;
         info->list[0].user_info = user_info;
         info->list[0].real_info = real_info;
         Py_INCREF(callback);
@@ -1047,8 +1045,8 @@ insert_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
             PyErr_NoMemory();
             return -1;
         }
-        info->list = tmp;
-        info->list[info->count].callback = callback;
+        info->list                        = tmp;
+        info->list[info->count].callback  = callback;
         info->list[info->count].user_info = user_info;
         info->list[info->count].real_info = real_info;
         Py_INCREF(callback);
@@ -1099,13 +1097,13 @@ remove_callback_info(struct callback_info* info, PyObject* callback, PyObject* u
 
         Py_DECREF(info->list[i].callback);
         Py_DECREF(info->list[i].user_info);
-        info->list[i].callback = NULL;
+        info->list[i].callback  = NULL;
         info->list[i].user_info = NULL;
     }
 }
 
 static void
-m_CGDisplayReconfigurationCallBack(CGDirectDisplayID display,
+m_CGDisplayReconfigurationCallBack(CGDirectDisplayID           display,
                                    CGDisplayChangeSummaryFlags flags, void* _userInfo)
 {
     PyObject* info = (PyObject*)_userInfo;
@@ -1142,7 +1140,7 @@ m_CGDisplayRegisterReconfigurationCallback(PyObject* self __attribute__((__unuse
 {
     PyObject* callback;
     PyObject* userinfo;
-    CGError err;
+    CGError   err;
 
     if (!PyArg_ParseTuple(args, "OO", &callback, &userinfo)) {
         return NULL;
@@ -1171,8 +1169,8 @@ m_CGDisplayRegisterReconfigurationCallback(PyObject* self __attribute__((__unuse
         return NULL;
     }
 
-    if (insert_callback_info(&display_reconfig_callback, callback, userinfo, real_info) ==
-        -1) {
+    if (insert_callback_info(&display_reconfig_callback, callback, userinfo, real_info)
+        == -1) {
         CGDisplayRemoveReconfigurationCallback(m_CGDisplayReconfigurationCallBack,
                                                real_info);
         Py_DECREF(real_info);
@@ -1353,9 +1351,8 @@ m_CGScreenRefreshCallback(CGRectCount count, const CGRect* rectArray, void* _use
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 0), "lOO", (long)count, py_rectarray,
-                              PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "lOO", (long)count,
+                                             py_rectarray, PyTuple_GetItem(info, 1));
     Py_DECREF(py_rectarray);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
@@ -1397,8 +1394,8 @@ m_CGRegisterScreenRefreshCallback(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (insert_callback_info(&screen_refresh_callback, callback, userinfo, real_info) <
-        0) {
+    if (insert_callback_info(&screen_refresh_callback, callback, userinfo, real_info)
+        < 0) {
         CGUnregisterScreenRefreshCallback(m_CGScreenRefreshCallback, real_info);
         Py_DECREF(real_info);
         return NULL;
@@ -1483,9 +1480,8 @@ m_CGEventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
         PyObjCErr_ToObjCWithGILState(&state);
     }
 
-    PyObject* result =
-        PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNNO", py_proxy, py_type,
-                              py_event, PyTuple_GetItem(info, 1));
+    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0), "NNNO", py_proxy,
+                                             py_type, py_event, PyTuple_GetItem(info, 1));
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -1502,17 +1498,17 @@ m_CGEventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event,
 static PyObject*
 m_CGEventTapCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_tap;
-    PyObject* py_place;
-    PyObject* py_options;
-    PyObject* py_eventsOfInterest;
-    PyObject* callback;
-    PyObject* info;
-    CGEventTapLocation tap;
+    PyObject*           py_tap;
+    PyObject*           py_place;
+    PyObject*           py_options;
+    PyObject*           py_eventsOfInterest;
+    PyObject*           callback;
+    PyObject*           info;
+    CGEventTapLocation  tap;
     CGEventTapPlacement place;
-    CGEventTapOptions options;
-    CGEventMask eventsOfInterest;
-    CFMachPortRef result = NULL;
+    CGEventTapOptions   options;
+    CGEventMask         eventsOfInterest;
+    CFMachPortRef       result = NULL;
 
     if (!PyArg_ParseTuple(args, "OOOOOO", &py_tap, &py_place, &py_options,
                           &py_eventsOfInterest, &callback, &info)) {
@@ -1529,8 +1525,8 @@ m_CGEventTapCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     if (PyObjC_PythonToObjC(@encode(CGEventTapOptions), py_options, &options) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGEventMask), py_eventsOfInterest,
-                            &eventsOfInterest) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CGEventMask), py_eventsOfInterest, &eventsOfInterest)
+        < 0) {
         return NULL;
     }
 
@@ -1563,17 +1559,17 @@ m_CGEventTapCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 static PyObject*
 m_CGEventTapCreateForPSN(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_psn;
-    PyObject* py_place;
-    PyObject* py_options;
-    PyObject* py_eventsOfInterest;
-    PyObject* callback;
-    PyObject* info;
+    PyObject*           py_psn;
+    PyObject*           py_place;
+    PyObject*           py_options;
+    PyObject*           py_eventsOfInterest;
+    PyObject*           callback;
+    PyObject*           info;
     ProcessSerialNumber psn;
     CGEventTapPlacement place;
-    CGEventTapOptions options;
-    CGEventMask eventsOfInterest;
-    CFMachPortRef result = NULL;
+    CGEventTapOptions   options;
+    CGEventMask         eventsOfInterest;
+    CFMachPortRef       result = NULL;
 
     if (!PyArg_ParseTuple(args, "OOOOOO", &py_psn, &py_place, &py_options,
                           &py_eventsOfInterest, &callback, &info)) {
@@ -1590,8 +1586,8 @@ m_CGEventTapCreateForPSN(PyObject* self __attribute__((__unused__)), PyObject* a
     if (PyObjC_PythonToObjC(@encode(CGEventTapOptions), py_options, &options) < 0) {
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(CGEventMask), py_eventsOfInterest,
-                            &eventsOfInterest) < 0) {
+    if (PyObjC_PythonToObjC(@encode(CGEventMask), py_eventsOfInterest, &eventsOfInterest)
+        < 0) {
         return NULL;
     }
 
@@ -1665,17 +1661,17 @@ static CGPatternCallbacks m_CGPatternCallbacks = {
 static PyObject*
 m_CGPatternCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* info;
-    PyObject* py_bounds;
-    PyObject* py_matrix;
-    float xStep, yStep;
-    PyObject* py_tiling;
-    PyObject* py_isColored;
-    PyObject* draw;
-    CGRect bounds;
+    PyObject*         info;
+    PyObject*         py_bounds;
+    PyObject*         py_matrix;
+    float             xStep, yStep;
+    PyObject*         py_tiling;
+    PyObject*         py_isColored;
+    PyObject*         draw;
+    CGRect            bounds;
     CGAffineTransform matrix;
-    CGPatternTiling tiling;
-    int isColored;
+    CGPatternTiling   tiling;
+    int               isColored;
 
     if (!PyArg_ParseTuple(args, "OOOffOOO", &info, &py_bounds, &py_matrix, &xStep, &yStep,
                           &py_tiling, &py_isColored, &draw)) {
@@ -1881,16 +1877,16 @@ static CGPSConverterCallbacks m_CGPSConverterCallbacks = {
 static PyObject*
 m_CGPSConverterCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* info;
-    PyObject* py_options;
-    PyObject* beginDocument;
-    PyObject* endDocument;
-    PyObject* beginPage;
-    PyObject* endPage;
-    PyObject* noteProgress;
-    PyObject* noteMessage;
-    PyObject* releaseInfo;
-    CFDictionaryRef options;
+    PyObject*        info;
+    PyObject*        py_options;
+    PyObject*        beginDocument;
+    PyObject*        endDocument;
+    PyObject*        beginPage;
+    PyObject*        endPage;
+    PyObject*        noteProgress;
+    PyObject*        noteMessage;
+    PyObject*        releaseInfo;
+    CFDictionaryRef  options;
     CGPSConverterRef result = NULL;
 
     if (!PyArg_ParseTuple(args, "O(OOOOOOO)O", &info, &beginDocument, &endDocument,

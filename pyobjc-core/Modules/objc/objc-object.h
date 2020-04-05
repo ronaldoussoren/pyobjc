@@ -13,7 +13,7 @@
 typedef struct {
     PyObject_HEAD
 
-        __strong id objc_object;
+    __strong id objc_object;
 #if Py_HAVE_LOCAL_LOOKUP
     PyObject* objc_dict;
 #endif /* Py_HAVE_LOCAL_LOOKUP */
@@ -21,7 +21,7 @@ typedef struct {
 } PyObjCObject;
 
 typedef struct {
-    PyObjCObject base;
+    PyObjCObject           base;
     PyObjCMethodSignature* signature;
 } PyObjCBlockObject;
 
@@ -30,10 +30,10 @@ extern PyObjCClassObject PyObjCObject_Type;
 
 PyObject* PyObjCObject_New(id objc_object, int flags, int retain);
 PyObject* PyObjCObject_FindSelector(PyObject* cls, SEL selector);
-id PyObjCObject_GetObject(PyObject* object);
-void PyObjCObject_ClearObject(PyObject* object);
+id        PyObjCObject_GetObject(PyObject* object);
+void      PyObjCObject_ClearObject(PyObject* object);
 #define PyObjCObject_GetObject(object) (((PyObjCObject*)(object))->objc_object)
-void _PyObjCObject_FreeDeallocHelper(PyObject* obj);
+void      _PyObjCObject_FreeDeallocHelper(PyObject* obj);
 PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
 #define PyObjCObject_GetFlags(object) (((PyObjCObject*)(object))->flags)
 #define PyObjCObject_IsClassic(object)                                                   \
@@ -48,7 +48,7 @@ PyObject* _PyObjCObject_NewDeallocHelper(id objc_object);
 PyObject* PyObjCObject_GetAttr(PyObject* object, PyObject* key);
 PyObject* PyObjCObject_GetAttrString(PyObject* object, char* key);
 PyObject* PyObjCObject_NewTransient(id objc_object, int* cookie);
-void PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie);
+void      PyObjCObject_ReleaseTransient(PyObject* proxy, int cookie);
 
 PyObject* PyObjC_get_c_void_p(void);
 

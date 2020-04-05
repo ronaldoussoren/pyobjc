@@ -6,23 +6,22 @@
 #import <ApplicationServices/ApplicationServices.h>
 
 #undef PySequence_Fast_GET_ITEM
-#define PySequence_Fast_GET_ITEM(o, i)\
-     (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
+#define PySequence_Fast_GET_ITEM(o, i)                                                   \
+    (PyList_Check(o) ? PyList_GetItem(o, i) : PyTuple_GetItem(o, i))
 
 #undef PySequence_Fast_GET_SIZE
-#define PySequence_Fast_GET_SIZE(o) \
-     (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
+#define PySequence_Fast_GET_SIZE(o) (PyList_Check(o) ? PyList_Size(o) : PyTuple_Size(o))
 
 static PyObject*
 m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_font;
-    PyObject* py_options;
-    CTFontRef font;
+    PyObject*          py_font;
+    PyObject*          py_options;
+    CTFontRef          font;
     CTFontTableOptions options;
-    CFArrayRef ref;
-    Py_ssize_t len, i;
-    PyObject* result;
+    CFArrayRef         ref;
+    Py_ssize_t         len, i;
+    PyObject*          result;
 
     if (!PyArg_ParseTuple(args, "OO", &py_font, &py_options)) {
         return NULL;
@@ -54,7 +53,7 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject
         return Py_None;
     }
 
-    len = CFArrayGetCount(ref);
+    len    = CFArrayGetCount(ref);
     result = PyTuple_New(len);
     if (result == NULL) {
         CFRelease(ref);
@@ -77,11 +76,11 @@ m_CTFontCopyAvailableTables(PyObject* self __attribute__((__unused__)), PyObject
 static PyObject*
 m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_style;
+    PyObject*           py_style;
     CTParagraphStyleRef style;
-    CFArrayRef output = NULL;
-    PyObject* result;
-    bool b;
+    CFArrayRef          output = NULL;
+    PyObject*           result;
+    bool                b;
 
     if (!PyArg_ParseTuple(args, "O", &py_style)) {
         return NULL;
@@ -116,13 +115,13 @@ m_CTParagraphStyleGetTabStops(PyObject* self __attribute__((__unused__)), PyObje
 static PyObject*
 m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_settings;
-    PyObject* seq;
-    PyObject* result;
-    Py_ssize_t len, i;
-    CFArrayRef aref = NULL;
+    PyObject*                py_settings;
+    PyObject*                seq;
+    PyObject*                result;
+    Py_ssize_t               len, i;
+    CFArrayRef               aref = NULL;
     CTParagraphStyleSetting* settings;
-    CTParagraphStyleRef style = NULL;
+    CTParagraphStyleRef      style = NULL;
 
     if (!PyArg_ParseTuple(args, "On", &py_settings, &len)) {
         return NULL;
@@ -177,10 +176,10 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
     }
 
     for (i = 0; i < len; i++) {
-        CTParagraphStyleSetting* cur = settings + i;
-        PyObject* curPy = PySequence_Fast_GET_ITEM(seq, i);
-        PyObject* s = PySequence_Fast(curPy, "CTParagraphStyleItem");
-        int r;
+        CTParagraphStyleSetting* cur   = settings + i;
+        PyObject*                curPy = PySequence_Fast_GET_ITEM(seq, i);
+        PyObject*                s     = PySequence_Fast(curPy, "CTParagraphStyleItem");
+        int                      r;
 
         if (s == NULL) {
             Py_DECREF(seq);
@@ -219,13 +218,13 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
                 r = -1;
             } else {
 
-                r = PyObjC_PythonToObjC(@encode(CFArrayRef),
+                r          = PyObjC_PythonToObjC(@encode(CFArrayRef),
                                         PySequence_Fast_GET_ITEM(s, 2), &aref);
                 cur->value = &aref;
             }
         } else {
             const void* buf;
-            Py_ssize_t buflen;
+            Py_ssize_t  buflen;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -296,9 +295,9 @@ static CGFloat
 m_CTRunDelegateGetAscentCallback(void* refCon)
 {
     PyObject* info = (PyObject*)refCon;
-    PyObject* cb = PyTuple_GetItem(info, 0);
-    PyObject* rc = PyTuple_GetItem(info, 3);
-    CGFloat value;
+    PyObject* cb   = PyTuple_GetItem(info, 0);
+    PyObject* rc   = PyTuple_GetItem(info, 3);
+    CGFloat   value;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -320,9 +319,9 @@ static CGFloat
 m_CTRunDelegateGetDescentCallback(void* refCon)
 {
     PyObject* info = (PyObject*)refCon;
-    PyObject* cb = PyTuple_GetItem(info, 1);
-    PyObject* rc = PyTuple_GetItem(info, 3);
-    CGFloat value;
+    PyObject* cb   = PyTuple_GetItem(info, 1);
+    PyObject* rc   = PyTuple_GetItem(info, 3);
+    CGFloat   value;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -344,9 +343,9 @@ static CGFloat
 m_CTRunDelegateGetWidthCallback(void* refCon)
 {
     PyObject* info = (PyObject*)refCon;
-    PyObject* cb = PyTuple_GetItem(info, 2);
-    PyObject* rc = PyTuple_GetItem(info, 3);
-    CGFloat value;
+    PyObject* cb   = PyTuple_GetItem(info, 2);
+    PyObject* rc   = PyTuple_GetItem(info, 3);
+    CGFloat   value;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -373,10 +372,10 @@ static CTRunDelegateCallbacks m_CTRunDelegateCallbacks = {
 static PyObject*
 m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_delegate;
+    PyObject*        py_delegate;
     CTRunDelegateRef delegate;
-    PyObject* py_refcon;
-    void* refcon;
+    PyObject*        py_refcon;
+    void*            refcon;
 
     if (!PyArg_ParseTuple(args, "O", &py_delegate)) {
         return NULL;
@@ -399,12 +398,12 @@ m_CTRunDelegateGetRefCon(PyObject* self __attribute__((__unused__)), PyObject* a
 static PyObject*
 m_CTRunDelegateCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
 {
-    PyObject* py_delegate;
-    PyObject* py_getAscender;
-    PyObject* py_getDescender;
-    PyObject* py_getWidth;
-    PyObject* py_refCon;
-    PyObject* info;
+    PyObject*        py_delegate;
+    PyObject*        py_getAscender;
+    PyObject*        py_getDescender;
+    PyObject*        py_getWidth;
+    PyObject*        py_refCon;
+    PyObject*        info;
     CTRunDelegateRef delegate;
 
     if (!PyArg_ParseTuple(args, "(OOO)O", &py_getAscender, &py_getDescender, &py_getWidth,
@@ -488,7 +487,8 @@ PyObjC_MODULE_INIT(_manual)
     if (PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode)) < 0)
         PyObjC_INITERROR();
     if (PyModule_AddIntConstant(m, "sizeof_CTWritingDirection",
-                                sizeof(CTWritingDirection)) < 0)
+                                sizeof(CTWritingDirection))
+        < 0)
         PyObjC_INITERROR();
     if (PyModule_AddIntConstant(m, "sizeof_id", sizeof(id)) < 0)
         PyObjC_INITERROR();

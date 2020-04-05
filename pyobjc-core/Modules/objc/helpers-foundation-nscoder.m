@@ -4,13 +4,13 @@ static PyObject*
 call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
                                        PyObject* arguments)
 {
-    char* typestr;
-    PyObject* value;
-    void* buf;
-    Py_ssize_t size;
-    int err;
+    char*             typestr;
+    PyObject*         value;
+    void*             buf;
+    Py_ssize_t        size;
+    int               err;
     struct objc_super super;
-    Py_ssize_t typestr_len;
+    Py_ssize_t        typestr_len;
 
     if (!PyArg_ParseTuple(arguments, "y#O", &typestr, &typestr_len, &value)) {
         return NULL;
@@ -69,15 +69,15 @@ imp_NSCoder_encodeValueOfObjCType_at_(ffi_cif* cif __attribute__((__unused__)),
                                       void* resp __attribute__((__unused__)), void** args,
                                       void* callable)
 {
-    id self = *(id*)args[0];
+    id    self    = *(id*)args[0];
     char* typestr = *(char**)args[2];
-    void* buf = *(void**)args[3];
+    void* buf     = *(void**)args[3];
 
-    PyObject* result = NULL;
+    PyObject* result  = NULL;
     PyObject* arglist = NULL;
-    PyObject* v = NULL;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject* v       = NULL;
+    PyObject* pyself  = NULL;
+    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -132,16 +132,16 @@ static PyObject*
 call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
                                              PyObject* arguments)
 {
-    char* typestr;
-    NSUInteger count;
-    NSUInteger i;
-    Py_ssize_t value_len;
-    PyObject* value;
-    void* buf;
-    Py_ssize_t size;
-    int err;
+    char*             typestr;
+    NSUInteger        count;
+    NSUInteger        i;
+    Py_ssize_t        value_len;
+    PyObject*         value;
+    void*             buf;
+    Py_ssize_t        size;
+    int               err;
     struct objc_super super;
-    Py_ssize_t typestr_len;
+    Py_ssize_t        typestr_len;
 
     if (!PyArg_ParseTuple(arguments, "y#" Py_ARG_NSUInteger "O", &typestr, &typestr_len,
                           &count, &value)) {
@@ -216,22 +216,22 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
 
 static void
 imp_NSCoder_encodeArrayOfObjCType_count_at_(ffi_cif* cif __attribute__((__unused__)),
-                                            void* resp __attribute__((__unused__)),
+                                            void*    resp __attribute__((__unused__)),
                                             void** args, void* callable)
 {
-    id self = *(id*)args[0];
-    char* typestr = *(char**)args[2];
-    NSUInteger count = *(NSUInteger*)args[3];
-    void* buf = *(void**)args[4];
+    id         self    = *(id*)args[0];
+    char*      typestr = *(char**)args[2];
+    NSUInteger count   = *(NSUInteger*)args[3];
+    void*      buf     = *(void**)args[4];
 
-    PyObject* result = NULL;
-    PyObject* arglist = NULL;
-    PyObject* v = NULL;
-    PyObject* values = NULL;
+    PyObject*  result  = NULL;
+    PyObject*  arglist = NULL;
+    PyObject*  v       = NULL;
+    PyObject*  values  = NULL;
     Py_ssize_t size;
     NSUInteger i;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject*  pyself = NULL;
+    int        cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -303,12 +303,12 @@ static PyObject*
 call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
                                        PyObject* arguments)
 {
-    char* typestr;
-    PyObject* value;
-    void* buf;
-    Py_ssize_t size, typestr_len;
+    char*             typestr;
+    PyObject*         value;
+    void*             buf;
+    Py_ssize_t        size, typestr_len;
     struct objc_super super;
-    PyObject* py_buf;
+    PyObject*         py_buf;
 
     if (!PyArg_ParseTuple(arguments, "y#O", &typestr, &typestr_len, &py_buf)) {
         return NULL;
@@ -368,16 +368,16 @@ imp_NSCoder_decodeValueOfObjCType_at_(ffi_cif* cif __attribute__((__unused__)),
                                       void* resp __attribute__((__unused__)), void** args,
                                       void* callable)
 {
-    id self = *(id*)args[0];
+    id    self    = *(id*)args[0];
     char* typestr = *(char**)args[2];
-    void* buf = *(void**)args[3];
+    void* buf     = *(void**)args[3];
 
-    PyObject* result = NULL;
+    PyObject* result  = NULL;
     PyObject* arglist = NULL;
     PyObject* v;
-    int err;
+    int       err;
     PyObject* pyself = NULL;
-    int cookie = 0;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -425,12 +425,12 @@ static PyObject*
 call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
                                             PyObject* arguments)
 {
-    char* typestr;
-    PyObject* value;
-    void* buf;
-    Py_ssize_t size, typestr_len;
+    char*             typestr;
+    PyObject*         value;
+    void*             buf;
+    Py_ssize_t        size, typestr_len;
     struct objc_super super;
-    PyObject* py_buf;
+    PyObject*         py_buf;
 
     if (!PyArg_ParseTuple(arguments, "y#On", &typestr, &typestr_len, &py_buf, &size)) {
         return NULL;
@@ -484,20 +484,20 @@ call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
 
 static void
 imp_NSCoder_decodeValueOfObjCType_at_size_(ffi_cif* cif __attribute__((__unused__)),
-                                           void* resp __attribute__((__unused__)),
+                                           void*    resp __attribute__((__unused__)),
                                            void** args, void* callable)
 {
-    id self = *(id*)args[0];
-    char* typestr = *(char**)args[2];
-    void* buf = *(void**)args[3];
-    NSUInteger size = *(NSUInteger*)args[4];
+    id         self    = *(id*)args[0];
+    char*      typestr = *(char**)args[2];
+    void*      buf     = *(void**)args[3];
+    NSUInteger size    = *(NSUInteger*)args[4];
 
-    PyObject* result = NULL;
+    PyObject* result  = NULL;
     PyObject* arglist = NULL;
     PyObject* v;
-    int err;
+    int       err;
     PyObject* pyself = NULL;
-    int cookie = 0;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -550,15 +550,15 @@ static PyObject*
 call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
                                              PyObject* arguments)
 {
-    char* typestr;
-    NSUInteger count;
-    NSUInteger i;
-    PyObject* result;
-    PyObject* py_buf;
-    void* buf;
-    Py_ssize_t size;
+    char*             typestr;
+    NSUInteger        count;
+    NSUInteger        i;
+    PyObject*         result;
+    PyObject*         py_buf;
+    void*             buf;
+    Py_ssize_t        size;
     struct objc_super super;
-    Py_ssize_t typestr_len;
+    Py_ssize_t        typestr_len;
 
     if (!PyArg_ParseTuple(arguments, "y#" Py_ARG_NSUInteger "O", &typestr, &typestr_len,
                           &count, &py_buf)) {
@@ -629,23 +629,23 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
 
 static void
 imp_NSCoder_decodeArrayOfObjCType_count_at_(ffi_cif* cif __attribute__((__unused__)),
-                                            void* resp __attribute__((__unused__)),
+                                            void*    resp __attribute__((__unused__)),
                                             void** args, void* callable)
 {
-    id self = *(id*)args[0];
-    char* typestr = *(char**)args[2];
-    NSUInteger count = *(unsigned*)args[3];
-    void* buf = *(void**)args[4];
+    id         self    = *(id*)args[0];
+    char*      typestr = *(char**)args[2];
+    NSUInteger count   = *(unsigned*)args[3];
+    void*      buf     = *(void**)args[4];
 
-    PyObject* result;
-    PyObject* arglist = NULL;
-    PyObject* v;
-    PyObject* seq = NULL;
+    PyObject*  result;
+    PyObject*  arglist = NULL;
+    PyObject*  v;
+    PyObject*  seq = NULL;
     Py_ssize_t size;
     NSUInteger i;
-    int res;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    int        res;
+    PyObject*  pyself = NULL;
+    int        cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -715,7 +715,7 @@ error:
 static PyObject*
 call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    char* bytes;
+    char*      bytes;
     Py_ssize_t size;
     Py_ssize_t length;
 
@@ -763,15 +763,15 @@ imp_NSCoder_encodeBytes_length_(ffi_cif* cif __attribute__((__unused__)),
                                 void* resp __attribute__((__unused__)), void** args,
                                 void* callable)
 {
-    id self = *(id*)args[0];
-    char* bytes = *(char**)args[2];
+    id         self   = *(id*)args[0];
+    char*      bytes  = *(char**)args[2];
     NSUInteger length = *(int*)args[3];
 
     PyObject* result;
     PyObject* arglist = NULL;
     PyObject* v;
     PyObject* pyself = NULL;
-    int cookie = 0;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -824,11 +824,11 @@ static PyObject*
 call_NSCoder_decodeBytesWithReturnedLength_(PyObject* method, PyObject* self,
                                             PyObject* arguments)
 {
-    char* bytes;
-    NSUInteger size = 0;
-    PyObject* v;
-    PyObject* result;
-    PyObject* py_buf;
+    char*             bytes;
+    NSUInteger        size = 0;
+    PyObject*         v;
+    PyObject*         result;
+    PyObject*         py_buf;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "O", &py_buf)) {
@@ -909,14 +909,14 @@ static void
 imp_NSCoder_decodeBytesWithReturnedLength_(ffi_cif* cif __attribute__((__unused__)),
                                            void* resp, void** args, void* callable)
 {
-    id self = *(id*)args[0];
-    NSUInteger* length = *(NSUInteger**)args[2];
+    id           self    = *(id*)args[0];
+    NSUInteger*  length  = *(NSUInteger**)args[2];
     const void** pretval = (const void**)resp;
 
     PyObject* result;
     PyObject* arglist = NULL;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject* pyself  = NULL;
+    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -952,7 +952,7 @@ imp_NSCoder_decodeBytesWithReturnedLength_(ffi_cif* cif __attribute__((__unused_
         goto error;
     }
 
-    *length = [temp length];
+    *length  = [temp length];
     *pretval = [temp buffer];
 
     [temp autorelease];
@@ -972,12 +972,12 @@ static PyObject*
 call_NSCoder_decodeBytesForKey_returnedLength_(PyObject* method, PyObject* self,
                                                PyObject* arguments)
 {
-    char* bytes;
-    NSUInteger size = 0;
-    PyObject* v;
-    PyObject* result;
-    PyObject* py_buf;
-    id key;
+    char*             bytes;
+    NSUInteger        size = 0;
+    PyObject*         v;
+    PyObject*         result;
+    PyObject*         py_buf;
+    id                key;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "O&O", PyObjCObject_Convert, &key, &py_buf)) {
@@ -1059,17 +1059,17 @@ static void
 imp_NSCoder_decodeBytesForKey_returnedLength_(ffi_cif* cif __attribute__((__unused__)),
                                               void* resp, void** args, void* callable)
 {
-    id self = *(id*)args[0];
-    id key = *(id*)args[2];
-    NSUInteger* length = *(NSUInteger**)args[3];
+    id           self    = *(id*)args[0];
+    id           key     = *(id*)args[2];
+    NSUInteger*  length  = *(NSUInteger**)args[3];
     const void** pretval = (const void**)resp;
 
-    PyObject* result;
-    PyObject* arglist = NULL;
-    PyObject* v;
+    PyObject*  result;
+    PyObject*  arglist = NULL;
+    PyObject*  v;
     NSUInteger len;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject*  pyself = NULL;
+    int        cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -1121,7 +1121,7 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(ffi_cif* cif __attribute__((__unus
         goto error;
     }
 
-    *length = len;
+    *length  = len;
     *pretval = [tmp buffer];
 
     PyGILState_Release(state);
@@ -1140,9 +1140,9 @@ static PyObject*
 call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
                                         PyObject* arguments)
 {
-    char* bytes;
-    Py_ssize_t size;
-    id key;
+    char*             bytes;
+    Py_ssize_t        size;
+    id                key;
     struct objc_super super;
 
     if (!PyArg_ParseTuple(arguments, "y#O&", &bytes, &size, PyObjCObject_Convert, &key)) {
@@ -1180,19 +1180,19 @@ call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
 
 static void
 imp_NSCoder_encodeBytes_length_forKey_(ffi_cif* cif __attribute__((__unused__)),
-                                       void* resp __attribute__((__unused__)),
+                                       void*    resp __attribute__((__unused__)),
                                        void** args, void* callable)
 {
-    id self = *(id*)args[0];
-    char* bytes = *(char**)args[2];
+    id         self   = *(id*)args[0];
+    char*      bytes  = *(char**)args[2];
     NSUInteger length = *(int*)args[3];
-    id key = *(id*)args[4];
+    id         key    = *(id*)args[4];
 
     PyObject* result;
     PyObject* arglist = NULL;
     PyObject* v;
     PyObject* pyself = NULL;
-    int cookie = 0;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -1255,77 +1255,89 @@ PyObjC_setup_nscoder(void)
     if (PyObjC_RegisterMethodMapping(classNSCoder,
                                      @selector(encodeArrayOfObjCType:count:at:),
                                      call_NSCoder_encodeArrayOfObjCType_count_at_,
-                                     imp_NSCoder_encodeArrayOfObjCType_count_at_) < 0) {
+                                     imp_NSCoder_encodeArrayOfObjCType_count_at_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeValueOfObjCType:at:),
                                      call_NSCoder_encodeValueOfObjCType_at_,
-                                     imp_NSCoder_encodeValueOfObjCType_at_) < 0) {
+                                     imp_NSCoder_encodeValueOfObjCType_at_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder,
                                      @selector(decodeArrayOfObjCType:count:at:),
                                      call_NSCoder_decodeArrayOfObjCType_count_at_,
-                                     imp_NSCoder_decodeArrayOfObjCType_count_at_) < 0) {
+                                     imp_NSCoder_decodeArrayOfObjCType_count_at_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(decodeValueOfObjCType:at:),
                                      call_NSCoder_decodeValueOfObjCType_at_,
-                                     imp_NSCoder_decodeValueOfObjCType_at_) < 0) {
+                                     imp_NSCoder_decodeValueOfObjCType_at_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder,
                                      @selector(decodeValueOfObjCType:at:size:),
                                      call_NSCoder_decodeValueOfObjCType_at_size_,
-                                     imp_NSCoder_decodeValueOfObjCType_at_size_) < 0) {
+                                     imp_NSCoder_decodeValueOfObjCType_at_size_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeBytes:length:),
                                      call_NSCoder_encodeBytes_length_,
-                                     imp_NSCoder_encodeBytes_length_) < 0) {
+                                     imp_NSCoder_encodeBytes_length_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeBytes:length:forKey:),
                                      call_NSCoder_encodeBytes_length_forKey_,
-                                     imp_NSCoder_encodeBytes_length_forKey_) < 0) {
+                                     imp_NSCoder_encodeBytes_length_forKey_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder,
                                      @selector(decodeBytesWithReturnedLength:),
                                      call_NSCoder_decodeBytesWithReturnedLength_,
-                                     imp_NSCoder_decodeBytesWithReturnedLength_) < 0) {
+                                     imp_NSCoder_decodeBytesWithReturnedLength_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder,
                                      @selector(decodeBytesForKey:returnedLength::),
                                      call_NSCoder_decodeBytesForKey_returnedLength_,
-                                     imp_NSCoder_decodeBytesForKey_returnedLength_) < 0) {
+                                     imp_NSCoder_decodeBytesForKey_returnedLength_)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(
             classNSCoder, @selector(decodeBytesWithoutReturnedLength),
-            PyObjCUnsupportedMethod_Caller, PyObjCUnsupportedMethod_IMP) < 0) {
+            PyObjCUnsupportedMethod_Caller, PyObjCUnsupportedMethod_IMP)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(encodeValuesOfObjCTypes:),
                                      PyObjCUnsupportedMethod_Caller,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
         return -1;
     }
 
     if (PyObjC_RegisterMethodMapping(classNSCoder, @selector(decodeValuesOfObjCTypes:),
                                      PyObjCUnsupportedMethod_Caller,
-                                     PyObjCUnsupportedMethod_IMP) < 0) {
+                                     PyObjCUnsupportedMethod_IMP)
+        < 0) {
         return -1;
     }
 

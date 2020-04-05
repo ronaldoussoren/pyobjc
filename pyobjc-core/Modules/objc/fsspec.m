@@ -12,9 +12,9 @@
 
 /* #include "pymactoolbox.h" */
 
-extern PyObject* PyMac_Error(OSErr);            /* Uses PyMac_GetOSErrException */
-extern int PyMac_GetFSSpec(PyObject*, FSSpec*); /* argument parser for FSSpec */
-extern PyObject* PyMac_BuildFSSpec(FSSpec*);    /* Convert FSSpec to PyObject */
+extern PyObject* PyMac_Error(OSErr);                  /* Uses PyMac_GetOSErrException */
+extern int       PyMac_GetFSSpec(PyObject*, FSSpec*); /* argument parser for FSSpec */
+extern PyObject* PyMac_BuildFSSpec(FSSpec*);          /* Convert FSSpec to PyObject */
 
 #endif
 
@@ -41,7 +41,7 @@ extern PyObject* PyMac_BuildFSSpec(FSSpec*);    /* Convert FSSpec to PyObject */
 typedef struct {
     PyObject_HEAD
 
-        FSSpec ref;
+    FSSpec ref;
 } PyObjC_FSSpecObject;
 
 static PyObject*
@@ -75,8 +75,8 @@ fsspec_as_carbon(PyObject* ref)
 
 static PyGetSetDef fsspec_getset[] = {{
                                           .name = "data",
-                                          .get = fsspec_as_bytes,
-                                          .doc = "bytes in the FSSpec",
+                                          .get  = fsspec_as_bytes,
+                                          .doc  = "bytes in the FSSpec",
                                       },
                                       {
                                           .name = NULL /* SENTINEL */
@@ -84,15 +84,15 @@ static PyGetSetDef fsspec_getset[] = {{
 
 static PyMethodDef fsspec_methods[] = {
 #if defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__)
-    {.ml_name = "as_carbon",
-     .ml_meth = (PyCFunction)fsspec_as_carbon,
+    {.ml_name  = "as_carbon",
+     .ml_meth  = (PyCFunction)fsspec_as_carbon,
      .ml_flags = METH_NOARGS,
-     .ml_doc = "as_carbon()\n" CLINIC_SEP
+     .ml_doc   = "as_carbon()\n" CLINIC_SEP
                "\nReturn Carbon.File.FSSpec instance for this object"},
 #endif /* defined(USE_TOOLBOX_OBJECT_GLUE) && !defined(__LP64__) */
     {
-        .ml_name = "__sizeof__",
-        .ml_meth = (PyCFunction)fsspec_sizeof,
+        .ml_name  = "__sizeof__",
+        .ml_meth  = (PyCFunction)fsspec_sizeof,
         .ml_flags = METH_NOARGS,
     },
     {
@@ -101,13 +101,13 @@ static PyMethodDef fsspec_methods[] = {
 
 PyTypeObject PyObjC_FSSpecType = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.FSSpec",
-    .tp_basicsize = sizeof(PyObjC_FSSpecObject),
-    .tp_itemsize = 0,
-    .tp_getattro = PyObject_GenericGetAttr,
-    .tp_setattro = PyObject_GenericSetAttr,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_methods = fsspec_methods,
-    .tp_getset = fsspec_getset,
+    .tp_basicsize                                  = sizeof(PyObjC_FSSpecObject),
+    .tp_itemsize                                   = 0,
+    .tp_getattro                                   = PyObject_GenericGetAttr,
+    .tp_setattro                                   = PyObject_GenericSetAttr,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_methods                                    = fsspec_methods,
+    .tp_getset                                     = fsspec_getset,
 };
 
 int

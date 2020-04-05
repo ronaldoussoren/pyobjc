@@ -7,29 +7,29 @@
 /* { dg-do run { xfail mips*-*-* arm*-*-* strongarm*-*-* xscale*-*-* } } */
 #include "ffitest.h"
 
-int main (void)
+int
+main(void)
 {
-	ffi_cif cif;
+    ffi_cif cif;
 #ifndef USING_MMAP
-	static ffi_closure cl;
+    static ffi_closure cl;
 #endif
-	ffi_closure *pcl;
-	ffi_type* arg_types[1];
+    ffi_closure* pcl;
+    ffi_type*    arg_types[1];
 
 #ifdef USING_MMAP
-	pcl = allocate_mmap (sizeof(ffi_closure));
+    pcl = allocate_mmap(sizeof(ffi_closure));
 #else
-	pcl = &cl;
+    pcl = &cl;
 #endif
 
-	arg_types[0] = NULL;
+    arg_types[0] = NULL;
 
-	ffi_type	badType	= ffi_type_void;
+    ffi_type badType = ffi_type_void;
 
-	badType.size = 0;
+    badType.size = 0;
 
-	CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, &badType,
-		arg_types) == FFI_BAD_TYPEDEF);
+    CHECK(ffi_prep_cif(&cif, FFI_DEFAULT_ABI, 0, &badType, arg_types) == FFI_BAD_TYPEDEF);
 
-	exit(0);
+    exit(0);
 }

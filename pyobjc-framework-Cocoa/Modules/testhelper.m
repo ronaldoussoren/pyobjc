@@ -76,7 +76,7 @@
      * cause a core-dump if the copy is not a 'new'
      * object.
      */
-    pool = [[NSAutoreleasePool alloc] init];
+    pool    = [[NSAutoreleasePool alloc] init];
     theCopy = [source copy];
     [pool release];
     pool = nil;
@@ -120,8 +120,8 @@
         [object takeValuesFromDictionary:value];
         break;
 #pragma clang diagnostic pop
-#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
-    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3)                                                       \
+    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
 
     case 4:
         [object setValue:value forKey:key];
@@ -140,8 +140,8 @@
                           observer:(NSObject*)obj
                            keyPath:(NSString*)path
 {
-#if defined(MAC_OS_X_VERSION_10_3) &&                                                    \
-    (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
+#if defined(MAC_OS_X_VERSION_10_3)                                                       \
+    && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3)
     NSObject* o = [[class alloc] init];
     [o addObserver:obj
         forKeyPath:path
@@ -185,7 +185,7 @@
 - (void)runThread:(id)object
 {
     NSObject* pool = [[NSAutoreleasePool alloc] init];
-    returnObject = [object call];
+    returnObject   = [object call];
     [returnObject retain];
     [pool release];
 }
@@ -197,8 +197,8 @@
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
-    double d = 1.5;
-    int iArray[] = {3, 4, 5, 6};
+    double d        = 1.5;
+    int    iArray[] = {3, 4, 5, 6};
     [coder encodeValueOfObjCType:@encode(double) at:&d];
     [coder encodeArrayOfObjCType:@encode(int) count:4 at:iArray];
     [coder encodeBytes:"hello world" length:11];
@@ -220,7 +220,7 @@
 
 + (NSData*)fetchData:(NSCoder*)coder
 {
-    void* data;
+    void*      data;
     NSUInteger length;
 
     data = [coder decodeBytesWithReturnedLength:&length];

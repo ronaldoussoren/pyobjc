@@ -6,14 +6,14 @@
  * header file.
  */
 extern PyObject* GrafObj_New(GrafPtr);
-extern int GrafObj_Convert(PyObject*, GrafPtr*);
+extern int       GrafObj_Convert(PyObject*, GrafPtr*);
 
 static PyObject*
 call_NSQuickDrawView_qdport(PyObject* method, PyObject* self, PyObject* arguments)
 {
-    PyObject* result;
+    PyObject*         result;
     struct objc_super super;
-    void* port;
+    void*             port;
 
     if (!PyArg_ParseTuple(arguments, "")) {
         return NULL;
@@ -30,7 +30,7 @@ call_NSQuickDrawView_qdport(PyObject* method, PyObject* self, PyObject* argument
         } @catch (NSException* localException) {
             PyObjCErr_FromObjC(localException);
             result = NULL;
-            port = NULL;
+            port   = NULL;
         }
     Py_END_ALLOW_THREADS
 
@@ -50,13 +50,13 @@ static void
 imp_NSQuickDrawView_qdport(void* cif __attribute__((__unused__)), void* resp, void** args,
                            void* callable)
 {
-    id self = *(id*)args[0];
+    id       self    = *(id*)args[0];
     GrafPtr* pretval = (GrafPtr*)resp;
 
     PyObject* result;
     PyObject* arglist = NULL;
-    PyObject* pyself = NULL;
-    int cookie = 0;
+    PyObject* pyself  = NULL;
+    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -109,7 +109,8 @@ setup_nsquickdrawview(PyObject* m __attribute__((__unused__)))
 
     if (PyObjC_RegisterMethodMapping(classNSQuickDrawView, @selector(qdport),
                                      call_NSQuickDrawView_qdport,
-                                     imp_NSQuickDrawView_qdport) < 0) {
+                                     imp_NSQuickDrawView_qdport)
+        < 0) {
 
         return -1;
     }
