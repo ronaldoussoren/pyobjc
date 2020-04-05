@@ -1,6 +1,8 @@
 Welcome to the PyObjC repository
 ================================
 
+.. image:: https://github.com/ronaldoussoren/pyobjc/workflows/pre-commit/badge.svg
+
 Introduction
 ------------
 
@@ -13,8 +15,6 @@ for the PyObjC project:
 * 'pyobjc-core': the actual bridge
 
 * 'pyobjc-framework-*': wrappers for specific frameworks (or sets of frameworks)
-
-* 'pyobjc-xcode': Mostly unmaintained Xcode templates for Python projects
 
 
 Supported Python versions
