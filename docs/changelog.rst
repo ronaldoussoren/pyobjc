@@ -27,7 +27,7 @@ Version 6.2.1
 
   Patch by Joshua Root
 
-* There were no SDK updates in Xcode 11.5
+* There were no SDK updates in Xcode 11.5 and Xcode 11.6 (beta)
 
 Version 6.2
 -----------
