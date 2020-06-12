@@ -13,7 +13,7 @@ from distutils.core import Command
 from setuptools import setup
 from setuptools.command import egg_info
 
-VERSION = "6.2.1b1"
+VERSION = "6.2.1"
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
