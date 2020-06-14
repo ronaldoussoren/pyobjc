@@ -187,6 +187,8 @@ Programming Language :: Python :: 3.4
 Programming Language :: Python :: 3.5
 Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
+Programming Language :: Python :: 3.8
+Programming Language :: Python :: 3.9
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
@@ -407,9 +409,15 @@ def Extension(*args, **kwds):
     Simple wrapper about distutils.core.Extension that adds additional PyObjC
     specific flags.
     """
-    os_level = get_sdk_level()
-    if os_level is None:
-        os_level = get_os_level()
+    if sys.platform != "darwin":
+        # Fake version, the code in setup() will
+        # notice we're not on darwin and will fail
+        # the build
+        os_level = "9.9"
+    else:
+        os_level = get_sdk_level()
+        if os_level is None:
+            os_level = get_os_level()
 
     cflags = []
     ldflags = []
@@ -464,14 +472,15 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
 
     k = kwds.copy()
 
-    os_level = get_sdk_level()
-    if os_level is None:
-        os_level = get_os_level()
-    os_compatible = True
     if sys.platform != "darwin":
         os_compatible = False
 
     else:
+        os_level = get_sdk_level()
+        if os_level is None:
+            os_level = get_os_level()
+        os_compatible = True
+
         if min_os_level is not None:
             if _sort_key(os_level) < _sort_key(min_os_level):
                 os_compatible = False
@@ -495,19 +504,17 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         if min_os_level is not None:
             if max_os_level is not None:
                 msg = (
-                    "This distribution is only supported on MacOSX "
+                    "This distribution is only supported on macOS "
                     "versions %s upto and including %s" % (min_os_level, max_os_level)
                 )
             else:
-                msg = "This distribution is only supported on MacOSX >= %s" % (
+                msg = "This distribution is only supported on macOS >= %s" % (
                     min_os_level,
                 )
         elif max_os_level is not None:
-            msg = "This distribution is only supported on MacOSX <= %s" % (
-                max_os_level,
-            )
+            msg = "This distribution is only supported on macOS <= %s" % (max_os_level,)
         else:
-            msg = "This distribution is only supported on MacOSX"
+            msg = "This distribution is only supported on macOS"
 
         def create_command_subclass(base_class):
             class subcommand(base_class):

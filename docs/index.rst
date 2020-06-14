@@ -23,14 +23,35 @@ PyObjC 5.3 was released on 2019-10-16. See the :doc:`changelog <changelog>` for 
 Supported platforms
 -------------------
 
-PyObjC supports Python 3.6 or later and does not support Python 2.
-PyObjC does not support other python implementation such as PyPy and Jython.
+PyObjC supports Python 3.6 ("CPython") or later on macO 10.9 or later.
 
-PyObjC is regularly tested on macOS 10.14 and should work on macOS
-10.9 or later for the i386 and x86_64 architectures.
+The binary wheels support x86_64, building from source should still work
+for users that still require 32-bit code.
 
-PyObjC only supports macOS, and is not supported on other platforms (iOS,
-Linux, ...).
+Unsupported platforms
+---------------------
+
+The following platforms are not supported:
+
+* Alternative Python implementations, like PyPy and Jython.
+
+  PyObjC uses some low-level trickery that is not supported by those
+  implementations.
+
+* Python 2.x
+
+  The latest releaes of PyObjC that supports Python 2.7 is version 5.3. Note
+  that this version is no longer maintained.
+
+* Operating systems other than macOS, such as Windows, Linux and iOS
+
+  PyObjC provides interfaces for the system APIs on macOS and as such
+  cannot support Linux and Windows.
+
+  It might be possible to support iOS, but that will require significant
+  engineering, as well as making sure that PyObjC's implementation is
+  compatible with Appstore rules (in particular the usage of dynamic
+  code generation).
 
 General documentation
 =====================
