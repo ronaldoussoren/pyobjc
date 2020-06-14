@@ -33,16 +33,6 @@ Unsupported platforms
 
 The following platforms are not supported:
 
-* Alternative Python implementations, like PyPy and Jython.
-
-  PyObjC uses some low-level trickery that is not supported by those
-  implementations.
-
-* Python 2.x
-
-  The latest releaes of PyObjC that supports Python 2.7 is version 5.3. Note
-  that this version is no longer maintained.
-
 * Operating systems other than macOS, such as Windows, Linux and iOS
 
   PyObjC provides interfaces for the system APIs on macOS and as such
@@ -50,8 +40,20 @@ The following platforms are not supported:
 
   It might be possible to support iOS, but that will require significant
   engineering, as well as making sure that PyObjC's implementation is
-  compatible with Appstore rules (in particular the usage of dynamic
+  compatible with AppStore rules (in particular the usage of dynamic
   code generation).
+
+* Python 2.x
+
+  The latest releaes of PyObjC that supports Python 2.7 is version 5.3. Note
+  that this version is no longer maintained.
+
+* Alternative Python implementations, like PyPy and Jython.
+
+  PyObjC uses some low-level trickery that is not supported by those
+  implementations.
+
+
 
 General documentation
 =====================
