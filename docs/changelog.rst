@@ -9,6 +9,8 @@ Version 6.2.2
 * Another attempt at giving a nice error message when trying to install on
   platforms other than macOS.
 
+* The classifiers now correctly identify supported Python versions
+
 Version 6.2.1
 -------------
 
