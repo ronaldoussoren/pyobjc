@@ -12,7 +12,7 @@ Note that this framework is deprecated in OSX 10.9
 """
 from pyobjc_setup import setup
 
-VERSION = "6.2.1"
+VERSION = "6.2.2b1"
 
 setup(
     name="pyobjc-framework-PubSub",

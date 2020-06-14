@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION = "6.2.1"
+VERSION = "6.2.2b1"
 
 setup(
     name="pyobjc-framework-DeviceCheck",

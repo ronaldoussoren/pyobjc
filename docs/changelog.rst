@@ -3,6 +3,12 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 6.2.2
+-------------
+
+* Another attempt at giving a nice error message when trying to install on
+  platforms other than macOS.
+
 Version 6.2.1
 -------------
 
