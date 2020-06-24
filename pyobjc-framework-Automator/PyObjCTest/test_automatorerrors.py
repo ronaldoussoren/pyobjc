@@ -39,6 +39,7 @@ class TestAutomatorErrors(TestCase):
         self.assertEqual(Automator.AMActionXProtectError, -220)
         self.assertEqual(Automator.AMActionMalwareError, -221)
         self.assertEqual(Automator.AMActionThirdPartyActionsNotAllowedError, -222)
+        self.assertEqual(Automator.AMActionXPCError, -223)
         self.assertEqual(Automator.AMConversionNotPossibleError, -300)
         self.assertEqual(Automator.AMConversionNoDataError, -301)
         self.assertEqual(Automator.AMConversionFailedError, -302)

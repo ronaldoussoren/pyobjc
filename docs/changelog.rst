@@ -9,6 +9,7 @@ Version 7.0
 * Removed metadata for 32-bit systems
 
 * Updated framework bindings:
+  - Automator
   - CFNetwork
   - CoreAudio
   - CoreMedia
