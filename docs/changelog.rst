@@ -23,6 +23,12 @@ Version 7.0
 
   - WidgetKit: This is a Swift-only framework
 
+* #309: Fix incompatibility with macOS 11 in framework loader
+
+* Another attempt at giving a nice error message when trying to install on
+  platforms other than macOS.
+
+
 Version 6.2.1
 -------------
 
