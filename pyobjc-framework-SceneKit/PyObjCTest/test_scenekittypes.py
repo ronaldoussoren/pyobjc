@@ -1,5 +1,3 @@
-import sys
-
 import objc
 from PyObjCTools.TestSupport import (
     TestCase,
@@ -72,24 +70,20 @@ class TestSceneKitTypes(TestCase):
         self.assertEqual(v.z, 3)
         self.assertEqual(v.w, 4)
 
-        if sys.maxsize > 2 ** 32:
-            v = SceneKit.SCNMatrix4MakeTranslation(1, 2, 3)
-            self.assertIsInstance(v, SceneKit.SCNMatrix4)
-            self.assertEqual(v.m41, 1)
-            self.assertEqual(v.m42, 2)
-            self.assertEqual(v.m43, 3)
+        v = SceneKit.SCNMatrix4MakeTranslation(1, 2, 3)
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
+        self.assertEqual(v.m41, 1)
+        self.assertEqual(v.m42, 2)
+        self.assertEqual(v.m43, 3)
 
-            v = SceneKit.SCNMatrix4MakeScale(1, 2, 3)
-            self.assertIsInstance(v, SceneKit.SCNMatrix4)
-            self.assertEqual(v.m11, 1)
-            self.assertEqual(v.m22, 2)
-            self.assertEqual(v.m33, 3)
+        v = SceneKit.SCNMatrix4MakeScale(1, 2, 3)
+        self.assertIsInstance(v, SceneKit.SCNMatrix4)
+        self.assertEqual(v.m11, 1)
+        self.assertEqual(v.m22, 2)
+        self.assertEqual(v.m33, 3)
 
-            w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
-            self.assertIsInstance(w, SceneKit.SCNMatrix4)
-        else:
-            self.assertFalse(hasattr(SceneKit, "SCNMatrix4MakeTranslation"))
-            self.assertFalse(hasattr(SceneKit, "SCNMatrix4MakeScale"))
+        w = SceneKit.SCNMatrix4Translate(v, 6, 7, 8)
+        self.assertIsInstance(w, SceneKit.SCNMatrix4)
 
     @expectedFailure
     def testFunctions_unsupported(self):

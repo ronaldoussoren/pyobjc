@@ -1,0 +1,36 @@
+import DiscRecording
+from PyObjCTools.TestSupport import TestCase
+
+
+class TestDRStatus(TestCase):
+    def testConstants(self):
+        self.assertIsInstance(DiscRecording.DRStatusStateKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusPercentCompleteKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusCurrentSessionKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusCurrentTrackKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusTotalSessionsKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusTotalTracksKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusCurrentSpeedKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusEraseTypeKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateNone, str)
+        self.assertIsInstance(DiscRecording.DRStatusStatePreparing, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateVerifying, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateDone, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateFailed, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateSessionOpen, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateTrackOpen, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateTrackWrite, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateTrackClose, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateSessionClose, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateFinishing, str)
+        self.assertIsInstance(DiscRecording.DRStatusStateErasing, str)
+        self.assertIsInstance(DiscRecording.DRStatusProgressInfoKey, str)
+        self.assertIsInstance(DiscRecording.DRStatusProgressCurrentKPS, str)
+        self.assertIsInstance(DiscRecording.DRStatusProgressCurrentXFactor, str)
+        self.assertIsInstance(DiscRecording.DRErrorStatusKey, str)
+        self.assertIsInstance(DiscRecording.DRErrorStatusErrorKey, str)
+        self.assertIsInstance(DiscRecording.DRErrorStatusErrorStringKey, str)
+        self.assertIsInstance(DiscRecording.DRErrorStatusErrorInfoStringKey, str)
+        self.assertIsInstance(DiscRecording.DRErrorStatusSenseKey, str)
+        self.assertIsInstance(DiscRecording.DRErrorStatusSenseCodeStringKey, str)
+        self.assertIsInstance(DiscRecording.DRErrorStatusAdditionalSenseStringKey, str)
