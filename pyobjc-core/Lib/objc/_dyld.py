@@ -133,5 +133,9 @@ def dyld_find(filename):
 
 
 def pathForFramework(path):
+    if path.startswith("/System/"):
+        # On macOS 11 system frameworks are in a shared cache, not
+        # in the filesystem.
+        return path
     fpath, name, version = infoForFramework(dyld_find(path))
     return os.path.join(fpath, name + ".framework")
