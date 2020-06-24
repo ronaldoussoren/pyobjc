@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 import objc
 
@@ -13,9 +13,11 @@ class TestWKNavigationDelegateHelper(WebKit.NSObject):
     def webView_didReceiveAuthenticationChallenge_completionHandler_(self, w, c, h):
         pass
 
+    def webView_authenticationChallenge_shouldAllowDeprecatedTLS_(self, w, c, h):
+        pass
+
 
 class TestWKNavigationDelegate(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(WebKit.WKErrorDomain, str)
@@ -26,7 +28,6 @@ class TestWKNavigationDelegate(TestCase):
         self.assertEqual(WebKit.WKNavigationResponsePolicyCancel, 0)
         self.assertEqual(WebKit.WKNavigationResponsePolicyAllow, 1)
 
-    @onlyOn64Bit
     @min_os_level("10.10")
     def testProtocols(self):
         p = objc.protocolNamed("WKNavigationDelegate")
@@ -46,4 +47,12 @@ class TestWKNavigationDelegate(TestCase):
             TestWKNavigationDelegateHelper.webView_didReceiveAuthenticationChallenge_completionHandler_,  # noqa: B950
             2,
             objc._C_VOID + objc._C_NSInteger + objc._C_ID,
+        )
+
+    @min_os_level("11.0")
+    def testMethods11_0(self):
+        self.assertArgIsBlock(
+            TestWKNavigationDelegateHelper.webView_authenticationChallenge_shouldAllowDeprecatedTLS_,
+            2,
+            b"vZ",
         )

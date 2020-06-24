@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.initialize import OC_TestInitialize
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class OC_TestInitializePython(OC_TestInitialize):
@@ -84,7 +84,3 @@ class TestInitializing(TestCase):
         self.assertEqual(s, "hello")
         v = OC_TestInitialize.numUninitialized()
         self.assertEqual(v, start)
-
-
-if __name__ == "__main__":
-    main()

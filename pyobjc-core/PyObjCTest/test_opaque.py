@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.opaque import OC_OpaqueTest, BarEncoded, FooEncoded
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 FooHandle = objc.createOpaquePointerType("FooHandle", FooEncoded, "FooHandle doc")
 
@@ -80,7 +80,3 @@ class TestFromC(TestCase):
         co = f.__cobject__()
         g = FooHandle(co)
         self.assertEqual(f.__pointer__, g.__pointer__)
-
-
-if __name__ == "__main__":
-    main()

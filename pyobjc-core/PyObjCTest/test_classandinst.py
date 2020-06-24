@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.testclassandinst import PyObjC_TestClassAndInstance
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class PyObjC_TestClassAndInstanceSubclass(PyObjC_TestClassAndInstance):
@@ -110,6 +110,3 @@ class TestClassAndInstance(TestCase):
 #    def testUnallocatable(self):
 #        # FIXME: This crashes on Tiger, haven't had time to debug yet
 #        self.assertEqual(PyObjC_TestUnallocatable.alloc(), None)
-
-if __name__ == "__main__":
-    main()

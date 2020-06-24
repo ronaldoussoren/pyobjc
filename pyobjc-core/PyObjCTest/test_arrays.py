@@ -8,7 +8,7 @@ import array
 import objc
 from PyObjCTest.arrays import OC_ArrayTest
 from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestArrayCalling(TestCase):
@@ -200,7 +200,3 @@ class TestArrayCallbacks(TestCase):
 
         v = OC_ArrayTest.callArrayOf4StructsOut_(obj)
         self.assertEqual(v, [(44, 45), (46, 47), (48, 49), (50, 51)])
-
-
-if __name__ == "__main__":
-    main()

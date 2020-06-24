@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 objc.registerMetaDataForSelector(
     b"OC_CallbackTest",
@@ -230,7 +230,3 @@ class TestSelectorFor(TestCase):
             pass
 
         self.assertEqual(selector.signature, b"v@:@@^v")
-
-
-if __name__ == "__main__":
-    main()

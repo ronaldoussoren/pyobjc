@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestFramework(TestCase):
@@ -70,7 +70,3 @@ class TestFramework(TestCase):
                 "/System/Library/Frameworks/CoreServices.framework/Versions/B/Frameworks/AE.framework/Versions/A/AE"  # noqa: B950
             ),
         )
-
-
-if __name__ == "__main__":
-    main()

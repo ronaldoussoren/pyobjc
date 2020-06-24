@@ -1,6 +1,6 @@
 import plistlib
 
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -32,7 +32,3 @@ class TestVersionSupport(TestCase):
             self.assertTrue(
                 objc.macos_available(version[0], version[1], version[2] - 1)
             )
-
-
-if __name__ == "__main__":
-    main()

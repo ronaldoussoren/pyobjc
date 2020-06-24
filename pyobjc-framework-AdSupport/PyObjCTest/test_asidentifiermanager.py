@@ -1,17 +1,14 @@
-import sys
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import AdSupport
 
 
-if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import TestCase, min_os_level
-    import AdSupport
+class ASIdentifierManager(TestCase):
+    @min_os_level("10.14")
+    def test_classes(self):
+        AdSupport.ASIdentifierManager
 
-    class ASIdentifierManager(TestCase):
-        @min_os_level("10.14")
-        def test_classes(self):
-            AdSupport.ASIdentifierManager
-
-        @min_os_level("10.14")
-        def test_methods(self):
-            self.assertResultIsBOOL(
-                AdSupport.ASIdentifierManager.isAdvertisingTrackingEnabled
-            )
+    @min_os_level("10.14")
+    def test_methods(self):
+        self.assertResultIsBOOL(
+            AdSupport.ASIdentifierManager.isAdvertisingTrackingEnabled
+        )

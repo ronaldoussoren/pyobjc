@@ -1,5 +1,5 @@
 from PyObjCTest.protected import PyObjCTest_Protected
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestProtected(TestCase):
@@ -7,7 +7,3 @@ class TestProtected(TestCase):
         o = PyObjCTest_Protected.new()
         self.assertEqual(None, o._protectedMethod())
         self.assertEqual(None, o.publicMethod())
-
-
-if __name__ == "__main__":
-    main()

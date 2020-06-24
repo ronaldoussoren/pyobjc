@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.properties import OCPropertyDefinitions
-from PyObjCTools.TestSupport import TestCase, main, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestPropertiesForClass(TestCase):
@@ -135,7 +135,3 @@ class TestPropertiesForClass(TestCase):
             if item["name"] == name:
                 return item
         self.fail("property not found: %s" % (name,))
-
-
-if __name__ == "__main__":
-    main()

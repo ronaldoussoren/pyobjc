@@ -1,17 +1,15 @@
-import sys
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import CloudKit
+import objc
 
-if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import TestCase, min_os_level
-    import CloudKit
-    import objc
 
-    class TestCKReference(TestCase):
-        @min_os_level("10.10")
-        def testClasses(self):
-            self.assertHasAttr(CloudKit, "CKReference")
-            self.assertIsInstance(CloudKit.CKReference, objc.objc_class)
+class TestCKReference(TestCase):
+    @min_os_level("10.10")
+    def testClasses(self):
+        self.assertHasAttr(CloudKit, "CKReference")
+        self.assertIsInstance(CloudKit.CKReference, objc.objc_class)
 
-        @min_os_level("10.10")
-        def testConstants(self):
-            self.assertEqual(CloudKit.CKReferenceActionNone, 0)
-            self.assertEqual(CloudKit.CKReferenceActionDeleteSelf, 1)
+    @min_os_level("10.10")
+    def testConstants(self):
+        self.assertEqual(CloudKit.CKReferenceActionNone, 0)
+        self.assertEqual(CloudKit.CKReferenceActionDeleteSelf, 1)

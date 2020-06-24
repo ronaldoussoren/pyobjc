@@ -14,7 +14,7 @@ import sys
 
 import objc
 from PyObjCTest.metadata import OC_MetaDataTest
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 make_array = array.array
 
@@ -1417,7 +1417,3 @@ class TestVariadicArray(TestCase):
 
         v = o.makeArrayWithArguments_(*range(40))
         self.assertEqual(v, list(range(40)))
-
-
-if __name__ == "__main__":
-    main()

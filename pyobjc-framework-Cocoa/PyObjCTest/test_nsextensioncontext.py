@@ -1,10 +1,9 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSExtensionContext(TestCase):
     @min_os_level("10.10")
-    @onlyOn64Bit
     def testMethods10_10(self):
         self.assertArgIsBlock(
             Foundation.NSExtensionContext.completeRequestReturningItems_completionHandler_,
@@ -16,6 +15,5 @@ class TestNSExtensionContext(TestCase):
         )
 
     @min_os_level("10.10")
-    @onlyOn64Bit
     def testConstant10_10(self):
         self.assertIsInstance(Foundation.NSExtensionItemsAndErrorsKey, str)

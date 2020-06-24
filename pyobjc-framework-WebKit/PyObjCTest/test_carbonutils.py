@@ -1,25 +1,11 @@
-import Cocoa
-from PyObjCTools.TestSupport import TestCase, onlyOn32Bit
-import WebKit
+import Cocoa  # noqa: F401
+from PyObjCTools.TestSupport import TestCase
 
 try:
-    import Quartz
+    import Quartz  # noqa: F401
 except ImportError:
-    Quartz = None
+    Quartz = None  # noqa: F401
 
 
 class TestCarbonUtils(TestCase):
-    @onlyOn32Bit
-    def testFunctions(self):
-        if Quartz is None:
-            self.fail("Quartz is not installed")
-
-        WebKit.WebInitForCarbon()
-
-        # img = NSImage.imageNamed_('NSHelpCursor')
-        img = Cocoa.NSImage.imageNamed_(Cocoa.NSImageNameUserAccounts)
-        self.assertIsInstance(img, Cocoa.NSImage)
-
-        ref = Cocoa.WebConvertNSImageToCGImageRef(img)
-        if ref is not None:
-            self.assertIsInstance(ref, Quartz.CGImageRef)
+    pass

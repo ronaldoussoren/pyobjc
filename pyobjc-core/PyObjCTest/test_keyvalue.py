@@ -46,7 +46,7 @@ from PyObjCTest.keyvaluehelper import (
 # the Key-Value support cannot be tested.
 from PyObjCTest.testbndl import PyObjC_TestClass3 as STUB
 from PyObjCTest.testbndl import PyObjCTest_KeyValueObserver
-from PyObjCTools.TestSupport import TestCase, main, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class KeyValueClass2(object):
@@ -932,7 +932,3 @@ if PyObjCTest_KeyValueObserver is not None:
                 self.assertIsInstance(o, NSObject)
             finally:
                 o.removeObserver_forKeyPath_(observer, "observationInfo")
-
-
-if __name__ == "__main__":
-    main()

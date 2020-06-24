@@ -5,7 +5,7 @@ import sys
 from test import list_tests, seq_tests
 
 import objc
-from PyObjCTools.TestSupport import main, onlyIf
+from PyObjCTools.TestSupport import onlyIf
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -412,7 +412,3 @@ class MutableArrayTest(list_tests.CommonTest):
         lst = self.type2test(base)
         lst.sort(key=lambda x: abs(x), reverse=True)
         self.assertEqual(lst, self.type2test([-5, 4, 3, -2, 1]))
-
-
-if __name__ == "__main__":
-    main()

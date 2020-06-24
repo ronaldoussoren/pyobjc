@@ -1,26 +1,14 @@
-import sys
-
 import objc
 from objc import NO, YES
 from PyObjCTest.fnd import NSPriorDayDesignations
 from PyObjCTest.testbndl2 import PyObjC_TestClass1, PyObjC_TestClass2
-from PyObjCTools.TestSupport import TestCase, main, onlyIf
+from PyObjCTools.TestSupport import TestCase, onlyIf
 
 
-# Several types are encoded slightly different on 32-bit vs. 64-bit
-# - NSPoint and NSRect: the actual type is different
-# - @encode(long) is _C_LNG_LNG instead of _C_LNG on 64-bit builds
-if sys.maxsize > 2 ** 32:
-    NSPoint_tp = b"{_NSPoint=dd}"
-    NSRect_tp = b"{_NSRect={_NSPoint=dd}{_NSSize=dd}}"
-    long_tp = b"q"
-    ulong_tp = b"Q"
-
-else:
-    NSPoint_tp = b"{_NSPoint=ff}"
-    NSRect_tp = b"{_NSRect={_NSPoint=ff}{_NSSize=ff}}"
-    long_tp = b"l"
-    ulong_tp = b"L"
+NSPoint_tp = b"{_NSPoint=dd}"
+NSRect_tp = b"{_NSRect={_NSPoint=dd}{_NSSize=dd}}"
+long_tp = b"q"
+ulong_tp = b"Q"
 
 
 #
@@ -65636,7 +65624,3 @@ class ObjCToPy(TestCase):
         r = PyObjC_TestClass2.invokestructTestStruct5InOutArg_of_((1, 2.5), o)
         self.assertEqual(r[0], (1, 2.5))
         self.assertEqual(r[1], (2, 4.5))
-
-
-if __name__ == "__main__":
-    main()

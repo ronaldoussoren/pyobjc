@@ -6,7 +6,6 @@ import objc
 from PyObjCTools import TestSupport
 from PyObjCTools.TestSupport import (
     TestCase,
-    main,
     sdkForPython,
     os_release,
     onlyIf,
@@ -14,8 +13,6 @@ from PyObjCTools.TestSupport import (
     onlyPython3,
     max_os_level,
     is32Bit,
-    onlyOn32Bit,
-    onlyOn64Bit,
     min_os_level,
     fourcc,
 )
@@ -209,59 +206,6 @@ class TestTestSupport(TestCase):
 
         finally:
             sys.version_info = orig_version
-
-    def testOnlyBits(self):
-        orig_size = sys.maxsize
-
-        try:
-            sys.maxsize = 2 ** 30
-
-            @onlyOn32Bit
-            def func_true():
-                pass
-
-            @onlyOn64Bit
-            def func_false():
-                pass
-
-            try:
-                func_true()
-            except TestSupport._unittest.SkipTest:
-                self.fail("Unexpected skip for python 2")
-
-            try:
-                func_false()
-            except TestSupport._unittest.SkipTest:
-                pass
-
-            else:
-                self.fail("Unexpected non-skip for python 2")
-
-            sys.maxsize = 2 ** 60
-
-            @onlyOn32Bit
-            def func_false():
-                pass
-
-            @onlyOn64Bit
-            def func_true():
-                pass
-
-            try:
-                func_true()
-            except TestSupport._unittest.SkipTest:
-                self.fail("Unexpected skip for python 2")
-
-            try:
-                func_false()
-            except TestSupport._unittest.SkipTest:
-                pass
-
-            else:
-                self.fail("Unexpected non-skip for python 2")
-
-        finally:
-            sys.maxsize = orig_size
 
     def test_mxx_os_level(self):
         orig_os_release = TestSupport.os_release
@@ -612,63 +556,33 @@ class TestTestSupport(TestCase):
         m = Method(3, {}, selector=True)
         self.assertArgHasType(m, 1, objc._C_ID)
 
-        if sys.maxsize > 2 ** 32:
-            m = Method(3, {"type": objc._C_LNG}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_LNG)
-            self.assertArgHasType(m, 1, objc._C_LNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_LNG}, selector=True)
+        self.assertArgHasType(m, 1, objc._C_LNG)
+        self.assertArgHasType(m, 1, objc._C_LNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
+        )
 
-            m = Method(3, {"type": objc._C_ULNG}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_ULNG)
-            self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_ULNG}, selector=True)
+        self.assertArgHasType(m, 1, objc._C_ULNG)
+        self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
+        )
 
-            m = Method(3, {"type": objc._C_LNG_LNG}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_LNG)
-            self.assertArgHasType(m, 1, objc._C_LNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_LNG_LNG}, selector=True)
+        self.assertArgHasType(m, 1, objc._C_LNG)
+        self.assertArgHasType(m, 1, objc._C_LNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
+        )
 
-            m = Method(3, {"type": objc._C_ULNG_LNG}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_ULNG)
-            self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
-
-        else:
-            m = Method(3, {"type": objc._C_LNG}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_LNG)
-            self.assertArgHasType(m, 1, objc._C_INT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
-
-            m = Method(3, {"type": objc._C_ULNG}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_ULNG)
-            self.assertArgHasType(m, 1, objc._C_UINT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
-
-            m = Method(3, {"type": objc._C_INT}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_LNG)
-            self.assertArgHasType(m, 1, objc._C_INT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
-
-            m = Method(3, {"type": objc._C_UINT}, selector=True)
-            self.assertArgHasType(m, 1, objc._C_UINT)
-            self.assertArgHasType(m, 1, objc._C_UINT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 1, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_ULNG_LNG}, selector=True)
+        self.assertArgHasType(m, 1, objc._C_ULNG)
+        self.assertArgHasType(m, 1, objc._C_ULNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 1, objc._C_ID
+        )
 
         m = Method(3, {"type": objc._C_DBL}, selector=False)
         self.assertArgHasType(m, 3, objc._C_DBL)
@@ -682,63 +596,33 @@ class TestTestSupport(TestCase):
         m = Method(3, {}, selector=False)
         self.assertArgHasType(m, 3, objc._C_ID)
 
-        if sys.maxsize > 2 ** 32:
-            m = Method(3, {"type": objc._C_LNG}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_LNG)
-            self.assertArgHasType(m, 3, objc._C_LNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_LNG}, selector=False)
+        self.assertArgHasType(m, 3, objc._C_LNG)
+        self.assertArgHasType(m, 3, objc._C_LNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
+        )
 
-            m = Method(3, {"type": objc._C_ULNG}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_ULNG)
-            self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_ULNG}, selector=False)
+        self.assertArgHasType(m, 3, objc._C_ULNG)
+        self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
+        )
 
-            m = Method(3, {"type": objc._C_LNG_LNG}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_LNG)
-            self.assertArgHasType(m, 3, objc._C_LNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_LNG_LNG}, selector=False)
+        self.assertArgHasType(m, 3, objc._C_LNG)
+        self.assertArgHasType(m, 3, objc._C_LNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
+        )
 
-            m = Method(3, {"type": objc._C_ULNG_LNG}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_ULNG)
-            self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
-
-        else:
-            m = Method(3, {"type": objc._C_LNG}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_LNG)
-            self.assertArgHasType(m, 3, objc._C_INT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
-
-            m = Method(3, {"type": objc._C_ULNG}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_ULNG)
-            self.assertArgHasType(m, 3, objc._C_UINT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
-
-            m = Method(3, {"type": objc._C_INT}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_LNG)
-            self.assertArgHasType(m, 3, objc._C_INT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
-
-            m = Method(3, {"type": objc._C_UINT}, selector=False)
-            self.assertArgHasType(m, 3, objc._C_UINT)
-            self.assertArgHasType(m, 3, objc._C_UINT)
-            self.assertRaises(
-                self.failureException, self.assertArgHasType, m, 3, objc._C_ID
-            )
+        m = Method(3, {"type": objc._C_ULNG_LNG}, selector=False)
+        self.assertArgHasType(m, 3, objc._C_ULNG)
+        self.assertArgHasType(m, 3, objc._C_ULNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertArgHasType, m, 3, objc._C_ID
+        )
 
     def test_result_type(self):
         m = Method(None, {})
@@ -753,63 +637,33 @@ class TestTestSupport(TestCase):
             self.failureException, self.assertResultHasType, m, objc._C_ID
         )
 
-        if sys.maxsize > 2 ** 32:
-            m = Method(None, {"type": objc._C_LNG}, selector=False)
-            self.assertResultHasType(m, objc._C_LNG)
-            self.assertResultHasType(m, objc._C_LNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
+        m = Method(None, {"type": objc._C_LNG}, selector=False)
+        self.assertResultHasType(m, objc._C_LNG)
+        self.assertResultHasType(m, objc._C_LNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertResultHasType, m, objc._C_ID
+        )
 
-            m = Method(None, {"type": objc._C_ULNG}, selector=False)
-            self.assertResultHasType(m, objc._C_ULNG)
-            self.assertResultHasType(m, objc._C_ULNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
+        m = Method(None, {"type": objc._C_ULNG}, selector=False)
+        self.assertResultHasType(m, objc._C_ULNG)
+        self.assertResultHasType(m, objc._C_ULNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertResultHasType, m, objc._C_ID
+        )
 
-            m = Method(None, {"type": objc._C_LNG_LNG}, selector=False)
-            self.assertResultHasType(m, objc._C_LNG)
-            self.assertResultHasType(m, objc._C_LNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
+        m = Method(None, {"type": objc._C_LNG_LNG}, selector=False)
+        self.assertResultHasType(m, objc._C_LNG)
+        self.assertResultHasType(m, objc._C_LNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertResultHasType, m, objc._C_ID
+        )
 
-            m = Method(None, {"type": objc._C_ULNG_LNG}, selector=False)
-            self.assertResultHasType(m, objc._C_ULNG)
-            self.assertResultHasType(m, objc._C_ULNG_LNG)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
-
-        else:
-            m = Method(None, {"type": objc._C_LNG}, selector=False)
-            self.assertResultHasType(m, objc._C_LNG)
-            self.assertResultHasType(m, objc._C_INT)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
-
-            m = Method(None, {"type": objc._C_ULNG}, selector=False)
-            self.assertResultHasType(m, objc._C_ULNG)
-            self.assertResultHasType(m, objc._C_UINT)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
-
-            m = Method(None, {"type": objc._C_INT}, selector=False)
-            self.assertResultHasType(m, objc._C_LNG)
-            self.assertResultHasType(m, objc._C_INT)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
-
-            m = Method(None, {"type": objc._C_UINT}, selector=False)
-            self.assertResultHasType(m, objc._C_UINT)
-            self.assertResultHasType(m, objc._C_UINT)
-            self.assertRaises(
-                self.failureException, self.assertResultHasType, m, objc._C_ID
-            )
+        m = Method(None, {"type": objc._C_ULNG_LNG}, selector=False)
+        self.assertResultHasType(m, objc._C_ULNG)
+        self.assertResultHasType(m, objc._C_ULNG_LNG)
+        self.assertRaises(
+            self.failureException, self.assertResultHasType, m, objc._C_ID
+        )
 
     def test_arg_fixed_size(self):
         m = Method(3, {"c_array_of_fixed_length": 42}, selector=True)
@@ -1444,7 +1298,3 @@ class TestTestSupport(TestCase):
 
     def run(self, *args, **kwds):
         unittest.TestCase.run(self, *args, **kwds)
-
-
-if __name__ == "__main__":
-    main()

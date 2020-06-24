@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestContext(TestCase):
@@ -23,7 +23,3 @@ class TestContext(TestCase):
         self.assertNotIn(h, objc.context._registry)
 
         self.assertRaises(KeyError, objc.context.get, h)
-
-
-if __name__ == "__main__":
-    main()

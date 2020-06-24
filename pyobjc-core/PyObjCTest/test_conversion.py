@@ -10,7 +10,7 @@ import sys
 import warnings
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 from .testbndl import (
     CHAR_MAX,
@@ -544,7 +544,3 @@ class PyOCTestTypeStr(TestCase):
         self.assertEqual(objc._C_IN, b"n")
         self.assertEqual(objc._C_OUT, b"o")
         self.assertEqual(objc._C_INOUT, b"N")
-
-
-if __name__ == "__main__":
-    main()

@@ -20,7 +20,7 @@ TODO:
 import array
 
 from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -207,7 +207,3 @@ class TestTypeCode_BOOL(TestCase):
 
         # It should not be possible to use a string as an array of booleans
         self.assertRaises(ValueError, o.BOOLArrayOf4InOut_, b"\x00\x01\x00\x01")
-
-
-if __name__ == "__main__":
-    main()

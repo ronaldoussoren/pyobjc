@@ -1,16 +1,12 @@
 # Tests for interaction with ObjC "blocks".
 #
 # These tests are fairly minimal at the moment.
-import sys
 
 import objc
 from PyObjCTest.block import OCTestBlock
-from PyObjCTools.TestSupport import TestCase, main, onlyIf, min_os_level
+from PyObjCTools.TestSupport import TestCase, onlyIf, min_os_level
 
-if sys.maxsize > 2 ** 32:
-    NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
-else:
-    NSRect_tp = b"{_NSRect={_NSPoint=ff}{_NSSize=ff}}"
+NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
 
 objc.parseBridgeSupport(
     """\
@@ -442,7 +438,3 @@ class TestBlockRuntimeSignature(TestCase):
                 objc._C_CHR + BLOCK_SELF_TYPE + objc._C_INT + objc._C_INT + objc._C_FLT
             ).decode("utf-8"),
         )
-
-
-if __name__ == "__main__":
-    main()

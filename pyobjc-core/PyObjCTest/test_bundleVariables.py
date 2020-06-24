@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 from . import fnd as Foundation
 
@@ -41,7 +41,3 @@ class TestBundleVariables(TestCase):
 
         self.assertIsInstance(d["NSFoundationVersionNumber"], float)
         self.assertIsInstance(d["NSDebugEnabled"], int)
-
-
-if __name__ == "__main__":
-    main()

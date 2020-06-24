@@ -6,18 +6,7 @@ import sys
 import objc
 import objc._lazyimport as lazyimport
 from PyObjCTest import metadatafunction
-from PyObjCTools.TestSupport import TestCase, main
-
-if sys.maxsize > 2 ** 32:
-
-    def sel32or64(a, b):
-        return b
-
-
-else:
-
-    def sel32or64(a, b):
-        return a
+from PyObjCTools.TestSupport import TestCase
 
 
 def lookupClasses(*names):
@@ -97,10 +86,7 @@ class TestLazyImport(TestCase):
             "enums": "$NSAWTEventType@16$NSAboveBottom@4$NSAboveTop@1$",
             "functions": {
                 "NSRectClipList": (
-                    sel32or64(
-                        b"v^{_NSRect={_NSPoint=ff}{_NSSize=ff}}i",
-                        b"v^{CGRect={CGPoint=dd}{CGSize=dd}}q",
-                    ),
+                    b"v^{CGRect={CGPoint=dd}{CGSize=dd}}q",
                     "",
                     {
                         "arguments": {
@@ -109,10 +95,7 @@ class TestLazyImport(TestCase):
                     },
                 ),
                 "FunctionThatDoesNotExist": (
-                    sel32or64(
-                        b"v^{_NSRect={_NSPoint=ff}{_NSSize=ff}}i",
-                        b"v^{CGRect={CGPoint=dd}{CGSize=dd}}q",
-                    ),
+                    b"v^{CGRect={CGPoint=dd}{CGSize=dd}}q",
                     "",
                     {},
                 ),
@@ -307,10 +290,7 @@ class TestLazyImport(TestCase):
         )
         self.assertIsInstance(mod, objc.ObjCLazyModule)
 
-        if sys.maxsize > 2 ** 32:
-            self.assertEqual(mod.umax, 2 ** 64 - 1)
-        else:
-            self.assertEqual(mod.umax, 2 ** 32 - 1)
+        self.assertEqual(mod.umax, 2 ** 64 - 1)
         self.assertEqual(mod.max, sys.maxsize)
         self.assertEqual(mod.min, -sys.maxsize - 1)
 
@@ -466,7 +446,3 @@ class TestLazyImport(TestCase):
         self.assertIsInstance(mod.kCFAllocatorMallocZone, objc.objc_object)
         self.assertTrue((mod.kCFAllocatorMallocZone.__flags__ & 0x10) == 0x10)
         self.assertIsInstance(mod.kCFAllocatorMallocZone, mod.CFAllocatorRef)
-
-
-if __name__ == "__main__":
-    main()

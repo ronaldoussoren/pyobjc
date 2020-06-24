@@ -1,7 +1,7 @@
 import objc
 import objc._objc
 from objc._protocols import PROTOCOL_CACHE
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestProtocols(TestCase):
@@ -26,7 +26,3 @@ class TestProtocols(TestCase):
 
         finally:
             objc._objc.protocolsForProcess = orig_protocolsForProcess
-
-
-if __name__ == "__main__":
-    main()

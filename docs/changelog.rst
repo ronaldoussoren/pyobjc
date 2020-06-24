@@ -3,6 +3,26 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 7.0
+-----------
+
+* Removed metadata for 32-bit systems
+
+* Updated framework bindings:
+  - CFNetwork
+  - CoreAudio
+  - PDFKit
+  - SafariServices
+  - SpriteKit
+  - WebKit
+
+* Added bindings for the following frameworks:
+  - ... (introduced in macOS 11.0)
+
+* The following new frameworks in macOS 11 will not be wrapped:
+
+  - WidgetKit: This is a Swift-only framework
+
 Version 6.2.1
 -------------
 

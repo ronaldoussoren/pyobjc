@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -61,7 +61,3 @@ class TestBasicIMP(TestCase):
         o = NSObject.alloc().init()
 
         self.assertEqual(o.description(), o.methodForSelector_(b"description")(o))
-
-
-if __name__ == "__main__":
-    main()

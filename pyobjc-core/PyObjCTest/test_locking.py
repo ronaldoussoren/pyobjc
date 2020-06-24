@@ -9,7 +9,7 @@ import time
 
 import objc
 from PyObjCTest.locking import OC_LockTest
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
@@ -153,7 +153,3 @@ class TestLockingWithStatement(TestCase):
         for idx in range(len(lst)):
             if lst[idx].endswith(" a"):
                 self.assertTrue(lst[idx + 1].endswith(" b"))
-
-
-if __name__ == "__main__":
-    main()

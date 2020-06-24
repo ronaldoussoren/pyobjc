@@ -13,12 +13,9 @@ import warnings
 import objc
 from PyObjCTest.fnd import NSObject
 from PyObjCTest.structs import OC_StructTest
-from PyObjCTools.TestSupport import TestCase, main, pyobjc_options
+from PyObjCTools.TestSupport import TestCase, pyobjc_options
 
-if sys.maxsize > 2 ** 32:
-    PTR_SIZE = 8
-else:
-    PTR_SIZE = 4
+PTR_SIZE = 8
 
 
 class TestStructs(TestCase):
@@ -273,7 +270,3 @@ class TestStructs(TestCase):
             self.assertEqual(v.second, 3)
 
             self.assertRaises(TypeError, tp0, 4, 5, 6)
-
-
-if __name__ == "__main__":
-    main()

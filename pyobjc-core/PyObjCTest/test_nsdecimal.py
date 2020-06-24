@@ -6,7 +6,7 @@ import operator
 
 import objc
 from PyObjCTest.decimal import OC_TestDecimal
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDecimalWrapper(TestCase):
@@ -275,7 +275,3 @@ class TestDecimalByReference(TestCase):
         self.assertEqual(str(d1), "1.25")
         self.assertIsInstance(d2, objc.NSDecimal)
         self.assertEqual(str(d2), "2.5")
-
-
-if __name__ == "__main__":
-    main()

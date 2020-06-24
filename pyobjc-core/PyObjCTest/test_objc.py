@@ -2,7 +2,7 @@ import sys
 
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass4
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 from .fnd import NSArray, NSAttributedString, NSObject
 
@@ -112,7 +112,3 @@ class TestPrivate(TestCase):
             AttributeError, resolve, "distutils.command.sdist.dont_show_formats"
         )
         self.assertRaises(AttributeError, resolve, "sys.does_not_exist")
-
-
-if __name__ == "__main__":
-    main()

@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.instanceVariables import ClassWithVariables
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
@@ -303,7 +303,3 @@ class TestStructConvenience(TestCase):
                 self.assertEqual(v.__name__, "my_var")
                 self.assertFalse(v.__isOutlet__)
                 self.assertFalse(v.__isSlot__)
-
-
-if __name__ == "__main__":
-    main()

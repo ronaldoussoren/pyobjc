@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 NSSortDescriptor = objc.lookUpClass("NSSortDescriptor")
@@ -26,7 +26,3 @@ class TestMetadataInheritance(TestCase):
     def testObjCMeta(self):
         o = NSSortDescriptor.alloc().init()
         self.assertResultHasType(o.selector, objc._C_SEL)
-
-
-if __name__ == "__main__":
-    main()

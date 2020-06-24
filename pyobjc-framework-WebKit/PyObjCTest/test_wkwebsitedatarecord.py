@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 
 
 class TestWKWebsiteDataRecord(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.11")
     def testConstants10_10(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeDiskCache, str)
@@ -15,7 +14,6 @@ class TestWKWebsiteDataRecord(TestCase):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeWebSQLDatabases, str)
         self.assertIsInstance(WebKit.WKWebsiteDataTypeIndexedDBDatabases, str)
 
-    @onlyOn64Bit
     @min_os_level("10.13.4")
     def testConstants10_13_4(self):
         self.assertIsInstance(WebKit.WKWebsiteDataTypeFetchCache, str)

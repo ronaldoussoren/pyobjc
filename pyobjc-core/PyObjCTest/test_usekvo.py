@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -88,7 +88,3 @@ class TestUseKVO(TestCase):
         self.assertFalse(OCTestUseKVO4.__useKVO__)
         obj = OCTestUseKVO4.alloc().init()
         self.assertNoChangesEmitted(obj)
-
-
-if __name__ == "__main__":
-    main()

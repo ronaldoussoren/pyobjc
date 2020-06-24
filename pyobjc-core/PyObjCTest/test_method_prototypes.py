@@ -12,7 +12,7 @@ method defintions:
 """
 
 from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -606,7 +606,3 @@ class TestImplicitSignature(TestCase):
         self.assertEqual(OC_ImplProto_Variations._leadingColon.signature, b"v@:")
         self.assertEqual(OC_ImplProto_Variations._leadingColon_.signature, b"@@:@")
         self.assertEqual(OC_ImplProto_Variations.methodWithArg_.signature, b"v@:@")
-
-
-if __name__ == "__main__":
-    main()

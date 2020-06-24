@@ -10,7 +10,7 @@ import warnings
 import objc
 from PyObjCTest.fnd import NSNumber, NSNumberFormatter
 from PyObjCTest.pythonnumber import OC_TestNumber
-from PyObjCTools.TestSupport import TestCase, main, os_level_key, os_release
+from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
 
 OC_PythonNumber = objc.lookUpClass("OC_PythonNumber")
 OC_BuiltinPythonNumber = objc.lookUpClass("OC_BuiltinPythonNumber")
@@ -712,7 +712,3 @@ class TestNumberFormatter(TestCase):
         self.assertEqual(
             formatter.stringForObjectValue_(n), formatter.stringForObjectValue_(p)
         )
-
-
-if __name__ == "__main__":
-    main()

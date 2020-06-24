@@ -1,12 +1,5 @@
 import AppKit
-import objc
-from PyObjCTools.TestSupport import (
-    TestCase,
-    min_os_level,
-    onlyOn32Bit,
-    os_level_key,
-    os_release,
-)
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFont(TestCase):
@@ -72,35 +65,6 @@ class TestNSFont(TestCase):
         self.assertIsInstance(AppKit.NSAntialiasThresholdChangedNotification, str)
         self.assertIsInstance(AppKit.NSFontSetChangedNotification, str)
 
-    @onlyOn32Bit
-    def testConstants_32bitonly(self):
-        self.assertEqual(AppKit.NSOneByteGlyphPacking, 0)
-        self.assertEqual(AppKit.NSJapaneseEUCGlyphPacking, 1)
-        self.assertEqual(AppKit.NSAsciiWithDoubleByteEUCGlyphPacking, 2)
-        self.assertEqual(AppKit.NSTwoByteGlyphPacking, 3)
-        self.assertEqual(AppKit.NSFourByteGlyphPacking, 4)
-
-        self.assertEqual(AppKit.NSGlyphBelow, 1)
-        self.assertEqual(AppKit.NSGlyphAbove, 2)
-
-        self.assertIsInstance(AppKit.NSAFMFamilyName, str)
-        self.assertIsInstance(AppKit.NSAFMFontName, str)
-        self.assertIsInstance(AppKit.NSAFMFormatVersion, str)
-        self.assertIsInstance(AppKit.NSAFMFullName, str)
-        self.assertIsInstance(AppKit.NSAFMNotice, str)
-        self.assertIsInstance(AppKit.NSAFMVersion, str)
-        self.assertIsInstance(AppKit.NSAFMWeight, str)
-        self.assertIsInstance(AppKit.NSAFMEncodingScheme, str)
-        self.assertIsInstance(AppKit.NSAFMCharacterSet, str)
-        self.assertIsInstance(AppKit.NSAFMCapHeight, str)
-        self.assertIsInstance(AppKit.NSAFMXHeight, str)
-        self.assertIsInstance(AppKit.NSAFMAscender, str)
-        self.assertIsInstance(AppKit.NSAFMDescender, str)
-        self.assertIsInstance(AppKit.NSAFMUnderlinePosition, str)
-        self.assertIsInstance(AppKit.NSAFMUnderlineThickness, str)
-        self.assertIsInstance(AppKit.NSAFMItalicAngle, str)
-        self.assertIsInstance(AppKit.NSAFMMappingScheme, str)
-
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertArgIsOut(AppKit.NSFont.getBoundingRects_forCGGlyphs_count_, 0)
@@ -138,63 +102,6 @@ class TestNSFont(TestCase):
         self.assertArgSizeInArg(
             AppKit.NSFont.getAdvancements_forPackedGlyphs_length_, 1, 2
         )
-
-    @onlyOn32Bit
-    def testMethods32(self):
-        self.assertResultIsBOOL(AppKit.NSFont.isBaseFont)
-        self.assertResultIsBOOL(AppKit.NSFont.glyphIsEncoded_)
-        self.assertArgHasType(AppKit.NSFont.glyphIsEncoded_, 0, b"I")
-        self.assertArgHasType(
-            AppKit.NSFont.positionOfGlyph_precededByGlyph_isNominal_, 0, b"I"
-        )
-        self.assertArgHasType(
-            AppKit.NSFont.positionOfGlyph_precededByGlyph_isNominal_, 1, b"I"
-        )
-        self.assertArgHasType(
-            AppKit.NSFont.positionOfGlyph_precededByGlyph_isNominal_,
-            2,
-            b"o^" + objc._C_NSBOOL,
-        )
-
-        self.assertArgHasType(
-            AppKit.NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_,
-            0,
-            b"n^I",
-        )
-        self.assertArgSizeInArg(
-            AppKit.NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 0, 1
-        )
-        self.assertArgHasType(
-            AppKit.NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_,
-            2,
-            b"o^" + AppKit.NSPoint.__typestr__,
-        )
-        self.assertArgSizeInArg(
-            AppKit.NSFont.positionsForCompositeSequence_numberOfGlyphs_pointArray_, 2, 1
-        )
-
-        self.assertArgHasType(
-            AppKit.NSFont.positionOfGlyph_struckOverGlyph_metricsExist_,
-            2,
-            b"o^" + objc._C_NSBOOL,
-        )
-        self.assertArgHasType(
-            AppKit.NSFont.positionOfGlyph_struckOverRect_metricsExist_,
-            2,
-            b"o^" + objc._C_NSBOOL,
-        )
-
-        if os_level_key(os_release()) < os_level_key("10.10"):
-            self.assertArgHasType(
-                AppKit.NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_,  # noqa: B950
-                3,
-                b"o^" + AppKit.NSSize.__typestr__,
-            )
-            self.assertArgHasType(
-                AppKit.NSFont.positionOfGlyph_withRelation_toBaseGlyph_totalAdvancement_metricsExist_,  # noqa: B950
-                4,
-                b"o^" + objc._C_NSBOOL,
-            )
 
     def testFunctions(self):
         glyphs = [ord("A"), ord("B"), ord("9"), ord("a")]

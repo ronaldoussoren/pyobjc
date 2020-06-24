@@ -1,17 +1,15 @@
 import AppKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSUserActivity(TestCase):
     @min_os_level("10.10")
-    @onlyOn64Bit
     def testConstants10_10(self):
         self.assertIsInstance(AppKit.NSUserActivityDocumentURLKey, str)
         self.assertIsInstance(AppKit.NSUserActivityTypeBrowsingWeb, str)
 
     @min_os_level("10.10")
-    @onlyOn64Bit
     def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSUserActivity.needsSave)
         self.assertArgIsBOOL(AppKit.NSUserActivity.setNeedsSave_, 0)
@@ -26,7 +24,6 @@ class TestNSUserActivity(TestCase):
         )
 
     @min_os_level("10.11")
-    @onlyOn64Bit
     def testMethods10_11(self):
         self.assertResultIsBOOL(AppKit.NSUserActivity.isEligibleForHandoff)
         self.assertArgIsBOOL(AppKit.NSUserActivity.setEligibleForHandoff_, 0)
@@ -38,6 +35,5 @@ class TestNSUserActivity(TestCase):
         self.assertArgIsBOOL(AppKit.NSUserActivity.setEligibleForPublicIndexing_, 0)
 
     @min_os_level("10.10")
-    @onlyOn64Bit
     def testProtocols(self):
         objc.protocolNamed("NSUserActivityDelegate")

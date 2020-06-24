@@ -4,7 +4,7 @@ Tests for the proxy of Python sets
 import objc
 from PyObjCTest.fnd import NSNull, NSObject, NSPredicate
 from PyObjCTest.pythonset import OC_TestSet
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 OC_PythonSet = objc.lookUpClass("OC_PythonSet")
 OC_BuiltinPythonSet = objc.lookUpClass("OC_BuiltinPythonSet")
@@ -284,7 +284,3 @@ class TestMutableSet(TestCase, BasicSetTests):
 
         OC_TestSet.removeAllObjecsFromSet_(s)
         self.assertEqual(s, self.setClass())
-
-
-if __name__ == "__main__":
-    main()

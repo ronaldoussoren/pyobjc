@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 
 
 class TestWKError(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(WebKit.WKErrorDomain, str)

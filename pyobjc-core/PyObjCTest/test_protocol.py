@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.protocol import OC_TestProtocol
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
@@ -588,7 +588,3 @@ class TestFormalProtocols2(TestCase):
         self.assertEqual(
             MyClassProtocol3.descriptionForClassMethod_(b"nosuchmethod"), None
         )
-
-
-if __name__ == "__main__":
-    main()

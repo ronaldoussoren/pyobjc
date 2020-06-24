@@ -1,5 +1,3 @@
-import sys
-
 import JavaScriptCore
 import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level
@@ -386,11 +384,7 @@ class TestJSObjectRef(TestCase):
             JavaScriptCore.JSPropertyNameArrayRef.__typestr__,
         )
 
-        if sys.maxsize > 2 ** 32:
-            SIZE_T = objc._C_ULNG_LNG
-
-        else:
-            SIZE_T = objc._C_ULNG
+        SIZE_T = objc._C_ULNG_LNG
 
         self.assertResultHasType(JavaScriptCore.JSPropertyNameArrayGetCount, SIZE_T)
         self.assertArgHasType(

@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -59,7 +59,3 @@ if 0:
             lst = []
             VarArgsClass2.classMethod1_(lst, foo="bar", baz="foo")
             self.assertEqual(lst, [{"foo": "bar", "baz": "foo"}])
-
-
-if __name__ == "__main__":
-    main()

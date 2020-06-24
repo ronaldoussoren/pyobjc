@@ -1,0 +1,131 @@
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import Quartz
+import objc
+
+
+class TestCIFilter(TestCase):
+    def testConstants(self):
+        self.assertIsInstance(Quartz.kCIAttributeFilterName, str)
+        self.assertIsInstance(Quartz.kCIAttributeFilterDisplayName, str)
+        self.assertIsInstance(Quartz.kCIAttributeFilterCategories, str)
+        self.assertIsInstance(Quartz.kCIAttributeClass, str)
+        self.assertIsInstance(Quartz.kCIAttributeType, str)
+        self.assertIsInstance(Quartz.kCIAttributeMin, str)
+        self.assertIsInstance(Quartz.kCIAttributeMax, str)
+        self.assertIsInstance(Quartz.kCIAttributeSliderMin, str)
+        self.assertIsInstance(Quartz.kCIAttributeSliderMax, str)
+        self.assertIsInstance(Quartz.kCIAttributeDefault, str)
+        self.assertIsInstance(Quartz.kCIAttributeIdentity, str)
+        self.assertIsInstance(Quartz.kCIAttributeName, str)
+        self.assertIsInstance(Quartz.kCIAttributeDisplayName, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeTime, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeScalar, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeDistance, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeAngle, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeBoolean, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypePosition, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeOffset, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypePosition3, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeRectangle, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeOpaqueColor, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeGradient, str)
+        self.assertIsInstance(Quartz.kCICategoryDistortionEffect, str)
+        self.assertIsInstance(Quartz.kCICategoryGeometryAdjustment, str)
+        self.assertIsInstance(Quartz.kCICategoryCompositeOperation, str)
+        self.assertIsInstance(Quartz.kCICategoryHalftoneEffect, str)
+        self.assertIsInstance(Quartz.kCICategoryColorAdjustment, str)
+        self.assertIsInstance(Quartz.kCICategoryColorEffect, str)
+        self.assertIsInstance(Quartz.kCICategoryTransition, str)
+        self.assertIsInstance(Quartz.kCICategoryTileEffect, str)
+        self.assertIsInstance(Quartz.kCICategoryGenerator, str)
+        self.assertIsInstance(Quartz.kCICategoryGradient, str)
+        self.assertIsInstance(Quartz.kCICategoryStylize, str)
+        self.assertIsInstance(Quartz.kCICategorySharpen, str)
+        self.assertIsInstance(Quartz.kCICategoryBlur, str)
+        self.assertIsInstance(Quartz.kCICategoryVideo, str)
+        self.assertIsInstance(Quartz.kCICategoryStillImage, str)
+        self.assertIsInstance(Quartz.kCICategoryInterlaced, str)
+        self.assertIsInstance(Quartz.kCICategoryNonSquarePixels, str)
+        self.assertIsInstance(Quartz.kCICategoryHighDynamicRange, str)
+        self.assertIsInstance(Quartz.kCICategoryBuiltIn, str)
+        self.assertIsInstance(Quartz.kCIApplyOptionExtent, str)
+        self.assertIsInstance(Quartz.kCIApplyOptionDefinition, str)
+        self.assertIsInstance(Quartz.kCIApplyOptionUserInfo, str)
+        self.assertIsInstance(Quartz.kCIApplyOptionColorSpace, str)
+
+    @min_os_level("10.5")
+    def testConstants10_5(self):
+        self.assertIsInstance(Quartz.kCICategoryReduction, str)
+        self.assertIsInstance(Quartz.kCIAttributeDescription, str)
+        self.assertIsInstance(Quartz.kCIAttributeReferenceDocumentation, str)
+        self.assertIsInstance(Quartz.kCIUIParameterSet, str)
+        self.assertIsInstance(Quartz.kCIUISetBasic, str)
+        self.assertIsInstance(Quartz.kCIUISetIntermediate, str)
+        self.assertIsInstance(Quartz.kCIUISetAdvanced, str)
+        self.assertIsInstance(Quartz.kCIUISetDevelopment, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeInteger, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeCount, str)
+        self.assertIsInstance(Quartz.kCICategoryFilterGenerator, str)
+        self.assertIsInstance(Quartz.kCIOutputImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputBackgroundImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputTimeKey, str)
+        self.assertIsInstance(Quartz.kCIInputTransformKey, str)
+        self.assertIsInstance(Quartz.kCIInputScaleKey, str)
+        self.assertIsInstance(Quartz.kCIInputAspectRatioKey, str)
+        self.assertIsInstance(Quartz.kCIInputCenterKey, str)
+        self.assertIsInstance(Quartz.kCIInputRadiusKey, str)
+        self.assertIsInstance(Quartz.kCIInputAngleKey, str)
+        self.assertIsInstance(Quartz.kCIInputRefractionKey, str)
+        self.assertIsInstance(Quartz.kCIInputWidthKey, str)
+        self.assertIsInstance(Quartz.kCIInputSharpnessKey, str)
+        self.assertIsInstance(Quartz.kCIInputIntensityKey, str)
+        self.assertIsInstance(Quartz.kCIInputEVKey, str)
+        self.assertIsInstance(Quartz.kCIInputSaturationKey, str)
+        self.assertIsInstance(Quartz.kCIInputColorKey, str)
+        self.assertIsInstance(Quartz.kCIInputBrightnessKey, str)
+        self.assertIsInstance(Quartz.kCIInputContrastKey, str)
+        self.assertIsInstance(Quartz.kCIInputGradientImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputMaskImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputShadingImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputTargetImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputExtentKey, str)
+
+    @min_os_level("10.11")
+    def testConstants10_11(self):
+        self.assertIsInstance(Quartz.kCIAttributeFilterAvailable_Mac, str)
+        self.assertIsInstance(Quartz.kCIAttributeFilterAvailable_iOS, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeColor, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeImage, str)
+        self.assertIsInstance(Quartz.kCIAttributeTypeTransform, str)
+        self.assertIsInstance(Quartz.kCIInputVersionKey, str)
+        self.assertIsInstance(Quartz.kCIInputWeightsKey, str)
+
+    @min_os_level("10.13")
+    def testConstants10_13(self):
+        self.assertIsInstance(Quartz.kCIInputDepthImageKey, str)
+        self.assertIsInstance(Quartz.kCIInputDisparityImageKey, str)
+
+    @min_os_level("10.14")
+    def testConstants10_14(self):
+        self.assertIsInstance(Quartz.kCIInputAmountKey, str)
+        self.assertIsInstance(Quartz.kCIInputMatteImageKey, str)
+
+    def testMethods(self):
+        self.assertIsNullTerminated(Quartz.CIFilter.apply_)
+        self.assertIsNullTerminated(Quartz.CIFilter.filterWithName_keysAndValues_)
+
+    @min_os_level("10.5")
+    def testMethods10_5(self):
+        self.assertResultIsBOOL(Quartz.CIFilter.isEnabled)
+        self.assertArgIsBOOL(Quartz.CIFilter.setEnabled_, 0)
+
+    @min_os_level("10.9")
+    def testMethods10_9(self):
+        self.assertArgIsOut(
+            Quartz.CIFilter.filterArrayFromSerializedXMP_inputImageExtent_error_, 2
+        )
+
+    @min_sdk_level("10.15")
+    def test_protocols(self):
+        objc.protocolNamed("CIFilter")

@@ -63,4 +63,8 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
 #endif
 #endif
+#if PyObjC_BUILD_RELEASE >= 1100
+    p = PyObjC_IdToPython(@protocol(WKScriptMessageHandlerWithReply));
+    Py_XDECREF(p);
+#endif
 }

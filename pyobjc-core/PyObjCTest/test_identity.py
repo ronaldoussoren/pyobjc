@@ -12,7 +12,7 @@ import sys
 
 import objc
 from PyObjCTest.identity import OC_TestIdentity
-from PyObjCTools.TestSupport import TestCase, main, os_release, os_level_key
+from PyObjCTools.TestSupport import TestCase, os_release, os_level_key
 
 
 class TestPythonRoundTrip(TestCase):
@@ -308,7 +308,3 @@ class TestSerializingDataStructures(TestCase):
         value = {"hello": [1, 2, 3], "world": {"nl": "wereld", "de": "Welt"}}
         container.setStoredObject_(value)
         container.writeStoredObjectToFile_("/tmp/pyPyObjCTest.identity")
-
-
-if __name__ == "__main__":
-    main()

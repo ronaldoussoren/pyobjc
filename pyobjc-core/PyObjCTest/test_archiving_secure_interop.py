@@ -13,7 +13,7 @@ import subprocess
 import tempfile
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 from plistlib import loads
 
@@ -235,7 +235,3 @@ class TestNSKeyedArchivingInterop(TestCase):
 
             converted = loads(converted)
             self.assertEqual(converted, testval)
-
-
-if __name__ == "__main__":
-    main()

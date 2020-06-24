@@ -2,7 +2,7 @@ import os
 import subprocess
 
 import objc._dyld as dyld
-from PyObjCTools.TestSupport import TestCase, main, os_release, os_level_key
+from PyObjCTools.TestSupport import TestCase, os_release, os_level_key
 
 
 class TestDyld(TestCase):
@@ -390,7 +390,3 @@ class TestDyld(TestCase):
             "/System/Library/Frameworks/Cocoa.framework",
         )
         self.assertRaises(ImportError, dyld.pathForFramework, "Foo.framework")
-
-
-if __name__ == "__main__":
-    main()

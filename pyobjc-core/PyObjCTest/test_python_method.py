@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -47,7 +47,3 @@ class TestPythonMethod(TestCase):
 
         self.assertEqual(o.my_method(4), 8)
         self.assertEqual(o.b, 2)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.test_object_property import OCObserve
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -53,7 +53,3 @@ class TestDictProperty(TestCase):
             observer.unregister(o, "aDict")
             for func in cleanup[::-1]:
                 func()
-
-
-if __name__ == "__main__":
-    main()

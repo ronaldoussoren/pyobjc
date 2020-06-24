@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class hidden_method(object):
@@ -200,7 +200,3 @@ class TestHiddenSelector(TestCase):
         self.assertRaises(AttributeError, getattr, OCTestSubHidden, "bodyclass")
         v = OCTestSubHidden.performSelector_(b"bodyclass")
         self.assertEqual(v, "BODYCLASS2")
-
-
-if __name__ == "__main__":
-    main()

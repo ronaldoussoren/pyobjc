@@ -1,5 +1,5 @@
 from objc import selector
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestDefaultSelectors(TestCase):
@@ -39,7 +39,3 @@ class TestDefaultSelectors(TestCase):
         s = selector(foo_bar_)
         self.assertEqual(s.selector, b"foo:bar:")
         self.assertEqual(s.signature, b"@@:@@")
-
-
-if __name__ == "__main__":
-    main()

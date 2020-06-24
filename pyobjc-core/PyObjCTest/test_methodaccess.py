@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 # _NSZombie = objc.lookUpClass('_NSZombie')
@@ -70,7 +70,3 @@ class ClassAndInstanceMethods(TestCase):
     def testClassThroughInstance(self):
         # Class methods are not accessible through instances.
         self.assertRaises(AttributeError, getattr, NSObject.new(), "alloc")
-
-
-if __name__ == "__main__":
-    main()

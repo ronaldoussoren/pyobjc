@@ -2,7 +2,7 @@ import copy
 
 import objc
 from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 objc.registerMetaDataForSelector(
     b"NSObject",
@@ -617,7 +617,3 @@ class TestBoolProperty(TestCase):
 
         o.p1 = [1, 2]
         self.assertEqual(o.p1, True)
-
-
-if __name__ == "__main__":
-    main()

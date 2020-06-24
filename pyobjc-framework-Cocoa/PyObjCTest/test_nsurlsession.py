@@ -1,5 +1,5 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 
 try:
@@ -406,7 +406,6 @@ class TestNSURLSession(TestCase):
     def testProtocols10_11(self):
         objc.protocolNamed("NSURLSessionStreamDelegate")
 
-    @onlyOn64Bit
     def test_protocol_methods10_15(self):
         self.assertArgHasType(
             TestNSURLSessionWebSocketDelegateHelper.URLSession_webSocketTask_didCloseWithCode_reason_,  # noqa: B950

@@ -5,7 +5,7 @@ These tests are for global function
 """
 import objc
 from PyObjCTest.metadatafunction import function_list
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 _FunctionTable = [
     (
@@ -803,7 +803,3 @@ class TestPrintfFormat(TestCase):
 
         v = makeArrayWithCFormat_(b"hello %s", b"world")  # noqa: F821
         self.assertEqual(list(v), ["hello %s", "hello world"])
-
-
-if __name__ == "__main__":
-    main()

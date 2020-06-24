@@ -3,7 +3,7 @@ Tests for objc.synthesize
 """
 import objc
 from PyObjCTest.fnd import NSObject
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestSynthesizeCopier(NSObject):
@@ -61,7 +61,3 @@ class TestSynthesize(TestCase):
     def testFailures(self):
         self.assertRaises(ValueError, objc.synthesize, "")
         self.assertRaises(ValueError, objc.synthesize, None)
-
-
-if __name__ == "__main__":
-    main()

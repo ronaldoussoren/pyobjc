@@ -14,7 +14,7 @@ import objc
 # To ensure we have the right metadata
 import PyObjCTest.test_metadata  # noqa: F401
 from PyObjCTest.metadata import OC_MetaDataTest
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 def setupMetaData():
@@ -1031,7 +1031,3 @@ class TestByReference(TestCase):
         self.assertEqual(len(list(filter(lambda x: x is not objc.NULL, r))), 2)
         self.assertEqual(y, 15)
         self.assertEqual(z, objc.NULL)
-
-
-if __name__ == "__main__":
-    main()

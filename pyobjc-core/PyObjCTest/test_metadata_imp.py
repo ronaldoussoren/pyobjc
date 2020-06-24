@@ -12,7 +12,7 @@ TODO:
 import objc
 import PyObjCTest.test_metadata  # noqa: F401
 from PyObjCTest.metadata import OC_MetaDataTest
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestArrayDefault(TestCase):
@@ -435,7 +435,3 @@ class TestByReference(TestCase):
         self.assertEqual(len(list(filter(None, map(makeNum, r)))), 2)
         self.assertEqual(y, 43)
         self.assertEqual(z, objc.NULL)
-
-
-if __name__ == "__main__":
-    main()

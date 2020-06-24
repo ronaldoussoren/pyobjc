@@ -2,7 +2,7 @@ import ctypes
 
 import objc
 from PyObjCTest.pointersupport import object_capsule, opaque_capsule
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 OpaqueType = objc.createOpaquePointerType("OpaqueType", b"^{OpaqueType}", None)
 
@@ -74,7 +74,3 @@ class TestProxySupport(TestCase):
 
         self.assertRaises(ValueError, NSObject, cobject=opaque_capsule())
         self.assertRaises(TypeError, NSObject, cobject=42)
-
-
-if __name__ == "__main__":
-    main()

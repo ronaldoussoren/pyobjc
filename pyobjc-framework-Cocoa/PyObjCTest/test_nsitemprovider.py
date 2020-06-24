@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 
 
@@ -29,7 +29,6 @@ class TestNSItemProvider(TestCase):
         self.assertEqual(AppKit.NSItemProviderFileOptionOpenInPlace, 1)
 
     @min_os_level("10.10")
-    @onlyOn64Bit
     def testConstants10_10(self):
         self.assertIsInstance(AppKit.NSTypeIdentifierDateText, str)
         self.assertIsInstance(AppKit.NSTypeIdentifierAddressText, str)
@@ -45,7 +44,6 @@ class TestNSItemProvider(TestCase):
         self.assertEqual(AppKit.NSItemProviderUnexpectedValueClassError, -1100)
 
     @min_os_level("10.11")
-    @onlyOn64Bit
     def testConstants10_11(self):
         self.assertEqual(AppKit.NSItemProviderUnavailableCoercionError, -1200)
 
@@ -71,7 +69,6 @@ class TestNSItemProvider(TestCase):
         )
 
     @min_os_level("10.10")
-    @onlyOn64Bit
     def testMethods10_10(self):
 
         self.assertResultIsBOOL(
@@ -104,7 +101,6 @@ class TestNSItemProvider(TestCase):
         # self.fail("NSItemProviderLoadHandler metadata test")
 
     @min_os_level("10.13")
-    @onlyOn64Bit
     def testMethods10_13(self):
         # XXX: Cannot properly test right now...
         self.assertArgIsBlock(

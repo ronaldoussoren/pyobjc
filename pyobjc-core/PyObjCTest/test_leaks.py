@@ -5,7 +5,7 @@ import gc
 
 import objc
 from PyObjCTest.fnd import NSAutoreleasePool, NSMutableArray, NSObject
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 LeaksDel = 0
 
@@ -108,7 +108,3 @@ class TestRetains(TestCase):
         del pool
         gc.collect()
         self.assertEqual(LeaksDel, 1)
-
-
-if __name__ == "__main__":
-    main()

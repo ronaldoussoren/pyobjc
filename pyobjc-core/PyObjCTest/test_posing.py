@@ -1,7 +1,7 @@
 import sys
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 # Most useful systems will at least have 'NSObject'.
 # NSObject = objc.lookUpClass('NSObject')
@@ -40,7 +40,3 @@ else:
             self.assertNotEqual(BaseClass.__name__, BaseName)
             self.assertEqual(PoseClass.__name__, BaseName)
             del obj
-
-
-if __name__ == "__main__":
-    main()

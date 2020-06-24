@@ -12,7 +12,7 @@ import objc
 
 from PyObjCTest.fnd import NSObject
 import PyObjCTest.specialtypecodes  # noqa: F401
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestTypeCodeLeaks(TestCase):
@@ -526,7 +526,3 @@ class TestTypeCodeLeaks(TestCase):
         self.assertEqual(
             csig[3], objc._C_STRUCT_B + b"test=" + objc._C_SHT + objc._C_STRUCT_E
         )
-
-
-if __name__ == "__main__":
-    main()

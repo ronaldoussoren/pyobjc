@@ -4,7 +4,7 @@ import sys
 import objc
 import objc._convenience as convenience
 from PyObjCTest.sequence import OC_TestSequence, OC_TestMutableSequence
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 objc.addConvenienceForBasicSequence("OC_TestSequence", False)
 objc.addConvenienceForBasicSequence("OC_TestMutableSequence", True)
@@ -536,7 +536,3 @@ class TestSequences(TestCase):
         self.assertRaises(IndexError, operator.setitem, o, 6, "x")
         self.assertRaises(IndexError, operator.setitem, o, -7, "x")
         self.assertRaises(ValueError, operator.setitem, o, slice(1, 3), (1, 2))
-
-
-if __name__ == "__main__":
-    main()

@@ -10,7 +10,7 @@ while at the same time getting a higher fidelity bridge.
 import array
 
 from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -235,7 +235,3 @@ class TestTypeCode_UniChar(TestCase):
         v, w = o.UniCharArrayOf4InOut_("foot")
         self.assertEqual(v, "foot")
         self.assertEqual(w, "hand")
-
-
-if __name__ == "__main__":
-    main()
