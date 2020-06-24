@@ -11,9 +11,11 @@ Version 7.0
 * Updated framework bindings:
   - CFNetwork
   - CoreAudio
+  - CoreMedia
   - PDFKit
   - SafariServices
   - SpriteKit
+  - VideoToolbox
   - WebKit
 
 * Added bindings for the following frameworks:

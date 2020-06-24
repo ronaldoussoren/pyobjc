@@ -568,6 +568,12 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionExtension_ContainsAlphaChannel, str
         )
 
+    @min_os_level("11.0")
+    def test_constants11_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_ProtectedContentOriginalFormat, str
+        )
+
     def test_structs(self):
         v = CoreMedia.CMVideoDimensions()
         self.assertEqual(v.width, 0)
