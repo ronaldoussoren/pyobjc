@@ -1,5 +1,3 @@
-import sys
-
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
@@ -18,10 +16,7 @@ class TestNSTouch(TestCase):
             | AppKit.NSTouchPhaseMoved
             | AppKit.NSTouchPhaseStationary,
         )
-        if sys.maxsize >= 2 ** 32:
-            self.assertEqual(AppKit.NSTouchPhaseAny, 0xFFFFFFFFFFFFFFFF)
-        else:
-            self.assertEqual(AppKit.NSTouchPhaseAny, 0xFFFFFFFF)
+        self.assertEqual(AppKit.NSTouchPhaseAny, 0xFFFFFFFFFFFFFFFF)
 
         # 10.12
         self.assertEqual(AppKit.NSTouchTypeDirect, 0)
