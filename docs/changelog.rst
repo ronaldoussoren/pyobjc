@@ -19,7 +19,11 @@ Version 7.0
   - Contacts
   - CoreAudio
   - CoreBluetooth
+  - CoreFoundation
+  - CoreHaptics
+  - CoreLocation
   - CoreMedia
+  - CoreMotion
   - CoreText
   - CoreVideo
   - DeviceCheck

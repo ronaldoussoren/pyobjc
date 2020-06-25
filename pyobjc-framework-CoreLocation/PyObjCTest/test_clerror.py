@@ -31,6 +31,7 @@ class TestCLError(TestCase):
         self.assertEqual(CoreLocation.kCLErrorDeferredCanceled, 15)
         self.assertEqual(CoreLocation.kCLErrorRangingUnavailable, 16)
         self.assertEqual(CoreLocation.kCLErrorRangingFailure, 17)
+        self.assertEqual(CoreLocation.kCLErrorPromptDeclined, 18)
 
         if int(os.uname()[2].split(".")[0]) < 12:
             self.assertEqual(CoreLocation.kCLErrorGeocodeFoundNoResult, 7)

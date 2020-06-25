@@ -795,6 +795,15 @@ class TestURL(TestCase):
             CoreFoundation.kCFURLVolumeSupportsAccessPermissionsKey, str
         )
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(CoreFoundation.kCFURLFileContentIdentifierKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLMayShareFileContentKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLMayHaveExtendedAttributesKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsPurgeableKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLIsSparseKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLLinkCountKey, str)
+
     @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsBOOL(CoreFoundation.CFURLIsFileReferenceURL)

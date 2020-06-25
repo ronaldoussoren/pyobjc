@@ -36,6 +36,10 @@ class TestCLLocation(TestCase):
         self.assertIsInstance(CoreLocation.CLLocationDistanceMax, float)
         self.assertIsInstance(CoreLocation.CLTimeIntervalMax, float)
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(CoreLocation.kCLLocationAccuracyReduced, str)
+
     @min_os_level("10.6")
     def testMethods(self):
         self.assertResultHasType(

@@ -34,6 +34,9 @@ class TestCLLocationManager(TestCase):
         self.assertEqual(CoreLocation.CLActivityTypeOtherNavigation, 4)
         self.assertEqual(CoreLocation.CLActivityTypeAirborne, 5)
 
+        self.assertEqual(CoreLocation.CLAccuracyAuthorizationFullAccuracy, 0)
+        self.assertEqual(CoreLocation.CLAccuracyAuthorizationReducedAccuracy, 1)
+
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(CoreLocation.CLLocationManager.locationServicesEnabled)
@@ -56,4 +59,21 @@ class TestCLLocationManager(TestCase):
     def testMethods10_10(self):
         self.assertResultIsBOOL(
             CoreLocation.CLLocationManager.isMonitoringAvailableForClass_
+        )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            CoreLocation.CLLocationManager.authorizedForPreciseLocation
+        )
+
+        self.assertArgIsBlock(
+            CoreLocation.CLLocationManager.requestTemporaryFullAccuracyAuthorizationWithPurposeKey_completion_,
+            1,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            CoreLocation.CLLocationManager.requestTemporaryPreciseLocationAuthorizationWithPurposeKey_completion_,
+            1,
+            b"v@",
         )
