@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 7.0
 -----------
 
+* This version drops support for 32-bit executables, both
+  the core bridge and the framework wrappers only support
+  64-bit executables going forward
+
 * Removed metadata for 32-bit systems
 
 * Updated framework bindings:
@@ -21,6 +25,7 @@ Version 7.0
   - DeviceCheck
   - ImageCaptureCore
   - NaturalLanguage
+  - OSLog
   - PDFKit
   - Photos
   - SafariServices

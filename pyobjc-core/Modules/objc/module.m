@@ -2675,11 +2675,32 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
 #endif /* MAC_OS_X_VERSION_10_15_3 */
 
 #ifdef MAC_OS_X_VERSION_10_15_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_3)
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_4)
         < 0) {
         return NULL;
     }
 #endif /* MAC_OS_X_VERSION_10_15_4 */
+
+#ifdef MAC_OS_X_VERSION_10_15_5
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_5", MAC_OS_X_VERSION_10_15_5)
+        < 0) {
+        return NULL;
+    }
+#endif /* MAC_OS_X_VERSION_10_15_5 */
+
+#ifdef MAC_OS_X_VERSION_10_15_6
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_6", MAC_OS_X_VERSION_10_15_6)
+        < 0) {
+        return NULL;
+    }
+#endif /* MAC_OS_X_VERSION_10_15_6 */
+
+#ifdef MAC_OS_X_VERSION_10_16
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_16", MAC_OS_X_VERSION_10_16)
+        < 0) {
+        return NULL;
+    }
+#endif /* MAC_OS_X_VERSION_10_16 */
 
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         return NULL;
