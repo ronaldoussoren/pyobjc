@@ -140,6 +140,7 @@ FRAMEWORK_WRAPPERS = [
     ("SoundAnalysis", "10.15", None),
     ("SystemExtensions", "10.15", None),
     ("UserNotifications", "10.14", None),
+    ("UserNotificationsUI", "10.16", None),
     ("VideoSubscriberAccount", "10.14", None),
     ("VideoToolbox", "10.8", None),
     ("Vision", "10.13", None),

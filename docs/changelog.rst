@@ -32,6 +32,7 @@ Version 7.0
   - AppTrackingTransparency (introduced in macOS 11.0)
   - KernelManagement (introduced in macOS 11.0)
   - ScreenTime (introduced in macOS 11.0)
+  - UserNotificationsUI (introduced in macOS 11.0)
 
 * The following new frameworks in macOS 11 will not be wrapped:
 
