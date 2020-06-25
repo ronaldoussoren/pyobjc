@@ -83,6 +83,7 @@ FRAMEWORK_WRAPPERS = [
     ("InstantMessage", "10.5", None),
     ("InterfaceBuilderKit", "10.5", "10.7"),
     ("IOSurface", "10.6", None),
+    ("KernelManagement", "10.16", None),
     ("LatentSemanticMapping", None, None),
     ("LaunchServices", None, None),
     ("LinkPresentation", "10.15", None),
@@ -116,6 +117,7 @@ FRAMEWORK_WRAPPERS = [
     ("QuickLookThumbnailing", "10.15", None),
     ("SafariServices", "10.11", None),
     ("ScreenSaver", None, None),
+    ("ScreenTime", "10.16", None),
     ("ScriptingBridge", "10.5", None),
     ("Security", None, None),
     ("SecurityFoundation", None, None),
@@ -160,6 +162,7 @@ MACOS_TO_DARWIN = {
     "10.13": "17.0",
     "10.14": "18.0",
     "10.15": "19.0",
+    "10.16": "20.0",
 }
 
 

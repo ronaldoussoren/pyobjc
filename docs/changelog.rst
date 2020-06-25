@@ -30,6 +30,7 @@ Version 7.0
 
 * Added bindings for the following frameworks:
   - KernelManagement (introduced in macOS 11.0)
+  - ScreenTime (introduced in macOS 11.0)
 
 * The following new frameworks in macOS 11 will not be wrapped:
 
