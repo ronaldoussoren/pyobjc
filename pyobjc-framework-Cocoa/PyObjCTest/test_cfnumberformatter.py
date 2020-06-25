@@ -26,24 +26,20 @@ class TestNumberFormatter(TestCase):
         self.assertEqual(v2, v[:-2])
         v = CoreFoundation.CFNumberFormatterCreateStringWithNumber(None, fmt, 42.5)
         self.assertIsInstance(v, str)
-        self.assertEqual(v, b"42.5".decode("ascii"))
+        self.assertEqual(v, "42.5")
 
         v = CoreFoundation.CFNumberFormatterCreateStringWithValue(
             None, fmt, CoreFoundation.kCFNumberDoubleType, 42.5
         )
         self.assertIsInstance(v, str)
-        self.assertEqual(v, b"42.5".decode("ascii"))
+        self.assertEqual(v, "42.5")
         num, rng = CoreFoundation.CFNumberFormatterCreateNumberFromString(
-            None, fmt, b"42.0a".decode("ascii"), (0, 5), 0
+            None, fmt, "42.0a", (0, 5), 0
         )
         self.assertEqual(num, 42.0)
         self.assertEqual(rng, (0, 4))
         ok, rng, num = CoreFoundation.CFNumberFormatterGetValueFromString(
-            fmt,
-            b"42.0a".decode("ascii"),
-            (0, 5),
-            CoreFoundation.kCFNumberDoubleType,
-            None,
+            fmt, "42.0a", (0, 5), CoreFoundation.kCFNumberDoubleType, None
         )
         self.assertEqual(ok, True)
         self.assertEqual(num, 42.0)
@@ -51,7 +47,7 @@ class TestNumberFormatter(TestCase):
         num, rng = CoreFoundation.CFNumberFormatterCreateNumberFromString(
             None,
             fmt,
-            b"42.0a".decode("ascii"),
+            "42.0a",
             (0, 5),
             CoreFoundation.kCFNumberFormatterParseIntegersOnly,
         )
@@ -62,14 +58,14 @@ class TestNumberFormatter(TestCase):
         )
         self.assertIsInstance(v, str)
         CoreFoundation.CFNumberFormatterSetProperty(
-            fmt, CoreFoundation.kCFNumberFormatterCurrencyCode, b"HFL".decode("ascii")
+            fmt, CoreFoundation.kCFNumberFormatterCurrencyCode, "HFL"
         )
 
         self.assertResultIsCFRetained(CoreFoundation.CFNumberFormatterCopyProperty)
         v = CoreFoundation.CFNumberFormatterCopyProperty(
             fmt, CoreFoundation.kCFNumberFormatterCurrencyCode
         )
-        self.assertEqual(v, b"HFL".decode("ascii"))
+        self.assertEqual(v, "HFL")
         self.assertArgIsOut(
             CoreFoundation.CFNumberFormatterGetDecimalInfoForCurrencyCode, 1
         )

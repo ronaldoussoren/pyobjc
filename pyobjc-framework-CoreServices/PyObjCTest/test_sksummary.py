@@ -10,9 +10,7 @@ class TestSKSummary(TestCase):
     def testFunctions(self):
         self.assertIsInstance(CoreServices.SKSummaryGetTypeID(), int)
 
-        ref = CoreServices.SKSummaryCreateWithString(
-            b"hello world.  and you too.".decode("latin1")
-        )
+        ref = CoreServices.SKSummaryCreateWithString("hello world.  and you too.")
         self.assertIsInstance(ref, CoreServices.SKSummaryRef)
 
         v = CoreServices.SKSummaryGetSentenceCount(ref)

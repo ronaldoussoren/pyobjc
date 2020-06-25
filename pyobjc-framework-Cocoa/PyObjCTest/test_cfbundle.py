@@ -12,7 +12,7 @@ class TestCFBundle(TestCase):
 
     def testBundleLoader(self):
         bundle = CoreFoundation.CFBundleGetBundleWithIdentifier(
-            b"com.apple.CoreFoundation".decode("ascii")
+            "com.apple.CoreFoundation"
         )
         self.assertIsInstance(bundle, CoreFoundation.CFBundleRef)
         array = list(CoreFoundation.CFBundleGetAllBundles())
@@ -21,7 +21,7 @@ class TestCFBundle(TestCase):
             self.assertIsInstance(b, CoreFoundation.CFBundleRef)
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
-            b"/System/Library/Frameworks/Foundation.framework".decode("ascii"),
+            "/System/Library/Frameworks/Foundation.framework",
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
@@ -29,17 +29,17 @@ class TestCFBundle(TestCase):
         self.assertIsInstance(bundle, CoreFoundation.CFBundleRef)
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
-            b"/System/Library/Frameworks".decode("ascii"),
+            "/System/Library/Frameworks",
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
         array = CoreFoundation.CFBundleCreateBundlesFromDirectory(
-            None, url, b"frameworkX".decode("ascii")
+            None, url, "frameworkX"
         )
         self.assertEqual(len(array), 0)
 
         array = CoreFoundation.CFBundleCreateBundlesFromDirectory(
-            None, url, b"framework".decode("ascii")
+            None, url, "framework"
         )
         self.assertNotEqual(len(array), 0)
 
@@ -52,15 +52,15 @@ class TestCFBundle(TestCase):
 
     def testInspection(self):
         bundle = CoreFoundation.CFBundleGetBundleWithIdentifier(
-            b"com.apple.CoreFoundation".decode("ascii")
+            "com.apple.CoreFoundation"
         )
         self.assertIsInstance(bundle, CoreFoundation.CFBundleRef)
         url = CoreFoundation.CFBundleCopyBundleURL(bundle)
         self.assertIsInstance(url, CoreFoundation.CFURLRef)
         v = CoreFoundation.CFBundleGetValueForInfoDictionaryKey(
-            bundle, b"CFBundleIdentifier".decode("ascii")
+            bundle, "CFBundleIdentifier"
         )
-        self.assertEqual(v, b"com.apple.CoreFoundation".decode("ascii"))
+        self.assertEqual(v, "com.apple.CoreFoundation")
         v = CoreFoundation.CFBundleGetInfoDictionary(bundle)
         self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
         self.assertTrue(v["CFBundleIdentifier"], "com.apple.CoreFoundation")
@@ -74,7 +74,7 @@ class TestCFBundle(TestCase):
         self.assertIsInstance(package_type, int)
         self.assertIsInstance(creator, int)
         identifier = CoreFoundation.CFBundleGetIdentifier(bundle)
-        self.assertEqual(identifier, b"com.apple.CoreFoundation".decode("ascii"))
+        self.assertEqual(identifier, "com.apple.CoreFoundation")
         v = CoreFoundation.CFBundleGetVersionNumber(bundle)
         self.assertIsInstance(v, int)
         v = CoreFoundation.CFBundleGetDevelopmentRegion(bundle)
@@ -101,17 +101,14 @@ class TestCFBundle(TestCase):
     def testDirectAccess(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
-            b"/System/Library/Frameworks/Foundation.framework".decode("ascii"),
+            "/System/Library/Frameworks/Foundation.framework",
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
 
         v = CoreFoundation.CFBundleCopyInfoDictionaryInDirectory(url)
         self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
-        self.assertEqual(
-            v[b"CFBundleIdentifier".decode("ascii")],
-            b"com.apple.Foundation".decode("ascii"),
-        )
+        self.assertEqual(v["CFBundleIdentifier"], "com.apple.Foundation")
         ok, bundle_type, creator = CoreFoundation.CFBundleGetPackageInfoInDirectory(
             url, None, None
         )
@@ -122,7 +119,7 @@ class TestCFBundle(TestCase):
     def testResources(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
-            b"/System/Library/Frameworks/Foundation.framework".decode("ascii"),
+            "/System/Library/Frameworks/Foundation.framework",
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
@@ -130,7 +127,7 @@ class TestCFBundle(TestCase):
         self.assertIsInstance(bundle, CoreFoundation.CFBundleRef)
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
-            b"/System/Library/Frameworks/Tcl.framework".decode("ascii"),
+            "/System/Library/Frameworks/Tcl.framework",
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
@@ -267,7 +264,7 @@ class TestCFBundle(TestCase):
     def testResourcesDirect(self):
         bundle = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
-            b"/System/Library/Frameworks/Foundation.framework".decode("ascii"),
+            "/System/Library/Frameworks/Foundation.framework",
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )
@@ -292,7 +289,7 @@ class TestCFBundle(TestCase):
     def testPlugin(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
             None,
-            b"/System/Library/Components/AppleScript.component".decode("ascii"),
+            "/System/Library/Components/AppleScript.component",
             CoreFoundation.kCFURLPOSIXPathStyle,
             True,
         )

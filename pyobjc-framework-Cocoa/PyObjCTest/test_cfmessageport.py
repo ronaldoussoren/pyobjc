@@ -33,7 +33,7 @@ class TestMessagePort(TestCase):
             pass
 
         port, shouldFree = CoreFoundation.CFMessagePortCreateLocal(
-            None, b"name".decode("ascii"), callout, context, None
+            None, "name", callout, context, None
         )
         self.assertIsInstance(port, CoreFoundation.CFMessagePortRef)
         self.assertIs(shouldFree is True or shouldFree, False)
@@ -41,18 +41,14 @@ class TestMessagePort(TestCase):
         ctx = CoreFoundation.CFMessagePortGetContext(port, None)
         self.assertIs(ctx, context)
 
-        port2 = CoreFoundation.CFMessagePortCreateRemote(None, b"name".decode("ascii"))
+        port2 = CoreFoundation.CFMessagePortCreateRemote(None, "name")
         self.assertIsInstance(port2, CoreFoundation.CFMessagePortRef)
         self.assertResultIsBOOL(CoreFoundation.CFMessagePortIsRemote)
         self.assertTrue(CoreFoundation.CFMessagePortIsRemote(port2))
-        self.assertTrue(
-            CoreFoundation.CFMessagePortGetName(port2), b"name".decode("ascii")
-        )
+        self.assertTrue(CoreFoundation.CFMessagePortGetName(port2), "name")
 
         CoreFoundation.CFMessagePortSetName(port2, "newname")
-        self.assertTrue(
-            CoreFoundation.CFMessagePortGetName(port2), b"newname".decode("ascii")
-        )
+        self.assertTrue(CoreFoundation.CFMessagePortGetName(port2), "newname")
 
         cb = CoreFoundation.CFMessagePortGetInvalidationCallBack(port)
         self.assertIs(cb, None)
@@ -90,7 +86,7 @@ class TestMessagePort(TestCase):
             return b"hello world"
 
         port, shouldFree = CoreFoundation.CFMessagePortCreateLocal(
-            None, b"pyobjc.test".decode("ascii"), callout, context, None
+            None, "pyobjc.test", callout, context, None
         )
         self.assertIsInstance(port, CoreFoundation.CFMessagePortRef)
 

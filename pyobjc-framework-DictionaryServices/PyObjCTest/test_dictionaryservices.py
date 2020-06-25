@@ -13,7 +13,7 @@ class TestDictionaryServices(TestCase):
 
     @onlyIf(os_release().rsplit(".", 1)[0] not in ("10.12", "10.13"))
     def testFunctions(self):
-        txt = b"the hello world program".decode("latin1")
+        txt = "the hello world program"
         r = DictionaryServices.DCSGetTermRangeInString(None, txt, 5)
         self.assertIsInstance(r, DictionaryServices.CFRange)
         self.assertEqual(r, (4, 5))

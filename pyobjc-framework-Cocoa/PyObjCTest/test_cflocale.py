@@ -68,7 +68,7 @@ class TestLocale(TestCase):
         )
         if v is not None:
             self.assertIsInstance(v, str)
-        self.assertEqual(v, b"Nederlands (Nederland)".decode("ascii"))
+        self.assertEqual(v, "Nederlands (Nederland)")
 
     def testConstants(self):
         self.assertIsInstance(CoreFoundation.kCFLocaleIdentifier, str)

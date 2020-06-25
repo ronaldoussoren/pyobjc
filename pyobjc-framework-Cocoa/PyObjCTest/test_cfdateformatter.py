@@ -186,15 +186,13 @@ class TestDateFormatter(TestCase):
         )
         self.assertIsInstance(v, str)
         CoreFoundation.CFDateFormatterSetProperty(
-            fmt,
-            CoreFoundation.kCFDateFormatterCalendarName,
-            b"gregorian".decode("latin1"),
+            fmt, CoreFoundation.kCFDateFormatterCalendarName, "gregorian"
         )
         v = CoreFoundation.CFDateFormatterCopyProperty(
             fmt, CoreFoundation.kCFDateFormatterCalendarName
         )
         self.assertIsInstance(v, str)
-        self.assertEqual(v, b"gregorian".decode("latin1"))
+        self.assertEqual(v, "gregorian")
         v = CoreFoundation.CFDateFormatterCopyProperty(
             fmt, CoreFoundation.kCFDateFormatterIsLenient
         )

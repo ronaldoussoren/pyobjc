@@ -18,9 +18,7 @@ class TestAttributedString(TestCase):
         self.assertIsInstance(v, int)
 
     def testCreate(self):
-        val = CoreFoundation.CFAttributedStringCreate(
-            None, b"hello".decode("ascii"), {b"foo".decode("ascii"): 42}
-        )
+        val = CoreFoundation.CFAttributedStringCreate(None, "hello", {"foo": 42})
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
         val = CoreFoundation.CFAttributedStringCreateWithSubstring(None, val, (1, 2))
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
@@ -29,56 +27,42 @@ class TestAttributedString(TestCase):
 
     def testGetting(self):
         val = CoreFoundation.CFAttributedStringCreate(
-            None,
-            b"hello".decode("ascii"),
-            {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"},
+            None, "hello", {"foo": 42, "bar": b"baz"}
         )
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
         dta = CoreFoundation.CFAttributedStringGetString(val)
-        self.assertEqual(dta, b"hello".decode("ascii"))
+        self.assertEqual(dta, "hello")
         length = CoreFoundation.CFAttributedStringGetLength(val)
         self.assertEqual(length, 5)
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 1, None)
-        self.assertEqual(
-            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
-        )
+        self.assertEqual(v, {"foo": 42, "bar": b"baz"})
         self.assertEqual(rng, (0, 5))
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 1, objc.NULL)
-        self.assertEqual(
-            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
-        )
+        self.assertEqual(v, {"foo": 42, "bar": b"baz"})
         self.assertEqual(rng, objc.NULL)
-        v, rng = CoreFoundation.CFAttributedStringGetAttribute(
-            val, 1, b"foo".decode("ascii"), None
-        )
+        v, rng = CoreFoundation.CFAttributedStringGetAttribute(val, 1, "foo", None)
         self.assertEqual(v, 42)
         self.assertEqual(rng, (0, 5))
-        v, rng = CoreFoundation.CFAttributedStringGetAttribute(
-            val, 1, b"foo".decode("ascii"), objc.NULL
-        )
+        v, rng = CoreFoundation.CFAttributedStringGetAttribute(val, 1, "foo", objc.NULL)
         self.assertEqual(v, 42)
         self.assertEqual(rng, objc.NULL)
         v, rng = CoreFoundation.CFAttributedStringGetAttributesAndLongestEffectiveRange(
             val, 1, (0, 5), None
         )
-        self.assertEqual(
-            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
-        )
+        self.assertEqual(v, {"foo": 42, "bar": b"baz"})
         self.assertEqual(rng, (0, 5))
         v, rng = CoreFoundation.CFAttributedStringGetAttributesAndLongestEffectiveRange(
             val, 1, (0, 5), objc.NULL
         )
-        self.assertEqual(
-            v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): b"baz"}
-        )
+        self.assertEqual(v, {"foo": 42, "bar": b"baz"})
         self.assertEqual(rng, objc.NULL)
         v, rng = CoreFoundation.CFAttributedStringGetAttributeAndLongestEffectiveRange(
-            val, 1, b"bar".decode("ascii"), (0, 5), None
+            val, 1, "bar", (0, 5), None
         )
         self.assertEqual(v, b"baz")
         self.assertEqual(rng, (0, 5))
         v, rng = CoreFoundation.CFAttributedStringGetAttributeAndLongestEffectiveRange(
-            val, 1, b"bar".decode("ascii"), (0, 5), objc.NULL
+            val, 1, "bar", (0, 5), objc.NULL
         )
         self.assertEqual(v, b"baz")
         self.assertEqual(rng, objc.NULL)
@@ -87,9 +71,7 @@ class TestAttributedString(TestCase):
         val = CoreFoundation.CFAttributedStringCreateMutable(None, 0)
         self.assertIsInstance(val, CoreFoundation.CFAttributedStringRef)
         orig = CoreFoundation.CFAttributedStringCreate(
-            None,
-            b"hello".decode("ascii"),
-            {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): "baz"},
+            None, "hello", {"foo": 42, "bar": "baz"}
         )
         self.assertIsInstance(orig, CoreFoundation.CFAttributedStringRef)
         val = CoreFoundation.CFAttributedStringCreateMutableCopy(None, 0, orig)
@@ -97,57 +79,36 @@ class TestAttributedString(TestCase):
         self.assertIsNot(val, orig)
         CoreFoundation.CFAttributedStringReplaceString(val, (0, 3), "Hal")
         dta = CoreFoundation.CFAttributedStringGetString(val)
-        self.assertEqual(dta, b"Hallo".decode("ascii"))
+        self.assertEqual(dta, "Hallo")
         v = CoreFoundation.CFAttributedStringGetMutableString(val)
         self.assertIs(v, None)
         CoreFoundation.CFAttributedStringSetAttributes(
-            val, (0, 2), {b"ronald".decode("ascii"): 99}, False
+            val, (0, 2), {"ronald": 99}, False
         )
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 1, None)
-        self.assertEqual(
-            v,
-            {
-                b"ronald".decode("ascii"): 99,
-                b"foo".decode("ascii"): 42,
-                b"bar".decode("ascii"): "baz",
-            },
-        )
+        self.assertEqual(v, {"ronald": 99, "foo": 42, "bar": "baz"})
         self.assertEqual(rng, (0, 2))
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 3, None)
-        self.assertEqual(v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): "baz"})
+        self.assertEqual(v, {"foo": 42, "bar": "baz"})
         self.assertEqual(rng, (2, 3))
         self.assertIsInstance(rng, CoreFoundation.CFRange)
         CoreFoundation.CFAttributedStringSetAttributes(
-            val, (0, 2), {b"ronald".decode("ascii"): 99}, True
+            val, (0, 2), {"ronald": 99}, True
         )
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 1, None)
-        self.assertEqual(v, {b"ronald".decode("ascii"): 99})
+        self.assertEqual(v, {"ronald": 99})
         self.assertEqual(rng, (0, 2))
-        CoreFoundation.CFAttributedStringSetAttribute(
-            val, (1, 3), b"color".decode("ascii"), b"blue".decode("ascii")
-        )
+        CoreFoundation.CFAttributedStringSetAttribute(val, (1, 3), "color", "blue")
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 1, None)
-        self.assertEqual(
-            v,
-            {
-                b"ronald".decode("ascii"): 99,
-                b"color".decode("ascii"): b"blue".decode("ascii"),
-            },
-        )
+        self.assertEqual(v, {"ronald": 99, "color": "blue"})
         self.assertEqual(rng, (1, 1))
-        CoreFoundation.CFAttributedStringRemoveAttribute(
-            val, (1, 3), b"color".decode("ascii")
-        )
+        CoreFoundation.CFAttributedStringRemoveAttribute(val, (1, 3), "color")
         v, rng = CoreFoundation.CFAttributedStringGetAttributes(val, 3, None)
-        self.assertEqual(v, {b"foo".decode("ascii"): 42, b"bar".decode("ascii"): "baz"})
+        self.assertEqual(v, {"foo": 42, "bar": "baz"})
         self.assertEqual(rng, (2, 2))
-        rep = CoreFoundation.CFAttributedStringCreate(
-            None, "dummy", {b"attrib".decode("ascii"): 99}
-        )
+        rep = CoreFoundation.CFAttributedStringCreate(None, "dummy", {"attrib": 99})
         CoreFoundation.CFAttributedStringReplaceAttributedString(val, (1, 3), rep)
-        self.assertEqual(
-            CoreFoundation.CFAttributedStringGetString(val), b"Hdummyo".decode("ascii")
-        )
+        self.assertEqual(CoreFoundation.CFAttributedStringGetString(val), "Hdummyo")
 
     def testEditing(self):
         val = CoreFoundation.CFAttributedStringCreateMutable(None, 0)

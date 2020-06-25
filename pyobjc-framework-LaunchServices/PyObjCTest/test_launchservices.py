@@ -65,5 +65,5 @@ class TestLaunchServices(TestCase):
             self.fail("No Calculator.app?")
 
         fn = LaunchServices.LSGetExtensionInfo
-        self.assertEqual(fn(10, b"hello.text".decode("latin1"), None), (0, 6))
+        self.assertEqual(fn(10, "hello.text", None), (0, 6))
         self.assertEqual(fn(10, "hello.text", None), (0, 6))

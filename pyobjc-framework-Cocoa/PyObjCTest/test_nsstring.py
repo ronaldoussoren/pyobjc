@@ -12,35 +12,27 @@ class TestNSString(TestCase):
 
     def testCompare(self):
         self.assertTrue(
-            Foundation.NSString.localizedCaseInsensitiveCompare_(
-                b"foo".decode("ascii"), b"bar".decode("ascii")
-            )
-            == 1,
+            Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "bar") == 1,
             b"NSString doesn'.decode('ascii')t compare correctly",
         )
         self.assertTrue(
-            Foundation.NSString.localizedCaseInsensitiveCompare_(
-                b"foo".decode("ascii"), b"Foo".decode("ascii")
-            )
-            == 0,
+            Foundation.NSString.localizedCaseInsensitiveCompare_("foo" "Foo") == 0,
             b"NSString doesn'.decode('ascii')t compare correctly",
         )
 
     def testFormatting(self):
         # The test on instances is slightly more verbose to avoid warnings
-        obj = Foundation.NSString.alloc().initWithFormat_(b"foo %d".decode("ascii"), 42)
-        self.assertEqual(obj, b"foo 42".decode("ascii"))
+        obj = Foundation.NSString.alloc().initWithFormat_("foo %d", 42)
+        self.assertEqual(obj, "foo 42")
 
-        obj = Foundation.NSString.alloc().initWithFormat_locale_(
-            b"foo %d".decode("ascii"), {}, 42
-        )
-        self.assertEqual(obj, b"foo 42".decode("ascii"))
+        obj = Foundation.NSString.alloc().initWithFormat_locale_("foo %d", {}, 42)
+        self.assertEqual(obj, "foo 42")
 
     def testGetCString(self):
         # Custom wrappers
-        v = Foundation.NSString.stringWithString_(b"hello world".decode("ascii"))
+        v = Foundation.NSString.stringWithString_("hello world")
 
-        self.assertEqual(v, b"hello world".decode("ascii"))
+        self.assertEqual(v, "hello world")
 
         x = v.getCString_maxLength_(None, 16)
         self.assertEqual(x, b"hello world")
@@ -55,18 +47,13 @@ class TestNSString(TestCase):
 
 class TestNSStringBridging(TestCase):
     def setUp(self):
-        self.nsUniString = Foundation.NSString.stringWithString_(
-            b"unifoo".decode("ascii")
-        )
-        self.pyUniString = b"unifoo".decode("ascii")
+        self.nsUniString = Foundation.NSString.stringWithString_("unifoo")
+        self.pyUniString = "unifoo"
 
     def testBasicComparison(self):
-        self.assertEqual(
-            b"unifoo".decode("ascii"),
-            Foundation.NSString.stringWithString_(b"unifoo".decode("ascii")),
-        )
+        self.assertEqual("unifoo", Foundation.NSString.stringWithString_("unifoo"))
 
-        u = b"\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8".decode("latin1")
+        u = "\xc3\xbc\xc3\xb1\xc3\xae\xc3\xa7\xc3\xb8d\xc3\xa8"
         self.assertEqual(u, Foundation.NSString.stringWithString_(u))
 
     def testTypesAndClasses(self):
@@ -83,7 +70,7 @@ class TestNSStringBridging(TestCase):
             try:
                 v = Foundation.NSString.stringWithString_("hello2")
                 self.assertIsInstance(v, objc.pyobjc_unicode)
-                self.assertEqual(v, b"hello2".decode("ascii"))
+                self.assertEqual(v, "hello2")
 
                 self.assertRaises(UnicodeError, str, "\xff")
                 # XXX: string bridge now uses the default Foundation.NSString encoding
@@ -123,12 +110,12 @@ class TestMutable(TestCase):
         Test that python and ObjC string representation are not
         automaticly synchronized.
         """
-        pyStr = Foundation.NSMutableString.stringWithString_(b"hello".decode("ascii"))
+        pyStr = Foundation.NSMutableString.stringWithString_("hello")
         ocStr = pyStr.nsstring()
-        self.assertEqual(pyStr, b"hello".decode("ascii"))
+        self.assertEqual(pyStr, "hello")
         self.assertIsInstance(ocStr, Foundation.NSMutableString)
-        ocStr.appendString_(b" world".decode("ascii"))
-        self.assertEqual(pyStr, b"hello".decode("ascii"))
+        ocStr.appendString_(" world")
+        self.assertEqual(pyStr, "hello")
 
 
 class TestPickle(TestCase):
@@ -180,11 +167,11 @@ class TestPickle(TestCase):
     def testFormat(self):
         v = self.strVal
 
-        d = v.stringByAppendingFormat_(b"hello".decode("ascii"))
-        self.assertEqual(d, v + b"hello".decode("ascii"))
+        d = v.stringByAppendingFormat_("hello")
+        self.assertEqual(d, v + "hello")
 
-        d = v.stringByAppendingFormat_(b"hello %s %d".decode("ascii"), b"world", 101)
-        self.assertEqual(d, v + b"hello world 101".decode("ascii"))
+        d = v.stringByAppendingFormat_("hello %s %d", b"world", 101)
+        self.assertEqual(d, v + "hello world 101")
 
         v = Foundation.NSString.alloc().initWithFormat_("%s %d %s", b"a", 44, b"cc")
         self.assertEqual(v, "a 44 cc")

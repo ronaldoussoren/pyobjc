@@ -341,7 +341,7 @@ class TestLSInfo(TestCase):
             ref,
             LaunchServices.kLSRolesAll,
             LaunchServices.kLSItemRoleHandlerDisplayName,
-            b"foo".decode("latin1"),
+            "foo",
         )
         self.assertIsInstance(ok, int)
 

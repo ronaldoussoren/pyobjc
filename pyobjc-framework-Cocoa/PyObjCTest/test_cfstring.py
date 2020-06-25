@@ -28,21 +28,19 @@ class TestString(TestCase):
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, str)
-        self.assertEqual(s, b"hello world".decode("ascii"))
+        self.assertEqual(s, "hello world")
 
         s = CoreFoundation.CFStringCreateWithBytes(
             None, b"hello world", 5, CoreFoundation.kCFStringEncodingASCII, False
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, str)
-        self.assertEqual(s, b"hello".decode("ascii"))
+        self.assertEqual(s, "hello")
 
-        s = CoreFoundation.CFStringCreateWithCharacters(
-            None, b"HELLO".decode("ascii"), 5
-        )
+        s = CoreFoundation.CFStringCreateWithCharacters(None, "HELLO", 5)
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, str)
-        self.assertEqual(s, b"HELLO".decode("ascii"))
+        self.assertEqual(s, "HELLO")
 
         # NOTE: the deallocator must be CoreFoundation.kCFAllocatorNull
         s = CoreFoundation.CFStringCreateWithCStringNoCopy(
@@ -53,7 +51,7 @@ class TestString(TestCase):
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, str)
-        self.assertEqual(s, b"hello world".decode("ascii"))
+        self.assertEqual(s, "hello world")
 
         s = CoreFoundation.CFStringCreateWithBytesNoCopy(
             None,
@@ -65,32 +63,32 @@ class TestString(TestCase):
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, str)
-        self.assertEqual(s, b"hello".decode("ascii"))
+        self.assertEqual(s, "hello")
 
         s = CoreFoundation.CFStringCreateWithCharactersNoCopy(
-            None, b"HELLO".decode("ascii"), 5, CoreFoundation.kCFAllocatorNull
+            None, "HELLO", 5, CoreFoundation.kCFAllocatorNull
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
         self.assertIsInstance(s, str)
-        self.assertEqual(s, b"HELLO".decode("ascii"))
+        self.assertEqual(s, "HELLO")
 
         del s
 
         s = CoreFoundation.CFStringCreateWithSubstring(
-            None, b"Hello world".decode("ascii"), CoreFoundation.CFRange(2, 4)
+            None, "Hello world", CoreFoundation.CFRange(2, 4)
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"Hello world".decode("ascii")[2:6])
+        self.assertEqual(s, "Hello world"[2:6])
 
-        s = CoreFoundation.CFStringCreateCopy(None, b"foo the bar".decode("ascii"))
+        s = CoreFoundation.CFStringCreateCopy(None, "foo the bar")
         self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"foo the bar".decode("ascii"))
+        self.assertEqual(s, "foo the bar")
 
         s = CoreFoundation.CFStringCreateWithFormat(
             None, None, "hello %s = %d", b"foo", 52
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"hello foo = 52".decode("ascii"))
+        self.assertEqual(s, "hello foo = 52")
 
         self.assertFalse(
             hasattr(CoreFoundation, "CFStringCreateWithFormatAndArguments")
@@ -99,11 +97,11 @@ class TestString(TestCase):
     def testCreateMutable(self):
         s = CoreFoundation.CFStringCreateMutable(None, 0)
         self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"".decode("ascii"))
+        self.assertEqual(s, "")
 
-        s = CoreFoundation.CFStringCreateMutableCopy(None, 0, b"foobar".decode("ascii"))
+        s = CoreFoundation.CFStringCreateMutableCopy(None, 0, "foobar")
         self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"foobar".decode("ascii"))
+        self.assertEqual(s, "foobar")
 
         if sys.version_info[:2] < (3, 3):
             # See issue15035 on Python's tracker. There currently is
@@ -111,49 +109,46 @@ class TestString(TestCase):
             # Therefore these tests can only work for earlier versions
             # of Python.
 
-            b = array.array("u", b"hello world".decode("latin1"))
+            b = array.array("u", "hello world")
             s = CoreFoundation.CFStringCreateMutableWithExternalCharactersNoCopy(
                 None, b, len(b), len(b), CoreFoundation.kCFAllocatorNull
             )
             self.assertIsInstance(s, objc.pyobjc_unicode)
-            self.assertEqual(s, b"hello world".decode("ascii"))
+            self.assertEqual(s, "hello world")
 
-            b[0] = b"H".decode("ascii")
+            b[0] = "H"
 
             # The objc_str proxy is immutable
-            self.assertEqual(s, b"hello world".decode("ascii"))
+            self.assertEqual(s, "hello world")
 
             # The changed string can be accessed directly though:
             s = s.nsstring()
-            self.assertEqual(s, b"Hello world".decode("ascii"))
+            self.assertEqual(s, "Hello world")
 
-            b2 = array.array("u", b" ".decode("ascii") * 40)
+            b2 = array.array("u", " " * 40)
             CoreFoundation.CFStringSetExternalCharactersNoCopy(s, b2, len(s), 40)
             self.assertEqual(s, " " * len(b))
-            b2[0] = b"X".decode("ascii")
+            b2[0] = "X"
             self.assertEqual(s, "X" + (" " * (len(b) - 1)))
 
     def testFunctions(self):
-        v = CoreFoundation.CFStringGetLength(b"bla bla".decode("ascii"))
+        v = CoreFoundation.CFStringGetLength("bla bla")
         self.assertEqual(v, 7)
 
-        v = CoreFoundation.CFStringGetCharacterAtIndex(b"zing".decode("ascii"), 2)
+        v = CoreFoundation.CFStringGetCharacterAtIndex("zing", 2)
         self.assertIsInstance(v, str)
         self.assertIsNotInstance(v, objc.pyobjc_unicode)
-        self.assertEqual(v, b"n".decode("ascii"))
+        self.assertEqual(v, "n")
 
         v = CoreFoundation.CFStringGetCharacters(
-            b"foo".decode("ascii"), CoreFoundation.CFRange(0, 3), None
+            "foo", CoreFoundation.CFRange(0, 3), None
         )
         self.assertIsInstance(v, str)
         self.assertIsNotInstance(v, objc.pyobjc_unicode)
-        self.assertEqual(v, b"foo".decode("ascii"))
+        self.assertEqual(v, "foo")
 
         ok, buf = CoreFoundation.CFStringGetCString(
-            b"sing along".decode("ascii"),
-            None,
-            100,
-            CoreFoundation.kCFStringEncodingUTF8,
+            "sing along", None, 100, CoreFoundation.kCFStringEncodingUTF8
         )
         self.assertTrue(ok)
 
@@ -163,17 +158,17 @@ class TestString(TestCase):
             buf = buf[: buf.index(b"\0")]
         self.assertEqual(buf, b"sing along")
         s = CoreFoundation.CFStringGetCStringPtr(
-            b"apenootjes".decode("ascii"), CoreFoundation.kCFStringEncodingASCII
+            "apenootjes", CoreFoundation.kCFStringEncodingASCII
         )
         if s is not objc.NULL:
             self.assertEqual(s, b"apenootjes")
             self.assertIsInstance(s, str)
-        s = CoreFoundation.CFStringGetCharactersPtr(b"apenootjes".decode("ascii"))
+        s = CoreFoundation.CFStringGetCharactersPtr("apenootjes")
         if s is not objc.NULL:
             self.assertEqual(s, "apenootjes")
             self.assertIsInstance(s, str)
         idx, buf, used = CoreFoundation.CFStringGetBytes(
-            b"apenootjes".decode("ascii"),
+            "apenootjes",
             CoreFoundation.CFRange(1, 4),
             CoreFoundation.kCFStringEncodingASCII,
             b"\0",
@@ -191,7 +186,7 @@ class TestString(TestCase):
             None, b"hello world", CoreFoundation.kCFStringEncodingUTF8
         )
         self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"hello world".decode("ascii"))
+        self.assertEqual(s, "hello world")
 
         data = CoreFoundation.CFStringCreateExternalRepresentation(
             None, s, CoreFoundation.kCFStringEncodingUTF16BE, b"\0"
@@ -213,30 +208,28 @@ class TestString(TestCase):
         )
         self.assertIsInstance(v, int)
         ok, buf = CoreFoundation.CFStringGetFileSystemRepresentation(
-            b"/path/to/nowhere.txt".decode("ascii"), None, 100
+            "/path/to/nowhere.txt", None, 100
         )
         self.assertTrue(ok)
         if b"\0" in buf:
             buf = buf[: buf.index(b"\0")]
         self.assertEqual(buf, b"/path/to/nowhere.txt")
         self.assertIsInstance(buf, bytes)
-        idx = CoreFoundation.CFStringGetMaximumSizeOfFileSystemRepresentation(
-            b"/tmp".decode("ascii")
-        )
+        idx = CoreFoundation.CFStringGetMaximumSizeOfFileSystemRepresentation("/tmp")
         self.assertIsInstance(idx, int)
         s = CoreFoundation.CFStringCreateWithFileSystemRepresentation(None, b"/tmp")
         self.assertIsInstance(s, objc.pyobjc_unicode)
-        self.assertEqual(s, b"/tmp".decode("ascii"))
+        self.assertEqual(s, "/tmp")
         self.assertRaises(
             (TypeError, ValueError),
             CoreFoundation.CFStringCreateWithFileSystemRepresentation,
             None,
-            b"/tmp".decode("ascii"),
+            "/tmp",
         )
 
         r = CoreFoundation.CFStringCompareWithOptionsAndLocale(
-            b"aas".decode("ascii"),
-            b"noot".decode("ascii"),
+            "aas",
+            "noot",
             CoreFoundation.CFRange(0, 3),
             CoreFoundation.kCFCompareBackwards,
             CoreFoundation.CFLocaleCopyCurrent(),
@@ -244,23 +237,18 @@ class TestString(TestCase):
         self.assertEqual(r, CoreFoundation.kCFCompareLessThan)
 
         r = CoreFoundation.CFStringCompareWithOptions(
-            b"aap".decode("ascii"),
-            b"noot".decode("ascii"),
-            CoreFoundation.CFRange(0, 3),
-            0,
+            "aap", "noot", CoreFoundation.CFRange(0, 3), 0
         )
         self.assertEqual(r, CoreFoundation.kCFCompareLessThan)
 
         r = CoreFoundation.CFStringCompare(
-            b"aap".decode("ascii"),
-            b"AAP".decode("ascii"),
-            CoreFoundation.kCFCompareCaseInsensitive,
+            "aap", "AAP", CoreFoundation.kCFCompareCaseInsensitive
         )
         self.assertEqual(r, CoreFoundation.kCFCompareEqualTo)
 
         found, rng = CoreFoundation.CFStringFindWithOptionsAndLocale(
-            b"the longer string".decode("ascii"),
-            b"longer".decode("ascii"),
+            "the longer string",
+            "longer",
             CoreFoundation.CFRange(0, 17),
             0,
             CoreFoundation.CFLocaleCopyCurrent(),
@@ -271,22 +259,14 @@ class TestString(TestCase):
         self.assertEqual(rng, CoreFoundation.CFRange(4, 6))
 
         found, rng = CoreFoundation.CFStringFindWithOptions(
-            b"the longer string".decode("ascii"),
-            b"longer".decode("ascii"),
-            CoreFoundation.CFRange(0, 17),
-            0,
-            None,
+            "the longer string", "longer", CoreFoundation.CFRange(0, 17), 0, None
         )
         self.assertIs(found, True)
         self.assertIsInstance(rng, CoreFoundation.CFRange)
         self.assertEqual(rng, CoreFoundation.CFRange(4, 6))
 
         arr = CoreFoundation.CFStringCreateArrayWithFindResults(
-            None,
-            b"word a world a world".decode("ascii"),
-            b"world".decode("ascii"),
-            CoreFoundation.CFRange(0, 20),
-            0,
+            None, "word a world a world", "world", CoreFoundation.CFRange(0, 20), 0
         )
         self.assertIsInstance(arr, CoreFoundation.CFArrayRef)
         self.assertEqual(len(arr), 2)
@@ -294,18 +274,14 @@ class TestString(TestCase):
         rng = CoreFoundation.CFStringFind("hello world", "world", 0)
         self.assertEqual(rng, CoreFoundation.CFRange(6, 5))
 
-        ok = CoreFoundation.CFStringHasPrefix(
-            b"hello".decode("ascii"), b"he".decode("ascii")
-        )
+        ok = CoreFoundation.CFStringHasPrefix("hello", "he")
         self.assertIs(ok, True)
-        ok = CoreFoundation.CFStringHasPrefix(
-            b"hello".decode("ascii"), b"ge".decode("ascii")
-        )
+        ok = CoreFoundation.CFStringHasPrefix("hello", "ge")
         self.assertIs(ok, False)
-        ok = CoreFoundation.CFStringHasSuffix(b"hello".decode("ascii"), "lo")
+        ok = CoreFoundation.CFStringHasSuffix("hello", "lo")
         self.assertIs(ok, True)
         rng = CoreFoundation.CFStringGetRangeOfComposedCharactersAtIndex(
-            b"hello world".decode("ascii"), 5
+            "hello world", 5
         )
         self.assertIsInstance(rng, CoreFoundation.CFRange)
         found, rng = CoreFoundation.CFStringFindCharacterFromSet(
@@ -324,11 +300,7 @@ class TestString(TestCase):
             lineEndIndex,
             contentsEndIndex,
         ) = CoreFoundation.CFStringGetLineBounds(
-            b"hello\n\nworld".decode("ascii"),
-            CoreFoundation.CFRange(0, 12),
-            None,
-            None,
-            None,
+            "hello\n\nworld", CoreFoundation.CFRange(0, 12), None, None, None
         )
         self.assertEqual(lineBeginIndex, 0)
         self.assertEqual(lineEndIndex, 12)
@@ -339,135 +311,131 @@ class TestString(TestCase):
             paraEndIndex,
             contentsEndIndex,
         ) = CoreFoundation.CFStringGetParagraphBounds(  # noqa: B950
-            b"hello\n\nworld".decode("ascii"),
-            CoreFoundation.CFRange(0, 12),
-            None,
-            None,
-            None,
+            "hello\n\nworld", CoreFoundation.CFRange(0, 12), None, None, None
         )
         self.assertEqual(paraBeginIndex, 0)
         self.assertEqual(paraEndIndex, 12)
         self.assertEqual(contentsEndIndex, 12)
 
         result = CoreFoundation.CFStringCreateByCombiningStrings(
-            None, [b"hello".decode("ascii"), b"world".decode("ascii")], "//"
+            None, ["hello", "world"], "//"
         )
-        self.assertEqual(result, b"hello//world".decode("ascii"))
+        self.assertEqual(result, "hello//world")
 
         result = CoreFoundation.CFStringCreateArrayBySeparatingStrings(
             None, "hello world", " "
         )
         self.assertEqual(result, ["hello", "world"])
 
-        v = CoreFoundation.CFStringGetIntValue(b"1000".decode("ascii"))
+        v = CoreFoundation.CFStringGetIntValue("1000")
         self.assertEqual(v, 1000)
 
-        v = CoreFoundation.CFStringGetDoubleValue(b"1000".decode("ascii"))
+        v = CoreFoundation.CFStringGetDoubleValue("1000")
         self.assertEqual(v, 1000.0)
 
-        v = CoreFoundation.CFStringGetDoubleValue(b"1000.5".decode("ascii"))
+        v = CoreFoundation.CFStringGetDoubleValue("1000.5")
         self.assertEqual(v, 1000.5)
 
     def testMutableFunctions(self):
         s = CoreFoundation.CFStringCreateMutable(None, 0)
         s = s.nsstring()
-        CoreFoundation.CFStringAppend(s, b"hello".decode("ascii"))
-        self.assertEqual(s, b"hello".decode("ascii"))
+        CoreFoundation.CFStringAppend(s, "hello")
+        self.assertEqual(s, "hello")
 
         s = CoreFoundation.CFStringCreateMutable(None, 0)
         # Ensure that we actually see updates:
         s = s.nsstring()
 
-        CoreFoundation.CFStringAppendCharacters(s, b"hel".decode("ascii"), 3)
-        self.assertEqual(s, b"hel".decode("ascii"))
+        CoreFoundation.CFStringAppendCharacters(s, "hel", 3)
+        self.assertEqual(s, "hel")
 
         CoreFoundation.CFStringAppendCString(
             s, b"lo world", CoreFoundation.kCFStringEncodingUTF8
         )
-        self.assertEqual(s, b"hello world".decode("ascii"))
+        self.assertEqual(s, "hello world")
 
         CoreFoundation.CFStringAppendFormat(s, None, ": %s = %d", b"x", 99)
-        self.assertEqual(s, b"hello world: x = 99".decode("ascii"))
+        self.assertEqual(s, "hello world: x = 99")
 
         self.assertNotHasAttr(CoreFoundation, "CFStringAppendFormatAndArguments")
         CoreFoundation.CFStringInsert(s, 2, "--")
-        self.assertEqual(s, b"he--llo world: x = 99".decode("ascii"))
+        self.assertEqual(s, "he--llo world: x = 99")
 
         CoreFoundation.CFStringDelete(s, CoreFoundation.CFRange(0, 8))
-        self.assertEqual(s, b"world: x = 99".decode("ascii"))
+        self.assertEqual(s, "world: x = 99")
 
         CoreFoundation.CFStringReplace(s, CoreFoundation.CFRange(0, 4), "WOR")
-        self.assertEqual(s, b"WORd: x = 99".decode("ascii"))
+        self.assertEqual(s, "WORd: x = 99")
 
         CoreFoundation.CFStringReplaceAll(s, "WHOOPS")
-        self.assertEqual(s, b"WHOOPS".decode("ascii"))
+        self.assertEqual(s, "WHOOPS")
 
-        CoreFoundation.CFStringReplaceAll(s, b"BLAblaBLAblaBLA".decode("ascii"))
-        self.assertEqual(s, b"BLAblaBLAblaBLA".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "BLAblaBLAblaBLA")
+        self.assertEqual(s, "BLAblaBLAblaBLA")
 
         CoreFoundation.CFStringFindAndReplace(
             s, "BL", " fo ", CoreFoundation.CFRange(0, 15), 0
         )
         self.assertEqual(s, " fo Abla fo Abla fo A")
 
-        CoreFoundation.CFStringReplaceAll(s, b"abc".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "abc")
         CoreFoundation.CFStringPad(s, " ", 9, 0)
-        self.assertEqual(s, b"abc      ".decode("ascii"))
+        self.assertEqual(s, "abc      ")
 
-        CoreFoundation.CFStringReplaceAll(s, b"abc".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "abc")
         CoreFoundation.CFStringPad(s, ". ", 9, 1)
-        self.assertEqual(s, b"abc . . .".decode("ascii"))
+        self.assertEqual(s, "abc . . .")
 
-        CoreFoundation.CFStringReplaceAll(s, b"abcdef".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "abcdef")
         CoreFoundation.CFStringPad(s, ". ", 3, 0)
-        self.assertEqual(s, b"abc".decode("ascii"))
+        self.assertEqual(s, "abc")
 
-        CoreFoundation.CFStringReplaceAll(s, b"aHelloaaa".decode("ascii"))
-        trim_chars = b"a".decode("ascii")
+        CoreFoundation.CFStringReplaceAll(s, "aHelloaaa")
+        trim_chars = "a"
 
         # print s
         CoreFoundation.CFStringTrim(s, trim_chars)
         # print s
         # print(s)
         # CoreFoundation.CFShow(s)
-        self.assertEqual(s, b"Hello".decode("ascii"))
+        self.assertEqual(s, "Hello")
 
-        CoreFoundation.CFStringReplaceAll(s, b"* * * *abc * ".decode("ascii"))
-        trim_chars = b"* ".decode("ascii")
+        CoreFoundation.CFStringReplaceAll(s, "* * * *abc * ")
+        trim_chars = "* "
 
         trim_chars = CoreFoundation.CFStringCreateWithCString(
             None, b"* ", CoreFoundation.kCFStringEncodingASCII
         )
         CoreFoundation.CFStringTrim(s, trim_chars)
-        self.assertEqual(s, b"*abc ".decode("ascii"))
+        self.assertEqual(s, "*abc ")
 
-        CoreFoundation.CFStringReplaceAll(s, b" \tHello world  \t ".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, " \tHello world  \t ")
         CoreFoundation.CFStringTrimWhitespace(s)
-        self.assertEqual(s, b"Hello world".decode("ascii"))
+        self.assertEqual(s, "Hello world")
 
-        CoreFoundation.CFStringReplaceAll(s, b"AbC".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "AbC")
         CoreFoundation.CFStringLowercase(s, CoreFoundation.CFLocaleCopyCurrent())
-        self.assertEqual(s, b"abc".decode("ascii"))
+        self.assertEqual(s, "abc")
 
-        CoreFoundation.CFStringReplaceAll(s, b"AbC".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "AbC")
         CoreFoundation.CFStringUppercase(s, CoreFoundation.CFLocaleCopyCurrent())
-        self.assertEqual(s, b"ABC".decode("ascii"))
+        self.assertEqual(s, "ABC")
 
-        CoreFoundation.CFStringReplaceAll(s, b"hello world".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "hello world")
         CoreFoundation.CFStringCapitalize(s, CoreFoundation.CFLocaleCopyCurrent())
-        self.assertEqual(s, b"Hello World".decode("ascii"))
+        self.assertEqual(s, "Hello World")
 
         CoreFoundation.CFStringNormalize(s, CoreFoundation.kCFStringNormalizationFormKD)
-        self.assertEqual(s, b"Hello World".decode("ascii"))
+        self.assertEqual(s, "Hello World")
 
         CoreFoundation.CFStringFold(
             s,
             CoreFoundation.kCFCompareCaseInsensitive,
             CoreFoundation.CFLocaleCopyCurrent(),
         )
-        self.assertEqual(s, b"hello world".decode("ascii"))
+        self.assertEqual(s, "hello world")
 
-        CoreFoundation.CFStringReplaceAll(s, b"A C".decode("ascii"))
+        CoreFoundation.CFStringReplaceAll(s, "A C")
         ok, rng = CoreFoundation.CFStringTransform(
             s,
             CoreFoundation.CFRange(0, 3),
@@ -577,7 +545,7 @@ class TestString(TestCase):
         self.assertNotHasAttr(CoreFoundation, "__CFStringMakeConstantString")
 
     def testCFSTR(self):
-        v = CoreFoundation.CFSTR(b"hello".decode("ascii"))
+        v = CoreFoundation.CFSTR("hello")
         self.assertIsInstance(v, str)
 
 
@@ -757,12 +725,7 @@ class TestStringEncodingExt(TestCase):
 
         self.assertArgIsOut(CoreFoundation.CFStringGetHyphenationLocationBeforeIndex, 5)
         v, ch = CoreFoundation.CFStringGetHyphenationLocationBeforeIndex(
-            b"hello world".decode("ascii"),
-            5,
-            CoreFoundation.CFRange(0, 10),
-            0,
-            loc,
-            None,
+            "hello world", 5, CoreFoundation.CFRange(0, 10), 0, loc, None
         )
         self.assertIsInstance(v, int)
         self.assertIsInstance(ch, int)

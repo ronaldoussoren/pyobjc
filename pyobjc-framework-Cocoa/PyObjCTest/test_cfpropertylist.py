@@ -4,9 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestPropertyList(TestCase):
     def testFunctions(self):
-        dta = CoreFoundation.CFPropertyListCreateXMLData(
-            None, {b"key".decode("ascii"): 42, b"key2".decode("ascii"): 1}
-        )
+        dta = CoreFoundation.CFPropertyListCreateXMLData(None, {"key": 42, "key2": 1})
         self.assertIsInstance(dta, CoreFoundation.CFDataRef)
         self.assertArgIsOut(CoreFoundation.CFPropertyListCreateFromXMLData, 3)
         v, err = CoreFoundation.CFPropertyListCreateFromXMLData(None, dta, 0, None)
@@ -17,7 +15,7 @@ class TestPropertyList(TestCase):
         self.assertEqual(v["key"], 42)
         self.assertEqual(v["key2"], True)
         v = CoreFoundation.CFPropertyListCreateDeepCopy(
-            None, {b"key".decode("ascii"): 42, b"key2".decode("ascii"): True}, 0
+            None, {"key": 42, "key2": True}, 0
         )
         self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
         self.assertIn("key", v)
@@ -25,8 +23,7 @@ class TestPropertyList(TestCase):
         self.assertEqual(v["key"], 42)
         self.assertEqual(v["key2"], True)
         valid = CoreFoundation.CFPropertyListIsValid(
-            {b"key".decode("ascii"): 42, b"key2".decode("ascii"): True},
-            CoreFoundation.kCFPropertyListBinaryFormat_v1_0,
+            {"key": 42, "key2": True}, CoreFoundation.kCFPropertyListBinaryFormat_v1_0
         )
         self.assertIs(valid, True)
 
@@ -37,7 +34,7 @@ class TestPropertyList(TestCase):
         r = CoreFoundation.CFWriteStreamOpen(stream)
         self.assertTrue(r)
 
-        value = {b"key1".decode("ascii"): 42, b"key2".decode("ascii"): 1}
+        value = {"key1": 42, "key2": 1}
 
         self.assertArgIsOut(CoreFoundation.CFPropertyListWriteToStream, 3)
         rval, errorString = CoreFoundation.CFPropertyListWriteToStream(
@@ -93,9 +90,7 @@ class TestPropertyList(TestCase):
 
     @min_os_level("10.6")
     def testFunctions10_6(self):
-        dta = CoreFoundation.CFPropertyListCreateXMLData(
-            None, {b"key".decode("ascii"): 42, b"key2".decode("ascii"): 1}
-        )
+        dta = CoreFoundation.CFPropertyListCreateXMLData(None, {"key": 42, "key2": 1})
         self.assertIsInstance(dta, CoreFoundation.CFDataRef)
         bytes_value = CoreFoundation.CFDataGetBytes(
             dta, (0, CoreFoundation.CFDataGetLength(dta)), None

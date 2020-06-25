@@ -38,7 +38,7 @@ class TestPreferences(TestCase):
         )
         self.assertIsInstance(v, CoreFoundation.CFDictionaryRef)
         v = CoreFoundation.CFPreferencesCopyMultiple(
-            [b"AutoFocus".decode("ascii"), b"WindowCloseAction".decode("ascii")],
+            ["AutoFocus", "WindowCloseAction"],
             "com.apple.Terminal",
             CoreFoundation.kCFPreferencesCurrentUser,
             CoreFoundation.kCFPreferencesAnyHost,
@@ -145,7 +145,7 @@ class TestPreferences(TestCase):
             CoreFoundation.kCFPreferencesAnyHost,
         )
         self.assertIsInstance(apps, CoreFoundation.CFArrayRef)
-        self.assertIn(b"com.apple.AddressBook".decode("ascii"), apps)
+        self.assertIn("com.apple.AddressBook", apps)
         self.assertResultIsCFRetained(CoreFoundation.CFPreferencesCopyKeyList)
         keys = CoreFoundation.CFPreferencesCopyKeyList(
             "com.apple.dock",

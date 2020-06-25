@@ -20,14 +20,12 @@ class TestCTLine(TestCase):
         self.assertIsInstance(v, int)
 
         self.assertResultIsCFRetained(CoreText.CTLineCreateWithAttributedString)
-        astr = CoreText.CFAttributedStringCreate(None, b"-".decode("latin1"), None)
+        astr = CoreText.CFAttributedStringCreate(None, "-", None)
         self.assertTrue(astr is not None)
         token = CoreText.CTLineCreateWithAttributedString(astr)
         self.assertIsInstance(token, CoreText.CTLineRef)
 
-        astr = CoreText.CFAttributedStringCreate(
-            None, b"hello world".decode("latin1"), None
-        )
+        astr = CoreText.CFAttributedStringCreate(None, "hello world", None)
         self.assertTrue(astr is not None)
         line = CoreText.CTLineCreateWithAttributedString(astr)
         self.assertIsInstance(line, CoreText.CTLineRef)
@@ -108,7 +106,7 @@ class TestCTLine(TestCase):
 
     @min_os_level("10.8")
     def testFunctions10_8(self):
-        astr = CoreText.CFAttributedStringCreate(None, b"-".decode("latin1"), None)
+        astr = CoreText.CFAttributedStringCreate(None, "-", None)
         self.assertTrue(astr is not None)
 
         token = CoreText.CTLineCreateWithAttributedString(astr)

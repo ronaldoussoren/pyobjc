@@ -7,9 +7,7 @@ class TestNSExceptionInteraction(TestCase):
     def testRepeatedAllocInit(self):
         for _ in range(1, 1000):
             _ = Foundation.NSException.alloc().initWithName_reason_userInfo_(
-                b"Bogus".decode("ascii"),
-                b"A bad reason".decode("ascii"),
-                {b"foo".decode("ascii"): b"bar".decode("ascii")},
+                "Bogus", "A bad reason", {"foo": "bar"}
             )
 
     def testFormat(self):

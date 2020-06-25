@@ -20,25 +20,14 @@ class TestNSArrayInteraction(TestCase):
             _ = Foundation.NSArray.alloc().init()
 
     def testIndices(self):
-        x = Foundation.NSArray.arrayWithArray_(
-            [b"foo".decode("ascii"), b"bar".decode("ascii"), b"baz".decode("ascii")]
-        )
+        x = Foundation.NSArray.arrayWithArray_(["foo", "bar", "baz"])
 
-        self.assertEqual(x.indexOfObject_(b"bar".decode("ascii")), 1)
+        self.assertEqual(x.indexOfObject_("bar"), 1)
 
         self.assertRaises(IndexError, x.objectAtIndex_, 100)
 
     def testEnumeration(self):
-        x = Foundation.NSArray.arrayWithArray_(
-            [
-                1,
-                2,
-                b"foo".decode("ascii"),
-                b"bar".decode("ascii"),
-                b"".decode("ascii"),
-                b"baz".decode("ascii"),
-            ]
-        )
+        x = Foundation.NSArray.arrayWithArray_([1, 2, "foo", "bar", "", "baz"])
         y = []
 
         for o in x:
@@ -47,17 +36,15 @@ class TestNSArrayInteraction(TestCase):
         self.assertEqual(len(x), len(y))
 
     def testContains(self):
-        x = Foundation.NSArray.arrayWithArray_(
-            [b"foo".decode("ascii"), b"bar".decode("ascii"), b"baz".decode("ascii")]
-        )
+        x = Foundation.NSArray.arrayWithArray_(["foo", "bar", "baz"])
         self.assertEqual(x.count(), 3)
         self.assertEqual(len(x), 3)
 
-        self.assertTrue(x.containsObject_(b"foo".decode("ascii")))
-        self.assertTrue(not x.containsObject_(b"dumbledorf".decode("ascii")))
+        self.assertTrue(x.containsObject_("foo"))
+        self.assertTrue(not x.containsObject_("dumbledorf"))
 
-        self.assertTrue(b"foo".decode("ascii") in x)
-        self.assertTrue(not b"dumbledorf".decode("ascii") in x)
+        self.assertTrue("foo" in x)
+        self.assertTrue("dumbledorf" not in x)
 
     def testIn(self):
         x = Foundation.NSMutableArray.array()
@@ -81,7 +68,7 @@ class TestNSArrayInteraction(TestCase):
 
         self.assertTrue(101 not in x)
         self.assertTrue(None not in x)
-        self.assertTrue(b"foo bar".decode("ascii") not in x)
+        self.assertTrue("foo bar" not in x)
 
     def assertSlicesEqual(self, x, y, z):
         self.assertEqual(x, x[:])
@@ -210,18 +197,8 @@ class TestNSArraySpecialMethods(TestCase):
     # Test calling 'difficult' methods from Python
 
     def test_initWithObjects_count_(self):
-        a = Foundation.NSArray.alloc().initWithObjects_count_(
-            (
-                b"a".decode("ascii"),
-                b"b".decode("ascii"),
-                b"c".decode("ascii"),
-                b"d".decode("ascii"),
-            ),
-            3,
-        )
-        self.assertEqual(
-            a, [b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii")]
-        )
+        a = Foundation.NSArray.alloc().initWithObjects_count_(("a", "b", "c", "d"), 3)
+        self.assertEqual(a, ["a", "b", "c"])
 
         import warnings
 
@@ -231,7 +208,7 @@ class TestNSArraySpecialMethods(TestCase):
             self.assertRaises(
                 ValueError,
                 Foundation.NSArray.alloc().initWithObjects_count_,
-                (b"a".decode("ascii"), b"b".decode("ascii")),
+                ("a", "b"),
                 3,
             )
 
@@ -239,100 +216,48 @@ class TestNSArraySpecialMethods(TestCase):
             del warnings.filters[0]
 
     def test_arrayWithObjects_count_(self):
-        a = Foundation.NSArray.arrayWithObjects_count_(
-            (
-                b"a".decode("ascii"),
-                b"b".decode("ascii"),
-                b"c".decode("ascii"),
-                b"d".decode("ascii"),
-            ),
-            3,
-        )
-        self.assertEqual(
-            a, [b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii")]
-        )
+        a = Foundation.NSArray.arrayWithObjects_count_(("a", "b", "c", "d"), 3)
+        self.assertEqual(a, ["a", "b", "c"])
 
         self.assertRaises(
-            ValueError,
-            Foundation.NSArray.arrayWithObjects_count_,
-            (b"a".decode("ascii"), b"b".decode("ascii")),
-            3,
+            ValueError, Foundation.NSArray.arrayWithObjects_count_, ("a", "b"), 3
         )
 
     def test_arrayByAddingObjects_count_(self):
         return
 
-        a = Foundation.NSArray.arrayWithArray_(
-            (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
-        self.assertEqual(
-            a, (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
+        a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
+        self.assertEqual(a, ("a", "b", "c"))
 
-        b = a.arrayByAddingObjects_count_(
-            (b"d".decode("ascii"), b"e".decode("ascii"), b"f".decode("ascii")), 3
-        )
-        self.assertEqual(
-            a, (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
-        self.assertEqual(
-            b,
-            (
-                b"a".decode("ascii"),
-                b"b".decode("ascii"),
-                b"c".decode("ascii"),
-                b"d".decode("ascii"),
-                b"e".decode("ascii"),
-                b"f".decode("ascii"),
-            ),
-        )
+        b = a.arrayByAddingObjects_count_(("d", "e", "f"), 3)
+        self.assertEqual(a, ("a", "b", "c"))
+        self.assertEqual(b, ("a", "b", "c", "d", "e", "f"))
 
-        self.assertRaises(
-            ValueError,
-            a.arrayByAddingObjects_count_,
-            (b"a".decode("ascii"), b"b".decode("ascii")),
-            3,
-        )
+        self.assertRaises(ValueError, a.arrayByAddingObjects_count_, ("a", "b"), 3)
 
     def test_sortedArrayUsingFunction_context_(self):
-        a = Foundation.NSArray.arrayWithArray_(
-            (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
-        self.assertEqual(
-            a, (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
+        a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
+        self.assertEqual(a, ("a", "b", "c"))
 
         def cmpfunc(l, r, c):
             return -cmp(l, r)
 
-        b = a.sortedArrayUsingFunction_context_(cmpfunc, b"hello".decode("ascii"))
-        self.assertEqual(
-            a, (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
-        self.assertEqual(
-            b, (b"c".decode("ascii"), b"b".decode("ascii"), b"a".decode("ascii"))
-        )
+        b = a.sortedArrayUsingFunction_context_(cmpfunc, "hello")
+        self.assertEqual(a, ("a", "b", "c"))
+        self.assertEqual(b, ("c", "b", "a"))
 
     def test_sortedArrayUsingFunction_context_hint_(self):
-        a = Foundation.NSArray.arrayWithArray_(
-            (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
-        self.assertEqual(
-            a, (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
+        a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
+        self.assertEqual(a, ("a", "b", "c"))
 
         def cmpfunc(l, r, c):
             return -cmp(l, r)
 
         b = a.sortedArrayUsingFunction_context_hint_(
-            cmpfunc, b"hello".decode("ascii"), a.sortedArrayHint()
+            cmpfunc, "hello", a.sortedArrayHint()
         )
-        self.assertEqual(
-            a, (b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii"))
-        )
-        self.assertEqual(
-            b, (b"c".decode("ascii"), b"b".decode("ascii"), b"a".decode("ascii"))
-        )
+        self.assertEqual(a, ("a", "b", "c"))
+        self.assertEqual(b, ("c", "b", "a"))
 
 
 class TestNSMutableArrayInteraction(TestCase):
@@ -357,27 +282,9 @@ class TestNSMutableArrayInteraction(TestCase):
             a = Foundation.NSMutableArray.arrayWithArray_(range(4))
             self.assertEqual(a, (0, 1, 2, 3))
 
-            a.replaceObjectsInRange_withObjects_count_(
-                (1, 2),
-                [
-                    b"a".decode("ascii"),
-                    b"b".decode("ascii"),
-                    b"c".decode("ascii"),
-                    b"d".decode("ascii"),
-                ],
-                3,
-            )
+            a.replaceObjectsInRange_withObjects_count_((1, 2), ["a", "b", "c", "d"], 3)
 
-            self.assertEqual(
-                a,
-                (
-                    0,
-                    b"a".decode("ascii"),
-                    b"b".decode("ascii"),
-                    b"c".decode("ascii"),
-                    3,
-                ),
-            )
+            self.assertEqual(a, (0, "a", "b", "c", 3))
 
     def testSortInvalid(self):
         # Invalid calls to sortUsingFunction:context:
@@ -393,10 +300,7 @@ class TestNSMutableArrayInteraction(TestCase):
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir)
             self.assertRaises(TypeError, a.sortUsingFunction_context_, dir, 1, 2)
             self.assertRaises(
-                TypeError,
-                a.sortUsingFunction_context_,
-                lambda *args: cmp(*args),
-                b"a".decode("ascii"),
+                TypeError, a.sortUsingFunction_context_, lambda *args: cmp(*args), "a"
             )
         finally:
             objc.options.verbose = t
@@ -411,7 +315,7 @@ class TestNSMutableArrayInteraction(TestCase):
             def cmpfunc(l, r, c):
                 return -cmp(l, r)
 
-            a.sortUsingFunction_context_range_(cmpfunc, b"a".decode("ascii"), (4, 4))
+            a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
 
             self.assertEqual(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
@@ -422,7 +326,7 @@ class TestNSMutableArrayInteraction(TestCase):
         def cmpfunc(l, r, c):
             return -cmp(l, r)
 
-        a.sortUsingFunction_context_(cmpfunc, b"a".decode("ascii"))
+        a.sortUsingFunction_context_(cmpfunc, "a")
 
         self.assertEqual(a, (3, 2, 1, 0))
 
@@ -435,7 +339,7 @@ class TestNSMutableArrayInteraction(TestCase):
             def cmpfunc(l, r, c):
                 return -cmp(l, r)
 
-            a.sortUsingFunction_context_range_(cmpfunc, b"a".decode("ascii"), (4, 4))
+            a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
 
             self.assertEqual(a, (0, 1, 2, 3, 7, 6, 5, 4, 8, 9))
 
@@ -503,29 +407,21 @@ class TestNSMutableArrayInteraction(TestCase):
 
 class TestVariadic(TestCase):
     def testArrayWithObjects(self):
-        a = Foundation.NSArray.arrayWithObjects_(
-            b"foo".decode("ascii"), b"bar".decode("ascii"), None
-        )
-        self.assertEqual(a, (b"foo".decode("ascii"), b"bar".decode("ascii")))
+        a = Foundation.NSArray.arrayWithObjects_("foo", "bar", None)
+        self.assertEqual(a, ("foo", "bar"))
         self.assertIsInstance(a, Foundation.NSArray)
 
-        a = Foundation.NSMutableArray.arrayWithObjects_(
-            b"foo".decode("ascii"), b"bar".decode("ascii"), None
-        )
-        self.assertEqual(a, [b"foo".decode("ascii"), b"bar".decode("ascii")])
+        a = Foundation.NSMutableArray.arrayWithObjects_("foo", "bar", None)
+        self.assertEqual(a, ["foo", "bar"])
         self.assertIsInstance(a, Foundation.NSMutableArray)
 
     def testInitWithObjecs(self):
-        a = Foundation.NSArray.alloc().initWithObjects_(
-            b"foo".decode("ascii"), b"bar".decode("ascii"), None
-        )
-        self.assertEqual(a, (b"foo".decode("ascii"), b"bar".decode("ascii")))
+        a = Foundation.NSArray.alloc().initWithObjects_("foo", "bar", None)
+        self.assertEqual(a, ("foo", "bar"))
         self.assertIsInstance(a, Foundation.NSArray)
 
-        a = Foundation.NSMutableArray.alloc().initWithObjects_(
-            b"foo".decode("ascii"), b"bar".decode("ascii"), None
-        )
-        self.assertEqual(a, [b"foo".decode("ascii"), b"bar".decode("ascii")])
+        a = Foundation.NSMutableArray.alloc().initWithObjects_(b"foo", b"bar", None)
+        self.assertEqual(a, ["foo", "bar"])
         self.assertIsInstance(a, Foundation.NSMutableArray)
 
 

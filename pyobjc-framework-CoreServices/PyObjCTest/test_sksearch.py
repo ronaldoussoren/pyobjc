@@ -33,7 +33,7 @@ class TestSKSearch(TestCase):
         doc = CoreServices.SKDocumentCreateWithURL(
             CoreServices.CFURLCreateWithFileSystemPath(
                 None,
-                b"/Library/Documentation/Acknowledgements.rtf".decode("latin1"),
+                "/Library/Documentation/Acknowledgements.rtf",
                 CoreServices.kCFURLPOSIXPathStyle,
                 False,
             )
@@ -41,7 +41,7 @@ class TestSKSearch(TestCase):
         doc2 = CoreServices.SKDocumentCreateWithURL(
             CoreServices.CFURLCreateWithFileSystemPath(
                 None,
-                b"/Library/Documentation/iPod/Acknowledgements.rtf".decode("latin1"),
+                "/Library/Documentation/iPod/Acknowledgements.rtf",
                 CoreServices.kCFURLPOSIXPathStyle,
                 False,
             )
@@ -67,12 +67,7 @@ class TestSKSearch(TestCase):
         ctx = 10
 
         res = CoreServices.SKSearchResultsCreateWithQuery(
-            grp,
-            b"copyright".decode("latin1"),
-            CoreServices.kSKSearchRequiredRanked,
-            2,
-            ctx,
-            callback,
+            grp, "copyright", CoreServices.kSKSearchRequiredRanked, 2, ctx, callback
         )
         self.assertIsInstance(res, CoreServices.SKSearchResultsRef)
 

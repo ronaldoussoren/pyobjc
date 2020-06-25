@@ -79,18 +79,12 @@ class TestLSSharedFileList(TestCase):
 
         self.assertResultIsCFRetained(CoreServices.LSSharedFileListCopyProperty)
         self.assertResultHasType(CoreServices.LSSharedFileListCopyProperty, b"@")
-        v = CoreServices.LSSharedFileListCopyProperty(
-            lst, b"pyobjc.name".decode("latin1")
-        )
+        v = CoreServices.LSSharedFileListCopyProperty(lst, "pyobjc.name")
 
-        v = CoreServices.LSSharedFileListSetProperty(
-            lst, b"pyobjc.name".decode("latin1"), b"value".decode("latin1")
-        )
+        v = CoreServices.LSSharedFileListSetProperty(lst, "pyobjc.name", "value")
         self.assertIsInstance(v, int)
-        v = CoreServices.LSSharedFileListCopyProperty(
-            lst, b"pyobjc.name".decode("latin1")
-        )
-        self.assertEqual(v, b"value".decode("latin1"))
+        v = CoreServices.LSSharedFileListCopyProperty(lst, "pyobjc.name")
+        self.assertEqual(v, "value")
 
         self.assertArgIsOut(CoreServices.LSSharedFileListCopySnapshot, 1)
         v, seed = CoreServices.LSSharedFileListCopySnapshot(lst, None)
@@ -101,7 +95,7 @@ class TestLSSharedFileList(TestCase):
         url = CoreServices.CFURLCreateWithString(
             None, "file://" + os.path.expanduser("~"), None
         )
-        title = b"PyObjC.Test".decode("latin1")
+        title = "PyObjC.Test"
         item = CoreServices.LSSharedFileListInsertItemFSRef(
             lst,
             CoreServices.kLSSharedFileListItemLast,
@@ -138,14 +132,12 @@ class TestLSSharedFileList(TestCase):
             self.assertIsInstance(url, CoreServices.CFURLRef)
 
         v = CoreServices.LSSharedFileListItemSetProperty(
-            item, b"pyobjc.name".decode("latin1"), b"pyobjc.test".decode("latin1")
+            item, "pyobjc.name", "pyobjc.test"
         )
         self.assertIsInstance(v, int)
 
         self.assertResultIsCFRetained(CoreServices.LSSharedFileListItemCopyProperty)
-        v = CoreServices.LSSharedFileListItemCopyProperty(
-            item, b"pyobjc.name".decode("latin1")
-        )
+        v = CoreServices.LSSharedFileListItemCopyProperty(item, "pyobjc.name")
         if v is not None:
             self.assertEqual(v, "pyobjc.test")
 

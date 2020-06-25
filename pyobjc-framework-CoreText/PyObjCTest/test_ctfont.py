@@ -198,7 +198,7 @@ class TestCTFont(TestCase):
         self.assertEqual(CoreText.kCTFontTableOptionExcludeSynthetic, (1 << 0))
 
     def testFunctions(self):
-        font = CoreText.CTFontCreateWithName(b"Optima Bold".decode("latin1"), 14, None)
+        font = CoreText.CTFontCreateWithName("Optima Bold", 14, None)
         self.assertIsInstance(font, CoreText.CTFontRef)
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithName)
 
@@ -231,7 +231,7 @@ class TestCTFont(TestCase):
         self.assertResultIsCFRetained(CoreText.CTFontCreateCopyWithFamily)
 
         font2 = CoreText.CTFontCreateForString(
-            font, b"hello world".decode("latin1"), CoreText.CFRange(1, 4)
+            font, "hello world", CoreText.CFRange(1, 4)
         )
         self.assertIsInstance(font2, CoreText.CTFontRef)
         self.assertResultIsCFRetained(CoreText.CTFontCreateForString)
@@ -288,9 +288,7 @@ class TestCTFont(TestCase):
         self.assertIsInstance(v, CoreText.CFArrayRef)
 
         self.assertArgIsOut(CoreText.CTFontGetGlyphsForCharacters, 2)
-        v, gl = CoreText.CTFontGetGlyphsForCharacters(
-            font, b"hello".decode("latin1"), None, 5
-        )
+        v, gl = CoreText.CTFontGetGlyphsForCharacters(font, "hello", None, 5)
 
         self.assertTrue(v is True)
         self.assertIsInstance(gl, tuple)
@@ -421,16 +419,12 @@ class TestCTFont(TestCase):
     @min_os_level("10.6")
     def testFunctions10_6(self):
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithNameAndOptions)
-        v = CoreText.CTFontCreateWithNameAndOptions(
-            b"Times".decode("latin1"), 15, None, 0
-        )
+        v = CoreText.CTFontCreateWithNameAndOptions("Times", 15, None, 0)
         self.assertIsInstance(v, CoreText.CTFontRef)
 
     @min_os_level("10.6")
     def testFunctions10_6_crash(self):
-        descr = CoreText.CTFontDescriptorCreateWithNameAndSize(
-            b"Courier".decode("latin1"), 14.0
-        )
+        descr = CoreText.CTFontDescriptorCreateWithNameAndSize("Courier", 14.0)
         self.assertNotEqual(descr, None)
 
         self.assertResultIsCFRetained(CoreText.CTFontCreateWithFontDescriptorAndOptions)
@@ -457,9 +451,7 @@ class TestCTFont(TestCase):
             CoreText.kCTFontMiniSystemFontType, 10.0, "nl_NL"
         )
         self.assertTrue(font is not None)
-        v, gl = CoreText.CTFontGetGlyphsForCharacters(
-            font, b"hello".decode("latin1"), None, 5
-        )
+        v, gl = CoreText.CTFontGetGlyphsForCharacters(font, "hello", None, 5)
         self.assertTrue(v)
         self.assertIsInstance(gl, tuple)
 

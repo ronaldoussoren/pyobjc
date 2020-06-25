@@ -41,9 +41,7 @@ class TestCGImageDestination(TestCase):
         dest = Quartz.CGImageDestinationCreateWithURL(url, "public.tiff", 2, None)
         self.assertIsInstance(dest, Quartz.CGImageDestinationRef)
 
-        Quartz.CGImageDestinationSetProperties(
-            dest, {b"key".decode("latin1"): b"value".decode("latin1")}
-        )
+        Quartz.CGImageDestinationSetProperties(dest, {"key": "value"})
 
         provider = Quartz.CGDataProviderCreateWithCFData(buffer("1" * 4 * 100 * 80))
         img = Quartz.CGImageCreate(

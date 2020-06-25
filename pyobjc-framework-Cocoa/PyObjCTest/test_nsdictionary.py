@@ -94,55 +94,49 @@ class TestNSDictionaryInteraction(TestCase):
 
     def testBasicInteraction(self):
         d = Foundation.NSMutableDictionary.dictionary()
-        d[b"a".decode("ascii")] = b"foo".decode("ascii")
-        d[b"b".decode("ascii")] = b"bar".decode("ascii")
+        d["a"] = "foo"
+        d["b"] = "bar"
 
         self.assertEqual(
-            d[b"a".decode("ascii")],
-            b"foo".decode("ascii"),
+            d["a"],
+            "foo",
             "Failed to retrieve the same thing that was put into the dict.",
         )
         try:
-            d[b"c".decode("ascii")]
+            d["c"]
             self.fail("Should have raised...")
         except KeyError:
             pass
 
     def testPythonIteraction(self):
         d = Foundation.NSMutableDictionary.dictionary()
-        d[b"a".decode("ascii")] = b"foo".decode("ascii")
-        d[b"b".decode("ascii")] = b"bar".decode("ascii")
+        d["a"] = "foo"
+        d["b"] = "bar"
 
         k = list(d.keys())
         k.sort()
-        self.assertTrue(k == [b"a".decode("ascii"), b"b".decode("ascii")])
+        self.assertTrue(k == ["a", "b"])
 
         k = list(d.values())
         k.sort()
-        self.assertTrue(k == [b"bar".decode("ascii"), b"foo".decode("ascii")])
+        self.assertTrue(k == ["bar", "foo"])
 
         k = list(d.items())
         k.sort()
-        self.assertTrue(
-            k
-            == [
-                (b"a".decode("ascii"), b"foo".decode("ascii")),
-                (b"b".decode("ascii"), b"bar".decode("ascii")),
-            ]
-        )
+        self.assertTrue(k == [("a", "foo"), ("b", "bar")])
 
     def testIn(self):
         d = Foundation.NSMutableDictionary.dictionary()
-        d[b"a".decode("ascii")] = b"foo".decode("ascii")
-        d[b"b".decode("ascii")] = b"bar".decode("ascii")
-        d[1] = b"baz".decode("ascii")
-        d[0] = b"bob".decode("ascii")
+        d["a"] = "foo"
+        d["b"] = "bar"
+        d[1] = "baz"
+        d[0] = "bob"
 
-        self.assertTrue(b"a".decode("ascii") in d)
+        self.assertTrue("a" in d)
         self.assertTrue(1 in d)
         # self.assertTrue( -1 in d )
         # self.assertTrue( d[-1] is None )
-        self.assertTrue(b"q".decode("ascii") not in d)
+        self.assertTrue("q" not in d)
 
         for k in d.allKeys():
             self.assertEqual(d.objectForKey_(k), d[k])
@@ -150,71 +144,27 @@ class TestNSDictionaryInteraction(TestCase):
         for k in d:
             self.assertEqual(d.objectForKey_(k), d[k])
 
-        del d[b"a".decode("ascii")]
-        self.assertTrue(b"a".decode("ascii") not in d)
+        del d["a"]
+        self.assertTrue("a" not in d)
 
     def test_varargConstruction(self):
         u = Foundation.NSDictionary.dictionaryWithObjects_forKeys_(
-            [1, 2, 3, 4],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-            ],
+            [1, 2, 3, 4], ["one", "two", "three", "four"]
         )
         v = Foundation.NSDictionary.alloc().initWithObjects_forKeys_(
-            [1, 2, 3, 4],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-            ],
+            [1, 2, 3, 4], ["one", "two", "three", "four"]
         )
         w = Foundation.NSDictionary.dictionaryWithObjects_forKeys_count_(
-            [1, 2, 3, 4, 5],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-                b"five".decode("ascii"),
-            ],
-            4,
+            [1, 2, 3, 4, 5], ["one", "two", "three", "four", "five"], 4
         )
         x = Foundation.NSDictionary.alloc().initWithObjects_forKeys_count_(
-            [1, 2, 3, 4, 5],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-                b"five".decode("ascii"),
-            ],
-            4,
+            [1, 2, 3, 4, 5], ["one", "two", "three", "four", "five"], 4
         )
         y = Foundation.NSDictionary.dictionaryWithObjectsAndKeys_(
-            1,
-            b"one".decode("ascii"),
-            2,
-            b"two".decode("ascii"),
-            3,
-            b"three".decode("ascii"),
-            4,
-            b"four".decode("ascii"),
-            None,
+            1, "one", 2, "two", 3, "three", 4, "four", None
         )
         z = Foundation.NSDictionary.alloc().initWithObjectsAndKeys_(
-            1,
-            b"one".decode("ascii"),
-            2,
-            b"two".decode("ascii"),
-            3,
-            b"three".decode("ascii"),
-            4,
-            b"four".decode("ascii"),
-            None,
+            1, "one", 2, "two", 3, "three", 4, "four", None
         )
 
         self.assertEqual(len(u), 4)
@@ -224,81 +174,37 @@ class TestNSDictionaryInteraction(TestCase):
         self.assertEqual(len(y), 4)
         self.assertEqual(len(z), 4)
 
-        self.assertEqual(u[b"one".decode("ascii")], 1)
-        self.assertEqual(v[b"two".decode("ascii")], 2)
-        self.assertEqual(w[b"three".decode("ascii")], 3)
-        self.assertEqual(x[b"one".decode("ascii")], 1)
-        self.assertEqual(y[b"two".decode("ascii")], 2)
-        self.assertEqual(z[b"four".decode("ascii")], 4)
+        self.assertEqual(u["one"], 1)
+        self.assertEqual(v["two"], 2)
+        self.assertEqual(w["three"], 3)
+        self.assertEqual(x["one"], 1)
+        self.assertEqual(y["two"], 2)
+        self.assertEqual(z["four"], 4)
 
     def test_varargConstruction2(self):
         u = Foundation.NSMutableDictionary.dictionaryWithObjects_forKeys_(
-            [1, 2, 3, 4],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-            ],
+            [1, 2, 3, 4], ["one", "two", "three", "four"]
         )
         self.assertIsNot(u, None)
         v = Foundation.NSMutableDictionary.alloc().initWithObjects_forKeys_(
-            [1, 2, 3, 4],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-            ],
+            [1, 2, 3, 4], ["one", "two", "three", "four"]
         )
         self.assertIsNot(v, None)
         w = Foundation.NSMutableDictionary.dictionaryWithObjects_forKeys_count_(
-            [1, 2, 3, 4, 5],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-                b"five".decode("ascii"),
-            ],
-            4,
+            [1, 2, 3, 4, 5], ["one", "two", "three", "four", "five"], 4
         )
         self.assertIsNot(w, None)
         x = Foundation.NSMutableDictionary.alloc().initWithObjects_forKeys_count_(
-            [1, 2, 3, 4, 5],
-            [
-                b"one".decode("ascii"),
-                b"two".decode("ascii"),
-                b"three".decode("ascii"),
-                b"four".decode("ascii"),
-                b"five".decode("ascii"),
-            ],
-            4,
+            [1, 2, 3, 4, 5], ["one", "two", "three", "four", "five"], 4
         )
         self.assertIsNot(x, None)
 
         y = Foundation.NSMutableDictionary.dictionaryWithObjectsAndKeys_(
-            1,
-            b"one".decode("ascii"),
-            2,
-            b"two".decode("ascii"),
-            3,
-            b"three".decode("ascii"),
-            4,
-            b"four".decode("ascii"),
-            None,
+            1, "one", 2, "two", 3, "three", 4, "four", None
         )
         self.assertIsNot(y, None)
         z = Foundation.NSMutableDictionary.alloc().initWithObjectsAndKeys_(
-            1,
-            b"one".decode("ascii"),
-            2,
-            b"two".decode("ascii"),
-            3,
-            b"three".decode("ascii"),
-            4,
-            b"four".decode("ascii"),
-            None,
+            1, "one", 2, "two", 3, "three", 4, "four", None
         )
         self.assertIsNot(z, None)
 
@@ -309,12 +215,12 @@ class TestNSDictionaryInteraction(TestCase):
         self.assertEqual(len(y), 4)
         self.assertEqual(len(z), 4)
 
-        self.assertEqual(u[b"one".decode("ascii")], 1)
-        self.assertEqual(v[b"two".decode("ascii")], 2)
-        self.assertEqual(w[b"three".decode("ascii")], 3)
-        self.assertEqual(x[b"one".decode("ascii")], 1)
-        self.assertEqual(y[b"two".decode("ascii")], 2)
-        self.assertEqual(z[b"four".decode("ascii")], 4)
+        self.assertEqual(u["one"], 1)
+        self.assertEqual(v["two"], 2)
+        self.assertEqual(w["three"], 3)
+        self.assertEqual(x["one"], 1)
+        self.assertEqual(y["two"], 2)
+        self.assertEqual(z["four"], 4)
 
 
 class MyDictionaryBase(Foundation.NSDictionary):

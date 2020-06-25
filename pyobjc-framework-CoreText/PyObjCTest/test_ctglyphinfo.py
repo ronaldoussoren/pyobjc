@@ -26,13 +26,11 @@ class TestCTGlyphInfo(TestCase):
         v = CoreText.CTGlyphInfoGetTypeID()
         self.assertIsInstance(v, int)
 
-        font = CoreText.CTFontCreateWithName(b"Optima Bold".decode("latin1"), 14, None)
+        font = CoreText.CTFontCreateWithName("Optima Bold", 14, None)
         self.assertIsInstance(font, CoreText.CTFontRef)
 
         self.assertResultIsCFRetained(CoreText.CTGlyphInfoCreateWithGlyphName)
-        info = v = CoreText.CTGlyphInfoCreateWithGlyphName(
-            b"copyright".decode("latin1"), font, b"(c)".decode("latin1")
-        )
+        info = v = CoreText.CTGlyphInfoCreateWithGlyphName("copyright", font, "(c)")
         self.assertIsInstance(v, CoreText.CTGlyphInfoRef)
 
         self.assertResultIsCFRetained(CoreText.CTGlyphInfoCreateWithGlyph)

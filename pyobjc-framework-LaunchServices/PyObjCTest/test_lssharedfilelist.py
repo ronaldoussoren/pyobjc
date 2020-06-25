@@ -90,18 +90,12 @@ class TestLSSharedFileList(TestCase):
 
         self.assertResultIsCFRetained(LaunchServices.LSSharedFileListCopyProperty)
         self.assertResultHasType(LaunchServices.LSSharedFileListCopyProperty, b"@")
-        v = LaunchServices.LSSharedFileListCopyProperty(
-            lst, b"pyobjc.name".decode("latin1")
-        )
+        v = LaunchServices.LSSharedFileListCopyProperty(lst, "pyobjc.name")
 
-        v = LaunchServices.LSSharedFileListSetProperty(
-            lst, b"pyobjc.name".decode("latin1"), b"value".decode("latin1")
-        )
+        v = LaunchServices.LSSharedFileListSetProperty(lst, "pyobjc.name", "value")
         self.assertIsInstance(v, int)
-        v = LaunchServices.LSSharedFileListCopyProperty(
-            lst, b"pyobjc.name".decode("latin1")
-        )
-        self.assertEqual(v, b"value".decode("latin1"))
+        v = LaunchServices.LSSharedFileListCopyProperty(lst, "pyobjc.name")
+        self.assertEqual(v, "value")
 
         self.assertArgIsOut(LaunchServices.LSSharedFileListCopySnapshot, 1)
         v, seed = LaunchServices.LSSharedFileListCopySnapshot(lst, None)
@@ -112,7 +106,7 @@ class TestLSSharedFileList(TestCase):
         url = LaunchServices.CFURLCreateWithString(
             None, "file://" + os.path.expanduser("~"), None
         )
-        title = b"PyObjC.Test".decode("latin1")
+        title = "PyObjC.Test"
         item = LaunchServices.LSSharedFileListInsertItemFSRef(
             lst,
             LaunchServices.kLSSharedFileListItemLast,
@@ -153,14 +147,12 @@ class TestLSSharedFileList(TestCase):
             self.assertIsInstance(url, LaunchServices.CFURLRef)
 
         v = LaunchServices.LSSharedFileListItemSetProperty(
-            item, b"pyobjc.name".decode("latin1"), b"pyobjc.test".decode("latin1")
+            item, "pyobjc.name", "pyobjc.test"
         )
         self.assertIsInstance(v, int)
 
         self.assertResultIsCFRetained(LaunchServices.LSSharedFileListItemCopyProperty)
-        v = LaunchServices.LSSharedFileListItemCopyProperty(
-            item, b"pyobjc.name".decode("latin1")
-        )
+        v = LaunchServices.LSSharedFileListItemCopyProperty(item, "pyobjc.name")
         if v is not None:
             self.assertEqual(v, "pyobjc.test")
 

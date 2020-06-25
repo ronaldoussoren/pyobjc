@@ -17,7 +17,7 @@ class TestCTFramesetter(TestCase):
         self.assertIsInstance(v, int)
 
         setter = CoreText.CTFramesetterCreateWithAttributedString(
-            CoreText.CFAttributedStringCreate(None, b"hello".decode("latin1"), None)
+            CoreText.CFAttributedStringCreate(None, "hello", None)
         )
         self.assertIsInstance(setter, CoreText.CTFramesetterRef)
 
@@ -30,7 +30,7 @@ class TestCTFramesetter(TestCase):
     @onlyIf(CGSize is not None, "CoreGraphics not available")
     def testMethods10_5(self):
         setter = CoreText.CTFramesetterCreateWithAttributedString(
-            CoreText.CFAttributedStringCreate(None, b"hello".decode("latin1"), None)
+            CoreText.CFAttributedStringCreate(None, "hello", None)
         )
         self.assertIsInstance(setter, CoreText.CTFramesetterRef)
 

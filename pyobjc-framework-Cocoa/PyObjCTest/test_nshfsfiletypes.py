@@ -10,7 +10,7 @@ class TestNSHFSFileTypes(TestCase):
         self.assertIsInstance(v, int)
         w = Foundation.NSFileTypeForHFSTypeCode(v)
         self.assertIsInstance(w, str)
-        self.assertEqual(w, b"'rtfd'".decode("latin1"))
+        self.assertEqual(w, "'rtfd'")
 
         fname = "/Library/Documentation/Acknowledgements.rtf"
         if not os.path.exists(fname):

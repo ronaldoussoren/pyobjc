@@ -65,9 +65,7 @@ class TestLatentSemanticMapping(TestCase):
         v = LatentSemanticMapping.LSMMapGetProperties(map1)
         self.assertIsInstance(v, LatentSemanticMapping.CFDictionaryRef)
 
-        LatentSemanticMapping.LSMMapSetProperties(
-            map1, {b"key".decode("latin1"): b"value".decode("latin1")}
-        )
+        LatentSemanticMapping.LSMMapSetProperties(map1, {"key": "value"})
         v = LatentSemanticMapping.LSMMapGetProperties(map1)
         self.assertIsInstance(v, (LatentSemanticMapping.CFDictionaryRef, dict))
 

@@ -36,18 +36,13 @@ class TestCVBuffer(TestCase):
         self.assertArgHasType(Quartz.CVBufferSetAttachment, 2, b"@")
         self.assertArgHasType(Quartz.CVBufferSetAttachment, 0, b"^{__CVBuffer=}")
         Quartz.CVBufferSetAttachment(
-            buf,
-            b"pyobjc.test".decode("latin1"),
-            ctx,
-            Quartz.kCVAttachmentMode_ShouldPropagate,
+            buf, "pyobjc.test", ctx, Quartz.kCVAttachmentMode_ShouldPropagate
         )
 
         self.assertArgHasType(Quartz.CVBufferGetAttachment, 0, b"^{__CVBuffer=}")
         self.assertResultHasType(Quartz.CVBufferGetAttachment, b"@")
         self.assertArgIsOut(Quartz.CVBufferGetAttachment, 2)
-        v, mode = Quartz.CVBufferGetAttachment(
-            buf, b"pyobjc.test".decode("latin1"), None
-        )
+        v, mode = Quartz.CVBufferGetAttachment(buf, "pyobjc.test", None)
         self.assertTrue(v is ctx)
         self.assertEqual(mode, Quartz.kCVAttachmentMode_ShouldPropagate)
 
@@ -59,7 +54,7 @@ class TestCVBuffer(TestCase):
         self.assertArgHasType(Quartz.CVBufferSetAttachments, 0, b"^{__CVBuffer=}")
         Quartz.CVBufferSetAttachments(
             buf,
-            {"pyobjc.test2": 42, "pyobjc.test3": b"hello".decode("latin1")},
+            {"pyobjc.test2": 42, "pyobjc.test3": "hello"},
             Quartz.kCVAttachmentMode_ShouldPropagate,
         )
 

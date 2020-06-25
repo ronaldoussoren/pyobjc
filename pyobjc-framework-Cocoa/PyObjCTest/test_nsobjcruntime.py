@@ -133,7 +133,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
 
-        v = Foundation.NSSelectorFromString(b"description".decode("ascii"))
+        v = Foundation.NSSelectorFromString("description")
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
 

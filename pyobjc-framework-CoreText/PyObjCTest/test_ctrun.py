@@ -19,9 +19,7 @@ class TestCTRun(TestCase):
         self.assertIsInstance(CoreText.CTRunGetTypeID(), int)
 
         line = CoreText.CTLineCreateWithAttributedString(
-            CoreText.CFAttributedStringCreate(
-                None, b"hello world".decode("latin1"), None
-            )
+            CoreText.CFAttributedStringCreate(None, "hello world", None)
         )
         self.assertIsInstance(line, CoreText.CTLineRef)
 
@@ -100,9 +98,7 @@ class TestCTRun(TestCase):
         self.assertArgSizeInArg(CoreText.CTRunGetAdvances, 2, 1)
 
         line = CoreText.CTLineCreateWithAttributedString(
-            CoreText.CFAttributedStringCreate(
-                None, b"hello world".decode("latin1"), None
-            )
+            CoreText.CFAttributedStringCreate(None, "hello world", None)
         )
         self.assertIsInstance(line, CoreText.CTLineRef)
 

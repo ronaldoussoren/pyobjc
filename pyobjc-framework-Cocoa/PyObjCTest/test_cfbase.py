@@ -184,9 +184,7 @@ class TestBase(TestCase):
             CoreFoundation.CFAllocatorGetTypeID()
         )
         self.assertIsInstance(v, str)
-        obj = CoreFoundation.CFURLCreateWithString(
-            None, b"http://www.apple.com/".decode("ascii"), None
-        )
+        obj = CoreFoundation.CFURLCreateWithString(None, "http://www.apple.com/", None)
         i = CoreFoundation.CFGetTypeID(obj)
         self.assertIsInstance(i, int)
         i = CoreFoundation.CFGetRetainCount(obj)
@@ -230,9 +228,7 @@ class TestBase(TestCase):
 
     @min_os_level("10.9")
     def testFunctions10_9(self):
-        obj = CoreFoundation.CFURLCreateWithString(
-            None, b"http://www.apple.com/".decode("ascii"), None
-        )
+        obj = CoreFoundation.CFURLCreateWithString(None, "http://www.apple.com/", None)
         CoreFoundation.CFRetain(obj)
         CoreFoundation.CFAutorelease(obj)
         del obj

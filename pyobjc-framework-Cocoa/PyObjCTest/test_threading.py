@@ -41,11 +41,11 @@ class ThreadingTest(TestCase):
         myObj = PyObjCTestThreadRunnerString.alloc().init()
 
         Foundation.NSThread.detachNewThreadSelector_toTarget_withObject_(
-            "run:", myObj, b"hello world".decode("ascii")
+            "run:", myObj, "hello world"
         )
 
         time.sleep(2)
-        self.assertEqual(myObj.storage[0], b"hello world".decode("ascii"))
+        self.assertEqual(myObj.storage[0], "hello world")
 
     def testNSObject(self):
         class PyObjCTestThreadRunner(Foundation.NSObject):

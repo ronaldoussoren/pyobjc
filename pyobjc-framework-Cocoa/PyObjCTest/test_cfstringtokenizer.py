@@ -7,7 +7,7 @@ class TestStringTokenizer(TestCase):
         self.assertIsCFType(CoreFoundation.CFStringTokenizerRef)
 
     def testFunctions(self):
-        s = b"Spring eens over een boom".decode("ascii")
+        s = "Spring eens over een boom"
         v = CoreFoundation.CFStringTokenizerCopyBestStringLanguage(s, (0, len(s)))
         self.assertEqual(v, "nl")
 
@@ -42,7 +42,7 @@ class TestStringTokenizer(TestCase):
         )
         # self.assertIs(v, None)
 
-        s = b"A dog jumped over a log. And then some more.".decode("ascii")
+        s = "A dog jumped over a log. And then some more."
         CoreFoundation.CFStringTokenizerSetString(tok, s, (0, len(s)))
 
         subref = []

@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestNSManagedObject(TestCase):
     def testMethods(self):
         descr = CoreData.NSEntityDescription.alloc().init()
-        descr.setName_(b"Name".decode("ascii"))
+        descr.setName_("Name")
         o = CoreData.NSManagedObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
             descr, None
         )

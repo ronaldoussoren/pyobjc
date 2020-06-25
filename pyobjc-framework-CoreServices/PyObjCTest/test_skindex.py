@@ -28,10 +28,7 @@ class TestSKIndex(TestCase):
         self.assertResultIsCFRetained(CoreServices.SKIndexCreateWithURL)
         try:
             url = CoreServices.CFURLCreateWithFileSystemPath(
-                None,
-                b"/tmp/pyobjc.test.index".decode("latin1"),
-                CoreServices.kCFURLPOSIXPathStyle,
-                False,
+                None, "/tmp/pyobjc.test.index", CoreServices.kCFURLPOSIXPathStyle, False
             )
             self.assertIsInstance(url, CoreServices.CFURLRef)
             ref = CoreServices.SKIndexCreateWithURL(
@@ -98,9 +95,9 @@ class TestSKIndex(TestCase):
         self.assertResultIsBOOL(CoreServices.SKIndexAddDocumentWithText)
         self.assertArgIsBOOL(CoreServices.SKIndexAddDocumentWithText, 3)
 
-        fn = b"/Library/Documentation/Acknowledgements.rtf".decode("latin1")
+        fn = "/Library/Documentation/Acknowledgements.rtf"
         if not os.path.exists(fn):
-            fn = b"/Library/Documentation/AirPort Acknowledgements.rtf".decode("latin1")
+            fn = "/Library/Documentation/AirPort Acknowledgements.rtf"
 
         doc = CoreServices.SKDocumentCreateWithURL(
             CoreServices.CFURLCreateWithFileSystemPath(

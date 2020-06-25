@@ -160,10 +160,7 @@ class TestStream(TestCase):
 
         self.assertResultIsCFRetained(CoreFoundation.CFReadStreamCreateWithFile)
         stream = CoreFoundation.CFReadStreamCreateWithFile(
-            None,
-            CoreFoundation.CFURLCreateWithString(
-                None, b"file:///etc/shells".decode("ascii"), None
-            ),
+            None, CoreFoundation.CFURLCreateWithString(None, "file:///etc/shells", None)
         )
         self.assertIsInstance(stream, CoreFoundation.CFReadStreamRef)
         r = CoreFoundation.CFReadStreamOpen(stream)
@@ -284,7 +281,7 @@ class TestStream(TestCase):
         stream = CoreFoundation.CFWriteStreamCreateWithFile(
             None,
             CoreFoundation.CFURLCreateWithString(
-                None, b"file:///tmp/pyobjc.test.txt".decode("ascii"), None
+                None, "file:///tmp/pyobjc.test.txt", None
             ),
         )
         self.assertIsInstance(stream, CoreFoundation.CFWriteStreamRef)

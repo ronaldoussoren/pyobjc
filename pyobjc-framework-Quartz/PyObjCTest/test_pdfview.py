@@ -11,7 +11,7 @@ class TestPDFViewHelper(Quartz.NSObject):
         pass
 
     def PDFViewPrintJobTitle_(self, s):
-        return b"a".decode("latin1")
+        return "a"
 
     def PDFViewPerformFind_(self, s):
         pass

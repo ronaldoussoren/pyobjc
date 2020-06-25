@@ -2,7 +2,7 @@
 
 import CoreData
 import Foundation
-from PyObjCTools.TestSupport import TestCase, os_release, onlyIf
+from PyObjCTools.TestSupport import TestCase
 
 
 class CoreDataTestObject(CoreData.NSManagedObject):
@@ -46,29 +46,23 @@ class Test(TestCase):
             self.entity, self.managedObjectContext
         )
 
-        testValue = b"FooBarBaz".decode("ascii")
+        testValue = "FooBarBaz"
 
-        managedObject.setValue_forKey_(testValue, b"testAttribute".decode("ascii"))
+        managedObject.setValue_forKey_(testValue, "testAttribute")
 
-        self.assertEqual(
-            testValue, managedObject.valueForKey_(b"testAttribute".decode("ascii"))
-        )
+        self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
-        testValue = b"BobFred".decode("ascii")
-        managedObject.setValue_forKey_(testValue, b"testAttribute".decode("ascii"))
+        testValue = "BobFred"
+        managedObject.setValue_forKey_(testValue, "testAttribute")
 
-        self.assertEqual(
-            testValue, managedObject.valueForKey_(b"testAttribute".decode("ascii"))
-        )
+        self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
-        testValue = b"Zebras have long legs.".decode("ascii")
+        testValue = "Zebras have long legs."
         managedObject.testAttribute = testValue
 
-        self.assertEqual(
-            testValue, managedObject.valueForKey_(b"testAttribute".decode("ascii"))
-        )
+        self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
     def testPythonicAttribute(self):
@@ -76,7 +70,7 @@ class Test(TestCase):
             self.entity, self.managedObjectContext
         )
 
-        testValue = b"Ducks have webbed feet".decode("ascii")
+        testValue = "Ducks have webbed feet"
         self.assertRaises(
             AttributeError, setattr, managedObject, "attributeWithoutModel", testValue
         )
@@ -90,7 +84,7 @@ class Test(TestCase):
 
         self.assertRaises(
             Foundation.NSUnknownKeyException,
-            managedObject.valueForKey_(b"attributeWithoutModel".decode("ascii")),
+            managedObject.valueForKey_("attributeWithoutModel"),
         )
 
 
@@ -127,34 +121,27 @@ class TestSubclass(TestCase):
         )
         self.assertIsInstance(managedObject, CoreDataTestObject)
 
-        testValue = b"FooBarBaz".decode("ascii")
+        testValue = "FooBarBaz"
 
-        managedObject.setValue_forKey_(testValue, b"testAttribute".decode("ascii"))
+        managedObject.setValue_forKey_(testValue, "testAttribute")
 
-        self.assertEqual(
-            testValue, managedObject.valueForKey_(b"testAttribute".decode("ascii"))
-        )
+        self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
-        testValue = b"BobFred".decode("ascii")
-        managedObject.setValue_forKey_(testValue, b"testAttribute".decode("ascii"))
+        testValue = "BobFred"
+        managedObject.setValue_forKey_(testValue, "testAttribute")
 
-        self.assertEqual(
-            testValue, managedObject.valueForKey_(b"testAttribute".decode("ascii"))
-        )
+        self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
         self.assertTrue("testAttribute" not in managedObject.__dict__)
 
-        testValue = b"Zebras have long legs.".decode("ascii")
+        testValue = "Zebras have long legs."
         managedObject._.testAttribute = testValue
 
-        self.assertEqual(
-            testValue, managedObject.valueForKey_(b"testAttribute".decode("ascii"))
-        )
+        self.assertEqual(testValue, managedObject.valueForKey_("testAttribute"))
         self.assertEqual(testValue, managedObject._.testAttribute)
 
-    @onlyIf(os_release().rsplit(".", 1)[0] != "10.6", "problems on OSX 10.6")
     def testPythonicAttribute(self):
         # self.fail("research recursion problem")
         managedObject = CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
@@ -162,7 +149,7 @@ class TestSubclass(TestCase):
         )
         self.assertIsInstance(managedObject, CoreDataTestObject)
 
-        testValue = b"Ducks have webbed feet".decode("ascii")
+        testValue = "Ducks have webbed feet"
         managedObject.attributeWithoutModel = testValue
 
         self.assertEqual(testValue, managedObject.attributeWithoutModel)

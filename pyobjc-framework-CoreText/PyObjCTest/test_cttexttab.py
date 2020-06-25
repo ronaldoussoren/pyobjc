@@ -17,7 +17,7 @@ class TestCTTextTab(TestCase):
             10.5,
             {
                 CoreText.kCTTabColumnTerminatorsAttributeName: CoreText.CFCharacterSetCreateWithCharactersInString(
-                    None, b".".decode("latin1")
+                    None, "."
                 )
             },
         )

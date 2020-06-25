@@ -65,9 +65,9 @@ class TestNSZone(TestCase):
             self.assertIsInstance(z, Foundation.NSZonePtr)
         z = Foundation.NSCreateZone(5000, 100, True)
         self.assertIsInstance(z, Foundation.NSZonePtr)
-        Foundation.NSSetZoneName(z, b"Hello World".decode("ascii"))
+        Foundation.NSSetZoneName(z, "Hello World")
         nm = Foundation.NSZoneName(z)
-        self.assertEqual(nm, b"Hello World".decode("ascii"))
+        self.assertEqual(nm, "Hello World")
 
         Foundation.NSRecycleZone(z)
         z = None

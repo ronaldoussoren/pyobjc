@@ -13,7 +13,7 @@ class TestSKDocument(TestCase):
         ref = CoreServices.SKDocumentCreateWithURL(
             CoreServices.CFURLCreateWithFileSystemPath(
                 None,
-                b"/Library/Documentation/Acknowledgements.rtf".decode("latin1"),
+                "/Library/Documentation/Acknowledgements.rtf",
                 CoreServices.kCFURLPOSIXPathStyle,
                 False,
             )

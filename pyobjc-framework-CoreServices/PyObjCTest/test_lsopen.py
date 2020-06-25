@@ -122,7 +122,7 @@ class TestLSOpen(TestCase):
             ),
             asyncLaunchRefCon=None,
             environment=None,
-            argv=[b"Terminal".decode("latin1")],
+            argv=["Terminal"],
             initialEvent=None,
         )
 

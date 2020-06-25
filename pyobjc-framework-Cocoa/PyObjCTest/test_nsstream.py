@@ -17,10 +17,7 @@ class TestNSStreamUsage(TestCase):
             inputStream,
             outputStream,
         ) = Foundation.NSStream.getStreamsToHost_port_inputStream_outputStream_(
-            Foundation.NSHost.hostWithAddress_(b"127.0.0.1".decode("ascii")),
-            631,  # IPP port
-            None,
-            None,
+            Foundation.NSHost.hostWithAddress_("127.0.0.1"), 631, None, None  # IPP port
         )
 
         self.assertIsInstance(inputStream, Foundation.NSInputStream)

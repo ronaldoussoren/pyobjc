@@ -32,7 +32,7 @@ class TestCTFrame(TestCase):
         self.assertIsInstance(v, int)
 
         setter = CoreText.CTFramesetterCreateWithAttributedString(
-            CoreText.CFAttributedStringCreate(None, b"hello".decode("latin1"), None)
+            CoreText.CFAttributedStringCreate(None, "hello", None)
         )
         self.assertIsInstance(setter, CoreText.CTFramesetterRef)
 

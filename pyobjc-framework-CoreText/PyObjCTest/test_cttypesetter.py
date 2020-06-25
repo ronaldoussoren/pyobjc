@@ -18,9 +18,7 @@ class TestCTTypesetter(TestCase):
     def testFunctions(self):
         self.assertIsInstance(CoreText.CTTypesetterGetTypeID(), int)
 
-        astring = CoreText.CFAttributedStringCreate(
-            None, b"hello world".decode("latin1"), None
-        )
+        astring = CoreText.CFAttributedStringCreate(None, "hello world", None)
         self.assertIsInstance(astring, CoreText.CFAttributedStringRef)
 
         self.assertResultIsCFRetained(CoreText.CTTypesetterCreateWithAttributedString)

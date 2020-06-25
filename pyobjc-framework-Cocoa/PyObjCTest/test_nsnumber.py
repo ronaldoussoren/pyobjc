@@ -30,8 +30,8 @@ def stripDocType(val):
     on macOS 10.1 are slightly different from the ones on macOS 10.2 (
     different DOCTYPE and version).
     """
-    r = re.sub(b"<!DOCTYPE [^>]*>".decode("ascii"), b"<!DOCTYPE>".decode("ascii"), val)
-    return r.replace(b'version="0.9"'.decode("ascii"), b'version="1.0"'.decode("ascii"))
+    r = re.sub("<!DOCTYPE [^>]*>", "<!DOCTYPE>", val)
+    return r.replace('version="0.9"', 'version="1.0"')
 
 
 class TestNSNumber(TestCase):
@@ -181,15 +181,12 @@ if objc.platform == "MACOSX":
             d = Foundation.NSMutableDictionary.dictionary()
 
             # Python 2.3 only...
-            d[b"plain".decode("ascii")] = 1
-            d[b"bool".decode("ascii")] = objc.YES
+            d["plain"] = 1
+            d["bool"] = objc.YES
 
-            self.assertEqual(
-                d.writeToFile_atomically_(b"/tmp/pyobjctest.plist".decode("ascii"), 0),
-                1,
-            )
+            self.assertEqual(d.writeToFile_atomically_("/tmp/pyobjctest.plist", 0), 1)
 
-            fd = open(b"/tmp/pyobjctest.plist".decode("ascii"), "rb")
+            fd = open("/tmp/pyobjctest.plist", "rb")
             data = fd.read().decode("utf8")
             fd.close()
 
@@ -198,15 +195,12 @@ if objc.platform == "MACOSX":
         def testPropertyList2(self):
             d = Foundation.NSMutableDictionary.dictionary()
 
-            d[b"plain".decode("ascii")] = Foundation.NSNumber.numberWithLong_(1)
-            d[b"bool".decode("ascii")] = Foundation.NSNumber.numberWithBool_(1)
+            d["plain"] = Foundation.NSNumber.numberWithLong_(1)
+            d["bool"] = Foundation.NSNumber.numberWithBool_(1)
 
-            self.assertEqual(
-                d.writeToFile_atomically_(b"/tmp/pyobjctest.plist".decode("ascii"), 0),
-                1,
-            )
+            self.assertEqual(d.writeToFile_atomically_("/tmp/pyobjctest.plist", 0), 1)
 
-            fd = open(b"/tmp/pyobjctest.plist".decode("ascii"), "rb")
+            fd = open("/tmp/pyobjctest.plist", "rb")
             data = fd.read().decode("utf8")
             fd.close()
 
@@ -215,29 +209,19 @@ if objc.platform == "MACOSX":
 
 class TestDecimalNumber(TestCase):
     def testProxy(self):
-        one = Foundation.NSDecimalNumber.decimalNumberWithString_(
-            b"1.00".decode("ascii")
-        )
+        one = Foundation.NSDecimalNumber.decimalNumberWithString_("1.00")
         self.assertIsInstance(one, Foundation.NSDecimalNumber)
 
-        two = Foundation.NSDecimalNumber.decimalNumberWithString_(
-            b"2.00".decode("ascii")
-        )
+        two = Foundation.NSDecimalNumber.decimalNumberWithString_("2.00")
         self.assertIsInstance(two, Foundation.NSDecimalNumber)
 
-        three = Foundation.NSDecimalNumber.decimalNumberWithString_(
-            b"3.00".decode("ascii")
-        )
+        three = Foundation.NSDecimalNumber.decimalNumberWithString_("3.00")
         self.assertIsInstance(three, Foundation.NSDecimalNumber)
 
-        six = Foundation.NSDecimalNumber.decimalNumberWithString_(
-            b"6.00".decode("ascii")
-        )
+        six = Foundation.NSDecimalNumber.decimalNumberWithString_("6.00")
         self.assertIsInstance(six, Foundation.NSDecimalNumber)
 
-        one_half = Foundation.NSDecimalNumber.decimalNumberWithString_(
-            b"0.50".decode("ascii")
-        )
+        one_half = Foundation.NSDecimalNumber.decimalNumberWithString_("0.50")
         self.assertIsInstance(one_half, Foundation.NSDecimalNumber)
 
         self.assertEqual(one + two, three)

@@ -329,7 +329,7 @@ class TestLSInfo(TestCase):
             ref,
             CoreServices.kLSRolesAll,
             CoreServices.kLSItemRoleHandlerDisplayName,
-            b"foo".decode("latin1"),
+            "foo",
         )
         self.assertIsInstance(ok, int)
 
