@@ -37,6 +37,7 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSecInternalComponent, -2070)
         self.assertEqual(Security.errSecCoreFoundationUnknown, -4960)
         self.assertEqual(Security.errSecMissingEntitlement, -34018)
+        self.assertEqual(Security.errSecRestrictedAPI, -34020)
         self.assertEqual(Security.errSecNotAvailable, -25291)
         self.assertEqual(Security.errSecReadOnly, -25292)
         self.assertEqual(Security.errSecAuthFailed, -25293)
@@ -476,6 +477,7 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSSLATSLeafCertificateHashAlgorithmViolation, -9884)
         self.assertEqual(Security.errSSLATSCertificateHashAlgorithmViolation, -9885)
         self.assertEqual(Security.errSSLATSCertificateTrustViolation, -9886)
+        self.assertEqual(Security.errSSLEarlyDataRejected, -9890)
 
     def test_functions(self):
         self.assertResultHasType(Security.SecCopyErrorMessageString, objc._C_ID)

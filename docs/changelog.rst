@@ -33,6 +33,7 @@ Version 7.0
   - PDFKit
   - Photos
   - SafariServices
+  - Security
   - SpriteKit
   - VideoToolbox
   - WebKit

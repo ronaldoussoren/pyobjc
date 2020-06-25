@@ -217,3 +217,7 @@ class TestSecTrusted(TestCase):
         self.assertArgIsBlock(
             Security.SecTrustEvaluateAsyncWithError, 2, SecTrustWithErrorCallback
         )
+
+    @min_os_level("10.16")
+    def test_functions10_16(self):
+        self.assertResultIsCFRetained(Security.SecTrustCopyKey)

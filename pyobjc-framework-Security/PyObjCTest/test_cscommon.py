@@ -111,6 +111,7 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.kSecCSReportProgress, 1 << 28)
         self.assertEqual(Security.kSecCSCheckTrustedAnchors, 1 << 27)
         self.assertEqual(Security.kSecCSQuickCheck, 1 << 26)
+        self.assertEqual(Security.kSecCSApplyEmbeddedPolicy, 1 << 25)
 
         self.assertEqual(Security.kSecCodeSignatureHost, 0x0001)
         self.assertEqual(Security.kSecCodeSignatureAdhoc, 0x0002)
@@ -121,6 +122,7 @@ class TestCSCommon(TestCase):
         self.assertEqual(Security.kSecCodeSignatureEnforcement, 0x1000)
         self.assertEqual(Security.kSecCodeSignatureLibraryValidation, 0x2000)
         self.assertEqual(Security.kSecCodeSignatureRuntime, 0x10000)
+        self.assertEqual(Security.kSecCodeSignatureLinkerSigned, 0x20000)
 
         self.assertEqual(Security.kSecCodeStatusValid, 0x0001)
         self.assertEqual(Security.kSecCodeStatusHard, 0x0100)

@@ -445,3 +445,4 @@ class TestMDS(TestCase):
         self.assertFalse(hasattr(Security, "cssmAlgToOid"))
         self.assertFalse(hasattr(Security, "errSecErrnoBase"))
         self.assertFalse(hasattr(Security, "errSecErrnoLimit"))
+        self.assertFalse(hasattr(Security, "CSSMERR_APPLETP_LEAF_PIN_MISMATCH"))
