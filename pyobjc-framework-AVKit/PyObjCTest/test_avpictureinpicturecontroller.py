@@ -35,3 +35,12 @@ class TestAVPictureInPictureController(TestCase):
             1,
             b"vZ",
         )
+
+    @min_os_level("10.16")
+    def test_methods10_16(self):
+        self.assertResultIsBOOL(
+            AVKit.AVPictureInPictureController.requiresLinearPlayback
+        )
+        self.assertArgIsBOOL(
+            AVKit.AVPictureInPictureController.setRequiresLinearPlayback_, 0
+        )

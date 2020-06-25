@@ -9,3 +9,4 @@ class TestPHError(TestCase):
         self.assertEqual(Photos.PHPhotosErrorLibraryVolumeOffline, 3114)
         self.assertEqual(Photos.PHPhotosErrorRelinquishingLibraryBundleToWriter, 3142)
         self.assertEqual(Photos.PHPhotosErrorSwitchingSystemPhotoLibrary, 3143)
+        self.assertEqual(Photos.PHPhotosErrorNetworkAccessRequired, 3164)

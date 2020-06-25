@@ -36,6 +36,9 @@ class TestICCameraDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICDeleteAfterSuccessfulDownload, str)
         self.assertIsInstance(ImageCaptureCore.ICDownloadSidecarFiles, str)
 
+        self.assertEqual(ImageCaptureCore.ICMediaPresentationConvertedAssets, 1)
+        self.assertEqual(ImageCaptureCore.ICMediaPresentationOriginalAssets, 2)
+
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(ImageCaptureCore.ICDeleteSuccessful, str)
@@ -45,6 +48,10 @@ class TestICCameraDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICDeleteErrorFileMissing, str)
         self.assertIsInstance(ImageCaptureCore.ICDeleteErrorDeviceMissing, str)
         self.assertIsInstance(ImageCaptureCore.ICDeleteErrorCanceled, str)
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(ImageCaptureCore.ICTruncateAfterSuccessfulDownload, str)
 
     @os_level_between("10.11", "10.11")
     def testConstants10_11(self):

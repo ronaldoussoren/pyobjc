@@ -10,10 +10,19 @@ Version 7.0
 
 * Updated framework bindings:
   - Automator
+  - AVKit
   - CFNetwork
+  - Contacts
   - CoreAudio
+  - CoreBluetooth
   - CoreMedia
+  - CoreText
+  - CoreVideo
+  - DeviceCheck
+  - ImageCaptureCore
+  - NaturalLanguage
   - PDFKit
+  - Photos
   - SafariServices
   - SpriteKit
   - VideoToolbox

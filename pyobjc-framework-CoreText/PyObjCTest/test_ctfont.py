@@ -471,6 +471,9 @@ class TestCTFont(TestCase):
 
         self.assertResultIsCFRetained(CoreText.CTFontCopyDefaultCascadeListForLanguages)
 
+        # XXX: Introduced in the macOS 11 SDK headers
+        CoreText.CTFontCopyNameForGlyph
+
     @min_os_level("10.9")
     def testFunctions10_9(self):
         self.assertResultIsCFRetained(CoreText.CTFontCreateForStringWithLanguage)

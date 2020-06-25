@@ -3,8 +3,8 @@ import WebKit
 
 
 class TestWKFindConfiguration(TestCase):
-    @min_os_level("11.0")
-    def testMethods(self):
+    @min_os_level("10.16")
+    def testMethods10_16(self):
         self.assertResultIsBOOL(WebKit.WKFindConfiguration.backwards)
         self.assertArgIsBOOL(WebKit.WKFindConfiguration.setBackwards_, 0)
 

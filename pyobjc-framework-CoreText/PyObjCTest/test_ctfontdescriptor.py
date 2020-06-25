@@ -92,9 +92,17 @@ class TestCTFontDescriptor(TestCase):
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingTotalAssetSize, str)
         self.assertIsInstance(CoreText.kCTFontDescriptorMatchingError, str)
 
+    @min_os_level("10.9")
+    def testConstants10_9(self):
+        self.assertIsInstance(CoreText.kCTFontOpticalSizeAttribute, str)
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(CoreText.kCTFontDownloadedAttribute, str)
+
+    @min_os_level("10.13")
+    def testConstants10_13(self):
+        self.assertIsInstance(CoreText.kCTFontVariationAxesAttribute, str)
 
     @min_os_level("10.9")
     def testFunctions10_9(self):

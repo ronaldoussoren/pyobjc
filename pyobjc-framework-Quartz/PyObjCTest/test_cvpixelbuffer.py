@@ -107,6 +107,15 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(
             Quartz.kCVPixelFormatType_420YpCbCr8VideoRange_8A_TriPlanar, fourcc(b"v0a8")
         )
+        self.assertEqual(Quartz.kCVPixelFormatType_16VersatileBayer, fourcc(b"bp16"))
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_64RGBA_DownscaledProResRAW, fourcc(b"bp64")
+        )
+
+        self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_RGGB, 0)
+        self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_GRBG, 1)
+        self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_GBRG, 2)
+        self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_BGGR, 3)
 
     def testTypes(self):
         self.assertIsCFType(Quartz.CVPixelBufferRef)

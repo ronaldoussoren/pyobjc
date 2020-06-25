@@ -35,3 +35,10 @@ class TestNLTagger(TestCase):
             2,
             b"v" + objc._C_NSInteger + b"@",
         )
+
+    @min_os_level("10.l6")
+    def test_methods10_16(self):
+        self.assertArgIsIn(
+            NaturalLanguage.NLTagger.tagHypothesesAtIndex_unit_scheme_maximumCount_tokenRange_,
+            4,
+        )
