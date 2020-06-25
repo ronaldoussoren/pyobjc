@@ -17,7 +17,7 @@ API Notes
 
 .. note::
 
-   This framework is only available on OSX 10.13.4 and later and requires a 64-bit binary.
+   This framework is only available on macOS 10.13.4 and later.
 
 The entire API can be used from Python, but there are non-technical restrictions
 on who can use the framework.

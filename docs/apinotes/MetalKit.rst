@@ -17,6 +17,6 @@ API Notes
 
 .. note::
 
-   This framework is only available on macOS 10.11 and later for 64-bit binaries.
+   This framework is only available on macOS 10.11 and later.
 
 The full API is available from Python.

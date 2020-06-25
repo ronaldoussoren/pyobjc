@@ -11,9 +11,9 @@ The framework is documented on `Apple's developer website`__
 API Notes
 ---------
 
-The entire "CloudKit" framework on MacOSX 10.10 (or later) is available from Python.
+The entire "CloudKit" framework on macOS 10.10 (or later) is available from Python.
 
 .. note::
 
-   The CloudKit framework is only available in 64-bit applications, and requires the use
-   of a developer certificate to be used (that is, this is an AppStore-only API)
+   The CloudKit framework requires the use
+   of a developer certificate to be used (this is an AppStore-only API)

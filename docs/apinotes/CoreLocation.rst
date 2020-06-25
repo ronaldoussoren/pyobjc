@@ -16,7 +16,7 @@ The entire CoreLocation framework is supported
 
 * ``kCLErrorGeocodeFoundNoResult``, ``kCLErrorGeocodeCanceled``
 
-   These contants have different values in the OSX 10.7
+   These contants have different values in the macOS 10.7
    and 10.8 SDKs. With PyObjC you get the value
-   corresponding to the OSX release you are running
+   corresponding to the macOS release you are running
    on.

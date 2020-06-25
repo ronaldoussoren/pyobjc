@@ -29,7 +29,7 @@ Version 7.0
   - WebKit
 
 * Added bindings for the following frameworks:
-  - ... (introduced in macOS 11.0)
+  - KernelManagement (introduced in macOS 11.0)
 
 * The following new frameworks in macOS 11 will not be wrapped:
 

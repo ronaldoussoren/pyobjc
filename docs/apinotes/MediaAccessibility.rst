@@ -12,4 +12,4 @@ These bindings are accessed through the ``MediaAccessibility`` package (that is,
 API Notes
 ---------
 
-The full framework is available from Python. This framework was introduced in OSX 10.9.
+The full framework is available from Python. This framework was introduced in macOS 10.9.

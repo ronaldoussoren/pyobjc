@@ -76,8 +76,8 @@ Not supported at the moment as this requires manual wrappers (C code).
 ``JSExport``
 ............
 
-OSX 10.9 introcuded a ``JSExport`` protocol. There is a C macro for renaming the name
+macOS 10.9 introcuded a ``JSExport`` protocol. There is a C macro for renaming the name
 seen in JavaScript for a given selector. That macro is not available in Python.
 
-To use the protocol you must use a Python that's build with OSX 10.9 or later
+To use the protocol you must use a Python that's build with macOS 10.9 or later
 as the deployment target.

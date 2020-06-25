@@ -17,7 +17,7 @@ API Notes
 
 .. note::
 
-   This framework is only available on OSX 10.11 and later and requires a 64-bit binary.
+   This framework is only available on macOS 10.11 and later.
 
 
 A number of APIs in this framework use SIMD types such as ``vector_float2``.

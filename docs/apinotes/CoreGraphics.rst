@@ -30,8 +30,8 @@ API Notes
 
 * ``CGDataProviderCreate``, ``CGDataProviderCreateDirectAccess``
 
-  These functions are not available when you build PyObjC on OSX 10.8,
-  even when you run on earlier releases of OSX.
+  These functions are not available when you build PyObjC on macOS 10.8,
+  even when you run on earlier releases of macOS.
 
 * ``CGPathCreateWithRoundedRect``, ``CGPathAddRoundedRect``
 

@@ -257,6 +257,8 @@ The framework name links to API notes for that framework, the python packages li
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Kernel                                                           | -                                           | Will not be wrapped.                    |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`KernelManagement </apinotes/KernelManagement>`             | `pyobjc-framework-KernelManagement`_        |                                         |
++------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`LatentSemanticMapping </apinotes/LatentSemanticMapping>`   | `pyobjc-framework-LatentSemanticMapping`_   |                                         |
 +------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | LDAP                                                             | -                                           | Will not be wrapped.                    |
@@ -575,3 +577,4 @@ prioritizing work.
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
 .. _`pyobjc-framework-OSLog`: https://pypi.org/project/pyobjc-framework-OSLog/
+.. _`pyobjc-framework-KernelManagement`: https://pypi.org/project/pyobjc-framework-KernelManagement/

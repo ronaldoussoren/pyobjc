@@ -13,4 +13,4 @@ These bindings are accessed through the ``CoreBluetooth`` package (that is, ``im
 API Notes
 ---------
 
-The entire "CoreBluetooth" framework on MacOSX 10.9 (or later) is available from Python.
+The entire "CoreBluetooth" framework on macOS 10.9 (or later) is available from Python.

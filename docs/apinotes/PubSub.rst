@@ -15,4 +15,4 @@ The PyObjC bindings for the PubSub framework are complete.
 
 .. note::
 
-   This framework is deprecated in OSX 10.9
+   This framework is deprecated in macOS 10.9

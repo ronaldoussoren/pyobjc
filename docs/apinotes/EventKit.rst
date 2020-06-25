@@ -12,8 +12,4 @@ These bindings are accessed through the ``EventKit`` package (that is, ``import 
 API Notes
 ---------
 
-The entire "EventKit" framework on MacOSX 10.8 (or later) is available from Python.
-
-.. note::
-
-   The EventKit framework is only available in 64-bit applications.
+The entire "EventKit" framework on macOS 10.8 (or later) is available from Python.

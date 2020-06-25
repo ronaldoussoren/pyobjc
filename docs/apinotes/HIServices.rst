@@ -18,7 +18,7 @@ This framework is mostly supported. Definitions can be accessed through both the
 
 *  ``AXValueGetValue`` is not yet supported, it requires a manual wrapper.
 
-*  The Internet Config API's are not supported, they are deprecated and OSX 10.7 and are replaced by
+*  The Internet Config API's are not supported, they are deprecated and macOS 10.7 and are replaced by
    LaunchServices.
 
 *  The Process Manager Interfaces are not supported.

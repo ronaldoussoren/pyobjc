@@ -11,8 +11,4 @@ These bindings are accessed through the ``LocalAuthentication`` package (that is
 API Notes
 ---------
 
-The entire "LocalAuthentication" framework on MacOSX 10.10 (or later) is available from Python.
-
-.. note::
-
-   The LocalAuthentication framework is only available in 64-bit applications.
+The entire "LocalAuthentication" framework on macOS 10.10 (or later) is available from Python.

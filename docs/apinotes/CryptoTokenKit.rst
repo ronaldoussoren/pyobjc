@@ -12,8 +12,4 @@ These bindings are accessed through the ``CryptoTokenKit`` package (that is, ``i
 API Notes
 ---------
 
-The entire "CryptoTokenKit" framework on MacOSX 10.10 (or later) is available from Python.
-
-.. note::
-
-   The CryptoTokenKit framework is only available in 64-bit applications.
+The entire "CryptoTokenKit" framework on macOS 10.10 (or later) is available from Python.

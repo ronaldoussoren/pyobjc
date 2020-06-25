@@ -12,5 +12,5 @@ API Notes
 
 All API's in the InstantMessage framework are wrapped by PyObjC.
 
-The InstantMessage framework is deprecated in OSX 10.9, use the
-Social framework instead (which is new in OSX 10.9)
+The InstantMessage framework is deprecated in macOS 10.9, use the
+Social framework instead (which is new in macOS 10.9)

@@ -1,0 +1,36 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "KernelManagementClient": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "loadExtensionsWithPaths:withError:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "loadExtensionsWithPaths:withNoAuth:withError:"
+     },
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "loadExtensionsWithPaths:withIdentifiers:withPersonalityNames:withNoAuth:withError:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

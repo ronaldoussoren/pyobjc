@@ -14,7 +14,7 @@ API Notes
 
 .. note::
 
-   The Accounts framework is only available in OSX 10.6 or later.
+   The Accounts framework is only available in macOS 10.6 or later.
 
 
 CWKeychainCopyEAPIdentity
