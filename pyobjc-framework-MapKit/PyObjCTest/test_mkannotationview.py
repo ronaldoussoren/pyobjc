@@ -21,6 +21,12 @@ class TestMKAnnotationView(TestCase):
 
         self.assertEqual(MapKit.MKAnnotationViewCollisionModeRectangle, 0)
         self.assertEqual(MapKit.MKAnnotationViewCollisionModeCircle, 1)
+        self.assertEqual(MapKit.MKAnnotationViewCollisionModeNone, 2)
+
+        self.assertEqual(MapKit.MKAnnotationViewZPriorityMax, 1000.0)
+        self.assertEqual(MapKit.MKAnnotationViewZPriorityDefaultSelected, 1000.0)
+        self.assertEqual(MapKit.MKAnnotationViewZPriorityDefaultUnselected, 500.0)
+        self.assertEqual(MapKit.MKAnnotationViewZPriorityMin, 0.0)
 
     @min_os_level("10.9")
     def testClasses(self):

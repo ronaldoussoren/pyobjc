@@ -29,6 +29,7 @@ Version 7.0
   - DeviceCheck
   - ImageCaptureCore
   - NaturalLanguage
+  - MapKit
   - OSLog
   - PDFKit
   - Photos
