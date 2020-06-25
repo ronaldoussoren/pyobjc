@@ -24,6 +24,7 @@ FRAMEWORK_WRAPPERS = [
     # Name                      Introcuded          Removed
     ("libdispatch", "10.8", None),
     ("AdSupport", "10.14", None),
+    ("AppTrackingTransparency", "10.16", None),
     ("AuthenticationServices", "10.15", None),
     ("AutomaticAssessmentConfiguration", "10.15", None),
     ("AVKit", "10.9", None),

@@ -29,6 +29,7 @@ Version 7.0
   - WebKit
 
 * Added bindings for the following frameworks:
+  - AppTrackingTransparency (introduced in macOS 11.0)
   - KernelManagement (introduced in macOS 11.0)
   - ScreenTime (introduced in macOS 11.0)
 
