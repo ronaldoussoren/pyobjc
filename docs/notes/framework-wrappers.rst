@@ -395,6 +395,8 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`SecurityInterface </apinotes/SecurityInterface>`            | `pyobjc-framework-SecurityInterface`_       |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| SensorKit                                                         |                                             | No public API on macOS                  |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ServerNotification </apinotes/ServerNotification>`          | `pyobjc-framework-ServerNotification`_      | Removed in macOS 10.9.                  |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ServiceManagement </apinotes/ServiceManagement>`            | `pyobjc-framework-ServiceManagement`_       |                                         |

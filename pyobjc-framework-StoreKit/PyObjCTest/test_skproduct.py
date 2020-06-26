@@ -15,3 +15,7 @@ class TestSKDownload(TestCase):
     @min_os_level("10.15")
     def test_methods10_15(self):
         self.assertResultIsBOOL(StoreKit.SKProduct.isDownloadable)
+
+    @min_os_level("10.16")
+    def test_methods10_16(self):
+        self.assertResultIsBOOL(StoreKit.SKProduct.isFamilyShareable)

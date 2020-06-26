@@ -42,6 +42,7 @@ Version 7.0
   - SafariServices
   - Security
   - SpriteKit
+  - StoreKit
   - UserNotifications
   - VideoToolbox
   - WebKit

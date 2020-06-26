@@ -7,6 +7,12 @@ class TestSKPaymentQueueHelper(StoreKit.NSObject):
     def paymentQueue_shouldContinueTransaction_inStorefront_(self, a, b, c):
         return 1
 
+    def paymentQueue_shouldAddStorePayment_forProduct_(self, a, b, c):
+        return 1
+
+    def paymentQueue_didRevokeEntitlementsForProductIdentifiers_(self, a, b):
+        pass
+
 
 class TestSKPaymentQueue(TestCase):
     def test_methods(self):
@@ -14,6 +20,14 @@ class TestSKPaymentQueue(TestCase):
 
         self.assertResultIsBOOL(
             TestSKPaymentQueueHelper.paymentQueue_shouldContinueTransaction_inStorefront_
+        )
+
+        self.assertResultIsBOOL(
+            TestSKPaymentQueueHelper.paymentQueue_shouldAddStorePayment_forProduct_
+        )
+
+        self.assertResultIsBOOL(
+            TestSKPaymentQueueHelper.paymentQueue_didRevokeEntitlementsForProductIdentifiers_
         )
 
     def test_protocols(self):
