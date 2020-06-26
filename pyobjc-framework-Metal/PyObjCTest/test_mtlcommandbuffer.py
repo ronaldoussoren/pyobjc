@@ -66,6 +66,20 @@ class TestMTLCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLDispatchTypeSerial, 0)
         self.assertEqual(Metal.MTLDispatchTypeConcurrent, 1)
 
+        self.assertEqual(Metal.MTLCommandBufferErrorOptionNone, 0)
+        self.assertEqual(
+            Metal.MTLCommandBufferErrorOptionEncoderExecutionStatus, 1 << 0
+        )
+
+        self.assertEqual(Metal.MTLCommandEncoderErrorStateUnknown, 0)
+        self.assertEqual(Metal.MTLCommandEncoderErrorStateCompleted, 1)
+        self.assertEqual(Metal.MTLCommandEncoderErrorStateAffected, 2)
+        self.assertEqual(Metal.MTLCommandEncoderErrorStatePending, 3)
+        self.assertEqual(Metal.MTLCommandEncoderErrorStateFaulted, 4)
+
+    def test_constants10_16(self):
+        self.assertIsInstance(Metal.MTLCommandBufferEncoderInfoErrorKey, str)
+
     @min_sdk_level("10.11")
     def test_protocols(self):
         objc.protocolNamed("MTLCommandBuffer")
@@ -111,3 +125,8 @@ class TestMTLCommandBuffer(TestCase):
         self.assertArgHasType(
             TestMTLCommandBufferHelper.encodeSignalEvent_value_, 1, objc._C_ULNGLNG
         )
+
+    @min_os_level("10.16")
+    def test_methods10_16(self):
+        self.assertResultIsBOOL(Metal.MTLCommandBufferDescriptor.retainedReferences)
+        self.assertArgIsBOOL(Metal.MTLCommandBufferDescriptor.setRetainedReferences_, 0)

@@ -7,6 +7,9 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def supportIndirectCommandBuffers(self):
         return 1
 
+    def textureWriteRoundingMode(self):
+        return 1
+
 
 class TestMTLRenderPipeline(TestCase):
     def test_constants(self):
@@ -73,6 +76,9 @@ class TestMTLRenderPipeline(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(
             TestMTLRenderPipelineHelper.supportIndirectCommandBuffers
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.textureWriteRoundingMode, objc._C_NSUInteger
         )
 
     @min_os_level("10.11")

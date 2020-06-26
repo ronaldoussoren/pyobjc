@@ -30,6 +30,7 @@ Version 7.0
   - Foundation
   - GameKit
   - ImageCaptureCore
+  - Metal
   - NaturalLanguage
   - NetworkExtension
   - MapKit

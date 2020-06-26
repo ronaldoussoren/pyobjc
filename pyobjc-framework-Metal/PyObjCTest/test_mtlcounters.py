@@ -16,7 +16,8 @@ class TestMTLCounters(TestCase):
         self.assertEqual(Metal.MTLCounterErrorValue, 0xFFFFFFFFFFFFFFFF)
 
         self.assertEqual(Metal.MTLCounterSampleBufferErrorOutOfMemory, 0)
-        self.assertEqual(Metal.MTLCounterSampleBufferErrorInternal, 1)
+        self.assertEqual(Metal.MTLCounterSampleBufferErrorInvalid, 1)
+        self.assertEqual(Metal.MTLCounterSampleBufferErrorInternal, 2)
 
     @min_os_level("10.15")
     def test_constants10_15(self):

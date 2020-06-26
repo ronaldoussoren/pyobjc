@@ -25,6 +25,24 @@ class TestMTLLibraryHelper(Metal.NSObject):
     def newFunctionWithName_constantValues_completionHandler_(self, a, b, c):
         pass
 
+    def options(self):
+        return 1
+
+    def newFunctionWithDescriptor_completionHandler_(self, a, b, c):
+        pass
+
+    def newFunctionWithDescriptor(self, a, b):
+        return 1
+
+    def newIntersectionFunctionWithDescriptor_completionHandler_(self, a, b):
+        pass
+
+    def newIntersectionFunctionWithDescriptor_error_(self, a, b):
+        return 1
+
+    def type(self):  # noqa: A003
+        pass
+
 
 class TestMTLLibrary(TestCase):
     def test_constants(self):
@@ -35,6 +53,8 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLFunctionTypeVertex, 1)
         self.assertEqual(Metal.MTLFunctionTypeFragment, 2)
         self.assertEqual(Metal.MTLFunctionTypeKernel, 3)
+        self.assertEqual(Metal.MTLFunctionTypeVisible, 5)
+        self.assertEqual(Metal.MTLFunctionTypeIntersection, 6)
 
         self.assertEqual(Metal.MTLLanguageVersion1_0, (1 << 16))
         self.assertEqual(Metal.MTLLanguageVersion1_1, (1 << 16) + 1)
@@ -42,6 +62,7 @@ class TestMTLLibrary(TestCase):
         self.assertEqual(Metal.MTLLanguageVersion2_0, (2 << 16))
         self.assertEqual(Metal.MTLLanguageVersion2_1, (2 << 16) + 1)
         self.assertEqual(Metal.MTLLanguageVersion2_2, (2 << 16) + 2)
+        self.assertEqual(Metal.MTLLanguageVersion2_3, (2 << 16) + 3)
 
         self.assertEqual(Metal.MTLLibraryErrorUnsupported, 1)
         self.assertEqual(Metal.MTLLibraryErrorInternal, 2)
@@ -85,6 +106,20 @@ class TestMTLLibrary(TestCase):
             2,
             b"v@@",
         )
+        self.assertResultHasType(TestMTLLibraryHelper.options, objc._C_NSUInteger)
+        self.assertArgIsBlock(
+            TestMTLLibraryHelper.newFunctionWithDescriptor_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsOut(TestMTLLibraryHelper.newFunctionWithDescriptor_error_, 1)
+        self.assertArgIsBlock(
+            TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsOut(
+            TestMTLLibraryHelper.newIntersectionFunctionWithDescriptor_error_, 1
+        )
+        self.assertResultHasType(TestMTLLibraryHelper.type, objc._C_NSUInteger)
 
     @min_os_level("10.11")
     def test_methods10_11(self):
@@ -94,6 +129,8 @@ class TestMTLLibrary(TestCase):
         self.assertArgIsBOOL(
             Metal.MTLCompileOptions.alloc().init().setFastMathEnabled_, 0
         )
+
+        self.assertResultIsBOOL(Metal.MTLVertexAttribute.alloc().init().isActive)
 
     @min_os_level("10.12")
     def test_methods10_12(self):

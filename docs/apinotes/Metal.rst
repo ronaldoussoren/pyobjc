@@ -31,3 +31,9 @@ It is generally safer to use ``MTLRasterizationRateLayerDescriptor.horizontal`` 
 ................................................................
 
 It is generally safer to use ``MTLRasterizationRateLayerDescriptor.vertical`` instead
+
+``MTLPackedFloat3``
+...................
+
+In C this is a structure with a union of "elements" and "x", "y", "z" values. In Python
+only the "x", "y" and "z" fields are exposed.

@@ -186,6 +186,36 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def supportsVertexAmplificationCount_(self, a):
         return 1
 
+    def supportsPullModelInterpolation(self):
+        return 1
+
+    def supportsCounterSampling_(self, a):
+        return 1
+
+    def supportsDynamicLibraries(self):
+        return 1
+
+    def newDynamicLibrary_errror_(self, a, b):
+        return 1
+
+    def newDynamicLibraryWithURL_errror_(self, a, b):
+        return 1
+
+    def newBinaryArchiveWithDescriptor_errror_(self, a, b):
+        return 1
+
+    def supportsRaytracing(self):
+        return 1
+
+    def accelerationStructureSizesWithDescriptor_(self, a):
+        return 1
+
+    def supportsFunctionPointers(self):
+        return 1
+
+    def supportsBinaryFunctionPointers(self):
+        return 1
+
 
 class TestMTLDevice(TestCase):
     def test_constants(self):
@@ -256,6 +286,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLPipelineOptionNone, 0)
         self.assertEqual(Metal.MTLPipelineOptionArgumentInfo, 1 << 0)
         self.assertEqual(Metal.MTLPipelineOptionBufferTypeInfo, 1 << 1)
+        self.assertEqual(Metal.MTLPipelineOptionFailOnBinaryArchiveMiss, 1 << 2)
 
         self.assertEqual(Metal.MTLReadWriteTextureTierNone, 0)
         self.assertEqual(Metal.MTLReadWriteTextureTier1, 1)
@@ -263,6 +294,16 @@ class TestMTLDevice(TestCase):
 
         self.assertEqual(Metal.MTLArgumentBuffersTier1, 0)
         self.assertEqual(Metal.MTLArgumentBuffersTier2, 1)
+
+        self.assertEqual(Metal.MTLRoundingModeDefault, 0)
+        self.assertEqual(Metal.MTLRoundingModeRTZ, 1)
+        self.assertEqual(Metal.MTLRoundingModeRTNE, 2)
+
+        self.assertEqual(Metal.MTLCounterSamplingPointAtStageBoundary, 0)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtDrawBoundary, 1)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtDispatchBoundary, 2)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtTileDispatchBoundary, 3)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtBlitBoundary, 4)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
@@ -274,6 +315,11 @@ class TestMTLDevice(TestCase):
         v = Metal.MTLSizeAndAlign()
         self.assertEqual(v.size, 0)
         self.assertEqual(v.align, 0)
+
+        v = Metal.MTLAccelerationStructureSizes()
+        self.assertEqual(v.accelerationStructureSize, 0)
+        self.assertEqual(v.buildScratchBufferSize, 0)
+        self.assertEqual(v.refitScratchBufferSize, 0)
 
     @min_os_level("10.11")
     def test_funtions10_11(self):
@@ -603,3 +649,26 @@ class TestMTLDevice(TestCase):
             1,
             b"o^" + objc._C_NSUInteger,
         )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPullModelInterpolation)
+        self.assertResultIsBOOL(
+            TestMTLDeviceHelper.supportsShaderBarycentricCoordinates
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsCounterSampling_)
+        self.assertArgHasType(
+            TestMTLDeviceHelper.supportsCounterSampling_, 0, objc._C_NSUInteger
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsDynamicLibraries)
+        self.assertArgHasType(TestMTLDeviceHelper.newDynamicLibrary_error_, 1, b"o^@")
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newDynamicLibraryWithURL_error_, 1, b"o^@"
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newBinaryArchiveWithDescriptor_error_, 1, b"o^@"
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRaytracing)
+        self.assertResultHasType(
+            TestMTLDeviceHelper.accelerationStructureSizesWithDescriptor_,
+            Metal.MTLAccelerationStructureSizes.__typestr__,
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFunctionPointers)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsBinaryFunctionPointers)

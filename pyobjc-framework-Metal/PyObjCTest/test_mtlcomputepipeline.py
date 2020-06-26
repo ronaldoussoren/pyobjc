@@ -13,6 +13,12 @@ class TestMTLComputePipelineHelper(Metal.NSObject):
     def staticThreadgroupMemoryLength(self):
         return 1
 
+    def textureWriteRoundingMode(self):
+        return 1
+
+    def newComputePipelineStateWithAdditionalBinaryFunctions_error_(self):
+        return 1
+
 
 class TestMTLComputePipeline(TestCase):
     @min_sdk_level("10.11")
@@ -44,4 +50,12 @@ class TestMTLComputePipeline(TestCase):
         self.assertResultHasType(
             TestMTLComputePipelineHelper.staticThreadgroupMemoryLength,
             objc._C_NSUInteger,
+        )
+        self.assertResultHasType(
+            TestMTLComputePipelineHelper.textureWriteRoundingMode, objc._C_NSUInteger
+        )
+        self.assertArgHasType(
+            TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_,
+            1,
+            b"o^@",
         )
