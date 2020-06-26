@@ -40,6 +40,7 @@ class TestFSEvents(TestCase):
             ("kFSEventStreamEventFlagItemIsHardlink", 0x00100000),
             ("kFSEventStreamEventFlagItemIsLastHardlink", 0x00200000),
             ("kFSEventStreamEventFlagItemCloned", 0x00400000),
+            ("kFSEventStreamCreateFlagFullHistory", 0x00000080),
         ):
             with self.subTest(k):
                 self.assertHasAttr(FSEvents, k)

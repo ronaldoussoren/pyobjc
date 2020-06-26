@@ -25,9 +25,11 @@ Version 7.0
   - CoreMedia
   - CoreMotion
   - CoreText
+  - CoreServices
   - CoreVideo
   - DeviceCheck
   - Foundation
+  - FSEvents
   - GameKit
   - ImageCaptureCore
   - ImageIO
