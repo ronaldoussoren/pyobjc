@@ -2,13 +2,14 @@ import GameKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
+class TestGKLeaderboardSetHelper(GameKit.GKLeaderboardSet):
+    def loadImageWithCompletionHandler_(self, h):
+        pass
+
+
 class TestGKLeaderboardSet(TestCase):
     @min_os_level("10.10")
     def testMethods(self):
-        class TestGKLeaderboardSetHelper(GameKit.GKLeaderboardSet):
-            def loadImageWithCompletionHandler_(self, h):
-                pass
-
         self.assertArgIsBlock(
             GameKit.GKLeaderboardSet.loadLeaderboardSetsWithCompletionHandler_,
             0,
@@ -19,4 +20,10 @@ class TestGKLeaderboardSet(TestCase):
         )
         self.assertArgIsBlock(
             TestGKLeaderboardSetHelper.loadImageWithCompletionHandler_, 0, b"v@@"
+        )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertArgIsBlock(
+            GameKit.GKLeaderboardSet.loadLeaderboardsWithHandler_, 0, b"v@@"
         )

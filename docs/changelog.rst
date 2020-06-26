@@ -12,7 +12,7 @@ Version 7.0
 
 * Removed metadata for 32-bit systems
 
-* Updated framework bindings:
+* Updated framework bindings (Xcode 12 beta 1):
   - Automator
   - AVKit
   - CFNetwork
@@ -27,8 +27,11 @@ Version 7.0
   - CoreText
   - CoreVideo
   - DeviceCheck
+  - Foundation
+  - GameKit
   - ImageCaptureCore
   - NaturalLanguage
+  - NetworkExtension
   - MapKit
   - OSLog
   - PDFKit

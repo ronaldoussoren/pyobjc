@@ -12,6 +12,10 @@ class TestGKPlayer(TestCase):
         self.assertEqual(GameKit.GKPhotoSizeSmall, 0)
         self.assertEqual(GameKit.GKPhotoSizeNormal, 1)
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(GameKit.GKPlayerIDNoLongerAvailable, str)
+
     def testMethods(self):
         self.assertArgIsBlock(
             GameKit.GKPlayer.loadPlayersForIdentifiers_withCompletionHandler_, 1, b"v@@"

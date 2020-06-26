@@ -485,6 +485,8 @@ class TestPickle(TestCase):
         self.assertEqual(Foundation.NSStringEnumerationByComposedCharacterSequences, 2)
         self.assertEqual(Foundation.NSStringEnumerationByWords, 3)
         self.assertEqual(Foundation.NSStringEnumerationBySentences, 4)
+        self.assertEqual(Foundation.NSStringEnumerationByCaretPositions, 5)
+        self.assertEqual(Foundation.NSStringEnumerationByDeletionClusters, 6)
         self.assertEqual(Foundation.NSStringEnumerationReverse, 1 << 8)
         self.assertEqual(Foundation.NSStringEnumerationSubstringNotRequired, 1 << 9)
         self.assertEqual(Foundation.NSStringEnumerationLocalized, 1 << 10)
@@ -571,4 +573,19 @@ class TestPickle(TestCase):
         )
         self.assertArgIsOut(
             Foundation.NSMutableString.applyTransform_reverse_range_updatedRange_, 3
+        )
+
+    @min_os_level("10.16")
+    def test_methods10_16(self):
+        # XXX: exposing this not very useful.
+        self.assertArgIsBlock(
+            Foundation.NSString.initWithCharactersNoCopy_length_deallocator_,
+            2,
+            b"v^" + objc._C_UNICHAR + objc._C_NSUInteger,
+        )
+
+        self.assertArgIsBlock(
+            Foundation.NSString.initWithBytesNoCopy_length_encoding_deallocator_,
+            3,
+            b"v^v" + objc._C_NSUInteger,
         )

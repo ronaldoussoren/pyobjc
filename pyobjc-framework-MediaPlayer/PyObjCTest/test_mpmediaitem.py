@@ -65,6 +65,7 @@ class TestMPMediaItem(TestCase):
         self.assertIsInstance(
             MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, str
         )
+        self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPlaybackStoreID, str)
 
     @min_os_level("10.12")
     def testMethods(self):

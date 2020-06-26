@@ -81,6 +81,12 @@ class TestGKLocalPlayer(TestCase):
             b"v@@@Q@",
         )
 
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            GameKit.GKLocalPlayer.isPersonalizedCommunicationRestricted
+        )
+
     def testProtocols(self):
         objc.protocolNamed("GKLocalPlayerListener")
 

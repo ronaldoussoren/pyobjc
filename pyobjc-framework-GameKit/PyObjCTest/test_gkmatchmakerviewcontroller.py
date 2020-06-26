@@ -4,6 +4,11 @@ import objc
 
 
 class TestGKMatchmakerViewController(TestCase):
+    def test_constants(self):
+        self.assertEqual(GameKit.GKMatchmakingModeDefault, 0)
+        self.assertEqual(GameKit.GKMatchmakingModeNearbyOnly, 1)
+        self.assertEqual(GameKit.GKMatchmakingModeAutomatchOnly, 2)
+
     def testMethods(self):
         self.assertResultIsBOOL(GameKit.GKMatchmakerViewController.isHosted)
         self.assertArgIsBOOL(GameKit.GKMatchmakerViewController.setHosted_, 0)

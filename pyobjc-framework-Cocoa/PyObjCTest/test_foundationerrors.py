@@ -38,6 +38,12 @@ class FoundationErrorsTest(TestCase):
         self.assertEqual(Foundation.NSFormattingError, 2048)
         self.assertEqual(Foundation.NSCoderInvalidValueError, 4866)
 
+        self.assertEqual(Foundation.NSBundleOnDemandResourceOutOfSpaceError, 4992)
+        self.assertEqual(
+            Foundation.NSBundleOnDemandResourceExceededMaximumSizeError, 4993
+        )
+        self.assertEqual(Foundation.NSBundleOnDemandResourceInvalidTagError, 4994)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(Foundation.NSFileWriteVolumeReadOnlyError, 642)

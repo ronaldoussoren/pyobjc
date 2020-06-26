@@ -35,3 +35,6 @@ class TestGKError(TestCase):
         self.assertEqual(GameKit.GKErrorGameSessionRequestInvalid, 29)
         self.assertEqual(GameKit.GKErrorRestrictedToAutomatch, 30)
         self.assertEqual(GameKit.GKErrorAPINotAvailable, 31)
+        self.assertEqual(GameKit.GKErrorNotAuthorized, 32)
+        self.assertEqual(GameKit.GKErrorConnectionTimeout, 33)
+        self.assertEqual(GameKit.GKErrorAPIObsolete, 34)
