@@ -821,3 +821,14 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(
             Quartz.kCGImagePropertyExifSourceExposureTimesOfCompositeImage, str
         )
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyWebPDictionary, str)
+
+        self.assertIsInstance(Quartz.kCGImagePropertyWebPLoopCount, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyWebPDelayTime, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyWebPUnclampedDelayTime, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyWebPFrameInfoArray, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyWebPCanvasPixelWidth, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyWebPCanvasPixelHeight, str)

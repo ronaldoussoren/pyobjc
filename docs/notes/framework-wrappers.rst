@@ -65,6 +65,8 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CFNetwork </apinotes/CFNetwork>`                            | `pyobjc-framework-CFNetwork`_               |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`ClassKit </apinotes/ClassKit>`                              | `pyobjc-framework-ClassKit`_                |                                         |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CloudKit </apinotes/CloudKit>`                              | `pyobjc-framework-CloudKit`_                |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Cocoa </apinotes/Cocoa>`                                    | `pyobjc-framework-Cocoa`_                   |                                         |
@@ -591,3 +593,4 @@ prioritizing work.
 .. _`pyobjc-framework-KernelManagement`: https://pypi.org/project/pyobjc-framework-KernelManagement/
 .. _`pyobjc-framework-ScreenTime`: https://pypi.org/project/pyobjc-framework-ScreenTime/
 .. _`pyobjc-framework-UserNotificationsUI`: https://pypi.org/project/pyobjc-framework-UserNotificationsUI/
+.. _`pyobjc-framework-ClassKit`: https://pypi.org/project/pyobjc-framework-ClassKit/

@@ -30,21 +30,25 @@ Version 7.0
   - Foundation
   - GameKit
   - ImageCaptureCore
+  - ImageIO
   - Metal
   - NaturalLanguage
   - NetworkExtension
   - MapKit
   - OSLog
   - PDFKit
+  - PencilKit
   - Photos
   - SafariServices
   - Security
   - SpriteKit
+  - UserNotifications
   - VideoToolbox
   - WebKit
 
 * Added bindings for the following frameworks:
   - AppTrackingTransparency (introduced in macOS 11.0)
+  - ClassKit (introduced in macOS 11.0)
   - KernelManagement (introduced in macOS 11.0)
   - ScreenTime (introduced in macOS 11.0)
   - UserNotificationsUI (introduced in macOS 11.0)

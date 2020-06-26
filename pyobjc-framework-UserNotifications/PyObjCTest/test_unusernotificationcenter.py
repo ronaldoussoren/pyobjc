@@ -41,6 +41,10 @@ class TestUNUserNotificationCenter(TestCase):
         self.assertEqual(
             UserNotifications.UNNotificationPresentationOptionAlert, 1 << 2
         )
+        self.assertEqual(UserNotifications.UNNotificationPresentationOptionList, 1 << 3)
+        self.assertEqual(
+            UserNotifications.UNNotificationPresentationOptionBanner, 1 << 4
+        )
         self.assertEqual(UserNotifications.UNNotificationPresentationOptionNone, 0)
 
     def test_methods(self):

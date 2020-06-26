@@ -38,6 +38,7 @@ FRAMEWORK_WRAPPERS = [
     ("BusinessChat", "10.14", None),
     ("CFNetwork", None, None),
     ("CalendarStore", "10.5", None),
+    ("ClassKit", "10.16", None),
     ("CloudKit", "10.10", None),
     ("Cocoa", None, None),
     ("Collaboration", "10.5", None),
