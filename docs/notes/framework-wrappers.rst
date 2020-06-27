@@ -12,6 +12,8 @@ The framework name links to API notes for that framework, the python packages li
 +===================================================================+=============================================+=========================================+
 | :doc:`dispatch </apinotes/libdispatch>`                           | `pyobjc-framework-libdispatch`_             |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`Accessibility </apinotes/Accessibility>`                    | `pyobjc-framework-Accessibility`_           |                                         |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Accelerate                                                        | -                                           | Will not be wrapped.                    |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Accounts </apinotes/Accounts>`                              | `pyobjc-framework-Accounts`_                |                                         |
@@ -59,7 +61,7 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CalendarStore </apinotes/CalendarStore>`                    | `pyobjc-framework-CalendarStore`_           |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CallKit                                                           | -                                           | No public API on macOS                  |
+| :doc:`CallKit </apinotes/CallKit>`                                | `pyobjc-framework-CallKit`_                 |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Carbon                                                            | -                                           | Framework will not be wrapped.          |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -596,3 +598,5 @@ prioritizing work.
 .. _`pyobjc-framework-ScreenTime`: https://pypi.org/project/pyobjc-framework-ScreenTime/
 .. _`pyobjc-framework-UserNotificationsUI`: https://pypi.org/project/pyobjc-framework-UserNotificationsUI/
 .. _`pyobjc-framework-ClassKit`: https://pypi.org/project/pyobjc-framework-ClassKit/
+.. _`pyobjc-framework-CallKit`: https://pypi.org/project/pyobjc-framework-CallKit/
+.. _`pyobjc-framework-Accessibility`: https://pypi.org/project/pyobjc-framework-Accessibility/

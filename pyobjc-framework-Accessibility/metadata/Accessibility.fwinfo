@@ -1,0 +1,16 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "AXNameFromColor": {
+    "args": {
+     "0": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}

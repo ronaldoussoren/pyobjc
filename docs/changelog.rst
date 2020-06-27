@@ -50,7 +50,9 @@ Version 7.0
   - WebKit
 
 * Added bindings for the following frameworks:
+  - Accessibility (introduced in macOS 11.0)
   - AppTrackingTransparency (introduced in macOS 11.0)
+  - CallKit (introduced in macOS 11.0)
   - ClassKit (introduced in macOS 11.0)
   - KernelManagement (introduced in macOS 11.0)
   - ScreenTime (introduced in macOS 11.0)

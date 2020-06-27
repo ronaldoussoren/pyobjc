@@ -23,6 +23,7 @@ VERSION = "7.0a1"
 FRAMEWORK_WRAPPERS = [
     # Name                      Introcuded          Removed
     ("libdispatch", "10.8", None),
+    ("Accessibility", "10.16", None),
     ("AdSupport", "10.14", None),
     ("AppTrackingTransparency", "10.16", None),
     ("AuthenticationServices", "10.15", None),
@@ -38,6 +39,7 @@ FRAMEWORK_WRAPPERS = [
     ("BusinessChat", "10.14", None),
     ("CFNetwork", None, None),
     ("CalendarStore", "10.5", None),
+    ("CallKit", "10.16", None),
     ("ClassKit", "10.16", None),
     ("CloudKit", "10.10", None),
     ("Cocoa", None, None),
