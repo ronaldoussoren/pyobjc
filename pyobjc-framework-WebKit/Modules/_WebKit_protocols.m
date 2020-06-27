@@ -4,6 +4,10 @@
  * Last update: Sun Dec 28 14:22:11 2014
  */
 
+#if PyObjC_BUILD_RELEASE >= 1100
+#import <WebKit/WKScriptMessageHandlerWithReply.h>
+#endif
+
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
