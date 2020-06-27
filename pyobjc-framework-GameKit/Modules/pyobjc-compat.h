@@ -204,6 +204,18 @@
 #define MAC_OS_X_VERSION_10_15_4 101504
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_15_5
+#define MAC_OS_X_VERSION_10_15_5 101505
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_15_6
+#define MAC_OS_X_VERSION_10_15_6 101506
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_16
+#define MAC_OS_X_VERSION_10_16 101600
+#endif
+
 /*
  * Explicit support for weak-linking functions
  *
