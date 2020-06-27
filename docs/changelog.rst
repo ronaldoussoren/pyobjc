@@ -63,7 +63,9 @@ Version 7.0
 
   - WidgetKit: This is a Swift-only framework
 
-* #309: Fix incompatibility with macOS 11 in framework loader
+* Updated ``objc.dyld_library`` and ``objc.dyld_framework`` to return
+  a sane result on macOS 11 where system libraries are no longer at 
+  the expected location, but in a shared cache.
 
 * Another attempt at giving a nice error message when trying to install on
   platforms other than macOS.

@@ -1058,10 +1058,11 @@ class TestPrintfFormat(TestCase):
         # that code is correct...
 
         # Generic table below doesn't work for these
-        for fmt, args in [("%#+x", (99,)), ("%+#x", (99,)), ("% #x", (99,))]:
+        for fmt, args in [(b"%#+x", (99,)), (b"%+#x", (99,)), (b"% #x", (99,))]:
 
             v = o.makeArrayWithCFormat_(fmt, *args)
-            self.assertEqual(list(map(str, list(v))), [fmt, (fmt % args)[1:]])
+            #self.assertEqual(list(map(str, list(v))), [fmt, (fmt  % args)[1:]])
+            self.assertEqual(list(v), [fmt.decode(), ((fmt  % args)[1:]).decode()])
 
         # Insert thousands seperator, the one in the C locale is ''
         v = o.makeArrayWithCFormat_(b"%'d", 20000)
@@ -1111,40 +1112,41 @@ class TestPrintfFormat(TestCase):
         self.assertEqual(list(v), ["%ls", "hello world"])
 
         TEST_TAB = [
-            ("% #d", (99,)),
-            ("%0#4x", (99,)),
-            ("%#+d", (99,)),
-            ("%+#d", (99,)),
-            ("%o", (20,)),
-            ("%10o", (9,)),
-            ("%d %.*o", (2, 5, 7)),
-            ("%*o", (5, 7)),
-            ("%.*o", (5, 7)),
-            ("%.*f", (3, 0.23424)),
-            ("%*.*f", (12, 3, 0.23424)),
-            ("%F", (-4.6,)),
-            ("%f", (2.7,)),
-            ("%e", (2.7,)),
-            ("%E", (-4.6,)),
-            ("%g", (2.7,)),
-            ("%G", (-4.6,)),
-            ("%.9f", (0.249,)),
-            ("%ld", (42,)),
-            ("%c", (42,)),
-            ("%hd", (42,)),
-            ("%lx", (42,)),
-            ("%%%d%%", (99,)),
-            ("%c", ("a",)),
-            ("%c%c", ("c", "d")),
-            ("%c%c", (90, "d")),
-            ("%f %f %f %f %f %f %f %f", (1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5))
+            (b"% #d", (99,)),
+            (b"%0#4x", (99,)),
+            (b"%#+d", (99,)),
+            (b"%+#d", (99,)),
+            (b"%o", (20,)),
+            (b"%10o", (9,)),
+            (b"%d %.*o", (2, 5, 7)),
+            (b"%*o", (5, 7)),
+            (b"%.*o", (5, 7)),
+            (b"%.*f", (3, 0.23424)),
+            (b"%*.*f", (12, 3, 0.23424)),
+            (b"%F", (-4.6,)),
+            (b"%f", (2.7,)),
+            (b"%e", (2.7,)),
+            (b"%E", (-4.6,)),
+            (b"%g", (2.7,)),
+            (b"%G", (-4.6,)),
+            (b"%.9f", (0.249,)),
+            (b"%ld", (42,)),
+            (b"%c", (42,)),
+            (b"%hd", (42,)),
+            (b"%lx", (42,)),
+            (b"%%%d%%", (99,)),
+            (b"%c", ("a",)),
+            (b"%c%c", ("c", "d")),
+            (b"%c%c", (90, "d")),
+            (b"%f %f %f %f %f %f %f %f", (1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5))
             # We don't have long double support at all
             # ( '%Lg', (42.0,)),
         ]
 
         for fmt, args in TEST_TAB:
-            v = o.makeArrayWithCFormat_(fmt, *args)
-            self.assertEqual(list(v), [fmt, fmt % args])
+            with self.subTest((fmt, args)):
+                v = o.makeArrayWithCFormat_(fmt, *args)
+                self.assertEqual(list(v), [fmt.decode(), fmt.decode() % args])
 
 
 class TestVariadic(TestCase):

@@ -67,9 +67,11 @@ class TestDyld(TestCase):
             if k in os.environ:
                 del os.environ[k]
 
-        orig = os.path.exists
+        orig_exists = os.path.exists
+        orig_islink = os.path.islink
         try:
             os.path.exists = lambda fn: lst.append(fn)
+            os.path.islink = lambda fn: None
 
             lst = []
             self.assertRaises(
@@ -186,7 +188,8 @@ class TestDyld(TestCase):
             del os.environ["DYLD_IMAGE_SUFFIX"]
 
         finally:
-            os.path.exists = orig
+            os.path.exists = orig_exists
+            os.path.islink = orig_islink
 
         self.assertEqual(
             dyld.dyld_library("/usr/lib/libSystem.dylib", "libXSystem.dylib"),

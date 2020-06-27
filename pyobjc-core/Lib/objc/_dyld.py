@@ -92,6 +92,12 @@ def dyld_framework(filename, framework_name, version=None):
                 yield os.path.join(path, framework_name + ".framework", framework_name)
 
     for f in inject_suffixes(_search()):
+        if f.startswith("/System/"):
+            if os.path.islink(f):
+                return f
+            elif os.path.isdir(os.path.dirname(f)):
+                return f
+
         if os.path.exists(f):
             return f
     # raise ..
@@ -116,6 +122,9 @@ def dyld_library(filename, libname):
             yield os.path.join(path, libname)
 
     for f in inject_suffixes(_search()):
+        if os.path.islink(f) and (f.startswith('/lib/') or f.startswith('/usr/lib/')):
+            return f
+
         if os.path.exists(f):
             return f
     raise ValueError("dylib %s could not be found" % (filename,))
@@ -133,9 +142,5 @@ def dyld_find(filename):
 
 
 def pathForFramework(path):
-    if path.startswith("/System/"):
-        # On macOS 11 system frameworks are in a shared cache, not
-        # in the filesystem.
-        return path
     fpath, name, version = infoForFramework(dyld_find(path))
     return os.path.join(fpath, name + ".framework")
