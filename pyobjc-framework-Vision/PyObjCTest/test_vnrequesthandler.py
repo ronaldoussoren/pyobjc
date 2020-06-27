@@ -82,3 +82,20 @@ class TestVNRequestHandler(TestCase):
             Vision.VNSequenceRequestHandler.performRequests_onImageData_orientation_error_,
             3,
         )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            Vision.VNSequenceRequestHandler.performRequests_onCMSampleBuffer_error_
+        )
+        self.assertArgIsOut(
+            Vision.VNSequenceRequestHandler.performRequests_onCMSampleBuffer_error_, 2
+        )
+
+        self.assertResultIsBOOL(
+            Vision.VNSequenceRequestHandler.performRequests_onCMSampleBuffer_orientation_error_
+        )
+        self.assertArgIsOut(
+            Vision.VNSequenceRequestHandler.performRequests_onCMSampleBuffer_orientation_error_,
+            3,
+        )

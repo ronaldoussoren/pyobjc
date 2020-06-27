@@ -47,6 +47,7 @@ Version 7.0
   - StoreKit
   - UserNotifications
   - VideoToolbox
+  - Vision
   - WebKit
 
 * Added bindings for the following frameworks:

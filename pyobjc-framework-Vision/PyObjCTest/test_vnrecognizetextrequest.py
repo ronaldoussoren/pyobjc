@@ -8,6 +8,7 @@ class TestVNRecognizeTextRequest(TestCase):
         self.assertEqual(Vision.VNRequestTextRecognitionLevelFast, 1)
 
         self.assertEqual(Vision.VNRecognizeTextRequestRevision1, 1)
+        self.assertEqual(Vision.VNRecognizeTextRequestRevision2, 2)
 
     @min_os_level("10.15")
     def test_methods(self):

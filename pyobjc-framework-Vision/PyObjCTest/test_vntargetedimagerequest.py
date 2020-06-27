@@ -83,3 +83,17 @@ class TestVNTargetedImageRequest(TestCase):
             3,
             b"v@@",
         )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertArgIsBlock(
+            Vision.VNTargetedImageRequest.initWithTargetedCMSampleBuffer_options_completionHandler_,
+            2,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            Vision.VNTargetedImageRequest.initWithTargetedCMSampleBuffer_orientation_options_completionHandler_,
+            3,
+            b"v@@",
+        )

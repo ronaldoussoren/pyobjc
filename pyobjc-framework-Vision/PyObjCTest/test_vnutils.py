@@ -64,3 +64,7 @@ class TestVNUtils(TestCase):
     @min_os_level("10.15")
     def testFunctions10_15(self):
         Vision.VNElementTypeSize
+
+    @min_os_level("10.16")
+    def testFunctions10_16(self):
+        Vision.VNNormalizedPointForImagePoint

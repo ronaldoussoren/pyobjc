@@ -21,3 +21,18 @@ class TestVNObservation(TestCase):
             Vision.VNFeaturePrintObservation.computeDistance_toFeaturePrintObservation_error_,  # noqa: B950
             2,
         )
+
+    @min_os_level("10.16")
+    def test_methods10_16(self):
+        self.assertArgIsOut(Vision.VNContoursObservation.contourAtIndex_error_, 1)
+        self.assertArgIsOut(Vision.VNContoursObservation.contourAtIndexPath_error_, 1)
+
+        self.assertArgIsOut(
+            Vision.VNRecognizedPointsObservation.recognizedPointsForGroupKey_error_, 1
+        )
+        self.assertArgIsOut(
+            Vision.VNRecognizedPointsObservation.keypointsMultiArrayAndReturnError_, 0
+        )
+        self.assertArgIsOut(
+            Vision.VNRecognizedPointsObservation.identifiedPointsForGroupKey_error_, 1
+        )
