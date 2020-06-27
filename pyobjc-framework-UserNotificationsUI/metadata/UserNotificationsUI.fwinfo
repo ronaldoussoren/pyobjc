@@ -1,8 +1,27 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+  "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "didReceiveNotificationResponse:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "type_override": "@?",
+	"callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "Q" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "functions": {},
   "informal_protocols": {}

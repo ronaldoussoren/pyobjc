@@ -412,36 +412,36 @@ class TestSCNetworkConfiguration(TestCase):
         v = SystemConfiguration.SCNetworkSetCopyAll(prefs)
         self.assertIsInstance(v, SystemConfiguration.CFArrayRef)
 
-        v = SystemConfiguration.SCNetworkSetCopyServices(set)
+        v = SystemConfiguration.SCNetworkSetCopyServices(a_set)
         self.assertIsInstance(v, SystemConfiguration.CFArrayRef)
 
         v = SystemConfiguration.SCNetworkSetCreate(prefs)
         self.assertIsInstance(v, SystemConfiguration.SCNetworkSetRef)
 
         v = SystemConfiguration.SCNetworkSetCopy(
-            prefs, SystemConfiguration.SCNetworkSetGetSetID(set)
+            prefs, SystemConfiguration.SCNetworkSetGetSetID(a_set)
         )
         self.assertIsInstance(v, SystemConfiguration.SCNetworkSetRef)
 
         v = SystemConfiguration.SCNetworkSetRemove(v)
         self.assertIsInstance(v, bool)
 
-        v = SystemConfiguration.SCNetworkSetGetName(set)
+        v = SystemConfiguration.SCNetworkSetGetName(a_set)
         self.assertIsInstance(v, str)
 
-        v = SystemConfiguration.SCNetworkSetGetSetID(set)
+        v = SystemConfiguration.SCNetworkSetGetSetID(a_set)
         self.assertIsInstance(v, str)
 
-        v = SystemConfiguration.SCNetworkSetGetServiceOrder(set)
+        v = SystemConfiguration.SCNetworkSetGetServiceOrder(a_set)
         self.assertIsInstance(v, SystemConfiguration.CFArrayRef)
 
         v = SystemConfiguration.SCNetworkSetSetName(
-            set, SystemConfiguration.SCNetworkSetGetName(set)
+            a_set, SystemConfiguration.SCNetworkSetGetName(a_set)
         )
         self.assertIsInstance(v, bool)
 
         v = SystemConfiguration.SCNetworkSetSetServiceOrder(
-            set, SystemConfiguration.SCNetworkSetGetServiceOrder(set)
+            a_set, SystemConfiguration.SCNetworkSetGetServiceOrder(a_set)
         )
         self.assertIsInstance(v, bool)
 

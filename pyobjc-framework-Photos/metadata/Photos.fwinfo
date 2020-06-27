@@ -278,6 +278,21 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "requestAuthorizationForAccessLevel:handler:",
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "q" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "class_method": false,
       "selector": "requestAuthorization:",
       "args": {
        "0": {
