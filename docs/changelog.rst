@@ -15,6 +15,7 @@ Version 7.0
 * Updated framework bindings (Xcode 12 beta 1):
   - AppKit
   - Automator
+  - AVFoundation
   - AVKit
   - CFNetwork
   - Contacts
@@ -26,6 +27,8 @@ Version 7.0
   - CoreLocation
   - CoreMedia
   - CoreMotion
+  - CoreML
+    XXX: "XDGBoost" subframework is not yet wrapped
   - CoreText
   - CoreServices
   - CoreVideo

@@ -19,3 +19,20 @@ class TestMLUpdateTask(TestCase):
             CoreML.MLUpdateTask.updateTaskForModelAtURL_trainingData_configuration_progressHandlers_error_,
             4,
         )
+
+    @min_os_level("10.16")
+    def test_methods10_16(self):
+        self.assertArgIsBlock(
+            CoreML.MLUpdateTask.updateTaskForModelAtURL_trainingData_completionHandler_error_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsOut(
+            CoreML.MLUpdateTask.updateTaskForModelAtURL_trainingData_completionHandler_error_,
+            3,
+        )
+
+        self.assertArgIsOut(
+            CoreML.MLUpdateTask.updateTaskForModelAtURL_trainingData_progressHandlers_error_,
+            3,
+        )

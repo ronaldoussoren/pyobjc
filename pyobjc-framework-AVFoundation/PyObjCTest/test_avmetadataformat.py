@@ -463,3 +463,18 @@ class TestAVMetadataFormat(TestCase):
     def testConstants10_13(self):
         self.assertIsInstance(AVFoundation.AVMetadataKeySpaceAudioFile, str)
         self.assertIsInstance(AVFoundation.AVMetadataFormatUnknown, str)
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonKeyAccessibilityDescription, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeUserDataKeyAccessibilityDescription, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataISOUserDataKeyAccessibilityDescription, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataQuickTimeMetadataKeyAccessibilityDescription, str
+        )

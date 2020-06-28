@@ -5,7 +5,9 @@ import CoreML
 class TestMLMultiArray(TestCase):
     def testConstants(self):
         self.assertEqual(CoreML.MLMultiArrayDataTypeDouble, 0x10000 | 64)
+        self.assertEqual(CoreML.MLMultiArrayDataTypeFloat64, 0x10000 | 64)
         self.assertEqual(CoreML.MLMultiArrayDataTypeFloat32, 0x10000 | 32)
+        self.assertEqual(CoreML.MLMultiArrayDataTypeFloat, 0x10000 | 32)
         self.assertEqual(CoreML.MLMultiArrayDataTypeInt32, 0x20000 | 32)
 
     @min_os_level("10.13")

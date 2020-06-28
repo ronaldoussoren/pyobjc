@@ -21,6 +21,13 @@ class TestAVPlayerItem(TestCase):
         self.assertEqual(AVFoundation.AVPlayerItemStatusReadyToPlay, 1)
         self.assertEqual(AVFoundation.AVPlayerItemStatusFailed, 2)
 
+        self.assertEqual(AVFoundation.AVAudioSpatializationFormatNone, 0)
+        self.assertEqual(AVFoundation.AVAudioSpatializationFormatMonoAndStereo, 0x3)
+        self.assertEqual(AVFoundation.AVAudioSpatializationFormatMultichannel, 0x4)
+        self.assertEqual(
+            AVFoundation.AVAudioSpatializationFormatMonoStereoAndMultichannel, 0x7
+        )
+
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVPlayerItemPlaybackStalledNotification, str)
@@ -97,4 +104,11 @@ class TestAVPlayerItem(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVPlayerItem.isAudioSpatializationAllowed)
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0
+        )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(AVFoundation.AVPlayerItem.startsOnFirstEligibleVariant)
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayerItem.setStartsOnFirstEligibleVariant_, 0
         )

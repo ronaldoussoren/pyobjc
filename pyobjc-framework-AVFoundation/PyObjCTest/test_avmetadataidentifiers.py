@@ -891,3 +891,21 @@ class TestAVMetadataIdentifiers(TestCase):
                 AVFoundation.AVMetadataIdentifierQuickTimeMetadataSpatialOverCaptureQualityScoringVersion,  # noqa: B950
                 str,
             )
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(
+            AVFoundation.AVMetadataCommonIdentifierAccessibilityDescription, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeUserDataAccessibilityDescription,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataAccessibilityDescription,
+            str,
+        )
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationHorizontalAccuracyInMeters,
+            str,
+        )

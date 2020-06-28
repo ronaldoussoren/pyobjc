@@ -98,3 +98,9 @@ class TestAVMediaFormat(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMediaCharacteristicContainsAlphaChannel, str
         )
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(AVFoundation.AVMediaCharacteristicContainsHDRVideo, str)
+        self.assertIsInstance(AVFoundation.AVFileTypeProfileMPEG4AppleHLS, str)
+        self.assertIsInstance(AVFoundation.AVFileTypeProfileMPEG4CMAFCompliant, str)

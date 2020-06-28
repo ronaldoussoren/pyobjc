@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, fourcc
+from PyObjCTools.TestSupport import TestCase, fourcc, min_os_level
 
 
 class TestAVAudioSession(TestCase):
@@ -108,3 +108,19 @@ class TestAVAudioSession(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioSessionPromptStyleNormal, fourcc(b"nrml")
         )  # noqa: B950
+
+    @min_os_level("10.16")
+    def test_constants10_16(self):
+        self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionNotification, str)
+        self.assertIsInstance(AVFoundation.AVAudioSessionRouteChangeNotification, str)
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionMediaServicesWereLostNotification, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionMediaServicesWereResetNotification, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVAudioSessionSilenceSecondaryAudioHintNotification, str
+        )
+        self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionTypeKey, str)
+        self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionOptionKey, str)

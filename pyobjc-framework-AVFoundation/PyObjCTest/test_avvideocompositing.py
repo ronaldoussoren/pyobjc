@@ -35,6 +35,12 @@ class TestAVVideoCompositing(TestCase):
             AVFoundation.AVVideoCompositionRenderContext.highQualityRendering
         )
 
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVVideoCompositionRenderContext.supportsHDRSourceFrames
+        )
+
     def testProtocolMethods(self):
         self.assertResultIsBOOL(TestAVVideoCompositingHelper.enablePostProcessing)
         self.assertResultIsBOOL(TestAVVideoCompositingHelper.containsTweening)

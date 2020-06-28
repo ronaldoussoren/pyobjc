@@ -86,3 +86,13 @@ class TestAVCaptureSession(TestCase):
 
         self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureConnection.isHighResolutionStillImageOutputEnabled
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVCaptureConnection.setHighResolutionStillImageOutputEnabled_,
+            0,
+        )
