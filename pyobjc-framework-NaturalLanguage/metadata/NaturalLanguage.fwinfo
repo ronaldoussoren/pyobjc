@@ -262,6 +262,13 @@
    "NLTagger": {
     "methods": [
      {
+      "selector": "tagHypothesesAtIndex:unit:scheme:maximumCount:tokenRange:",
+      "class_method": true,
+      "args": {
+       "4": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "requestAssetsForLanguage:tagScheme:completionHandler:",
       "class_method": true,
       "args": {
@@ -285,7 +292,7 @@
         "callable": {
 	 "arguments": {
 	  "0": { "typestr": "^v" },
-	  "1": { "typestr": "Q" },
+	  "1": { "typestr": "@" },
 	  "2": { "typestr": "{_NSRange=QQ}" },
 	  "3": { "typestr": "o^Z" }
 	 },

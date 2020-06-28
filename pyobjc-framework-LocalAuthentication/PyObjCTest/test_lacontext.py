@@ -1,6 +1,6 @@
 import objc
 
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_between
 import LocalAuthentication
 
 
@@ -20,6 +20,8 @@ class TestLAContext(TestCase):
             b"v" + objc._C_NSBOOL + b"@",
         )
 
+    @os_level_between("10.10", "10.15")
+    def testMethods10_10_to_15(self):
         self.assertResultIsBOOL(LocalAuthentication.LAContext.isCancelButtonVisible)
         self.assertArgIsBOOL(LocalAuthentication.LAContext.setCancelButtonVisible_, 0)
 

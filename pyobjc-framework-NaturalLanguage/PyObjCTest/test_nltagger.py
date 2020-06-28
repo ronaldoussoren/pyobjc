@@ -21,7 +21,7 @@ class TestNLTagger(TestCase):
             NaturalLanguage.NLTagger.enumerateTagsInRange_unit_scheme_options_usingBlock_,
             4,
             objc._C_VOID
-            + objc._C_NSUInteger
+            + objc._C_ID
             + NaturalLanguage.NSRange.__typestr__
             + objc._C_OUT
             + objc._C_PTR
@@ -36,9 +36,9 @@ class TestNLTagger(TestCase):
             b"v" + objc._C_NSInteger + b"@",
         )
 
-    @min_os_level("10.l6")
+    @min_os_level("10.16")
     def test_methods10_16(self):
-        self.assertArgIsIn(
+        self.assertArgIsOut(
             NaturalLanguage.NLTagger.tagHypothesesAtIndex_unit_scheme_maximumCount_tokenRange_,
             4,
         )

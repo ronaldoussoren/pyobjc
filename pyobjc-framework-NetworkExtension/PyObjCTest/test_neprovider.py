@@ -36,5 +36,5 @@ class NEProvider(TestCase):
     @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertArgIsBlock(
-            NetworkExtension.NEProvider.displayMessage_completionHandler_, 0, b"vZ"
+            NetworkExtension.NEProvider.displayMessage_completionHandler_, 1, b"vZ"
         )

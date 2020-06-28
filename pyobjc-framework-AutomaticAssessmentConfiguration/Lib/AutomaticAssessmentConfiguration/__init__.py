@@ -9,7 +9,8 @@ import sys
 
 import Foundation
 import objc
-from AutomaticAssessmentConfiguration import _metadata
+from . import _metadata
+from . import _AutomaticAssessmentConfiguration
 
 sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
     "AutomaticAssessmentConfiguration",
@@ -25,7 +26,7 @@ sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_AutomaticAssessmentConfiguration, Foundation,),
 )
 
 del sys.modules["AutomaticAssessmentConfiguration._metadata"]
