@@ -100,6 +100,7 @@ FRAMEWORK_WRAPPERS = [
     ("Message", None, "10.9"),
     ("Metal", "10.11", None),
     ("MetalKit", "10.11", None),
+    ("MLCompute", "10.16", None),
     ("ModelIO", "10.11", None),
     ("MultipeerConnectivity", "10.10", None),
     ("NaturalLanguage", "10.14", None),

@@ -24,3 +24,8 @@ class TestNSPersistentStoreResult(TestCase):
         self.assertEqual(CoreData.NSBatchInsertRequestResultTypeStatusOnly, 0x0)
         self.assertEqual(CoreData.NSBatchInsertRequestResultTypeObjectIDs, 0x1)
         self.assertEqual(CoreData.NSBatchInsertRequestResultTypeCount, 0x2)
+
+        self.assertEqual(CoreData.NSPersistentCloudKitContainerEventResultTypeEvents, 0)
+        self.assertEqual(
+            CoreData.NSPersistentCloudKitContainerEventResultTypeCountEvents, 1
+        )

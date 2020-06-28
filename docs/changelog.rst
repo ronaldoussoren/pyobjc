@@ -13,12 +13,14 @@ Version 7.0
 * Removed metadata for 32-bit systems
 
 * Updated framework bindings (Xcode 12 beta 1):
+  - AppKit
   - Automator
   - AVKit
   - CFNetwork
   - Contacts
   - CoreAudio
   - CoreBluetooth
+  - CoreData
   - CoreFoundation
   - CoreHaptics
   - CoreLocation
@@ -56,6 +58,8 @@ Version 7.0
   - CallKit (introduced in macOS 11.0)
   - ClassKit (introduced in macOS 11.0)
   - KernelManagement (introduced in macOS 11.0)
+  - MLCompute (introduced in macOS 11.0)
+  - ReplayKit (introduced in macOS 11.0)
   - ScreenTime (introduced in macOS 11.0)
   - UserNotificationsUI (introduced in macOS 11.0)
 
@@ -64,7 +68,7 @@ Version 7.0
   - WidgetKit: This is a Swift-only framework
 
 * Updated ``objc.dyld_library`` and ``objc.dyld_framework`` to return
-  a sane result on macOS 11 where system libraries are no longer at 
+  a sane result on macOS 11 where system libraries are no longer at
   the expected location, but in a shared cache.
 
 * Another attempt at giving a nice error message when trying to install on

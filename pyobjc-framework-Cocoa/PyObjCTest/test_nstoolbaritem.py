@@ -44,6 +44,11 @@ class TestNSToolbarItem(TestCase):
         self.assertResultIsBOOL(AppKit.NSToolbarItem.isBordered)
         self.assertArgIsBOOL(AppKit.NSToolbarItem.setBordered_, 0)
 
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(AppKit.NSToolbarItem.isNavigational)
+        self.assertArgIsBOOL(AppKit.NSToolbarItem.setNavigational_, 0)
+
     def testProtocols(self):
         self.assertResultIsBOOL(TestNSToolbarItemHelper.validateToolbarItem_)
 

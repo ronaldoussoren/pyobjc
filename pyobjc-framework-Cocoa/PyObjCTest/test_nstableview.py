@@ -124,6 +124,11 @@ class TestNSTableView(TestCase):
         self.assertIsInstance(AppKit.NSTableViewColumnDidResizeNotification, str)
         self.assertIsInstance(AppKit.NSTableViewSelectionIsChangingNotification, str)
 
+        self.assertEqual(AppKit.NSTableViewStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSTableViewStyleFullWidth, 1)
+        self.assertEqual(AppKit.NSTableViewStyleInset, 2)
+        self.assertEqual(AppKit.NSTableViewStyleSourceList, 3)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(AppKit.NSTableViewSelectionHighlightStyleNone, -1)

@@ -1,0 +1,54 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "MLCTensor": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyDataFromDeviceMemoryToBytes:length:synchronizeWithDevice:"
+     }
+    ]
+   },
+   "MLCTensorData": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "dataWithBytesNoCopy:length:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": true,
+      "selector": "dataWithImmutableBytesNoCopy:length:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "bytes"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "bytes"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

@@ -3,6 +3,18 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSManagedObjectContext(TestCase):
+    @min_os_level("10.12.4")
+    def testConstants10_12_4(self):
+        self.assertIsInstance(
+            CoreData.NSManagedObjectContextDidSaveObjectIDsNotification, str
+        )
+        self.assertIsInstance(
+            CoreData.NSManagedObjectContextDidMergeChangesObjectIDsNotification, str
+        )
+        self.assertIsInstance(CoreData.NSInsertedObjectIDsKey, str)
+        self.assertIsInstance(CoreData.NSUpdatedObjectIDsKey, str)
+        self.assertIsInstance(CoreData.NSDeletedObjectIDsKey, str)
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(CoreData.NSManagedObjectContextQueryGenerationKey, str)

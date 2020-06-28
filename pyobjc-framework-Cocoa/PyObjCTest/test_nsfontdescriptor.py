@@ -101,6 +101,20 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignMonospaced, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignRounded, str)
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(AppKit.NSFontTextStyleLargeTitle, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleTitle1, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleTitle2, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleTitle3, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleHeadline, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleSubheadline, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleBody, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleCallout, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleFootnote, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleCaption1, str)
+        self.assertIsInstance(AppKit.NSFontTextStyleCaption2, str)
+
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(AppKit.NSFontDescriptor.requiresFontAssetRequest)

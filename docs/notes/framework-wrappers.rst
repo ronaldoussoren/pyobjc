@@ -296,6 +296,8 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | MetricKit                                                         | -                                           | No public API on macOS.                 |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`MLCompute </apinotes/MLCompute>`                            | `pyobjc-framework-MLCompute`_               |                                         |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`ModelIO </apinotes/ModelIO>`                                | `pyobjc-framework-ModelIO`_                 |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`    | `pyobjc-framework-MultipeerConnectivity`_   |                                         |
@@ -374,6 +376,8 @@ The framework name links to API notes for that framework, the python packages li
 |                                                                   |                                             | macOS 10.15.                            |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | RealityKit                                                        | -                                           | Swift only framework.                   |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`ReplayKit </apinotes/ReplayKit>`                            | `pyobjc-framework-ReplayKit`_               |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | Ruby                                                              | -                                           | Will not be wrapped.                    |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -600,3 +604,5 @@ prioritizing work.
 .. _`pyobjc-framework-ClassKit`: https://pypi.org/project/pyobjc-framework-ClassKit/
 .. _`pyobjc-framework-CallKit`: https://pypi.org/project/pyobjc-framework-CallKit/
 .. _`pyobjc-framework-Accessibility`: https://pypi.org/project/pyobjc-framework-Accessibility/
+.. _`pyobjc-framework-MLCompute`: https://pypi.org/project/pyobjc-framework-MLCompute/
+.. _`pyobjc-framework-ReplayKit`: https://pypi.org/project/pyobjc-framework-ReplayKit/
