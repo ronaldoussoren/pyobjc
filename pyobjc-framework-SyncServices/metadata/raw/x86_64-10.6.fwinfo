@@ -2203,7 +2203,7 @@
       "class_method": false,
       "required": true,
       "retval": {
-       "typestr": "i",
+       "typestr": "I",
        "typestr_special": false
       },
       "selector": "preferredSyncModeForEntityName:",

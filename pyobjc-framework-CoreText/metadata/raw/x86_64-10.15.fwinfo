@@ -4203,7 +4203,7 @@
      },
      {
       "name": "text",
-      "typestr": "[4^{__CFString=}]"
+      "typestr": "^^{__CFString=}"
      }
     ],
     "retval": {

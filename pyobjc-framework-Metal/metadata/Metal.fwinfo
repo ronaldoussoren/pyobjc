@@ -9,6 +9,7 @@
    "MTLResourceHazardTrackingModeMask": { "value": "0x3 << MTLResourceHazardTrackingModeShift" }
   },
   "enum": {
+   "MTLCounterSampleBufferErrorInternal": { "value": 2 },
    "MTLCounterErrorValue": { "value": 18446744073709551615 },
    "MTLCounterDontSample": { "value": 18446744073709551615 }
   },

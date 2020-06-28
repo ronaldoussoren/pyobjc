@@ -3,6 +3,17 @@ import subprocess
 import pathlib
 import configparser
 
+IGNORE = {
+    # Frameworks not present in the latest SDK
+    "GameCenter",
+    "InterfaceBuilderKit"
+    "Message",
+    "PubSub",
+    "QTKit",
+    "XgridFoundation",
+}
+
+
 BASE = pathlib.Path(__file__).resolve().parent.parent
 
 scan_failed = []
@@ -12,6 +23,8 @@ for nm in BASE.glob("pyobjc-framework-*"):
     cfg.read(nm / "metadata" / "metadata.ini")
 
     for section in cfg.sections():
+        if section in IGNORE:
+            continue
         print(nm.name, section)
         overrides = nm / "metadata" / (cfg[section]["framework"] + ".fwinfo")
 
