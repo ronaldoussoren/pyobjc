@@ -211,9 +211,9 @@ functions = {
     "CFHTTPMessageAppendBytes": (b"Z^{__CFHTTPMessage=}^Cq",),
     "CFHostCancelInfoResolution": (b"v^{__CFHost=}i",),
     "CFNetServiceBrowserSearchForServices": (
-        b"Z^{__CFNetServiceBrowser=}^{__CFString=}^{__CFString=}^{_CFStreamError=qi}",
+        b"Z^{__CFNetServiceBrowser=}^{__CFString=}^{__CFString=}o^{_CFStreamError=qi}",
     ),
-    "CFHTTPAuthenticationIsValid": (b"Z^{_CFHTTPAuthentication=}^{_CFStreamError=qi}",),
+    "CFHTTPAuthenticationIsValid": (b"Z^{_CFHTTPAuthentication=}o^{_CFStreamError=qi}",),
     "CFHTTPAuthenticationAppliesToRequest": (
         b"Z^{_CFHTTPAuthentication=}^{__CFHTTPMessage=}",
     ),
@@ -226,7 +226,7 @@ functions = {
         b"v^{__CFNetServiceBrowser=}^{_CFStreamError=qi}",
     ),
     "CFHTTPMessageApplyCredentials": (
-        b"Z^{__CFHTTPMessage=}^{_CFHTTPAuthentication=}^{__CFString=}^{__CFString=}^{_CFStreamError=qi}",
+        b"Z^{__CFHTTPMessage=}^{_CFHTTPAuthentication=}^{__CFString=}^{__CFString=}o^{_CFStreamError=qi}",
     ),
     "CFHTTPReadStreamSetRedirectsAutomatically": (b"v^{__CFReadStream=}Z",),
     "CFNetServiceRegisterWithOptions": (b"Z^{__CFNetService=}Q^{_CFStreamError=qi}",),
@@ -355,7 +355,7 @@ functions = {
     ),
     "CFHostUnscheduleFromRunLoop": (b"v^{__CFHost=}^{__CFRunLoop=}^{__CFString=}",),
     "CFHTTPMessageApplyCredentialDictionary": (
-        b"Z^{__CFHTTPMessage=}^{_CFHTTPAuthentication=}^{__CFDictionary=}^{_CFStreamError=qi}",
+        b"Z^{__CFHTTPMessage=}^{_CFHTTPAuthentication=}^{__CFDictionary=}o^{_CFStreamError=qi}",
     ),
     "CFHTTPMessageIsRequest": (b"Z^{__CFHTTPMessage=}",),
     "CFNetServiceResolve": (b"Z^{__CFNetService=}^{_CFStreamError=qi}",),
@@ -387,7 +387,7 @@ functions = {
     "CFNetServiceSetProtocolSpecificInformation": (b"v^{__CFNetService=}@",),
     "CFSocketStreamSOCKSGetErrorSubdomain": (b"i^{_CFStreamError=qi}",),
     "CFStreamCreatePairWithSocketToCFHost": (
-        b"v^{__CFAllocator=}^{__CFHost=}i^^{__CFReadStream=}^^{__CFWriteStream=}",
+        b"v^{__CFAllocator=}^{__CFHost=}i^^{__CFReadStream=}o^^{__CFWriteStream=}",
         "",
         {"retval": {"already_cfretained": True}},
     ),

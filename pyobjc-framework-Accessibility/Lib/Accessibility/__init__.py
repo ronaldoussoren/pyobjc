@@ -9,7 +9,8 @@ import sys
 
 import Quartz
 import objc
-from Accessibility import _metadata
+from . import _metadata
+from . import _Accessibility
 
 sys.modules["Accessibility"] = mod = objc.ObjCLazyModule(
     "Accessibility",
@@ -23,7 +24,7 @@ sys.modules["Accessibility"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Quartz),
+    (_Accessibility, Quartz,),
 )
 
 
