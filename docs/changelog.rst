@@ -77,6 +77,8 @@ Version 7.0
 * Another attempt at giving a nice error message when trying to install on
   platforms other than macOS.
 
+* #301: pyobjc-framework-Metal build failed on macOS mojave
+
 
 Version 6.2.1
 -------------
