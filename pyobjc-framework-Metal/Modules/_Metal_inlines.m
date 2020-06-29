@@ -21,8 +21,6 @@ static PyObjC_function_map function_map[] = {
     {"MTLRegionMake2D", (PyObjC_Function_Pointer)&MTLRegionMake2D},
     {"MTLRegionMake3D", (PyObjC_Function_Pointer)&MTLRegionMake3D},
     {"MTLClearColorMake", (PyObjC_Function_Pointer)&MTLClearColorMake},
-    {"MTLTextureSwizzleChannelsMake",
-     (PyObjC_Function_Pointer)&MTLTextureSwizzleChannelsMake},
 
 #if PyObjC_BUILD_RELEASE >= 1013
     {"MTLSamplePositionMake", (PyObjC_Function_Pointer)&MTLSamplePositionMake},
@@ -33,6 +31,8 @@ static PyObjC_function_map function_map[] = {
 #endif
 #if PyObjC_BUILD_RELEASE >= 1015 && __apple_build_version__ >= 11030000
     {"MTLCoordinate2DMake", (PyObjC_Function_Pointer)&MTLCoordinate2DMake},
+    {"MTLTextureSwizzleChannelsMake",
+     (PyObjC_Function_Pointer)&MTLTextureSwizzleChannelsMake},
 #endif
     {0, 0}};
 
