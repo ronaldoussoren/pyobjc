@@ -47,11 +47,17 @@ def get_sdk_level(sdk):
     if sdk == "/":
         return get_os_level()
 
-    sdk = os.path.basename(sdk)
-    assert sdk.startswith("MacOSX")
-    assert sdk.endswith(".sdk")
-    sdk = sdk[6:-4]
-    return sdk
+    sdkname = os.path.basename(sdk)
+    assert sdkname.startswith("MacOSX")
+    assert sdkname.endswith(".sdk")
+    if sdkname == "MacOSX.sdk":
+        try:
+            pl = plistlib.readPlist(os.path.join(sdk, "SDKSettings.plist"))
+            return pl["Version"]
+        except Exception:
+            raise SystemExit("Cannot determine SDK version")
+    else:
+        return sdkname[6:-4]
 
 
 # CFLAGS for the objc._objc extension:
@@ -400,6 +406,8 @@ def _find_executable(executable):
 
 
 def _working_compiler(executable):
+    if executable == 'xcrun':
+        return True
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".c") as fp:
         fp.write("#include <stdarg.h>\nint main(void) { return 0; }\n")
