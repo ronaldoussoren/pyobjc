@@ -79,6 +79,8 @@ Version 7.0
 
 * #301: pyobjc-framework-Metal build failed on macOS mojave
 
+* Python 3.10 support: Don't assume the result of Py_TYPE is an lvalue
+
 
 Version 6.2.1
 -------------
