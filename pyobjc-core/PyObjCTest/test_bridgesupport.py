@@ -1,4 +1,7 @@
-import ctypes
+try:
+    import ctypes
+except ImportError:
+    ctypes = None
 import os
 import re
 import subprocess
@@ -8,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 import objc
 import objc._bridgesupport as bridgesupport
-from PyObjCTools.TestSupport import TestCase, main, os_release, expectedFailure
+from PyObjCTools.TestSupport import TestCase, main, os_release, expectedFailure, onlyIf
 
 from importlib import reload
 
@@ -1641,6 +1644,7 @@ class Patcher(object):
 
 
 class TestParseBridgeSupport(TestCase):
+    @onlyIf(ctypes is not None, "requires ctypes")
     def test_calls(self):
         # - Minimal XML with all types of metadata
         # - Mock the APIs used by parseBridgeSupport

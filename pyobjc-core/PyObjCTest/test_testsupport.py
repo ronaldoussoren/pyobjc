@@ -1,6 +1,10 @@
-import ctypes
 import sys
 import unittest
+
+try:
+    import ctypes
+except ImportError:
+    ctypes = None
 
 import objc
 from PyObjCTools import TestSupport
@@ -113,6 +117,7 @@ class TestTestSupport(TestCase):
 
         self.assertEqual(fourcc(b"abcd"), struct.unpack(">i", b"abcd")[0])
 
+    @onlyIf(ctypes is not None, "test requires ctypes")
     def test_cast(self):
         c_int = ctypes.c_int()
         c_uint = ctypes.c_uint()

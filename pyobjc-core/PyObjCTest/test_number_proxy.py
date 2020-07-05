@@ -223,8 +223,12 @@ class TestNSNumber(TestCase):
         self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65409)
         self.assertEqual(OC_TestNumber.numberAsUnsignedInt_(v), 4_294_967_169)
 
-        if sys.maxsize == (2 ** 31) - 1:
-            self.assertEqual(OC_TestNumber.numberAsUnsignedLong_(v), 4_294_967_169)
+        # NOTE: The expected values in the test below were determined by running
+        #       the equivalent ObjC code.
+        if objc.arch == 'arm64':
+            self.assertEqual(
+                OC_TestNumber.numberAsUnsignedLong_(v), 18_446_744_073_709_551_615
+            )
         else:
             self.assertEqual(
                 OC_TestNumber.numberAsUnsignedLong_(v), 18_446_744_073_709_551_488
@@ -241,7 +245,7 @@ class TestNSNumber(TestCase):
 
         self.assertIn(
             OC_TestNumber.numberAsUnsignedLongLong_(v),
-            (18_446_744_073_709_551_489, 18_446_744_073_709_551_488),
+            (18_446_744_073_709_551_489, 18_446_744_073_709_551_488, 18_446_744_073_709_551_615),
         )
 
         self.assertEqual(OC_TestNumber.numberAsDouble_(v), -127.6)
@@ -251,11 +255,11 @@ class TestNSNumber(TestCase):
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
 
-        if sys.byteorder == "big":
+        if objc.arch == 'arm64':
             self.assertEqual(OC_TestNumber.numberAsChar_(v), -1)
             self.assertEqual(OC_TestNumber.numberAsShort_(v), -1)
             self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 255)
-            self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65535)
+            self.assertEqual(OC_TestNumber.numberAsUnsignedShort_(v), 65535) 
         else:
             self.assertEqual(OC_TestNumber.numberAsChar_(v), 0)
             self.assertEqual(OC_TestNumber.numberAsShort_(v), 0)
@@ -553,7 +557,7 @@ class TestPyNumber(TestCase):
 
         self.assertEqual(OC_TestNumber.numberAsBOOL_(v), 1)
 
-        if sys.byteorder == "big":
+        if objc.arch == 'arm64':
             self.assertEqual(OC_TestNumber.numberAsChar_(v), -1)
             self.assertEqual(OC_TestNumber.numberAsShort_(v), -1)
             self.assertEqual(OC_TestNumber.numberAsUnsignedChar_(v), 255)

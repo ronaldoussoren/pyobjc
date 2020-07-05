@@ -50,6 +50,7 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
 
 
 def makeTestSuite(use_system_libffi):
+    use_system_libffi = True
     import __main__
 
     topdir = dirname(__main__.__file__)
@@ -58,7 +59,6 @@ def makeTestSuite(use_system_libffi):
     deja_suite = dejagnu.testSuiteForDirectory(
         join(deja_topdir, "libffi-src/tests/testsuite/libffi.call")
     )
-    print(deja_topdir)
 
     plain_suite = importExternalTestCases(
         "test_*.py", join(topdir, "PyObjCTest"), package="PyObjCTest"

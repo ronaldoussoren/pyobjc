@@ -56,7 +56,10 @@ class TestTypeCodeLeaks(TestCase):
             OC_TestTypeCodeLeaks_Result.myBOOLResult.native_signature
         )
         self.assertEqual(pysig[0], objc._C_NSBOOL)
-        self.assertEqual(csig[0], objc._C_CHR)
+        if objc.arch == "arm64":
+            self.assertEqual(csig[0], objc._C_BOOL)
+        else:
+            self.assertEqual(csig[0], objc._C_CHR)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_Result.myInt8Result.signature)
         csig = objc.splitSignature(
@@ -128,7 +131,10 @@ class TestTypeCodeLeaks(TestCase):
             OC_TestTypeCodeLeaks_RefIn.myBOOLArg_.native_signature
         )
         self.assertEqual(pysig[3], objc._C_IN + objc._C_PTR + objc._C_NSBOOL)
-        self.assertEqual(csig[3], objc._C_IN + objc._C_PTR + objc._C_CHR)
+        if objc.arch == "arm64":
+            self.assertEqual(csig[3], objc._C_IN + objc._C_PTR + objc._C_BOOL)
+        else:
+            self.assertEqual(csig[3], objc._C_IN + objc._C_PTR + objc._C_CHR)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefIn.myInt8Arg_.signature)
         csig = objc.splitSignature(
@@ -190,7 +196,10 @@ class TestTypeCodeLeaks(TestCase):
             OC_TestTypeCodeLeaks_RefInOut.myBOOLArg_.native_signature
         )
         self.assertEqual(pysig[3], objc._C_INOUT + objc._C_PTR + objc._C_NSBOOL)
-        self.assertEqual(csig[3], objc._C_INOUT + objc._C_PTR + objc._C_CHR)
+        if objc.arch == "arm64":
+            self.assertEqual(csig[3], objc._C_INOUT + objc._C_PTR + objc._C_BOOL)
+        else:
+            self.assertEqual(csig[3], objc._C_INOUT + objc._C_PTR + objc._C_CHR)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefInOut.myInt8Arg_.signature)
         csig = objc.splitSignature(
@@ -254,7 +263,10 @@ class TestTypeCodeLeaks(TestCase):
             OC_TestTypeCodeLeaks_RefOut.myBOOLArg_.native_signature
         )
         self.assertEqual(pysig[3], objc._C_OUT + objc._C_PTR + objc._C_NSBOOL)
-        self.assertEqual(csig[3], objc._C_OUT + objc._C_PTR + objc._C_CHR)
+        if objc.arch == "arm64":
+            self.assertEqual(csig[3], objc._C_OUT + objc._C_PTR + objc._C_BOOL)
+        else:
+            self.assertEqual(csig[3], objc._C_OUT + objc._C_PTR + objc._C_CHR)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefOut.myInt8Arg_.signature)
         csig = objc.splitSignature(
@@ -316,7 +328,10 @@ class TestTypeCodeLeaks(TestCase):
             OC_TestTypeCodeLeaks_RefConst.myBOOLArg_.native_signature
         )
         self.assertEqual(pysig[3], objc._C_CONST + objc._C_PTR + objc._C_NSBOOL)
-        self.assertEqual(csig[3], objc._C_CONST + objc._C_PTR + objc._C_CHR)
+        if objc.arch == "arm64":
+            self.assertEqual(csig[3], objc._C_CONST + objc._C_PTR + objc._C_BOOL)
+        else:
+            self.assertEqual(csig[3], objc._C_CONST + objc._C_PTR + objc._C_CHR)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_RefConst.myInt8Arg_.signature)
         csig = objc.splitSignature(
@@ -398,7 +413,10 @@ class TestTypeCodeLeaks(TestCase):
         self.assertEqual(
             pysig[3], objc._C_ARY_B + b"4" + objc._C_NSBOOL + objc._C_ARY_E
         )
-        self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_CHR + objc._C_ARY_E)
+        if objc.arch == "arm64":
+            self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_BOOL + objc._C_ARY_E)
+        else:
+            self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_CHR + objc._C_ARY_E)
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myInt8Arg_.signature)
         csig = objc.splitSignature(
@@ -486,9 +504,14 @@ class TestTypeCodeLeaks(TestCase):
         self.assertEqual(
             pysig[3], objc._C_STRUCT_B + b"test=" + objc._C_NSBOOL + objc._C_STRUCT_E
         )
-        self.assertEqual(
-            csig[3], objc._C_STRUCT_B + b"test=" + objc._C_CHR + objc._C_STRUCT_E
-        )
+        if objc.arch == "arm64":
+            self.assertEqual(
+                csig[3], objc._C_STRUCT_B + b"test=" + objc._C_BOOL + objc._C_STRUCT_E
+            )
+        else:
+            self.assertEqual(
+                csig[3], objc._C_STRUCT_B + b"test=" + objc._C_CHR + objc._C_STRUCT_E
+            )
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_StructDef.myInt8Arg_.signature)
         csig = objc.splitSignature(
