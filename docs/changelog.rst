@@ -28,7 +28,9 @@ XXX TODO:
   - CoreBluetooth
   - CoreData
   - CoreFoundation
+  - CoreGraphics
   - CoreHaptics
+  - CoreImage
   - CoreLocation
   - CoreMedia
   - CoreMotion

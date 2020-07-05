@@ -46,10 +46,19 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def bottomRight(self):
         return 1
 
+    def breakpoint0(self):
+        return 1
+
+    def breakpoint1(self):
+        return 1
+
     def brightness(self):
         return 1
 
     def center(self):
+        return 1
+
+    def centerStretchAmount(self):
         return 1
 
     def count(self):
@@ -71,6 +80,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         return 1
 
     def compression(self):
+        return 1
+
+    def cropAmount(self):
         return 1
 
     def pitch(self):
@@ -136,6 +148,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def falloff(self):
         return 1
 
+    def flipYTiles(self):
+        return 1
+
     def focalLength(self):
         return 1
 
@@ -146,6 +161,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         return 1
 
     def grayComponentReplacement(self):
+        return 1
+
+    def growAmount(self):
         return 1
 
     def haloOverlap(self):
@@ -167,6 +185,12 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         return 1
 
     def intensity(self):
+        return 1
+
+    def insetPoint0(self):
+        return 1
+
+    def insetPoint1(self):
         return 1
 
     def layers(self):
@@ -250,6 +274,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def radius1(self):
         return 1
 
+    def refraction(self):
+        return 1
+
     def ringAmount(self):
         return 1
 
@@ -304,6 +331,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def spatialSigma(self):
         return 1
 
+    def strands(self):
+        return 1
+
     def striationContrast(self):
         return 1
 
@@ -352,6 +382,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def roll(self):
         return 1
 
+    def zoom(self):
+        return 1
+
     def setEV_(self, a):
         pass
 
@@ -367,7 +400,16 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def setCompression_(self, a):
         pass
 
+    def setCropAmount_(self, a):
+        pass
+
+    def setCenterStretchAmount_(self, a):
+        pass
+
     def setShadowOffset_(self, a):
+        pass
+
+    def setStrands_(self, a):
         pass
 
     def setNRNoiseLevel_(self, a):
@@ -407,6 +449,12 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         pass
 
     def setBottomRight_(self, a):
+        pass
+
+    def setBreakpoint0_(self, a):
+        pass
+
+    def setBreakpoint1_(self, a):
         pass
 
     def setBrightness_(self, a):
@@ -499,6 +547,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def setFalloff_(self, a):
         pass
 
+    def setFlipYTiles_(self, a):
+        pass
+
     def setFocalLength_(self, a):
         pass
 
@@ -509,6 +560,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         pass
 
     def setGrayComponentReplacement_(self, a):
+        pass
+
+    def setGrowAmount(self, a):
         pass
 
     def setHaloOverlap_(self, a):
@@ -530,6 +584,12 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         pass
 
     def setIntensity_(self, a):
+        pass
+
+    def setInsetPoint0_(self, a):
+        pass
+
+    def setInsetPoint1_(self, a):
         pass
 
     def setLayers_(self, a):
@@ -611,6 +671,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         pass
 
     def setRadius1_(self, a):
+        pass
+
+    def setRefraction_(self, a):
         pass
 
     def setRingAmount_(self, a):
@@ -707,6 +770,9 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
         return 1
 
     def setWidth_(self, a):
+        return 1
+
+    def setZoom_(self, a):
         return 1
 
 
@@ -856,6 +922,42 @@ class TestCIFilterBuiltins(TestCase):
         objc.protocolNamed("CIMotionBlur")
         objc.protocolNamed("CINoiseReduction")
         objc.protocolNamed("CIZoomBlur")
+
+    @min_sdk_level("10.16")
+    def test_protocols10_16(self):
+        objc.protocolNamed("CIColorAbsoluteDifference")
+        objc.protocolNamed("CIColorThreshold")
+        objc.protocolNamed("CIColorThresholdOtsu")
+        objc.protocolNamed("CIBumpDistortion")
+        objc.protocolNamed("CIBumpDistortionLinear")
+        objc.protocolNamed("CICircleSplashDistortion")
+        objc.protocolNamed("CICircularWrap")
+        objc.protocolNamed("CIDisplacementDistortion")
+        objc.protocolNamed("CIDroste")
+        objc.protocolNamed("CIGlassDistortion")
+        objc.protocolNamed("CIGlassLozenge")
+        objc.protocolNamed("CIHoleDistortion")
+        objc.protocolNamed("CILightTunnel")
+        objc.protocolNamed("CINinePartStretched")
+        objc.protocolNamed("CINinePartTiled")
+        objc.protocolNamed("CIPinchDistortion")
+        objc.protocolNamed("CIStretchCrop")
+        objc.protocolNamed("CITorusLensDistortion")
+        objc.protocolNamed("CITwirlDistortion")
+        objc.protocolNamed("CIVortexDistortion")
+        objc.protocolNamed("CIAreaReductionFilter")
+        objc.protocolNamed("CIAreaAverage")
+        objc.protocolNamed("CIAreaHistogram")
+        objc.protocolNamed("CIAreaMaximum")
+        objc.protocolNamed("CIAreaMaximumAlpha")
+        objc.protocolNamed("CIAreaMinimum")
+        objc.protocolNamed("CIAreaMinimumAlpha")
+        objc.protocolNamed("CIAreaMinMax")
+        objc.protocolNamed("CIAreaMinMaxRed")
+        objc.protocolNamed("CIColumnAverage")
+        objc.protocolNamed("CIHistogramDisplay")
+        objc.protocolNamed("CIKMeans")
+        objc.protocolNamed("CIRowAverage")
 
     def assert_rw_prop(self, cls, name, typestr):
         self.assertResultHasType(getattr(cls, name), typestr)
@@ -1662,3 +1764,180 @@ class TestCIFilterBuiltins(TestCase):
                 TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "amount", objc._C_FLT)
+
+        with self.subTest("CIColorAbsoluteDifference"):
+            pass
+
+        with self.subTest("CINoiseReduction"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "threshold", objc._C_FLT)
+
+        with self.subTest("CIColorThresholdOtsu"):
+            pass
+
+        with self.subTest("CIBumpDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+
+        with self.subTest("CIBumpDistortionLinear"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+
+        with self.subTest("CICircleSplashDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+
+        with self.subTest("CICircularWrap"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
+
+        with self.subTest("CIDisplacementDistortion"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+
+        with self.subTest("CIDroste"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "insetPoint0", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "insetPoint1", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "strands", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "periodicity", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "rotation", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "zoom", objc._C_FLT)
+
+        with self.subTest("CIGlassDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+
+        with self.subTest("CIGlassLozenge"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point0", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "point1", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "refraction", objc._C_FLT)
+
+        with self.subTest("CIHoleDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+
+        with self.subTest("CILightTunnel"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "rotation", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+
+        with self.subTest("CILightTunnel"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "breakpoint0", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "breakpoint1", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "growAmount", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "flipYTiles", objc._C_BOOL)
+
+        with self.subTest("CIPinchDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+
+        with self.subTest("CIStretchCrop"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "size", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "cropAmount", objc._C_FLT)
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "centerStretchAmount", objc._C_FLT
+            )
+
+        with self.subTest("CITorusLensDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "width", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "refraction", objc._C_FLT)
+
+        with self.subTest("CITwirlDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
+
+        with self.subTest("CIVortexDistortion"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
+            )
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
+
+        with self.subTest("CIAreaReductionFilter"):
+            self.assert_rw_prop(
+                TestCIBuiltinFilterHelper, "extent", Quartz.CGRect.__typestr__
+            )
+
+        with self.subTest("CIAreaAverage"):
+            pass
+
+        with self.subTest("CIAreaHistogram"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "count", objc._C_NSInteger)
+
+        with self.subTest("CIAreaMaximum"):
+            pass
+
+        with self.subTest("CIAreaMaximumAlpha"):
+            pass
+
+        with self.subTest("CIAreaMinimum"):
+            pass
+
+        with self.subTest("CIAreaMinimumAlpha"):
+            pass
+
+        with self.subTest("CIAreaMinMax"):
+            pass
+
+        with self.subTest("CIAreaMinMaxRed"):
+            pass
+
+        with self.subTest("CIColumnAverage"):
+            pass
+
+        with self.subTest("CIHistogramDisplay"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "height", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "highLimit", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "lowLimit", objc._C_FLT)
+
+        with self.subTest("CIAreaHistogram"):
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "count", objc._C_NSInteger)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "passes", objc._C_FLT)
+            self.assert_rw_prop(TestCIBuiltinFilterHelper, "perceptual", objc._C_BOOL)
+
+        with self.subTest("CIRowAverage"):
+            pass
