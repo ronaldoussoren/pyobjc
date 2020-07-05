@@ -39,6 +39,7 @@ XXX TODO:
   - DeviceCheck
   - Foundation
   - FSEvents
+  - GameController
   - GameKit
   - ImageCaptureCore
   - ImageIO
