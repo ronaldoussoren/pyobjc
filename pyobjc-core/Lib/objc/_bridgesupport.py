@@ -3,7 +3,6 @@ Backward compatibity with bridgesupport files
 """
 __all__ = ("initFrameworkWrapper", "parseBridgeSupport")
 
-import ctypes
 import functools
 import os
 import re
@@ -14,6 +13,8 @@ import xml.etree.ElementTree as ET
 import pkg_resources
 
 import objc
+
+ctypes = None
 
 for method in (
     b"alloc",
@@ -47,6 +48,11 @@ _BOOLEAN_ATTRIBUTES = [
     "free_result",
 ]
 
+def _get_ctypes():
+    global ctypes
+
+    if ctypes is None:
+        import ctypes
 
 def _as_bytes(value):
     if isinstance(value, bytes):
@@ -268,6 +274,8 @@ class _BridgeSupportParser(object):
         return argIdx, result
 
     def do_cftype(self, node):
+        _get_ctypes()
+
         name = self.attribute_string(node, "name", None)
         typestr = self.attribute_string(node, "type", "type64")
         funcname = self.attribute_string(node, "gettypeid_func", None)
@@ -592,6 +600,7 @@ def parseBridgeSupport(
 ):
 
     if dylib_path:
+        _get_ctypes()
         lib = ctypes.cdll.LoadLibrary(dylib_path)
         _libraries.append(lib)
 
