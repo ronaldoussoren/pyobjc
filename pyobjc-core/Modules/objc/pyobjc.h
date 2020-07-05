@@ -84,7 +84,6 @@
 #import "libffi_support.h"
 
 #import "ObjCPointer.h"
-#import "arc-runtime.h"
 #import "block_support.h"
 #import "bundle-variables.h"
 #import "class-builder.h"

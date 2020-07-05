@@ -79,6 +79,7 @@ CFLAGS = [
     "-Wshorten-64-to-32",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
+    "-Werror",
 ]
 
 # CFLAGS for other (test) extensions:
