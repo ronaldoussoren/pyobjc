@@ -18,6 +18,7 @@ XXX TODO:
 
 * Updated framework bindings (Xcode 12 beta 1):
   - AppKit
+  - AuthenticationServices
   - Automator
   - AVFoundation
   - AVKit
