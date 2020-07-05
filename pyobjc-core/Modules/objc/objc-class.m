@@ -2833,12 +2833,12 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
 
     /* add the methods */
     if (curMethodIndex != 0) {
-        class_addMethodList(targetClass, methodsToAdd, (unsigned)curMethodIndex);
+        PyObjC_class_addMethodList(targetClass, methodsToAdd, (unsigned)curMethodIndex);
     }
 
     PyMem_Free(methodsToAdd);
     if (curClassMethodIndex != 0) {
-        class_addMethodList(object_getClass(targetClass), classMethodsToAdd,
+        PyObjC_class_addMethodList(object_getClass(targetClass), classMethodsToAdd,
                             (unsigned)curClassMethodIndex);
     }
 

@@ -2045,11 +2045,6 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         return NULL;
     }
 
-    PyObjC_SetupRuntimeCompat();
-    if (PyErr_Occurred()) {
-        return NULL;
-    }
-
     NSAutoreleasePool* initReleasePool = [[NSAutoreleasePool alloc] init];
     [OC_NSBundleHack installBundleHack];
 

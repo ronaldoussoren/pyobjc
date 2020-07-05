@@ -88,7 +88,7 @@ XXX TODO:
 * Python 3.10 support: Completely phase out use of old buffer API, which will
   be removed in Python 3.10.
 
-* Remove remnants of support for i386, ppc and ppc64 from pyobjc-core.
+* Removed remnants of support for i386, ppc and ppc64 from pyobjc-core.
 
 Version 6.2.1
 -------------

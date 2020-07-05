@@ -242,7 +242,7 @@ build_intermediate_class(Class base_class, char* name)
         if (closure == NULL)
             goto error_cleanup;
 
-        preclass_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
+        class_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
         closure = NULL;
     }
 
@@ -553,7 +553,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                 continue;
             }
 
-            if (!preclass_addProtocol(
+            if (!class_addProtocol(
                     new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
                 goto error_cleanup;
             }
@@ -971,7 +971,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                 if (closure == NULL)
                     goto error_cleanup;
 
-                preclass_addMethod(new_class, cur->selector, closure, cur->typestr);
+                class_addMethod(new_class, cur->selector, closure, cur->typestr);
                 PyObject* sel =
                     PyObjCSelector_NewNative(new_class, cur->selector, cur->typestr, 0);
                 if (sel == NULL)
@@ -1012,7 +1012,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             goto error_cleanup;
         }
 
-        if (!preclass_addIvar(new_class, PyObjCInstanceVariable_GetName(value), size,
+        if (!class_addIvar(new_class, PyObjCInstanceVariable_GetName(value), size,
                               align, type)) {
 
             goto error_cleanup;
@@ -1055,7 +1055,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             goto error_cleanup;
         }
 
-        if (!preclass_addMethod(new_class, PyObjCSelector_GetSelector(value), imp,
+        if (!class_addMethod(new_class, PyObjCSelector_GetSelector(value), imp,
                                 PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }
@@ -1097,7 +1097,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             goto error_cleanup;
         }
 
-        if (!preclass_addMethod(new_meta_class, PyObjCSelector_GetSelector(value), imp,
+        if (!class_addMethod(new_meta_class, PyObjCSelector_GetSelector(value), imp,
                                 PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }
