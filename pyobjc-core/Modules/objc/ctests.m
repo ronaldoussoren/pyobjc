@@ -63,9 +63,6 @@ BEGIN_UNITTEST(CheckNSInvoke)
  * Leopard is even worse, this test causes a crash of the interpreter when
  * running on PPC64.
  */
-#ifdef __ppc64__
-ASSERT_EQUALS(0, 1, "%d");
-#endif
 
 PyObjCTest_NSInvoke* obj = [[PyObjCTest_NSInvoke alloc] init];
 NSInvocation*        inv;
@@ -406,13 +403,7 @@ END_UNITTEST
 
 BEGIN_UNITTEST(TestSizeOfBool)
 
-/* Code in libffi_support.m depends on this equality. */
-#if defined(__ppc__) || defined(__ppc64__)
-ASSERT_EQUALS(sizeof(bool), sizeof(int), "%d");
-
-#else
 ASSERT_EQUALS(sizeof(bool), sizeof(char), "%d");
-#endif
 
 END_UNITTEST
 

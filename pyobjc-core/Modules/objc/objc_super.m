@@ -38,8 +38,7 @@ super_getattro(PyObject* self, PyObject* name)
          * (i.e. super, or a subclass), not the class of su->obj.
          */
         if (PyUnicode_Check(name)) {
-            skip =
-                (PyUnicode_GET_SIZE(name) && PyObjC_is_ascii_string(name, "__class__"));
+            skip = PyObjC_is_ascii_string(name, "__class__");
 
         } else {
             skip = 0;

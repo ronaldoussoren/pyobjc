@@ -2702,6 +2702,13 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     }
 #endif /* MAC_OS_X_VERSION_10_16 */
 
+#ifdef MAC_OS_X_VERSION_11_0
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_0", MAC_OS_X_VERSION_11_0)
+        < 0) {
+        return NULL;
+    }
+#endif /* MAC_OS_X_VERSION_11_0 */
+
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         return NULL;
     }
@@ -2728,6 +2735,19 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         return NULL;
     }
 
+#if defined(__x86_64__)
+    if (PyModule_AddStringConstant(m, "arch", "x86_64") < 0) {
+        return NULL;
+    }
+#elif defined(__arm64__)
+    if (PyModule_AddStringConstant(m, "arch", "arm64") < 0) {
+        return NULL;
+    }
+#else
+# error "Unsupported CPU architecture"
+#endif
+     
+
     /* Issue #298, at least in Xcode 11.3 the following code results in
      * a type encoding of "^{NSObject=#}" instead of "@" for the property:
      *
@@ -2741,7 +2761,10 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         return NULL;
     }
 
+#if PY_VERSION_HEX < 0x03070000
     PyEval_InitThreads();
+#endif
+
     if (![NSThread isMultiThreaded]) {
         [NSThread detachNewThreadSelector:@selector(targetForBecomingMultiThreaded:)
                                  toTarget:[OC_NSAutoreleasePoolCollector class]

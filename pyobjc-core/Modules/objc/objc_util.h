@@ -36,9 +36,9 @@ extern NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks;
 extern NSMapTableKeyCallBacks   PyObjCUtil_ObjCIdentityKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks;
 
-extern void PyObjC_FreeCArray(int, void*);
+extern void PyObjC_FreeCArray(int, Py_buffer*);
 extern int  PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
-                                  PyObject**);
+                                  PyObject**, Py_buffer*);
 extern PyObject* PyObjC_CArrayToPython(const char*, void*, Py_ssize_t);
 extern PyObject* PyObjC_CArrayToPython2(const char*, void*, Py_ssize_t,
                                         bool already_retained, bool already_cfretained);

@@ -17,11 +17,6 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/NSHost.h>
 
-#ifdef __ppc64__
-extern bool ffi64_stret_needs_ptr(const ffi_type* inType, unsigned short*,
-                                  unsigned short*);
-#endif
-
 /*
  * Define SMALL_STRUCT_LIMIT as the largest struct that will be returned
  * in registers instead of with a hidden pointer argument.
@@ -29,25 +24,17 @@ extern bool ffi64_stret_needs_ptr(const ffi_type* inType, unsigned short*,
 
 static const char gCharEncoding[] = {_C_CHR, 0};
 
-#if defined(__ppc__)
-
-#define SMALL_STRUCT_LIMIT 4
-
-#elif defined(__ppc64__)
-
-#define SMALL_STRUCT_LIMIT 8
-
-#elif defined(__i386__)
-
-#define SMALL_STRUCT_LIMIT 8
-
-#elif defined(__x86_64__)
+#if defined(__x86_64__)
 
 #define SMALL_STRUCT_LIMIT 16
 
+#elif defined(__arm64__)
+
+/* pass */
+
 #else
 
-#error "Unsupported MACOSX platform"
+#error "Unsupported CPU architecture"
 
 #endif
 
@@ -364,35 +351,7 @@ struct_to_ffi_type(const char* argtype)
 ffi_type*
 PyObjCFFI_Typestr2FFI(const char* argtype)
 {
-#ifdef __ppc__
-    static const char long_type[]  = {_C_LNG, 0};
-    static const char ulong_type[] = {_C_ULNG, 0};
-
-    switch (*argtype) {
-    case _C_CHR:
-    case _C_SHT:
-    case _C_UNICHAR:
-        return signature_to_ffi_type(long_type);
-
-    case _C_UCHR:
-    case _C_USHT:
-        return signature_to_ffi_type(ulong_type);
-
-#ifdef _C_BOOL
-    case _C_BOOL:
-        return signature_to_ffi_type(long_type);
-#endif
-
-    case _C_NSBOOL:
-        return signature_to_ffi_type(long_type);
-    default:
-        return signature_to_ffi_type(argtype);
-    }
-
-#else /* !__ppc__ */
     return signature_to_ffi_type(argtype);
-
-#endif /* ! __ppc__ */
 }
 
 static ffi_type*
@@ -417,12 +376,7 @@ signature_to_ffi_type(const char* argtype)
 
 #ifdef _C_BOOL
     case _C_BOOL:
-        /* sizeof(bool) == 4 on PPC32, and 1 on all others */
-#if defined(__ppc__) && !defined(__LP64__)
-        return &ffi_type_sint;
-#else  /* !defined(__ppc__) || defined(__LP64__) */
         return &ffi_type_schar;
-#endif /* !defined(__ppc__) || defined(__LP64__) */
 
 #endif /* _C_BOOL */
 
@@ -832,10 +786,10 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 typecode = _C_LNG;
             }
 
-            if (typecode == _C_LNG_LNG) {
+            if (typecode == _C_LNG_LNG || typecode == _C_ULNG_LNG) {
                 byref[curarg] = PyMem_Malloc(sizeof(long long));
 
-            } else if (typecode == _C_LNG) {
+            } else if (typecode == _C_LNG || typecode == _C_ULNG) {
                 byref[curarg] = PyMem_Malloc(sizeof(long));
 
             } else {
@@ -866,15 +820,15 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
         case 'U':
         case 'O':
             /* UNSIGNED */
-            if (*format == 'U' || *format == 'X') {
+            if (*format == 'U' || *format == 'X' || *format == 'O') {
                 typecode = _C_LNG;
             }
 
-            if (typecode == _C_LNG_LNG) {
+            if (typecode == _C_LNG_LNG || typecode == _C_ULNG_LNG) {
                 byref[curarg] = PyMem_Malloc(sizeof(long long));
                 typecode      = _C_ULNG_LNG;
 
-            } else if (typecode == _C_LNG) {
+            } else if (typecode == _C_LNG || typecode == _C_ULNG) {
                 byref[curarg] = PyMem_Malloc(sizeof(long));
                 typecode      = _C_ULNG;
 
@@ -924,17 +878,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 return -1;
             }
             values[curarg] = byref[curarg];
-#if defined(__ppc__)
-            /* Passing floats to variadic functions on darwin/ppc
-             * is slightly convoluted. Lying to libffi about the
-             * type of the argument seems to trick it into doing
-             * what the callee expects.
-             */
-            arglist[curarg] = &ffi_type_uint64;
-
-#else  /* !defined(__ppc) */
             arglist[curarg] = signature_to_ffi_type(&typecode);
-#endif /* !defined(__ppc) */
 
             argoffset++;
             curarg++;
@@ -945,9 +889,9 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
             /* string */
             if (*format == 'S' || typecode == _C_LNG) {
                 /* whar_t */
-                v = byref_attr[curarg].buffer =
+                v = byref_attr[curarg].obj =
                     PyUnicode_FromObject(PyTuple_GET_ITEM(argtuple, argoffset));
-                if (byref_attr[curarg].buffer == NULL) {
+                if (byref_attr[curarg].obj == NULL) {
                     Py_DECREF(encoded);
                     return -1;
                 }
@@ -2665,8 +2609,6 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
     BOOL       have_counted_array = NO;
     PyObject*  printf_format      = NULL;
     Py_ssize_t sz;
-    void*      buffer    = NULL;
-    Py_ssize_t bufferlen = 0;
 
     /* We have to do two passes over the argument array: the first to deal
      * with plain arguments, the second deals with arrays whose size is
@@ -2733,12 +2675,14 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 }
 
             } else {
+		Py_buffer view;
 
                 switch (methinfo->argtype[i]->ptrType) {
                 case PyObjC_kFixedLengthArray:
                 case PyObjC_kVariableLengthArray:
                 case PyObjC_kArrayCountInArg:
-                    if (PyObject_AsWriteBuffer(argument, &buffer, &bufferlen) != -1) {
+                    if (PyObject_GetBuffer(argument, &view, PyBUF_CONTIG) != -1) {
+                        PyBuffer_Release(&view);
                         error = 1;
                         break;
 
@@ -2785,12 +2729,12 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 return -1;
 
             case PyObjC_kFixedLengthArray:
-                if (PyObject_AsWriteBuffer(argument, &buffer, &bufferlen) != -1) {
+                if (PyObject_CheckBuffer(argument)) {
 
                     count = methinfo->argtype[i]->arrayArg;
                     byref_attr[i].token =
                         PyObjC_PythonToCArray(YES, YES, resttype, argument, byref + i,
-                                              &count, &byref_attr[i].buffer);
+                                              &count, &byref_attr[i].obj, &byref_attr[i].view);
 
                     if (byref_attr[i].token == -1) {
                         return -1;
@@ -2813,12 +2757,12 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 break;
 
             case PyObjC_kVariableLengthArray:
-                if (PyObject_AsWriteBuffer(argument, &buffer, &bufferlen) != -1) {
+                if (PyObject_CheckBuffer(argument)) {
 
                     count = methinfo->argtype[i]->arrayArg;
                     byref_attr[i].token =
                         PyObjC_PythonToCArray(YES, YES, resttype, argument, byref + i,
-                                              NULL, &byref_attr[i].buffer);
+                                              NULL, &byref_attr[i].obj, &byref_attr[i].view);
 
                     if (byref_attr[i].token == -1) {
                         return -1;
@@ -2941,7 +2885,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                     if (closure == NULL) {
                                         return -1;
                                     }
-                                    byref_attr[i].buffer = PyCapsule_New(
+                                    byref_attr[i].obj = PyCapsule_New(
                                         closure, "objc.__imp__", imp_capsule_cleanup);
                                 } else {
                                     PyErr_SetString(
@@ -2991,7 +2935,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
                             byref_attr[i].token = PyObjC_PythonToCArray(
                                 argtype[0] == _C_INOUT, YES, resttype, argument,
-                                byref + i, &count, &byref_attr[i].buffer);
+                                byref + i, &count, &byref_attr[i].obj, &byref_attr[i].view);
                             if (byref_attr[i].token == -1) {
                                 error = -1;
                             } else {
@@ -3003,7 +2947,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                             /* TODO: add explicit support for UniChar arrays */
                             byref_attr[i].token = PyObjC_PythonToCArray(
                                 argtype[0] == _C_INOUT, YES, resttype, argument,
-                                byref + i, NULL, &byref_attr[i].buffer);
+                                byref + i, NULL, &byref_attr[i].obj, &byref_attr[i].view);
                             if (byref_attr[i].token == -1) {
                                 error = -1;
                             } else {
@@ -3112,7 +3056,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         count           = methinfo->argtype[i]->arrayArg;
                         byref_attr[i].token =
                             PyObjC_PythonToCArray(NO, YES, resttype, argument, byref + i,
-                                                  &count, &byref_attr[i].buffer);
+                                                  &count, &byref_attr[i].obj, &byref_attr[i].view);
 
                         if (byref_attr[i].token == -1) {
                             error = -1;
@@ -3120,45 +3064,45 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                     } break;
 
                     case PyObjC_kVariableLengthArray: {
-                        const char* buf;
-                        Py_ssize_t  len;
+			Py_buffer view;
 
-                        error = PyObject_AsCharBuffer(argument, &buf, &len);
+			error = PyObject_GetBuffer(argument, &view, PyBUF_CONTIG_RO);
                         if (error != -1) {
-                            byref[i] = PyMem_Malloc(len);
+                            byref[i] = PyMem_Malloc(view.len);
 
                             if (byref[i] == NULL) {
                                 PyErr_NoMemory();
                                 error = -1;
 
                             } else {
-                                memcpy(byref[i], buf, len);
+                                memcpy(byref[i], view.buf, view.len);
                                 error = 0;
                             }
+
+                            PyBuffer_Release(&view);
                         }
                     }
 
                     break;
 
                     case PyObjC_kNullTerminatedArray: {
-                        const char* buf;
-                        Py_ssize_t  len;
+			Py_buffer view;
 
-                        error = PyObject_AsCharBuffer(argument, &buf, &len);
+			error = PyObject_GetBuffer(argument, &view, PyBUF_CONTIG_RO);
                         if (error != -1) {
-                            byref[i] = PyMem_Malloc(len + 1);
+                            byref[i] = PyMem_Malloc(view.len + 1);
 
                             if (byref[i] == NULL) {
                                 PyErr_NoMemory();
                                 error = -1;
 
                             } else {
-                                memcpy(byref[i], buf, len);
-                                ((char*)byref[i])[len] = '\0';
+                                memcpy(byref[i], view.buf, view.len);
+                                ((char*)byref[i])[view.len] = '\0';
                             }
 
-                        } else {
-                            error = -1;
+                            PyBuffer_Release(&view);
+
                         }
                     } break;
 
@@ -3217,7 +3161,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                     return -1;
                                 }
 
-                                byref_attr[i].buffer = PyCapsule_New(
+                                byref_attr[i].obj = PyCapsule_New(
                                     closure, "objc.__imp__", imp_capsule_cleanup);
 
                             } else {
@@ -3272,7 +3216,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         if (*(void**)arg == NULL) {
                             return -1;
                         }
-                        byref_attr[i].buffer = PyCapsule_New(
+                        byref_attr[i].obj = PyCapsule_New(
                             *(void**)arg, "objc.__block__", block_capsule_cleanup);
                     }
                     arglist[i] = signature_to_ffi_type(argtype);
@@ -3333,11 +3277,10 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                     }
 
                     if (argument
-                        && (PyObject_AsWriteBuffer(argument, &buffer, &bufferlen)
-                            != -1)) {
+                        && PyObject_CheckBuffer(argument)) {
                         byref_attr[i].token =
                             PyObjC_PythonToCArray(YES, YES, resttype, argument, byref + i,
-                                                  &count, &byref_attr[i].buffer);
+                                                  &count, &byref_attr[i].obj, &byref_attr[i].view);
                         if (byref_attr[i].token == -1) {
                             return -1;
                         }
@@ -3397,7 +3340,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
                                 byref_attr[i].token = PyObjC_PythonToCArray(
                                     argtype[0] == _C_INOUT, NO, resttype, argument,
-                                    byref + i, &count, &byref_attr[i].buffer);
+                                    byref + i, &count, &byref_attr[i].obj, &byref_attr[i].view);
                                 if (byref_attr[i].token == -1) {
                                     return -1;
                                 }
@@ -3429,7 +3372,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                             }
                             byref_attr[i].token = PyObjC_PythonToCArray(
                                 NO, NO, gCharEncoding, argument, byref + i, &count,
-                                &byref_attr[i].buffer);
+                                &byref_attr[i].obj, &byref_attr[i].view);
                             if (byref_attr[i].token == -1) {
                                 return -1;
                             }
@@ -3782,8 +3725,8 @@ PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         v = PyObjC_NULL;
                         Py_INCREF(v);
 
-                    } else if (byref_attr[i].buffer != NULL) {
-                        v = byref_attr[i].buffer;
+                    } else if (byref_attr[i].obj != NULL) {
+                        v = byref_attr[i].obj;
                         Py_INCREF(v);
 
                     } else {
@@ -3942,11 +3885,14 @@ PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_
                 continue;
 
             if (byref_attr[i].token != 0) {
-                PyObjC_FreeCArray(byref_attr[i].token, byref[i]);
+                PyObjC_FreeCArray(byref_attr[i].token, &(byref_attr[i].view));
                 byref[i] = NULL;
 
-                Py_XDECREF(byref_attr[i].buffer);
-                byref_attr[i].buffer = NULL;
+                /* XXX: Check if this is correct, .obj is sometimes set
+                 * without using the CArray functions.
+                 */
+                Py_XDECREF(byref_attr[i].obj);
+                byref_attr[i].obj = NULL;
 
             } else {
                 PyMem_Free(byref[i]);
@@ -3958,6 +3904,7 @@ PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_
     return 0;
 }
 
+#ifndef __arm64__
 int
 PyObjCRT_ResultUsesStret(const char* typestr)
 {
@@ -3967,22 +3914,11 @@ PyObjCRT_ResultUsesStret(const char* typestr)
     }
 
     if (*typestr == _C_STRUCT_B &&
-#ifdef __ppc64__
-        ffi64_stret_needs_ptr((typestr), NULL, NULL)
-
-#else /* !__ppc64__ */
         (resultSize > SMALL_STRUCT_LIMIT
-#ifdef __i386__
-         /* darwin/x86 ABI is slightly odd ;-) */
-         || (resultSize != 1 && resultSize != 2 && resultSize != 4 && resultSize != 8)
-#endif
-#ifdef __x86_64__
          /* darwin/x86-64 ABI is slightly odd ;-) */
          || (resultSize != 1 && resultSize != 2 && resultSize != 4 && resultSize != 8
              && resultSize != 16)
-#endif
              )
-#endif /* !__ppc64__ */
     ) {
 
         return 1;
@@ -3990,6 +3926,7 @@ PyObjCRT_ResultUsesStret(const char* typestr)
         return 0;
     }
 }
+#endif /* !__arm64__ */
 
 #define USE_ALLOCA(bufsize) 0
 
@@ -4016,12 +3953,14 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
     ffi_cif                cif;
     ffi_type*              arglist[MAX_ARGCOUNT];
     void*                  values[MAX_ARGCOUNT];
-    struct byref_attr      byref_attr[MAX_ARGCOUNT] = {{0, 0}};
+    struct byref_attr      byref_attr[MAX_ARGCOUNT] = {{0, 0, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}};
     void*                  byref[MAX_ARGCOUNT]      = {0};
     Py_ssize_t             r;
     void*                  msgResult;
     Py_ssize_t             resultSize;
+#ifndef __arm64__
     int                    useStret;
+#endif
     int                    flags;
     SEL                    theSel;
     int                    isUninitialized;
@@ -4176,11 +4115,11 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
             }
         }
     }
-
+#ifndef __arm64__
     useStret = 0;
+#endif
 
     if (unlikely(PyObjCIMP_Check(aMeth))) {
-        useStret   = 0;
         theSel     = PyObjCIMP_GetSelector(aMeth);
         arglist[0] = &ffi_type_pointer;
         values[0]  = &self_obj;
@@ -4197,10 +4136,12 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
             objc_superSetClass(super, meth->base.sel_class);
         }
 
+#ifndef __arm64__
         useStret = PyObjCRT_ResultUsesStret(rettype);
         if (useStret == -1) {
             goto error_cleanup;
         }
+#endif
 
         superPtr   = &super;
         arglist[0] = &ffi_type_pointer;
@@ -4222,7 +4163,11 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
     ffi_type* retsig = PyObjCFFI_Typestr2FFI(rettype);
     if (retsig == NULL)
         goto error_cleanup;
-    r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
+    if (methinfo->variadic) { 
+        r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), (int)r, retsig, arglist);
+    } else { 
+        r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist); 
+    }
     if (r != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
         goto error_cleanup;
@@ -4241,11 +4186,15 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
                 ffi_call(&cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), msgResult, values);
             } else {
 
+#ifdef __arm64__
+    ffi_call(&cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+#else
                 if (unlikely(useStret)) {
                     ffi_call(&cif, FFI_FN(objc_msgSendSuper_stret), msgResult, values);
                 } else {
                     ffi_call(&cif, FFI_FN(objc_msgSendSuper), msgResult, values);
                 }
+#endif
             }
 
         } @catch (NSObject* localException) {
@@ -4360,8 +4309,13 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
         return NULL;
     }
 
-    rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), cl_ret_type,
+    if (methinfo->variadic) {
+        rv = ffi_prep_cif_var(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), (int)Py_SIZE(methinfo), cl_ret_type,
                       cl_arg_types);
+    } else {
+        rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), cl_ret_type,
+                      cl_arg_types);  
+    }
 
     if (rv != FFI_OK) {
         PyMem_Free(cif);
@@ -4397,6 +4351,7 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
     ffi_cif*     cif;
     ffi_closure* cl;
     ffi_status   rv;
+    void* codeloc;
 
     cif = PyObjCFFI_CIFForSignature(methinfo);
     if (cif == NULL) {
@@ -4405,21 +4360,21 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
 
     /* And finally create the actual closure */
     /*cl = PyMem_Malloc(sizeof(*cl));*/
-    cl = PyObjC_malloc_closure();
+    cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
     if (cl == NULL) {
         PyObjCFFI_FreeCIF(cif);
         /*PyErr_NoMemory();*/
         return NULL;
     }
 
-    rv = ffi_prep_closure(cl, cif, func, userdata);
+    rv = ffi_prep_closure_loc(cl, cif, func, userdata, codeloc);
     if (rv != FFI_OK) {
         PyObjCFFI_FreeCIF(cif);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         return NULL;
     }
 
-    return (IMP)cl;
+    return (IMP)codeloc;
 }
 
 /*
@@ -4433,10 +4388,10 @@ PyObjCFFI_FreeClosure(IMP closure)
     void*        retval;
     ffi_closure* cl;
 
-    cl     = (ffi_closure*)closure;
+    cl     = ffi_find_closure_for_code_np(closure);
     retval = cl->user_data;
     PyObjCFFI_FreeCIF(cl->cif);
-    PyObjC_free_closure(cl);
+    ffi_closure_free(cl);
 
     return retval;
 }

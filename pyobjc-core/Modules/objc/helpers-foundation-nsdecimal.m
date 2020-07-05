@@ -890,7 +890,7 @@ call_NSDecimalNumber_decimalValue(PyObject* method, PyObject* self, PyObject* ar
             objc_superSetReceiver(super, PyObjCObject_GetObject(self));
             objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
-#if defined(__i386__)
+#if defined(__i386__) || defined(__arm64__)
             /* The call below doesn't work on i386, I'm not sure why.
              * Because nobody will every subclass NSDecimalNumber this is not
              * really a problem.

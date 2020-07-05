@@ -302,6 +302,13 @@ tc2tc(char* buf)
 exit:
     switch (*buf) {
     case _C_NSBOOL:
+#ifdef __arm64__
+        *buf = _C_BOOL;
+#else
+        *buf = _C_CHR;
+#endif
+        break;
+
     case _C_CHAR_AS_INT:
     case _C_CHAR_AS_TEXT:
         *buf = _C_CHR;
@@ -1031,8 +1038,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                                           PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R has signature that is not compatible with super-class",
-                             value);
+                             "%R has signature that is not compatible with super-class: %s != %s",
+                             value, method_getTypeEncoding(meth), PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }
@@ -1074,8 +1081,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                                           PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R has signature that is not compatible with super-class",
-                             value);
+                             "%R has signature that is not compatible with super-class: %s != %s",
+                             value, method_getTypeEncoding(meth), PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }

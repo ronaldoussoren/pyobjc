@@ -501,4 +501,16 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 
 #define PyObjC_MODULE_CREATE(name) PyModule_Create(&mod_module);
 
+
+#ifdef __arm64__
+
+/* On ARM64 there are no separate dispatch functions for struct returns */
+
+/* XXX: This needs a cleaner fix... */
+
+#define objc_msgSend_stret  objc_msgSend
+#define objc_msgSendSuper_stret  objc_msgSendSuper
+
+#endif
+
 #endif /* PyObjC_COMPAT_H */

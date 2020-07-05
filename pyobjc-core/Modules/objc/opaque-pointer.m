@@ -225,6 +225,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     PyObject*                           v = NULL;
     PyObject*                           w = NULL;
     const char*                         name_dot;
+    void* codeloc = NULL;
 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
@@ -343,7 +344,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
         }
     }
 
-    cl = PyObjC_malloc_closure();
+    cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
     if (cl == NULL) {
         goto error_cleanup;
     }
@@ -352,29 +353,29 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     Py_INCREF(Py_TYPE(&(newType->ht_type)));
     PyType_Ready((PyTypeObject*)newType);
 
-    rv = ffi_prep_closure(cl, convert_cif, opaque_to_c, newType);
+    rv = ffi_prep_closure_loc(cl, convert_cif, opaque_to_c, newType, codeloc);
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
-    to_c = (PyObjCPointerWrapper_FromPythonFunc)cl;
+    to_c = (PyObjCPointerWrapper_FromPythonFunc)codeloc;
     cl   = NULL;
 
-    cl = PyObjC_malloc_closure();
+    cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
     if (cl == NULL) {
         goto error_cleanup;
     }
 
-    rv = ffi_prep_closure(cl, new_cif, opaque_from_c, newType);
+    rv = ffi_prep_closure_loc(cl, new_cif, opaque_from_c, newType, codeloc);
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
-    from_c = (PyObjCPointerWrapper_ToPythonFunc)cl;
+    from_c = (PyObjCPointerWrapper_ToPythonFunc)codeloc;
     cl     = NULL;
 
     r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);
@@ -395,15 +396,15 @@ error_cleanup:
     }
 
     if (cl) {
-        PyObjC_free_closure(cl);
+        ffi_closure_free(cl);
     }
 
     if (to_c) {
-        PyObjC_free_closure((ffi_closure*)to_c);
+        ffi_closure_free(ffi_find_closure_for_code_np(to_c));
     }
 
     if (from_c) {
-        PyObjC_free_closure((ffi_closure*)from_c);
+        ffi_closure_free(ffi_find_closure_for_code_np(from_c));
     }
 
     Py_XDECREF(v);

@@ -6,6 +6,10 @@ An overview of the relevant changes in new, and older, releases.
 Version 7.0
 -----------
 
+XXX TODO:
+  - Fully validate use of new buffer protocol, with tests
+  - Implement shape support for new buffer protocol, instead of only for array.array
+
 * This version drops support for 32-bit executables, both
   the core bridge and the framework wrappers only support
   64-bit executables going forward
@@ -79,8 +83,12 @@ Version 7.0
 
 * #301: pyobjc-framework-Metal build failed on macOS mojave
 
-* Python 3.10 support: Don't assume the result of Py_TYPE is an lvalue
+* Python 3.10 support: Don't assume the result of Py_REFCNT, Py_SIZE and Py_TYPE are an lvalue.
 
+* Python 3.10 support: Completely phase out use of old buffer API, which will
+  be removed in Python 3.10.
+
+* Remove remnants of support for i386, ppc and ppc64 from pyobjc-core.
 
 Version 6.2.1
 -------------

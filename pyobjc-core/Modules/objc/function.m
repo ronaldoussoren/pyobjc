@@ -89,7 +89,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     ffi_type*         arglist[MAX_ARGCOUNT];
     void*             values[MAX_ARGCOUNT];
     void*             byref[MAX_ARGCOUNT]      = {0};
-    struct byref_attr byref_attr[MAX_ARGCOUNT] = {{0, 0}};
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = { BYREF_ATTR_INT };
     ffi_cif           cif;
     ffi_cif*          cifptr;
 
@@ -181,7 +181,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     }
 
     if (variadicAllArgs) {
-        r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
+        r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
                          PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
 
         if (r != FFI_OK) {

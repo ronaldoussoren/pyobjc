@@ -4,6 +4,8 @@
  */
 #include "pyobjc.h"
 
+#if 0
+
 #include <sys/mman.h>
 
 typedef struct freelist {
@@ -98,3 +100,5 @@ PyObjC_free_closure(ffi_closure* cl)
     closure_freelist      = (freelist*)cl;
     return 0;
 }
+
+#endif
