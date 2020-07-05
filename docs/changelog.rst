@@ -72,6 +72,7 @@ XXX TODO:
   - MLCompute (introduced in macOS 11.0)
   - ReplayKit (introduced in macOS 11.0)
   - ScreenTime (introduced in macOS 11.0)
+  - UniformTypeIdentifiers (introduced in macOS 11.0)
   - UserNotificationsUI (introduced in macOS 11.0)
 
 * The following new frameworks in macOS 11 will not be wrapped:

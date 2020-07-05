@@ -143,6 +143,7 @@ FRAMEWORK_WRAPPERS = [
     ("SceneKit", "10.7", None),
     ("SoundAnalysis", "10.15", None),
     ("SystemExtensions", "10.15", None),
+    ("UniformTypeIdentifiers", "10.16", None),
     ("UserNotifications", "10.14", None),
     ("UserNotificationsUI", "10.16", None),
     ("VideoSubscriberAccount", "10.14", None),
