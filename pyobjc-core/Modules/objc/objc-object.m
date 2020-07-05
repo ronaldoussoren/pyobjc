@@ -218,7 +218,7 @@ object_verify_type(PyObject* obj)
             }
 
             tmp          = Py_TYPE(obj);
-            Py_TYPE(obj) = tp;
+            Py_SET_TYPE(obj, tp);
             Py_INCREF(tp);
             Py_DECREF(tmp);
 
@@ -727,7 +727,7 @@ objc_get_real_class(PyObject* self, void* closure __attribute__((__unused__)))
     ret = PyObjCClass_New(object_getClass(obj_object));
     if (ret != (PyObject*)Py_TYPE(self)) {
         Py_DECREF(Py_TYPE(self));
-        Py_TYPE(self) = (PyTypeObject*)ret;
+        Py_SET_TYPE(self, (PyTypeObject*)ret);
         Py_INCREF(ret);
     }
     return ret;

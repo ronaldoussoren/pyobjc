@@ -380,6 +380,18 @@
  *
  */
 
+#ifndef Py_SET_TYPE
+#define Py_SET_TYPE(obj, type) do { Py_TYPE((obj)) = (type); } while(0)
+#endif
+
+#ifndef Py_SET_SIZE
+#define Py_SET_SIZE(obj, size) do { Py_SIZE((obj)) = (size); } while(0)
+#endif
+
+#ifndef Py_SET_REFCNT
+#define Py_SET_REFCNT(obj, count) do { Py_REFCOUNT((obj)) = (count); } while(0)
+#endif
+
 /* Use CLINIC_SEP between the prototype and
  * description in doc strings, to get clean
  * docstrings.

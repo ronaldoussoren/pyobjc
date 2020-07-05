@@ -371,7 +371,7 @@ new_methodsignature(const char* signature)
         retval->argtype[i] = NULL;
     }
 
-    Py_SIZE(retval)               = nargs;
+    Py_SET_SIZE(retval, nargs);
     retval->suggestion            = NULL;
     retval->variadic              = NO;
     retval->deprecated            = 0;
@@ -1169,7 +1169,7 @@ compiled_metadata(PyObject* metadata)
     }
 
     result = PyObject_NewVar(PyObjCMethodSignature, &PyObjCMethodSignature_Type, max_idx);
-    Py_SIZE(result)               = max_idx;
+    Py_SET_SIZE(result, max_idx);
     result->suggestion            = NULL;
     result->variadic              = NO;
     result->deprecated            = 0;

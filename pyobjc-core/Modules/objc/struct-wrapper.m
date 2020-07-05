@@ -1289,7 +1289,7 @@ PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
         return NULL;
     }
 
-    Py_REFCNT(result)         = 1;
+    Py_SET_REFCNT(result, 1);
     result->base.tp_members   = members;
     result->base.tp_basicsize = sizeof(PyObject) + (numFields * sizeof(PyObject*));
     if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields) == -1) {
