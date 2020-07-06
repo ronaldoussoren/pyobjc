@@ -23,6 +23,12 @@ class TestWKWebViewConfiguration(TestCase):
             WebKit.WKWebViewConfiguration.setAllowsAirPlayForMediaPlayback_, 0
         )
 
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            WebKit.WKWebViewConfiguration.limitsNavigationsToAppBoundDomains
+        )
+
     def testConstants(self):
         self.assertEqual(WebKit.WKUserInterfaceDirectionPolicyContent, 0)
         self.assertEqual(WebKit.WKUserInterfaceDirectionPolicySystem, 1)

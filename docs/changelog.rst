@@ -25,6 +25,7 @@ XXX TODO:
   - CFNetwork
   - Contacts
   - CoreAudio
+  - CoreAudioTypes
   - CoreBluetooth
   - CoreData
   - CoreFoundation
