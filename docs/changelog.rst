@@ -49,6 +49,7 @@ XXX TODO:
   - ImageIO
   - Metal
   - NaturalLanguage
+  - Network
   - NetworkExtension
   - MapKit
   - OSLog
