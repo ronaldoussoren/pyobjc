@@ -26,17 +26,31 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 }
 
 /* Python glue */
-PyObjC_MODULE_INIT(_Network)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_Network",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__Network(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
 {
     PyObject*                                m;
     nw_connection_send_completion_t          t;
     nw_content_context_t                     t2;
     nw_parameters_configure_protocol_block_t p;
 
-    m = PyObjC_MODULE_CREATE(_Network) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
@@ -72,8 +86,8 @@ PyObjC_MODULE_INIT(_Network)
         goto error;
 #pragma clang diagnostic pop
 
-    PyObjC_INITDONE();
+    return m;
 
 error:
-    PyObjC_INITERROR();
+    return NULL;
 }

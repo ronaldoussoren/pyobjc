@@ -480,37 +480,4 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
     PyGILState_Release(_GILState);                                                       \
     }
 
-/* TEMP */
-
-#define PyObjC_INITERROR() return NULL
-#define PyObjC_INITDONE() return m
-
-#define PyObjC_MODULE_INIT(name)                                                         \
-    static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,                       \
-                                            PyObjC_STR(name),                            \
-                                            NULL,                                        \
-                                            0,                                           \
-                                            mod_methods,                                 \
-                                            NULL,                                        \
-                                            NULL,                                        \
-                                            NULL,                                        \
-                                            NULL};                                       \
-                                                                                         \
-    PyObject* PyInit_##name(void);                                                       \
-    PyObject* __attribute__((__visibility__("default"))) PyInit_##name(void)
-
-#define PyObjC_MODULE_CREATE(name) PyModule_Create(&mod_module);
-
-
-#ifdef __arm64__
-
-/* On ARM64 there are no separate dispatch functions for struct returns */
-
-/* XXX: This needs a cleaner fix... */
-
-#define objc_msgSend_stret  objc_msgSend
-#define objc_msgSendSuper_stret  objc_msgSendSuper
-
-#endif
-
 #endif /* PyObjC_COMPAT_H */

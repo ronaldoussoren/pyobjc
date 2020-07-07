@@ -40,6 +40,7 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     void**         members;
     int            r;
     PyObject*      buf = NULL;
+    Py_buffer      view;
     CFBagRef       bag;
 
     if (!PyArg_ParseTuple(args, "OOn", &py_allocator, &py_members, &count)) {
@@ -51,7 +52,7 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     }
 
     r = PyObjC_PythonToCArray(NO, NO, @encode(NSObject*), py_members, (void**)&members,
-                              &count, &buf);
+                              &count, &buf, &view);
     if (r == -1) {
         return NULL;
     }
@@ -59,7 +60,7 @@ mod_CFBagCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     bag = CFBagCreate(allocator, (const void**)members, (CFIndex)count,
                       &kCFTypeBagCallBacks);
 
-    PyObjC_FreeCArray(r, members);
+    PyObjC_FreeCArray(r, &view);
     Py_XDECREF(buf);
 
     PyObject* result = PyObjC_ObjCToPython(@encode(CFBagRef), &bag);

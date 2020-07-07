@@ -378,7 +378,6 @@ m_releasecallback(void* releaseInfo, void* data)
     PyGILState_Release(state);
 }
 
-WEAK_LINKED_NAME_10_6(CGBitmapContextCreateWithData)
 static PyObject*
 m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
                                 PyObject* args)
@@ -443,6 +442,7 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
             return NULL;
         }
 #pragma clang diagnostic pop
+
     }
 
     PyObject* releaseInfo = PyTuple_New(3);
@@ -609,19 +609,15 @@ m_CGPDFObjectGetValue(PyObject* self __attribute__((__unused__)), PyObject* args
 }
 
 static PyMethodDef mod_methods[] = {
-#if PyObjC_BUILD_RELEASE >= 1005
     {"CGFontCopyTableTags", (PyCFunction)m_CGFontCopyTableTags, METH_VARARGS, NULL},
     {"CGWindowListCreate", (PyCFunction)m_CGWindowListCreate, METH_VARARGS, NULL},
     {"CGWindowListCreateDescriptionFromArray",
      (PyCFunction)m_CGWindowListCreateDescriptionFromArray, METH_VARARGS, NULL},
     {"CGWindowListCreateImageFromArray", (PyCFunction)m_CGWindowListCreateImageFromArray,
      METH_VARARGS, NULL},
-#endif /* PyObjC_BUILD_RELEASE >= 1005 */
     {"CGBitmapContextCreate", (PyCFunction)m_CGBitmapContextCreate, METH_VARARGS, NULL},
-#if PyObjC_BUILD_RELEASE >= 1006
     {"CGBitmapContextCreateWithData", (PyCFunction)m_CGBitmapContextCreateWithData,
      METH_VARARGS, NULL},
-#endif
     {"CGPDFObjectGetValue", (PyCFunction)m_CGPDFObjectGetValue, METH_VARARGS, NULL},
 
     {
@@ -630,44 +626,57 @@ static PyMethodDef mod_methods[] = {
         0,
     }};
 
-PyObjC_MODULE_INIT(_coregraphics)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_coregraphics",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__coregraphics(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__coregraphics(void)
 {
-    PyObject* m = PyObjC_MODULE_CREATE(_coregraphics);
+    PyObject* m = PyModule_Create(&mod_module);
     if (!m)
-        PyObjC_INITERROR();
+        return NULL;
 
 #if PyObjC_BUILD_RELEASE >= 1005
     PyObject* d = PyModule_GetDict(m);
     if (!d)
-        PyObjC_INITERROR();
+        return NULL;
 #endif
 
     if (PyObjC_ImportAPI(m) < 0)
-        PyObjC_INITERROR();
+        return NULL;
 
 #if PyObjC_BUILD_RELEASE >= 1005                                                         \
     && (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5)
     if (CGFontCopyTableTags == NULL) {
         if (PyDict_DelItemString(d, "CGFontCopyTableTags") < 0) {
-            PyObjC_INITERROR();
+            return NULL;
         }
     }
 
     if (CGWindowListCreate == NULL) {
         if (PyDict_DelItemString(d, "CGWindowListCreate") < 0) {
-            PyObjC_INITERROR();
+            return NULL;
         }
     }
 
     if (CGWindowListCreateDescriptionFromArray == NULL) {
         if (PyDict_DelItemString(d, "CGWindowListCreateDescriptionFromArray") < 0) {
-            PyObjC_INITERROR();
+            return NULL;
         }
     }
 
     if (CGWindowListCreateImageFromArray == NULL) {
         if (PyDict_DelItemString(d, "CGWindowListCreateImageFromArray") < 0) {
-            PyObjC_INITERROR();
+            return NULL;
         }
     }
 #endif
@@ -677,5 +686,5 @@ PyObjC_MODULE_INIT(_coregraphics)
     CHECK_WEAK_LINK_10_6(m, CGBitmapContextCreateWithData);
 #endif
 
-    PyObjC_INITDONE();
+    return m;
 }

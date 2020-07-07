@@ -6,6 +6,7 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args
 {
     PyObject*      py_allocator;
     PyObject*      py_bytes;
+    Py_buffer      view;
     Py_ssize_t     count;
     CFAllocatorRef allocator;
     CFBitVectorRef vector;
@@ -29,7 +30,7 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args
         byteCount = count / 8;
     }
 
-    r = PyObjC_PythonToCArray(NO, NO, "z", py_bytes, &bytes, &byteCount, &buf);
+    r = PyObjC_PythonToCArray(NO, NO, "z", py_bytes, &bytes, &byteCount, &buf, &view);
     if (r == -1) {
         return NULL;
     }
@@ -40,7 +41,7 @@ mod_CFBitVectorCreate(PyObject* self __attribute__((__unused__)), PyObject* args
 
     vector = CFBitVectorCreate(allocator, bytes, count);
 
-    PyObjC_FreeCArray(r, bytes);
+    PyObjC_FreeCArray(r, &view);
     Py_XDECREF(buf);
 
     PyObject* result = PyObjC_ObjCToPython(@encode(CFBitVectorRef), &vector);

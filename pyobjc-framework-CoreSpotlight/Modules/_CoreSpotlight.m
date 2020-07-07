@@ -3,9 +3,6 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#ifdef __LP64__
-/* Framework is 64-bit only */
-
 #import <CoreSpotlight/CoreSpotlight.h>
 #import <Foundation/Foundation.h>
 
@@ -14,20 +11,32 @@
  */
 #include "_CoreSpotlight_protocols.m"
 
-#endif
-
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_CoreSpotlight)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_CoreSpotlight",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__CoreSpotlight(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__CoreSpotlight(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_CoreSpotlight) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

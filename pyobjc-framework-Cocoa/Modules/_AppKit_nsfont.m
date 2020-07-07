@@ -1,3 +1,6 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 static PyObject*
 m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
                                 PyObject* arguments)
@@ -10,6 +13,7 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
     NSGlyph*                glBuf;
     int                     bufCode;
     PyObject*               buffer = NULL;
+    Py_buffer               view;
     NSInteger               count;
     Py_ssize_t              c;
     NSMultibyteGlyphPacking packing;
@@ -35,7 +39,7 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
 
     c       = count;
     bufCode = PyObjC_PythonToCArray(NO, NO, @encode(NSGlyph), py_glBuf, (void**)&glBuf,
-                                    &c, &buffer);
+                                    &c, &buffer, &view);
     if (bufCode == -1) {
         return NULL;
     }
@@ -43,7 +47,7 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
 
     packedGlyphs = malloc(count * 4 + 1);
     if (packedGlyphs == NULL) {
-        PyObjC_FreeCArray(bufCode, glBuf);
+        PyObjC_FreeCArray(bufCode, &view);
         Py_XDECREF(buffer);
         PyErr_NoMemory();
         return NULL;
@@ -59,7 +63,7 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
         }
     Py_END_ALLOW_THREADS
 
-    PyObjC_FreeCArray(bufCode, glBuf);
+    PyObjC_FreeCArray(bufCode, &view);
     Py_XDECREF(buffer);
 
     if (PyErr_Occurred()) {
@@ -85,6 +89,8 @@ m_NSConvertGlyphsToPackedGlyphs(PyObject* self __attribute__((__unused__)),
     free(packedGlyphs);
     return pyRes;
 }
+
+#pragma clang diagnostic pop
 
 #define APPKIT_NSFONT_METHODS                                                            \
     {"NSConvertGlyphsToPackedGlyphs", (PyCFunction)m_NSConvertGlyphsToPackedGlyphs,      \

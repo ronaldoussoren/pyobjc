@@ -43,10 +43,6 @@ objc_NSApplicationMain(PyObject* self __attribute__((__unused__)), PyObject* arg
                 goto error_cleanup;
             }
             argv[i] = strdup(PyBytes_AsString(bytes));
-#if PY_MAJOR_VERSION == 2
-        } else if (PyString_Check(v)) {
-            argv[i] = strdup(PyString_AsString(v));
-#endif
         } else {
             PyErr_SetString(PyExc_TypeError, "NSApplicationMain: need list of strings "
                                              "as argument");

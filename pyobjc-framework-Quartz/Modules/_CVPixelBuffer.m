@@ -5,9 +5,6 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#if PyObjC_BUILD_RELEASE >= 1005
-/* WITH_COREVIDEO */
-
 #import <CoreVideo/CoreVideo.h>
 
 static void
@@ -31,7 +28,6 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
     PyGILState_Release(state);
 }
 
-WEAK_LINKED_NAME_10_5(CVPixelBufferCreateWithBytes)
 
 static PyObject*
 mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
@@ -107,7 +103,7 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            rv = USE_10_5(CVPixelBufferCreateWithBytes)(
+            rv = CVPixelBufferCreateWithBytes(
                 allocator, width, height, pixelFormatType, baseAddress, bytesPerRow,
                 mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
                 &pixelBuffer);
@@ -140,24 +136,27 @@ static PyMethodDef mod_methods[] = {{"CVPixelBufferCreateWithBytes",
 
                                     {0, 0, 0, 0}};
 
-#else /* ! WITH_CORE_VIDEO */
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_CVPixelBuffer",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
 
-static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
+PyObject* PyInit__CVPixelBuffer(void);
 
-#endif /* ! WITH_CORE_VIDEO */
-
-PyObjC_MODULE_INIT(_CVPixelBuffer)
+PyObject* __attribute__((__visibility__("default"))) PyInit__CVPixelBuffer(void)
 {
-    PyObject* m = PyObjC_MODULE_CREATE(_CVPixelBuffer);
+    PyObject* m = PyModule_Create(&mod_module);
     if (!m)
-        PyObjC_INITERROR();
+        return NULL;
 
     if (PyObjC_ImportAPI(m) < 0)
-        PyObjC_INITERROR();
+        return NULL;
 
-#if PyObjC_BUILD_RELEASE >= 1005
-    CHECK_WEAK_LINK_10_5(m, CVPixelBufferCreateWithBytes);
-#endif
-
-    PyObjC_INITDONE();
+    return m;
 }

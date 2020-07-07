@@ -124,7 +124,8 @@ def get_sdk_level():
 
     if sdkname == "MacOSX.sdk":
         try:
-            pl = plistlib.readPlist(os.path.join(sdk, "SDKSettings.plist"))
+            with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
+                pl = plistlib.load(fp)
             return pl["Version"]
         except Exception:
             raise SystemExit("Cannot determine SDK version")

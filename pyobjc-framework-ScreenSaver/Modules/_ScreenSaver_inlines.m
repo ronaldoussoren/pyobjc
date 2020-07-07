@@ -27,17 +27,30 @@ static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
 };
 
-PyObjC_MODULE_INIT(_inlines)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_inlines",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__inlines(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__inlines(void)
 {
-    PyObject* m = PyObjC_MODULE_CREATE(_inlines);
+    PyObject* m = PyModule_Create(&mod_module);
     if (!m) {
-        PyObjC_INITERROR();
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))
         < 0) {
-        PyObjC_INITERROR();
+        return NULL;
     }
 
-    PyObjC_INITDONE();
+    return m;
 }

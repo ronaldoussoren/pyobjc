@@ -5,9 +5,7 @@
 
 #import <Foundation/Foundation.h>
 
-#ifdef __LP64__
 #import <Intents/Intents.h>
-#endif
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
@@ -19,13 +17,27 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_Intents)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_Intents",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__Intents(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__Intents(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_Intents) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

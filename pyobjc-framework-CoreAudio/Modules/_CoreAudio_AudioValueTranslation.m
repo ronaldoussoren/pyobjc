@@ -64,13 +64,8 @@ avt_get_mInputData(PyObject* _self, void* closure __attribute__((__unused__)))
         return Py_None;
     }
 
-#if PY_MAJOR_VERSION == 3
     return PyMemoryView_FromMemory(self->avt_translation->mInputData,
                                    self->avt_translation->mInputDataSize, PyBUF_WRITE);
-#else
-    return PyBuffer_FromMemory(self->avt_translation->mInputData,
-                               self->avt_translation->mInputDataSize);
-#endif
 }
 
 static PyObject*
@@ -83,13 +78,8 @@ avt_get_mOutputData(PyObject* _self, void* closure __attribute__((__unused__)))
         return Py_None;
     }
 
-#if PY_MAJOR_VERSION == 3
     return PyMemoryView_FromMemory(self->avt_translation->mOutputData,
                                    self->avt_translation->mOutputDataSize, PyBUF_WRITE);
-#else
-    return PyBuffer_FromMemory(self->avt_translation->mOutputData,
-                               self->avt_translation->mOutputDataSize);
-#endif
 }
 
 static PyGetSetDef avt_getset[] = {
@@ -210,27 +200,19 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     Py_ssize_t                      output_bufsize = -1;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                                     "|"
-#if PY_MAJOR_VERSION == 3
-                                     "$"
-#endif
-                                     "nn",
+                                     "|$nn",
                                      keywords, &input_bufsize, &output_bufsize)) {
         return NULL;
     }
 
     if ((input_bufsize != -1 && input_bufsize < 0)
-#ifdef __LP64__
         || input_bufsize > (Py_ssize_t)UINT_MAX
-#endif
     ) {
         PyErr_SetString(PyExc_ValueError, "input bufsize out of range");
         return NULL;
     }
     if ((output_bufsize != -1 && output_bufsize < 0)
-#ifdef __LP64__
         || output_bufsize > (Py_ssize_t)UINT_MAX
-#endif
     ) {
         PyErr_SetString(PyExc_ValueError, "output bufsize out of range");
         return NULL;

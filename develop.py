@@ -124,9 +124,11 @@ def get_sdk_level():
 
     if sdkname == "MacOSX.sdk":
         try:
-            pl = plistlib.readPlist(os.path.join(sdk, "SDKSettings.plist"))
+            with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
+                 pl = plistlib.load(fp)
             return pl["Version"]
         except Exception:
+            raise
             raise SystemExit("Cannot determine SDK version")
     else:
         return sdkname[6:-4]
@@ -208,9 +210,15 @@ def build_project(project, extra_args):
         shutil.rmtree(os.path.join(proj_dir, "build"))
 
     print("Installing {!r} using {!r}".format(project, sys.executable))
-    status = subprocess.call(
-        [sys.executable, "setup.py", "develop"] + extra_args, cwd=proj_dir
-    )
+    if project == "pyobjc-core":
+        status = subprocess.call(
+            [sys.executable, "setup.py", "build_ext", "--use-system-libffi=1", "develop"] + extra_args, cwd=proj_dir
+        )
+    else:
+        status = subprocess.call(
+            [sys.executable, "setup.py", "develop"] + extra_args, cwd=proj_dir
+        )
+
     if status != 0:
         print("Installing {!r} failed (status {})".format(project, status))
         return False
@@ -229,7 +237,7 @@ def main():
 
 
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
-        build_project(project, sys.argv[1:])
+        r = build_project(project, sys.argv[1:])
 
 
 if __name__ == "__main__":

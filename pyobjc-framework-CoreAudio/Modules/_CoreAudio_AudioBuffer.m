@@ -74,12 +74,8 @@ ab_get_data(PyObject* _self, void* closure __attribute__((__unused__)))
         return Py_None;
     }
 
-#if PY_MAJOR_VERSION == 3
     return PyMemoryView_FromMemory(self->ab_buf->mData, self->ab_buf->mDataByteSize,
                                    PyBUF_WRITE);
-#else
-    return PyBuffer_FromMemory(self->ab_buf->mData, self->ab_buf->mDataByteSize);
-#endif
 }
 
 static PyGetSetDef ab_getset[] = {
@@ -152,20 +148,12 @@ ab_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     unsigned int         num_channels = 1;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                                     "|"
-#if PY_MAJOR_VERSION == 3
-                                     "$"
-#endif
-                                     "In",
+                                     "|$In",
                                      keywords, &num_channels, &bufsize)) {
         return NULL;
     }
 
-#ifdef __LP64__
     if ((bufsize != -1 && bufsize < 0) || bufsize > (Py_ssize_t)UINT_MAX) {
-#else
-    if (bufsize != -1 && bufsize < 0) { /* 32bit means int == long == Py_ssizet */
-#endif
         PyErr_Format(PyExc_ValueError, "bufsize %ld out of range", (long)bufsize);
         return NULL;
     }

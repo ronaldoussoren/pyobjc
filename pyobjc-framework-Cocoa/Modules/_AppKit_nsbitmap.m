@@ -126,21 +126,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
                 if (r == 0) {
                     dataPlanes[i] = planeBuffers[i].buf;
                 } else {
-#if PY_MAJOR_VERSION == 2
-                    /* Fall back to old-style buffers, not all python 2 types
-                     * implement the newer APIs and that includes the stdlib.
-                     */
-                    PyErr_Clear();
-                    const void* buf;
-                    Py_ssize_t  len;
-                    int         r = PyObject_AsReadBuffer(py_Planes[i], &buf, &len);
-                    if (r == -1) {
-                        goto error_cleanup;
-                    }
-                    dataPlanes[i] = buf;
-#else
                     goto error_cleanup;
-#endif
                 }
             }
         }
@@ -252,21 +238,7 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
                 if (r == 0) {
                     dataPlanes[i] = planeBuffers[i].buf;
                 } else {
-#if PY_MAJOR_VERSION == 2
-                    /* Fall back to old-style buffers, not all python 2 types
-                     * implement the newer APIs and that includes the stdlib.
-                     */
-                    PyErr_Clear();
-                    const void* buf;
-                    Py_ssize_t  len;
-                    int         r = PyObject_AsReadBuffer(py_Planes[i], &buf, &len);
-                    if (r == -1) {
-                        goto error_cleanup;
-                    }
-                    dataPlanes[i] = buf;
-#else
                     goto error_cleanup;
-#endif
                 }
             }
         }
@@ -362,10 +334,6 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
     if (result != NULL) {
         for (i = 0; i < 5; i++) {
             if (dataPlanes[i]) {
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
-                PyObject* buffer =
-                    PyBuffer_FromReadWriteMemory(dataPlanes[i], bytesPerPlane);
-#else
                 Py_buffer info;
                 if (PyBuffer_FillInfo(&info, NULL, dataPlanes[i], bytesPerPlane, 0,
                                       PyBUF_FULL)
@@ -373,7 +341,6 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
                     return NULL;
                 }
                 PyObject* buffer = PyMemoryView_FromBuffer(&info);
-#endif
 
                 if ((!buffer) || PyErr_Occurred()) {
                     Py_DECREF(result);
@@ -427,10 +394,6 @@ call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self, PyObject* arg
         return NULL;
     }
 
-#if PY_MAJOR_VERSION == 2 && PY_MINOR_VERSION <= 6
-    result = PyBuffer_FromReadWriteMemory(bitmapData, bytesPerPlane);
-#else /* Python 2.7 and later */
-
     /* A memory view requires that the backing store implements the buffer
      * interface, therefore create a mutable bytes object to do that for us.
      */
@@ -440,7 +403,6 @@ call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self, PyObject* arg
     }
     result = PyMemoryView_FromBuffer(&info);
 
-#endif /* Python 2.7 and later */
     if (result == NULL) {
         if (result) {
             Py_DECREF(result);

@@ -20,20 +20,34 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_Foundation)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_Foundation",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__Foundation(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__Foundation(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_Foundation) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
     if (setup_nsinvocation(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
     if (setup_nsnetservice(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
     if (setup_nssstring(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

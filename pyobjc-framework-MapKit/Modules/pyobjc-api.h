@@ -22,6 +22,13 @@
 
 #include "pyobjc-compat.h"
 
+#ifdef Py_LIMITED_API
+/* 
+ * Make sure PyObjC framework wrappers can build using the limited API
+ */
+typedef void Py_buffer;
+#endif
+
 #include <objc/objc-runtime.h>
 
 /* Current API version, increase whenever:
@@ -31,7 +38,7 @@
  * Do not increase when adding a new function, the struct_len field
  * can be used for detecting if a function has been added.
  */
-#define PYOBJC_API_VERSION 20
+#define PYOBJC_API_VERSION 21
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -66,9 +73,9 @@ struct pyobjc_api {
     PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*);
     void (*err_python_to_objc_gil)(PyGILState_STATE* state);
     int (*simplify_sig)(const char* signature, char* buf, size_t buflen);
-    void (*free_c_array)(int, void*);
+    void (*free_c_array)(int, Py_buffer*);
     int (*py_to_c_array)(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
-                         PyObject**);
+                         PyObject**, Py_buffer*);
     PyObject* (*c_array_to_py)(const char*, void*, Py_ssize_t);
     PyTypeObject* imp_type;
     IMP (*imp_get_imp)(PyObject*);

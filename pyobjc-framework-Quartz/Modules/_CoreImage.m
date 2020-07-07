@@ -16,11 +16,24 @@ static PyMethodDef mod_methods[] = {{
     0,
 }};
 
-PyObjC_MODULE_INIT(_CoreImage)
-{
-    PyObject* m = PyObjC_MODULE_CREATE(_CoreImage);
-    if (!m)
-        PyObjC_INITERROR();
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_CoreImage",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
 
-    PyObjC_INITDONE();
+PyObject* PyInit__CoreImage(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__CoreImage(void)
+{
+    PyObject* m = PyModule_Create(&mod_module);
+    if (!m)
+        return NULL;
+
+    return m;
 }

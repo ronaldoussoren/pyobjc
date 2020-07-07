@@ -16,10 +16,24 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_Accessibility)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_Accessibility",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__Accessibility(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__Accessibility(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_Accessibility) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
-    PyObjC_INITDONE();
+    return m;
 }

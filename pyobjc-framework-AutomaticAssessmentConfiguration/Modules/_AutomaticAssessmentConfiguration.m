@@ -16,10 +16,24 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_AutomaticAssessmentConfiguration)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_AutomaticAssessmentConfiguration",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__AutomaticAssessmentConfiguration(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__AutomaticAssessmentConfiguration(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_AutomaticAssessmentConfiguration) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
-    PyObjC_INITDONE();
+    return m;
 }

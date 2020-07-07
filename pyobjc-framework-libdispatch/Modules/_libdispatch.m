@@ -85,15 +85,29 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 }
 
 /* Python glue */
-PyObjC_MODULE_INIT(_libdispatch)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_libdispatch",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__libdispatch(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__libdispatch(void)
 {
     PyObject*              m;
     dispatch_source_type_t s;
 
-    m = PyObjC_MODULE_CREATE(_libdispatch) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
     id v = (id)DISPATCH_QUEUE_CONCURRENT;
     if (add_constant(m, "DISPATCH_QUEUE_CONCURRENT", @encode(id), &v) != 0)
@@ -192,8 +206,8 @@ PyObjC_MODULE_INIT(_libdispatch)
         < 0)
         goto error;
 
-    PyObjC_INITDONE();
+    return m;
 
 error:
-    PyObjC_INITERROR();
+    return NULL;
 }

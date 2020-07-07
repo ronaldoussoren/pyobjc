@@ -22,6 +22,13 @@
 
 #include "pyobjc-compat.h"
 
+#ifdef Py_LIMITED_API
+/* 
+ * Make sure PyObjC framework wrappers can build using the limited API
+ */
+typedef void Py_buffer;
+#endif
+
 #include <objc/objc-runtime.h>
 
 /* Current API version, increase whenever:

@@ -15,13 +15,27 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_ContactsUI)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_ContactsUI",
+     NULL,                                        
+     0,
+     mod_methods,                                 
+     NULL,                                        
+     NULL,                                        
+     NULL,                                        
+     NULL};                                       
+
+PyObject* PyInit__ContactsUI(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__ContactsUI(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_ContactsUI) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

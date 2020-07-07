@@ -38,11 +38,7 @@ call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
         return NULL;
 
     v = PyObjC_CArrayToPython(
-#ifdef __LP64__
         "{_NSRect={_NSPoint=dd}{_NSSize=dd}}",
-#else
-        "{_NSRect={_NSPoint=ff}{_NSSize=ff}}",
-#endif
         rects, count);
     if (v == NULL)
         return NULL;

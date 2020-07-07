@@ -49,14 +49,14 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif /* PyObjC_BUILD_RELEASE >= 1010 */
     p = PyObjC_IdToPython(@protocol(WebPlugInViewFactory));
     Py_XDECREF(p);
-#if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010
+#if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(WKNavigationDelegate));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKScriptMessageHandler));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKUIDelegate));
     Py_XDECREF(p);
-#endif /* defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010 */
+#endif /* PyObjC_BUILD_RELEASE >= 1010 */
 #if PyObjC_BUILD_RELEASE >= 1013
 #if WK_API_ENABLED
     p = PyObjC_IdToPython(@protocol(WKHTTPCookieStoreObserver));
