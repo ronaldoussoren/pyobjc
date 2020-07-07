@@ -121,6 +121,7 @@ FRAMEWORK_WRAPPERS = [
     ("QTKit", "10.5", "10.15"),
     ("Quartz", None, None),
     ("QuickLookThumbnailing", "10.15", None),
+    ("ReplayKit", "10.16", None),
     ("SafariServices", "10.11", None),
     ("ScreenSaver", None, None),
     ("ScreenTime", "10.16", None),
