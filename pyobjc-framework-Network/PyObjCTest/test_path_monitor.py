@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import Network
 
@@ -27,3 +27,7 @@ class TestPathMonitor(TestCase):
         Network.nw_path_monitor_set_queue
         Network.nw_path_monitor_start
         Network.nw_path_monitor_cancel
+
+    @min_os_level("10.16")
+    def test_functions10_16(self):
+        Network.nw_path_monitor_prohibit_interface_type

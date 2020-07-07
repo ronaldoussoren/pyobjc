@@ -34,3 +34,13 @@ class TestGCMotion(TestCase):
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(GameController.GCMotion.hasAttitudeAndRotationRate)
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(GameController.GCMotion.sensorsRequireManualActivation)
+
+        self.assertResultIsBOOL(GameController.GCMotion.sensorsActive)
+        self.assertArgIsBOOL(GameController.GCMotion.setSensorsActive_, 0)
+
+        self.assertResultIsBOOL(GameController.GCMotion.hasAttitude)
+        self.assertResultIsBOOL(GameController.GCMotion.hasRotationRate)

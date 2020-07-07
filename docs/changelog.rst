@@ -18,16 +18,20 @@ XXX TODO:
 
 * Updated framework bindings (Xcode 12 beta 1):
   - AppKit
+  - AuthenticationServices
   - Automator
   - AVFoundation
   - AVKit
   - CFNetwork
   - Contacts
   - CoreAudio
+  - CoreAudioTypes
   - CoreBluetooth
   - CoreData
   - CoreFoundation
+  - CoreGraphics
   - CoreHaptics
+  - CoreImage
   - CoreLocation
   - CoreMedia
   - CoreMotion
@@ -39,11 +43,13 @@ XXX TODO:
   - DeviceCheck
   - Foundation
   - FSEvents
+  - GameController
   - GameKit
   - ImageCaptureCore
   - ImageIO
   - Metal
   - NaturalLanguage
+  - Network
   - NetworkExtension
   - MapKit
   - OSLog
@@ -66,8 +72,10 @@ XXX TODO:
   - ClassKit (introduced in macOS 11.0)
   - KernelManagement (introduced in macOS 11.0)
   - MLCompute (introduced in macOS 11.0)
+  - PassKit (introduced in macOS 11.0)
   - ReplayKit (introduced in macOS 11.0)
   - ScreenTime (introduced in macOS 11.0)
+  - UniformTypeIdentifiers (introduced in macOS 11.0)
   - UserNotificationsUI (introduced in macOS 11.0)
 
 * The following new frameworks in macOS 11 will not be wrapped:

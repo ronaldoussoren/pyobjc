@@ -37,6 +37,8 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(Quartz.kCGColorSpaceUserRGB, (str, str))
         self.assertIsInstance(Quartz.kCGColorSpaceUserCMYK, (str, str))
 
+        self.assertEqual(Quartz.CG_HDR_BT_2100, 1)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(Quartz.kCGColorSpaceGenericRGBLinear, str)
@@ -90,6 +92,11 @@ class TestCGColorSpace(TestCase):
     def testConstants10_15_4(self):
         self.assertIsInstance(Quartz.kCGColorSpaceITUR_2020_PQ, str)
         self.assertIsInstance(Quartz.kCGColorSpaceDisplayP3_PQ, str)
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(Quartz.kCGColorSpaceITUR_2100_PQ, str)
+        self.assertIsInstance(Quartz.kCGColorSpaceITUR_2100_HLG, str)
 
     def testFunctions(self):
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateDeviceGray)
@@ -219,6 +226,8 @@ class TestCGColorSpace(TestCase):
         self.assertResultHasType(Quartz.CGColorSpaceIsWideGamutRGB, objc._C_BOOL)
         self.assertResultHasType(Quartz.CGColorSpaceSupportsOutput, objc._C_BOOL)
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateWithICCData)
+
+        self.assertResultHasType(Quartz.CGColorSpaceUsesExtendedRange, objc._C_BOOL)
 
     @min_os_level("10.13")
     def testFunctions10_13(self):

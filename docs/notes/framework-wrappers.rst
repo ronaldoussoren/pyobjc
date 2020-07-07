@@ -113,7 +113,7 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`CoreMediaIO </apinotes/CoreMediaIO>`                        | `pyobjc-framework-CoreMediaIO`_             |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| CoreMIDI                                                          | -                                           | Not yet wrapped.                        |
+| :doc:`CoreMIDI </apinotes/CoreMIDI>`                              | `pyobjc-framework-CoreMIDI`                 |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | CoreMIDIServer                                                    | -                                           | No public API.                          |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -245,7 +245,7 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`IOSurface </apinotes/IOSurface>`                            | `pyobjc-framework-IOSurface`_               |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| IOUSBHost                                                         | -                                           | Not wrapped yet.                        |
+| IOUSBHost                                                         | -                                           | Will not be wrapped.                    |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`iTunesLibrary </apinotes/iTunesLibrary>`                    | `pyobjc-framework-iTunesLibrary`_           |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -339,6 +339,8 @@ The framework name links to API notes for that framework, the python packages li
 | PCSC                                                              | -                                           | Use `pyscard`_ instead.                 |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`PDFKit </apinotes/PDFKit>`                                  | `pyobjc-framework-Quartz`_                  | Use "import Quartz".                    |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`PassKit </apinotes/PassKit>`                                | `pyobjc-framework-PassKit`_                 |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`PencilKit </apinotes/PencilKit>`                            | `pyobjc-framework-PencilKit`_               |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -439,6 +441,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`UserNotifications </apinotes/UserNotifications>`            | `pyobjc-framework-UserNotifications`_       |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`UserNotificationsUI </apinotes/UserNotificationsUI>`        | `pyobjc-framework-UserNotificationsUI`_     |                                         |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`UniformTypeIdentifiers </apinotes/UniformTypeIdentifiers>`  | `pyobjc-framework-UniformTypeIdentifiers`_  |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | vecLib                                                            | -                                           | Will not be wrapped.                    |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -606,3 +610,6 @@ prioritizing work.
 .. _`pyobjc-framework-Accessibility`: https://pypi.org/project/pyobjc-framework-Accessibility/
 .. _`pyobjc-framework-MLCompute`: https://pypi.org/project/pyobjc-framework-MLCompute/
 .. _`pyobjc-framework-ReplayKit`: https://pypi.org/project/pyobjc-framework-ReplayKit/
+.. _`pyobjc-framework-PassKit`: https://pypi.org/project/pyobjc-framework-PassKit/
+.. _`pyobjc-framework-UniformTypeIdentifiers`: https://pypi.org/project/pyobjc-framework-UniformTypeIdentifiers/
+.. _`pyobjc-framework-CoreMIDI`: https://pypi.org/project/pyobjc-framework-CoreMIDI/

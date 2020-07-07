@@ -121,3 +121,7 @@ class TestParameters(TestCase):
 
         Network.nw_parameters_set_prohibit_constrained
         Network.nw_parameters_get_prohibit_constrained
+
+    @min_os_level("10.16")
+    def test_functions10_16(self):
+        Network.nw_parameters_set_privacy_context

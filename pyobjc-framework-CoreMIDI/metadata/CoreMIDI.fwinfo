@@ -1,0 +1,418 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "MIDICISession": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "enableProfile:onChannel:error:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "disableProfile:onChannel:error:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {
+   "MIDIClientCreate": {
+    "args": {
+     "0": {},
+     "1": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{MIDINotification=iI}"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "2": {},
+     "3": {}
+    }
+   },
+   "MIDIClientCreateWithBlock": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MIDIDestinationCreate": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "3": {},
+     "4": {}
+    }
+   },
+   "MIDIDestinationCreateWithBlock": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIDestinationCreateWithProtocol": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "MIDIDeviceAddEntity": {
+    "args": {
+     "1": {},
+     "5": {}
+    }
+   },
+   "MIDIDeviceCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {},
+     "4": {}
+    }
+   },
+   "MIDIDeviceNewEntity": {
+    "args": {
+     "1": {},
+     "6": {}
+    }
+   },
+   "MIDIDriverEnableMonitoring": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDIEndpointGetEntity": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDIEndpointGetRefCons": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIEndpointSetRefCons": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIEntityGetDevice": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDIEventListAdd": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": {}
+    },
+    "retval": {}
+   },
+   "MIDIEventListInit": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "MIDIEventPacketNext": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "MIDIExternalDeviceCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {},
+     "3": {}
+    }
+   },
+   "MIDIGetDriverDeviceList": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDIGetDriverIORunLoop": {
+    "retval": {}
+   },
+   "MIDIGetSerialPortDrivers": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDIGetSerialPortOwner": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MIDIInputPortCreate": {
+    "args": {
+     "1": {},
+     "2": {
+      "function": {
+       "args": [
+        {
+         "typestr": "^{MIDIPacketList=I[1{MIDIPacket=QS[256C]}]}"
+        },
+        {
+         "typestr": "^v"
+        },
+        {
+         "typestr": "^v"
+        }
+       ],
+       "retval": {
+        "typestr": "v"
+       }
+      }
+     },
+     "3": {},
+     "4": {}
+    }
+   },
+   "MIDIInputPortCreateWithBlock": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIInputPortCreateWithProtocol": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "MIDIObjectFindByUniqueID": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIObjectGetDataProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIObjectGetDictionaryProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIObjectGetIntegerProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIObjectGetProperties": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDIObjectGetStringProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIObjectRemoveProperty": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDIObjectSetDataProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIObjectSetDictionaryProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIObjectSetIntegerProperty": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDIObjectSetStringProperty": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIOutputPortCreate": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIPacketListAdd": {
+    "args": {
+     "0": {},
+     "2": {},
+     "5": {}
+    },
+    "retval": {}
+   },
+   "MIDIPacketListInit": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "MIDIPacketNext": {
+    "args": {
+     "0": {}
+    },
+    "retval": {}
+   },
+   "MIDIPortConnectSource": {
+    "args": {
+     "2": {}
+    }
+   },
+   "MIDIReceived": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDIReceivedEventList": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDISend": {
+    "args": {
+     "2": {}
+    }
+   },
+   "MIDISendEventList": {
+    "args": {
+     "2": {}
+    }
+   },
+   "MIDISendSysex": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDISetSerialPortOwner": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MIDISetupCreate": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDISetupFromData": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MIDISetupGetCurrent": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDISetupToData": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDISourceCreate": {
+    "args": {
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDISourceCreateWithProtocol": {
+    "args": {
+     "1": {},
+     "3": {}
+    }
+   },
+   "MIDIThruConnectionCreate": {
+    "args": {
+     "0": {},
+     "1": {},
+     "2": {}
+    }
+   },
+   "MIDIThruConnectionFind": {
+    "args": {
+     "0": {},
+     "1": {}
+    }
+   },
+   "MIDIThruConnectionGetParams": {
+    "args": {
+     "1": {}
+    }
+   },
+   "MIDIThruConnectionParamsInitialize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDIThruConnectionParamsSize": {
+    "args": {
+     "0": {}
+    }
+   },
+   "MIDIThruConnectionSetParams": {
+    "args": {
+     "1": {}
+    }
+   }
+  },
+  "informal_protocols": {}
+ }
+}
