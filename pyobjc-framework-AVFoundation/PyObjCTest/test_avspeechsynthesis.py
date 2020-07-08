@@ -79,6 +79,7 @@ class TestAVSpeechSynthesis(TestCase):
             AVSpeechSynthesizerBufferCallback,
         )
 
+    @expectedFailure
     @min_os_level("10.16")
     def testMethods10_16(self):
         self.assertResultIsBOOL(

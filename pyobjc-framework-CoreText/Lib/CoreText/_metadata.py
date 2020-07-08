@@ -275,6 +275,21 @@ functions = {
     ),
     "CTFontDescriptorMatchFontDescriptorsWithProgressHandler": (
         b"B^{__CFArray=}^{__CFSet=}@?",
+        "",
+        {
+          "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"B"},
+                        "arguments": {
+                            0: {"type": "^v"},
+                            1: {"type": "I"},
+                            2: {"type": "@"},
+                        },
+                    },
+		}
+           }
+        }
     ),
     "CTGlyphInfoGetGlyph": (b"S^{__CTGlyphInfo=}",),
     "CTFontManagerUnregisterFontURLs": (
@@ -338,7 +353,7 @@ functions = {
         "",
         {
             "retval": {"already_cfretained": True},
-            "arguments": {3: {"type_modifier": "n"}},
+            "arguments": {3: {"type_modifier": "n", "c_array_of_fixed_length": 4}},
         },
     ),
     "CTRunGetStringIndicesPtr": (

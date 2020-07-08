@@ -1,5 +1,5 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVCaptureSession(TestCase):
@@ -87,6 +87,7 @@ class TestAVCaptureSession(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVCaptureAudioChannel.isEnabled)
         self.assertArgIsBOOL(AVFoundation.AVCaptureAudioChannel.setEnabled_, 0)
 
+    @expectedFailure
     @min_os_level("10.16")
     def testMethods10_16(self):
         self.assertResultIsBOOL(

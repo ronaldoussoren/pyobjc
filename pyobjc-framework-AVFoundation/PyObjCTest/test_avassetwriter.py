@@ -61,10 +61,10 @@ class TestAVAssetWriter(TestCase):
         self.assertArgHasType(
             TestAVAssetWriterHelper.assetWriter_didOutputSegmentData_segmentType_segmentReport_,
             2,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestAVAssetWriterHelper.assetWriter_didOutputSegmentData_segmentType_,
             2,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
         )

@@ -624,7 +624,7 @@ class TestCase(_unittest.TestCase):
             and _typealias.get(typestr, typestr) != _typealias.get(tp, tp)
         ):
             self.fail(
-                message or "result of %r is not of type %r, but %r" % (method, tp, type)
+                message or "result of %r is not of type %r, but %r" % (method, tp, typestr)
             )
 
     def assertArgHasType(self, method, argno, tp, message=None):
@@ -652,7 +652,7 @@ class TestCase(_unittest.TestCase):
         ):
             self.fail(
                 message
-                or "arg %d of %s is not of type %r, but %r" % (argno, method, tp, type)
+                or "arg %d of %s is not of type %r, but %r" % (argno, method, tp, typestr)
             )
 
     def assertArgIsFunction(self, method, argno, sel_type, retained, message=None):

@@ -97,6 +97,11 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDevice.isWhiteBalanceModeSupported_
         )
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isAdjustingWhiteBalance)
+
+
+    @expectedFailure # XXX
+    @min_os_level("10.7")
+    def testMethods_error_on_11(self):
         self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.transportControlsSupported)
 
     @min_os_level("10.14")

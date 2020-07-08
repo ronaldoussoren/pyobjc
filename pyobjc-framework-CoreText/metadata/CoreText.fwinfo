@@ -1980,7 +1980,7 @@
    },
    "CTRubyAnnotationCreate": {
     "args": {
-     "3": { "type_modifier": "n" }
+     "3": { "type_modifier": "n", "c_array_of_fixed_length": 4 }
     }
    },
    "CTRubyAnnotationCreateWithAttributes": {

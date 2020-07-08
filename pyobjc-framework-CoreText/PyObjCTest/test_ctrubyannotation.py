@@ -21,7 +21,7 @@ class TestCTRubyAnnotation(TestCase):
         self.assertEqual(CoreText.kCTRubyOverhangAuto, 0)
         self.assertEqual(CoreText.kCTRubyOverhangStart, 1)
         self.assertEqual(CoreText.kCTRubyOverhangEnd, 2)
-        self.assertEqual(CoreText.kCTRubyOCoreText.verhangNone, 3)
+        self.assertEqual(CoreText.kCTRubyOverhangNone, 3)
 
         self.assertEqual(CoreText.kCTRubyPositionBefore, 0)
         self.assertEqual(CoreText.kCTRubyPositionAfter, 1)

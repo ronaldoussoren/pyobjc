@@ -498,7 +498,7 @@ PyObject* PyInit__manual(void);
 
 PyObject* __attribute__((__visibility__("default"))) PyInit__manual(void)
 {
-    m = PyModule_Create(&mod_module);
+    PyObject* m = PyModule_Create(&mod_module);
     if (m == NULL)
         return NULL;
 
