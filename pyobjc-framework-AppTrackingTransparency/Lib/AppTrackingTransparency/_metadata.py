@@ -19,7 +19,7 @@ else:
 
 
 misc = {}
-constants = """$AppTrackingTransparencyVersionNumber@d$AppTrackingTransparencyVersionString@^C$"""
+constants = """$AppTrackingTransparencyVersionNumber@d$AppTrackingTransparencyVersionString@*$"""
 enums = """$ATTrackingManagerAuthorizationStatusAuthorized@3$ATTrackingManagerAuthorizationStatusDenied@2$ATTrackingManagerAuthorizationStatusNotDetermined@0$ATTrackingManagerAuthorizationStatusRestricted@1$"""
 misc.update({})
 r = objc.registerMetaDataForSelector

@@ -19,7 +19,7 @@ else:
 
 
 misc = {}
-constants = """$CSIndexErrorDomain$CSMailboxArchive$CSMailboxDrafts$CSMailboxInbox$CSMailboxJunk$CSMailboxSent$CSMailboxTrash$CSQueryContinuationActionType$CSSearchQueryErrorDomain$CSSearchQueryString$CSSearchableItemActionType$CSSearchableItemActivityIdentifier$CoreSpotlightVersionNumber@d$CoreSpotlightVersionString@^C$"""
+constants = """$CSIndexErrorDomain$CSMailboxArchive$CSMailboxDrafts$CSMailboxInbox$CSMailboxJunk$CSMailboxSent$CSMailboxTrash$CSQueryContinuationActionType$CSSearchQueryErrorDomain$CSSearchQueryString$CSSearchableItemActionType$CSSearchableItemActivityIdentifier$CoreSpotlightVersionNumber@d$CoreSpotlightVersionString@*$"""
 enums = """$CSIndexErrorCodeIndexUnavailableError@-1000$CSIndexErrorCodeIndexingUnsupported@-1005$CSIndexErrorCodeInvalidClientStateError@-1002$CSIndexErrorCodeInvalidItemError@-1001$CSIndexErrorCodeQuotaExceeded@-1004$CSIndexErrorCodeRemoteConnectionError@-1003$CSIndexErrorCodeUnknownError@-1$CSSearchQueryErrorCodeCancelled@-2003$CSSearchQueryErrorCodeIndexUnreachable@-2001$CSSearchQueryErrorCodeInvalidQuery@-2002$CSSearchQueryErrorCodeUnknown@-2000$CoreSpotlightAPIVersion@40$"""
 misc.update({})
 aliases = {"CS_TVOS_UNAVAILABLE": "__TVOS_PROHIBITED"}

@@ -6,19 +6,19 @@ import objc
 
 class TestRPBroadcast(TestCase):
     def test_methods(self):
-        self.asssertArgIsBlock(
+        self.assertArgIsBlock(
             ReplayKit.RPBroadcastActivityController.showBroadcastPickerAtPoint_fromWindow_preferredExtensionIdentifier_completionHandler_,  # noqa: B950
             3,
             b"v@@",
         )
 
-        self.asssertResultIsBOOL(ReplayKit.RPBroadcastController.isBroadcasting)
-        self.asssertResultIsBOOL(ReplayKit.RPBroadcastController.isPaused)
+        self.assertResultIsBOOL(ReplayKit.RPBroadcastController.isBroadcasting)
+        self.assertResultIsBOOL(ReplayKit.RPBroadcastController.isPaused)
 
-        self.asssertArgIsBlock(
+        self.assertArgIsBlock(
             ReplayKit.RPBroadcastController.startBroadcastWithHandler_, 0, b"v@"
         )
-        self.asssertArgIsBlock(
+        self.assertArgIsBlock(
             ReplayKit.RPBroadcastController.finishBroadcastWithHandler_, 0, b"v@"
         )
 

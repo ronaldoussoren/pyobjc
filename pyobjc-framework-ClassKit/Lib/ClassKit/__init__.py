@@ -10,6 +10,7 @@ import sys
 import Foundation
 import objc
 from ClassKit import _metadata
+from ClassKit import _ClassKit
 
 sys.modules["ClassKit"] = mod = objc.ObjCLazyModule(
     "ClassKit",
@@ -23,7 +24,7 @@ sys.modules["ClassKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_ClassKit, Foundation,),
 )
 
 

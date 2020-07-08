@@ -1,4 +1,4 @@
-from PyObjCTest.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase
 import CallKit
 
 

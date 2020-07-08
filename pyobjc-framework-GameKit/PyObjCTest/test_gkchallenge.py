@@ -13,7 +13,7 @@ class TestGKChallenge(TestCase):
 
     def testMethods(self):
         self.assertArgIsBlock(
-            GameKit.GKChallenge.loadReceivedChallengesWithCompletionHandler, 0, b"v@@"
+            GameKit.GKChallenge.loadReceivedChallengesWithCompletionHandler_, 0, b"v@@"
         )
 
         self.assertArgIsBlock(

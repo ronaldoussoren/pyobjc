@@ -9,7 +9,46 @@
   "called_definitions": {},
   "cftypes": {},
   "classes": {
-   "null": {
+   "CLSDataStore": {
+    "methods": [
+     {
+      "args": [
+       {
+        "typestr": "@",
+        "typestr_special": false
+       },
+       {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        },
+        "typestr": "@?",
+        "typestr_special": false
+       }
+      ],
+      "class_method": false,
+      "retval": {
+       "typestr": "v",
+       "typestr_special": false
+      },
+      "selector": "contextsMatchingIdentifierPath:completion:",
+      "visibility": "public"
+     }
+    ] 
+   },
+   "CLSActivity": {
     "methods": [
      {
       "args": [],
@@ -101,41 +140,6 @@
        {
         "typestr": "@",
         "typestr_special": false
-       },
-       {
-        "callable": {
-         "arguments": {
-          "0": {
-           "type": "^v"
-          },
-          "1": {
-           "type": "@"
-          },
-          "2": {
-           "type": "@"
-          }
-         },
-         "retval": {
-          "type": "v"
-         }
-        },
-        "typestr": "@?",
-        "typestr_special": false
-       }
-      ],
-      "class_method": false,
-      "retval": {
-       "typestr": "v",
-       "typestr_special": false
-      },
-      "selector": "contextsMatchingIdentifierPath:completion:",
-      "visibility": "public"
-     },
-     {
-      "args": [
-       {
-        "typestr": "@",
-        "typestr_special": false
        }
       ],
       "class_method": false,
@@ -172,13 +176,7 @@
       "name": "currentActivity",
       "typestr": "@",
       "typestr_special": false
-     }
-    ],
-    "protocols": []
-   },
-   "CLSActivity": {
-    "categories": [],
-    "methods": [
+     },
      {
       "args": [
        {

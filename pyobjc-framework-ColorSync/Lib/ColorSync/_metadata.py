@@ -55,7 +55,7 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "ColorSyncProfileCreateDisplayTransferTablesFromVCGT": (
-        b"^{__CFData=}^{ColorSyncProfile=}^Q",
+        b"^{__CFData=}^{ColorSyncProfile=}n^Q",
         "",
         {
             "retval": {"already_cfretained": True},
@@ -212,7 +212,7 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "ColorSyncIterateInstalledProfiles": (
-        b"v^?^I^v^^{__CFError=}",
+        b"v^?N^I^v^^{__CFError=}",
         "",
         {
             "arguments": {
@@ -291,7 +291,7 @@ functions = {
     ),
     "ColorSyncTransformGetTypeID": (b"Q",),
     "ColorSyncProfileGetDisplayTransferFormulaFromVCGT": (
-        b"B^{ColorSyncProfile=}^f^f^f^f^f^f^f^f^f",
+        b"B^{ColorSyncProfile=}o^fo^fo^fo^fo^fo^fo^fo^fo^f",
     ),
     "ColorSyncRegisterDevice": (b"B^{__CFString=}^{__CFUUID=}^{__CFDictionary=}",),
     "ColorSyncProfileEstimateGammaWithDisplayID": (

@@ -10,6 +10,7 @@ import sys
 import Foundation
 import objc
 from ReplayKit import _metadata
+from ReplayKit import _ReplayKit
 
 sys.modules["ReplayKit"] = mod = objc.ObjCLazyModule(
     "ReplayKit",
@@ -23,7 +24,7 @@ sys.modules["ReplayKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_ReplayKit, Foundation,),
 )
 
 

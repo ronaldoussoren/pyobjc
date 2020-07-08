@@ -14,7 +14,7 @@ class TestSKProductStorePromotionController(TestCase):
         self.assertArgIsBlock(
             StoreKit.SKProductStorePromotionController.fetchStorePromotionVisibilityForProduct_completionHandler_,
             1,
-            b"v" + objc._C_NSUInteger + b"@",
+            b"v" + objc._C_NSInteger + b"@",
         )
         self.assertArgIsBlock(
             StoreKit.SKProductStorePromotionController.updateStorePromotionVisibility_forProduct_completionHandler_,

@@ -4,7 +4,7 @@ import ClassKit  # noqa: F401
 import objc
 
 
-class TestCLSActivityHelper(TestCase):
+class TestCLSActivityHelper(ClassKit.NSObject):
     def updateDescendantsOfContext_completion_(self, a, b):
         pass
 

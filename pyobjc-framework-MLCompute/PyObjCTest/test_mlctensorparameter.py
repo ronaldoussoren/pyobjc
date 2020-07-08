@@ -5,5 +5,5 @@ import MLCompute
 
 class TestMLCTensorParameter(TestCase):
     def test_methods(self):
-        self.assertResultIsBOOL(MLCompute.TestMLCTensorParameter.isUpdatable)
-        self.assertArgIsBOOL(MLCompute.TestMLCTensorParameter.setIsUpdatable_, 0)
+        self.assertResultIsBOOL(MLCompute.MLCTensorParameter.isUpdatable)
+        self.assertArgIsBOOL(MLCompute.MLCTensorParameter.setIsUpdatable_, 0)

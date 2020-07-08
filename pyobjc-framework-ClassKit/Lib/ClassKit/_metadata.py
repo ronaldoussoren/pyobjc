@@ -91,7 +91,7 @@ try:
     )
     r(b"NSUserActivity", b"isClassKitDeepLink", {"retval": {"type": b"Z"}})
     r(
-        b"null",
+        b"CLSDataStore",
         b"contextsMatchingIdentifierPath:completion:",
         {
             "arguments": {
@@ -109,7 +109,7 @@ try:
         },
     )
     r(
-        b"null",
+        b"CLSActivity",
         b"contextsMatchingPredicate:completion:",
         {
             "arguments": {
@@ -126,7 +126,7 @@ try:
             }
         },
     )
-    r(b"null", b"isStarted", {"retval": {"type": b"Z"}})
+    r(b"CLSActivity", b"isStarted", {"retval": {"type": b"Z"}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}
