@@ -19,7 +19,7 @@ else:
 
 
 misc = {}
-constants = """$KernelManagementVersionNumber@d$KernelManagementVersionString@^C$OSKernelManagementErrorDomain$"""
+constants = """$KernelManagementVersionNumber@d$KernelManagementVersionString@*$OSKernelManagementErrorDomain$"""
 enums = """$OSKMErrorNotApproved@2$OSKMErrorUnknown@1$"""
 misc.update({})
 r = objc.registerMetaDataForSelector
