@@ -76,7 +76,7 @@ class TestDebugging(TestCase):
         value = fp.read()
         fp.close()
 
-        self.assertIn("_objc.", value)
+        self.assertTrue(any(x in value for x in {"_objc.", "ffi_call_unix64"}))
 
     def testInstallExceptionHandler(self):
         self.assertFalse(Debugging.handlerInstalled())

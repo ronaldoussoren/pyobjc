@@ -51,7 +51,7 @@ class TestWKWebView(TestCase):
             b"v@@",
         )
         self.assertArgIsBlock(
-            WebKit.WKWebView.callAsyncJavaScript_arguments__inContentWorld_completionHandler_,
+            WebKit.WKWebView.callAsyncJavaScript_arguments_inContentWorld_completionHandler_,
             3,
             b"v@@",
         )

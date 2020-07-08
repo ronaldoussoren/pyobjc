@@ -389,7 +389,7 @@
 #endif
 
 #ifndef Py_SET_REFCNT
-#define Py_SET_REFCNT(obj, count) do { Py_REFCOUNT((obj)) = (count); } while(0)
+#define Py_SET_REFCNT(obj, count) do { Py_REFCNT((obj)) = (count); } while(0)
 #endif
 
 /* Use CLINIC_SEP between the prototype and

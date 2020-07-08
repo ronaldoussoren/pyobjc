@@ -11,7 +11,7 @@
   "called_definitions": {},
   "cftypes": {},
   "classes": {
-   "null": {
+   "UTType": {
     "methods": [
      {
       "args": [
@@ -278,13 +278,7 @@
       "name": "tags",
       "typestr": "@",
       "typestr_special": false
-     }
-    ],
-    "protocols": []
-   },
-   "UTType": {
-    "categories": [],
-    "methods": [
+     },
      {
       "args": [],
       "class_method": true,

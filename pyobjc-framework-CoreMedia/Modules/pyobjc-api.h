@@ -42,6 +42,10 @@ typedef void Py_buffer;
 
 #define PYOBJC_API_NAME "__C_API__"
 
+#ifdef Py_LIMITED_API
+typedef void Py_buffer;
+#endif
+
 /*
  * Only add items to the end of this list!
  */

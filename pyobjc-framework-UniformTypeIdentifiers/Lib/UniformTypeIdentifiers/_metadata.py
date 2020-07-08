@@ -29,9 +29,9 @@ try:
     r(b"UTType", b"isDeclared", {"retval": {"type": b"Z"}})
     r(b"UTType", b"isDynamic", {"retval": {"type": b"Z"}})
     r(b"UTType", b"isPublicType", {"retval": {"type": b"Z"}})
-    r(b"null", b"conformsToType:", {"retval": {"type": b"Z"}})
-    r(b"null", b"isSubtypeOfType:", {"retval": {"type": b"Z"}})
-    r(b"null", b"isSupertypeOfType:", {"retval": {"type": b"Z"}})
+    r(b"UTType", b"conformsToType:", {"retval": {"type": b"Z"}})
+    r(b"UTType", b"isSubtypeOfType:", {"retval": {"type": b"Z"}})
+    r(b"UTType", b"isSupertypeOfType:", {"retval": {"type": b"Z"}})
 finally:
     objc._updatingMetadata(False)
 expressions = {}
