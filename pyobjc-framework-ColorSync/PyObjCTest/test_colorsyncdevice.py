@@ -44,7 +44,7 @@ class TestColorSyncDevice(TestCase):
         ColorSync.ColorSyncDeviceSetCustomProfiles
         self.assertResultIsCFRetained(ColorSync.ColorSyncDeviceCopyDeviceInfo)
         self.assertArgIsFunction(
-            ColorSync.ColorSyncIterateDeviceProfiles, 0, objc._C_BOOL + b"@^v", False
+            ColorSync.ColorSyncIterateDeviceProfiles, 0, objc._C_BOOL + b"^{__CFDictionary=}^v", False
         )
         self.assertResultIsCFRetained(ColorSync.CGDisplayCreateUUIDFromDisplayID)
 

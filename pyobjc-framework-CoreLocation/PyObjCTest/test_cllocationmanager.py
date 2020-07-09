@@ -64,7 +64,7 @@ class TestCLLocationManager(TestCase):
     @min_os_level("10.16")
     def testMethods10_16(self):
         self.assertResultIsBOOL(
-            CoreLocation.CLLocationManager.authorizedForPreciseLocation
+            CoreLocation.CLLocationManager.isAuthorizedForPreciseLocation
         )
 
         self.assertArgIsBlock(

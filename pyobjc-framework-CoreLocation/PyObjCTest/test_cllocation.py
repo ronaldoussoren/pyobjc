@@ -38,7 +38,7 @@ class TestCLLocation(TestCase):
 
     @min_os_level("10.16")
     def testConstants10_16(self):
-        self.assertIsInstance(CoreLocation.kCLLocationAccuracyReduced, str)
+        self.assertIsInstance(CoreLocation.kCLLocationAccuracyReduced, float)
 
     @min_os_level("10.6")
     def testMethods(self):
