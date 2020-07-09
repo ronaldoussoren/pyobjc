@@ -9,10 +9,71 @@
      "typestr": "^{AudioHardwarePlugInInterface=}"
    }
   },
+  "enum": {
+   "kAudioChannelLayoutTag_Atmos_5_1_2": { "value": 12713992 },
+   "kAudioChannelLayoutTag_Atmos_5_1_4": { "value": 12779530 },
+   "kAudioChannelLayoutTag_Atmos_7_1_2": { "value": 12845066 },
+   "kAudioChannelLayoutTag_Atmos_7_1_4": { "value": 12582924 },
+   "kAudioChannelLayoutTag_Atmos_9_1_6": { "value": 12648464 },
+   "kAudioChannelLayoutTag_WAVE_4_0_B": { "value": 12124164 },
+   "kAudioChannelLayoutTag_WAVE_5_0_B": { "value": 12189701 },
+   "kAudioChannelLayoutTag_WAVE_5_1_B": { "value": 12255238 },
+   "kAudioChannelLayoutTag_WAVE_6_1": { "value": 12320775 },
+   "kAudioChannelLayoutTag_WAVE_7_1": { "value": 12386312 },
+   "kAudioChannelBit_LeftTopMiddle": { "value": 2097152 },
+   "kAudioChannelBit_RightTopMiddle": { "value": 8388608 },
+   "kAudioChannelBit_LeftTopRear": { "value": 16777216 },
+   "kAudioChannelBit_CenterTopRear": { "value": 33554432 },
+   "kAudioChannelBit_RightTopRear": { "value": 67108864 },
+   "kAudioChannelLabel_LeftTopMiddle": { "value": 49 },
+   "kAudioChannelLabel_RightTopMiddle": { "value": 51 },
+   "kAudioChannelLabel_LeftTopRear": { "value": 52 },
+   "kAudioChannelLabel_CenterTopRear": { "value": 53 },
+   "kAudioChannelLabel_RightTopRear": { "value": 54 },
+   "AVAudioSessionErrorCodeNone": { "value": 0 },
+   "AVAudioSessionErrorCodeMediaServicesFailed": { "value": 1836282486 },
+   "AVAudioSessionErrorCodeIsBusy": { "value": 560030580 },
+   "AVAudioSessionErrorCodeIncompatibleCategory": { "value": 560161140 },
+   "AVAudioSessionErrorCodeCannotInterruptOthers": { "value": 560557684 },
+   "AVAudioSessionErrorCodeMissingEntitlement": { "value": 1701737535 },
+   "AVAudioSessionErrorCodeSiriIsRecording": { "value": 1936290409 },
+   "AVAudioSessionErrorCodeCannotStartPlaying": { "value": 561015905 },
+   "AVAudioSessionErrorCodeCannotStartRecording": { "value": 561145187 },
+   "AVAudioSessionErrorCodeBadParam": { "value": -50 },
+   "AVAudioSessionErrorCodeInsufficientPriority": { "value": 561017449 },
+   "AVAudioSessionErrorCodeResourceNotAvailable": { "value": 561145203 },
+   "AVAudioSessionErrorCodeUnspecified": { "value": 2003329396 },
+   "AVAudioSessionErrorCodeExpiredSession": { "value": 561210739 },
+   "AVAudioSessionErrorCodeSessionNotActive": { "value": 1768841571 },
+   "kAudioFormatMPEGD_USAC": { "value": 1970495843 }
+  },
+  "aliases": {
+   "kAudioChannelLayoutTag_WAVE_2_1": { "alias": "kAudioChannelLayoutTag_DVD_4" },
+   "kAudioChannelLayoutTag_WAVE_3_0": { "alias": "kAudioChannelLayoutTag_MPEG_3_0_A" },
+   "kAudioChannelLayoutTag_WAVE_4_0_A": { "alias": "kAudioChannelLayoutTag_ITU_2_2" },
+   "kAudioChannelLayoutTag_WAVE_5_0_A": { "alias": "kAudioChannelLayoutTag_MPEG_5_0_A" },
+   "kAudioChannelLayoutTag_WAVE_5_1_A": { "alias": "kAudioChannelLayoutTag_MPEG_5_1_A" },
+   "kAudioChannelLabel_LeftTopFront": { "alias": "kAudioChannelLabel_VerticalHeightLeft" },
+   "kAudioChannelLabel_CenterTopFront": { "alias": "kAudioChannelLabel_VerticalHeightCenter" },
+   "kAudioChannelLabel_RightTopFront": { "alias": "kAudioChannelLabel_VerticalHeightRight" },
+   "kAudioChannelLabel_CenterTopMiddle": { "alias": "kAudioChannelLabel_TopCenterSurround" },
+   "kAudioChannelBit_LeftTopFront": { "alias": "kAudioChannelBit_VerticalHeightLeft" },
+   "kAudioChannelBit_CenterTopFront": { "alias": "kAudioChannelBit_VerticalHeightCenter" },
+   "kAudioChannelBit_RightTopFront": { "alias": "kAudioChannelBit_VerticalHeightRight" },
+   "kAudioChannelBit_CenterTopMiddle": { "alias": "kAudioChannelBit_TopCenterSurround" }
+  },
   "structs": {
    "AudioBuffer": { "ignore": true, "comment": "Manual wrapper" },
    "AudioBufferList": { "ignore": true, "comment": "Manual wrapper" },
-   "AudioValueTranslation": { "ignore": true, "comment": "Manual wrapper" }
+   "AudioValueTranslation": { "ignore": true, "comment": "Manual wrapper" },
+   "AudioFormatListItem": {
+    "fieldnames": [
+     "mASBD",
+     "mChannelLayoutTag"
+    ],
+    "special": false,
+    "typestr": "{AudioFormatListItem={AudioStreamBasicDescription=dIIIIIIII}I}"
+   }
   },
   "functions": {
    "AudioDeviceAddIOProc": {
@@ -353,7 +414,7 @@
          "typestr": "I"
         },
         {
-         "typestr": ["n^{AudioObjectPropertyAddress=LLL}", "n^{AudioObjectPropertyAddress=III}"]
+         "typestr": "n^{AudioObjectPropertyAddress=III}"
         },
         {
          "typestr": "^v"
@@ -422,7 +483,7 @@
        "arguments": {
         "0": { "type": "^v" },
 	"1": { "type": "I" },
-	"2": { "type": ["n^{AudioObjectPropertyAddress=LLL}", "n^{AudioObjectPropertyAddress=III}"], "c_array_length_in_arg": 1 }
+	"2": { "type": "n^{AudioObjectPropertyAddress=III}", "c_array_length_in_arg": 1 }
        }
       }
      }
@@ -467,7 +528,7 @@
          "typestr": "I"
         },
         {
-         "typestr": ["n^{AudioObjectPropertyAddress=LLL}", "n^{AudioObjectPropertyAddress=III}"]
+         "typestr": "n^{AudioObjectPropertyAddress=III}"
         },
         {
          "typestr": "^v"
@@ -490,7 +551,7 @@
        "arguments": {
         "0": { "type": "^v" },
 	"1": { "type": "I" },
-	"2": { "type": ["n^{AudioObjectPropertyAddress=LLL}", "n^{AudioObjectPropertyAddress=III}"], "c_array_length_in_arg": 1 }
+	"2": { "type": "n^{AudioObjectPropertyAddress=III}", "c_array_length_in_arg": 1 }
        }
       }
      }
@@ -575,7 +636,7 @@
    "IsAudioFormatNativeEndian": {
     "retval": { "type_override": "B" },
     "args": {
-     "0": { "type_override": [ "n^{AudioStreamBasicDescription=dLLLLLLLL}", "n^{AudioStreamBasicDescription=dIIIIIIII}" ] }
+     "0": { "type_override": "n^{AudioStreamBasicDescription=dIIIIIIII}" }
     }
    },
    "CalculateLPCMFlags": {
@@ -591,7 +652,7 @@
    "FillOutASBDForLPCM": {
     "retval": { "type_override": "v" },
     "args": {
-     "0": { "type_override": [ "o^{AudioStreamBasicDescription=dLLLLLLLL}", "o^{AudioStreamBasicDescription=dIIIIIIII}" ] },
+     "0": { "type_override": "o^{AudioStreamBasicDescription=dIIIIIIII}" },
      "1": { "type_override": "d" },
      "2": { "type_override": "I" },
      "3": { "type_override": "I" },
@@ -604,21 +665,21 @@
    "FillOutAudioTimeStampWithSampleTime": {
     "retval": { "type_override": "v" },
     "args": {
-     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "0": { "type_override": "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
      "1": { "type_override": "d" }
     }
    },
    "FillOutAudioTimeStampWithHostTime": {
     "retval": { "type_override": "v" },
     "args": {
-     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "0": { "type_override": "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
      "1": { "type_override": "Q" }
     }
    },
    "FillOutAudioTimeStampWithSampleAndHostTime": {
     "retval": { "type_override": "v" },
     "args": {
-     "0": { "type_override": [ "o^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+     "0": { "type_override": "o^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
      "1": { "type_override": "d" },
      "2": { "type_override": "Q" }
     }

@@ -2,7 +2,7 @@ import CoreAudio
 from PyObjCTools.TestSupport import TestCase, fourcc
 
 TARGET_RT_BIG_ENDIAN = False
-CA_PREFER_FIXED_POINT = False
+CA_PREFER_FIXED_POINT = True
 
 
 class TestCoreAudioBaseTypes(TestCase):
@@ -710,9 +710,10 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertIsInstance(v.mDataByteSize, int)
         self.assertIs(v.mData, None)
 
-        v = CoreAudio.AudioBufferList()  # XXX: Needs more work
-        self.assertIsInstance(v.mNumberBuffers, int)
-        self.assertIs(v.mBuffers, None)
+        # Manual binding, tested elsewhere
+        # v = CoreAudio.AudioBufferList(1)
+        # self.assertIsInstance(v.mNumberBuffers, int)
+        # self.assertIs(v.mBuffers, None)
 
         v = CoreAudio.AudioStreamBasicDescription()
         self.assertIsInstance(v.mSampleRate, float)
@@ -734,7 +735,7 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertIsInstance(v.mSubframes, int)
         self.assertIsInstance(v.mSubframeDivisor, int)
         self.assertIsInstance(v.mCounter, int)
-        self.assertIsInstance(v.mType, CoreAudio.SMPTETimeType)
+        self.assertIsInstance(v.mType, int)
         self.assertIsInstance(v.mFlags, int)
         self.assertIsInstance(v.mHours, int)
         self.assertIsInstance(v.mMinutes, int)
@@ -758,13 +759,14 @@ class TestCoreAudioBaseTypes(TestCase):
         v = CoreAudio.AudioChannelDescription()
         self.assertIsInstance(v.mChannelLabel, int)
         self.assertIsInstance(v.mChannelFlags, int)
-        self.assertIs(v.mCoordinates, None)
+        self.assertEqual(v.mCoordinates, (0.0, 0.0, 0.0))
 
-        v = CoreAudio.AudioChannelLayout()
-        self.assertIsInstance(v.mChannelLayoutTag, int)
-        self.assertIsInstance(v.mChannelBitmap, CoreAudio.AudioChannelBitmap)
-        self.assertIsInstance(v.mChannelFlags, int)
-        self.assertIs(v.mChannelDescriptions, None)
+        # Tested elsewhere
+        # v = CoreAudio.AudioChannelLayout()
+        # self.assertIsInstance(v.mChannelLayoutTag, int)
+        # self.assertIsInstance(v.mChannelBitmap, CoreAudio.AudioChannelBitmap)
+        # self.assertIsInstance(v.mChannelFlags, int)
+        # self.assertIs(v.mChannelDescriptions, None)
 
         v = CoreAudio.AudioFormatListItem()
         self.assertIsInstance(v.mASBD, CoreAudio.AudioStreamBasicDescription)

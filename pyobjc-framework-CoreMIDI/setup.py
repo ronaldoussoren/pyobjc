@@ -14,7 +14,6 @@ VERSION = "7.0a1"
 setup(
     name="pyobjc-framework-CoreMIDI",
     description="Wrappers for the framework CoreMIDI on macOS",
-    min_os_level="10.16",
     packages=["CoreMIDI"],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

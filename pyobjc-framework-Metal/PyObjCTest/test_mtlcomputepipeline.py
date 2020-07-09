@@ -16,7 +16,7 @@ class TestMTLComputePipelineHelper(Metal.NSObject):
     def textureWriteRoundingMode(self):
         return 1
 
-    def newComputePipelineStateWithAdditionalBinaryFunctions_error_(self):
+    def newComputePipelineStateWithAdditionalBinaryFunctions_error_(self, a, b):
         return 1
 
 

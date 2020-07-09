@@ -28,10 +28,10 @@ class TestMTLLibraryHelper(Metal.NSObject):
     def options(self):
         return 1
 
-    def newFunctionWithDescriptor_completionHandler_(self, a, b, c):
+    def newFunctionWithDescriptor_completionHandler_(self, a, b):
         pass
 
-    def newFunctionWithDescriptor(self, a, b):
+    def newFunctionWithDescriptor(self):
         return 1
 
     def newIntersectionFunctionWithDescriptor_completionHandler_(self, a, b):

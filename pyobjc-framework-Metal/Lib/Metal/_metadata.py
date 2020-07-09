@@ -40,11 +40,6 @@ misc.update(
             b"{_MTLTextureSwizzleChannels=CCCC}",
             ["red", "green", "blue", "alpha"],
         ),
-        "MTLPackedFloat3": objc.createStructType(
-            "MTLPackedFloat3",
-            b"{_MTLPackedFloat3=(_union _MTLPackedFloat3::(anonymous at /Users/ronald/Downloads/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.16.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:8:5)={=fff}[3f])}",
-            [],
-        ),
         "MTLQuadTessellationFactorsHalf": objc.createStructType(
             "MTLQuadTessellationFactorsHalf",
             b"{_MTLQuadTessellationFactorsHalf=[4S][2S]}",
@@ -63,17 +58,6 @@ misc.update(
             b"{_MTLVertexAmplificationViewMapping=II}",
             ["viewportArrayIndexOffset", "renderTargetArrayIndexOffset"],
         ),
-        "MTLAccelerationStructureInstanceDescriptor": objc.createStructType(
-            "MTLAccelerationStructureInstanceDescriptor",
-            b"{_MTLAccelerationStructureInstanceDescriptor={_MTLPackedFloat4x3=[4{_MTLPackedFloat3=(_union _MTLPackedFloat3::(anonymous at /Users/ronald/Downloads/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.16.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:8:5)={=fff}[3f])}]}IIII}",
-            [
-                "transformationMatrix",
-                "flags",
-                "mask",
-                "intersectionFunctionTableOffset",
-                "accelerationStructureIndex",
-            ],
-        ),
         "MTLCounterResultStageUtilization": objc.createStructType(
             "MTLCounterResultStageUtilization",
             b"{_MTLCounterResultStageUtilization=QQQQQQ}",
@@ -85,11 +69,6 @@ misc.update(
                 "fragmentCycles",
                 "renderTargetCycles",
             ],
-        ),
-        "MTLPackedFloat4x3": objc.createStructType(
-            "MTLPackedFloat4x3",
-            b"{_MTLPackedFloat4x3=[4{_MTLPackedFloat3=(_union _MTLPackedFloat3::(anonymous at /Users/ronald/Downloads/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.16.sdk/System/Library/Frameworks/Metal.framework/Headers/MTLAccelerationStructureTypes.h:8:5)={=fff}[3f])}]}",
-            ["columns"],
         ),
         "MTLDrawPatchIndirectArguments": objc.createStructType(
             "MTLDrawPatchIndirectArguments",
