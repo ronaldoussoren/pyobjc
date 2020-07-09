@@ -28,6 +28,21 @@
   },
   "classes": {},
   "enum": {
+   "kCFStreamSocketSecurityNone": {
+    "value": 0
+   },
+   "kCFStreamSocketSecuritySSLv2": {
+    "value": 1
+   },
+   "kCFStreamSocketSecuritySSLv3": {
+    "value": 2
+   },
+   "kCFStreamSocketSecuritySSLv23": {
+    "value": 3
+   },
+   "kCFStreamSocketSecurityTLSv1": {
+    "value": 4
+   },
    "kCFURLErrorAppTransportSecurityRequiresSecureConnection": {
     "value": -1022
    },
@@ -69,8 +84,8 @@
    "CFFTPCreateParsedResourceListing": {
     "args": {
      "0": {},
-     "1": {},
-     "3": {}
+     "1": { "type_override": "^v", "type_modifier":"n"},
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CFHTTPAuthenticationAppliesToRequest": {
@@ -145,7 +160,7 @@
    "CFHTTPMessageAppendBytes": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
     }
    },
    "CFHTTPMessageApplyCredentialDictionary": {
@@ -348,21 +363,21 @@
    "CFHostGetAddressing": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     },
     "retval": {}
    },
    "CFHostGetNames": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     },
     "retval": {}
    },
    "CFHostGetReachability": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o" }
     },
     "retval": {}
    },
@@ -403,7 +418,7 @@
    "CFHostStartInfoResolution": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "CFHostUnscheduleFromRunLoop": {
@@ -416,7 +431,7 @@
    "CFNetDiagnosticCopyNetworkStatusPassively": {
     "args": {
      "0": {},
-     "1": {}
+     "1": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CFNetDiagnosticCreateWithStreams": {
@@ -692,7 +707,7 @@
    "CFNetServiceRegisterWithOptions": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "CFNetServiceResolve": {
@@ -704,7 +719,7 @@
    "CFNetServiceResolveWithTimeout": {
     "args": {
      "0": {},
-     "2": {}
+     "2": { "type_modifier": "o" }
     }
    },
    "CFNetServiceScheduleWithRunLoop": {
@@ -893,16 +908,16 @@
     "args": {
      "0": {},
      "1": {},
-     "3": {},
-     "4": { "type_modifier": "o" }
+     "3": { "type_modifier": "o", "already_cfretained": true  },
+     "4": { "type_modifier": "o" , "already_cfretained": true }
     }
    },
    "CFStreamCreatePairWithSocketToNetService": {
     "args": {
      "0": {},
      "1": {},
-     "2": {},
-     "3": {}
+     "2": { "type_modifier": "o", "already_cfretained": true },
+     "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
    "CFWriteStreamCreateWithFTPURL": {
