@@ -21,12 +21,17 @@ class TestRPScreenRecorder(TestCase):
             ReplayKit.RPScreenRecorder.discardRecordingWithHandler_, 0, b"v"
         )
         self.assertArgIsBlock(
-            ReplayKit.RPScreenRecorder.startCaptureWithHandler_,
+            ReplayKit.RPScreenRecorder.startCaptureWithHandler_completionHandler_,
             0,
-            b"v@" + objc.C_C_NSInteger + b"@",
+            b"v^{opaqueCMSampleBuffer=}" + objc._C_NSInteger + b"@",
         )
         self.assertArgIsBlock(
-            ReplayKit.RPScreenRecorder.stopCaptureWithHandler_, 0, b"v"
+            ReplayKit.RPScreenRecorder.startCaptureWithHandler_completionHandler_,
+            1,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            ReplayKit.RPScreenRecorder.stopCaptureWithHandler_, 0, b"v@"
         )
         self.assertResultIsBOOL(ReplayKit.RPScreenRecorder.isAvailable)
         self.assertResultIsBOOL(ReplayKit.RPScreenRecorder.isRecording)

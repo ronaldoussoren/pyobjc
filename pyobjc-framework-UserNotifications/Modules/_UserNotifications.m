@@ -18,7 +18,7 @@ static PyMethodDef mod_methods[] = {
 /* Python glue */
 static struct PyModuleDef mod_module = {
      PyModuleDef_HEAD_INIT,
-     "_UserNotificatins",
+     "_UserNotifications",
      NULL,                                        
      0,
      mod_methods,                                 
@@ -27,9 +27,9 @@ static struct PyModuleDef mod_module = {
      NULL,                                        
      NULL};                                       
 
-PyObject* PyInit__UserNotificatins(void);
+PyObject* PyInit__UserNotifications(void);
 
-PyObject* __attribute__((__visibility__("default"))) PyInit__UserNotificatins(void)
+PyObject* __attribute__((__visibility__("default"))) PyInit__UserNotifications(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);

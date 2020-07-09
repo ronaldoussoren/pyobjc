@@ -45,6 +45,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
     nw_connection_send_completion_t          t;
     nw_content_context_t                     t2;
     nw_parameters_configure_protocol_block_t p;
+    nw_privacy_context_t                     c;
 
     m = PyModule_Create(&mod_module);
     if (!m) { return NULL; }
@@ -84,6 +85,13 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
                      @encode(nw_parameters_configure_protocol_block_t), &p)
         != 0)
         goto error;
+    c = NW_DEFAULT_PRIVACY_CONTEXT;
+    if (add_constant(m, "NW_DEFAULT_PRIVACY_CONTEXT",
+                     @encode(nw_privacy_context_t), &c)
+        != 0)
+        goto error;
+
+
 #pragma clang diagnostic pop
 
     return m;

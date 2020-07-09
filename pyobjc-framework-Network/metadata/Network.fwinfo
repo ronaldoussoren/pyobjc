@@ -12,6 +12,36 @@
    "NW_LISTENER_INFINITE_CONNECTION_LIMIT": { "value": 4294967295 }
   },
   "functions": {
+   "nw_resolution_report_get_protocol": {
+    "retval": { "already_retained": true }
+   },
+   "nw_group_descriptor_create_multicast": {
+    "retval": { "already_retained": true }
+   },
+   "nw_resolution_report_copy_preferred_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_group_copy_parameters": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_group_copy_descriptor": {
+    "retval": { "already_retained": true }
+   },
+   "nw_resolver_config_create_tls": {
+    "retval": { "already_retained": true }
+   },
+   "nw_resolution_report_copy_successful_endpoint": {
+    "retval": { "already_retained": true }
+   },
+   "nw_privacy_context_create": {
+    "retval": { "already_retained": true }
+   },
+   "nw_resolver_config_create_https": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_group_create": {
+    "retval": { "already_retained": true }
+   },
    "nw_txt_record_create_dictionary": {
     "retval": { "already_retained": true }
    },
