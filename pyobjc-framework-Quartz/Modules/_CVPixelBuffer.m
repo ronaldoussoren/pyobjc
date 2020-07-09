@@ -87,12 +87,9 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if (PyObject_AsWriteBuffer(py_buffer, &baseAddress, &buflen) < 0) {
         return NULL;
     }
-#pragma clang diagnostic pop
 
     PyObject* real_info = Py_BuildValue("OOO", releaseCallback, info, py_buffer);
     if (real_info == NULL) {

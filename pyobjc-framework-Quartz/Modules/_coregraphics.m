@@ -319,14 +319,10 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     } else {
         Py_ssize_t size;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
         if (PyObject_AsWriteBuffer(py_data, &data, &size) == -1) {
             return NULL;
         }
 
-#pragma clang diagnostic pop
     }
 
     CGContextRef ctx = NULL;
