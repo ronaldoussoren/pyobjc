@@ -216,10 +216,11 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     static ffi_cif*   convert_cif             = NULL;
     static ffi_cif*   new_cif                 = NULL;
 
-    PyHeapTypeObject*                   newType = NULL;
-    PyObjCPointerWrapper_ToPythonFunc   from_c  = NULL;
-    PyObjCPointerWrapper_FromPythonFunc to_c    = NULL;
-    ffi_closure*                        cl      = NULL;
+    PyHeapTypeObject*                   newType  = NULL;
+    PyObjCPointerWrapper_ToPythonFunc   from_c   = NULL;
+    PyObjCPointerWrapper_FromPythonFunc to_c     = NULL;
+    ffi_closure*                        cl_to_c  = NULL;
+    ffi_closure*                        cl_from_c = NULL;
     ffi_status                          rv;
     int                                 r;
     PyObject*                           v = NULL;
@@ -344,8 +345,8 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
         }
     }
 
-    cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    if (cl == NULL) {
+    cl_to_c = ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
+    if (cl_to_c == NULL) {
         goto error_cleanup;
     }
 
@@ -353,7 +354,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     Py_INCREF(Py_TYPE(&(newType->ht_type)));
     PyType_Ready((PyTypeObject*)newType);
 
-    rv = ffi_prep_closure_loc(cl, convert_cif, opaque_to_c, newType, codeloc);
+    rv = ffi_prep_closure_loc(cl_to_c, convert_cif, opaque_to_c, newType, codeloc);
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
@@ -361,14 +362,13 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
     to_c = (PyObjCPointerWrapper_FromPythonFunc)codeloc;
-    cl   = NULL;
 
-    cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    if (cl == NULL) {
+    cl_from_c = ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
+    if (cl_from_c == NULL) {
         goto error_cleanup;
     }
 
-    rv = ffi_prep_closure_loc(cl, new_cif, opaque_from_c, newType, codeloc);
+    rv = ffi_prep_closure_loc(cl_from_c, new_cif, opaque_from_c, newType, codeloc);
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         goto error_cleanup;
@@ -376,7 +376,6 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     Py_INCREF(newType); /* Store reference, hence INCREF */
 
     from_c = (PyObjCPointerWrapper_ToPythonFunc)codeloc;
-    cl     = NULL;
 
     r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);
     if (r == -1) {
@@ -395,16 +394,12 @@ error_cleanup:
         PyMem_Free(newType);
     }
 
-    if (cl) {
-        ffi_closure_free(cl);
+    if (cl_to_c) {
+        ffi_closure_free(cl_to_c);
     }
 
-    if (to_c) {
-        ffi_closure_free(ffi_find_closure_for_code_np(to_c));
-    }
-
-    if (from_c) {
-        ffi_closure_free(ffi_find_closure_for_code_np(from_c));
+    if (cl_from_c) {
+        ffi_closure_free(cl_from_c);
     }
 
     Py_XDECREF(v);
