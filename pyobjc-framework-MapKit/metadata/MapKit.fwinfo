@@ -3,6 +3,10 @@
 {
  "definitions": {
   "enum": {
+   "MKAnnotationViewZPriorityMax": { "value": 1000.0 },
+   "MKAnnotationViewZPriorityDefaultSelected": { "value": 1000.0 },
+   "MKAnnotationViewZPriorityDefaultUnselected": { "value": 500.0 },
+   "MKAnnotationViewZPriorityMin": { "value": 0.0 },
    "MKFeatureVisibilityAdaptive": { "value": 0 },
    "MKFeatureVisibilityHidden": { "value": 1 },
    "MKFeatureVisibilityVisible": { "value": 2 },

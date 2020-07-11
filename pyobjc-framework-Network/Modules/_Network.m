@@ -29,23 +29,19 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 static struct PyModuleDef mod_module = {
      PyModuleDef_HEAD_INIT,
      "_Network",
-     NULL,                                        
+     NULL,
      0,
-     mod_methods,                                 
-     NULL,                                        
-     NULL,                                        
-     NULL,                                        
-     NULL};                                       
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
 
 PyObject* PyInit__Network(void);
 
 PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
 {
-    PyObject*                                m;
-    nw_connection_send_completion_t          t;
-    nw_content_context_t                     t2;
-    nw_parameters_configure_protocol_block_t p;
-    nw_privacy_context_t                     c;
+    PyObject* m;
 
     m = PyModule_Create(&mod_module);
     if (!m) { return NULL; }
@@ -53,46 +49,46 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    t = NW_CONNECTION_SEND_IDEMPOTENT_CONTENT;
-    if (add_constant(m, "NW_CONNECTION_SEND_IDEMPOTENT_CONTENT",
-                     @encode(nw_connection_send_completion_t), &t)
-        != 0)
-        goto error;
-    t2 = NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT;
-    if (add_constant(m, "NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT",
-                     @encode(nw_content_context_t), &t2)
-        != 0)
-        goto error;
-    t2 = NW_CONNECTION_FINAL_MESSAGE_CONTEXT;
-    if (add_constant(m, "NW_CONNECTION_FINAL_MESSAGE_CONTEXT",
-                     @encode(nw_content_context_t), &t2)
-        != 0)
-        goto error;
-    t2 = NW_CONNECTION_DEFAULT_STREAM_CONTEXT;
-    if (add_constant(m, "NW_CONNECTION_DEFAULT_STREAM_CONTEXT",
-                     @encode(nw_content_context_t), &t2)
-        != 0)
-        goto error;
-    p = NW_PARAMETERS_DEFAULT_CONFIGURATION;
-    if (add_constant(m, "NW_PARAMETERS_DEFAULT_CONFIGURATION",
-                     @encode(nw_parameters_configure_protocol_block_t), &p)
-        != 0)
-        goto error;
-    p = NW_PARAMETERS_DISABLE_PROTOCOL;
-    if (add_constant(m, "NW_PARAMETERS_DISABLE_PROTOCOL",
-                     @encode(nw_parameters_configure_protocol_block_t), &p)
-        != 0)
-        goto error;
-    c = NW_DEFAULT_PRIVACY_CONTEXT;
-    if (add_constant(m, "NW_DEFAULT_PRIVACY_CONTEXT",
-                     @encode(nw_privacy_context_t), &c)
-        != 0)
-        goto error;
+    if (@available(macos 10.14, *)) {
+        nw_connection_send_completion_t t = NW_CONNECTION_SEND_IDEMPOTENT_CONTENT;
+        if (add_constant(m, "NW_CONNECTION_SEND_IDEMPOTENT_CONTENT",
+                         @encode(nw_connection_send_completion_t), &t)
+            != 0)
+            goto error;
+        nw_content_context_t t2 = NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT;
+        if (add_constant(m, "NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT",
+                         @encode(nw_content_context_t), &t2)
+            != 0)
+            goto error;
+        t2 = NW_CONNECTION_FINAL_MESSAGE_CONTEXT;
+        if (add_constant(m, "NW_CONNECTION_FINAL_MESSAGE_CONTEXT",
+                         @encode(nw_content_context_t), &t2)
+            != 0)
+            goto error;
+        t2 = NW_CONNECTION_DEFAULT_STREAM_CONTEXT;
+        if (add_constant(m, "NW_CONNECTION_DEFAULT_STREAM_CONTEXT",
+                         @encode(nw_content_context_t), &t2)
+            != 0)
+            goto error;
+        nw_parameters_configure_protocol_block_t p = NW_PARAMETERS_DEFAULT_CONFIGURATION;
+        if (add_constant(m, "NW_PARAMETERS_DEFAULT_CONFIGURATION",
+                         @encode(nw_parameters_configure_protocol_block_t), &p)
+            != 0)
+            goto error;
+        p = NW_PARAMETERS_DISABLE_PROTOCOL;
+        if (add_constant(m, "NW_PARAMETERS_DISABLE_PROTOCOL",
+                         @encode(nw_parameters_configure_protocol_block_t), &p)
+            != 0)
+            goto error;
+   }
 
-
-#pragma clang diagnostic pop
+    if (@available(macos 10.16, *)) {
+        nw_privacy_context_t c = NW_DEFAULT_PRIVACY_CONTEXT;
+        if (add_constant(m, "NW_DEFAULT_PRIVACY_CONTEXT",
+                         @encode(nw_privacy_context_t), &c)
+            != 0)
+            goto error;
+    }
 
     return m;
 

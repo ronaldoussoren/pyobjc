@@ -5,6 +5,7 @@ import Network
 
 
 class TestPrivacyContext(TestCase):
+    @min_os_level("10.16")
     def test_constants(self):
         self.assertIsInstance(Network.NW_DEFAULT_PRIVACY_CONTEXT, objc.objc_object)
 
