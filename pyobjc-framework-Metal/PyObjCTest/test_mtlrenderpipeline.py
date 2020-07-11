@@ -78,7 +78,7 @@ class TestMTLRenderPipeline(TestCase):
             TestMTLRenderPipelineHelper.supportIndirectCommandBuffers
         )
         self.assertResultHasType(
-            TestMTLRenderPipelineHelper.textureWriteRoundingMode, objc._C_NSUInteger
+            TestMTLRenderPipelineHelper.textureWriteRoundingMode, objc._C_NSInteger
         )
 
     @min_os_level("10.11")

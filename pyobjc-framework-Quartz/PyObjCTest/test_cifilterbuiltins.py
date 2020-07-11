@@ -562,7 +562,7 @@ class TestCIBuiltinFilterHelper(Quartz.NSObject):
     def setGrayComponentReplacement_(self, a):
         pass
 
-    def setGrowAmount(self, a):
+    def setGrowAmount_(self, a):
         pass
 
     def setHaloOverlap_(self, a):

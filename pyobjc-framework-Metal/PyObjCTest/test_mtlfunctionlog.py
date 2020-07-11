@@ -20,11 +20,11 @@ class TestMTLFunctionLog(TestCase):
 
     @min_sdk_level("10.16")
     def test_protocols(self):
-        objc.protocolNamed("MTLFunctionLogContainer")
+        objc.protocolNamed("MTLLogContainer")
         objc.protocolNamed("MTLFunctionLogDebugLocation")
         objc.protocolNamed("MTLFunctionLog")
 
     def test_methods(self):
         self.assertResultHasType(TestMTLFunctionLogHelper.line, objc._C_NSUInteger)
         self.assertResultHasType(TestMTLFunctionLogHelper.column, objc._C_NSUInteger)
-        self.assertResultHasType(TestMTLFunctionLogHelper.type, objc._C_NSUInteger)
+        self.assertResultHasType(TestMTLFunctionLogHelper.type, objc._C_NSInteger)

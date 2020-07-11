@@ -9,8 +9,8 @@ class TestMTLAccelerationStructureCommandEncoderHelper(Metal.NSObject):
     ):
         pass
 
-    def refitAccelerationStructure_descriptor_scratchBuffer_scratchBufferOffset_(
-        self, a, b, c, d
+    def refitAccelerationStructure_descriptor_destination_scratchBuffer_scratchBufferOffset_(
+        self, a, b, c, d, e
     ):
         pass
 
@@ -42,8 +42,8 @@ class TestMTLAccelerationStructureCommandEncoder(TestCase):
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLAccelerationStructureCommandEncoderHelper.refitAccelerationStructure_descriptor_scratchBuffer_scratchBufferOffset_,  # noqa: B950
-            3,
+            TestMTLAccelerationStructureCommandEncoderHelper.refitAccelerationStructure_descriptor_destination_scratchBuffer_scratchBufferOffset_,  # noqa: B950
+            4,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
@@ -58,22 +58,22 @@ class TestMTLAccelerationStructureCommandEncoder(TestCase):
         )
 
         self.assertArgIsIn(
-            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage,
+            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage_,
             0,
             objc._C_NSUInteger,
         )
         self.assertArgSizeInArg(
-            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage,
+            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage_,
             0,
             1,
         )
         self.assertArgHasType(
-            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage,
+            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage,
+            TestMTLAccelerationStructureCommandEncoderHelper.useResources_count_usage_,
             2,
             objc._C_NSUInteger,
         )

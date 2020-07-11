@@ -3,17 +3,17 @@ import objc
 from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
-class TestMTLIntersectionFunctionTableHelper(TestCase):
+class TestMTLIntersectionFunctionTableHelper(Metal.NSObject):
     def setBuffer_offset_atIndex_(self, a, b, c):
         pass
 
     def setBuffers_offsets_withRange_(self, a, b, c):
         pass
 
-    def setFunction_atIndex_(self, a, b, c):
+    def setFunction_atIndex_(self, a, b):
         pass
 
-    def setFunctions_withRange_(self, a, b, c):
+    def setFunctions_withRange_(self, a, b):
         pass
 
 
@@ -63,7 +63,7 @@ class TestMTLIntersectionFunctionTable(TestCase):
         )
         self.assertArgHasType(
             TestMTLIntersectionFunctionTableHelper.setFunction_atIndex_,
-            2,
+            1,
             objc._C_NSUInteger,
         )
 

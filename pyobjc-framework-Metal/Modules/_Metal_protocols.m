@@ -36,5 +36,11 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MTLAccelerationStructureCommandEncoder));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLLogContainer));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLFunctionLogDebugLocation));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLFunctionLog));
+    Py_XDECREF(p);
 #endif
 }

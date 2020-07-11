@@ -13,6 +13,11 @@
    "MTLCounterErrorValue": { "value": 18446744073709551615 },
    "MTLCounterDontSample": { "value": 18446744073709551615 }
   },
+  "structs": {
+   "MTLAccelerationStructureInstanceDescriptor": { "ignore": true, "comment": "vector types" },
+   "MTLPackedFloat3": { "ignore": true, "comment": "vector types" },
+   "MTLPackedFloat4x3": { "ignore": true, "comment": "vector types" }
+  },
   "classes": {
    "MTLRasterizationRateMapDescriptor": {
     "methods": [
@@ -49,6 +54,41 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "setIntersectionFunctionTables:withBufferRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setIntersectionFunctionTables:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setVisibleFunctionTables:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setVisibleFunctionTables:withBufferRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
+     {
+      "selector": "setFunctions:withRange:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      }
+     },
      {
       "selector": "setVertexAmplificationCount:viewMapping:",
       "class_method": false,

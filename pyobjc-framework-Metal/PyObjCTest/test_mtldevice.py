@@ -216,6 +216,15 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def supportsBinaryFunctionPointers(self):
         return 1
 
+    def newDynamicLibrary_error_(self, a, b):
+        return 1
+
+    def newDynamicLibraryWithURL_error_(self, a, b):
+        return 1
+
+    def newBinaryArchiveWithDescriptor_error_(self, a, b):
+        return 1
+
 
 class TestMTLDevice(TestCase):
     def test_constants(self):

@@ -77,6 +77,7 @@ class TestMTLCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLCommandEncoderErrorStatePending, 3)
         self.assertEqual(Metal.MTLCommandEncoderErrorStateFaulted, 4)
 
+    @min_os_level("10.16")
     def test_constants10_16(self):
         self.assertIsInstance(Metal.MTLCommandBufferEncoderInfoErrorKey, str)
 

@@ -52,7 +52,7 @@ class TestMTLComputePipeline(TestCase):
             objc._C_NSUInteger,
         )
         self.assertResultHasType(
-            TestMTLComputePipelineHelper.textureWriteRoundingMode, objc._C_NSUInteger
+            TestMTLComputePipelineHelper.textureWriteRoundingMode, objc._C_NSInteger
         )
         self.assertArgHasType(
             TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_,

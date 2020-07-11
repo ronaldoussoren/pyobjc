@@ -237,7 +237,7 @@ class TestMTLArgumentEncoder(TestCase):
         self.assertArgHasType(
             TestMTLArgumentEncoderHelper.setIntersectionFunctionTables_withRange_,
             0,
-            "n^@",
+            b"n^@",
         )
         self.assertArgSizeInArg(
             TestMTLArgumentEncoderHelper.setIntersectionFunctionTables_withRange_, 0, 1

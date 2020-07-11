@@ -32,13 +32,13 @@ class TestMTLBinaryArchive(TestCase):
         self.assertArgHasType(
             TestMTLBinaryArchiveHelper.addComputePipelineFunctionsWithDescriptor_error_,
             1,
-            b"n^@",
+            b"o^@",
         )
         self.assertArgHasType(
             TestMTLBinaryArchiveHelper.addRenderPipelineFunctionsWithDescriptor_error_,
             1,
-            b"n^@",
+            b"o^@",
         )
         self.assertArgHasType(
-            TestMTLBinaryArchiveHelper.serializeToURL_error_, 1, b"n^@"
+            TestMTLBinaryArchiveHelper.serializeToURL_error_, 1, b"o^@"
         )
