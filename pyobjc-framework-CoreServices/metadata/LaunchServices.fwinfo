@@ -4,14 +4,16 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "enum": {
+   "kLSUnknownKindID": { "value": 0 }
+  },
   "structs": {
     "LSApplicationParameters": {
        "fieldnames": [ "version", "flags", "application", "asyncLaunchRefCon", "environment", "argv", "initialEvent" ]
     },
     "LSItemInfoRecord": {
        "pack": 2,
-       "fieldnames": [  [ "flags", "filetype", "creator", "extension", "iconFileName", "kindID" ],
-       			[ "flags", "filetype", "creator", "extension" ] ]
+       "fieldnames": [ "flags", "filetype", "creator", "extension" ]
     },
     "LSLaunchFSRefSpec": {
        "pack": 2,

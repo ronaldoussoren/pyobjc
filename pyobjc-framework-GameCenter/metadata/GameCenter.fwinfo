@@ -10,9 +10,12 @@
    "GKTurnTimeoutDefault": { "typestr": "d" },
    "GKTurnTimeoutNone": { "typestr": "d" },
    "GKExchangeTimeoutDefault": { "typestr": "d" },
-   "GKExchangeTimeoutNone": { "typestr": "d" }
+   "GKExchangeTimeoutNone": { "typestr": "d" },
+   "GKPlayerDidChangeNotificationName": { "typestr": "@" }
   },
   "enum": {
+   "GKPhotoSizeSmall": { "value": 0 },
+   "GKPhotoSizeNormal": { "value": 1 },
    "GKInviteRecipientResponseAccepted": { "value": 0 },
    "GKInviteRecipientResponseDeclined": { "value": 1 },
    "GKInviteRecipientResponseFailed": { "value": 2 },

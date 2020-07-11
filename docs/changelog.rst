@@ -233,6 +233,10 @@ Version 6.0
   - DeviceCheck
   - ExecutionPolicy
   - FileProvider
+
+    ``FileProvider.NSFileProviderItemFieldTrashed`` and ``NSFileProviderErrorVersionOutOfDate`` were dropped
+    from the framework in macOS 11.
+
   - FileProviderUI
   - LinkPresentation
   - OSLog

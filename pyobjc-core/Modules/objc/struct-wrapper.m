@@ -80,8 +80,8 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
     len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d",
-                     Py_TYPE(self)->tp_name, offset);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+                     Py_TYPE(self)->tp_name, offset, len);
         return NULL;
     }
 
@@ -151,8 +151,8 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d",
-                     Py_TYPE(self)->tp_name, offset);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+                     Py_TYPE(self)->tp_name, offset, len);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
@@ -1658,8 +1658,8 @@ PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d",
-                     Py_TYPE(self)->tp_name, offset);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+                     Py_TYPE(self)->tp_name, offset, len);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;

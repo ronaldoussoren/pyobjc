@@ -65,6 +65,9 @@ class TestNSFileProviderItem(TestCase):
             FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting, 1 << 5
         )
         self.assertEqual(
+            FileProvider.NSFileProviderItemCapabilitiesAllowsEvicting, 1 << 6
+        )
+        self.assertEqual(
             FileProvider.NSFileProviderItemCapabilitiesAllowsAddingSubItems,
             FileProvider.NSFileProviderItemCapabilitiesAllowsWriting,
         )
@@ -79,7 +82,8 @@ class TestNSFileProviderItem(TestCase):
             | FileProvider.NSFileProviderItemCapabilitiesAllowsReparenting
             | FileProvider.NSFileProviderItemCapabilitiesAllowsRenaming
             | FileProvider.NSFileProviderItemCapabilitiesAllowsTrashing
-            | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting,
+            | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting
+            | FileProvider.NSFileProviderItemCapabilitiesAllowsEvicting,
         )
 
     @min_sdk_level("10.15")

@@ -14,4 +14,3 @@ class TestNSFileProviderError(TestCase):
         self.assertEqual(FileProvider.NSFileProviderErrorInsufficientQuota, -1003)
         self.assertEqual(FileProvider.NSFileProviderErrorServerUnreachable, -1004)
         self.assertEqual(FileProvider.NSFileProviderErrorNoSuchItem, -1005)
-        self.assertEqual(FileProvider.NSFileProviderErrorVersionOutOfDate, -1006)

@@ -17,7 +17,4 @@ class TestNSFileProviderExtension(TestCase):
             FileProvider.NSFileProviderItemFieldContentModificationDate, 1 << 7
         )
         self.assertEqual(FileProvider.NSFileProviderItemFieldFlags, 1 << 8)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldTrashed, 1 << 9)
-        self.assertEqual(
-            FileProvider.NSFileProviderItemFieldExtendedAttributes, 1 << 10
-        )
+        self.assertEqual(FileProvider.NSFileProviderItemFieldExtendedAttributes, 1 << 9)
