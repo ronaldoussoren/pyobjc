@@ -4268,6 +4268,17 @@ error_cleanup:
  * should be called using objc_sendMsg_sret (using a pointer to the return value
  * as an initial argument), and is set to 0 otherwise.
  */
+
+static const char* ffi_status_str(ffi_status rv) {
+    switch (rv) {
+    case FFI_OK: return "OK";
+    case FFI_BAD_TYPEDEF: return "bad typedef";
+    case FFI_BAD_ABI: return "bad ABI";
+    default: return "UNKNOWN";
+    }
+}
+
+
 ffi_cif*
 PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 {
@@ -4320,7 +4331,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
     if (rv != FFI_OK) {
         PyMem_Free(cif);
         PyMem_Free(cl_arg_types);
-        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI CIF: err=%d", rv);
+        PyErr_Format(PyExc_RuntimeError, "Cannot create FFI CIF for %s: err=%d [%s]", methinfo->signature, rv, ffi_status_str(rv));
         return NULL;
     }
 
