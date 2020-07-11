@@ -41,9 +41,7 @@ class TestCTParagraphStyle(TestCase):
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierTabStops, 4)
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierDefaultTabInterval, 5)
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierLineBreakMode, 6)
-        self.assertEqual(
-            CoreText.kCTParagraphStyleSpecifierLineHeightMultiple, 7
-        )
+        self.assertEqual(CoreText.kCTParagraphStyleSpecifierLineHeightMultiple, 7)
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierMaximumLineHeight, 8)
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierMinimumLineHeight, 9)
         self.assertEqual(CoreText.kCTParagraphStyleSpecifierLineSpacing, 10)

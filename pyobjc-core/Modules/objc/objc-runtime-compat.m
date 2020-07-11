@@ -104,4 +104,3 @@ PyObjC_class_addMethodList(Class cls, struct PyObjC_method* list, unsigned int c
     }
     return YES;
 }
-

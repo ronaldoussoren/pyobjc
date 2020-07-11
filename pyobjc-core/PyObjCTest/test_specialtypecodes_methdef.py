@@ -414,9 +414,13 @@ class TestTypeCodeLeaks(TestCase):
             pysig[3], objc._C_ARY_B + b"4" + objc._C_NSBOOL + objc._C_ARY_E
         )
         if objc.arch == "arm64":
-            self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_BOOL + objc._C_ARY_E)
+            self.assertEqual(
+                csig[3], objc._C_ARY_B + b"4" + objc._C_BOOL + objc._C_ARY_E
+            )
         else:
-            self.assertEqual(csig[3], objc._C_ARY_B + b"4" + objc._C_CHR + objc._C_ARY_E)
+            self.assertEqual(
+                csig[3], objc._C_ARY_B + b"4" + objc._C_CHR + objc._C_ARY_E
+            )
 
         pysig = objc.splitSignature(OC_TestTypeCodeLeaks_ArrayDef.myInt8Arg_.signature)
         csig = objc.splitSignature(

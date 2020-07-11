@@ -11,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 import objc
 import objc._bridgesupport as bridgesupport
-from PyObjCTools.TestSupport import TestCase, main, os_release, expectedFailure, onlyIf
+from PyObjCTools.TestSupport import TestCase, main, expectedFailure, onlyIf
 
 from importlib import reload
 
@@ -565,7 +565,7 @@ class TestBridgeSupportParser(TestCase):
         test_func.__name__ = _test_name
         test_func.__doc__ = "System bridgesupport %r" % (fn,)
 
-        # XXX: This test is not very useful due to the 
+        # XXX: This test is not very useful due to the
         # quality of the XML files in macOS as of 10.13.
         # Therefore mark all of these tests as "expectedFailure",
         # even if some of them will pass.

@@ -2741,7 +2741,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
 #else
 # error "Unsupported CPU architecture"
 #endif
-     
+
 
     /* Issue #298, at least in Xcode 11.3 the following code results in
      * a type encoding of "^{NSObject=#}" instead of "@" for the property:

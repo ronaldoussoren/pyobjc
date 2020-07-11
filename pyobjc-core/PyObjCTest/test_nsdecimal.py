@@ -218,6 +218,7 @@ class TestUsingNSDecimalNumber(TestCase):
         v = n.decimalValue()
         self.assertEqual(d, v)
 
+
 class TestDecimalByReference(TestCase):
     def test_byref_in(self):
         d = objc.NSDecimal("1.5")

@@ -287,7 +287,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
     if (signature->variadic) {
         r = ffi_prep_cif_var(
-            &cif, FFI_DEFAULT_ABI, (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)), 
+            &cif, FFI_DEFAULT_ABI, (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)),
             (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
             useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
             arglist);
@@ -295,7 +295,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         r = ffi_prep_cif(
             &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
             useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
-            arglist); 
+            arglist);
     }
 #endif
 

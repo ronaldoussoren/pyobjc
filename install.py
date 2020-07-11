@@ -226,8 +226,8 @@ def version_key(version):
 
 def main():
     if sys.platform != "darwin":
-       print("PyObjC requires macOS")
-       sys.exit(1)
+        print("PyObjC requires macOS")
+        sys.exit(1)
 
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
         ok = build_project(project, sys.argv[1:])

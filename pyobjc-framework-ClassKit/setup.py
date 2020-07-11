@@ -28,7 +28,7 @@ setup(
                 for fn in os.listdir("Modules")
                 if fn.startswith("_ClassKit")
             ],
-        ),
+        )
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

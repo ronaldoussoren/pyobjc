@@ -122,7 +122,7 @@ def dyld_library(filename, libname):
             yield os.path.join(path, libname)
 
     for f in inject_suffixes(_search()):
-        if os.path.islink(f) and (f.startswith('/lib/') or f.startswith('/usr/lib/')):
+        if os.path.islink(f) and (f.startswith("/lib/") or f.startswith("/usr/lib/")):
             return f
 
         if os.path.exists(f):

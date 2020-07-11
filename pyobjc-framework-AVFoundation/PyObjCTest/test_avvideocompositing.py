@@ -35,7 +35,7 @@ class TestAVVideoCompositing(TestCase):
             AVFoundation.AVVideoCompositionRenderContext.highQualityRendering
         )
 
-    @expectedFailure # XXX
+    @expectedFailure  # XXX
     @min_os_level("10.16")
     def testMethods10_16(self):
         self.assertResultIsBOOL(

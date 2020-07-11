@@ -292,13 +292,13 @@ static PyMethodDef mod_methods[] = {
 static struct PyModuleDef mod_module = {
      PyModuleDef_HEAD_INIT,
      "_CoreMedia",
-     NULL,                                        
+     NULL,
      0,
-     mod_methods,                                 
-     NULL,                                        
-     NULL,                                        
-     NULL,                                        
-     NULL};                                       
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
 
 PyObject* PyInit__CoreMedia(void);
 

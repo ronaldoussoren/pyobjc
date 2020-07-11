@@ -27,7 +27,7 @@ setup(
                 for fn in os.listdir("Modules")
                 if fn.startswith("_Accessibility")
             ],
-        ),
+        )
     ],
     version=VERSION,
     install_requires=[

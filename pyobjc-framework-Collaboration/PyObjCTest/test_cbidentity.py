@@ -12,4 +12,6 @@ class TestCBIdentity(TestCase):
         with self.subTest("isEnabled"):
             self.assertResultIsBOOL(Collaboration.CBUserIdentity.isEnabled)
         with self.subTest("authenticateWithPassword:"):
-            self.assertResultIsBOOL(Collaboration.CBUserIdentity.authenticateWithPassword_)
+            self.assertResultIsBOOL(
+                Collaboration.CBUserIdentity.authenticateWithPassword_
+            )

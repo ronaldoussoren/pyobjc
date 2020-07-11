@@ -16,5 +16,7 @@ class TestCXProvider(TestCase):
 
     def test_methods(self):
         self.assertArgIsBlock(
-            CallKit.CXProvider.reportNewIncomingCallWithUUID_update_completion_, 2, b"v@"
+            CallKit.CXProvider.reportNewIncomingCallWithUUID_update_completion_,
+            2,
+            b"v@",
         )

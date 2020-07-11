@@ -24,7 +24,7 @@ sys.modules["ReplayKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_ReplayKit, Foundation,),
+    (_ReplayKit, Foundation),
 )
 
 

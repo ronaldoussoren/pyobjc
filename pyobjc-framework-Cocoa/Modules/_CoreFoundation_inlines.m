@@ -87,7 +87,7 @@ PyInit__inlines(void)
     PyObject* m;
     m = PyModule_Create(&mod_module);
     if (m == NULL) {
-        return NULL; 
+        return NULL;
     }
 
     if (PyModule_AddObject(m, "_inline_list_", PyObjC_CreateInlineTab(function_map))

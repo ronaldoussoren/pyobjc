@@ -46,7 +46,7 @@
       "selector": "contextsMatchingIdentifierPath:completion:",
       "visibility": "public"
      }
-    ] 
+    ]
    },
    "CLSActivity": {
     "methods": [

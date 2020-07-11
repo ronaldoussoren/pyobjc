@@ -15,7 +15,7 @@ struct byref_attr {
     Py_buffer view;
 };
 
-#define BYREF_ATTR_INT { 0, 0, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } } 
+#define BYREF_ATTR_INT { 0, 0, { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } }
 
 typedef void (*PyObjCFFI_ClosureFunc)(ffi_cif*, void*, void**, void*);
 typedef void (*PyObjC_callback_function)(void);

@@ -370,7 +370,12 @@ try:
                 4: {
                     "callable": {
                         "retval": {"type": b"v"},
-                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}, 2: {"type": b"@"}, 3: {"type": b"@"}},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                            3: {"type": b"@"},
+                        },
                     }
                 }
             }
@@ -384,7 +389,12 @@ try:
                 4: {
                     "callable": {
                         "retval": {"type": b"v"},
-                        "arguments": {0: {"type": b"^v"}, 1: { "type": b"@" }, 2: { "type": b"@" }, 3: { "type": b"@" }},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                            3: {"type": b"@"},
+                        },
                     }
                 }
             }

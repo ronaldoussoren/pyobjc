@@ -24,7 +24,7 @@ sys.modules["Accessibility"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_Accessibility, Quartz,),
+    (_Accessibility, Quartz),
 )
 
 

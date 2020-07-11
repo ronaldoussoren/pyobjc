@@ -1,5 +1,6 @@
 import objc
 
+
 class OC_Compared(objc.lookUpClass("NSObject")):
     def initWithValue_(self, value):
         self = super(OC_Compared, self).init()
@@ -30,4 +31,3 @@ class OC_Compared(objc.lookUpClass("NSObject")):
 
         else:
             return 0
-

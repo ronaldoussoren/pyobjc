@@ -125,7 +125,7 @@ def get_sdk_level():
     if sdkname == "MacOSX.sdk":
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
-                 pl = plistlib.load(fp)
+                pl = plistlib.load(fp)
             return pl["Version"]
         except Exception:
             raise
@@ -134,6 +134,7 @@ def get_sdk_level():
         return sdkname[6:-4]
 
     return sdk[6:-4]
+
 
 def sorted_framework_wrappers():
     frameworks = []
@@ -212,7 +213,15 @@ def build_project(project, extra_args):
     print("Installing {!r} using {!r}".format(project, sys.executable))
     if project == "pyobjc-core":
         status = subprocess.call(
-            [sys.executable, "setup.py", "build_ext", "--use-system-libffi=1", "develop"] + extra_args, cwd=proj_dir
+            [
+                sys.executable,
+                "setup.py",
+                "build_ext",
+                "--use-system-libffi=1",
+                "develop",
+            ]
+            + extra_args,
+            cwd=proj_dir,
         )
     else:
         status = subprocess.call(
@@ -232,12 +241,11 @@ def version_key(version):
 
 def main():
     if sys.platform != "darwin":
-       print("PyObjC requires macOS")
-       sys.exit(1)
-
+        print("PyObjC requires macOS")
+        sys.exit(1)
 
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
-        r = build_project(project, sys.argv[1:])
+        build_project(project, sys.argv[1:])
 
 
 if __name__ == "__main__":

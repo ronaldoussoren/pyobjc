@@ -4163,10 +4163,10 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
     ffi_type* retsig = PyObjCFFI_Typestr2FFI(rettype);
     if (retsig == NULL)
         goto error_cleanup;
-    if (methinfo->variadic) { 
+    if (methinfo->variadic) {
         r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), (int)r, retsig, arglist);
-    } else { 
-        r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist); 
+    } else {
+        r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
     }
     if (r != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
@@ -4314,7 +4314,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
                       cl_arg_types);
     } else {
         rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), cl_ret_type,
-                      cl_arg_types);  
+                      cl_arg_types);
     }
 
     if (rv != FFI_OK) {

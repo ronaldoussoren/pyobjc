@@ -26,7 +26,7 @@ sys.modules["AutomaticAssessmentConfiguration"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_AutomaticAssessmentConfiguration, Foundation,),
+    (_AutomaticAssessmentConfiguration, Foundation),
 )
 
 del sys.modules["AutomaticAssessmentConfiguration._metadata"]

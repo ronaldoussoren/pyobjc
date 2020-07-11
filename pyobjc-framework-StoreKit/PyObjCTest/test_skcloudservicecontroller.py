@@ -32,7 +32,9 @@ class TestSKCloudServiceController(TestCase):
     @min_os_level("10.16")
     def test_methods10_16(self):
         self.assertArgIsBlock(
-            StoreKit.SKCloudServiceController.requestAuthorization_, 0, b"v" + objc._C_NSInteger
+            StoreKit.SKCloudServiceController.requestAuthorization_,
+            0,
+            b"v" + objc._C_NSInteger,
         )
         self.assertArgIsBlock(
             StoreKit.SKCloudServiceController.requestCapabilitiesWithCompletionHandler_,
@@ -40,11 +42,17 @@ class TestSKCloudServiceController(TestCase):
             b"v" + objc._C_NSUInteger + b"@",
         )
         self.assertArgIsBlock(
-            StoreKit.SKCloudServiceController.requestStorefrontCountryCodeWithCompletionHandler_, 0, b"v@@"
+            StoreKit.SKCloudServiceController.requestStorefrontCountryCodeWithCompletionHandler_,
+            0,
+            b"v@@",
         )
         self.assertArgIsBlock(
-            StoreKit.SKCloudServiceController.requestStorefrontIdentifierWithCompletionHandler_, 0, b"v@@"
+            StoreKit.SKCloudServiceController.requestStorefrontIdentifierWithCompletionHandler_,
+            0,
+            b"v@@",
         )
         self.assertArgIsBlock(
-            StoreKit.SKCloudServiceController.requestUserTokenForDeveloperToken_completionHandler_, 1, b"v@@"
+            StoreKit.SKCloudServiceController.requestUserTokenForDeveloperToken_completionHandler_,
+            1,
+            b"v@@",
         )

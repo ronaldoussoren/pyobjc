@@ -48,11 +48,13 @@ _BOOLEAN_ATTRIBUTES = [
     "free_result",
 ]
 
+
 def _get_ctypes():
     global ctypes
 
     if ctypes is None:
         import ctypes
+
 
 def _as_bytes(value):
     if isinstance(value, bytes):

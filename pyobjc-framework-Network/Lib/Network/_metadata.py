@@ -137,12 +137,12 @@ functions = {
         },
     ),
     "nw_endpoint_get_port": (b"S@",),
-    "nw_connection_group_create": (b"@@@", "", { "retval": { "already_retained": True }}),
+    "nw_connection_group_create": (b"@@@", "", {"retval": {"already_retained": True}}),
     "nw_listener_set_state_changed_handler": (
         b"v@@?",
         "",
         {
-            "retval": { "already_retained": True },
+            "retval": {"already_retained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -154,7 +154,7 @@ functions = {
                         },
                     }
                 }
-            }
+            },
         },
     ),
     "nw_protocol_copy_udp_definition": (
@@ -368,7 +368,7 @@ functions = {
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
-    "nw_privacy_context_create": (b"@^c", "", { "retval": { "already_retained": True }}),
+    "nw_privacy_context_create": (b"@^c", "", {"retval": {"already_retained": True}}),
     "nw_content_context_copy_antecedent": (
         b"@@",
         "",
@@ -443,7 +443,11 @@ functions = {
         {"retval": {"already_retained": True}},
     ),
     "nw_interface_get_type": (b"I@",),
-    "nw_resolution_report_copy_successful_endpoint": (b"@@", "", { "retval": { "already_retained":  True }}),
+    "nw_resolution_report_copy_successful_endpoint": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_endpoint_get_address": (b"^{sockaddr=CC[14c]}@",),
     "nw_framer_deliver_input_no_copy": (b"B@Q@B",),
     "nw_path_is_equal": (b"B@@",),
@@ -524,7 +528,11 @@ functions = {
         "",
         {"retval": {"already_retained": True}},
     ),
-    "nw_connection_group_copy_parameters": (b"@@", "", { "retval": { "already_retained": True }}),
+    "nw_connection_group_copy_parameters": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_ws_metadata_copy_server_response": (
         b"@@",
         "",
@@ -555,7 +563,11 @@ functions = {
     "nw_udp_create_options": (b"@", "", {"retval": {"already_retained": True}}),
     "nw_parameters_get_prohibit_constrained": (b"B@",),
     "nw_connection_group_copy_path_for_message": (b"@@@",),
-    "nw_resolution_report_get_protocol": (b"I@", "", { "retval": { "already_retained": True }}),
+    "nw_resolution_report_get_protocol": (
+        b"I@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_advertise_descriptor_set_txt_record_object": (b"v@@",),
     "nw_framer_message_set_value": (
         b"v@^t^v@?",
@@ -672,12 +684,16 @@ functions = {
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
-    "nw_resolver_config_create_tls": (b"@@", "", { "retval": { "already_retained": True }}),
+    "nw_resolver_config_create_tls": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_connection_set_better_path_available_handler": (
         b"v@@?",
         "",
         {
-            "retval": { "already_retained": True },
+            "retval": {"already_retained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -685,7 +701,7 @@ functions = {
                         "arguments": {0: {"type": "^v"}, 1: {"type": "B"}},
                     }
                 }
-            }
+            },
         },
     ),
     "nw_framer_set_wakeup_handler": (
@@ -840,12 +856,16 @@ functions = {
         {"retval": {"already_retained": True}},
     ),
     "nw_resolution_report_get_milliseconds": (b"Q@",),
-    "nw_resolver_config_create_https": (b"@@", "", { "retval": { "already_retained": True }}),
+    "nw_resolver_config_create_https": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_ethernet_channel_set_receive_handler": (
         b"v@@?",
         "",
         {
-            "retval": { "already_retained": True },
+            "retval": {"already_retained": True},
             "arguments": {
                 1: {
                     "callable": {
@@ -859,7 +879,7 @@ functions = {
                         },
                     }
                 }
-            }
+            },
         },
     ),
     "nw_parameters_clear_prohibited_interface_types": (b"v@",),
@@ -1129,7 +1149,11 @@ functions = {
         {"retval": {"already_retained": True}},
     ),
     "nw_tcp_options_set_enable_fast_open": (b"v@B",),
-    "nw_group_descriptor_create_multicast": (b"@@", "", { "retval": { "already_retained": True }}),
+    "nw_group_descriptor_create_multicast": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_protocol_definition_is_equal": (b"B@@",),
     "nw_listener_set_advertise_descriptor": (b"v@@",),
     "nw_ws_create_options": (b"@I", "", {"retval": {"already_retained": True}}),
@@ -1314,7 +1338,11 @@ functions = {
     ),
     "nw_parameters_require_interface": (b"v@@",),
     "nw_ethernet_channel_set_queue": (b"v@@",),
-    "nw_resolution_report_copy_preferred_endpoint": (b"@@", "", { "retval": { "already_retained": True }}),
+    "nw_resolution_report_copy_preferred_endpoint": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_connection_receive": (
         b"v@II@?",
         "",
@@ -1442,7 +1470,11 @@ functions = {
         "",
         {"retval": {"c_array_delimited_by_null": True}},
     ),
-    "nw_connection_group_copy_descriptor": (b"@@", "", { "retval": { "already_retained": True }}),
+    "nw_connection_group_copy_descriptor": (
+        b"@@",
+        "",
+        {"retval": {"already_retained": True}},
+    ),
     "nw_path_monitor_set_cancel_handler": (
         b"v@@?",
         "",

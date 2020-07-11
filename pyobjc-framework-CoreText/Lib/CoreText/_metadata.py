@@ -277,7 +277,7 @@ functions = {
         b"B^{__CFArray=}^{__CFSet=}@?",
         "",
         {
-          "arguments": {
+            "arguments": {
                 2: {
                     "callable": {
                         "retval": {"type": b"B"},
@@ -286,10 +286,10 @@ functions = {
                             1: {"type": "I"},
                             2: {"type": "@"},
                         },
-                    },
-		}
-           }
-        }
+                    }
+                }
+            }
+        },
     ),
     "CTGlyphInfoGetGlyph": (b"S^{__CTGlyphInfo=}",),
     "CTFontManagerUnregisterFontURLs": (

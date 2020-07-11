@@ -1064,7 +1064,7 @@ class TestPrintfFormat(TestCase):
         for fmt, args in [(b"%#+x", (99,)), (b"%+#x", (99,)), (b"% #x", (99,))]:
             with self.subTest((fmt, args)):
                 v = o.makeArrayWithCFormat_(fmt, *args)
-                self.assertEqual(list(v), [fmt.decode(), ((fmt  % args)[1:]).decode()])
+                self.assertEqual(list(v), [fmt.decode(), ((fmt % args)[1:]).decode()])
 
         # Insert thousands seperator, the one in the C locale is ''
         with self.subTest("%'d"):
@@ -1082,7 +1082,7 @@ class TestPrintfFormat(TestCase):
         with self.subTest("%lld, -20"):
             v = o.makeArrayWithCFormat_(b"%lld", -20)
             self.assertEqual(list(v), ["%lld", "-20"])
-    
+
         with self.subTest("%zd"):
             v = o.makeArrayWithCFormat_(b"%zd", 20)
             self.assertEqual(list(v), ["%zd", "20"])
@@ -1090,23 +1090,23 @@ class TestPrintfFormat(TestCase):
         with self.subTest("%td"):
             v = o.makeArrayWithCFormat_(b"%td", 20)
             self.assertEqual(list(v), ["%td", "20"])
-    
+
         with self.subTest("%qd, 20"):
             v = o.makeArrayWithCFormat_(b"%qd", 20)
             self.assertEqual(list(v), ["%qd", "20"])
-    
+
         with self.subTest("%qd, -20"):
             v = o.makeArrayWithCFormat_(b"%qd", -20)
             self.assertEqual(list(v), ["%qd", "-20"])
-    
+
         with self.subTest("%D"):
             v = o.makeArrayWithCFormat_(b"%D", -20)
             self.assertEqual(list(v), ["%D", "-20"])
-    
+
         with self.subTest("%O"):
             v = o.makeArrayWithCFormat_(b"%O", 8)
             self.assertEqual(list(v), ["%O", "10"])
-    
+
         with self.subTest("%U"):
             v = o.makeArrayWithCFormat_(b"%U", 8)
             self.assertEqual(list(v), ["%U", "8"])
@@ -1115,7 +1115,7 @@ class TestPrintfFormat(TestCase):
             obj = object()
             v = o.makeArrayWithCFormat_(b"%p", obj)
             self.assertEqual(list(v), ["%p", "%#x" % (id(obj),)])
-    
+
         with self.subTest("%lc%lc"):
             v = o.makeArrayWithCFormat_(b"%lc%lc", "d", "e")
             self.assertEqual(list(v), ["%lc%lc", "de"])
@@ -1123,23 +1123,23 @@ class TestPrintfFormat(TestCase):
         with self.subTest("%C"):
             v = o.makeArrayWithCFormat_(b"%C", "A")
             self.assertEqual(list(v), ["%C", "A"])
-    
+
         with self.subTest("%C%C%c"):
             v = o.makeArrayWithCFormat_(b"%C%C%c", "A", 90, "b")
             self.assertEqual(list(v), ["%C%C%c", "A%cb" % (90,)])
-    
+
         with self.subTest("%S"):
             v = o.makeArrayWithCFormat_(b"%S", "hello world")
             self.assertEqual(list(v), ["%S", "hello world"])
             v = o.makeArrayWithCFormat_(b"%S", "hello world")
             self.assertEqual(list(v), ["%S", "hello world"])
-    
+
         with self.subTest("%ls"):
             v = o.makeArrayWithCFormat_(b"%ls", "hello world")
             self.assertEqual(list(v), ["%ls", "hello world"])
             v = o.makeArrayWithCFormat_(b"%ls", "hello world")
             self.assertEqual(list(v), ["%ls", "hello world"])
-    
+
         TEST_TAB = [
             (b"% #d", (99,)),
             (b"%0#4x", (99,)),

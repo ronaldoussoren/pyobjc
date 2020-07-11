@@ -407,7 +407,7 @@ def _find_executable(executable):
 
 
 def _working_compiler(executable):
-    if executable == 'xcrun':
+    if executable == "xcrun":
         return True
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".c") as fp:
