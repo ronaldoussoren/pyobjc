@@ -34,5 +34,7 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MTLVisibleFunctionTable));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(MTLAccelerationStructureCommandEncoder));
+    Py_XDECREF(p);
 #endif
 }

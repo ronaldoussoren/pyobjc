@@ -217,7 +217,7 @@ class TestMTLArgumentEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLArgumentEncoderHelper.setVisibleFunctionTables_withRange_, 0, "n^@"
+            TestMTLArgumentEncoderHelper.setVisibleFunctionTables_withRange_, 0, b"n^@"
         )
         self.assertArgSizeInArg(
             TestMTLArgumentEncoderHelper.setVisibleFunctionTables_withRange_, 0, 1

@@ -4,11 +4,13 @@ import ModelIO
 
 
 class TestMDLAssetHelper(ModelIO.NSObject):
-    def boundingBox(self):
-        return 1
+    # XXX: vector tytes
+    # def boundingBox(self):
+    #    return 1
 
-    def setBoundingBox_(self, v):
-        pass
+    # XXX: vector tytes
+    # def setBoundingBox_(self, v):
+    #    pass
 
     def sphericalHarmonicsLevel(self):
         return 1

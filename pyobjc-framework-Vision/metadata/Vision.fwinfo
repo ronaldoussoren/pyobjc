@@ -26,11 +26,13 @@
    "VNImageOptionCameraIntrinsics": { "typestr": "@" }
   },
   "enum": {
+   "VNDetectContourRequestRevision1": { "value": 1 },
    "VNElementTypeUnknown": { "value": 0 },
    "VNElementTypeFloat": { "value": 1 },
    "VNElementTypeDouble": { "value": 2 },
    "VNRecognizeAnimalsRequestRevision1": { "value": 1 },
    "VNRecognizeTextRequestRevision1": { "value": 1 },
+   "VNRecognizeTextRequestRevision2": { "value": 2 },
    "VNTrackObjectRequestRevision2": { "value": 2 },
    "VNRequestTextRecognitionLevelAccurate": { "value": 0 },
    "VNRequestTextRecognitionLevelFast": { "value": 1 },
@@ -43,6 +45,7 @@
    "VNRequestFaceLandmarksConstellation65Points": { "value": 1 },
    "VNRequestFaceLandmarksConstellation76Points": { "value": 2 },
    "VNDetectFaceCaptureQualityRequestRevision1": { "value": 1 },
+   "VNDetectFaceCaptureQualityRequestRevision2": { "value": 2 },
    "VNDetectFaceQualityRequestRevision1": { "value": 1 },
    "VNDetectAnimalRectanglesRequestRevision1": { "value": 1 },
    "VNClassifyImageRequestRevision1": { "value": 1 },

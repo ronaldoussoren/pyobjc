@@ -99,6 +99,10 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "kSecCodeSignatureLinkerSigned": { "value": 131072 },
+   "kSecCSApplyEmbeddedPolicy": { "value": 33554432  },
+   "errSecRestrictedAPI": { "value": -34020  },
+   "errSSLEarlyDataRejected": { "value": -9890  },
    "kCMSCertificateChainWithRootOrFail": { "value": 4 },
    "errSSLATSViolation": { "value": -9880 },
    "errSSLATSMinimumVersionViolation": { "value": -9881 },

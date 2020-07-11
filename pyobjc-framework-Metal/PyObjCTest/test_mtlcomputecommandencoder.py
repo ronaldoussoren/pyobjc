@@ -361,7 +361,7 @@ class TestMTLComputeCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setVisibleFunctionTables_withBufferRange_,
             0,
-            "n^@",
+            b"n^@",
         )
         self.assertArgSizeInArg(
             TestMTLComputeCommandEncoderHelper.setVisibleFunctionTables_withBufferRange_,
@@ -384,7 +384,7 @@ class TestMTLComputeCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setIntersectionFunctionTables_withBufferRange_,
             0,
-            "n^@",
+            b"n^@",
         )
         self.assertArgSizeInArg(
             TestMTLComputeCommandEncoderHelper.setIntersectionFunctionTables_withBufferRange_,

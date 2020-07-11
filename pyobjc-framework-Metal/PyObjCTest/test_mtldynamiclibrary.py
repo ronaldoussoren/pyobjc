@@ -25,6 +25,6 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertResultIsBOOL(
             TestMTLAccelerationStructureHelper.serializeToURL_error_
         )
-        self.argHasType(
+        self.assertArgHasType(
             TestMTLAccelerationStructureHelper.serializeToURL_error_, 1, b"o^@"
         )
