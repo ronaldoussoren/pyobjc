@@ -16,7 +16,7 @@ class TestNSString(TestCase):
             b"NSString doesn'.decode('ascii')t compare correctly",
         )
         self.assertTrue(
-            Foundation.NSString.localizedCaseInsensitiveCompare_("foo" "Foo") == 0,
+            Foundation.NSString.localizedCaseInsensitiveCompare_("foo", "Foo") == 0,
             b"NSString doesn'.decode('ascii')t compare correctly",
         )
 

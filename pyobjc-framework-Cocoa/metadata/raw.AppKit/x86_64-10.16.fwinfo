@@ -20676,12 +20676,6 @@
      {
       "args": [
        {
-        "callable": {
-         "arguments": {
-          "0": {
-           "type": "^v"
-          }
-         },
          "retval": {
           "type": "v"
          }
@@ -102011,16 +102005,6 @@
         "typestr_special": false
        },
        {
-        "callable": {
-         "arguments": {
-          "0": {
-           "type": "^v"
-          }
-         },
-         "retval": {
-          "type": "@?"
-         }
-        },
         "typestr": "@?",
         "typestr_special": false
        }

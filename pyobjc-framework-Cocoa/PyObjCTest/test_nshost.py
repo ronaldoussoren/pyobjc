@@ -19,7 +19,7 @@ class TestNSHost(TestCase):
         self.assertEqual(o.address(), "127.0.0.1")
 
     def testCreation2(self):
-        o = Foundation.NSHost.hostWithName_(b"localhost")
+        o = Foundation.NSHost.hostWithName_("localhost")
         lst = sorted(o.addresses())
         self.assertIn(lst, (["127.0.0.1", "::1"], ["127.0.0.1"]))
         self.assertEqual(o.address(), o.addresses()[0])
