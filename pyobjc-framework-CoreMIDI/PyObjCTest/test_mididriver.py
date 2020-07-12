@@ -4,12 +4,11 @@ import CoreMIDI
 
 class TestMIDIDriver(TestCase):
     def test_types(self):
-        self.assertOpaqueType(CoreMIDI.MIDIDeviceRef)
-        self.assertOpaqueType(CoreMIDI.MIDIDeviceListRef)
-        self.assertOpaqueType(CoreMIDI.MIDIEndpointRef)
+        self.assertIsOpaquePointer(CoreMIDI.MIDIDriverRef)
 
     def test_constants(self):
-        self.assertIsInstance(CoreMIDI.kMIDIDriverPropertyUsesSerial, str)
+        if CoreMIDI.kMIDIDriverPropertyUsesSerial is not None:
+            self.assertIsInstance(CoreMIDI.kMIDIDriverPropertyUsesSerial, str)
 
     def test_not_exposed(self):
         self.assertNotHasAttr(CoreMIDI, "kMIDIDriverTypeID")

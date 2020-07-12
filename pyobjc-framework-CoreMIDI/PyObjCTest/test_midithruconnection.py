@@ -30,7 +30,7 @@ class TestMIDIThruConnection(TestCase):
         self.assertIs(v.destinations, None)
         self.assertIs(v.channelMap, None)
         self.assertIsInstance(v.lowVelocity, int)
-        self.assertIs(v.highVelocity, None)
+        self.assertIsInstance(v.highVelocity, int)
         self.assertIsInstance(v.lowNote, int)
         self.assertIsInstance(v.highNote, int)
         self.assertIsInstance(v.noteNumber, CoreMIDI.MIDITransform)

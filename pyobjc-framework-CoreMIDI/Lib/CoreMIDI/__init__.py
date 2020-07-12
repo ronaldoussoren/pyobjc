@@ -10,6 +10,7 @@ import sys
 import Foundation
 import objc
 from CoreMIDI import _metadata
+from CoreMIDI import _CoreMIDI
 
 sys.modules["CoreMIDI"] = mod = objc.ObjCLazyModule(
     "CoreMIDI",
@@ -23,7 +24,7 @@ sys.modules["CoreMIDI"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_CoreMIDI, Foundation),
 )
 
 

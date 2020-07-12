@@ -174,15 +174,11 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-#if PY_VERSION_HEX >= 0x02070000
     Py_buffer view;
     if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE) < 0) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
     buf = PyMemoryView_FromBuffer(&view);
-#else
-    buf = PyBuffer_FromReadWriteMemory(buffer, count);
-#endif
     if (buf == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -357,15 +353,11 @@ m_CGDataProviderGetBytesAtOffsetCallback(void* _info, void* buffer, size_t offse
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-#if PY_VERSION_HEX >= 0x02070000
     Py_buffer view;
     if (PyBuffer_FillInfo(&view, NULL, buffer, count, 0, PyBUF_WRITABLE) < 0) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
     buf = PyMemoryView_FromBuffer(&view);
-#else
-    buf = PyBuffer_FromReadWriteMemory(buffer, count);
-#endif
     if (buf == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }

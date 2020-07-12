@@ -40,17 +40,6 @@ class TestMIDICapabilityInquiry(TestCase):
 
     @min_os_level("10.14")
     def test_methods10_14(self):
-        self.assertArgIsBlock(
-            CoreMIDI.MIDICISession.initWithDiscoveredNode_dataReadyHandler_disconnectHandler_,
-            1,
-            b"v",
-        )
-        self.assertArgIsBlock(
-            CoreMIDI.MIDICISession.initWithDiscoveredNode_dataReadyHandler_disconnectHandler_,
-            2,
-            MIDICISessionDisconnectBlock,
-        )
-
         self.assertResultIsBOOL(CoreMIDI.MIDICISession.supportsProfileCapability)
         self.assertResultIsBOOL(CoreMIDI.MIDICISession.supportsPropertyCapability)
 
@@ -59,10 +48,6 @@ class TestMIDICapabilityInquiry(TestCase):
 
         self.assertResultIsBOOL(CoreMIDI.MIDICISession.disableProfile_onChannel_error_)
         self.assertArgIsOut(CoreMIDI.MIDICISession.disableProfile_onChannel_error_, 2)
-
-        self.assertResultIsBOOL(
-            CoreMIDI.MIDICISession.sendProfile_onChannel_profileData_
-        )
 
         self.assertResultIsBlock(
             CoreMIDI.MIDICISession.profileChangedCallback, MIDICIProfileChangedBlock
@@ -73,18 +58,21 @@ class TestMIDICapabilityInquiry(TestCase):
             MIDICIProfileChangedBlock,
         )
 
-        self.assertResultIsBlock(
-            CoreMIDI.MIDICISession.profileSpecificDataHandler,
-            MIDICIProfileSpecificDataBlock,
-        )
-        self.assertArgIsBlock(
-            CoreMIDI.MIDICISession.setProfileSpecificDataHandler_,
-            0,
-            MIDICIProfileSpecificDataBlock,
-        )
-
     @min_os_level("10.16")
     def test_methods10_16(self):
+        self.assertArgIsBlock(
+            CoreMIDI.MIDICISession.initWithDiscoveredNode_dataReadyHandler_disconnectHandler_,
+            1,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            CoreMIDI.MIDICISession.initWithDiscoveredNode_dataReadyHandler_disconnectHandler_,
+            2,
+            MIDICISessionDisconnectBlock,
+        )
+        self.assertResultIsBOOL(
+            CoreMIDI.MIDICISession.sendProfile_onChannel_profileData_
+        )
         self.assertResultIsBOOL(CoreMIDI.MIDICIDiscoveredNode.supportsProfiles)
         self.assertResultIsBOOL(CoreMIDI.MIDICIDiscoveredNode.supportsProperties)
 
@@ -110,4 +98,13 @@ class TestMIDICapabilityInquiry(TestCase):
             CoreMIDI.MIDICIDiscoveryManager.discoverWithHandler_,
             0,
             MIDICIDiscoveryResponseBlock,
+        )
+        self.assertResultIsBlock(
+            CoreMIDI.MIDICISession.profileSpecificDataHandler,
+            MIDICIProfileSpecificDataBlock,
+        )
+        self.assertArgIsBlock(
+            CoreMIDI.MIDICISession.setProfileSpecificDataHandler_,
+            0,
+            MIDICIProfileSpecificDataBlock,
         )
