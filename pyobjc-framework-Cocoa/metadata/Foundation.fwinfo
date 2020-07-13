@@ -12206,6 +12206,31 @@
         "type_override": "^T"
        },
        "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "^T", "c_array_length_in_arg": 2, "type_modifier": "n" },
+	  "2": { "typestr": "Q" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "@"
+      },
+      "selector": "initWithCharactersNoCopy:length:deallocator:",
+      "suggestion": "use -initWithCharacters:length: instead"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_override": "^T"
+       },
+       "2": {
         "type_override": "Z"
        }
       },

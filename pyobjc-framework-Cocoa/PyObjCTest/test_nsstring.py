@@ -581,7 +581,7 @@ class TestPickle(TestCase):
         self.assertArgIsBlock(
             Foundation.NSString.initWithCharactersNoCopy_length_deallocator_,
             2,
-            b"v^" + objc._C_UNICHAR + objc._C_NSUInteger,
+            b"vn^" + objc._C_UNICHAR + objc._C_NSUInteger,
         )
 
         self.assertArgIsBlock(

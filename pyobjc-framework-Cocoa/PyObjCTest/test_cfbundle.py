@@ -1,5 +1,5 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
 
 
 class TestCFBundle(TestCase):
@@ -188,8 +188,11 @@ class TestCFBundle(TestCase):
         url = CoreFoundation.CFBundleCopyExecutableURL(bundle)
         self.assertIsInstance(url, CoreFoundation.CFURLRef)
         array = CoreFoundation.CFBundleCopyExecutableArchitectures(bundle)
-        self.assertIsNot(array, None)
-        self.assertIsInstance(array, CoreFoundation.CFArrayRef)
+        if os_level_key(os_release()) >= os_level_key("10.16"):
+            self.assertIs(array, None)
+        else:
+            self.assertIsNot(array, None)
+            self.assertIsInstance(array, CoreFoundation.CFArrayRef)
         self.assertArgIsOut(CoreFoundation.CFBundlePreflightExecutable, 1)
         ok, error = CoreFoundation.CFBundlePreflightExecutable(bundle, None)
         self.assertTrue((ok is True) or (ok is False))
@@ -282,9 +285,12 @@ class TestCFBundle(TestCase):
         array = CoreFoundation.CFBundleCopyLocalizationsForURL(bundle)
         self.assertIsInstance(array, CoreFoundation.CFArrayRef)
         array = CoreFoundation.CFBundleCopyExecutableArchitecturesForURL(bundle)
-        self.assertIsInstance(array, CoreFoundation.CFArrayRef)
-        for a in array:
-            self.assertIsInstance(a, int)
+        if os_level_key(os_release()) >= os_level_key("10.16"):
+            self.assertIs(array, None)
+        else:
+            self.assertIsInstance(array, CoreFoundation.CFArrayRef)
+            for a in array:
+                self.assertIsInstance(a, int)
 
     def testPlugin(self):
         url = CoreFoundation.CFURLCreateWithFileSystemPath(
