@@ -1918,6 +1918,8 @@
    "kSecCFErrorInfoPlist": { "typestr": "@" },
    "kSecCFErrorGuestAttributes": { "typestr": "@" },
    "kSecCFErrorRequirementSyntax": { "typestr": "@" },
+   "SecAddSharedWebCredential": { "typestr": "@" },
+   "kSecSharedPassword": { "typestr": "@" },
    "kSecCFErrorPath": { "typestr": "@" }
   },
   "aliases": {
@@ -1936,6 +1938,53 @@
   "classes": {
   },
   "functions": {
+   "SecTrustCopyKey": {
+    "retval": { "typestr": "v", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "@" }
+    }
+   },
+   "SecCreateSharedWebCredentialPassword": {
+    "retval": { "typestr": "@", "already_cfretained": true },
+    "args": {
+    }
+   },
+   "SecRequestSharedWebCredential": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "@" },
+     "2": {
+      "typestr": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "SecAddSharedWebCredential": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "@" },
+     "2": { "typestr": "@" },
+     "3": {
+      "typestr": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
    "sec_protocol_metadata_get_negotiated_tls_protocol_version":  {
     "retval": { "type_override": "S" },
     "args": {

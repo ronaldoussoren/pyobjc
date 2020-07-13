@@ -13,5 +13,6 @@ class TestPKAddPaymentPassRequest(TestCase):
             PassKit.PKAddPaymentPassRequestConfiguration.requiresFelicaSecureElement
         )
         self.assertArgIsBOOL(
-            PassKit.PKAddPaymentPassRequestConfiguration.requiresFelicaSecureElement_, 0
+            PassKit.PKAddPaymentPassRequestConfiguration.setRequiresFelicaSecureElement_,
+            0,
         )

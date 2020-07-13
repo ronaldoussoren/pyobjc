@@ -4,7 +4,7 @@
  * Last update: Sun Dec 28 14:22:11 2014
  */
 
-#if PyObjC_BUILD_RELEASE >= 1100
+#if PyObjC_BUILD_RELEASE >= 1016
 #import <WebKit/WKScriptMessageHandlerWithReply.h>
 #endif
 
@@ -67,7 +67,7 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
 #endif
 #endif
-#if PyObjC_BUILD_RELEASE >= 1100
+#if PyObjC_BUILD_RELEASE >= 1016
     p = PyObjC_IdToPython(@protocol(WKScriptMessageHandlerWithReply));
     Py_XDECREF(p);
 #endif

@@ -77,7 +77,7 @@ class TestMIDICapabilityInquiry(TestCase):
         self.assertResultIsBOOL(CoreMIDI.MIDICIDiscoveredNode.supportsProperties)
 
         self.assertArgIsBOOL(
-            CoreMIDI.MIDICIResponder.initWithDeviceInfo_profileDelegate_profileSates_supportProperties_,
+            CoreMIDI.MIDICIResponder.initWithDeviceInfo_profileDelegate_profileStates_supportProperties_,
             3,
         )
 

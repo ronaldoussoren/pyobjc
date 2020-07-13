@@ -1,6 +1,6 @@
 import GameKit
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestGKLeaderboard(TestCase):
@@ -36,17 +36,12 @@ class TestGKLeaderboard(TestCase):
     @min_os_level("10.16")
     def test_methods10_16(self):
         self.assertArgIsBlock(
-            GameKit.GKLeaderboard.loadLeaderboardsWithIDs_completionHandler_, 1, b"v@@@"
+            GameKit.GKLeaderboard.loadLeaderboardsWithIDs_completionHandler_, 1, b"v@@"
         )
         self.assertArgIsBlock(
             GameKit.GKLeaderboard.loadPreviousOccurrenceWithCompletionHandler_,
             0,
             b"v@@",
-        )
-        self.assertArgIsBlock(
-            GameKit.GKLeaderboard.submitScore_context_player_loaderboardIDs_completionHandler_,
-            4,
-            b"v@",
         )
         self.assertArgIsBlock(
             GameKit.GKLeaderboard.submitScore_context_player_completionHandler_,
@@ -56,10 +51,19 @@ class TestGKLeaderboard(TestCase):
         self.assertArgIsBlock(
             GameKit.GKLeaderboard.loadEntriesForPlayerScope_timeScope_range_completionHandler_,
             3,
-            b"v@@" + objc._C_NSUInteger + b"@",
+            b"v@@" + objc._C_NSInteger + b"@",
         )
         self.assertArgIsBlock(
             GameKit.GKLeaderboard.loadEntriesForPlayers_timeScope_completionHandler_,
             2,
             b"v@@@",
+        )
+
+    @expectedFailure
+    @min_os_level("10.16")
+    def test_methods10_16_missing(self):
+        self.assertArgIsBlock(
+            GameKit.GKLeaderboard.submitScore_context_player_loaderboardIDs_completionHandler_,
+            4,
+            b"v@",
         )

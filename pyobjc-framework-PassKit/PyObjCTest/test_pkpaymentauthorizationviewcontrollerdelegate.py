@@ -85,22 +85,17 @@ class TestPKAddPaymentPassRequest(TestCase):
         self.assertArgIsBlock(
             TestPKAddPaymentPassRequestHelper.paymentAuthorizationViewController_didAuthorizePayment_completion_,
             2,
-            b"v" + objc._C_NSUInteger,
+            b"v" + objc._C_NSInteger,
         )
         self.assertArgIsBlock(
             TestPKAddPaymentPassRequestHelper.paymentAuthorizationViewController_didSelectShippingMethod_completion_,
             2,
-            b"v" + objc._C_NSUInteger + b"@",
-        )
-        self.assertArgIsBlock(
-            TestPKAddPaymentPassRequestHelper.paymentAuthorizationViewController_didSelectShippingAddress_completion_,
-            2,
-            b"v" + objc._C_NSUInteger + b"@@",
+            b"v" + objc._C_NSInteger + b"@",
         )
         self.assertArgIsBlock(
             TestPKAddPaymentPassRequestHelper.paymentAuthorizationViewController_didSelectShippingContact_completion_,
             2,
-            b"v" + objc._C_NSUInteger + b"@@",
+            b"v" + objc._C_NSInteger + b"@@",
         )
         self.assertArgIsBlock(
             TestPKAddPaymentPassRequestHelper.paymentAuthorizationViewController_didSelectPaymentMethod_completion_,

@@ -52,7 +52,7 @@ class TestPKPaymentAuthorizationController(TestCase):
         self.assertArgIsBlock(
             TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didAuthorizePayment_completion_,
             2,
-            b"v@",
+            b"vq",
         )
         self.assertArgIsBlock(
             TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didRequestMerchantSessionUpdate_,
@@ -71,19 +71,14 @@ class TestPKPaymentAuthorizationController(TestCase):
             b"v@",
         )
         self.assertArgIsBlock(
-            TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didSelectPlaymentMethod_handler_,
-            2,
-            b"v@",
-        )
-        self.assertArgIsBlock(
             TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didSelectShippingMethod_completion_,
             2,
-            b"v@",
+            b"vq@",
         )
         self.assertArgIsBlock(
             TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didSelectShippingContact_completion_,
             2,
-            b"v@",
+            b"vq@@",
         )
         self.assertArgIsBlock(
             TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didSelectPaymentMethod_completion_,
@@ -95,10 +90,10 @@ class TestPKPaymentAuthorizationController(TestCase):
             PassKit.PKPaymentAuthorizationController.canMakePayments
         )
         self.assertResultIsBOOL(
-            PassKit.PKPaymentAuthorizationController.canMakePaymentsUsigNetworks_
+            PassKit.PKPaymentAuthorizationController.canMakePaymentsUsingNetworks_
         )
         self.assertResultIsBOOL(
-            PassKit.PKPaymentAuthorizationController.canMakePaymentsUsigNetworks_capabilities_
+            PassKit.PKPaymentAuthorizationController.canMakePaymentsUsingNetworks_capabilities_
         )
 
         self.assertArgIsBlock(

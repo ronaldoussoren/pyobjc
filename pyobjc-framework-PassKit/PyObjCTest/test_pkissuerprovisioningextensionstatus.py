@@ -8,7 +8,7 @@ class TestPKIssuerProvisioningExtensionStatus(TestCase):
         self.assertResultIsBOOL(
             PassKit.PKIssuerProvisioningExtensionStatus.requiresAuthentication
         )
-        self.asserArgIsBOOL(
+        self.assertArgIsBOOL(
             PassKit.PKIssuerProvisioningExtensionStatus.setRequiresAuthentication_, 0
         )
         self.assertResultIsBOOL(

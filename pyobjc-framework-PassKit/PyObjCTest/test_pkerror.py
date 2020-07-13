@@ -12,9 +12,9 @@ class TestPKError(TestCase):
 
         self.assertEqual(PassKit.PKUnknownError, -1)
         self.assertEqual(PassKit.PKInvalidDataError, 1)
-        self.assertEqual(PassKit.PKUnsupportedVersionError, 0)
-        self.assertEqual(PassKit.PKInvalidSignature, 1)
-        self.assertEqual(PassKit.PKNotEntitledError, 2)
+        self.assertEqual(PassKit.PKUnsupportedVersionError, 2)
+        self.assertEqual(PassKit.PKInvalidSignature, 3)
+        self.assertEqual(PassKit.PKNotEntitledError, 4)
 
         self.assertEqual(PassKit.PKPaymentUnknownError, -1)
         self.assertEqual(PassKit.PKPaymentShippingContactInvalidError, 1)

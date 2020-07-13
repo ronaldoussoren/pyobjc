@@ -33,5 +33,5 @@ class TestPKPaymentInformationEventExtension(TestCase):
         self.assertArgIsBlock(
             TestPKPaymentInformationEventExtensionHelper.handleConfigurationRequest_completion_,
             1,
-            b"v@",
+            b"v",
         )

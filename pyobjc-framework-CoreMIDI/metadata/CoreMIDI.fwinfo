@@ -17,8 +17,51 @@
    "MIDINetworkNotificationSessionDidChange": { "typestr": "@" }
   },
   "classes": {
+   "MIDICIDiscoveryManager": {
+    "methods": [
+     {
+      "selector": "discoverWithHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "MIDICISession": {
     "methods": [
+     {
+      "selector": "initWithDiscoveredNode:dataReadyHandler:disconnectHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       },
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
      {
       "args": {
        "2": { "type_modifier": "o" }
@@ -225,7 +268,7 @@
    "MIDIDeviceNewEntity": {
     "args": {
      "1": {},
-     "6": {}
+     "6": { "type_modifier": "o" }
     }
    },
    "MIDIDriverEnableMonitoring": {
