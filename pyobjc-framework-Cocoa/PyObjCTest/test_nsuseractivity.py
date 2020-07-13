@@ -1,13 +1,17 @@
 import Foundation
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestNSUserActivity(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(Foundation.NSUserActivityDocumentURLKey, str)
         self.assertIsInstance(Foundation.NSUserActivityTypeBrowsingWeb, str)
+
+    @min_os_level("10.10")
+    @expectedFailure  # XXX
+    def testConstants10_10_failon1015beta(self):
+        self.assertIsInstance(Foundation.NSUserActivityDocumentURLKey, str)
 
     @min_os_level("10.10")
     def testMethods10_10(self):

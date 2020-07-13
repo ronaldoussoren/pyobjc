@@ -465,7 +465,7 @@ class PyKeyValueCodingExplicit(TestCase):
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, "key1"), 1)
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, "key2"), 2)
         self.assertEqual(STUB.keyValue_forObject_key_(2, o, "key3"), 3)
-        self.assertEqual(STUB.keyValue_forObject_key_(2, o, "key4", "4"))
+        self.assertEqual(STUB.keyValue_forObject_key_(2, o, "key4"), "4")
         self.assertEqual(
             STUB.keyValue_forObject_key_(2, o, "multiple"), o._values["multiple"]
         )
@@ -513,11 +513,11 @@ class PyKeyValueCodingExplicit(TestCase):
         o = KeyValueClass1Explicit.alloc().init()
 
         self.assertEqual(o._values["key3"], 3)
-        STUB.setKeyValue_forObject_key_value_(0, o, "key3")
+        STUB.setKeyValue_forObject_key_value_(0, o, "key3", "drie")
         self.assertEqual(o._values["key3"], "drie")
 
         self.assertEqual(o._values["key4"], "4")
-        STUB.setKeyValue_forObject_key_value_(0, o, "key4")
+        STUB.setKeyValue_forObject_key_value_(0, o, "key4", "vier")
         self.assertNotHasAttr(o, "key4")
         self.assertEqual(o._values["key4"], "viervierviervier")
 
@@ -539,7 +539,7 @@ class PyKeyValueCodingExplicit(TestCase):
         STUB.setKeyValue_forObject_key_value_(2, o, "key3", "drie")
         self.assertEqual(o._values["key3"], "drie")
 
-        self.assertEqual(o._values["key4"], b"4")
+        self.assertEqual(o._values["key4"], "4")
         STUB.setKeyValue_forObject_key_value_(2, o, "key4", "vier")
         self.assertEqual(o._values["key4"], "viervierviervier")
 

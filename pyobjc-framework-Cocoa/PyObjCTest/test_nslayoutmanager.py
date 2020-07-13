@@ -600,12 +600,15 @@ class TestNSLayoutManager(TestCase):
             4,
         )
 
+        self.assertResultIsBOOL(
+            AppKit.NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_
+        )
+
+    @expectedFailure
+    def testMethods10_5_failon11beta(self):
         self.assertArgIsBOOL(
             AppKit.NSLayoutManager.rulerAccessoryViewForTextView_paragraphStyle_ruler_enabled_,
             3,
-        )
-        self.assertResultIsBOOL(
-            AppKit.NSLayoutManager.layoutManagerOwnsFirstResponderInWindow_
         )
 
     @expectedFailureIf(

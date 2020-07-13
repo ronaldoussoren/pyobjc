@@ -82,6 +82,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
             goto error;
    }
 
+#if DPyObjC_BUILD_RELEASE >= 1016
     if (@available(macos 10.16, *)) {
         nw_privacy_context_t c = NW_DEFAULT_PRIVACY_CONTEXT;
         if (add_constant(m, "NW_DEFAULT_PRIVACY_CONTEXT",
@@ -89,6 +90,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
             != 0)
             goto error;
     }
+#endif
 
     return m;
 

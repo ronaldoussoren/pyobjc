@@ -185,6 +185,60 @@
    }
   },
   "classes": {
+   "NSTableViewDiffableDataSource": {
+    "methods": [
+     {
+      "selector": "initWithTableView:cellProvider:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" },
+	  "3": { "typestr": "q" },
+	  "4": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "rowViewProvider",
+      "class_method": false,
+      "retval": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "q" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+       }
+      }
+     },
+     {
+      "selector": "setRowViewProvider:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "q" },
+	  "3": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "@" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "NSTextAttachmentCell": {
     "methods": [
      {

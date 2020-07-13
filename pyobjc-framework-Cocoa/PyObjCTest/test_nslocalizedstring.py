@@ -16,29 +16,23 @@ class TestNSLocalizedString(TestCase):
         del pool
         self.assertEqual(s, "hello world")
         # XXX : Since we get the same object back, it's still str
-        # self.assertEqual (s.nsstring().description(), b"hello world".decode('ascii'))
+        # self.assertEqual (s.nsstring().description(), "hello world")
 
         pool = Foundation.NSAutoreleasePool.alloc().init()
-        s = Foundation.NSLocalizedStringFromTable(
-            "hello world", "tab".decode("utf-8"), ""
-        )
+        s = Foundation.NSLocalizedStringFromTable("hello world", "tab", "")
         del pool
         self.assertEqual(s, "hello world")
 
         pool = Foundation.NSAutoreleasePool.alloc().init()
         s = Foundation.NSLocalizedStringFromTableInBundle(
-            "hello world", "tab".decode("utf-8"), Foundation.NSBundle.mainBundle(), ""
+            "hello world", "tab", Foundation.NSBundle.mainBundle(), ""
         )
         del pool
         self.assertEqual(s, "hello world")
 
         pool = Foundation.NSAutoreleasePool.alloc().init()
         s = Foundation.NSLocalizedStringWithDefaultValue(
-            "hello world",
-            "tab".decode("utf-8"),
-            Foundation.NSBundle.mainBundle(),
-            "default".decode("utf-8"),
-            "",
+            "hello world", "tab", Foundation.NSBundle.mainBundle(), "default", ""
         )
         del pool
         self.assertEqual(s, "default")

@@ -420,7 +420,7 @@ class TestVariadic(TestCase):
         self.assertEqual(a, ("foo", "bar"))
         self.assertIsInstance(a, Foundation.NSArray)
 
-        a = Foundation.NSMutableArray.alloc().initWithObjects_(b"foo", b"bar", None)
+        a = Foundation.NSMutableArray.alloc().initWithObjects_("foo", "bar", None)
         self.assertEqual(a, ["foo", "bar"])
         self.assertIsInstance(a, Foundation.NSMutableArray)
 

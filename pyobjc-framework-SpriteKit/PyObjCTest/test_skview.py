@@ -26,9 +26,6 @@ class TestSKView(TestCase):
         self.assertArgIsBOOL(SpriteKit.SKView.setIgnoresSiblingOrder_, 0)
         self.assertResultIsBOOL(SpriteKit.SKView.ignoresSiblingOrder)
 
-        # XXX: Introduced in the 11.0 SDK without deployment target
-        self.assertResultIsBOOL(SpriteKit.SKView.disableDepthStencilBuffer)
-
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertArgIsBOOL(SpriteKit.SKView.setShowsFields_, 0)
@@ -41,6 +38,10 @@ class TestSKView(TestCase):
         self.assertResultIsBOOL(SpriteKit.SKView.allowsTransparency)
         self.assertArgIsBOOL(SpriteKit.SKView.setShouldCullNonVisibleNodes_, 0)
         self.assertResultIsBOOL(SpriteKit.SKView.shouldCullNonVisibleNodes)
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(SpriteKit.SKView.disableDepthStencilBuffer)
 
     @min_sdk_level("10.12")
     def testProtocols(self):
