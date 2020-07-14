@@ -6,4 +6,4 @@ import MLCompute
 class TestMLCYOLOLossDescriptor(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(MLCompute.MLCYOLOLossDescriptor.shouldRescore)
-        self.assertArgIsBOOL(MLCompute.MLCYOLOLossDescriptor.shouldRescore_, 0)
+        self.assertArgIsBOOL(MLCompute.MLCYOLOLossDescriptor.setShouldRescore_, 0)

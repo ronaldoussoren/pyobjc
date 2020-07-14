@@ -33,6 +33,3 @@ class TestVNObservation(TestCase):
         self.assertArgIsOut(
             Vision.VNRecognizedPointsObservation.keypointsMultiArrayAndReturnError_, 0
         )
-        self.assertArgIsOut(
-            Vision.VNRecognizedPointsObservation.identifiedPointsForGroupKey_error_, 1
-        )

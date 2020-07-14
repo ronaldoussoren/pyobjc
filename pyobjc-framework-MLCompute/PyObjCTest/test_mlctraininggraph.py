@@ -65,7 +65,7 @@ class TestMLCTrainingGraph(TestCase):
         )
         self.assertArgIsBlock(
             MLCompute.MLCTrainingGraph.executeGradientWithBatchSize_options_outputsData_completionHandler_,
-            2,
+            3,
             b"v@@d",
         )
 
