@@ -100,6 +100,8 @@ FRAMEWORK_WRAPPERS = [
     ("Message", None, "10.9"),
     ("Metal", "10.11", None),
     ("MetalKit", "10.11", None),
+    ("MetalPerformanceShaders", "10.13", None),
+    ("MetalPerformanceShadersGraph", "10.16", None),
     ("MLCompute", "10.16", None),
     ("ModelIO", "10.11", None),
     ("MultipeerConnectivity", "10.10", None),

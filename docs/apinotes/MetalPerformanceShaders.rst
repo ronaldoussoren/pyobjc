@@ -9,7 +9,7 @@ the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
 .. __: https://developer.apple.com/metalperformanceshaders/?language=objc
 
-These bindings are accessed through the ``MetalPerformanceShaders`` package (that is, ``import Metal``).
+These bindings are accessed through the ``MetalPerformanceShaders`` package (that is, ``import MetalPerformanceShaders``).
 
 
 API Notes

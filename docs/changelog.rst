@@ -73,6 +73,7 @@ XXX TODO:
   - ClassKit (introduced in macOS 11.0)
   - KernelManagement (introduced in macOS 11.0)
   - MetalPerformanceShaders (introduced in macOS 10.13)
+  - MetalPerformanceShadersGraph (introduced in macOS 11.0)
   - MLCompute (introduced in macOS 11.0)
   - PassKit (introduced in macOS 11.0)
   - ReplayKit (introduced in macOS 11.0)
