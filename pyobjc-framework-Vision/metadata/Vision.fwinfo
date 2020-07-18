@@ -26,6 +26,10 @@
    "VNImageOptionCameraIntrinsics": { "typestr": "@" }
   },
   "enum": {
+   "VNDetectHumanHandPoseRequestRevision1": { "value": 1 },
+   "VNDetectTrajectoriesRequestRevision1": { "value": 1 },
+   "VNDetectHumanBodyPoseRequestRevision1": { "value": 1 },
+   "VNGenerateOpticalFlowRequestRevision1": { "value": 1 },
    "VNDetectContourRequestRevision1": { "value": 1 },
    "VNElementTypeUnknown": { "value": 0 },
    "VNElementTypeFloat": { "value": 1 },
@@ -88,6 +92,45 @@
    "VNErrorUnsupportedRevision": { "value": 16 }
   },
   "classes": {
+   "VNRecognizedPointsObservation": {
+    "methods": [
+     {
+      "selector": "identifiedPointsForGroupKey_error_",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "VNGeometryUtils": {
+    "methods": [
+     {
+      "selector": "calculateArea:forContour:orientedArea:error:",
+      "class_method": true,
+      "args": {
+       "0": { "type_modifier": "n" },
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "calculatePerimeter:forContour:error:",
+      "class_method": true,
+      "args": {
+       "0": { "type_modifier": "n" },
+       "2": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "boundingCircleForSIMDPoints:pointCount:error:",
+      "class_method": true,
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "NSObject": {
     "methods": [
      {
@@ -451,6 +494,38 @@
    },
    "VNTargetedImageRequest": {
     "methods": [
+     {
+      "selector": "initWithTargetedCMSampleBuffer:orientation:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "3": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "initWithTargetedCMSampleBuffer:options:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "initWithTargetedCVPixelBuffer:orientation:options:completionHandler:",
       "class_method": false,

@@ -292,7 +292,7 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`MetalKit </apinotes/MetalKit>`                              | `pyobjc-framework-MetalKit`_                |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
-| MetalPerformanceShaders                                           | -                                           | Not wrapped yet.                        |
+| :doc:`MetalPerformanceShaders </apinotes/MetalPerformanceShaders>`| `pyobjc-framework-MetalPerformanceShaders`  |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | MetricKit                                                         | -                                           | No public API on macOS.                 |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
@@ -613,3 +613,4 @@ prioritizing work.
 .. _`pyobjc-framework-PassKit`: https://pypi.org/project/pyobjc-framework-PassKit/
 .. _`pyobjc-framework-UniformTypeIdentifiers`: https://pypi.org/project/pyobjc-framework-UniformTypeIdentifiers/
 .. _`pyobjc-framework-CoreMIDI`: https://pypi.org/project/pyobjc-framework-CoreMIDI/
+.. _`pyobjc-framework-MetalPerformanceShaders`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShaders/

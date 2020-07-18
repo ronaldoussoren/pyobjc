@@ -1,0 +1,1236 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "MPSAccelerationStructure": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:group:"
+     }
+    ]
+   },
+   "MPSBinaryImageKernel": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:primaryTexture:inPlaceSecondaryTexture:fallbackCopyAllocator:"
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:inPlacePrimaryTexture:secondaryTexture:fallbackCopyAllocator:"
+     }
+    ]
+   },
+   "MPSCNNBatchNormalization": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceImage:destinationState:destinationStateIsTemporary:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeBatchToCommandBuffer:sourceImages:destinationStates:destinationStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSCNNBinaryConvolution": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:convolutionData:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
+     }
+    ]
+   },
+   "MPSCNNBinaryConvolutionNode": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {},
+       "5": {}
+      },
+      "class_method": true,
+      "selector": "nodeWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "initWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
+     }
+    ]
+   },
+   "MPSCNNBinaryFullyConnected": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:convolutionData:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
+     }
+    ]
+   },
+   "MPSCNNBinaryFullyConnectedNode": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {},
+       "5": {}
+      },
+      "class_method": true,
+      "selector": "nodeWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
+     },
+     {
+      "args": {
+       "2": {},
+       "3": {},
+       "4": {},
+       "5": {}
+      },
+      "class_method": false,
+      "selector": "initWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
+     }
+    ]
+   },
+   "MPSCNNBinaryKernel": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:primaryImage:secondaryImage:destinationState:destinationStateIsTemporary:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "encodeBatchToCommandBuffer:primaryImages:secondaryImages:destinationStates:destinationStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSCNNConvolution": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:convolutionDescriptor:kernelWeights:biasTerms:flags:"
+     }
+    ]
+   },
+   "MPSCNNConvolutionDescriptor": {
+    "methods": [
+     {
+      "args": {
+       "0": {},
+       "1": {},
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "setBatchNormalizationParametersForInferenceWithMean:variance:gamma:beta:epsilon:"
+     }
+    ]
+   },
+   "MPSCNNConvolutionTranspose": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceImage:convolutionGradientState:destinationState:destinationStateIsTemporary:"
+     },
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "encodeBatchToCommandBuffer:sourceImages:convolutionGradientStates:destinationStates:destinationStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSCNNFullyConnected": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:convolutionDescriptor:kernelWeights:biasTerms:flags:"
+     }
+    ]
+   },
+   "MPSCNNKernel": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceImage:destinationState:destinationStateIsTemporary:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeBatchToCommandBuffer:sourceImages:destinationStates:destinationStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSCNNMultiaryKernel": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceImages:destinationState:destinationStateIsTemporary:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeBatchToCommandBuffer:sourceImages:destinationStates:destinationStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSCNNNeuronPReLU": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:a:count:"
+     }
+    ]
+   },
+   "MPSImage": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "readBytes:dataLayout:bytesPerRow:region:featureChannelInfo:imageIndex:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeBytes:dataLayout:bytesPerRow:region:featureChannelInfo:imageIndex:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeBytes:dataLayout:bytesPerColumn:bytesPerRow:bytesPerImage:region:featureChannelInfo:imageIndex:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "readBytes:dataLayout:bytesPerRow:bytesPerImage:region:featureChannelInfo:imageIndex:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeBytes:dataLayout:bytesPerRow:bytesPerImage:region:featureChannelInfo:imageIndex:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "readBytes:dataLayout:imageIndex:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "writeBytes:dataLayout:imageIndex:"
+     }
+    ]
+   },
+   "MPSImageCanny": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:linearToGrayScaleTransform:sigma:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "colorTransform"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "colorTransform"
+     }
+    ]
+   },
+   "MPSImageConversion": {
+    "methods": [
+     {
+      "args": {
+       "3": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:srcAlpha:destAlpha:backgroundColor:conversionInfo:"
+     }
+    ]
+   },
+   "MPSImageConvolution": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:kernelWidth:kernelHeight:weights:"
+     }
+    ]
+   },
+   "MPSImageDescriptor": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:"
+     }
+    ]
+   },
+   "MPSImageDilate": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:kernelWidth:kernelHeight:values:"
+     }
+    ]
+   },
+   "MPSImageFindKeypoints": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:info:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceTexture:regions:numberOfRegions:keypointCountBuffer:keypointCountBufferOffset:keypointDataBuffer:keypointDataBufferOffset:"
+     }
+    ]
+   },
+   "MPSImageHistogram": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:histogramInfo:"
+     }
+    ]
+   },
+   "MPSImageHistogramEqualization": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:histogramInfo:"
+     }
+    ]
+   },
+   "MPSImageHistogramSpecification": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:histogramInfo:"
+     }
+    ]
+   },
+   "MPSImageNormalizedHistogram": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:histogramInfo:"
+     }
+    ]
+   },
+   "MPSImagePyramid": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:kernelWidth:kernelHeight:weights:"
+     }
+    ]
+   },
+   "MPSImageScale": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "scaleTransform"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "setScaleTransform:"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readwrite"
+      ],
+      "name": "scaleTransform"
+     }
+    ]
+   },
+   "MPSImageSobel": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:linearGrayColorTransform:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "colorTransform"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "colorTransform"
+     }
+    ]
+   },
+   "MPSImageThresholdBinary": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:thresholdValue:maximumValue:linearGrayColorTransform:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "transform"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "transform"
+     }
+    ]
+   },
+   "MPSImageThresholdBinaryInverse": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:thresholdValue:maximumValue:linearGrayColorTransform:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "transform"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "transform"
+     }
+    ]
+   },
+   "MPSImageThresholdToZero": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:thresholdValue:linearGrayColorTransform:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "transform"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "transform"
+     }
+    ]
+   },
+   "MPSImageThresholdToZeroInverse": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:thresholdValue:linearGrayColorTransform:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "transform"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "transform"
+     }
+    ]
+   },
+   "MPSImageThresholdTruncate": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:thresholdValue:linearGrayColorTransform:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "transform"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "transform"
+     }
+    ]
+   },
+   "MPSKernel": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSKeyedUnarchiver": {
+    "methods": [
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "unarchivedObjectOfClasses:fromData:device:error:"
+     },
+     {
+      "args": {
+       "3": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "unarchivedObjectOfClass:fromData:device:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initForReadingFromData:device:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "unarchivedObjectOfClasses:fromData:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "unarchivedObjectOfClass:fromData:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initForReadingFromData:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "unarchiveTopLevelObjectWithData:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": true,
+      "selector": "unarchiveTopLevelObjectWithData:device:error:"
+     }
+    ]
+   },
+   "MPSMatrixBatchNormalization": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixBatchNormalizationGradient": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixFindTopK": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixFullyConnected": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixFullyConnectedGradient": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixNeuron": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixNeuronGradient": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixSoftMax": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSMatrixSoftMaxGradient": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSNDArray": {
+    "methods": [
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "exportDataWithCommandBuffer:toBuffer:destinationDataType:offset:rowStrides:"
+     },
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "importDataWithCommandBuffer:fromBuffer:sourceDataType:offset:rowStrides:"
+     },
+     {
+      "args": {
+       "0": {},
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "readBytes:strideBytes:"
+     },
+     {
+      "args": {
+       "0": {},
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "writeBytes:strideBytes:"
+     }
+    ]
+   },
+   "MPSNDArrayBinaryKernel": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:primarySourceArray:secondarySourceArray:resultState:outputStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSNDArrayDescriptor": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": true,
+      "selector": "descriptorWithDataType:dimensionCount:dimensionSizes:"
+     },
+     {
+      "class_method": true,
+      "selector": "descriptorWithDataType:dimensionSizes:",
+      "variadic": true
+     },
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "reshapeWithDimensionCount:dimensionSizes:"
+     }
+    ]
+   },
+   "MPSNDArrayMultiaryBase": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSNDArrayMultiaryKernel": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceArrays:resultState:outputStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSNDArrayUnaryKernel": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceArray:resultState:outputStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSNNCropAndResizeBilinear": {
+    "methods": [
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:resizeWidth:resizeHeight:numberOfRegions:regions:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "regions"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "regions"
+     }
+    ]
+   },
+   "MPSNNForwardLoss": {
+    "methods": [
+     {
+      "args": {
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "encodeBatchToCommandBuffer:sourceImages:labels:weights:destinationStates:destinationStateIsTemporary:"
+     }
+    ]
+   },
+   "MPSNNGraph": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithDevice:resultImages:resultsAreNeeded:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": true,
+      "selector": "graphWithDevice:resultImages:resultsAreNeeded:"
+     }
+    ]
+   },
+   "MPSNNReshape": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceImage:destinationState:destinationStateIsTemporary:reshapedWidth:reshapedHeight:reshapedFeatureChannels:"
+     },
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "encodeBatchToCommandBuffer:sourceImages:destinationStates:destinationStateIsTemporary:reshapedWidth:reshapedHeight:reshapedFeatureChannels:"
+     }
+    ]
+   },
+   "MPSPolygonBuffer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:"
+     }
+    ]
+   },
+   "MPSRNNImageInferenceLayer": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSRNNMatrixInferenceLayer": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "encodeSequenceToCommandBuffer:sourceMatrices:sourceOffsets:destinationMatrices:destinationOffsets:recurrentInputState:recurrentOutputStates:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSRNNMatrixTrainingLayer": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "encodeForwardSequenceToCommandBuffer:sourceMatrices:sourceOffsets:destinationMatrices:destinationOffsets:trainingStates:recurrentInputState:recurrentOutputStates:weights:"
+     },
+     {
+      "args": {
+       "2": {},
+       "4": {},
+       "6": {}
+      },
+      "class_method": false,
+      "selector": "encodeGradientSequenceToCommandBuffer:forwardSources:forwardSourceOffsets:sourceGradients:sourceGradientOffsets:destinationGradients:destinationOffsets:weightGradients:trainingStates:recurrentInputState:recurrentOutputStates:weights:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSRayIntersector": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSSVGF": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSSVGFDenoiser": {
+    "methods": [
+     {
+      "args": {
+       "2": {},
+       "4": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:sourceTexture:destinationTexture:sourceTexture2:destinationTexture2:motionVectorTexture:depthNormalTexture:previousDepthNormalTexture:"
+     }
+    ]
+   },
+   "MPSStateResourceList": {
+    "methods": [
+     {
+      "class_method": true,
+      "selector": "resourceListWithTextureDescriptors:",
+      "variadic": true
+     },
+     {
+      "class_method": true,
+      "selector": "resourceListWithBufferSizes:",
+      "variadic": true
+     }
+    ]
+   },
+   "MPSTemporalAA": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSUnaryImageKernel": {
+    "methods": [
+     {
+      "args": {
+       "1": {}
+      },
+      "class_method": false,
+      "selector": "encodeToCommandBuffer:inPlaceTexture:fallbackCopyAllocator:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {
+   "MPSCNNBatchNormalizationDataSource": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "gamma"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "beta"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "mean"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "variance"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSCNNConvolutionDataSource": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "weights"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "biasTerms"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "rangesForUInt8Kernel"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "lookupTableForUInt8Kernel"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSCNNGroupNormalizationDataSource": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "gamma"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "beta"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   },
+   "MPSCNNInstanceNormalizationDataSource": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "gamma"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "beta"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyWithZone:device:"
+     }
+    ]
+   }
+  },
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

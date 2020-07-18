@@ -12,6 +12,21 @@
    "NW_LISTENER_INFINITE_CONNECTION_LIMIT": { "value": 4294967295 }
   },
   "functions": {
+   "nw_connection_group_extract_connection_for_message": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_group_copy_local_endpoint_for_message": {
+    "retval": { "already_retained": true }
+   },
+   "nw_connection_group_copy_remote_endpoint_for_message": {
+    "retval": { "already_retained": true }
+   },
+   "nw_privacy_context_create": {
+    "retval": { "already_retained": true },
+    "args": {
+     "0": { "type_modifier": "n", "c_array_delimited_by_null": true }
+    }
+   },
    "nw_resolution_report_get_protocol": {
     "retval": { "already_retained": true }
    },
@@ -31,9 +46,6 @@
     "retval": { "already_retained": true }
    },
    "nw_resolution_report_copy_successful_endpoint": {
-    "retval": { "already_retained": true }
-   },
-   "nw_privacy_context_create": {
     "retval": { "already_retained": true }
    },
    "nw_resolver_config_create_https": {
@@ -72,6 +84,74 @@
     "args": {
      "1": { "type_modifier": "n", "type_override": "^t", "c_array_delimited_by_null": true },
      "2": { "type_modifier": "n", "type_override": "^v", "c_array_length_in_arg": 3 }
+    }
+   },
+   "nw_connection_group_send_message": {
+    "args": {
+     "4": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_group_set_receive_handler": {
+    "args": {
+     "3": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" },
+        "3": { "type": "B" }
+       }
+      }
+     }
+    }
+   },
+   "nw_connection_group_set_state_changed_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "v" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "i" },
+        "2": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_establishment_report_enumerate_resolution_reports": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
+    }
+   },
+   "nw_group_descriptor_enumerate_endpoints": {
+    "args": {
+     "1": {
+      "callable": {
+       "retval": { "type": "B" },
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       }
+      }
+     }
     }
    },
    "nw_ws_response_enumerate_additional_headers": {

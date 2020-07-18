@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Intents
 
 
@@ -42,3 +42,7 @@ class TestINIntentErrors(TestCase):
         self.assertEqual(Intents.INIntentErrorEncodingGeneric, 8000)
         self.assertEqual(Intents.INIntentErrorEncodingFailed, 8001)
         self.assertEqual(Intents.INIntentErrorDecodingGeneric, 9000)
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(Intents.INIntentErrorDomain, str)

@@ -18,21 +18,21 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "dataWithBytesNoCopy:length:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
       "selector": "dataWithImmutableBytesNoCopy:length:"
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_size": true },
       "selector": "bytes"
      }
     ],

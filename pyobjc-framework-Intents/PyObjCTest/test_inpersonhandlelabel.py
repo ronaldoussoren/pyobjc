@@ -14,3 +14,7 @@ class TestINPersonHandleLabel(TestCase):
         self.assertIsInstance(Intents.INPersonHandleLabelWorkFax, str)
         self.assertIsInstance(Intents.INPersonHandleLabelPager, str)
         self.assertIsInstance(Intents.INPersonHandleLabelOther, str)
+
+    @min_os_level("10.16")
+    def test_constants10_16(self):
+        self.assertIsInstance(Intents.INPersonHandleLabelSchool, str)
