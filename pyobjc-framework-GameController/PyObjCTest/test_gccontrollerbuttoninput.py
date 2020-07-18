@@ -37,11 +37,11 @@ class TestGCControllerButtonInput(TestCase):
     @min_os_level("10.16")
     def testMethods10_16(self):
         self.assertResultIsBlock(
-            GameController.GCControllerButtonInput.GCControllerButtonTouchedChangedHandler,
+            GameController.GCControllerButtonInput.touchedChangedHandler,
             b"v@f" + objc._C_NSBOOL + objc._C_NSBOOL,
         )
         self.assertArgIsBlock(
-            GameController.GCControllerButtonInput.setGCControllerButtonTouchedChangedHandler_,
+            GameController.GCControllerButtonInput.setTouchedChangedHandler_,
             0,
             b"v@f" + objc._C_NSBOOL + objc._C_NSBOOL,
         )

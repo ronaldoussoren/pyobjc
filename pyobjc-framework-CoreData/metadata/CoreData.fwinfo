@@ -71,6 +71,74 @@
      }
     ]
    },
+   "NSBatchInsertRequest": {
+    "methods": [
+     {
+      "retval": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	}
+       },
+       "class_method": false,
+       "selector": "dictionaryHandler"
+     },
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "setDictionaryHandler:"
+     },
+     {
+      "retval": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	}
+       },
+       "class_method": false,
+       "selector": "managedObjectHandler"
+     },
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "setManagedObjectHandler:"
+     }
+    ]
+   },
    "NSCoreDataCoreSpotlightDelegate": {
     "methods": [
      {

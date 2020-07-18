@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, max_os_level
 
 
 class TestAudioHardwarePlugIn(TestCase):
@@ -16,6 +16,7 @@ class TestAudioHardwarePlugIn(TestCase):
     def testCFTypes(self):
         self.assertIsOpaquePointer(CoreAudio.AudioHardwarePlugInRef)
 
+    @max_os_level("10.15.9")  # API removed in macOS 11
     def testFunctions(self):
         self.assertArgIsOut(CoreAudio.AudioObjectCreate, 3)
 

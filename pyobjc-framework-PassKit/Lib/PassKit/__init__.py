@@ -10,6 +10,7 @@ import sys
 import Foundation
 import objc
 from PassKit import _metadata
+from PassKit import _PassKit
 
 sys.modules["PassKit"] = mod = objc.ObjCLazyModule(
     "PassKit",
@@ -23,7 +24,7 @@ sys.modules["PassKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_PassKit, Foundation),
 )
 
 

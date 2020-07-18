@@ -25,8 +25,8 @@ class TestPKPaymentRequest(TestCase):
 
         self.assertEqual(PassKit.PKShippingTypeShipping, 0)
         self.assertEqual(PassKit.PKShippingTypeDelivery, 1)
-        self.assertEqual(PassKit.PKShippingTypeStorePickup, 1)
-        self.assertEqual(PassKit.PKShippingTypeServicePickup, 2)
+        self.assertEqual(PassKit.PKShippingTypeStorePickup, 2)
+        self.assertEqual(PassKit.PKShippingTypeServicePickup, 3)
 
         self.assertEqual(PassKit.PKPaymentSummaryItemTypeFinal, 0)
         self.assertEqual(PassKit.PKPaymentSummaryItemTypePending, 1)

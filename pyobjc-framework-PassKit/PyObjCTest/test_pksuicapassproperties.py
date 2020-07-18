@@ -11,13 +11,7 @@ class TestPKSuicaPassProperties(TestCase):
             PassKit.PKSuicaPassProperties.isBalanceAllowedForCommute
         )
         self.assertResultIsBOOL(
-            PassKit.PKSuicaPassProperties.setBalanceAllowedForCommute_, 0
-        )
-        self.assertResultIsBOOL(
             PassKit.PKSuicaPassProperties.isLowBalanceGateNotificationEnabled
-        )
-        self.assertResultIsBOOL(
-            PassKit.PKSuicaPassProperties.setLowBalanceGateNotificationEnabled_, 0
         )
         self.assertResultIsBOOL(PassKit.PKSuicaPassProperties.isGreenCarTicketUsed)
         self.assertResultIsBOOL(PassKit.PKSuicaPassProperties.isBlacklisted)

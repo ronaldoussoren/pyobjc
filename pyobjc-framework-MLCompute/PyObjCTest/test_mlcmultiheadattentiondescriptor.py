@@ -10,18 +10,18 @@ class TestMLCMultiheadAttentionDescriptor(TestCase):
             MLCompute.MLCMultiheadAttentionDescriptor.hasAttentionBiases
         )
         self.assertResultIsBOOL(
-            MLCompute.MLCMultiheadAttentionDescriptor.hasZeroAttention
+            MLCompute.MLCMultiheadAttentionDescriptor.addsZeroAttention
         )
 
         self.assertArgIsBOOL(
-            MLCompute.MLCMultiheadAttentionDescriptor.descriptorWithModelDimension_keyDimension_valueDimension_headCount_dropout_hasBiases_hasAttentionBaises_addsZeroAttention_,  # noqa: B950
+            MLCompute.MLCMultiheadAttentionDescriptor.descriptorWithModelDimension_keyDimension_valueDimension_headCount_dropout_hasBiases_hasAttentionBiases_addsZeroAttention_,  # noqa: B950
             5,
         )
         self.assertArgIsBOOL(
-            MLCompute.MLCMultiheadAttentionDescriptor.descriptorWithModelDimension_keyDimension_valueDimension_headCount_dropout_hasBiases_hasAttentionBaises_addsZeroAttention_,  # noqa: B950
+            MLCompute.MLCMultiheadAttentionDescriptor.descriptorWithModelDimension_keyDimension_valueDimension_headCount_dropout_hasBiases_hasAttentionBiases_addsZeroAttention_,  # noqa: B950
             6,
         )
         self.assertArgIsBOOL(
-            MLCompute.MLCMultiheadAttentionDescriptor.descriptorWithModelDimension_keyDimension_valueDimension_headCount_dropout_hasBiases_hasAttentionBaises_addsZeroAttention_,  # noqa: B950
+            MLCompute.MLCMultiheadAttentionDescriptor.descriptorWithModelDimension_keyDimension_valueDimension_headCount_dropout_hasBiases_hasAttentionBiases_addsZeroAttention_,  # noqa: B950
             7,
         )

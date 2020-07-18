@@ -7,7 +7,7 @@ class TestPKPassLibrary(TestCase):
     def test_constants(self):
         self.assertEqual(PassKit.PKPassLibraryDidAddPasses, 0)
         self.assertEqual(PassKit.PKPassLibraryShouldReviewPasses, 1)
-        self.assertEqual(PassKit.PKPassLibraryDidCancelAddPasses, 1)
+        self.assertEqual(PassKit.PKPassLibraryDidCancelAddPasses, 2)
 
         self.assertEqual(
             PassKit.PKAutomaticPassPresentationSuppressionResultNotSupported, 0
@@ -52,8 +52,8 @@ class TestPKPassLibrary(TestCase):
 
         self.assertArgIsBlock(
             PassKit.PKPassLibrary.addPasses_withCompletionHandler_,
-            0,
-            b"v" + objc._C_NSUInteger,
+            1,
+            b"v" + objc._C_NSInteger,
         )
 
         self.assertResultIsBOOL(
@@ -62,7 +62,7 @@ class TestPKPassLibrary(TestCase):
         self.assertResultIsBOOL(
             PassKit.PKPassLibrary.canAddSecureElementPassWithPrimaryAccountIdentifier_
         )
-        self.assertResultIsBOOL(PassKit.PKPassLibrary.canAddFelicaPass_)
+        self.assertResultIsBOOL(PassKit.PKPassLibrary.canAddFelicaPass)
 
         self.assertArgIsBlock(
             PassKit.PKPassLibrary.activatePaymentPass_withActivationData_completion_,
