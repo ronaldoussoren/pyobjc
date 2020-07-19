@@ -45,6 +45,7 @@ class TestMTLHeap(TestCase):
     def test_constants(self):
         self.assertEqual(Metal.MTLHeapTypeAutomatic, 0)
         self.assertEqual(Metal.MTLHeapTypePlacement, 1)
+        self.assertEqual(Metal.MTLHeapTypeSparse, 2)
 
     @min_os_level("10.15")
     def test_protocols(self):

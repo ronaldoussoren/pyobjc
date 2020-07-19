@@ -16,7 +16,7 @@ XXX TODO:
 
 * Removed metadata for 32-bit systems
 
-* Updated framework bindings (Xcode 12 beta 1):
+* Updated framework bindings (Xcode 12 beta 2):
   - AppKit
   - AuthenticationServices
   - Automator

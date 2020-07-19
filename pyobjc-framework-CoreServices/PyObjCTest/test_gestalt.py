@@ -143,6 +143,8 @@ class TestGestalt(TestCase):
         self.assert_not_wrapped("gestaltCPUPentiumII")
         self.assert_not_wrapped("gestaltCPUX86")
         self.assert_not_wrapped("gestaltCPUPentium4")
+        self.assert_not_wrapped("gestaltCPUARMFamily")
+        self.assert_not_wrapped("gestaltCPUARM64")
         self.assert_not_wrapped("gestaltCRMAttr")
         self.assert_not_wrapped("gestaltCRMPresent")
         self.assert_not_wrapped("gestaltCRMPersistentFix")

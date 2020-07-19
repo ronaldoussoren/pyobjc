@@ -5,10 +5,13 @@ from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 class TestMTLBinaryArchiveHelper(Metal.NSObject):
     def addComputePipelineFunctionsWithDescriptor_error_(self, a, b):
-        pass
+        return 1
 
     def addRenderPipelineFunctionsWithDescriptor_error_(self, a, b):
-        pass
+        return 1
+
+    def addTileRenderPipelineFunctionsWithDescriptor_error_(self, a, b):
+        return 1
 
     def serializeToURL_error_(self, a, b):
         pass
@@ -34,8 +37,19 @@ class TestMTLBinaryArchive(TestCase):
             1,
             b"o^@",
         )
+        self.assertResultIsBOOL(
+            TestMTLBinaryArchiveHelper.addRenderPipelineFunctionsWithDescriptor_error_
+        )
         self.assertArgHasType(
             TestMTLBinaryArchiveHelper.addRenderPipelineFunctionsWithDescriptor_error_,
+            1,
+            b"o^@",
+        )
+        self.assertResultIsBOOL(
+            TestMTLBinaryArchiveHelper.addTileRenderPipelineFunctionsWithDescriptor_error_
+        )
+        self.assertArgHasType(
+            TestMTLBinaryArchiveHelper.addTileRenderPipelineFunctionsWithDescriptor_error_,
             1,
             b"o^@",
         )

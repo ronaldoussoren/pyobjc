@@ -63,6 +63,14 @@ class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
     def resolveCounters_inRange_destinationBuffer_destinationOffset_(self, a, b, c, d):
         pass
 
+    def getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_(
+        self, a, b, c, d, e, f, g, h
+    ):
+        pass
+
+    def resetTextureAccessCounters_region_mipLevel_slice_(self, a, b, c, d):
+        pass
+
 
 class TestMTLBlitCommandEncoder(TestCase):
     def test_constants(self):
@@ -423,6 +431,47 @@ class TestMTLBlitCommandEncoder(TestCase):
         )
         self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.resolveCounters_inRange_destinationBuffer_destinationOffset_,  # noqa: B950
+            3,
+            objc._C_NSUInteger,
+        )
+
+        self.asssertArgHasType(
+            TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
+            1,
+            Metal.MTLRegion.__typestr,
+        )
+        self.asssertArgHasType(
+            TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+        self.asssertArgHasType(
+            TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
+            3,
+            objc._C_NSUInteger,
+        )
+        self.asssertIsBOOL(
+            TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
+            4,
+        )
+        self.asssertArgHasType(
+            TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: 6950
+            3,
+            objc._C_NSUInteger,
+        )
+
+        self.asssertArgHasType(
+            TestMTLBlitCommandEncoderHelper.resetTextureAccessCounters_region_mipLevel_slice_,  # noqa: B950
+            1,
+            Metal.MTLRegion.__typestr,
+        )
+        self.asssertArgHasType(
+            TestMTLBlitCommandEncoderHelper.resetTextureAccessCounters_region_mipLevel_slice_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+        self.asssertArgHasType(
+            TestMTLBlitCommandEncoderHelper.resetTextureAccessCounters_region_mipLevel_slice_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )

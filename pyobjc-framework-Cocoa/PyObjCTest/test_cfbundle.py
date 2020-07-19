@@ -320,3 +320,6 @@ class TestCFBundle(TestCase):
         self.assertEqual(
             CoreFoundation.kCFBundleExecutableArchitecturePPC64, 0x01000012
         )
+        self.assertEqual(
+            CoreFoundation.kCFBundleExecutableArchitectureARM64, 0x0100000C
+        )

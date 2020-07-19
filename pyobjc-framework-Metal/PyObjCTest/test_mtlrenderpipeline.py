@@ -10,6 +10,18 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def textureWriteRoundingMode(self):
         return 1
 
+    def maxTotalThreadsPerThreadgroup(self):
+        return 1
+
+    def threadgroupSizeMatchesTileSize(self):
+        return 1
+
+    def imageblockSampleLength(self):
+        return 1
+
+    def imageblockMemoryLengthForDimensions_(self, a):
+        return 1
+
 
 class TestMTLRenderPipeline(TestCase):
     def test_constants(self):
@@ -79,6 +91,24 @@ class TestMTLRenderPipeline(TestCase):
         )
         self.assertResultHasType(
             TestMTLRenderPipelineHelper.textureWriteRoundingMode, objc._C_NSInteger
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.maxTotalThreadsPerThreadgroup, objc._C_NSInteger
+        )
+        self.assertResultIsBOOL(
+            TestMTLRenderPipelineHelper.threadgroupSizeMatchesTileSize
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.imageblockSampleLength, objc._C_NSInteger
+        )
+        self.assertResultHasType(
+            TestMTLRenderPipelineHelper.imageblockMemoryLengthForDimensions_,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.imageblockMemoryLengthForDimensions_,
+            0,
+            Metal.MTLSize.__typestr__,
         )
 
     @min_os_level("10.11")

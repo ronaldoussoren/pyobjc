@@ -80,6 +80,15 @@ class TestMTLArgumentHelper(Metal.NSObject):
     def swizzle(self):
         return 1
 
+    def firstMipmapInTail(self):
+        return 1
+
+    def tailSizeInBytes(self):
+        return 1
+
+    def isSparse(self):
+        return 1
+
 
 class TestMTLArgument(TestCase):
     def test_constants(self):
@@ -324,6 +333,14 @@ class TestMTLArgument(TestCase):
             3,
             Metal.NSRange.__typestr__,
         )
+
+        self.assertResultHasType(
+            TestMTLArgumentHelper.firstMipmapInTail, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestMTLArgumentHelper.tailSizeInBytes, objc._C_NSUInteger
+        )
+        self.assertResultIsBOOL(TestMTLArgumentHelper.isSparse)
 
     @min_os_level("10.14")
     def test_methods10_14(self):

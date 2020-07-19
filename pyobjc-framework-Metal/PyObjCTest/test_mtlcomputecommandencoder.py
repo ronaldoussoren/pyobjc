@@ -87,6 +87,21 @@ class TestMTLComputeCommandEncoderHelper(Metal.NSObject):
     def setAccelerationStructure_atBufferIndex_(self, a, b):
         pass
 
+    def setImageblockWidth_height_(self, a, b):
+        pass
+
+    def executeCommandsInBuffer_withRange_(self, a, b):
+        pass
+
+    def executeCommandsInBuffer_inDirectBuffer_indirectBufferOffset_(self, a, b, c):
+        pass
+
+    def imageblockMemoryLengthForDimensions_(self, a):
+        return 1
+
+    def supportIndirectCommandBuffers(self):
+        return 1
+
 
 class TestMTLComputeCommandEncoder(TestCase):
     def test_structs(self):
@@ -402,4 +417,41 @@ class TestMTLComputeCommandEncoder(TestCase):
             TestMTLComputeCommandEncoderHelper.setAccelerationStructure_atBufferIndex_,
             1,
             objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.executeCommandsInBuffer_withRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.executeCommandsInBuffer_inDirectBuffer_indirectBufferOffset_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertResultHasType(
+            TestMTLComputeCommandEncoderHelper.imageblockMemoryLengthForDimensions_,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.executeCommandsInBuffer_inDirectBuffer_indirectBufferOffset_,
+            0,
+            Metal.MTLSize.__typestr__,
+        )
+
+        self.assertResultIsBOOL(
+            TestMTLComputeCommandEncoderHelper.supportIndirectCommandBuffers
         )

@@ -41,3 +41,10 @@ class TestMTLSampler(TestCase):
         self.assertArgIsBOOL(
             Metal.MTLSamplerDescriptor.alloc().init().setSupportArgumentBuffers_, 0
         )
+
+    @min_os_level("10.15")
+    def test_methods10_15(self):
+        self.assertResultIsBOOL(Metal.MTLSamplerDescriptor.alloc().init().lodAverage)
+        self.assertArgIsBOOL(
+            Metal.MTLSamplerDescriptor.alloc().init().setLodAverage_, 0
+        )
