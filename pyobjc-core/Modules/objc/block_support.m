@@ -285,18 +285,26 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         values[0]  = &block_ptr;
     }
 
-    if (signature->variadic) {
-        r = ffi_prep_cif_var(
-            &cif, FFI_DEFAULT_ABI, (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)),
-            (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
-            useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
-            arglist);
+    if (@available(macOS 10.15,*)) {
+        if (signature->variadic) {
+            r = ffi_prep_cif_var(
+                &cif, FFI_DEFAULT_ABI, (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)),
+                (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
+                useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                arglist);
+        } else {
+            r = ffi_prep_cif(
+                &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
+                useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                arglist);
+        }
     } else {
         r = ffi_prep_cif(
             &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
             useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
             arglist);
     }
+
 #endif
 
     if (r != FFI_OK) {

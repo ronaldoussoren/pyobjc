@@ -181,8 +181,17 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     }
 
     if (variadicAllArgs) {
-        r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
-                         PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+#ifndef __arm64__
+        if (@available(macOS 10.15, *)) {
+#endif
+            r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
+                             PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+#ifndef __arm64__
+        } else {
+            r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
+                             PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+        }
+#endif
 
         if (r != FFI_OK) {
             PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);

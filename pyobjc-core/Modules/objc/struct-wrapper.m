@@ -909,15 +909,40 @@ make_init(const char* typestr)
         }
     }
 
+#ifdef HAVE_CLOSURE_POOL
+    if (@available(macOS 10.15, *)) {
+        cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
+    } else {
+        cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
+    }
+#else
     cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
+#endif
     if (cl == NULL) {
         PyMem_Free((void*)typestr);
         return NULL;
     }
 
-    rv = ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr, codeloc);
+    if (@available(macOS 10.15, *)) {
+        rv = ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr, codeloc);
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
+        rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+
+#pragma clang diagnostic pop
+    }
     if (rv != FFI_OK) {
+#ifdef HAVE_CLOSURE_POOL
+        if (@available(macOS 10.15, *)) {
+            ffi_closure_free(cl);
+        } else {
+            PyObjC_ffi_closure_free(cl);
+        }
+#else
         ffi_closure_free(cl);
+#endif
         PyMem_Free((void*)typestr);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         return NULL;

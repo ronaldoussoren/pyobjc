@@ -14,6 +14,10 @@ XXX TODO:
   the core bridge and the framework wrappers only support
   64-bit executables going forward
 
+* PyObjC is now always build with the system libffi.
+
+  XXX: This currently requires building with the macOS 10.15 SDK or later.
+
 * Removed metadata for 32-bit systems
 
 * Updated framework bindings (Xcode 12 beta 2):
