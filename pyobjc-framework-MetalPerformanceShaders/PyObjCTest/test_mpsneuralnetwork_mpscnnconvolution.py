@@ -59,37 +59,34 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
 
     def test_methods(self):
         self.assertResultHasType(
-            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.dataType, objc._C_NSUInteger
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.dataType, b"I"
         )
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNConvolutionHelper.weights, b"^v"
         )
-        self.assertResultIsVarialbeSize(
-            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.weights, b"^v"
+        self.assertResultIsVariableSize(
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.weights
         )
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNConvolutionHelper.biasTerms, b"^f"
         )
-        self.assertResultIsVarialbeSize(
-            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.biasTerms, b"^v"
+        self.assertResultIsVariableSize(
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.biasTerms
         )
         self.assertResultIsBOOL(TestMPSNeuralNetwork_MPSCNNConvolutionHelper.load)
 
         # self.assertResultHasType(TestMPSNeuralNetwork_MPSCNNConvolutionHelper.dataType, ...) # Vector type!
         self.assertResultHasType(
-            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.weightsQuantizationType,
-            objc._C_NSUInteger,
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.weightsQuantizationType, b"I"
         )
         self.assertResultIsBOOL(
             TestMPSNeuralNetwork_MPSCNNConvolutionHelper.updateWithGradientState_sourceState_
         )
         self.assertResultHasType(
-            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.weightsLayout,
-            objc._C_NSUInteger,
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.weightsLayout, b"I"
         )
         self.assertResultHasType(
-            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.kernelWeightsDataType,
-            objc._C_NSUInteger,
+            TestMPSNeuralNetwork_MPSCNNConvolutionHelper.kernelWeightsDataType, b"I"
         )
 
     @min_os_level("10.13")
@@ -170,78 +167,78 @@ class TestMPSNeuralNetwork_MPSCNNConvolution(TestCase):
             1,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeToCommandBuffer_sourceImage_convolutionGradientState_destinationState_destinationIsTemporary_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeToCommandBuffer_sourceImage_convolutionGradientState_destinationState_destinationStateIsTemporary_,  # noqa: B950
             4,
         )
 
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeToCommandBuffer_sourceImages_convolutionGradientStates_destinationStates_destinationStateIsTemporary_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNConvolutionTranspose.encodeBatchToCommandBuffer_sourceImages_convolutionGradientStates_destinationStates_destinationStateIsTemporary_,  # noqa: B950
             4,
         )
 
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             2,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             2,
         )
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             3,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             3,
         )
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             4,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             4,
         )
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             5,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryConvolution.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             5,
         )
 
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             2,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             2,
         )
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             3,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             3,
         )
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             4,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             4,
         )
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             5,
         )
         self.assertArgIsVariableSize(
-            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerm_outputScaleTerms_inputBiasTerms_inptScaleTerms_type_flags_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryFullyConnected.initWithDevice_convolutionData_outputBiasTerms_outputScaleTerms_inputBiasTerms_inputScaleTerms_type_flags_,  # noqa: B950
             5,
         )
 

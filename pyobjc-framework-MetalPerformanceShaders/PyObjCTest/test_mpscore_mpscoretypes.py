@@ -118,8 +118,8 @@ class TestMPSCore_MPSCoreTypes(TestCase):
         self.assertIsInstance(v.length, int)
 
         v = MetalPerformanceShaders.MPSRegion()
-        self.assertIsInstance(v.start, MetalPerformanceShaders.MPSOrigin)
-        self.assertIsInstance(v.length, MetalPerformanceShaders.MPSSize)
+        self.assertIsInstance(v.origin, MetalPerformanceShaders.MPSOrigin)
+        self.assertIsInstance(v.size, MetalPerformanceShaders.MPSSize)
 
         v = MetalPerformanceShaders.MPSScaleTransform()
         self.assertIsInstance(v.scaleX, float)
@@ -138,7 +138,7 @@ class TestMPSCore_MPSCoreTypes(TestCase):
 
     @min_os_level("10.13")
     def test_functions10_13(self):
-        self.assertResultHasType(
+        self.assertIsInstance(
             MetalPerformanceShaders.MPSRectNoClip, MetalPerformanceShaders.MTLRegion
         )
 

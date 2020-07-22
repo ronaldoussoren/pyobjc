@@ -17,10 +17,10 @@ class TestMPSNeuralNetwork_MPSCNNMath(TestCase):
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSCNNArithmeticGradient.isSecondarySourceFilter
         )
-        self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNArithmeticGradient.initWithDevice_isSecondarySourceFilter_,
-            1,
-        )
+        # self.assertArgIsBOOL(
+        # MetalPerformanceShaders.MPSCNNArithmeticGradient.initWithDevice_isSecondarySourceFilter_,
+        # 1,
+        # )
 
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSCNNAddGradient.initWithDevice_isSecondarySourceFilter_,

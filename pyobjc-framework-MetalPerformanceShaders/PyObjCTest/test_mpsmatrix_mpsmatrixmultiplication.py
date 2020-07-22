@@ -7,11 +7,11 @@ class TestMPSMatrix_MPSMatrixMultiplication(TestCase):
     @min_os_level("10.13")
     def test_methods10_13(self):
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSMatrixMultiplication.initWithDevice_transposeLeft_transposeRight_resultRows_resultColumns_interiorColumn_alpha_beta_,  # noqa: B950
+            MetalPerformanceShaders.MPSMatrixMultiplication.initWithDevice_transposeLeft_transposeRight_resultRows_resultColumns_interiorColumns_alpha_beta_,  # noqa: B950
             1,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSMatrixMultiplication.initWithDevice_transposeLeft_transposeRight_resultRows_resultColumns_interiorColumn_alpha_beta_,  # noqa: B950
+            MetalPerformanceShaders.MPSMatrixMultiplication.initWithDevice_transposeLeft_transposeRight_resultRows_resultColumns_interiorColumns_alpha_beta_,  # noqa: B950
             2,
         )
 

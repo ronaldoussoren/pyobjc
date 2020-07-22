@@ -107,8 +107,10 @@ class TestMPSCore_MPSKernelTypes(TestCase):
         self.assertIsInstance(v.addend, int)
         self.assertIsInstance(v.shift, int)
 
-        self.fail("MPSCustomKernelSourceInfo")  # Vector types
-        self.fail("MPSCustomKernelInfo")  # Vector types
+        # self.fail("MPSCustomKernelSourceInfo")  # Vector types
+        # self.fail("MPSCustomKernelInfo")  # Vector types
+        self.assertNotHasAttr(MetalPerformanceShaders, "MPSCustomKernelSourceInfo")
+        self.assertNotHasAttr(MetalPerformanceShaders, "MPSCustomKernelInfo")
 
         v = MetalPerformanceShaders.MPSCustomKernelArgumentCount()
         self.assertIsInstance(v.destinationTextureCount, int)

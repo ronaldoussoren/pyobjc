@@ -20,7 +20,7 @@ class TestMPSCore_MPSImage(TestCase):
 
     @min_os_level("10.15")
     def test_function10_15(self):
-        self.assertArgBlock(
+        self.assertArgIsBlock(
             MetalPerformanceShaders.MPSImageBatchIterate,
             1,
             objc._C_NSInteger + objc._C_ID + objc._C_NSUInteger,
@@ -41,7 +41,7 @@ class TestMPSCore_MPSImage(TestCase):
             MetalPerformanceShaders.MPSImage.readBytes_dataLayout_bytesPerRow_region_featureChannelInfo_imageIndex_,
             0,
         )
-        self.assertArgIsVariableSized(
+        self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSImage.readBytes_dataLayout_bytesPerRow_region_featureChannelInfo_imageIndex_,
             0,
         )
@@ -50,7 +50,7 @@ class TestMPSCore_MPSImage(TestCase):
             MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_bytesPerRow_region_featureChannelInfo_imageIndex_,
             0,
         )
-        self.assertArgIsVariableSized(
+        self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_bytesPerRow_region_featureChannelInfo_imageIndex_,
             0,
         )
@@ -59,24 +59,22 @@ class TestMPSCore_MPSImage(TestCase):
             MetalPerformanceShaders.MPSImage.readBytes_dataLayout_bytesPerRow_bytesPerImage_region_featureChannelInfo_imageIndex_,
             0,
         )
-        self.assertArgIsVariableSized(
+        self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSImage.readBytes_dataLayout_bytesPerRow_bytesPerImage_region_featureChannelInfo_imageIndex_,
             0,
         )
 
         self.assertArgIsOut(
-            MetalPerformanceShaders.MPSImage.readBytes_dataLayout_dataLayout_imageIndex_,
-            0,
+            MetalPerformanceShaders.MPSImage.readBytes_dataLayout_imageIndex_, 0
         )
-        self.assertArgIsVariableSized(
+        self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSImage.readBytes_dataLayout_imageIndex_, 0
         )
 
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_dataLayout_imageIndex_,
-            0,
+            MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_imageIndex_, 0
         )
-        self.assertArgIsVariableSized(
+        self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_imageIndex_, 0
         )
 
@@ -86,7 +84,7 @@ class TestMPSCore_MPSImage(TestCase):
             MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_bytesPerRow_bytesPerImage_region_featureChannelInfo_imageIndex_,
             0,
         )
-        self.assertArgIsVariableSized(
+        self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_bytesPerRow_bytesPerImage_region_featureChannelInfo_imageIndex_,
             0,
         )
@@ -97,7 +95,7 @@ class TestMPSCore_MPSImage(TestCase):
             MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_bytesPerColumn_bytesPerRow_bytesPerImage_region_featureChannelInfo_imageIndex_,  # noqa : B950
             0,
         )
-        self.assertArgIsVariableSized(
+        self.assertArgIsVariableSize(
             MetalPerformanceShaders.MPSImage.writeBytes_dataLayout_bytesPerColumn_bytesPerRow_bytesPerImage_region_featureChannelInfo_imageIndex_,  # noqa : B950
             0,
         )

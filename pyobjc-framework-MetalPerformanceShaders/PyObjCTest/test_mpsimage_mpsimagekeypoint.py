@@ -9,7 +9,7 @@ class TestMPSImage_MPSImageHistogram(TestCase):
         self.assertIsInstance(v.maximumKeypoints, int)
         self.assertIsInstance(v.minimumThresholdValue, float)
 
-        self.assertNotHasAttr(MetalPerformanceShaders.MPSImageKeypointData)
+        self.assertNotHasAttr(MetalPerformanceShaders, "MPSImageKeypointData")
         # v = MetalPerformanceShaders.MPSImageKeypointData()
         # self.assertIsInstance(v.keypointCoordinate, objc.vector_ushort2)
         # self.assertIsInstance(v.keypointColorValue, float)

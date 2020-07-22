@@ -22,11 +22,12 @@ class TestMPSRayIntersector_MPSAccelerationStructure(TestCase):
         self.assertEqual(
             MetalPerformanceShaders.MPSAccelerationStructureStatusUnbuilt, 0
         )
-        self.assertEqual(MetalPerformanceShaders.wMPSAccelerationStructureStatusBuilt)
+        self.assertEqual(MetalPerformanceShaders.MPSAccelerationStructureStatusBuilt, 1)
 
     @min_os_level("10.14")
     def test_methods10_14(self):
         self.assertArgIsBlock(
             MetalPerformanceShaders.MPSAccelerationStructure.rebuildWithCompletionHandler_,
+            0,
             MPSAccelerationStructureCompletionHandler,
         )

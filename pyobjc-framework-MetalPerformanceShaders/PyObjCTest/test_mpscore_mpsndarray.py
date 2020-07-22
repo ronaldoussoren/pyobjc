@@ -6,10 +6,7 @@ import MetalPerformanceShaders
 class TestMPSCore_MPSNDArray(TestCase):
     @min_os_level("10.15")
     def test_methods(self):
-        self.assertVariadic(
-            MetalPerformanceShaders.MPSNDArrayDescriptor.descriptorWithDataType_dimensionSizes_
-        )
-        self.assertNullTerminated(
+        self.assertIsNullTerminated(
             MetalPerformanceShaders.MPSNDArrayDescriptor.descriptorWithDataType_dimensionSizes_
         )
 

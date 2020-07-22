@@ -39,14 +39,14 @@ class TestMPSNeuralNetwork_MPSCNNGroupNormalization(TestCase):
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNGroupNormalizationHelper.beta, b"^f"
         )
-        self.assertResultIsVarialbeSize(
+        self.assertResultIsVariableSize(
             TestMPSNeuralNetwork_MPSCNNGroupNormalizationHelper.beta
         )
 
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNGroupNormalizationHelper.gamma, b"^f"
         )
-        self.assertResultIsVarialbeSize(
+        self.assertResultIsVariableSize(
             TestMPSNeuralNetwork_MPSCNNGroupNormalizationHelper.gamma
         )
 
@@ -74,5 +74,5 @@ class TestMPSNeuralNetwork_MPSCNNGroupNormalization(TestCase):
         self.assertArgHasType(
             TestMPSNeuralNetwork_MPSCNNGroupNormalizationHelper.copyWithZone_,
             0,
-            b"^{NSZone=}",
+            b"^{_NSZone=}",
         )

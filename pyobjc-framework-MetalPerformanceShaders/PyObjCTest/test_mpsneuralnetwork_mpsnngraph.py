@@ -1,5 +1,5 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
-
+import objc
 import MetalPerformanceShaders
 
 MPSNNGraphCompletionHandler = b"v@@"
@@ -13,16 +13,26 @@ class TestMPSNeuralNetwork_MPSNNGraph(TestCase):
             2,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSNNGraph.WithDevice_resultImage_resultImageIsNeeded_,
+            MetalPerformanceShaders.MPSNNGraph.graphWithDevice_resultImage_resultImageIsNeeded_,
             2,
         )
 
-        self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSNNGraph.initWithDevice_resultImages_resultImageAreNeeded_,
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSNNGraph.initWithDevice_resultImages_resultsAreNeeded_,
+            2,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgIsVariableSize(
+            MetalPerformanceShaders.MPSNNGraph.initWithDevice_resultImages_resultsAreNeeded_,
             2,
         )
-        self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSNNGraph.WithDevice_resultImages_resultImageAreNeeded_,
+        self.assertArgHasType(
+            MetalPerformanceShaders.MPSNNGraph.graphWithDevice_resultImages_resultsAreNeeded_,
+            2,
+            b"o^" + objc._C_NSBOOL,
+        )
+        self.assertArgIsVariableSize(
+            MetalPerformanceShaders.MPSNNGraph.graphWithDevice_resultImages_resultsAreNeeded_,
             2,
         )
 

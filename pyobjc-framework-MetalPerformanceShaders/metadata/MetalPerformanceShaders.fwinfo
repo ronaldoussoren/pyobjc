@@ -2,7 +2,67 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "structs": {
+   "MPSIntersectionDistancePrimitiveIndexCoordinates": { "ignore": true },
+   "MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates": { "ignore": true },
+   "MPSImageKeypointData": { "ignore": true },
+   "MPSRayOriginDirection": { "ignore": true },
+   "MPSAxisAlignedBoundingBox": { "ignore": true },
+   "MPSImageHistogramInfo": { "ignore": true },
+   "MPSCustomKernelSourceInfo": { "ignore": true },
+   "MPSCustomKernelInfo": { "ignore": true },
+   "MPSPackedFloat3": { "ignore": true },
+   "MPSRayOriginMinDistanceDirectionMaxDistance": { "ignore": true },
+   "MPSRayPackedOriginDirection": { "ignore": true },
+   "MPSRayOriginMaskDirectionMaxDistance": { "ignore": true }
+  },
+  "enum": {
+   "MPSDeviceCapsIndex": { "value": 127 },
+   "MPSFunctionConstantNone": { "value": -1 }
+  },
+  "expressions": {
+   "MPSFunctionConstantIndex": { "value": "MPSDeviceCapsIndex-1" },
+   "MPSBatchSizeIndex": { "value": "MPSDeviceCapsIndex-2" },
+   "MPSUserConstantIndex": { "value": "MPSDeviceCapsIndex-3" },
+   "MPSNDArrayConstantIndex": { "value": "MPSDeviceCapsIndex-4" },
+   "MPSFunctionConstantIndexReserved": { "value": "MPSDeviceCapsIndex-5" },
+   "MPSUserAvailableFunctionConstantStartIndex": { "value": "MPSDeviceCapsIndex-8" }
+  },
   "classes": {
+   "NSObject": {
+    "methods": [
+     {
+      "selector": "variance",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "mean",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "weights",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "biasTerms",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "gamma",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     },
+     {
+      "selector": "beta",
+      "class_method": false,
+      "retval": { "c_array_of_variable_length": true }
+     }
+    ]
+   },
    "MPSAccelerationStructure": {
     "methods": [
      {
@@ -61,10 +121,10 @@
     "methods": [
      {
       "args": {
-       "2": {},
-       "3": {},
-       "4": {},
-       "5": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "5": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:convolutionData:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
@@ -75,20 +135,20 @@
     "methods": [
      {
       "args": {
-       "2": {},
-       "3": {},
-       "4": {},
-       "5": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "5": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": true,
       "selector": "nodeWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
      },
      {
       "args": {
-       "2": {},
-       "3": {},
-       "4": {},
-       "5": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "5": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
@@ -99,10 +159,10 @@
     "methods": [
      {
       "args": {
-       "2": {},
-       "3": {},
-       "4": {},
-       "5": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "5": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:convolutionData:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
@@ -113,20 +173,20 @@
     "methods": [
      {
       "args": {
-       "2": {},
-       "3": {},
-       "4": {},
-       "5": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "5": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": true,
       "selector": "nodeWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
      },
      {
       "args": {
-       "2": {},
-       "3": {},
-       "4": {},
-       "5": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "5": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithSource:weights:outputBiasTerms:outputScaleTerms:inputBiasTerms:inputScaleTerms:type:flags:"
@@ -155,8 +215,8 @@
     "methods": [
      {
       "args": {
-       "2": {},
-       "3": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:convolutionDescriptor:kernelWeights:biasTerms:flags:"
@@ -167,10 +227,10 @@
     "methods": [
      {
       "args": {
-       "0": {},
-       "1": {},
-       "2": {},
-       "3": {}
+       "0": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "1": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "setBatchNormalizationParametersForInferenceWithMean:variance:gamma:beta:epsilon:"
@@ -199,8 +259,8 @@
     "methods": [
      {
       "args": {
-       "2": {},
-       "3": {}
+       "2": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:convolutionDescriptor:kernelWeights:biasTerms:flags:"
@@ -258,49 +318,49 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "readBytes:dataLayout:bytesPerRow:region:featureChannelInfo:imageIndex:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "writeBytes:dataLayout:bytesPerRow:region:featureChannelInfo:imageIndex:"
      },
      {
       "args": {
-       "0": {}
+       "0": {  "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "writeBytes:dataLayout:bytesPerColumn:bytesPerRow:bytesPerImage:region:featureChannelInfo:imageIndex:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "readBytes:dataLayout:bytesPerRow:bytesPerImage:region:featureChannelInfo:imageIndex:"
      },
      {
       "args": {
-       "0": {}
+       "0": {  "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "writeBytes:dataLayout:bytesPerRow:bytesPerImage:region:featureChannelInfo:imageIndex:"
      },
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "readBytes:dataLayout:imageIndex:"
      },
      {
       "args": {
-       "0": {}
+       "0": {  "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "writeBytes:dataLayout:imageIndex:"
@@ -311,14 +371,14 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n", "c_array_of_fixed_length": 3}
       },
       "class_method": false,
       "selector": "initWithDevice:linearToGrayScaleTransform:sigma:"
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_fixed_length": 3 },
       "selector": "colorTransform"
      }
     ],
@@ -348,7 +408,7 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:kernelWidth:kernelHeight:weights:"
@@ -370,7 +430,7 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:kernelWidth:kernelHeight:values:"
@@ -381,7 +441,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithDevice:info:"
@@ -399,7 +459,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithDevice:histogramInfo:"
@@ -410,7 +470,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithDevice:histogramInfo:"
@@ -421,7 +481,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithDevice:histogramInfo:"
@@ -432,7 +492,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n" }
       },
       "class_method": false,
       "selector": "initWithDevice:histogramInfo:"
@@ -443,7 +503,7 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:kernelWidth:kernelHeight:weights:"
@@ -479,7 +539,7 @@
     "methods": [
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n", "c_array_of_fixed_length": 3 }
       },
       "class_method": false,
       "selector": "initWithDevice:linearGrayColorTransform:"
@@ -504,7 +564,7 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n", "c_array_of_fixed_length": 3 }
       },
       "class_method": false,
       "selector": "initWithDevice:thresholdValue:maximumValue:linearGrayColorTransform:"
@@ -529,7 +589,7 @@
     "methods": [
      {
       "args": {
-       "3": {}
+       "3": { "type_modifier": "n", "c_array_of_fixed_length": 3 }
       },
       "class_method": false,
       "selector": "initWithDevice:thresholdValue:maximumValue:linearGrayColorTransform:"
@@ -554,7 +614,7 @@
     "methods": [
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "n", "c_array_of_fixed_length": 3 }
       },
       "class_method": false,
       "selector": "initWithDevice:thresholdValue:linearGrayColorTransform:"
@@ -579,7 +639,7 @@
     "methods": [
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "n", "c_array_of_fixed_length": 3 }
       },
       "class_method": false,
       "selector": "initWithDevice:thresholdValue:linearGrayColorTransform:"
@@ -604,7 +664,7 @@
     "methods": [
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "n", "c_array_of_fixed_length": 3 }
       },
       "class_method": false,
       "selector": "initWithDevice:thresholdValue:linearGrayColorTransform:"
@@ -815,30 +875,30 @@
     "methods": [
      {
       "args": {
-       "4": {}
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "exportDataWithCommandBuffer:toBuffer:destinationDataType:offset:rowStrides:"
      },
      {
       "args": {
-       "4": {}
+       "4": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "importDataWithCommandBuffer:fromBuffer:sourceDataType:offset:rowStrides:"
      },
      {
       "args": {
-       "0": {},
-       "1": {}
+       "0": { "type_modifier": "o", "c_array_of_variable_length": true },
+       "1": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "readBytes:strideBytes:"
      },
      {
       "args": {
-       "0": {},
-       "1": {}
+       "0": { "type_modifier": "n", "c_array_of_variable_length": true },
+       "1": { "type_modifier": "n", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "writeBytes:strideBytes:"
@@ -868,11 +928,12 @@
      {
       "class_method": true,
       "selector": "descriptorWithDataType:dimensionSizes:",
-      "variadic": true
+      "variadic": true,
+      "c_array_delimited_by_null": true
      },
      {
       "args": {
-       "1": {}
+       "1": { "type_modifier": "n", "c_array_length_in_arg": 0 }
       },
       "class_method": false,
       "selector": "reshapeWithDimensionCount:dimensionSizes:"
@@ -952,14 +1013,14 @@
     "methods": [
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": false,
       "selector": "initWithDevice:resultImages:resultsAreNeeded:"
      },
      {
       "args": {
-       "2": {}
+       "2": { "type_modifier": "o", "c_array_of_variable_length": true }
       },
       "class_method": true,
       "selector": "graphWithDevice:resultImages:resultsAreNeeded:"
@@ -1129,7 +1190,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_length": true },
       "selector": "gamma"
      },
      {
@@ -1160,7 +1221,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_length": true },
       "selector": "weights"
      },
      {
@@ -1191,7 +1252,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_length": true },
       "selector": "gamma"
      },
      {
@@ -1212,7 +1273,7 @@
     "methods": [
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_variable_length": true },
       "selector": "gamma"
      },
      {
@@ -1230,7 +1291,24 @@
     ]
    }
   },
-  "functions": {},
+  "functions": {
+   "MPSImageBatchIterate": {
+    "args": {
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "Q" }
+       },
+       "retval": {
+        "typestr": "q"
+       }
+      }
+     }
+    }
+   }
+  },
   "informal_protocols": {}
  }
 }

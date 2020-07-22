@@ -14,7 +14,7 @@ class TestMPSNeuralNetwork_MPSCNNKernel(TestCase):
             3,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNKernel.encodeToCommandBuffer_sourceImages_destinationStates_destinationStateIsTemporary_,
+            MetalPerformanceShaders.MPSCNNKernel.encodeBatchToCommandBuffer_sourceImages_destinationStates_destinationStateIsTemporary_,  # noqa: B950
             3,
         )
 
@@ -35,7 +35,7 @@ class TestMPSNeuralNetwork_MPSCNNKernel(TestCase):
             4,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNBinaryKernel.encodeToCommandBuffer_primaryImages_secondaryImages_destinationStates_destinationStateIsTemporary_,  # noqa: B950
+            MetalPerformanceShaders.MPSCNNBinaryKernel.encodeBatchToCommandBuffer_primaryImages_secondaryImages_destinationStates_destinationStateIsTemporary_,  # noqa: B950
             4,
         )
 

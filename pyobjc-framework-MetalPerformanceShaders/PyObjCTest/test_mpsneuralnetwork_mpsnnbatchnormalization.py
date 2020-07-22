@@ -89,25 +89,26 @@ class TestMPSNeuralNetwork_MPSNNBatchNormalization(TestCase):
         )
 
         self.assertResultHasType(
-            TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper.load, objc._C_BOOL
+            TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper.load, objc._C_NSBOOL
         )
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper.updateGammaAndBetaWithBatchNormalizationState_,
-            objc._C_BOOL,
+            objc._C_NSBOOL,
         )
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper.updateMeanAndVarianceWithBatchNormalizationState_,
-            objc._C_BOOL,
+            objc._C_NSBOOL,
         )
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper.epsilon, objc._C_FLT
         )
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper.supportsSecureCoding,
-            objc._C_BOOL,
+            objc._C_NSBOOL,
         )
 
         self.assertArgHasType(
             TestMPSNeuralNetwork_MPSNNBatchNormalizationHelper.copyWithZone_device_,
-            b"^{NSZone=}",
+            0,
+            b"^{_NSZone=}",
         )

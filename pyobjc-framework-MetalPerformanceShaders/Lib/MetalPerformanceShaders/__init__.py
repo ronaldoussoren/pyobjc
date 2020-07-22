@@ -8,23 +8,27 @@ documentation for details on how to use these functions and classes.
 import sys
 
 import objc
-from MetalPerformanceShaders import _metadata
 import Metal
+from MetalPerformanceShaders import _metadata
+from MetalPerformanceShaders import _MetalPerformanceShaders
+from MetalPerformanceShaders._inlines import _inline_list_
 
-sys.modules["Metal"] = mod = objc.ObjCLazyModule(
-    "Metal",
-    "com.apple.Metal",
-    objc.pathForFramework("/System/Library/Frameworks/Metal.framework"),
+sys.modules["MetalPerformanceShaders"] = mod = objc.ObjCLazyModule(
+    "MetalPerformanceShaders",
+    "com.apple.MetalPerformanceShaders",
+    objc.pathForFramework(
+        "/System/Library/Frameworks/MetalPerformanceShaders.framework"
+    ),
     _metadata.__dict__,
-    None,
+    _inline_list_,
     {
         "__doc__": __doc__,
         "objc": objc,
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Metal,),
+    (_MetalPerformanceShaders, Metal),
 )
 
 
-del sys.modules["Metal._metadata"]
+del sys.modules["MetalPerformanceShaders._metadata"]

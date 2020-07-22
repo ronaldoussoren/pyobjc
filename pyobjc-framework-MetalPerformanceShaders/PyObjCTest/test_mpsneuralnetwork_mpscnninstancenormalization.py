@@ -40,14 +40,14 @@ class TestMPSNeuralNetwork_MPSCNNInstanceNormalization(TestCase):
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper.gamma, b"^f"
         )
-        self.assertResultIsVarialbeSize(
+        self.assertResultIsVariableSize(
             TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper.gamma
         )
 
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper.beta, b"^f"
         )
-        self.assertResultIsVarialbeSize(
+        self.assertResultIsVariableSize(
             TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper.beta
         )
 
@@ -62,7 +62,7 @@ class TestMPSNeuralNetwork_MPSCNNInstanceNormalization(TestCase):
 
         self.assertResultHasType(
             TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper.numberOfFeatureChannels,
-            b"f",
+            objc._C_NSUInteger,
         )
 
         self.assertResultIsBOOL(
@@ -72,7 +72,7 @@ class TestMPSNeuralNetwork_MPSCNNInstanceNormalization(TestCase):
         self.assertArgHasType(
             TestMPSNeuralNetwork_MPSCNNInstanceNormalizationHelper.copyWithZone_device_,
             0,
-            b"^{NSZone=}",
+            b"^{_NSZone=}",
         )
 
         self.assertResultIsBOOL(

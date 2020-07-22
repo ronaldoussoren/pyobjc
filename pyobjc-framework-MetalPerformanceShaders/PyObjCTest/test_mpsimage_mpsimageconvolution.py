@@ -27,17 +27,17 @@ class TestMPSImage_MPSImageConvolution(TestCase):
     @min_os_level("10.16")
     def test_methods10_16(self):
         self.assertArgIsIn(
-            MetalPerformanceShaders.MPSImageCanny.inithWithDevice_linearToGrayScaleTransform_sigma_,
+            MetalPerformanceShaders.MPSImageCanny.initWithDevice_linearToGrayScaleTransform_sigma_,
             1,
         )
-        self.assertArgFixedSize(
-            MetalPerformanceShaders.MPSImageCanny.inithWithDevice_linearToGrayScaleTransform_sigma_,
+        self.assertArgIsFixedSize(
+            MetalPerformanceShaders.MPSImageCanny.initWithDevice_linearToGrayScaleTransform_sigma_,
             1,
             3,
         )
 
         self.assertResultIsFixedSize(
-            MetalPerformanceShaders.MPSImageCanny.colorTransform
+            MetalPerformanceShaders.MPSImageCanny.colorTransform, 3
         )
 
         self.assertResultIsBOOL(MetalPerformanceShaders.MPSImageCanny.useFastMode)

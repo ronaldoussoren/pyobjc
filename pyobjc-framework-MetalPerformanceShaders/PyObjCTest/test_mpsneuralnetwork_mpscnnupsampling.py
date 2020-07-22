@@ -9,5 +9,6 @@ class TestMPSNeuralNetwork_MPSCNNUpsampling(TestCase):
         self.assertResultIsBOOL(MetalPerformanceShaders.MPSCNNUpsampling.alignCorners)
 
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSCNNUpsampling.initWithDevice_integerScaleFactorX_integerScaleFactorY_alignCorners_3
+            MetalPerformanceShaders.MPSCNNUpsamplingBilinear.initWithDevice_integerScaleFactorX_integerScaleFactorY_alignCorners_,
+            3,
         )

@@ -12,15 +12,6 @@ class TestMPSNNGraphNodesHelper(MetalPerformanceShaders.NSObject):
     def setTrainingStyle_(self, a):
         pass
 
-    def alpha(self):
-        return 1
-
-    def nodeWithSource_alpha_(self, a, b):
-        pass
-
-    def initWithSource_alpha_(self, a, b):
-        pass
-
 
 class TestMPSNNGraphNodes(TestCase):
     def test_protocols(self):
@@ -36,10 +27,6 @@ class TestMPSNNGraphNodes(TestCase):
         self.assertArgHasType(
             TestMPSNNGraphNodesHelper.setTrainingStyle_, 0, objc._C_NSUInteger
         )
-
-        self.assertResultHasType(TestMPSNNGraphNodesHelper.alpha, b"f")
-        self.assertArgHasType(TestMPSNNGraphNodesHelper.nodeWithSource_alpha_, 1, b"f")
-        self.assertArgHasType(TestMPSNNGraphNodesHelper.initWithSource_alpha_, 1, b"f")
 
     @min_os_level("10.13")
     def test_methods10_13(self):
@@ -236,16 +223,16 @@ class TestMPSNNGraphNodes(TestCase):
             2,
         )
         self.assertResultIsBOOL(
-            MetalPerformanceShaders.MPSNNImageNode.isSecondarySourceFilter
+            MetalPerformanceShaders.MPSNNArithmeticGradientNode.isSecondarySourceFilter
         )
 
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSCNNUpsamplingBilinearNode.nodeWithSource_integerScaleFactorX_integerScaleFactorY_alignCorners_,  # noqa: B950
-            2,
+            3,
         )
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSCNNUpsamplingBilinearNode.initWithSource_integerScaleFactorX_integerScaleFactorY_alignCorners_,  # noqa: B950
-            2,
+            3,
         )
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSCNNUpsamplingBilinearNode.alignCorners
@@ -271,7 +258,7 @@ class TestMPSNNGraphNodes(TestCase):
             5,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSNNLossGradientNode.nodeWithSourceGradient_sourceImage_lossDescriptor_isLabelsGradientFilter_,
+            MetalPerformanceShaders.MPSNNLossGradientNode.nodeWithSources_gradientState_lossDescriptor_isLabelsGradientFilter_,
             3,
         )
 
@@ -284,7 +271,7 @@ class TestMPSNNGraphNodes(TestCase):
             5,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSNNLossGradientNode.initWithSourceGradient_sourceImage_lossDescriptor_isLabelsGradientFilter_,
+            MetalPerformanceShaders.MPSNNLossGradientNode.initWithSources_gradientState_lossDescriptor_isLabelsGradientFilter_,
             3,
         )
 

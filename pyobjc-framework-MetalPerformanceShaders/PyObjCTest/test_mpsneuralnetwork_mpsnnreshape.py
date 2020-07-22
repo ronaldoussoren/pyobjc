@@ -11,6 +11,6 @@ class TestMPSNeuralNetwork_MPSCNNReshape(TestCase):
             3,
         )
         self.assertArgIsBOOL(
-            MetalPerformanceShaders.MPSNNReshape.encodeToCommandBuffer_sourceImages_destinationStates_destinationStateIsTemporary_reshapedWidth_reshapedHeight_reshapedFeatureChannels_,  # noqa: B950
+            MetalPerformanceShaders.MPSNNReshape.encodeBatchToCommandBuffer_sourceImages_destinationStates_destinationStateIsTemporary_reshapedWidth_reshapedHeight_reshapedFeatureChannels_,  # noqa: B950
             3,
         )
