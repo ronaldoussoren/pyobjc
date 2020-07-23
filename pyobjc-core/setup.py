@@ -167,9 +167,17 @@ class oc_build_py(build_py.build_py):
 
 class oc_test(test.test):
     description = "run test suite"
-    user_options = [("verbosity=", None, "print what tests are run")]
+    user_options = [
+        ("verbosity=", None, "print what tests are run"),
+        (
+            "xml=",
+            None,
+            "xml output filename (requires: pip install unittest-xml-reporting)",
+        ),
+    ]
 
     def initialize_options(self):
+        self.xml = None
         self.verbosity = "1"
 
     def finalize_options(self):
@@ -256,8 +264,15 @@ class oc_test(test.test):
         try:
             suite = makeTestSuite()
 
-            runner = unittest.TextTestRunner(verbosity=self.verbosity)
-            result = runner.run(suite)
+            if self.xml:
+                with open(self.xml, "wb") as out:
+                    import xmlrunner
+
+                    runner = xmlrunner.XMLTestRunner(output=out)
+                    result = runner.run(suite)
+            else:
+                runner = unittest.TextTestRunner(verbosity=self.verbosity)
+                result = runner.run(suite)
 
             # Print out summary. This is a structured format that
             # should make it easy to use this information in scripts.
