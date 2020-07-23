@@ -275,13 +275,13 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     PyObject* py_colorSpace;
     PyObject* py_bitmapInfo;
 
-    void*           data;
     size_t          width;
     size_t          height;
     size_t          bitsPerComponent;
     size_t          bytesPerRow;
     CGColorSpaceRef colorSpace;
     CGBitmapInfo    bitmapInfo;
+    Py_buffer       view;
 
     if (!PyArg_ParseTuple(args, "OOOOOOO", &py_data, &py_width, &py_height,
                           &py_bitsPerComponent, &py_bytesPerRow, &py_colorSpace,
@@ -310,16 +310,14 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     }
 
     if (py_data == Py_None) {
-        data = NULL;
+       /* pass */
 
     } else if (PyUnicode_Check(py_data)) {
         PyErr_SetString(PyExc_TypeError, "Cannot use Unicode as backing store");
         return NULL;
 
     } else {
-        Py_ssize_t size;
-
-        if (PyObject_AsWriteBuffer(py_data, &data, &size) == -1) {
+        if (PyObject_GetBuffer(py_data, &view, PyBUF_CONTIG) == -1) {
             return NULL;
         }
 
@@ -328,7 +326,8 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     CGContextRef ctx = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            ctx = CGBitmapContextCreate(data, width, height, bitsPerComponent,
+            ctx = CGBitmapContextCreate(py_data == Py_None ? NULL : view.buf,
+                                        width, height, bitsPerComponent,
                                         bytesPerRow, colorSpace, bitmapInfo);
 
         } @catch (NSException* localException) {
@@ -336,6 +335,13 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
+
+   if (py_data != Py_None) {
+        /* This is not safe in general, but there is no way to keep the
+         * buffer alive until after the bitmap context is deallocated.
+         */
+        PyBuffer_Release(&view);
+    }
 
     if (ctx == NULL && PyErr_Occurred()) {
         return NULL;

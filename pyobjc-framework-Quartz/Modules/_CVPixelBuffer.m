@@ -11,12 +11,15 @@ static void
 mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddress)
 {
     PyObject*        info  = (PyObject*)releaseRefCon;
+    PyObject*        view;
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (PyTuple_GetItem(info, 0) != Py_None) {
         PyObject* r = PyObject_CallFunction(PyTuple_GetItem(info, 0), "O",
                                             PyTuple_GetItem(info, 1));
         if (r == NULL) {
+            view = PyTuple_GetItem( info, 3);
+            PyBuffer_Release(PyObjCMemView_GetBuffer(view));
             Py_XDECREF(info);
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -24,6 +27,8 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
         Py_DECREF(r);
     }
 
+    view = PyTuple_GetItem( info, 3);
+    PyBuffer_Release(PyObjCMemView_GetBuffer(view));
     Py_DECREF(info);
     PyGILState_Release(state);
 }
@@ -37,7 +42,6 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
     size_t           width;
     size_t           height;
     OSType           pixelFormatType;
-    void*            baseAddress;
     size_t           bytesPerRow;
     CFDictionaryRef  pixelBufferAttributes;
     CVPixelBufferRef pixelBuffer;
@@ -46,10 +50,10 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
     PyObject*        py_height;
     PyObject*        py_pixelFormatType;
     PyObject*        py_buffer;
-    Py_ssize_t       buflen;
     PyObject*        py_bytesPerRow;
     PyObject*        releaseCallback;
     PyObject*        info;
+    PyObject*        view;
     PyObject*        py_pixelBufferAttributes;
     PyObject*        py_pixelBuffer = Py_None;
 
@@ -87,11 +91,16 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyObject_AsWriteBuffer(py_buffer, &baseAddress, &buflen) < 0) {
+    view = PyObjCMemView_New();
+    if (view == NULL) {
         return NULL;
     }
 
-    PyObject* real_info = Py_BuildValue("OOO", releaseCallback, info, py_buffer);
+    if (PyObject_GetBuffer(py_buffer, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) <0) {
+        return NULL;
+    }
+
+    PyObject* real_info = Py_BuildValue("OOOO", releaseCallback, info, py_buffer, view);
     if (real_info == NULL) {
         return NULL;
     }
@@ -101,8 +110,8 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
     Py_BEGIN_ALLOW_THREADS
         @try {
             rv = CVPixelBufferCreateWithBytes(
-                allocator, width, height, pixelFormatType, baseAddress, bytesPerRow,
-                mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
+                allocator, width, height, pixelFormatType, PyObjCMemView_GetBuffer(view)->buf,
+                bytesPerRow, mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
                 &pixelBuffer);
 
         } @catch (NSException* localException) {

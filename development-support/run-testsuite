@@ -177,10 +177,7 @@ def build_project(*, interpreter, py_ver, project):
 
     # Actually build
     lg.info("building %r using %r (%s)", project, interpreter, py_ver)
-    if project == "pyobjc-core":
-        status = subprocess.call([interpreter, "setup.py", "build_ext", "--use-system-libffi=1", "install"], cwd=proj_dir)
-    else:
-        status = subprocess.call([interpreter, "setup.py", "install"], cwd=proj_dir)
+    status = subprocess.call([interpreter, "setup.py", "install"], cwd=proj_dir)
     if status != 0:
         lg.warning("build %r failed (status %s)", project, status)
         return False

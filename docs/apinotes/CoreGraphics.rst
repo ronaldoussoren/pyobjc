@@ -7,6 +7,13 @@ API Notes
 * See :doc:`/api/coregraphics-context-managers` for some extensions
   to the CoreGraphics API.
 
+* ``CGBitmapContextCreate``: When passing in a data object you must make sure
+   that this object stays alive until the bitmap context is released, and
+   must also make sure that the storage for the data object doesn't change (
+   the Python binding does not lock the buffer view).
+
+   In general it is better to pass ``None`` and let framework manage memory for you.
+
 * ``CGColorConversionInfoCreateFromList``: This function requires a manual
   wrapper and is not yet supported.
 

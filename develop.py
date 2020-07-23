@@ -211,22 +211,9 @@ def build_project(project, extra_args):
         shutil.rmtree(os.path.join(proj_dir, "build"))
 
     print("Installing {!r} using {!r}".format(project, sys.executable))
-    if project == "pyobjc-core":
-        status = subprocess.call(
-            [
-                sys.executable,
-                "setup.py",
-                "build_ext",
-                "--use-system-libffi=1",
-                "develop",
-            ]
-            + extra_args,
-            cwd=proj_dir,
-        )
-    else:
-        status = subprocess.call(
-            [sys.executable, "setup.py", "develop"] + extra_args, cwd=proj_dir
-        )
+    status = subprocess.call(
+        [sys.executable, "setup.py", "develop"] + extra_args, cwd=proj_dir
+    )
 
     if status != 0:
         print("Installing {!r} failed (status {})".format(project, status))
