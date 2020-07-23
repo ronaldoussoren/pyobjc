@@ -1,6 +1,5 @@
 import glob
 import os
-import plistlib
 import shlex
 import tempfile
 import sys
@@ -14,6 +13,8 @@ from distutils.sysconfig import get_config_vars
 from pkg_resources import add_activation_listener, normalize_path, require, working_set
 from setuptools import Extension, setup
 from setuptools.command import build_ext, build_py, egg_info, install_lib, test
+
+from Tools.pyobjc_setup import get_sdk, get_sdk_level
 
 
 def get_config_var(var):
@@ -32,30 +33,6 @@ if sys.version_info < MIN_PYTHON:
 # Compiler arguments
 #
 #
-
-
-def get_os_level():
-    pl = plistlib.readPlist("/System/Library/CoreServices/SystemVersion.plist")
-    v = pl["ProductVersion"]
-    return ".".join(v.split(".")[:2])
-
-
-def get_sdk_level(sdk):
-    if sdk == "/":
-        return get_os_level()
-
-    sdkname = os.path.basename(sdk)
-    assert sdkname.startswith("MacOSX")
-    assert sdkname.endswith(".sdk")
-    if sdkname == "MacOSX.sdk":
-        try:
-            pl = plistlib.readPlist(os.path.join(sdk, "SDKSettings.plist"))
-            return pl["Version"]
-        except Exception:
-            raise SystemExit("Cannot determine SDK version")
-    else:
-        return sdkname[6:-4]
-
 
 # CFLAGS for the objc._objc extension:
 CFLAGS = [
@@ -427,6 +404,10 @@ def _fixup_compiler(use_ccache):
         pass
 
     cc = oldcc = get_config_var("CC").split()[0]
+
+    if cc == "xcrun":
+        return
+
     cc = _find_executable(cc)
     if cc is not None and os.path.basename(cc).startswith("gcc"):
         # Check if compiler is LLVM-GCC, that's known to
@@ -493,16 +474,7 @@ class oc_build_ext(build_ext.build_ext):
     def finalize_options(self):
         build_ext.build_ext.finalize_options(self)
 
-        self.sdk_root = os.environ.get("SDKROOT", None)
-        if self.sdk_root is None:
-            if os.path.exists("/usr/bin/xcodebuild"):
-                self.sdk_root = subprocess.check_output(
-                    ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
-                    universal_newlines=True,
-                ).strip()
-
-            else:
-                self.sdk_root = "/"
+        self.sdk_root = get_sdk()
 
         if not os.path.exists(self.sdk_root):
             raise DistutilsSetupError("SDK root %r does not exist" % (self.sdk_root,))

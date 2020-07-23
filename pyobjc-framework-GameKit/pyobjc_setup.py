@@ -16,6 +16,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import re
 import unittest
 from distutils import log
 from distutils.command import build, install
@@ -196,14 +197,11 @@ Topic :: Software Development :: User Interfaces
 )
 
 
-def get_os_level():
-    with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
-        pl = plistlib.load(fp)
-    v = pl["ProductVersion"]
-    return ".".join(v.split(".")[:2])
-
-
 def get_sdk():
+    sdk = os.environ.get("SDKROOT", None)
+    if sdk:
+        return sdk
+
     env_cflags = os.environ.get("CFLAGS", "")
     config_cflags = get_config_var("CFLAGS")
     sdk = None
@@ -219,30 +217,39 @@ def get_sdk():
         if sdk:
             break
 
+    if sdk is None:
+        cc = get_config_var("CC")
+        if cc.startswith("xcrun -sdk "):
+            sdk_name = shlex.split(cc)[2]
+        else:
+            sdk_name = "macosx"
+        sdk = subprocess.run(
+            ["xcrun", "-sdk", sdk_name, "-show-sdk-path"],
+            encoding="utf8",
+            stdout=subprocess.PIPE,
+            check=True,
+        ).stdout.strip()
+
     return sdk
 
 
-def get_sdk_level():
-    sdk = get_sdk()
-
-    if not sdk:
-        return None
-
-    if sdk == "/":
-        return get_os_level()
+def get_sdk_level(sdk):
+    assert sdk
 
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
-    if sdkname == "MacOSX.sdk":
+
+    plist = os.path.join(sdk, "SDKSettings.plist")
+    if os.path.exists(plist):
         try:
-            with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
+            with open(plist, "rb") as fp:
                 pl = plistlib.load(fp)
             return pl["Version"]
         except Exception:
             raise SystemExit("Cannot determine SDK version")
     else:
-        return sdkname[6:-4]
+        return re.match(r"MacOSX(\d+(\.\d+)*).*\.sdk$", sdkname).group(1)
 
 
 class pyobjc_install_lib(install_lib.install_lib):
@@ -325,6 +332,10 @@ def _fixup_compiler():
         pass
 
     cc = oldcc = get_config_var("CC").split()[0]
+
+    if cc == "xcrun":
+        return
+
     cc = _find_executable(cc)
     if cc is not None and os.path.basename(cc).startswith("gcc"):
         # Check if compiler is LLVM-GCC, that's known to
@@ -408,16 +419,14 @@ def Extension(*args, **kwds):
     Simple wrapper about distutils.core.Extension that adds additional PyObjC
     specific flags.
     """
-    os_level = get_sdk_level()
-    if os_level is None:
-        os_level = get_os_level()
+    sdk = get_sdk()
+    os_level = get_sdk_level(sdk)
 
     cflags = []
     ldflags = []
     if "clang" in get_config_var("CC"):
         cflags.append("-Wno-deprecated-declarations")
 
-    sdk = get_sdk()
     if not sdk:  # and os.path.exists('/usr/include/stdio.h'):
         # We're likely on a system with the Xcode Command Line Tools.
         # Explicitly use the most recent SDK to avoid compile problems.
@@ -465,9 +474,8 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
 
     k = kwds.copy()
 
-    os_level = get_sdk_level()
-    if os_level is None:
-        os_level = get_os_level()
+    os_level = get_sdk_level(get_sdk())
+    assert os_level
     os_compatible = True
     if sys.platform != "darwin":
         os_compatible = False

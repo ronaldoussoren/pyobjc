@@ -174,7 +174,12 @@ class TestSCNetworkConfiguration(TestCase):
         )
         self.assertTrue(r is True or r is False)
 
-        r, current, active, available = SystemConfiguration.SCNetworkInterfaceCopyMediaOptions(
+        (
+            r,
+            current,
+            active,
+            available,
+        ) = SystemConfiguration.SCNetworkInterfaceCopyMediaOptions(
             iface, None, None, None, False
         )
         self.assertTrue(r is True)
