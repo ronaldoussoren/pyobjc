@@ -803,6 +803,7 @@ class TestURL(TestCase):
         self.assertIsInstance(CoreFoundation.kCFURLIsPurgeableKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLIsSparseKey, str)
         self.assertIsInstance(CoreFoundation.kCFURLLinkCountKey, str)
+        self.assertIsInstance(CoreFoundation.kCFURLVolumeSupportsFileProtectionKey, str)
 
     @min_os_level("10.9")
     def testFunctions10_9(self):

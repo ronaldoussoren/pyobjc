@@ -71,3 +71,7 @@ class TestSecProtocolOptions(TestCase):
             1,
             sec_protocol_verify_t,
         )
+
+    @min_os_level("10.16")
+    def test_functions10_16(self):
+        Security.sec_protocol_options_set_peer_authentication_optional

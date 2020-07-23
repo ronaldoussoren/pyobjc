@@ -13,3 +13,5 @@ class TestGCDeviceHaptics(TestCase):
         self.assertIsInstance(GameController.GCHapticsLocalityTriggers, str)
         self.assertIsInstance(GameController.GCHapticsLocalityLeftTrigger, str)
         self.assertIsInstance(GameController.GCHapticsLocalityRightTrigger, str)
+
+        self.assertIsInstance(GameController.GCHapticDurationInfinite, float)

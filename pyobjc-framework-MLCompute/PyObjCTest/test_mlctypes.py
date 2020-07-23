@@ -34,7 +34,7 @@ class MLCTypes(TestCase):
         )
         self.assertEqual(MLCompute.MLCExecutionOptionsSynchronous, 0x02)
         self.assertEqual(MLCompute.MLCExecutionOptionsProfiling, 0x04)
-        self.assertEqual(MLCompute.MLCExecutionOptionsForwardOnlyForInference, 0x08)
+        self.assertEqual(MLCompute.MLCExecutionOptionsForwardForInference, 0x08)
 
         self.assertEqual(MLCompute.MLCArithmeticOperationAdd, 0)
         self.assertEqual(MLCompute.MLCArithmeticOperationSubtract, 1)
@@ -132,6 +132,9 @@ class MLCTypes(TestCase):
 
         self.assertEqual(MLCompute.MLCSoftmaxOperationSoftmax, 0)
         self.assertEqual(MLCompute.MLCSoftmaxOperationLogSoftmax, 1)
+
+        self.assertEqual(MLCompute.MLCLSTMResultModeOutput, 0x00)
+        self.assertEqual(MLCompute.MLCLSTMResultModeOutputAndStates, 0x01)
 
     def test_functions(self):
         MLCompute.MLCActivationTypeDebugDescription

@@ -33,3 +33,14 @@ class TestNSBatchInsertRequest(TestCase):
         self.assertArgIsBlock(
             CoreData.NSBatchInsertRequest.initWithEntity_managedObjectHandler_, 1, b"Z@"
         )
+
+        self.assertArgIsBlock(
+            CoreData.NSBatchInsertRequest.initWithEntityName_dictionaryHandler_,
+            1,
+            b"Z@",
+        )
+        self.assertArgIsBlock(
+            CoreData.NSBatchInsertRequest.initWithEntityName_managedObjectHandler_,
+            1,
+            b"Z@",
+        )

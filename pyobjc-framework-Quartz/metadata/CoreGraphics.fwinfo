@@ -276,6 +276,30 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGPreflightListenEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGRequestListenEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGPreflightPostEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGRequestPostEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGPreflightScreenCaptureAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGRequestScreenCaptureAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
    "CGBitmapContextCreate": {
     "retval": {
      "already_cfretained": true

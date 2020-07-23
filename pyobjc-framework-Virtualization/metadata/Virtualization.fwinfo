@@ -1,0 +1,63 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "VZDiskImageStorageDeviceAttachment": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithURL:readOnly:error:"
+     }
+    ]
+   },
+   "VZFileSerialPortAttachment": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithURL:append:error:"
+     }
+    ]
+   },
+   "VZVirtualMachine": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "requestStopWithError:"
+     }
+    ]
+   },
+   "VZVirtualMachineConfiguration": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "validateWithError:"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "GCHapticDurationInfinite": { "typestr": "f" }
+  },
   "classes": {
    "GCKeyboardInput": {
     "methods": [
@@ -721,6 +724,13 @@
    },
    "GCMotion": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasGravityAndUserAcceleration"
+     },
      {
       "class_method": false,
       "retval": {

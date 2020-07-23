@@ -44,3 +44,5 @@ class TestGCMotion(TestCase):
 
         self.assertResultIsBOOL(GameController.GCMotion.hasAttitude)
         self.assertResultIsBOOL(GameController.GCMotion.hasRotationRate)
+
+        self.assertResultIsBOOL(GameController.GCMotion.hasGravityAndUserAcceleration)

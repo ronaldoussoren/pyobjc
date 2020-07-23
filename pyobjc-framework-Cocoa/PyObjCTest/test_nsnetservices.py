@@ -29,6 +29,9 @@ class TestNSNetservices(TestCase):
         self.assertEqual(Foundation.NSNetServicesCancelledError, -72005)
         self.assertEqual(Foundation.NSNetServicesInvalidError, -72006)
         self.assertEqual(Foundation.NSNetServicesTimeoutError, -72007)
+        self.assertEqual(
+            Foundation.NSNetServicesMissingRequiredConfigurationError, -72008
+        )
         self.assertEqual(Foundation.NSNetServiceNoAutoRename, 1)
 
     @min_os_level("10.9")

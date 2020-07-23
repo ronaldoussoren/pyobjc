@@ -27,3 +27,6 @@ class TestMLCTensor(TestCase):
         )
 
         self.assertResultIsBOOL(MLCompute.MLCTensor.bindAndWriteData_toDevice_)
+
+        self.assertResultIsBOOL(MLCompute.MLCTensor.synchronizeOptimizerData)
+        self.assertResultIsBOOL(MLCompute.MLCTensor.bindOptimizerData_deviceData_)

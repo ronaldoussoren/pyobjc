@@ -800,6 +800,20 @@
        "type_override": "Z"
       },
       "selector": "isHidden"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setAutomaticallyAdjustsSize:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "automaticallyAdjustsSize"
      }
     ]
    },
@@ -27591,6 +27605,9 @@
    }
   },
   "enum": {
+   "NSImageSymbolScaleSmall": { "value": 1 },
+   "NSImageSymbolScaleMedium": { "value": 2 },
+   "NSImageSymbolScaleLarge": { "value": 3 },
    "NSAppKitVersionNumber10_14": { "value": 1671.0 },
    "NSAppKitVersionNumber10_14_1": { "value": 1671.1 },
    "NSAppKitVersionNumber10_14_2": { "value": 1671.2 },

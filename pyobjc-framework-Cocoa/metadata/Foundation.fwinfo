@@ -54,6 +54,7 @@
     "NSMaxYEdge": { "ignore": true }
   },
   "enum": {
+   "NSNetServicesMissingRequiredConfigurationError": { "value": -72008 },
    "NSMinXEdge": { "value": 0 },
    "NSMinYEdge": { "value": 1 },
    "NSMaxXEdge": { "value": 2 },

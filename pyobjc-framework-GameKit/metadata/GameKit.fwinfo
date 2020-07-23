@@ -3,7 +3,8 @@
   "enum": {
    "GKAuthenticatingWithoutUI": { "value": 0 },
    "GKAuthenticatingWithGreenBuddyUI": { "value": 1 },
-   "GKAuthenticatingWithAuthKitInvocation": { "value": 2 }
+   "GKAuthenticatingWithAuthKitInvocation": { "value": 2 },
+   "GKPeerStateConnectedRelay": { "value": 5 }
   },
   "classes": {
    "GKAchievementDescription": {

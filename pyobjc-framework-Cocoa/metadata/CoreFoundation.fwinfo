@@ -47,6 +47,7 @@
    "kCFNumberFormatterCurrencyAccountingStyle": { "value": "10" }
   },
   "externs": {
+    "kCFURLVolumeSupportsFileProtectionKey": { "typestr": "i" },
     "kCFStreamErrorDomainSOCKS": { "typestr": "i" },
     "kCFStreamPropertySOCKSProxy": { "typestr": "@" },
     "kCFStreamPropertySOCKSProxyHost": { "typestr": "@" },

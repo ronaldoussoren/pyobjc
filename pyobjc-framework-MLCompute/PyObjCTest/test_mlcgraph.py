@@ -14,3 +14,10 @@ class TestMLCGraph(TestCase):
             MLCompute.MLCGraph.bindAndWriteData_forInputs_toDevice_batchSize_synchronous_,
             4,
         )
+
+        self.assertResultIsBOOL(
+            MLCompute.MLCGraph.bindAndWriteData_forInputs_toDevice_synchronous_
+        )
+        self.assertArgIsBOOL(
+            MLCompute.MLCGraph.bindAndWriteData_forInputs_toDevice_synchronous_, 3
+        )

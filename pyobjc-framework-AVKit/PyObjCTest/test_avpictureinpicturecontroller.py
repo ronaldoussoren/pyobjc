@@ -44,3 +44,7 @@ class TestAVPictureInPictureController(TestCase):
         self.assertArgIsBOOL(
             AVKit.AVPictureInPictureController.setRequiresLinearPlayback_, 0
         )
+
+        self.assertResultIsBOOL(
+            AVKit.AVPictureInPictureController.canStopPictureInPicture
+        )

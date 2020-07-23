@@ -86,7 +86,15 @@ class TestNSFileProviderItem(TestCase):
             | FileProvider.NSFileProviderItemCapabilitiesAllowsEvicting,
         )
 
-    @min_sdk_level("10.15")
+        self.assertEqual(FileProvider.NSFileProviderFileSystemUserExecutable, 1 << 0)
+        self.assertEqual(FileProvider.NSFileProviderFileSystemUserReadable, 1 << 1)
+        self.assertEqual(FileProvider.NSFileProviderFileSystemUserWritable, 1 << 2)
+        self.assertEqual(FileProvider.NSFileProviderFileSystemHidden, 1 << 3)
+        self.assertEqual(
+            FileProvider.NSFileProviderFileSystemPathExtensionHidden, 1 << 4
+        )
+
+    @min_sdk_level("10.16")
     def test_protocols(self):
         objc.protocolNamed("NSFileProviderItemFlags")
         objc.protocolNamed("NSFileProviderItem")

@@ -48,6 +48,21 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "canModifyManagedObjectsInStore:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "canUpdateRecordForManagedObjectWithID:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "canUpdateRecordForManagedObjectWithID:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
       "selector": "initializeCloudKitSchemaWithOptions:error:",
       "args": {
        "1": { "type_modifier": "o" }
@@ -73,6 +88,40 @@
    },
    "NSBatchInsertRequest": {
     "methods": [
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "initWithEntityName:managedObjectHandler:"
+     },
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "initWithEntityName:dictionaryHandler:"
+     },
      {
       "retval": {
 	  "callable": {

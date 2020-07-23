@@ -4,17 +4,13 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestNSFileProviderExtension(TestCase):
     def test_constants(self):
-        self.assertEqual(FileProvider.NSFileProviderItemFieldContents, 1 << 0)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldFilename, 1 << 1)
-        self.assertEqual(
-            FileProvider.NSFileProviderItemFieldParentItemIdentifier, 1 << 2
-        )
-        self.assertEqual(FileProvider.NSFileProviderItemFieldLastUsedDate, 1 << 3)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldTagData, 1 << 4)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldFavoriteRank, 1 << 5)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldCreationDate, 1 << 6)
-        self.assertEqual(
-            FileProvider.NSFileProviderItemFieldContentModificationDate, 1 << 7
-        )
-        self.assertEqual(FileProvider.NSFileProviderItemFieldFlags, 1 << 8)
-        self.assertEqual(FileProvider.NSFileProviderItemFieldExtendedAttributes, 1 << 9)
+        self.assertEqual(FileProvider.NSFileProviderItemContents, 1 << 0)
+        self.assertEqual(FileProvider.NSFileProviderItemFilename, 1 << 1)
+        self.assertEqual(FileProvider.NSFileProviderItemParentItemIdentifier, 1 << 2)
+        self.assertEqual(FileProvider.NSFileProviderItemLastUsedDate, 1 << 3)
+        self.assertEqual(FileProvider.NSFileProviderItemTagData, 1 << 4)
+        self.assertEqual(FileProvider.NSFileProviderItemFavoriteRank, 1 << 5)
+        self.assertEqual(FileProvider.NSFileProviderItemCreationDate, 1 << 6)
+        self.assertEqual(FileProvider.NSFileProviderItemContentModificationDate, 1 << 7)
+        self.assertEqual(FileProvider.NSFileProviderItemFileSystemFlags, 1 << 8)
+        self.assertEqual(FileProvider.NSFileProviderItemExtendedAttributes, 1 << 9)

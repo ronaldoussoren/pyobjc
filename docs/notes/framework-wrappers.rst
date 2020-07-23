@@ -453,6 +453,8 @@ The framework name links to API notes for that framework, the python packages li
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`VideoToolbox </apinotes/VideoToolbox>`                      | `pyobjc-framework-VideoToolbox`_            |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
+| :doc:`Virtualization </apinotes/Virtualization>`                  | `pyobjc-framework-Virtualization`_          |                                         |
++-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | :doc:`Vision </apinotes/Vision>`                                  | `pyobjc-framework-Vision`_                  |                                         |
 +-------------------------------------------------------------------+---------------------------------------------+-----------------------------------------+
 | vmnet                                                             | -                                           | Will not be wrapped, too low level.     |
@@ -614,3 +616,4 @@ prioritizing work.
 .. _`pyobjc-framework-UniformTypeIdentifiers`: https://pypi.org/project/pyobjc-framework-UniformTypeIdentifiers/
 .. _`pyobjc-framework-CoreMIDI`: https://pypi.org/project/pyobjc-framework-CoreMIDI/
 .. _`pyobjc-framework-MetalPerformanceShaders`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShaders/
+.. _`pyobjc-framework-Virtualization`: https://pypi.org/project/pyobjc-framework-Virtualization/

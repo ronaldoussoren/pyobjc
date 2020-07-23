@@ -45,6 +45,10 @@ class TestNSImage(TestCase):
         self.assertEqual(AppKit.NSImageResizingModeStretch, 0)
         self.assertEqual(AppKit.NSImageResizingModeTile, 1)
 
+        self.assertEqual(AppKit.NSImageSymbolScaleSmall, 1)
+        self.assertEqual(AppKit.NSImageSymbolScaleMedium, 2)
+        self.assertEqual(AppKit.NSImageSymbolScaleLarge, 3)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(AppKit.NSImageNameQuickLookTemplate, str)

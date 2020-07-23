@@ -44,3 +44,20 @@ class TestMLCLSTMDescriptor(TestCase):
             MLCompute.MLCLSTMDescriptor.descriptorWithInputSize_hiddenSize_layerCount_usesBiases_batchFirst_isBidirectional_returnsSequences_dropout_,  # noqa: B950
             6,
         )
+
+        self.assertArgIsBOOL(
+            MLCompute.MLCLSTMDescriptor.descriptorWithInputSize_hiddenSize_layerCount_usesBiases_batchFirst_isBidirectional_returnsSequences_dropout_resultMode_,  # noqa: B950
+            3,
+        )
+        self.assertArgIsBOOL(
+            MLCompute.MLCLSTMDescriptor.descriptorWithInputSize_hiddenSize_layerCount_usesBiases_batchFirst_isBidirectional_returnsSequences_dropout_resultMode_,  # noqa: B950
+            4,
+        )
+        self.assertArgIsBOOL(
+            MLCompute.MLCLSTMDescriptor.descriptorWithInputSize_hiddenSize_layerCount_usesBiases_batchFirst_isBidirectional_returnsSequences_dropout_resultMode_,  # noqa: B950
+            5,
+        )
+        self.assertArgIsBOOL(
+            MLCompute.MLCLSTMDescriptor.descriptorWithInputSize_hiddenSize_layerCount_usesBiases_batchFirst_isBidirectional_returnsSequences_dropout_resultMode_,  # noqa: B950
+            6,
+        )

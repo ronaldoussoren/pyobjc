@@ -3,8 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileProviderManager(TestCase):
-    @min_os_level("10.15")
-    def test_methods10_15(self):
+    @min_os_level("10.16")
+    def test_methods10_16(self):
         self.assertArgIsBlock(
             FileProvider.NSFileProviderManager.signalEnumeratorForContainerItemIdentifier_completionHandler_,  # noqa:  B950
             1,
@@ -43,5 +43,10 @@ class TestNSFileProviderManager(TestCase):
         self.assertArgIsBlock(
             FileProvider.NSFileProviderManager.importDomain_fromDirectoryAtURL_completionHandler_,  # noqa: B950
             2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            FileProvider.NSFileProviderManager.signalErrorResolved_completionHandler_,
+            1,
             b"v@",
         )

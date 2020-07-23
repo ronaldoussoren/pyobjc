@@ -20,55 +20,7 @@ XXX TODO:
 
 * Removed metadata for 32-bit systems
 
-* Updated framework bindings (Xcode 12 beta 2):
-  - AppKit
-  - AuthenticationServices
-  - Automator
-  - AVFoundation
-  - AVKit
-  - CFNetwork
-  - Contacts
-  - CoreAudio
-  - CoreAudioTypes
-  - CoreBluetooth
-  - CoreData
-  - CoreFoundation
-  - CoreGraphics
-  - CoreHaptics
-  - CoreImage
-  - CoreLocation
-  - CoreMedia
-  - CoreMotion
-  - CoreML
-    XXX: "XDGBoost" subframework is not yet wrapped
-  - CoreText
-  - CoreServices
-  - CoreVideo
-  - DeviceCheck
-  - Foundation
-  - FSEvents
-  - GameController
-  - GameKit
-  - ImageCaptureCore
-  - ImageIO
-  - Intents
-  - Metal
-  - NaturalLanguage
-  - Network
-  - NetworkExtension
-  - MapKit
-  - OSLog
-  - PDFKit
-  - PencilKit
-  - Photos
-  - SafariServices
-  - Security
-  - SpriteKit
-  - StoreKit
-  - UserNotifications
-  - VideoToolbox
-  - Vision
-  - WebKit
+* Existing framework bindings were updated for the macOS 11 SDK (Xcode 12 beta 3)
 
 * Added bindings for the following frameworks:
   - Accessibility (introduced in macOS 11.0)
@@ -84,6 +36,7 @@ XXX TODO:
   - ScreenTime (introduced in macOS 11.0)
   - UniformTypeIdentifiers (introduced in macOS 11.0)
   - UserNotificationsUI (introduced in macOS 11.0)
+  - Virtualization (introduced in macOS 11.0)
 
 * The following new frameworks in macOS 11 will not be wrapped:
 

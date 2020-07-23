@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
 
 
@@ -81,3 +81,8 @@ class TestCGWindow(TestCase):
             ((0, 0), (100, 100)), windowArray, 0
         )
         self.assertIsInstance(v, Quartz.CGImageRef)
+
+    @min_os_level("10.15")
+    def testFunctions10_15(self):
+        Quartz.CGPreflightScreenCaptureAccess
+        Quartz.CGRequestScreenCaptureAccess

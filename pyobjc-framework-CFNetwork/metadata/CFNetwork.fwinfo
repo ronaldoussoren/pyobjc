@@ -28,6 +28,7 @@
   },
   "classes": {},
   "enum": {
+   "kCFNetServicesErrorMissingRequiredConfiguration": { "value": -72008 },
    "kCFStreamSocketSecurityNone": {
     "value": 0
    },

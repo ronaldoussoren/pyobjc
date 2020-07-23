@@ -215,6 +215,9 @@ class TestICCameraDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICReturnConnectionEjectFailed, -21346)
         self.assertEqual(ImageCaptureCore.ICReturnConnectionFailedToOpen, -21345)
         self.assertEqual(ImageCaptureCore.ICReturnConnectionFailedToOpenDevice, -21344)
+        self.assertEqual(
+            ImageCaptureCore.ICReturnConnectionNotAuthorizedToOpenDevice, -21343
+        )
         self.assertEqual(ImageCaptureCore.ICReturnPTPFailedToSendCommand, -21250)
         self.assertEqual(ImageCaptureCore.ICReturnPTPNotAuthorizedToSendCommand, -21249)
 

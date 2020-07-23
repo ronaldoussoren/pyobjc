@@ -3125,6 +3125,9 @@
    }
   },
   "enum": {
+   "WKErrorJavaScriptInvalidFrameTarget": { "value": 12 },
+   "WKErrorNavigationAppBoundDomain": { "value": 13 },
+   "WKErrorJavaScriptAppBoundDomain": { "value": 14 },
    "WKContentModeRecommended": { "value": 0 },
    "WKContentModeMobile": { "value": 1 },
    "WKContentModeDesktop": { "value": 2 },

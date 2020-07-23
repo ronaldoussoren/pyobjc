@@ -16,3 +16,5 @@ class TestCMError(TestCase):
         self.assertEqual(CoreMotion.CMErrorNotAvailable, 109)
         self.assertEqual(CoreMotion.CMErrorNotEntitled, 110)
         self.assertEqual(CoreMotion.CMErrorNotAuthorized, 111)
+        self.assertEqual(CoreMotion.CMErrorNilData, 112)
+        self.assertEqual(CoreMotion.CMErrorSize, 113)

@@ -50,6 +50,19 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(
             Quartz.kCVPixelFormatType_420YpCbCr8BiPlanarFullRange, fourcc(b"420f")
         )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_422YpCbCr8BiPlanarVideoRange, fourcc(b"422v")
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_422YpCbCr8BiPlanarFullRange, fourcc(b"422f")
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_444YpCbCr8BiPlanarVideoRange, fourcc(b"444v")
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_444YpCbCr8BiPlanarFullRange, fourcc(b"444f")
+        )
+
         self.assertEqual(Quartz.kCVPixelFormatType_422YpCbCr8_yuvs, fourcc(b"yuvs"))
         self.assertEqual(Quartz.kCVPixelFormatType_422YpCbCr8FullRange, fourcc(b"yuvf"))
         self.assertEqual(Quartz.kCVPixelFormatType_OneComponent8, fourcc(b"L008"))
@@ -64,6 +77,12 @@ class TestCVPixelBuffer(TestCase):
             Quartz.kCVPixelFormatType_30RGBLEPackedWideGamut, fourcc(b"w30r")
         )
         self.assertEqual(Quartz.kCVPixelFormatType_ARGB2101010LEPacked, fourcc(b"l10r"))
+
+        self.assertEqual(Quartz.kCVPixelFormatType_OneComponent10, fourcc(b"L010"))
+        self.assertEqual(Quartz.kCVPixelFormatType_OneComponent12, fourcc(b"L012"))
+        self.assertEqual(Quartz.kCVPixelFormatType_OneComponent16, fourcc(b"L016"))
+        self.assertEqual(Quartz.kCVPixelFormatType_TwoComponent16, fourcc(b"2C16"))
+
         self.assertEqual(Quartz.kCVPixelFormatType_14Bayer_GRBG, fourcc(b"grb4"))
         self.assertEqual(Quartz.kCVPixelFormatType_14Bayer_RGGB, fourcc(b"rgg4"))
         self.assertEqual(Quartz.kCVPixelFormatType_14Bayer_BGGR, fourcc(b"bgg4"))

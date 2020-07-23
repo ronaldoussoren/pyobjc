@@ -44,6 +44,15 @@
       }
      ]
     },
+    "AVPictureInPictureController": {
+     "methods": [
+         {
+	  "class_method": false,
+	  "selector": "canStopPictureInPicture",
+	  "retval": { "type_override": "Z" }
+	 }
+	]
+    },
     "AVRoutePickerView": {
      "methods": [
          {

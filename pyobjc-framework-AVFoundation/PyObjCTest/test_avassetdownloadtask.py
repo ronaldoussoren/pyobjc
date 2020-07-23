@@ -29,6 +29,13 @@ class TestAVAssetDownloadTask(TestCase):
             str,  # noqa: B950
         )
 
+    @min_os_level("10.16")
+    def test_constants10_16(self):
+        self.assertIsInstance(
+            AVFoundation.AVAssetDownloadTaskMinimumRequiredPresentationSizeKey, str
+        )
+        self.assertIsInstance(AVFoundation.AVAssetDownloadTaskPrefersHDRKey, str)
+
     def test_methods(self):
         self.assertArgHasType(
             TestAVAssetDownloadTaskHelper.URLSession_assetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_,  # noqa: B950

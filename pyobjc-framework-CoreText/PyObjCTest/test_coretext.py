@@ -18,6 +18,7 @@ class TestCoreText(TestCase):
         self.assertEqual(CoreText.kCTVersionNumber10_13, 0x000A0000)
         self.assertEqual(CoreText.kCTVersionNumber10_14, 0x000B0000)
         self.assertEqual(CoreText.kCTVersionNumber10_15, 0x000C0000)
+        self.assertEqual(CoreText.kCTVersionNumber11_0, 0x000D0000)
 
     def testFunctions(self):
         v = CoreText.CTGetCoreTextVersion()

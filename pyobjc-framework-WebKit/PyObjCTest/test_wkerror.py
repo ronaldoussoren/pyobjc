@@ -18,3 +18,6 @@ class TestWKError(TestCase):
         self.assertEqual(WebKit.WKErrorContentRuleListStoreVersionMismatch, 9)
         self.assertEqual(WebKit.WKErrorAttributedStringContentFailedToLoad, 10)
         self.assertEqual(WebKit.WKErrorAttributedStringContentLoadTimedOut, 11)
+        self.assertEqual(WebKit.WKErrorJavaScriptInvalidFrameTarget, 12)
+        self.assertEqual(WebKit.WKErrorNavigationAppBoundDomain, 13)
+        self.assertEqual(WebKit.WKErrorJavaScriptAppBoundDomain, 14)

@@ -16,3 +16,4 @@ class TestGKPublicConstants(TestCase):
         self.assertEqual(GameKit.GKPeerStateConnected, 2)
         self.assertEqual(GameKit.GKPeerStateDisconnected, 3)
         self.assertEqual(GameKit.GKPeerStateConnecting, 4)
+        self.assertEqual(GameKit.GKPeerStateConnectedRelay, 5)

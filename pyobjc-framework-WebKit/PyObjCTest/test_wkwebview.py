@@ -46,12 +46,12 @@ class TestWKWebView(TestCase):
     @min_os_level("10.16")
     def testMethods10_16(self):
         self.assertArgIsBlock(
-            WebKit.WKWebView.evaluateJavaScript_inContentWorld_completionHandler_,
+            WebKit.WKWebView.evaluateJavaScript_inFrame_inContentWorld_completionHandler_,
             2,
             b"v@@",
         )
         self.assertArgIsBlock(
-            WebKit.WKWebView.callAsyncJavaScript_arguments_inContentWorld_completionHandler_,
+            WebKit.WKWebView.callAsyncJavaScript_arguments_inFrame_inContentWorld_completionHandler_,
             3,
             b"v@@",
         )

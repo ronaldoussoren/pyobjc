@@ -296,6 +296,7 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLMayHaveExtendedAttributesKey, str)
         self.assertIsInstance(Foundation.NSURLIsPurgeableKey, str)
         self.assertIsInstance(Foundation.NSURLIsSparseKey, str)
+        self.assertIsInstance(Foundation.NSURLVolumeSupportsFileProtectionKey, str)
 
     @min_os_level("10.6")
     def testMethods10_6(self):
