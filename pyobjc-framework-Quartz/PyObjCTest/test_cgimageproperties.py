@@ -314,14 +314,10 @@ class TestCGImageProperties(TestCase):
     @min_os_level("10.5")
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.6")
     def testConstants10_5_bad_on_10_6(self):
-        self.assertTrue(
-            hasattr(Quartz, "Quartz.kCGImagePropertyMakerMinoltaDictionary")
-        )
-        self.assertTrue(hasattr(Quartz, "Quartz.kCGImagePropertyMakerFujiDictionary"))
-        self.assertTrue(
-            hasattr(Quartz, "Quartz.kCGImagePropertyMakerOlympusDictionary")
-        )
-        self.assertTrue(hasattr(Quartz, "Quartz.kCGImagePropertyMakerPentaxDictionary"))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerMinoltaDictionary"))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerFujiDictionary"))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerOlympusDictionary"))
+        self.assertTrue(hasattr(Quartz, "kCGImagePropertyMakerPentaxDictionary"))
 
         self.assertIsInstance(Quartz.kCGImagePropertyMakerMinoltaDictionary, str)
         self.assertIsInstance(Quartz.kCGImagePropertyMakerFujiDictionary, str)

@@ -108,6 +108,9 @@ XXX TODO:
 
 * Removed remnants of support for i386, ppc and ppc64 from pyobjc-core.
 
+* Added type to manage ``Py_buffer`` lifetimes to the internal API in pyobjc-core, to be used
+  by framework wrappers.
+
 Version 6.2.1
 -------------
 

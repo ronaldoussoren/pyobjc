@@ -64,7 +64,7 @@ class TestMTLBlitCommandEncoderHelper(Metal.NSObject):
         pass
 
     def getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_(
-        self, a, b, c, d, e, f, g, h
+        self, a, b, c, d, e, f, g
     ):
         pass
 

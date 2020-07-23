@@ -42,7 +42,7 @@ static void __attribute__((__used__)) use_protocols(void)
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(MTLFunctionLog));
     Py_XDECREF(p);
-    p = PyObjC_IdToPython(@protocol(MTLIndirectComputeCommand));
-    Py_XDECREF(p);
+    //p = PyObjC_IdToPython(@protocol(MTLIndirectComputeCommand));
+    //Py_XDECREF(p);
 #endif
 }

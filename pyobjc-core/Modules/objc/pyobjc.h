@@ -123,6 +123,7 @@
 #import "super-call.h"
 #import "varlist.h"
 #import "weakref.h"
+#import "memview.h"
 
 #define PYOBJC_BUILD
 #import "pyobjc-api.h"

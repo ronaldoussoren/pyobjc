@@ -1733,11 +1733,11 @@
     "args": [
      {
       "name": "whitePoint",
-      "typestr": "^d"
+      "typestr": "[3d]"
      },
      {
       "name": "blackPoint",
-      "typestr": "^d"
+      "typestr": "[3d]"
      },
      {
       "name": "gamma",
@@ -1753,19 +1753,19 @@
     "args": [
      {
       "name": "whitePoint",
-      "typestr": "^d"
+      "typestr": "[3d]"
      },
      {
       "name": "blackPoint",
-      "typestr": "^d"
+      "typestr": "[3d]"
      },
      {
       "name": "gamma",
-      "typestr": "^d"
+      "typestr": "[3d]"
      },
      {
       "name": "matrix",
-      "typestr": "^d"
+      "typestr": "[9d]"
      }
     ],
     "retval": {
@@ -1857,15 +1857,15 @@
     "args": [
      {
       "name": "whitePoint",
-      "typestr": "^d"
+      "typestr": "[3d]"
      },
      {
       "name": "blackPoint",
-      "typestr": "^d"
+      "typestr": "[3d]"
      },
      {
       "name": "range",
-      "typestr": "^d"
+      "typestr": "[4d]"
      }
     ],
     "retval": {
@@ -6621,7 +6621,7 @@
      },
      {
       "name": "encoding",
-      "typestr": "^S"
+      "typestr": "[256S]"
      }
     ],
     "retval": {
@@ -6653,7 +6653,7 @@
      },
      {
       "name": "encoding",
-      "typestr": "^S"
+      "typestr": "[256S]"
      }
     ],
     "retval": {

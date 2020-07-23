@@ -4,6 +4,30 @@ import objc
 
 
 class TestCIBuiltinFilterHelper(Quartz.NSObject):
+    def periodicity(self):
+        return 1
+
+    def setPeriodicity_(self, a):
+        pass
+
+    def highLimit(self):
+        return 1
+
+    def setHighLimit_(self, a):
+        pass
+
+    def lowLimit(self):
+        return 1
+
+    def setLowLimit_(self, a):
+        pass
+
+    def passes(self):
+        return 1
+
+    def setPasses_(self, a):
+        pass
+
     def EV(self):
         return 1
 
@@ -1465,7 +1489,9 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "point", Quartz.CGPoint.__typestr__
             )
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "size", objc._C_FLT)
+
+            # XXX: Conflict between two protocols...
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "size", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "rotation", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "decay", objc._C_FLT)
 

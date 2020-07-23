@@ -38,7 +38,7 @@ class TestCGColorConversion(TestCase):
     def testFunctions10_13(self):
         try:
             Quartz.CGColorConversionInfoCreateFromList
-        except NameError:
+        except AttributeError:
             pass
         else:
             self.fail("CGColorConversionInfoCreateFromList is wrapped")

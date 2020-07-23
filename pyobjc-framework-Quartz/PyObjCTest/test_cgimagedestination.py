@@ -92,21 +92,21 @@ class TestCGImageDestination(TestCase):
 
     @min_os_level("10.8")
     def testConstants10_8(self):
-        self.assertIsInstance(Quartz.CGImageDestinationMetadata, str)
-        self.assertIsInstance(Quartz.CGImageDestinationMergeMetadata, str)
-        self.assertIsInstance(Quartz.CGImageMetadataShouldExcludeXMP, str)
-        self.assertIsInstance(Quartz.CGImageDestinationDateTime, str)
-        self.assertIsInstance(Quartz.CGImageDestinationOrientation, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationMetadata, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationMergeMetadata, str)
+        self.assertIsInstance(Quartz.kCGImageMetadataShouldExcludeXMP, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationDateTime, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationOrientation, str)
 
     @min_os_level("10.10")
     def testConstants10_10(self):
-        self.assertIsInstance(Quartz.CGImageDestinationImageMaxPixelSize, str)
-        self.assertIsInstance(Quartz.CGImageDestinationEmbedThumbnail, str)
-        self.assertIsInstance(Quartz.CGImageMetadataShouldExcludeGPS, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationImageMaxPixelSize, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationEmbedThumbnail, str)
+        self.assertIsInstance(Quartz.kCGImageMetadataShouldExcludeGPS, str)
 
     @min_os_level("10.12")
     def testConstants10_12(self):
-        self.assertIsInstance(Quartz.CGImageDestinationOptimizeColorForSharing, str)
+        self.assertIsInstance(Quartz.kCGImageDestinationOptimizeColorForSharing, str)
 
     @min_os_level("10.8")
     def testFunctions10_8(self):

@@ -1686,19 +1686,19 @@
      },
      {
       "name": "lowerLeft",
-      "typestr": "^f"
+      "typestr": "[2f]"
      },
      {
       "name": "lowerRight",
-      "typestr": "^f"
+      "typestr": "[2f]"
      },
      {
       "name": "upperRight",
-      "typestr": "^f"
+      "typestr": "[2f]"
      },
      {
       "name": "upperLeft",
-      "typestr": "^f"
+      "typestr": "[2f]"
      }
     ],
     "retval": {

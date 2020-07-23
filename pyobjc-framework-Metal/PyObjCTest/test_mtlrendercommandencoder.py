@@ -110,7 +110,7 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
         pass
 
     def drawIndexedPatches_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_indirectBuffer_indirectBufferOffset_(  # noqa: B950
-        self, a, b, c, d, e, f, g, h
+        self, a, b, c, d, e, f, g
     ):
         pass
 
@@ -150,7 +150,7 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_(self, a, b, c, d):
         pass
 
-    def dispatchThreadsPerTile_(self):
+    def dispatchThreadsPerTile_(self, a):
         pass
 
     def setThreadgroupMemoryLength_offset_atIndex_(self, a, b, c):

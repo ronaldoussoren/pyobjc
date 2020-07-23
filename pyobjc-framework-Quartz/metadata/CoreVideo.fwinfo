@@ -23,8 +23,10 @@
    "kCVPixelFormatComponentRange": { "typestr": "@" },
    "kCVPixelFormatComponentRange_VideoRange": { "typestr": "@" },
    "kCVPixelFormatComponentRange_FullRange": { "typestr": "@" },
-   "kCVPixelFormatComponentRange_WideRange": { "typestr": "@" },
-   "kCVPixelBufferPoolFlushExcessBuffers": { "typestr": "@" }
+   "kCVPixelFormatComponentRange_WideRange": { "typestr": "@" }
+  },
+  "aliases": {
+   "COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH": { "ignore": true }
   },
   "enum": {
    "kCVPixelFormatType_DisparityFloat16": { "value": 1751411059 },

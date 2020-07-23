@@ -502,7 +502,7 @@ class TestCGContext(TestCase):
 
             Quartz.CGContextDrawImage(context, ((0, 0), (70, 50)), image)
 
-            provider = Quartz.CGDataProviderCreateWithCFData("1" * 4 * 20 * 10)
+            provider = Quartz.CGDataProviderCreateWithCFData(b"1" * 4 * 20 * 10)
             mask = Quartz.CGImageMaskCreate(20, 10, 8, 32, 80, provider, None, True)
             self.assertIsInstance(mask, Quartz.CGImageRef)
 

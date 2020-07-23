@@ -32,7 +32,7 @@ class TestCAEmitterLayer(TestCase):
         self.assertIsInstance(Quartz.kCAEmitterLayerPoints, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerOutline, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerSurface, str)
-        self.assertIsInstance(Quartz.Quartz.kCAEmitterLayerVolume, str)
+        self.assertIsInstance(Quartz.kCAEmitterLayerVolume, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerUnordered, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerOldestFirst, str)
         self.assertIsInstance(Quartz.kCAEmitterLayerOldestLast, str)

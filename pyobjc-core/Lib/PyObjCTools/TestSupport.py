@@ -785,7 +785,7 @@ class TestCase(_unittest.TestCase):
             if st["arguments"][0]["type"] != b"^v":
                 self.fail(
                     message
-                    or "arg %d of %s has an invalid block signature %r"
+                    or "arg %d of %s has an invalid block signature %r for argument 0"
                     % (argno, method, st["arguments"][0]["type"])
                 )
             for a in st["arguments"][1:]:
@@ -831,7 +831,7 @@ class TestCase(_unittest.TestCase):
             if st["arguments"][0]["type"] != b"^v":
                 self.fail(
                     message
-                    or "result %s has an invalid block signature %r"
+                    or "result %s has an invalid block signature %r for argument 0"
                     % (method, st["arguments"][0]["type"])
                 )
             for a in st["arguments"][1:]:

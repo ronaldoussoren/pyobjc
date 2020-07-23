@@ -8,9 +8,8 @@ import shutil
 import subprocess
 import sys
 import tarfile
-from distutils.core import Command
 
-from setuptools import setup
+from setuptools import setup, Command
 from setuptools.command import egg_info
 
 VERSION = "7.0a1"

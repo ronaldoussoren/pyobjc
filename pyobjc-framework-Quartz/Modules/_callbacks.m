@@ -698,17 +698,19 @@ static void
 m_releaseData(void* _info, const void* data, size_t size)
 {
     PyObject* info = (PyObject*)_info;
+    PyObject* view;
     int       tag;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
     tag = PyLong_AsLong(PyTuple_GetItem(info, 2));
+    view = PyTuple_GetItem(info, 3);
 
     if (PyTuple_GetItem(info, 1) != Py_None) {
         PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 1), "O",
                                                  PyTuple_GetItem(info, 0));
         if (result == NULL) {
-            PyObjC_FreeCArray(tag, (void*)data);
+            PyObjC_FreeCArray(tag, PyObjCMemView_GetBuffer(view));
             Py_DECREF(info);
             PyObjCErr_ToObjCWithGILState(&state);
             return;
@@ -716,7 +718,7 @@ m_releaseData(void* _info, const void* data, size_t size)
         Py_DECREF(result);
     }
 
-    PyObjC_FreeCArray(tag, (void*)data);
+    PyObjC_FreeCArray(tag, PyObjCMemView_GetBuffer(view));
     Py_DECREF(info);
 
     PyGILState_Release(state);
@@ -742,20 +744,25 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)), PyObj
 
     int        tag;
     PyObject*  bufobj = NULL;
-    Py_buffer  view;
+    PyObject*  view;
     Py_ssize_t sz     = (Py_ssize_t)size;
     void*      arr;
 
-    tag = PyObjC_PythonToCArray(NO, YES, @encode(char), data, &arr, &sz, &bufobj, &view);
+    view = PyObjCMemView_New();
+    if (view == NULL) {
+        return NULL;
+    }
+
+    tag = PyObjC_PythonToCArray(NO, YES, @encode(char), data, &arr, &sz, &bufobj, PyObjCMemView_GetBuffer(view));
     if (tag < 0) {
         return NULL;
     }
 
     PyObject* real_info;
     if (bufobj != NULL) {
-        real_info = Py_BuildValue("OOlO", info, release, (long)tag, bufobj);
+        real_info = Py_BuildValue("OOlOO", info, release, (long)tag, view, bufobj);
     } else {
-        real_info = Py_BuildValue("OOl", info, release, (long)tag);
+        real_info = Py_BuildValue("OOlO", info, release, (long)tag, view);
     }
 
     CGDataProviderRef result;
@@ -771,7 +778,7 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)), PyObj
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
-        PyObjC_FreeCArray(tag, &view);
+        PyObjC_FreeCArray(tag, PyObjCMemView_GetBuffer(view));
         Py_DECREF(info);
         return NULL;
     }

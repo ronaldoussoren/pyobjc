@@ -92,6 +92,9 @@ struct pyobjc_api {
     PyObject* (*varlistnew)(const char* tp, void* array);
     int (*pyobjcobject_convert)(PyObject*, void*);
     int (*register_id_alias)(const char*, const char*);
+    int (*memview_check)(PyObject*);
+    PyObject* (*memview_new)(void);
+    Py_buffer* (*memview_getbuffer)(PyObject*);
 };
 
 #ifndef PYOBJC_BUILD
@@ -130,6 +133,9 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjC_VarList_New (PyObjC_API->varlistnew)
 #define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
 #define PyObjCPointerWrapper_RegisterID (PyObjC_API->register_id_alias)
+#define PyObjCMemView_Check (PyObjC_API->memview_check)
+#define PyObjCMemView_New (PyObjC_API->memview_new)
+#define PyObjCMemView_GetBuffer (PyObjC_API->memview_getbuffer)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {
