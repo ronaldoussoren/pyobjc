@@ -1040,6 +1040,10 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
     def test_complex_newobj_ex(self):
         pass
 
+    @onlyIf(0, "python unittest not relevant for archiving")
+    def test_buffers_numpy(self):
+        pass
+
     @expectedFailure
     def test_newobj_not_class(self):
         # Exception handling in NSCoder is dodgy
