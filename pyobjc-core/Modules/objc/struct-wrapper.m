@@ -929,7 +929,11 @@ make_init(const char* typestr)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
+        #if __arm64__
+        __builtin_unreachable();
+        #else
         rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+        #endif
 
 #pragma clang diagnostic pop
     }

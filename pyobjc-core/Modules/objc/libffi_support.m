@@ -4408,7 +4408,11 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
+        #if __arm64__
+        __builtin_unreachable();
+        #else
         rv = ffi_prep_closure(cl, cif, func, userdata);
+        #endif
 
 #pragma clang diagnostic pop
     }

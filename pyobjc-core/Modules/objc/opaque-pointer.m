@@ -368,7 +368,11 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
+        #if __arm64__
+        __builtin_unreachable();
+        #else
         rv = ffi_prep_closure(cl_to_c, convert_cif, opaque_to_c, newType);
+        #endif
 
 #pragma clang diagnostic pop
     }
@@ -399,7 +403,11 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
+        #if __arm64__
+        __builtin_unreachable();
+        #else
         rv = ffi_prep_closure(cl_from_c, new_cif, opaque_from_c, newType);
+        #endif
 
 #pragma clang diagnostic pop
     }
