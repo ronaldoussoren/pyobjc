@@ -6,8 +6,11 @@ class TestConstants(TestCase):
     def test_version_current(self):
         self.assertIsInstance(objc.MAC_OS_X_VERSION_CURRENT, int)
 
-        v = os_release().split(".")[:2]
-        v = "MAC_OS_X_VERSION_%s_%s" % tuple(v)
+        v = tuple(map(int, os_release().split(".")[:2]))
+        if v < (11,):
+            v = "MAC_OS_X_VERSION_%d_%d" % v
+        else:
+            v = "MAC_OS_VERSION_%d_%d" % v
 
         self.assertGreaterEqual(objc.MAC_OS_X_VERSION_CURRENT, getattr(objc, v))
 
@@ -41,3 +44,4 @@ class TestConstants(TestCase):
         self.assertEqual(objc.MAC_OS_X_VERSION_10_13_6, 101_306)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_14, 101_400)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_14_1, 101_401)
+        self.assertEqual(objc.MAC_OS_VERSION_11_0, 110_000)

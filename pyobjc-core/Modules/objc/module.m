@@ -12,6 +12,7 @@
 #include <stddef.h>
 #include <sys/socket.h>
 
+#import <AvailabilityVersions.h>
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSBundle.h>
 #import <Foundation/NSProcessInfo.h>
@@ -2756,12 +2757,12 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     }
 #endif /* MAC_OS_X_VERSION_10_16 */
 
-#ifdef MAC_OS_X_VERSION_11_0
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_0", MAC_OS_X_VERSION_11_0)
+#ifdef MAC_OS_VERSION_11_0
+    if (PyModule_AddIntConstant(m, "MAC_OS_VERSION_11_0", MAC_OS_VERSION_11_0)
         < 0) {
         return NULL;
     }
-#endif /* MAC_OS_X_VERSION_11_0 */
+#endif /* MAC_OS_VERSION_11_0 */
 
     if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
         return NULL;
