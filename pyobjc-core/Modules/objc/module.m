@@ -32,6 +32,16 @@ PyObject* PyObjC_TypeStr2CFTypeID = NULL;
 
 static NSAutoreleasePool* global_release_pool = nil;
 
+
+#if PyObjC_BUILD_RELEASE >= 1100
+/* There is no public API for checking if a library is in the
+ * shared library cache.
+ */
+extern int _dyld_shared_cache_contains_path(const char* path) 
+    __attribute__((availability(macos, introduced=10.16)));
+#endif
+
+
 /* Calculate the current version of macOS in a format that
  * can be compared with MAC_OS_VERSION_X_... constants
  */
@@ -1773,6 +1783,29 @@ done:
     return Py_None;
 }
 
+#if PyObjC_BUILD_RELEASE >= 1100
+static PyObject*
+mod_dyld_shared_cache_contains_path(PyObject* mod __attribute__((__unused__)), PyObject* object)
+{
+    if (@available(macOS 10.16, *)) {
+ 	if (!PyUnicode_Check(object)) {
+            PyErr_SetString(PyExc_TypeError, "Expecting a string");
+            return NULL;
+        }
+        const char* path = PyUnicode_AsUTF8(object);
+        if (path == NULL) {
+            return NULL;
+        }
+
+        int result = _dyld_shared_cache_contains_path(path);
+        return PyBool_FromLong(result);
+    } else {
+        PyErr_SetString(PyExc_NotImplementedError, "_dyld_shared_cache_contains_path not available");
+        return NULL;
+    }
+}
+#endif
+
 static PyMethodDef mod_methods[] = {
     {
         .ml_name  = "propertiesForClass",
@@ -1978,6 +2011,22 @@ static PyMethodDef mod_methods[] = {
                   "\nForce a rescan of the method table of a class",
     },
     {
+        .ml_name  = "_rescanClass",
+        .ml_meth  = (PyCFunction)force_rescan,
+        .ml_flags = METH_VARARGS | METH_KEYWORDS,
+        .ml_doc   = "_rescanClass(classObject)\n" CLINIC_SEP
+                  "\nForce a rescan of the method table of a class",
+    },
+#if PyObjC_BUILD_RELEASE >= 1100
+    {
+        .ml_name  = "_dyld_shared_cache_contains_path",
+        .ml_meth  = (PyCFunction)mod_dyld_shared_cache_contains_path,
+        .ml_flags = METH_O,
+        .ml_doc   = "_dyld_shared_cache_contains_path(path)\n" CLINIC_SEP
+                  "\nForce a rescan of the method table of a class",
+    },
+#endif
+    {
         .ml_name = NULL /* SENTINEL */
     }};
 
@@ -2177,6 +2226,16 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     if (d == 0) {
         return NULL;
     }
+
+#if Py_BUILD_RELEASE >= 1100
+    if (@available(macOS 10.16, *)) {
+        /* pass */
+    } else {
+        if (PyDict_DelItemString(d, "_dyld_shared_cache_contains_path") < 0) {
+            PyErr_Clear();
+        }
+    }
+#endif
 
     if (PyDict_SetItemString(d, "ObjCPointer", (PyObject*)&PyObjCPointer_Type) < 0) {
         return NULL;

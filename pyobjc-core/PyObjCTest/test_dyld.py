@@ -68,18 +68,15 @@ class TestDyld(TestCase):
                 del os.environ[k]
 
         orig_exists = os.path.exists
-        orig_islink = os.path.islink
+        orig__dyld_shared_cache_contains_path = dyld._dyld_shared_cache_contains_path
         try:
             os.path.exists = lambda fn: lst.append(fn)
-            os.path.islink = lambda fn: None
+            dyld._dyld_shared_cache_contains_path = lambda fn: False
 
             lst = []
-            self.assertRaises(
-                ValueError,
-                dyld.dyld_library,
-                "/usr/lib/libSystem.dylib",
-                "libXSystem.dylib",
-            )
+            with self.assertRaises(ValueError):
+                result = dyld.dyld_library("/usr/lib/libSystem.dylib", "libXSystem.dylib")
+                print("Found", result)
             self.assertEqual(
                 lst,
                 [
@@ -189,7 +186,7 @@ class TestDyld(TestCase):
 
         finally:
             os.path.exists = orig_exists
-            os.path.islink = orig_islink
+            dyld._dyld_shared_cache_contains_path = orig__dyld_shared_cache_contains_path
 
         self.assertEqual(
             dyld.dyld_library("/usr/lib/libSystem.dylib", "libXSystem.dylib"),
@@ -365,19 +362,6 @@ class TestDyld(TestCase):
         self.assertEqual(
             dyld.dyld_framework("/System/Library/Cocoa.framework/Cocoa", "Cocoa", "A"),
             "/System/Library/Frameworks/Cocoa.framework/Versions/A/Cocoa",
-        )
-
-    def test_readlink(self):
-        # Some python versions had a readlink version that doesn't work with unicode
-        # input, ensure that we're not one one of those
-        self.assertEqual(
-            os.path.realpath("/usr/lib/libSystem.dylib"), "/usr/lib/libSystem.B.dylib"
-        )
-        self.assertEqual(
-            os.path.realpath(b"/usr/lib/libSystem.dylib"), b"/usr/lib/libSystem.B.dylib"
-        )
-        self.assertEqual(
-            os.path.realpath("/usr/lib/libSystem.dylib"), "/usr/lib/libSystem.B.dylib"
         )
 
     def test_dyld_find(self):
