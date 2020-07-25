@@ -4431,8 +4431,8 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
         rv = ffi_prep_closure(cl, cif, func, userdata);
 
 #pragma clang diagnostic pop
-    }
 #endif
+    }
 
 #else /* PyObjC_BUILD_RELEASE < 1015 */
     rv = ffi_prep_closure(cl, cif, func, userdata);
