@@ -37,7 +37,7 @@ static NSAutoreleasePool* global_release_pool = nil;
 /* There is no public API for checking if a library is in the
  * shared library cache.
  */
-extern int _dyld_shared_cache_contains_path(const char* path) 
+extern int _dyld_shared_cache_contains_path(const char* path)
     __attribute__((availability(macos, introduced=10.16)));
 #endif
 
