@@ -54,6 +54,7 @@
     "NSMaxYEdge": { "ignore": true }
   },
   "enum": {
+   "NSBundleExecutableArchitectureARM64": { "value": "16777228" },
    "NSNetServicesMissingRequiredConfigurationError": { "value": -72008 },
    "NSMinXEdge": { "value": 0 },
    "NSMinYEdge": { "value": 1 },
@@ -10779,6 +10780,11 @@
    "NSProcessInfo": {
     "methods": [
      {
+      "selector": "isiOSAppOnMac",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "performActivityWithOptions:reason:usingBlock:",
       "class_method": false,
       "args": {
@@ -15070,6 +15076,7 @@
    }
   },
   "externs": {
+   "NSURLVolumeSupportsFileProtectionKey": { "typestr": "@" },
    "NSSecureUnarchiveFromDataTransformerName": { "typestr": "@" },
    "NSURLUbiquitousSharedItemPermissionsReadWrite": { "typestr": "@" },
    "NSURLUbiquitousSharedItemPermissionsReadOnly": { "typestr": "@" },

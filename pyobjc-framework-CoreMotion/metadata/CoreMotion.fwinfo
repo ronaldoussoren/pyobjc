@@ -4,7 +4,7 @@
  "definitions": {
   "enum": {
    "CMErrorNilData": { "value": 112 },
-   "CMErrorSize": { "value": 13 }
+   "CMErrorSize": { "value": 113 }
   },
   "classes": {
    "CMPedometer": {

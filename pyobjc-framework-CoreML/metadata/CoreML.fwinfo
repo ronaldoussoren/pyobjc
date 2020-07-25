@@ -1,6 +1,7 @@
 {
  "definitions": {
   "enum": {
+   "MLModelErrorModelCollection": { "value": 11 },
    "MLComputeUnitsCPUOnly": { "value": 0 },
    "MLComputeUnitsCPUAndGPU": { "value": 1 },
    "MLComputeUnitsAll": { "value": 2 },
@@ -34,6 +35,42 @@
    "MLModelLicenseKey": { "typestr": "@" }
   },
   "classes": {
+   "MLModelCollection": {
+    "methods": [
+     {
+      "selector": "beginAccessingModelCollectionWithIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "endAccessingModelCollectionWithIdentifier:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "Z" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     }
+    ]
+   },
    "MLDictionaryFeatureProvider": {
     "methods": [
      {

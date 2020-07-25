@@ -17,15 +17,15 @@ import sys
 import tempfile
 import time
 import unittest
-from distutils import log
-from distutils.command import build, install
-from distutils.errors import DistutilsError, DistutilsPlatformError
-from distutils.sysconfig import get_config_var, get_config_vars
-
+from sysconfig import get_config_var, get_config_vars
 from setuptools import Command
 from setuptools import Extension as _Extension
 from setuptools import setup as _setup
 from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
+
+from distutils import log
+from distutils.errors import DistutilsError, DistutilsPlatformError
+from distutils.command import build, install
 
 
 class oc_build_py(build_py.build_py):

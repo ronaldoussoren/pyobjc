@@ -24,9 +24,10 @@ class TestMTLResourceStateCommandEncoder(TestCase):
         self.assertEqual(Metal.MTLSparseTextureMappingModeUnmap, 1)
 
     def test_structs(self):
-        v = Metal.MTLMapIndirectBufferFormat()  # XXX: Needs work!
-        self.assertIsInstance(v.numMappings, int)
-        self.assertIs(v.mappings, None)
+        self.assertNotHasAttr(Metal, "MTLMapIndirectBufferFormat")
+        #v = Metal.MTLMapIndirectBufferFormat()  # XXX: Needs work!
+        #self.assertIsInstance(v.numMappings, int)
+        #self.assertIs(v.mappings, None)
 
         v = Metal.MTLMapIndirectArguments()
         self.assertIsInstance(v.regionOriginX, int)
@@ -47,11 +48,6 @@ class TestMTLResourceStateCommandEncoder(TestCase):
             TestMTLResourceStateCommandEncoderHelper.updateTextureMappings_mode_regions_mipLevels_slices_numRegions_,  # noqa: B950
             1,
             objc._C_NSUInteger,
-        )
-        self.assertArgSizeInArg(
-            TestMTLResourceStateCommandEncoderHelper.updateTextureMappings_mode_regions_mipLevels_slices_numRegions_,  # noqa: B950
-            1,
-            5,
         )
         self.assertArgHasType(
             TestMTLResourceStateCommandEncoderHelper.updateTextureMappings_mode_regions_mipLevels_slices_numRegions_,  # noqa: B950

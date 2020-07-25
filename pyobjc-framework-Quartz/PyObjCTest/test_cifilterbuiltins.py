@@ -1805,7 +1805,7 @@ class TestCIFilterBuiltins(TestCase):
                 TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
 
         with self.subTest("CIBumpDistortionLinear"):
             self.assert_rw_prop(
@@ -1813,7 +1813,7 @@ class TestCIFilterBuiltins(TestCase):
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
 
         with self.subTest("CICircleSplashDistortion"):
             self.assert_rw_prop(
@@ -1829,7 +1829,8 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "angle", objc._C_FLT)
 
         with self.subTest("CIDisplacementDistortion"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            pass
 
         with self.subTest("CIDroste"):
             self.assert_rw_prop(
@@ -1847,7 +1848,7 @@ class TestCIFilterBuiltins(TestCase):
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
             )
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
 
         with self.subTest("CIGlassLozenge"):
             self.assert_rw_prop(
@@ -1889,12 +1890,12 @@ class TestCIFilterBuiltins(TestCase):
                 TestCIBuiltinFilterHelper, "center", Quartz.CGPoint.__typestr__
             )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "radius", objc._C_FLT)
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
 
         with self.subTest("CIStretchCrop"):
-            self.assert_rw_prop(
-                TestCIBuiltinFilterHelper, "size", Quartz.CGPoint.__typestr__
-            )
+            # self.assert_rw_prop(
+            #     TestCIBuiltinFilterHelper, "size", Quartz.CGPoint.__typestr__
+            # )
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "cropAmount", objc._C_FLT)
             self.assert_rw_prop(
                 TestCIBuiltinFilterHelper, "centerStretchAmount", objc._C_FLT
@@ -1931,7 +1932,7 @@ class TestCIFilterBuiltins(TestCase):
             pass
 
         with self.subTest("CIAreaHistogram"):
-            self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
+            # self.assert_rw_prop(TestCIBuiltinFilterHelper, "scale", objc._C_FLT)
             self.assert_rw_prop(TestCIBuiltinFilterHelper, "count", objc._C_NSInteger)
 
         with self.subTest("CIAreaMaximum"):

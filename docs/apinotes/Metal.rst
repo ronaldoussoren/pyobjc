@@ -36,3 +36,9 @@ It is generally safer to use ``MTLRasterizationRateLayerDescriptor.vertical`` in
 ..........................................................................................
 
 These structures contain vector types and are not exposed at the moment.
+
+
+``MTLMapIndirectBufferFormat``
+..............................
+
+This structure is currently not available from python and needs a manual wrapper.

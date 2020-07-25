@@ -2,9 +2,133 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "NSFileProviderItemCreationDate": { "value": 64 },
+   "NSFileProviderItemContentModificationDate": { "value": 128 },
+   "NSFileProviderItemFileSystemFlags": { "value": 256 },
+   "NSFileProviderItemExtendedAttributes": { "value": 512 },
+   "NSFileProviderItemTagData": { "value": 16 },
+   "NSFileProviderItemLastUsedDate": { "value": 8 },
+   "NSFileProviderFileSystemPathExtensionHidden": { "value": 16 },
+   "NSFileProviderItemFavoriteRank": { "value": 32 },
+   "NSFileProviderFileSystemHidden": { "value": 8 },
+   "NSFileProviderFileSystemUserExecutable": { "value": 1 },
+   "NSFileProviderModifyItemMayAlreadyExist": { "value": 1 },
+   "NSFileProviderItemFilename": { "value": 2 },
+   "NSFileProviderFileSystemUserReadable": { "value": 2 },
+   "NSFileProviderFileSystemUserWritable": { "value": 4 },
+   "NSFileProviderItemContents": { "value": 1 },
+   "NSFileProviderDeleteItemRecursive": { "value": 1 },
+   "NSFileProviderCreateItemMayAlreadyExist": { "value": 1 },
+   "NSFileProviderItemParentItemIdentifier": { "value": 4 }
+  },
   "classes": {
    "NSObject": {
     "methods": [
+     {
+      "selector": "fetchContentsForItemWithIdentifier:version:usingExistingContentsAtURL:request:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "deleteItemWithIdentifier:baseVersion:options:request:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "modifyItem:baseVersion:changedFields:contents:options:request:completionHandler:",
+      "class_method": false,
+      "args": {
+       "6": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "Z" },
+	  "4": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "createItemBasedOnTemplate:fields:contents:options:request:completionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" },
+	  "3": { "type": "Z" },
+	  "4": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "itemForIdentifier:request:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "fileSystemFlags",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     },
+     {
+      "selector": "suggestedBatchSize",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     },
+     {
+      "selector": "suggestedPageSize",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     },
      {
       "selector": "currentSyncAnchorWithCompletionHandler:",
       "class_method": false,
@@ -18,6 +142,20 @@
 	}
        }
       }
+     }
+    ]
+   },
+   "NSFileProviderRequest": {
+    "methods": [
+     {
+      "selector": "isFileViewerRequest",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isSystemRequest",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
      }
     ]
    },
@@ -87,7 +225,8 @@
         "callable": {
          "arguments": {
 	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
 	 "retval": { "type": "v" }
 	}
@@ -341,7 +480,8 @@
         "callable": {
          "arguments": {
 	  "0": { "type": "^v" },
-	  "1": { "type": "@" }
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
 	 },
 	 "retval": { "type": "v" }
 	}
@@ -402,6 +542,13 @@
    "NSFileProviderManager": {
     "methods": [
      {
+      "selector": "temporaryDirectoryURLWithError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "evictItemWithIdentifier:completionHandler:",
       "class_method": false,
       "args": {
@@ -451,6 +598,21 @@
       "class_method": false,
       "args": {
        "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "signalErrorResolved:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
         "callable": {
          "arguments": {
 	  "0": { "type": "^v" },

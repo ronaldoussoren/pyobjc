@@ -116,4 +116,4 @@ class TestNSProcessInfo(TestCase):
 
     @min_os_level("10.16")
     def testMethods10_16(self):
-        self.assertResultIsBOOL(Foundation.NSProcessInfo.iOSAppOnMac)
+        self.assertResultIsBOOL(Foundation.NSProcessInfo.isiOSAppOnMac)

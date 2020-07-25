@@ -2,9 +2,66 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "MLCLSTMResultModeOutput": { "value": 0 },
+   "MLCLSTMResultModeOutputAndStates": { "value": 1 },
+   "MLCExecutionOptionsForwardForInference": { "value": 8 }
+  },
   "classes": {
+   "MLCLSTMDescriptor": {
+    "methods": [
+     {
+      "selector": "descriptorWithInputSize:hiddenSize:layerCount:usesBiases:batchFirst:isBidirectional:returnsSequences:dropout:resultMode:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" },
+       "4": { "type_override": "Z" },
+       "5": { "type_override": "Z" },
+       "6": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MLCGraph": {
+    "methods": [
+     {
+      "selector": "bindAndWriteData:forInputs:toDevice:synchronous:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" }
+      },
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MLCSGDOptimizer": {
+    "methods": [
+     {
+      "selector": "usesNesterovMomentum",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "optimizerWithDescriptor:momentumScale:usesNesterovMomentum:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "MLCTensor": {
     "methods": [
+     {
+      "selector": "bindOptimizerData:deviceData:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "synchronizeOptimizerData",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "args": {
        "0": {}

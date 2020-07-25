@@ -48,6 +48,11 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "canDeleteRecordForManagedObjectWithID:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
       "selector": "canModifyManagedObjectsInStore:",
       "retval": { "type_override": "Z" }
      },
@@ -90,7 +95,7 @@
     "methods": [
      {
       "args": {
-       "0": {
+       "1": {
 	  "callable": {
 	    "arguments": {
 	      "0": { "typestr": "^v" },
@@ -107,7 +112,7 @@
      },
      {
       "args": {
-       "0": {
+       "1": {
 	  "callable": {
 	    "arguments": {
 	      "0": { "typestr": "^v" },
