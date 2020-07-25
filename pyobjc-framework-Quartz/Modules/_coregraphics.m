@@ -362,6 +362,7 @@ static void
 m_releasecallback(void* releaseInfo, void* data)
 {
     PyObject* py_data = (PyObject*)releaseInfo;
+    PyObject* view;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -371,6 +372,9 @@ m_releasecallback(void* releaseInfo, void* data)
                                             PyTuple_GetItem(py_data, 2));
         Py_XDECREF(r);
     }
+
+    view = PyTuple_GetItem(py_data, 3);
+    PyBuffer_Release(PyObjCMemView_GetBuffer(view));
 
     Py_DECREF(py_data);
 
@@ -393,8 +397,8 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     PyObject* py_bitmapInfo;
     PyObject* py_releaseCallback;
     PyObject* py_releaseInfo;
-
-    void*           data;
+    
+    PyObject*       view = NULL;
     size_t          width;
     size_t          height;
     size_t          bitsPerComponent;
@@ -429,25 +433,25 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     }
 
     if (py_data == Py_None) {
-        data = NULL;
+        /* pass */
 
     } else if (PyUnicode_Check(py_data)) {
         PyErr_SetString(PyExc_TypeError, "Cannot use Unicode as backing store");
         return NULL;
 
     } else {
-        Py_ssize_t size;
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        if (PyObject_AsWriteBuffer(py_data, &data, &size) == -1) {
+        view = PyObjCMemView_New();
+        if (view == NULL) {
             return NULL;
         }
-#pragma clang diagnostic pop
 
+        if (PyObject_GetBuffer(py_data, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) == -1) {
+            Py_DECREF(view);
+            return NULL;
+        }
     }
 
-    PyObject* releaseInfo = PyTuple_New(3);
+    PyObject* releaseInfo = PyTuple_New(4);
     if (releaseInfo == NULL) {
         return NULL;
     }
@@ -457,12 +461,15 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     Py_INCREF(py_releaseInfo);
     PyTuple_SET_ITEM(releaseInfo, 2, py_data);
     Py_INCREF(py_data);
+    PyTuple_SET_ITEM(releaseInfo, 3, view);
+
 
     CGContextRef ctx = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
             ctx = USE_10_6(CGBitmapContextCreateWithData)(
-                data, width, height, bitsPerComponent, bytesPerRow, colorSpace,
+                view ? PyObjCMemView_GetBuffer(view)->buf : NULL, width, height, 
+                bitsPerComponent, bytesPerRow, colorSpace,
                 bitmapInfo, m_releasecallback, releaseInfo);
 
         } @catch (NSException* localException) {
@@ -472,11 +479,13 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     Py_END_ALLOW_THREADS
 
     if (ctx == NULL && PyErr_Occurred()) {
+        PyBuffer_Release(PyObjCMemView_GetBuffer(view));
         Py_DECREF(releaseInfo);
         return NULL;
     }
 
     if (ctx == NULL) {
+        PyBuffer_Release(PyObjCMemView_GetBuffer(view));
         Py_DECREF(releaseInfo);
         Py_INCREF(Py_None);
         return Py_None;
