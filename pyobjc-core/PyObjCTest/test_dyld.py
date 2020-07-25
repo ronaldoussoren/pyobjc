@@ -75,7 +75,9 @@ class TestDyld(TestCase):
 
             lst = []
             with self.assertRaises(ValueError):
-                result = dyld.dyld_library("/usr/lib/libSystem.dylib", "libXSystem.dylib")
+                result = dyld.dyld_library(
+                    "/usr/lib/libSystem.dylib", "libXSystem.dylib"
+                )
                 print("Found", result)
             self.assertEqual(
                 lst,
@@ -186,7 +188,9 @@ class TestDyld(TestCase):
 
         finally:
             os.path.exists = orig_exists
-            dyld._dyld_shared_cache_contains_path = orig__dyld_shared_cache_contains_path
+            dyld._dyld_shared_cache_contains_path = (
+                orig__dyld_shared_cache_contains_path
+            )
 
         self.assertEqual(
             dyld.dyld_library("/usr/lib/libSystem.dylib", "libXSystem.dylib"),

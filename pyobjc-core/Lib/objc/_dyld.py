@@ -13,6 +13,7 @@ __all__ = [
 import os
 
 from objc._framework import infoForFramework
+
 try:
     from objc._objc import _dyld_shared_cache_contains_path
 except ImportError:
