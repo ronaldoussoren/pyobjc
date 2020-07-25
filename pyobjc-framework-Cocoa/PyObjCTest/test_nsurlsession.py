@@ -5,7 +5,7 @@ import objc
 try:
     Foundation.NSURLSessionStreamTask
 
-except NameError:
+except AttributeError:
     pass
 
 else:

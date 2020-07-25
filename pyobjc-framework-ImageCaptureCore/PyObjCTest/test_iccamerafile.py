@@ -3,6 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestICCameraFile(TestCase):
+    @min_os_level("10.10")
     def test_methods(self):
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.highFramerate)
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraFile.timeLapse)

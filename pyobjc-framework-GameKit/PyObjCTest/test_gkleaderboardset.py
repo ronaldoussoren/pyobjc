@@ -2,9 +2,10 @@ import GameKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestGKLeaderboardSetHelper(GameKit.GKLeaderboardSet):
-    def loadImageWithCompletionHandler_(self, h):
-        pass
+if hasattr(GameKit, "GKLeaderboardSet"):
+    class TestGKLeaderboardSetHelper(GameKit.GKLeaderboardSet):
+        def loadImageWithCompletionHandler_(self, h):
+            pass
 
 
 class TestGKLeaderboardSet(TestCase):

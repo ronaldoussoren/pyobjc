@@ -103,7 +103,7 @@ class TestAVContentKeySession(TestCase):
             AVFoundation.AVContentKeyRequest.renewsExpiringResponseData
         )
 
-    @min_os_level("10.5")
+    @min_os_level("10.12.4")
     def testMethods10_5(self):
         self.assertArgIsBlock(
             AVFoundation.AVContentKeySession.makeSecureTokenForExpirationDateOfPersistableContentKey_completionHandler_,  # noqa: B950

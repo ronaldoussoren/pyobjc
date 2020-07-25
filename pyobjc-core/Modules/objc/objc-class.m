@@ -187,7 +187,8 @@ objc_class_register(Class objc_class, PyObject* py_class)
     }
 
     if (NSMapGet(class_registry, objc_class)) {
-        PyErr_SetString(PyObjCExc_InternalError, "Registering class more than once");
+        PyErr_Format(PyObjCExc_InternalError, "Registering class '%.100s' more than once",
+		class_getName(objc_class));
         return -1;
     }
 

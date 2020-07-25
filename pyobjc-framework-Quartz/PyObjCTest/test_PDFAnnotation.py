@@ -10,8 +10,23 @@ class TestPDFAnnotation(TestCase):
         self.assertArgIsBOOL(Quartz.PDFAnnotation.setShouldPrint_, 0)
         self.assertResultIsBOOL(Quartz.PDFAnnotation.hasAppearanceStream)
 
+
+    @min_os_level("10.12")
+    def testMethods10_12(self):
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.setValue_forAnnotationKey_)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.setRect_forAnnotationKey_)
+
+    @min_os_level("10.13")
+    def testMethods10_13(self):
         self.assertResultIsBOOL(Quartz.PDFAnnotation.isMultiline)
         self.assertArgIsBOOL(Quartz.PDFAnnotation.setMultiline_, 0)
+        self.assertResultIsBOOL(Quartz.PDFAnnotation.isHighlighted)
+        self.assertArgIsBOOL(Quartz.PDFAnnotation.setHighlighted_, 0)
+
+    @min_os_level("10.12")
+    def testConstants(self):
         self.assertResultIsBOOL(Quartz.PDFAnnotation.isPasswordField)
         # self.assertArgIsBOOL(Quartz.PDFAnnotation.setIsPasswordField_, 0)
         self.assertResultIsBOOL(Quartz.PDFAnnotation.hasComb)
@@ -26,21 +41,6 @@ class TestPDFAnnotation(TestCase):
         self.assertArgIsBOOL(Quartz.PDFAnnotation.setListChoice_, 0)
         self.assertResultIsBOOL(Quartz.PDFAnnotation.isOpen)
         self.assertArgIsBOOL(Quartz.PDFAnnotation.setOpen_, 0)
-
-    @min_os_level("10.12")
-    def testMethods10_12(self):
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.setValue_forAnnotationKey_)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setBoolean_forAnnotationKey_, 0)
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.setRect_forAnnotationKey_)
-
-    @min_os_level("10.13")
-    def testMethods10_13(self):
-        self.assertResultIsBOOL(Quartz.PDFAnnotation.isHighlighted)
-        self.assertArgIsBOOL(Quartz.PDFAnnotation.setHighlighted_, 0)
-
-    @min_os_level("10.12")
-    def testConstants(self):
         self.assertIsInstance(Quartz.kPDFAnnotationKey_AppearanceDictionary, str)
         self.assertIsInstance(Quartz.kPDFAnnotationKey_AppearanceState, str)
         self.assertIsInstance(Quartz.kPDFAnnotationKey_Border, str)

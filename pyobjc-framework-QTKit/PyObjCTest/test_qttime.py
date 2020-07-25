@@ -4,7 +4,7 @@ import QTKit
 
 class TestQTTime(TestCase):
     def testConstants(self):
-        self.assertEqual(QTKit.QTKit.kQTTimeIsIndefinite, 1)
+        self.assertEqual(QTKit.kQTTimeIsIndefinite, 1)
         self.assertIsInstance(QTKit.QTZeroTime, QTKit.QTTime)
         self.assertIsInstance(QTKit.QTIndefiniteTime, QTKit.QTTime)
 

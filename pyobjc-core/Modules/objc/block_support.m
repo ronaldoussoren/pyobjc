@@ -285,6 +285,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         values[0]  = &block_ptr;
     }
 
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15,*)) {
         if (signature->variadic) {
             r = ffi_prep_cif_var(
@@ -298,7 +299,9 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
                 useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
                 arglist);
         }
-    } else {
+    } else 
+#endif
+    {
         r = ffi_prep_cif(
             &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
             useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),

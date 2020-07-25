@@ -125,7 +125,7 @@ class TestCFSocketStream(TestCase):
         self.assertIsInstance(rd, CFNetwork.CFReadStreamRef)
         self.assertIsInstance(wr, CFNetwork.CFWriteStreamRef)
 
-        if os_level_key(os_release()) < os_level_key("10.10"):
+        if os_level_key(os_release()) < os_level_key("10.9"):
             self.assertResultIsBOOL(CFNetwork.CFSocketStreamPairSetSecurityProtocol)
             v = CFNetwork.CFSocketStreamPairSetSecurityProtocol(
                 rd, wr, CFNetwork.kCFStreamSocketSecuritySSLv23

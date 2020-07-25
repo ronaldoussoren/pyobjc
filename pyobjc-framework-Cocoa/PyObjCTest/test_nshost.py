@@ -21,7 +21,7 @@ class TestNSHost(TestCase):
     def testCreation2(self):
         o = Foundation.NSHost.hostWithName_("localhost")
         lst = sorted(o.addresses())
-        self.assertIn(lst, (["127.0.0.1", "::1"], ["127.0.0.1"]))
+        self.assertIn("127.0.0.1", lst)
         self.assertEqual(o.address(), o.addresses()[0])
 
     def testIndirectCreation(self):

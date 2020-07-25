@@ -43,12 +43,12 @@ m_CFProxyAutoConfigurationResultCallback(void* _context, CFArrayRef proxyList,
     PyObject* py_func = PyTuple_GetItem(context, 0);
     PyObject* py_ctx  = PyTuple_GetItem(context, 1);
 
-    PyObject* py_list = PyObjC_IdToPython((NSObject*)proxyList);
+    PyObject* py_list = PyObjC_IdToPython((NSObject*)(NSArray*)proxyList);
     if (py_list == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
         return;
     }
-    PyObject* py_error = PyObjC_IdToPython((NSObject*)error);
+    PyObject* py_error = PyObjC_IdToPython((NSObject*)(NSError*)error);
     if (py_error == NULL) {
         Py_DECREF(py_list);
         PyObjCErr_ToObjCWithGILState(&state);
