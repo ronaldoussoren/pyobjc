@@ -11,7 +11,7 @@ import Foundation
 import objc
 from Virtualization import _metadata
 
-# from Virtualization import _Virtualization
+from Virtualization import _Virtualization
 
 sys.modules["Virtualization"] = mod = objc.ObjCLazyModule(
     "Virtualization",
@@ -25,8 +25,7 @@ sys.modules["Virtualization"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    # (_Virtualization, Foundation),
-    (Foundation,),
+    (_Virtualization, Foundation),
 )
 
 

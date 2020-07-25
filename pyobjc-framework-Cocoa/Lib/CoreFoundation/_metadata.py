@@ -3314,7 +3314,7 @@ cftypes = [
     ),
     ("CFSetRef", b"^{__CFSet=}", "CFSetGetTypeID", "NSSet"),
     ("CFSocketRef", b"^{__CFSocket=}", "CFSocketGetTypeID", None),
-    ("CFStringRef", b"@", "CFStringGetTypeID", "NSString"),
+    ("CFStringRef", b"^{__CFString=}", "CFStringGetTypeID", "NSString"),
     (
         "CFStringTokenizerRef",
         b"^{__CFStringTokenizer=}",

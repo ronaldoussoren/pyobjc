@@ -47,11 +47,11 @@ class TestWKWebView(TestCase):
     def testMethods10_16(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.evaluateJavaScript_inFrame_inContentWorld_completionHandler_,
-            2,
+            3,
             b"v@@",
         )
         self.assertArgIsBlock(
             WebKit.WKWebView.callAsyncJavaScript_arguments_inFrame_inContentWorld_completionHandler_,
-            3,
+            4,
             b"v@@",
         )
