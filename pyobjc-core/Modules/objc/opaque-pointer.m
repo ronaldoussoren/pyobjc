@@ -365,12 +365,16 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl_to_c, convert_cif, opaque_to_c, newType, codeloc);
     } else {
+#ifdef __arm64__
+        rv = FFI_BAD_ABI;
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl_to_c, convert_cif, opaque_to_c, newType);
 
 #pragma clang diagnostic pop
+#endif
     }
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
@@ -396,12 +400,16 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl_from_c, new_cif, opaque_from_c, newType, codeloc);
     } else {
+#ifdef __arm64__
+        rv = FFI_BAD_ABI;
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl_from_c, new_cif, opaque_from_c, newType);
 
 #pragma clang diagnostic pop
+#endif
     }
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);

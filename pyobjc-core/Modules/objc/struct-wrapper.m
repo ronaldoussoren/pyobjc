@@ -926,12 +926,16 @@ make_init(const char* typestr)
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr, codeloc);
     } else {
+#ifdef __arm64__
+       rv = FFI_BAD_ABI; /* Can't happen... */
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
 
 #pragma clang diagnostic pop
+#endif
     }
     if (rv != FFI_OK) {
 #ifdef HAVE_CLOSURE_POOL

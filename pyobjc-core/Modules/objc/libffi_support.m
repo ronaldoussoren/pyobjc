@@ -4405,12 +4405,16 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl, cif, func, userdata, codeloc);
     } else {
+#ifdef __arm64__
+        rv = FFI_BAD_ABI;
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl, cif, func, userdata);
 
 #pragma clang diagnostic pop
+#endif
     }
 
     if (rv != FFI_OK) {
