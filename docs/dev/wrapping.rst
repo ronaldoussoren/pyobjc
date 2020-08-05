@@ -27,7 +27,7 @@ The basics
 
 The code for loading a framework and exporting its classes is pretty simple:
 
- .. sourcecode: python
+ .. sourcecode:: python
 
     import objc
     objc.loadBundle("MyFramework", globals(),
