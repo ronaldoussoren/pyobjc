@@ -13,3 +13,6 @@ class TestVZDiskImageStorageDeviceAttachment(TestCase):
             Virtualization.VZDiskImageStorageDeviceAttachment.initWithURL_readOnly_error_,
             2,
         )
+        self.assertResultIsBOOL(
+            Virtualization.VZDiskImageStorageDeviceAttachment.isReadOnly
+        )

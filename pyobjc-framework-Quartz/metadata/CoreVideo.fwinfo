@@ -4,6 +4,7 @@
  "definitions": {
   "externs": {
    "kCVPixelFormatContainsGrayscale": { "typestr": "@" },
+   "kCVPixelFormatContainsGrayscale": { "typestr": "@" },
    "kCVImageBufferTransferFunction_Linear": { "typestr": "@" },
    "kCVImageBufferTransferFunction_sRGB": { "typestr": "@" },
    "kCVImageBufferTransferFunction_SMPTE_ST_2084_PQ": { "typestr": "@" },
@@ -29,6 +30,14 @@
    "COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH": { "ignore": true }
   },
   "enum": {
+   "kCVPixelFormatType_OneComponent10": { "value": 1278226736 },
+   "kCVPixelFormatType_OneComponent12": { "value": 1278226738 },
+   "kCVPixelFormatType_OneComponent16": { "value": 1278226742 },
+   "kCVPixelFormatType_TwoComponent16": { "value": 843264310 },
+   "kCVPixelFormatType_444YpCbCr8BiPlanarFullRange": { "value": 875836518 },
+   "kCVPixelFormatType_422YpCbCr8BiPlanarVideoRange": { "value": 875704950 },
+   "kCVPixelFormatType_422YpCbCr8BiPlanarFullRange": { "value": 875704934 },
+   "kCVPixelFormatType_444YpCbCr8BiPlanarVideoRange": { "value": 875836534 },
    "kCVPixelFormatType_DisparityFloat16": { "value": 1751411059 },
    "kCVPixelFormatType_DisparityFloat32": { "value": 1717856627 },
    "kCVPixelFormatType_DepthFloat16": { "value": 1751410032 },

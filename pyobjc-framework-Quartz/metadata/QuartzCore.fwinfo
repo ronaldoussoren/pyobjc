@@ -22,6 +22,7 @@
    "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
   },
   "externs": {
+   "kCIContextName": { "typestr": "@" },
    "kCIInputEnableEDRModeKey": { "typestr": "@" },
    "kCIContextAllowLowPower": { "typestr": "@" },
    "kCARendererMetalCommandQueue": { "typestr": "@" },
@@ -1346,18 +1347,6 @@
       }
      },
      {
-      "selector": "size",
-      "class_method": false,
-      "retval": { "type_override": "{CGPoint=dd}" }
-     },
-     {
-      "selector": "setSize:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "{CGPoint=dd}" }
-      }
-     },
-     {
       "selector": "roll",
       "class_method": false,
       "retval": { "type_override": "f" }
@@ -2192,18 +2181,6 @@
      },
      {
       "selector": "setRingSize:",
-      "class_method": false,
-      "args": {
-       "0": { "type_override": "f" }
-      }
-     },
-     {
-      "selector": "scale",
-      "class_method": false,
-      "retval": { "type_override": "f" }
-     },
-     {
-      "selector": "setScale:",
       "class_method": false,
       "args": {
        "0": { "type_override": "f" }

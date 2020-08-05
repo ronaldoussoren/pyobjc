@@ -17,6 +17,7 @@
    }
   },
   "enum": {
+   "DISPATCH_TIME_FOREVER": { "value": 18446744073709551614  },
    "DISPATCH_MACH_SEND_DEAD": { "value": 1 },
    "DISPATCH_TIMER_STRICT": { "value": 1 },
    "DISPATCH_VNODE_DELETE": { "value": 1 },
@@ -76,6 +77,14 @@
    "DISPATCH_QUEUE_CONCURRENT_WITH_AUTORELEASE_POOL": { "value": "dispatch_queue_attr_make_with_autorelease_frequency(DISPATCH_QUEUE_CONCURRENT, DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM)" }
   },
   "functions": {
+   "dispatch_set_qos_class_floor": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "I" },
+     "2": { "type_override": "i" }
+    },
+    "retval": { "type_override": "v" }
+   },
    "dispatch_source_set_registration_handler": {
     "args": {
      "0": { "type_override": "@" },
@@ -669,6 +678,23 @@
     },
     "retval": { "type_override": "v" }
    },
+   "dispatch_barrier_async_and_wait": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
    "dispatch_barrier_async": {
     "args": {
      "0": { "type_override": "@" },
@@ -682,6 +708,25 @@
         "type": "v"
        }
       }
+     }
+    },
+    "retval": { "type_override": "v" }
+   },
+   "dispatch_barrier_async_and_wait_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
      }
     },
     "retval": { "type_override": "v" }
@@ -924,6 +969,25 @@
      "type_override": "v"
     }
    },
+   "dispatch_async_and_wait": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": {
+      "type_override": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
    "dispatch_async": {
     "args": {
      "0": { "type_override": "@" },
@@ -937,6 +1001,27 @@
         "type": "v"
        }
       }
+     }
+    },
+    "retval": {
+     "type_override": "v"
+    }
+   },
+   "dispatch_async_and_wait_f": {
+    "args": {
+     "0": { "type_override": "@" },
+     "1": { "type_override": "^v" },
+     "2": {
+      "type_override": "^?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" }
+       },
+       "retval": {
+        "type": "v"
+       }
+      },
+      "callable_retained": true
      }
     },
     "retval": {

@@ -28,7 +28,8 @@ class TestPKConstants(TestCase):
         self.assertIsInstance(PassKit.PKPaymentNetworkSuica, str)
         self.assertIsInstance(PassKit.PKPaymentNetworkVisa, str)
         self.assertIsInstance(PassKit.PKPaymentNetworkVPay, str)
-        self.assertIsInstance(PassKit.PKPaymentNetworkAlipay, str)
+        self.assertIsInstance(PassKit.PKPaymentNetworkBarcode, str)
+        self.assertIsInstance(PassKit.PKPaymentNetworkGirocard, str)
 
         self.assertIsInstance(PassKit.PKContactFieldPostalAddress, str)
         self.assertIsInstance(PassKit.PKContactFieldEmailAddress, str)

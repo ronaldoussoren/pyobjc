@@ -94,8 +94,17 @@ class TestColorSyncProfile(TestCase):
         self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfiles, 1)
         self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfiles, 3)
 
+        self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 1)
+        self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 4)
+
         self.assertArgIsOut(ColorSync.ColorSyncProfileInstall, 3)
         self.assertArgIsOut(ColorSync.ColorSyncProfileUninstall, 1)
+
+        self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfiles, 1)
+        self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfiles, 3)
+
+        self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 1)
+        self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 4)
 
     @min_os_level("10.13")
     def testConstants(self):
@@ -168,6 +177,12 @@ class TestColorSyncProfile(TestCase):
             b"com.apple.developer.ColorSync.profile.install",
         )
         self.assertEqual(ColorSync.COLORSYNC_MD5_LENGTH, 16)
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(ColorSync.kColorSyncProfileCacheSeed, str)
+        self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)
+        self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)
 
     def testStructs(self):
         v = ColorSync.ColorSyncMD5()

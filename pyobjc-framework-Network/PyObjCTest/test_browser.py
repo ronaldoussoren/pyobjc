@@ -13,6 +13,7 @@ class TestBrowser(TestCase):
         self.assertEqual(Network.nw_browser_state_ready, 1)
         self.assertEqual(Network.nw_browser_state_failed, 2)
         self.assertEqual(Network.nw_browser_state_cancelled, 3)
+        self.assertEqual(Network.nw_browser_state_waiting, 4)
 
     @min_os_level("10.15")
     def test_functions10_15(self):

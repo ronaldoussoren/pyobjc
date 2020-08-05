@@ -78,6 +78,7 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG4Video, fourcc(b"mp4v"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG2Video, fourcc(b"mp2v"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG1Video, fourcc(b"mp1v"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_VP9, fourcc(b"vp09"))
 
         self.assertEqual(CoreMedia.kCMVideoCodecType_DVCNTSC, fourcc(b"dvc "))
         self.assertEqual(CoreMedia.kCMVideoCodecType_DVCPAL, fourcc(b"dvcp"))

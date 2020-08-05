@@ -19,5 +19,9 @@ class TestSKError(TestCase):
         self.assertEqual(StoreKit.SKErrorInvalidSignature, 12)
         self.assertEqual(StoreKit.SKErrorMissingOfferParams, 13)
         self.assertEqual(StoreKit.SKErrorInvalidOfferPrice, 14)
+        self.assertEqual(StoreKit.SKErrorOverlayCancelled, 15)
+        self.assertEqual(StoreKit.SKErrorOverlayInvalidConfiguration, 16)
+        self.assertEqual(StoreKit.SKErrorOverlayTimeout, 17)
+        self.assertEqual(StoreKit.SKErrorIneligibleForOffer, 18)
 
         self.assertEqual(StoreKit.SKErrorStoreProductNotAvailable, 5)

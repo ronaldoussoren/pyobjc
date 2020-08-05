@@ -2303,6 +2303,17 @@
      }
     ]
    },
+   "WKUserScript": {
+    "methods": [
+     {
+      "args": {
+       "2": { "type_override": "Z" }
+      },
+      "class_method": false,
+      "selector": "initWithSource:injectionTime:forMainFrameOnly:inContentWorld:"
+     }
+    ]
+   },
    "WKWebView": {
     "methods": [
      {
@@ -2420,6 +2431,54 @@
       },
       "class_method": false,
       "selector": "takeSnapshotWithConfiguration:completionHandler:"
+     },
+     {
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "evaluateJavaScript:inFrame:inContentWorld:completionHandler:"
+     },
+     {
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          },
+          "2": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "callAsyncJavaScript:arguments:inFrame:inContentWorld:completionHandler:"
      },
      {
       "args": {

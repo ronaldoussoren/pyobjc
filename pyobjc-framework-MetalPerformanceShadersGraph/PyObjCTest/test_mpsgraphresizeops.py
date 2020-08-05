@@ -17,3 +17,12 @@ class TestMPSGraphResizeOps(TestCase):
             MetalPerformanceShadersGraph.MPSGraph.resizeTensor_size_mode_centerResult_alignCorners_layout_name_,
             4,
         )
+
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.resizeWithGradientTensor_input_mode_centerResult_alignCorners_layout_name_,  # noqa: B950
+            3,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.resizeWithGradientTensor_input_mode_centerResult_alignCorners_layout_name_,  # noqa: B950
+            4,
+        )

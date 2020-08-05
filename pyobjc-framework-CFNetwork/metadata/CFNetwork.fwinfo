@@ -85,7 +85,7 @@
    "CFFTPCreateParsedResourceListing": {
     "args": {
      "0": {},
-     "1": { "type_override": "^v", "type_modifier":"n"},
+     "1": { "type_override": "n^v", "type_modifier":"n", "c_array_length_in_arg": 2 },
      "3": { "type_modifier": "o", "already_cfretained": true }
     }
    },
@@ -161,7 +161,7 @@
    "CFHTTPMessageAppendBytes": {
     "args": {
      "0": {},
-     "1": { "type_modifier": "n", "c_array_length_in_arg": 2 }
+     "1": { "type_modifier": "n", "c_array_length_in_arg": 2, "type_override": "^v" }
     }
    },
    "CFHTTPMessageApplyCredentialDictionary": {
