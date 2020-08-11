@@ -258,7 +258,7 @@ def runConsoleEventLoop(
                 break
 
             soon = NSDate.dateWithTimeIntervalSinceNow_(maxTimeout)
-            nextfire = nextfire.earlierDate_(soon)
+            nextfire = soon.earlierDate_(nextfire)
             if not runLoop.runMode_beforeDate_(mode, nextfire):
                 stopper.stop()
 
