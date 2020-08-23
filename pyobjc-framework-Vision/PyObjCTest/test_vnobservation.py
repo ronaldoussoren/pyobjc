@@ -3,6 +3,10 @@ import Vision
 
 
 class TestVNObservation(TestCase):
+    @min_os_level("10.16")
+    def test_constants10_16(self):
+        self.assertIsInstance(Vision.VNRecognizedPointGroupKeyAll, str)
+
     @min_os_level("10.15")
     def test_methods(self):
         self.assertResultIsBOOL(

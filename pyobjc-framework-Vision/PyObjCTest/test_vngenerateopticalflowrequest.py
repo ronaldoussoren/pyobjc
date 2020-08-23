@@ -4,10 +4,14 @@ import Vision
 
 class TestVNGenerateOpticalFlowRequest(TestCase):
     def testConstants(self):
-        self.assertEqual(Vision.VNOpticalFlowGenerateLevelLow, 0)
-        self.assertEqual(Vision.VNOpticalFlowGenerateLevelMedium, 1)
-        self.assertEqual(Vision.VNOpticalFlowGenerateLevelHigh, 2)
-        self.assertEqual(Vision.VNOpticalFlowGenerateLevelVeryHigh, 3)
+        self.assertEqual(Vision.VNGenerateOpticalFlowRequestComputationAccuracyLow, 0)
+        self.assertEqual(
+            Vision.VNGenerateOpticalFlowRequestComputationAccuracyMedium, 1
+        )
+        self.assertEqual(Vision.VNGenerateOpticalFlowRequestComputationAccuracyHigh, 2)
+        self.assertEqual(
+            Vision.VNGenerateOpticalFlowRequestComputationAccuracyVeryHigh, 3
+        )
 
     @min_os_level("10.16")
     def testConstants10_16(self):

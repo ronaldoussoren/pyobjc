@@ -96,6 +96,14 @@ class TestNSFileManager(TestCase):
         self.assertIsInstance(Foundation.NSFileSystemNodes, str)
         self.assertIsInstance(Foundation.NSFileSystemFreeNodes, str)
 
+        self.assertIsInstance(Foundation.NSFileProtectionKey, str)
+        self.assertIsInstance(Foundation.NSFileProtectionNone, str)
+        self.assertIsInstance(Foundation.NSFileProtectionComplete, str)
+        self.assertIsInstance(Foundation.NSFileProtectionCompleteUnlessOpen, str)
+        self.assertIsInstance(
+            Foundation.NSFileProtectionCompleteUntilFirstUserAuthentication, str
+        )
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(Foundation.NSVolumeEnumerationSkipHiddenVolumes, 1 << 1)
@@ -144,6 +152,14 @@ class TestNSFileManager(TestCase):
         )
         self.assertEqual(
             Foundation.NSDirectoryEnumerationProducesRelativePathURLs, 1 << 4
+        )
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(Foundation.NSURLFileProtectionComplete, str)
+        self.assertIsInstance(Foundation.NSURLFileProtectionCompleteUnlessOpen, str)
+        self.assertIsInstance(
+            Foundation.NSURLFileProtectionCompleteUntilFirstUserAuthentication, str
         )
 
     @min_os_level("10.6")

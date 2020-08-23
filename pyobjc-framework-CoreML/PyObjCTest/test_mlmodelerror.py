@@ -11,10 +11,9 @@ class TestMLFeatureDescription(TestCase):
         self.assertEqual(CoreML.MLModelErrorCustomModel, 5)
         self.assertEqual(CoreML.MLModelErrorUpdate, 6)
         self.assertEqual(CoreML.MLModelErrorParameters, 7)
-        self.assertEqual(CoreML.MLModelErrorModelEncryption, 8)
-        self.assertEqual(CoreML.MLModelErrorModelKeyFetch, 9)
-        self.assertEqual(CoreML.MLModelErrorModelDecryption, 10)
-        self.assertEqual(CoreML.MLModelErrorModelCollection, 11)
+        self.assertEqual(CoreML.MLModelErrorModelDecryptionKeyFetch, 8)
+        self.assertEqual(CoreML.MLModelErrorModelDecryption, 9)
+        self.assertEqual(CoreML.MLModelErrorModelCollection, 10)
 
     @min_os_level("10.13")
     def testConstants10_13(self):

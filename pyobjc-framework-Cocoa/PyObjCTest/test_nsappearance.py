@@ -8,6 +8,12 @@ class TestNSAppearance(TestCase):
     def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSAppearance.allowsVibrancy)
 
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertArgIsBlock(
+            AppKit.NSAppearance.performAsCurrentDrawingAppearance_, 0, b"v"
+        )
+
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AppKit.NSAppearanceNameAqua, str)

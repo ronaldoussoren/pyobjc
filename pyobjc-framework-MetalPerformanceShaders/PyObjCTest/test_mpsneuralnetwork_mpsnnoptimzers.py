@@ -26,7 +26,14 @@ class TestMPSNeuralNetwork_MPSCNNOptimzers(TestCase):
         self.assertResultIsBOOL(
             MetalPerformanceShaders.MPSNNOptimizerStochasticGradientDescent.useNestrovMomentum
         )
+        self.assertResultIsBOOL(
+            MetalPerformanceShaders.MPSNNOptimizerStochasticGradientDescent.useNesterovMomentum
+        )
         self.assertArgIsBOOL(
             MetalPerformanceShaders.MPSNNOptimizerStochasticGradientDescent.initWithDevice_momentumScale_useNestrovMomentum_optimizerDescriptor_,  # noqa: B950
+            2,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShaders.MPSNNOptimizerStochasticGradientDescent.initWithDevice_momentumScale_useNesterovMomentum_optimizerDescriptor_,  # noqa: B950
             2,
         )

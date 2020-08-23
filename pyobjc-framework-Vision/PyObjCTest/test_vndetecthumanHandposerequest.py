@@ -31,6 +31,45 @@ class TestVNDetectHumanHandPoseRequest(TestCase):
         self.assertIsInstance(Vision.VNHandLandmarkRegionKeyRingFinger, str)
         self.assertIsInstance(Vision.VNHandLandmarkRegionKeyLittleFinger, str)
 
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameWrist, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameThumbCMC, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameThumbMP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameThumbIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameThumbTip, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameIndexMCP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameIndexPIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameIndexDIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameIndexTip, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameMiddleMCP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameMiddlePIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameMiddleDIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameMiddleTip, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameRingMCP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameRingPIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameRingDIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameRingTip, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameLittleMCP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameLittlePIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameLittleDIP, str)
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointNameLittleTip, str)
+
+        self.assertIsInstance(
+            Vision.VNHumanHandPoseObservationJointsGroupNameThumb, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanHandPoseObservationJointsGroupNameIndexFinger, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanHandPoseObservationJointsGroupNameMiddleFinger, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanHandPoseObservationJointsGroupNameRingFinger, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanHandPoseObservationJointsGroupNameLittleFinger, str
+        )
+        self.assertIsInstance(Vision.VNHumanHandPoseObservationJointsGroupNameAll, str)
+
         self.assertEqual(Vision.VNDetectHumanHandPoseRequestRevision1, 1)
 
     @min_os_level("10.16")
@@ -50,5 +89,20 @@ class TestVNDetectHumanHandPoseRequest(TestCase):
         )
         self.assertArgIsOut(
             Vision.VNDetectHumanHandPoseRequest.supportedIdentifiedPointGroupKeysForRevision_error_,
+            1,
+        )
+        self.assertArgIsOut(
+            Vision.VNDetectHumanHandPoseRequest.supportedJointNamesForRevision_error_, 1
+        )
+        self.assertArgIsOut(
+            Vision.VNDetectHumanHandPoseRequest.supportedJointsGroupNamesForRevision_error_,
+            1,
+        )
+
+        self.assertArgIsOut(
+            Vision.VNHumanHandPoseObservation.recognizedPointForJointName_error_, 1
+        )
+        self.assertArgIsOut(
+            Vision.VNHumanHandPoseObservation.recognizedPointsForJointsGroupName_error_,
             1,
         )

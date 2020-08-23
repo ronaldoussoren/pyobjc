@@ -36,6 +36,8 @@ class TestVTErrors(TestCase):
         self.assertEqual(VideoToolbox.kVTColorCorrectionImageRotationFailedErr, -12219)
         self.assertEqual(VideoToolbox.kVTVideoDecoderRemovedErr, -17690)
         self.assertEqual(VideoToolbox.kVTSessionMalfunctionErr, -17691)
+        self.assertEqual(VideoToolbox.kVTVideoDecoderNeedsRosettaErr, -17692)
+        self.assertEqual(VideoToolbox.kVTVideoEncoderNeedsRosettaErr, -17693)
         self.assertEqual(
             VideoToolbox.kVTDecodeFrame_EnableAsynchronousDecompression, 1 << 0
         )

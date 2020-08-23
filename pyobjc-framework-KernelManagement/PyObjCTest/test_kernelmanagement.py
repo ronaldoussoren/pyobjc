@@ -10,6 +10,16 @@ class TestKernelManagement(TestCase):
 
         self.assertIsInstance(KernelManagement.OSKernelManagementErrorDomain, str)
 
+        self.assertEqual(KernelManagement.OSKMErrorUnknown, 1)
+        self.assertEqual(KernelManagement.OSKMErrorNotApproved, 2)
+        self.assertEqual(KernelManagement.OSKMErrorBootLevel, 3)
+
+        self.assertEqual(KernelManagement.OSKernelManagementLoadOptionsSkipLoading, 1)
+        self.assertEqual(KernelManagement.OSKernelManagementLoadOptionsSkipMatching, 2)
+        self.assertEqual(
+            KernelManagement.OSKernelManagementLoadOptionsDisallowAuthorization, 3
+        )
+
     def test_methods(self):
         self.assertResultIsBOOL(
             KernelManagement.KernelManagementClient.loadExtensionsWithPaths_withError_
@@ -40,5 +50,10 @@ class TestKernelManagement(TestCase):
         )
         self.assertArgIsOut(
             KernelManagement.KernelManagementClient.loadExtensionsWithPaths_withIdentifiers_withPersonalityNames_withNoAuth_withError_,  # noqa: B950
+            4,
+        )
+
+        self.assertResultIsBOOL(
+            KernelManagement.KernelManagementClient.loadExtensionsWithPaths_withIdentifiers_withPersonalityNames_options_error_,  # noqa: B950,
             4,
         )

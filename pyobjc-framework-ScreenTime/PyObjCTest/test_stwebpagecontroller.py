@@ -19,3 +19,10 @@ class TestSTWebpageController(TestCase):
         )
 
         self.assertResultIsBOOL(ScreenTime.STWebpageController.URLIsBlocked)
+
+        self.assertResultIsBOOL(
+            ScreenTime.STWebpageController.setBundleIdentifier_erorr_
+        )
+        self.assertArgIsOut(
+            ScreenTime.STWebpageController.setBundleIdentifier_erorr_, 1
+        )

@@ -60,9 +60,30 @@ class TestCLLocationManager(TestCase):
         self.assertResultIsBOOL(
             CoreLocation.CLLocationManager.isMonitoringAvailableForClass_
         )
+        self.assertResultIsBOOL(CoreLocation.CLLocationManager.locationServicesEnabled)
+        self.assertResultIsBOOL(
+            CoreLocation.CLLocationManager.pausesLocationUpdatesAutomatically
+        )
+        self.assertArgIsBOOL(
+            CoreLocation.CLLocationManager.setPausesLocationUpdatesAutomatically_, 0
+        )
+        self.assertResultIsBOOL(
+            CoreLocation.CLLocationManager.allowsBackgroundLocationUpdates
+        )
+        self.assertArgIsBOOL(
+            CoreLocation.CLLocationManager.setAllowsBackgroundLocationUpdates_, 0
+        )
+        self.assertResultIsBOOL(CoreLocation.CLLocationManager.headingAvailable)
+
+    @min_os_level("10.15")
+    def testMethods10_15(self):
+        self.assertResultIsBOOL(CoreLocation.CLLocationManager.isRangingAvailable)
 
     @min_os_level("10.16")
     def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            CoreLocation.CLLocationManager.isAuthorizedForWidgetUpdates
+        )
         self.assertResultIsBOOL(
             CoreLocation.CLLocationManager.isAuthorizedForPreciseLocation
         )

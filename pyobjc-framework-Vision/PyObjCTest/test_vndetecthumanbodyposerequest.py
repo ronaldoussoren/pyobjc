@@ -32,6 +32,48 @@ class TestVNDetectHumanBodyPoseRequest(TestCase):
         self.assertIsInstance(Vision.VNBodyLandmarkRegionKeyLeftLeg, str)
         self.assertIsInstance(Vision.VNBodyLandmarkRegionKeyRightLeg, str)
 
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameNose, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftEye, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightEye, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftEar, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightEar, str)
+        self.assertIsInstance(
+            Vision.VNHumanBodyPoseObservationJointNameLeftShoulder, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanBodyPoseObservationJointNameRightShoulder, str
+        )
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameNeck, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftElbow, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightElbow, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftWrist, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightWrist, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftHip, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightHip, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRoot, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftKnee, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightKnee, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameLeftAnkle, str)
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointNameRightAnkle, str)
+
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointsGroupNameFace, str)
+        self.assertIsInstance(
+            Vision.VNHumanBodyPoseObservationJointsGroupNameTorso, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanBodyPoseObservationJointsGroupNameLeftArm, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanBodyPoseObservationJointsGroupNameRightArm, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanBodyPoseObservationJointsGroupNameLeftLeg, str
+        )
+        self.assertIsInstance(
+            Vision.VNHumanBodyPoseObservationJointsGroupNameRightLeg, str
+        )
+        self.assertIsInstance(Vision.VNHumanBodyPoseObservationJointsGroupNameAll, str)
+
         self.assertEqual(Vision.VNDetectHumanBodyPoseRequestRevision1, 1)
 
     @min_os_level("10.16")
@@ -50,5 +92,19 @@ class TestVNDetectHumanBodyPoseRequest(TestCase):
         )
         self.assertArgIsOut(
             Vision.VNDetectHumanBodyPoseRequest.supportedIdentifiedPointGroupKeysForRevision_error_,
+            1,
+        )
+        self.assertArgIsOut(
+            Vision.VNDetectHumanBodyPoseRequest.supportedJointNamesForRevision_error_, 1
+        )
+        self.assertArgIsOut(
+            Vision.VNDetectHumanBodyPoseRequest.supportedJointsGroupNamesForRevision_error_,
+            1,
+        )
+        self.assertArgIsOut(
+            Vision.VNHumanBodyPoseObservation.recognizedPointForJointName_error_, 1
+        )
+        self.assertArgIsOut(
+            Vision.VNHumanBodyPoseObservation.recognizedPointsForJointsGroupName_error_,
             1,
         )

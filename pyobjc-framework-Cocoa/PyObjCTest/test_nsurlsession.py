@@ -141,6 +141,22 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionWebSocketCloseCodeTLSHandshakeFailure, 1015
         )
 
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUnknown, 0
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUDP, 1
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTCP, 2
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTLS, 3
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolHTTPS, 4
+        )
+
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(Foundation.NSURLSessionTransferSizeUnknown, int)

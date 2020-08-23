@@ -5,7 +5,6 @@ import MLCompute
 
 class TestMLCSGDOptimizer(TestCase):
     def test_methods(self):
-        self.assertResultIsBOOL(MLCompute.MLCSGDOptimizer.usesNestrovMomentum)
         self.assertResultIsBOOL(MLCompute.MLCSGDOptimizer.usesNesterovMomentum)
 
         self.assertArgIsBOOL(

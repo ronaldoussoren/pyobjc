@@ -26,3 +26,4 @@ class TestCTFontManagerErrors(TestCase):
         self.assertEqual(CoreText.kCTFontManagerErrorCancelledByUser, 304)
         self.assertEqual(CoreText.kCTFontManagerErrorDuplicatedName, 305)
         self.assertEqual(CoreText.kCTFontManagerErrorInvalidFilePath, 306)
+        self.assertEqual(CoreText.kCTFontManagerErrorUnsupportedScope, 307)

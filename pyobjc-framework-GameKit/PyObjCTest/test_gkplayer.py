@@ -32,3 +32,7 @@ class TestGKPlayer(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(GameKit.GKPlayer.scopedIDsArePersistent)
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(GameKit.GKPlayer.isInvitable)

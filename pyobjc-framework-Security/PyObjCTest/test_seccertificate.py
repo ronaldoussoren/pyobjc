@@ -82,6 +82,7 @@ class TestSecCertificate(TestCase):
         )
         self.assertArgIsCFRetained(Security.SecCertificateCopyEmailAddresses, 1)
 
+        # "SEC_SUFFIX_LEGACYMAC" on arm64
         self.assertResultHasType(Security.SecCertificateCopyPublicKey, objc._C_INT)
         self.assertArgHasType(Security.SecCertificateCopyPublicKey, 0, objc._C_ID)
         self.assertArgHasType(
@@ -91,6 +92,7 @@ class TestSecCertificate(TestCase):
         )
         self.assertArgIsCFRetained(Security.SecCertificateCopyPublicKey, 1)
 
+        # "SEC_SUFFIX_LEGACYMAC" on arm64
         self.assertResultHasType(Security.SecCertificateCopySerialNumber, objc._C_ID)
         self.assertArgHasType(Security.SecCertificateCopySerialNumber, 0, objc._C_ID)
         self.assertArgHasType(

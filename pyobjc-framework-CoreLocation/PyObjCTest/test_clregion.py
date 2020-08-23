@@ -8,6 +8,11 @@ class TestCLRegion(TestCase):
         self.assertEqual(CoreLocation.CLRegionStateInside, 1)
         self.assertEqual(CoreLocation.CLRegionStateOutside, 2)
 
+        self.assertEqual(CoreLocation.CLProximityUnknown, 0)
+        self.assertEqual(CoreLocation.CLProximityImmediate, 1)
+        self.assertEqual(CoreLocation.CLProximityNear, 2)
+        self.assertEqual(CoreLocation.CLProximityFar, 3)
+
     @min_os_level("10.7")
     def testMethods10_7(self):
         self.assertResultIsBOOL(CoreLocation.CLRegion.containsCoordinate_)

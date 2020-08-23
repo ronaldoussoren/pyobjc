@@ -403,6 +403,7 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSecCertificatePolicyNotAllowed, -67899)
         self.assertEqual(Security.errSecCertificateNameNotAllowed, -67900)
         self.assertEqual(Security.errSecCertificateValidityPeriodTooLong, -67901)
+        self.assertEqual(Security.errSecCertificateIsCA, -67902)
 
         self.assertEqual(Security.errSSLProtocol, -9800)
         self.assertEqual(Security.errSSLNegotiation, -9801)

@@ -10,3 +10,6 @@ class TestVNDetectContoursRequest(TestCase):
     def test_methods10_16(self):
         self.assertResultIsBOOL(Vision.VNDetectContoursRequest.detectDarkOnLight)
         self.assertArgIsBOOL(Vision.VNDetectContoursRequest.setDetectDarkOnLight_, 0)
+
+        self.assertResultIsBOOL(Vision.VNDetectContoursRequest.detectsDarkOnLight)
+        self.assertArgIsBOOL(Vision.VNDetectContoursRequest.setDetectsDarkOnLight_, 0)
