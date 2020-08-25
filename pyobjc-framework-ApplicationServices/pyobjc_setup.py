@@ -229,6 +229,10 @@ def get_sdk_level():
     if sdk == "/":
         return get_os_level()
 
+    # Remove trailing slashes to prevent basename returning "" incorrectly.
+    # Without this "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/"
+    # will fail the below assertions.
+    sdk = sdk.rstrip("/")
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
