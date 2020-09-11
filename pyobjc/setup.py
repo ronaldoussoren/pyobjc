@@ -21,7 +21,7 @@ VERSION = "6.2.2"
 # removed column is ``None`` when the framework is present ont he latest
 # supported OSX release.
 FRAMEWORK_WRAPPERS = [
-    # Name                      Introcuded          Removed
+    # Name                      Introduced          Removed
     ("libdispatch", "10.8", None),
     ("AdSupport", "10.14", None),
     ("AuthenticationServices", "10.15", None),
