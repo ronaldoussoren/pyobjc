@@ -44,6 +44,7 @@ def get_sdk_level(sdk):
     if sdk == "/":
         return get_os_level()
 
+    sdk = sdk.rstrip("/")
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")

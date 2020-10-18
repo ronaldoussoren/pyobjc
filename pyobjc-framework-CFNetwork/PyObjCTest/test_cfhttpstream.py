@@ -63,7 +63,7 @@ class TestCFHTTPStream(TestCase):
                 )
                 CFNetwork.CFHTTPReadStreamSetRedirectsAutomatically(v, True)
 
-            if os_level_key(os_release()) < os_level_key("10.10"):
+            if os_level_key(os_release()) < os_level_key("10.9"):
                 CFNetwork.CFHTTPReadStreamSetProxy(v, "localhost", 8080)
 
         finally:

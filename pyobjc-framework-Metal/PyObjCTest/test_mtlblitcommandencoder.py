@@ -435,42 +435,42 @@ class TestMTLBlitCommandEncoder(TestCase):
             objc._C_NSUInteger,
         )
 
-        self.asssertArgHasType(
+        self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
             1,
-            Metal.MTLRegion.__typestr,
+            Metal.MTLRegion.__typestr__,
         )
-        self.asssertArgHasType(
+        self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
-        self.asssertArgHasType(
+        self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
             3,
             objc._C_NSUInteger,
         )
-        self.asssertIsBOOL(
+        self.assertArgIsBOOL(
             TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: B950
             4,
         )
-        self.asssertArgHasType(
+        self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.getTextureAccessCounters_region_mipLevel_slice_resetCounters_countersBuffer_countersBufferOffset_,  # noqa: 6950
             3,
             objc._C_NSUInteger,
         )
 
-        self.asssertArgHasType(
+        self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.resetTextureAccessCounters_region_mipLevel_slice_,  # noqa: B950
             1,
-            Metal.MTLRegion.__typestr,
+            Metal.MTLRegion.__typestr__,
         )
-        self.asssertArgHasType(
+        self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.resetTextureAccessCounters_region_mipLevel_slice_,  # noqa: B950
             2,
             objc._C_NSUInteger,
         )
-        self.asssertArgHasType(
+        self.assertArgHasType(
             TestMTLBlitCommandEncoderHelper.resetTextureAccessCounters_region_mipLevel_slice_,  # noqa: B950
             3,
             objc._C_NSUInteger,

@@ -60,3 +60,10 @@ class TestObjectAPI(TestCase):
     def test_functions_10_12(self):
         self.assertResultHasType(libdispatch.dispatch_activate, objc._C_VOID)
         self.assertArgHasType(libdispatch.dispatch_activate, 0, objc._C_ID)
+
+    @min_os_level("10.14")
+    def test_functions_10_14(self):
+        self.assertResultHasType(libdispatch.dispatch_set_qos_class_floor, objc._C_VOID)
+        self.assertArgHasType(libdispatch.dispatch_set_qos_class_floor, 0, objc._C_ID)
+        self.assertArgHasType(libdispatch.dispatch_set_qos_class_floor, 1, objc._C_UINT)
+        self.assertArgHasType(libdispatch.dispatch_set_qos_class_floor, 2, objc._C_INT)

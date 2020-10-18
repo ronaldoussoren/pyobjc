@@ -13,7 +13,7 @@ import subprocess
 import tempfile
 
 import objc
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, os_release, os_level_key
 
 from plistlib import loads
 
@@ -38,200 +38,202 @@ objc.registerMetaDataForSelector(
     },
 )
 
+if os_level_key(os_release()) >= os_level_key("10.13"):
+    # Secure coding was introduced in 10.13.
 
-class TestNSKeyedArchivingInterop(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        src = os.path.join(MYDIR, "dump-nsarchive-securecoding.m")
-        dst = cls.progpath = os.path.join(MYDIR, "dump-nsarchive-securecoding")
+    class TestNSKeyedArchivingInterop(TestCase):
+        @classmethod
+        def setUpClass(cls):
+            src = os.path.join(MYDIR, "dump-nsarchive-securecoding.m")
+            dst = cls.progpath = os.path.join(MYDIR, "dump-nsarchive-securecoding")
 
-        subprocess.check_call(
-            [
-                "cc",
-                "-o",
-                dst,
-                src,
-                "-framework",
-                "Foundation",
-                "-DPyObjC_BUILD_RELEASE=%02d%02d"
-                % (tuple(map(int, platform.mac_ver()[0].split(".")[:2]))),
-            ]
-        )
+            subprocess.check_call(
+                [
+                    "cc",
+                    "-o",
+                    dst,
+                    src,
+                    "-framework",
+                    "Foundation",
+                    "-DPyObjC_BUILD_RELEASE=%02d%02d"
+                    % (tuple(map(int, platform.mac_ver()[0].split(".")[:2]))),
+                ]
+            )
 
-    @classmethod
-    def tearDownClass(cls):
-        if os.path.exists(cls.progpath):
-            os.unlink(cls.progpath)
+        @classmethod
+        def tearDownClass(cls):
+            if os.path.exists(cls.progpath):
+                os.unlink(cls.progpath)
 
-    def test_interop_string(self):
-        for testval in ("hello world", "goodbye moon"):
+        def test_interop_string(self):
+            for testval in ("hello world", "goodbye moon"):
+                v = NSArray.arrayWithObject_(testval)
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    v, True, None
+                )
+
+                if data is None:
+                    self.fail("Cannot create archive: %s" % (error,))
+
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
+
+                    converted = subprocess.check_output([self.progpath, fp.name])
+
+                converted = loads(converted)
+                self.assertEqual(converted, [testval])
+
+        def test_interop_float(self):
+            for testval in (-4.5, 0, 5.5e10):
+                v = NSArray.arrayWithObject_(testval)
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    v, True, None
+                )
+
+                if data is None:
+                    self.fail("Cannot create archive: %s" % (error,))
+
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
+
+                    converted = subprocess.check_output([self.progpath, fp.name])
+
+                converted = loads(converted)
+                self.assertEqual(converted, [testval])
+
+        def test_interop_int(self):
+            for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62):
+                v = NSArray.arrayWithObject_(testval)
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    v, True, None
+                )
+
+                if data is None:
+                    self.fail("Cannot create archive: %s" % (error,))
+
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
+
+                    converted = subprocess.check_output([self.progpath, fp.name])
+
+                converted = loads(converted)
+                self.assertEqual(converted, [testval])
+
+            testval = 2 ** 64
             v = NSArray.arrayWithObject_(testval)
-            (
-                data,
-                error,
-            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                v, True, None
-            )
-
-            if data is None:
-                self.fail("Cannot create archive: %s" % (error,))
+            data = NSKeyedArchiver.archivedDataWithRootObject_(v)
 
             with tempfile.NamedTemporaryFile() as fp:
                 fp.write(data.bytes())
                 fp.flush()
 
-                converted = subprocess.check_output([self.progpath, fp.name])
+                self.assertRaises(
+                    subprocess.CalledProcessError,
+                    subprocess.check_output,
+                    [self.progpath, fp.name],
+                )
 
-            converted = loads(converted)
-            self.assertEqual(converted, [testval])
+        def test_interop_data(self):
+            for testval in (b"hello world",):
+                v = NSArray.arrayWithObject_(testval)
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    v, True, None
+                )
 
-    def test_interop_float(self):
-        for testval in (-4.5, 0, 5.5e10):
-            v = NSArray.arrayWithObject_(testval)
-            (
-                data,
-                error,
-            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                v, True, None
-            )
+                if data is None:
+                    self.fail("Cannot create archive: %s" % (error,))
 
-            if data is None:
-                self.fail("Cannot create archive: %s" % (error,))
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
 
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
+                    converted = subprocess.check_output([self.progpath, fp.name])
 
-                converted = subprocess.check_output([self.progpath, fp.name])
+                converted = loads(converted)
+                self.assertEqual(converted, [testval])
 
-            converted = loads(converted)
-            self.assertEqual(converted, [testval])
+        def test_interop_seq(self):
+            for testval in (["a", "b", 3], ("a", "b", 3)):
 
-    def test_interop_int(self):
-        for testval in (-42, 0, 42, -(2 ** 62), 2 ** 62):
-            v = NSArray.arrayWithObject_(testval)
-            (
-                data,
-                error,
-            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                v, True, None
-            )
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    testval, True, None
+                )
 
-            if data is None:
-                self.fail("Cannot create archive: %s" % (error,))
+                if data is None:
+                    self.fail("Cannot create archive: %s" % (error,))
 
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
 
-                converted = subprocess.check_output([self.progpath, fp.name])
+                    converted = subprocess.check_output([self.progpath, fp.name])
 
-            converted = loads(converted)
-            self.assertEqual(converted, [testval])
+                converted = loads(converted)
+                self.assertIs(type(converted), list)
+                self.assertEqual(converted, list(testval))
 
-        testval = 2 ** 64
-        v = NSArray.arrayWithObject_(testval)
-        data = NSKeyedArchiver.archivedDataWithRootObject_(v)
+        def test_interop_set(self):
+            for testval in ({"a", "b", 3}, frozenset({"a", "b", 3})):
 
-        with tempfile.NamedTemporaryFile() as fp:
-            fp.write(data.bytes())
-            fp.flush()
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    testval, True, None
+                )
 
-            self.assertRaises(
-                subprocess.CalledProcessError,
-                subprocess.check_output,
-                [self.progpath, fp.name],
-            )
+                if data is None:
+                    self.fail("Cannot create archive: %s" % (error,))
 
-    def test_interop_data(self):
-        for testval in (b"hello world",):
-            v = NSArray.arrayWithObject_(testval)
-            (
-                data,
-                error,
-            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                v, True, None
-            )
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
 
-            if data is None:
-                self.fail("Cannot create archive: %s" % (error,))
+                    converted = subprocess.check_output([self.progpath, fp.name])
 
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
+                self.assertTrue(converted.startswith(b"{("))
+                self.assertTrue(converted.endswith(b")}\n"))
+                converted = b"{" + converted[2:-3] + b"}"
+                converted = eval(converted.decode("utf-8"), {"a": "a", "b": "b"})
 
-                converted = subprocess.check_output([self.progpath, fp.name])
+                self.assertEqual(converted, set(testval))
 
-            converted = loads(converted)
-            self.assertEqual(converted, [testval])
+        def test_interop_dict(self):
+            for testval in ({"a": "b", "c": 42},):
 
-    def test_interop_seq(self):
-        for testval in (["a", "b", 3], ("a", "b", 3)):
+                (
+                    data,
+                    error,
+                ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
+                    testval, True, None
+                )
 
-            (
-                data,
-                error,
-            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                testval, True, None
-            )
+                if data is None:
+                    self.fail("Cannot create archive: %s" % (error,))
 
-            if data is None:
-                self.fail("Cannot create archive: %s" % (error,))
+                with tempfile.NamedTemporaryFile() as fp:
+                    fp.write(data.bytes())
+                    fp.flush()
 
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
+                    converted = subprocess.check_output([self.progpath, fp.name])
 
-                converted = subprocess.check_output([self.progpath, fp.name])
-
-            converted = loads(converted)
-            self.assertIs(type(converted), list)
-            self.assertEqual(converted, list(testval))
-
-    def test_interop_set(self):
-        for testval in ({"a", "b", 3}, frozenset({"a", "b", 3})):
-
-            (
-                data,
-                error,
-            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                testval, True, None
-            )
-
-            if data is None:
-                self.fail("Cannot create archive: %s" % (error,))
-
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
-
-                converted = subprocess.check_output([self.progpath, fp.name])
-
-            self.assertTrue(converted.startswith(b"{("))
-            self.assertTrue(converted.endswith(b")}\n"))
-            converted = b"{" + converted[2:-3] + b"}"
-            converted = eval(converted.decode("utf-8"), {"a": "a", "b": "b"})
-
-            self.assertEqual(converted, set(testval))
-
-    def test_interop_dict(self):
-        for testval in ({"a": "b", "c": 42},):
-
-            (
-                data,
-                error,
-            ) = NSKeyedArchiver.archivedDataWithRootObject_requiringSecureCoding_error_(
-                testval, True, None
-            )
-
-            if data is None:
-                self.fail("Cannot create archive: %s" % (error,))
-
-            with tempfile.NamedTemporaryFile() as fp:
-                fp.write(data.bytes())
-                fp.flush()
-
-                converted = subprocess.check_output([self.progpath, fp.name])
-
-            converted = loads(converted)
-            self.assertEqual(converted, testval)
+                converted = loads(converted)
+                self.assertEqual(converted, testval)

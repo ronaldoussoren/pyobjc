@@ -70,9 +70,11 @@ class TestSCNetworkConnection(TestCase):
         self.assertArgIsOut(
             SystemConfiguration.SCNetworkConnectionCopyUserPreferences, 2
         )
-        v, servId, userOpts = SystemConfiguration.SCNetworkConnectionCopyUserPreferences(
-            None, None, None
-        )
+        (
+            v,
+            servId,
+            userOpts,
+        ) = SystemConfiguration.SCNetworkConnectionCopyUserPreferences(None, None, None)
         if v:
             self.assertIsInstance(servId, str)
             self.assertIsInstance(

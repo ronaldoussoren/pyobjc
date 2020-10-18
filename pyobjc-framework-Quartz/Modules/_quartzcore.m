@@ -10,7 +10,10 @@
 #import <CoreImage/CIFilterBuiltins.h>
 #endif
 
+#if PyObjC_BUILD_RELEASE >= 1013
 #import <CoreImage/CoreImage.h>
+#endif
+
 #import <Quartz/Quartz.h>
 
 #include "_CoreImage_protocols.m"

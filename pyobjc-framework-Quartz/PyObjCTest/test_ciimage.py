@@ -80,6 +80,13 @@ class TestCIImage(TestCase):
             Quartz.kCIImageAuxiliarySemanticSegmentationTeethMatte, str
         )
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(Quartz.kCIImageToneMapHDRtoSDR, str)
+        self.assertIsInstance(
+            Quartz.kCIImageAuxiliarySemanticSegmentationGlassesMatte, str
+        )
+
     def testMethods(self):
         self.assertArgIsBOOL(
             Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2

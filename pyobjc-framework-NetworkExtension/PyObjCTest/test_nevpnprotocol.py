@@ -15,3 +15,8 @@ class TestNEVPNProtocol(TestCase):
 
         self.assertResultIsBOOL(NetworkExtension.NEVPNProtocol.excludeLocalNetworks)
         self.assertArgIsBOOL(NetworkExtension.NEVPNProtocol.setExcludeLocalNetworks_, 0)
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(NetworkExtension.NEVPNProtocol.enforceRoutes)
+        self.assertArgIsBOOL(NetworkExtension.NEVPNProtocol.setEnforceRoutes_, 0)

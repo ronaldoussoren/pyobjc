@@ -703,12 +703,12 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setTileBuffer_length_atIndex_,
+            TestMTLRenderCommandEncoderHelper.setTileBuffer_offset_atIndex_,
             1,
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setTileBuffer_length_atIndex_,
+            TestMTLRenderCommandEncoderHelper.setTileBuffer_offset_atIndex_,
             2,
             objc._C_NSUInteger,
         )
@@ -830,7 +830,7 @@ class TestMTLRenderCommandEncoder(TestCase):
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
-            1,
+            3,
             Metal.NSRange.__typestr__,
         )
 

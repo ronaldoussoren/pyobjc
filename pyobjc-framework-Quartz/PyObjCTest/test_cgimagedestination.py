@@ -108,6 +108,10 @@ class TestCGImageDestination(TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(Quartz.kCGImageDestinationOptimizeColorForSharing, str)
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(Quartz.kCGImageDestinationPreserveGainMap, str)
+
     @min_os_level("10.8")
     def testFunctions10_8(self):
         Quartz.CGImageDestinationAddImageAndMetadata

@@ -112,3 +112,10 @@ class TestAVPlayerItem(TestCase):
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItem.setStartsOnFirstEligibleVariant_, 0
         )
+
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayerItem.appliesPerFrameHDRDisplayMetadata
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayerItem.setAppliesPerFrameHDRDisplayMetadata_, 0
+        )

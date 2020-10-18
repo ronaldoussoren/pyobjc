@@ -44,22 +44,6 @@ class TestAVAudioSession(TestCase):
         self.assertEqual(
             AVFoundation.AVAudioSessionCategoryOptionDuckOthers, 0x2
         )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioSessionCategoryOptionAllowBluetooth, 0x4
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioSessionCategoryOptionDefaultToSpeaker, 0x8
-        )  # noqa: B950
-        self.assertEqual(
-            AVFoundation.AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers,  # noqa: B950
-            0x11,
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioSessionCategoryOptionAllowBluetoothA2DP, 0x20
-        )
-        self.assertEqual(
-            AVFoundation.AVAudioSessionCategoryOptionAllowAirPlay, 0x40
-        )  # noqa: B950
 
         self.assertEqual(AVFoundation.AVAudioSessionInterruptionTypeBegan, 1)
         self.assertEqual(AVFoundation.AVAudioSessionInterruptionTypeEnded, 0)

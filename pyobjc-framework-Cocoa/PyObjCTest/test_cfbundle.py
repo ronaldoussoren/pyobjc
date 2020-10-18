@@ -1,5 +1,5 @@
 import CoreFoundation
-from PyObjCTools.TestSupport import TestCase, os_level_key, os_release
+from PyObjCTools.TestSupport import TestCase, os_level_key, os_release, min_os_level
 
 
 class TestCFBundle(TestCase):
@@ -323,3 +323,9 @@ class TestCFBundle(TestCase):
         self.assertEqual(
             CoreFoundation.kCFBundleExecutableArchitectureARM64, 0x0100000C
         )
+
+    @min_os_level("10.16")
+    def test_functions_10_16(self):
+        self.assertResultIsBOOL(CoreFoundation.CFBundleIsExecutableLoadable)
+        self.assertResultIsBOOL(CoreFoundation.CFBundleIsExecutableLoadableForURL)
+        self.assertResultIsBOOL(CoreFoundation.CFBundleIsArchitectureLoadable)

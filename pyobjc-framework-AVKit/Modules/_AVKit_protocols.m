@@ -7,11 +7,11 @@
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
-#if defined(__x86_64__) && PyObjC_BUILD_RELEASE >= 1010
+#if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(AVCaptureViewDelegate));
     Py_XDECREF(p);
 #endif
-#if defined(__x86_64__) && PyObjC_BUILD_RELEASE >= 1015
+#if PyObjC_BUILD_RELEASE >= 1015
     p = PyObjC_IdToPython(@protocol(AVPictureInPictureControllerDelegate));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(AVPlayerViewPictureInPictureDelegate));

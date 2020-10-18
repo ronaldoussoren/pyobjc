@@ -93,7 +93,8 @@ class TestMTLRenderPipeline(TestCase):
             TestMTLRenderPipelineHelper.textureWriteRoundingMode, objc._C_NSInteger
         )
         self.assertResultHasType(
-            TestMTLRenderPipelineHelper.maxTotalThreadsPerThreadgroup, objc._C_NSInteger
+            TestMTLRenderPipelineHelper.maxTotalThreadsPerThreadgroup,
+            objc._C_NSUInteger,
         )
         self.assertResultIsBOOL(
             TestMTLRenderPipelineHelper.threadgroupSizeMatchesTileSize

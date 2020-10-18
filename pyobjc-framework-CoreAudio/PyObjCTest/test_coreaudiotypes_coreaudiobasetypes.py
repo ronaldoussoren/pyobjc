@@ -1,5 +1,5 @@
 import CoreAudio
-from PyObjCTools.TestSupport import TestCase, fourcc
+from PyObjCTools.TestSupport import TestCase, fourcc, min_os_level
 
 TARGET_RT_BIG_ENDIAN = False
 CA_PREFER_FIXED_POINT = True
@@ -773,5 +773,9 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertIsInstance(v.mChannelLayoutTag, int)
 
     def test_functions(self):
-        CoreAudio.AudioChannelLayoutTag_GetNumberOfChannels
         CoreAudio.TestAudioFormatNativeEndian
+
+    @min_os_level("10.11")
+    def test_functions10_11(self):
+        CoreAudio.TestAudioFormatNativeEndian
+        CoreAudio.AudioChannelLayoutTag_GetNumberOfChannels

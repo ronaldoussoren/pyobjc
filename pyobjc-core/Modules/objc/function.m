@@ -181,13 +181,20 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     }
 
     if (variadicAllArgs) {
+#if PyObjC_BUILD_RELEASE >= 1015
+
 #ifndef __arm64__
         if (@available(macOS 10.15, *)) {
 #endif
             r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
                              PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
 #ifndef __arm64__
-        } else {
+        } else 
+#endif
+#endif
+
+#ifndef __arm64__
+        {
             r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
                              PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
         }

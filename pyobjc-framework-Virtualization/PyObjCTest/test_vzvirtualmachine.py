@@ -16,7 +16,7 @@ class TestVZVirtualMachine(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(Virtualization.VZVirtualMachine.isSupported)
         self.assertResultIsBOOL(Virtualization.VZVirtualMachine.canStart)
-        self.assertResultIsBOOL(Virtualization.VZVirtualMachine.canPauze)
+        self.assertResultIsBOOL(Virtualization.VZVirtualMachine.canPause)
         self.assertResultIsBOOL(Virtualization.VZVirtualMachine.canResume)
         self.assertResultIsBOOL(Virtualization.VZVirtualMachine.canRequestStop)
 
@@ -24,10 +24,10 @@ class TestVZVirtualMachine(TestCase):
             Virtualization.VZVirtualMachine.startWithCompletionHandler_, 0, b"v@"
         )
         self.assertArgIsBlock(
-            Virtualization.VZVirtualMachine.pauseWithCompletionHandler, 0, b"v@"
+            Virtualization.VZVirtualMachine.pauseWithCompletionHandler_, 0, b"v@"
         )
         self.assertArgIsBlock(
-            Virtualization.VZVirtualMachine.resumeWithCompletionHandler, 0, b"v@"
+            Virtualization.VZVirtualMachine.resumeWithCompletionHandler_, 0, b"v@"
         )
 
         self.assertResultIsBOOL(Virtualization.VZVirtualMachine.requestStopWithError_)

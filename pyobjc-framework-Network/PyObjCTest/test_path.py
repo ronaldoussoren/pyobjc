@@ -13,6 +13,11 @@ class TestPath(TestCase):
         self.assertEqual(Network.nw_path_status_unsatisfied, 2)
         self.assertEqual(Network.nw_path_status_satisfiable, 3)
 
+        self.assertEqual(Network.nw_path_unsatisfied_reason_not_available, 0)
+        self.assertEqual(Network.nw_path_unsatisfied_reason_cellular_denied, 1)
+        self.assertEqual(Network.nw_path_unsatisfied_reason_wifi_denied, 2)
+        self.assertEqual(Network.nw_path_unsatisfied_reason_local_network_denied, 3)
+
     def test_functions(self):
         Network.nw_path_get_status
 
@@ -40,3 +45,7 @@ class TestPath(TestCase):
         self.assertArgIsBlock(
             Network.nw_path_enumerate_gateways, 1, nw_path_enumerate_gateways_block_t
         )
+
+    @min_os_level("10.16")
+    def test_functions10_16(self):
+        Network.nw_path_get_unsatisfied_reason

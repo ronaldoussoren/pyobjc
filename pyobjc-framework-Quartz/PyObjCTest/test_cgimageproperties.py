@@ -240,6 +240,9 @@ class TestCGImageProperties(TestCase):
         self.assertEqual(Quartz.kCGImagePropertyOrientationRightMirrored, 7)
         self.assertEqual(Quartz.kCGImagePropertyOrientationLeft, 8)
 
+        self.assertEqual(Quartz.kCGImageTGACompressionNone, 0)
+        self.assertEqual(Quartz.kCGImageTGACompressionRLE, 1)
+
     @min_os_level("10.5")
     def testConstants10_5(self):
         self.assertIsInstance(Quartz.kCGImagePropertyMakerCanonDictionary, str)
@@ -828,3 +831,10 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyWebPFrameInfoArray, str)
         self.assertIsInstance(Quartz.kCGImagePropertyWebPCanvasPixelWidth, str)
         self.assertIsInstance(Quartz.kCGImagePropertyWebPCanvasPixelHeight, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyTGADictionary, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyTGACompression, str)
+
+        self.assertIsInstance(
+            Quartz.kCGImageAuxiliaryDataTypeSemanticSegmentationGlassesMatte, str
+        )
+        self.assertIsInstance(Quartz.kCGImageAuxiliaryDataTypeHDRGainMap, str)

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
 import objc
 
@@ -42,6 +42,9 @@ class TestPDFDocument(TestCase):
         self.assertIsInstance(Quartz.PDFDocumentCreationDateAttribute, str)
         self.assertIsInstance(Quartz.PDFDocumentModificationDateAttribute, str)
         self.assertIsInstance(Quartz.PDFDocumentKeywordsAttribute, str)
+
+    @min_os_level("10.13")
+    def test_constants10_13(self):
         self.assertIsInstance(Quartz.PDFDocumentOwnerPasswordOption, str)
         self.assertIsInstance(Quartz.PDFDocumentUserPasswordOption, str)
 
@@ -51,17 +54,11 @@ class TestPDFDocument(TestCase):
         self.assertResultIsBOOL(Quartz.PDFDocument.unlockWithPassword_)
         self.assertResultIsBOOL(Quartz.PDFDocument.allowsPrinting)
         self.assertResultIsBOOL(Quartz.PDFDocument.allowsCopying)
-        self.assertResultIsBOOL(Quartz.PDFDocument.allowsFormFieldEntry)
         self.assertResultIsBOOL(Quartz.PDFDocument.writeToFile_)
         self.assertResultIsBOOL(Quartz.PDFDocument.writeToFile_withOptions_)
         self.assertResultIsBOOL(Quartz.PDFDocument.writeToURL_)
         self.assertResultIsBOOL(Quartz.PDFDocument.writeToURL_withOptions_)
         self.assertResultIsBOOL(Quartz.PDFDocument.isFinding)
-
-        self.assertResultIsBOOL(Quartz.PDFDocument.allowsDocumentChanges)
-        self.assertResultIsBOOL(Quartz.PDFDocument.allowsDocumentAssembly)
-        self.assertResultIsBOOL(Quartz.PDFDocument.allowsContentAccessibility)
-        self.assertResultIsBOOL(Quartz.PDFDocument.allowsCommenting)
 
         self.assertResultHasType(TestPDFDocumentHelper.classForPage, objc._C_CLASS)
         self.assertResultHasType(
@@ -77,5 +74,14 @@ class TestPDFDocument(TestCase):
             Quartz.PDFDocument.printOperationForPrintInfo_scalingMode_autoRotate_, 2
         )
 
+    @min_os_level("10.13")
+    def testMethods10_13(self):
+        self.assertResultIsBOOL(Quartz.PDFDocument.allowsFormFieldEntry)
+        self.assertResultIsBOOL(Quartz.PDFDocument.allowsDocumentChanges)
+        self.assertResultIsBOOL(Quartz.PDFDocument.allowsDocumentAssembly)
+        self.assertResultIsBOOL(Quartz.PDFDocument.allowsContentAccessibility)
+        self.assertResultIsBOOL(Quartz.PDFDocument.allowsCommenting)
+
+    @min_sdk_level("10.13")
     def testProtocols(self):
         objc.protocolNamed("PDFDocumentDelegate")

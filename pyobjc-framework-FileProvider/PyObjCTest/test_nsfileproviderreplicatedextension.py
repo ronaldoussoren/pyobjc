@@ -21,7 +21,7 @@ class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
         pass
 
     def modifyItem_baseVersion_changedFields_contents_options_request_completionHandler_(
-        self, a, b, c, d, e, f
+        self, a, b, c, d, e, f, g
     ):
         pass
 
@@ -45,6 +45,14 @@ class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
         self, a, b, c
     ):
         pass
+
+    def fetchContentsForItemWithIdentifier_version_usingExistingContentsAtURL_request_completionHandler_(
+        self, a, b, c, d, e
+    ):
+        return 1
+
+    def supportedServiceSourcesForItemIdentifier_completionHandler_(self, a, b):
+        return 1
 
 
 class TestNSFileProviderReplicatedExtension(TestCase):
@@ -131,7 +139,7 @@ class TestNSFileProviderReplicatedExtension(TestCase):
         )
         self.assertArgIsBlock(
             TestNSFileProviderReplicatedExtensionHelper.fetchThumbnailsForItemIdentifiers_requestedSize_perThumbnailCompletionHandler_completionHandler_,  # noqa: B950
-            4,
+            3,
             b"v@",
         )
 
@@ -139,4 +147,10 @@ class TestNSFileProviderReplicatedExtension(TestCase):
             TestNSFileProviderReplicatedExtensionHelper.performActionWithIdentifier_onItemsWithIdentifiers_completionHandler_,
             2,
             b"v@",
+        )
+
+        self.assertArgIsBlock(
+            TestNSFileProviderReplicatedExtensionHelper.fetchContentsForItemWithIdentifier_version_usingExistingContentsAtURL_request_completionHandler_,  # noqa: B950
+            4,
+            b"v@@@",
         )

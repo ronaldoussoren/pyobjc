@@ -5,7 +5,7 @@ import objc
 try:
     Foundation.NSURLSessionStreamTask
 
-except NameError:
+except AttributeError:
     pass
 
 else:
@@ -411,6 +411,11 @@ class TestNSURLSession(TestCase):
         self.assertResultIsBOOL(
             Foundation.NSURLSessionTaskTransactionMetrics.isMultipath
         )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(Foundation.NSURLSession.sessionSendsLaunchEvents)
+        self.assertArgIsBOOL(Foundation.NSURLSession.setSessionSendsLaunchEvents_, 0)
 
     @min_sdk_level("10.12")
     def testProtocols10_12(self):

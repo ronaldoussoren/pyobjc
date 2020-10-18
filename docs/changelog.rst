@@ -64,6 +64,20 @@ XXX TODO:
 * Added type to manage ``Py_buffer`` lifetimes to the internal API in pyobjc-core, to be used
   by framework wrappers.
 
+* Add ``objc._C_BYREF``. This definition was missing, but isn't used in modern ObjC code.
+
+* PR 323: Remove leading slashes from detected SDK patch to avoid miscalculating the version.
+
+  Patch by GitHub user linuxfood.
+
+* PR 322: Avoid *None* error in PyObjCTools.AppHelper
+
+  Patch by github user mintho
+
+* PR 321: Fix typo in documentation
+
+  Patch by github user russeldavis
+
 Version 6.2.1
 -------------
 

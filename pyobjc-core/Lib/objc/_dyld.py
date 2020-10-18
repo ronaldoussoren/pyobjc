@@ -14,6 +14,11 @@ import os
 
 from objc._framework import infoForFramework
 
+try:
+    from objc._objc import _dyld_shared_cache_contains_path
+except ImportError:
+    _dyld_shared_cache_contains_path = None
+
 # These are the defaults as per man dyld(1)
 #
 DEFAULT_FRAMEWORK_FALLBACK = ":".join(
@@ -92,10 +97,8 @@ def dyld_framework(filename, framework_name, version=None):
                 yield os.path.join(path, framework_name + ".framework", framework_name)
 
     for f in inject_suffixes(_search()):
-        if f.startswith("/System/"):
-            if os.path.islink(f):
-                return f
-            elif os.path.isdir(os.path.dirname(f)):
+        if _dyld_shared_cache_contains_path is not None:
+            if _dyld_shared_cache_contains_path(f):
                 return f
 
         if os.path.exists(f):
@@ -122,9 +125,9 @@ def dyld_library(filename, libname):
             yield os.path.join(path, libname)
 
     for f in inject_suffixes(_search()):
-        if os.path.islink(f) and (f.startswith("/lib/") or f.startswith("/usr/lib/")):
-            return f
-
+        if _dyld_shared_cache_contains_path is not None:
+            if _dyld_shared_cache_contains_path(f):
+                return f
         if os.path.exists(f):
             return f
     raise ValueError("dylib %s could not be found" % (filename,))

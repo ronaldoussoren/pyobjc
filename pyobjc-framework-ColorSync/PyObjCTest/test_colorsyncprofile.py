@@ -9,8 +9,12 @@ class TestColorSyncProfile(TestCase):
         self.assertIsCFType(ColorSync.ColorSyncProfileRef)
         self.assertIsCFType(ColorSync.ColorSyncMutableProfileRef)
 
+    @min_os_level("10.4")
+    def testFunctions10_4(self):
+        self.assertResultHasType(ColorSync.ColorSyncProfileIsWideGamut, objc._C_BOOL)
+
     @min_os_level("10.13")
-    def testFunctions(self):
+    def testFunctions10_13(self):
         self.assertIsInstance(ColorSync.ColorSyncProfileGetTypeID(), int)
 
         self.assertResultIsCFRetained(ColorSync.ColorSyncProfileCreate)
@@ -105,6 +109,10 @@ class TestColorSyncProfile(TestCase):
 
         self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 1)
         self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 4)
+
+    @min_os_level("10.16")
+    def testFunctions10_16(self):
+        self.assertResultHasType(ColorSync.ColorSyncProfileIsMatrixBased, objc._C_BOOL)
 
     @min_os_level("10.13")
     def testConstants(self):

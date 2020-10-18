@@ -70,3 +70,7 @@ class TestMLCTrainingGraph(TestCase):
         )
 
         self.assertResultIsBOOL(MLCompute.MLCTrainingGraph.setTrainingTensorParameters_)
+
+        self.assertResultIsBOOL(
+            MLCompute.MLCTrainingGraph.bindOptimizerData_deviceData_withTensor_
+        )

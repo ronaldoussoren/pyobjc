@@ -17,15 +17,15 @@ import sys
 import tempfile
 import time
 import unittest
-from distutils import log
-from distutils.command import build, install
-from distutils.errors import DistutilsError, DistutilsPlatformError
-from distutils.sysconfig import get_config_var, get_config_vars
-
+from sysconfig import get_config_var, get_config_vars
 from setuptools import Command
 from setuptools import Extension as _Extension
 from setuptools import setup as _setup
 from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
+
+from distutils import log
+from distutils.errors import DistutilsError, DistutilsPlatformError
+from distutils.command import build, install
 
 
 class oc_build_py(build_py.build_py):
@@ -231,6 +231,7 @@ def get_sdk_level():
     if sdk == "/":
         return get_os_level()
 
+    sdk = sdk.rstrip("/")
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
@@ -560,16 +561,20 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         k["long_description"] += "\n\nProject links\n"
         k["long_description"] += "-------------\n"
         k["long_description"] += "\n"
-        k["long_description"] += (
-            "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n"
-            % (REPO_NAME,)
+        k[
+            "long_description"
+        ] += "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n" % (
+            REPO_NAME,
         )
-        k["long_description"] += (
-            "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues>`_\n\n"
-            % (REPO_NAME,)
+        k[
+            "long_description"
+        ] += "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues>`_\n\n" % (
+            REPO_NAME,
         )
-        k["long_description"] += (
-            "* `Repository <https://github.com/ronaldoussoren/%s/>`_\n\n" % (REPO_NAME,)
+        k[
+            "long_description"
+        ] += "* `Repository <https://github.com/ronaldoussoren/%s/>`_\n\n" % (
+            REPO_NAME,
         )
         k["long_description_content_type"] = "text/x-rst; charset=UTF-8"
 

@@ -422,12 +422,12 @@ class TestMTLComputeCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
             0,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
         )
         self.assertArgHasType(
             TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
             1,
-            objc._C_NSUInteger,
+            objc._C_NSInteger,
         )
 
         self.assertArgHasType(
@@ -440,16 +440,6 @@ class TestMTLComputeCommandEncoder(TestCase):
             TestMTLComputeCommandEncoderHelper.executeCommandsInBuffer_inDirectBuffer_indirectBufferOffset_,
             2,
             objc._C_NSUInteger,
-        )
-
-        self.assertResultHasType(
-            TestMTLComputeCommandEncoderHelper.imageblockMemoryLengthForDimensions_,
-            objc._C_NSUInteger,
-        )
-        self.assertArgHasType(
-            TestMTLComputeCommandEncoderHelper.executeCommandsInBuffer_inDirectBuffer_indirectBufferOffset_,
-            0,
-            Metal.MTLSize.__typestr__,
         )
 
         self.assertResultIsBOOL(

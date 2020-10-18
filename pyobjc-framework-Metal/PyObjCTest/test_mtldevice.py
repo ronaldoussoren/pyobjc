@@ -792,7 +792,7 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
             2,
-            Metal.MTLSize.__typstr__,
+            Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
@@ -828,7 +828,7 @@ class TestMTLDevice(TestCase):
         self.assertArgHasType(
             TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
             2,
-            Metal.MTLSize.__typstr__,
+            Metal.MTLSize.__typestr__,
         )
         self.assertArgHasType(
             TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,

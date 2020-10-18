@@ -910,9 +910,13 @@ make_init(const char* typestr)
     }
 
 #ifdef HAVE_CLOSURE_POOL
+
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    } else {
+    } else 
+#endif
+    {
         cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
     }
 #else
@@ -923,21 +927,35 @@ make_init(const char* typestr)
         return NULL;
     }
 
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr, codeloc);
     } else {
+#ifdef __arm64__
+       rv = FFI_BAD_ABI; /* Can't happen... */
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
 
 #pragma clang diagnostic pop
+#endif
     }
+#else
+
+    rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+#endif
+
     if (rv != FFI_OK) {
 #ifdef HAVE_CLOSURE_POOL
+
+#if PyObjC_BUILD_RELEASE >= 1015
         if (@available(macOS 10.15, *)) {
             ffi_closure_free(cl);
-        } else {
+        } else 
+#endif
+        {
             PyObjC_ffi_closure_free(cl);
         }
 #else

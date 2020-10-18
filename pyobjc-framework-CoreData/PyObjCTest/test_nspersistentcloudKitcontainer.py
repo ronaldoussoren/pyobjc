@@ -32,8 +32,8 @@ class TestNSPersistentCloudKitContainer(TestCase):
             CoreData.NSPersistentCloudKitContainer.canUpdateRecordForManagedObjectWithID_
         )
         self.assertResultIsBOOL(
-            CoreData.NSPersistentCloudKitContainer.canDeleteRecordForManagedObjectWithID
+            CoreData.NSPersistentCloudKitContainer.canDeleteRecordForManagedObjectWithID_
         )
         self.assertResultIsBOOL(
-            CoreData.NSPersistentCloudKitContainer.canModifyManagedObjectsInStore
+            CoreData.NSPersistentCloudKitContainer.canModifyManagedObjectsInStore_
         )

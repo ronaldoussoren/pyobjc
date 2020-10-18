@@ -9,7 +9,8 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCDataTypeFloat32, 1)
         self.assertEqual(MLCompute.MLCDataTypeBoolean, 4)
         self.assertEqual(MLCompute.MLCDataTypeInt64, 5)
-        self.assertEqual(MLCompute.MLCDataTypeCount, 6)
+        self.assertEqual(MLCompute.MLCDataTypeInt32, 7)
+        self.assertNotHasAttr(MLCompute, "MLCDataTypeCount")
 
         self.assertEqual(MLCompute.MLCRandomInitializerTypeInvalid, 0)
         self.assertEqual(MLCompute.MLCRandomInitializerTypeUniform, 1)

@@ -128,6 +128,7 @@ class TestNSTableView(TestCase):
         self.assertEqual(AppKit.NSTableViewStyleFullWidth, 1)
         self.assertEqual(AppKit.NSTableViewStyleInset, 2)
         self.assertEqual(AppKit.NSTableViewStyleSourceList, 3)
+        self.assertEqual(AppKit.NSTableViewStylePlain, 4)
 
     @min_os_level("10.6")
     def testConstants10_6(self):

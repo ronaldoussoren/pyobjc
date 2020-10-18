@@ -4165,12 +4165,18 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
         goto error_cleanup;
 
     if (methinfo->variadic) {
+#if PyObjC_BUILD_RELEASE >= 1015
 #ifndef __arm64__
         if (@available(macOS 10.15, *)) {
 #endif
             r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), (int)r, retsig, arglist);
 #ifndef __arm64__
-        } else {
+        } else 
+#endif
+#endif
+
+#ifndef __arm64__
+        {
             r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
         }
 #endif
@@ -4330,13 +4336,19 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
     }
 
     if (methinfo->variadic) {
+#if PyObjC_BUILD_RELEASE >= 1015
 #ifndef __arm64__
         if (@available(macOS 10.15, *)) {
 #endif
             rv = ffi_prep_cif_var(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), (int)Py_SIZE(methinfo), cl_ret_type,
                           cl_arg_types);
 #ifndef __arm64__
-        } else {
+        } else 
+#endif
+#endif
+
+#ifndef __arm64__
+        {
             rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), cl_ret_type,
                       cl_arg_types);
         }
@@ -4389,9 +4401,13 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
 
     /* And finally create the actual closure */
 #ifdef HAVE_CLOSURE_POOL
+
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    } else {
+    } else 
+#endif
+    {
         cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
     }
 #else
@@ -4402,16 +4418,25 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
         return NULL;
     }
 
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl, cif, func, userdata, codeloc);
     } else {
+#ifdef __arm64__
+        rv = FFI_BAD_ABI;
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl, cif, func, userdata);
 
 #pragma clang diagnostic pop
+#endif
     }
+
+#else /* PyObjC_BUILD_RELEASE < 1015 */
+    rv = ffi_prep_closure(cl, cif, func, userdata);
+#endif
 
     if (rv != FFI_OK) {
         PyObjCFFI_FreeCIF(cif);
@@ -4434,12 +4459,16 @@ PyObjCFFI_FreeClosure(IMP closure)
     ffi_closure* cl;
 
 #ifdef HAVE_CLOSURE_POOL
+
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15,*)) {
         cl     = ffi_find_closure_for_code_np(closure);
         retval = cl->user_data;
         PyObjCFFI_FreeCIF(cl->cif);
         ffi_closure_free(cl);
-    } else {
+    } else 
+#endif
+    {
         cl = (ffi_closure*)closure;
         retval = cl->user_data;
         PyObjCFFI_FreeCIF(cl->cif);

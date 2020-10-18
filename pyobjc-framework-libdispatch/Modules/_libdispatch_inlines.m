@@ -11,14 +11,18 @@
  * because the functions are inline functions and hence will
  * be available on all macOS versions once compiled.
  */
+#if PyObjC_BUILD_RELEASE >= 1013
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability"
+#endif
 
 static PyObjC_function_map function_map[] = {
     {"dispatch_get_main_queue", (PyObjC_Function_Pointer)&dispatch_get_main_queue},
     {0, 0}};
 
+#if PyObjC_BUILD_RELEASE >= 1013
 #pragma clang diagnostic pop
+#endif
 
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */

@@ -86,7 +86,6 @@ class TestICCameraDevice(TestCase):
         self.assertResultIsBOOL(
             ImageCaptureCore.ICCameraDevice.isAccessRestrictedAppleDevice
         )
-        self.assertResultIsBOOL(ImageCaptureCore.ICCameraDevice.iCloudPhotosEnabled)
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraDevice.tetheredCaptureEnabled)
         self.assertResultIsBOOL(ImageCaptureCore.ICCameraDevice.batteryLevelAvailable)
         self.assertResultIsBOOL(
@@ -116,6 +115,10 @@ class TestICCameraDevice(TestCase):
             3,
             b"v@:@@@@^v",
         )
+
+    @min_os_level("10.10")
+    def test_methods10_10(self):
+        self.assertResultIsBOOL(ImageCaptureCore.ICCameraDevice.iCloudPhotosEnabled)
 
     @min_os_level("10.15")
     def test_methods10_15(self):

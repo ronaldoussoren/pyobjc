@@ -19,16 +19,16 @@ class TestCVOpenGLBuffer(TestCase):
         self.assertArgIsOut(Quartz.CVOpenGLBufferCreate, 4)
         self.assertArgIsCFRetained(Quartz.CVOpenGLBufferCreate, 4)
         rv, buf = Quartz.CVOpenGLBufferCreate(None, 100, 100, {"a": "b"}, None)
-        self.assertEqual(rv, 0)
-        self.assertIsInstance(buf, Quartz.CVOpenGLBufferRef)
+        if rv == 0:
+            self.assertIsInstance(buf, Quartz.CVOpenGLBufferRef)
 
-        v = Quartz.CVOpenGLBufferRetain(buf)
-        self.assertTrue(v is buf)
+            v = Quartz.CVOpenGLBufferRetain(buf)
+            self.assertTrue(v is buf)
 
-        Quartz.CVOpenGLBufferRelease(v)
+            Quartz.CVOpenGLBufferRelease(v)
 
-        v = Quartz.CVOpenGLBufferGetAttributes(buf)
-        self.assertIsInstance(v, (dict, Quartz.CFDictionaryRef))
+            v = Quartz.CVOpenGLBufferGetAttributes(buf)
+            self.assertIsInstance(v, (dict, Quartz.CFDictionaryRef))
 
-        # FIXME: actual test
-        self.assertArgHasType(Quartz.CVOpenGLBufferAttach, 0, b"^{__CVBuffer=}")
+            # FIXME: actual test
+            self.assertArgHasType(Quartz.CVOpenGLBufferAttach, 0, b"^{__CVBuffer=}")

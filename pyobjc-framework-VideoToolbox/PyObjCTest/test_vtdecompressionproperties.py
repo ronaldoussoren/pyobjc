@@ -144,3 +144,10 @@ class TestVTDecompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTDecompressionPropertyKey_UsingGPURegistryID, str
         )
+
+    @min_os_level("10.l6")
+    def test_constants10_16(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTDecompressionPropertyKey_PropagatePerFrameHDRDisplayMetadata,
+            str,
+        )

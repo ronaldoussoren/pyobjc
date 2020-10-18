@@ -214,3 +214,7 @@ class TestVTCompressionProperties(TestCase):
         )
         self.assertIsInstance(VideoToolbox.kVTHDRMetadataInsertionMode_None, str)
         self.assertIsInstance(VideoToolbox.kVTHDRMetadataInsertionMode_Auto, str)
+
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_PreserveDynamicHDRMetadata, str
+        )

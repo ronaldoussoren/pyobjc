@@ -151,6 +151,7 @@ FRAMEWORK_WRAPPERS = [
     ("UserNotificationsUI", "10.16", None),
     ("VideoSubscriberAccount", "10.14", None),
     ("VideoToolbox", "10.8", None),
+    ("Virtualization", "10.16", None),
     ("Vision", "10.13", None),
     # iTunes library is shipped with iTunes, not part of macOS 'core'
     # Requires iTunes 11 or later, which is not available on 10.5
@@ -516,12 +517,64 @@ class oc_test(Command):
                     print("Twine failed for", nm, exc)
                     failures += 1
 
+        filename = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "docs",
+            "notes",
+            "framework-wrappers.rst",
+        )
+        if not os.path.exists(filename):
+            print("ERROR: framework-wrappers.rst not found")
+            failures += 1
+
+        else:
+            frameworks = frameworks_in_table(filename)
+
+            for fwk in os.listdir("/System/Library/Frameworks"):
+                if not fwk.endswith(".framework"):
+                    continue
+                fwk, _ = os.path.splitext(fwk)
+                if fwk not in frameworks:
+                    print(f"Framework {fwk} not in framework-wrappers.rst")
+                    failures += 1
+
         print(
             "SUMMARY: {'testSeconds': 0.0, 'count': 1, 'fails': %d, "
             "'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }" % (failures,)
         )
         if failures:
             sys.exit(1)
+
+
+def frameworks_in_table(filename):
+    result = {}
+    in_table = False
+    with open(filename, "r") as stream:
+
+        for line in stream:
+            if not in_table:
+                if line.startswith("+--") or line.startswith("+=="):
+                    in_table = True
+                    continue
+
+            else:
+                if line.startswith("+--") or line.startswith("+=="):
+                    continue
+                elif not line.startswith("|"):
+                    break
+
+                cell = line.split("|")[1].strip()
+                if not cell:
+                    continue
+
+                if "`" in cell:
+                    cell = cell.split("`")[1].split()[0]
+                    linked = True
+                else:
+                    linked = False
+
+                result[cell] = linked
+    return result
 
 
 class oc_egg_info(egg_info.egg_info):

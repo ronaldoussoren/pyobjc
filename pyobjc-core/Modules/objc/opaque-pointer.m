@@ -346,9 +346,13 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     }
 
 #ifdef HAVE_CLOSURE_POOL
+
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         cl_to_c = ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
-    } else {
+    } else 
+#endif
+    {
         cl_to_c = PyObjC_ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
     }
 #else
@@ -362,15 +366,22 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     Py_INCREF(Py_TYPE(&(newType->ht_type)));
     PyType_Ready((PyTypeObject*)newType);
 
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl_to_c, convert_cif, opaque_to_c, newType, codeloc);
-    } else {
+    } else 
+#endif
+    {
+#ifdef __arm64__
+        rv = FFI_BAD_ABI;
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl_to_c, convert_cif, opaque_to_c, newType);
 
 #pragma clang diagnostic pop
+#endif
     }
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
@@ -381,9 +392,12 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     to_c = (PyObjCPointerWrapper_FromPythonFunc)codeloc;
 
 #ifdef HAVE_CLOSURE_POOL
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         cl_from_c = ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
-    } else {
+    } else 
+#endif
+    {
         cl_from_c = PyObjC_ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
     }
 #else
@@ -393,15 +407,22 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
         goto error_cleanup;
     }
 
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         rv = ffi_prep_closure_loc(cl_from_c, new_cif, opaque_from_c, newType, codeloc);
-    } else {
+    } else 
+#endif
+    {
+#ifdef __arm64__
+        rv = FFI_BAD_ABI;
+#else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
         rv = ffi_prep_closure(cl_from_c, new_cif, opaque_from_c, newType);
 
 #pragma clang diagnostic pop
+#endif
     }
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
@@ -429,6 +450,7 @@ error_cleanup:
     }
 
 #ifdef HAVE_CLOSURE_POOL
+#if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         if (cl_to_c) {
             ffi_closure_free(cl_to_c);
@@ -437,7 +459,9 @@ error_cleanup:
         if (cl_from_c) {
             ffi_closure_free(cl_from_c);
         }
-    } else {
+    } else 
+#endif
+    {
         if (cl_to_c) {
             PyObjC_ffi_closure_free(cl_to_c);
         }

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
 import objc
 
@@ -117,9 +117,11 @@ class TestPDFView(TestCase):
         self.assertResultIsBOOL(Quartz.PDFView.pageShadowsEnabled)
         self.assertArgIsBOOL(Quartz.PDFView.enablePageShadows_, 0)
 
+    @min_sdk_level("10.13")
     def testProtocols(self):
         objc.protocolNamed("PDFViewDelegate")
 
+    def test_protocol_methods(self):
         self.assertArgHasType(
             TestPDFViewHelper.PDFViewWillChangeScaleFactor_toScale_, 1, objc._C_CGFloat
         )

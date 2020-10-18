@@ -298,6 +298,8 @@ class TestNSURL(TestCase):
         self.assertIsInstance(Foundation.NSURLIsSparseKey, str)
         self.assertIsInstance(Foundation.NSURLVolumeSupportsFileProtectionKey, str)
 
+        self.assertIsInstance(Foundation.NSURLFileProtectionKey, str)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(

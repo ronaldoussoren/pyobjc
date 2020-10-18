@@ -4,12 +4,6 @@ import Intents
 
 class TestINIntentErrors(TestCase):
     def testConstants(self):
-        self.assertEqual(
-            Intents.INIntentErrorHandlingApplicationExitedUnexpectedly, 1312
-        )
-        self.assertEqual(Intents.INIntentErrorHandlingApplicationRequestTimeout, 1314)
-        self.assertEqual(Intents.INIntentErrorHandlingNotSupportedOnPlatform, 1316)
-
         self.assertEqual(Intents.INIntentErrorInteractionOperationNotSupported, 1900)
         self.assertEqual(Intents.INIntentErrorDonatingInteraction, 1901)
         self.assertEqual(Intents.INIntentErrorDeletingAllInteractions, 1902)
