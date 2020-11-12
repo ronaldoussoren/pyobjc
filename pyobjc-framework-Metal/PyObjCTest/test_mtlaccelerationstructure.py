@@ -32,12 +32,13 @@ class TestMTLAccelerationStructure(TestCase):
     def test_methods10_16(self):
         self.assertResultIsBOOL(Metal.MTLAccelerationStructureGeometryDescriptor.opaque)
         self.assertArgIsBOOL(
-            Metal.MTLAccelerationStructureGeometryDescriptor.setOpaque_
+            Metal.MTLAccelerationStructureGeometryDescriptor.setOpaque_, 0
         )
 
         self.assertResultIsBOOL(
             Metal.MTLAccelerationStructureGeometryDescriptor.allowDuplicateIntersectionFunctionInvocation
         )
         self.assertArgIsBOOL(
-            Metal.MTLAccelerationStructureGeometryDescriptor.setAllowDuplicateIntersectionFunctionInvocation_
+            Metal.MTLAccelerationStructureGeometryDescriptor.setAllowDuplicateIntersectionFunctionInvocation_,
+            0
         )

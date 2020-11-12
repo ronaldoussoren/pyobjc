@@ -21,8 +21,8 @@ class TestSTWebpageController(TestCase):
         self.assertResultIsBOOL(ScreenTime.STWebpageController.URLIsBlocked)
 
         self.assertResultIsBOOL(
-            ScreenTime.STWebpageController.setBundleIdentifier_erorr_
+            ScreenTime.STWebpageController.setBundleIdentifier_error_
         )
         self.assertArgIsOut(
-            ScreenTime.STWebpageController.setBundleIdentifier_erorr_, 1
+            ScreenTime.STWebpageController.setBundleIdentifier_error_, 1
         )
