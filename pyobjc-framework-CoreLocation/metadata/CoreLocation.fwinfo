@@ -169,6 +169,28 @@
        "type_override": "Z"
       },
       "selector": "locationServicesEnabled"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "isAuthorizedForPreciseLocation"
+     },
+     {
+      "class_method": false,
+      "selector": "requestTemporaryPreciseLocationAuthorizationWithPurposeKey:completion:",
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
      }
     ]
    }
