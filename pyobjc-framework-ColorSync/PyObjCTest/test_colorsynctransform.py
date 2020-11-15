@@ -15,6 +15,7 @@ class TestColorSyncTransform(TestCase):
         self.assertResultIsCFRetained(ColorSync.ColorSyncTransformCopyProperty)
         ColorSync.ColorSyncTransformSetProperty
 
+        print(ColorSync.ColorSyncTransformConvert.__metadata__())
         self.assertArgIsOut(ColorSync.ColorSyncTransformConvert, 3)
         self.assertArgIsVariableSize(ColorSync.ColorSyncTransformConvert, 3)
         self.assertArgIsIn(ColorSync.ColorSyncTransformConvert, 7)
