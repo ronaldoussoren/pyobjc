@@ -15,7 +15,6 @@ class TestMLCTensor(TestCase):
         )
 
         self.assertResultIsBOOL(MLCompute.MLCTensor.hasValidNumerics)
-        self.assertResultIsBOOL(MLCompute.MLCTensor.optimizerData_)
         self.assertResultIsBOOL(MLCompute.MLCTensor.synchronizeData)
 
         self.assertResultIsBOOL(

@@ -3,11 +3,42 @@
 {
  "definitions": {
   "enum": {
+   "MLCDataTypeCount": { "ignore": true },
    "MLCLSTMResultModeOutput": { "value": 0 },
    "MLCLSTMResultModeOutputAndStates": { "value": 1 },
-   "MLCExecutionOptionsForwardForInference": { "value": 8 }
+   "MLCExecutionOptionsForwardForInference": { "value": 8 },
+   "MLCDataTypeInt32": { "value": 7 }
   },
   "classes": {
+   "MLCDevice": {
+    "methods": [
+     {
+      "selector": "deviceWithType:selectsMultipleComputeDevices:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MLCTrainingGraph": {
+    "methods": [
+     {
+      "selector": "bindOptimizerData:deviceData:withTensor:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MLCLayer": {
+    "methods": [
+     {
+      "selector": "supportsDataType:onDevice:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "MLCLSTMDescriptor": {
     "methods": [
      {

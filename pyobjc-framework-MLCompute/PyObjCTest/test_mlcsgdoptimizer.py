@@ -8,10 +8,6 @@ class TestMLCSGDOptimizer(TestCase):
         self.assertResultIsBOOL(MLCompute.MLCSGDOptimizer.usesNesterovMomentum)
 
         self.assertArgIsBOOL(
-            MLCompute.MLCSGDOptimizer.optimizerWithDescriptor_momentumScale_usesNestrovMomentum_,
-            2,
-        )
-        self.assertArgIsBOOL(
             MLCompute.MLCSGDOptimizer.optimizerWithDescriptor_momentumScale_usesNesterovMomentum_,
             2,
         )
