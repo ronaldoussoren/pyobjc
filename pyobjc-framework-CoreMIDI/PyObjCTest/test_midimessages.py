@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, expectedFailure
 import CoreMIDI
 
 
@@ -66,6 +66,7 @@ class TestMIDIMessages(TestCase):
         self.assertIsInstance(v.word2, int)
         self.assertIsInstance(v.word3, int)
 
+    @expectedFailure
     @min_sdk_level("10.16")
     def test_functions(self):
         CoreMIDI.MIDIMessageTypeForUPWord

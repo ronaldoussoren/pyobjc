@@ -14,8 +14,8 @@ from CoreMIDI import _CoreMIDI
 
 sys.modules["CoreMIDI"] = mod = objc.ObjCLazyModule(
     "CoreMIDI",
-    "com.apple.CoreMIDI",
-    objc.pathForFramework("/System/Library/Frameworks/CoreMIDI.framework"),
+    "com.apple.audio.midi.CoreMIDI",
+    "/System/Library/Frameworks/CoreMIDI.framework",
     _metadata.__dict__,
     None,
     {
