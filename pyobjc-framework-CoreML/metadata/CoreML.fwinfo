@@ -1,7 +1,6 @@
 {
  "definitions": {
   "enum": {
-   "MLModelErrorModelCollection": { "value": 11 },
    "MLComputeUnitsCPUOnly": { "value": 0 },
    "MLComputeUnitsCPUAndGPU": { "value": 1 },
    "MLComputeUnitsAll": { "value": 2 },
