@@ -26,6 +26,31 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "isExcludedFromSync",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isPathExtensionHidden",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isHidden",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isUserWritable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isUserReadable",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "fetchContentsForItemWithIdentifier:version:usingExistingContentsAtURL:request:completionHandler:",
       "class_method": false,
       "args": {
@@ -546,6 +571,22 @@
       "class_method": false,
       "args": {
        "0": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "lookupRequestingApplicationIdentifier:reason:completionHandler:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
       }
      },
      {
