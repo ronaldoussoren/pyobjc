@@ -150,4 +150,4 @@ class TestCode(TestCase):
         self.assertArgHasType(Security.SecCodeMapMemory, 1, objc._C_UINT)
 
         self.assertArgIsOut(Security.SecCodeCreateWithXPCMessage, 2)
-        self.assertArgIsAlreadyCFRetained(Security.SecCodeCreateWithXPCMessage, 2)
+        self.assertArgIsCFRetained(Security.SecCodeCreateWithXPCMessage, 2)

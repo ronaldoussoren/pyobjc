@@ -99,6 +99,7 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "errSecCertificateIsCA": { "value": -67902 },
    "kSecCodeSignatureLinkerSigned": { "value": 131072 },
    "kSecCSApplyEmbeddedPolicy": { "value": 33554432  },
    "errSecRestrictedAPI": { "value": -34020  },
@@ -1938,6 +1939,14 @@
   "classes": {
   },
   "functions": {
+   "SecCodeCreateWithXPCMessage": {
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "o^@", "already_cfretained": true }
+    },
+    "retval": { "typestr": "i" }
+   },
    "sec_protocol_options_set_peer_authentication_optional": {
     "retval": { "typestr": "v" },
     "args": {
