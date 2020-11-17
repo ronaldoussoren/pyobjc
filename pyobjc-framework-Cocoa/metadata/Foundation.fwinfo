@@ -54,7 +54,12 @@
     "NSMaxYEdge": { "ignore": true }
   },
   "enum": {
-   "NSBundleExecutableArchitectureARM64": { "value": "16777228" },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolUnknown": { "value": 0 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolUDP": { "value": 1 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolTCP": { "value": 2 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolTLS": { "value": 3 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolHTTPS": { "value": 4 },
+   "NSBundleExecutableArchitectureARM64": { "value": 16777228 },
    "NSNetServicesMissingRequiredConfigurationError": { "value": -72008 },
    "NSMinXEdge": { "value": 0 },
    "NSMinYEdge": { "value": 1 },

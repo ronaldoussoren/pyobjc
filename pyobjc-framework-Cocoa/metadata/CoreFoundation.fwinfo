@@ -13,7 +13,6 @@
    "kCFISO8601DateFormatWithInternetDateTime": { "value": "kCFISO8601DateFormatWithFullDate | kCFISO8601DateFormatWithFullTime" }
   },
   "enum": {
-    "kCFBundleExecutableArchitectureARM64": { "value": 16777228 },
    "kCFISO8601DateFormatWithYear": { "value": 1 },
    "kCFISO8601DateFormatWithMonth": { "value": 2 },
    "kCFISO8601DateFormatWithWeekOfYear": { "value": 4 },
@@ -48,7 +47,6 @@
    "kCFNumberFormatterCurrencyAccountingStyle": { "value": "10" }
   },
   "externs": {
-    "kCFURLVolumeSupportsFileProtectionKey": { "typestr": "@" },
     "kCFStreamErrorDomainSOCKS": { "typestr": "i" },
     "kCFStreamPropertySOCKSProxy": { "typestr": "@" },
     "kCFStreamPropertySOCKSProxyHost": { "typestr": "@" },
