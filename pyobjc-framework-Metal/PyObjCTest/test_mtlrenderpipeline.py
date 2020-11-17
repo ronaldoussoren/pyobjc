@@ -89,28 +89,6 @@ class TestMTLRenderPipeline(TestCase):
         self.assertResultIsBOOL(
             TestMTLRenderPipelineHelper.supportIndirectCommandBuffers
         )
-        self.assertResultHasType(
-            TestMTLRenderPipelineHelper.textureWriteRoundingMode, objc._C_NSInteger
-        )
-        self.assertResultHasType(
-            TestMTLRenderPipelineHelper.maxTotalThreadsPerThreadgroup,
-            objc._C_NSUInteger,
-        )
-        self.assertResultIsBOOL(
-            TestMTLRenderPipelineHelper.threadgroupSizeMatchesTileSize
-        )
-        self.assertResultHasType(
-            TestMTLRenderPipelineHelper.imageblockSampleLength, objc._C_NSInteger
-        )
-        self.assertResultHasType(
-            TestMTLRenderPipelineHelper.imageblockMemoryLengthForDimensions_,
-            objc._C_NSInteger,
-        )
-        self.assertArgHasType(
-            TestMTLRenderPipelineHelper.imageblockMemoryLengthForDimensions_,
-            0,
-            Metal.MTLSize.__typestr__,
-        )
 
     @min_os_level("10.11")
     def test_methods10_11(self):

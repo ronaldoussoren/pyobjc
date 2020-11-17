@@ -4,11 +4,14 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestMTLAccelerationStructure(TestCase):
     def test_structs(self):
-        v = Metal.MTLAccelerationStructureInstanceDescriptor()
-        self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
-        self.assertIsInstance(v.options, int)
-        self.assertIsInstance(v.intersectionFunctionTableOffset, int)
-        self.assertIsInstance(v.accelerationStructureIndex, int)
+        # Vector types in fields
+        self.assertFalse(hasattr(Metal, 'MTLAccelerationStructureInstanceDescriptor'))
+
+        #v = Metal.MTLAccelerationStructureInstanceDescriptor()
+        #self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
+        #self.assertIsInstance(v.options, int)
+        #self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        #self.assertIsInstance(v.accelerationStructureIndex, int)
 
     def test_constants(self):
 

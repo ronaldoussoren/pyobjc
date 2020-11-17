@@ -51,9 +51,6 @@ class TestMTLComputePipeline(TestCase):
             TestMTLComputePipelineHelper.staticThreadgroupMemoryLength,
             objc._C_NSUInteger,
         )
-        self.assertResultHasType(
-            TestMTLComputePipelineHelper.textureWriteRoundingMode, objc._C_NSInteger
-        )
         self.assertArgHasType(
             TestMTLComputePipelineHelper.newComputePipelineStateWithAdditionalBinaryFunctions_error_,
             1,

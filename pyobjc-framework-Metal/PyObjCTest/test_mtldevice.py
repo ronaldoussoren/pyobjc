@@ -343,10 +343,6 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLArgumentBuffersTier1, 0)
         self.assertEqual(Metal.MTLArgumentBuffersTier2, 1)
 
-        self.assertEqual(Metal.MTLRoundingModeDefault, 0)
-        self.assertEqual(Metal.MTLRoundingModeRTZ, 1)
-        self.assertEqual(Metal.MTLRoundingModeRTNE, 2)
-
         self.assertEqual(Metal.MTLCounterSamplingPointAtStageBoundary, 0)
         self.assertEqual(Metal.MTLCounterSamplingPointAtDrawBoundary, 1)
         self.assertEqual(Metal.MTLCounterSamplingPointAtDispatchBoundary, 2)
@@ -726,7 +722,6 @@ class TestMTLDevice(TestCase):
             Metal.MTLAccelerationStructureSizes.__typestr__,
         )
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFunctionPointers)
-        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsBinaryFunctionPointers)
 
         self.assertArgHasType(
             TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_reflection_error_,
