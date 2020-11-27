@@ -111,7 +111,7 @@ def virtualenv(interpreter):
         shutil.rmtree("test-env")
 
 
-def variants(ver, permitted_variants=("64bit",)):
+def variants(ver, permitted_variants=("64bit", "x86_64", "arm64", "universal2")):
     if os.path.islink(
         os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
     ):

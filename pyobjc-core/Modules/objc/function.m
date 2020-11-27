@@ -183,6 +183,11 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     if (variadicAllArgs) {
 #if PyObjC_BUILD_RELEASE >= 1015
 
+#ifdef __arm64__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+#endif
+
 #ifndef __arm64__
         if (@available(macOS 10.15, *)) {
 #endif
@@ -198,6 +203,9 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
             r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
                              PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
         }
+
+#else
+#pragma clang diagnostic pop
 #endif
 
         if (r != FFI_OK) {

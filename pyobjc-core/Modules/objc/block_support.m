@@ -262,6 +262,9 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     arglist[0] = &ffi_type_pointer;
     values[0]  = &block_ptr;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+
     if (signature->variadic) {
         r = ffi_prep_cif_var(
             &cif, FFI_DEFAULT_ABI, (int)Py_SIZE(signature), (int)cif_arg_count,
@@ -273,6 +276,8 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
             PyObjCFFI_Typestr2FFI(signature->rettype->type),
             arglist);
     }
+#pragma clang diagnostic pop
+
 #else
     if (useStret) {
         arglist[0] = &ffi_type_pointer;

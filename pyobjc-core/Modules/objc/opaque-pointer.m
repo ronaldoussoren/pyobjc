@@ -356,7 +356,12 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
         cl_to_c = PyObjC_ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
     }
 #else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+
     cl_to_c = ffi_closure_alloc(sizeof(*cl_to_c), &codeloc);
+
+#pragma clang diagnostic pop
 #endif
     if (cl_to_c == NULL) {
         goto error_cleanup;
@@ -401,7 +406,10 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
         cl_from_c = PyObjC_ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
     }
 #else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
     cl_from_c = ffi_closure_alloc(sizeof(*cl_from_c), &codeloc);
+#pragma clang diagnostic pop
 #endif
     if (cl_from_c == NULL) {
         goto error_cleanup;
@@ -471,6 +479,8 @@ error_cleanup:
         }
     }
 #else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
     if (cl_to_c) {
         ffi_closure_free(cl_to_c);
     }
@@ -478,6 +488,7 @@ error_cleanup:
     if (cl_from_c) {
         ffi_closure_free(cl_from_c);
     }
+#pragma clang diagnostic pop
 #endif
 
     Py_XDECREF(v);

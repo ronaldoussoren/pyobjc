@@ -920,7 +920,10 @@ make_init(const char* typestr)
         cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
     }
 #else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
     cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
+#pragma clang diagnostic pop
 #endif
     if (cl == NULL) {
         PyMem_Free((void*)typestr);
@@ -959,7 +962,10 @@ make_init(const char* typestr)
             PyObjC_ffi_closure_free(cl);
         }
 #else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
         ffi_closure_free(cl);
+#pragma clang diagnostic pop
 #endif
         PyMem_Free((void*)typestr);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);

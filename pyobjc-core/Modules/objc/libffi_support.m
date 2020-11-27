@@ -4166,6 +4166,12 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
 
     if (methinfo->variadic) {
 #if PyObjC_BUILD_RELEASE >= 1015
+
+#ifdef __arm64__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+#endif
+
 #ifndef __arm64__
         if (@available(macOS 10.15, *)) {
 #endif
@@ -4179,6 +4185,8 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
         {
             r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
         }
+#else
+#pragma clang diagnostic pop
 #endif
     } else {
         r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)r, retsig, arglist);
@@ -4337,6 +4345,11 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 
     if (methinfo->variadic) {
 #if PyObjC_BUILD_RELEASE >= 1015
+#ifdef __arm64__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+#endif
+
 #ifndef __arm64__
         if (@available(macOS 10.15, *)) {
 #endif
@@ -4352,6 +4365,8 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
             rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), cl_ret_type,
                       cl_arg_types);
         }
+#else
+#pragma clang diagnostic pop
 #endif
     } else {
         rv = ffi_prep_cif(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), cl_ret_type,
@@ -4411,7 +4426,10 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
         cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
     }
 #else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
     cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
+#pragma clang diagnostic pop
 #endif
     if (cl == NULL) {
         PyObjCFFI_FreeCIF(cif);
@@ -4475,10 +4493,13 @@ PyObjCFFI_FreeClosure(IMP closure)
         PyObjC_ffi_closure_free(cl);
     }
 #else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
     cl     = ffi_find_closure_for_code_np(closure);
     retval = cl->user_data;
     PyObjCFFI_FreeCIF(cl->cif);
     ffi_closure_free(cl);
+#pragma clang diagnostic pop
 #endif
     return retval;
 }
