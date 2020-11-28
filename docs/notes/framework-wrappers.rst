@@ -488,7 +488,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | WidgetKit                                                                            | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`XgridFoundation </apinotes/XgridFoundation>`                                   | `pyobjc-framework-XgridFoundation`_                  | Removed in macOS 10.8.                  |
+| XgridFoundation                                                                      | -                                                    | Removed in macOS 10.8.                  |
+|                                                                                      |                                                      | Bindings removed in PyObjC 7            |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 
 Frameworks that are marked as "Will not be wrapped" will not be wrapped, mostly because these frameworks are not

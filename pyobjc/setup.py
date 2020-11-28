@@ -139,7 +139,6 @@ FRAMEWORK_WRAPPERS = [
     ("SyncServices", None, None),
     ("SystemConfiguration", None, None),
     ("WebKit", None, None),
-    ("XgridFoundation", None, "10.8"),
     ("GameKit", "10.8", None),
     ("GameplayKit", "10.11", None),
     ("SceneKit", "10.7", None),

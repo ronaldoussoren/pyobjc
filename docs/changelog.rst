@@ -34,8 +34,15 @@ Version 7.0
 
 * Dropped the bindings to the QTKit framework
 
+  This framework was removed in macOS 10.15.
+
   These bindings contained a C extension and cannot be build with recent
   versions of Xcode.
+
+
+* Dropped the bindings for the XgridFoundation framework
+
+  This framework was removed in macOS 10.8.
 
 * Updated ``objc.dyld_library`` and ``objc.dyld_framework`` to return
   a sane result on macOS 11 where system libraries are no longer at
