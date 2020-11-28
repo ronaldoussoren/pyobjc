@@ -16,7 +16,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "7.0a1"
+VERSION = '7.0'
 
 setup(
     name="pyobjc-framework-SyncServices",

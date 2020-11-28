@@ -11,7 +11,7 @@ Note that using the library requires a signed application bundle.
 
 from pyobjc_setup import setup
 
-VERSION = "7.0a1"
+VERSION = '7.0'
 
 setup(
     name="pyobjc-framework-iTunesLibrary",
