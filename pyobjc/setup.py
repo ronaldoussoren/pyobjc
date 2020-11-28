@@ -119,7 +119,6 @@ FRAMEWORK_WRAPPERS = [
     ("PreferencePanes", None, None),
     ("PubSub", "10.5", "10.14"),
     ("PushKit", "10.15", None),
-    ("QTKit", "10.5", "10.15"),
     ("Quartz", None, None),
     ("QuickLookThumbnailing", "10.15", None),
     ("ReplayKit", "10.16", None),

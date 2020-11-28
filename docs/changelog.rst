@@ -6,17 +6,11 @@ An overview of the relevant changes in new, and older, releases.
 Version 7.0
 -----------
 
-XXX TODO:
-  - Fully validate use of new buffer protocol, with tests
-  - Implement shape support for new buffer protocol, instead of only for array.array
-
 * This version drops support for 32-bit executables, both
   the core bridge and the framework wrappers only support
   64-bit executables going forward
 
 * PyObjC is now always build with the system libffi.
-
-  XXX: This currently requires building with the macOS 10.15 SDK or later.
 
 * Removed metadata for 32-bit systems
 
@@ -38,9 +32,10 @@ XXX TODO:
   - UserNotificationsUI (introduced in macOS 11.0)
   - Virtualization (introduced in macOS 11.0)
 
-* The following new frameworks in macOS 11 will not be wrapped:
+* Dropped the bindings to the QTKit framework
 
-  - WidgetKit: This is a Swift-only framework
+  These bindings contained a C extension and cannot be build with recent
+  versions of Xcode.
 
 * Updated ``objc.dyld_library`` and ``objc.dyld_framework`` to return
   a sane result on macOS 11 where system libraries are no longer at
