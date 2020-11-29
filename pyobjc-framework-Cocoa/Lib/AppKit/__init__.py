@@ -174,8 +174,8 @@ except AttributeError:
 if objc.arch == "arm64":
     # XXX: Temporary adjustment until the metadata
     #      is updated
-    mod.NSImageResizingModeStretch = 0
-    mod.NSImageResizingModeTile = 1
+    mod.NSImageResizingModeStretch = 1
+    mod.NSImageResizingModeTile = 0
 
     mod.NSTextAlignmentCenter = 1
     mod.NSTextAlignmentRight = 2
