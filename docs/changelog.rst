@@ -3,6 +3,13 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 7.0.1
+-------------
+
+* Issue #337: PyObjC doesn't work on Catalina or earlier
+
+  Fix by Lawrence D'Anna.
+
 Version 7.0
 -----------
 
