@@ -19,6 +19,14 @@ try:
 except ImportError:
     _dyld_shared_cache_contains_path = None
 
+def dyld_shared_cache_contains_path(p):
+    if _dyld_shared_cache_contains_path is None:
+        return False
+    try:
+        return _dyld_shared_cache_contains_path(p)
+    except NotImplementedError:
+        return False
+
 # These are the defaults as per man dyld(1)
 #
 DEFAULT_FRAMEWORK_FALLBACK = ":".join(
@@ -97,9 +105,8 @@ def dyld_framework(filename, framework_name, version=None):
                 yield os.path.join(path, framework_name + ".framework", framework_name)
 
     for f in inject_suffixes(_search()):
-        if _dyld_shared_cache_contains_path is not None:
-            if _dyld_shared_cache_contains_path(f):
-                return f
+        if dyld_shared_cache_contains_path(f):
+            return f
 
         if os.path.exists(f):
             return f
@@ -125,9 +132,8 @@ def dyld_library(filename, libname):
             yield os.path.join(path, libname)
 
     for f in inject_suffixes(_search()):
-        if _dyld_shared_cache_contains_path is not None:
-            if _dyld_shared_cache_contains_path(f):
-                return f
+        if dyld_shared_cache_contains_path(f):
+            return f
         if os.path.exists(f):
             return f
     raise ValueError("dylib %s could not be found" % (filename,))
