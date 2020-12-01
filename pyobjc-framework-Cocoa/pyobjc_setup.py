@@ -427,12 +427,18 @@ def Extension(*args, **kwds):
             universal_newlines=True,
         ).strip()
         if data:
+            #Handle sdk version when not included in pathname, ie. /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+            version = subprocess.check_output(
+                ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-version"],
+                universal_newlines=True,
+            ).strip()
+            if version:
+                release_build = tuple(map(int, version.split(".")[:2]))
+            else:
+                release_build = tuple(map(int, os.path.basename(data)[6:-4].split(".")))
             cflags.append("-isysroot")
             cflags.append(data)
-            cflags.append(
-                "-DPyObjC_BUILD_RELEASE=%02d%02d"
-                % (tuple(map(int, os.path.basename(data)[6:-4].split("."))))
-            )
+            cflags.append("-DPyObjC_BUILD_RELEASE=%02d%02d" % release_build)
 
     else:
         cflags.append(
