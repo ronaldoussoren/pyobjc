@@ -101,8 +101,8 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
         }
 
         PyErr_Clear();
-        bzero(dataPlanes, sizeof(dataPlanes));
-        bzero(py_Planes, sizeof(py_Planes));
+        memset(dataPlanes, 0, sizeof(dataPlanes));
+        memset(py_Planes, 0, sizeof(py_Planes));
 
         if (!PyArg_ParseTuple(arguments, "Oiiiibbsii", &maybeNone, &width, &height, &bps,
                               &spp, &hasAlpha, &isPlanar, &colorSpaceName, &bpr, &bpp)) {
@@ -212,8 +212,8 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
         }
 
         PyErr_Clear();
-        bzero(dataPlanes, sizeof(dataPlanes));
-        bzero(py_Planes, sizeof(py_Planes));
+        memset(dataPlanes, 0, sizeof(dataPlanes));
+        memset(py_Planes, 0, sizeof(py_Planes));
 
         if (!PyArg_ParseTuple(arguments, "Oiiiibbsiii", &maybeNone, &width, &height, &bps,
                               &spp, &hasAlpha, &isPlanar, &colorSpaceName, &format, &bpr,
