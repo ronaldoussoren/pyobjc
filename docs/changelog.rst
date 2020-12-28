@@ -3,6 +3,15 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 7.1
+-----------
+
+* Update bindings for the macOS 11.1 SDK
+
+* Add bindings for framework "AdServices" (new in macOS 11.1)
+
+* #333: Improve SDK version detection in framework bindings
+
 Version 7.0.1
 -------------
 
@@ -21,7 +30,7 @@ Version 7.0
 
 * Removed metadata for 32-bit systems
 
-* Existing framework bindings were updated for the macOS 11 SDK (Xcode 12 beta 3)
+* Existing framework bindings were updated for the macOS 11 SDK
 
 * Added bindings for the following frameworks:
   - Accessibility (introduced in macOS 11.0)

@@ -20,6 +20,7 @@ aliases = {'NEFilterFlowBytesMax': 'UINT64_MAX'}
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
+    r(b'NEAppProxyFlow', b'isBound:completionHandler:', {'retval': {'type': b'Z'}})
     r(b'NEAppProxyFlow', b'openWithLocalEndpoint:completionHandler:', {'arguments': {3: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'@'}}}, 'type': '@?'}}})
     r(b'NEAppProxyProvider', b'handleNewFlow:', {'retval': {'type': 'Z'}})
     r(b'NEAppProxyProvider', b'handleNewUDPFlow:initialRemoteEndpoint:', {'retval': {'type': b'Z'}})

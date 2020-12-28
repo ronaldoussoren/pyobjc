@@ -87,6 +87,10 @@ class TestCIImage(TestCase):
             Quartz.kCIImageAuxiliarySemanticSegmentationGlassesMatte, str
         )
 
+    @min_os_level("10.16.1")
+    def testConstants10_16_1(self):
+        self.assertIsInstance(Quartz.kCIImageAuxiliarySemanticSegmentationSkyMatte, str)
+
     def testMethods(self):
         self.assertArgIsBOOL(
             Quartz.CIImage.imageWithTexture_size_flipped_colorSpace_, 2

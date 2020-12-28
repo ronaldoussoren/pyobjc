@@ -617,6 +617,11 @@
    "NEAppProxyFlow": {
     "methods": [
      {
+      "selector": "isBound",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "openWithLocalEndpoint:completionHandler:",
       "class_method": false,
       "args": {

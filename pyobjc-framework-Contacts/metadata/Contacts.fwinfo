@@ -43,6 +43,7 @@
    "CNPostalAddressFormatterStyleMailingAddress": { "value": 0 }
   },
   "externs": {
+   "CNLabelPhoneNumberAppleWatch": { "typestr": "@" },
    "CNLabelContactRelationSon": { "typestr": "@" },
    "CNLabelContactRelationDaughter": { "typestr": "@" },
    "CNErrorDomain": { "typestr": "@" },

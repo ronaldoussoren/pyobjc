@@ -5,6 +5,10 @@
   "enum": {
    "CMErrorNilData": { "value": 112 },
    "CMErrorSize": { "value": 113 }
+   "CMFallDetectionEventUserResolutionConfirmed": { "value": 0 },
+   "CMFallDetectionEventUserResolutionDismissed": { "value": 1 },
+   "CMFallDetectionEventUserResolutionRejected": { "value": 2 },
+   "CMFallDetectionEventUserResolutionUnresponsive: { "value": 3 }
   },
   "classes": {
    "CMPedometer": {

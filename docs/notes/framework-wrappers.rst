@@ -34,6 +34,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AddressBook </apinotes/AddressBook>`                                           | `pyobjc-framework-AddressBook`_                      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`AdServices </apinotes/AdServices>`                                             | `pyobjc-framework-AdServices`_                      |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AdSupport </apinotes/AdSupport>`                                               | `pyobjc-framework-AdSupport`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | AGL                                                                                  | -                                                    | Will not be wrapped, OpenGL is          |
@@ -100,6 +102,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`Contacts </apinotes/Contacts>`  `                                              | `pyobjc-framework-Contacts`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ContactsUI </apinotes/ContactsUI>`                                             | `pyobjc-framework-ContactsUI`_                       |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| ContextualActionsClient                                                              | -                                                    | No functionality exposed.               |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CoreAudio </apinotes/CoreAudio>`                                               | `pyobjc-framework-CoreAudio`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -644,4 +648,5 @@ prioritizing work.
 .. _`pyobjc-framework-MetalPerformanceShaders`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShaders/
 .. _`pyobjc-framework-MetalPerformanceShadersGraph`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShadersGraph/
 .. _`pyobjc-framework-Virtualization`: https://pypi.org/project/pyobjc-framework-Virtualization/
-.. _`pyobjc-framework-AutomaticAssessmentConfiguration`: https://pypi.org/project/pyobjc-framework-Virtualization/
+.. _`pyobjc-framework-AutomaticAssessmentConfiguration`: https://pypi.org/project/pyobjc-framework-AutomaticAssessmentConfiguration/
+.. _`pyobjc-framework-AdServices`: https://pypi.org/project/pyobjc-framework-AdServices/

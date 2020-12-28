@@ -315,6 +315,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyApple4, 1004)
         self.assertEqual(Metal.MTLGPUFamilyApple5, 1005)
         self.assertEqual(Metal.MTLGPUFamilyApple6, 1006)
+        self.assertEqual(Metal.MTLGPUFamilyApple7, 1007)
 
         self.assertEqual(Metal.MTLGPUFamilyMac1, 2001)
         self.assertEqual(Metal.MTLGPUFamilyMac2, 2002)

@@ -204,6 +204,15 @@
    }
   },
   "externs": {
+   "kCIInputLocalToneMapAmountKey": {
+    "typestr": "@"
+   },
+   "kCIImageAuxiliarySemanticSegmentationSkyMatte": {
+    "typestr": "@"
+   },
+   "kCIImageRepresentationSemanticSegmentationSkyMatteImage": {
+    "typestr": "@"
+   },
    "kCIImageRepresentationSemanticSegmentationGlassesMatteImage": {
     "typestr": "@"
    },

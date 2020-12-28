@@ -57,6 +57,12 @@ class TestCIContext(TestCase):
             Quartz.kCIImageRepresentationSemanticSegmentationGlassesMatteImage, str
         )
 
+    @min_os_level("10.16.1")
+    def testConstants10_16_1(self):
+        self.assertIsInstance(
+            Quartz.kCIImageRepresentationSemanticSegmentationSkyMatteImage, str
+        )
+
     def testMethods(self):
         self.assertArgIsOut(
             Quartz.CIContext.render_toBitmap_rowBytes_bounds_format_colorSpace_, 1

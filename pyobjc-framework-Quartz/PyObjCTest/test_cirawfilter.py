@@ -51,3 +51,7 @@ class TestCIRAWFilter(TestCase):
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(Quartz.kCIInputEnableEDRModeKey, str)
+
+    @min_os_level("10.16.1")
+    def testConstants10_16_1(self):
+        self.assertIsInstance(Quartz.kCIInputLocalToneMapAmountKey, str)

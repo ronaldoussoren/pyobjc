@@ -90,6 +90,7 @@ def _install_virtualenv(interpreter):
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "virtualenv"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel"])
+    subprocess.check_call([interpreter, "-mpip", "install", "-U", "twine"])
 
 
 @contextlib.contextmanager
@@ -104,6 +105,7 @@ def virtualenv(interpreter):
         raise RuntimeError("VirtualEnv incomplete")
 
     try:
+        _install_virtualenv("test-env/bin/python")
         yield os.path.abspath("test-env/bin/python")
 
     finally:
@@ -111,7 +113,7 @@ def virtualenv(interpreter):
         shutil.rmtree("test-env")
 
 
-def variants(ver, permitted_variants=("64bit", "x86_64", "arm64", "universal2")):
+def variants(ver, permitted_variants=("64bit", "x86_64", "arm64", "intel", "universal2")):
     if os.path.islink(
         os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
     ):

@@ -838,3 +838,4 @@ class TestCGImageProperties(TestCase):
             Quartz.kCGImageAuxiliaryDataTypeSemanticSegmentationGlassesMatte, str
         )
         self.assertIsInstance(Quartz.kCGImageAuxiliaryDataTypeHDRGainMap, str)
+        self.assertIsInstance(Quartz.kCGImageAuxiliaryDataTypeSemanticSegmentationSkyMatte, str)

@@ -12,7 +12,7 @@ import tarfile
 from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = '7.0.1'
+VERSION = '7.1'
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -23,6 +23,7 @@ FRAMEWORK_WRAPPERS = [
     # Name                      Introcuded          Removed
     ("libdispatch", "10.8", None),
     ("Accessibility", "10.16", None),
+    ("AdServices", "10.16", None),
     ("AdSupport", "10.14", None),
     ("AppTrackingTransparency", "10.16", None),
     ("AuthenticationServices", "10.15", None),
@@ -172,6 +173,7 @@ MACOS_TO_DARWIN = {
     "10.14": "18.0",
     "10.15": "19.0",
     "10.16": "20.0",
+    "11.0": "20.0",
 }
 
 

@@ -76,8 +76,9 @@ def main():
             print("WARNING: Building wheel for {} failed".format(nm))
             failed.append((nm, "sdist", ""))
 
-        for ver in detect_pyversions():
+        for ver in ["3.9"]: # detect_pyversions():
             for variant in variants(ver):
+                if 'universal2' not in variant: continue
                 setup_variant(ver, variant)
                 status = subprocess.call(
                     [

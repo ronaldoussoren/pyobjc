@@ -13,6 +13,7 @@
    "MTLSparseTextureMappingModeUnmap": { "value": 1 },
    "MTLCounterSampleBufferErrorInternal": { "value": 2 },
    "MTLGPUFamilyApple6": { "value": 1006 },
+   "MTLGPUFamilyApple7": { "value": 1007 },
    "MTLHeapTypeSparse": { "value": 2 },
    "MTLPixelFormatASTC_4x4_HDR": { "value": 222 },
    "MTLPixelFormatASTC_5x4_HDR": { "value": 223 },

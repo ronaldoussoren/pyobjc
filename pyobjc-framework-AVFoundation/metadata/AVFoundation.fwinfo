@@ -45,6 +45,7 @@
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVVideoAppleProRAWBitDepthKey": { "typestr": "@" },
    "AVAssetDownloadTaskPrefersHDRKey": { "typestr": "@" },
    "AVAssetDownloadTaskMinimumRequiredPresentationSizeKey": { "typestr": "@" },
    "AVAssetDownloadTaskMediaSelectionPrefersMultichannelKey": { "typestr": "@" },

@@ -107,3 +107,7 @@ class TestAVVideoSettings(TestCase):
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422HQ, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422LT, str)
         self.assertIsInstance(AVFoundation.AVVideoCodecTypeAppleProRes422Proxy, str)
+
+    @min_os_level("10.16.1")
+    def testConstants10_16_1(self):
+        self.assertIsInstance(AVFoundation.AVVideoAppleProRAWBitDepthKey, str)
