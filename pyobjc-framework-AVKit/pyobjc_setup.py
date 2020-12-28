@@ -426,12 +426,21 @@ def Extension(*args, **kwds):
             ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
             universal_newlines=True,
         ).strip()
+            
         if data:
+            sdk_settings_path = os.path.join(data, 'SDKSettings.plist')
+            if os.path.exists(sdk_settings_path):
+                 with open(sdk_settings_path, 'rb') as fp:
+                     sdk_settings = plistlib.load(fp)
+                 version = sdk_settings['Version']
+            else:
+                 version = os.path.basename(data)[6:-4]
+
             cflags.append("-isysroot")
             cflags.append(data)
             cflags.append(
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
-                % (tuple(map(int, os.path.basename(data)[6:-4].split("."))))
+                % (tuple(map(int, version.split("."))))
             )
 
     else:
