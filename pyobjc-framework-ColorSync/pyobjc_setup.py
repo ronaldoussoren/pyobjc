@@ -419,7 +419,7 @@ def Extension(*args, **kwds):
         cflags.append("-Wno-deprecated-declarations")
 
     sdk = get_sdk()
-    if not sdk:  # and os.path.exists('/usr/include/stdio.h'):
+    if not sdk:  
         # We're likely on a system with the Xcode Command Line Tools.
         # Explicitly use the most recent SDK to avoid compile problems.
         data = subprocess.check_output(
@@ -441,6 +441,10 @@ def Extension(*args, **kwds):
             cflags.append(
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
                 % (tuple(map(int, version.split("."))))
+            )
+        else:
+            cflags.append(
+                "-DPyObjC_BUILD_RELEASE=%02d%02d" % (tuple(map(int, os_level.split("."))))
             )
 
     else:

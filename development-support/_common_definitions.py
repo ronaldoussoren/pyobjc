@@ -55,12 +55,15 @@ def repository_commit_state():
 
 
 def xcode_version():
-    data = subprocess.check_output(["xcodebuild", "-version"])
-    data = data.decode("utf-8")
-    lines = data.splitlines()
-    assert len(lines) >= 2
-    return "{} ({})".format(lines[0], lines[-1])
+    try:
+        data = subprocess.check_output(["xcodebuild", "-version"])
+        data = data.decode("utf-8")
+        lines = data.splitlines()
+        assert len(lines) >= 2
+        return "{} ({})".format(lines[0], lines[-1])
 
+    except subprocess.CalledProcessError:
+        return "Xcode not installed (cmd line tools)"
 
 def py_version(ver):
     return (

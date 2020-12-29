@@ -35,7 +35,8 @@ if sys.version_info < MIN_PYTHON:
 
 
 def get_os_level():
-    pl = plistlib.readPlist("/System/Library/CoreServices/SystemVersion.plist")
+    with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
+       pl = plistlib.load(fp)
     v = pl["ProductVersion"]
     return ".".join(v.split(".")[:2])
 
@@ -50,7 +51,8 @@ def get_sdk_level(sdk):
     assert sdkname.endswith(".sdk")
     if sdkname == "MacOSX.sdk":
         try:
-            pl = plistlib.readPlist(os.path.join(sdk, "SDKSettings.plist"))
+            with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
+                pl = plistlib.load(fp)
             return pl["Version"]
         except Exception:
             raise SystemExit("Cannot determine SDK version")
@@ -496,11 +498,15 @@ class oc_build_ext(build_ext.build_ext):
 
         self.sdk_root = os.environ.get("SDKROOT", None)
         if self.sdk_root is None:
-            if os.path.exists("/usr/bin/xcodebuild"):
+            if os.path.exists("/usr/bin/xcrun"):
                 self.sdk_root = subprocess.check_output(
                     ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
                     universal_newlines=True,
                 ).strip()
+
+                if not self.sdk_root:
+                   # With command line tools the value can be empty
+                   self.sdk_root = "/"
 
             else:
                 self.sdk_root = "/"
