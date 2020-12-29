@@ -11,7 +11,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "6.2.2"
+VERSION = '6.2.3'
 
 setup(
     name="pyobjc-framework-Vision",
