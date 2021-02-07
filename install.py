@@ -128,6 +128,7 @@ def get_sdk_level():
                 pl = plistlib.load(fp)
             return pl["Version"]
         except Exception:
+            raise
             raise SystemExit("Cannot determine SDK version")
     else:
         return sdkname[6:-4]
@@ -154,6 +155,16 @@ def sorted_framework_wrappers():
                 if not in_requires:
                     if ln.strip().startswith("install_requires"):
                         in_requires = True
+
+                        if "]" in ln:
+                            # Dependencies on a single line
+                            start = ln.find("[")
+                            deps = ln[start + 1 :].strip().split(",")
+                            for d in deps:
+                                d = d.strip()[1:]
+                                if d.startswith("pyobjc-framework-"):
+                                    d = d.split(">")[0]
+                                    requires.append(d)
                 else:
                     if ln.strip().startswith("]"):
                         in_requires = False
@@ -213,6 +224,7 @@ def build_project(project, extra_args):
     status = subprocess.call(
         [sys.executable, "setup.py", "install"] + extra_args, cwd=proj_dir
     )
+
     if status != 0:
         print("Installing {!r} failed (status {})".format(project, status))
         return False

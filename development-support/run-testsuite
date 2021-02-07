@@ -112,6 +112,16 @@ def sort_framework_wrappers():
                 if requires is None:
                     if ln.strip().startswith("install_requires"):
                         requires = []
+
+                        if "]" in ln:
+                            # Dependencies on a single line
+                            start = ln.find("[")
+                            deps = ln[start + 1 :].strip().split(",")
+                            for d in deps:
+                                d = d.strip()[1:]
+                                if d.startswith("pyobjc-framework-"):
+                                    d = d.split(">")[0]
+                                    requires.append(d)
                 else:
                     if ln.strip().startswith("]"):
                         break
@@ -177,7 +187,10 @@ def build_project(*, interpreter, py_ver, project):
 
     # Actually build
     lg.info("building %r using %r (%s)", project, interpreter, py_ver)
-    status = subprocess.call([interpreter, "-mpip", "install", "--no-deps", "--no-cache-dir", "."], cwd=proj_dir)
+    status = subprocess.call(
+        [interpreter, "-mpip", "install", "--no-deps", "--no-cache-dir", "."],
+        cwd=proj_dir,
+    )
     if status != 0:
         lg.warning("build %r failed (status %s)", project, status)
         return False
@@ -502,9 +515,7 @@ def main():
             if not os.path.exists(os.path.join(proj_dir, ".coverage")):
                 continue
 
-            subprocess.check_call(
-                [interpreter, "-mcoverage", "combine"], cwd=proj_dir
-            )
+            subprocess.check_call([interpreter, "-mcoverage", "combine"], cwd=proj_dir)
             subprocess.check_call(
                 [
                     interpreter,

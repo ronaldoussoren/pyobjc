@@ -155,6 +155,16 @@ def sorted_framework_wrappers():
                 if not in_requires:
                     if ln.strip().startswith("install_requires"):
                         in_requires = True
+
+                        if "]" in ln:
+                            # Dependencies on a single line
+                            start = ln.find("[")
+                            deps = ln[start + 1 :].strip().split(",")
+                            for d in deps:
+                                d = d.strip()[1:]
+                                if d.startswith("pyobjc-framework-"):
+                                    d = d.split(">")[0]
+                                    requires.append(d)
                 else:
                     if ln.strip().startswith("]"):
                         in_requires = False
