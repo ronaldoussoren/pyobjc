@@ -177,11 +177,12 @@ def build_project(*, interpreter, py_ver, project):
 
     # Actually build
     lg.info("building %r using %r (%s)", project, interpreter, py_ver)
-    status = subprocess.call([interpreter, "setup.py", "install"], cwd=proj_dir)
+    status = subprocess.call([interpreter, "-mpip", "install", "--no-deps", "--no-cache-dir", "."], cwd=proj_dir)
     if status != 0:
         lg.warning("build %r failed (status %s)", project, status)
         return False
 
+    lg.info("checking install %r using %r (%s)", project, interpreter, py_ver)
     status = subprocess.call(
         [
             interpreter,
