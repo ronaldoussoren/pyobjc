@@ -4,17 +4,17 @@ repos:
     rev: master
     hooks:
       - id: black
-        language_version: python3.7
+        language_version: python3.9
         # override until resolved: https://github.com/ambv/black/issues/402
         files: \.pyi?$
         types: []
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.8
+    rev: master
     hooks:
       - id: flake8
         args: ["--config", ".flake8" ]
-        language_version: python3.7
+        language_version: python3.9
         additional_dependencies:
         - flake8-bugbear
         - flake8-deprecated
@@ -30,7 +30,7 @@ repos:
 #    hooks:
 #      - id: isort
 #        additional_dependencies: [toml]
-#        language_version: python3.7
+#        language_version: python3.9
 #
 
 
