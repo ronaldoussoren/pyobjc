@@ -194,13 +194,27 @@ static PyMethodDef mod_methods[] = {
 #define impC_id_vF3 PyObjCUnsupportedMethod_IMP
 
 /* Python glue */
-PyObjC_MODULE_INIT(_SpriteKit)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_SpriteKit",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__SpriteKit(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__SpriteKit(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_SpriteKit) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
     {
         Class classSK3DNode = objc_lookUpClass("SK3DNode");
@@ -208,13 +222,13 @@ PyObjC_MODULE_INIT(_SpriteKit)
             if (PyObjC_RegisterMethodMapping(classSK3DNode, @selector(projectPoint:),
                                              call_vF3_vF3, imp_vF3_vF3)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
 
             if (PyObjC_RegisterMethodMapping(classSK3DNode, @selector(unprojectPoint:),
                                              call_vF3_vF3, imp_vF3_vF3)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
         }
     }
@@ -225,27 +239,27 @@ PyObjC_MODULE_INIT(_SpriteKit)
             if (PyObjC_RegisterMethodMapping(classSKFieldNode, @selector(direction),
                                              call_vF3_v, imp_vF3_v)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
 
             if (PyObjC_RegisterMethodMapping(classSKFieldNode, @selector(setDirection:),
                                              call_v_vF3, imp_v_vF3)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
 
             if (PyObjC_RegisterMethodMapping(classSKFieldNode,
                                              @selector(linearGravityFieldWithVector:),
                                              callC_id_vF3, impC_id_vF3)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
 
             if (PyObjC_RegisterMethodMapping(classSKFieldNode,
                                              @selector(velocityFieldWithVector:),
                                              callC_id_vF3, impC_id_vF3)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
         }
     }
@@ -257,7 +271,7 @@ PyObjC_MODULE_INIT(_SpriteKit)
                                              @selector(sampleFieldsAt:), call_vF3_vF3,
                                              imp_vF3_vF3)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
         }
 
@@ -267,10 +281,10 @@ PyObjC_MODULE_INIT(_SpriteKit)
                                              @selector(sampleFieldsAt:), call_vF3_vF3,
                                              imp_vF3_vF3)
                 < 0) {
-                PyObjC_INITERROR();
+                return NULL;
             }
         }
     }
 
-    PyObjC_INITDONE();
+    return m;
 }

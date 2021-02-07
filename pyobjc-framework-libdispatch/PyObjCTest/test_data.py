@@ -15,6 +15,12 @@ class TestDataAPI(TestCase):
 
         self.assertIs(libdispatch.DISPATCH_DATA_DESTRUCTOR_DEFAULT, None)
 
+    @min_os_level("10.9")
+    def test_constants10_9(self):
+        self.assertIsInstance(
+            libdispatch.DISPATCH_DATA_DESTRUCTOR_MUNMAP, objc.objc_object
+        )
+
     @min_os_level("10.7")
     def test_functions(self):
         self.assertResultHasType(libdispatch.dispatch_data_create, objc._C_ID)

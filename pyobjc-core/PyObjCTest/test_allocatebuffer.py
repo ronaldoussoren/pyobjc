@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestAllocateBuffer(TestCase):
@@ -12,7 +12,3 @@ class TestAllocateBuffer(TestCase):
         self.assertEqual(len(b), 10000)
 
         self.assertIsInstance(b, bytearray)
-
-
-if __name__ == "__main__":
-    main()

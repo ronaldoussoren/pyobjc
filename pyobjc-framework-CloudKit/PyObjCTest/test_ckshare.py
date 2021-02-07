@@ -1,13 +1,11 @@
-import sys
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import CloudKit
 
-if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import TestCase, min_os_level
-    import CloudKit
 
-    class TestCKShare(TestCase):
-        @min_os_level("10.12")
-        def testConstants10_12(self):
-            self.assertIsInstance(CloudKit.CKRecordTypeShare, str)
-            self.assertIsInstance(CloudKit.CKShareTitleKey, str)
-            self.assertIsInstance(CloudKit.CKShareThumbnailImageDataKey, str)
-            self.assertIsInstance(CloudKit.CKShareTypeKey, str)
+class TestCKShare(TestCase):
+    @min_os_level("10.12")
+    def testConstants10_12(self):
+        self.assertIsInstance(CloudKit.CKRecordTypeShare, str)
+        self.assertIsInstance(CloudKit.CKShareTitleKey, str)
+        self.assertIsInstance(CloudKit.CKShareThumbnailImageDataKey, str)
+        self.assertIsInstance(CloudKit.CKShareTypeKey, str)

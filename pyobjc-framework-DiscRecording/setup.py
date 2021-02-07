@@ -15,7 +15,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "6.2.2"
+VERSION = '7.1'
 
 
 distutils.unixccompiler.UnixCCompiler.src_extensions.append(".mm")

@@ -204,6 +204,33 @@
    }
   },
   "externs": {
+   "kCIInputLocalToneMapAmountKey": {
+    "typestr": "@"
+   },
+   "kCIImageAuxiliarySemanticSegmentationSkyMatte": {
+    "typestr": "@"
+   },
+   "kCIImageRepresentationSemanticSegmentationSkyMatteImage": {
+    "typestr": "@"
+   },
+   "kCIImageRepresentationSemanticSegmentationGlassesMatteImage": {
+    "typestr": "@"
+   },
+   "kCIImageToneMapHDRtoSDR": {
+    "typestr": "@"
+   },
+   "kCIImageAuxiliarySemanticSegmentationGlassesMatte": {
+    "typestr": "@"
+   },
+   "kCGImageDestinationPreserveGainMap": {
+    "typestr": "@"
+   },
+   "kCGColorSpaceExtendedITUR_2020": {
+    "typestr": "@"
+   },
+   "kCGColorSpaceExtendedDisplayP3": {
+    "typestr": "@"
+   },
    "kCGColorSpaceDisplayP3_PQ": {
     "typestr": "@"
    },
@@ -276,6 +303,34 @@
   },
   "formal_protocols": {},
   "functions": {
+   "CGColorSpaceUsesITUR_2100TF": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGPreflightListenEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGRequestListenEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGPreflightPostEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGRequestPostEventAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGPreflightScreenCaptureAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
+   "CGRequestScreenCaptureAccess": {
+    "args": {},
+    "retval": { "type_override": "B" }
+   },
    "CGBitmapContextCreate": {
     "retval": {
      "already_cfretained": true
@@ -431,6 +486,33 @@
    "CGColorSpaceCreateCalibratedGray": {
     "retval": {
      "already_cfretained": true
+    }
+   },
+   "CGColorSpaceCreateExtended": {
+    "args":{
+     "0": { "type_override": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{CGColorSpace=}"
+    }
+   },
+   "CGColorSpaceCreateExtendedLinearized": {
+    "args":{
+     "0": { "type_override": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{CGColorSpace=}"
+    }
+   },
+   "CGColorSpaceCreateLinearized": {
+    "args":{
+     "0": { "type_override": "^{CGColorSpace=}" }
+    },
+    "retval": {
+     "already_cfretained": true,
+     "type_override": "^{CGColorSpace=}"
     }
    },
    "CGColorSpaceCreateCalibratedRGB": {

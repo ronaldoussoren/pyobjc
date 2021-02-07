@@ -20,7 +20,7 @@ class TestError(TestCase):
 
     @min_os_level("10.5")
     def testCreation(self):
-        userInfo = {b"foo".decode("ascii"): b"bar".decode("ascii")}
+        userInfo = {"foo": "bar"}
         err = CoreFoundation.CFErrorCreate(
             None, CoreFoundation.kCFErrorDomainPOSIX, 42, userInfo
         )
@@ -29,8 +29,8 @@ class TestError(TestCase):
         dct = CoreFoundation.CFErrorCopyUserInfo(err)
         self.assertEqual(dct, userInfo)
 
-        keys = [b"key1".decode("ascii"), b"key2".decode("ascii")]
-        values = [b"value1".decode("ascii"), b"value2".decode("ascii")]
+        keys = ["key1", "key2"]
+        values = ["value1", "value2"]
 
         keys = [Foundation.NSString.stringWithString_(v) for v in keys]
         values = [Foundation.NSString.stringWithString_(v) for v in values]
@@ -52,18 +52,12 @@ class TestError(TestCase):
         )
         self.assertIsInstance(err, CoreFoundation.CFErrorRef)
         dct = CoreFoundation.CFErrorCopyUserInfo(err)
-        self.assertEqual(
-            dct,
-            {
-                b"key1".decode("ascii"): b"value1".decode("ascii"),
-                b"key2".decode("ascii"): b"value2".decode("ascii"),
-            },
-        )
+        self.assertEqual(dct, {"key1": "value1", "key2": "value2"})
 
     @min_os_level("10.5")
     def testInspection(self):
         userInfo = {
-            b"foo".decode("ascii"): b"bar".decode("ascii"),
+            "foo": "bar",
             CoreFoundation.kCFErrorLocalizedFailureReasonKey: "failure reason",
             CoreFoundation.kCFErrorLocalizedRecoverySuggestionKey: "recovery suggestion",
         }
@@ -83,19 +77,18 @@ class TestError(TestCase):
         self.assertIn(
             v,
             (
-                b"Operation could not be completed. failure reason".decode("ascii"),
-                b"The operation couldn%st be completed. failure reason".decode("ascii")
-                % (chr(0x2019),),
+                "Operation could not be completed. failure reason",
+                "The operation couldn%st be completed. failure reason" % (chr(0x2019),),
             ),
         )
 
         self.assertResultIsCFRetained(CoreFoundation.CFErrorCopyFailureReason)
         v = CoreFoundation.CFErrorCopyFailureReason(err)
-        self.assertEqual(v, b"failure reason".decode("ascii"))
+        self.assertEqual(v, "failure reason")
 
         self.assertResultIsCFRetained(CoreFoundation.CFErrorCopyRecoverySuggestion)
         v = CoreFoundation.CFErrorCopyRecoverySuggestion(err)
-        self.assertEqual(v, b"recovery suggestion".decode("ascii"))
+        self.assertEqual(v, "recovery suggestion")
 
     @min_os_level("10.5")
     def testConstants(self):

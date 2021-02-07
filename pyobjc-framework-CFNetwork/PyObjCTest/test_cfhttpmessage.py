@@ -21,6 +21,10 @@ class TestCFHTTPMessage(TestCase):
         self.assertIsInstance(CFNetwork.kCFHTTPVersion2_0, str)
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeKerberos, str)
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(CFNetwork.kCFHTTPVersion3_0, str)
+
     def testConstants(self):
         self.assertIsInstance(CFNetwork.kCFHTTPVersion1_0, str)
         self.assertIsInstance(CFNetwork.kCFHTTPVersion1_1, str)
@@ -69,7 +73,7 @@ class TestCFHTTPMessage(TestCase):
 
         self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyBody)
         b = CFNetwork.CFHTTPMessageCopyBody(req)
-        self.assertIsInstance(b, (CFNetwork.CFDataRef, memoryview, bytes))
+        self.assertIsInstance(b, (CFNetwork.NSData, memoryview, bytes))
 
         self.assertResultIsCFRetained(CFNetwork.CFHTTPMessageCopyAllHeaderFields)
         v = CFNetwork.CFHTTPMessageCopyAllHeaderFields(req)

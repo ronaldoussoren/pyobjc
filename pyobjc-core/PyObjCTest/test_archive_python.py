@@ -25,7 +25,6 @@ from PyObjCTest.fnd import (
 )
 from PyObjCTools.TestSupport import (
     TestCase,
-    main,
     onlyIf,
     expectedFailure,
     expectedFailureIf,
@@ -1579,7 +1578,3 @@ class TestKeyedArchiveNative(TestArchiveNative):
 #
 class TestArchivePythonObjCSubclass(TestCase):
     pass
-
-
-if __name__ == "__main__":
-    main()

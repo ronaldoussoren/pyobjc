@@ -12,8 +12,4 @@ These bindings are accessed through the ``FinderSync`` package (that is, ``impor
 API Notes
 ---------
 
-The entire "FinderSync" framework on MacOSX 10.10 (or later) is available from Python.
-
-.. note::
-
-   The FinderSync framework is only available in 64-bit applications.
+The entire "FinderSync" framework on macOS 10.10 (or later) is available from Python.

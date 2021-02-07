@@ -37,6 +37,17 @@ class TestNSData(TestCase):
 
         self.assertEqual(Foundation.NSAtomicWrite, 1)
 
+        self.assertEqual(Foundation.NSDataWritingFileProtectionNone, 0x10000000)
+        self.assertEqual(Foundation.NSDataWritingFileProtectionComplete, 0x20000000)
+        self.assertEqual(
+            Foundation.NSDataWritingFileProtectionCompleteUnlessOpen, 0x30000000
+        )
+        self.assertEqual(
+            Foundation.NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication,
+            0x40000000,
+        )
+        self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xF0000000)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(Foundation.NSDataReadingMapped, 1 << 0)

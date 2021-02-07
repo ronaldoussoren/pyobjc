@@ -9,14 +9,12 @@ class TestNSWorkspace(TestCase):
 
         # A method with 2 output parameters, this means the result
         # is a tuple with 3 elements (return value, param1, param2)
-        res = ws.getInfoForFile_application_type_(b"/".decode("ascii"), None, None)
+        res = ws.getInfoForFile_application_type_("/", None, None)
         self.assertIsInstance(res, tuple)
         self.assertEqual(len(res), 3)
         self.assertEqual(res[0], 1)
-        self.assertEqual(
-            res[1], b"/System/Library/CoreServices/Finder.app".decode("ascii")
-        )
-        self.assertEqual(res[2], b"".decode("ascii"))
+        self.assertEqual(res[1], "/System/Library/CoreServices/Finder.app")
+        self.assertEqual(res[2], "")
 
     def testConstants(self):
         self.assertEqual(AppKit.NSWorkspaceLaunchAndPrint, 0x00000002)

@@ -2,7 +2,7 @@
 Test cases for testing if it is possible to pickle
 Objective-C objects
 """
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 # Test cases for pickling ObjC objects
@@ -20,7 +20,3 @@ class TestPickleMixedGraph(TestCase):
 # of NSObject
 class TestPicklePythonNSObject(TestCase):
     pass
-
-
-if __name__ == "__main__":
-    main()

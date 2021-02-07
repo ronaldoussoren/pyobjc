@@ -2,7 +2,7 @@ import pickle
 
 import objc
 from PyObjCTest.test_object_property import OCObserve
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -437,7 +437,3 @@ class TestSetProperty(TestCase):
         v = pickle.loads(p)
         self.assertEqual(o.aSet, v)
         self.assertTrue(isinstance(v, set))
-
-
-if __name__ == "__main__":
-    main()

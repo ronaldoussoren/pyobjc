@@ -3,6 +3,13 @@
  * size of a C-style array depends on the value of another argument.
  */
 
+#if PyObjC_BUILD_RELEASE < 1014
+#define NSBezierPathElementMoveTo NSMoveToBezierPathElement
+#define NSBezierPathElementLineTo NSLineToBezierPathElement
+#define NSBezierPathElementCurveTo NSCurveToBezierPathElement
+#define NSBezierPathElementClosePath NSClosePathBezierPathElement
+#endif
+
 static PyObject*
 call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* self,
                                                    PyObject* arguments)
@@ -44,16 +51,16 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
     }
 
     switch (res) {
-    case NSMoveToBezierPathElement:
+    case NSBezierPathElementMoveTo:
         pointCount = 1;
         break;
-    case NSLineToBezierPathElement:
+    case NSBezierPathElementLineTo:
         pointCount = 1;
         break;
-    case NSCurveToBezierPathElement:
+    case NSBezierPathElementCurveTo:
         pointCount = 3;
         break;
-    case NSClosePathBezierPathElement:
+    case NSBezierPathElementClosePath:
         pointCount = 0;
         break;
     default:
@@ -217,16 +224,16 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(void* cif __attribute__((__unu
         goto error;
 
     switch (*(NSBezierPathElement*)resp) {
-    case NSMoveToBezierPathElement:
+    case NSBezierPathElementMoveTo:
         pointCount = 1;
         break;
-    case NSLineToBezierPathElement:
+    case NSBezierPathElementLineTo:
         pointCount = 1;
         break;
-    case NSCurveToBezierPathElement:
+    case NSBezierPathElementCurveTo:
         pointCount = 3;
         break;
-    case NSClosePathBezierPathElement:
+    case NSBezierPathElementClosePath:
         pointCount = 0;
         break;
     default:

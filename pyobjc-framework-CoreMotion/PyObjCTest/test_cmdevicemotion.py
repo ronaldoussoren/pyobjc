@@ -9,6 +9,10 @@ class TestCMDeviceMotion(TestCase):
         self.assertEqual(CoreMotion.CMMagneticFieldCalibrationAccuracyMedium, 1)
         self.assertEqual(CoreMotion.CMMagneticFieldCalibrationAccuracyHigh, 2)
 
+        self.assertEqual(CoreMotion.CMDeviceMotionSensorLocationDefault, 0)
+        self.assertEqual(CoreMotion.CMDeviceMotionSensorLocationHeadphoneLeft, 1)
+        self.assertEqual(CoreMotion.CMDeviceMotionSensorLocationHeadphoneRight, 2)
+
     def test_structs(self):
         v = CoreMotion.CMCalibratedMagneticField()
         self.assertEqual(v.field, CoreMotion.CMMagneticField())

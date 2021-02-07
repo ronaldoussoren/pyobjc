@@ -468,22 +468,22 @@
     "retval": { "typestr": "B" },
     "args": {
      "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "o^f" },
-     "2": { "typestr": "o^f" },
-     "3": { "typestr": "o^f" },
-     "4": { "typestr": "o^f" },
-     "5": { "typestr": "o^f" },
-     "6": { "typestr": "o^f" },
-     "7": { "typestr": "o^f" },
-     "8": { "typestr": "o^f" },
-     "9": { "typestr": "o^f" }
+     "1": { "type_override": "o^f" },
+     "2": { "type_override": "o^f" },
+     "3": { "type_override": "o^f" },
+     "4": { "type_override": "o^f" },
+     "5": { "type_override": "o^f" },
+     "6": { "type_override": "o^f" },
+     "7": { "type_override": "o^f" },
+     "8": { "type_override": "o^f" },
+     "9": { "type_override": "o^f" }
     }
    },
    "ColorSyncProfileCreateDisplayTransferTablesFromVCGT": {
     "retval": { "typestr": "B" },
     "args": {
      "0": { "typestr": "^{ColorSyncProfile=}" },
-     "1": { "typestr": "n^L", "comment": "Unclear if this is correct" }
+     "1": { "type_override": "n^L", "comment": "Unclear if this is correct" }
     }
    },
    "ColorSyncIterateInstalledProfiles": {
@@ -500,7 +500,7 @@
        "retval": { "typestr": "B" }
       }
      },
-     "1": { "typestr": "N^I" },
+     "1": { "type_override": "N^I" },
      "2": { "typestr": "^v" },
      "3": { "typestr": "^^{__CFError=}", "type_modifier": "o" }
     }

@@ -2,7 +2,7 @@ import copy
 
 import objc
 from PyObjCTest.copying import OC_CopyBase, OC_CopyHelper
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
@@ -257,7 +257,3 @@ class TestPyCopyObjC(TestCase):
         b = copy.copy(a)
         self.assertIsInstance(b, NSMutableArray)
         self.assertEqual(list(a), list(b))
-
-
-if __name__ == "__main__":
-    main()

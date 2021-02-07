@@ -105,6 +105,9 @@ class TestAVError(TestCase):
             AVFoundation.AVErrorExternalPlaybackNotSupportedForAsset, -11870
         )
         self.assertEqual(AVFoundation.AVErrorOperationNotSupportedForPreset, -11871)
+        self.assertEqual(AVFoundation.AVErrorIncorrectlyConfigured, -11875)
+        self.assertEqual(AVFoundation.AVErrorSegmentStartedWithNonSyncSample, -11876)
+        self.assertEqual(AVFoundation.AVErrorRosettaNotInstalled, -11877)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

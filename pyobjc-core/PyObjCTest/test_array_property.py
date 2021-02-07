@@ -3,7 +3,7 @@ import collections.abc
 
 import objc
 from PyObjCTest.test_object_property import OCObserve
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 NSIndexSet = objc.lookUpClass("NSIndexSet")
@@ -748,7 +748,3 @@ class TestArrayProperty(TestCase):
         self.assertEqual(list(v.__reversed__()), [3, 2, 1])
 
         self.assertRaises(AttributeError, getattr, o.array, "nosuchattribute")
-
-
-if __name__ == "__main__":
-    main()

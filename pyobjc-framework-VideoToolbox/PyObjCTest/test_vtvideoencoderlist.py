@@ -23,6 +23,12 @@ class TestVTVideoEncoderList(TestCase):
             VideoToolbox.kVTVideoEncoderList_IsHardwareAccelerated, str
         )
 
+    @min_os_level("10.16")
+    def test_constants10_16(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTVideoEncoderList_SupportsFrameReordering, str
+        )
+
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTCopyVideoEncoderList, 1)
         self.assertArgIsCFRetained(VideoToolbox.VTCopyVideoEncoderList, 1)

@@ -26,11 +26,4 @@ On macOS 10.6 and macOS 10.7 you cannot use PyObjC to write a screen saver
 because the screen saver engine uses Objetive-C Garbage Collection and
 that is not supported by PyObjC.
 
-Screen savers work again in OS X 10.8.
-
-For OSX 10.6 or later on Intel CPUs the binary must contain support
-for the x86_64 (64-bit Intel) code, on earlier OSX releases support
-for i386 (32-bit Intel) is needed.
-
-See the section on "Binary Compatibility" in Apple's documentation
-for more information.
+Screen savers work again in macOS X 10.8.

@@ -16,6 +16,6 @@ PyObjC provides complete wrappers for the DictionaryServices framework.
 
 .. warning::
 
-   On OSX 10.12 the interpreter crashes when using this framework
+   On macOS 10.12 the interpreter crashes when using this framework
    using a python.org binary, it works fine using a locally build
    interpreter (such as Homebrew)

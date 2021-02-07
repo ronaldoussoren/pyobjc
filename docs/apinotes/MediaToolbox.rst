@@ -12,7 +12,7 @@ These bindings are accessed through the ``MediaToolbox`` package (that is, ``imp
 API Notes
 ---------
 
-The full framework is available from Python. This framework was introduced in OSX 10.7.
+The full framework is available from Python. This framework was introduced in macOS 10.7.
 
 * ``MTAudioProcessingTapCreate``
 

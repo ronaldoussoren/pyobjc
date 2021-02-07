@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class specialproperty(object):
@@ -41,7 +41,3 @@ class TestClassSetupHook(TestCase):
 #
 #    def testIncomplete(self):
 #        self.fail("Test (and implementation) incomplete")
-
-
-if __name__ == "__main__":
-    main()

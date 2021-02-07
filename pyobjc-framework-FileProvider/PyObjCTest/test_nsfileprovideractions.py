@@ -3,14 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileProviderActions(TestCase):
-    @min_os_level("10.15")
-    def test_methods10_15(self):
-        self.assertArgIsBlock(
-            FileProvider.NSFileProviderExtension.performActionWithIdentifier_onItemsWithIdentifiers_completionHandler_,  # noqa: B950
-            2,
-            b"v@",
-        )
-
+    @min_os_level("10.16")
+    def test_methods10_16(self):
         self.assertArgIsBlock(
             FileProvider.NSFileProviderExtension.importDocumentAtURL_toParentItemIdentifier_completionHandler_,  # noqa: B950
             2,
@@ -69,10 +63,4 @@ class TestNSFileProviderActions(TestCase):
             FileProvider.NSFileProviderExtension.setFavoriteRank_forItemIdentifier_completionHandler_,  # noqa: B950
             2,
             b"v@@",
-        )
-
-        self.assertArgIsBlock(
-            FileProvider.NSFileProviderExtension.performActionWithIdentifier_onItemsWithIdentifiers_completionHandler_,  # noqa: B950
-            2,
-            b"v@",
         )

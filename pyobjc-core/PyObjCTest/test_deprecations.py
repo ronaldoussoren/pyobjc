@@ -3,7 +3,7 @@ import warnings
 
 import objc
 from PyObjCTest.deprecations import OCTestDeprecations, function_list
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 objc.registerMetaDataForSelector(b"OCTestDeprecations", b"method1", {})
 objc.registerMetaDataForSelector(
@@ -101,7 +101,3 @@ class TestDeprecationWarnings(TestCase):
             self.assertDeprecationWarning(func4)  # noqa: F821
             self.assertDeprecationWarning(func6)  # noqa: F821
             self.assertNoDeprecationWarning(func8)  # noqa: F821
-
-
-if __name__ == "__main__":
-    main()

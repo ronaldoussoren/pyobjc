@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 
 
 class TestWKError(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.13")
     def test_methods(self):
         self.assertArgIsBlock(WebKit.WKHTTPCookieStore.getAllCookies_, 0, b"v@")

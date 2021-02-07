@@ -334,7 +334,7 @@
      },
      {
       "name": "q",
-      "typestr": "^{dispatch_queue_s=}"
+      "typestr": "@"
      }
     ],
     "retval": {

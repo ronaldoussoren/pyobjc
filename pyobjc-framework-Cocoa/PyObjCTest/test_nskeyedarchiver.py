@@ -15,9 +15,7 @@ class TestNSKeyedArchiver(TestCase):
 
     def testOutput(self):
         o = Foundation.NSKeyedUnarchiver.alloc().initForReadingWithData_(
-            Foundation.NSKeyedArchiver.archivedDataWithRootObject_(
-                b"foobar".decode("ascii")
-            )
+            Foundation.NSKeyedArchiver.archivedDataWithRootObject_("foobar")
         )
         self.assertIsInstance(o, Foundation.NSKeyedUnarchiver)
         m = o.decodeBytesForKey_returnedLength_.__metadata__()
@@ -98,6 +96,17 @@ class TestNSKeyedArchiver(TestCase):
         )
         self.assertArgIsOut(
             Foundation.NSKeyedUnarchiver.unarchivedObjectOfClasses_fromData_error_, 2
+        )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertArgIsOut(
+            Foundation.NSKeyedUnarchiver.unarchivedArrayOfObjectsOfClasses_fromData_error_,
+            2,
+        )
+        self.assertArgIsOut(
+            Foundation.NSKeyedUnarchiver.unarchivedDictionaryWithKeysOfClasses_objectsOfClasses_fromData_error_,
+            3,
         )
 
     @min_sdk_level("10.7")

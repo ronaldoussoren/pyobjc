@@ -5,7 +5,13 @@
 #ifndef PyObjC_CLOSURE_POOL
 #define PyObjC_CLOSURE_POOL
 
-extern ffi_closure* PyObjC_malloc_closure(void);
-extern int          PyObjC_free_closure(ffi_closure* cl);
+#if defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15
+
+#define HAVE_CLOSURE_POOL 1
+
+extern ffi_closure* PyObjC_ffi_closure_alloc(size_t size, void** code_loc);
+extern int          PyObjC_ffi_closure_free(ffi_closure* cl);
+
+#endif
 
 #endif /* PyObjC_CLOSURE_POOL */

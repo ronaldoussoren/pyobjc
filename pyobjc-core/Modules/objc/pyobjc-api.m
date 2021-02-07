@@ -115,6 +115,9 @@ struct pyobjc_api objc_api = {
     .varlistnew                = PyObjC_VarList_New,
     .pyobjcobject_convert      = PyObjCObject_Convert,
     .register_id_alias         = PyObjCPointerWrapper_RegisterID,
+    .memview_check             = PyObjCMemView_Check,
+    .memview_new               = PyObjCMemView_New,
+    .memview_getbuffer         = PyObjCMemView_GetBuffer,
 };
 
 int

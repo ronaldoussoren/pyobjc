@@ -3,7 +3,7 @@ Some simple tests to check that the framework is properly wrapped.
 """
 import objc
 import WebKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level, onlyOn32Bit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 
 
 class TestWebKit(TestCase):
@@ -29,11 +29,6 @@ class TestWebKit(TestCase):
     def testVariables(self):
         self.assertHasAttr(WebKit, "DOMRangeException")
         self.assertIsInstance(WebKit.DOMRangeException, str)
-
-    @onlyOn32Bit
-    def testFunctions(self):
-        self.assertHasAttr(WebKit, "WebConvertNSImageToCGImageRef")
-        self.assertIsInstance(WebKit.WebConvertNSImageToCGImageRef, objc.function)
 
     @min_sdk_level("10.6")
     def testProtocols(self):

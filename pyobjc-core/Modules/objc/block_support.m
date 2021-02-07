@@ -143,7 +143,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     ffi_type*              arglist[MAX_ARGCOUNT];
     void*                  values[MAX_ARGCOUNT];
     void*                  byref[MAX_ARGCOUNT]      = {0};
-    struct byref_attr      byref_attr[MAX_ARGCOUNT] = {{0, 0}};
+    struct byref_attr      byref_attr[MAX_ARGCOUNT] = { BYREF_ATTR_INT };
     ffi_cif                cif;
     PyObject*              retval;
 
@@ -177,10 +177,12 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     argbuf_len = PyObjCRT_SizeOfReturnType(signature->rettype->type);
     argbuf_len = align(argbuf_len, sizeof(void*));
 
+#ifndef __arm64__
     int useStret = PyObjCRT_ResultUsesStret(signature->rettype->type);
     if (useStret == -1) {
         goto error;
     }
+#endif
 
     argbuf_len += sizeof(void*); /* Argument 0: the block itself */
     r = PyObjCFFI_CountArguments(signature, 1, &byref_in_count, &byref_out_count,
@@ -236,17 +238,47 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         return NULL;
     }
 
+#ifdef __arm64__
+    cif_arg_count = PyObjCFFI_ParseArguments(
+        signature, 1, args,
+        align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
+            + sizeof(void*),
+        argbuf, argbuf_len, byref, byref_attr, arglist,
+        values);
+#else
     cif_arg_count = PyObjCFFI_ParseArguments(
         signature, 1, args,
         align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
             + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist,
         useStret ? values + 1 : values);
+#endif
 
     if (cif_arg_count == -1) {
         goto error;
     }
 
+#ifdef __arm64__
+    arglist[0] = &ffi_type_pointer;
+    values[0]  = &block_ptr;
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+
+    if (signature->variadic) {
+        r = ffi_prep_cif_var(
+            &cif, FFI_DEFAULT_ABI, (int)Py_SIZE(signature), (int)cif_arg_count,
+            PyObjCFFI_Typestr2FFI(signature->rettype->type),
+            arglist);
+    } else {
+        r = ffi_prep_cif(
+            &cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
+            PyObjCFFI_Typestr2FFI(signature->rettype->type),
+            arglist);
+    }
+#pragma clang diagnostic pop
+
+#else
     if (useStret) {
         arglist[0] = &ffi_type_pointer;
         byref[0]   = argbuf;
@@ -258,10 +290,31 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         values[0]  = &block_ptr;
     }
 
-    r = ffi_prep_cif(
-        &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
-        useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
-        arglist);
+#if PyObjC_BUILD_RELEASE >= 1015
+    if (@available(macOS 10.15,*)) {
+        if (signature->variadic) {
+            r = ffi_prep_cif_var(
+                &cif, FFI_DEFAULT_ABI, (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)),
+                (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
+                useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                arglist);
+        } else {
+            r = ffi_prep_cif(
+                &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
+                useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                arglist);
+        }
+    } else 
+#endif
+    {
+        r = ffi_prep_cif(
+            &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
+            useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+            arglist);
+    }
+
+#endif
+
     if (r != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);
         goto error;
@@ -276,17 +329,25 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
         }
     Py_END_ALLOW_THREADS
 
+#ifndef __arm64__
     if (useStret) {
         byref[0] = NULL;
     }
+#endif
 
     if (PyErr_Occurred()) {
         goto error;
     }
 
+#ifdef __arm64__
+    retval =
+        PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr, byref_out_count,
+                              NULL, 0, values);
+#else
     retval =
         PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr, byref_out_count,
                               NULL, 0, useStret ? values + 1 : values);
+#endif
 
     if (variadicAllArgs) {
         if (PyObjCFFI_FreeByRef(Py_SIZE(signature) + PyTuple_Size(args), byref,

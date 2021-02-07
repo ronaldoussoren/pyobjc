@@ -99,6 +99,11 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "errSecCertificateIsCA": { "value": -67902 },
+   "kSecCodeSignatureLinkerSigned": { "value": 131072 },
+   "kSecCSApplyEmbeddedPolicy": { "value": 33554432  },
+   "errSecRestrictedAPI": { "value": -34020  },
+   "errSSLEarlyDataRejected": { "value": -9890  },
    "kCMSCertificateChainWithRootOrFail": { "value": 4 },
    "errSSLATSViolation": { "value": -9880 },
    "errSSLATSMinimumVersionViolation": { "value": -9881 },
@@ -1914,6 +1919,8 @@
    "kSecCFErrorInfoPlist": { "typestr": "@" },
    "kSecCFErrorGuestAttributes": { "typestr": "@" },
    "kSecCFErrorRequirementSyntax": { "typestr": "@" },
+   "SecAddSharedWebCredential": { "typestr": "@" },
+   "kSecSharedPassword": { "typestr": "@" },
    "kSecCFErrorPath": { "typestr": "@" }
   },
   "aliases": {
@@ -1932,6 +1939,68 @@
   "classes": {
   },
   "functions": {
+   "SecCodeCreateWithXPCMessage": {
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "I" },
+     "2": { "typestr": "o^@", "already_cfretained": true }
+    },
+    "retval": { "typestr": "i" }
+   },
+   "sec_protocol_options_set_peer_authentication_optional": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "B" }
+    }
+   },
+   "SecTrustCopyKey": {
+    "retval": { "typestr": "v", "already_cfretained": true },
+    "args": {
+     "0": { "typestr": "@" }
+    }
+   },
+   "SecCreateSharedWebCredentialPassword": {
+    "retval": { "typestr": "@", "already_cfretained": true },
+    "args": {
+    }
+   },
+   "SecRequestSharedWebCredential": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "@" },
+     "2": {
+      "typestr": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" },
+        "2": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
+   "SecAddSharedWebCredential": {
+    "retval": { "typestr": "v" },
+    "args": {
+     "0": { "typestr": "@" },
+     "1": { "typestr": "@" },
+     "2": { "typestr": "@" },
+     "3": {
+      "typestr": "@?",
+      "callable": {
+       "arguments": {
+        "0": { "type": "^v" },
+        "1": { "type": "@" }
+       },
+       "retval": { "type": "v" }
+      }
+     }
+    }
+   },
    "sec_protocol_metadata_get_negotiated_tls_protocol_version":  {
     "retval": { "type_override": "S" },
     "args": {

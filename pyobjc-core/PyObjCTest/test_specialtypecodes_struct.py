@@ -5,7 +5,7 @@ TODO:
 * _C_UNICHAR, _C_CHAR_AS_INT, _C_CHAR_AS_TEXT
 """
 from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 EmbeddedBoolStruct = objc.createStructType(
@@ -70,7 +70,3 @@ class TestObjectiveC(TestCase):
         self.assertIs(w.valid[1], True)
         self.assertIs(w.valid[2], True)
         self.assertIs(w.valid[3], False)
-
-
-if __name__ == "__main__":
-    main()

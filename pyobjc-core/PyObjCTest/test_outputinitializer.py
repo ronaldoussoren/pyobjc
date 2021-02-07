@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.testoutputinitializer import PyObjC_TestOutputInitializer
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 objc.registerMetaDataForSelector(
     b"PyObjC_TestOutputInitializer",
@@ -14,7 +14,3 @@ class TestOutputInitializer(TestCase):
         robj, rtrue = PyObjC_TestOutputInitializer.alloc().initWithBooleanOutput_(None)
         self.assertEqual(rtrue, objc.YES)
         self.assertEqual(robj.isInitialized(), objc.YES)
-
-
-if __name__ == "__main__":
-    main()

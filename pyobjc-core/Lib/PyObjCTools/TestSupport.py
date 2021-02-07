@@ -413,6 +413,282 @@ class TestCase(_unittest.TestCase):
     This also adds a number of useful assertion methods
     """
 
+    # New API for testing function/method signatures, with one assert for
+    # the callable and one assert each for every return value and argument.
+    #
+    # Primary reason for the new API is to ensure that all metadata overrides
+    # are explicitly tested.
+
+    def assertManualBinding(self, func):
+        if hasattr(func, "__metadata__"):
+            self.fail(f"{func} has automatic bindings")
+
+    def assertCallable(self, func, *, argcount, variadic=None, deprecated=None):
+        """
+        Assert basic information about a method or function
+        """
+
+        results = []
+        if not hasattr(func, "__metadata__"):
+            self.fail("{func} has manual bindings")
+
+        info = func.__metadata__()
+
+        if isinstance(func, objc.selector):
+            cnt = info["arguments"] - 2
+        else:
+            cnt = info["arguments"]
+
+        if cnt != argcount:
+            results.append(f"{cnt} argument, expected {argcount}")
+
+        if variadic is not None:
+            if func.get("variadic") is not variadic:
+                results.append(f"variadic {info['variadic']!r} is not {variadic!r}")
+
+        else:
+            if info.get("variadic") is True:
+                results.append(f"variadic is True, not tested")
+
+        if deprecated is not None:
+            if info.get("deprecated") != deprecated:
+                results.append(f"variadic {info['deprecated']!r} != {deprecated!r}")
+
+        else:
+            if info.get("deprecated") is not None:
+                results.append(f"deprecated is set, not tested")
+
+        if results:
+            self.fail(f"{func}: " + ", ".join(results))
+
+    def assertReturns(
+        self,
+        func,
+        *,
+        type_encoding=None,
+        null_accepted=None,
+        already_retained=None,
+        already_cfretained=None,
+        callable=None,  # noqa: A002
+        c_array_of_variable_length=None,
+        c_array_delimited_by_null=None,
+    ):
+        """
+        Assert information about a return value
+        """
+
+        results = []
+        info = func.__metadata__()["retval"]
+
+        if type_encoding is not None:
+            if info["type"] != type_encoding:
+                results.append(f"encoding {info['type']!r} != {type_encoding!r}")
+
+        if null_accepted is not None:
+            if info["null_accepted"] is not null_accepted:
+                results.append(
+                    f"null_accepted {info['null_accepted']!r} is not {null_accepted!r}"
+                )
+
+        else:
+            if info["null_accepted"] is False:
+                results.append(f"null_accepted is False, not tested")
+
+        if already_retained is not None:
+            if info["already_retained"] is not already_retained:
+                results.append(
+                    f"already_retained {info['already_retained']!r} is not {already_retained!r}"
+                )
+
+        else:
+            if info["already_retained"] is True:
+                results.append(f"already_retained is True, not tested")
+
+        if already_cfretained is not None:
+            if info["already_cfretained"] is not already_cfretained:
+                results.append(
+                    f"already_cfretained {info['already_cfretained']!r} is not {already_cfretained!r}"
+                )
+
+        else:
+            if info["already_cfretained"] is True:
+                results.append(f"already_cfretained is True, not tested")
+
+        if c_array_of_variable_length is not None:
+            if info["c_array_of_variable_length"] is not c_array_of_variable_length:
+                results.append(
+                    f"c_array_of_variable_length {info['c_array_of_variable_length']!r} is not {c_array_of_variable_length!r}"
+                )
+
+        else:
+            if info["c_array_of_variable_length"] is True:
+                results.append(f"c_array_of_variable_length is True, not tested")
+
+        if c_array_delimited_by_null is not None:
+            if info["c_array_delimited_by_null"] is not c_array_delimited_by_null:
+                results.append(
+                    f"c_array_delimited_by_null {info['c_array_delimited_by_null']!r} is not {c_array_delimited_by_null!r}"
+                )
+
+        else:
+            if info["c_array_delimited_by_null"] is True:
+                results.append(f"c_array_delimited_by_null is True, not tested")
+
+        if callable is not None:
+            raise RuntimeError("Need to design API for this")
+
+        if results:
+            self.fail(f"{func} return-value: " + ", ".join(results))
+
+    def assertArgument(
+        self,
+        func,
+        argno,
+        *,
+        type_encoding=None,
+        type_modifier=None,
+        null_accepted=None,
+        printf_format=None,
+        already_retained=None,
+        already_cfretained=None,
+        callable=None,  # noqa: A002
+        callable_retaind=None,
+        c_array_length_in_arg=None,
+        c_array_length_in_result=None,
+        c_array_of_variable_length=None,
+        c_array_delimited_by_null=None,
+    ):
+        """
+        Assert information about an argument
+        """
+        try:
+            if isinstance(func, objc.selector):
+                info = func.__metadata__()["arguments"][argno + 2]
+            else:
+                info = func.__metadata__()["arguments"][argno]
+        except IndexError:
+            self.fail(f"{func.__name__!r} does not have argument {argno}")
+
+        results = []
+        have_modifier = False
+        have_array = False
+
+        if type_encoding is not None:
+            if type_modifier is not None:
+                expected_type = type_modifier + type_encoding
+
+            else:
+                expected_type = type_encoding
+
+            if info["type"] != expected_type:
+                results.append(f"encoding {info['type']!r} != {expected_type!r}")
+
+        elif type_modifier is not None:
+            if not info["type"].startswith(type_modifier + b"^") and not info[
+                "type"
+            ].startswith(type_modifier + b"*"):
+                results.append(
+                    f"modifier {type_modifier!r} not set or set for non-pointer {info['type']!r}"
+                )
+            else:
+                have_modifier = True
+
+        else:
+            if info["type"][0] in (objc._C_IN, objc._C_OUT, objc._C_INOUT):
+                results.append("modifier is set, not tested")
+                have_modifier = True
+
+        if null_accepted is not None:
+            if info["null_accepted"] is not null_accepted:
+                results.append(
+                    f"null_accepted {info['null_accepted']!r} is not {null_accepted!r}"
+                )
+
+        else:
+            if info["null_accepted"] is False:
+                results.append(f"null_accepted is False, not tested")
+
+        if printf_format is not None:
+            if info["printf_format"] is not null_accepted:
+                results.append(
+                    f"printf_format {info['printf_format']!r} is not {printf_format!r}"
+                )
+
+        else:
+            if info["printf_format"] is True:
+                results.append(f"printf_format is True, not tested")
+
+        if already_retained is not None:
+            if info["already_retained"] is not already_retained:
+                results.append(
+                    f"already_retained {info['already_retained']!r} is not {already_retained!r}"
+                )
+
+        else:
+            if info["already_retained"] is True:
+                results.append(f"already_retained is True, not tested")
+
+        if already_cfretained is not None:
+            if info["already_cfretained"] is not already_cfretained:
+                results.append(
+                    f"already_cfretained {info['already_cfretained']!r} is not {already_cfretained!r}"
+                )
+
+        else:
+            if info["already_cfretained"] is True:
+                results.append(f"already_cfretained is True, not tested")
+
+        if c_array_of_variable_length is not None:
+            have_array = True
+            if info["c_array_of_variable_length"] is not c_array_of_variable_length:
+                results.append(
+                    f"c_array_of_variable_length {info['c_array_of_variable_length']!r} is not {c_array_of_variable_length!r}"
+                )
+
+        if c_array_length_in_arg is not None:
+            have_array = True
+            if info["c_array_length_in_arg"] != c_array_length_in_arg:
+                results.append(
+                    f"c_array_length_in_arg {info['c_array_length_in_arg']!r} != {c_array_length_in_arg!r}"
+                )
+
+        else:
+            if info["c_array_length_in_arg"] is not None:
+                results.append(f"c_array_length_in_arg is set, not tested")
+
+        if c_array_length_in_result is not None:
+            have_array = True
+            if info["c_array_length_in_result"] is not c_array_length_in_result:
+                results.append(
+                    f"c_array_length_in_result {info['c_array_length_in_result']!r} is not {c_array_length_in_result!r}"
+                )
+
+        else:
+            if info["c_array_length_in_result"] is True:
+                results.append(f"c_array_length_in_arg is True, not tested")
+
+        if c_array_delimited_by_null is not None:
+            have_array = True
+            if info["c_array_delimited_by_null"] is not c_array_delimited_by_null:
+                results.append(
+                    f"c_array_delimited_by_null {info['c_array_delimited_by_null']!r} is not {c_array_delimited_by_null!r}"
+                )
+
+        else:
+            if info["c_array_delimited_by_null"] is True:
+                results.append(f"c_array_delimited_by_null is True, not tested")
+
+        if have_array and not have_modifier:
+            results.append("array, not no modifier specified")
+
+        if callable is not None:
+            raise RuntimeError("Need to design API for this")
+
+        if results:
+            self.fail(f"{func} arg {argno}: " + ", ".join(results))
+
+    # ----
+
     def assertIsCFType(self, tp, message=None):
         if not isinstance(tp, objc.objc_class):
             self.fail(message or "%r is not a CFTypeRef type" % (tp,))
@@ -624,7 +900,8 @@ class TestCase(_unittest.TestCase):
             and _typealias.get(typestr, typestr) != _typealias.get(tp, tp)
         ):
             self.fail(
-                message or "result of %r is not of type %r, but %r" % (method, tp, type)
+                message
+                or "result of %r is not of type %r, but %r" % (method, tp, typestr)
             )
 
     def assertArgHasType(self, method, argno, tp, message=None):
@@ -652,7 +929,8 @@ class TestCase(_unittest.TestCase):
         ):
             self.fail(
                 message
-                or "arg %d of %s is not of type %r, but %r" % (argno, method, tp, type)
+                or "arg %d of %s is not of type %r, but %r"
+                % (argno, method, tp, typestr)
             )
 
     def assertArgIsFunction(self, method, argno, sel_type, retained, message=None):
@@ -783,7 +1061,7 @@ class TestCase(_unittest.TestCase):
             if st["arguments"][0]["type"] != b"^v":
                 self.fail(
                     message
-                    or "arg %d of %s has an invalid block signature %r"
+                    or "arg %d of %s has an invalid block signature %r for argument 0"
                     % (argno, method, st["arguments"][0]["type"])
                 )
             for a in st["arguments"][1:]:
@@ -829,7 +1107,7 @@ class TestCase(_unittest.TestCase):
             if st["arguments"][0]["type"] != b"^v":
                 self.fail(
                     message
-                    or "result %s has an invalid block signature %r"
+                    or "result %s has an invalid block signature %r for argument 0"
                     % (method, st["arguments"][0]["type"])
                 )
             for a in st["arguments"][1:]:

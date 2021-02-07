@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.NULL import OCTestNULL
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 objc.registerMetaDataForSelector(
     b"OCTestNULL",
@@ -214,7 +214,3 @@ class TestNULLArguments(TestCase):
         - argument should be NULL in objC
         - result should be objc.NULL
         """
-
-
-if __name__ == "__main__":
-    main()

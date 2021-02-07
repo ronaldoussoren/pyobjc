@@ -13,7 +13,7 @@ class TestUserNotification(TestCase):
 
     def testCreation(self):
         runloop_mode = CoreFoundation.kCFRunLoopDefaultMode
-        runloop_mode = b"pyobjctest.cfusernotificaton".decode("ascii")
+        runloop_mode = "pyobjctest.cfusernotificaton"
 
         rl = CoreFoundation.CFRunLoopGetCurrent()
 

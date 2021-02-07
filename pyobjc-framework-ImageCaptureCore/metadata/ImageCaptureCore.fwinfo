@@ -3,6 +3,7 @@
 {
  "definitions": {
   "enum": {
+   "ICReturnConnectionNotAuthorizedToOpenDevice": { "value": -21343 },
    "ICReturnCodeObjectOffset": { "value": -21450 },
    "ICReturnDeviceFailedToCompleteTransfer": { "value": -9956 },
    "ICReturnDeviceFailedToSendData": { "value": -9957 },

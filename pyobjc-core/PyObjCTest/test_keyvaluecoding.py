@@ -3,7 +3,7 @@ import operator
 import os
 
 from PyObjCTools import KeyValueCoding
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -721,7 +721,3 @@ class TestKVCHelper(TestCase):
 
         self.assertRaises(TypeError, operator.getitem, o, 42)
         self.assertRaises(TypeError, operator.setitem, o, 42, 99)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 
 
 class TestWKWebsiteDataStore(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.11")
     def testMethods10_11(self):
         self.assertResultIsBOOL(WebKit.WKWebsiteDataStore.isPersistent)

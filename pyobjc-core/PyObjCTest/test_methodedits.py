@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -411,7 +411,3 @@ class TestCategory(TestCase):
         self.assertHasAttr(NSObjectCat3, "classValue")
         o = NSObjectCat3.alloc().init()
         self.assertEqual(o.getClassValue(), "aap")
-
-
-if __name__ == "__main__":
-    main()

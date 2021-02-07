@@ -1,6 +1,6 @@
 import CoreBluetooth
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestCBPeripheral(TestCase):
@@ -24,12 +24,10 @@ class TestCBPeripheral(TestCase):
             CoreBluetooth.CBPeripheral.setNotifyValue_forCharacteristic_, 0
         )
 
-    @onlyOn64Bit
     @min_os_level("10.9")
     def testMethods2(self):
         self.assertResultIsBOOL(CoreBluetooth.CBPeripheral.isConnected)
 
-    @onlyOn64Bit
     @min_os_level("10.13")
     def testMethods10_13(self):
         self.assertResultIsBOOL(CoreBluetooth.CBPeripheral.canSendWriteWithoutResponse)

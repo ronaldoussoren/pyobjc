@@ -1,10 +1,9 @@
 import JavaScriptCore  # noqa: F401
 import objc
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestJSExport(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.9")
     def test_protocols(self):
         import sysconfig

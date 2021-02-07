@@ -88,7 +88,7 @@ class TestISyncSessionDriver(TestCase):
     def testProtocols(self):
         objc.protocolNamed("ISyncSessionDriverDataSource")
         self.assertResultHasType(
-            TestISyncSessionDriverHelper.preferredSyncModeForEntityName_, objc._C_INT
+            TestISyncSessionDriverHelper.preferredSyncModeForEntityName_, objc._C_UINT
         )
         self.assertResultHasType(
             TestISyncSessionDriverHelper.sessionBeginTimeout, objc._C_DBL

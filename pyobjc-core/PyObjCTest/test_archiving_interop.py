@@ -12,7 +12,7 @@ import tempfile
 from plistlib import loads
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 MYDIR = os.path.dirname(os.path.abspath(__file__))
@@ -377,7 +377,3 @@ class TestLoadingOlderVersions(TestCase):
 
         locals()["test_%s" % (fname.replace(".", "_").replace("-", "_"))] = test
         del test
-
-
-if __name__ == "__main__":
-    main()

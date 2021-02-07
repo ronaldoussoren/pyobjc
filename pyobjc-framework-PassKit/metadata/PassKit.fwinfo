@@ -1,0 +1,78 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "PKIssuerProvisioningExtensionPassEntry": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "art"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "art"
+     }
+    ]
+   },
+   "PKIssuerProvisioningExtensionPaymentPassEntry": {
+    "methods": [
+     {
+      "args": {
+       "2": {}
+      },
+      "class_method": false,
+      "selector": "initWithIdentifier:title:art:addRequestConfiguration:"
+     }
+    ]
+   },
+   "PKPass": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "initWithData:error:"
+     }
+    ]
+   },
+   "PKTicketMetadata": {
+    "methods": [
+     {
+      "args": {
+       "3": {}
+      },
+      "class_method": false,
+      "selector": "initWithProvisioningCredentialIdentifier:cardConfigurationIdentifier:sharingInstanceIdentifier:passThumbnailImage:ownerDisplayName:localizedDescription:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "passThumbnailImage"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "passThumbnailImage"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

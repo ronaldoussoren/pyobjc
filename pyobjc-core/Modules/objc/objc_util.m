@@ -382,10 +382,10 @@ NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks = {
 #define SHOULD_IGNORE 2
 
 void
-PyObjC_FreeCArray(int code, void* array)
+PyObjC_FreeCArray(int code, Py_buffer* view)
 {
     if (code == SHOULD_FREE) {
-        PyMem_Free(array);
+        PyBuffer_Release(view);
     }
 }
 
@@ -473,16 +473,6 @@ array_typestr(PyObject* array)
     Py_DECREF(bytes);
 
     return res;
-}
-
-static int
-buffer_get(BOOL writable, PyObject* obj, void** bufptr, Py_ssize_t* sizeptr)
-{
-    if (writable) {
-        return PyObject_AsWriteBuffer(obj, bufptr, sizeptr);
-    } else {
-        return PyObject_AsReadBuffer(obj, (const void**)bufptr, sizeptr);
-    }
 }
 
 static char struct_elem_code(const char* typestr);
@@ -686,7 +676,7 @@ code_compatible(char array_code, char type_code)
 int
 PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                       PyObject* pythonList, void** array, Py_ssize_t* size,
-                      PyObject** bufobj)
+                      PyObject** bufobj, Py_buffer* view)
 {
     Py_ssize_t eltsize = PyObjCRT_SizeOfType(elementType);
     Py_ssize_t i;
@@ -707,8 +697,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
          * you want.
          */
 
-        char*      buf;
-        Py_ssize_t bufsize;
         int        have_buffer;
 
         if (PyUnicode_Check(pythonList)) {
@@ -717,86 +705,93 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        have_buffer = buffer_get(writable, pythonList, (void**)&buf, &bufsize);
+        have_buffer = PyObject_GetBuffer(pythonList, view, writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO);
         if (have_buffer == -1) {
             if (writable) {
                 /* Ensure that the expected semantics still work
                  * when the passed in buffer is read-only
                  */
-                if (buffer_get(NO, pythonList, (void**)&buf, &bufsize) == -1) {
+                PyObject* byte_array;
+
+                if (PyObject_GetBuffer(pythonList, view, PyBUF_CONTIG_RO) == -1) {
                     return -1;
                 }
 
                 if (size == NULL || *size == -1) {
-                    *array = PyMem_Malloc(bufsize);
-                    if (*array == NULL) {
-                        return -1;
-                    }
-                    memcpy(*array, buf, bufsize);
-
+                    byte_array = PyByteArray_FromStringAndSize(view->buf, view->len);
                 } else {
-                    if ((exactSize && *size != bufsize)
-                        || (!exactSize && *size > bufsize)) {
+                    if ((exactSize && *size != view->len)
+                        || (!exactSize && *size > view->len)) {
                         PyErr_Format(PyExc_ValueError,
                                      "Requesting buffer of %" PY_FORMAT_SIZE_T
                                      "d, have buffer "
                                      "of %" PY_FORMAT_SIZE_T "d",
-                                     *size, bufsize);
+                                     *size, view->len);
                         return -1;
                     }
 
-                    *array = PyMem_Malloc(*size);
-                    if (*array == NULL) {
-                        return -1;
-                    }
-
-                    memcpy(*array, buf, *size);
+                    byte_array = PyByteArray_FromStringAndSize(view->buf, *size);
                 }
+
+                PyBuffer_Release(view);
+
+                if (byte_array == NULL) {
+                    return -1;
+                }
+
+                if (PyObject_GetBuffer(byte_array, view, PyBUF_CONTIG) == -1) {
+                    Py_DECREF(byte_array);
+                    return -1;
+                }
+
+                Py_DECREF(byte_array); /* Reference is kept by the view */
+                *array = view->buf;
                 return SHOULD_FREE;
             }
         }
 
         if (have_buffer != -1) {
             if (size == NULL) {
-                *array  = buf;
+                *array  = view->buf;
                 *bufobj = pythonList;
                 Py_INCREF(pythonList);
 
             } else if (*size == -1) {
-                *array  = buf;
-                *size   = bufsize;
+                *array  = view->buf;
+                *size   = view->len;
                 *bufobj = pythonList;
                 Py_INCREF(pythonList);
 
             } else {
-                if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
+                if ((exactSize && *size != view->len) || (!exactSize && *size > view->len)) {
                     PyErr_Format(PyExc_ValueError,
                                  "Requesting buffer of %" PY_FORMAT_SIZE_T
                                  "d, have buffer "
                                  "of %" PY_FORMAT_SIZE_T "d",
-                                 *size, bufsize);
+                                 *size, view->len);
                     return -1;
                 }
 
-                *array  = buf;
+                *array  = view->buf;
                 *bufobj = pythonList;
                 Py_INCREF(pythonList);
             }
-            return SHOULD_IGNORE;
+            return SHOULD_FREE;
         }
 
         PyErr_Clear();
     }
 
     if (*elementType == _C_UNICHAR && PyUnicode_Check(pythonList)) {
+        PyObject* bytes_array;
 
-        *bufobj = _PyUnicode_EncodeUTF16(pythonList, NULL, -1);
+        bytes_array = _PyUnicode_EncodeUTF16(pythonList, NULL, -1);
 
-        if (*bufobj == NULL) {
+        if (bytes_array == NULL) {
             return -1;
         }
 
-        Py_ssize_t bufsize = PyBytes_Size(*bufobj) / 2;
+        Py_ssize_t bufsize = PyBytes_Size(bytes_array) / 2;
 
         if (*size == -1) {
             *size = bufsize;
@@ -813,17 +808,24 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        /* XXX: Update API protocol to make the extra copy not necessary
-         * Cannot use the code at the end because 'buffer' is assumed to be
-         * the value to return to the python caller.
-         */
-        *array = PyMem_Malloc(PyBytes_Size(*bufobj));
-        memcpy(*array, PyBytes_AsString(*bufobj), PyBytes_Size(*bufobj));
-        Py_DECREF(*bufobj);
-        *bufobj = NULL;
-        return SHOULD_FREE;
+        if (writable) {
+            PyObject* tmp = PyByteArray_FromObject(bytes_array);
+            Py_DECREF(bytes_array);
+            if (tmp == NULL) {
+                return -1;
+            }
 
-        /* *array = PyBytes_AsString(*bufobj); return SHOULD_IGNORE*/
+            bytes_array = tmp;
+        }
+
+        if (PyObject_GetBuffer(bytes_array, view, writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO) == -1) {
+            Py_DECREF(bytes_array);
+            return -1;
+        }
+
+        *array = view->buf;
+        Py_DECREF(bytes_array); /* Kept alive by view */
+        return SHOULD_FREE;
     }
 
     /* A more complex array */
@@ -853,8 +855,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
          * simple type of the same type as the array, or a struct/array
          * containing only elements of the type of the array.
          */
-        char*      buf;
-        Py_ssize_t bufsize;
         char       code = array_typestr(pythonList);
         if (code_compatible(code, *elementType)) {
             /* Simple array, ok */
@@ -892,7 +892,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        if (buffer_get(writable, pythonList, (void**)&buf, &bufsize) == -1) {
+        if (PyObject_GetBuffer(pythonList, view, writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO) == -1) {
             return -1;
         }
 
@@ -901,21 +901,21 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        if ((bufsize % eltsize) != 0) {
+        if ((view->len % eltsize) != 0) {
             PyErr_SetString(PyExc_ValueError, "Badly shaped array.array");
             return -1;
         }
 
-        *array = buf;
+        *array = view->buf;
 
         if (size == NULL) {
             /* pass */
 
         } else if (*size == -1) {
-            *size = bufsize / eltsize;
+            *size = view->len / eltsize;
 
         } else {
-            bufsize /= eltsize;
+            Py_ssize_t bufsize = view->len / eltsize;
 
             if ((exactSize && *size != bufsize) || (!exactSize && *size > bufsize)) {
                 PyErr_Format(PyExc_ValueError,
@@ -924,11 +924,11 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                              *size, bufsize);
                 return -1;
             }
-            *array = buf;
+            *array = view->buf;
         }
         *bufobj = pythonList;
         Py_INCREF(pythonList);
-        return SHOULD_IGNORE;
+        return SHOULD_FREE;
 
     } else {
         Py_ssize_t seqlen;
@@ -971,12 +971,26 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        *array = PyMem_Malloc(eltsize * pycount);
-        if (*array == NULL) {
+
+        PyObject* bytes_array = PyByteArray_FromStringAndSize(NULL, 0);
+        if (bytes_array == NULL) {
             Py_DECREF(seq);
-            PyErr_NoMemory();
             return -1;
         }
+
+        if (PyByteArray_Resize(bytes_array, eltsize * pycount) == -1) {
+            Py_DECREF(bytes_array);
+            Py_DECREF(seq);
+            return -1;
+        }
+
+        if (PyObject_GetBuffer(bytes_array, view, PyBUF_CONTIG) == -1) {
+            Py_DECREF(bytes_array);
+            Py_DECREF(seq);
+            return -1;
+        }
+        *array = view->buf;
+        Py_DECREF(bytes_array); /* kept alive by view */
 
         if (size) {
             *size = pycount;
@@ -990,7 +1004,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             r = depythonify_c_value(elementType, item, ((char*)*array) + (i * eltsize));
             if (r == -1) {
                 Py_DECREF(seq);
-                PyMem_Free(*array);
+                PyBuffer_Release(view);
                 *array = NULL;
                 return -1;
             }

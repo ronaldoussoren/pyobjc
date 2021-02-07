@@ -52,3 +52,9 @@ class TestAVSampleBufferDisplayLayer(TestCase):
             AVFoundation.AVSampleBufferDisplayLayer.setPreventsDisplaySleepDuringVideoPlayback_,  # noqa: B950
             0,
         )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVSampleBufferDisplayLayer.requiresFlushToResumeDecoding
+        )

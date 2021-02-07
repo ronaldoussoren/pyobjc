@@ -5,21 +5,21 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#if PyObjC_BUILD_RELEASE >= 1005
-/* WITH_COREVIDEO */
-
 #import <CoreVideo/CoreVideo.h>
 
 static void
 mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddress)
 {
     PyObject*        info  = (PyObject*)releaseRefCon;
+    PyObject*        view;
     PyGILState_STATE state = PyGILState_Ensure();
 
     if (PyTuple_GetItem(info, 0) != Py_None) {
         PyObject* r = PyObject_CallFunction(PyTuple_GetItem(info, 0), "O",
                                             PyTuple_GetItem(info, 1));
         if (r == NULL) {
+            view = PyTuple_GetItem( info, 3);
+            PyBuffer_Release(PyObjCMemView_GetBuffer(view));
             Py_XDECREF(info);
             PyObjCErr_ToObjCWithGILState(&state);
         }
@@ -27,11 +27,12 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
         Py_DECREF(r);
     }
 
+    view = PyTuple_GetItem( info, 3);
+    PyBuffer_Release(PyObjCMemView_GetBuffer(view));
     Py_DECREF(info);
     PyGILState_Release(state);
 }
 
-WEAK_LINKED_NAME_10_5(CVPixelBufferCreateWithBytes)
 
 static PyObject*
 mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
@@ -41,7 +42,6 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
     size_t           width;
     size_t           height;
     OSType           pixelFormatType;
-    void*            baseAddress;
     size_t           bytesPerRow;
     CFDictionaryRef  pixelBufferAttributes;
     CVPixelBufferRef pixelBuffer;
@@ -50,10 +50,10 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
     PyObject*        py_height;
     PyObject*        py_pixelFormatType;
     PyObject*        py_buffer;
-    Py_ssize_t       buflen;
     PyObject*        py_bytesPerRow;
     PyObject*        releaseCallback;
     PyObject*        info;
+    PyObject*        view;
     PyObject*        py_pixelBufferAttributes;
     PyObject*        py_pixelBuffer = Py_None;
 
@@ -91,14 +91,16 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    if (PyObject_AsWriteBuffer(py_buffer, &baseAddress, &buflen) < 0) {
+    view = PyObjCMemView_New();
+    if (view == NULL) {
         return NULL;
     }
-#pragma clang diagnostic pop
 
-    PyObject* real_info = Py_BuildValue("OOO", releaseCallback, info, py_buffer);
+    if (PyObject_GetBuffer(py_buffer, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) <0) {
+        return NULL;
+    }
+
+    PyObject* real_info = Py_BuildValue("OOOO", releaseCallback, info, py_buffer, view);
     if (real_info == NULL) {
         return NULL;
     }
@@ -107,9 +109,9 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
 
     Py_BEGIN_ALLOW_THREADS
         @try {
-            rv = USE_10_5(CVPixelBufferCreateWithBytes)(
-                allocator, width, height, pixelFormatType, baseAddress, bytesPerRow,
-                mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
+            rv = CVPixelBufferCreateWithBytes(
+                allocator, width, height, pixelFormatType, PyObjCMemView_GetBuffer(view)->buf,
+                bytesPerRow, mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
                 &pixelBuffer);
 
         } @catch (NSException* localException) {
@@ -140,24 +142,27 @@ static PyMethodDef mod_methods[] = {{"CVPixelBufferCreateWithBytes",
 
                                     {0, 0, 0, 0}};
 
-#else /* ! WITH_CORE_VIDEO */
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_CVPixelBuffer",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
 
-static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
+PyObject* PyInit__CVPixelBuffer(void);
 
-#endif /* ! WITH_CORE_VIDEO */
-
-PyObjC_MODULE_INIT(_CVPixelBuffer)
+PyObject* __attribute__((__visibility__("default"))) PyInit__CVPixelBuffer(void)
 {
-    PyObject* m = PyObjC_MODULE_CREATE(_CVPixelBuffer);
+    PyObject* m = PyModule_Create(&mod_module);
     if (!m)
-        PyObjC_INITERROR();
+        return NULL;
 
     if (PyObjC_ImportAPI(m) < 0)
-        PyObjC_INITERROR();
+        return NULL;
 
-#if PyObjC_BUILD_RELEASE >= 1005
-    CHECK_WEAK_LINK_10_5(m, CVPixelBufferCreateWithBytes);
-#endif
-
-    PyObjC_INITDONE();
+    return m;
 }

@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDataSupport(TestCase):
@@ -34,7 +34,3 @@ class TestNSDataSupport(TestCase):
         self.assertEqual(buf[0:2], b"He")
         buf[0:2] = b"hE"
         self.assertEqual(buf[0:2], b"hE")
-
-
-if __name__ == "__main__":
-    main()

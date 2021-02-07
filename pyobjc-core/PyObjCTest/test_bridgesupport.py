@@ -1,4 +1,7 @@
-import ctypes
+try:
+    import ctypes
+except ImportError:
+    ctypes = None
 import os
 import re
 import subprocess
@@ -8,7 +11,7 @@ import xml.etree.ElementTree as ET
 
 import objc
 import objc._bridgesupport as bridgesupport
-from PyObjCTools.TestSupport import TestCase, main, os_release, expectedFailure
+from PyObjCTools.TestSupport import TestCase, main, expectedFailure, onlyIf
 
 from importlib import reload
 
@@ -562,12 +565,11 @@ class TestBridgeSupportParser(TestCase):
         test_func.__name__ = _test_name
         test_func.__doc__ = "System bridgesupport %r" % (fn,)
 
-        if contains_any(fn, BROKEN_FRAMEWORKS) and any(
-            os_release().startswith(version) for version in ("10.13", "10.14", "10.15")
-        ):
-            locals()[_test_name] = expectedFailure(test_func)
-        else:
-            locals()[_test_name] = test_func
+        # XXX: This test is not very useful due to the
+        # quality of the XML files in macOS as of 10.13.
+        # Therefore mark all of these tests as "expectedFailure",
+        # even if some of them will pass.
+        locals()[_test_name] = expectedFailure(test_func)
         del test_func
         del _test_name
 
@@ -1642,6 +1644,7 @@ class Patcher(object):
 
 
 class TestParseBridgeSupport(TestCase):
+    @onlyIf(ctypes is not None, "requires ctypes")
     def test_calls(self):
         # - Minimal XML with all types of metadata
         # - Mock the APIs used by parseBridgeSupport

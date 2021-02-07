@@ -1,4 +1,3 @@
-#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -25,21 +24,25 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
     PyObject*             py_serverName;
     int                   serverName_token;
     PyObject*             serverName_buffer = NULL;
+    Py_buffer             serverName_view;
     Py_ssize_t            securityDomain_length;
     const char*           securityDomain;
     PyObject*             py_securityDomain;
     int                   securityDomain_token;
     PyObject*             securityDomain_buffer = NULL;
+    Py_buffer             securityDomain_view;
     Py_ssize_t            accountName_length;
     const char*           accountName;
     PyObject*             py_accountName;
     int                   accountName_token;
     PyObject*             accountName_buffer = NULL;
+    Py_buffer             accountName_view;
     Py_ssize_t            path_length;
     const char*           path;
     PyObject*             py_path;
     int                   path_token;
     PyObject*             path_buffer = NULL;
+    Py_buffer             path_view;
     UInt16                port;
     SecProtocolType       protocol;
     SecAuthenticationType authenticationType;
@@ -66,7 +69,7 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
 
     serverName_token =
         PyObjC_PythonToCArray(NO, NO, &string, py_serverName, (void**)&serverName,
-                              &serverName_length, &serverName_buffer);
+                              &serverName_length, &serverName_buffer, &serverName_view);
     if (serverName_token == -1) {
         return NULL;
     }
@@ -77,9 +80,9 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
     } else {
         securityDomain_token = PyObjC_PythonToCArray(
             NO, NO, &string, py_securityDomain, (void**)&securityDomain,
-            &securityDomain_length, &securityDomain_buffer);
+            &securityDomain_length, &securityDomain_buffer, &securityDomain_view);
         if (securityDomain_token == -1) {
-            PyObjC_FreeCArray(serverName_token, (void*)serverName);
+            PyObjC_FreeCArray(serverName_token, &serverName_view);
             Py_XDECREF(serverName_buffer);
             return NULL;
         }
@@ -90,12 +93,12 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
     } else {
         accountName_token =
             PyObjC_PythonToCArray(NO, NO, &string, py_accountName, (void**)&accountName,
-                                  &accountName_length, &accountName_buffer);
+                                  &accountName_length, &accountName_buffer, &accountName_view);
         if (accountName_token == -1) {
-            PyObjC_FreeCArray(serverName_token, (void*)serverName);
+            PyObjC_FreeCArray(serverName_token, &serverName_view);
             Py_XDECREF(serverName_buffer);
             if (py_securityDomain != NULL)
-                PyObjC_FreeCArray(securityDomain_token, (void*)securityDomain);
+                PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
             Py_XDECREF(securityDomain_buffer);
             return NULL;
         }
@@ -105,14 +108,14 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         path = NULL;
     } else {
         path_token = PyObjC_PythonToCArray(NO, NO, &string, py_path, (void**)&path,
-                                           &path_length, &path_buffer);
+                                           &path_length, &path_buffer, &path_view);
         if (path_token == -1) {
-            PyObjC_FreeCArray(serverName_token, (void*)serverName);
+            PyObjC_FreeCArray(serverName_token, &serverName_view);
             Py_XDECREF(serverName_buffer);
             if (py_securityDomain != NULL)
-                PyObjC_FreeCArray(securityDomain_token, (void*)securityDomain);
+                PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
             Py_XDECREF(securityDomain_buffer);
-            PyObjC_FreeCArray(accountName_token, (void*)accountName);
+            PyObjC_FreeCArray(accountName_token, &accountName_view);
             Py_XDECREF(accountName_buffer);
             return NULL;
         }
@@ -123,25 +126,25 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         PyObjC_FreeCArray(serverName_token, (void*)serverName);
         Py_XDECREF(serverName_buffer);
         if (py_securityDomain != NULL)
-            PyObjC_FreeCArray(securityDomain_token, (void*)securityDomain);
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
         Py_XDECREF(securityDomain_buffer);
-        PyObjC_FreeCArray(accountName_token, (void*)accountName);
+        PyObjC_FreeCArray(accountName_token, &accountName_view);
         Py_XDECREF(accountName_buffer);
-        PyObjC_FreeCArray(path_token, (void*)path);
+        PyObjC_FreeCArray(path_token, &path_view);
         Py_XDECREF(path_buffer);
         return NULL;
     }
 
     if (py_passwordData != Py_None && py_passwordData != PyObjC_NULL) {
         PyErr_SetString(PyExc_TypeError, "passwordData must be None or objc.NULL");
-        PyObjC_FreeCArray(serverName_token, (void*)serverName);
+        PyObjC_FreeCArray(serverName_token, &serverName_view);
         Py_XDECREF(serverName_buffer);
         if (py_securityDomain != NULL)
-            PyObjC_FreeCArray(securityDomain_token, (void*)securityDomain);
+            PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
         Py_XDECREF(securityDomain_buffer);
-        PyObjC_FreeCArray(accountName_token, (void*)accountName);
+        PyObjC_FreeCArray(accountName_token, &accountName_view);
         Py_XDECREF(accountName_buffer);
-        PyObjC_FreeCArray(path_token, (void*)path);
+        PyObjC_FreeCArray(path_token, &path_view);
         Py_XDECREF(path_buffer);
         return NULL;
     }
@@ -161,14 +164,14 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
         }
     Py_END_ALLOW_THREADS
 
-    PyObjC_FreeCArray(serverName_token, (void*)serverName);
+    PyObjC_FreeCArray(serverName_token, &serverName_view);
     Py_XDECREF(serverName_buffer);
     if (py_securityDomain != NULL)
-        PyObjC_FreeCArray(securityDomain_token, (void*)securityDomain);
+        PyObjC_FreeCArray(securityDomain_token, &securityDomain_view);
     Py_XDECREF(securityDomain_buffer);
-    PyObjC_FreeCArray(accountName_token, (void*)accountName);
+    PyObjC_FreeCArray(accountName_token, &accountName_view);
     Py_XDECREF(accountName_buffer);
-    PyObjC_FreeCArray(path_token, (void*)path);
+    PyObjC_FreeCArray(path_token, &path_view);
     Py_XDECREF(path_buffer);
 
     if (PyErr_Occurred()) {
@@ -180,11 +183,7 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
             py_passwordData = Py_None;
             Py_INCREF(py_passwordData);
         } else {
-#if PY_MAJOR_VERSION == 3
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
-#else
-            py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
-#endif
             (void)SecKeychainItemFreeContent(NULL, passwordData);
 
             if (py_passwordData == NULL) {
@@ -225,11 +224,13 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
     PyObject*          py_serviceName;
     int                serviceName_token;
     PyObject*          serviceName_buffer = NULL;
+    Py_buffer          serviceName_view;
     Py_ssize_t         accountName_length;
     const char*        accountName;
     PyObject*          py_accountName;
     int                accountName_token;
     PyObject*          accountName_buffer = NULL;
+    Py_buffer          accountName_view;
     UInt32             password_length    = 0;
     PyObject*          py_password_length;
     void*              passwordData = NULL;
@@ -251,7 +252,7 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
 
     serviceName_token =
         PyObjC_PythonToCArray(NO, NO, &string, py_serviceName, (void**)&serviceName,
-                              &serviceName_length, &serviceName_buffer);
+                              &serviceName_length, &serviceName_buffer, &serviceName_view);
     if (serviceName_token == -1) {
         return NULL;
     }
@@ -261,9 +262,9 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
     } else {
         accountName_token =
             PyObjC_PythonToCArray(NO, NO, &string, py_accountName, (void**)&accountName,
-                                  &accountName_length, &accountName_buffer);
+                                  &accountName_length, &accountName_buffer, &accountName_view);
         if (accountName_token == -1) {
-            PyObjC_FreeCArray(serviceName_token, (void*)serviceName);
+            PyObjC_FreeCArray(serviceName_token, &serviceName_view);
             Py_XDECREF(serviceName_buffer);
             return NULL;
         }
@@ -271,18 +272,18 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
 
     if (py_password_length != Py_None && py_password_length != PyObjC_NULL) {
         PyErr_SetString(PyExc_TypeError, "passwordLength must be None or objc.NULL");
-        PyObjC_FreeCArray(serviceName_token, (void*)serviceName);
+        PyObjC_FreeCArray(serviceName_token, &serviceName_view);
         Py_XDECREF(serviceName_buffer);
-        PyObjC_FreeCArray(accountName_token, (void*)accountName);
+        PyObjC_FreeCArray(accountName_token, &accountName_view);
         Py_XDECREF(accountName_buffer);
         return NULL;
     }
 
     if (py_passwordData != Py_None && py_passwordData != PyObjC_NULL) {
         PyErr_SetString(PyExc_TypeError, "passwordData must be None or objc.NULL");
-        PyObjC_FreeCArray(serviceName_token, (void*)serviceName);
+        PyObjC_FreeCArray(serviceName_token, &serviceName_view);
         Py_XDECREF(serviceName_buffer);
-        PyObjC_FreeCArray(accountName_token, (void*)accountName);
+        PyObjC_FreeCArray(accountName_token, &accountName_view);
         Py_XDECREF(accountName_buffer);
         return NULL;
     }
@@ -300,9 +301,9 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
         }
     Py_END_ALLOW_THREADS
 
-    PyObjC_FreeCArray(serviceName_token, (void*)serviceName);
+    PyObjC_FreeCArray(serviceName_token, &serviceName_view);
     Py_XDECREF(serviceName_buffer);
-    PyObjC_FreeCArray(accountName_token, (void*)accountName);
+    PyObjC_FreeCArray(accountName_token, &accountName_view);
     Py_XDECREF(accountName_buffer);
 
     if (PyErr_Occurred()) {
@@ -314,11 +315,7 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
             py_passwordData = Py_None;
             Py_INCREF(py_passwordData);
         } else {
-#if PY_MAJOR_VERSION == 3
             py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
-#else
-            py_passwordData = PyBytes_FromStringAndSize(passwordData, password_length);
-#endif
             (void)SecKeychainItemFreeContent(NULL, passwordData);
 
             if (py_passwordData == NULL) {
@@ -490,11 +487,7 @@ m_AuthorizationCopyInfo(PyObject* module __attribute__((__unused__)), PyObject* 
     if (py_tag == Py_None) {
         tag = NULL;
 
-#if PY_MAJOR_VERSION == 2
-    } else if (PyString_Check(py_tag)) {
-#else
     } else if (PyBytes_Check(py_tag)) {
-#endif
         tag = PyBytes_AsString(py_tag);
 
     } else {
@@ -717,22 +710,12 @@ m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)
         return NULL;
     }
 
-#if PY_MAJOR_VERSION == 2
-    if (!PyString_Check(py_pathToTool)) {
-        PyErr_SetString(PyExc_ValueError, "pathToTool must be a bytes string");
-        return NULL;
-    }
-
-    pathToTool = PyString_AsString(py_pathToTool);
-
-#else
     if (!PyBytes_Check(py_pathToTool)) {
         PyErr_SetString(PyExc_ValueError, "pathToTool must be a bytes string");
         return NULL;
     }
 
     pathToTool = PyBytes_AsString(py_pathToTool);
-#endif
 
     seq = PySequence_Fast(py_arguments, "arguments must be a sequence of byte strings");
     if (seq == NULL) {
@@ -753,16 +736,6 @@ m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)
     for (i = 0; i < PySequence_Fast_GET_SIZE(seq); i++) {
         PyObject* t = PySequence_Fast_GET_ITEM(seq, i);
 
-#if PY_MAJOR_VERSION == 2
-        if (!PyString_Check(t)) {
-            PyErr_SetString(PyExc_ValueError,
-                            "arguments must be a sequence of byte strings");
-            PyMem_Free(arguments);
-            Py_DECREF(seq);
-            return NULL;
-        }
-        arguments[i] = PyString_AsString(t);
-#else
         if (!PyBytes_Check(t)) {
             PyErr_SetString(PyExc_ValueError,
                             "arguments must be a sequence of byte strings");
@@ -771,7 +744,6 @@ m_AuthorizationExecuteWithPrivileges(PyObject* module __attribute__((__unused__)
             return NULL;
         }
         arguments[i] = PyBytes_AsString(t);
-#endif
     }
     arguments[i] = NULL;
     Py_DECREF(seq);
@@ -826,13 +798,27 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_Security)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_Security",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__Security(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__Security(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_Security) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

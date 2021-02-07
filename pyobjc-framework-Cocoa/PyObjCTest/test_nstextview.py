@@ -223,10 +223,13 @@ class TestNSTextView(TestCase):
             3,
         )
 
-    @min_os_level("10.7")
-    def testMethods10_7(self):
+    @min_os_level("10.10")
+    def testMethods10_10(self):
         self.assertResultIsBOOL(AppKit.NSTextView.usesRolloverButtonForSelection)
         self.assertArgIsBOOL(AppKit.NSTextView.setUsesRolloverButtonForSelection_, 0)
+
+    @min_os_level("10.7")
+    def testMethods10_7(self):
 
         self.assertResultIsBOOL(AppKit.NSTextView.usesInspectorBar)
         self.assertArgIsBOOL(AppKit.NSTextView.setUsesInspectorBar_, 0)

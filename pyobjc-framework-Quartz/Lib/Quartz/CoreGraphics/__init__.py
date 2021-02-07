@@ -8,15 +8,19 @@ import sys
 
 import CoreFoundation
 import objc
+import os
 from Quartz.CoreGraphics import _metadata
 from Quartz.CoreGraphics._inlines import _inline_list_
+
+if os.path.exists("/System/Library/Frameworks/CoreGraphics.framework"):
+    framework_path = "/System/Library/Frameworks/CoreGraphics.framework"
+else:
+    framework_path = "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework"  # noqa: B950
 
 sys.modules["Quartz.CoreGraphics"] = mod = objc.ObjCLazyModule(
     "Quartz.CoreGraphics",
     "com.apple.CoreGraphics",
-    objc.pathForFramework(
-        "/System/Library/Frameworks/ApplicationServices.framework/Frameworks/CoreGraphics.framework"  # noqa: B950
-    ),
+    objc.pathForFramework(framework_path),
     _metadata.__dict__,
     _inline_list_,
     {

@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 gDict = {}
 
@@ -137,7 +137,3 @@ class SplitSignatureTest(TestCase):
             objc.splitStructSignature(b'{NSPoint="x"d"y"d}'),
             ("NSPoint", [("x", b"d"), ("y", b"d")]),
         )
-
-
-if __name__ == "__main__":
-    main()

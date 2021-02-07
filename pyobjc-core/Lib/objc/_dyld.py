@@ -14,6 +14,19 @@ import os
 
 from objc._framework import infoForFramework
 
+try:
+    from objc._objc import _dyld_shared_cache_contains_path
+except ImportError:
+    _dyld_shared_cache_contains_path = None
+
+def dyld_shared_cache_contains_path(p):
+    if _dyld_shared_cache_contains_path is None:
+        return False
+    try:
+        return _dyld_shared_cache_contains_path(p)
+    except NotImplementedError:
+        return False
+
 # These are the defaults as per man dyld(1)
 #
 DEFAULT_FRAMEWORK_FALLBACK = ":".join(
@@ -92,6 +105,9 @@ def dyld_framework(filename, framework_name, version=None):
                 yield os.path.join(path, framework_name + ".framework", framework_name)
 
     for f in inject_suffixes(_search()):
+        if dyld_shared_cache_contains_path(f):
+            return f
+
         if os.path.exists(f):
             return f
     # raise ..
@@ -116,6 +132,8 @@ def dyld_library(filename, libname):
             yield os.path.join(path, libname)
 
     for f in inject_suffixes(_search()):
+        if dyld_shared_cache_contains_path(f):
+            return f
         if os.path.exists(f):
             return f
     raise ValueError("dylib %s could not be found" % (filename,))
@@ -133,9 +151,5 @@ def dyld_find(filename):
 
 
 def pathForFramework(path):
-    if path.startswith("/System/"):
-        # On macOS 11 system frameworks are in a shared cache, not
-        # in the filesystem.
-        return path
     fpath, name, version = infoForFramework(dyld_find(path))
     return os.path.join(fpath, name + ".framework")

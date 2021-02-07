@@ -13,9 +13,7 @@
 #include "_AppKit_nsbezierpath.m"
 #include "_AppKit_nsbitmap.m"
 #include "_AppKit_nsfont.m"
-#include "_AppKit_nsquickdrawview.m"
 #include "_AppKit_nsview.m"
-#include "_AppKit_nswindow.m"
 #include "_AppKit_protocols.m"
 
 static PyMethodDef mod_methods[] = {
@@ -23,26 +21,36 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_AppKit)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_AppKit",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__AppKit(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__AppKit(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_AppKit) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
     if (setup_carbon(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
     if (setup_nsbezierpath(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
     if (setup_nsbitmap(m) == -1)
-        PyObjC_INITERROR();
-    if (setup_nsquickdrawview(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
     if (setup_nsview(m) == -1)
-        PyObjC_INITERROR();
-    if (setup_nswindows(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

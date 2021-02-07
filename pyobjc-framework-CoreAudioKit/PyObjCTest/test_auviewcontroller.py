@@ -1,10 +1,9 @@
 import CoreAudioKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAUViewController(TestCase):
     @min_os_level("10.13")
-    @onlyOn64Bit
     def testMethods(self):
         self.assertArgIsBOOL(
             CoreAudioKit.AUAudioUnitViewConfiguration.initWithWidth_height_hostHasController_,

@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "6.2.2"
+VERSION = '7.1'
 
 setup(
     name="pyobjc-framework-Security",
@@ -20,11 +20,9 @@ setup(
             "Security._Security",
             ["Modules/_Security.m"],
             extra_link_args=["-framework", "Security"],
-            py_limited_api=True,
         )
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp36"}},
 )

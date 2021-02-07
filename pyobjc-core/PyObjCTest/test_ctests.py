@@ -10,7 +10,7 @@ import platform
 import sys
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 ctests = objc._ctests
 
@@ -67,6 +67,3 @@ for n in names:
     methods["test_%s" % (n,)] = make_test(n)
 
 CTests = type(TestCase)("CTests", (TestCase,), methods)
-
-if __name__ == "__main__":
-    main()

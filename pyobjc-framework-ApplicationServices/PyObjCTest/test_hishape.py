@@ -1,4 +1,3 @@
-import sys
 import HIServices
 from PyObjCTools.TestSupport import TestCase
 
@@ -35,14 +34,7 @@ class TestHIShape(TestCase):
 
         HIServices.HIShapeReplacePathInCGContext
 
-        if sys.maxsize < 2 ** 32:
-            HIShapeEnumerateProcPtr = (
-                b"ii^{__HIShape=}n^{CGRect={CGPoint=ff}{CGSize=ff}}^v"
-            )
-        else:
-            HIShapeEnumerateProcPtr = (
-                b"ii^{__HIShape=}n^{CGRect={CGPoint=dd}{CGSize=dd}}^v"
-            )
+        HIShapeEnumerateProcPtr = b"ii^{__HIShape=}n^{CGRect={CGPoint=dd}{CGSize=dd}}^v"
 
         self.assertArgIsFunction(
             HIServices.HIShapeEnumerate, 2, HIShapeEnumerateProcPtr, False

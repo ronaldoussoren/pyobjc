@@ -1,20 +1,9 @@
-import sys
 import warnings
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
-# try:
-#    from  Foundation import NSRange
-#
-#    _C_NSRange = NSRange.__typestr__
-#
-# except ImportError:
-if 1:
-    if sys.maxsize > 2 ** 32:
-        _C_NSRange = b"{_NSRange=QQ}"
-    else:
-        _C_NSRange = b"{_NSRange=II}"
+_C_NSRange = b"{_NSRange=QQ}"
 
 
 NSObject = objc.lookUpClass("NSObject")
@@ -701,7 +690,3 @@ class TestBasicDescriptors(TestCase):
             self.assertIsInstance(method, objc.selector)
             self.assertEqual(method.signature, b"q@:@q")
             self.assertEqual(method.selector, b"foo:bar:")
-
-
-if __name__ == "__main__":
-    main()

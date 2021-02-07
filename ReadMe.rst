@@ -3,6 +3,10 @@ Welcome to the PyObjC repository
 
 .. image:: https://github.com/ronaldoussoren/pyobjc/workflows/pre-commit/badge.svg
 
+
+*This is an development branch that will introduce support for macOS 11*
+
+
 Introduction
 ------------
 

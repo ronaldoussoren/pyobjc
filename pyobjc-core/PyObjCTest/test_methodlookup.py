@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.methodlookup import PyObjC_MethodLookup1, PyObjC_MethodLookup2
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestSuperObject(TestCase):
@@ -152,7 +152,3 @@ class TestMethodResolution(TestCase):
             PyObjC_MethodLookup1.pyobjc_instanceMethods,
             "clsmeth5",
         )
-
-
-if __name__ == "__main__":
-    main()

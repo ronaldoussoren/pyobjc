@@ -3,7 +3,7 @@ Tests for dealing with 'FILE*' argument.
 """
 import objc
 from PyObjCTest.filepointer import OC_TestFilePointer
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 fp = objc.FILE("/etc/passwd", "r")
 gFirstPasswdLine = fp.readline()
@@ -47,7 +47,3 @@ class TestFilePointer(TestCase):
         fp = o.openFile_withMode_(b"/tmp/pyobjc.filepointer.txt", b"w+")
         self.assertIsInstance(fp, objc.FILE)
         fp.close()
-
-
-if __name__ == "__main__":
-    main()

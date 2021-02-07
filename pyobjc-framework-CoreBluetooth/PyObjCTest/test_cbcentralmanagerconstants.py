@@ -39,6 +39,15 @@ class TestCBCentral(TestCase):
             CoreBluetooth.CBCentralManagerRestoredStateScanOptionsKey, str
         )
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(
+            CoreBluetooth.CBConnectionEventMatchingOptionServiceUUIDs, str
+        )
+        self.assertIsInstance(
+            CoreBluetooth.CBConnectionEventMatchingOptionPeripheralUUIDs, str
+        )
+
     @min_os_level("10.14")
     def testConstants10_14(self):
         # XXX: This is currently documented as a 10.13 constant, but isn't available there

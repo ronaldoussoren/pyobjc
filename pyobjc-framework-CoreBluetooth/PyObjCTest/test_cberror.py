@@ -25,6 +25,7 @@ class TestCBAdvertisementData(TestCase):
         self.assertEqual(CoreBluetooth.CBErrorOperationNotSupported, 13)
         self.assertEqual(CoreBluetooth.CBErrorPeerRemovedPairingInformation, 14)
         self.assertEqual(CoreBluetooth.CBErrorEncryptionTimedOut, 15)
+        self.assertEqual(CoreBluetooth.CBErrorTooManyLEPairedDevices, 16)
 
         self.assertEqual(CoreBluetooth.CBATTErrorSuccess, 0x00)
         self.assertEqual(CoreBluetooth.CBATTErrorInvalidHandle, 0x01)

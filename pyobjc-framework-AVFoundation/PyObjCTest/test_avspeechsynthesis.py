@@ -80,6 +80,16 @@ class TestAVSpeechSynthesis(TestCase):
         )
 
     @expectedFailure
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVSpeechSynthesizer.prefersAssistiveTechnologySettings
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVSpeechSynthesizer.setPrefersAssistiveTechnologySettings_, 0
+        )
+
+    @expectedFailure
     @min_sdk_level("10.14")
     def testProtocols(self):
         objc.protocolNamed("AVSpeechSynthesizerDelegate")

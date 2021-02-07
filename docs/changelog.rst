@@ -3,6 +3,70 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 7.1
+-----------
+
+* Update bindings for the macOS 11.1 SDK
+
+* Add bindings for framework "AdServices" (new in macOS 11.1)
+
+* #333: Improve SDK version detection in framework bindings
+
+Version 7.0.1
+-------------
+
+* Issue #337: PyObjC doesn't work on Catalina or earlier
+
+  Fix by Lawrence D'Anna.
+
+Version 7.0
+-----------
+
+* This version drops support for 32-bit executables, both
+  the core bridge and the framework wrappers only support
+  64-bit executables going forward
+
+* PyObjC is now always build with the system libffi.
+
+* Removed metadata for 32-bit systems
+
+* Existing framework bindings were updated for the macOS 11 SDK
+
+* Added bindings for the following frameworks:
+  - Accessibility (introduced in macOS 11.0)
+  - AppTrackingTransparency (introduced in macOS 11.0)
+  - CallKit (introduced in macOS 11.0)
+  - ClassKit (introduced in macOS 11.0)
+  - KernelManagement (introduced in macOS 11.0)
+  - MetalPerformanceShaders (introduced in macOS 10.13)
+  - MetalPerformanceShadersGraph (introduced in macOS 11.0)
+  - MLCompute (introduced in macOS 11.0)
+  - PassKit (introduced in macOS 11.0)
+  - ReplayKit (introduced in macOS 11.0)
+  - ScreenTime (introduced in macOS 11.0)
+  - UniformTypeIdentifiers (introduced in macOS 11.0)
+  - UserNotificationsUI (introduced in macOS 11.0)
+  - Virtualization (introduced in macOS 11.0)
+
+* Dropped the bindings to the QTKit framework
+
+  This framework was removed in macOS 10.15.
+
+  These bindings contained a C extension and cannot be build with recent
+  versions of Xcode.
+
+
+* Dropped the bindings for the XgridFoundation framework
+
+  This framework was removed in macOS 10.8.
+
+* Updated ``objc.dyld_library`` and ``objc.dyld_framework`` to return
+  a sane result on macOS 11 where system libraries are no longer at
+  the expected location, but in a shared cache.
+
+* Another attempt at giving a nice error message when trying to install on
+  platforms other than macOS.
+
 Version 6.2.2
 -------------
 
@@ -10,10 +74,36 @@ Version 6.2.2
 
 * #309: Fix incompatibility with macOS 11 in framework loader
 
-* Another attempt at giving a nice error message when trying to install on
-  platforms other than macOS.
-
 * The classifiers now correctly identify supported Python versions
+
+* #301: pyobjc-framework-Metal build failed on macOS mojave
+
+* Python 3.10 support: Don't assume the result of Py_REFCNT, Py_SIZE and Py_TYPE are an lvalue.
+
+* Python 3.10 support: Completely phase out use of old buffer API, which will
+  be removed in Python 3.10.
+
+  As a side effect of this a number of extensions that used the limited ABI once again
+  use the regular ABI.
+
+* Removed remnants of support for i386, ppc and ppc64 from pyobjc-core.
+
+* Added type to manage ``Py_buffer`` lifetimes to the internal API in pyobjc-core, to be used
+  by framework wrappers.
+
+* Add ``objc._C_BYREF``. This definition was missing, but isn't used in modern ObjC code.
+
+* PR 323: Remove leading slashes from detected SDK patch to avoid miscalculating the version.
+
+  Patch by GitHub user linuxfood.
+
+* PR 322: Avoid *None* error in PyObjCTools.AppHelper
+
+  Patch by github user mintho
+
+* PR 321: Fix typo in documentation
+
+  Patch by github user russeldavis
 
 Version 6.2.1
 -------------
@@ -147,6 +237,10 @@ Version 6.0
   - DeviceCheck
   - ExecutionPolicy
   - FileProvider
+
+    ``FileProvider.NSFileProviderItemFieldTrashed`` and ``NSFileProviderErrorVersionOutOfDate`` were dropped
+    from the framework in macOS 11.
+
   - FileProviderUI
   - LinkPresentation
   - OSLog

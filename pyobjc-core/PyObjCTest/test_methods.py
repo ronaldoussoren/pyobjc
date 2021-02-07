@@ -37,7 +37,7 @@ import warnings
 
 import objc
 from PyObjCTest.testbndl import OC_TestClass1, OC_TestClass2
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 # Can't set the right signatures in plain Objective-C.
 for method, argmeta in [
@@ -1398,7 +1398,3 @@ class OCPyTestSimpleArguments(TestCase):
         self.assertEqual(
             self.obj.invokeInstanceLongLongArg_on_(-(1 << 60), self.ocobj), -(1 << 61)
         )
-
-
-if __name__ == "__main__":
-    main()

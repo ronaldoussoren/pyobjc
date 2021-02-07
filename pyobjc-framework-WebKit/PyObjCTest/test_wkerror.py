@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 
 
 class TestWKError(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(WebKit.WKErrorDomain, str)
@@ -19,3 +18,6 @@ class TestWKError(TestCase):
         self.assertEqual(WebKit.WKErrorContentRuleListStoreVersionMismatch, 9)
         self.assertEqual(WebKit.WKErrorAttributedStringContentFailedToLoad, 10)
         self.assertEqual(WebKit.WKErrorAttributedStringContentLoadTimedOut, 11)
+        self.assertEqual(WebKit.WKErrorJavaScriptInvalidFrameTarget, 12)
+        self.assertEqual(WebKit.WKErrorNavigationAppBoundDomain, 13)
+        self.assertEqual(WebKit.WKErrorJavaScriptAppBoundDomain, 14)

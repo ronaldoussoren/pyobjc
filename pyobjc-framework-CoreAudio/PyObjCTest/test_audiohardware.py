@@ -158,6 +158,9 @@ class TestAudioHardware(TestCase):
             CoreAudio.kAudioDevicePropertyActualSampleRate, fourcc(b"asrt")
         )
         self.assertEqual(CoreAudio.kAudioDevicePropertyClockDevice, fourcc(b"apcd"))
+        self.assertEqual(
+            CoreAudio.kAudioDevicePropertyIOThreadOSWorkgroup, fourcc(b"oswg")
+        )
 
         self.assertEqual(CoreAudio.kAudioDevicePropertyJackIsConnected, fourcc(b"jack"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyVolumeScalar, fourcc(b"volm"))

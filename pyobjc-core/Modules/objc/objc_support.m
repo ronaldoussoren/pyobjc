@@ -670,15 +670,6 @@ PyObjCRT_NextField(const char* type)
 Return the alignment of an object specified by type
 */
 
-/*
- *  On MacOS X, the elements of a struct are aligned differently inside the
- *  struct than outside. That is, the maximum alignment of any struct field
- *  (except the first) is 4, doubles outside of a struct have an alignment of
- *  8.
- *
- *  Other platform don't seem to have this inconsistency.
- */
-
 static inline Py_ssize_t
 PyObjC_EmbeddedAlignOfType(const char* type)
 {
@@ -686,16 +677,7 @@ PyObjC_EmbeddedAlignOfType(const char* type)
 
     Py_ssize_t align = PyObjCRT_AlignOfType(type);
 
-#if defined(__i386__) || defined(__x86_64__)
     return align;
-
-#else
-    if (align < 4 || align == 16) {
-        return align;
-    } else {
-        return 4;
-    }
-#endif
 }
 
 Py_ssize_t
@@ -1992,7 +1974,7 @@ PyObjCRT_SizeOfReturnType(const char* type)
 {
     PyObjC_Assert(type != NULL, -1);
 
-#if 1 /* def __ppc__ */
+#if defined(__x86_64__) /* XXX */
     switch (*type) {
     case _C_CHR:
     case _C_BOOL:
@@ -2279,52 +2261,12 @@ depythonify_c_return_value(const char* type, PyObject* argument, void* datum)
 }
 
 PyObject*
-pythonify_c_return_value(const char* type, void* datum)
+pythonify_c_return_value(const char* type, void* datum) /* XXX */
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
 
-#ifdef __ppc__
-    /*
-     * On PowerPC short and char return values are returned
-     * as full-size ints.
-     */
-    static const char intType[]  = {_C_INT, 0};
-    static const char uintType[] = {_C_UINT, 0};
-
-    switch (*type) {
-    case _C_BOOL:
-    case _C_NSBOOL:
-        return PyBool_FromLong(*(int*)datum);
-
-    case _C_CHR:
-    case _C_CHAR_AS_INT:
-    case _C_SHT:
-        return pythonify_c_value(intType, datum);
-
-    case _C_UCHR:
-    case _C_USHT:
-        return pythonify_c_value(uintType, datum);
-
-    case _C_CHAR_AS_TEXT: {
-        char ch = *(int*)datum;
-        return PyBytes_FromStringAndSize(&ch, 1);
-    }
-
-    case _C_UNICHAR: {
-        int     byteorder = 0;
-        unichar ch        = *(int*)datum;
-        return PyUnicode_DecodeUTF16((const char*)&ch, 2, NULL, &byteorder);
-    }
-
-    default:
-        return pythonify_c_value(type, datum);
-    }
-
-#else
     return pythonify_c_value(type, datum);
-
-#endif
 }
 
 int

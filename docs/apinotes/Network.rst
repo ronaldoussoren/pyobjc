@@ -14,7 +14,7 @@ API Notes
 
 .. note::
 
-   This framework is only available on OSX 10.14 and later and requires a 64-bit binary.
+   This framework is only available on macOS 10.14 and later.
 
 ``nw_framer_parse_input``
 .........................

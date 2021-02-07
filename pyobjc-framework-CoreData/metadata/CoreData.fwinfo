@@ -48,6 +48,26 @@
     "methods": [
      {
       "class_method": false,
+      "selector": "canDeleteRecordForManagedObjectWithID:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "canModifyManagedObjectsInStore:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "canUpdateRecordForManagedObjectWithID:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
+      "selector": "canUpdateRecordForManagedObjectWithID:",
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "class_method": false,
       "selector": "initializeCloudKitSchemaWithOptions:error:",
       "args": {
        "1": { "type_modifier": "o" }
@@ -68,6 +88,108 @@
       "args": {
        "0": { "type_override": "Z" }
       }
+     }
+    ]
+   },
+   "NSBatchInsertRequest": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "initWithEntityName:managedObjectHandler:"
+     },
+     {
+      "args": {
+       "1": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "initWithEntityName:dictionaryHandler:"
+     },
+     {
+      "retval": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	}
+       },
+       "class_method": false,
+       "selector": "dictionaryHandler"
+     },
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "setDictionaryHandler:"
+     },
+     {
+      "retval": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	}
+       },
+       "class_method": false,
+       "selector": "managedObjectHandler"
+     },
+     {
+      "args": {
+       "0": {
+	  "callable": {
+	    "arguments": {
+	      "0": { "typestr": "^v" },
+	      "1": { "typestr": "@" }
+	    },
+	    "retval": {
+	      "typestr": "Z"
+	    }
+	  }
+	}
+       },
+       "class_method": false,
+       "selector": "setManagedObjectHandler:"
      }
     ]
    },

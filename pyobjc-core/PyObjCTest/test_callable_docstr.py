@@ -2,7 +2,7 @@ import inspect
 
 import objc
 from objc import _callable_docstr as mod
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSArray = objc.lookUpClass("NSArray")
 
@@ -946,7 +946,3 @@ class TestCallableSignature(TestCase):
         self.assertRaises(AttributeError, mod.callable_signature, int)
         self.assertRaises(AttributeError, mod.callable_signature, dir)
         self.assertRaises(AttributeError, mod.callable_signature, lambda x: x * 2)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,0 +1,142 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "enum": {
+   "MLCDataTypeCount": { "ignore": true },
+   "MLCLSTMResultModeOutput": { "value": 0 },
+   "MLCLSTMResultModeOutputAndStates": { "value": 1 },
+   "MLCExecutionOptionsForwardForInference": { "value": 8 },
+   "MLCDataTypeInt32": { "value": 7 }
+  },
+  "classes": {
+   "MLCDevice": {
+    "methods": [
+     {
+      "selector": "deviceWithType:selectsMultipleComputeDevices:",
+      "class_method": false,
+      "args": {
+       "1": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MLCTrainingGraph": {
+    "methods": [
+     {
+      "selector": "bindOptimizerData:deviceData:withTensor:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MLCLayer": {
+    "methods": [
+     {
+      "selector": "supportsDataType:onDevice:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MLCLSTMDescriptor": {
+    "methods": [
+     {
+      "selector": "descriptorWithInputSize:hiddenSize:layerCount:usesBiases:batchFirst:isBidirectional:returnsSequences:dropout:resultMode:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" },
+       "4": { "type_override": "Z" },
+       "5": { "type_override": "Z" },
+       "6": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MLCGraph": {
+    "methods": [
+     {
+      "selector": "bindAndWriteData:forInputs:toDevice:synchronous:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" }
+      },
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
+   "MLCSGDOptimizer": {
+    "methods": [
+     {
+      "selector": "usesNesterovMomentum",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "optimizerWithDescriptor:momentumScale:usesNesterovMomentum:",
+      "class_method": false,
+      "args": {
+       "2": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
+   "MLCTensor": {
+    "methods": [
+     {
+      "selector": "bindOptimizerData:deviceData:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "synchronizeOptimizerData",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "copyDataFromDeviceMemoryToBytes:length:synchronizeWithDevice:"
+     }
+    ]
+   },
+   "MLCTensorData": {
+    "methods": [
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
+      "selector": "dataWithBytesNoCopy:length:"
+     },
+     {
+      "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
+      },
+      "class_method": true,
+      "selector": "dataWithImmutableBytesNoCopy:length:"
+     },
+     {
+      "class_method": false,
+      "retval": { "c_array_of_variable_size": true },
+      "selector": "bytes"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "nonatomic",
+       "readonly"
+      ],
+      "name": "bytes"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

@@ -1,7 +1,7 @@
 import os
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 from . import fnd as Foundation
 
@@ -54,7 +54,3 @@ class TestBundleFunctions(TestCase):
             # fn = Foundation.NSCountFrames
             # value = fn()
             # self.assertIsInstance(value, int)
-
-
-if __name__ == "__main__":
-    main()

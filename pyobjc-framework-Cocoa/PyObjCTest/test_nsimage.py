@@ -42,8 +42,16 @@ class TestNSImage(TestCase):
         self.assertEqual(AppKit.NSImageCacheBySize, 2)
         self.assertEqual(AppKit.NSImageCacheNever, 3)
 
-        self.assertEqual(AppKit.NSImageResizingModeStretch, 0)
-        self.assertEqual(AppKit.NSImageResizingModeTile, 1)
+        if objc.arch == "x86_64":
+            self.assertEqual(AppKit.NSImageResizingModeStretch, 0)
+            self.assertEqual(AppKit.NSImageResizingModeTile, 1)
+        else:
+            self.assertEqual(AppKit.NSImageResizingModeTile, 0)
+            self.assertEqual(AppKit.NSImageResizingModeStretch, 1)
+
+        self.assertEqual(AppKit.NSImageSymbolScaleSmall, 1)
+        self.assertEqual(AppKit.NSImageSymbolScaleMedium, 2)
+        self.assertEqual(AppKit.NSImageSymbolScaleLarge, 3)
 
     @min_os_level("10.5")
     def testConstants10_5(self):

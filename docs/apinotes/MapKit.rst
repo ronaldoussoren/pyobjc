@@ -11,11 +11,7 @@ These bindings are accessed through the ``MapKit`` package (that is, ``import Ma
 API Notes
 ---------
 
-The entire "MapKit" framework on MacOSX 10.9 (or later) is available from Python.
-
-.. note::
-
-   The MapKit framework is only available in 64-bit applications.
+The entire "MapKit" framework on macOS 10.9 (or later) is available from Python.
 
 .. note::
 

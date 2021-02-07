@@ -1,9 +1,6 @@
-import AppKit
-from PyObjCTools.TestSupport import TestCase, onlyOn32Bit
+import AppKit  # noqa: F401
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSMovie(TestCase):
-    @onlyOn32Bit
-    def testMethods(self):
-        self.assertArgIsBOOL(AppKit.NSMovie.initWithURL_byReference_, 1)
-        self.assertResultIsBOOL(AppKit.NSMovie.canInitWithPasteboard_)
+    pass

@@ -204,6 +204,26 @@
 #define MAC_OS_X_VERSION_10_15_4 101504
 #endif
 
+#ifndef MAC_OS_X_VERSION_10_15_5
+#define MAC_OS_X_VERSION_10_15_5 101505
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_15_6
+#define MAC_OS_X_VERSION_10_15_6 101506
+#endif
+
+#ifndef MAC_OS_X_VERSION_10_16
+#define MAC_OS_X_VERSION_10_16 101600
+#endif
+
+#ifndef MAC_OS_X_VERSION_11_0
+#define MAC_OS_X_VERSION_11_0 110000
+#endif
+
+#ifndef MAC_OS_X_VERSION_11_1
+#define MAC_OS_X_VERSION_11_1 110100
+#endif
+
 /*
  * Explicit support for weak-linking functions
  *
@@ -368,6 +388,18 @@
  *
  */
 
+#ifndef Py_SET_TYPE
+#define Py_SET_TYPE(obj, type) do { Py_TYPE((obj)) = (type); } while(0)
+#endif
+
+#ifndef Py_SET_SIZE
+#define Py_SET_SIZE(obj, size) do { Py_SIZE((obj)) = (size); } while(0)
+#endif
+
+#ifndef Py_SET_REFCNT
+#define Py_SET_REFCNT(obj, count) do { Py_REFCNT((obj)) = (count); } while(0)
+#endif
+
 /* Use CLINIC_SEP between the prototype and
  * description in doc strings, to get clean
  * docstrings.
@@ -455,26 +487,5 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyObjC_END_WITH_GIL                                                              \
     PyGILState_Release(_GILState);                                                       \
     }
-
-/* TEMP */
-
-#define PyObjC_INITERROR() return NULL
-#define PyObjC_INITDONE() return m
-
-#define PyObjC_MODULE_INIT(name)                                                         \
-    static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,                       \
-                                            PyObjC_STR(name),                            \
-                                            NULL,                                        \
-                                            0,                                           \
-                                            mod_methods,                                 \
-                                            NULL,                                        \
-                                            NULL,                                        \
-                                            NULL,                                        \
-                                            NULL};                                       \
-                                                                                         \
-    PyObject* PyInit_##name(void);                                                       \
-    PyObject* __attribute__((__visibility__("default"))) PyInit_##name(void)
-
-#define PyObjC_MODULE_CREATE(name) PyModule_Create(&mod_module);
 
 #endif /* PyObjC_COMPAT_H */

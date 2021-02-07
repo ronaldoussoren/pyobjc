@@ -14,25 +14,19 @@ class TestNSHost(TestCase):
         # implementation of -hostWithAddress: and -hostWithName: yet the latter
         # does not have the problem we're seeing here.
         #
-        o = Foundation.NSHost.hostWithAddress_(b"127.0.0.1".decode("ascii"))
-        self.assertEqual(o.addresses(), (b"127.0.0.1".decode("ascii"),))
-        self.assertEqual(o.address(), b"127.0.0.1".decode("ascii"))
+        o = Foundation.NSHost.hostWithAddress_("127.0.0.1")
+        self.assertEqual(o.addresses(), ("127.0.0.1",))
+        self.assertEqual(o.address(), "127.0.0.1")
 
     def testCreation2(self):
-        o = Foundation.NSHost.hostWithName_(b"localhost".decode("ascii"))
+        o = Foundation.NSHost.hostWithName_("localhost")
         lst = sorted(o.addresses())
-        self.assertIn(
-            lst,
-            (
-                [b"127.0.0.1".decode("ascii"), b"::1".decode("ascii")],
-                [b"127.0.0.1".decode("ascii")],
-            ),
-        )
+        self.assertIn("127.0.0.1", lst)
         self.assertEqual(o.address(), o.addresses()[0])
 
     def testIndirectCreation(self):
-        o = PyObjC_TestClass3.createAHostWithAddress_(b"127.0.0.1".decode("ascii"))
-        self.assertEqual(o.address(), b"127.0.0.1".decode("ascii"))
+        o = PyObjC_TestClass3.createAHostWithAddress_("127.0.0.1")
+        self.assertEqual(o.address(), "127.0.0.1")
 
     def testMethods(self):
         self.assertArgIsBOOL(Foundation.NSHost.setHostCacheEnabled_, 0)

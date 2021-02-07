@@ -109,6 +109,53 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def sampleCountersInBuffer_atSampleIndex_withBarrier_(self, a, b, c):
         pass
 
+    def drawIndexedPatches_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_indirectBuffer_indirectBufferOffset_(  # noqa: B950
+        self, a, b, c, d, e, f, g
+    ):
+        pass
+
+    def tileWidth(self):
+        return 1
+
+    def tileHeight(self):
+        return 1
+
+    def setTileBytes_length_atIndex_(self, a, b, c):
+        pass
+
+    def setTileBuffer_offset_atIndex_(self, a, b, c):
+        pass
+
+    def setTileBufferOffset_atIndex_(self, a, b):
+        pass
+
+    def setTileBuffers_offsets_withRange_(self, a, b, c):
+        pass
+
+    def setTileTexture_atIndex_(self, a, b):
+        pass
+
+    def setTileTextures_withRange_(self, a, b):
+        pass
+
+    def setTileSamplerState_atIndex_(self, a, b):
+        pass
+
+    def setTileSamplerStates_withRange_(self, a, b):
+        pass
+
+    def setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_(self, a, b, c, d):
+        pass
+
+    def setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_(self, a, b, c, d):
+        pass
+
+    def dispatchThreadsPerTile_(self, a):
+        pass
+
+    def setThreadgroupMemoryLength_offset_atIndex_(self, a, b, c):
+        pass
+
 
 class TestMTLRenderCommandEncoder(TestCase):
     def test_constants(self):
@@ -607,4 +654,204 @@ class TestMTLRenderCommandEncoder(TestCase):
             TestMTLRenderCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,
             2,
             objc._C_NSBOOL,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.drawIndexedPatches_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_indirectBuffer_indirectBufferOffset_,  # noqa: B950
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.drawIndexedPatches_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_indirectBuffer_indirectBufferOffset_,  # noqa: B950
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.drawIndexedPatches_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_indirectBuffer_indirectBufferOffset_,  # noqa: B950
+            4,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.drawIndexedPatches_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_indirectBuffer_indirectBufferOffset_,  # noqa: B950
+            6,
+            objc._C_NSUInteger,
+        )
+
+        self.assertResultHasType(
+            TestMTLRenderCommandEncoderHelper.tileWidth, objc._C_NSUInteger
+        )
+
+        self.assertResultHasType(
+            TestMTLRenderCommandEncoderHelper.tileHeight, objc._C_NSUInteger
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBytes_length_atIndex_, 0, b"n^v"
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileBytes_length_atIndex_, 0, 1
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBytes_length_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBytes_length_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBuffer_offset_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBuffer_offset_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBufferOffset_atIndex_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBufferOffset_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBuffers_offsets_withRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileBuffers_offsets_withRange_, 0, 2
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBuffers_offsets_withRange_,
+            1,
+            b"n^" + objc._C_NSUInteger,
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileBuffers_offsets_withRange_, 1, 2
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileBuffers_offsets_withRange_,
+            2,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileTexture_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileTextures_withRange_, 0, b"n^@"
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileTextures_withRange_, 0, 1
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileTextures_withRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerState_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_withRange_, 0, b"n^@"
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_withRange_, 0, 1
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_withRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerState_lodMinClamp_lodMaxClamp_atIndex_,
+            3,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            0,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            1,
+            b"n^" + objc._C_NSUInteger,
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            1,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            2,
+            b"n^" + objc._C_NSUInteger,
+        )
+        self.assertArgSizeInArg(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            2,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setTileSamplerStates_lodMinClamps_lodMaxClamps_withRange_,
+            3,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.dispatchThreadsPerTile_,
+            0,
+            Metal.MTLSize.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setThreadgroupMemoryLength_offset_atIndex_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setThreadgroupMemoryLength_offset_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderCommandEncoderHelper.setThreadgroupMemoryLength_offset_atIndex_,
+            2,
+            objc._C_NSUInteger,
         )

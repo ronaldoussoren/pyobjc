@@ -7,6 +7,21 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def supportIndirectCommandBuffers(self):
         return 1
 
+    def textureWriteRoundingMode(self):
+        return 1
+
+    def maxTotalThreadsPerThreadgroup(self):
+        return 1
+
+    def threadgroupSizeMatchesTileSize(self):
+        return 1
+
+    def imageblockSampleLength(self):
+        return 1
+
+    def imageblockMemoryLengthForDimensions_(self, a):
+        return 1
+
 
 class TestMTLRenderPipeline(TestCase):
     def test_constants(self):

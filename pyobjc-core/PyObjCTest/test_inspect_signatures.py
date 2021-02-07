@@ -2,7 +2,7 @@ import inspect
 import types
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main, min_python_release
+from PyObjCTools.TestSupport import TestCase, min_python_release
 
 
 class TestInspectSignatures(TestCase):
@@ -65,7 +65,3 @@ class TestInspectSignatures(TestCase):
 
                     if value is None:
                         self.fail("No inspect.signature for %s.%s" % (cls.__name__, nm))
-
-
-if __name__ == "__main__":
-    main()

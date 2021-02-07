@@ -287,6 +287,19 @@ class TestNSURL(TestCase):
             Foundation.NSURLVolumeAvailableCapacityForOpportunisticUsageKey, str
         )
 
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(Foundation.NSURLContentTypeKey, str)
+
+        self.assertIsInstance(Foundation.NSURLFileContentIdentifierKey, str)
+        self.assertIsInstance(Foundation.NSURLMayShareFileContentKey, str)
+        self.assertIsInstance(Foundation.NSURLMayHaveExtendedAttributesKey, str)
+        self.assertIsInstance(Foundation.NSURLIsPurgeableKey, str)
+        self.assertIsInstance(Foundation.NSURLIsSparseKey, str)
+        self.assertIsInstance(Foundation.NSURLVolumeSupportsFileProtectionKey, str)
+
+        self.assertIsInstance(Foundation.NSURLFileProtectionKey, str)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(

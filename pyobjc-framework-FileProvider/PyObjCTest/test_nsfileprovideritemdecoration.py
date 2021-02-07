@@ -4,6 +4,6 @@ import objc
 
 
 class TestNSFileProviderItemDecoration(TestCase):
-    @min_sdk_level("10.15")
+    @min_sdk_level("10.16")
     def test_protocols(self):
         objc.protocolNamed("NSFileProviderItemDecorating")

@@ -17,7 +17,7 @@ API Notes
 
 .. note::
 
-   This framework is only available on macOS 10.11 and later for 64-bit binaries.
+   This framework is only available on macOS 10.11 and later.
 
 The full API is available from Python.
 
@@ -31,3 +31,14 @@ It is generally safer to use ``MTLRasterizationRateLayerDescriptor.horizontal`` 
 ................................................................
 
 It is generally safer to use ``MTLRasterizationRateLayerDescriptor.vertical`` instead
+
+``MTLPackedFloat3``, ``MTLPackedFloat4x3``, ``MTLAccelerationStructureInstanceDescriptor``
+..........................................................................................
+
+These structures contain vector types and are not exposed at the moment.
+
+
+``MTLMapIndirectBufferFormat``
+..............................
+
+This structure is currently not available from python and needs a manual wrapper.

@@ -34,8 +34,8 @@ class TestNotificationCenter(TestCase):
         self.assertArgHasType(CoreFoundation.CFNotificationCenterAddObserver, 4, b"@")
 
         args = {}
-        args["object"] = b"object".decode("ascii")
-        args["pyobjc.test"] = b"pyobjc.test".decode("ascii")
+        args["object"] = "object"
+        args["pyobjc.test"] = "pyobjc.test"
 
         CoreFoundation.CFNotificationCenterAddObserver(
             ref,
@@ -48,32 +48,28 @@ class TestNotificationCenter(TestCase):
 
         CoreFoundation.CFNotificationCenterPostNotificationWithOptions(
             ref,
-            b"pyobjc.test".decode("ascii"),
+            "pyobjc.test",
             ref,
-            {b"name".decode("ascii"): b"value".decode("ascii")},
+            {"name": "value"},
             CoreFoundation.kCFNotificationPostToAllSessions,
         )
         self.assertEqual(len(notifications), 1)
         info = notifications[-1]
         self.assertIs(info[0], ref)
-        self.assertEqual(info[1], b"object".decode("ascii"))
-        self.assertEqual(info[2], b"pyobjc.test".decode("ascii"))
+        self.assertEqual(info[1], "object")
+        self.assertEqual(info[2], "pyobjc.test")
         self.assertIs(info[3], ref)
-        self.assertEqual(info[4], {b"name".decode("ascii"): b"value".decode("ascii")})
+        self.assertEqual(info[4], {"name": "value"})
         CoreFoundation.CFNotificationCenterPostNotification(
-            ref,
-            b"pyobjc.test".decode("ascii"),
-            ref,
-            {b"name2".decode("ascii"): b"value2".decode("ascii")},
-            True,
+            ref, "pyobjc.test", ref, {"name2": "value2"}, True
         )
         self.assertEqual(len(notifications), 2)
         info = notifications[-1]
         self.assertIs(info[0], ref)
-        self.assertEqual(info[1], b"object".decode("ascii"))
-        self.assertEqual(info[2], b"pyobjc.test".decode("ascii"))
+        self.assertEqual(info[1], "object")
+        self.assertEqual(info[2], "pyobjc.test")
         self.assertIs(info[3], ref)
-        self.assertEqual(info[4], {b"name2".decode("ascii"): b"value2".decode("ascii")})
+        self.assertEqual(info[4], {"name2": "value2"})
         self.assertArgHasType(
             CoreFoundation.CFNotificationCenterRemoveObserver, 1, b"@"
         )
@@ -89,9 +85,9 @@ class TestNotificationCenter(TestCase):
         )
         CoreFoundation.CFNotificationCenterPostNotificationWithOptions(
             ref,
-            b"pyobjc.test".decode("ascii"),
+            "pyobjc.test",
             ref,
-            {b"name".decode("ascii"): b"value".decode("ascii")},
+            {"name": "value"},
             CoreFoundation.kCFNotificationPostToAllSessions,
         )
         self.assertEqual(len(notifications), 2)
@@ -110,20 +106,12 @@ class TestNotificationCenter(TestCase):
         )
         self.assertArgIsBOOL(CoreFoundation.CFNotificationCenterPostNotification, 4)
         CoreFoundation.CFNotificationCenterPostNotification(
-            ref,
-            b"pyobjc.test".decode("ascii"),
-            ref,
-            {b"name2".decode("ascii"): b"value2".decode("ascii")},
-            True,
+            ref, "pyobjc.test", ref, {"name2": "value2"}, True
         )
         self.assertEqual(len(notifications), 3)
         CoreFoundation.CFNotificationCenterRemoveEveryObserver(ref, args["object"])
         CoreFoundation.CFNotificationCenterPostNotification(
-            ref,
-            b"pyobjc.test".decode("ascii"),
-            ref,
-            {b"name2".decode("ascii"): b"value2".decode("ascii")},
-            True,
+            ref, "pyobjc.test", ref, {"name2": "value2"}, True
         )
         self.assertEqual(len(notifications), 3)
 

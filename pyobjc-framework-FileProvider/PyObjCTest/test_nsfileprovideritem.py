@@ -4,6 +4,12 @@ import objc
 
 
 class TestNSFileProviderItemHelper(FileProvider.NSObject):
+    def capabilities(self):
+        return 1
+
+    def fileSystemFlags(self):
+        return 1
+
     def isUserReadable(self):
         return 1
 
@@ -65,6 +71,9 @@ class TestNSFileProviderItem(TestCase):
             FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting, 1 << 5
         )
         self.assertEqual(
+            FileProvider.NSFileProviderItemCapabilitiesAllowsEvicting, 1 << 6
+        )
+        self.assertEqual(
             FileProvider.NSFileProviderItemCapabilitiesAllowsAddingSubItems,
             FileProvider.NSFileProviderItemCapabilitiesAllowsWriting,
         )
@@ -79,15 +88,39 @@ class TestNSFileProviderItem(TestCase):
             | FileProvider.NSFileProviderItemCapabilitiesAllowsReparenting
             | FileProvider.NSFileProviderItemCapabilitiesAllowsRenaming
             | FileProvider.NSFileProviderItemCapabilitiesAllowsTrashing
-            | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting,
+            | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting
+            | FileProvider.NSFileProviderItemCapabilitiesAllowsEvicting,
         )
 
-    @min_sdk_level("10.15")
+        self.assertEqual(FileProvider.NSFileProviderFileSystemUserExecutable, 1 << 0)
+        self.assertEqual(FileProvider.NSFileProviderFileSystemUserReadable, 1 << 1)
+        self.assertEqual(FileProvider.NSFileProviderFileSystemUserWritable, 1 << 2)
+        self.assertEqual(FileProvider.NSFileProviderFileSystemHidden, 1 << 3)
+        self.assertEqual(
+            FileProvider.NSFileProviderFileSystemPathExtensionHidden, 1 << 4
+        )
+
+        self.assertIsInstance(
+            FileProvider.NSFileProviderRootContainerItemIdentifier, str
+        )
+        self.assertIsInstance(
+            FileProvider.NSFileProviderWorkingSetContainerItemIdentifier, str
+        )
+        self.assertIsInstance(
+            FileProvider.NSFileProviderTrashContainerItemIdentifier, str
+        )
+
+    @min_sdk_level("10.16")
     def test_protocols(self):
-        objc.protocolNamed("NSFileProviderItemFlags")
         objc.protocolNamed("NSFileProviderItem")
 
     def test_methods(self):
+        self.assertResultHasType(
+            TestNSFileProviderItemHelper.capabilities, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestNSFileProviderItemHelper.fileSystemFlags, objc._C_NSUInteger
+        )
         self.assertResultIsBOOL(TestNSFileProviderItemHelper.isUserReadable)
         self.assertResultIsBOOL(TestNSFileProviderItemHelper.isUserWritable)
         self.assertResultIsBOOL(TestNSFileProviderItemHelper.isHidden)

@@ -53,7 +53,7 @@ subpackages = [
     if os.path.exists(os.path.join("Lib/Quartz", fn, "__init__.py"))
 ]
 
-VERSION = "6.2.2"
+VERSION = '7.1'
 
 setup(
     name="pyobjc-framework-Quartz",
@@ -111,6 +111,7 @@ setup(
             ["Modules/_quartzcore.m"],
             extra_link_args=["-framework", "QuartzCore"],
             py_limited_api=True,
+            depends=["Modules/_CoreImage_protocols.m"],
         ),
         Extension(
             "Quartz.QuickLookUI._QuickLookUI",

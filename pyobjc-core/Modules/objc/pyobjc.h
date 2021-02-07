@@ -5,7 +5,7 @@
  * Central include file for PyObjC.
  */
 
-#define OBJC_VERSION "6.2.2"
+#define OBJC_VERSION "7.1"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
@@ -84,7 +84,6 @@
 #import "libffi_support.h"
 
 #import "ObjCPointer.h"
-#import "arc-runtime.h"
 #import "block_support.h"
 #import "bundle-variables.h"
 #import "class-builder.h"
@@ -124,6 +123,7 @@
 #import "super-call.h"
 #import "varlist.h"
 #import "weakref.h"
+#import "memview.h"
 
 #define PYOBJC_BUILD
 #import "pyobjc-api.h"

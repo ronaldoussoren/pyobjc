@@ -4,11 +4,10 @@ Some tests for difficult wrapped graphics functions and methods
 NOTE: These require a WindowServer connection on macOS
 """
 import array
-import sys
 import unittest
 
 import Cocoa
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class SimpleImage:
@@ -65,10 +64,7 @@ class RectTest(TestCase):
         self.image = Cocoa.NSImage.alloc().initWithSize_((100, 100))
 
     def makeArray(self, points):
-        if sys.maxsize > 2 ** 32:
-            code = "d"
-        else:
-            code = "f"
+        code = "d"
 
         a = array.array(code, len(points) * [0, 0, 0, 0])
         for i in range(len(points)):
@@ -136,7 +132,3 @@ class RectTest(TestCase):
         self.image.lockFocus()
         Cocoa.NSRectFillList(self.makeArray(self.points), len(self.points))
         self.image.unlockFocus()
-
-
-if __name__ == "__main__":
-    main()

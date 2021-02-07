@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main, os_release
+from PyObjCTools.TestSupport import TestCase, os_release
 
 
 class TestConstants(TestCase):
@@ -41,7 +41,3 @@ class TestConstants(TestCase):
         self.assertEqual(objc.MAC_OS_X_VERSION_10_13_6, 101_306)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_14, 101_400)
         self.assertEqual(objc.MAC_OS_X_VERSION_10_14_1, 101_401)
-
-
-if __name__ == "__main__":
-    main()

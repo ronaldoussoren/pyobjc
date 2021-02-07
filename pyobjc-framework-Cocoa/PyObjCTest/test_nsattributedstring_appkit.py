@@ -264,3 +264,7 @@ class TestNSAttributedString(TestCase):
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(AppKit.NSDefaultAttributesDocumentAttribute, str)
+
+    @min_os_level("10.16")
+    def testConstants10_16(self):
+        self.assertIsInstance(AppKit.NSTrackingAttributeName, str)

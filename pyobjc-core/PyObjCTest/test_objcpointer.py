@@ -2,7 +2,7 @@ import warnings
 
 import objc
 from PyObjCTest.structpointer1 import OC_TestStructPointer
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestObjCPointer(TestCase):
@@ -36,7 +36,3 @@ class TestObjCPointer(TestCase):
         self.assertRaises(
             objc.UnknownPointerError, OC_TestStructPointer.returnUnwrapped
         )
-
-
-if __name__ == "__main__":
-    main()

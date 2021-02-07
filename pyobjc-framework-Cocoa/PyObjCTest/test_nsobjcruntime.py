@@ -1,5 +1,3 @@
-import sys
-
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
@@ -94,15 +92,9 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(Foundation.NSIntegerMax, int)
         self.assertIsInstance(Foundation.NSIntegerMin, int)
         self.assertIsInstance(Foundation.NSUIntegerMax, int)
-        if sys.maxsize > 2 ** 32:
-            self.assertEqual(Foundation.NSIntegerMax, 2 ** 63 - 1)
-            self.assertEqual(Foundation.NSIntegerMin, -(2 ** 63))
-            self.assertEqual(Foundation.NSUIntegerMax, 2 ** 64 - 1)
-
-        else:
-            self.assertEqual(Foundation.NSIntegerMax, 2 ** 31 - 1)
-            self.assertEqual(Foundation.NSIntegerMin, -(2 ** 31))
-            self.assertEqual(Foundation.NSUIntegerMax, 2 ** 32 - 1)
+        self.assertEqual(Foundation.NSIntegerMax, 2 ** 63 - 1)
+        self.assertEqual(Foundation.NSIntegerMin, -(2 ** 63))
+        self.assertEqual(Foundation.NSUIntegerMax, 2 ** 64 - 1)
 
         self.assertTrue(objc.YES)
         self.assertFalse(objc.NO)
@@ -141,7 +133,7 @@ class TestNSObjCRuntime(TestCase):
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
 
-        v = Foundation.NSSelectorFromString(b"description".decode("ascii"))
+        v = Foundation.NSSelectorFromString("description")
         self.assertIsInstance(v, str)
         self.assertEqual(v, "description")
 

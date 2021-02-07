@@ -38,7 +38,7 @@ class TestCharacterSet(TestCase):
             (CoreFoundation.CFCharacterSetRef, CoreFoundation.CFMutableCharacterSetRef),
         )
         charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
-            None, b"abcdefABCDEF0123456789".decode("latin1")
+            None, "abcdefABCDEF0123456789"
         )
         self.assertIsInstance(
             charset,
@@ -81,7 +81,7 @@ class TestCharacterSet(TestCase):
             CoreFoundation.kCFCharacterSetDecimalDigit
         )
         charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
-            None, b"abcdef".decode("latin1")
+            None, "abcdef"
         )
 
         self.assertTrue(CoreFoundation.CFCharacterSetIsSupersetOfSet(letters, charset))
@@ -90,16 +90,8 @@ class TestCharacterSet(TestCase):
         self.assertTrue(CoreFoundation.CFCharacterSetHasMemberInPlane(digits, 0))
         self.assertFalse(CoreFoundation.CFCharacterSetHasMemberInPlane(digits, 4))
 
-        self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                letters, b"A".decode("latin1")
-            )
-        )
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                letters, b"9".decode("latin1")
-            )
-        )
+        self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(letters, "A"))
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(letters, "9"))
 
         data = CoreFoundation.CFCharacterSetCreateBitmapRepresentation(None, charset)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)
@@ -112,29 +104,21 @@ class TestCharacterSet(TestCase):
             CoreFoundation.kCFCharacterSetDecimalDigit
         )
         self.assertTrue(
-            CoreFoundation.CFCharacterSetIsLongCharacterMember(
-                letters, ord(b"A".decode("latin1"))
-            )
+            CoreFoundation.CFCharacterSetIsLongCharacterMember(letters, ord("A"))
         )
         self.assertFalse(
-            CoreFoundation.CFCharacterSetIsLongCharacterMember(
-                letters, ord(b"9".decode("latin1"))
-            )
+            CoreFoundation.CFCharacterSetIsLongCharacterMember(letters, ord("9"))
         )
         self.assertTrue(
-            CoreFoundation.CFCharacterSetIsLongCharacterMember(
-                digits, ord(b"9".decode("latin1"))
-            )
+            CoreFoundation.CFCharacterSetIsLongCharacterMember(digits, ord("9"))
         )
         self.assertFalse(
-            CoreFoundation.CFCharacterSetIsLongCharacterMember(
-                digits, ord(b"A".decode("latin1"))
-            )
+            CoreFoundation.CFCharacterSetIsLongCharacterMember(digits, ord("A"))
         )
 
     def testMutation(self):
         charset = CoreFoundation.CFCharacterSetCreateWithCharactersInString(
-            None, b"abcdef".decode("latin1")
+            None, "abcdef"
         )
         charset = CoreFoundation.CFCharacterSetCreateMutableCopy(None, charset)
 
@@ -149,50 +133,22 @@ class TestCharacterSet(TestCase):
             CoreFoundation.CFCharacterSetIsCharacterMember(charset, chr(4))
         )
 
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"5".decode("latin1")
-            )
-        )
-        CoreFoundation.CFCharacterSetAddCharactersInString(
-            charset, b"012345".decode("latin1")
-        )
-        self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"5".decode("latin1")
-            )
-        )
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "5"))
+        CoreFoundation.CFCharacterSetAddCharactersInString(charset, "012345")
+        self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "5"))
 
-        self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"a".decode("latin1")
-            )
-        )
-        CoreFoundation.CFCharacterSetRemoveCharactersInString(
-            charset, b"ab".decode("latin1")
-        )
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"a".decode("latin1")
-            )
-        )
+        self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "a"))
+        CoreFoundation.CFCharacterSetRemoveCharactersInString(charset, "ab")
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "a"))
 
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"9".decode("latin1")
-            )
-        )
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "9"))
         CoreFoundation.CFCharacterSetUnion(
             charset,
             CoreFoundation.CFCharacterSetGetPredefined(
                 CoreFoundation.kCFCharacterSetDecimalDigit
             ),
         )
-        self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"9".decode("latin1")
-            )
-        )
+        self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "9"))
 
         CoreFoundation.CFCharacterSetIntersect(
             charset,
@@ -200,23 +156,11 @@ class TestCharacterSet(TestCase):
                 CoreFoundation.kCFCharacterSetLetter
             ),
         )
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"9".decode("latin1")
-            )
-        )
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "9"))
 
         CoreFoundation.CFCharacterSetInvert(charset)
-        self.assertTrue(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"9".decode("latin1")
-            )
-        )
-        self.assertFalse(
-            CoreFoundation.CFCharacterSetIsCharacterMember(
-                charset, b"e".decode("latin1")
-            )
-        )
+        self.assertTrue(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "9"))
+        self.assertFalse(CoreFoundation.CFCharacterSetIsCharacterMember(charset, "e"))
 
     def testConstants(self):
         self.assertEqual(CoreFoundation.kCFCharacterSetControl, 1)

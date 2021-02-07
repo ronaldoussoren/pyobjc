@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.fsref import OC_TestFSRefHelper
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestFSRef(TestCase):
@@ -54,7 +54,3 @@ class TestFSRef(TestCase):
         p = o.stringForFSRef_(ref)
         self.assertIsInstance(p, str)
         self.assertEqual(p, "/Library")
-
-
-if __name__ == "__main__":
-    main()

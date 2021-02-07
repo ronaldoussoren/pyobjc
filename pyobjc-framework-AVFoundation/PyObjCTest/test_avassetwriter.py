@@ -1,5 +1,14 @@
 import AVFoundation
-from PyObjCTools.TestSupport import TestCase, min_os_level
+import objc
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+
+
+class TestAVAssetWriterHelper(AVFoundation.NSObject):
+    def assetWriter_didOutputSegmentData_segmentType_segmentReport_(self, a, b, c, d):
+        pass
+
+    def assetWriter_didOutputSegmentData_segmentType_(self, a, b, c):
+        pass
 
 
 class TestAVAssetWriter(TestCase):
@@ -36,3 +45,26 @@ class TestAVAssetWriter(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.canAddInput_)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.startWriting)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.finishWriting)
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(AVFoundation.AVAssetWriter.producesCombinableFragments)
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetWriter.setProducesCombinableFragments_, 0
+        )
+
+    @min_sdk_level("10.16")
+    def test_protocols(self):
+        objc.protocolNamed("AVAssetWriterDelegate")
+
+    def test_protocol_methods(self):
+        self.assertArgHasType(
+            TestAVAssetWriterHelper.assetWriter_didOutputSegmentData_segmentType_segmentReport_,
+            2,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestAVAssetWriterHelper.assetWriter_didOutputSegmentData_segmentType_,
+            2,
+            objc._C_NSInteger,
+        )

@@ -10,6 +10,7 @@ import sys
 import Foundation
 import objc
 from FileProvider import _metadata
+from FileProvider import _FileProvider
 
 sys.modules["FileProvider"] = mod = objc.ObjCLazyModule(
     "FileProvider",
@@ -23,7 +24,7 @@ sys.modules["FileProvider"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (_FileProvider, Foundation,),
 )
 
 

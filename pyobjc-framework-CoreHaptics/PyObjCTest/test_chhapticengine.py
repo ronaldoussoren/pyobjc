@@ -21,6 +21,11 @@ class TestCHHapticEngine(TestCase):
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonApplicationSuspended, 2)
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonIdleTimeout, 3)
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonNotifyWhenFinished, 4)
+        self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonEngineDestroyed, 5)
+        self.assertEqual(
+            CoreHaptics.CHHapticEngineStoppedReasonGameControllerDisconnect, 6
+        )
+
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonSystemError, -1)
 
     @min_sdk_level("10.15")

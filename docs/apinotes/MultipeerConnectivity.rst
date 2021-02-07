@@ -11,8 +11,4 @@ These bindings are accessed through the ``MultipeerConnectivity`` package (that 
 API Notes
 ---------
 
-The entire "MultipeerConnectivity" framework on MacOSX 10.10 (or later) is available from Python.
-
-.. note::
-
-   The MultipeerConnectivity framework is only available in 64-bit applications.
+The entire "MultipeerConnectivity" framework on macOS 10.10 (or later) is available from Python.

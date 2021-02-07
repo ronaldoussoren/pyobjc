@@ -1929,6 +1929,7 @@ carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
     Py_ssize_t buflen;
     PyObject*  res;
     PyObject*  v = NULL;
+    Py_buffer   view;
 
     if (!PyArg_ParseTuple(args, "yOO", &signature, &o1, &o2)) {
         return NULL;
@@ -1943,14 +1944,14 @@ carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
         }
     }
 
-    r = PyObjC_PythonToCArray(NO, NO, signature, o1, (void**)&buf, &buflen, &v);
+    r = PyObjC_PythonToCArray(NO, NO, signature, o1, (void**)&buf, &buflen, &v, &view);
     Py_XDECREF(v);
     if (r == -1) {
         return NULL;
     }
 
     res = PyObjC_CArrayToPython(signature, buf, buflen);
-    PyObjC_FreeCArray(r, buf);
+    PyObjC_FreeCArray(r, &view);
 
     return res;
 }

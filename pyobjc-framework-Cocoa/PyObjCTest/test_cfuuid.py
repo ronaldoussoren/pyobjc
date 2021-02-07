@@ -31,7 +31,7 @@ class TestCFUUIDAPI(TestCase):
         self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
         self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreateString)
         text = CoreFoundation.CFUUIDCreateString(None, uuid)
-        self.assertEqual(text, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii"))
+        self.assertEqual(text, "01020304-0506-0708-090A-0B0C0D0E0F10")
         self.assertRaises(
             ValueError,
             CoreFoundation.CFUUIDCreateWithBytes,
@@ -78,17 +78,17 @@ class TestCFUUIDAPI(TestCase):
     def testCreateFromString(self):
         self.assertResultIsCFRetained(CoreFoundation.CFUUIDCreateFromString)
         uuid1 = CoreFoundation.CFUUIDCreateFromString(
-            None, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii")
+            None, "01020304-0506-0708-090A-0B0C0D0E0F10"
         )
         self.assertIsNot(uuid1, None)
         self.assertIsInstance(uuid1, CoreFoundation.CFUUIDRef)
         text = CoreFoundation.CFUUIDCreateString(None, uuid1)
-        self.assertEqual(text, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii"))
+        self.assertEqual(text, "01020304-0506-0708-090A-0B0C0D0E0F10")
         uuid2 = CoreFoundation.CFUUIDCreateFromString(
-            None, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii")
+            None, "01020304-0506-0708-090A-0B0C0D0E0F10"
         )
         text = CoreFoundation.CFUUIDCreateString(None, uuid2)
-        self.assertEqual(text, b"01020304-0506-0708-090A-0B0C0D0E0F10".decode("ascii"))
+        self.assertEqual(text, "01020304-0506-0708-090A-0B0C0D0E0F10")
         # CoreFoundation.CFUUID interns values
         self.assertIs(uuid1, uuid2)
 
@@ -146,7 +146,7 @@ class TestCFUUIDAPI(TestCase):
         self.assertIsNot(uuid, None)
         self.assertIsInstance(uuid, CoreFoundation.CFUUIDRef)
         text = CoreFoundation.CFUUIDCreateString(None, uuid)
-        self.assertEqual(text, b"10111213-1415-1617-1819-1A1B1C1D1E1F".decode("ascii"))
+        self.assertEqual(text, "10111213-1415-1617-1819-1A1B1C1D1E1F")
 
     def testStructs(self):
         o = CoreFoundation.CFUUIDBytes()

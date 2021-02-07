@@ -54,6 +54,13 @@
     "NSMaxYEdge": { "ignore": true }
   },
   "enum": {
+   "NSURLSessionTaskMetricsDomainResolutionProtocolUnknown": { "value": 0 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolUDP": { "value": 1 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolTCP": { "value": 2 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolTLS": { "value": 3 },
+   "NSURLSessionTaskMetricsDomainResolutionProtocolHTTPS": { "value": 4 },
+   "NSBundleExecutableArchitectureARM64": { "value": 16777228 },
+   "NSNetServicesMissingRequiredConfigurationError": { "value": -72008 },
    "NSMinXEdge": { "value": 0 },
    "NSMinYEdge": { "value": 1 },
    "NSMaxXEdge": { "value": 2 },
@@ -10778,6 +10785,11 @@
    "NSProcessInfo": {
     "methods": [
      {
+      "selector": "isiOSAppOnMac",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "selector": "performActivityWithOptions:reason:usingBlock:",
       "class_method": false,
       "args": {
@@ -12197,6 +12209,31 @@
        ]
       },
       "selector": "availableStringEncodings"
+     },
+     {
+      "args": {
+       "0": {
+        "c_array_length_in_arg": 1,
+        "type_modifier": "n",
+        "type_override": "^T"
+       },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "^T", "c_array_length_in_arg": 2, "type_modifier": "n" },
+	  "2": { "typestr": "Q" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "retval": {
+       "type_override": "@"
+      },
+      "selector": "initWithCharactersNoCopy:length:deallocator:",
+      "suggestion": "use -initWithCharacters:length: instead"
      },
      {
       "args": {
@@ -15044,6 +15081,7 @@
    }
   },
   "externs": {
+   "NSURLVolumeSupportsFileProtectionKey": { "typestr": "@" },
    "NSSecureUnarchiveFromDataTransformerName": { "typestr": "@" },
    "NSURLUbiquitousSharedItemPermissionsReadWrite": { "typestr": "@" },
    "NSURLUbiquitousSharedItemPermissionsReadOnly": { "typestr": "@" },

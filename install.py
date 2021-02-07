@@ -118,9 +118,20 @@ def get_sdk_level():
     if sdk == "/":
         return get_os_level()
 
-    sdk = os.path.basename(sdk)
-    assert sdk.startswith("MacOSX")
-    assert sdk.endswith(".sdk")
+    sdkname = os.path.basename(sdk)
+    assert sdkname.startswith("MacOSX")
+    assert sdkname.endswith(".sdk")
+
+    if sdkname == "MacOSX.sdk":
+        try:
+            with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
+                pl = plistlib.load(fp)
+            return pl["Version"]
+        except Exception:
+            raise SystemExit("Cannot determine SDK version")
+    else:
+        return sdkname[6:-4]
+
     return sdk[6:-4]
 
 
@@ -214,6 +225,10 @@ def version_key(version):
 
 
 def main():
+    if sys.platform != "darwin":
+        print("PyObjC requires macOS")
+        sys.exit(1)
+
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
         ok = build_project(project, sys.argv[1:])
         if not ok:

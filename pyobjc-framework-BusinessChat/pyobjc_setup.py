@@ -17,15 +17,15 @@ import sys
 import tempfile
 import time
 import unittest
-from distutils import log
-from distutils.command import build, install
-from distutils.errors import DistutilsError, DistutilsPlatformError
-from distutils.sysconfig import get_config_var, get_config_vars
-
+from sysconfig import get_config_var, get_config_vars
 from setuptools import Command
 from setuptools import Extension as _Extension
 from setuptools import setup as _setup
 from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
+
+from distutils import log
+from distutils.errors import DistutilsError, DistutilsPlatformError
+from distutils.command import build, install
 
 
 class oc_build_py(build_py.build_py):
@@ -180,11 +180,13 @@ License :: OSI Approved :: MIT License
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
+Programming Language :: Python :: 2
+Programming Language :: Python :: 2.7
 Programming Language :: Python :: 3
+Programming Language :: Python :: 3.4
+Programming Language :: Python :: 3.5
 Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
-Programming Language :: Python :: 3.8
-Programming Language :: Python :: 3.9
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
@@ -229,16 +231,14 @@ def get_sdk_level():
     if sdk == "/":
         return get_os_level()
 
-    # Remove trailing slashes to prevent basename returning "" incorrectly.
-    # Without this "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/"
-    # will fail the below assertions.
     sdk = sdk.rstrip("/")
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
     if sdkname == "MacOSX.sdk":
         try:
-            pl = plistlib.readPlist(os.path.join(sdk, "SDKSettings.plist"))
+            with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
+                pl = plistlib.load(fp)
             return pl["Version"]
         except Exception:
             raise SystemExit("Cannot determine SDK version")
@@ -409,15 +409,9 @@ def Extension(*args, **kwds):
     Simple wrapper about distutils.core.Extension that adds additional PyObjC
     specific flags.
     """
-    if sys.platform != "darwin":
-        # Fake version, the code in setup() will
-        # notice we're not on darwin and will fail
-        # the build
-        os_level = "9.9"
-    else:
-        os_level = get_sdk_level()
-        if os_level is None:
-            os_level = get_os_level()
+    os_level = get_sdk_level()
+    if os_level is None:
+        os_level = get_os_level()
 
     cflags = []
     ldflags = []
@@ -425,19 +419,32 @@ def Extension(*args, **kwds):
         cflags.append("-Wno-deprecated-declarations")
 
     sdk = get_sdk()
-    if not sdk:  # and os.path.exists('/usr/include/stdio.h'):
+    if not sdk:  
         # We're likely on a system with the Xcode Command Line Tools.
         # Explicitly use the most recent SDK to avoid compile problems.
         data = subprocess.check_output(
             ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
             universal_newlines=True,
         ).strip()
+            
         if data:
+            sdk_settings_path = os.path.join(data, 'SDKSettings.plist')
+            if os.path.exists(sdk_settings_path):
+                 with open(sdk_settings_path, 'rb') as fp:
+                     sdk_settings = plistlib.load(fp)
+                 version = sdk_settings['Version']
+            else:
+                 version = os.path.basename(data)[6:-4]
+
             cflags.append("-isysroot")
             cflags.append(data)
             cflags.append(
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
-                % (tuple(map(int, os.path.basename(data)[6:-4].split("."))))
+                % (tuple(map(int, version.split("."))))
+            )
+        else:
+            cflags.append(
+                "-DPyObjC_BUILD_RELEASE=%02d%02d" % (tuple(map(int, os_level.split("."))))
             )
 
     else:
@@ -472,15 +479,14 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
 
     k = kwds.copy()
 
+    os_level = get_sdk_level()
+    if os_level is None:
+        os_level = get_os_level()
+    os_compatible = True
     if sys.platform != "darwin":
         os_compatible = False
 
     else:
-        os_level = get_sdk_level()
-        if os_level is None:
-            os_level = get_os_level()
-        os_compatible = True
-
         if min_os_level is not None:
             if _sort_key(os_level) < _sort_key(min_os_level):
                 os_compatible = False
@@ -504,17 +510,19 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         if min_os_level is not None:
             if max_os_level is not None:
                 msg = (
-                    "This distribution is only supported on macOS "
+                    "This distribution is only supported on MacOSX "
                     "versions %s upto and including %s" % (min_os_level, max_os_level)
                 )
             else:
-                msg = "This distribution is only supported on macOS >= %s" % (
+                msg = "This distribution is only supported on MacOSX >= %s" % (
                     min_os_level,
                 )
         elif max_os_level is not None:
-            msg = "This distribution is only supported on macOS <= %s" % (max_os_level,)
+            msg = "This distribution is only supported on MacOSX <= %s" % (
+                max_os_level,
+            )
         else:
-            msg = "This distribution is only supported on macOS"
+            msg = "This distribution is only supported on MacOSX"
 
         def create_command_subclass(base_class):
             class subcommand(base_class):
@@ -566,16 +574,20 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         k["long_description"] += "\n\nProject links\n"
         k["long_description"] += "-------------\n"
         k["long_description"] += "\n"
-        k["long_description"] += (
-            "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n"
-            % (REPO_NAME,)
+        k[
+            "long_description"
+        ] += "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n" % (
+            REPO_NAME,
         )
-        k["long_description"] += (
-            "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues>`_\n\n"
-            % (REPO_NAME,)
+        k[
+            "long_description"
+        ] += "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues>`_\n\n" % (
+            REPO_NAME,
         )
-        k["long_description"] += (
-            "* `Repository <https://github.com/ronaldoussoren/%s/>`_\n\n" % (REPO_NAME,)
+        k[
+            "long_description"
+        ] += "* `Repository <https://github.com/ronaldoussoren/%s/>`_\n\n" % (
+            REPO_NAME,
         )
         k["long_description_content_type"] = "text/x-rst; charset=UTF-8"
 

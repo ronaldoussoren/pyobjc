@@ -102,16 +102,14 @@ class TestNSGeometry(TestCase):
         self.assertIs(AppKit.NSMouseInRect(p2, r2, True), False)
         self.assertIs(AppKit.NSContainsRect(r1, r2), False)
         self.assertIs(AppKit.NSIntersectsRect(r1, r2), False)
-        self.assertEqual(AppKit.NSStringFromPoint(p1), b"{1, 2}".decode("ascii"))
-        self.assertEqual(AppKit.NSStringFromSize(s1), b"{4, 5}".decode("ascii"))
-        self.assertEqual(
-            AppKit.NSStringFromRect(r1), b"{{0, 1}, {4, 5}}".decode("ascii")
-        )
+        self.assertEqual(AppKit.NSStringFromPoint(p1), "{1, 2}")
+        self.assertEqual(AppKit.NSStringFromSize(s1), "{4, 5}")
+        self.assertEqual(AppKit.NSStringFromRect(r1), "{{0, 1}, {4, 5}}")
         v = AppKit.NSPointFromString("{1, 2}")
         self.assertEqual(v, p1)
         v = AppKit.NSSizeFromString("{4,5}")
         self.assertEqual(v, s1)
-        v = AppKit.NSRectFromString(b"{   {0,1}  , {  4, 5}}".decode("ascii"))
+        v = AppKit.NSRectFromString("{   {0,1}  , {  4, 5}}")
         self.assertEqual(v, r1)
 
     def testValueMethods(self):

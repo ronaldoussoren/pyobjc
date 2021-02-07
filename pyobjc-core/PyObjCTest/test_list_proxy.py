@@ -5,7 +5,7 @@ NOTE: this file is very, very incomplete and just tests copying at the moment.
 """
 import objc
 from PyObjCTest.pythonset import OC_TestSet
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 OC_PythonArray = objc.lookUpClass("OC_PythonArray")
 OC_BuiltinPythonArray = objc.lookUpClass("OC_BuiltinPythonArray")
@@ -66,7 +66,3 @@ class TestMutableSequence(TestCase, BasicSequenceTests):
         o = OC_TestSet.set_copyWithZone_(s, None)
         self.assertEqual(s, o)
         self.assertIsNot(s, o)
-
-
-if __name__ == "__main__":
-    main()

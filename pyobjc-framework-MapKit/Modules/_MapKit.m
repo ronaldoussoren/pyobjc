@@ -12,15 +12,6 @@
 #define NS_ENUM_AVAILABLE(a, b)
 #endif
 
-#if PyObjC_BUILD_RELEASE >= 1011 && !defined(__LP64__)
-/* Class not available on 32-bit builds causes issues
- * when building this extension.
- */
-@interface NSUserActivity {
-}
-@end
-#endif
-
 #import <MapKit/MapKit.h>
 
 /* We include the source code here instead of
@@ -33,13 +24,27 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_MapKit)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_MapKit",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__MapKit(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__MapKit(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_MapKit) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

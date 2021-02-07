@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -80,7 +80,3 @@ class TestAssocations(TestCase):
 
         self.assertEqual(objc.getAssociatedObject(o, key1), value)
         self.assertEqual(objc.getAssociatedObject(o, key2), "<copy!>")
-
-
-if __name__ == "__main__":
-    main()

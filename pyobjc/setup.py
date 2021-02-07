@@ -8,12 +8,11 @@ import shutil
 import subprocess
 import sys
 import tarfile
-from distutils.core import Command
 
-from setuptools import setup
+from setuptools import setup, Command
 from setuptools.command import egg_info
 
-VERSION = "6.2.2"
+VERSION = '7.1'
 
 # Table with all framework wrappers and the OSX releases where they are
 # first supported, and where support was removed. The introduced column
@@ -23,7 +22,10 @@ VERSION = "6.2.2"
 FRAMEWORK_WRAPPERS = [
     # Name                      Introcuded          Removed
     ("libdispatch", "10.8", None),
+    ("Accessibility", "10.16", None),
+    ("AdServices", "10.16", None),
     ("AdSupport", "10.14", None),
+    ("AppTrackingTransparency", "10.16", None),
     ("AuthenticationServices", "10.15", None),
     ("AutomaticAssessmentConfiguration", "10.15", None),
     ("AVKit", "10.9", None),
@@ -37,6 +39,8 @@ FRAMEWORK_WRAPPERS = [
     ("BusinessChat", "10.14", None),
     ("CFNetwork", None, None),
     ("CalendarStore", "10.5", None),
+    ("CallKit", "10.16", None),
+    ("ClassKit", "10.16", None),
     ("CloudKit", "10.10", None),
     ("Cocoa", None, None),
     ("Collaboration", "10.5", None),
@@ -51,7 +55,7 @@ FRAMEWORK_WRAPPERS = [
     ("CoreLocation", "10.6", None),
     ("CoreMedia", "10.7", None),
     ("CoreMediaIO", "10.7", None),
-    # ('CoreMIDI',                None,               None        ),
+    ("CoreMIDI", None, None),
     ("CoreML", "10.13", None),
     ("CoreMotion", "10.15", None),
     ("CoreServices", None, None),
@@ -83,6 +87,7 @@ FRAMEWORK_WRAPPERS = [
     ("InstantMessage", "10.5", None),
     ("InterfaceBuilderKit", "10.5", "10.7"),
     ("IOSurface", "10.6", None),
+    ("KernelManagement", "10.16", None),
     ("LatentSemanticMapping", None, None),
     ("LaunchServices", None, None),
     ("LinkPresentation", "10.15", None),
@@ -95,6 +100,9 @@ FRAMEWORK_WRAPPERS = [
     ("Message", None, "10.9"),
     ("Metal", "10.11", None),
     ("MetalKit", "10.11", None),
+    ("MetalPerformanceShaders", "10.13", None),
+    ("MetalPerformanceShadersGraph", "10.16", None),
+    ("MLCompute", "10.16", None),
     ("ModelIO", "10.11", None),
     ("MultipeerConnectivity", "10.10", None),
     ("NaturalLanguage", "10.14", None),
@@ -105,17 +113,19 @@ FRAMEWORK_WRAPPERS = [
     ("OpenDirectory", "10.6", None),
     ("OSAKit", None, None),
     ("OSLog", "10.15", None),
+    ("PassKit", "10.16", None),
     ("PencilKit", "10.15", None),
     ("Photos", "10.11", None),
     ("PhotosUI", "10.11", None),
     ("PreferencePanes", None, None),
     ("PubSub", "10.5", "10.14"),
     ("PushKit", "10.15", None),
-    ("QTKit", "10.5", "10.15"),
     ("Quartz", None, None),
     ("QuickLookThumbnailing", "10.15", None),
+    ("ReplayKit", "10.16", None),
     ("SafariServices", "10.11", None),
     ("ScreenSaver", None, None),
+    ("ScreenTime", "10.16", None),
     ("ScriptingBridge", "10.5", None),
     ("Security", None, None),
     ("SecurityFoundation", None, None),
@@ -130,15 +140,17 @@ FRAMEWORK_WRAPPERS = [
     ("SyncServices", None, None),
     ("SystemConfiguration", None, None),
     ("WebKit", None, None),
-    ("XgridFoundation", None, "10.8"),
     ("GameKit", "10.8", None),
     ("GameplayKit", "10.11", None),
     ("SceneKit", "10.7", None),
     ("SoundAnalysis", "10.15", None),
     ("SystemExtensions", "10.15", None),
+    ("UniformTypeIdentifiers", "10.16", None),
     ("UserNotifications", "10.14", None),
+    ("UserNotificationsUI", "10.16", None),
     ("VideoSubscriberAccount", "10.14", None),
     ("VideoToolbox", "10.8", None),
+    ("Virtualization", "10.16", None),
     ("Vision", "10.13", None),
     # iTunes library is shipped with iTunes, not part of macOS 'core'
     # Requires iTunes 11 or later, which is not available on 10.5
@@ -160,6 +172,8 @@ MACOS_TO_DARWIN = {
     "10.13": "17.0",
     "10.14": "18.0",
     "10.15": "19.0",
+    "10.16": "20.0",
+    "11.0": "20.0",
 }
 
 
@@ -227,11 +241,13 @@ License :: OSI Approved :: MIT License
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
+Programming Language :: Python :: 2
+Programming Language :: Python :: 2.7
 Programming Language :: Python :: 3
+Programming Language :: Python :: 3.4
+Programming Language :: Python :: 3.5
 Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
-Programming Language :: Python :: 3.8
-Programming Language :: Python :: 3.9
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
 Topic :: Software Development :: User Interfaces
@@ -501,12 +517,64 @@ class oc_test(Command):
                     print("Twine failed for", nm, exc)
                     failures += 1
 
+        filename = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "docs",
+            "notes",
+            "framework-wrappers.rst",
+        )
+        if not os.path.exists(filename):
+            print("ERROR: framework-wrappers.rst not found")
+            failures += 1
+
+        else:
+            frameworks = frameworks_in_table(filename)
+
+            for fwk in os.listdir("/System/Library/Frameworks"):
+                if not fwk.endswith(".framework"):
+                    continue
+                fwk, _ = os.path.splitext(fwk)
+                if fwk not in frameworks:
+                    print(f"Framework {fwk} not in framework-wrappers.rst")
+                    failures += 1
+
         print(
             "SUMMARY: {'testSeconds': 0.0, 'count': 1, 'fails': %d, "
             "'errors': 0, 'xfails': 0, 'skip': 0, 'xpass': 0, }" % (failures,)
         )
         if failures:
             sys.exit(1)
+
+
+def frameworks_in_table(filename):
+    result = {}
+    in_table = False
+    with open(filename, "r") as stream:
+
+        for line in stream:
+            if not in_table:
+                if line.startswith("+--") or line.startswith("+=="):
+                    in_table = True
+                    continue
+
+            else:
+                if line.startswith("+--") or line.startswith("+=="):
+                    continue
+                elif not line.startswith("|"):
+                    break
+
+                cell = line.split("|")[1].strip()
+                if not cell:
+                    continue
+
+                if "`" in cell:
+                    cell = cell.split("`")[1].split()[0]
+                    linked = True
+                else:
+                    linked = False
+
+                result[cell] = linked
+    return result
 
 
 class oc_egg_info(egg_info.egg_info):

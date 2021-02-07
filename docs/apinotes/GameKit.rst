@@ -20,4 +20,4 @@ The full API for the GameKit framework is available from Python
 
 .. note::
 
-   This framework is only available on OSX 10.8 and later.
+   This framework is only available on macOS 10.8 and later.

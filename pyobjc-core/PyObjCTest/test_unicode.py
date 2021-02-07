@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestUnicodeProxy(TestCase):
@@ -17,7 +17,3 @@ class TestUnicodeProxy(TestCase):
         self.assertIsInstance(o.nsstring().stringByAppendingString_, objc.selector)
 
         self.assertEqual(o.stringByAppendingString_("foo %d"), "hellofoo %d")
-
-
-if __name__ == "__main__":
-    main()

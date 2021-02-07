@@ -1,12 +1,11 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFontAssetRequest(TestCase):
     def testConstants(self):
         self.assertEqual(AppKit.NSFontAssetRequestOptionUsesStandardUI, 1 << 0)
 
-    @onlyOn64Bit
     @min_os_level("10.13")
     def testMethods(self):
         self.assertArgIsBlock(

@@ -1,7 +1,7 @@
 import datetime
 
 from PyObjCTest.fnd import NSDate, NSDateFormatter
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestNSDateProxy(TestCase):
@@ -34,7 +34,3 @@ class TestNSDateProxy(TestCase):
 
         value = formatter.stringFromDate_(date)
         self.assertEqual(value, date.strftime("%Y-%m-%d %H:%M:%S"))
-
-
-if __name__ == "__main__":
-    main()

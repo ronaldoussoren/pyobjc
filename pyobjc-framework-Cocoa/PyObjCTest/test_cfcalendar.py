@@ -188,7 +188,7 @@ class TestCFCalendarVariadic(TestCase):
             None, CoreFoundation.kCFBuddhistCalendar
         )
 
-        loc = CoreFoundation.CFLocaleCreate(None, b"mr_IN".decode("latin1"))
+        loc = CoreFoundation.CFLocaleCreate(None, "mr_IN")
         self.assertIsInstance(loc, CoreFoundation.CFLocaleRef)
         id1 = CoreFoundation.CFLocaleGetIdentifier(loc)
 
@@ -202,19 +202,14 @@ class TestCFCalendarVariadic(TestCase):
 
         self.assertEqual(new_id, id1)
         self.assertNotEqual(orig_id, id1)
-        tz = CoreFoundation.CFTimeZoneCreateWithName(
-            None, b"Pacific/Wallis".decode("latin1"), True
-        )
+        tz = CoreFoundation.CFTimeZoneCreateWithName(None, "Pacific/Wallis", True)
         self.assertIsInstance(tz, CoreFoundation.CFTimeZoneRef)
         orig_zone = CoreFoundation.CFCalendarCopyTimeZone(cal)
         self.assertIsInstance(orig_zone, CoreFoundation.CFTimeZoneRef)
         CoreFoundation.CFCalendarSetTimeZone(cal, tz)
         new_zone = CoreFoundation.CFCalendarCopyTimeZone(cal)
         self.assertIsInstance(new_zone, CoreFoundation.CFTimeZoneRef)
-        self.assertEqual(
-            CoreFoundation.CFTimeZoneGetName(new_zone),
-            b"Pacific/Wallis".decode("latin1"),
-        )
+        self.assertEqual(CoreFoundation.CFTimeZoneGetName(new_zone), "Pacific/Wallis")
         weekday = CoreFoundation.CFCalendarGetFirstWeekday(cal)
         weekday = weekday + 2 % 7
         CoreFoundation.CFCalendarSetFirstWeekday(cal, weekday)

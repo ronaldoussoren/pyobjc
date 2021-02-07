@@ -1,8 +1,12 @@
 /*
  * A simple allocator for closure. This assumes that most closures are kept
  * alive forever and we therefore don't have to return storage to the OS.
+ *
+ * These functions are only used when deploying to macOS 10.14 or earlier.
  */
 #include "pyobjc.h"
+
+#if defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15
 
 #include <sys/mman.h>
 
@@ -78,8 +82,12 @@ allocate_block(void)
 }
 
 ffi_closure*
-PyObjC_malloc_closure(void)
+PyObjC_ffi_closure_alloc(size_t size, void** codeloc)
 {
+    if (size != sizeof(ffi_closure)) {
+        PyErr_SetString(PyObjCExc_Error, "Allocating closure of unexpected size");
+        return NULL;
+    }
     if (closure_freelist == NULL) {
         closure_freelist = allocate_block();
         if (closure_freelist == NULL) {
@@ -88,13 +96,16 @@ PyObjC_malloc_closure(void)
     }
     ffi_closure* result = (ffi_closure*)closure_freelist;
     closure_freelist    = closure_freelist->next;
+    *codeloc = (void*)result;
     return result;
 }
 
 int
-PyObjC_free_closure(ffi_closure* cl)
+PyObjC_ffi_closure_free(ffi_closure* cl)
 {
     ((freelist*)cl)->next = closure_freelist;
     closure_freelist      = (freelist*)cl;
     return 0;
 }
+
+#endif /* defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15 */

@@ -1,7 +1,7 @@
 import warnings
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestCompatFunctions(TestCase):
@@ -57,7 +57,3 @@ class TestCompatFunctions(TestCase):
 
         finally:
             objc.options.use_kvo = orig
-
-
-if __name__ == "__main__":
-    main()

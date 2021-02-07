@@ -22,6 +22,13 @@
 
 #include "pyobjc-compat.h"
 
+#ifdef Py_LIMITED_API
+/*
+ * Make sure PyObjC framework wrappers can build using the limited API
+ */
+typedef void Py_buffer;
+#endif
+
 #include <objc/objc-runtime.h>
 
 /* Current API version, increase whenever:
@@ -31,7 +38,7 @@
  * Do not increase when adding a new function, the struct_len field
  * can be used for detecting if a function has been added.
  */
-#define PYOBJC_API_VERSION 20
+#define PYOBJC_API_VERSION 21
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -66,9 +73,9 @@ struct pyobjc_api {
     PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*);
     void (*err_python_to_objc_gil)(PyGILState_STATE* state);
     int (*simplify_sig)(const char* signature, char* buf, size_t buflen);
-    void (*free_c_array)(int, void*);
+    void (*free_c_array)(int, Py_buffer*);
     int (*py_to_c_array)(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
-                         PyObject**);
+                         PyObject**, Py_buffer*);
     PyObject* (*c_array_to_py)(const char*, void*, Py_ssize_t);
     PyTypeObject* imp_type;
     IMP (*imp_get_imp)(PyObject*);
@@ -81,6 +88,9 @@ struct pyobjc_api {
     PyObject* (*varlistnew)(const char* tp, void* array);
     int (*pyobjcobject_convert)(PyObject*, void*);
     int (*register_id_alias)(const char*, const char*);
+    int (*memview_check)(PyObject*);
+    PyObject* (*memview_new)(void);
+    Py_buffer* (*memview_getbuffer)(PyObject*);
 };
 
 #ifndef PYOBJC_BUILD
@@ -119,6 +129,9 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjC_VarList_New (PyObjC_API->varlistnew)
 #define PyObjCObject_Convert (PyObjC_API->pyobjcobject_convert)
 #define PyObjCPointerWrapper_RegisterID (PyObjC_API->register_id_alias)
+#define PyObjCMemView_Check (PyObjC_API->memview_check)
+#define PyObjCMemView_New (PyObjC_API->memview_new)
+#define PyObjCMemView_GetBuffer (PyObjC_API->memview_getbuffer)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {

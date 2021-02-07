@@ -6,7 +6,7 @@
 
 static void __attribute__((__used__)) use_protocols(void)
 {
-#if PyObjC_BUILD_RELEASE >= 1012 && defined(__LP64__)
+#if PyObjC_BUILD_RELEASE >= 1012
     PyObject* p;
     p = PyObjC_IdToPython(@protocol(INSearchCallHistoryIntentHandling));
     Py_XDECREF(p);

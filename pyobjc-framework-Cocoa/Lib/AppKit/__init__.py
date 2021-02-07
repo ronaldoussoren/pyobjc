@@ -171,5 +171,14 @@ try:
 except AttributeError:
     mod.NSImageNameApplicationIcon = "NSApplicationIcon"
 
+if objc.arch == "arm64":
+    # XXX: Temporary adjustment until the metadata
+    #      is updated
+    mod.NSImageResizingModeStretch = 1
+    mod.NSImageResizingModeTile = 0
+
+    mod.NSTextAlignmentCenter = 1
+    mod.NSTextAlignmentRight = 2
+
 
 del sys.modules["AppKit._metadata"]

@@ -3,7 +3,7 @@
 #
 import objc
 from PyObjCTest.exceptions import PyObjCTestExceptions
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestExceptionsFromObjC(TestCase):
@@ -86,7 +86,3 @@ class TestExceptionsFromObjC(TestCase):
 
         except objc.error as e:
             self.assertEqual(e._pyobjc_exc_, "thrown string")
-
-
-if __name__ == "__main__":
-    main()

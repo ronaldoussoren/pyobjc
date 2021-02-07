@@ -26,6 +26,10 @@ class TestCBCentralManager(TestCase):
         self.assertEqual(CoreBluetooth.CBConnectionEventPeerDisconnected, 0)
         self.assertEqual(CoreBluetooth.CBConnectionEventPeerConnected, 1)
 
+        self.assertEqual(
+            CoreBluetooth.CBCentralManagerFeatureExtendedScanAndConnect, 1 << 0
+        )
+
     @min_os_level("10.9")
     def testProtocols(self):
         self.assertIsInstance(
@@ -43,3 +47,7 @@ class TestCBCentralManager(TestCase):
             1,
             objc._C_NSInteger,
         )
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(CoreBluetooth.CBCentralManager.supportsFeatures_)

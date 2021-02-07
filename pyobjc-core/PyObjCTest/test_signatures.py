@@ -2,7 +2,7 @@
 Test some basic features of signature strings.
 """
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class PyOCTestTypeStr(TestCase):
@@ -66,7 +66,3 @@ class PyOCTestTypeStr(TestCase):
             self.assertEqual(s.signature, b"v@:ii")
         finally:
             s.signature = x
-
-
-if __name__ == "__main__":
-    main()

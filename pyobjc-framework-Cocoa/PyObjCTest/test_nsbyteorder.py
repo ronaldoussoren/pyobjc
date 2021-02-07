@@ -1,5 +1,3 @@
-import sys
-
 import Foundation
 import CoreFoundation
 from PyObjCTools.TestSupport import TestCase
@@ -22,46 +20,23 @@ class TestNSByteOrder(TestCase):
         self.assertEqual(Foundation.NSSwapShort(350), CoreFoundation.CFSwapInt16(350))
         self.assertEqual(Foundation.NSSwapInt(350), CoreFoundation.CFSwapInt32(350))
 
-        if sys.maxsize > 2 ** 32:
-            self.assertEqual(
-                Foundation.NSSwapLong(350), CoreFoundation.CFSwapInt64(350)
-            )
-            self.assertEqual(
-                Foundation.NSSwapBigLongToHost(350),
-                CoreFoundation.CFSwapInt64BigToHost(350),
-            )
-            self.assertEqual(
-                Foundation.NSSwapHostLongToBig(350),
-                CoreFoundation.CFSwapInt64HostToBig(350),
-            )
-            self.assertEqual(
-                Foundation.NSSwapLittleLongToHost(350),
-                CoreFoundation.CFSwapInt64LittleToHost(350),
-            )
-            self.assertEqual(
-                Foundation.NSSwapHostLongToLittle(350),
-                CoreFoundation.CFSwapInt64HostToLittle(350),
-            )
-        else:
-            self.assertEqual(
-                Foundation.NSSwapLong(350), CoreFoundation.CFSwapInt32(350)
-            )
-            self.assertEqual(
-                Foundation.NSSwapBigLongToHost(350),
-                CoreFoundation.CFSwapInt32BigToHost(350),
-            )
-            self.assertEqual(
-                Foundation.NSSwapHostLongToBig(350),
-                CoreFoundation.CFSwapInt32HostToBig(350),
-            )
-            self.assertEqual(
-                Foundation.NSSwapLittleLongToHost(350),
-                CoreFoundation.CFSwapInt32LittleToHost(350),
-            )
-            self.assertEqual(
-                Foundation.NSSwapHostLongToLittle(350),
-                CoreFoundation.CFSwapInt32HostToLittle(350),
-            )
+        self.assertEqual(Foundation.NSSwapLong(350), CoreFoundation.CFSwapInt64(350))
+        self.assertEqual(
+            Foundation.NSSwapBigLongToHost(350),
+            CoreFoundation.CFSwapInt64BigToHost(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostLongToBig(350),
+            CoreFoundation.CFSwapInt64HostToBig(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapLittleLongToHost(350),
+            CoreFoundation.CFSwapInt64LittleToHost(350),
+        )
+        self.assertEqual(
+            Foundation.NSSwapHostLongToLittle(350),
+            CoreFoundation.CFSwapInt64HostToLittle(350),
+        )
 
         self.assertEqual(
             Foundation.NSSwapLongLong(350), CoreFoundation.CFSwapInt64(350)

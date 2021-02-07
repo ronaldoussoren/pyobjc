@@ -54,25 +54,21 @@ class TestTimeZone(TestCase):
         # rewritten als plan Objective-C.
         abbrevs = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
         newmap = abbrevs.mutableCopy()
-        newmap[b"AAA".decode("ascii")] = b"Europe/Amsterdam".decode("ascii")
+        newmap["AAA"] = "Europe/Amsterdam"
 
         v = CoreFoundation.CFTimeZoneSetAbbreviationDictionary(newmap)
         self.assertIs(v, None)
         try:
             map2 = CoreFoundation.CFTimeZoneCopyAbbreviationDictionary()
             self.assertIsInstance(map2, CoreFoundation.CFDictionaryRef)
-            self.assertEqual(
-                map2[b"AAA".decode("ascii")], b"Europe/Amsterdam".decode("ascii")
-            )
+            self.assertEqual(map2["AAA"], "Europe/Amsterdam")
         finally:
             CoreFoundation.CFTimeZoneSetAbbreviationDictionary(abbrevs)
 
     def testZoneObject(self):
         with open("/usr/share/zoneinfo/posixrules", "rb") as fp:
             data = fp.read()
-        zone = CoreFoundation.CFTimeZoneCreate(
-            None, b"Europe/Amsterdam".decode("ascii"), data
-        )
+        zone = CoreFoundation.CFTimeZoneCreate(None, "Europe/Amsterdam", data)
         self.assertIsInstance(zone, CoreFoundation.CFTimeZoneRef)
         self.assertResultIsCFRetained(
             CoreFoundation.CFTimeZoneCreateWithTimeIntervalFromGMT
@@ -85,7 +81,7 @@ class TestTimeZone(TestCase):
         zone = CoreFoundation.CFTimeZoneCreateWithName(None, "Europe/Amsterdam", True)
         self.assertIsInstance(zone, CoreFoundation.CFTimeZoneRef)
         name = CoreFoundation.CFTimeZoneGetName(zone)
-        self.assertEqual(name, b"Europe/Amsterdam".decode("ascii"))
+        self.assertEqual(name, "Europe/Amsterdam")
 
         data = CoreFoundation.CFTimeZoneGetData(zone)
         self.assertIsInstance(data, CoreFoundation.CFDataRef)

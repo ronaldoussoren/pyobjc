@@ -21,6 +21,9 @@ class TestCFNetServices(TestCase):
         self.assertEqual(CFNetwork.kCFNetServicesErrorCancel, -72005)
         self.assertEqual(CFNetwork.kCFNetServicesErrorInvalid, -72006)
         self.assertEqual(CFNetwork.kCFNetServicesErrorTimeout, -72007)
+        self.assertEqual(
+            CFNetwork.kCFNetServicesErrorMissingRequiredConfiguration, -72008
+        )
         self.assertEqual(CFNetwork.kCFNetServiceMonitorTXT, 1)
         self.assertEqual(CFNetwork.kCFNetServiceFlagNoAutoRename, 1)
         self.assertEqual(CFNetwork.kCFNetServiceFlagMoreComing, 1)

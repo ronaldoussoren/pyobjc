@@ -1826,7 +1826,7 @@
      },
      {
       "name": "queue",
-      "typestr": "^{dispatch_queue_s=}"
+      "typestr": "@"
      }
     ],
     "retval": {
@@ -2119,7 +2119,7 @@
      },
      {
       "name": "queue",
-      "typestr": "^{dispatch_queue_s=}"
+      "typestr": "@"
      }
     ],
     "retval": {
@@ -2717,7 +2717,7 @@
      },
      {
       "name": "queue",
-      "typestr": "^{dispatch_queue_s=}"
+      "typestr": "@"
      }
     ],
     "retval": {
@@ -3513,7 +3513,7 @@
      },
      {
       "name": "queue",
-      "typestr": "^{dispatch_queue_s=}"
+      "typestr": "@"
      }
     ],
     "retval": {

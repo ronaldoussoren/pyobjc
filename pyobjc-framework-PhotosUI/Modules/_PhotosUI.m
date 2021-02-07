@@ -3,16 +3,6 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#if !defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1013
-
-/* The headers PhotosUI headers use a class that's
- * only available in 64bit mode without and guard...
- */
-@interface NSExtensionContext : NSObject {
-}
-@end
-#endif
-
 #import <PhotosUI/PhotosUI.h>
 
 /* We include the source code here instead of
@@ -26,13 +16,27 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_PhotosUI)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_PhotosUI",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__PhotosUI(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__PhotosUI(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_PhotosUI) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

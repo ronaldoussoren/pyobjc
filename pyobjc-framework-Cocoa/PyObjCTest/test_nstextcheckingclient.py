@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import objc
 
 
@@ -92,7 +92,6 @@ class TestNSTextCheckingClient(TestCase):
         self.assertEqual(AppKit.NSTextInputTraitTypeNo, 1)
         self.assertEqual(AppKit.NSTextInputTraitTypeYes, 2)
 
-    @onlyOn64Bit
     def test_methods(self):
         self.assertResultHasType(
             TestNSTextCheckingClientHelper.autocorrectionType, objc._C_NSInteger

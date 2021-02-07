@@ -14,8 +14,7 @@ class TestRegr(TestCase):
             TypeError, fm.stringWithFileSystemRepresentation_length_, b"/var"
         )
         self.assertEqual(
-            b"/var".decode("ascii"),
-            fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4),
+            "/var", fm.stringWithFileSystemRepresentation_length_(b"/var/boo", 4)
         )
 
     def testThreadHang(self):
@@ -40,7 +39,7 @@ class TestRegr(TestCase):
                 def run(self):
                     pool = NSAutoreleasePool.alloc().init()  # noqa: F841
                     aList.append("before")
-                    NSLog(b"does this print?".decode("ascii"))
+                    NSLog("does this print?")
                     aList.append("after")
 
             o = ThreadHangObject.alloc().init()

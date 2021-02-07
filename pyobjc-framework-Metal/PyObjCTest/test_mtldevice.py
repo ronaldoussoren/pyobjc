@@ -186,6 +186,83 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def supportsVertexAmplificationCount_(self, a):
         return 1
 
+    def supportsPullModelInterpolation(self):
+        return 1
+
+    def supportsCounterSampling_(self, a):
+        return 1
+
+    def supportsDynamicLibraries(self):
+        return 1
+
+    def newDynamicLibrary_errror_(self, a, b):
+        return 1
+
+    def newDynamicLibraryWithURL_errror_(self, a, b):
+        return 1
+
+    def newBinaryArchiveWithDescriptor_errror_(self, a, b):
+        return 1
+
+    def supportsRaytracing(self):
+        return 1
+
+    def accelerationStructureSizesWithDescriptor_(self, a):
+        return 1
+
+    def supportsFunctionPointers(self):
+        return 1
+
+    def supportsBinaryFunctionPointers(self):
+        return 1
+
+    def newDynamicLibrary_error_(self, a, b):
+        return 1
+
+    def newDynamicLibraryWithURL_error_(self, a, b):
+        return 1
+
+    def newBinaryArchiveWithDescriptor_error_(self, a, b):
+        return 1
+
+    def supports32BitFloatFiltering(self):
+        return 1
+
+    def supports32BitMSAA(self):
+        return 1
+
+    def supportsQueryTextureLOD(self):
+        return 1
+
+    def supportsBCTextureCompression(self):
+        return 1
+
+    def newRenderPipelineStateWithTileDescriptor_options_reflection_error_(
+        self, a, b, c, d
+    ):
+        return 1
+
+    def newRenderPipelineStateWithTileDescriptor_options_completionHandler_(
+        self, a, b, c
+    ):
+        pass
+
+    def sparseTileSizeWithTextureType_pixelFormat_sampleCount_(self, a, b, c):
+        return 1
+
+    def sparseTileSizeInBytes(self):
+        return 1
+
+    def convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_(
+        self, a, b, c, d, e
+    ):
+        pass
+
+    def convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_(
+        self, a, b, c, d
+    ):
+        pass
+
 
 class TestMTLDevice(TestCase):
     def test_constants(self):
@@ -237,6 +314,8 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLGPUFamilyApple3, 1003)
         self.assertEqual(Metal.MTLGPUFamilyApple4, 1004)
         self.assertEqual(Metal.MTLGPUFamilyApple5, 1005)
+        self.assertEqual(Metal.MTLGPUFamilyApple6, 1006)
+        self.assertEqual(Metal.MTLGPUFamilyApple7, 1007)
 
         self.assertEqual(Metal.MTLGPUFamilyMac1, 2001)
         self.assertEqual(Metal.MTLGPUFamilyMac2, 2002)
@@ -256,6 +335,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLPipelineOptionNone, 0)
         self.assertEqual(Metal.MTLPipelineOptionArgumentInfo, 1 << 0)
         self.assertEqual(Metal.MTLPipelineOptionBufferTypeInfo, 1 << 1)
+        self.assertEqual(Metal.MTLPipelineOptionFailOnBinaryArchiveMiss, 1 << 2)
 
         self.assertEqual(Metal.MTLReadWriteTextureTierNone, 0)
         self.assertEqual(Metal.MTLReadWriteTextureTier1, 1)
@@ -263,6 +343,15 @@ class TestMTLDevice(TestCase):
 
         self.assertEqual(Metal.MTLArgumentBuffersTier1, 0)
         self.assertEqual(Metal.MTLArgumentBuffersTier2, 1)
+
+        self.assertEqual(Metal.MTLCounterSamplingPointAtStageBoundary, 0)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtDrawBoundary, 1)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtDispatchBoundary, 2)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtTileDispatchBoundary, 3)
+        self.assertEqual(Metal.MTLCounterSamplingPointAtBlitBoundary, 4)
+
+        self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeOutward, 0)
+        self.assertEqual(Metal.MTLSparseTextureRegionAlignmentModeInward, 1)
 
     @min_os_level("10.13")
     def test_constants10_13(self):
@@ -274,6 +363,11 @@ class TestMTLDevice(TestCase):
         v = Metal.MTLSizeAndAlign()
         self.assertEqual(v.size, 0)
         self.assertEqual(v.align, 0)
+
+        v = Metal.MTLAccelerationStructureSizes()
+        self.assertEqual(v.accelerationStructureSize, 0)
+        self.assertEqual(v.buildScratchBufferSize, 0)
+        self.assertEqual(v.refitScratchBufferSize, 0)
 
     @min_os_level("10.11")
     def test_funtions10_11(self):
@@ -319,6 +413,10 @@ class TestMTLDevice(TestCase):
             TestMTLDeviceHelper.argumentBuffersSupport, objc._C_NSUInteger
         )
         self.assertResultIsBOOL(TestMTLDeviceHelper.areRasterOrderGroupsSupported)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supports32BitFloatFiltering)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supports32BitMSAA)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsQueryTextureLOD)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsBCTextureCompression)
         self.assertResultIsBOOL(TestMTLDeviceHelper.areBarycentricCoordsSupported)
         self.assertResultIsBOOL(
             TestMTLDeviceHelper.supportsShaderBarycentricCoordinates
@@ -602,4 +700,134 @@ class TestMTLDevice(TestCase):
             TestMTLDeviceHelper.sampleTimestamps_gpuTimestamp_,
             1,
             b"o^" + objc._C_NSUInteger,
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPullModelInterpolation)
+        self.assertResultIsBOOL(
+            TestMTLDeviceHelper.supportsShaderBarycentricCoordinates
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsCounterSampling_)
+        self.assertArgHasType(
+            TestMTLDeviceHelper.supportsCounterSampling_, 0, objc._C_NSUInteger
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsDynamicLibraries)
+        self.assertArgHasType(TestMTLDeviceHelper.newDynamicLibrary_error_, 1, b"o^@")
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newDynamicLibraryWithURL_error_, 1, b"o^@"
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newBinaryArchiveWithDescriptor_error_, 1, b"o^@"
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRaytracing)
+        self.assertResultHasType(
+            TestMTLDeviceHelper.accelerationStructureSizesWithDescriptor_,
+            Metal.MTLAccelerationStructureSizes.__typestr__,
+        )
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFunctionPointers)
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_reflection_error_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgIsOut(
+            TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_reflection_error_,
+            3,
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_completionHandler_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgIsBlock(
+            TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_completionHandler_,
+            2,
+            MTLNewRenderPipelineStateWithReflectionCompletionHandler,
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_,
+            0,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.sparseTileSizeWithTextureType_pixelFormat_sampleCount_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertResultHasType(
+            TestMTLDeviceHelper.sparseTileSizeInBytes, objc._C_NSUInteger
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
+            0,
+            b"n^" + Metal.MTLRegion.__typestr__,
+        )
+        self.assertArgSizeInArg(
+            TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
+            0,
+            4,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
+            1,
+            b"n^" + Metal.MTLRegion.__typestr__,
+        )
+        self.assertArgSizeInArg(
+            TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
+            1,
+            4,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
+            2,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
+            3,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparsePixelRegions_toTileRegions_withTileSize_alignmentMode_numRegions_,
+            4,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
+            0,
+            b"n^" + Metal.MTLRegion.__typestr__,
+        )
+        self.assertArgSizeInArg(
+            TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
+            0,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
+            1,
+            b"n^" + Metal.MTLRegion.__typestr__,
+        )
+        self.assertArgSizeInArg(
+            TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
+            1,
+            3,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
+            2,
+            Metal.MTLSize.__typestr__,
+        )
+        self.assertArgHasType(
+            TestMTLDeviceHelper.convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_,
+            3,
+            objc._C_NSUInteger,
         )

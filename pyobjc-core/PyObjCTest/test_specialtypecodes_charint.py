@@ -10,7 +10,7 @@ while at the same time getting a higher fidelity bridge.
 import array
 
 from PyObjCTest.specialtypecodes import OC_TestSpecialTypeCode
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -232,7 +232,3 @@ class TestTypeCode_int8(TestCase):
         v, w = o.int8ArrayOf4InOut_([1, 2, 3, 4])
         self.assertEqual(v, [1, 2, 3, 4])
         self.assertEqual(w, (ord("h"), ord("a"), ord("n"), ord("d")))
-
-
-if __name__ == "__main__":
-    main()

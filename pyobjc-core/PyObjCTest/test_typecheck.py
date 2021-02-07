@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestPython3Types(TestCase):
@@ -54,7 +54,3 @@ class TestPython3Types(TestCase):
         tab = [(b"NSAppleScriptErrorMessage", b"@")]
 
         self.assertRaises(TypeError, objc.loadBundleVariables, bundle, d, tab)
-
-
-if __name__ == "__main__":
-    main()

@@ -17,12 +17,8 @@ API Notes
 .. note::
 
    These bindings are only available on macOS 10.8 or later. The dispatch library is
-   available on earlier releases of OSX, but in a way that is not compatbile with these
+   available on earlier releases of macOS, but in a way that is not compatbile with these
    bindings.
-
-.. warning::
-
-   For 32-bit binaries this library only works on macOS 10.12 or later.
 
 The libraries exposes a number APIs in two variants: one that has a block as an argument,
 and one that has a function as an argument. Both can be used from Python, but in general
@@ -95,3 +91,8 @@ These functions are not available.
 ..........................
 
 Use *DISPATCH_DATA_DESTRUCTOR_DEFAULT* as the destructor.
+
+The workgroup API's
+....................
+
+The various workgroup APIs (introduced in macOS 11) are not supported. 

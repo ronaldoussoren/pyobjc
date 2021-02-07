@@ -17,7 +17,7 @@ import operator
 from test import mapping_tests
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSDictionary = objc.lookUpClass("NSDictionary")
 NSMutableDictionary = objc.lookUpClass("NSMutableDictionary")
@@ -845,7 +845,3 @@ class TestPyObjCDict(TestCase):
         self.assertRaises(TypeError, operator.le, oc.keys(), ("a", "f"))
         self.assertRaises(TypeError, operator.gt, oc.keys(), ("a", "f"))
         self.assertRaises(TypeError, operator.ge, oc.keys(), ("a", "f"))
-
-
-if __name__ == "__main__":
-    main()

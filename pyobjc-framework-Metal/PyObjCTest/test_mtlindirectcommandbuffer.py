@@ -17,6 +17,8 @@ class TestMTLIndirectCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLIndirectCommandTypeDrawIndexed, 1 << 1)
         self.assertEqual(Metal.MTLIndirectCommandTypeDrawPatches, 1 << 2)
         self.assertEqual(Metal.MTLIndirectCommandTypeDrawIndexedPatches, 1 << 3)
+        self.assertEqual(Metal.MTLIndirectCommandTypeConcurrentDispatch, 1 << 5)
+        self.assertEqual(Metal.MTLIndirectCommandTypeConcurrentDispatchThreads, 1 << 6)
 
     def test_structs(self):
         v = Metal.MTLIndirectCommandBufferExecutionRange()

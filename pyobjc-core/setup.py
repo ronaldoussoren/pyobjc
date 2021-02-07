@@ -6,17 +6,14 @@ import tempfile
 import sys
 import subprocess
 import warnings
+from setuptools import Extension, setup
+from setuptools.command import build_ext, build_py, egg_info, install_lib, test
 from distutils import log
 from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
 from distutils.sysconfig import get_config_var as _get_config_var
 from distutils.sysconfig import get_config_vars
 
-# Patch distutils: it needs to compile .S files as well.
-from distutils.unixccompiler import UnixCCompiler
-
 from pkg_resources import add_activation_listener, normalize_path, require, working_set
-from setuptools import Extension, setup
-from setuptools.command import build_ext, build_py, egg_info, install_lib, test
 
 
 def get_config_var(var):
@@ -38,7 +35,8 @@ if sys.version_info < MIN_PYTHON:
 
 
 def get_os_level():
-    pl = plistlib.readPlist("/System/Library/CoreServices/SystemVersion.plist")
+    with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
+       pl = plistlib.load(fp)
     v = pl["ProductVersion"]
     return ".".join(v.split(".")[:2])
 
@@ -47,11 +45,19 @@ def get_sdk_level(sdk):
     if sdk == "/":
         return get_os_level()
 
-    sdk = os.path.basename(sdk)
-    assert sdk.startswith("MacOSX")
-    assert sdk.endswith(".sdk")
-    sdk = sdk[6:-4]
-    return sdk
+    sdk = sdk.rstrip("/")
+    sdkname = os.path.basename(sdk)
+    assert sdkname.startswith("MacOSX")
+    assert sdkname.endswith(".sdk")
+    if sdkname == "MacOSX.sdk":
+        try:
+            with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
+                pl = plistlib.load(fp)
+            return pl["Version"]
+        except Exception:
+            raise SystemExit("Cannot determine SDK version")
+    else:
+        return sdkname[6:-4]
 
 
 # CFLAGS for the objc._objc extension:
@@ -73,6 +79,8 @@ CFLAGS = [
     "-Wshorten-64-to-32",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
+    "-Werror",
+    "-I/usr/include/ffi",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -88,6 +96,7 @@ OBJC_LDFLAGS = [
     "Carbon",
     "-fvisibility=protected",
     "-g",
+    "-lffi",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "-O3",
 ]
@@ -145,31 +154,6 @@ for k in cfg_vars:
         and "-Werror=declaration-after-statement" in cfg_vars[k]
     ):
         cfg_vars[k] = cfg_vars[k].replace("-Werror=declaration-after-statement", "")
-
-
-#
-# Support for an embedded copy of libffi
-#
-EMBEDDED_FFI_CFLAGS = ["-Ilibffi-src/include", "-Ilibffi-src/powerpc"]
-
-# The list below includes the source files for all CPU types that we run on
-# this makes it easier to build fat binaries on macOS
-EMBEDDED_FFI_SOURCE = [
-    "libffi-src/ffi.c",
-    "libffi-src/types.c",
-    "libffi-src/powerpc/ppc-darwin.S",
-    "libffi-src/powerpc/ppc-darwin_closure.S",
-    "libffi-src/powerpc/ppc-ffi_darwin.c",
-    "libffi-src/powerpc/ppc64-darwin_closure.S",
-    "libffi-src/x86/darwin64.S",
-    "libffi-src/x86/x86-darwin.S",
-    "libffi-src/x86/x86-ffi64.c",
-    "libffi-src/x86/x86-ffi_darwin.c",
-]
-
-
-UnixCCompiler.src_extensions.append(".S")
-del UnixCCompiler
 
 
 #
@@ -285,8 +269,6 @@ class oc_test(test.test):
     def run(self):
         verify_platform()
 
-        be_cmd = self.get_finalized_command("build_ext")
-
         import unittest
 
         # Ensure that build directory is on sys.path (py3k)
@@ -298,7 +280,7 @@ class oc_test(test.test):
         warnings.simplefilter("error")
 
         try:
-            suite = makeTestSuite(be_cmd.use_system_libffi)
+            suite = makeTestSuite()
 
             runner = unittest.TextTestRunner(verbosity=self.verbosity)
             result = runner.run(suite)
@@ -400,6 +382,8 @@ def _find_executable(executable):
 
 
 def _working_compiler(executable):
+    if executable == "xcrun":
+        return True
 
     with tempfile.NamedTemporaryFile(mode="w", suffix=".c") as fp:
         fp.write("#include <stdarg.h>\nint main(void) { return 0; }\n")
@@ -492,7 +476,6 @@ def _fixup_compiler(use_ccache):
 
 class oc_build_ext(build_ext.build_ext):
     user_options = [
-        ("use-system-libffi=", None, "use the system installation of libffi"),
         (
             "deployment-target=",
             None,
@@ -504,31 +487,26 @@ class oc_build_ext(build_ext.build_ext):
             "Path to the SDK to use (can also be set using ${SDKROOT})",
         ),
     ]
-    boolean_options = ["use-system-libffi"]
 
     def initialize_options(self):
         build_ext.build_ext.initialize_options(self)
-        self.use_system_libffi = False
         self.deployment_target = None
         self.sdk_root = None
 
     def finalize_options(self):
         build_ext.build_ext.finalize_options(self)
 
-        # setting was not set manually, check whether python was configured this
-        # way.
-        if not self.use_system_libffi:
-            self.use_system_libffi = "--with-system-ffi" in get_config_var(
-                "CONFIG_ARGS"
-            )
-
         self.sdk_root = os.environ.get("SDKROOT", None)
         if self.sdk_root is None:
-            if os.path.exists("/usr/bin/xcodebuild"):
+            if os.path.exists("/usr/bin/xcrun"):
                 self.sdk_root = subprocess.check_output(
                     ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
                     universal_newlines=True,
                 ).strip()
+
+                if not self.sdk_root:
+                   # With command line tools the value can be empty
+                   self.sdk_root = "/"
 
             else:
                 self.sdk_root = "/"
@@ -545,42 +523,6 @@ class oc_build_ext(build_ext.build_ext):
 
     def run(self):
         verify_platform()
-
-        if self.use_system_libffi:
-
-            LIBFFI_INCLUDEDIR = (
-                get_config_var("LIBFFI_INCLUDEDIR") or "/usr/include/ffi"
-            )
-
-            try:
-                p = subprocess.Popen(
-                    ["pkg-config", "libffi", "--cflags"], stdout=subprocess.PIPE
-                )
-                FFI_CFLAGS = shlex.split(p.communicate()[0].strip())
-                if p.returncode != 0:
-                    raise Exception("pkg-config failed")
-
-                p = subprocess.Popen(
-                    ["pkg-config", "libffi", "--libs"], stdout=subprocess.PIPE
-                )
-                FFI_LDFLAGS = shlex.split(p.communicate()[0].strip())
-                if p.returncode != 0:
-                    raise Exception("pkg-config failed")
-            except Exception:
-                # pkg-config failed, so make some assuptions
-                FFI_CFLAGS = ["-I" + LIBFFI_INCLUDEDIR]
-                FFI_LDFLAGS = ["-lffi"]
-
-            for ext in self.extensions:
-                if ext.name == "objc._objc":
-                    ext.extra_compile_args.extend(FFI_CFLAGS)
-                    ext.extra_link_args.extend(FFI_LDFLAGS)
-        else:
-            for ext in self.extensions:
-                if ext.name == "objc._objc":
-                    if ext.sources[: -len(EMBEDDED_FFI_SOURCE)] != EMBEDDED_FFI_SOURCE:
-                        ext.sources.extend(EMBEDDED_FFI_SOURCE)
-                        ext.extra_compile_args.extend(EMBEDDED_FFI_CFLAGS)
 
         if self.deployment_target is not None:
             os.environ["MACOSX_DEPLOYMENT_TARGET"] = self.deployment_target

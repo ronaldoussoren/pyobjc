@@ -10,7 +10,7 @@ and (Objective-)C frameworks
 """
 from pyobjc_setup import Extension, setup
 
-VERSION = "6.2.2"
+VERSION = '7.1'
 
 setup(
     name="pyobjc-framework-CoreText",
@@ -22,7 +22,6 @@ setup(
             "CoreText._manual",
             ["Modules/_manual.m"],
             extra_link_args=["-framework", "CoreServices"],
-            py_limited_api=True,
         )
     ],
     version=VERSION,
@@ -32,5 +31,4 @@ setup(
         "pyobjc-framework-Quartz>=" + VERSION,
     ],
     long_description=__doc__,
-    options={"bdist_wheel": {"py_limited_api": "cp36"}},
 )

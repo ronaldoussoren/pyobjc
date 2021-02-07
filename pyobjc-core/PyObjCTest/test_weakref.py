@@ -1,7 +1,7 @@
 import weakref
 
 from PyObjCTest.fnd import NSArray, NSAutoreleasePool, NSObject
-from PyObjCTools.TestSupport import TestCase, main, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import objc
 
 
@@ -56,7 +56,3 @@ class TestObjCWeakRef(TestCase):
 
         del pool
         self.assertIs(r(), None)
-
-
-if __name__ == "__main__":
-    main()

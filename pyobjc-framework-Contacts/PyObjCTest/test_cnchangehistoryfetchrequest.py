@@ -1,33 +1,27 @@
-import sys
-
 import objc
 
-if sys.maxsize > 2 ** 32:
-    from PyObjCTools.TestSupport import TestCase, min_os_level
-    import Contacts
+from PyObjCTools.TestSupport import TestCase, min_os_level
+import Contacts
 
-    class TestCNChangeHistoryFetchRequest(TestCase):
-        @min_os_level("10.15")
-        def testProtocols(self):
-            objc.protocolNamed("CNKeyDescriptor")
 
-        @min_os_level("10.15")
-        def test_methods(self):
-            self.assertResultIsBOOL(
-                Contacts.CNChangeHistoryFetchRequest.shouldUnifyResults
-            )
-            self.assertArgIsBOOL(
-                Contacts.CNChangeHistoryFetchRequest.setShouldUnifyResults_, 0
-            )
+class TestCNChangeHistoryFetchRequest(TestCase):
+    @min_os_level("10.15")
+    def testProtocols(self):
+        objc.protocolNamed("CNKeyDescriptor")
 
-            self.assertResultIsBOOL(Contacts.CNChangeHistoryFetchRequest.mutableObjects)
-            self.assertArgIsBOOL(
-                Contacts.CNChangeHistoryFetchRequest.setMutableObjects_, 0
-            )
+    @min_os_level("10.15")
+    def test_methods(self):
+        self.assertResultIsBOOL(Contacts.CNChangeHistoryFetchRequest.shouldUnifyResults)
+        self.assertArgIsBOOL(
+            Contacts.CNChangeHistoryFetchRequest.setShouldUnifyResults_, 0
+        )
 
-            self.assertResultIsBOOL(
-                Contacts.CNChangeHistoryFetchRequest.includeGroupChanges
-            )
-            self.assertArgIsBOOL(
-                Contacts.CNChangeHistoryFetchRequest.setIncludeGroupChanges_, 0
-            )
+        self.assertResultIsBOOL(Contacts.CNChangeHistoryFetchRequest.mutableObjects)
+        self.assertArgIsBOOL(Contacts.CNChangeHistoryFetchRequest.setMutableObjects_, 0)
+
+        self.assertResultIsBOOL(
+            Contacts.CNChangeHistoryFetchRequest.includeGroupChanges
+        )
+        self.assertArgIsBOOL(
+            Contacts.CNChangeHistoryFetchRequest.setIncludeGroupChanges_, 0
+        )

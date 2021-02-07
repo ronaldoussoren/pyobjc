@@ -4,7 +4,7 @@ import datetime
 import sys
 
 from PyObjCTest.classes import OCTestClasses
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 import objc
 
 
@@ -181,7 +181,3 @@ class TestBridgedClasses(TestCase):
         value = O()
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonObject")
-
-
-if __name__ == "__main__":
-    main()

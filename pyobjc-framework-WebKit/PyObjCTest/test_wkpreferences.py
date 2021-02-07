@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 
 
 class TestWKPreferences(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.javaScriptEnabled)
@@ -19,13 +18,11 @@ class TestWKPreferences(TestCase):
         self.assertResultIsBOOL(WebKit.WKPreferences.plugInsEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setPlugInsEnabled_, 0)
 
-    @onlyOn64Bit
     @min_os_level("10.12")
     def testMethods10_12(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.tabFocusesLinks)
         self.assertArgIsBOOL(WebKit.WKPreferences.setTabFocusesLinks_, 0)
 
-    @onlyOn64Bit
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.isFraudulentWebsiteWarningEnabled)

@@ -1,11 +1,11 @@
 import Foundation
-from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 
 try:
     Foundation.NSURLSessionStreamTask
 
-except NameError:
+except AttributeError:
     pass
 
 else:
@@ -139,6 +139,22 @@ class TestNSURLSession(TestCase):
         )
         self.assertEqual(
             Foundation.NSURLSessionWebSocketCloseCodeTLSHandshakeFailure, 1015
+        )
+
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUnknown, 0
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolUDP, 1
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTCP, 2
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolTLS, 3
+        )
+        self.assertEqual(
+            Foundation.NSURLSessionTaskMetricsDomainResolutionProtocolHTTPS, 4
         )
 
     @min_os_level("10.10")
@@ -396,6 +412,11 @@ class TestNSURLSession(TestCase):
             Foundation.NSURLSessionTaskTransactionMetrics.isMultipath
         )
 
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(Foundation.NSURLSessionConfiguration.sessionSendsLaunchEvents)
+        self.assertArgIsBOOL(Foundation.NSURLSessionConfiguration.setSessionSendsLaunchEvents_, 0)
+
     @min_sdk_level("10.12")
     def testProtocols10_12(self):
         objc.protocolNamed("NSURLSessionTaskDelegate")
@@ -406,7 +427,6 @@ class TestNSURLSession(TestCase):
     def testProtocols10_11(self):
         objc.protocolNamed("NSURLSessionStreamDelegate")
 
-    @onlyOn64Bit
     def test_protocol_methods10_15(self):
         self.assertArgHasType(
             TestNSURLSessionWebSocketDelegateHelper.URLSession_webSocketTask_didCloseWithCode_reason_,  # noqa: B950

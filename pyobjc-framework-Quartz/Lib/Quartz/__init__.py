@@ -30,7 +30,7 @@ def _load():
         submods.append(m)
         mod.CoreGraphics = m
     except ImportError:
-        pass
+        raise
 
     try:
         from Quartz import ImageIO as m
@@ -93,6 +93,14 @@ def _load():
 
         submods.append(m)
         mod.QuickLookUI = m
+    except ImportError:
+        pass
+
+    try:
+        from Quartz import QuartzComposer as m
+
+        submods.append(m)
+        mod.QuartzComposer = m
     except ImportError:
         pass
 

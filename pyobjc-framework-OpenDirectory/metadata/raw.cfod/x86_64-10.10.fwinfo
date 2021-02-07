@@ -1636,7 +1636,7 @@
      },
      {
       "name": "function",
-      "typestr": "@"
+      "typestr": "^{__CFString=}"
      },
      {
       "name": "payload",
@@ -1684,11 +1684,11 @@
      },
      {
       "name": "password",
-      "typestr": "@"
+      "typestr": "^{__CFString=}"
      },
      {
       "name": "recordName",
-      "typestr": "@"
+      "typestr": "^{__CFString=}"
      },
      {
       "already_cfretained": true,
@@ -2484,7 +2484,7 @@
      },
      {
       "name": "newPassword",
-      "typestr": "@"
+      "typestr": "^{__CFString=}"
      },
      {
       "already_cfretained": true,

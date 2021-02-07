@@ -1,0 +1,21 @@
+ "definitions": {
+  "enum": {
+   "AAAttributionErrorCodeNetworkError": { "value": 1 },
+   "AAAttributionErrorCodeInternalError": { "value": 2 },
+   "AAAttributionErrorCodePlatformNotSupported": { "value": 3 }
+  },
+  "classes": {
+   "AAAttribution": {
+    "methods": [
+     {
+      "class_method": true,
+      "selector": "attributionTokenWithError:",
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     }
+    ]
+   }
+  }
+ }
+}

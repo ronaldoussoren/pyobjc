@@ -47,6 +47,10 @@
    }
   },
   "enum": {
+   "SKErrorOverlayCancelled": { "value": 15 },
+   "SKErrorOverlayInvalidConfiguration": { "value": 16 },
+   "SKErrorOverlayTimeout": { "value": 17 },
+   "SKErrorIneligibleForOffer": { "value": 18 },
    "SKProductDiscountPaymentModeFreeTrial": {
     "value": 2
    },

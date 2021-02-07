@@ -5,7 +5,7 @@ import re
 
 import objc
 from PyObjCTest.corefoundation import OC_TestCoreFoundation
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 # registerCFSignature(name, encoding, typeId [, tollfreeName]) -> type
 
@@ -93,7 +93,3 @@ class TestCoreFoundation(TestCase):
         self.assertHasAttr(CFUUIDRef, "myMethod")
         self.assertNotHasAttr(CFDateRef, "myMethod")
         self.assertNotHasAttr(cftype, "myMethod")
-
-
-if __name__ == "__main__":
-    main()

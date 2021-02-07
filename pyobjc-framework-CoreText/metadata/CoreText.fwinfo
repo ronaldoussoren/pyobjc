@@ -195,6 +195,20 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {
+   "CTFontDescriptorMatchFontDescriptorsWithProgressHandler": {
+    "args": {
+      "2": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+         "1": { "type": "I" },
+         "2": { "type": "@" }
+        },
+        "retval": { "type": "B" }
+       }
+      }
+    }
+   },
    "CTFontManagerUnregisterFontDescriptors": {
     "args": {
      "2": {
@@ -1980,7 +1994,7 @@
    },
    "CTRubyAnnotationCreate": {
     "args": {
-     "3": { "type_modifier": "n" }
+     "3": { "type_modifier": "n", "c_array_of_fixed_length": 4 }
     }
    },
    "CTRubyAnnotationCreateWithAttributes": {

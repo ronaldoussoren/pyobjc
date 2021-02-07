@@ -186,12 +186,24 @@ static PyMethodDef mod_methods[] = {
 
     {0, 0, 0, 0}};
 
-PyObjC_MODULE_INIT(_doubleindirect)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_doubleindirect",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__doubleindirect(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__doubleindirect(void)
 {
-    PyObject* m = PyObjC_MODULE_CREATE(_doubleindirect);
-
+    PyObject* m = PyModule_Create(&mod_module);
     if (PyObjC_ImportAPI(m) < 0)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

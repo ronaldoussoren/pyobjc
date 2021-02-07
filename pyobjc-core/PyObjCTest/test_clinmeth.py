@@ -3,7 +3,7 @@ Tests for accessing methods through classes and instances
 """
 import objc
 from PyObjCTest.clinmeth import PyObjC_ClsInst1, PyObjC_ClsInst2
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestClassMethods(TestCase):
@@ -86,7 +86,3 @@ class TestSuper(TestCase):
 
         self.assertEqual(cls.both(), 30)
         self.assertEqual(objc.super(cls, cls).both(), 3)
-
-
-if __name__ == "__main__":
-    main()

@@ -31,8 +31,13 @@ class TestNSText(TestCase):
         self.assertEqual(AppKit.NSNaturalTextAlignment, 4)
 
         self.assertEqual(AppKit.NSTextAlignmentLeft, 0)
-        self.assertEqual(AppKit.NSTextAlignmentRight, 1)
-        self.assertEqual(AppKit.NSTextAlignmentCenter, 2)
+        if objc.arch == "x86_64":
+            self.assertEqual(AppKit.NSTextAlignmentRight, 1)
+            self.assertEqual(AppKit.NSTextAlignmentCenter, 2)
+        else:
+            self.assertEqual(AppKit.NSTextAlignmentCenter, 1)
+            self.assertEqual(AppKit.NSTextAlignmentRight, 2)
+
         self.assertEqual(AppKit.NSTextAlignmentJustified, 3)
         self.assertEqual(AppKit.NSTextAlignmentNatural, 4)
 

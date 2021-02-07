@@ -202,3 +202,19 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_UsingGPURegistryID, str
         )
+
+    @min_os_level("10.16")
+    def test_constants10_16(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_PrioritizeEncodingSpeedOverQuality,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_HDRMetadataInsertionMode, str
+        )
+        self.assertIsInstance(VideoToolbox.kVTHDRMetadataInsertionMode_None, str)
+        self.assertIsInstance(VideoToolbox.kVTHDRMetadataInsertionMode_Auto, str)
+
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_PreserveDynamicHDRMetadata, str
+        )

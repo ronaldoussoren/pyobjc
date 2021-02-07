@@ -72,6 +72,36 @@ class TestMTLComputeCommandEncoderHelper(Metal.NSObject):
     def sampleCountersInBuffer_atSampleIndex_withBarrier_(self, a, b, c):
         pass
 
+    def setVisibleFunctionTable_atBufferIndex_(self, a, b):
+        pass
+
+    def setVisibleFunctionTables_withBufferRange_(self, a, b):
+        pass
+
+    def setIntersectionFunctionTable_atBufferIndex_(self, a, b):
+        pass
+
+    def setIntersectionFunctionTables_withBufferRange_(self, a, b):
+        pass
+
+    def setAccelerationStructure_atBufferIndex_(self, a, b):
+        pass
+
+    def setImageblockWidth_height_(self, a, b):
+        pass
+
+    def executeCommandsInBuffer_withRange_(self, a, b):
+        pass
+
+    def executeCommandsInBuffer_inDirectBuffer_indirectBufferOffset_(self, a, b, c):
+        pass
+
+    def imageblockMemoryLengthForDimensions_(self, a):
+        return 1
+
+    def supportIndirectCommandBuffers(self):
+        return 1
+
 
 class TestMTLComputeCommandEncoder(TestCase):
     def test_structs(self):
@@ -335,4 +365,83 @@ class TestMTLComputeCommandEncoder(TestCase):
             TestMTLComputeCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,  # noqa: B950
             2,
             objc._C_NSBOOL,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setVisibleFunctionTable_atBufferIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setVisibleFunctionTables_withBufferRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLComputeCommandEncoderHelper.setVisibleFunctionTables_withBufferRange_,
+            0,
+            1,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setVisibleFunctionTables_withBufferRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setIntersectionFunctionTable_atBufferIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setIntersectionFunctionTables_withBufferRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLComputeCommandEncoderHelper.setIntersectionFunctionTables_withBufferRange_,
+            0,
+            1,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setIntersectionFunctionTables_withBufferRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setAccelerationStructure_atBufferIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
+            0,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.setImageblockWidth_height_,
+            1,
+            objc._C_NSInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.executeCommandsInBuffer_withRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLComputeCommandEncoderHelper.executeCommandsInBuffer_inDirectBuffer_indirectBufferOffset_,
+            2,
+            objc._C_NSUInteger,
+        )
+
+        self.assertResultIsBOOL(
+            TestMTLComputeCommandEncoderHelper.supportIndirectCommandBuffers
         )

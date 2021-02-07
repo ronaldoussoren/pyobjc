@@ -129,19 +129,12 @@ class TestCFArray(TestCase):
 
     def testContains(self):
         array = CoreFoundation.CFArrayCreate(
-            None,
-            [b"a".decode("latin1"), 2, 3, 4, 4, 2],
-            6,
-            CoreFoundation.kCFTypeArrayCallBacks,
+            None, ["a", 2, 3, 4, 4, 2], 6, CoreFoundation.kCFTypeArrayCallBacks
         )
-        self.assertEqual(array, [b"a".decode("latin1"), 2, 3, 4, 4, 2])
+        self.assertEqual(array, ["a", 2, 3, 4, 4, 2])
         self.assertIsInstance(array, NSArray)
 
-        self.assertFalse(
-            CoreFoundation.CFArrayContainsValue(
-                array, (0, 6), b"hello".decode("latin1")
-            )
-        )
+        self.assertFalse(CoreFoundation.CFArrayContainsValue(array, (0, 6), "hello"))
         self.assertTrue(CoreFoundation.CFArrayContainsValue(array, (0, 6), 4))
         self.assertFalse(CoreFoundation.CFArrayContainsValue(array, (0, 2), 4))
 
@@ -152,17 +145,13 @@ class TestCFArray(TestCase):
             CoreFoundation.CFArrayGetFirstIndexOfValue(array, (0, 6), 2), 1
         )
         self.assertEqual(
-            CoreFoundation.CFArrayGetFirstIndexOfValue(
-                array, (0, 6), b"hello".decode("latin1")
-            ),
+            CoreFoundation.CFArrayGetFirstIndexOfValue(array, (0, 6), "hello"),
             CoreFoundation.kCFNotFound,
         )
         self.assertEqual(CoreFoundation.CFArrayGetLastIndexOfValue(array, (0, 6), 3), 2)
         self.assertEqual(CoreFoundation.CFArrayGetLastIndexOfValue(array, (0, 6), 2), 5)
         self.assertEqual(
-            CoreFoundation.CFArrayGetLastIndexOfValue(
-                array, (0, 6), b"hello".decode("latin1")
-            ),
+            CoreFoundation.CFArrayGetLastIndexOfValue(array, (0, 6), "hello"),
             CoreFoundation.kCFNotFound,
         )
         self.assertArgHasType(CoreFoundation.CFArrayGetFirstIndexOfValue, 2, b"@")
@@ -170,33 +159,25 @@ class TestCFArray(TestCase):
 
     def testGetting(self):
         array = CoreFoundation.CFArrayCreate(
-            None,
-            [b"a".decode("latin1"), 2, 3, 4, 4, 2],
-            6,
-            CoreFoundation.kCFTypeArrayCallBacks,
+            None, ["a", 2, 3, 4, 4, 2], 6, CoreFoundation.kCFTypeArrayCallBacks
         )
-        self.assertEqual(array, [b"a".decode("latin1"), 2, 3, 4, 4, 2])
+        self.assertEqual(array, ["a", 2, 3, 4, 4, 2])
         self.assertIsInstance(array, NSArray)
 
-        self.assertEqual(
-            CoreFoundation.CFArrayGetValueAtIndex(array, 0), b"a".decode("latin1")
-        )
+        self.assertEqual(CoreFoundation.CFArrayGetValueAtIndex(array, 0), "a")
         self.assertEqual(CoreFoundation.CFArrayGetValueAtIndex(array, 1), 2)
         self.assertArgHasType(CoreFoundation.CFArrayGetValues, 2, b"o^@")
         self.assertArgSizeInArg(CoreFoundation.CFArrayGetValues, 2, 1)
 
         vals = CoreFoundation.CFArrayGetValues(array, (0, 3), None)
         self.assertIsInstance(vals, tuple)
-        self.assertEqual(vals, (b"a".decode("latin1"), 2, 3))
+        self.assertEqual(vals, ("a", 2, 3))
 
     def testUpdating(self):
         array = CoreFoundation.CFArrayCreate(
-            None,
-            [b"a".decode("latin1"), 2, 3, 4, 4, 2],
-            6,
-            CoreFoundation.kCFTypeArrayCallBacks,
+            None, ["a", 2, 3, 4, 4, 2], 6, CoreFoundation.kCFTypeArrayCallBacks
         )
-        self.assertEqual(array, [b"a".decode("latin1"), 2, 3, 4, 4, 2])
+        self.assertEqual(array, ["a", 2, 3, 4, 4, 2])
         self.assertIsInstance(array, CoreFoundation.NSArray)
         array = CoreFoundation.CFArrayCreateMutableCopy(None, 0, array)
 
@@ -204,103 +185,35 @@ class TestCFArray(TestCase):
         self.assertArgHasType(CoreFoundation.CFArrayInsertValueAtIndex, 2, b"@")
         self.assertArgHasType(CoreFoundation.CFArraySetValueAtIndex, 2, b"@")
 
-        CoreFoundation.CFArrayAppendValue(array, b"foo".decode("latin1"))
-        self.assertEqual(
-            array, [b"a".decode("latin1"), 2, 3, 4, 4, 2, b"foo".decode("latin1")]
-        )
+        CoreFoundation.CFArrayAppendValue(array, "foo")
+        self.assertEqual(array, ["a", 2, 3, 4, 4, 2, "foo"])
 
         CoreFoundation.CFArrayInsertValueAtIndex(array, 1, 4)
-        self.assertEqual(
-            array, [b"a".decode("latin1"), 4, 2, 3, 4, 4, 2, b"foo".decode("latin1")]
-        )
+        self.assertEqual(array, ["a", 4, 2, 3, 4, 4, 2, "foo"])
 
         CoreFoundation.CFArrayRemoveValueAtIndex(array, 2)
-        self.assertEqual(
-            array, [b"a".decode("latin1"), 4, 3, 4, 4, 2, b"foo".decode("latin1")]
-        )
+        self.assertEqual(array, ["a", 4, 3, 4, 4, 2, "foo"])
 
-        CoreFoundation.CFArraySetValueAtIndex(array, 2, b"two".decode("latin1"))
-        self.assertEqual(
-            array,
-            [
-                b"a".decode("latin1"),
-                4,
-                b"two".decode("latin1"),
-                4,
-                4,
-                2,
-                b"foo".decode("latin1"),
-            ],
-        )
+        CoreFoundation.CFArraySetValueAtIndex(array, 2, "two")
+        self.assertEqual(array, ["a", 4, "two", 4, 4, 2, "foo"])
 
         CoreFoundation.CFArrayExchangeValuesAtIndices(array, 1, 2)
-        self.assertEqual(
-            array,
-            [
-                b"a".decode("latin1"),
-                b"two".decode("latin1"),
-                4,
-                4,
-                4,
-                2,
-                b"foo".decode("latin1"),
-            ],
-        )
+        self.assertEqual(array, ["a", "two", 4, 4, 4, 2, "foo"])
 
         self.assertArgHasType(CoreFoundation.CFArrayReplaceValues, 2, b"n^@")
         self.assertArgSizeInArg(CoreFoundation.CFArrayReplaceValues, 2, 3)
         CoreFoundation.CFArrayReplaceValues(
-            array,
-            (2, 3),
-            (
-                b"a".decode("latin1"),
-                b"b".decode("latin1"),
-                b"c".decode("latin1"),
-                b"d".decode("latin1"),
-                b"e".decode("latin1"),
-                b"f".decode("latin1"),
-            ),
-            6,
+            array, (2, 3), ("a", "b", "c", "d", "e", "f"), 6
         )
-        self.assertEqual(
-            array,
-            [
-                b"a".decode("latin1"),
-                b"two".decode("latin1"),
-                b"a".decode("latin1"),
-                b"b".decode("latin1"),
-                b"c".decode("latin1"),
-                b"d".decode("latin1"),
-                b"e".decode("latin1"),
-                b"f".decode("latin1"),
-                2,
-                b"foo".decode("latin1"),
-            ],
-        )
+        self.assertEqual(array, ["a", "two", "a", "b", "c", "d", "e", "f", 2, "foo"])
 
         array2 = CoreFoundation.CFArrayCreate(
-            None,
-            [b"hello".decode("latin1"), b"earth".decode("latin1")],
-            2,
-            CoreFoundation.kCFTypeArrayCallBacks,
+            None, ["hello", "earth"], 2, CoreFoundation.kCFTypeArrayCallBacks
         )
         CoreFoundation.CFArrayAppendArray(array, array2, (0, 2))
         self.assertEqual(
             array,
-            [
-                b"a".decode("latin1"),
-                b"two".decode("latin1"),
-                b"a".decode("latin1"),
-                b"b".decode("latin1"),
-                b"c".decode("latin1"),
-                b"d".decode("latin1"),
-                b"e".decode("latin1"),
-                b"f".decode("latin1"),
-                2,
-                b"foo".decode("latin1"),
-                b"hello".decode("latin1"),
-                b"earth".decode("latin1"),
-            ],
+            ["a", "two", "a", "b", "c", "d", "e", "f", 2, "foo", "hello", "earth"],
         )
 
         CoreFoundation.CFArrayRemoveAllValues(array)

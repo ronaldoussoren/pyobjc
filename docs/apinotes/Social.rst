@@ -12,8 +12,4 @@ These bindings are accessed through the ``Social`` package (that is, ``import So
 API Notes
 ---------
 
-The entire "Social" framework on MacOSX 10.8 (or later) is available from Python.
-
-.. note::
-
-   This framework is 64-bit only.
+The entire "Social" framework on macOS 10.8 (or later) is available from Python.

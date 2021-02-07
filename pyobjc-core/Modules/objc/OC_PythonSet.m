@@ -188,7 +188,7 @@
         PyObjC_Assert(result == self, nil);
         self = result;
         if (self != nil) {
-            Py_TYPE(value) = &PyFrozenSet_Type;
+	    Py_SET_TYPE(value, &PyFrozenSet_Type);
         }
         return self;
     } else if (code == 2) {

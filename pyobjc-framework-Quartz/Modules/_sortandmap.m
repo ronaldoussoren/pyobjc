@@ -197,12 +197,24 @@ static PyMethodDef mod_methods[] = {{
 
                                     {0, 0, 0, 0}};
 
-PyObjC_MODULE_INIT(_sortandmap)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_sortandmap",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__sortandmap(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__sortandmap(void)
 {
-    PyObject* m = PyObjC_MODULE_CREATE(_sortandmap);
-
+    PyObject* m = PyModule_Create(&mod_module);
     if (PyObjC_ImportAPI(m) < 0)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

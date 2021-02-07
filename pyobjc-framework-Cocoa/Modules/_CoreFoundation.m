@@ -1,4 +1,3 @@
-#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -50,10 +49,24 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 
-PyObjC_MODULE_INIT(_CoreFoundation)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_CoreFoundation",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__CoreFoundation(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__CoreFoundation(void)
 {
     PyObject* m;
-    m = PyObjC_MODULE_CREATE(_CoreFoundation) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     /* Some C functions aren't available at runtime (e.g. when compiling on
      * OS X 10.5 but running on 10.4), so we use "#pragma weak" to weakly
@@ -66,7 +79,7 @@ PyObjC_MODULE_INIT(_CoreFoundation)
     COREFOUNDATION_FILEDESCRIPTOR_AFTER_CREATE
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

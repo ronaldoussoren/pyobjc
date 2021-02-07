@@ -1,5 +1,4 @@
 import array
-import sys
 
 import AppKit
 from PyObjCTools.TestSupport import TestCase
@@ -52,10 +51,7 @@ class TestRegressions(TestCase):
         self.assertIsInstance(b, float)
         self.assertIsInstance(a, float)
 
-        if sys.maxsize > 2 ** 32:
-            a = array.array("d", [0] * 6)
-        else:
-            a = array.array("f", [0] * 6)
+        a = array.array("d", [0] * 6)
         v = color.getComponents_(a)
         self.assertIs(v, a)
         self.assertEqual(a[0], 1.0)

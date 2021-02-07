@@ -1,5 +1,5 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 
@@ -62,7 +62,3 @@ class TestKVOProp(TestCase):
         o.didChangeValueForKey_("helper")
         self.assertEqual(len(o.accessing), 1)
         self.assertEqual(o.accessing[-1], ("set_helper", 42))
-
-
-if __name__ == "__main__":
-    main()

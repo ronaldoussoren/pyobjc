@@ -600,6 +600,15 @@
      }
     ]
    },
+   "SKView": {
+    "methods": [
+     {
+      "selector": "disableDepthStencilBuffer",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "SKPhysicsWorld": {
     "methods": [
      {

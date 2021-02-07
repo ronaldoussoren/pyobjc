@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.testbndl import OC_TestClass2
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 from collections import UserDict as IterableUserDict, UserList
 import collections.abc
@@ -57,7 +57,3 @@ class TestBridges(TestCase):
 
         v = MySequence()
         self.assertIsSubclass(classOfProxy(v), NSMutableArray)
-
-
-if __name__ == "__main__":
-    main()

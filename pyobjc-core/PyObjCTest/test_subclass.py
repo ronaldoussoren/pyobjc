@@ -1,6 +1,6 @@
 import objc
 from PyObjCTest.testbndl import PyObjC_TestClass3
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 # Most useful systems will at least have 'NSObject'.
 NSObject = objc.lookUpClass("NSObject")
@@ -443,7 +443,3 @@ class TestOverridingSpecials(TestCase):
         o.setValue_forKey_(42, "key")
 
         self.assertEqual(values, {"key": 42})
-
-
-if __name__ == "__main__":
-    main()

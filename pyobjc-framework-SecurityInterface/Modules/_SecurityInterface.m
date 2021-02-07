@@ -157,19 +157,33 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-PyObjC_MODULE_INIT(_SecurityInterface)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_SecurityInterface",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__SecurityInterface(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__SecurityInterface(void)
 {
     PyObject* m;
     Class     cls;
 
-    m = PyObjC_MODULE_CREATE(_SecurityInterface) if (!m) { PyObjC_INITERROR(); }
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
     cls = objc_lookUpClass("SFAuthorizationView");
     if (cls == NULL) {
-        PyObjC_INITDONE();
+        return m;
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(authorizationView),
@@ -177,7 +191,7 @@ PyObjC_MODULE_INIT(_SecurityInterface)
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {
 
-        PyObjC_INITERROR();
+        return NULL;
     }
 
     if (PyObjC_RegisterMethodMapping(cls, @selector(setAuthorizationView:),
@@ -185,8 +199,8 @@ PyObjC_MODULE_INIT(_SecurityInterface)
                                      PyObjCUnsupportedMethod_IMP)
         < 0) {
 
-        PyObjC_INITERROR();
+        return NULL;
     }
 
-    PyObjC_INITDONE();
+    return m;
 }

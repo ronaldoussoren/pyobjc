@@ -9,7 +9,7 @@ import test.test_set
 from test.test_set import PassThru, check_pass_thru
 
 import objc
-from PyObjCTools.TestSupport import TestCase, main, onlyIf
+from PyObjCTools.TestSupport import TestCase, onlyIf
 
 NSSet = objc.lookUpClass("NSSet")
 NSMutableSet = objc.lookUpClass("NSMutableSet")
@@ -492,7 +492,3 @@ class TestGraphs(test.test_set.TestGraphs):
 
     def tearDown(self):
         del test.test_set.set
-
-
-if __name__ == "__main__":
-    main()

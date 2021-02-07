@@ -1,9 +1,8 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, onlyOn64Bit
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
 
 
 class TestWKContentRuleListStore(TestCase):
-    @onlyOn64Bit
     @min_os_level("10.13")
     def testMethods(self):
         self.assertArgIsBlock(

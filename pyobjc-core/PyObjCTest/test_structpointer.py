@@ -1,7 +1,7 @@
 import objc
 from PyObjCTest.structpointer1 import OC_TestStructPointer
 from PyObjCTest.structpointer2 import FooEncoded
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 TestStructPointerStructPtr = objc.createOpaquePointerType(
     "TestStructPointerStructPtr", FooEncoded
@@ -22,7 +22,3 @@ class TestOpaqueStructPointer(TestCase):
         # And then check that the correct pointer wrapper is created
         v = OC_TestStructPointer.returnPointerToStruct()
         self.assertIsInstance(v, TestStructPointerStructPtr)
-
-
-if __name__ == "__main__":
-    main()

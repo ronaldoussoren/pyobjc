@@ -89,7 +89,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     ffi_type*         arglist[MAX_ARGCOUNT];
     void*             values[MAX_ARGCOUNT];
     void*             byref[MAX_ARGCOUNT]      = {0};
-    struct byref_attr byref_attr[MAX_ARGCOUNT] = {{0, 0}};
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = { BYREF_ATTR_INT };
     ffi_cif           cif;
     ffi_cif*          cifptr;
 
@@ -181,8 +181,32 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     }
 
     if (variadicAllArgs) {
-        r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-                         PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+#if PyObjC_BUILD_RELEASE >= 1015
+
+#ifdef __arm64__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+#endif
+
+#ifndef __arm64__
+        if (@available(macOS 10.15, *)) {
+#endif
+            r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
+                             PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+#ifndef __arm64__
+        } else 
+#endif
+#endif
+
+#ifndef __arm64__
+        {
+            r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
+                             PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+        }
+
+#else
+#pragma clang diagnostic pop
+#endif
 
         if (r != FFI_OK) {
             PyErr_Format(PyExc_RuntimeError, "Cannot setup FFI CIF [%d]", r);

@@ -5,15 +5,9 @@ from PyObjCTools.TestSupport import TestCase
 class PythonListAsValue(TestCase):
     def testSettingPythonList(self):
         defaults = Foundation.NSUserDefaults.standardUserDefaults()
-        defaults.setObject_forKey_(
-            [b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii")],
-            b"randomKey".decode("ascii"),
-        )
+        defaults.setObject_forKey_(["a", "b", "c"], "randomKey")
 
-        self.assertEqual(
-            defaults.arrayForKey_(b"randomKey".decode("ascii")),
-            [b"a".decode("ascii"), b"b".decode("ascii"), b"c".decode("ascii")],
-        )
+        self.assertEqual(defaults.arrayForKey_("randomKey"), ["a", "b", "c"])
 
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSUserDefaults.boolForKey_)

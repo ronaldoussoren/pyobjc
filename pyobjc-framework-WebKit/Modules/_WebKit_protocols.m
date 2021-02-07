@@ -4,6 +4,10 @@
  * Last update: Sun Dec 28 14:22:11 2014
  */
 
+#if PyObjC_BUILD_RELEASE >= 1016
+#import <WebKit/WKScriptMessageHandlerWithReply.h>
+#endif
+
 static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
@@ -45,14 +49,14 @@ static void __attribute__((__used__)) use_protocols(void)
 #endif /* PyObjC_BUILD_RELEASE >= 1010 */
     p = PyObjC_IdToPython(@protocol(WebPlugInViewFactory));
     Py_XDECREF(p);
-#if defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010
+#if PyObjC_BUILD_RELEASE >= 1010
     p = PyObjC_IdToPython(@protocol(WKNavigationDelegate));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKScriptMessageHandler));
     Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(WKUIDelegate));
     Py_XDECREF(p);
-#endif /* defined(__LP64__) && PyObjC_BUILD_RELEASE >= 1010 */
+#endif /* PyObjC_BUILD_RELEASE >= 1010 */
 #if PyObjC_BUILD_RELEASE >= 1013
 #if WK_API_ENABLED
     p = PyObjC_IdToPython(@protocol(WKHTTPCookieStoreObserver));
@@ -62,5 +66,9 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(WKURLSchemeHandler));
     Py_XDECREF(p);
 #endif
+#endif
+#if PyObjC_BUILD_RELEASE >= 1016
+    p = PyObjC_IdToPython(@protocol(WKScriptMessageHandlerWithReply));
+    Py_XDECREF(p);
 #endif
 }

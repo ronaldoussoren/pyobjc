@@ -187,7 +187,8 @@ objc_class_register(Class objc_class, PyObject* py_class)
     }
 
     if (NSMapGet(class_registry, objc_class)) {
-        PyErr_SetString(PyObjCExc_InternalError, "Registering class more than once");
+        PyErr_Format(PyObjCExc_InternalError, "Registering class '%.100s' more than once",
+		class_getName(objc_class));
         return -1;
     }
 
@@ -2833,12 +2834,12 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
 
     /* add the methods */
     if (curMethodIndex != 0) {
-        class_addMethodList(targetClass, methodsToAdd, (unsigned)curMethodIndex);
+        PyObjC_class_addMethodList(targetClass, methodsToAdd, (unsigned)curMethodIndex);
     }
 
     PyMem_Free(methodsToAdd);
     if (curClassMethodIndex != 0) {
-        class_addMethodList(object_getClass(targetClass), classMethodsToAdd,
+        PyObjC_class_addMethodList(object_getClass(targetClass), classMethodsToAdd,
                             (unsigned)curClassMethodIndex);
     }
 

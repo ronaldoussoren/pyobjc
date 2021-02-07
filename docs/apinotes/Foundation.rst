@@ -181,3 +181,11 @@ a plain python integer, accessing the actual Mach message buffer is not possible
 The method ``initWithUUIDBytes:`` has an argument of type bytes with length 16.
 
 The method ``getUUIDBytes:`` returns an instance of bytes of length 16.
+
+
+``NSString``
+............
+
+- ``initWithCharactersNoCopy:length:deallocator:``, ``initWithBytesNoCopy:length:encoding:deallocator:``:
+  These methods are available from Python, but are not really useful because the pointer argument for
+  the deallocator will not be the same as the argument passed in the first argument of this selector.

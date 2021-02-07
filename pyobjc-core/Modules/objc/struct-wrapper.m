@@ -80,8 +80,8 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
     len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d",
-                     Py_TYPE(self)->tp_name, offset);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+                     Py_TYPE(self)->tp_name, offset, len);
         return NULL;
     }
 
@@ -151,8 +151,8 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d",
-                     Py_TYPE(self)->tp_name, offset);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+                     Py_TYPE(self)->tp_name, offset, len);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;
@@ -687,8 +687,8 @@ set_defaults(PyObject* self, const char* typestr)
         } break;
 
         case _C_UNICHAR: {
-            Py_UNICODE ch = 0;
-            v             = PyUnicode_FromUnicode(&ch, 1);
+            char buffer[2] = { 0, 0 };
+            v             = PyUnicode_FromStringAndSize(buffer, 1);
         } break;
 
         case _C_CHAR_AS_INT:
@@ -891,6 +891,7 @@ make_init(const char* typestr)
     static ffi_cif* init_cif = NULL;
     ffi_closure*    cl       = NULL;
     ffi_status      rv;
+    void* codeloc;
 
     typestr = PyObjCUtil_Strdup(typestr);
     if (typestr == NULL) {
@@ -908,21 +909,70 @@ make_init(const char* typestr)
         }
     }
 
-    cl = PyObjC_malloc_closure();
+#ifdef HAVE_CLOSURE_POOL
+
+#if PyObjC_BUILD_RELEASE >= 1015
+    if (@available(macOS 10.15, *)) {
+        cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
+    } else 
+#endif
+    {
+        cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
+    }
+#else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+    cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
+#pragma clang diagnostic pop
+#endif
     if (cl == NULL) {
         PyMem_Free((void*)typestr);
         return NULL;
     }
 
+#if PyObjC_BUILD_RELEASE >= 1015
+    if (@available(macOS 10.15, *)) {
+        rv = ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr, codeloc);
+    } else {
+#ifdef __arm64__
+       rv = FFI_BAD_ABI; /* Can't happen... */
+#else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
+        rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+
+#pragma clang diagnostic pop
+#endif
+    }
+#else
+
     rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+#endif
+
     if (rv != FFI_OK) {
-        PyObjC_free_closure(cl);
+#ifdef HAVE_CLOSURE_POOL
+
+#if PyObjC_BUILD_RELEASE >= 1015
+        if (@available(macOS 10.15, *)) {
+            ffi_closure_free(cl);
+        } else 
+#endif
+        {
+            PyObjC_ffi_closure_free(cl);
+        }
+#else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability-new"
+        ffi_closure_free(cl);
+#pragma clang diagnostic pop
+#endif
         PyMem_Free((void*)typestr);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         return NULL;
     }
 
-    return (initproc)cl;
+    return (initproc)codeloc;
 }
 
 static long
@@ -1289,7 +1339,7 @@ PyObjC_MakeStructType(const char* name, const char* doc, initproc tpinit,
         return NULL;
     }
 
-    Py_REFCNT(result)         = 1;
+    Py_SET_REFCNT(result, 1);
     result->base.tp_members   = members;
     result->base.tp_basicsize = sizeof(PyObject) + (numFields * sizeof(PyObject*));
     if (PyDict_SetItemString(result->base.tp_dict, "_fields", fields) == -1) {
@@ -1657,8 +1707,8 @@ PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d",
-                     Py_TYPE(self)->tp_name, offset);
+        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+                     Py_TYPE(self)->tp_name, offset, len);
         return -1;
     }
     member = Py_TYPE(self)->tp_members + offset;

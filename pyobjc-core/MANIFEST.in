@@ -7,7 +7,6 @@ graft Modules
 graft PyObjCTest
 graft Scripts
 graft Tools
-graft libffi-src
 graft setup-lib
 graft source-deps
 global-exclude .DS_Store

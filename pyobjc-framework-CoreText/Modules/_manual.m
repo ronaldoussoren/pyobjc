@@ -1,4 +1,3 @@
-#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -122,6 +121,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
     CFArrayRef               aref = NULL;
     CTParagraphStyleSetting* settings;
     CTParagraphStyleRef      style = NULL;
+    Py_buffer*               views = NULL;
 
     if (!PyArg_ParseTuple(args, "On", &py_settings, &len)) {
         return NULL;
@@ -175,6 +175,14 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
         return NULL;
     }
 
+    views = malloc(sizeof(Py_buffer) * len);
+    if (views == NULL) {
+        free(settings);
+        Py_DECREF(seq);
+        PyErr_NoMemory();
+        return NULL;
+    }
+
     for (i = 0; i < len; i++) {
         CTParagraphStyleSetting* cur   = settings + i;
         PyObject*                curPy = PySequence_Fast_GET_ITEM(seq, i);
@@ -182,31 +190,23 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
         int                      r;
 
         if (s == NULL) {
-            Py_DECREF(seq);
-            free(settings);
-            return NULL;
+            goto setup_error;
         }
         if (PySequence_Fast_GET_SIZE(s) != 3) {
             PyErr_Format(PyExc_ValueError, "settings item has length %ld, not 3",
                          (long)PySequence_Fast_GET_SIZE(s));
-            Py_DECREF(seq);
-            free(settings);
-            return NULL;
+            goto setup_error;
         }
 
         r = PyObjC_PythonToObjC(@encode(CTParagraphStyleSpecifier),
                                 PySequence_Fast_GET_ITEM(s, 0), &cur->spec);
         if (r == -1) {
-            Py_DECREF(seq);
-            free(settings);
-            return NULL;
+            goto setup_error;
         }
         r = PyObjC_PythonToObjC(@encode(size_t), PySequence_Fast_GET_ITEM(s, 1),
                                 &cur->valueSize);
         if (r == -1) {
-            Py_DECREF(seq);
-            free(settings);
-            return NULL;
+            goto setup_error;
         }
         if (cur->spec == kCTParagraphStyleSpecifierTabStops) {
             /* Force the size to be correct, just in case */
@@ -223,28 +223,21 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
                 cur->value = &aref;
             }
         } else {
-            const void* buf;
-            Py_ssize_t  buflen;
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            r = PyObject_AsReadBuffer(PySequence_Fast_GET_ITEM(s, 2), &buf, &buflen);
-#pragma clang diagnostic pop
+            r = PyObject_GetBuffer(PySequence_Fast_GET_ITEM(s, 2), views + i, PyBUF_CONTIG_RO);
             if (r != -1) {
-                if ((size_t)buflen != cur->valueSize) {
+                if ((size_t)views[i].len != cur->valueSize) {
                     PyErr_Format(PyExc_ValueError,
-                                 "Got buffer of %ld bytes, need %ld bytes", (long)buflen,
+                                 "Got buffer of %ld bytes, need %ld bytes", (long)views[i].len,
                                  (long)cur->valueSize);
+                    PyBuffer_Release(views+i);
                     r = -1;
                 } else {
-                    cur->value = (void*)buf;
+                    cur->value = views[i].buf;
                 }
             }
         }
         if (r == -1) {
-            Py_DECREF(seq);
-            free(settings);
-            return NULL;
+            goto setup_error;
         }
     }
 
@@ -260,7 +253,14 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
         }
     Py_END_ALLOW_THREADS
 
+    for (i = 0; i < len; i++) {
+        if (settings[i].spec != kCTParagraphStyleSpecifierTabStops) {
+            PyBuffer_Release(views+i);
+        }
+    }
+
     free(settings);
+    free(views);
 
     if (PyErr_Occurred()) {
         if (rv) {
@@ -277,6 +277,18 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
     result = PyObjC_ObjCToPython(@encode(CTParagraphStyleRef), &rv);
     CFRelease(rv);
     return result;
+
+setup_error:
+    Py_DECREF(seq);
+    for (Py_ssize_t j = 0; j < i; j++) {
+        if (settings[j].spec != kCTParagraphStyleSpecifierTabStops) {
+            PyBuffer_Release(views+j);
+        }
+    }
+
+    free(settings);
+    free(views);
+    return NULL;
 }
 
 #if PyObjC_BUILD_RELEASE >= 1009
@@ -471,27 +483,40 @@ static PyMethodDef mod_methods[] = {
         0,
     }};
 
-PyObjC_MODULE_INIT(_manual)
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_manual",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
+
+PyObject* PyInit__manual(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__manual(void)
 {
-    PyObject* m = PyObjC_MODULE_CREATE(_manual);
+    PyObject* m = PyModule_Create(&mod_module);
     if (m == NULL)
-        PyObjC_INITERROR();
+        return NULL;
 
     if (PyObjC_ImportAPI(m) < 0)
-        PyObjC_INITERROR();
+        return NULL;
 
     if (PyModule_AddIntConstant(m, "sizeof_CGFloat", sizeof(CGFloat)) < 0)
-        PyObjC_INITERROR();
+        return NULL;
     if (PyModule_AddIntConstant(m, "sizeof_CTTextAlignment", sizeof(CTTextAlignment)) < 0)
-        PyObjC_INITERROR();
+        return NULL;
     if (PyModule_AddIntConstant(m, "sizeof_CTLineBreakMode", sizeof(CTLineBreakMode)) < 0)
-        PyObjC_INITERROR();
+        return NULL;
     if (PyModule_AddIntConstant(m, "sizeof_CTWritingDirection",
                                 sizeof(CTWritingDirection))
         < 0)
-        PyObjC_INITERROR();
+        return NULL;
     if (PyModule_AddIntConstant(m, "sizeof_id", sizeof(id)) < 0)
-        PyObjC_INITERROR();
+        return NULL;
 
-    PyObjC_INITDONE();
+    return m;
 }

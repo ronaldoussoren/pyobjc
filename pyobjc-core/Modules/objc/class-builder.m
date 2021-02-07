@@ -242,7 +242,7 @@ build_intermediate_class(Class base_class, char* name)
         if (closure == NULL)
             goto error_cleanup;
 
-        preclass_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
+        class_addMethod(intermediate_class, cur->selector, (IMP)closure, cur->typestr);
         closure = NULL;
     }
 
@@ -302,6 +302,13 @@ tc2tc(char* buf)
 exit:
     switch (*buf) {
     case _C_NSBOOL:
+#ifdef __arm64__
+        *buf = _C_BOOL;
+#else
+        *buf = _C_CHR;
+#endif
+        break;
+
     case _C_CHAR_AS_INT:
     case _C_CHAR_AS_TEXT:
         *buf = _C_CHR;
@@ -546,7 +553,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                 continue;
             }
 
-            if (!preclass_addProtocol(
+            if (!class_addProtocol(
                     new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
                 goto error_cleanup;
             }
@@ -964,7 +971,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                 if (closure == NULL)
                     goto error_cleanup;
 
-                preclass_addMethod(new_class, cur->selector, closure, cur->typestr);
+                class_addMethod(new_class, cur->selector, closure, cur->typestr);
                 PyObject* sel =
                     PyObjCSelector_NewNative(new_class, cur->selector, cur->typestr, 0);
                 if (sel == NULL)
@@ -1005,7 +1012,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             goto error_cleanup;
         }
 
-        if (!preclass_addIvar(new_class, PyObjCInstanceVariable_GetName(value), size,
+        if (!class_addIvar(new_class, PyObjCInstanceVariable_GetName(value), size,
                               align, type)) {
 
             goto error_cleanup;
@@ -1031,8 +1038,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                                           PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R has signature that is not compatible with super-class",
-                             value);
+                             "%R has signature that is not compatible with super-class: %s != %s",
+                             value, method_getTypeEncoding(meth), PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }
@@ -1048,7 +1055,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             goto error_cleanup;
         }
 
-        if (!preclass_addMethod(new_class, PyObjCSelector_GetSelector(value), imp,
+        if (!class_addMethod(new_class, PyObjCSelector_GetSelector(value), imp,
                                 PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }
@@ -1074,8 +1081,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                                           PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R has signature that is not compatible with super-class",
-                             value);
+                             "%R has signature that is not compatible with super-class: %s != %s",
+                             value, method_getTypeEncoding(meth), PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }
@@ -1090,7 +1097,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             goto error_cleanup;
         }
 
-        if (!preclass_addMethod(new_meta_class, PyObjCSelector_GetSelector(value), imp,
+        if (!class_addMethod(new_meta_class, PyObjCSelector_GetSelector(value), imp,
                                 PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }

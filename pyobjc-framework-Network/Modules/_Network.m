@@ -26,54 +26,74 @@ add_constant(PyObject* m, const char* name, char* typestr, const void* value)
 }
 
 /* Python glue */
-PyObjC_MODULE_INIT(_Network)
-{
-    PyObject*                                m;
-    nw_connection_send_completion_t          t;
-    nw_content_context_t                     t2;
-    nw_parameters_configure_protocol_block_t p;
+static struct PyModuleDef mod_module = {
+     PyModuleDef_HEAD_INIT,
+     "_Network",
+     NULL,
+     0,
+     mod_methods,
+     NULL,
+     NULL,
+     NULL,
+     NULL};
 
-    m = PyObjC_MODULE_CREATE(_Network) if (!m) { PyObjC_INITERROR(); }
+PyObject* PyInit__Network(void);
+
+PyObject* __attribute__((__visibility__("default"))) PyInit__Network(void)
+{
+    PyObject* m;
+
+    m = PyModule_Create(&mod_module);
+    if (!m) { return NULL; }
 
     if (PyObjC_ImportAPI(m) == -1)
-        PyObjC_INITERROR();
+        return NULL;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability-new"
-    t = NW_CONNECTION_SEND_IDEMPOTENT_CONTENT;
-    if (add_constant(m, "NW_CONNECTION_SEND_IDEMPOTENT_CONTENT",
-                     @encode(nw_connection_send_completion_t), &t)
-        != 0)
-        goto error;
-    t2 = NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT;
-    if (add_constant(m, "NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT",
-                     @encode(nw_content_context_t), &t2)
-        != 0)
-        goto error;
-    t2 = NW_CONNECTION_FINAL_MESSAGE_CONTEXT;
-    if (add_constant(m, "NW_CONNECTION_FINAL_MESSAGE_CONTEXT",
-                     @encode(nw_content_context_t), &t2)
-        != 0)
-        goto error;
-    t2 = NW_CONNECTION_DEFAULT_STREAM_CONTEXT;
-    if (add_constant(m, "NW_CONNECTION_DEFAULT_STREAM_CONTEXT",
-                     @encode(nw_content_context_t), &t2)
-        != 0)
-        goto error;
-    p = NW_PARAMETERS_DEFAULT_CONFIGURATION;
-    if (add_constant(m, "NW_PARAMETERS_DEFAULT_CONFIGURATION",
-                     @encode(nw_parameters_configure_protocol_block_t), &p)
-        != 0)
-        goto error;
-    p = NW_PARAMETERS_DISABLE_PROTOCOL;
-    if (add_constant(m, "NW_PARAMETERS_DISABLE_PROTOCOL",
-                     @encode(nw_parameters_configure_protocol_block_t), &p)
-        != 0)
-        goto error;
-#pragma clang diagnostic pop
+    if (@available(macos 10.14, *)) {
+        nw_connection_send_completion_t t = NW_CONNECTION_SEND_IDEMPOTENT_CONTENT;
+        if (add_constant(m, "NW_CONNECTION_SEND_IDEMPOTENT_CONTENT",
+                         @encode(nw_connection_send_completion_t), &t)
+            != 0)
+            goto error;
+        nw_content_context_t t2 = NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT;
+        if (add_constant(m, "NW_CONNECTION_DEFAULT_MESSAGE_CONTEXT",
+                         @encode(nw_content_context_t), &t2)
+            != 0)
+            goto error;
+        t2 = NW_CONNECTION_FINAL_MESSAGE_CONTEXT;
+        if (add_constant(m, "NW_CONNECTION_FINAL_MESSAGE_CONTEXT",
+                         @encode(nw_content_context_t), &t2)
+            != 0)
+            goto error;
+        t2 = NW_CONNECTION_DEFAULT_STREAM_CONTEXT;
+        if (add_constant(m, "NW_CONNECTION_DEFAULT_STREAM_CONTEXT",
+                         @encode(nw_content_context_t), &t2)
+            != 0)
+            goto error;
+        nw_parameters_configure_protocol_block_t p = NW_PARAMETERS_DEFAULT_CONFIGURATION;
+        if (add_constant(m, "NW_PARAMETERS_DEFAULT_CONFIGURATION",
+                         @encode(nw_parameters_configure_protocol_block_t), &p)
+            != 0)
+            goto error;
+        p = NW_PARAMETERS_DISABLE_PROTOCOL;
+        if (add_constant(m, "NW_PARAMETERS_DISABLE_PROTOCOL",
+                         @encode(nw_parameters_configure_protocol_block_t), &p)
+            != 0)
+            goto error;
+   }
 
-    PyObjC_INITDONE();
+#if PyObjC_BUILD_RELEASE >= 1016
+    if (@available(macos 10.16, *)) {
+        nw_privacy_context_t c = NW_DEFAULT_PRIVACY_CONTEXT;
+        if (add_constant(m, "NW_DEFAULT_PRIVACY_CONTEXT",
+                         @encode(nw_privacy_context_t), &c)
+            != 0)
+            goto error;
+    }
+#endif
+
+    return m;
 
 error:
-    PyObjC_INITERROR();
+    return NULL;
 }

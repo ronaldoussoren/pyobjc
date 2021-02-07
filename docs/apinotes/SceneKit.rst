@@ -22,11 +22,7 @@ The type "SCNVector3FromGLKVector3" is also not available at the moment.
 
 .. note::
 
-   This framework is only available on OSX 10.8 and later.
-
-.. note::
-
-   As of macOS 10.12 this framework is only available for 64-bit code.
+   This framework is only available on macOS 10.8 and later.
 
 
 * ``SCNErrorDomain``

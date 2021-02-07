@@ -22,9 +22,9 @@ class TestNSInvocation(TestCase):
         )
         invocation.setSelector_("addObject:")
         invocation.setTarget_(value)
-        invocation.setArgument_atIndex_(b"hello".decode("ascii"), 2)
+        invocation.setArgument_atIndex_("hello", 2)
         v = invocation.getArgument_atIndex_(None, 2)
-        self.assertEqual(v, b"hello".decode("ascii"))
+        self.assertEqual(v, "hello")
         invocation.invoke()
 
         self.assertEqual(value.count(), 4)

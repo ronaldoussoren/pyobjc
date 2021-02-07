@@ -4,7 +4,8 @@
  "definitions": {
   "enum": {
    "GKGameModelMaxScore": { "value": 16777216 },
-   "GKGameModelMinScore": { "value": -16777216 }
+   "GKGameModelMinScore": { "value": -16777216 },
+   "GK_VERSION": { "ignore": true }
   },
   "classes": {
    "NSObject": {

@@ -2,7 +2,190 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "externs": {
+   "GCHapticDurationInfinite": { "typestr": "f" }
+  },
   "classes": {
+   "GCKeyboardInput": {
+    "methods": [
+     {
+      "selector": "keyChangedHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "q" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setKeyChangedHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "@" },
+	 "3": { "typestr": "q" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+      }
+     }
+    ]
+   },
+   "GCControllerTouchpad": {
+    "methods": [
+     {
+      "selector": "touchUp",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "f" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setTouchUp:",
+      "class_method": false,
+      "args": {
+       "0": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "f" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+      }
+     },
+     {
+      "selector": "touchMoved",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "f" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setTouchMoved:",
+      "class_method": false,
+      "args": {
+       "0": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "f" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+      }
+     },
+     {
+      "selector": "touchDown",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "f" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setTouchDown:",
+      "class_method": false,
+      "args": {
+       "0": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "f" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" },
+	 "4": { "typestr": "Z" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+      }
+     }
+    ]
+   },
+   "GCMouseInput": {
+    "methods": [
+     {
+      "selector": "mouseMovedHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" }
+	},
+	"retval": { "typestr": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setMouseMovedHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+       "callable": {
+        "arguments": {
+	 "0": { "typestr": "^v" },
+	 "1": { "typestr": "@" },
+	 "2": { "typestr": "f" },
+	 "3": { "typestr": "f" }
+	},
+	"retval": { "typestr": "v" }
+       }
+       }
+      }
+     }
+    ]
+   },
    "GCController": {
     "methods": [
      {
@@ -117,6 +300,64 @@
    },
    "GCControllerButtonInput": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": {
+          "typestr": "^v"
+         },
+         "1": {
+          "typestr": "@"
+         },
+         "2": {
+          "typestr": "f"
+         },
+         "3": {
+          "typestr": "Z"
+         },
+         "4": {
+          "typestr": "Z"
+         }
+        },
+        "retval": {
+         "typestr": "v"
+        }
+       }
+      },
+      "selector": "touchedChangedHandler"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          },
+          "2": {
+           "typestr": "f"
+          },
+          "3": {
+           "typestr": "Z"
+          },
+          "4": {
+           "typestr": "Z"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "setTouchedChangedHandler:"
+     },
      {
       "class_method": false,
       "retval": {
@@ -483,6 +724,13 @@
    },
    "GCMotion": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "hasGravityAndUserAcceleration"
+     },
      {
       "class_method": false,
       "retval": {

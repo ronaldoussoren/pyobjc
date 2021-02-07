@@ -1,6 +1,6 @@
 import objc
 import objc._objc
-from PyObjCTools.TestSupport import TestCase, main
+from PyObjCTools.TestSupport import TestCase
 
 NSObject = objc.lookUpClass("NSObject")
 NSURL = objc.lookUpClass("NSURL")
@@ -45,7 +45,3 @@ class TestMethodResolution(TestCase):
         self.assertEqual(url.ocmethod2(), "NSURL.ocmethod2")
         self.assertEqual(super(NSURL, url).oc_method1(), "NSObject.oc_method1")
         self.assertEqual(super(NSURL, url).ocmethod2(), "NSObject.ocmethod2")
-
-
-if __name__ == "__main__":
-    main()

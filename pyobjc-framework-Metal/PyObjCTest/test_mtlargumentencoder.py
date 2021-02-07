@@ -52,6 +52,21 @@ class TestMTLArgumentEncoderHelper(Metal.NSObject):
     def newArgumentEncoderForBufferAtIndex_(self, a):
         pass
 
+    def setAccelerationStructure_atIndex_(self, a, b):
+        pass
+
+    def setVisibleFunctionTable_atIndex_(self, a, b):
+        pass
+
+    def setVisibleFunctionTables_withRange_(self, a, b):
+        pass
+
+    def setIntersectionFunctionTable_atIndex_(self, a, b):
+        pass
+
+    def setIntersectionFunctionTables_withRange_(self, a, b):
+        pass
+
 
 class TestMTLArgumentEncoder(TestCase):
     @min_sdk_level("10.13")
@@ -187,4 +202,48 @@ class TestMTLArgumentEncoder(TestCase):
             TestMTLArgumentEncoderHelper.newArgumentEncoderForBufferAtIndex_,
             0,
             objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setAccelerationStructure_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setVisibleFunctionTable_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setVisibleFunctionTables_withRange_, 0, b"n^@"
+        )
+        self.assertArgSizeInArg(
+            TestMTLArgumentEncoderHelper.setVisibleFunctionTables_withRange_, 0, 1
+        )
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setVisibleFunctionTables_withRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setIntersectionFunctionTable_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setIntersectionFunctionTables_withRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLArgumentEncoderHelper.setIntersectionFunctionTables_withRange_, 0, 1
+        )
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setIntersectionFunctionTables_withRange_,
+            1,
+            Metal.NSRange.__typestr__,
         )

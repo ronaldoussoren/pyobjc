@@ -14,8 +14,4 @@ These bindings are accessed through the ``NaturalLanguage`` package (that is, ``
 API Notes
 ---------
 
-The entire "NaturalLanguage" framework on MacOSX 10.14 (or later) is available from Python.
-
-.. note::
-
-   The UserNotification framework is only available in 64-bit applications.
+The entire "NaturalLanguage" framework on macOS 10.14 (or later) is available from Python.

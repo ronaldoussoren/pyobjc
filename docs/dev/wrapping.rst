@@ -84,7 +84,7 @@ and then returned from  the function).
 
 Given the following class interface:
 
- .. sourcecode: objective-c
+ .. sourcecode:: objective-c
 
    @interface ClassName {}
 
@@ -105,7 +105,7 @@ denoted in the signature string using the character 'o' before the actual
 argument signature.  The 'correct' signature for method is therefore 'v@:o^@@'.
 The following code tells the bridge about this better method signature:
 
- .. sourcecode: python
+ .. sourcecode:: python
 
    import objc
    objc.setSignatureForSelector("ClassName", "selector:withArguments:",

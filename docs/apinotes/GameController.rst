@@ -16,7 +16,7 @@ The full API for the GameController framework is available from Python
 
 .. note::
 
-   This framework is only available on OSX 10.9 and later and requires a 64-bit binary.
+   This framework is only available on macOS 10.9 and later.
 
 GCRay
 .....

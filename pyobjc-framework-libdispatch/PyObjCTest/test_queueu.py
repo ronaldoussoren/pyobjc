@@ -269,3 +269,41 @@ class TestQueueAPI(TestCase):
 
         self.assertResultHasType(libdispatch.dispatch_assert_queue_not, objc._C_VOID)
         self.assertArgHasType(libdispatch.dispatch_assert_queue_not, 0, objc._C_ID)
+
+    @min_os_level("10.14")
+    def test_functions10_14(self):
+        self.assertResultHasType(libdispatch.dispatch_async_and_wait, objc._C_VOID)
+        self.assertArgHasType(
+            libdispatch.dispatch_async_and_wait, 0, objc._C_ID
+        )  # dispatch_queue_t
+        self.assertArgIsBlock(libdispatch.dispatch_async_and_wait, 1, b"v")
+
+        self.assertResultHasType(libdispatch.dispatch_async_and_wait_f, objc._C_VOID)
+        self.assertArgHasType(
+            libdispatch.dispatch_async_and_wait_f, 0, objc._C_ID
+        )  # dispatch_queue_t
+        self.assertArgHasType(
+            libdispatch.dispatch_async_and_wait_f, 1, objc._C_PTR + objc._C_VOID
+        )
+        self.assertArgIsFunction(libdispatch.dispatch_async_and_wait_f, 2, b"v^v", 1)
+
+        self.assertResultHasType(
+            libdispatch.dispatch_barrier_async_and_wait, objc._C_VOID
+        )
+        self.assertArgHasType(
+            libdispatch.dispatch_barrier_async_and_wait, 0, objc._C_ID
+        )  # dispatch_queue_t
+        self.assertArgIsBlock(libdispatch.dispatch_barrier_async_and_wait, 1, b"v")
+
+        self.assertResultHasType(
+            libdispatch.dispatch_barrier_async_and_wait_f, objc._C_VOID
+        )
+        self.assertArgHasType(
+            libdispatch.dispatch_barrier_async_and_wait_f, 0, objc._C_ID
+        )  # dispatch_queue_t
+        self.assertArgHasType(
+            libdispatch.dispatch_barrier_async_and_wait_f, 1, objc._C_PTR + objc._C_VOID
+        )
+        self.assertArgIsFunction(
+            libdispatch.dispatch_barrier_async_and_wait_f, 2, b"v^v", 1
+        )

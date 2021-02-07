@@ -17,9 +17,15 @@ API Notes
 
 .. note::
 
-   This framework is only available on OSX 10.11 and later and requires a 64-bit binary.
+   This framework is only available on macOS 10.11 and later.
 
 
 A number of APIs in this framework use SIMD types such as ``vector_float2``.
 Those SIMD types are not yet supported in PyObjC and those APIs cannot be
 used.
+
+
+``GK_VERSION``
+..............
+
+This is a version number for the SDK is not available in Python.

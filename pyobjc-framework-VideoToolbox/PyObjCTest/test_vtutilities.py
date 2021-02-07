@@ -7,3 +7,7 @@ class TestVTUtilities(TestCase):
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTCreateCGImageFromCVPixelBuffer, 2)
         self.assertArgIsCFRetained(VideoToolbox.VTCreateCGImageFromCVPixelBuffer, 2)
+
+    @min_os_level("10.16")
+    def test_functions10_16(self):
+        VideoToolbox.VTRegisterSupplementalVideoDecoderIfAvailable

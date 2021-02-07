@@ -1,5 +1,5 @@
 [flake8]
-max-line-length = 88
+max-line-length = 120
 select = C,E,F,W,B,B950,T,Q,M,B950,A
 # Temporarily ignore T000 messages
 ignore = E501,W503,E203,T000

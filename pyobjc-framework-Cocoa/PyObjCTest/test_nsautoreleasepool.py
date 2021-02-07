@@ -7,4 +7,4 @@ class TestNSAutoreleasePoolInteraction(TestCase):
         pool = Foundation.NSAutoreleasePool.alloc().init()
         bar = Foundation.NSMutableArray.array()
         del pool  # Always use 'del pool' instead of 'pool.release()'!
-        bar.addObject_(b"a".decode("ascii"))  # should still exist because of python GC
+        bar.addObject_("a")  # should still exist because of python GC

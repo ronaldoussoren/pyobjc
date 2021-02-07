@@ -141,6 +141,17 @@ class TestNSWindow(TestCase):
         self.assertIsInstance(AppKit.NSWindowDidEndSheetNotification, str)
         self.assertIsInstance(AppKit.NSWindowDidChangeScreenProfileNotification, str)
 
+        self.assertEqual(AppKit.NSWindowToolbarStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSWindowToolbarStyleExpanded, 1)
+        self.assertEqual(AppKit.NSWindowToolbarStylePreference, 2)
+        self.assertEqual(AppKit.NSWindowToolbarStyleUnified, 3)
+        self.assertEqual(AppKit.NSWindowToolbarStyleUnifiedCompact, 4)
+
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleAutomatic, 0)
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleNone, 1)
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleLine, 2)
+        self.assertEqual(AppKit.NSTitlebarSeparatorStyleShadow, 3)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertEqual(
