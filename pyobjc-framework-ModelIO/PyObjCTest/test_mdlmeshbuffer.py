@@ -25,7 +25,7 @@ class TestMDLMeshBufferHelper(ModelIO.NSObject):
     def newBufferWithData_type_(self, c, t):
         return None
 
-    def newBufferFromZone_length_type_(self, z, l, t):
+    def newBufferFromZone_length_type_(self, z, x, t):
         return None
 
     def newBufferFromZone_data_type_(self, z, d, t):

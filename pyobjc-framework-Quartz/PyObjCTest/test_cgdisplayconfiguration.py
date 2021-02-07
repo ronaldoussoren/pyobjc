@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level, os_release, os_level_key
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
 
 

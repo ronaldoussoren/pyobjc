@@ -36,7 +36,7 @@ class TestGKTurnBasedMatch(TestCase):
         self.assertEqual(GameKit.GKTurnBasedMatchOutcomeThird, 8)
         self.assertEqual(GameKit.GKTurnBasedMatchOutcomeFourth, 9)
 
-        self.assertEqual(GameKit.GKTurnBasedMatchOutcomeCustomRange, 0x00FF0000)
+        self.assertEqual(GameKit.GKTurnBasedMatchOutcomeCustomRange, 0x00ff0000)
 
         self.assertEqual(GameKit.GKTurnBasedExchangeStatusUnknown, 0)
         self.assertEqual(GameKit.GKTurnBasedExchangeStatusActive, 1)

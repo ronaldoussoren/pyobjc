@@ -31,9 +31,9 @@ class TestMDLVertexDescriptor(TestCase):
         self.assertEqual(ModelIO.MDLVertexFormatUShortNormalizedBits, 0x70000)
         self.assertEqual(ModelIO.MDLVertexFormatShortNormalizedBits, 0x80000)
         self.assertEqual(ModelIO.MDLVertexFormatUIntBits, 0x90000)
-        self.assertEqual(ModelIO.MDLVertexFormatIntBits, 0xA0000)
-        self.assertEqual(ModelIO.MDLVertexFormatHalfBits, 0xB0000)
-        self.assertEqual(ModelIO.MDLVertexFormatFloatBits, 0xC0000)
+        self.assertEqual(ModelIO.MDLVertexFormatIntBits, 0xa0000)
+        self.assertEqual(ModelIO.MDLVertexFormatHalfBits, 0xb0000)
+        self.assertEqual(ModelIO.MDLVertexFormatFloatBits, 0xc0000)
         self.assertEqual(
             ModelIO.MDLVertexFormatUChar, ModelIO.MDLVertexFormatUCharBits | 1
         )

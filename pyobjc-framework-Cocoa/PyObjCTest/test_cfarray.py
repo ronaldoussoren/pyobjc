@@ -67,8 +67,8 @@ class TestCFArray(TestCase):
         self.assertArgIsFunction(CoreFoundation.CFArrayBSearchValues, 3, b"l@@@", False)
         self.assertArgHasType(CoreFoundation.CFArrayBSearchValues, 4, b"@")
 
-        def compare(l, r, context):
-            return cmp(l, r)
+        def compare(a, b, context):
+            return cmp(a, b)
 
         r = CoreFoundation.CFArrayBSearchValues(array, (0, 20), 10, compare, None)
         self.assertEqual(r, 10)
@@ -88,8 +88,8 @@ class TestCFArray(TestCase):
         self.assertArgIsFunction(CoreFoundation.CFArraySortValues, 2, b"l@@@", False)
         self.assertArgHasType(CoreFoundation.CFArraySortValues, 3, b"@")
 
-        def compare(l, r, context):
-            return cmp(l, r)
+        def compare(a, b, context):
+            return cmp(a, b)
 
         CoreFoundation.CFArraySortValues(array, (0, 6), compare, None)
 

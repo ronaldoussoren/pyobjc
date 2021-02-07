@@ -70,7 +70,7 @@ class TestNSPathUtilities(TestCase):
         self.assertEqual(Foundation.NSLocalDomainMask, 2)
         self.assertEqual(Foundation.NSNetworkDomainMask, 4)
         self.assertEqual(Foundation.NSSystemDomainMask, 8)
-        self.assertEqual(Foundation.NSAllDomainsMask, 0x0FFFF)
+        self.assertEqual(Foundation.NSAllDomainsMask, 0x0ffff)
 
     @min_os_level("10.6")
     def testConstants10_6(self):

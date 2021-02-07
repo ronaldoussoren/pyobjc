@@ -194,7 +194,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
             r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
                              PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
 #ifndef __arm64__
-        } else 
+        } else
 #endif
 #endif
 

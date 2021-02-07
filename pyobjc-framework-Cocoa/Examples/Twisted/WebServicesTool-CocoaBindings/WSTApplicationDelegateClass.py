@@ -33,7 +33,6 @@ class WSTApplicationDelegate(NSObject):
         return True
 
     def applicationDidFinishLaunching_(self, aNotification):
-        """Create and display a new connection window
-        """
+        """Create and display a new connection window"""
         reactor.interleave(AppHelper.callAfter)
         self.newConnectionAction_(None)

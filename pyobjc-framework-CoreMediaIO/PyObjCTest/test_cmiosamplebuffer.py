@@ -32,7 +32,7 @@ class TestCMIOSampleBuffer(TestCase):
         )
 
     def testConstants(self):
-        self.assertEqual(CoreMediaIO.kCMIOInvalidSequenceNumber, 0xFFFFFFFFFFFFFFFF)
+        self.assertEqual(CoreMediaIO.kCMIOInvalidSequenceNumber, 0xffffffffffffffff)
 
         self.assertEqual(CoreMediaIO.kCMIOSampleBufferNoDiscontinuities, 0)
 

@@ -4,22 +4,22 @@ import objc
 
 
 class TestNSCollectionViewFlowLayoutHelper(AppKit.NSObject):
-    def collectionView_layout_sizeForItemAtIndexPath_(self, cv, l, p):
+    def collectionView_layout_sizeForItemAtIndexPath_(self, cv, x, p):
         return 1
 
-    def collectionView_layout_insetForSectionAtIndex_(self, cv, l, p):
+    def collectionView_layout_insetForSectionAtIndex_(self, cv, x, p):
         return 1
 
-    def collectionView_layout_minimumLineSpacingForSectionAtIndex_(self, cv, l, p):
+    def collectionView_layout_minimumLineSpacingForSectionAtIndex_(self, cv, x, p):
         return 1
 
-    def collectionView_layout_minimumInteritemSpacingForSectionAtIndex_(self, cv, l, p):
+    def collectionView_layout_minimumInteritemSpacingForSectionAtIndex_(self, cv, x, p):
         return 1
 
-    def collectionView_layout_referenceSizeForHeaderInSection_(self, cv, l, p):
+    def collectionView_layout_referenceSizeForHeaderInSection_(self, cv, x, p):
         return 1
 
-    def collectionView_layout_referenceSizeForFooterInSection_(self, cv, l, p):
+    def collectionView_layout_referenceSizeForFooterInSection_(self, cv, x, p):
         return 1
 
 

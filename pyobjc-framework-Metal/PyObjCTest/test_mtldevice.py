@@ -330,7 +330,7 @@ class TestMTLDevice(TestCase):
         self.assertEqual(Metal.MTLDeviceLocationBuiltIn, 0)
         self.assertEqual(Metal.MTLDeviceLocationSlot, 1)
         self.assertEqual(Metal.MTLDeviceLocationExternal, 2)
-        self.assertEqual(Metal.MTLDeviceLocationUnspecified, 0xFFFFFFFFFFFFFFFF)
+        self.assertEqual(Metal.MTLDeviceLocationUnspecified, 0xffffffffffffffff)
 
         self.assertEqual(Metal.MTLPipelineOptionNone, 0)
         self.assertEqual(Metal.MTLPipelineOptionArgumentInfo, 1 << 0)

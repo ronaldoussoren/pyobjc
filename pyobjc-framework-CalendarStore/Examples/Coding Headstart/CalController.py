@@ -100,8 +100,10 @@ class CalController(NSObject):
     def events(self):
         store = CalCalendarStore.defaultCalendarStore()
         # Pull all events starting now from all calendars in the CalendarStore
-        allEventsPredicate = CalCalendarStore.eventPredicateWithStartDate_endDate_calendars_(
-            NSDate.date(), NSDate.distantFuture(), store.calendars()
+        allEventsPredicate = (
+            CalCalendarStore.eventPredicateWithStartDate_endDate_calendars_(
+                NSDate.date(), NSDate.distantFuture(), store.calendars()
+            )
         )
         return store.eventsWithPredicate_(allEventsPredicate)
 

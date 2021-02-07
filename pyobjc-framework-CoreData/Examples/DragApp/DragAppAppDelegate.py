@@ -17,8 +17,10 @@ class DragAppAppDelegate(Cocoa.NSObject):
             allBundles.addObject_(Cocoa.NSBundle.mainBundle())
             allBundles.addObjectsFromArray_(Cocoa.NSBundle.allFrameworks())
 
-            self._managedObjectModel = CoreData.NSManagedObjectModel.mergedModelFromBundles_(
-                allBundles.allObjects()
+            self._managedObjectModel = (
+                CoreData.NSManagedObjectModel.mergedModelFromBundles_(
+                    allBundles.allObjects()
+                )
             )
 
         return self._managedObjectModel

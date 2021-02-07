@@ -35,7 +35,7 @@ for nm in dir(_CoreMediaIO):
 
 
 def CMIOGetNextSequenceNumber(value):
-    if value == 0xFFFFFFFFFFFFFFFF:
+    if value == 0xffffffffffffffff:
         return 0
     return value + 1
 

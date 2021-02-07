@@ -451,9 +451,9 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
                 continue
 
             for aSignature in methodSignature:
-                if (type(aSignature) == types.ListType) and (
+                if (type(aSignature) == types.ListType) and (  # noqa: E721
                     len(aSignature) > 0
-                ):  # noqa: E721
+                ):
                     signature = "%s %s(%s)" % (
                         aSignature[0],
                         aMethod,

@@ -65,6 +65,7 @@ def xcode_version():
     except subprocess.CalledProcessError:
         return "Xcode not installed (cmd line tools)"
 
+
 def py_version(ver):
     return (
         subprocess.check_output(
@@ -116,7 +117,9 @@ def virtualenv(interpreter):
         shutil.rmtree("test-env")
 
 
-def variants(ver, permitted_variants=("64bit", "x86_64", "arm64", "intel", "universal2")):
+def variants(
+    ver, permitted_variants=("64bit", "x86_64", "arm64", "intel", "universal2")
+):
     if os.path.islink(
         os.path.join("/Library/Frameworks/Python.framework/Versions", ver)
     ):

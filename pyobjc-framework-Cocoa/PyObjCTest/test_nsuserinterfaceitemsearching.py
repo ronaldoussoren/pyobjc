@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSUserInterfaceItemSearchingHelper(AppKit.NSObject):
-    def searchForItemsWithSearchString_resultLimit_matchedItemHandler_(self, s, l, h):
+    def searchForItemsWithSearchString_resultLimit_matchedItemHandler_(self, a, b, c):
         pass
 
 

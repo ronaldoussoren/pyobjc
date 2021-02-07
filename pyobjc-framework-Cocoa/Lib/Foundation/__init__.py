@@ -100,9 +100,9 @@ def _setup_conveniences():
     )
 
     if sys.maxsize > 2 ** 32:
-        NSNotFound = 0x7FFFFFFFFFFFFFFF
+        NSNotFound = 0x7fffffffffffffff
     else:
-        NSNotFound = 0x7FFFFFFF
+        NSNotFound = 0x7fffffff
 
     def indexset_iter(self):
         value = self.firstIndex()
@@ -194,10 +194,10 @@ for nm in dir(Foundation._Foundation):
 
 mod.NSDecimal = objc.NSDecimal
 
-import Foundation._context  # isort:skip  # noqa: F402
-import Foundation._functiondefines  # isort:skip  # noqa: F402
-import Foundation._nsindexset  # isort:skip  # noqa: F402
-import Foundation._nsobject  # isort:skip  # noqa: F402
+import Foundation._context  # isort:skip  # noqa: E402
+import Foundation._functiondefines  # isort:skip  # noqa: E402
+import Foundation._nsindexset  # isort:skip  # noqa: E402
+import Foundation._nsobject  # isort:skip  # noqa: E402
 
 for nm in dir(Foundation._functiondefines):
     setattr(mod, nm, getattr(Foundation._functiondefines, nm))

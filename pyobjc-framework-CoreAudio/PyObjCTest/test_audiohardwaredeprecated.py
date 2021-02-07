@@ -39,7 +39,7 @@ class TestAudioHardwareDeprecated(TestCase):
             CoreAudio.kAudioObjectPropertySelectorWildcard,
         )
 
-        self.assertEqual(CoreAudio.kAudioPropertyWildcardSection, 0xFF)
+        self.assertEqual(CoreAudio.kAudioPropertyWildcardSection, 0xff)
 
         self.assertEqual(
             CoreAudio.kAudioPropertyWildcardChannel,

@@ -121,9 +121,9 @@ def cast_int(value):
 
     (where as: 1 << 31 == 2147483648)
     """
-    value = value & 0xFFFFFFFF
+    value = value & 0xffffffff
     if value & 0x80000000:
-        value = ~value + 1 & 0xFFFFFFFF
+        value = ~value + 1 & 0xffffffff
         return -value
     else:
         return value
@@ -136,9 +136,9 @@ def cast_longlong(value):
     Usage:
         cast_longlong(1 << 63) == -1
     """
-    value = value & 0xFFFFFFFFFFFFFFFF
+    value = value & 0xffffffffffffffff
     if value & 0x8000000000000000:
-        value = ~value + 1 & 0xFFFFFFFFFFFFFFFF
+        value = ~value + 1 & 0xffffffffffffffff
         return -value
     else:
         return value
@@ -152,7 +152,7 @@ def cast_uint(value):
         cast_int(1 << 31) == 2147483648
 
     """
-    value = value & 0xFFFFFFFF
+    value = value & 0xffffffff
     return value
 
 
@@ -160,7 +160,7 @@ def cast_ulonglong(value):
     """
     Cast value to 64bit integer
     """
-    value = value & 0xFFFFFFFFFFFFFFFF
+    value = value & 0xffffffffffffffff
     return value
 
 
@@ -448,7 +448,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info.get("variadic") is True:
-                results.append(f"variadic is True, not tested")
+                results.append("variadic is True, not tested")
 
         if deprecated is not None:
             if info.get("deprecated") != deprecated:
@@ -456,7 +456,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info.get("deprecated") is not None:
-                results.append(f"deprecated is set, not tested")
+                results.append("deprecated is set, not tested")
 
         if results:
             self.fail(f"{func}: " + ", ".join(results))
@@ -492,7 +492,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["null_accepted"] is False:
-                results.append(f"null_accepted is False, not tested")
+                results.append("null_accepted is False, not tested")
 
         if already_retained is not None:
             if info["already_retained"] is not already_retained:
@@ -502,7 +502,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["already_retained"] is True:
-                results.append(f"already_retained is True, not tested")
+                results.append("already_retained is True, not tested")
 
         if already_cfretained is not None:
             if info["already_cfretained"] is not already_cfretained:
@@ -512,7 +512,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["already_cfretained"] is True:
-                results.append(f"already_cfretained is True, not tested")
+                results.append("already_cfretained is True, not tested")
 
         if c_array_of_variable_length is not None:
             if info["c_array_of_variable_length"] is not c_array_of_variable_length:
@@ -522,7 +522,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["c_array_of_variable_length"] is True:
-                results.append(f"c_array_of_variable_length is True, not tested")
+                results.append("c_array_of_variable_length is True, not tested")
 
         if c_array_delimited_by_null is not None:
             if info["c_array_delimited_by_null"] is not c_array_delimited_by_null:
@@ -532,7 +532,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["c_array_delimited_by_null"] is True:
-                results.append(f"c_array_delimited_by_null is True, not tested")
+                results.append("c_array_delimited_by_null is True, not tested")
 
         if callable is not None:
             raise RuntimeError("Need to design API for this")
@@ -606,7 +606,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["null_accepted"] is False:
-                results.append(f"null_accepted is False, not tested")
+                results.append("null_accepted is False, not tested")
 
         if printf_format is not None:
             if info["printf_format"] is not null_accepted:
@@ -616,7 +616,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["printf_format"] is True:
-                results.append(f"printf_format is True, not tested")
+                results.append("printf_format is True, not tested")
 
         if already_retained is not None:
             if info["already_retained"] is not already_retained:
@@ -626,7 +626,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["already_retained"] is True:
-                results.append(f"already_retained is True, not tested")
+                results.append("already_retained is True, not tested")
 
         if already_cfretained is not None:
             if info["already_cfretained"] is not already_cfretained:
@@ -636,7 +636,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["already_cfretained"] is True:
-                results.append(f"already_cfretained is True, not tested")
+                results.append("already_cfretained is True, not tested")
 
         if c_array_of_variable_length is not None:
             have_array = True
@@ -654,7 +654,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["c_array_length_in_arg"] is not None:
-                results.append(f"c_array_length_in_arg is set, not tested")
+                results.append("c_array_length_in_arg is set, not tested")
 
         if c_array_length_in_result is not None:
             have_array = True
@@ -665,7 +665,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["c_array_length_in_result"] is True:
-                results.append(f"c_array_length_in_arg is True, not tested")
+                results.append("c_array_length_in_arg is True, not tested")
 
         if c_array_delimited_by_null is not None:
             have_array = True
@@ -676,7 +676,7 @@ class TestCase(_unittest.TestCase):
 
         else:
             if info["c_array_delimited_by_null"] is True:
-                results.append(f"c_array_delimited_by_null is True, not tested")
+                results.append("c_array_delimited_by_null is True, not tested")
 
         if have_array and not have_modifier:
             results.append("array, not no modifier specified")
@@ -1510,7 +1510,7 @@ else:  # pragma: no cover (py2.6)
 
             self.fail("test unexpectedly passed")
 
-        test.__name__ == func.__name__
+        test.__name__ = func.__name__
 
         return test
 

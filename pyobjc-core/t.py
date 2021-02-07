@@ -9,5 +9,5 @@ data = subprocess.check_output(
 
 print(data)
 
-value = plistlib.load(open(data + '/SDKSettings.plist', 'rb'))
+value = plistlib.load(open(data + "/SDKSettings.plist", "rb"))
 pprint.pprint(value)

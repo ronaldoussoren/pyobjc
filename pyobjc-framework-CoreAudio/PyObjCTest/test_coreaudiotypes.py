@@ -53,8 +53,8 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(CoreAudio.kAudioFormatAMR_WB, fourcc(b"sawb"))
         self.assertEqual(CoreAudio.kAudioFormatAudible, fourcc(b"AUDB"))
         self.assertEqual(CoreAudio.kAudioFormatiLBC, fourcc(b"ilbc"))
-        self.assertEqual(CoreAudio.kAudioFormatDVIIntelIMA, 0x6D730011)
-        self.assertEqual(CoreAudio.kAudioFormatMicrosoftGSM, 0x6D730031)
+        self.assertEqual(CoreAudio.kAudioFormatDVIIntelIMA, 0x6d730011)
+        self.assertEqual(CoreAudio.kAudioFormatMicrosoftGSM, 0x6d730031)
         self.assertEqual(CoreAudio.kAudioFormatAES3, fourcc(b"aes3"))
         self.assertEqual(CoreAudio.kAudioFormatEnhancedAC3, fourcc(b"ec-3"))
         self.assertEqual(CoreAudio.kAudioFormatFLAC, fourcc(b"flac"))
@@ -98,7 +98,7 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(CoreAudio.kLinearPCMFormatFlagsSampleFractionShift, 7)
         self.assertEqual(
             CoreAudio.kLinearPCMFormatFlagsSampleFractionMask,
-            0x3F << CoreAudio.kLinearPCMFormatFlagsSampleFractionShift,
+            0x3f << CoreAudio.kLinearPCMFormatFlagsSampleFractionShift,
         )
         self.assertEqual(
             CoreAudio.kLinearPCMFormatFlagsAreAllClear,
@@ -167,7 +167,7 @@ class TestAudioDriverPlugIn(TestCase):
             | CoreAudio.kAudioTimeStampHostTimeValid,
         )
 
-        self.assertEqual(CoreAudio.kAudioChannelLabel_Unknown, 0xFFFFFFFF)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_Unknown, 0xffffffff)
         self.assertEqual(CoreAudio.kAudioChannelLabel_Unused, 0)
         self.assertEqual(CoreAudio.kAudioChannelLabel_UseCoordinates, 100)
         self.assertEqual(CoreAudio.kAudioChannelLabel_Left, 1)
@@ -251,8 +251,8 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(CoreAudio.kAudioChannelLabel_HOA_ACN_14, (2 << 16) | 14)
         self.assertEqual(CoreAudio.kAudioChannelLabel_HOA_ACN_15, (2 << 16) | 15)
         self.assertEqual(CoreAudio.kAudioChannelLabel_HOA_ACN_65024, (2 << 16) | 65024)
-        self.assertEqual(CoreAudio.kAudioChannelLabel_BeginReserved, 0xF0000000)
-        self.assertEqual(CoreAudio.kAudioChannelLabel_EndReserved, 0xFFFFFFFE)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_BeginReserved, 0xf0000000)
+        self.assertEqual(CoreAudio.kAudioChannelLabel_EndReserved, 0xfffffffe)
         self.assertEqual(CoreAudio.kAudioChannelBit_Left, 1 << 0)
         self.assertEqual(CoreAudio.kAudioChannelBit_Right, 1 << 1)
         self.assertEqual(CoreAudio.kAudioChannelBit_Center, 1 << 2)
@@ -551,9 +551,9 @@ class TestAudioDriverPlugIn(TestCase):
         self.assertEqual(
             CoreAudio.kAudioChannelLayoutTag_DiscreteInOrder, (147 << 16) | 0
         )
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_BeginReserved, 0xF0000000)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_EndReserved, 0xFFFEFFFF)
-        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Unknown, 0xFFFF0000)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_BeginReserved, 0xf0000000)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_EndReserved, 0xfffeffff)
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Unknown, 0xffff0000)
 
         self.assertEqual(CoreAudio.kMPEG4Object_AAC_Main, 1)
         self.assertEqual(CoreAudio.kMPEG4Object_AAC_LC, 2)

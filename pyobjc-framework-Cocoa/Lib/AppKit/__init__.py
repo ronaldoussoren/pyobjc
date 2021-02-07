@@ -65,11 +65,11 @@ sys.modules["AppKit"] = mod = objc.ObjCLazyModule(
 # NSApp is a global variable that can be changed in ObjC,
 # somewhat emulate that (it is *not* possible to assign to
 # NSApp in Python)
-from AppKit._nsapp import NSApp  # isort:skip  # noqa: F402
+from AppKit._nsapp import NSApp  # isort:skip  # noqa: E402
 
 mod.NSApp = NSApp
 
-import AppKit._AppKit  # isort:skip  # noqa: F402
+import AppKit._AppKit  # isort:skip  # noqa: E402
 
 for nm in dir(AppKit._AppKit):
     setattr(mod, nm, getattr(AppKit._AppKit, nm))

@@ -36,7 +36,7 @@ if sys.version_info < MIN_PYTHON:
 
 def get_os_level():
     with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
-       pl = plistlib.load(fp)
+        pl = plistlib.load(fp)
     v = pl["ProductVersion"]
     return ".".join(v.split(".")[:2])
 
@@ -505,8 +505,8 @@ class oc_build_ext(build_ext.build_ext):
                 ).strip()
 
                 if not self.sdk_root:
-                   # With command line tools the value can be empty
-                   self.sdk_root = "/"
+                    # With command line tools the value can be empty
+                    self.sdk_root = "/"
 
             else:
                 self.sdk_root = "/"

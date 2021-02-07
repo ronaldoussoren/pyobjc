@@ -28,6 +28,4 @@ class TestNEAppProxyFlow(TestCase):
 
     @min_os_level("10.16.1")
     def testMethods10_16_1(self):
-        self.assertResultIsBOOL(
-            NetworkExtension.NEAppProxyFlow.isBound
-        )
+        self.assertResultIsBOOL(NetworkExtension.NEAppProxyFlow.isBound)

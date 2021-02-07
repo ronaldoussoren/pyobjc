@@ -98,7 +98,7 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
             1 << 13,
         )
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodCustom, 1 << 14)
-        self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSizeMask, 0x7F0)
+        self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSizeMask, 0x7f0)
         self.assertEqual(
             MetalPerformanceShaders.MPSNNPaddingMethodExcludeEdges, 1 << 15
         )

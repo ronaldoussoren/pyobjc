@@ -95,4 +95,4 @@ Use *DISPATCH_DATA_DESTRUCTOR_DEFAULT* as the destructor.
 The workgroup API's
 ....................
 
-The various workgroup APIs (introduced in macOS 11) are not supported. 
+The various workgroup APIs (introduced in macOS 11) are not supported.

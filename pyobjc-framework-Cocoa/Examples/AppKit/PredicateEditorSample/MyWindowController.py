@@ -174,8 +174,10 @@ class MyWindowController(Cocoa.NSWindowController):
                     return cleanSubpredicates[0]
 
                 else:
-                    return Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(
-                        predicate_type, cleanSubpredicates
+                    return (
+                        Cocoa.NSCompoundPredicate.alloc().initWithType_subpredicates_(
+                            predicate_type, cleanSubpredicates
+                        )
                     )
 
         else:

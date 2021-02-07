@@ -29,8 +29,10 @@ class Test(TestCase):
         self.managedObjectModel = CoreData.NSManagedObjectModel.new()
         self.managedObjectModel.setEntities_([self.entity])
 
-        self.persistentStoreCoordinator = CoreData.NSPersistentStoreCoordinator.alloc().initWithManagedObjectModel_(
-            self.managedObjectModel
+        self.persistentStoreCoordinator = (
+            CoreData.NSPersistentStoreCoordinator.alloc().initWithManagedObjectModel_(
+                self.managedObjectModel
+            )
         )
         self.persistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_(
             CoreData.NSInMemoryStoreType, None, None, None, None
@@ -103,8 +105,10 @@ class TestSubclass(TestCase):
         self.managedObjectModel = CoreData.NSManagedObjectModel.new()
         self.managedObjectModel.setEntities_([self.entity])
 
-        self.persistentStoreCoordinator = CoreData.NSPersistentStoreCoordinator.alloc().initWithManagedObjectModel_(
-            self.managedObjectModel
+        self.persistentStoreCoordinator = (
+            CoreData.NSPersistentStoreCoordinator.alloc().initWithManagedObjectModel_(
+                self.managedObjectModel
+            )
         )
         self.persistentStoreCoordinator.addPersistentStoreWithType_configuration_URL_options_error_(
             CoreData.NSInMemoryStoreType, None, None, None, None
@@ -116,8 +120,10 @@ class TestSubclass(TestCase):
         )
 
     def testModeledAttribute(self):
-        managedObject = CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
-            self.entity, self.managedObjectContext
+        managedObject = (
+            CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
+                self.entity, self.managedObjectContext
+            )
         )
         self.assertIsInstance(managedObject, CoreDataTestObject)
 
@@ -144,8 +150,10 @@ class TestSubclass(TestCase):
 
     def testPythonicAttribute(self):
         # self.fail("research recursion problem")
-        managedObject = CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
-            self.entity, self.managedObjectContext
+        managedObject = (
+            CoreDataTestObject.alloc().initWithEntity_insertIntoManagedObjectContext_(
+                self.entity, self.managedObjectContext
+            )
         )
         self.assertIsInstance(managedObject, CoreDataTestObject)
 

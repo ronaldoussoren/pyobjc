@@ -7,19 +7,400 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+misc.update(
+    {
+        "ColorSyncMD5": objc.createStructType(
+            "ColorSyncMD5", b"{_ColorSyncMD5=[16C]}", ["digest"]
+        )
+    }
+)
+constants = """$kCMMApplyTransformProcName$kCMMCreateTransformPropertyProcName$kCMMInitializeLinkProfileProcName$kCMMInitializeTransformProcName$kColorSyncACESCGLinearProfile$kColorSyncAdobeRGB1998Profile$kColorSyncBestQuality$kColorSyncBlackPointCompensation$kColorSyncCameraDeviceClass$kColorSyncConversion1DLut$kColorSyncConversion3DLut$kColorSyncConversionBPC$kColorSyncConversionChannelID$kColorSyncConversionGridPoints$kColorSyncConversionInpChan$kColorSyncConversionMatrix$kColorSyncConversionNDLut$kColorSyncConversionOutChan$kColorSyncConversionParamCurve0$kColorSyncConversionParamCurve1$kColorSyncConversionParamCurve2$kColorSyncConversionParamCurve3$kColorSyncConversionParamCurve4$kColorSyncConvertQuality$kColorSyncConvertThreadCount$kColorSyncConvertUseExtendedRange$kColorSyncConvertUseVectorUnit$kColorSyncCustomProfiles$kColorSyncDCIP3Profile$kColorSyncDeviceClass$kColorSyncDeviceDefaultProfileID$kColorSyncDeviceDescription$kColorSyncDeviceDescriptions$kColorSyncDeviceHostScope$kColorSyncDeviceID$kColorSyncDeviceModeDescription$kColorSyncDeviceModeDescriptions$kColorSyncDeviceProfileID$kColorSyncDeviceProfileIsCurrent$kColorSyncDeviceProfileIsDefault$kColorSyncDeviceProfileIsFactory$kColorSyncDeviceProfileURL$kColorSyncDeviceProfilesNotification$kColorSyncDeviceRegisteredNotification$kColorSyncDeviceUnregisteredNotification$kColorSyncDeviceUserScope$kColorSyncDisplayDeviceClass$kColorSyncDisplayDeviceProfilesNotification$kColorSyncDisplayP3Profile$kColorSyncDraftQuality$kColorSyncExtendedRange$kColorSyncFactoryProfiles$kColorSyncFixedPointRange$kColorSyncGenericCMYKProfile$kColorSyncGenericGrayGamma22Profile$kColorSyncGenericGrayProfile$kColorSyncGenericLabProfile$kColorSyncGenericRGBProfile$kColorSyncGenericXYZProfile$kColorSyncITUR2020Profile$kColorSyncITUR709Profile$kColorSyncNormalQuality$kColorSyncPreferredCMM$kColorSyncPrinterDeviceClass$kColorSyncProfile$kColorSyncProfileCacheSeed$kColorSyncProfileClass$kColorSyncProfileColorSpace$kColorSyncProfileComputerDomain$kColorSyncProfileDescription$kColorSyncProfileHeader$kColorSyncProfileHostScope$kColorSyncProfileMD5Digest$kColorSyncProfilePCS$kColorSyncProfileRepositoryChangeNotification$kColorSyncProfileURL$kColorSyncProfileUserDomain$kColorSyncProfileUserScope$kColorSyncROMMRGBProfile$kColorSyncRegistrationUpdateWindowServer$kColorSyncRenderingIntent$kColorSyncRenderingIntentAbsolute$kColorSyncRenderingIntentPerceptual$kColorSyncRenderingIntentRelative$kColorSyncRenderingIntentSaturation$kColorSyncRenderingIntentUseProfileHeader$kColorSyncSRGBProfile$kColorSyncScannerDeviceClass$kColorSyncSigAToB0Tag$kColorSyncSigAToB1Tag$kColorSyncSigAToB2Tag$kColorSyncSigAbstractClass$kColorSyncSigBToA0Tag$kColorSyncSigBToA1Tag$kColorSyncSigBToA2Tag$kColorSyncSigBlueColorantTag$kColorSyncSigBlueTRCTag$kColorSyncSigCmykData$kColorSyncSigColorSpaceClass$kColorSyncSigCopyrightTag$kColorSyncSigDeviceMfgDescTag$kColorSyncSigDeviceModelDescTag$kColorSyncSigDisplayClass$kColorSyncSigGamutTag$kColorSyncSigGrayData$kColorSyncSigGrayTRCTag$kColorSyncSigGreenColorantTag$kColorSyncSigGreenTRCTag$kColorSyncSigInputClass$kColorSyncSigLabData$kColorSyncSigLinkClass$kColorSyncSigMediaBlackPointTag$kColorSyncSigMediaWhitePointTag$kColorSyncSigNamedColor2Tag$kColorSyncSigNamedColorClass$kColorSyncSigOutputClass$kColorSyncSigPreview0Tag$kColorSyncSigPreview1Tag$kColorSyncSigPreview2Tag$kColorSyncSigProfileDescriptionTag$kColorSyncSigProfileSequenceDescTag$kColorSyncSigRedColorantTag$kColorSyncSigRedTRCTag$kColorSyncSigRgbData$kColorSyncSigTechnologyTag$kColorSyncSigViewingCondDescTag$kColorSyncSigViewingConditionsTag$kColorSyncSigXYZData$kColorSyncTranformInfo$kColorSyncTransformCodeFragmentMD5$kColorSyncTransformCodeFragmentType$kColorSyncTransformCreator$kColorSyncTransformDeviceToDevice$kColorSyncTransformDeviceToPCS$kColorSyncTransformDstSpace$kColorSyncTransformFullConversionData$kColorSyncTransformGamutCheck$kColorSyncTransformInfo$kColorSyncTransformPCSToDevice$kColorSyncTransformPCSToPCS$kColorSyncTransformParametricConversionData$kColorSyncTransformSimplifiedConversionData$kColorSyncTransformSrcSpace$kColorSyncTransformTag$kColorSyncWaitForCacheReply$"""
+enums = """$COLORSYNC_MD5_LENGTH@16$kColorSync10BitInteger@8$kColorSync16BitFloat@4$kColorSync16BitInteger@3$kColorSync1BitGamut@1$kColorSync32BitFloat@7$kColorSync32BitInteger@5$kColorSync32BitNamedColorIndex@6$kColorSync8BitInteger@2$kColorSyncAlphaFirst@4$kColorSyncAlphaInfoMask@31$kColorSyncAlphaLast@3$kColorSyncAlphaNone@0$kColorSyncAlphaNoneSkipFirst@6$kColorSyncAlphaNoneSkipLast@5$kColorSyncAlphaPremultipliedFirst@2$kColorSyncAlphaPremultipliedLast@1$kColorSyncByteOrder16Big@12288$kColorSyncByteOrder16Little@4096$kColorSyncByteOrder32Big@16384$kColorSyncByteOrder32Little@8192$kColorSyncByteOrderDefault@0$kColorSyncByteOrderMask@28672$"""
+misc.update(
+    {
+        "COLORSYNC_PROFILE_INSTALL_ENTITLEMENT": b"com.apple.developer.ColorSync.profile.install"
+    }
+)
+functions = {
+    "ColorSyncProfileCopyDescriptionString": (
+        b"^{__CFString=}^{ColorSyncProfile=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncCMMCopyLocalizedName": (
+        b"^{__CFString=}^{ColorSyncCMM=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCreateLink": (
+        b"^{ColorSyncProfile=}^{__CFArray=}^{__CFDictionary=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncCreateCodeFragment": (
+        b"@^{__CFArray=}^{__CFDictionary=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCreateDisplayTransferTablesFromVCGT": (
+        b"^{__CFData=}^{ColorSyncProfile=}^Q",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"type_modifier": "n"}},
+        },
+    ),
+    "CGDisplayGetDisplayIDFromUUID": (b"I^{__CFUUID=}",),
+    "ColorSyncProfileCreateDeviceProfile": (
+        b"^{ColorSyncProfile=}^{__CFString=}^{__CFUUID=}@",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCopyHeader": (
+        b"^{__CFData=}^{ColorSyncProfile=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCopyTagSignatures": (
+        b"^{__CFArray=}^{ColorSyncProfile=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncCMMGetTypeID": (b"Q",),
+    "ColorSyncProfileCreateWithURL": (
+        b"^{ColorSyncProfile=}^{__CFURL=}^^{__CFError=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            },
+        },
+    ),
+    "ColorSyncProfileVerify": (
+        b"B^{ColorSyncProfile=}^^{__CFError=}^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                },
+                2: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                },
+            }
+        },
+    ),
+    "ColorSyncProfileIsMatrixBased": (b"B^{ColorSyncProfile=}",),
+    "ColorSyncTransformConvert": (
+        b"B^{ColorSyncTransform=}QQ^vIIQ^vIIQ^{__CFDictionary=}",
+        "",
+        {
+            "arguments": {
+                3: {"c_array_of_variable_length": True, "type_modifier": "o"},
+                7: {"c_array_of_variable_length": True, "type_modifier": "n"},
+            }
+        },
+    ),
+    "ColorSyncCMMCreate": (
+        b"^{ColorSyncCMM=}^{__CFBundle=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCreateWithDisplayID": (
+        b"^{ColorSyncProfile=}I",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCreateMutableCopy": (
+        b"^{ColorSyncProfile=}^{ColorSyncProfile=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "CGDisplayCreateUUIDFromDisplayID": (
+        b"^{__CFUUID=}I",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileInstall": (
+        b"B^{ColorSyncProfile=}^{__CFString=}^{__CFString=}^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                3: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            }
+        },
+    ),
+    "ColorSyncProfileSetTag": (b"v^{ColorSyncProfile=}^{__CFString=}^{__CFData=}",),
+    "ColorSyncTransformCreate": (
+        b"^{ColorSyncTransform=}^{__CFArray=}^{__CFDictionary=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCopyTag": (
+        b"^{__CFData=}^{ColorSyncProfile=}^{__CFString=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncIterateDeviceProfiles": (
+        b"v^?^v",
+        "",
+        {
+            "arguments": {
+                0: {
+                    "callable": {
+                        "retval": {"type": b"B"},
+                        "arguments": {
+                            0: {"type": b"^{__CFDictionary=}"},
+                            1: {"type": b"^v"},
+                        },
+                    },
+                    "callable_retained": False,
+                }
+            }
+        },
+    ),
+    "ColorSyncProfileGetURL": (
+        b"^{__CFURL=}^{ColorSyncProfile=}^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            }
+        },
+    ),
+    "ColorSyncTransformSetProperty": (b"v^{ColorSyncTransform=}@@",),
+    "ColorSyncUnregisterDevice": (b"B^{__CFString=}^{__CFUUID=}",),
+    "ColorSyncDeviceCopyDeviceInfo": (
+        b"^{__CFDictionary=}^{__CFString=}^{__CFUUID=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncProfileCreateMutable": (
+        b"^{ColorSyncProfile=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncIterateInstalledProfiles": (
+        b"v^?^I^v^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                0: {
+                    "callable": {
+                        "retval": {"type": b"B"},
+                        "arguments": {
+                            0: {"type": b"^{__CFDictionary=}"},
+                            1: {"type": b"^v"},
+                        },
+                    },
+                    "callable_retained": False,
+                },
+                1: {"type_modifier": "N"},
+                3: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                },
+            }
+        },
+    ),
+    "ColorSyncProfileUninstall": (
+        b"B^{ColorSyncProfile=}^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            }
+        },
+    ),
+    "ColorSyncProfileCopyData": (
+        b"^{__CFData=}^{ColorSyncProfile=}^^{__CFError=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            },
+        },
+    ),
+    "ColorSyncIterateInstalledCMMs": (
+        b"v^?^v",
+        "",
+        {
+            "arguments": {
+                0: {
+                    "callable": {
+                        "retval": {"type": b"B"},
+                        "arguments": {
+                            0: {"type": b"^{ColorSyncCMM=}"},
+                            1: {"type": b"^v"},
+                        },
+                    },
+                    "callable_retained": False,
+                }
+            }
+        },
+    ),
+    "ColorSyncDeviceSetCustomProfiles": (
+        b"B^{__CFString=}^{__CFUUID=}^{__CFDictionary=}",
+    ),
+    "ColorSyncCMMGetBundle": (b"^{__CFBundle=}^{ColorSyncCMM=}",),
+    "ColorSyncIterateInstalledProfilesWithOptions": (
+        b"v^?^I^v^{__CFDictionary=}^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                0: {
+                    "callable": {
+                        "retval": {"type": b"B"},
+                        "arguments": {
+                            0: {"type": b"^{__CFDictionary=}"},
+                            1: {"type": b"^v"},
+                        },
+                    }
+                },
+                1: {"type_modifier": "N"},
+                4: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                },
+            }
+        },
+    ),
+    "ColorSyncProfileGetTypeID": (b"Q",),
+    "ColorSyncProfileCreateWithName": (
+        b"^{ColorSyncProfile=}^{__CFString=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncTransformGetTypeID": (b"Q",),
+    "ColorSyncProfileGetDisplayTransferFormulaFromVCGT": (
+        b"B^{ColorSyncProfile=}^f^f^f^f^f^f^f^f^f",
+        "",
+        {
+            "arguments": {
+                1: {"type_modifier": "o"},
+                2: {"type_modifier": "o"},
+                3: {"type_modifier": "o"},
+                4: {"type_modifier": "o"},
+                5: {"type_modifier": "o"},
+                6: {"type_modifier": "o"},
+                7: {"type_modifier": "o"},
+                8: {"type_modifier": "o"},
+                9: {"type_modifier": "o"},
+            }
+        },
+    ),
+    "ColorSyncProfileIsWideGamut": (b"B^{ColorSyncProfile=}",),
+    "ColorSyncRegisterDevice": (b"B^{__CFString=}^{__CFUUID=}^{__CFDictionary=}",),
+    "ColorSyncProfileEstimateGammaWithDisplayID": (
+        b"fi^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            }
+        },
+    ),
+    "ColorSyncProfileGetMD5": (b"{_ColorSyncMD5=[16C]}^{ColorSyncProfile=}",),
+    "ColorSyncProfileRemoveTag": (b"v^{ColorSyncProfile=}^{__CFString=}",),
+    "ColorSyncProfileContainsTag": (b"B^{ColorSyncProfile=}^{__CFString=}",),
+    "ColorSyncProfileEstimateGamma": (
+        b"f^{ColorSyncProfile=}^^{__CFError=}",
+        "",
+        {
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            }
+        },
+    ),
+    "ColorSyncProfileCreate": (
+        b"^{ColorSyncProfile=}^{__CFData=}^^{__CFError=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                1: {
+                    "already_cfretained": True,
+                    "type_modifier": "o",
+                    "null_accepted": True,
+                }
+            },
+        },
+    ),
+    "ColorSyncProfileSetHeader": (b"v^{ColorSyncProfile=}^{__CFData=}",),
+    "ColorSyncTransformCopyProperty": (
+        b"@^{ColorSyncTransform=}@^{__CFDictionary=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
+    "ColorSyncCMMCopyCMMIdentifier": (
+        b"^{__CFString=}^{ColorSyncCMM=}",
+        "",
+        {"retval": {"already_cfretained": True}},
+    ),
 }
-misc.update({'ColorSyncMD5': objc.createStructType('ColorSyncMD5', b'{_ColorSyncMD5=[16C]}', ['digest'])})
-constants = '''$kCMMApplyTransformProcName$kCMMCreateTransformPropertyProcName$kCMMInitializeLinkProfileProcName$kCMMInitializeTransformProcName$kColorSyncACESCGLinearProfile$kColorSyncAdobeRGB1998Profile$kColorSyncBestQuality$kColorSyncBlackPointCompensation$kColorSyncCameraDeviceClass$kColorSyncConversion1DLut$kColorSyncConversion3DLut$kColorSyncConversionBPC$kColorSyncConversionChannelID$kColorSyncConversionGridPoints$kColorSyncConversionInpChan$kColorSyncConversionMatrix$kColorSyncConversionNDLut$kColorSyncConversionOutChan$kColorSyncConversionParamCurve0$kColorSyncConversionParamCurve1$kColorSyncConversionParamCurve2$kColorSyncConversionParamCurve3$kColorSyncConversionParamCurve4$kColorSyncConvertQuality$kColorSyncConvertThreadCount$kColorSyncConvertUseExtendedRange$kColorSyncConvertUseVectorUnit$kColorSyncCustomProfiles$kColorSyncDCIP3Profile$kColorSyncDeviceClass$kColorSyncDeviceDefaultProfileID$kColorSyncDeviceDescription$kColorSyncDeviceDescriptions$kColorSyncDeviceHostScope$kColorSyncDeviceID$kColorSyncDeviceModeDescription$kColorSyncDeviceModeDescriptions$kColorSyncDeviceProfileID$kColorSyncDeviceProfileIsCurrent$kColorSyncDeviceProfileIsDefault$kColorSyncDeviceProfileIsFactory$kColorSyncDeviceProfileURL$kColorSyncDeviceProfilesNotification$kColorSyncDeviceRegisteredNotification$kColorSyncDeviceUnregisteredNotification$kColorSyncDeviceUserScope$kColorSyncDisplayDeviceClass$kColorSyncDisplayDeviceProfilesNotification$kColorSyncDisplayP3Profile$kColorSyncDraftQuality$kColorSyncExtendedRange$kColorSyncFactoryProfiles$kColorSyncFixedPointRange$kColorSyncGenericCMYKProfile$kColorSyncGenericGrayGamma22Profile$kColorSyncGenericGrayProfile$kColorSyncGenericLabProfile$kColorSyncGenericRGBProfile$kColorSyncGenericXYZProfile$kColorSyncITUR2020Profile$kColorSyncITUR709Profile$kColorSyncNormalQuality$kColorSyncPreferredCMM$kColorSyncPrinterDeviceClass$kColorSyncProfile$kColorSyncProfileCacheSeed$kColorSyncProfileClass$kColorSyncProfileColorSpace$kColorSyncProfileComputerDomain$kColorSyncProfileDescription$kColorSyncProfileHeader$kColorSyncProfileHostScope$kColorSyncProfileMD5Digest$kColorSyncProfilePCS$kColorSyncProfileRepositoryChangeNotification$kColorSyncProfileURL$kColorSyncProfileUserDomain$kColorSyncProfileUserScope$kColorSyncROMMRGBProfile$kColorSyncRegistrationUpdateWindowServer$kColorSyncRenderingIntent$kColorSyncRenderingIntentAbsolute$kColorSyncRenderingIntentPerceptual$kColorSyncRenderingIntentRelative$kColorSyncRenderingIntentSaturation$kColorSyncRenderingIntentUseProfileHeader$kColorSyncSRGBProfile$kColorSyncScannerDeviceClass$kColorSyncSigAToB0Tag$kColorSyncSigAToB1Tag$kColorSyncSigAToB2Tag$kColorSyncSigAbstractClass$kColorSyncSigBToA0Tag$kColorSyncSigBToA1Tag$kColorSyncSigBToA2Tag$kColorSyncSigBlueColorantTag$kColorSyncSigBlueTRCTag$kColorSyncSigCmykData$kColorSyncSigColorSpaceClass$kColorSyncSigCopyrightTag$kColorSyncSigDeviceMfgDescTag$kColorSyncSigDeviceModelDescTag$kColorSyncSigDisplayClass$kColorSyncSigGamutTag$kColorSyncSigGrayData$kColorSyncSigGrayTRCTag$kColorSyncSigGreenColorantTag$kColorSyncSigGreenTRCTag$kColorSyncSigInputClass$kColorSyncSigLabData$kColorSyncSigLinkClass$kColorSyncSigMediaBlackPointTag$kColorSyncSigMediaWhitePointTag$kColorSyncSigNamedColor2Tag$kColorSyncSigNamedColorClass$kColorSyncSigOutputClass$kColorSyncSigPreview0Tag$kColorSyncSigPreview1Tag$kColorSyncSigPreview2Tag$kColorSyncSigProfileDescriptionTag$kColorSyncSigProfileSequenceDescTag$kColorSyncSigRedColorantTag$kColorSyncSigRedTRCTag$kColorSyncSigRgbData$kColorSyncSigTechnologyTag$kColorSyncSigViewingCondDescTag$kColorSyncSigViewingConditionsTag$kColorSyncSigXYZData$kColorSyncTranformInfo$kColorSyncTransformCodeFragmentMD5$kColorSyncTransformCodeFragmentType$kColorSyncTransformCreator$kColorSyncTransformDeviceToDevice$kColorSyncTransformDeviceToPCS$kColorSyncTransformDstSpace$kColorSyncTransformFullConversionData$kColorSyncTransformGamutCheck$kColorSyncTransformInfo$kColorSyncTransformPCSToDevice$kColorSyncTransformPCSToPCS$kColorSyncTransformParametricConversionData$kColorSyncTransformSimplifiedConversionData$kColorSyncTransformSrcSpace$kColorSyncTransformTag$kColorSyncWaitForCacheReply$'''
-enums = '''$COLORSYNC_MD5_LENGTH@16$kColorSync10BitInteger@8$kColorSync16BitFloat@4$kColorSync16BitInteger@3$kColorSync1BitGamut@1$kColorSync32BitFloat@7$kColorSync32BitInteger@5$kColorSync32BitNamedColorIndex@6$kColorSync8BitInteger@2$kColorSyncAlphaFirst@4$kColorSyncAlphaInfoMask@31$kColorSyncAlphaLast@3$kColorSyncAlphaNone@0$kColorSyncAlphaNoneSkipFirst@6$kColorSyncAlphaNoneSkipLast@5$kColorSyncAlphaPremultipliedFirst@2$kColorSyncAlphaPremultipliedLast@1$kColorSyncByteOrder16Big@12288$kColorSyncByteOrder16Little@4096$kColorSyncByteOrder32Big@16384$kColorSyncByteOrder32Little@8192$kColorSyncByteOrderDefault@0$kColorSyncByteOrderMask@28672$'''
-misc.update({'COLORSYNC_PROFILE_INSTALL_ENTITLEMENT': b'com.apple.developer.ColorSync.profile.install'})
-functions={'ColorSyncProfileCopyDescriptionString': (b'^{__CFString=}^{ColorSyncProfile=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncCMMCopyLocalizedName': (b'^{__CFString=}^{ColorSyncCMM=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCreateLink': (b'^{ColorSyncProfile=}^{__CFArray=}^{__CFDictionary=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncCreateCodeFragment': (b'@^{__CFArray=}^{__CFDictionary=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCreateDisplayTransferTablesFromVCGT': (b'^{__CFData=}^{ColorSyncProfile=}^Q', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'type_modifier': 'n'}}}), 'CGDisplayGetDisplayIDFromUUID': (b'I^{__CFUUID=}',), 'ColorSyncProfileCreateDeviceProfile': (b'^{ColorSyncProfile=}^{__CFString=}^{__CFUUID=}@', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCopyHeader': (b'^{__CFData=}^{ColorSyncProfile=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCopyTagSignatures': (b'^{__CFArray=}^{ColorSyncProfile=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncCMMGetTypeID': (b'Q',), 'ColorSyncProfileCreateWithURL': (b'^{ColorSyncProfile=}^{__CFURL=}^^{__CFError=}', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileVerify': (b'B^{ColorSyncProfile=}^^{__CFError=}^^{__CFError=}', '', {'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}, 2: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileIsMatrixBased': (b'B^{ColorSyncProfile=}',), 'ColorSyncTransformConvert': (b'B^{ColorSyncTransform=}QQ^vIIQ^vIIQ^{__CFDictionary=}', '', {'arguments': {3: {'c_array_of_variable_length': True, 'type_modifier': 'o'}, 7: {'c_array_of_variable_length': True, 'type_modifier': 'n'}}}), 'ColorSyncCMMCreate': (b'^{ColorSyncCMM=}^{__CFBundle=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCreateWithDisplayID': (b'^{ColorSyncProfile=}I', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCreateMutableCopy': (b'^{ColorSyncProfile=}^{ColorSyncProfile=}', '', {'retval': {'already_cfretained': True}}), 'CGDisplayCreateUUIDFromDisplayID': (b'^{__CFUUID=}I', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileInstall': (b'B^{ColorSyncProfile=}^{__CFString=}^{__CFString=}^^{__CFError=}', '', {'arguments': {3: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileSetTag': (b'v^{ColorSyncProfile=}^{__CFString=}^{__CFData=}',), 'ColorSyncTransformCreate': (b'^{ColorSyncTransform=}^{__CFArray=}^{__CFDictionary=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCopyTag': (b'^{__CFData=}^{ColorSyncProfile=}^{__CFString=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncIterateDeviceProfiles': (b'v^?^v', '', {'arguments': {0: {'callable': {'retval': {'type': b'B'}, 'arguments': {0: {'type': b'^{__CFDictionary=}'}, 1: {'type': b'^v'}}}, 'callable_retained': False}}}), 'ColorSyncProfileGetURL': (b'^{__CFURL=}^{ColorSyncProfile=}^^{__CFError=}', '', {'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncTransformSetProperty': (b'v^{ColorSyncTransform=}@@',), 'ColorSyncUnregisterDevice': (b'B^{__CFString=}^{__CFUUID=}',), 'ColorSyncDeviceCopyDeviceInfo': (b'^{__CFDictionary=}^{__CFString=}^{__CFUUID=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncProfileCreateMutable': (b'^{ColorSyncProfile=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncIterateInstalledProfiles': (b'v^?^I^v^^{__CFError=}', '', {'arguments': {0: {'callable': {'retval': {'type': b'B'}, 'arguments': {0: {'type': b'^{__CFDictionary=}'}, 1: {'type': b'^v'}}}, 'callable_retained': False}, 1: {'type_modifier': 'N'}, 3: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileUninstall': (b'B^{ColorSyncProfile=}^^{__CFError=}', '', {'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileCopyData': (b'^{__CFData=}^{ColorSyncProfile=}^^{__CFError=}', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncIterateInstalledCMMs': (b'v^?^v', '', {'arguments': {0: {'callable': {'retval': {'type': b'B'}, 'arguments': {0: {'type': b'^{ColorSyncCMM=}'}, 1: {'type': b'^v'}}}, 'callable_retained': False}}}), 'ColorSyncDeviceSetCustomProfiles': (b'B^{__CFString=}^{__CFUUID=}^{__CFDictionary=}',), 'ColorSyncCMMGetBundle': (b'^{__CFBundle=}^{ColorSyncCMM=}',), 'ColorSyncIterateInstalledProfilesWithOptions': (b'v^?^I^v^{__CFDictionary=}^^{__CFError=}', '', {'arguments': {0: {'callable': {'retval': {'type': b'B'}, 'arguments': {0: {'type': b'^{__CFDictionary=}'}, 1: {'type': b'^v'}}}}, 1: {'type_modifier': 'N'}, 4: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileGetTypeID': (b'Q',), 'ColorSyncProfileCreateWithName': (b'^{ColorSyncProfile=}^{__CFString=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncTransformGetTypeID': (b'Q',), 'ColorSyncProfileGetDisplayTransferFormulaFromVCGT': (b'B^{ColorSyncProfile=}^f^f^f^f^f^f^f^f^f', '', {'arguments': {1: {'type_modifier': 'o'}, 2: {'type_modifier': 'o'}, 3: {'type_modifier': 'o'}, 4: {'type_modifier': 'o'}, 5: {'type_modifier': 'o'}, 6: {'type_modifier': 'o'}, 7: {'type_modifier': 'o'}, 8: {'type_modifier': 'o'}, 9: {'type_modifier': 'o'}}}), 'ColorSyncProfileIsWideGamut': (b'B^{ColorSyncProfile=}',), 'ColorSyncRegisterDevice': (b'B^{__CFString=}^{__CFUUID=}^{__CFDictionary=}',), 'ColorSyncProfileEstimateGammaWithDisplayID': (b'fi^^{__CFError=}', '', {'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileGetMD5': (b'{_ColorSyncMD5=[16C]}^{ColorSyncProfile=}',), 'ColorSyncProfileRemoveTag': (b'v^{ColorSyncProfile=}^{__CFString=}',), 'ColorSyncProfileContainsTag': (b'B^{ColorSyncProfile=}^{__CFString=}',), 'ColorSyncProfileEstimateGamma': (b'f^{ColorSyncProfile=}^^{__CFError=}', '', {'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileCreate': (b'^{ColorSyncProfile=}^{__CFData=}^^{__CFError=}', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o', 'null_accepted': True}}}), 'ColorSyncProfileSetHeader': (b'v^{ColorSyncProfile=}^{__CFData=}',), 'ColorSyncTransformCopyProperty': (b'@^{ColorSyncTransform=}@^{__CFDictionary=}', '', {'retval': {'already_cfretained': True}}), 'ColorSyncCMMCopyCMMIdentifier': (b'^{__CFString=}^{ColorSyncCMM=}', '', {'retval': {'already_cfretained': True}})}
-aliases = {'CSEXTERN_DESKTOP': 'CSEXTERN', 'ColorSyncMutableProfileRef': 'ColorSyncProfileRef', 'CS_UNAVAILABLE_PUBLIC_EMBEDDED': 'CS_UNAVAILABLE_EMBEDDED'}
-cftypes=[('ColorSyncCMMRef', b'^{ColorSyncCMM=}', 'ColorSyncCMMGetTypeID', None), ('ColorSyncProfileRef', b'^{ColorSyncProfile=}', 'ColorSyncProfileGetTypeID', None), ('ColorSyncTransformRef', b'^{ColorSyncTransform=}', 'ColorSyncTransformGetTypeID', None)]
+aliases = {
+    "CSEXTERN_DESKTOP": "CSEXTERN",
+    "ColorSyncMutableProfileRef": "ColorSyncProfileRef",
+    "CS_UNAVAILABLE_PUBLIC_EMBEDDED": "CS_UNAVAILABLE_EMBEDDED",
+}
+cftypes = [
+    ("ColorSyncCMMRef", b"^{ColorSyncCMM=}", "ColorSyncCMMGetTypeID", None),
+    ("ColorSyncProfileRef", b"^{ColorSyncProfile=}", "ColorSyncProfileGetTypeID", None),
+    (
+        "ColorSyncTransformRef",
+        b"^{ColorSyncTransform=}",
+        "ColorSyncTransformGetTypeID",
+        None,
+    ),
+]
 expressions = {}
 
 # END OF FILE

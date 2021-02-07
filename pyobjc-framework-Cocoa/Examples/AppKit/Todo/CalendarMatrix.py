@@ -51,14 +51,16 @@ class CalendarMatrix(Cocoa.NSMatrix):
         prevSelDate = self.selectedDay()
         selDay = self.selectedCell().tag() - self._startOffset + 1
 
-        selDate = Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
-            prevSelDate.yearOfCommonEra(),
-            prevSelDate.monthOfYear(),
-            selDay,
-            0,
-            0,
-            0,
-            Cocoa.NSTimeZone.localTimeZone(),
+        selDate = (
+            Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
+                prevSelDate.yearOfCommonEra(),
+                prevSelDate.monthOfYear(),
+                selDay,
+                0,
+                0,
+                0,
+                Cocoa.NSTimeZone.localTimeZone(),
+            )
         )
         self.setSelectedDay_(selDate)
         self.highlightTodayIfVisible()
@@ -105,8 +107,10 @@ class CalendarMatrix(Cocoa.NSMatrix):
         currentMonth = selDate.monthOfYear()
         currentYear = selDate.yearOfCommonEra()
 
-        firstOfMonth = Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
-            currentYear, currentMonth, 1, 0, 0, 0, Cocoa.NSTimeZone.localTimeZone()
+        firstOfMonth = (
+            Cocoa.NSCalendarDate.dateWithYear_month_day_hour_minute_second_timeZone_(
+                currentYear, currentMonth, 1, 0, 0, 0, Cocoa.NSTimeZone.localTimeZone()
+            )
         )
         self.monthName.setStringValue_(
             firstOfMonth.descriptionWithCalendarFormat_("%B %Y")

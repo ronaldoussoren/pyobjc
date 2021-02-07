@@ -187,7 +187,7 @@ class TestNSDictionaryInterface(TestCase):
         d2 = {BadCmp(): 1}
 
         with self.assertRaises(Exc):
-            d1 == d2
+            d1 == d2  # noqa: B015
 
     def testKeysContained(self):
         self.helper_keys_contained(lambda x: x.keys())
@@ -247,19 +247,19 @@ class TestNSDictionaryInterface(TestCase):
         d2 = self.dictClass().dictionaryWithDictionary_({1: C()})
 
         with self.assertRaises(RuntimeError):
-            d1.items() == d2.items()
+            d1.items() == d2.items()  # noqa: B015
         with self.assertRaises(RuntimeError):
-            d1.items() != d2.items()
+            d1.items() != d2.items()  # noqa: B015
         with self.assertRaises(RuntimeError):
-            d1.items() <= d2.items()
+            d1.items() <= d2.items()  # noqa: B015
         with self.assertRaises(RuntimeError):
-            d1.items() >= d2.items()
+            d1.items() >= d2.items()  # noqa: B015
 
         d3 = self.dictClass().dictionaryWithDictionary_({1: C(), 2: C()})
         with self.assertRaises(RuntimeError):
-            d2.items() < d3.items()
+            d2.items() < d3.items()  # noqa: B015
         with self.assertRaises(RuntimeError):
-            d3.items() > d2.items()
+            d3.items() > d2.items()  # noqa: B015
 
         k1 = self.dictClass().dictionaryWithDictionary_({1: 1, 2: 2}).keys()
         k2 = self.dictClass().dictionaryWithDictionary_({1: 1, 2: 2, 3: 3}).keys()

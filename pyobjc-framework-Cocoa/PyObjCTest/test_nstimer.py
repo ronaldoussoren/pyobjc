@@ -20,8 +20,10 @@ class TestNSTimer(TestCase):
             Foundation.NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_,
             4,
         )
-        timer = Foundation.NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(
-            0.1, obj, "fire:", None, False
+        timer = (
+            Foundation.NSTimer.timerWithTimeInterval_target_selector_userInfo_repeats_(
+                0.1, obj, "fire:", None, False
+            )
         )
         Foundation.NSRunLoop.currentRunLoop().addTimer_forMode_(
             timer, Foundation.NSDefaultRunLoopMode

@@ -16,7 +16,7 @@ class TestNSTouch(TestCase):
             | AppKit.NSTouchPhaseMoved
             | AppKit.NSTouchPhaseStationary,
         )
-        self.assertEqual(AppKit.NSTouchPhaseAny, 0xFFFFFFFFFFFFFFFF)
+        self.assertEqual(AppKit.NSTouchPhaseAny, 0xffffffffffffffff)
 
         # 10.12
         self.assertEqual(AppKit.NSTouchTypeDirect, 0)

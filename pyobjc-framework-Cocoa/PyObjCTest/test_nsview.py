@@ -7,7 +7,7 @@ class TestNSViewHelper(AppKit.NSObject):
     def view_stringForToolTip_point_userData_(self, a, b, c, d):
         return 1
 
-    def layer_shouldInheritContentsScale_fromWindow_(self, l, s, w):
+    def layer_shouldInheritContentsScale_fromWindow_(self, a, b, c):
         return 1
 
 

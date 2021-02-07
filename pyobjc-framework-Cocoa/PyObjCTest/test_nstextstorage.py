@@ -4,10 +4,10 @@ import objc
 
 
 class TestNSTextStorageHelper(AppKit.NSObject):
-    def textStorage_willProcessEditing_range_changeInLength_(self, s, e, r, l):
+    def textStorage_willProcessEditing_range_changeInLength_(self, s, e, r, x):
         pass
 
-    def textStorage_didProcessEditing_range_changeInLength_(self, s, e, r, l):
+    def textStorage_didProcessEditing_range_changeInLength_(self, s, e, r, x):
         pass
 
 

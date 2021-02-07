@@ -62,7 +62,7 @@ class TestNSTableViewHelper(AppKit.NSObject):
         return 1
 
     def tableView_toolTipForCell_rect_tableColumn_row_mouseLocation_(
-        self, tv, c, re, tc, r, l
+        self, tv, c, re, tc, r, x
     ):
         return 1
 

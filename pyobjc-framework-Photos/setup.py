@@ -10,7 +10,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = '7.1'
+VERSION = "7.1"
 
 setup(
     name="pyobjc-framework-Photos",

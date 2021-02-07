@@ -9,7 +9,7 @@ SCNBindingBlock = b"v" + objc._C_UINT + objc._C_UINT + b"@@"
 
 
 class TestSCNShadableHelper(SceneKit.NSObject):
-    def writeBytes_length_(self, b, l):
+    def writeBytes_length_(self, a, b):
         pass
 
     def handleBindingOfSymbol_usingBlock_(self, s, b):
@@ -18,11 +18,11 @@ class TestSCNShadableHelper(SceneKit.NSObject):
     def handleUnbindingOfSymbol_usingBlock_(self, s, b):
         pass
 
-    def program_bindValueForSymbol_atLocation_programID_renderer_(self, p, s, l, pp, r):
+    def program_bindValueForSymbol_atLocation_programID_renderer_(self, p, s, x, pp, r):
         return 1
 
     def program_unbindValueForSymbol_atLocation_programID_renderer_(
-        self, p, s, l, pp, r
+        self, p, s, x, pp, r
     ):
         return 1
 

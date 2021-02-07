@@ -914,7 +914,7 @@ make_init(const char* typestr)
 #if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    } else 
+    } else
 #endif
     {
         cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
@@ -956,7 +956,7 @@ make_init(const char* typestr)
 #if PyObjC_BUILD_RELEASE >= 1015
         if (@available(macOS 10.15, *)) {
             ffi_closure_free(cl);
-        } else 
+        } else
 #endif
         {
             PyObjC_ffi_closure_free(cl);

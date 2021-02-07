@@ -52,7 +52,7 @@ class TestNSTextAttachmentHelper(AppKit.NSObject):
 
 class TestNSTextAttachment(TestCase):
     def testConstants(self):
-        self.assertEqual(AppKit.NSAttachmentCharacter, chr(0xFFFC))
+        self.assertEqual(AppKit.NSAttachmentCharacter, chr(0xfffc))
 
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSTextAttachmentCell.wantsToTrackMouse)

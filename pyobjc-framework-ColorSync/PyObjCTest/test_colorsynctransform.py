@@ -39,7 +39,7 @@ class TestColorSyncTransform(TestCase):
         self.assertEqual(ColorSync.kColorSyncAlphaNoneSkipLast, 5)
         self.assertEqual(ColorSync.kColorSyncAlphaNoneSkipFirst, 6)
 
-        self.assertEqual(ColorSync.kColorSyncAlphaInfoMask, 0x1F)
+        self.assertEqual(ColorSync.kColorSyncAlphaInfoMask, 0x1f)
         self.assertEqual(ColorSync.kColorSyncByteOrderMask, 0x7000)
         self.assertEqual(ColorSync.kColorSyncByteOrderDefault, 0 << 12)
         self.assertEqual(ColorSync.kColorSyncByteOrder16Little, 1 << 12)

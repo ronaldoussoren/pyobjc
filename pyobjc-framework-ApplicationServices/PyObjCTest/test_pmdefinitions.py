@@ -46,9 +46,9 @@ class TestPMDefinitions(TestCase):
         self.assertEqual(PrintCore.kPMQualityInkSaver, 0x0001)
         self.assertEqual(PrintCore.kPMQualityDraft, 0x0004)
         self.assertEqual(PrintCore.kPMQualityNormal, 0x0008)
-        self.assertEqual(PrintCore.kPMQualityPhoto, 0x000B)
-        self.assertEqual(PrintCore.kPMQualityBest, 0x000D)
-        self.assertEqual(PrintCore.kPMQualityHighest, 0x000F)
+        self.assertEqual(PrintCore.kPMQualityPhoto, 0x000b)
+        self.assertEqual(PrintCore.kPMQualityBest, 0x000d)
+        self.assertEqual(PrintCore.kPMQualityHighest, 0x000f)
 
         self.assertEqual(PrintCore.kPMPaperTypeUnknown, 0x0000)
         self.assertEqual(PrintCore.kPMPaperTypePlain, 0x0001)

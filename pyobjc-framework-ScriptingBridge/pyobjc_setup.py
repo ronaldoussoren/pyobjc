@@ -419,22 +419,22 @@ def Extension(*args, **kwds):
         cflags.append("-Wno-deprecated-declarations")
 
     sdk = get_sdk()
-    if not sdk:  
+    if not sdk:
         # We're likely on a system with the Xcode Command Line Tools.
         # Explicitly use the most recent SDK to avoid compile problems.
         data = subprocess.check_output(
             ["/usr/bin/xcrun", "-sdk", "macosx", "--show-sdk-path"],
             universal_newlines=True,
         ).strip()
-            
+
         if data:
-            sdk_settings_path = os.path.join(data, 'SDKSettings.plist')
+            sdk_settings_path = os.path.join(data, "SDKSettings.plist")
             if os.path.exists(sdk_settings_path):
-                 with open(sdk_settings_path, 'rb') as fp:
-                     sdk_settings = plistlib.load(fp)
-                 version = sdk_settings['Version']
+                with open(sdk_settings_path, "rb") as fp:
+                    sdk_settings = plistlib.load(fp)
+                version = sdk_settings["Version"]
             else:
-                 version = os.path.basename(data)[6:-4]
+                version = os.path.basename(data)[6:-4]
 
             cflags.append("-isysroot")
             cflags.append(data)
@@ -444,7 +444,8 @@ def Extension(*args, **kwds):
             )
         else:
             cflags.append(
-                "-DPyObjC_BUILD_RELEASE=%02d%02d" % (tuple(map(int, os_level.split("."))))
+                "-DPyObjC_BUILD_RELEASE=%02d%02d"
+                % (tuple(map(int, os_level.split("."))))
             )
 
     else:

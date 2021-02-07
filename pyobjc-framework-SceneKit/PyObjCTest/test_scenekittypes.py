@@ -39,7 +39,7 @@ class TestSceneKitTypes(TestCase):
         self.assertEqual(SceneKit.SCNColorMaskGreen, 0x1 << 2)
         self.assertEqual(SceneKit.SCNColorMaskBlue, 0x1 << 1)
         self.assertEqual(SceneKit.SCNColorMaskAlpha, 0x1 << 0)
-        self.assertEqual(SceneKit.SCNColorMaskAll, 0xF)
+        self.assertEqual(SceneKit.SCNColorMaskAll, 0xf)
 
     @expectedFailureIf(os_release().rsplit(".", 1)[0] == "10.10")
     @min_os_level("10.10")

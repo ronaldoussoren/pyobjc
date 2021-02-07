@@ -5,13 +5,13 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 class TestMTLAccelerationStructure(TestCase):
     def test_structs(self):
         # Vector types in fields
-        self.assertFalse(hasattr(Metal, 'MTLAccelerationStructureInstanceDescriptor'))
+        self.assertFalse(hasattr(Metal, "MTLAccelerationStructureInstanceDescriptor"))
 
-        #v = Metal.MTLAccelerationStructureInstanceDescriptor()
-        #self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
-        #self.assertIsInstance(v.options, int)
-        #self.assertIsInstance(v.intersectionFunctionTableOffset, int)
-        #self.assertIsInstance(v.accelerationStructureIndex, int)
+        # v = Metal.MTLAccelerationStructureInstanceDescriptor()
+        # self.assertIsInstance(v.transformationMatrix, Metal.MTLPackedFloat4x3)
+        # self.assertIsInstance(v.options, int)
+        # self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        # self.assertIsInstance(v.accelerationStructureIndex, int)
 
     def test_constants(self):
 
@@ -43,5 +43,5 @@ class TestMTLAccelerationStructure(TestCase):
         )
         self.assertArgIsBOOL(
             Metal.MTLAccelerationStructureGeometryDescriptor.setAllowDuplicateIntersectionFunctionInvocation_,
-            0
+            0,
         )

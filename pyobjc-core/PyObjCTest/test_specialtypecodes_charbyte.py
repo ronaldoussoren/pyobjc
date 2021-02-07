@@ -166,7 +166,7 @@ class TestTypeCode_byte(TestCase):
         self.assertIsInstance(v, bytes)
 
         self.assertEqual(v[0], 0x64)
-        self.assertEqual(v[1], 0xC8)
+        self.assertEqual(v[1], 0xc8)
         self.assertEqual(v[2], 0x96)
         self.assertEqual(v[3], 0x63)
 

@@ -19,6 +19,7 @@ try:
 except ImportError:
     _dyld_shared_cache_contains_path = None
 
+
 def dyld_shared_cache_contains_path(p):
     if _dyld_shared_cache_contains_path is None:
         return False
@@ -26,6 +27,7 @@ def dyld_shared_cache_contains_path(p):
         return _dyld_shared_cache_contains_path(p)
     except NotImplementedError:
         return False
+
 
 # These are the defaults as per man dyld(1)
 #

@@ -23,44 +23,44 @@ class TestNSLayoutManagerHelper(AppKit.NSObject):
         return 1
 
     def layoutManager_shouldGenerateGlyphs_properties_characterIndexes_forGlyphRange_(
-        self, l, g, p, c, r
+        self, x, g, p, c, r
     ):
         pass
 
     def layoutManager_lineSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_(
-        self, l, i, r
+        self, x, i, r
     ):
         return 1
 
     def layoutManager_paragraphSpacingBeforeGlyphAtIndex_withProposedLineFragmentRect_(
-        self, l, i, r
+        self, x, i, r
     ):
         return 1
 
     def layoutManager_paragraphSpacingAfterGlyphAtIndex_withProposedLineFragmentRect_(
-        self, l, i, r
+        self, x, i, r
     ):
         return 1
 
-    def layoutManager_shouldUseAction_forControlCharacterAtIndex_(self, l, a, i):
+    def layoutManager_shouldUseAction_forControlCharacterAtIndex_(self, x, a, i):
         return 1
 
-    def layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_(self, l, i):
+    def layoutManager_shouldBreakLineByWordBeforeCharacterAtIndex_(self, x, i):
         return 1
 
-    def layoutManager_shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, l, i):
+    def layoutManager_shouldBreakLineByHyphenatingBeforeCharacterAtIndex_(self, x, i):
         return 1
 
     def layoutManager_boundingBoxForControlGlyphAtIndex_forTextContainer_proposedLineFragment_glyphPosition_characterIndex_(  # noqa: B950
-        self, l, i, c, f, p, i2
+        self, x, i, c, f, p, i2
     ):
         return 1
 
-    def layoutManager_textContainer_didChangeGeometryFromSize_(self, l, c, s):
+    def layoutManager_textContainer_didChangeGeometryFromSize_(self, x, c, s):
         pass
 
     def layoutManager_shouldSetLineFragmentRect_lineFragmentUsedRect_baselineOffset_inTextContainer_forGlyphRange_(  # noqa: B950
-        self, l, fr, ur, o, c, r
+        self, x, fr, ur, o, c, r
     ):
         return 1
 

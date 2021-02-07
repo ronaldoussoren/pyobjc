@@ -47,7 +47,7 @@ class TestAVAsset(TestCase):
         self.assertEqual(
             AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToLocal, 1 << 3
         )
-        self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidAll, 0xFFFF)
+        self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidAll, 0xffff)
         self.assertEqual(
             AVFoundation.AVAssetReferenceRestrictionDefaultPolicy,
             AVFoundation.AVAssetReferenceRestrictionForbidLocalReferenceToRemote,

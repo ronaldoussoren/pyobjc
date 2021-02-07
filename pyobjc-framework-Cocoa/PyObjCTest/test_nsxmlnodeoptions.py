@@ -51,8 +51,8 @@ class TestNSXMLNodeOptions(TestCase):
             (Foundation.NSXMLNodeUseSingleQuotes | Foundation.NSXMLNodeUseDoubleQuotes),
         )
         self.assertEqual(
-            Foundation.NSXMLNodePreserveAll & 0xFFFFFFFF,
-            0xFFFFFFFF
+            Foundation.NSXMLNodePreserveAll & 0xffffffff,
+            0xffffffff
             & (
                 Foundation.NSXMLNodePreserveNamespaceOrder
                 | Foundation.NSXMLNodePreserveAttributeOrder
@@ -64,6 +64,6 @@ class TestNSXMLNodeOptions(TestCase):
                 | Foundation.NSXMLNodePreserveWhitespace
                 | Foundation.NSXMLNodePreserveDTD
                 | Foundation.NSXMLNodePreserveCharacterReferences
-                | 0xFFF00000
+                | 0xfff00000
             ),
         )

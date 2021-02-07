@@ -25,6 +25,5 @@ class WSTApplicationDelegate(NSObject):
         WSTConnectionWindowController.connectionWindowController().showWindow_(sender)
 
     def applicationDidFinishLaunching_(self, aNotification):
-        """Create and display a new connection window
-        """
+        """Create and display a new connection window"""
         self.newConnectionAction_(None)

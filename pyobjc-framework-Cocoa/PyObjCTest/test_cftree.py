@@ -46,10 +46,10 @@ class TestCFTree(TestCase):
             0,
         )
 
-        def compare(l, r, context):
+        def compare(a, b, context):
             return -cmp(
-                CoreFoundation.CFTreeGetContext(l, None),
-                CoreFoundation.CFTreeGetContext(r, None),
+                CoreFoundation.CFTreeGetContext(a, None),
+                CoreFoundation.CFTreeGetContext(b, None),
             )
 
         CoreFoundation.CFTreeSortChildren(root, compare, None)

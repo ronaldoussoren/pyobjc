@@ -37,7 +37,7 @@ class TestDate(TestCase):
         self.assertEqual(CoreFoundation.kCFGregorianUnitsHours, (1 << 3))
         self.assertEqual(CoreFoundation.kCFGregorianUnitsMinutes, (1 << 4))
         self.assertEqual(CoreFoundation.kCFGregorianUnitsSeconds, (1 << 5))
-        self.assertEqual(CoreFoundation.kCFGregorianAllUnits, 0x00FFFFFF)
+        self.assertEqual(CoreFoundation.kCFGregorianAllUnits, 0x00ffffff)
 
     def testStructs(self):
         v = CoreFoundation.CFGregorianDate()

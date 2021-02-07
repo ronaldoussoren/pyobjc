@@ -10,7 +10,7 @@ class Behaviour(Foundation.NSObject):
     def roundingMode(self):
         return 1
 
-    def exceptionDuringOperation_error_leftOperand_rightOperand_(self, exc, err, l, r):
+    def exceptionDuringOperation_error_leftOperand_rightOperand_(self, exc, err, x, r):
         pass
 
 

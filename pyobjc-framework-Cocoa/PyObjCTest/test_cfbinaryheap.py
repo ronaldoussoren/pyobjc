@@ -19,10 +19,10 @@ class TestCFBinaryHeap(TestCase):
         self.assertFalse(CoreFoundation.CFBinaryHeapContainsValue(heap, "niemand"))
 
     def testApply(self):
-        def compare(l, r, info):
-            if l < r:
+        def compare(a, b, info):
+            if a < b:
                 return -1
-            elif r < l:
+            elif b < a:
                 return 1
             else:
                 return 0

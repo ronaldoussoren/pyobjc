@@ -16,30 +16,30 @@ _update(globals())
 del _update
 
 
-from ._convenience import *  # noqa: F401, F403
-from ._convenience_nsobject import *  # noqa: F401, F403
-from ._convenience_nsdecimal import *  # noqa: F401, F403
-from ._convenience_nsdata import *  # noqa: F401, F403
-from ._convenience_nsdictionary import *  # noqa: F401, F403
-from ._convenience_nsset import *  # noqa: F401, F403
-from ._convenience_nsarray import *  # noqa: F401, F403
-from ._convenience_nsstring import *  # noqa: F401, F403
-from ._convenience_mapping import *  # noqa: F401, F403
-from ._convenience_sequence import *  # noqa: F401, F403
-from ._bridgesupport import *  # noqa: F401, F403
-from ._dyld import *  # noqa: F401, F403
-from ._protocols import *  # noqa: F401, F403
-from ._descriptors import *  # noqa: F401, F403
-from ._category import *  # noqa: F401, F403
-from ._bridges import *  # noqa: F401, F403
-from ._pythonify import *  # noqa: F401, F403
-from ._locking import *  # noqa: F401, F403
-from ._context import *  # noqa: F401, F403
-from ._properties import *  # noqa: F401, F403
-from ._lazyimport import *  # noqa: F401, F403
-from ._compat import *  # noqa: F401, F403
-from . import _callable_docstr  # noqa: F401, F403
-from . import _pycoder  # noqa: F401, F403
+from ._convenience import *  # noqa: F401, F403, E402
+from ._convenience_nsobject import *  # noqa: F401, F403, E402
+from ._convenience_nsdecimal import *  # noqa: F401, F403, E402
+from ._convenience_nsdata import *  # noqa: F401, F403, E402
+from ._convenience_nsdictionary import *  # noqa: F401, F403, E402
+from ._convenience_nsset import *  # noqa: F401, F403, E402
+from ._convenience_nsarray import *  # noqa: F401, F403, E402
+from ._convenience_nsstring import *  # noqa: F401, F403, E402
+from ._convenience_mapping import *  # noqa: F401, F403, E402
+from ._convenience_sequence import *  # noqa: F401, F403, E402
+from ._bridgesupport import *  # noqa: F401, F403, E402
+from ._dyld import *  # noqa: F401, F403, E402
+from ._protocols import *  # noqa: F401, F403, E402
+from ._descriptors import *  # noqa: F401, F403, E402
+from ._category import *  # noqa: F401, F403, E402
+from ._bridges import *  # noqa: F401, F403, E402
+from ._pythonify import *  # noqa: F401, F403, E402
+from ._locking import *  # noqa: F401, F403, E402
+from ._context import *  # noqa: F401, F403, E402
+from ._properties import *  # noqa: F401, F403, E402
+from ._lazyimport import *  # noqa: F401, F403, E402
+from ._compat import *  # noqa: F401, F403, E402
+from . import _callable_docstr  # noqa: F401, F403, E402
+from . import _pycoder  # noqa: F401, F403, E402
 
 
 # Helper function for new-style metadata modules

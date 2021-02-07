@@ -133,18 +133,18 @@ class _ArrayOperators(object):
                 r.append(item)
         return rval
 
-    @staticmethod  # noqa: A003
-    def max(obj, segments):
+    @staticmethod
+    def max(obj, segments):  # noqa: A003
         path = ".".join(segments)
         return max(x for x in getKeyPath(obj, path) if x is not _null)
 
-    @staticmethod  # noqa: A003
-    def min(obj, segments):
+    @staticmethod
+    def min(obj, segments):  # noqa: A003
         path = ".".join(segments)
         return min(x for x in getKeyPath(obj, path) if x is not _null)
 
-    @staticmethod  # noqa: A003
-    def sum(obj, segments):
+    @staticmethod
+    def sum(obj, segments):  # noqa: A003
         path = ".".join(segments)
         lst = getKeyPath(obj, path)
         return msum(float(x) if x is not _null else 0.0 for x in lst)

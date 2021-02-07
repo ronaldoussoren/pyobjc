@@ -15,7 +15,7 @@ class TestListener(TestCase):
         self.assertEqual(Network.nw_listener_state_failed, 3)
         self.assertEqual(Network.nw_listener_state_cancelled, 4)
 
-        self.assertEqual(Network.NW_LISTENER_INFINITE_CONNECTION_LIMIT, 0xFFFFFFFF)
+        self.assertEqual(Network.NW_LISTENER_INFINITE_CONNECTION_LIMIT, 0xffffffff)
 
     def test_functions(self):
         self.assertResultIsRetained(Network.nw_listener_create_with_port)

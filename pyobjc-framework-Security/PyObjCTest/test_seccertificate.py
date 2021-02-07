@@ -20,7 +20,7 @@ class TestSecCertificate(TestCase):
         self.assertEqual(Security.kSecKeyUsageEncipherOnly, 1 << 7)
         self.assertEqual(Security.kSecKeyUsageDecipherOnly, 1 << 8)
         self.assertEqual(Security.kSecKeyUsageCritical, 1 << 31)
-        self.assertEqual(Security.kSecKeyUsageAll, 0x7FFFFFFF)
+        self.assertEqual(Security.kSecKeyUsageAll, 0x7fffffff)
 
         self.assertIsInstance(Security.kSecPropertyKeyType, str)
         self.assertIsInstance(Security.kSecPropertyKeyLabel, str)

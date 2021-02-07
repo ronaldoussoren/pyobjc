@@ -4177,7 +4177,7 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
 #endif
             r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), (int)r, retsig, arglist);
 #ifndef __arm64__
-        } else 
+        } else
 #endif
 #endif
 
@@ -4356,7 +4356,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
             rv = ffi_prep_cif_var(cif, FFI_DEFAULT_ABI, (int)Py_SIZE(methinfo), (int)Py_SIZE(methinfo), cl_ret_type,
                           cl_arg_types);
 #ifndef __arm64__
-        } else 
+        } else
 #endif
 #endif
 
@@ -4420,7 +4420,7 @@ PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc fun
 #if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
         cl = ffi_closure_alloc(sizeof(*cl), &codeloc);
-    } else 
+    } else
 #endif
     {
         cl = PyObjC_ffi_closure_alloc(sizeof(*cl), &codeloc);
@@ -4484,7 +4484,7 @@ PyObjCFFI_FreeClosure(IMP closure)
         retval = cl->user_data;
         PyObjCFFI_FreeCIF(cl->cif);
         ffi_closure_free(cl);
-    } else 
+    } else
 #endif
     {
         cl = (ffi_closure*)closure;

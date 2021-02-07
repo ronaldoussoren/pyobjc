@@ -36,7 +36,7 @@ class TestNSColorPanel(TestCase):
         self.assertEqual(AppKit.NSColorPanelColorListModeMask, 0x00000020)
         self.assertEqual(AppKit.NSColorPanelWheelModeMask, 0x00000040)
         self.assertEqual(AppKit.NSColorPanelCrayonModeMask, 0x00000080)
-        self.assertEqual(AppKit.NSColorPanelAllModesMask, 0x0000FFFF)
+        self.assertEqual(AppKit.NSColorPanelAllModesMask, 0x0000ffff)
 
         self.assertIsInstance(AppKit.NSColorPanelColorDidChangeNotification, str)
 

@@ -29,7 +29,7 @@ class TestNSBundle(TestCase):
         self.assertEqual(AppKit.NSBundleExecutableArchitecturePPC, 0x00000012)
         self.assertEqual(AppKit.NSBundleExecutableArchitectureX86_64, 0x01000007)
         self.assertEqual(AppKit.NSBundleExecutableArchitecturePPC64, 0x01000012)
-        self.assertEqual(AppKit.NSBundleExecutableArchitectureARM64, 0x0100000C)
+        self.assertEqual(AppKit.NSBundleExecutableArchitectureARM64, 0x0100000c)
 
         self.assertIsInstance(AppKit.NSBundleDidLoadNotification, str)
         self.assertIsInstance(AppKit.NSLoadedClasses, str)

@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestMTLRenderPass(TestCase):
     def test_constants(self):
-        self.assertEqual(Metal.MTLCounterDontSample, 0xFFFFFFFFFFFFFFFF)
+        self.assertEqual(Metal.MTLCounterDontSample, 0xffffffffffffffff)
         self.assertEqual(Metal.MTLMaxRenderPassSampleBuffers, 4)
 
         self.assertEqual(Metal.MTLLoadActionDontCare, 0)

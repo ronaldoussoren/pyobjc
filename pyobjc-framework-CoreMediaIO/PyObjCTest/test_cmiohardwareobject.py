@@ -17,7 +17,7 @@ class TestCMIOHardwareObject(TestCase):
             CoreMediaIO.kCMIOObjectPropertySelectorWildcard, fourcc(b"****")
         )
         self.assertEqual(CoreMediaIO.kCMIOObjectPropertyScopeWildcard, fourcc(b"****"))
-        self.assertEqual(CoreMediaIO.kCMIOObjectPropertyElementWildcard, 0xFFFFFFFF)
+        self.assertEqual(CoreMediaIO.kCMIOObjectPropertyElementWildcard, 0xffffffff)
 
         self.assertEqual(CoreMediaIO.kCMIOObjectPropertyScopeGlobal, fourcc(b"glob"))
         self.assertEqual(CoreMediaIO.kCMIOObjectPropertyElementMaster, 0)

@@ -40,6 +40,7 @@ class ToDoItem(Cocoa.NSObject):
     def description(self):
         descr = """%s
 \tName: %s
+\tDay: %s
 \tNotes: %s
 \tCompleted: %s
 \tSecs Until Due: %d

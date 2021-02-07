@@ -84,7 +84,7 @@ class TestNSLayoutContraintManual(TestCase):
             (1 << AppKit.NSLayoutAttributeFirstBaseline),
         )
 
-        self.assertEqual(AppKit.NSLayoutFormatAlignmentMask, 0xFFFF)
+        self.assertEqual(AppKit.NSLayoutFormatAlignmentMask, 0xffff)
 
         self.assertEqual(AppKit.NSLayoutFormatDirectionLeadingToTrailing, 0 << 16)
         self.assertEqual(AppKit.NSLayoutFormatDirectionLeftToRight, 1 << 16)

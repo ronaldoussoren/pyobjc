@@ -116,8 +116,8 @@ class Controller(Cocoa.NSObject):
         if self.openImageIOSupportedTypes is None:
             imageIOUTIs = Quartz.CGImageSourceCopyTypeIdentifiers()
             count = len(imageIOUTIs)
-            self.openImageIOSupportedTypes = Cocoa.NSMutableArray.alloc().initWithCapacity_(
-                count
+            self.openImageIOSupportedTypes = (
+                Cocoa.NSMutableArray.alloc().initWithCapacity_(count)
             )
             for i in range(count):
                 self.openImageIOSupportedTypes.addObjectsFromArray_(

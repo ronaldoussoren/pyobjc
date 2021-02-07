@@ -7,7 +7,7 @@ class TestNSRulerViewHelper(AppKit.NSView):
     def rulerView_shouldMoveMarker_(self, rl, mk):
         return 1
 
-    def rulerView_willMoveMarker_toLocation_(self, rl, mk, l):
+    def rulerView_willMoveMarker_toLocation_(self, rl, mk, x):
         return 1
 
     def rulerView_didMoveMarker_(self, rv, mk):
@@ -22,7 +22,7 @@ class TestNSRulerViewHelper(AppKit.NSView):
     def rulerView_shouldAddMarker_(self, rv, mk):
         return 1
 
-    def rulerView_willAddMarker_atLocation_(self, rv, mk, l):
+    def rulerView_willAddMarker_atLocation_(self, rv, mk, x):
         return 1
 
     def rulerView_didAddMarker_(self, rv, mk):

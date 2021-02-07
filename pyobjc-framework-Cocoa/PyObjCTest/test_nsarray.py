@@ -239,8 +239,8 @@ class TestNSArraySpecialMethods(TestCase):
         a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
         self.assertEqual(a, ("a", "b", "c"))
 
-        def cmpfunc(l, r, c):
-            return -cmp(l, r)
+        def cmpfunc(a, b, c):
+            return -cmp(a, b)
 
         b = a.sortedArrayUsingFunction_context_(cmpfunc, "hello")
         self.assertEqual(a, ("a", "b", "c"))
@@ -250,8 +250,8 @@ class TestNSArraySpecialMethods(TestCase):
         a = Foundation.NSArray.arrayWithArray_(("a", "b", "c"))
         self.assertEqual(a, ("a", "b", "c"))
 
-        def cmpfunc(l, r, c):
-            return -cmp(l, r)
+        def cmpfunc(a, b, c):
+            return -cmp(a, b)
 
         b = a.sortedArrayUsingFunction_context_hint_(
             cmpfunc, "hello", a.sortedArrayHint()
@@ -312,8 +312,8 @@ class TestNSMutableArrayInteraction(TestCase):
 
         if objc.platform == "MACOSX" or hasattr(a, "sortUsingFunction_context_range_"):
 
-            def cmpfunc(l, r, c):
-                return -cmp(l, r)
+            def cmpfunc(a, b, c):
+                return -cmp(a, b)
 
             a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
 
@@ -323,8 +323,8 @@ class TestNSMutableArrayInteraction(TestCase):
         a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
-        def cmpfunc(l, r, c):
-            return -cmp(l, r)
+        def cmpfunc(a, b, c):
+            return -cmp(a, b)
 
         a.sortUsingFunction_context_(cmpfunc, "a")
 
@@ -336,8 +336,8 @@ class TestNSMutableArrayInteraction(TestCase):
 
         if objc.platform == "MACOSX" or hasattr(a, "sortUsingFunction_context_range_"):
 
-            def cmpfunc(l, r, c):
-                return -cmp(l, r)
+            def cmpfunc(a, b, c):
+                return -cmp(a, b)
 
             a.sortUsingFunction_context_range_(cmpfunc, "a", (4, 4))
 
@@ -349,8 +349,8 @@ class TestNSMutableArrayInteraction(TestCase):
         a = Foundation.NSMutableArray.arrayWithArray_(range(4))
         self.assertEqual(a, (0, 1, 2, 3))
 
-        def cmpfunc(l, r):
-            return -cmp(l, r)
+        def cmpfunc(a, b):
+            return -cmp(a, b)
 
         if sys.version_info[0] == 2:
             a.sort(cmp=cmpfunc)
@@ -363,8 +363,8 @@ class TestNSMutableArrayInteraction(TestCase):
 
         mapping = {0: "nul", 1: "een", 2: "twee", 3: "drie"}
 
-        def keyfunc(l):
-            return mapping[l]
+        def keyfunc(item):
+            return mapping[item]
 
         a.sort(key=keyfunc)
         self.assertEqual(a, (3, 1, 0, 2))

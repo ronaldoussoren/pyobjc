@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSScrubberLayoutHelper(AppKit.NSObject):
-    def scrubber_layout_sizeForItemAtIndex_(self, s, l, i):
+    def scrubber_layout_sizeForItemAtIndex_(self, s, x, i):
         return 1
 
 

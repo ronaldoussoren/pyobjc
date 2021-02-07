@@ -27,7 +27,7 @@ class TestCTFont(TestCase):
 
         self.assertEqual(CoreText.kCTFontTableAnkr, fourcc(b"ankr"))
 
-        self.assertEqual(CoreText.kCTFontUIFontNone, 0xFFFFFFFF)
+        self.assertEqual(CoreText.kCTFontUIFontNone, 0xffffffff)
         self.assertEqual(CoreText.kCTFontUIFontUser, 0)
         self.assertEqual(CoreText.kCTFontUIFontUserFixedPitch, 1)
         self.assertEqual(CoreText.kCTFontUIFontSystem, 2)

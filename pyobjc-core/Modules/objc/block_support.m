@@ -304,7 +304,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
                 useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
                 arglist);
         }
-    } else 
+    } else
 #endif
     {
         r = ffi_prep_cif(

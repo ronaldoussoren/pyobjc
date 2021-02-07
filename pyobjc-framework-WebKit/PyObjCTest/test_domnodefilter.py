@@ -25,7 +25,7 @@ class TestDOMNodeFilter(TestCase):
         self.assertEqual(WebKit.DOM_FILTER_ACCEPT, 1)
         self.assertEqual(WebKit.DOM_FILTER_REJECT, 2)
         self.assertEqual(WebKit.DOM_FILTER_SKIP, 3)
-        self.assertEqual(WebKit.DOM_SHOW_ALL, cast_uint(0xFFFFFFFF))
+        self.assertEqual(WebKit.DOM_SHOW_ALL, cast_uint(0xffffffff))
         self.assertEqual(WebKit.DOM_SHOW_ELEMENT, 0x00000001)
         self.assertEqual(WebKit.DOM_SHOW_ATTRIBUTE, 0x00000002)
         self.assertEqual(WebKit.DOM_SHOW_TEXT, 0x00000004)

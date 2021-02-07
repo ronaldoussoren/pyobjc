@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestCMTime(TestCase):
     def test_constants(self):
-        self.assertEqual(CoreMedia.kCMTimeMaxTimescale, 0x7FFFFFFF)
+        self.assertEqual(CoreMedia.kCMTimeMaxTimescale, 0x7fffffff)
 
         self.assertEqual(CoreMedia.kCMTimeFlags_Valid, 1 << 0)
         self.assertEqual(CoreMedia.kCMTimeFlags_HasBeenRounded, 1 << 1)

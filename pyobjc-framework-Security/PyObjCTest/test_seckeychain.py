@@ -140,7 +140,7 @@ class TestSecKeychain(TestCase):
             Security.kSecTrustSettingsChangedEventMask,
             1 << Security.kSecTrustSettingsChangedEvent,
         )
-        self.assertEqual(Security.kSecEveryEventMask, 0xFFFFFFFF)
+        self.assertEqual(Security.kSecEveryEventMask, 0xffffffff)
 
         self.assertEqual(Security.kSecPreferencesDomainUser, 0)
         self.assertEqual(Security.kSecPreferencesDomainSystem, 1)

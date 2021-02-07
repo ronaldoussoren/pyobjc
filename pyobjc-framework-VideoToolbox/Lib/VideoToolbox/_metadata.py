@@ -7,19 +7,303 @@
 import objc, sys
 
 if sys.maxsize > 2 ** 32:
-    def sel32or64(a, b): return b
-else:
-    def sel32or64(a, b): return a
 
-misc = {
-}
-misc.update({'VTInt32Point': objc.createStructType('VTInt32Point', b'{VTInt32Point=ii}', ['x', 'y']), 'VTInt32Size': objc.createStructType('VTInt32Size', b'{VTInt32Size=ii}', ['width', 'height'])})
-constants = '''$kVTAlphaChannelMode_PremultipliedAlpha$kVTAlphaChannelMode_StraightAlpha$kVTCompressionPropertyKey_AllowFrameReordering$kVTCompressionPropertyKey_AllowOpenGOP$kVTCompressionPropertyKey_AllowTemporalCompression$kVTCompressionPropertyKey_AlphaChannelMode$kVTCompressionPropertyKey_AspectRatio16x9$kVTCompressionPropertyKey_AverageBitRate$kVTCompressionPropertyKey_BaseLayerFrameRate$kVTCompressionPropertyKey_CleanAperture$kVTCompressionPropertyKey_ColorPrimaries$kVTCompressionPropertyKey_ContentLightLevelInfo$kVTCompressionPropertyKey_DataRateLimits$kVTCompressionPropertyKey_Depth$kVTCompressionPropertyKey_EncoderID$kVTCompressionPropertyKey_ExpectedDuration$kVTCompressionPropertyKey_ExpectedFrameRate$kVTCompressionPropertyKey_FieldCount$kVTCompressionPropertyKey_FieldDetail$kVTCompressionPropertyKey_GammaLevel$kVTCompressionPropertyKey_H264EntropyMode$kVTCompressionPropertyKey_HDRMetadataInsertionMode$kVTCompressionPropertyKey_ICCProfile$kVTCompressionPropertyKey_MasteringDisplayColorVolume$kVTCompressionPropertyKey_MaxFrameDelayCount$kVTCompressionPropertyKey_MaxH264SliceBytes$kVTCompressionPropertyKey_MaxKeyFrameInterval$kVTCompressionPropertyKey_MaxKeyFrameIntervalDuration$kVTCompressionPropertyKey_MaximizePowerEfficiency$kVTCompressionPropertyKey_MoreFramesAfterEnd$kVTCompressionPropertyKey_MoreFramesBeforeStart$kVTCompressionPropertyKey_MultiPassStorage$kVTCompressionPropertyKey_NumberOfPendingFrames$kVTCompressionPropertyKey_PixelAspectRatio$kVTCompressionPropertyKey_PixelBufferPoolIsShared$kVTCompressionPropertyKey_PixelTransferProperties$kVTCompressionPropertyKey_PreserveDynamicHDRMetadata$kVTCompressionPropertyKey_PrioritizeEncodingSpeedOverQuality$kVTCompressionPropertyKey_ProfileLevel$kVTCompressionPropertyKey_ProgressiveScan$kVTCompressionPropertyKey_Quality$kVTCompressionPropertyKey_RealTime$kVTCompressionPropertyKey_SourceFrameCount$kVTCompressionPropertyKey_TargetQualityForAlpha$kVTCompressionPropertyKey_TransferFunction$kVTCompressionPropertyKey_UsingGPURegistryID$kVTCompressionPropertyKey_UsingHardwareAcceleratedVideoEncoder$kVTCompressionPropertyKey_VideoEncoderPixelBufferAttributes$kVTCompressionPropertyKey_YCbCrMatrix$kVTDecompressionPropertyKey_ContentHasInterframeDependencies$kVTDecompressionPropertyKey_DeinterlaceMode$kVTDecompressionPropertyKey_FieldMode$kVTDecompressionPropertyKey_MaxOutputPresentationTimeStampOfFramesBeingDecoded$kVTDecompressionPropertyKey_MaximizePowerEfficiency$kVTDecompressionPropertyKey_MinOutputPresentationTimeStampOfFramesBeingDecoded$kVTDecompressionPropertyKey_NumberOfFramesBeingDecoded$kVTDecompressionPropertyKey_OnlyTheseFrames$kVTDecompressionPropertyKey_OutputPoolRequestedMinimumBufferCount$kVTDecompressionPropertyKey_PixelBufferPool$kVTDecompressionPropertyKey_PixelBufferPoolIsShared$kVTDecompressionPropertyKey_PixelFormatsWithReducedResolutionSupport$kVTDecompressionPropertyKey_PixelTransferProperties$kVTDecompressionPropertyKey_PropagatePerFrameHDRDisplayMetadata$kVTDecompressionPropertyKey_RealTime$kVTDecompressionPropertyKey_ReducedCoefficientDecode$kVTDecompressionPropertyKey_ReducedFrameDelivery$kVTDecompressionPropertyKey_ReducedResolutionDecode$kVTDecompressionPropertyKey_SuggestedQualityOfServiceTiers$kVTDecompressionPropertyKey_SupportedPixelFormatsOrderedByPerformance$kVTDecompressionPropertyKey_SupportedPixelFormatsOrderedByQuality$kVTDecompressionPropertyKey_ThreadCount$kVTDecompressionPropertyKey_UsingGPURegistryID$kVTDecompressionPropertyKey_UsingHardwareAcceleratedVideoDecoder$kVTDecompressionProperty_DeinterlaceMode_Temporal$kVTDecompressionProperty_DeinterlaceMode_VerticalFilter$kVTDecompressionProperty_FieldMode_BothFields$kVTDecompressionProperty_FieldMode_BottomFieldOnly$kVTDecompressionProperty_FieldMode_DeinterlaceFields$kVTDecompressionProperty_FieldMode_SingleField$kVTDecompressionProperty_FieldMode_TopFieldOnly$kVTDecompressionProperty_OnlyTheseFrames_AllFrames$kVTDecompressionProperty_OnlyTheseFrames_IFrames$kVTDecompressionProperty_OnlyTheseFrames_KeyFrames$kVTDecompressionProperty_OnlyTheseFrames_NonDroppableFrames$kVTDecompressionProperty_TemporalLevelLimit$kVTDecompressionResolutionKey_Height$kVTDecompressionResolutionKey_Width$kVTDownsamplingMode_Average$kVTDownsamplingMode_Decimate$kVTEncodeFrameOptionKey_ForceKeyFrame$kVTH264EntropyMode_CABAC$kVTH264EntropyMode_CAVLC$kVTHDRMetadataInsertionMode_Auto$kVTHDRMetadataInsertionMode_None$kVTMultiPassStorageCreationOption_DoNotDelete$kVTPixelTransferPropertyKey_DestinationCleanAperture$kVTPixelTransferPropertyKey_DestinationColorPrimaries$kVTPixelTransferPropertyKey_DestinationICCProfile$kVTPixelTransferPropertyKey_DestinationPixelAspectRatio$kVTPixelTransferPropertyKey_DestinationTransferFunction$kVTPixelTransferPropertyKey_DestinationYCbCrMatrix$kVTPixelTransferPropertyKey_DownsamplingMode$kVTPixelTransferPropertyKey_RealTime$kVTPixelTransferPropertyKey_ScalingMode$kVTProfileLevel_H263_Profile0_Level10$kVTProfileLevel_H263_Profile0_Level45$kVTProfileLevel_H263_Profile3_Level45$kVTProfileLevel_H264_Baseline_1_3$kVTProfileLevel_H264_Baseline_3_0$kVTProfileLevel_H264_Baseline_3_1$kVTProfileLevel_H264_Baseline_3_2$kVTProfileLevel_H264_Baseline_4_0$kVTProfileLevel_H264_Baseline_4_1$kVTProfileLevel_H264_Baseline_4_2$kVTProfileLevel_H264_Baseline_5_0$kVTProfileLevel_H264_Baseline_5_1$kVTProfileLevel_H264_Baseline_5_2$kVTProfileLevel_H264_Baseline_AutoLevel$kVTProfileLevel_H264_Extended_5_0$kVTProfileLevel_H264_Extended_AutoLevel$kVTProfileLevel_H264_High_3_0$kVTProfileLevel_H264_High_3_1$kVTProfileLevel_H264_High_3_2$kVTProfileLevel_H264_High_4_0$kVTProfileLevel_H264_High_4_1$kVTProfileLevel_H264_High_4_2$kVTProfileLevel_H264_High_5_0$kVTProfileLevel_H264_High_5_1$kVTProfileLevel_H264_High_5_2$kVTProfileLevel_H264_High_AutoLevel$kVTProfileLevel_H264_Main_3_0$kVTProfileLevel_H264_Main_3_1$kVTProfileLevel_H264_Main_3_2$kVTProfileLevel_H264_Main_4_0$kVTProfileLevel_H264_Main_4_1$kVTProfileLevel_H264_Main_4_2$kVTProfileLevel_H264_Main_5_0$kVTProfileLevel_H264_Main_5_1$kVTProfileLevel_H264_Main_5_2$kVTProfileLevel_H264_Main_AutoLevel$kVTProfileLevel_HEVC_Main10_AutoLevel$kVTProfileLevel_HEVC_Main_AutoLevel$kVTProfileLevel_MP4V_AdvancedSimple_L0$kVTProfileLevel_MP4V_AdvancedSimple_L1$kVTProfileLevel_MP4V_AdvancedSimple_L2$kVTProfileLevel_MP4V_AdvancedSimple_L3$kVTProfileLevel_MP4V_AdvancedSimple_L4$kVTProfileLevel_MP4V_Main_L2$kVTProfileLevel_MP4V_Main_L3$kVTProfileLevel_MP4V_Main_L4$kVTProfileLevel_MP4V_Simple_L0$kVTProfileLevel_MP4V_Simple_L1$kVTProfileLevel_MP4V_Simple_L2$kVTProfileLevel_MP4V_Simple_L3$kVTPropertyDocumentationKey$kVTPropertyReadWriteStatusKey$kVTPropertyReadWriteStatus_ReadOnly$kVTPropertyReadWriteStatus_ReadWrite$kVTPropertyShouldBeSerializedKey$kVTPropertySupportedValueListKey$kVTPropertySupportedValueMaximumKey$kVTPropertySupportedValueMinimumKey$kVTPropertyTypeKey$kVTPropertyType_Boolean$kVTPropertyType_Enumeration$kVTPropertyType_Number$kVTScalingMode_CropSourceToCleanAperture$kVTScalingMode_Letterbox$kVTScalingMode_Normal$kVTScalingMode_Trim$kVTVideoDecoderSpecification_EnableHardwareAcceleratedVideoDecoder$kVTVideoDecoderSpecification_PreferredDecoderGPURegistryID$kVTVideoDecoderSpecification_RequireHardwareAcceleratedVideoDecoder$kVTVideoDecoderSpecification_RequiredDecoderGPURegistryID$kVTVideoEncoderList_CodecName$kVTVideoEncoderList_CodecType$kVTVideoEncoderList_DisplayName$kVTVideoEncoderList_EncoderID$kVTVideoEncoderList_EncoderName$kVTVideoEncoderList_GPURegistryID$kVTVideoEncoderList_InstanceLimit$kVTVideoEncoderList_IsHardwareAccelerated$kVTVideoEncoderList_PerformanceRating$kVTVideoEncoderList_QualityRating$kVTVideoEncoderList_SupportedSelectionProperties$kVTVideoEncoderList_SupportsFrameReordering$kVTVideoEncoderSpecification_EnableHardwareAcceleratedVideoEncoder$kVTVideoEncoderSpecification_EncoderID$kVTVideoEncoderSpecification_PreferredEncoderGPURegistryID$kVTVideoEncoderSpecification_RequireHardwareAcceleratedVideoEncoder$kVTVideoEncoderSpecification_RequiredEncoderGPURegistryID$'''
-enums = '''$kVTAllocationFailedErr@-12904$kVTColorCorrectionImageRotationFailedErr@-12219$kVTColorCorrectionPixelTransferFailedErr@-12212$kVTColorSyncTransformConvertFailedErr@-12919$kVTCompressionSessionBeginFinalPass@1$kVTCouldNotCreateColorCorrectionDataErr@-12918$kVTCouldNotCreateInstanceErr@-12907$kVTCouldNotFindTemporalFilterErr@-12217$kVTCouldNotFindVideoDecoderErr@-12906$kVTCouldNotFindVideoEncoderErr@-12908$kVTDecodeFrame_1xRealTimePlayback@4$kVTDecodeFrame_DoNotOutputFrame@2$kVTDecodeFrame_EnableAsynchronousDecompression@1$kVTDecodeFrame_EnableTemporalProcessing@8$kVTDecodeInfo_Asynchronous@1$kVTDecodeInfo_FrameDropped@2$kVTDecodeInfo_ImageBufferModifiable@4$kVTEncodeInfo_Asynchronous@1$kVTEncodeInfo_FrameDropped@2$kVTFormatDescriptionChangeNotSupportedErr@-12916$kVTFrameSiloInvalidTimeRangeErr@-12216$kVTFrameSiloInvalidTimeStampErr@-12215$kVTImageRotationNotSupportedErr@-12914$kVTInsufficientSourceColorDataErr@-12917$kVTInvalidSessionErr@-12903$kVTMultiPassStorageIdentifierMismatchErr@-12213$kVTMultiPassStorageInvalidErr@-12214$kVTParameterErr@-12902$kVTPixelTransferNotPermittedErr@-12218$kVTPixelTransferNotSupportedErr@-12905$kVTPropertyNotSupportedErr@-12900$kVTPropertyReadOnlyErr@-12901$kVTSessionMalfunctionErr@-17691$kVTUnlimitedFrameDelayCount@-1$kVTVideoDecoderAuthorizationErr@-12210$kVTVideoDecoderBadDataErr@-12909$kVTVideoDecoderMalfunctionErr@-12911$kVTVideoDecoderNeedsRosettaErr@-17692$kVTVideoDecoderNotAvailableNowErr@-12913$kVTVideoDecoderRemovedErr@-17690$kVTVideoDecoderUnsupportedDataFormatErr@-12910$kVTVideoEncoderAuthorizationErr@-12211$kVTVideoEncoderMalfunctionErr@-12912$kVTVideoEncoderNeedsRosettaErr@-17693$kVTVideoEncoderNotAvailableNowErr@-12915$'''
+    def sel32or64(a, b):
+        return b
+
+
+else:
+
+    def sel32or64(a, b):
+        return a
+
+
+misc = {}
+misc.update(
+    {
+        "VTInt32Point": objc.createStructType(
+            "VTInt32Point", b"{VTInt32Point=ii}", ["x", "y"]
+        ),
+        "VTInt32Size": objc.createStructType(
+            "VTInt32Size", b"{VTInt32Size=ii}", ["width", "height"]
+        ),
+    }
+)
+constants = """$kVTAlphaChannelMode_PremultipliedAlpha$kVTAlphaChannelMode_StraightAlpha$kVTCompressionPropertyKey_AllowFrameReordering$kVTCompressionPropertyKey_AllowOpenGOP$kVTCompressionPropertyKey_AllowTemporalCompression$kVTCompressionPropertyKey_AlphaChannelMode$kVTCompressionPropertyKey_AspectRatio16x9$kVTCompressionPropertyKey_AverageBitRate$kVTCompressionPropertyKey_BaseLayerFrameRate$kVTCompressionPropertyKey_CleanAperture$kVTCompressionPropertyKey_ColorPrimaries$kVTCompressionPropertyKey_ContentLightLevelInfo$kVTCompressionPropertyKey_DataRateLimits$kVTCompressionPropertyKey_Depth$kVTCompressionPropertyKey_EncoderID$kVTCompressionPropertyKey_ExpectedDuration$kVTCompressionPropertyKey_ExpectedFrameRate$kVTCompressionPropertyKey_FieldCount$kVTCompressionPropertyKey_FieldDetail$kVTCompressionPropertyKey_GammaLevel$kVTCompressionPropertyKey_H264EntropyMode$kVTCompressionPropertyKey_HDRMetadataInsertionMode$kVTCompressionPropertyKey_ICCProfile$kVTCompressionPropertyKey_MasteringDisplayColorVolume$kVTCompressionPropertyKey_MaxFrameDelayCount$kVTCompressionPropertyKey_MaxH264SliceBytes$kVTCompressionPropertyKey_MaxKeyFrameInterval$kVTCompressionPropertyKey_MaxKeyFrameIntervalDuration$kVTCompressionPropertyKey_MaximizePowerEfficiency$kVTCompressionPropertyKey_MoreFramesAfterEnd$kVTCompressionPropertyKey_MoreFramesBeforeStart$kVTCompressionPropertyKey_MultiPassStorage$kVTCompressionPropertyKey_NumberOfPendingFrames$kVTCompressionPropertyKey_PixelAspectRatio$kVTCompressionPropertyKey_PixelBufferPoolIsShared$kVTCompressionPropertyKey_PixelTransferProperties$kVTCompressionPropertyKey_PreserveDynamicHDRMetadata$kVTCompressionPropertyKey_PrioritizeEncodingSpeedOverQuality$kVTCompressionPropertyKey_ProfileLevel$kVTCompressionPropertyKey_ProgressiveScan$kVTCompressionPropertyKey_Quality$kVTCompressionPropertyKey_RealTime$kVTCompressionPropertyKey_SourceFrameCount$kVTCompressionPropertyKey_TargetQualityForAlpha$kVTCompressionPropertyKey_TransferFunction$kVTCompressionPropertyKey_UsingGPURegistryID$kVTCompressionPropertyKey_UsingHardwareAcceleratedVideoEncoder$kVTCompressionPropertyKey_VideoEncoderPixelBufferAttributes$kVTCompressionPropertyKey_YCbCrMatrix$kVTDecompressionPropertyKey_ContentHasInterframeDependencies$kVTDecompressionPropertyKey_DeinterlaceMode$kVTDecompressionPropertyKey_FieldMode$kVTDecompressionPropertyKey_MaxOutputPresentationTimeStampOfFramesBeingDecoded$kVTDecompressionPropertyKey_MaximizePowerEfficiency$kVTDecompressionPropertyKey_MinOutputPresentationTimeStampOfFramesBeingDecoded$kVTDecompressionPropertyKey_NumberOfFramesBeingDecoded$kVTDecompressionPropertyKey_OnlyTheseFrames$kVTDecompressionPropertyKey_OutputPoolRequestedMinimumBufferCount$kVTDecompressionPropertyKey_PixelBufferPool$kVTDecompressionPropertyKey_PixelBufferPoolIsShared$kVTDecompressionPropertyKey_PixelFormatsWithReducedResolutionSupport$kVTDecompressionPropertyKey_PixelTransferProperties$kVTDecompressionPropertyKey_PropagatePerFrameHDRDisplayMetadata$kVTDecompressionPropertyKey_RealTime$kVTDecompressionPropertyKey_ReducedCoefficientDecode$kVTDecompressionPropertyKey_ReducedFrameDelivery$kVTDecompressionPropertyKey_ReducedResolutionDecode$kVTDecompressionPropertyKey_SuggestedQualityOfServiceTiers$kVTDecompressionPropertyKey_SupportedPixelFormatsOrderedByPerformance$kVTDecompressionPropertyKey_SupportedPixelFormatsOrderedByQuality$kVTDecompressionPropertyKey_ThreadCount$kVTDecompressionPropertyKey_UsingGPURegistryID$kVTDecompressionPropertyKey_UsingHardwareAcceleratedVideoDecoder$kVTDecompressionProperty_DeinterlaceMode_Temporal$kVTDecompressionProperty_DeinterlaceMode_VerticalFilter$kVTDecompressionProperty_FieldMode_BothFields$kVTDecompressionProperty_FieldMode_BottomFieldOnly$kVTDecompressionProperty_FieldMode_DeinterlaceFields$kVTDecompressionProperty_FieldMode_SingleField$kVTDecompressionProperty_FieldMode_TopFieldOnly$kVTDecompressionProperty_OnlyTheseFrames_AllFrames$kVTDecompressionProperty_OnlyTheseFrames_IFrames$kVTDecompressionProperty_OnlyTheseFrames_KeyFrames$kVTDecompressionProperty_OnlyTheseFrames_NonDroppableFrames$kVTDecompressionProperty_TemporalLevelLimit$kVTDecompressionResolutionKey_Height$kVTDecompressionResolutionKey_Width$kVTDownsamplingMode_Average$kVTDownsamplingMode_Decimate$kVTEncodeFrameOptionKey_ForceKeyFrame$kVTH264EntropyMode_CABAC$kVTH264EntropyMode_CAVLC$kVTHDRMetadataInsertionMode_Auto$kVTHDRMetadataInsertionMode_None$kVTMultiPassStorageCreationOption_DoNotDelete$kVTPixelTransferPropertyKey_DestinationCleanAperture$kVTPixelTransferPropertyKey_DestinationColorPrimaries$kVTPixelTransferPropertyKey_DestinationICCProfile$kVTPixelTransferPropertyKey_DestinationPixelAspectRatio$kVTPixelTransferPropertyKey_DestinationTransferFunction$kVTPixelTransferPropertyKey_DestinationYCbCrMatrix$kVTPixelTransferPropertyKey_DownsamplingMode$kVTPixelTransferPropertyKey_RealTime$kVTPixelTransferPropertyKey_ScalingMode$kVTProfileLevel_H263_Profile0_Level10$kVTProfileLevel_H263_Profile0_Level45$kVTProfileLevel_H263_Profile3_Level45$kVTProfileLevel_H264_Baseline_1_3$kVTProfileLevel_H264_Baseline_3_0$kVTProfileLevel_H264_Baseline_3_1$kVTProfileLevel_H264_Baseline_3_2$kVTProfileLevel_H264_Baseline_4_0$kVTProfileLevel_H264_Baseline_4_1$kVTProfileLevel_H264_Baseline_4_2$kVTProfileLevel_H264_Baseline_5_0$kVTProfileLevel_H264_Baseline_5_1$kVTProfileLevel_H264_Baseline_5_2$kVTProfileLevel_H264_Baseline_AutoLevel$kVTProfileLevel_H264_Extended_5_0$kVTProfileLevel_H264_Extended_AutoLevel$kVTProfileLevel_H264_High_3_0$kVTProfileLevel_H264_High_3_1$kVTProfileLevel_H264_High_3_2$kVTProfileLevel_H264_High_4_0$kVTProfileLevel_H264_High_4_1$kVTProfileLevel_H264_High_4_2$kVTProfileLevel_H264_High_5_0$kVTProfileLevel_H264_High_5_1$kVTProfileLevel_H264_High_5_2$kVTProfileLevel_H264_High_AutoLevel$kVTProfileLevel_H264_Main_3_0$kVTProfileLevel_H264_Main_3_1$kVTProfileLevel_H264_Main_3_2$kVTProfileLevel_H264_Main_4_0$kVTProfileLevel_H264_Main_4_1$kVTProfileLevel_H264_Main_4_2$kVTProfileLevel_H264_Main_5_0$kVTProfileLevel_H264_Main_5_1$kVTProfileLevel_H264_Main_5_2$kVTProfileLevel_H264_Main_AutoLevel$kVTProfileLevel_HEVC_Main10_AutoLevel$kVTProfileLevel_HEVC_Main_AutoLevel$kVTProfileLevel_MP4V_AdvancedSimple_L0$kVTProfileLevel_MP4V_AdvancedSimple_L1$kVTProfileLevel_MP4V_AdvancedSimple_L2$kVTProfileLevel_MP4V_AdvancedSimple_L3$kVTProfileLevel_MP4V_AdvancedSimple_L4$kVTProfileLevel_MP4V_Main_L2$kVTProfileLevel_MP4V_Main_L3$kVTProfileLevel_MP4V_Main_L4$kVTProfileLevel_MP4V_Simple_L0$kVTProfileLevel_MP4V_Simple_L1$kVTProfileLevel_MP4V_Simple_L2$kVTProfileLevel_MP4V_Simple_L3$kVTPropertyDocumentationKey$kVTPropertyReadWriteStatusKey$kVTPropertyReadWriteStatus_ReadOnly$kVTPropertyReadWriteStatus_ReadWrite$kVTPropertyShouldBeSerializedKey$kVTPropertySupportedValueListKey$kVTPropertySupportedValueMaximumKey$kVTPropertySupportedValueMinimumKey$kVTPropertyTypeKey$kVTPropertyType_Boolean$kVTPropertyType_Enumeration$kVTPropertyType_Number$kVTScalingMode_CropSourceToCleanAperture$kVTScalingMode_Letterbox$kVTScalingMode_Normal$kVTScalingMode_Trim$kVTVideoDecoderSpecification_EnableHardwareAcceleratedVideoDecoder$kVTVideoDecoderSpecification_PreferredDecoderGPURegistryID$kVTVideoDecoderSpecification_RequireHardwareAcceleratedVideoDecoder$kVTVideoDecoderSpecification_RequiredDecoderGPURegistryID$kVTVideoEncoderList_CodecName$kVTVideoEncoderList_CodecType$kVTVideoEncoderList_DisplayName$kVTVideoEncoderList_EncoderID$kVTVideoEncoderList_EncoderName$kVTVideoEncoderList_GPURegistryID$kVTVideoEncoderList_InstanceLimit$kVTVideoEncoderList_IsHardwareAccelerated$kVTVideoEncoderList_PerformanceRating$kVTVideoEncoderList_QualityRating$kVTVideoEncoderList_SupportedSelectionProperties$kVTVideoEncoderList_SupportsFrameReordering$kVTVideoEncoderSpecification_EnableHardwareAcceleratedVideoEncoder$kVTVideoEncoderSpecification_EncoderID$kVTVideoEncoderSpecification_PreferredEncoderGPURegistryID$kVTVideoEncoderSpecification_RequireHardwareAcceleratedVideoEncoder$kVTVideoEncoderSpecification_RequiredEncoderGPURegistryID$"""
+enums = """$kVTAllocationFailedErr@-12904$kVTColorCorrectionImageRotationFailedErr@-12219$kVTColorCorrectionPixelTransferFailedErr@-12212$kVTColorSyncTransformConvertFailedErr@-12919$kVTCompressionSessionBeginFinalPass@1$kVTCouldNotCreateColorCorrectionDataErr@-12918$kVTCouldNotCreateInstanceErr@-12907$kVTCouldNotFindTemporalFilterErr@-12217$kVTCouldNotFindVideoDecoderErr@-12906$kVTCouldNotFindVideoEncoderErr@-12908$kVTDecodeFrame_1xRealTimePlayback@4$kVTDecodeFrame_DoNotOutputFrame@2$kVTDecodeFrame_EnableAsynchronousDecompression@1$kVTDecodeFrame_EnableTemporalProcessing@8$kVTDecodeInfo_Asynchronous@1$kVTDecodeInfo_FrameDropped@2$kVTDecodeInfo_ImageBufferModifiable@4$kVTEncodeInfo_Asynchronous@1$kVTEncodeInfo_FrameDropped@2$kVTFormatDescriptionChangeNotSupportedErr@-12916$kVTFrameSiloInvalidTimeRangeErr@-12216$kVTFrameSiloInvalidTimeStampErr@-12215$kVTImageRotationNotSupportedErr@-12914$kVTInsufficientSourceColorDataErr@-12917$kVTInvalidSessionErr@-12903$kVTMultiPassStorageIdentifierMismatchErr@-12213$kVTMultiPassStorageInvalidErr@-12214$kVTParameterErr@-12902$kVTPixelTransferNotPermittedErr@-12218$kVTPixelTransferNotSupportedErr@-12905$kVTPropertyNotSupportedErr@-12900$kVTPropertyReadOnlyErr@-12901$kVTSessionMalfunctionErr@-17691$kVTUnlimitedFrameDelayCount@-1$kVTVideoDecoderAuthorizationErr@-12210$kVTVideoDecoderBadDataErr@-12909$kVTVideoDecoderMalfunctionErr@-12911$kVTVideoDecoderNeedsRosettaErr@-17692$kVTVideoDecoderNotAvailableNowErr@-12913$kVTVideoDecoderRemovedErr@-17690$kVTVideoDecoderUnsupportedDataFormatErr@-12910$kVTVideoEncoderAuthorizationErr@-12211$kVTVideoEncoderMalfunctionErr@-12912$kVTVideoEncoderNeedsRosettaErr@-17693$kVTVideoEncoderNotAvailableNowErr@-12915$"""
 misc.update({})
-functions={'VTPixelTransferSessionCreate': (b'i^{__CFAllocator=}^^{OpaqueVTPixelTransferSession=}', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTCreateCGImageFromCVPixelBuffer': (b'i^{__CVBuffer=}^{__CFDictionary=}^^{CGImage=}', '', {'retval': {'already_cfretained': True}, 'arguments': {2: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTMultiPassStorageGetTypeID': (b'Q',), 'VTDecompressionSessionFinishDelayedFrames': (b'i^{OpaqueVTDecompressionSession=}',), 'VTSessionCopySupportedPropertyDictionary': (b'i@^^{__CFDictionary=}', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTSessionSetProperty': (b'i@^{__CFString=}@',), 'VTPixelTransferSessionTransferImage': (b'i^{OpaqueVTPixelTransferSession=}^{__CVBuffer=}^{__CVBuffer=}',), 'VTFrameSiloGetProgressOfCurrentPass': (b'i^{OpaqueVTFrameSilo=}^f', '', {'arguments': {1: {'type_modifier': 'o'}}}), 'VTMultiPassStorageClose': (b'i^{OpaqueVTMultiPassStorage=}',), 'VTIsHardwareDecodeSupported': (b'ZI',), 'VTCompressionSessionPrepareToEncodeFrames': (b'i^{OpaqueVTCompressionSession=}',), 'VTCompressionSessionInvalidate': (b'v^{OpaqueVTCompressionSession=}',), 'VTCompressionSessionCompleteFrames': (b'i^{OpaqueVTCompressionSession=}{_CMTime=qiIq}',), 'VTFrameSiloCallBlockForEachSampleBuffer': (b'i^{OpaqueVTFrameSilo=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}@?', '', {'arguments': {2: {'callable': {'retval': {'type': b'i'}, 'arguments': {0: {'type': '^v'}, 1: {'type': '^{opaqueCMSampleBuffer=}'}}}, 'block': {'retval': {'type': b'i'}, 'arguments': {0: {'type': b'^{opaqueCMSampleBuffer=}'}}}}}}), 'VTSessionCopyProperty': (b'i@^{__CFString=}^{__CFAllocator=}^@', '', {'retval': {'already_cfretained': True}, 'arguments': {3: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTFrameSiloAddSampleBuffer': (b'i^{OpaqueVTFrameSilo=}^{opaqueCMSampleBuffer=}',), 'VTDecompressionSessionDecodeFrame': (b'i^{OpaqueVTDecompressionSession=}^{opaqueCMSampleBuffer=}I^v^I', '', {'arguments': {4: {'type_modifier': 'o'}}}), 'VTRegisterProfessionalVideoWorkflowVideoEncoders': (b'v',), 'VTCompressionSessionEncodeFrameWithOutputHandler': (b'i^{OpaqueVTCompressionSession=}^{__CVBuffer=}{_CMTime=qiIq}{_CMTime=qiIq}^{__CFDictionary=}^I@?', '', {'arguments': {5: {'type_modifier': 'o'}, 6: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': '^v'}, 1: {'type': 'i'}, 2: {'type': [u'I', u'Q']}, 3: {'type': '^{opaqueCMSampleBuffer=}'}}}}}}), 'VTPixelTransferSessionGetTypeID': (b'Q',), 'VTCompressionSessionGetTypeID': (b'Q',), 'VTCompressionSessionGetPixelBufferPool': (b'^{__CVPixelBufferPool=}^{OpaqueVTCompressionSession=}',), 'VTRegisterSupplementalVideoDecoderIfAvailable': (b'vI',), 'VTFrameSiloCallFunctionForEachSampleBuffer': (b'i^{OpaqueVTFrameSilo=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}^v^?', '', {'arguments': {3: {'callable': {'retval': {'type': b'i'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'^{opaqueCMSampleBuffer=}'}}}, 'callable_retained': False}}}), 'VTDecompressionSessionCopyBlackPixelBuffer': (b'i^{OpaqueVTDecompressionSession=}^^{__CVBuffer=}', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTDecompressionSessionCanAcceptFormatDescription': (b'Z^{OpaqueVTDecompressionSession=}^{opaqueCMFormatDescription=}',), 'VTCopyVideoEncoderList': (b'i^{__CFDictionary=}^^{__CFArray=}', '', {'retval': {'already_cfretained': True}, 'arguments': {1: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTMultiPassStorageCreate': (b'i^{__CFAllocator=}^{__CFURL=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}^{__CFDictionary=}^^{OpaqueVTMultiPassStorage=}', '', {'retval': {'already_cfretained': True}, 'arguments': {4: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTDecompressionSessionGetTypeID': (b'Q',), 'VTCompressionSessionBeginPass': (b'i^{OpaqueVTCompressionSession=}I^I',), 'VTSessionSetProperties': (b'i@^{__CFDictionary=}',), 'VTDecompressionSessionWaitForAsynchronousFrames': (b'i^{OpaqueVTDecompressionSession=}',), 'VTFrameSiloSetTimeRangesForNextPass': (b'i^{OpaqueVTFrameSilo=}q^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}', '', {'arguments': {2: {'c_array_length_in_arg': 1, 'type_modifier': 'n'}}}), 'VTRegisterProfessionalVideoWorkflowVideoDecoders': (b'v',), 'VTPixelTransferSessionInvalidate': (b'v^{OpaqueVTPixelTransferSession=}',), 'VTDecompressionSessionDecodeFrameWithOutputHandler': (b'i^{OpaqueVTDecompressionSession=}^{opaqueCMSampleBuffer=}I^I@?', '', {'arguments': {3: {'type_modifier': 'o'}, 4: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': '^v'}, 1: {'type': 'i'}, 2: {'type': 'I'}, 3: {'type': '^{__CVBuffer=}'}, 4: {'type': '{_CMTime=qiIq}'}, 5: {'type': '{_CMTime=qiIq}'}}}}}}), 'VTCompressionSessionEndPass': (b'i^{OpaqueVTCompressionSession=}^Z^I', '', {'arguments': {1: {'type_modifier': 'o'}}}), 'VTCompressionSessionEncodeFrame': (b'i^{OpaqueVTCompressionSession=}^{__CVBuffer=}{_CMTime=qiIq}{_CMTime=qiIq}^{__CFDictionary=}^v^I', '', {'arguments': {6: {'type_modifier': 'o'}}}), 'VTFrameSiloCreate': (b'i^{__CFAllocator=}^{__CFURL=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}^{__CFDictionary=}^^{OpaqueVTFrameSilo=}', '', {'retval': {'already_cfretained': True}, 'arguments': {4: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTCompressionSessionCreate': (b'i^{__CFAllocator=}iiI^{__CFDictionary=}^{__CFDictionary=}^{__CFAllocator=}^?^v^^{OpaqueVTCompressionSession=}', '', {'retval': {'already_cfretained': True}, 'arguments': {9: {'already_cfretained': True, 'type_modifier': 'o'}, 7: {'callable': {'retval': {'type': b'v'}, 'arguments': {0: {'type': b'^v'}, 1: {'type': b'^v'}, 2: {'type': b'i'}, 3: {'type': b'I'}, 4: {'type': b'^{opaqueCMSampleBuffer=}'}}}}}}), 'VTCopySupportedPropertyDictionaryForEncoder': (b'iiiI^{__CFDictionary=}^^{__CFString=}^^{__CFDictionary=}', '', {'retval': {'already_cfretained': True}, 'arguments': {4: {'already_cfretained': True, 'type_modifier': 'o'}, 5: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTFrameSiloGetTypeID': (b'Q',), 'VTSessionCopySerializableProperties': (b'i@^{__CFAllocator=}^^{__CFDictionary=}', '', {'retval': {'already_cfretained': True}, 'arguments': {2: {'already_cfretained': True, 'type_modifier': 'o'}}}), 'VTDecompressionSessionInvalidate': (b'v^{OpaqueVTDecompressionSession=}',)}
-aliases = {'VT_SUPPORT_COLORSYNC_PIXEL_TRANSFER': 'COREMEDIA_TRUE'}
-cftypes=[('VTPixelTransferSessionRef', b'^{OpaqueVTPixelTransferSession=}', ':VTPixelTransferSessionGetTypeID', None), ('VTDecompressionSessionRef', b'^{OpaqueVTDecompressionSession=}', ':VTDecompressionSessionGetTypeID', None), ('VTFrameSiloRef', b'^{OpaqueVTFrameSilo=}', ':VTFrameSiloGetTypeID', None), ('VTSessionRef', b'^{OpaqueVTSession=}', ':VTSessionGetTypeID', None), ('VTMultiPassStorageRef', b'^{OpaqueVTMultiPassStorage=}', ':VTMultiPassStorageGetTypeID', None)]
+functions = {
+    "VTPixelTransferSessionCreate": (
+        b"i^{__CFAllocator=}^^{OpaqueVTPixelTransferSession=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTCreateCGImageFromCVPixelBuffer": (
+        b"i^{__CVBuffer=}^{__CFDictionary=}^^{CGImage=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTMultiPassStorageGetTypeID": (b"Q",),
+    "VTDecompressionSessionFinishDelayedFrames": (
+        b"i^{OpaqueVTDecompressionSession=}",
+    ),
+    "VTSessionCopySupportedPropertyDictionary": (
+        b"i@^^{__CFDictionary=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTSessionSetProperty": (b"i@^{__CFString=}@",),
+    "VTPixelTransferSessionTransferImage": (
+        b"i^{OpaqueVTPixelTransferSession=}^{__CVBuffer=}^{__CVBuffer=}",
+    ),
+    "VTFrameSiloGetProgressOfCurrentPass": (
+        b"i^{OpaqueVTFrameSilo=}^f",
+        "",
+        {"arguments": {1: {"type_modifier": "o"}}},
+    ),
+    "VTMultiPassStorageClose": (b"i^{OpaqueVTMultiPassStorage=}",),
+    "VTIsHardwareDecodeSupported": (b"ZI",),
+    "VTCompressionSessionPrepareToEncodeFrames": (b"i^{OpaqueVTCompressionSession=}",),
+    "VTCompressionSessionInvalidate": (b"v^{OpaqueVTCompressionSession=}",),
+    "VTCompressionSessionCompleteFrames": (
+        b"i^{OpaqueVTCompressionSession=}{_CMTime=qiIq}",
+    ),
+    "VTFrameSiloCallBlockForEachSampleBuffer": (
+        b"i^{OpaqueVTFrameSilo=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}@?",
+        "",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"i"},
+                        "arguments": {
+                            0: {"type": "^v"},
+                            1: {"type": "^{opaqueCMSampleBuffer=}"},
+                        },
+                    },
+                    "block": {
+                        "retval": {"type": b"i"},
+                        "arguments": {0: {"type": b"^{opaqueCMSampleBuffer=}"}},
+                    },
+                }
+            }
+        },
+    ),
+    "VTSessionCopyProperty": (
+        b"i@^{__CFString=}^{__CFAllocator=}^@",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTFrameSiloAddSampleBuffer": (b"i^{OpaqueVTFrameSilo=}^{opaqueCMSampleBuffer=}",),
+    "VTDecompressionSessionDecodeFrame": (
+        b"i^{OpaqueVTDecompressionSession=}^{opaqueCMSampleBuffer=}I^v^I",
+        "",
+        {"arguments": {4: {"type_modifier": "o"}}},
+    ),
+    "VTRegisterProfessionalVideoWorkflowVideoEncoders": (b"v",),
+    "VTCompressionSessionEncodeFrameWithOutputHandler": (
+        b"i^{OpaqueVTCompressionSession=}^{__CVBuffer=}{_CMTime=qiIq}{_CMTime=qiIq}^{__CFDictionary=}^I@?",
+        "",
+        {
+            "arguments": {
+                5: {"type_modifier": "o"},
+                6: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": "^v"},
+                            1: {"type": "i"},
+                            2: {"type": [u"I", u"Q"]},
+                            3: {"type": "^{opaqueCMSampleBuffer=}"},
+                        },
+                    }
+                },
+            }
+        },
+    ),
+    "VTPixelTransferSessionGetTypeID": (b"Q",),
+    "VTCompressionSessionGetTypeID": (b"Q",),
+    "VTCompressionSessionGetPixelBufferPool": (
+        b"^{__CVPixelBufferPool=}^{OpaqueVTCompressionSession=}",
+    ),
+    "VTRegisterSupplementalVideoDecoderIfAvailable": (b"vI",),
+    "VTFrameSiloCallFunctionForEachSampleBuffer": (
+        b"i^{OpaqueVTFrameSilo=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}^v^?",
+        "",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"i"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"^{opaqueCMSampleBuffer=}"},
+                        },
+                    },
+                    "callable_retained": False,
+                }
+            }
+        },
+    ),
+    "VTDecompressionSessionCopyBlackPixelBuffer": (
+        b"i^{OpaqueVTDecompressionSession=}^^{__CVBuffer=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTDecompressionSessionCanAcceptFormatDescription": (
+        b"Z^{OpaqueVTDecompressionSession=}^{opaqueCMFormatDescription=}",
+    ),
+    "VTCopyVideoEncoderList": (
+        b"i^{__CFDictionary=}^^{__CFArray=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {1: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTMultiPassStorageCreate": (
+        b"i^{__CFAllocator=}^{__CFURL=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}^{__CFDictionary=}^^{OpaqueVTMultiPassStorage=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTDecompressionSessionGetTypeID": (b"Q",),
+    "VTCompressionSessionBeginPass": (b"i^{OpaqueVTCompressionSession=}I^I",),
+    "VTSessionSetProperties": (b"i@^{__CFDictionary=}",),
+    "VTDecompressionSessionWaitForAsynchronousFrames": (
+        b"i^{OpaqueVTDecompressionSession=}",
+    ),
+    "VTFrameSiloSetTimeRangesForNextPass": (
+        b"i^{OpaqueVTFrameSilo=}q^{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
+        "",
+        {"arguments": {2: {"c_array_length_in_arg": 1, "type_modifier": "n"}}},
+    ),
+    "VTRegisterProfessionalVideoWorkflowVideoDecoders": (b"v",),
+    "VTPixelTransferSessionInvalidate": (b"v^{OpaqueVTPixelTransferSession=}",),
+    "VTDecompressionSessionDecodeFrameWithOutputHandler": (
+        b"i^{OpaqueVTDecompressionSession=}^{opaqueCMSampleBuffer=}I^I@?",
+        "",
+        {
+            "arguments": {
+                3: {"type_modifier": "o"},
+                4: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": "^v"},
+                            1: {"type": "i"},
+                            2: {"type": "I"},
+                            3: {"type": "^{__CVBuffer=}"},
+                            4: {"type": "{_CMTime=qiIq}"},
+                            5: {"type": "{_CMTime=qiIq}"},
+                        },
+                    }
+                },
+            }
+        },
+    ),
+    "VTCompressionSessionEndPass": (
+        b"i^{OpaqueVTCompressionSession=}^Z^I",
+        "",
+        {"arguments": {1: {"type_modifier": "o"}}},
+    ),
+    "VTCompressionSessionEncodeFrame": (
+        b"i^{OpaqueVTCompressionSession=}^{__CVBuffer=}{_CMTime=qiIq}{_CMTime=qiIq}^{__CFDictionary=}^v^I",
+        "",
+        {"arguments": {6: {"type_modifier": "o"}}},
+    ),
+    "VTFrameSiloCreate": (
+        b"i^{__CFAllocator=}^{__CFURL=}{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}^{__CFDictionary=}^^{OpaqueVTFrameSilo=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {4: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTCompressionSessionCreate": (
+        b"i^{__CFAllocator=}iiI^{__CFDictionary=}^{__CFDictionary=}^{__CFAllocator=}^?^v^^{OpaqueVTCompressionSession=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                9: {"already_cfretained": True, "type_modifier": "o"},
+                7: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"^v"},
+                            2: {"type": b"i"},
+                            3: {"type": b"I"},
+                            4: {"type": b"^{opaqueCMSampleBuffer=}"},
+                        },
+                    }
+                },
+            },
+        },
+    ),
+    "VTCopySupportedPropertyDictionaryForEncoder": (
+        b"iiiI^{__CFDictionary=}^^{__CFString=}^^{__CFDictionary=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {
+                4: {"already_cfretained": True, "type_modifier": "o"},
+                5: {"already_cfretained": True, "type_modifier": "o"},
+            },
+        },
+    ),
+    "VTFrameSiloGetTypeID": (b"Q",),
+    "VTSessionCopySerializableProperties": (
+        b"i@^{__CFAllocator=}^^{__CFDictionary=}",
+        "",
+        {
+            "retval": {"already_cfretained": True},
+            "arguments": {2: {"already_cfretained": True, "type_modifier": "o"}},
+        },
+    ),
+    "VTDecompressionSessionInvalidate": (b"v^{OpaqueVTDecompressionSession=}",),
+}
+aliases = {"VT_SUPPORT_COLORSYNC_PIXEL_TRANSFER": "COREMEDIA_TRUE"}
+cftypes = [
+    (
+        "VTPixelTransferSessionRef",
+        b"^{OpaqueVTPixelTransferSession=}",
+        ":VTPixelTransferSessionGetTypeID",
+        None,
+    ),
+    (
+        "VTDecompressionSessionRef",
+        b"^{OpaqueVTDecompressionSession=}",
+        ":VTDecompressionSessionGetTypeID",
+        None,
+    ),
+    ("VTFrameSiloRef", b"^{OpaqueVTFrameSilo=}", ":VTFrameSiloGetTypeID", None),
+    ("VTSessionRef", b"^{OpaqueVTSession=}", ":VTSessionGetTypeID", None),
+    (
+        "VTMultiPassStorageRef",
+        b"^{OpaqueVTMultiPassStorage=}",
+        ":VTMultiPassStorageGetTypeID",
+        None,
+    ),
+]
 expressions = {}
 
 # END OF FILE

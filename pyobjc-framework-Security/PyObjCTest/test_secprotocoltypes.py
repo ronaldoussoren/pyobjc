@@ -8,63 +8,63 @@ class TestSecProtocolTypes(TestCase):
         self.assertEqual(Security.tls_protocol_version_TLSv11, 0x0302)
         self.assertEqual(Security.tls_protocol_version_TLSv12, 0x0303)
         self.assertEqual(Security.tls_protocol_version_TLSv13, 0x0304)
-        self.assertEqual(Security.tls_protocol_version_DTLSv10, 0xFEFF)
-        self.assertEqual(Security.tls_protocol_version_DTLSv12, 0xFEFD)
+        self.assertEqual(Security.tls_protocol_version_DTLSv10, 0xfeff)
+        self.assertEqual(Security.tls_protocol_version_DTLSv12, 0xfefd)
 
-        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_3DES_EDE_CBC_SHA, 0x000A)
-        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA, 0x002F)
+        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_3DES_EDE_CBC_SHA, 0x000a)
+        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA, 0x002f)
         self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_256_CBC_SHA, 0x0035)
-        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_128_GCM_SHA256, 0x009C)
-        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_256_GCM_SHA384, 0x009D)
-        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA256, 0x003C)
-        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_256_CBC_SHA256, 0x003D)
+        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_128_GCM_SHA256, 0x009c)
+        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_256_GCM_SHA384, 0x009d)
+        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_128_CBC_SHA256, 0x003c)
+        self.assertEqual(Security.tls_ciphersuite_RSA_WITH_AES_256_CBC_SHA256, 0x003d)
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, 0xC008
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, 0xc008
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, 0xC009
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, 0xc009
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, 0xC00A
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, 0xc00a
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, 0xC012
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, 0xc012
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA, 0xC013
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA, 0xc013
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA, 0xC014
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA, 0xc014
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, 0xC023
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, 0xc023
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, 0xC024
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, 0xc024
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA256, 0xC027
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_CBC_SHA256, 0xc027
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA384, 0xC028
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_CBC_SHA384, 0xc028
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, 0xC02B
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, 0xc02b
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, 0xC02C
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, 0xc02c
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_GCM_SHA256, 0xC02F
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_128_GCM_SHA256, 0xc02f
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_GCM_SHA384, 0xC030
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_AES_256_GCM_SHA384, 0xc030
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256, 0xCCA8
+            Security.tls_ciphersuite_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256, 0xcca8
         )
         self.assertEqual(
-            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256, 0xCCA9
+            Security.tls_ciphersuite_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256, 0xcca9
         )
         self.assertEqual(Security.tls_ciphersuite_AES_128_GCM_SHA256, 0x1301)
         self.assertEqual(Security.tls_ciphersuite_AES_256_GCM_SHA384, 0x1302)

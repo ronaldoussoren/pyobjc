@@ -17,11 +17,11 @@ class TestNSDatePickerCell(TestCase):
         self.assertEqual(AppKit.NSSingleDateMode, 0)
         self.assertEqual(AppKit.NSRangeDateMode, 1)
 
-        self.assertEqual(AppKit.NSHourMinuteDatePickerElementFlag, 0x000C)
-        self.assertEqual(AppKit.NSHourMinuteSecondDatePickerElementFlag, 0x000E)
+        self.assertEqual(AppKit.NSHourMinuteDatePickerElementFlag, 0x000c)
+        self.assertEqual(AppKit.NSHourMinuteSecondDatePickerElementFlag, 0x000e)
         self.assertEqual(AppKit.NSTimeZoneDatePickerElementFlag, 0x0010)
-        self.assertEqual(AppKit.NSYearMonthDatePickerElementFlag, 0x00C0)
-        self.assertEqual(AppKit.NSYearMonthDayDatePickerElementFlag, 0x00E0)
+        self.assertEqual(AppKit.NSYearMonthDatePickerElementFlag, 0x00c0)
+        self.assertEqual(AppKit.NSYearMonthDayDatePickerElementFlag, 0x00e0)
         self.assertEqual(AppKit.NSEraDatePickerElementFlag, 0x0100)
 
         self.assertEqual(AppKit.NSDatePickerStyleTextFieldAndStepper, 0)
@@ -31,12 +31,12 @@ class TestNSDatePickerCell(TestCase):
         self.assertEqual(AppKit.NSDatePickerModeSingle, 0)
         self.assertEqual(AppKit.NSDatePickerModeRange, 1)
 
-        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinute, 0x000C)
-        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinuteSecond, 0x000E)
+        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinute, 0x000c)
+        self.assertEqual(AppKit.NSDatePickerElementFlagHourMinuteSecond, 0x000e)
         self.assertEqual(AppKit.NSDatePickerElementFlagTimeZone, 0x0010)
 
-        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonth, 0x00C0)
-        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonthDay, 0x00E0)
+        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonth, 0x00c0)
+        self.assertEqual(AppKit.NSDatePickerElementFlagYearMonthDay, 0x00e0)
         self.assertEqual(AppKit.NSDatePickerElementFlagEra, 0x0100)
 
     def testMethods(self):

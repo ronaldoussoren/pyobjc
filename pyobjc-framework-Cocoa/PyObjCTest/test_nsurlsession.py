@@ -414,8 +414,12 @@ class TestNSURLSession(TestCase):
 
     @min_os_level("10.16")
     def testMethods10_16(self):
-        self.assertResultIsBOOL(Foundation.NSURLSessionConfiguration.sessionSendsLaunchEvents)
-        self.assertArgIsBOOL(Foundation.NSURLSessionConfiguration.setSessionSendsLaunchEvents_, 0)
+        self.assertResultIsBOOL(
+            Foundation.NSURLSessionConfiguration.sessionSendsLaunchEvents
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSURLSessionConfiguration.setSessionSendsLaunchEvents_, 0
+        )
 
     @min_sdk_level("10.12")
     def testProtocols10_12(self):

@@ -166,8 +166,10 @@ class ImageBrowserController(Cocoa.NSWindowController):
     def addAnImageWithPath_(self, path):
         addObject = False
 
-        fileAttribs = Cocoa.NSFileManager.defaultManager().fileAttributesAtPath_traverseLink_(
-            path, True
+        fileAttribs = (
+            Cocoa.NSFileManager.defaultManager().fileAttributesAtPath_traverseLink_(
+                path, True
+            )
         )
         if fileAttribs is not None:
             # Check for packages.

@@ -70,7 +70,7 @@ class TestCFSocketStream(TestCase):
         self.assertEqual(CFNetwork.kCFStreamErrorSOCKS4RequestFailed, 91)
         self.assertEqual(CFNetwork.kCFStreamErrorSOCKS4IdentdFailed, 92)
         self.assertEqual(CFNetwork.kCFStreamErrorSOCKS4IdConflict, 93)
-        self.assertEqual(CFNetwork.kSOCKS5NoAcceptableMethod, 0xFF)
+        self.assertEqual(CFNetwork.kSOCKS5NoAcceptableMethod, 0xff)
 
         # Moved to CoreFoundation in 10.14, still testing here for backward
         # compat reasons.

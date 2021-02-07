@@ -15,7 +15,7 @@ class TestMacLocales(TestCase):
         self.assertEqual(CoreServices.kLocaleScriptVariantMask, 1 << 3)
         self.assertEqual(CoreServices.kLocaleRegionMask, 1 << 4)
         self.assertEqual(CoreServices.kLocaleRegionVariantMask, 1 << 5)
-        self.assertEqual(CoreServices.kLocaleAllPartsMask, 0x0000003F)
+        self.assertEqual(CoreServices.kLocaleAllPartsMask, 0x0000003f)
 
         self.assertEqual(CoreServices.kLocaleNameMask, 1 << 0)
         self.assertEqual(CoreServices.kLocaleOperationVariantNameMask, 1 << 1)

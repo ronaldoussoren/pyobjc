@@ -16,7 +16,7 @@ class TestMTLIndirectCommandEncoderHelper(Metal.NSObject):
         pass
 
     def drawIndexedPatches_patchStart_patchCount_patchIndexBuffer_patchIndexBufferOffset_controlPointIndexBuffer_controlPointIndexBufferOffset_instanceCount_baseInstance_tessellationFactorBuffer_tessellationFactorBufferOffset_tessellationFactorBufferInstanceStride_(  # noqa: B950
-        self, a, b, c, d, e, f, g, h, i, j, k, l
+        self, a, b, c, d, e, f, g, h, i, j, k, x
     ):
         pass
 

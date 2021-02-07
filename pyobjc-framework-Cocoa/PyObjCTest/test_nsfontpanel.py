@@ -25,9 +25,9 @@ class TestNSFontPanel(TestCase):
         self.assertEqual(AppKit.NSFontPanelTextColorEffectModeMask, 1 << 10)
         self.assertEqual(AppKit.NSFontPanelDocumentColorEffectModeMask, 1 << 11)
         self.assertEqual(AppKit.NSFontPanelShadowEffectModeMask, 1 << 12)
-        self.assertEqual(AppKit.NSFontPanelAllEffectsModeMask, (0xFFF00))
-        self.assertEqual(AppKit.NSFontPanelStandardModesMask, (0xFFFF))
-        self.assertEqual(AppKit.NSFontPanelAllModesMask, (0xFFFFFFFF))
+        self.assertEqual(AppKit.NSFontPanelAllEffectsModeMask, (0xfff00))
+        self.assertEqual(AppKit.NSFontPanelStandardModesMask, (0xffff))
+        self.assertEqual(AppKit.NSFontPanelAllModesMask, (0xffffffff))
 
         self.assertEqual(AppKit.NSFontPanelModeMaskFace, 1 << 0)
         self.assertEqual(AppKit.NSFontPanelModeMaskSize, 1 << 1)
@@ -37,9 +37,9 @@ class TestNSFontPanel(TestCase):
         self.assertEqual(AppKit.NSFontPanelModeMaskTextColorEffect, 1 << 10)
         self.assertEqual(AppKit.NSFontPanelModeMaskDocumentColorEffect, 1 << 11)
         self.assertEqual(AppKit.NSFontPanelModeMaskShadowEffect, 1 << 12)
-        self.assertEqual(AppKit.NSFontPanelModeMaskAllEffects, 0xFFF00)
-        self.assertEqual(AppKit.NSFontPanelModesMaskStandardModes, 0xFFFF)
-        self.assertEqual(AppKit.NSFontPanelModesMaskAllModes, 0xFFFFFFFF)
+        self.assertEqual(AppKit.NSFontPanelModeMaskAllEffects, 0xfff00)
+        self.assertEqual(AppKit.NSFontPanelModesMaskStandardModes, 0xffff)
+        self.assertEqual(AppKit.NSFontPanelModesMaskAllModes, 0xffffffff)
 
     def testProtocols(self):
         self.assertResultHasType(

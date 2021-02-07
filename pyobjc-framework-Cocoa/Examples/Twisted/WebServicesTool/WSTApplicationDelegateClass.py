@@ -32,8 +32,7 @@ class WSTApplicationDelegate(Cocoa.NSObject):
         return True
 
     def applicationDidFinishLaunching_(self, aNotification):
-        """Create and display a new connection window
-        """
+        """Create and display a new connection window"""
         reactor.interleave(AppHelper.callAfter)
         reactor.addSystemEventTrigger("after", "shutdown", AppHelper.stopEventLoop)
         self.newConnectionAction_(None)
