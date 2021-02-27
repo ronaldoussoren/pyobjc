@@ -56,6 +56,7 @@ General documentation
    notes/quartz-vs-coregraphics
    examples/index
    notes/framework-wrappers.rst
+   notes/codesigning.rst
    apinotes
    deprecations
    team
