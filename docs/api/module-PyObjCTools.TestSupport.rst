@@ -34,7 +34,7 @@ wrappers.
    "literal".
 
    The *value* is a byte string of length 4 and contains
-   the contents of the :c:type:`char` C literal with
+   the contents of the *char* C literal with
    the four character code, for example ``b"abcd"``.
 
 .. function:: cast_int(value)
@@ -318,7 +318,7 @@ wrappers.
 
    .. method:: assertResultIsBOOL(method[, message])
 
-      Assert that the result has type :c:type:`BOOL`.
+      Assert that the result has type *BOOL*.
 
    .. method:: assertArgHasType(method, argno, tp[, message])
 
@@ -326,7 +326,7 @@ wrappers.
 
    .. method:: assertArgIsBOOL(method, argno[, message])
 
-      Assert that the argument *argno* has type :c:type:`BOOL`.
+      Assert that the argument *argno* has type *BOOL*.
 
    .. method:: assertArgIsFunction(method, argno, sel_type, retained[, message])
 

@@ -133,7 +133,7 @@ The document root has children that contain the metadata for various types of ob
 
 * *<string_constant>*: Describes a #define that expands into a C or Objective-C string literal
 
-* *<struct>*:   Describes a typedef-ed C structure (for example :c:type:`NSPoint`)
+* *<struct>*:   Describes a typedef-ed C structure (for example *NSPoint*)
 
 
 The sections below contain more information about all types, with details about their semantics,
@@ -165,15 +165,15 @@ type encoding that aren't presesnt in Apple's runtime and redefines one type enc
   +--------------+---------------------------------------------------------------------------------------+
   | **Typecode** | **Description**                                                                       |
   +==============+=======================================================================================+
-  | *B*          | used for type :c:type:`BOOL`, is used for :c:type:`bool` in the Objective-C runtime   |
+  | *B*          | used for type *BOOL*, is used for *bool* in the Objective-C runtime                   |
   +--------------+---------------------------------------------------------------------------------------+
-  | *Z*          | used for type :c:type:`bool`                                                          |
+  | *Z*          | used for type *bool*                                                                  |
   +--------------+---------------------------------------------------------------------------------------+
-  | *T*          | used for type :c:type:`UniChar`                                                       |
+  | *T*          | used for type *UniChar*                                                               |
   +--------------+---------------------------------------------------------------------------------------+
-  | *t*          | used for type :c:type:`char` in the role of a single character                        |
+  | *t*          | used for type *char* in the role of a single character                                |
   +--------------+---------------------------------------------------------------------------------------+
-  | *z*          | used for type :c:type:`char` in the role of a small integer                           |
+  | *z*          | used for type *char* in the role of a small integer                                   |
   +--------------+---------------------------------------------------------------------------------------+
 
 The bridge uses the information provided by these ehnanced type encodings and translates them to regular
@@ -196,7 +196,7 @@ interpretation).
 <cftype>
 .........
 
-Nodes of this type define a CoreFoundation type, such :c:type:`CFURLRef`. These elements are used to
+Nodes of this type define a CoreFoundation type, such *CFURLRef*. These elements are used to
 define a Python proxy for the CoreFoundation type and to register that type with the bridge. The proxy
 type is a subclass of :class:`objc_object`.
 
@@ -206,7 +206,7 @@ type is a subclass of :class:`objc_object`.
 
 These elements do not have child elements, all information is encoded in attributes:
 
- * *name*:           the name of the Objetive-C type (such as :c:type:`CFURLRef`
+ * *name*:           the name of the Objetive-C type (such as *CFURLRef*
  * *type*, *type64*: the type encoding for the Objective-C type, *type64* contains the encoding for use
    in 64-bit mode when that encoding is different from the encoding used in 32-bit mode.
  * *gettypeid_func*: (optional) the name of a C function for retrieving the type ID of the type, the default is derived
@@ -295,7 +295,7 @@ embedded function pointers.
 <enum>
 ......
 
-This element defines a numeric constant such as an :c:type:`enum` label or C a macro that expands into an integer or float
+This element defines a numeric constant such as an *enum* label or C a macro that expands into an integer or float
 literal.
 
 .. sourcecode:: xml
@@ -504,8 +504,8 @@ These elements do not have child elements, all information is encoded in attribu
   (or a *<struct>* element in a bridgesupport file). The value of the attribute is
   a fully qualified name.
 
-  One example for using this is to map the Objective-C types :c:type:`NSPoint` and
-  :c:type:`CGPoint` to the same Python type.
+  One example for using this is to map the Objective-C types *NSPoint* and
+  *CGPoint* to the same Python type.
 
 
 Describing function and method prototypes
@@ -516,7 +516,7 @@ to describe the full prototype (for functions) or additional information about t
 
 For functions the *<arg>* children contain information about all arguments, in order (and without using the
 attribute *index* described below). The *<retval>* child element can contain information about the function
-return value, when that element is not present the function has return type :c:type:`void`.
+return value, when that element is not present the function has return type *void*.
 
 For methods the *<arg>* children can contain more information about some arguments, these children have
 an *index* attribute that tells which argument is described. Likewise the *<retval>* element can optionally
@@ -579,7 +579,7 @@ The following attributes can be used with *<arg>* and *<retval>* elements:
 
 * *free_result*: The return value in C is a buffer that should be freed using the function :c:func:`free`.
 
-* *sel_of_type*, *sel_of_type64*: Used when the argument has type :c:type:`SEL`: the value of the attribute describes the type
+* *sel_of_type*, *sel_of_type64*: Used when the argument has type *SEL*: the value of the attribute describes the type
   signature of a selector. This data is used by the decorator :func:`selectorFor` to adjust the method signature of a newly
   defined python method.
 

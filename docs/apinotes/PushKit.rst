@@ -1,5 +1,5 @@
 API Notes: PushKit framework
-===========================
+============================
 
 
 The full API is described in `Apple's documentation`__, both

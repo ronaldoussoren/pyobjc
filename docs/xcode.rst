@@ -2,6 +2,8 @@
 PyObjC with InterfaceBuilder
 ============================
 
+.. warning:: This file is out of date
+
 PyObjC can be used with InterfaceBuilder, the best way to use Interface Builder
 depends on the version of Xcode you are using.
 
@@ -43,16 +45,3 @@ my development on OSX 10.5*
 
 The version of Xcode that ships with Xcode 2 does not support Python code,
 which means that you will have to define your classes twice: one times in
-actual (Python) code, and then again in Interface Builder.
-
-Deprecation note: ``PyObjCTools.NibClassBuilder``
-.................................................
-
-The module ``PyObjCTools.NibClassBuilder`` allows you to remove some of the
-duplication in class definitions between Python and Interface Builder. This
-module was used a lot before Xcode 3 was released, but is now deprecated and
-doesn't work with NIB files created in Xcode 3.
-
-Please migrate to manual class definitions (as described in the section about
-Xcode 3) as soon as possible. This is slightly more work, but ensures that your
-code will work with later versions of Xcode and PyObjC.

@@ -96,12 +96,12 @@ How the size of the C array is calculated depends on the *type* of the argument:
 
 * When the type is a pointer type the value is calculated by dereferencing the pointer.
 
-* When the type is a integer (for example, :c:type:`int`, :c:type:`unsigned long` or :c:type:`NSInteger`) the length
+* When the type is a integer (for example, *int*, *unsigned long* or *NSInteger*) the length
   is the value of the C argument.
 
-* When the type is :c:type:`NSRange` or :c:type:`CFRange` the length of the C array is the lenght of the range.
+* When the type is *NSRange* or *CFRange* the length of the C array is the lenght of the range.
 
-* When the type is :c:type:`id` and the Objective-C instance responds to the "-count" selector the length
+* When the type is *id* and the Objective-C instance responds to the "-count" selector the length
   of the C array is the result of calling that selector.
 
 * In all other cases the length cannot be calculated and the bridge raises an exception.
@@ -223,7 +223,7 @@ dictionary all keys are optional unless the description mentions otherwise.
   this section, with some additional limitations: the *arguments* key of the dictionary must describe all arguments of the
   callable (that is all keys in range(len(*arguments*)) must be present), the *type* key of the argument and return value
   metadata must be present (although it is allowed to leave out the return value metadata when the function has return
-  type :c:type:`void`).
+  type *void*).
 
   For blocks the argument array *must* include the first implicit argument at index 0 or the *arguments* array, and with
   type b"^v".
@@ -439,11 +439,6 @@ Metadata for Objective-C methods and classes
 
    Register a metadata structure for the given selector. The metadata is a dictionary,
    and the structure of that dictionary is described in the section `Metadata dictionaries`_.
-
-
-.. function:: registerListType(type)
-
-   Register *type* as a list-like type that will be bridged to Objective-C as an NSArray subclass.
 
 
 .. function:: registerMappingType(type)

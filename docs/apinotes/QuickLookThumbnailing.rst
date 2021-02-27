@@ -1,5 +1,5 @@
 API Notes: QuickLookThumbnailing framework
-===========================
+==========================================
 
 
 The full API is described in `Apple's documentation`__, both

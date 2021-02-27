@@ -34,7 +34,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AddressBook </apinotes/AddressBook>`                                           | `pyobjc-framework-AddressBook`_                      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`AdServices </apinotes/AdServices>`                                             | `pyobjc-framework-AdServices`_                      |                                         |
+| :doc:`AdServices </apinotes/AdServices>`                                             | `pyobjc-framework-AdServices`_                       |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AdSupport </apinotes/AdSupport>`                                               | `pyobjc-framework-AdSupport`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -70,6 +70,9 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`AutomaticAssessmentConfiguration </apinotes/AutomaticAssessmentConfiguration>` | `pyobjc-framework-AutomaticAssessmentConfiguration`_ |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AVFoundation </apinotes/AVFoundation>`                                         | `pyobjc-framework-AVFoundation`_                     |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| AVFAudio                                                                             |                                                      | New in macOS 11.3                       |
+|                                                                                      |                                                      | Exposed through AVFoundation bindings.  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`AVKit </apinotes/AVKit>`                                                       | `pyobjc-framework-AVKit`_                            |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -440,7 +443,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Social </apinotes/Social>`                                                     | `pyobjc-framework-Social`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`SoundAnalysis </apinotes/SoundAnalysis`                                        | `pyobjc-framework-SoundAnalysis`_                    | Not wrapped yet                         |
+| :doc:`SoundAnalysis </apinotes/SoundAnalysis>`                                       | `pyobjc-framework-SoundAnalysis`_                    | Not wrapped yet                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Speech </apinotes/Speech>`                                                     | `pyobjc-framework-Speech`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -650,3 +653,4 @@ prioritizing work.
 .. _`pyobjc-framework-Virtualization`: https://pypi.org/project/pyobjc-framework-Virtualization/
 .. _`pyobjc-framework-AutomaticAssessmentConfiguration`: https://pypi.org/project/pyobjc-framework-AutomaticAssessmentConfiguration/
 .. _`pyobjc-framework-AdServices`: https://pypi.org/project/pyobjc-framework-AdServices/
+.. _`pyobjc-framework-PencilKit`: https://pypi.org/project/pyobjc-framework-PencilKit/

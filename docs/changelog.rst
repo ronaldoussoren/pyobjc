@@ -3,6 +3,15 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 7.2
+-----------
+
+* Update bindings for the macOS 11.3 SDK
+
+  This SDK introduces a separate ``AVFAudio`` framework, but
+  PyObjC continues to expose these APIs through the
+  ``AVFoundation`` bindings.
+
 Version 7.1
 -----------
 
@@ -739,7 +748,7 @@ Version 4.0b1
   - :doc:`OpenDirectory </apinotes/OpenDirectory>`
   - :doc:`Photos </apinotes/Photos>`
   - :doc:`PhotosUI </apinotes/PhotosUI>`
-  - :doc:`QTKit </apinotes/QTKit>`
+  - QTKit
   - :doc:`Quartz </apinotes/Quartz>`
   - :doc:`QuartzCore </apinotes/QuartzCore>`
   - :doc:`QuickLook </apinotes/QuickLook>`

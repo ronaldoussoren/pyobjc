@@ -481,7 +481,7 @@ Dynamic modification of classes
 .. class:: Category
 
    A helper class for adding a category to an existing Objecive-C class (subclass
-   of :c:type:`NSObject`).
+   of *NSObject*).
 
    Usage::
 
@@ -646,17 +646,17 @@ Types
 
    .. note::
 
-      The wrapper classes for the :c:type:`NSString` class cluster aren't subclasses
+      The wrapper classes for the *NSString* class cluster aren't subclasses
       of :class:`objc_object`, but are subclasses of the builtin :class:`unicode` type
       (:class:`str:` in Python 3).
 
 .. class:: pyobjc_unicode
 
-   This class is used to wrap instances of the :c:type:`NSString` class cluster and is
+   This class is used to wrap instances of the *NSString* class cluster and is
    a subclass of the builtin Unicode type (:class:`unicode` for python 2 and :class:`str`
    for Python 3).
 
-   Methods of the underlying :c:type:`NSString` class can be accessed at as methods
+   Methods of the underlying *NSString* class can be accessed at as methods
    of the python type, unless they have the same name as a method of the built-in Unicode
    type.
 
@@ -668,10 +668,10 @@ Types
 
    .. note::
 
-      Instances of :c:type:`NSString` can be mutable. Mutations to mutable Cocoa
+      Instances of *NSString* can be mutable. Mutations to mutable Cocoa
       strings are not reflected in instances of :class:`pyobjc_unicode`, use
       :meth:`nsstring` and explict conversion to the built-in unicode type when
-      you work with mutable :c:type:`NSString` values.
+      you work with mutable *NSString* values.
 
    .. note::
 
@@ -1213,52 +1213,52 @@ lists symbolic constants in the for those constants.
 ======================== =================================================
 Name                     Objective-C type
 ======================== =================================================
-:const:`_C_ID`           :c:type:`id` (an Objective-C instance)
+:const:`_C_ID`           *id* (an Objective-C instance)
 ------------------------ -------------------------------------------------
 :const:`_C_CLASS`        an Objective-C class
 ------------------------ -------------------------------------------------
 :const:`_C_SEL`          a method selector
 ------------------------ -------------------------------------------------
-:const:`_C_CHR`          :c:type:`char`
+:const:`_C_CHR`          *char*
 ------------------------ -------------------------------------------------
-:const:`_C_UCHR`         :c:type:`unsigned char`
+:const:`_C_UCHR`         *unsigned char*
 ------------------------ -------------------------------------------------
-:const:`_C_SHT`          :c:type:`short`
+:const:`_C_SHT`          *short*
 ------------------------ -------------------------------------------------
-:const:`_C_USHT`         :c:type:`unsigned short`
+:const:`_C_USHT`         *unsigned short*
 ------------------------ -------------------------------------------------
-:const:`_C_BOOL`         :c:type:`bool`  (or :c:type:`_Bool`)
+:const:`_C_BOOL`         *bool*  (or *_Bool*)
 ------------------------ -------------------------------------------------
-:const:`_C_INT`          :c:type:`int`
+:const:`_C_INT`          *int*
 ------------------------ -------------------------------------------------
-:const:`_C_UINT`         :c:type:`unsigned int`
+:const:`_C_UINT`         *unsigned int*
 ------------------------ -------------------------------------------------
-:const:`_C_LNG`          :c:type:`long`
+:const:`_C_LNG`          *long*
 ------------------------ -------------------------------------------------
-:const:`_C_ULNG`         :c:type:`unsigned long`
+:const:`_C_ULNG`         *unsigned long*
 ------------------------ -------------------------------------------------
-:const:`_C_LNG_LNG`      :c:type:`long long`
+:const:`_C_LNG_LNG`      *long long*
 ------------------------ -------------------------------------------------
-:const:`_C_ULNG_LNG`     :c:type:`unsigned long long`
+:const:`_C_ULNG_LNG`     *unsigned long long*
 ------------------------ -------------------------------------------------
-:const:`_C_FLT`          :c:type:`float`
+:const:`_C_FLT`          *float*
 ------------------------ -------------------------------------------------
-:const:`_C_DBL`          :c:type:`double`
+:const:`_C_DBL`          *double*
 ------------------------ -------------------------------------------------
-:const:`_C_VOID`         :c:type:`void`
+:const:`_C_VOID`         *void*
 ------------------------ -------------------------------------------------
 :const:`_C_UNDEF`        "other" (such a function)
 ------------------------ -------------------------------------------------
-:const:`_C_CHARPTR`      C string (:c:type:`char*`)
+:const:`_C_CHARPTR`      C string (*char**)
 ------------------------ -------------------------------------------------
-:const:`_C_NSBOOL`       :c:type:`BOOL`
+:const:`_C_NSBOOL`       *BOOL*
 ------------------------ -------------------------------------------------
-:const:`_C_UNICHAR`      :c:type:`UniChar`
+:const:`_C_UNICHAR`      *UniChar*
 ------------------------ -------------------------------------------------
-:const:`_C_CHAR_AS_TEXT` :c:type:`char` when uses as text or a byte array
+:const:`_C_CHAR_AS_TEXT` *char* when uses as text or a byte array
 ------------------------ -------------------------------------------------
-:const:`_C_CHAR_AS_INT`  :c:type:`int8_t` (or :c:type:`char` when
-                    used as a number)
+:const:`_C_CHAR_AS_INT`  *int8_t* (or *char* when
+                         used as a number)
 ======================== =================================================
 
 The values :const:`_C_NSBOOL`, :const:`_C_UNICHAR`, :const:`_C_CHAR_AS_TEXT`,
@@ -1300,7 +1300,7 @@ More complex types can be represented using longer type strings:
   followed by :const:`_C_ARY_E`.
 
 * The C construct 'const' is mapped to :const:`_C_CONST`, that is a
-  :c:type:`const char*` is represented as :const:`_C_CONST` + :const:`_C_CHARPTR`.
+  *const char\** is represented as :const:`_C_CONST` + :const:`_C_CHARPTR`.
 
 Additional annotations for method and function arguments
 ........................................................
@@ -1359,17 +1359,17 @@ in Cocoa but are not basic C types.
   ======================= ==============================
   Constant                Objective-C type
   ======================= ==============================
-  :const:`_C_CFTYPEID`    :c:type:`CFTypeID`
+  :const:`_C_CFTYPEID`    *CFTypeID*
   ----------------------- ------------------------------
-  :const:`_C_NSInteger`   :c:type:`NSInteger`
+  :const:`_C_NSInteger`   *NSInteger*
   ----------------------- ------------------------------
-  :const:`_C_NSUInteger`  :c:type:`NSUInteger`
+  :const:`_C_NSUInteger`  *NSUInteger*
   ----------------------- ------------------------------
-  :const:`_C_CFIndex`     :c:type:`CFIndex`
+  :const:`_C_CFIndex`     *CFIndex*
   ----------------------- ------------------------------
-  :const:`_C_CGFloat`     :c:type:`CGFloat`
+  :const:`_C_CGFloat`     *CGFloat*
   ----------------------- ------------------------------
-  :const:`_sockaddr_type` :c:type:`struct sockaddr`
+  :const:`_sockaddr_type` *struct sockaddr*
   ======================= ==============================
 
 
@@ -1377,7 +1377,7 @@ Context pointers
 ----------------
 
 A number of Objective-C APIs have one argument that is a context pointer,
-which is a :c:type:`void*`. In Objective-C your can pass a pointer to an
+which is a *void\**. In Objective-C your can pass a pointer to an
 arbitrary value, in Python this must be an integer.
 
 PyObjC provides a :data:`context` object that can be used to allocate
@@ -1517,7 +1517,7 @@ Descriptors
                                                       object values at specific           :func:`typedAccessor`.
                                                       indexes for an indexed
                                                       property. The argument
-                                                      is an :c:type:`NSIndexSet`.
+                                                      is an *NSIndexSet*.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    get\ *Property*\ _range_                           Optimized accessor                  Not supported by PyObjC, don't use
    -------------------------------------------------- ----------------------------------- -----------------------------------------
@@ -1526,8 +1526,8 @@ Descriptors
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    insert\ *Property*\ _atIndexes_                    Insert the values from a list of    Don't use this with
                                                       at specific indices. The            :func:`typedAccessor`.
-                                                      arguments are an :c:type:`NSArray`
-                                                      and an :c:type:`NSIndexSet`.
+                                                      arguments are an *NSArray*
+                                                      and an *NSIndexSet*.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    removeObjectFrom\ *Property*\ AtIndex\_            Remove the value
                                                       at a specific index of an
@@ -1536,7 +1536,7 @@ Descriptors
    remove\ *Property*\ AtIndexes\_                    Remove the values at specific
                                                       indices of an indexed property. The
                                                       argument is an
-                                                      :c:type:`NSIndexSet`.
+                                                      *NSIndexSet*.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    replaceObjectIn\ *Property*\ AtIndex_withObject\_  Replace the value at a specific
                                                       index of an indexed property.
@@ -1544,7 +1544,7 @@ Descriptors
    replace\ *Property*\ AtIndexes_with\ *Property*\_  Replace the values at specific      Don't use with :func:`typedAccessor`
                                                       indices of an indexed property.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
-   enumeratorOf\ *Property*                            Returns an :c:type:`NSEnumerator`
+   enumeratorOf\ *Property*                            Returns an *NSEnumerator*
                                                        for an unordered property.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    memberOf\ *Property*\ _                             Returns True if the value is
@@ -1567,7 +1567,7 @@ Descriptors
                                                        are not in the set argument.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    validate\ *Property*\ _error_                       Validate the new value of a         For typed accessor's the value
-                                                       property                            is wrapped in an :c:type:`NSValue`
+                                                       property                            is wrapped in an *NSValue*
                                                                                            (but numbers and booleans are automaticly
                                                                                            unwrapped by the bridge)
    ================================================== =================================== =========================================
@@ -1722,9 +1722,9 @@ Archiving Python and Objective-C objects
 ----------------------------------------
 
 Python and Objective-C each provide a native object serialization method,
-the :mod:`pickle` module in Python and the :c:type:`NSCoding` protocol in Objective-C.
+the :mod:`pickle` module in Python and the *NSCoding* protocol in Objective-C.
 
-It is possible to use an :c:type:`NSKeyedArchiver` to store any Python object that
+It is possible to use an *NSKeyedArchiver* to store any Python object that
 can be pickled in an Objective-C serialized data object.
 
 Due to technical details it is not possible to pickle an Objective-C object,
