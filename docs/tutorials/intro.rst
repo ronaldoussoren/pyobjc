@@ -28,7 +28,7 @@ write code that does not follow the Model-View-Controller paradigm, but you
 would be on your own.  Cocoa and Interface Builder are designed to suit this
 model.
 
-.. __: https://developer.apple.com/library/content/documentation/General/Conceptual/MOSXAppProgrammingGuide/CoreAppDesign/CoreAppDesign.html
+.. __: https://developer.apple.com/library/archive/documentation/General/Conceptual/MOSXAppProgrammingGuide/CoreAppDesign/CoreAppDesign.html
 
 Cocoa is built on the Model-View-Controller paradigm (MVC).  What this means
 is that the application code should be split into three parts:
@@ -121,7 +121,7 @@ contains enough information to recreate the view objects, but a NIB can also
 contain a large proportion of the setup for your Model and Controller
 functionality.  This is especially true when using `Cocoa Bindings`__.
 
-.. __: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
+.. __: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
 
 Delegates
 ---------

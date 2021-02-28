@@ -4,7 +4,7 @@ API Notes: FSEvents framework
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/documentation/coreservices/core_services_functions?language=objc
+.. __: https://developer.apple.com/documentation/coreservices/carbon_core/carbon_core_functions?preferredLanguage=occ
 
 These bindings are accessed through the ``FSEvents`` package (that is, ``import FSEvents``).
 

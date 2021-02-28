@@ -7,7 +7,7 @@ Apple documentation
 The full API is described in `Apple's documentation`__, both
 the C and Objective-C APIs are available (but see the `API Notes`_ below).
 
-.. __: https://developer.apple.com/corehaptics/?language=objc
+.. __: https://developer.apple.com/documentation/corehaptics/?language=objc
 
 These bindings are accessed through the ``SystemExtensions`` package (that is, ``import SystemExtensions``).
 

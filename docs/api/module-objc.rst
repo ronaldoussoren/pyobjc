@@ -1578,7 +1578,7 @@ Descriptors
       Added support for unordered properties. Also fixed some issues for 64-bit
       builds.
 
-.. _`Apple documentation for Key-Value Coding`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/SearchImplementation.html
+.. _`Apple documentation for Key-Value Coding`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/SearchImplementation.html
 
 .. function:: typedAccessor(valueType)
 

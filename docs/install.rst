@@ -75,7 +75,7 @@ Requirements for building from source
 
 PyObjC contains extensions and is distributed as source code. You therefore
 need a compiler to install PyObjC. The easiest way to get a compiler is do
-download `Xcode from the Mac App Store <https://itunes.apple.com/us/app/xcode/id497799835?mt=12>`_.
+download `Xcode from the Mac App Store <https://apps.apple.com/us/app/xcode/id497799835?mt=12>`_.
 
 Depending on the Python release you may need to install the Command Line
 Tools for Xcode. To install the Command Line Tools first install Xcode from

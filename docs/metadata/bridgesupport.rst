@@ -90,7 +90,7 @@ framework itself.
 
    The call to :func:`objc.pathForFramework` ensures that the wrapper does the right thing
    when DYLD environment variables are
-   set (see `dyld(1) <https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/dyld.1.html>`_ for
+   set (see `dyld(1) <https://www.manpagez.com/man/1/dyld/>`_ for
    more information on those).
 
 
@@ -591,9 +591,9 @@ The following attributes can be used with *<arg>* and *<retval>* elements:
   separated by a comma, in those cases the first value is the argument that contains the array length that should be passed to the
   function while the second value the argument that contains the usuable length of the array when the function returns.
 
-.. _`BridgeSupport(5)`: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html
+.. _`BridgeSupport(5)`: https://www.manpagez.com/man/5/BridgeSupport/
 
-.. _`Apple's manual page for BridgeSupport`: https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html
+.. _`Apple's manual page for BridgeSupport`: https://www.manpagez.com/man/5/BridgeSupport/
 
 
 API description
@@ -614,7 +614,7 @@ API description
                      see :func:`loadFunctionList` for more information on
                      this parameter.
 
-   Load a `BridgeSupport XML file <https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man5/BridgeSupport.5.html>`_
+   Load a `BridgeSupport XML file <https://www.manpagez.com/man/5/BridgeSupport/>`_
    with metadata for a framework.
 
    The definitions from the framework will be added to the *globals* dictionary.
@@ -671,4 +671,4 @@ API description
 .. [1] Technically, deprecation started in PyObjC 2.5, the bridgesupport
        system was temporarily removed in PyObjC 2.4.
 
-.. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html?language=objc
+.. _`Apple's Objective-C Runtime Programming Guide`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Introduction/Introduction.html?language=objc

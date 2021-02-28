@@ -63,7 +63,7 @@ The metadata is a Python dictionary with a particular structure (all keys are op
   In python the function is called with the additional arguments after the fixed arguments (just like in C), but without
   a null value at the end of the argument array.
 
-  An example of such a function is `execlp(3) <http://www.manpages.info/macosx/execl.3.html>`_
+  An example of such a function is `execlp(3) <https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html>`_
 
 * *c_array_length_in_arg*: If present and the value is an integer, and the function is a variadic function, the
   variable part of the function argument list is a list of values and the value for this key indicates which function

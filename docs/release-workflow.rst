@@ -105,7 +105,7 @@ Push the update to GitHub.
 Check the website
 -----------------
 
-Check that https://pyobjc.readthedocs.io/ contains the release notes for the current release
+Check that https://pyobjc.readthedocs.io/en/latest/ contains the release notes for the current release
 
 Send out announcement
 ---------------------

@@ -452,7 +452,7 @@ For more information about Objective-C see:
 
 * `The Objective-C Programming Language`_ at `Apple`_.
 
-.. _`The Objective-C Programming Language`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html
+.. _`The Objective-C Programming Language`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/OOP_ObjC/Introduction/Introduction.html
 
    The link is not correct, but the actual document is not online at the  moment.
 
@@ -737,9 +737,9 @@ instead of Python lists for instance variables that will be observed and contain
 a sequence of values (and simularly for ``NSMutableDictionary`` instead of
 ``dict``).
 
-.. _`Cocoa Bindings`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
-.. _`Key-Value Coding`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueCoding/index.html
-.. _`Key-Value Observing`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
+.. _`Cocoa Bindings`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CocoaBindings/CocoaBindings.html
+.. _`Key-Value Coding`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/index.html
+.. _`Key-Value Observing`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
 
 NOTE: Key-Value Observing is not supported for "pure" python objects, that
 is instances of classes that don't inherit from ``NSObject``. Adding such
@@ -869,7 +869,7 @@ More information on Cocoa programming can be found at:
 
 ..  _`Cocoa documentation at the Apple developer website`: https://developer.apple.com/documentation?language=objc
 
-.. _`Cocoa examples at the Apple developer website`: https://developer.apple.com/library/content/navigation/index.html
+.. _`Cocoa examples at the Apple developer website`: https://developer.apple.com/library/archive/navigation/index.html
 
 Notes on specific tasks
 -----------------------

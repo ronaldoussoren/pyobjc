@@ -50,7 +50,7 @@ Getting Started
    this in Python, not Objective-C.  Your nib file should now be the same as
    *step3-MainMenu.nib*.
 
-.. _`Developing Cocoa Objective-C Applications: a Tutorial`: https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html
+.. _`Developing Cocoa Objective-C Applications: a Tutorial`: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html
 
 4. Create the skeleton Python script by running the ``nibclassbuilder`` script.
    ``nibclassbuilder`` will parse the NIB file and create a skeleton module for

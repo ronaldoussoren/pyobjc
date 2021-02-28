@@ -110,4 +110,4 @@ in the DocUtils source tree.
     docstrings for individual methods may use example blocks, hyperlinks, or
     any other ReST markup.
 
-.. _reStructuredText: http://docutils.sourceforge.net/rst.html
+.. _reStructuredText: https://docutils.sourceforge.io/rst.html
