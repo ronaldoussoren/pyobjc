@@ -50,7 +50,6 @@ General documentation
    core/introspecting
    core/serializing
    core/kvo
-   core/objc-gc
    metadata/index
    tutorials/index
    notes/quartz-vs-coregraphics
@@ -61,7 +60,6 @@ General documentation
    deprecations
    team
    release-workflow
-   xcode
 
 
 API documentation
@@ -76,6 +74,15 @@ API documentation
    api/module-PyObjCTools.AppCategories
    api/module-PyObjCTools.FndCategories
 
+
+Historical documents
+====================
+
+.. toctree::
+   :maxdepth: 1
+
+   xcode
+   core/objc-gc
 
 
 PyObjC Developement
