@@ -25,6 +25,7 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(Quartz.kCVPixelFormatType_32ABGR, fourcc(b"ABGR"))
         self.assertEqual(Quartz.kCVPixelFormatType_32RGBA, fourcc(b"RGBA"))
         self.assertEqual(Quartz.kCVPixelFormatType_64ARGB, fourcc(b"b64a"))
+        self.assertEqual(Quartz.kCVPixelFormatType_64RGBALE, fourcc(b"l64r"))
         self.assertEqual(Quartz.kCVPixelFormatType_48RGB, fourcc(b"b48r"))
         self.assertEqual(Quartz.kCVPixelFormatType_32AlphaGray, fourcc(b"b32a"))
         self.assertEqual(Quartz.kCVPixelFormatType_16Gray, fourcc(b"b16g"))

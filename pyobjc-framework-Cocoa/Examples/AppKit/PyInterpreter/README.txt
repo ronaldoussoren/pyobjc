@@ -2,7 +2,7 @@ PyInterpreter
 
 PyInterpreter is a full featured Python interpreter in a NSTextView.
 
-See:    https://pythonhosted.org/pyobjc/
+See:    https://pyobjc.readthedocs.io/en/latest/
         https://wiki.python.org/moin/MacPython/PyInterpreter
 
 Source for both the pyobjc module and PyInterpreter are

@@ -10,16 +10,16 @@ class TestMPMediaItem(TestCase):
         self.assertEqual(MediaPlayer.MPMediaTypePodcast, 1 << 1)
         self.assertEqual(MediaPlayer.MPMediaTypeAudioBook, 1 << 2)
         self.assertEqual(MediaPlayer.MPMediaTypeAudioITunesU, 1 << 3)
-        self.assertEqual(MediaPlayer.MPMediaTypeAnyAudio, 0x00ff)
+        self.assertEqual(MediaPlayer.MPMediaTypeAnyAudio, 0x00FF)
         self.assertEqual(MediaPlayer.MPMediaTypeMovie, 1 << 8)
         self.assertEqual(MediaPlayer.MPMediaTypeTVShow, 1 << 9)
         self.assertEqual(MediaPlayer.MPMediaTypeVideoPodcast, 1 << 10)
         self.assertEqual(MediaPlayer.MPMediaTypeMusicVideo, 1 << 11)
         self.assertEqual(MediaPlayer.MPMediaTypeVideoITunesU, 1 << 12)
         self.assertEqual(MediaPlayer.MPMediaTypeHomeVideo, 1 << 13)
-        self.assertEqual(MediaPlayer.MPMediaTypeAnyVideo, 0xff00)
+        self.assertEqual(MediaPlayer.MPMediaTypeAnyVideo, 0xFF00)
 
-        self.assertEqual(MediaPlayer.MPMediaTypeAny, 0xffffffffffffffff)
+        self.assertEqual(MediaPlayer.MPMediaTypeAny, 0xFFFFFFFFFFFFFFFF)
 
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPersistentID, str)
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyMediaType, str)
@@ -66,6 +66,10 @@ class TestMPMediaItem(TestCase):
             MediaPlayer.MPNowPlayingInfoPropertyCurrentPlaybackDate, str
         )
         self.assertIsInstance(MediaPlayer.MPMediaItemPropertyPlaybackStoreID, str)
+
+    @min_os_level("11.3")
+    def testConstants11_3(self):
+        self.assertIsInstance(MediaPlayer.MPMediaItemPropertyIsPreorder, str)
 
     @min_os_level("10.12")
     def testMethods(self):

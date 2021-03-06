@@ -300,6 +300,10 @@ class TestNSURL(TestCase):
 
         self.assertIsInstance(Foundation.NSURLFileProtectionKey, str)
 
+    @min_os_level("11.3")
+    def testConstants11_3(self):
+        self.assertIsInstance(Foundation.NSURLUbiquitousItemIsExcludedFromSyncKey, str)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgIsBOOL(

@@ -36,6 +36,12 @@ class TestAVAssetDownloadTask(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVAssetDownloadTaskPrefersHDRKey, str)
 
+    @min_os_level("11.3")
+    def test_constants11_3(self):
+        self.assertIsInstance(
+            AVFoundation.AVAssetDownloadTaskPrefersLosslessAudioKey, str
+        )
+
     def test_methods(self):
         self.assertArgHasType(
             TestAVAssetDownloadTaskHelper.URLSession_assetDownloadTask_didLoadTimeRange_totalTimeRangesLoaded_timeRangeExpectedToLoad_,  # noqa: B950

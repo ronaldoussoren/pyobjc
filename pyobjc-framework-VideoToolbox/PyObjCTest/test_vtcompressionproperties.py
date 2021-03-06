@@ -218,3 +218,14 @@ class TestVTCompressionProperties(TestCase):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_PreserveDynamicHDRMetadata, str
         )
+
+    @min_os_level("10.16.3")
+    def test_constants10_16_3(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_BaseLayerFrameRateFraction,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTVideoEncoderSpecification_EnableLowLatencyRateControl,
+            str,
+        )

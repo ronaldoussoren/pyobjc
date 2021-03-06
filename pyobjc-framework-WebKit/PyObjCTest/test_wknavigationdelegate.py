@@ -24,9 +24,11 @@ class TestWKNavigationDelegate(TestCase):
 
         self.assertEqual(WebKit.WKNavigationActionPolicyCancel, 0)
         self.assertEqual(WebKit.WKNavigationActionPolicyAllow, 1)
+        self.assertEqual(WebKit.WKNavigationActionPolicyDownload, 2)
 
         self.assertEqual(WebKit.WKNavigationResponsePolicyCancel, 0)
         self.assertEqual(WebKit.WKNavigationResponsePolicyAllow, 1)
+        self.assertEqual(WebKit.WKNavigationResponsePolicyDownload, 2)
 
     @min_os_level("10.10")
     def testProtocols(self):

@@ -62,3 +62,7 @@ class TestNSProgress(TestCase):
         self.assertIsInstance(AppKit.NSProgressFileAnimationImageKey, str)
         self.assertIsInstance(AppKit.NSProgressFileAnimationImageOriginalRectKey, str)
         self.assertIsInstance(AppKit.NSProgressFileIconKey, str)
+
+    @min_os_level("10.10")
+    def testConstants10_10(self):
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindUploading, str)

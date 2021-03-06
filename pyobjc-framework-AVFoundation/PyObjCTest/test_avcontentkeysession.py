@@ -133,6 +133,11 @@ class TestAVContentKeySession(TestCase):
             b"v@@",
         )
 
+    @min_os_level("11.3")
+    def testMethods11_3(self):
+        self.assertResultIsBOOL(AVFoundation.AVSampleBufferAttachContentKey)
+        self.assertArgIsOut(AVFoundation.AVSampleBufferAttachContentKey, 2)
+
     @min_sdk_level("10.12.4")
     def testProtocols(self):
         objc.protocolNamed("AVContentKeySessionDelegate")

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MLCompute
 
@@ -47,4 +47,10 @@ class TestMLCInferenceGraph(TestCase):
             MLCompute.MLCInferenceGraph.executeWithInputsData_lossLabelsData_lossLabelWeightsData_outputsData_batchSize_options_completionHandler_,  # noqa: B950
             6,
             b"v@@d",
+        )
+
+    @min_os_level("11.3")
+    def test_methods11_3(self):
+        self.assertResultIsBOOL(
+            MLCompute.MLCInferenceGraph.compileWithOptions_device_inputTensors_inputTensorsData_
         )

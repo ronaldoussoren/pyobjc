@@ -28,6 +28,11 @@ class TestAVPlayerItem(TestCase):
             AVFoundation.AVAudioSpatializationFormatMonoStereoAndMultichannel, 0x7
         )
 
+        self.assertEqual(AVFoundation.AVVariantPreferenceNone, 0)
+        self.assertEqual(
+            AVFoundation.AVVariantPreferenceScalabilityToLosslessAudio, 1 << 0
+        )
+
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVPlayerItemPlaybackStalledNotification, str)

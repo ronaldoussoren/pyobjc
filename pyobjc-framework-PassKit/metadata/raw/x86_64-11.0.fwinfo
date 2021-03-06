@@ -5870,6 +5870,9 @@
   },
   "expressions": {},
   "externs": {
+   "PKPaymentNetworkMir": {
+    "typestr": "@"
+   },
    "PKAddSecureElementPassErrorDomain": {
     "typestr": "@"
    },

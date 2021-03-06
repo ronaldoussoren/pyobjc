@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MLCompute
 
@@ -16,12 +16,12 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCRandomInitializerTypeUniform, 1)
         self.assertEqual(MLCompute.MLCRandomInitializerTypeGlorotUniform, 2)
         self.assertEqual(MLCompute.MLCRandomInitializerTypeXavier, 3)
-        self.assertEqual(MLCompute.MLCRandomInitializerTypeCount, 4)
+        self.assertNotHasAttr(MLCompute, "MLCRandomInitializerTypeCount")
 
         self.assertEqual(MLCompute.MLCDeviceTypeCPU, 0)
         self.assertEqual(MLCompute.MLCDeviceTypeGPU, 1)
         self.assertEqual(MLCompute.MLCDeviceTypeAny, 2)
-        self.assertEqual(MLCompute.MLCDeviceTypeCount, 3)
+        self.assertNotHasAttr(MLCompute, "MLCDeviceTypeCount")
 
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsNone, 0x00)
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsDebugLayers, 0x01)
@@ -63,7 +63,12 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCArithmeticOperationExp2, 23)
         self.assertEqual(MLCompute.MLCArithmeticOperationLog, 24)
         self.assertEqual(MLCompute.MLCArithmeticOperationLog2, 25)
-        self.assertEqual(MLCompute.MLCArithmeticOperationCount, 26)
+        self.assertEqual(MLCompute.MLCArithmeticOperationMultiplyNoNaN, 26)
+        self.assertEqual(MLCompute.MLCArithmeticOperationDivideNoNaN, 27)
+        self.assertEqual(MLCompute.MLCArithmeticOperationMin, 28)
+        self.assertEqual(MLCompute.MLCArithmeticOperationMax, 29)
+
+        self.assertNotHasAttr(MLCompute, "MLCArithmeticOperationCount")
 
         self.assertEqual(MLCompute.MLCLossTypeMeanAbsoluteError, 0)
         self.assertEqual(MLCompute.MLCLossTypeMeanSquaredError, 1)
@@ -74,7 +79,7 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCLossTypeHuber, 6)
         self.assertEqual(MLCompute.MLCLossTypeCosineDistance, 7)
         self.assertEqual(MLCompute.MLCLossTypeLog, 8)
-        self.assertEqual(MLCompute.MLCLossTypeCount, 9)
+        self.assertNotHasAttr(MLCompute, "MLCLossTypeCount")
 
         self.assertEqual(MLCompute.MLCActivationTypeNone, 0)
         self.assertEqual(MLCompute.MLCActivationTypeReLU, 1)
@@ -95,7 +100,10 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCActivationTypeTanhShrink, 16)
         self.assertEqual(MLCompute.MLCActivationTypeThreshold, 17)
         self.assertEqual(MLCompute.MLCActivationTypeGELU, 18)
-        self.assertEqual(MLCompute.MLCActivationTypeCount, 19)
+        self.assertEqual(MLCompute.MLCActivationTypeHardSwish, 19)
+        self.assertEqual(MLCompute.MLCActivationTypeClamp, 20)
+
+        self.assertNotHasAttr(MLCompute, "MLCActivationTypeCount")
 
         self.assertEqual(MLCompute.MLCConvolutionTypeStandard, 0)
         self.assertEqual(MLCompute.MLCConvolutionTypeTransposed, 1)
@@ -113,7 +121,7 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCPoolingTypeMax, 1)
         self.assertEqual(MLCompute.MLCPoolingTypeAverage, 2)
         self.assertEqual(MLCompute.MLCPoolingTypeL2Norm, 3)
-        self.assertEqual(MLCompute.MLCPoolingTypeCount, 4)
+        self.assertNotHasAttr(MLCompute, "MLCPoolingTypeCount")
 
         self.assertEqual(MLCompute.MLCReductionTypeNone, 0)
         self.assertEqual(MLCompute.MLCReductionTypeSum, 1)
@@ -122,7 +130,11 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCReductionTypeMin, 4)
         self.assertEqual(MLCompute.MLCReductionTypeArgMax, 5)
         self.assertEqual(MLCompute.MLCReductionTypeArgMin, 6)
-        self.assertEqual(MLCompute.MLCReductionTypeCount, 7)
+        self.assertEqual(MLCompute.MLCReductionTypeL1Norm, 7)
+        self.assertEqual(MLCompute.MLCReductionTypeAny, 8)
+        self.assertEqual(MLCompute.MLCReductionTypeAll, 9)
+
+        self.assertNotHasAttr(MLCompute, "MLCReductionTypeCount")
 
         self.assertEqual(MLCompute.MLCRegularizationTypeNone, 0)
         self.assertEqual(MLCompute.MLCRegularizationTypeL1, 1)
@@ -137,6 +149,21 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCLSTMResultModeOutput, 0x00)
         self.assertEqual(MLCompute.MLCLSTMResultModeOutputAndStates, 0x01)
 
+        self.assertEqual(MLCompute.MLCComparisonOperationEqual, 0)
+        self.assertEqual(MLCompute.MLCComparisonOperationNotEqual, 1)
+        self.assertEqual(MLCompute.MLCComparisonOperationLess, 2)
+        self.assertEqual(MLCompute.MLCComparisonOperationGreater, 3)
+        self.assertEqual(MLCompute.MLCComparisonOperationLessOrEqual, 4)
+        self.assertEqual(MLCompute.MLCComparisonOperationGreaterOrEqual, 5)
+        self.assertEqual(MLCompute.MLCComparisonOperationLogicalAND, 6)
+        self.assertEqual(MLCompute.MLCComparisonOperationLogicalOR, 7)
+        self.assertEqual(MLCompute.MLCComparisonOperationLogicalNOT, 8)
+        self.assertEqual(MLCompute.MLCComparisonOperationLogicalNAND, 9)
+        self.assertEqual(MLCompute.MLCComparisonOperationLogicalNOR, 10)
+        self.assertEqual(MLCompute.MLCComparisonOperationLogicalXOR, 11)
+
+        self.assertNotHasAttr(MLCompute, "MLCComparisonOperationCount")
+
     def test_functions(self):
         MLCompute.MLCActivationTypeDebugDescription
         MLCompute.MLCArithmeticOperationDebugDescription
@@ -148,3 +175,8 @@ class MLCTypes(TestCase):
         MLCompute.MLCPoolingTypeDebugDescription
         MLCompute.MLCSoftmaxOperationDebugDescription
         MLCompute.MLCSampleModeDebugDescription
+        MLCompute.MLCLSTMResultModeDebugDescription
+
+    @min_os_level("11.3")
+    def test_functions11_3(self):
+        MLCompute.MLCComparisonOperationDebugDescription

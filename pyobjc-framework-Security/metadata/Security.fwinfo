@@ -99,6 +99,7 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "kSecCSAllowNetworkAccess": { "value": : 65536 },
    "errSecCertificateIsCA": { "value": -67902 },
    "kSecCodeSignatureLinkerSigned": { "value": 131072 },
    "kSecCSApplyEmbeddedPolicy": { "value": 33554432  },

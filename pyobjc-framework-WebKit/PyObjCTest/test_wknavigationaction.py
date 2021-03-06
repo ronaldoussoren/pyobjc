@@ -11,3 +11,7 @@ class TestWKNavigationAction(TestCase):
         self.assertEqual(WebKit.WKNavigationTypeReload, 3)
         self.assertEqual(WebKit.WKNavigationTypeFormResubmitted, 4)
         self.assertEqual(WebKit.WKNavigationTypeOther, -1)
+
+    @min_os_level("10.16")
+    def testMethods10_16(self):
+        self.assertResultIsBOOL(WebKit.WKNavigationAction.shouldPerformDownload)

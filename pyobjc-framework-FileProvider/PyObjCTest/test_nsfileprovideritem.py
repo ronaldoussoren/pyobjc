@@ -74,6 +74,9 @@ class TestNSFileProviderItem(TestCase):
             FileProvider.NSFileProviderItemCapabilitiesAllowsEvicting, 1 << 6
         )
         self.assertEqual(
+            FileProvider.NSFileProviderItemCapabilitiesAllowsExcludingFromSync, 1 << 7
+        )
+        self.assertEqual(
             FileProvider.NSFileProviderItemCapabilitiesAllowsAddingSubItems,
             FileProvider.NSFileProviderItemCapabilitiesAllowsWriting,
         )
@@ -88,8 +91,7 @@ class TestNSFileProviderItem(TestCase):
             | FileProvider.NSFileProviderItemCapabilitiesAllowsReparenting
             | FileProvider.NSFileProviderItemCapabilitiesAllowsRenaming
             | FileProvider.NSFileProviderItemCapabilitiesAllowsTrashing
-            | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting
-            | FileProvider.NSFileProviderItemCapabilitiesAllowsEvicting,
+            | FileProvider.NSFileProviderItemCapabilitiesAllowsDeleting,
         )
 
         self.assertEqual(FileProvider.NSFileProviderFileSystemUserExecutable, 1 << 0)

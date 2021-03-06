@@ -7,6 +7,13 @@ class TestNSFileProviderDomain(TestCase):
     def test_constants10_16(self):
         self.assertIsInstance(FileProvider.NSFileProviderDomainDidChange, str)
 
+        self.assertEqual(
+            FileProvider.NSFileProviderDomainTestingModeAlwaysEnabledDomain, 1 << 0
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderDomainTestingModeInteractive, 1 << 1
+        )
+
     @min_os_level("10.16")
     def test_methods10_16(self):
         self.assertResultIsBOOL(FileProvider.NSFileProviderDomain.isDisconnected)

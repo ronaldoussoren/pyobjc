@@ -25,6 +25,8 @@ class TestAVAudioIONode(TestCase):
 
     @min_os_level("10.15")
     def testMethods10_15(self):
+        self.assertResultIsBOOL(AVFoundation.AVAudioIONode.isVoiceProcessingEnabled)
+
         self.assertResultIsBOOL(
             AVFoundation.AVAudioInputNode.setVoiceProcessingEnabled_error_
         )

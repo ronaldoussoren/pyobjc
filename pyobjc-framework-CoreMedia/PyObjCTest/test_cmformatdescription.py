@@ -75,6 +75,7 @@ class TestCMFormatDescription(TestCase):
         self.assertEqual(CoreMedia.kCMVideoCodecType_H264, fourcc(b"avc1"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_HEVC, fourcc(b"hvc1"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_HEVCWithAlpha, fourcc(b"muxa"))
+        self.assertEqual(CoreMedia.kCMVideoCodecType_DolbyVisionHEVC, fourcc(b"dvh1"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG4Video, fourcc(b"mp4v"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG2Video, fourcc(b"mp2v"))
         self.assertEqual(CoreMedia.kCMVideoCodecType_MPEG1Video, fourcc(b"mp1v"))

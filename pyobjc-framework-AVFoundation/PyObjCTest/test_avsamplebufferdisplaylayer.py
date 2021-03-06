@@ -24,6 +24,13 @@ class TestAVSampleBufferDisplayLayer(TestCase):
             str,
         )
 
+    @min_os_level("11.3")
+    def testConstants11_3(self):
+        self.assertIsInstance(
+            AVFoundation.AVSampleBufferDisplayLayerOutputObscuredDueToInsufficientExternalProtectionDidChangeNotification,
+            str,
+        )  # noqa: B950
+
     @min_os_level("10.8")
     def testMethods(self):
         self.assertResultIsBOOL(
@@ -57,4 +64,10 @@ class TestAVSampleBufferDisplayLayer(TestCase):
     def testMethods10_16(self):
         self.assertResultIsBOOL(
             AVFoundation.AVSampleBufferDisplayLayer.requiresFlushToResumeDecoding
+        )
+
+    @min_os_level("11.3")
+    def testMethods11_3(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVSampleBufferDisplayLayer.outputObscuredDueToInsufficientExternalProtection
         )

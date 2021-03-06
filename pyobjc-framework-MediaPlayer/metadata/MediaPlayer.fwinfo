@@ -1,6 +1,7 @@
 {
  "definitions": {
   "externs": {
+   "MPMediaItemPropertyIsPreorder": { "typestr": "@" },
    "MPNowPlayingInfoPropertyServiceIdentifier,": { "typestr": "@" },
    "MPNowPlayingInfoPropertyCurrentPlaybackDate": { "typestr": "@" },
    "MPNowPlayingInfoPropertyAssetURL": { "typestr": "@" },

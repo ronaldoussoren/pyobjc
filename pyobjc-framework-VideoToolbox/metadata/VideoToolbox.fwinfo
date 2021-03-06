@@ -7,6 +7,8 @@
    "VTDecompressionOutputCallbackRecord": { "ignore": true }
   },
   "externs": {
+   "kVTVideoEncoderSpecification_EnableLowLatencyRateControl": { "typestr": "@" },
+   "kVTCompressionPropertyKey_BaseLayerFrameRateFraction": { "typestr": "@" },
    "kVTVideoEncoderList_IsHardwareAccelerated": { "typestr": "@" },
    "kVTVideoEncoderList_InstanceLimit": { "typestr": "@" },
    "kVTVideoEncoderList_QualityRating": { "typestr": "@" },

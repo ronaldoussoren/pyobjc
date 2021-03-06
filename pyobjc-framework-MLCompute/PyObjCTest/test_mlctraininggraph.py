@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MLCompute
 
@@ -73,4 +73,10 @@ class TestMLCTrainingGraph(TestCase):
 
         self.assertResultIsBOOL(
             MLCompute.MLCTrainingGraph.bindOptimizerData_deviceData_withTensor_
+        )
+
+    @min_os_level("11.3")
+    def test_methods11_3(self):
+        self.assertResultIsBOOL(
+            MLCompute.MLCTrainingGraph.compileWithOptions_device_inputSensors_inputTensorsData_
         )

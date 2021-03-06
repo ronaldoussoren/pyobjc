@@ -1,5 +1,6 @@
 from PyObjCTools.TestSupport import TestCase, min_os_level
 import WebKit
+import objc
 
 
 class TestWKWebView(TestCase):
@@ -54,4 +55,30 @@ class TestWKWebView(TestCase):
             WebKit.WKWebView.callAsyncJavaScript_arguments_inFrame_inContentWorld_completionHandler_,
             4,
             b"v@@",
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.pauseAllMediaPlayback_,
+            0,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.suspendAllMediaPlayback_,
+            0,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.resumeAllMediaPlayback_,
+            0,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.requestMediaPlaybackState_,
+            0,
+            b"v" + objc._C_NSInteger,
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.startDownloadUsingRequest_completionHandler_, 1, b"v@"
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.resumeDownloadFromResumeData_completionHandler_, 1, b"v@"
         )

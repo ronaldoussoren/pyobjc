@@ -36,6 +36,9 @@ class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
     def materializedItemsDidChangeWithCompletionHandler_(self, a):
         pass
 
+    def pendingItemsDidChangeWithCompletionHandler_(self, a):
+        pass
+
     def fetchThumbnailsForItemIdentifiers_requestedSize_perThumbnailCompletionHandler_completionHandler_(
         self, a, b, c, d
     ):
@@ -58,6 +61,9 @@ class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
 class TestNSFileProviderReplicatedExtension(TestCase):
     def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderCreateItemMayAlreadyExist, 1 << 0)
+        self.assertEqual(
+            FileProvider.NSFileProviderCreateItemDeletionConflicted, 1 << 1
+        )
 
         self.assertEqual(FileProvider.NSFileProviderDeleteItemRecursive, 1 << 0)
 
@@ -82,6 +88,10 @@ class TestNSFileProviderReplicatedExtension(TestCase):
         objc.protocolNamed("NSFileProviderServicing")
         objc.protocolNamed("NSFileProviderThumbnailing")
         objc.protocolNamed("NSFileProviderCustomAction")
+
+    @min_sdk_level("11.3")
+    def test_protocols11_3(self):
+        objc.protocolNamed("NSFileProviderDomainState")
 
     def test_methods(self):
         self.assertArgHasType(
@@ -128,6 +138,12 @@ class TestNSFileProviderReplicatedExtension(TestCase):
 
         self.assertArgIsBlock(
             TestNSFileProviderReplicatedExtensionHelper.materializedItemsDidChangeWithCompletionHandler_,
+            0,
+            b"v",
+        )
+
+        self.assertArgIsBlock(
+            TestNSFileProviderReplicatedExtensionHelper.pendingItemsDidChangeWithCompletionHandler_,
             0,
             b"v",
         )

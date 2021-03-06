@@ -87,6 +87,20 @@ class TestGKLocalPlayer(TestCase):
             GameKit.GKLocalPlayer.isPersonalizedCommunicationRestricted
         )
 
+    @min_os_level("11.3")
+    def testMethods11_3(self):
+        self.assertArgIsBlock(
+            GameKit.GKLocalPlayer.loadFriendsAuthorizationStatus_,
+            0,
+            b"v" + objc._C_NSInteger + b"@",
+        )
+        self.assertArgIsBlock(GameKit.GKLocalPlayer.loadFriends_, 0, b"v@@")
+        self.assertArgIsBlock(
+            GameKit.GKLocalPlayer.loadFriendsWithIdentifiers_completionHandler_,
+            1,
+            b"v@@",
+        )
+
     def testProtocols(self):
         objc.protocolNamed("GKLocalPlayerListener")
 
@@ -98,3 +112,8 @@ class TestGKLocalPlayer(TestCase):
         self.assertEqual(GameKit.GKAuthenticatingWithoutUI, 0)
         self.assertEqual(GameKit.GKAuthenticatingWithGreenBuddyUI, 1)
         self.assertEqual(GameKit.GKAuthenticatingWithAuthKitInvocation, 2)
+
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusNotDetermined, 0)
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusRestricted, 1)
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusDenied, 2)
+        self.assertEqual(GameKit.GKFriendsAuthorizationStatusAuthorized, 3)

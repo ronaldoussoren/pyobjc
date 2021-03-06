@@ -1,5 +1,11 @@
 import FileProvider
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
+import objc
+
+
+class TestNSFileProviderManagerHelper(FileProvider.NSObject):
+    def refreshInterval(self):
+        return 1
 
 
 class TestNSFileProviderManager(TestCase):
@@ -99,3 +105,11 @@ class TestNSFileProviderManager(TestCase):
             0,
             b"v@",
         )
+
+        self.assertResultHasType(
+            TestNSFileProviderManagerHelper.refreshInterval, objc._C_DBL
+        )
+
+    @min_sdk_level("11.3")
+    def test_protocols(self):
+        objc.protocolNamed("NSFileProviderPendingSetEnumerator")

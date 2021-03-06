@@ -1,5 +1,5 @@
 import FileProvider
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSFileProviderError(TestCase):
@@ -25,3 +25,9 @@ class TestNSFileProviderError(TestCase):
             FileProvider.NSFileProviderErrorNewerExtensionVersionFound, -2004
         )
         self.assertEqual(FileProvider.NSFileProviderErrorCannotSynchronize, -2005)
+        self.assertEqual(FileProvider.NSFileProviderErrorNonEvictableChildren, -2006)
+        self.assertEqual(FileProvider.NSFileProviderErrorItemHasUnsyncedEdits, -2007)
+
+    @min_os_level("11.3")
+    def test_constants11_3(self):
+        self.assertIsInstance(FileProvider.NSFileProviderErrorCausedByErrorsKey, str)

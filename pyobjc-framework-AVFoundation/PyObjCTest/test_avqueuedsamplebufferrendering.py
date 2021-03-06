@@ -10,6 +10,9 @@ class TestAVQueuedSampleBufferRenderingHelper(AVFoundation.NSObject):
     def requestMediaDataWhenReadyOnQueue_usingBlock_(self, q, b):
         pass
 
+    def hasSufficientMediaDataForReliablePlaybackStart(self):
+        return 0
+
 
 class TestAVQueuedSampleBufferRendering(TestCase):
     def testConstants(self):
@@ -35,4 +38,7 @@ class TestAVQueuedSampleBufferRendering(TestCase):
             TestAVQueuedSampleBufferRenderingHelper.requestMediaDataWhenReadyOnQueue_usingBlock_,  # noqa: B950
             1,
             b"v",
+        )
+        self.assertResultIsBOOL(
+            TestAVQueuedSampleBufferRenderingHelper.hasSufficientMediaDataForReliablePlaybackStart
         )

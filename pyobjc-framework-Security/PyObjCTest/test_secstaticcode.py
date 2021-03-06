@@ -31,6 +31,7 @@ class TestSecStaticCode(TestCase):
         self.assertEqual(Security.kSecCSUseSoftwareSigningCert, 1 << 10)
         self.assertEqual(Security.kSecCSValidatePEH, 1 << 11)
         self.assertEqual(Security.kSecCSSingleThreaded, 1 << 12)
+        self.assertEqual(Security.kSecCSAllowNetworkAccess, 1 << 16)
 
     def test_functions(self):
         self.assertIsInstance(Security.SecStaticCodeGetTypeID(), int)
