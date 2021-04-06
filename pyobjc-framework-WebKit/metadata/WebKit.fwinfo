@@ -20,6 +20,27 @@
    }
   },
   "classes": {
+   "WKDownload": {
+    "methods": [
+     {
+      "class_method": false,
+      "selector": "cancel:",
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "typestr": "^v" },
+          "1": { "typestr": "@" }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     }
+    ]
+   },
    "NSAttributedString": {
     "methods": [
      {
@@ -1543,6 +1564,75 @@
     "methods": [
      {
       "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "q"
+          },
+          "2": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "download:didReceiveAuthenticationChallenge:completionHandler:"
+     },
+     {
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "q"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "download:willPerformHTTPRedirection:newRequest:decisionHandler:"
+     },
+     {
+      "args": {
+       "3": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "@"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        },
+        "type_override": "@?"
+       }
+      },
+      "class_method": false,
+      "selector": "download:decideDestinationUsingResponse:suggestedFilename:completionHandler:"
+     },
+     {
+      "args": {
        "3": {
         "callable": {
          "arguments": {
@@ -2283,8 +2373,44 @@
      }
     ]
    },
+   "WKNavigationAction": {
+    "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setShouldPerformDownload:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "shouldPerformDownload"
+     }
+    ]
+   },
    "WKPreferences": {
     "methods": [
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setTextInteractionEnabled:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "textInteractionEnabled"
+     },
      {
       "args": {
        "0": {
@@ -2338,6 +2464,123 @@
        "type_override": "Z"
       },
       "selector": "handlesURLScheme:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "resumeDownloadFromResumeData:completionHandler:"
+     },
+     {
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "@"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "startDownloadUsingRequest:completionHandler:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          },
+          "1": {
+           "type": "q"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "requestMediaPlaybackState:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "resumeAllMediaPlayback:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "suspendAllMediaPlayback:"
+     },
+     {
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": {
+           "type": "^v"
+          }
+         },
+         "retval": {
+          "type": "v"
+         }
+        }
+       }
+      },
+      "class_method": false,
+      "selector": "pauseAllMediaPlayback:"
      },
      {
       "args": {
@@ -3184,6 +3427,14 @@
    }
   },
   "enum": {
+   "WKMediaPlaybackStateNone": { "value": 0 },
+   "WKMediaPlaybackStatePaused": { "value": 1 },
+   "WKMediaPlaybackStateSuspended": { "value": 2 },
+   "WKMediaPlaybackStatePlaying": { "value": 3 },
+   "WKDownloadRedirectPolicyCancel": { "value": 0 },
+   "WKDownloadRedirectPolicyAllow": { "value": 1 },
+   "WKNavigationActionPolicyDownload": { "value": 2 },
+   "WKNavigationResponsePolicyDownload": { "value": 2 },
    "WKErrorJavaScriptInvalidFrameTarget": { "value": 12 },
    "WKErrorNavigationAppBoundDomain": { "value": 13 },
    "WKErrorJavaScriptAppBoundDomain": { "value": 14 },

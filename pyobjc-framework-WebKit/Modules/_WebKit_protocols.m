@@ -71,4 +71,8 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(WKScriptMessageHandlerWithReply));
     Py_XDECREF(p);
 #endif
+#if PyObjC_BUILD_RELEASE >= 1103
+    p = PyObjC_IdToPython(@protocol(WKDownloadDelegate));
+    Py_XDECREF(p);
+#endif
 }

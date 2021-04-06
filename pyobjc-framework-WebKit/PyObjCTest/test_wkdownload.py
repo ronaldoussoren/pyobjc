@@ -8,5 +8,5 @@ class TestWKDownload(TestCase):
         self.assertArgIsBlock(
             WebKit.WKDownload.cancel_,
             0,
-            b"v@@@",
+            b"v@",
         )

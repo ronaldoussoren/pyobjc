@@ -5,7 +5,7 @@ import objc
 
 class TestWKDownloadDelegateHelper(WebKit.NSObject):
     def download_decideDestinationUsingResponse_suggestedFilename_completionHandler_(
-        self, a, b, c
+        self, a, b, c, d
     ):
         pass
 
@@ -27,11 +27,6 @@ class TestWKDownloadDelegate(TestCase):
     def test_protocols(self):
         objc.protocolNamed("WKDownloadDelegate")
 
-        self.assertArgIsBlock(
-            WebKit.WKDownload.cancel_,
-            0,
-            b"v@@@",
-        )
 
     @min_sdk_level("11.3")
     def test_protocol_methods(self):
