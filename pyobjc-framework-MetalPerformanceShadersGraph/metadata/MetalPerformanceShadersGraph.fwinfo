@@ -5,6 +5,15 @@
   "classes": {},
   "formal_protocols": {},
   "functions": {},
-  "informal_protocols": {}
+  "informal_protocols": {},
+  "enum": {
+   "MPSGraphScatterModeAdd": { "value":  0 },
+   "MPSGraphScatterModeSub": { "value":  1 },
+   "MPSGraphScatterModeMul": { "value":  2 },
+   "MPSGraphScatterModeDiv": { "value":  3 },
+   "MPSGraphScatterModeMin": { "value":  4 },
+   "MPSGraphScatterModeMax": { "value":  5 },
+   "MPSGraphScatterModeSet": { "value":  6 }
+  }
  }
 }
