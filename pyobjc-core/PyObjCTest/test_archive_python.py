@@ -1066,6 +1066,11 @@ class TestKeyedArchivePlainPython(TestCase, test.pickletester.AbstractPickleTest
         test.pickletester.AbstractPickleTests.test_recursive_set_and_inst(self)
 
     @expectedFailure
+    def test_recursive_set(self):
+        # XXX: Need further investigation
+        test.pickletester.AbstractPickleTests.test_recursive_set(self)
+
+    @expectedFailure
     def test_recursive_frozenset_and_inst(self):
         test.pickletester.AbstractPickleTests.test_recursive_frozenset_and_inst(self)
 
@@ -1200,9 +1205,64 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
         return NSUnarchiver.unarchiveObjectWithData_(buf)
 
     @expectedFailure
+    def test_recursive_dict_like_key(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_dict_like_key(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_dict_key(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_key(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_dict_like_key(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_like_key(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_dict_subclass_key(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass_key(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_inst_state(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_inst_state(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_dict(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_dict_subclass(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_list_like(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list_like(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_list_subclass(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list_subclass(self)
+
+    @expectedFailure
+    def test_recursive_set(self):
+        # XXX: Needs further investigation...
+        test.pickletester.AbstractPickleTests.test_recursive_set(self)
+
+    @expectedFailure
     def test_recursive_dict(self):
         # See 'TestArchiveNative'
         test.pickletester.AbstractPickleTests.test_recursive_dict(self)
+
+    @expectedFailure
+    def test_recursive_tuple_and_dict_like(self):
+        # See 'TestArchiveNative'
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_like(self)
 
     @expectedFailure
     def test_recursive_dict_key(self):

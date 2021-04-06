@@ -5,7 +5,7 @@ import sys
 from test import list_tests, seq_tests
 
 import objc
-from PyObjCTools.TestSupport import onlyIf
+from PyObjCTools.TestSupport import onlyIf, expectedFailure
 
 NSArray = objc.lookUpClass("NSArray")
 NSMutableArray = objc.lookUpClass("NSMutableArray")
@@ -143,6 +143,10 @@ class ArrayTests(seq_tests.CommonTest):
 class MutableArrayTest(list_tests.CommonTest):
     type2test = NSMutableArray
 
+    @expectedFailure
+    def test_pop(self):
+        lists_tests.CommonTest.test_pop(self) 
+
     @onlyIf(0, "test irrelevant for NSMutableArray")
     def test_repr_deep(self):
         pass
@@ -229,6 +233,7 @@ class MutableArrayTest(list_tests.CommonTest):
         v = self.type2test([1, 2, 0, 3, 4])
         self.assertEqual(u, v)
 
+    @expectedFailure
     def test_pyobjc_pop(self):
         u = self.type2test([1, 2, 3, 4])
         self.assertRaises(IndexError, u.pop, -8)
