@@ -118,9 +118,9 @@ calc_current_version(void)
 @implementation OC_NSAutoreleasePoolCollector
 + (void)newAutoreleasePool
 {
-    self                = [[self alloc] init];
+    OC_NSAutoreleasePoolCollector* value = [[self alloc] init];
     global_release_pool = [[NSAutoreleasePool alloc] init];
-    (void)[self autorelease];
+    (void)[value autorelease];
 }
 
 - (void)dealloc
