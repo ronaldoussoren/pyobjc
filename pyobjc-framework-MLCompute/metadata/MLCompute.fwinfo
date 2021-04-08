@@ -3,13 +3,51 @@
 {
  "definitions": {
   "enum": {
+   "MLCReductionTypeL1Norm": { "value": 7 },
+   "MLCReductionTypeAny": { "value": 8 },
+   "MLCReductionTypeAll": { "value": 9 },
+   "MLCReductionTypeCount": { "ignore": true },
+   "MLCComparisonOperationEqual": { "value": 0 },
+   "MLCComparisonOperationNotEqual": { "value": 1 },
+   "MLCComparisonOperationLess": { "value": 2 },
+   "MLCComparisonOperationGreater": { "value": 3 },
+   "MLCComparisonOperationLessOrEqual": { "value": 4 },
+   "MLCComparisonOperationGreaterOrEqual": { "value": 5 },
+   "MLCComparisonOperationLogicalAND": { "value": 6 },
+   "MLCComparisonOperationLogicalOR": { "value": 7 },
+   "MLCComparisonOperationLogicalNOT": { "value": 8 },
+   "MLCComparisonOperationLogicalNAND": { "value": 9 },
+   "MLCComparisonOperationLogicalNOR": { "value": 10 },
+   "MLCComparisonOperationLogicalXOR": { "value": 11 },
+   "MLCComparisonOperationCount": { "ignore": true },
+   "MLCActivationTypeHardSwish": { "value": 19 },
+   "MLCActivationTypeClamp": { "value": 20 },
+   "MLCActivationTypeCount": { "ignore": true },
+   "MLCPoolingTypeCount": { "ignore": true },
+   "MLCLossTypeCount": { "ignore": true },
    "MLCDataTypeCount": { "ignore": true },
    "MLCLSTMResultModeOutput": { "value": 0 },
    "MLCLSTMResultModeOutputAndStates": { "value": 1 },
+   "MLCRandomInitializerTypeCount": { "ignore": true },
+   "MLCDeviceTypeCount": { "ignore": true },
    "MLCExecutionOptionsForwardForInference": { "value": 8 },
-   "MLCDataTypeInt32": { "value": 7 }
+   "MLCDataTypeInt32": { "value": 7 },
+   "MLCArithmeticOperationMultiplyNoNaN": { "value": 26 },
+   "MLCArithmeticOperationDivideNoNaN": { "value": 27 },
+   "MLCArithmeticOperationMin": { "value": 28 },
+   "MLCArithmeticOperationMax": { "value": 29 },
+   "MLCArithmeticOperationCount": { "ignore": true }
   },
   "classes": {
+   "MLCInferenceGraph": {
+    "methods": [
+     {
+      "selector": "compileWithOptions:device:inputTensors:inputTensorsData:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "MLCDevice": {
     "methods": [
      {
@@ -25,6 +63,11 @@
     "methods": [
      {
       "selector": "bindOptimizerData:deviceData:withTensor:",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "compileWithOptions:device:inputTensors:inputTensorsData:",
       "class_method": false,
       "retval": { "type_override": "Z" }
      }
@@ -106,6 +149,23 @@
     "methods": [
      {
       "args": {
+       "0": { "type_modifier": "n", "c_array_length_in_arg": 1 },
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "n^v", "c_array_length_in_arg": 2 },
+	  "2": { "type": "Q" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      },
+      "class_method": true,
+      "selector": "dataWithBytesNoCopy:length:deallocator:"
+     },
+     {
+      "args": {
        "0": { "type_modifier": "n", "c_array_length_in_arg": 1 }
       },
       "class_method": true,
@@ -136,7 +196,20 @@
    }
   },
   "formal_protocols": {},
-  "functions": {},
+  "functions": {
+   "MLCLSTMResultModeDebugDescription": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "Q" }
+    }
+   },
+   "MLCComparisonOperationDebugDescription": {
+    "retval": { "type_override": "@" },
+    "args": {
+     "0": { "type_override": "i" }
+    }
+   }
+  },
   "informal_protocols": {}
  }
 }

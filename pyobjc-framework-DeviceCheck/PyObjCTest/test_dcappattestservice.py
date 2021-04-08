@@ -12,7 +12,7 @@ class TestDCAppAttestService(TestCase):
             DeviceCheck.DCAppAttestService.generateKeyWithCompletionHandler_, 0, b"v@@"
         )
         self.assertArgIsBlock(
-            DeviceCheck.DCAppAttestService.attestKey_completionHandler_, 1, b"v@@"
+            DeviceCheck.DCAppAttestService.attestKey_clientDataHash_completionHandler_, 2, b"v@@"
         )
         self.assertArgIsBlock(
             DeviceCheck.DCAppAttestService.generateAssertion_clientDataHash_completionHandler_,

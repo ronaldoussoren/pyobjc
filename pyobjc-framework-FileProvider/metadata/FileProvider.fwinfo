@@ -3,6 +3,14 @@
 {
  "definitions": {
   "enum": {
+   "NSFileProviderItemCapabilitiesAllowsExcludingFromSync": { "value": 128 },
+   "NSFileProviderDomainTestingModeAlwaysEnabledDomain": { "value": 1 },
+   "NSFileProviderDomainTestingModeInteractive": { "value": 2 },
+   "NSFileProviderErrorNonEvictableChildren": { "value": -2006 },
+   "NSFileProviderErrorItemHasUnsyncedEdits": { "value": -2007 },
+   "NSFileProviderCreateItemDeletionConflicted": { "value": 2 },
+   "NSFileProviderTestingOperationSideDisk": { "value": 0 },
+   "NSFileProviderTestingOperationSideFileProvider": { "value": 1 },
    "NSFileProviderItemCreationDate": { "value": 64 },
    "NSFileProviderItemContentModificationDate": { "value": 128 },
    "NSFileProviderItemFileSystemFlags": { "value": 256 },
@@ -22,9 +30,32 @@
    "NSFileProviderCreateItemMayAlreadyExist": { "value": 1 },
    "NSFileProviderItemParentItemIdentifier": { "value": 4 }
   },
+  "externs": {
+   "NSFileProviderErrorCausedByErrorsKey": { "typestr": "@" }
+  },
   "classes": {
    "NSObject": {
     "methods": [
+     {
+      "selector": "refreshInterval",
+      "class_method": false,
+      "retval": { "type_override": "d" }
+     },
+     {
+      "selector": "targetSide",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     },
+     {
+      "selector": "side",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     },
+     {
+      "selector": "changedFields",
+      "class_method": false,
+      "retval": { "type_override": "Q" }
+     },
      {
       "selector": "isExcludedFromSync",
       "class_method": false,
@@ -49,6 +80,21 @@
       "selector": "isUserReadable",
       "class_method": false,
       "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "pendingItemsDidChangeWithCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+	  "0": { "type": "^v" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
      },
      {
       "selector": "fetchContentsForItemWithIdentifier:version:usingExistingContentsAtURL:request:completionHandler:",
@@ -566,6 +612,20 @@
    },
    "NSFileProviderManager": {
     "methods": [
+     {
+      "selector": "runTestingOperations:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "listAvailableTestingOperationsWithError:",
+      "class_method": false,
+      "args": {
+       "0": { "type_modifier": "o" }
+      }
+     },
      {
       "selector": "temporaryDirectoryURLWithError:",
       "class_method": false,

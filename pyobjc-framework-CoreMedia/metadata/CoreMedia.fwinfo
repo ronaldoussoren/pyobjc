@@ -55,6 +55,7 @@
    "CMSubtitleFormatDescriptionGetFormatType": {  "alias": "CMFormatDescriptionGetMediaSubType" }
   },
   "enum": {
+   "kCMVideoCodecType_DolbyVisionHEVC": { "value": 1685481521 },
    "kCMMemoryPoolError_AllocationFailed": { "value": -15490 },
    "kCMMemoryPoolError_InvalidParameter": { "value": -15491 },
    "kCMTimebaseVeryLongCFTimeInterval": { "value": 8073216000.0 }

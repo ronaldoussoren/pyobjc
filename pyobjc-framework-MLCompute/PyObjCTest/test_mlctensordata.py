@@ -28,6 +28,6 @@ class TestMLCTensorData(TestCase):
         )
         self.assertArgIsBlock(
             MLCompute.MLCTensorData.dataWithBytesNoCopy_length_deallocator_,
-            3,
-            b"vn^v" + objc._C_UInteger,
+            2,
+            b"vn^v" + objc._C_NSUInteger,
         )

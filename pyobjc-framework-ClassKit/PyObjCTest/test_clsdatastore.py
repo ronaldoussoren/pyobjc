@@ -17,5 +17,5 @@ class TestCLSDataStore(TestCase):
     @min_os_level("11.3")
     def test_methods11_3(self):
         self.assertArgIsBlock(
-            ClassKit.CLSDataStore.fetchActivityForURL_completions_, 1, b"v@@"
+            ClassKit.CLSDataStore.fetchActivityForURL_completion_, 1, b"v@@"
         )

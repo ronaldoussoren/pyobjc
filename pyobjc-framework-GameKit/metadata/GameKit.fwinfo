@@ -1,6 +1,13 @@
 {
  "definitions": {
   "enum": {
+   "GKFriendsAuthorizationStatusNotDetermined": { "value": 0 },
+   "GKFriendsAuthorizationStatusRestricted": { "value": 1 },
+   "GKFriendsAuthorizationStatusDenied": { "value": 2 },
+   "GKFriendsAuthorizationStatusAuthorized": { "value": 3 },
+   "GKErrorFriendListDescriptionMissing": { "value": 100 },
+   "GKErrorFriendListRestricted": { "value": 101 },
+   "GKErrorFriendListDenied": { "value": 102 },
    "GKAuthenticatingWithoutUI": { "value": 0 },
    "GKAuthenticatingWithGreenBuddyUI": { "value": 1 },
    "GKAuthenticatingWithAuthKitInvocation": { "value": 2 },
@@ -938,6 +945,54 @@
    },
    "GKLocalPlayer": {
     "methods": [
+     {
+      "selector": "loadFriendsWithIdentifiers:completionHandler:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadFriends:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "@" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
+     {
+      "selector": "loadFriendsAuthorizationStatus:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+	 "arguments": {
+	  "0": { "type": "^v" },
+	  "1": { "type": "q" },
+	  "2": { "type": "@" }
+	 },
+	 "retval": { "type": "v" }
+	}
+       }
+      }
+     },
      {
       "selector": "fetchItemsForIdentityVerificationSignature:",
       "class_method": false,

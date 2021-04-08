@@ -340,6 +340,19 @@ def test_summary(fp_out, state_dir):
     return ok
 
 
+def system_supports_arch(interpreter, arch):
+    assert supports_arch(interpreter, arch)
+
+    try:
+        subprocess.check_output(
+            ["/usr/bin/arch", "-%s" % (arch,), interpreter, "-c", ""]
+        )
+    except subprocess.CalledProcessError:
+        return False
+
+    return True
+
+
 def supports_arch(interpreter, arch):
     lines = subprocess.check_output(["/usr/bin/file", interpreter])
     lines = lines.decode("utf-8").splitlines()
@@ -463,6 +476,14 @@ def main():
                     if not supports_arch(interpreter, arch):
                         lg.info(
                             "skipping Python %s (%7s), unsupported architecture",
+                            variant,
+                            arch,
+                        )
+                        continue
+
+                    if not system_supports_arch(interpreter, arch):
+                        lg.info(
+                            "skipping Python %s (%7s), system cannot run architecture",
                             variant,
                             arch,
                         )

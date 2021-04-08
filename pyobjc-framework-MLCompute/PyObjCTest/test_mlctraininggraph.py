@@ -78,5 +78,5 @@ class TestMLCTrainingGraph(TestCase):
     @min_os_level("11.3")
     def test_methods11_3(self):
         self.assertResultIsBOOL(
-            MLCompute.MLCTrainingGraph.compileWithOptions_device_inputSensors_inputTensorsData_
+            MLCompute.MLCTrainingGraph.compileWithOptions_device_inputTensors_inputTensorsData_
         )

@@ -14,6 +14,12 @@
    }
   },
   "enum": {
+   "AVVariantPreferenceNone": { "value": 0 },
+   "AVVariantPreferenceScalabilityToLosslessAudio": { "value": 1 },
+   "AVPlayerInterstitialEventRestrictionNone": { "value": 0 },
+   "AVPlayerInterstitialEventRestrictionConstrainsSeekingForwardInPrimaryContent": { "value": 1 },
+   "AVPlayerInterstitialEventRestrictionRequiresPlaybackAtPreferredRateForAdvancement": { "value": 4 },
+   "AVPlayerInterstitialEventRestrictionDefaultPolicy": { "value": 0 },
    "AVSpeechBoundaryImmediate": { "value": 0 },
    "AVSpeechBoundaryWord": { "value": 1 },
    "AVSpeechSynthesisVoiceQualityDefault": { "value": 1 },
@@ -45,6 +51,10 @@
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVAssetDownloadTaskPrefersLosslessAudioKey": { "typestr": "@" },
+   "AVPlayerWaitingDuringInterstitialEventReason": { "typestr": "@" },
+   "AVPlayerInterstitialEventObserverCurrentEventDidChangeNotification": { "typestr": "@" },
+   "AVSampleBufferDisplayLayerOutputObscuredDueToInsufficientExternalProtectionDidChangeNotification": { "typestr": "@" },
    "AVVideoAppleProRAWBitDepthKey": { "typestr": "@" },
    "AVAssetDownloadTaskPrefersHDRKey": { "typestr": "@" },
    "AVAssetDownloadTaskMinimumRequiredPresentationSizeKey": { "typestr": "@" },
@@ -2133,12 +2143,22 @@
      {
       "class_method": false,
       "retval": { "type_override": "Z" },
+      "selector": "automaticallyHandlesInterstitialEvents"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
       "selector": "canUseNetworkResourcesForLiveStreamingWhilePaused"
      },
      {
       "class_method": false,
       "args": { "0": { "type_override": "Z" } },
       "selector": "setCanUseNetworkResourcesForLiveStreamingWhilePaused:"
+     },
+     {
+      "class_method": false,
+      "args": { "0": { "type_override": "Z" } },
+      "selector": "setAutomaticallyHandlesInterstitialEvents:"
      }
     ],
     "properties": [
@@ -2264,11 +2284,35 @@
       },
       "class_method": false,
       "selector": "addPeriodicTimeObserverForInterval:queue:usingBlock:"
+     },
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "delaysRateChangeUntilHasSufficientMediaData"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setDelaysRateChangeUntilHasSufficientMediaData:"
      }
     ]
    },
    "AVSampleBufferDisplayLayer": {
     "methods": [
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "outputObscuredDueToInsufficientExternalProtection"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      },
+      "selector": "setOutputObscuredDueToInsufficientExternalProtection:"
+     },
      {
       "class_method": false,
       "retval": { "type_override": "Z" },
@@ -2714,6 +2758,11 @@
    "NSObject": {
     "methods": [
      {
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "selector": "hasSufficientMediaDataForReliablePlaybackStart"
+     },
+     {
       "selector": "URLSession:aggregateAssetDownloadTask:didLoadTimeRange:totalTimeRangesLoaded:timeRangeExpectedToLoad:forMediaSelection:",
       "class_method": false,
       "args": {
@@ -2858,6 +2907,14 @@
    }
   },
   "functions": {
+   "AVSampleBufferAttachContentKey": {
+    "args": {
+     "0": { "type_override": "^{opaqueCMSampleBuffer=}" },
+     "1": { "type_override": "@" },
+     "2": { "type_override": "^@", "type_modifier": "o" }
+    },
+    "retval": { "type_override": "Z" }
+   },
    "AVMakeBeatRange": {
     "args": {
      "0": {

@@ -2,6 +2,20 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "GCDualSenseAdaptiveTriggerModeOff": { "value": 0 },
+   "GCDualSenseAdaptiveTriggerModeFeedback": { "value": 1 },
+   "GCDualSenseAdaptiveTriggerModeWeapon": { "value": 2 },
+   "GCDualSenseAdaptiveTriggerModeVibration": { "value": 3 },
+   "GCDualSenseAdaptiveTriggerStatusUnknown": { "value": -1 },
+   "GCDualSenseAdaptiveTriggerStatusFeedbackNoLoad": { "value": 0 },
+   "GCDualSenseAdaptiveTriggerStatusFeedbackLoadApplied": { "value": 1 },
+   "GCDualSenseAdaptiveTriggerStatusWeaponReady": { "value": 2 },
+   "GCDualSenseAdaptiveTriggerStatusWeaponFiring": { "value": 3 },
+   "GCDualSenseAdaptiveTriggerStatusWeaponFired": { "value": 4 },
+   "GCDualSenseAdaptiveTriggerStatusVibrationNotVibrating": { "value": 5 },
+   "GCDualSenseAdaptiveTriggerStatusVibrationIsVibrating": { "value": 6 }
+  },
   "externs": {
    "GCHapticDurationInfinite": { "typestr": "f" }
   },
