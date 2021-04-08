@@ -15081,6 +15081,8 @@
    }
   },
   "externs": {
+   "NSProgressFileOperationKindUploading": { "typestr": "@" },
+   "NSURLUbiquitousItemIsExcludedFromSyncKey": { "typestr": "@" },
    "NSURLVolumeSupportsFileProtectionKey": { "typestr": "@" },
    "NSSecureUnarchiveFromDataTransformerName": { "typestr": "@" },
    "NSURLUbiquitousSharedItemPermissionsReadWrite": { "typestr": "@" },
