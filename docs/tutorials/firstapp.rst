@@ -78,7 +78,7 @@ Testing the user interface
    .. sourcecode:: python
       :linenos:
 
-        from distutils.core import setup
+        from setuptools import setup
         import py2app
 
         setup(

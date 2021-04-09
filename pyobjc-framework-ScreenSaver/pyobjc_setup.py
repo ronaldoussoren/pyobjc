@@ -28,9 +28,9 @@ from setuptools import Extension as _Extension
 from setuptools import setup as _setup
 from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
 
-from distutils import log
-from distutils.errors import DistutilsError, DistutilsPlatformError
-from distutils.command import build, install
+from setuptools._distutils import log
+from setuptools._distutils.errors import DistutilsError, DistutilsPlatformError
+from setuptools.command import build, install
 
 
 class oc_build_py(build_py.build_py):

@@ -9,10 +9,14 @@ import subprocess
 import warnings
 from setuptools import Extension, setup
 from setuptools.command import build_ext, build_py, egg_info, install_lib, test
-from distutils import log
-from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
-from distutils.sysconfig import get_config_var as _get_config_var
-from distutils.sysconfig import get_config_vars
+from setuptools._distutils import log
+from setuptools._distutils.errors import (
+    DistutilsError,
+    DistutilsPlatformError,
+    DistutilsSetupError,
+)
+from setuptools._distutils.sysconfig import get_config_var as _get_config_var
+from setuptools._distutils.sysconfig import get_config_vars
 
 from pkg_resources import add_activation_listener, normalize_path, require, working_set
 

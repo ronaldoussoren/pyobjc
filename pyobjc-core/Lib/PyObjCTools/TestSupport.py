@@ -15,7 +15,7 @@ import struct as _struct
 import sys as _sys
 import unittest as _unittest
 import subprocess as _subprocess
-from distutils.sysconfig import get_config_var as _get_config_var
+from setuptools._distutils.sysconfig import get_config_var as _get_config_var
 
 import objc
 

@@ -6,7 +6,7 @@ copy of PyObjC
 """
 
 import platform
-from distutils.version import LooseVersion
+from setuptools._distutils.version import LooseVersion
 
 import objc  # noqa: F401
 from AddressBook import *  # noqa: F401, F403
