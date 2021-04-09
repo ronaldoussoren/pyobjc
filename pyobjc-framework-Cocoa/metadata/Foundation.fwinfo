@@ -6992,6 +6992,15 @@
        }
       },
       "class_method": false,
+      "selector": "setAssumesHTTP3Capable:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
       "selector": "setHTTPShouldHandleCookies:"
      },
      {
@@ -14313,6 +14322,13 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "assumesHTTP3Capable"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "HTTPShouldHandleCookies"
      },
      {
@@ -15081,6 +15097,7 @@
    }
   },
   "externs": {
+   "NSMultipleUnderlyingErrorsKey": { "typestr": "@" },
    "NSProgressFileOperationKindUploading": { "typestr": "@" },
    "NSURLUbiquitousItemIsExcludedFromSyncKey": { "typestr": "@" },
    "NSURLVolumeSupportsFileProtectionKey": { "typestr": "@" },

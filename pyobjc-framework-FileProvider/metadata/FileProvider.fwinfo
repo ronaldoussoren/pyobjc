@@ -3,11 +3,20 @@
 {
  "definitions": {
   "enum": {
+   "NSFileProviderTestingOperationTypeIngestion": { "value": 0 },
+   "NSFileProviderTestingOperationTypeLookup": { "value": 1 },
+   "NSFileProviderTestingOperationTypeCreation": { "value": 2 },
+   "NSFileProviderTestingOperationTypeModification": { "value": 3 },
+   "NSFileProviderTestingOperationTypeDeletion": { "value": 4 },
+   "NSFileProviderTestingOperationTypeContentFetch": { "value": 5 },
+   "NSFileProviderTestingOperationTypeChildrenEnumeration": { "value": 6 },
+   "NSFileProviderTestingOperationTypeCollisionResolution": { "value": 7 },
    "NSFileProviderItemCapabilitiesAllowsExcludingFromSync": { "value": 128 },
-   "NSFileProviderDomainTestingModeAlwaysEnabledDomain": { "value": 1 },
+   "NSFileProviderDomainTestingModeAlwaysEnabled": { "value": 1 },
    "NSFileProviderDomainTestingModeInteractive": { "value": 2 },
    "NSFileProviderErrorNonEvictableChildren": { "value": -2006 },
-   "NSFileProviderErrorItemHasUnsyncedEdits": { "value": -2007 },
+   "NSFileProviderErrorUnsyncedEdits": { "value": -2007 },
+   "NSFileProviderErrorNonEvictable": { "value": -2008 },
    "NSFileProviderCreateItemDeletionConflicted": { "value": 2 },
    "NSFileProviderTestingOperationSideDisk": { "value": 0 },
    "NSFileProviderTestingOperationSideFileProvider": { "value": 1 },

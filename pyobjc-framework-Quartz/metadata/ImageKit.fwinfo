@@ -6,6 +6,22 @@
    "IKFilterBrowserPanel": {
     "methods": [
      {
+      "selector": "rememberLastSetting",
+      "class_method": false,
+      "retval": { "type_override" : "Z" }
+     },
+     {
+      "selector": "setRememberLastSetting:",
+      "class_method": false,
+      "args": {
+       "0": { "type_override" : "Z" }
+      }
+     }
+    ]
+   },
+   "IKFilterBrowserPanel": {
+    "methods": [
+     {
       "args": {
        "2": {
         "sel_of_type": [

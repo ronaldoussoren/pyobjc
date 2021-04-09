@@ -833,6 +833,7 @@ try:
         {"retval": {"type": b"Z"}},
     )
     r(b"PKTransitPassProperties", b"isBlacklisted", {"retval": {"type": b"Z"}})
+    r(b"PKTransitPassProperties", b"isBlocked", {"retval": {"type": b"Z"}})
     r(b"PKTransitPassProperties", b"isInStation", {"retval": {"type": b"Z"}})
 finally:
     objc._updatingMetadata(False)

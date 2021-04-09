@@ -13,21 +13,35 @@ class TestNSFileProviderTestingHelper(FileProvider.NSObject):
     def changedFields(self):
         return 1
 
+    def type(self):
+        return 1
 
 class TestNSFileProviderTesting(TestCase):
     def test_constants(self):
         self.assertEqual(FileProvider.NSFileProviderTestingOperationSideDisk, 0)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationSideFileProvider, 1)
 
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeIngestion, 0)
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeLookup, 1)
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeCreation, 2)
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeModification, 3)
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeDeletion, 4)
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeContentFetch, 5)
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeChildrenEnumeration, 6)
+        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeCollisionResolution, 7)
+
+
     @min_sdk_level("11.3")
     def test_protocols(self):
         objc.protocolNamed("NSFileProviderTestingOperation")
         objc.protocolNamed("NSFileProviderTestingIngestion")
         objc.protocolNamed("NSFileProviderTestingLookup")
-        objc.protocolNamed("NSFileProviderTestingPropagation")
         objc.protocolNamed("NSFileProviderTestingContentFetch")
         objc.protocolNamed("NSFileProviderTestingChildrenEnumeration")
-        objc.protocolNamed("NSFileProviderTestingBounce")
+        objc.protocolNamed("NSFileProviderTestingCreation")
+        objc.protocolNamed("NSFileProviderTestingModification")
+        objc.protocolNamed("NSFileProviderTestingDeletion")
+        objc.protocolNamed("NSFileProviderTestingCollisionResolution")
 
     def test_proto_methods(self):
         self.assertResultHasType(
@@ -38,6 +52,9 @@ class TestNSFileProviderTesting(TestCase):
         )
         self.assertResultHasType(
             TestNSFileProviderTestingHelper.changedFields, objc._C_NSUInteger
+        )
+        self.assertResultHasType(
+            TestNSFileProviderTestingHelper.type, objc._C_NSUInteger
         )
 
     @min_os_level("11.3")

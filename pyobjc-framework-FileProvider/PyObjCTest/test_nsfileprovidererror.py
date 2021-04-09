@@ -26,8 +26,5 @@ class TestNSFileProviderError(TestCase):
         )
         self.assertEqual(FileProvider.NSFileProviderErrorCannotSynchronize, -2005)
         self.assertEqual(FileProvider.NSFileProviderErrorNonEvictableChildren, -2006)
-        self.assertEqual(FileProvider.NSFileProviderErrorItemHasUnsyncedEdits, -2007)
-
-    @min_os_level("11.3")
-    def test_constants11_3(self):
-        self.assertIsInstance(FileProvider.NSFileProviderErrorCausedByErrorsKey, str)
+        self.assertEqual(FileProvider.NSFileProviderErrorUnsyncedEdits, -2007)
+        self.assertEqual(FileProvider.NSFileProviderErrorNonEvictable, -2008)

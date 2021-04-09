@@ -45,6 +45,15 @@
      }
     ]
    },
+   "PKTransitPassProperties": {
+    "methods": [
+     {
+      "selector": "isBlocked",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "PKTicketMetadata": {
     "methods": [
      {

@@ -45,9 +45,8 @@
    }
   },
   "externs": {
-   "kCGImageAuxiliaryDataTypeSemanticSegmentationSkyMatte": {
-    "typestr": "@"
-   },
+   "kCGImagePropertyPNGTransparency": { "typestr": "@" },
+   "kCGImageAuxiliaryDataTypeSemanticSegmentationSkyMatte": { "typestr": "@" },
    "kCGImagePropertyExifSourceExposureTimesOfCompositeImage": {
     "typestr": "@"
    },

@@ -1828,7 +1828,7 @@
    "NSFileProviderFileSystemUserReadable": 2,
    "NSFileProviderFileSystemUserWritable": 4,
    "NSFileProviderItemCapabilitiesAllowsAddingSubItems": 2,
-   "NSFileProviderItemCapabilitiesAllowsAll": 127,
+   "NSFileProviderItemCapabilitiesAllowsAll": 63,
    "NSFileProviderItemCapabilitiesAllowsContentEnumerating": 1,
    "NSFileProviderItemCapabilitiesAllowsDeleting": 32,
    "NSFileProviderItemCapabilitiesAllowsEvicting": 64,

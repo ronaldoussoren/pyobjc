@@ -14,9 +14,11 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(NSFileProviderTestingOperation)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSFileProviderTestingIngestion)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSFileProviderTestingLookup)); Py_XDECREF(p);
-    //p = PyObjC_IdToPython(@protocol(NSFileProviderTestingPropagation)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSFileProviderTestingContentFetch)); Py_XDECREF(p);
     p = PyObjC_IdToPython(@protocol(NSFileProviderTestingChildrenEnumeration)); Py_XDECREF(p);
-    //p = PyObjC_IdToPython(@protocol(NSFileProviderTestingBounce)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderTestingCreation)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderTestingModification)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderTestingDeletion)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSFileProviderTestingCollisionResolution)); Py_XDECREF(p);
 #endif
 }

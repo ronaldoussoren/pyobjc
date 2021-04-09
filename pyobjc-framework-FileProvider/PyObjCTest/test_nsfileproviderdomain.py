@@ -8,7 +8,7 @@ class TestNSFileProviderDomain(TestCase):
         self.assertIsInstance(FileProvider.NSFileProviderDomainDidChange, str)
 
         self.assertEqual(
-            FileProvider.NSFileProviderDomainTestingModeAlwaysEnabledDomain, 1 << 0
+            FileProvider.NSFileProviderDomainTestingModeAlwaysEnabled, 1 << 0
         )
         self.assertEqual(
             FileProvider.NSFileProviderDomainTestingModeInteractive, 1 << 1

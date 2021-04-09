@@ -440,6 +440,9 @@ class TestCGImageProperties(TestCase):
         # New definition in Xcode 10.14 SDK
         self.assertIsInstance(Quartz.kCGImagePropertyPrimaryImage, str)
 
+        # New definition in Xcode 12.5 SDK
+        self.assertIsInstance(Quartz.kCGImagePropertyPNGTransparency, str)
+
     @min_os_level("10.13.4")
     def testConstants10_13_4(self):
         self.assertIsInstance(Quartz.kCGImagePropertyIPTCExtAboutCvTerm, str)

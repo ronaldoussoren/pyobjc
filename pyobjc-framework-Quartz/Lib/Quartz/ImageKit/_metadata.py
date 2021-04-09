@@ -38,6 +38,8 @@ aliases = {
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
 try:
+    r(b"IKSaveOptions", b"rememberLastSetting", {"retval": {"type": b"Z"}})
+    r(b"IKSaveOptions", b"setRememberLastSetting:", {"arguments": {2: {"type": b"Z"}}})
     r(b"IKCameraDeviceView", b"canDeleteSelectedItems", {"retval": {"type": b"Z"}})
     r(b"IKCameraDeviceView", b"canDownloadSelectedItems", {"retval": {"type": b"Z"}})
     r(b"IKCameraDeviceView", b"canRotateSelectedItemsLeft", {"retval": {"type": b"Z"}})

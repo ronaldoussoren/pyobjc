@@ -49,6 +49,11 @@ class TestGCController(TestCase):
     def testMethods10_16(self):
         self.assertResultIsBOOL(GameController.GCController.supportsHIDDevice_)
 
+    @min_os_level("11.3")
+    def testMethods11_3(self):
+        self.assertResultIsBOOL(GameController.GCController.shouldMonitorBackgroundEvents)
+        self.assertArgIsBOOL(GameController.GCController.setShouldMonitorBackgroundEvents_, 0)
+
     @min_os_level("10.9")
     def test_constants(self):
         self.assertIsInstance(GameController.GCControllerDidConnectNotification, str)

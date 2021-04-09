@@ -34,6 +34,7 @@ class TestSystemExtensions(TestCase):
         )
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorRequestCanceled, 11)
         self.assertEqual(SystemExtensions.OSSystemExtensionErrorRequestSuperseded, 12)
+        self.assertEqual(SystemExtensions.OSSystemExtensionErrorAuthorizationRequired, 13)
 
         self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionCancel, 0)
         self.assertEqual(SystemExtensions.OSSystemExtensionReplacementActionReplace, 1)

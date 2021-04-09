@@ -17,6 +17,8 @@
    "GCDualSenseAdaptiveTriggerStatusVibrationIsVibrating": { "value": 6 }
   },
   "externs": {
+   "GCInputDirectionalDpad": { "typestr": "@" },
+   "GCInputDirectionalCardinalDpad": { "typestr": "@" },
    "GCHapticDurationInfinite": { "typestr": "f" }
   },
   "classes": {
@@ -202,6 +204,18 @@
    },
    "GCController": {
     "methods": [
+     {
+      "selector": "shouldMonitorBackgroundEvents",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setShouldMonitorBackgroundEvents",
+      "class_method": false,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
      {
       "args": {
        "0": {

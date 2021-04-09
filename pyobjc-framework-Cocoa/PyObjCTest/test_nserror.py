@@ -73,6 +73,10 @@ class TestNSError(TestCase):
     def testConstants10_13(self):
         self.assertIsInstance(AppKit.NSLocalizedFailureErrorKey, str)
 
+    @min_os_level("11.3")
+    def testConstants11_3(self):
+        self.assertIsInstance(AppKit.NSMultipleUnderlyingErrorsKey, str)
+
     def testAttemptRecovery(self):
         self.assertArgHasType(
             TestNSErrorHelper.attemptRecoveryFromError_optionIndex_delegate_didRecoverSelector_contextInfo_,  # noqa: B950
