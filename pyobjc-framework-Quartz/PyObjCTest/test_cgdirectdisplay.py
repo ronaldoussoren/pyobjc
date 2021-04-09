@@ -78,7 +78,7 @@ class TestCGDirectDisplay(TestCase):
 
         self.assertArgIsOut(Quartz.CGGetDisplaysWithOpenGLDisplayMask, 2)
         self.assertArgIsOut(Quartz.CGGetDisplaysWithOpenGLDisplayMask, 3)
-        v, ids, cnt = Quartz.CGGetDisplaysWithOpenGLDisplayMask(0xff, 10, None, None)
+        v, ids, cnt = Quartz.CGGetDisplaysWithOpenGLDisplayMask(0xFF, 10, None, None)
         self.assertIsInstance(v, int)
         self.assertIsInstance(cnt, int)
         self.assertTrue(cnt)

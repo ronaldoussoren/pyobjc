@@ -16,7 +16,7 @@ class TestWSOptions(TestCase):
         self.assertEqual(Network.nw_ws_opcode_binary, 0x2)
         self.assertEqual(Network.nw_ws_opcode_close, 0x8)
         self.assertEqual(Network.nw_ws_opcode_ping, 0x9)
-        self.assertEqual(Network.nw_ws_opcode_pong, 0xa)
+        self.assertEqual(Network.nw_ws_opcode_pong, 0xA)
 
         self.assertEqual(Network.nw_ws_close_code_normal_closure, 1000)
         self.assertEqual(Network.nw_ws_close_code_going_away, 1001)

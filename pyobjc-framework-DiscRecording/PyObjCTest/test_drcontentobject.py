@@ -14,7 +14,7 @@ class TestDRContentObject(TestCase):
         self.assertEqual(DiscRecording.kDRFilesystemMaskJoliet, 1 << 1)
         self.assertEqual(DiscRecording.kDRFilesystemMaskUDF, 1 << 2)
         self.assertEqual(DiscRecording.kDRFilesystemMaskHFSPlus, 1 << 3)
-        self.assertEqual(DiscRecording.kDRFilesystemMaskDefault, 0xffffffff)
+        self.assertEqual(DiscRecording.kDRFilesystemMaskDefault, 0xFFFFFFFF)
 
     def testFunctions(self):
         self.assertResultIsBOOL(DiscRecording.DRFSObjectIsVirtual)

@@ -1217,12 +1217,16 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     @expectedFailure
     def test_recursive_tuple_and_dict_like_key(self):
         # XXX: Needs further investigation...
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_like_key(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_like_key(
+            self
+        )
 
     @expectedFailure
     def test_recursive_tuple_and_dict_subclass_key(self):
         # XXX: Needs further investigation...
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass_key(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass_key(
+            self
+        )
 
     @expectedFailure
     def test_recursive_tuple_and_inst_state(self):
@@ -1237,7 +1241,9 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     @expectedFailure
     def test_recursive_tuple_and_dict_subclass(self):
         # XXX: Needs further investigation...
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_dict_subclass(
+            self
+        )
 
     @expectedFailure
     def test_recursive_tuple_and_list_like(self):
@@ -1247,7 +1253,9 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     @expectedFailure
     def test_recursive_tuple_and_list_subclass(self):
         # XXX: Needs further investigation...
-        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list_subclass(self)
+        test.pickletester.AbstractPickleTests.test_recursive_tuple_and_list_subclass(
+            self
+        )
 
     @expectedFailure
     def test_recursive_set(self):
@@ -1268,11 +1276,6 @@ class TestArchivePlainPython(TestKeyedArchivePlainPython):
     def test_recursive_dict_key(self):
         # See 'TestArchiveNative'
         test.pickletester.AbstractPickleTests.test_recursive_dict_key(self)
-
-    @expectedFailure
-    def test_recursive_set(self):
-        # See 'TestArchiveNative'
-        test.pickletester.AbstractPickleTests.test_recursive_set(self)
 
     @expectedFailure
     def test_recursive_frozenset(self):

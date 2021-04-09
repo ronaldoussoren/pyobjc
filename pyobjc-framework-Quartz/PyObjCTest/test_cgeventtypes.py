@@ -60,8 +60,8 @@ class TestCGEventTypes(TestCase):
         self.assertEqual(Quartz.kCGEventOtherMouseDown, 25)
         self.assertEqual(Quartz.kCGEventOtherMouseUp, 26)
         self.assertEqual(Quartz.kCGEventOtherMouseDragged, 27)
-        self.assertEqual(Quartz.kCGEventTapDisabledByTimeout, 0xfffffffe)
-        self.assertEqual(Quartz.kCGEventTapDisabledByUserInput, 0xffffffff)
+        self.assertEqual(Quartz.kCGEventTapDisabledByTimeout, 0xFFFFFFFE)
+        self.assertEqual(Quartz.kCGEventTapDisabledByUserInput, 0xFFFFFFFF)
 
         self.assertEqual(Quartz.kCGMouseEventNumber, 0)
         self.assertEqual(Quartz.kCGMouseEventClickState, 1)
@@ -151,8 +151,8 @@ class TestCGEventTypes(TestCase):
         self.assertEqual(Quartz.kCGEventSourceStateCombinedSessionState, 0)
         self.assertEqual(Quartz.kCGEventSourceStateHIDSystemState, 1)
 
-        self.assertEqual(Quartz.kCGAnyInputEventType, 0xffffffff)
-        self.assertEqual(Quartz.kCGEventMaskForAllEvents, 0xffffffffffffffff)
+        self.assertEqual(Quartz.kCGAnyInputEventType, 0xFFFFFFFF)
+        self.assertEqual(Quartz.kCGEventMaskForAllEvents, 0xFFFFFFFFFFFFFFFF)
 
     def testStructs(self):
         v = Quartz.CGEventTapInformation()

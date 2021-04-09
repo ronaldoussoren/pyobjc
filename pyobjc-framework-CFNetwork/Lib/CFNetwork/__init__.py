@@ -15,11 +15,11 @@ from CFNetwork import _metadata
 
 
 def CFSocketStreamSOCKSGetError(err):
-    return err.error & 0xffff
+    return err.error & 0xFFFF
 
 
 def CFSocketStreamSOCKSGetErrorSubdomain(err):
-    return (err.error >> 16) & 0xffff
+    return (err.error >> 16) & 0xFFFF
 
 
 frameworkPath = "/System/Library/Frameworks/CFNetwork.framework"

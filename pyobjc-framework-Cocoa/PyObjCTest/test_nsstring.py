@@ -240,12 +240,12 @@ class TestPickle(TestCase):
         self.assertEqual(
             Foundation.NSUTF16LittleEndianStringEncoding, cast_uint(0x94000100)
         )
-        self.assertEqual(Foundation.NSUTF32StringEncoding, cast_uint(0x8c000100))
+        self.assertEqual(Foundation.NSUTF32StringEncoding, cast_uint(0x8C000100))
         self.assertEqual(
             Foundation.NSUTF32BigEndianStringEncoding, cast_uint(0x98000100)
         )
         self.assertEqual(
-            Foundation.NSUTF32LittleEndianStringEncoding, cast_uint(0x9c000100)
+            Foundation.NSUTF32LittleEndianStringEncoding, cast_uint(0x9C000100)
         )
 
         self.assertEqual(Foundation.NSStringEncodingConversionAllowLossy, 1)

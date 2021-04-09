@@ -27,7 +27,6 @@ class TestWKDownloadDelegate(TestCase):
     def test_protocols(self):
         objc.protocolNamed("WKDownloadDelegate")
 
-
     @min_sdk_level("11.3")
     def test_protocol_methods(self):
         self.assertArgIsBlock(

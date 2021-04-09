@@ -56,7 +56,7 @@ class TestMTLRenderPipeline(TestCase):
         self.assertEqual(Metal.MTLColorWriteMaskGreen, 0x1 << 2)
         self.assertEqual(Metal.MTLColorWriteMaskBlue, 0x1 << 1)
         self.assertEqual(Metal.MTLColorWriteMaskAlpha, 0x1 << 0)
-        self.assertEqual(Metal.MTLColorWriteMaskAll, 0xf)
+        self.assertEqual(Metal.MTLColorWriteMaskAll, 0xF)
 
         self.assertEqual(Metal.MTLPrimitiveTopologyClassUnspecified, 0)
         self.assertEqual(Metal.MTLPrimitiveTopologyClassPoint, 1)

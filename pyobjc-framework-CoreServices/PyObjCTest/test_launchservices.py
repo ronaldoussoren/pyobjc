@@ -13,7 +13,7 @@ class TestLaunchServices(TestCase):
         self.assertTrue(isinstance(CoreServices.kLSRequestAllInfo, int))
         # Note: the header file seems to indicate otherwise but the value
         # really is a signed integer!
-        self.assertEqual(CoreServices.kLSRequestAllInfo, 0xffffffff)
+        self.assertEqual(CoreServices.kLSRequestAllInfo, 0xFFFFFFFF)
 
         self.assertTrue(hasattr(CoreServices, "kLSLaunchInProgressErr"))
         self.assertTrue(isinstance(CoreServices.kLSLaunchInProgressErr, int))

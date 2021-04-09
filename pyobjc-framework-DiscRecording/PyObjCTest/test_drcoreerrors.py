@@ -30,13 +30,13 @@ class TestDRCoreErrors(TestCase):
         self.assertEqual(DiscRecording.kDRSpeedTestAlreadyRunningErr, 0x80020068)
         self.assertEqual(DiscRecording.kDRInvalidIndexPointsErr, 0x80020069)
         self.assertEqual(
-            DiscRecording.kDRDoubleLayerL0DataZoneBlocksParamErr, 0x8002006a
+            DiscRecording.kDRDoubleLayerL0DataZoneBlocksParamErr, 0x8002006A
         )
-        self.assertEqual(DiscRecording.kDRDoubleLayerL0AlreadySpecifiedErr, 0x8002006b)
-        self.assertEqual(DiscRecording.kDRAudioFileNotSupportedErr, 0x8002006c)
-        self.assertEqual(DiscRecording.kDRBurnPowerCalibrationErr, 0x8002006d)
-        self.assertEqual(DiscRecording.kDRBurnMediaWriteFailureErr, 0x8002006e)
-        self.assertEqual(DiscRecording.kDRTrackReusedErr, 0x8002006f)
+        self.assertEqual(DiscRecording.kDRDoubleLayerL0AlreadySpecifiedErr, 0x8002006B)
+        self.assertEqual(DiscRecording.kDRAudioFileNotSupportedErr, 0x8002006C)
+        self.assertEqual(DiscRecording.kDRBurnPowerCalibrationErr, 0x8002006D)
+        self.assertEqual(DiscRecording.kDRBurnMediaWriteFailureErr, 0x8002006E)
+        self.assertEqual(DiscRecording.kDRTrackReusedErr, 0x8002006F)
         self.assertEqual(DiscRecording.kDRFileModifiedDuringBurnErr, 0x80020100)
         self.assertEqual(DiscRecording.kDRFileLocationConflictErr, 0x80020101)
         self.assertEqual(DiscRecording.kDRTooManyNameConflictsErr, 0x80020102)

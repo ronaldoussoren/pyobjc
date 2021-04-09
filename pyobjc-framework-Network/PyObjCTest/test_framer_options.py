@@ -20,7 +20,7 @@ class TestFramerOptions(TestCase):
 
         self.assertEqual(Network.NW_FRAMER_CREATE_FLAGS_DEFAULT, 0x00)
 
-        self.assertEqual(Network.NW_FRAMER_WAKEUP_TIME_FOREVER, 0xffffffffffffffff)
+        self.assertEqual(Network.NW_FRAMER_WAKEUP_TIME_FOREVER, 0xFFFFFFFFFFFFFFFF)
 
     @min_os_level("10.15")
     def test_functions10_15(self):

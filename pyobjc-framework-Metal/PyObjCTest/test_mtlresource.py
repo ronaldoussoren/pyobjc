@@ -49,12 +49,12 @@ class TestMTLResource(TestCase):
 
         self.assertEqual(Metal.MTLResourceCPUCacheModeShift, 0)
         self.assertEqual(
-            Metal.MTLResourceCPUCacheModeMask, 0xf << Metal.MTLResourceCPUCacheModeShift
+            Metal.MTLResourceCPUCacheModeMask, 0xF << Metal.MTLResourceCPUCacheModeShift
         )
 
         self.assertEqual(Metal.MTLResourceStorageModeShift, 4)
         self.assertEqual(
-            Metal.MTLResourceStorageModeMask, 0xf << Metal.MTLResourceStorageModeShift
+            Metal.MTLResourceStorageModeMask, 0xF << Metal.MTLResourceStorageModeShift
         )
 
         self.assertEqual(Metal.MTLResourceHazardTrackingModeShift, 8)

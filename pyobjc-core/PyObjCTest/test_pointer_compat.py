@@ -61,15 +61,15 @@ class TestProxySupport(TestCase):
 
     @onlyIf(ctypes is not None, "requires ctypes")
     def test_opaque_ctypes(self):
-        ptr = ctypes.c_void_p(0xabcd)
+        ptr = ctypes.c_void_p(0xABCD)
 
         value = OpaqueType(c_void_p=ptr)
         self.assertIsInstance(value, OpaqueType)
-        self.assertEqual(value.__pointer__, 0xabcd)
+        self.assertEqual(value.__pointer__, 0xABCD)
 
-        value = OpaqueType(c_void_p=0xdefa)
+        value = OpaqueType(c_void_p=0xDEFA)
         self.assertIsInstance(value, OpaqueType)
-        self.assertEqual(value.__pointer__, 0xdefa)
+        self.assertEqual(value.__pointer__, 0xDEFA)
 
     def test_object_capsule(self):
         NSObject = objc.lookUpClass("NSObject")

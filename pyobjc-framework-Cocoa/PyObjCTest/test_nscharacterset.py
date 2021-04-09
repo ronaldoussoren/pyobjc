@@ -4,7 +4,7 @@ from PyObjCTools.TestSupport import TestCase
 
 class TestNSCharacterSet(TestCase):
     def testConstants(self):
-        self.assertEqual(Foundation.NSOpenStepUnicodeReservedBase, 0xf400)
+        self.assertEqual(Foundation.NSOpenStepUnicodeReservedBase, 0xF400)
 
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSCharacterSet.characterIsMember_)

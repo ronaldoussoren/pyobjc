@@ -26,7 +26,7 @@ class TestSecTrustSettings(TestCase):
         self.assertEqual(Security.kSecTrustSettingsKeyUseSignCert, 0x00000008)
         self.assertEqual(Security.kSecTrustSettingsKeyUseSignRevocation, 0x00000010)
         self.assertEqual(Security.kSecTrustSettingsKeyUseKeyExchange, 0x00000020)
-        self.assertEqual(Security.kSecTrustSettingsKeyUseAny, 0xffffffff)
+        self.assertEqual(Security.kSecTrustSettingsKeyUseAny, 0xFFFFFFFF)
 
         self.assertEqual(Security.kSecTrustSettingsResultInvalid, 0)
         self.assertEqual(Security.kSecTrustSettingsResultTrustRoot, 1)

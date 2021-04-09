@@ -13,7 +13,7 @@ class TestTime(TestCase):
         self.assertEqual(libdispatch.DISPATCH_TIME_FOREVER, 18446744073709551615)
 
         self.assertEqual(libdispatch.DISPATCH_TIME_NOW, 0)
-        self.assertEqual(libdispatch.DISPATCH_TIME_FOREVER, 0xffffffffffffffff)
+        self.assertEqual(libdispatch.DISPATCH_TIME_FOREVER, 0xFFFFFFFFFFFFFFFF)
 
     def test_structs(self):
 

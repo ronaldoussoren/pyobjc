@@ -46,7 +46,7 @@ class TestNSData(TestCase):
             Foundation.NSDataWritingFileProtectionCompleteUntilFirstUserAuthentication,
             0x40000000,
         )
-        self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xf0000000)
+        self.assertEqual(Foundation.NSDataWritingFileProtectionMask, 0xF0000000)
 
     @min_os_level("10.6")
     def testConstants10_6(self):

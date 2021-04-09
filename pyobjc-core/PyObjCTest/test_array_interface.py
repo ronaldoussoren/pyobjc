@@ -145,7 +145,7 @@ class MutableArrayTest(list_tests.CommonTest):
 
     @expectedFailure
     def test_pop(self):
-        lists_tests.CommonTest.test_pop(self) 
+        list_tests.CommonTest.test_pop(self)
 
     @onlyIf(0, "test irrelevant for NSMutableArray")
     def test_repr_deep(self):

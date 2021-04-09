@@ -43,7 +43,7 @@ class TestAudioHardwareBase(TestCase):
 
         self.assertEqual(CoreAudio.kAudioObjectPropertyScopeWildcard, fourcc(b"****"))
 
-        self.assertEqual(CoreAudio.kAudioObjectPropertyElementWildcard, 0xffffffff)
+        self.assertEqual(CoreAudio.kAudioObjectPropertyElementWildcard, 0xFFFFFFFF)
 
         self.assertEqual(CoreAudio.kAudioObjectClassIDWildcard, fourcc(b"****"))
 

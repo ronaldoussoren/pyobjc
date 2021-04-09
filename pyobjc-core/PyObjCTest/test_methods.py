@@ -521,7 +521,7 @@ class PyOCTestByReferenceArguments(TestCase):
         self.assertEqual(self.obj.passOutChar_(None), 127)
 
     def testCharInOut(self):
-        self.assertEqual(self.obj.passInOutChar_(b"\x10"), 0x3a)
+        self.assertEqual(self.obj.passInOutChar_(b"\x10"), 0x3A)
 
     def testUCharIn(self):
         self.assertEqual(self.obj.passInUChar_(10), 19)

@@ -45,10 +45,10 @@ class TestCGEventSource(TestCase):
         v = Quartz.CGEventSourceCounterForEventType(0, Quartz.kCGEventLeftMouseDown)
         self.assertIsInstance(v, int)
 
-        Quartz.CGEventSourceSetUserData(src, 0xabbccdd00112233)
+        Quartz.CGEventSourceSetUserData(src, 0xABBCCDD00112233)
         v = Quartz.CGEventSourceGetUserData(src)
         self.assertIsInstance(v, int)
-        self.assertEqual(v, 0xabbccdd00112233)
+        self.assertEqual(v, 0xABBCCDD00112233)
 
         Quartz.CGEventSourceSetLocalEventsFilterDuringSuppressionState(
             src,

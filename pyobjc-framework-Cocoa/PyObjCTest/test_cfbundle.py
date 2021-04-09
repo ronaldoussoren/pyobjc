@@ -321,7 +321,7 @@ class TestCFBundle(TestCase):
             CoreFoundation.kCFBundleExecutableArchitecturePPC64, 0x01000012
         )
         self.assertEqual(
-            CoreFoundation.kCFBundleExecutableArchitectureARM64, 0x0100000c
+            CoreFoundation.kCFBundleExecutableArchitectureARM64, 0x0100000C
         )
 
     @min_os_level("10.16")

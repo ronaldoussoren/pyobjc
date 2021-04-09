@@ -303,7 +303,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationLowQuality, 0x20)
         self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationMediumQuality, 0x40)
         self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationHighQuality, 0x60)
-        self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationMaxQuality, 0x7f)
+        self.assertEqual(CoreAudio.kAudioSubDeviceDriftCompensationMaxQuality, 0x7F)
 
         self.assertEqual(CoreAudio.kAudioSubDeviceUIDKey, b"uid")
         self.assertEqual(CoreAudio.kAudioSubDeviceNameKey, b"name")

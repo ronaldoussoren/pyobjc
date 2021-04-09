@@ -32,7 +32,7 @@ class TestRunLoop(TestCase):
         self.assertEqual(CoreFoundation.kCFRunLoopBeforeWaiting, (1 << 5))
         self.assertEqual(CoreFoundation.kCFRunLoopAfterWaiting, (1 << 6))
         self.assertEqual(CoreFoundation.kCFRunLoopExit, (1 << 7))
-        self.assertEqual(CoreFoundation.kCFRunLoopAllActivities, 0x0fffffff)
+        self.assertEqual(CoreFoundation.kCFRunLoopAllActivities, 0x0FFFFFFF)
         self.assertIsInstance(CoreFoundation.kCFRunLoopDefaultMode, str)
         self.assertIsInstance(CoreFoundation.kCFRunLoopCommonModes, str)
 

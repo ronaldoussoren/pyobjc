@@ -21,7 +21,7 @@ class TestNSParagraphStyle(TestCase):
         self.assertEqual(AppKit.NSLineBreakStrategyNone, 0)
         self.assertEqual(AppKit.NSLineBreakStrategyPushOut, 1 << 0)
         self.assertEqual(AppKit.NSLineBreakStrategyHangulWordPriority, 1 << 1)
-        self.assertEqual(AppKit.NSLineBreakStrategyStandard, 0xffff)
+        self.assertEqual(AppKit.NSLineBreakStrategyStandard, 0xFFFF)
 
     @min_os_level("10.11")
     def testMethods10_11(self):

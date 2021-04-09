@@ -18,7 +18,7 @@ class TestLaunchServices(TestCase):
         self.assertIsInstance(LaunchServices.kLSRequestAllInfo, int)
         # Note: the header file seems to indicate otherwise but the value
         # really is a signed integer!
-        self.assertEqual(LaunchServices.kLSRequestAllInfo, 0xffffffff)
+        self.assertEqual(LaunchServices.kLSRequestAllInfo, 0xFFFFFFFF)
 
         self.assertHasAttr(LaunchServices, "kLSLaunchInProgressErr")
         self.assertIsInstance(LaunchServices.kLSLaunchInProgressErr, int)

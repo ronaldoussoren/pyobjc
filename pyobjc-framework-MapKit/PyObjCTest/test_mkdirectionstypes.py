@@ -8,7 +8,7 @@ class TestMKDirectionsTypes(TestCase):
     def testConstants(self):
         self.assertEqual(MapKit.MKDirectionsTransportTypeAutomobile, 1 << 0)
         self.assertEqual(MapKit.MKDirectionsTransportTypeWalking, 1 << 1)
-        self.assertEqual(MapKit.MKDirectionsTransportTypeAny, 0x0fffffff)
+        self.assertEqual(MapKit.MKDirectionsTransportTypeAny, 0x0FFFFFFF)
 
     @min_os_level("10.11")
     def testConstants10_11(self):

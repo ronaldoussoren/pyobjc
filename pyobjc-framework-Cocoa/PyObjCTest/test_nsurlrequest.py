@@ -62,9 +62,7 @@ class TestNSURLRequest(TestCase):
     @min_os_level("11.3")
     def testMethods11_3(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.assumesHTTP3Capable)
-        self.assertArgIsBOOL(
-            Foundation.NSMutableURLRequest.setAssumesHTTP3Capable_, 0
-        )
+        self.assertArgIsBOOL(Foundation.NSMutableURLRequest.setAssumesHTTP3Capable_, 0)
 
     @min_sdk_level("10.15")
     def test_protocols(self):

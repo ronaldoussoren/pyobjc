@@ -18,7 +18,7 @@ class TestICDevice(TestCase):
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskShared, 0x00000200)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskBonjour, 0x00000400)
         self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskBluetooth, 0x00000800)
-        self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskRemote, 0x0000fe00)
+        self.assertEqual(ImageCaptureCore.ICDeviceLocationTypeMaskRemote, 0x0000FE00)
 
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeUSB, str)
         self.assertIsInstance(ImageCaptureCore.ICTransportTypeFireWire, str)

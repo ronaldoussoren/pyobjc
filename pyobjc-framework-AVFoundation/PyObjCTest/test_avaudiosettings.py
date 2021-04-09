@@ -8,7 +8,7 @@ class TestAVAudioSettings(TestCase):
         self.assertEqual(AVFoundation.AVAudioQualityLow, 0x20)
         self.assertEqual(AVFoundation.AVAudioQualityMedium, 0x40)
         self.assertEqual(AVFoundation.AVAudioQualityHigh, 0x60)
-        self.assertEqual(AVFoundation.AVAudioQualityMax, 0x7f)
+        self.assertEqual(AVFoundation.AVAudioQualityMax, 0x7F)
 
         self.assertIsInstance(AVFoundation.AVSampleRateKey, str)
         self.assertIsInstance(AVFoundation.AVNumberOfChannelsKey, str)

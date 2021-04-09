@@ -1409,15 +1409,15 @@ class TestVariableLengthValue(TestCase):
 
         data = v.as_buffer(4)
         self.assertEqual(data[0], 0)
-        v[0] = 0x0f0f0f0f
-        self.assertEqual(data[0], 0x0f)
+        v[0] = 0x0F0F0F0F
+        self.assertEqual(data[0], 0x0F)
         data[0] = 0
 
         if sys.byteorder == "little":
-            self.assertEqual(v[0], 0x0f0f0f00)
+            self.assertEqual(v[0], 0x0F0F0F00)
 
         else:
-            self.assertEqual(v[0], 0x000f0f0f)
+            self.assertEqual(v[0], 0x000F0F0F)
 
     def testInput(self):
         o = OC_MetaDataTest.alloc().init()

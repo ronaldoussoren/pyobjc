@@ -121,9 +121,9 @@ def cast_int(value):
 
     (where as: 1 << 31 == 2147483648)
     """
-    value = value & 0xffffffff
+    value = value & 0xFFFFFFFF
     if value & 0x80000000:
-        value = ~value + 1 & 0xffffffff
+        value = ~value + 1 & 0xFFFFFFFF
         return -value
     else:
         return value
@@ -136,9 +136,9 @@ def cast_longlong(value):
     Usage:
         cast_longlong(1 << 63) == -1
     """
-    value = value & 0xffffffffffffffff
+    value = value & 0xFFFFFFFFFFFFFFFF
     if value & 0x8000000000000000:
-        value = ~value + 1 & 0xffffffffffffffff
+        value = ~value + 1 & 0xFFFFFFFFFFFFFFFF
         return -value
     else:
         return value
@@ -152,7 +152,7 @@ def cast_uint(value):
         cast_int(1 << 31) == 2147483648
 
     """
-    value = value & 0xffffffff
+    value = value & 0xFFFFFFFF
     return value
 
 
@@ -160,7 +160,7 @@ def cast_ulonglong(value):
     """
     Cast value to 64bit integer
     """
-    value = value & 0xffffffffffffffff
+    value = value & 0xFFFFFFFFFFFFFFFF
     return value
 
 

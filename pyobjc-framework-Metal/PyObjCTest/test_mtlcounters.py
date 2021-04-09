@@ -13,7 +13,7 @@ class TestMTLCountersHelper(Metal.NSObject):
 
 class TestMTLCounters(TestCase):
     def test_constants(self):
-        self.assertEqual(Metal.MTLCounterErrorValue, 0xffffffffffffffff)
+        self.assertEqual(Metal.MTLCounterErrorValue, 0xFFFFFFFFFFFFFFFF)
 
         self.assertEqual(Metal.MTLCounterSampleBufferErrorOutOfMemory, 0)
         self.assertEqual(Metal.MTLCounterSampleBufferErrorInvalid, 1)

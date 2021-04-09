@@ -13,8 +13,9 @@ class TestNSFileProviderTestingHelper(FileProvider.NSObject):
     def changedFields(self):
         return 1
 
-    def type(self):
+    def type(self):  # noqa: A003
         return 1
+
 
 class TestNSFileProviderTesting(TestCase):
     def test_constants(self):
@@ -27,9 +28,12 @@ class TestNSFileProviderTesting(TestCase):
         self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeModification, 3)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeDeletion, 4)
         self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeContentFetch, 5)
-        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeChildrenEnumeration, 6)
-        self.assertEqual(FileProvider.NSFileProviderTestingOperationTypeCollisionResolution, 7)
-
+        self.assertEqual(
+            FileProvider.NSFileProviderTestingOperationTypeChildrenEnumeration, 6
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderTestingOperationTypeCollisionResolution, 7
+        )
 
     @min_sdk_level("11.3")
     def test_protocols(self):

@@ -84,7 +84,7 @@ class TestBitVector(TestCase):
         CoreFoundation.CFBitVectorFlipBits(bitset, (0, 8))
         bits2 = ord(CoreFoundation.CFBitVectorGetBits(bitset, (0, 8), None))
 
-        self.assertEqual(bits2, ~bits & 0xff)
+        self.assertEqual(bits2, ~bits & 0xFF)
 
         CoreFoundation.CFBitVectorSetBitAtIndex(bitset, 4, 0)
         self.assertEqual(CoreFoundation.CFBitVectorGetBitAtIndex(bitset, 4), 0)

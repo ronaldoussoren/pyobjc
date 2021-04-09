@@ -20,7 +20,7 @@ class TestLSInfo(TestCase):
             os.unlink(self.path)
 
     def testConstants(self):
-        self.assertEqual(CoreServices.kLSInvalidExtensionIndex, 0xffffffffffffffff)
+        self.assertEqual(CoreServices.kLSInvalidExtensionIndex, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(CoreServices.kLSAppInTrashErr, -10660)
         self.assertEqual(CoreServices.kLSExecutableIncorrectFormat, -10661)
         self.assertEqual(CoreServices.kLSAttributeNotFoundErr, -10662)
@@ -56,7 +56,7 @@ class TestLSInfo(TestCase):
         self.assertEqual(CoreServices.kLSRequestAllFlags, 0x00000010)
         self.assertEqual(CoreServices.kLSRequestIconAndKind, 0x00000020)
         self.assertEqual(CoreServices.kLSRequestExtensionFlagsOnly, 0x00000040)
-        self.assertEqual(CoreServices.kLSRequestAllInfo, 0xffffffff)
+        self.assertEqual(CoreServices.kLSRequestAllInfo, 0xFFFFFFFF)
         self.assertEqual(CoreServices.kLSItemInfoIsPlainFile, 0x00000001)
         self.assertEqual(CoreServices.kLSItemInfoIsPackage, 0x00000002)
         self.assertEqual(CoreServices.kLSItemInfoIsApplication, 0x00000004)
@@ -75,7 +75,7 @@ class TestLSInfo(TestCase):
         self.assertEqual(CoreServices.kLSRolesViewer, 0x00000002)
         self.assertEqual(CoreServices.kLSRolesEditor, 0x00000004)
         self.assertEqual(CoreServices.kLSRolesShell, 0x00000008)
-        self.assertEqual(CoreServices.kLSRolesAll, 0xffffffff, 0xffffffffffffffff)
+        self.assertEqual(CoreServices.kLSRolesAll, 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFF)
         self.assertEqual(CoreServices.kLSUnknownKindID, 0)
         self.assertEqual(CoreServices.kLSUnknownType, 0)
         self.assertEqual(CoreServices.kLSUnknownCreator, 0)

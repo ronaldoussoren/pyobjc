@@ -53,7 +53,7 @@ class TestNSFont(TestCase):
     def testConstants(self):
         self.assertEqual(AppKit.NSFontIdentityMatrix, None)
 
-        self.assertEqual(AppKit.NSControlGlyph, 0xffffff)
+        self.assertEqual(AppKit.NSControlGlyph, 0xFFFFFF)
         self.assertEqual(AppKit.NSNullGlyph, 0)
         self.assertEqual(AppKit.NSNativeShortGlyphPacking, 5)
 

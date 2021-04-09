@@ -9,7 +9,7 @@ import objc
 
 class TestCGImage(TestCase):
     def testConstants(self):
-        self.assertEqual(Quartz.kCGImagePixelFormatMask, 0xf0000)
+        self.assertEqual(Quartz.kCGImagePixelFormatMask, 0xF0000)
         self.assertEqual(Quartz.kCGImagePixelFormatPacked, 0 << 16)
         self.assertEqual(Quartz.kCGImagePixelFormatRGB555, 1 << 16)
         self.assertEqual(Quartz.kCGImagePixelFormatRGB565, 2 << 16)
@@ -25,7 +25,7 @@ class TestCGImage(TestCase):
         self.assertEqual(Quartz.kCGImageAlphaNoneSkipFirst, 6)
         self.assertEqual(Quartz.kCGImageAlphaOnly, 7)
 
-        self.assertEqual(Quartz.kCGBitmapAlphaInfoMask, 0x1f)
+        self.assertEqual(Quartz.kCGBitmapAlphaInfoMask, 0x1F)
         self.assertEqual(Quartz.kCGBitmapFloatComponents, (1 << 8))
         self.assertEqual(Quartz.kCGBitmapByteOrderMask, 0x7000)
         self.assertEqual(Quartz.kCGBitmapByteOrderDefault, (0 << 12))

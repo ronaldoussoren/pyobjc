@@ -9,7 +9,7 @@ class TestKeychainitem(TestCase):
         self.assertEqual(Security.kSecGenericPasswordItemClass, fourcc(b"genp"))
         self.assertEqual(Security.kSecAppleSharePasswordItemClass, fourcc(b"ashp"))
         self.assertEqual(Security.kSecCertificateItemClass, 0x80001000)
-        self.assertEqual(Security.kSecPublicKeyItemClass, 0x0000000f)
+        self.assertEqual(Security.kSecPublicKeyItemClass, 0x0000000F)
         self.assertEqual(Security.kSecPrivateKeyItemClass, 0x00000010)
         self.assertEqual(Security.kSecSymmetricKeyItemClass, 0x00000011)
 

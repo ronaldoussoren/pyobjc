@@ -16,8 +16,8 @@ class TestNSTextCheckingResult(TestCase):
         self.assertEqual(Foundation.NSTextCheckingTypeReplacement, 1 << 8)
         self.assertEqual(Foundation.NSTextCheckingTypeCorrection, 1 << 9)
 
-        self.assertEqual(Foundation.NSTextCheckingAllSystemTypes, 0xffffffff)
-        self.assertEqual(Foundation.NSTextCheckingAllCustomTypes, (0xffffffff << 32))
+        self.assertEqual(Foundation.NSTextCheckingAllSystemTypes, 0xFFFFFFFF)
+        self.assertEqual(Foundation.NSTextCheckingAllCustomTypes, (0xFFFFFFFF << 32))
         self.assertEqual(
             Foundation.NSTextCheckingAllTypes,
             (

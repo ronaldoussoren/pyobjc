@@ -2,7 +2,6 @@ from PyObjCTools.TestSupport import (
     TestCase,
     min_os_level,
 )
-import objc
 import GameController
 
 

@@ -141,7 +141,7 @@ def _load(mod):
         mod.CGSetLocalEventsFilterDuringSuppressionState
     )
 
-    mod.kCGAnyInputEventType = 0xffffffff
+    mod.kCGAnyInputEventType = 0xFFFFFFFF
 
 
 _load(mod)

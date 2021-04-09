@@ -18,7 +18,7 @@ class TestXMLParser(TestCase):
         self.assertEqual(CoreFoundation.kCFXMLParserSkipWhitespace, (1 << 3))
         self.assertEqual(CoreFoundation.kCFXMLParserResolveExternalEntities, (1 << 4))
         self.assertEqual(CoreFoundation.kCFXMLParserAddImpliedAttributes, (1 << 5))
-        self.assertEqual(CoreFoundation.kCFXMLParserAllOptions, 0x00ffffff)
+        self.assertEqual(CoreFoundation.kCFXMLParserAllOptions, 0x00FFFFFF)
         self.assertEqual(CoreFoundation.kCFXMLParserNoOptions, 0)
         self.assertEqual(CoreFoundation.kCFXMLStatusParseNotBegun, -2)
         self.assertEqual(CoreFoundation.kCFXMLStatusParseInProgress, -1)

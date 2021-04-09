@@ -100,9 +100,9 @@ def _setup_conveniences():
     )
 
     if sys.maxsize > 2 ** 32:
-        NSNotFound = 0x7fffffffffffffff
+        NSNotFound = 0x7FFFFFFFFFFFFFFF
     else:
-        NSNotFound = 0x7fffffff
+        NSNotFound = 0x7FFFFFFF
 
     def indexset_iter(self):
         value = self.firstIndex()

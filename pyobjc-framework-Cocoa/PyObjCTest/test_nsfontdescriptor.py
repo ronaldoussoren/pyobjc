@@ -24,7 +24,7 @@ class TestNSFontDescriptor(TestCase):
         self.assertEqual(AppKit.NSFontScriptsClass, (10 << 28))
         self.assertEqual(AppKit.NSFontSymbolicClass, (12 << 28))
 
-        self.assertEqual(AppKit.NSFontFamilyClassMask, (0xf0000000))
+        self.assertEqual(AppKit.NSFontFamilyClassMask, (0xF0000000))
 
         self.assertEqual(AppKit.NSFontItalicTrait, (1 << 0))
         self.assertEqual(AppKit.NSFontBoldTrait, (1 << 1))
@@ -68,7 +68,7 @@ class TestNSFontDescriptor(TestCase):
         self.assertEqual(AppKit.NSFontDescriptorTraitUIOptimized, 1 << 12)
         self.assertEqual(AppKit.NSFontDescriptorTraitTightLeading, 1 << 15)
         self.assertEqual(AppKit.NSFontDescriptorTraitLooseLeading, 1 << 16)
-        self.assertEqual(AppKit.NSFontDescriptorClassMask, 0xf0000000)
+        self.assertEqual(AppKit.NSFontDescriptorClassMask, 0xF0000000)
 
         self.assertEqual(AppKit.NSFontDescriptorClassUnknown, 0 << 28)
         self.assertEqual(AppKit.NSFontDescriptorClassOldStyleSerifs, 1 << 28)
