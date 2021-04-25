@@ -66,6 +66,14 @@ class TestLAContext(TestCase):
             LocalAuthentication.LAErrorWatchNotAvailable,
             LocalAuthentication.kLAErrorWatchNotAvailable,
         )
+        self.assertEqual(
+            LocalAuthentication.LAErrorBiometryNotPaired,
+            LocalAuthentication.kLAErrorBiometryNotPaired,
+        )
+        self.assertEqual(
+            LocalAuthentication.LAErrorBiometryDisconnected,
+            LocalAuthentication.kLAErrorBiometryDisconnected,
+        )
 
     @min_os_level("10.11")
     def testConstants10_11(self):

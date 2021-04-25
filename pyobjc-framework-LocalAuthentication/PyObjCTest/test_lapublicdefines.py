@@ -38,6 +38,8 @@ class TestLAPublicDefines(TestCase):
         self.assertEqual(LocalAuthentication.kLAErrorAppCancel, -9)
         self.assertEqual(LocalAuthentication.kLAErrorInvalidContext, -10)
         self.assertEqual(LocalAuthentication.kLAErrorWatchNotAvailable, -11)
+        self.assertEqual(LocalAuthentication.kLAErrorBiometryNotPaired, -12)
+        self.assertEqual(LocalAuthentication.kLAErrorBiometryDisconnected, -13)
         self.assertEqual(
             LocalAuthentication.kLAErrorDomain, "com.apple.LocalAuthentication"
         )

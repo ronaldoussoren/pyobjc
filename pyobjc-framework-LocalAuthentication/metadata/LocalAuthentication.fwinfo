@@ -20,6 +20,10 @@
      "LATouchIDAuthenticationMaximumAllowableReuseDuration": { "typestr": "d" }
   },
   "enum": {
+   "LAErrorBiometryNotPaired": { "value": -12 },
+   "LAErrorBiometryDisconnected": { "value": -13 },
+   "kLAErrorBiometryNotPaired": { "value": -12 },
+   "kLAErrorBiometryDisconnected": { "value": -13 },
    "kLACredentialSmartCardPIN": { "value": -3 },
    "LABiometryTypeNone": { "value": 0 },
    "LABiometryNone": { "value": 0 },
