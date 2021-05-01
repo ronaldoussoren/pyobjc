@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION = "7.1"
+VERSION = "7.2"
 
 setup(
     name="pyobjc-framework-FinderSync",
