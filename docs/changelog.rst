@@ -12,6 +12,10 @@ Version 7.2.1
   trying to build PyObjC for a CPU architecture that is no longer
   supported (such as 32-bit Intel)
 
+* #319: Use memset instead of bzero in C code to clear memory
+
+  Based on a PR by GitHub user stbdang.
+
 Version 7.2
 -----------
 
