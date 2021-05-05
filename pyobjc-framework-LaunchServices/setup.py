@@ -5,7 +5,7 @@ Use the "CoreServices" bindings instead.
 """
 from pyobjc_setup import setup
 
-VERSION = "7.1"
+VERSION = "7.2.1"
 
 setup(
     name="pyobjc-framework-LaunchServices",
