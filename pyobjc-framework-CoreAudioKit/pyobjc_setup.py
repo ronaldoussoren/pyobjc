@@ -10,6 +10,7 @@ __all__ = ("setup", "Extension", "Command")
 import os
 import pkg_resources
 import plistlib
+import re
 import shlex
 import shutil
 import subprocess
@@ -308,6 +309,13 @@ def _working_compiler(executable):
         binfile = os.path.basename(binfile)
         if os.path.exists(binfile):
             os.unlink(binfile)
+
+    cflags = get_config_var("CFLAGS")
+    if re.search(r"-arch\s+i386", cflags) is not None:
+        raise DistutilsPlatformError("i386 (32-bit) is not supported by PyObjC")
+
+    if re.search(r"-arch\s+ppc", cflags) is not None:
+        raise DistutilsPlatformError("PowerPC is not supported by PyObjC")
 
     return True
 

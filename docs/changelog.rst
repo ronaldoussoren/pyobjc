@@ -3,6 +3,15 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 7.2.1
+-------------
+
+* #356: Explicitly error out when building for unsupported architectures
+
+  "python setup.py build" will now fail with a clear error when
+  trying to build PyObjC for a CPU architecture that is no longer
+  supported (such as 32-bit Intel)
+
 Version 7.2
 -----------
 
