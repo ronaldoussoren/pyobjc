@@ -16,6 +16,9 @@ Version 7.2.1
 
   Based on a PR by GitHub user stbdang.
 
+* #348: Fix platform version guard for using protocols in MetalPerformanceShaders
+  bindings
+
 Version 7.2
 -----------
 
