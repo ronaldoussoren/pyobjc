@@ -16,6 +16,9 @@ Version 7.3
 
   Based on a PR by GitHub user stbdang.
 
+* #348: Fix platform version guard for using protocols in
+  MetalPerformanceShaders bindings
+
 * #336: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,
