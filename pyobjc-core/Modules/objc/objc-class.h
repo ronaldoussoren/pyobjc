@@ -89,6 +89,7 @@ typedef struct _PyObjCClassObject {
     unsigned int useKVO : 1;
     unsigned int hasPythonImpl : 1;
     unsigned int isCFWrapper : 1;
+    unsigned int isFinal: 1;
 } PyObjCClassObject;
 
 extern PyObject* PyObjCClass_DefaultModule;
@@ -120,6 +121,13 @@ PyObjCClass_IsCFWrapper(PyTypeObject* tp)
 {
     return ((PyObjCClassObject*)tp)->isCFWrapper;
 }
+
+static inline int
+PyObjCClass_IsFinal(PyTypeObject* tp)
+{
+    return ((PyObjCClassObject*)tp)->isFinal;
+}
+
 
 PyObject* objc_class_locate(Class objc_class);
 

@@ -3,8 +3,8 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 7.2.1
--------------
+Version 7.3
+-----------
 
 * #356: Explicitly error out when building for unsupported architectures
 
@@ -15,6 +15,24 @@ Version 7.2.1
 * #319: Use memset instead of bzero in C code to clear memory
 
   Based on a PR by GitHub user stbdang.
+
+* #336: Add core support for 'final' classes
+
+  It is now possible to mark Objective-C classes as final,
+  that is to disable subclassing for such classes.
+
+  This is primarily meant to be used in framework bindings for
+  matching Objective-C semantics.
+
+  This adds two new APIs:
+
+  1. A keyword argument "final" when defining a new class::
+
+        class MyClass (NSObject, final=True):
+            pass
+
+  2. An read-write attribute "__objc_final__" on all subclasses
+     of NSObject.
 
 Version 7.2
 -----------
