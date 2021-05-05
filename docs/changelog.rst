@@ -34,6 +34,8 @@ Version 7.3
   2. An read-write attribute "__objc_final__" on all subclasses
      of NSObject.
 
+  Note that this is a separate concept from :func:`typing.final`.
+
 Version 7.2
 -----------
 
