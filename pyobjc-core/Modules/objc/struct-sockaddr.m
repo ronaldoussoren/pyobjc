@@ -13,6 +13,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/un.h>
+#include <arpa/inet.h>
 
 static PyObject* socket_error    = NULL;
 static PyObject* socket_gaierror = NULL;
@@ -90,7 +91,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
 {
     struct addrinfo hints, *res;
     int             error;
-    int             d1, d2, d3, d4;
+    uint32_t        d1, d2, d3, d4;
     char            ch;
 
     memset((void*)addr_ret, '\0', sizeof(*addr_ret));
@@ -147,13 +148,13 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         sinaddr->sin_addr.s_addr = INADDR_BROADCAST;
         return sizeof(sinaddr->sin_addr);
     }
-    if (sscanf(name, "%d.%d.%d.%d%c", &d1, &d2, &d3, &d4, &ch) == 4 && 0 <= d1
+    if (sscanf(name, "%u.%u.%u.%u%c", &d1, &d2, &d3, &d4, &ch) == 4 && 0 <= d1
         && d1 <= 255 && 0 <= d2 && d2 <= 255 && 0 <= d3 && d3 <= 255 && 0 <= d4
         && d4 <= 255) {
         struct sockaddr_in* sinaddr;
         sinaddr                  = (struct sockaddr_in*)addr_ret;
-        sinaddr->sin_addr.s_addr = htonl(((long)d1 << 24) | ((long)d2 << 16)
-                                         | ((long)d3 << 8) | ((long)d4 << 0));
+        sinaddr->sin_addr.s_addr = htonl((d1 << 24) | (d2 << 16)
+                                         | (d3 << 8) | (d4 << 0));
         sinaddr->sin_family      = AF_INET;
         sinaddr->sin_len         = sizeof(*sinaddr);
         return 4;

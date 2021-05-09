@@ -24,6 +24,12 @@ Version 7.3
   The tests didn't actually test calling the callback function
   for CFMessagePortCreateLocal.
 
+* #349: Change calls to htonl in pyobjc-core to avoid compiler warning
+
+  The original code had a 32-bit assumption (using 'long' to represent
+  a 32-bit value), and that causes problems for some users build from
+  source.
+
 * #336: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,
