@@ -19,6 +19,11 @@ Version 7.3
 * #348: Fix platform version guard for using protocols in
   MetalPerformanceShaders bindings
 
+* #344: Fix test for CFMessagePortCreateLocal
+
+  The tests didn't actually test calling the callback function
+  for CFMessagePortCreateLocal.
+
 * #336: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,
