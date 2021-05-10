@@ -40,6 +40,10 @@ Version 7.3
   causing access to an already deallocated value when the Python reference
   was garbage collected.
 
+* #260: Add manual bindings for AXValueCreate and AXValueGetValue in ApplicationServices
+
+  Calling these crashed in previous versions.
+
 * #336: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,

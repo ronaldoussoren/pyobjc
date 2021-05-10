@@ -781,7 +781,6 @@ functions = {
         {"retval": {"already_cfretained": True}},
     ),
     "AXObserverGetTypeID": (b"Q",),
-    "AXValueGetValue": (b"Z^{__AXValue=}I^v",),
     "HIShapeGetTypeID": (b"Q",),
     "AXObserverCreate": (
         b"ii^?^^{__AXObserver=}",
@@ -861,11 +860,6 @@ functions = {
             "retval": {"already_cfretained": True},
             "arguments": {3: {"already_cfretained": True, "type_modifier": "o"}},
         },
-    ),
-    "AXValueCreate": (
-        b"^{__AXValue=}I^v",
-        "",
-        {"retval": {"already_cfretained": True}},
     ),
     "HIShapeSetEmpty": (b"i^{__HIShape=}",),
     "HIShapeReplacePathInCGContext": (b"i^{__HIShape=}^{CGContext=}",),
