@@ -34,6 +34,12 @@ Version 7.3
 
   Trying to use this function will no longer crash Python.
 
+* #357: Calling ``Metal.MTLCopyAllDevices()`` no longer crashes
+
+  The reference count of the result of this function was handled incorrect,
+  causing access to an already deallocated value when the Python reference
+  was garbage collected.
+
 * #336: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,
