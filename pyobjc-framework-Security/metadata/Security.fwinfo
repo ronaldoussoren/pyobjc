@@ -1920,7 +1920,6 @@
    "kSecCFErrorInfoPlist": { "typestr": "@" },
    "kSecCFErrorGuestAttributes": { "typestr": "@" },
    "kSecCFErrorRequirementSyntax": { "typestr": "@" },
-   "SecAddSharedWebCredential": { "typestr": "@" },
    "kSecSharedPassword": { "typestr": "@" },
    "kSecCFErrorPath": { "typestr": "@" }
   },

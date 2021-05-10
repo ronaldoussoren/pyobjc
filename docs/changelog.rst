@@ -30,6 +30,10 @@ Version 7.3
   a 32-bit value), and that causes problems for some users build from
   source.
 
+* #315: Fix binding for ``SecAddSharedWebCredential`` (Security framework)
+
+  Trying to use this function will no longer crash Python.
+
 * #336: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,
