@@ -856,7 +856,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 {
     switch (t) {
     case 1:
-        return [NSObject new];
+        return [[NSObject new] autorelease];
     case 2:
         return [NSArray array];
     case 3:

@@ -406,7 +406,6 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     int        first_python_gen = 0;
     Class      new_class        = NULL;
     Class      new_meta_class   = NULL;
-    Class      cur_class;
     PyObject*  py_superclass      = NULL;
     int        have_intermediate  = 0;
     PyObject*  instance_variables = NULL;
@@ -431,7 +430,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
         goto error_cleanup;
     }
 
-    if ((cur_class = objc_lookUpClass(name)) != NULL) {
+    if ( objc_lookUpClass(name) != NULL) {
         /*
          * NOTE: we used to allow redefinition of a class if the
          * redefinition is in the same module. This code was removed
