@@ -44,6 +44,8 @@ Version 7.3
 
   Calling these crashed in previous versions.
 
+* #324: Fix the type encoding for a number of CoreFoundation types in the Security bindings
+
 * #336: Add core support for 'final' classes
 
   It is now possible to mark Objective-C classes as final,

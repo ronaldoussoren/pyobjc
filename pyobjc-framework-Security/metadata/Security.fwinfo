@@ -34,47 +34,47 @@
     "gettypeid_func": "SecRequirementGetTypeID"
    },
    "SecCertificateRef": {
-    "typestr": "^{OpaqueSecCertificateRef=}",
+    "typestr": "^{__SecCertificate=}",
     "gettypeid_func": "SecCertificateGetTypeID"
    },
    "SecIdentityRef": {
-    "typestr": "^{OpaqueSecIdentityRef=}",
+    "typestr": "^{__SecIdentity=}",
     "gettypeid_func": "SecIdentityGetTypeID"
    },
    "SecKeyRef": {
-    "typestr": "^{OpaqueSecKeyRef=}",
+    "typestr": "^{__SecKey=}",
     "gettypeid_func": "SecKeyGetTypeID"
    },
    "SecPolicyRef": {
-    "typestr": "^{OpaqueSecPolicyRef=}",
+    "typestr": "^{__SecPolicy=}",
     "gettypeid_func": "SecPolicyGetTypeID"
    },
    "SecAccessControlRef": {
-    "typestr": "^{OpaqueSecAccessControlRef=}",
+    "typestr": "^{__SecAccessControl=}",
     "gettypeid_func": "SecAccessControlGetTypeID"
    },
    "SecKeychainRef": {
-    "typestr": "^{OpaqueSecKeychainRef=}",
+    "typestr": "^{__SecKeychain=}",
     "gettypeid_func": "SecKeyChainGetTypeID"
    },
    "SecKeychainItemRef": {
-    "typestr": "^{OpaqueSecKeychainItemRef=}",
+    "typestr": "^{__SecKeychainItem=}",
     "gettypeid_func": "SecKeyChainItemGetTypeID"
    },
    "SecTrustedApplicationRef": {
-    "typestr": "^{OpaqueSecTrustedApplicationRef=}",
+    "typestr": "^{__SecTrustedApplication=}",
     "gettypeid_func": "SecTrustedApplicationGetTypeID"
    },
    "SecAccessRef": {
-    "typestr": "^{OpaqueSecAccessRef=}",
+    "typestr": "^{__SecAccess=}",
     "gettypeid_func": "SecAccessGetTypeID"
    },
    "SecACLRef": {
-    "typestr": "^{OpaqueSecTrustRef=}",
+    "typestr": "^{__SecACL=}",
     "gettypeid_func": "SecACLGetTypeID"
    },
    "SecPasswordRef": {
-    "typestr": "^{OpaqueSecPasswordRef=}",
+    "typestr": "^{__SecPassword=}",
     "gettypeid_func": "SecPasswordGetTypeID"
    },
    "SecTaskRef": {

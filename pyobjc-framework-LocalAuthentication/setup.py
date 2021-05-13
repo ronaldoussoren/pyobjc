@@ -17,6 +17,10 @@ setup(
     min_os_level="10.10",
     packages=["LocalAuthentication"],
     version=VERSION,
-    install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
+    install_requires=[
+        "pyobjc-core>=" + VERSION,
+        "pyobjc-framework-Cocoa>=" + VERSION,
+        "pyobjc-framework-Security>=" + VERSION,
+    ],
     long_description=__doc__,
 )
