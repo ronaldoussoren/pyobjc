@@ -24,42 +24,48 @@ import timeit
 
 import objc
 
+
+def print_bench(title, time):
+    print(f"{title:30s}: {time:.3f}")
+
+
 NSObject = objc.lookUpClass("NSObject")
 NSArray = objc.lookUpClass("NSArray")
 
-print(
-    "object description lookup:", timeit.timeit(setup="o = object()", stmt="o.__repr__")
+print_bench(
+    "object description lookup", timeit.timeit(setup="o = object()", stmt="o.__repr__")
 )
-print(
-    "NSObject description lookup:",
+print_bench(
+    "NSObject description lookup",
     timeit.timeit(
         setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
         "o = NSObject.alloc().init()",
         stmt="o.description",
     ),
 )
-print(
-    "NSArray description lookup: ",
+print_bench(
+    "NSArray description lookup",
     timeit.timeit(
         setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
         "o = NSArray.alloc().init()",
         stmt="o.description",
     ),
 )
-print(
-    "object description call:  ",
+print()
+print_bench(
+    "object description call",
     timeit.timeit(setup="m = object().__repr__", stmt="m()"),
 )
-print(
-    "NSObject description call:  ",
+print_bench(
+    "NSObject description call",
     timeit.timeit(
         setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
         "m = NSObject.alloc().init().description",
         stmt="m()",
     ),
 )
-print(
-    "NSArray description call:   ",
+print_bench(
+    "NSArray description call",
     timeit.timeit(
         setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
         "m = NSArray.alloc().init().description",
