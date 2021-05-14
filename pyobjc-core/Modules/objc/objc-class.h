@@ -83,6 +83,7 @@ typedef struct _PyObjCClassObject {
     PyObject* delmethod;
     PyObject* hiddenSelectors;
     PyObject* hiddenClassSelectors;
+    PyObject* lookup_cache;
 
     Py_ssize_t   dictoffset;
     Py_ssize_t   generation;
@@ -115,6 +116,37 @@ extern PyObject* PyObjCClass_ListProperties(PyObject* cls);
 extern PyObject* PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel);
 extern PyObject* PyObjCMetaClass_TryResolveSelector(PyObject* base, PyObject* name,
                                                     SEL sel);
+
+static inline PyObject*
+PyObjCClass_GetLookupCache(PyTypeObject* tp)
+{
+    return ((PyObjCClassObject*)tp)->lookup_cache;
+}
+
+static inline int
+PyObjCClass_AddToLookupCache(PyTypeObject* _tp, PyObject* name, PyObject* value)
+{
+#ifdef PyObjC_ENABLE_LOOKUP_CACHE
+    int r;
+    PyObjCClassObject* tp = (PyObjCClassObject*)_tp;
+    if (tp->lookup_cache == NULL) {
+        tp->lookup_cache = PyDict_New();
+        if (tp->lookup_cache == NULL) {
+            return -1;
+        }
+    }
+    r = PyDict_SetItem(tp->lookup_cache, name, value);
+    return r;
+#else
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-value"
+
+    &_tp; &name; &value;
+#pragma clang diagnostic pop
+    return 0;
+#endif
+}
+
 
 static inline int
 PyObjCClass_IsCFWrapper(PyTypeObject* tp)

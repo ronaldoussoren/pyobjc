@@ -302,6 +302,7 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject * mro, *base, *dict;
+    PyObject* first_class = NULL;
     PyObject*  descr = NULL;
     PyObject*  res;
     SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
@@ -319,6 +320,20 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
         base = PyTuple_GET_ITEM(mro, i);
 
         if (PyObjCClass_Check(base)) {
+            if (i == 0) {
+                first_class = base;
+            }
+            PyObject* cache = PyObjCClass_GetLookupCache((PyTypeObject*)base);
+            if (cache != NULL) {
+                descr = PyDict_GetItemWithError(cache, name);
+                if (descr == NULL && PyErr_Occurred()) {
+                    return NULL;
+                }
+                if (descr != NULL) {
+                    break;
+                }
+            }
+
             if (PyObjCClass_CheckMethodList(base, 0) < 0) {
                 return NULL;
             }
@@ -338,6 +353,11 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
         if (descr == NULL && PyErr_Occurred()) {
             return NULL;
         } else if (descr != NULL) {
+            if (first_class != NULL) {
+                if (PyObjCClass_AddToLookupCache((PyTypeObject*)first_class, name, descr) == -1) {
+                    PyErr_Clear();
+                }
+            }
             break;
         }
 

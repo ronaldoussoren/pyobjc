@@ -82,6 +82,7 @@ CFLAGS = [
     # "--analyze",
     "-Werror",
     "-I/usr/include/ffi",
+    # "-O3", "-flto",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -99,7 +100,7 @@ OBJC_LDFLAGS = [
     "-g",
     "-lffi",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
-    # "-O3",
+    # "-O3", "-flto"
 ]
 
 

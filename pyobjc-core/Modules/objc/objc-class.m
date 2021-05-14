@@ -962,6 +962,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     info->isFinal              = final;
     info->hiddenSelectors      = hiddenSelectors;
     info->hiddenClassSelectors = hiddenClassSelectors;
+    info->lookup_cache         = NULL;
 
     var = class_getInstanceVariable(objc_class, "__dict__");
     if (var != NULL) {
@@ -2183,6 +2184,7 @@ PyObjCClass_New(Class objc_class)
     info->isCFWrapper     = 0;
     info->isFinal         = 0;
     info->hiddenSelectors = hiddenSelectors;
+    info->lookup_cache    = NULL;
 
     objc_class_register(objc_class, result);
 
