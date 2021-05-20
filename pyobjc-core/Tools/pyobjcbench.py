@@ -72,3 +72,17 @@ print_bench(
         stmt="m()",
     ),
 )
+print()
+print_bench(
+    "python function call",
+    timeit.timeit(setup="import math; f=math.sin", stmt="f(5.0)"),
+)
+setup = """
+import objc
+objc.loadBundleFunctions(None, globals(), [("sin", b"dd")])
+f = sin
+"""
+print_bench(
+    "objc function call",
+    timeit.timeit(setup=setup, stmt="f(5.0)"),
+)
