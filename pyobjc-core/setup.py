@@ -82,6 +82,7 @@ CFLAGS = [
     # "--analyze",
     "-Werror",
     "-I/usr/include/ffi",
+    # "-fvisibility=hidden",
     # "-O3", "-flto",
 ]
 
@@ -96,11 +97,13 @@ OBJC_LDFLAGS = [
     "Foundation",
     "-framework",
     "Carbon",
-    "-fvisibility=protected",
+    # "-fvisibility=protected",
     "-g",
     "-lffi",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
-    # "-O3", "-flto"
+    "-fvisibility=hidden",
+    "-O3",
+    "-flto",
 ]
 
 
@@ -131,7 +134,7 @@ if get_config_var("Py_DEBUG"):
     # Running with Py_DEBUG, reduce optimization level
     # to make it easier to debug the code.
     cfg_vars = get_config_vars()
-    for k in vars:
+    for k in cfg_vars:
         if isinstance(cfg_vars[k], str) and "-O2" in cfg_vars[k]:
             cfg_vars[k] = cfg_vars[k].replace("-O2", "-O1 -g")
         elif isinstance(cfg_vars[k], str) and "-O3" in cfg_vars[k]:
