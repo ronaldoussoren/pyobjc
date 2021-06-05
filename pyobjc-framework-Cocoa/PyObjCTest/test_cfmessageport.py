@@ -79,6 +79,7 @@ class TestMessagePort(TestCase):
 
     @min_os_level("10.5")
     def testSending(self):
+        curloop = CoreFoundation.CFRunLoopGetCurrent()
         context = []
 
         def callout(port, messageid, data, info):
@@ -92,9 +93,28 @@ class TestMessagePort(TestCase):
 
         self.assertArgIsOut(CoreFoundation.CFMessagePortSendRequest, 6)
         rls = CoreFoundation.CFMessagePortCreateRunLoopSource(None, port, 0)
-        self.assertIsNot(rls, None)
-        err, data = CoreFoundation.CFMessagePortSendRequest(
-            port, 99, None, 1.0, 1.0, None, None
+        CoreFoundation.CFRunLoopAddSource(
+            curloop, rls, CoreFoundation.kCFRunLoopCommonModes
         )
-        self.assertEqual(err, 0)
-        self.assertEqual(data, None)
+
+        cli = CoreFoundation.CFMessagePortCreateRemote(None, "pyobjc.test")
+        self.assertIsInstance(cli, CoreFoundation.CFMessagePortRef)
+
+        try:
+            self.assertIsNot(rls, None)
+            err, data = CoreFoundation.CFMessagePortSendRequest(
+                cli,
+                99,
+                b"message",
+                1.0,
+                1.0,
+                CoreFoundation.kCFRunLoopDefaultMode,
+                None,
+            )
+            self.assertEqual(err, 0)
+            self.assertEqual(data, b"hello world")
+
+        finally:
+            CoreFoundation.CFRunLoopRemoveSource(
+                curloop, rls, CoreFoundation.kCFRunLoopCommonModes
+            )

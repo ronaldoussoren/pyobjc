@@ -9,7 +9,7 @@ and (Objective-)C frameworks
 
 from pyobjc_setup import setup
 
-VERSION = "7.2"
+VERSION = "7.3"
 
 setup(
     name="pyobjc-framework-LocalAuthentication",
@@ -17,6 +17,10 @@ setup(
     min_os_level="10.10",
     packages=["LocalAuthentication"],
     version=VERSION,
-    install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],
+    install_requires=[
+        "pyobjc-core>=" + VERSION,
+        "pyobjc-framework-Cocoa>=" + VERSION,
+        "pyobjc-framework-Security>=" + VERSION,
+    ],
     long_description=__doc__,
 )

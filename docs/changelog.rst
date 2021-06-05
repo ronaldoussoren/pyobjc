@@ -3,6 +3,69 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 7.3
+-----------
+
+* #356: Explicitly error out when building for unsupported architectures
+
+  "python setup.py build" will now fail with a clear error when
+  trying to build PyObjC for a CPU architecture that is no longer
+  supported (such as 32-bit Intel)
+
+* #319: Use memset instead of bzero in C code to clear memory
+
+  Based on a PR by GitHub user stbdang.
+
+* #348: Fix platform version guard for using protocols in
+  MetalPerformanceShaders bindings
+
+* #344: Fix test for CFMessagePortCreateLocal
+
+  The tests didn't actually test calling the callback function
+  for CFMessagePortCreateLocal.
+
+* #349: Change calls to htonl in pyobjc-core to avoid compiler warning
+
+  The original code had a 32-bit assumption (using 'long' to represent
+  a 32-bit value), and that causes problems for some users build from
+  source.
+
+* #315: Fix binding for ``SecAddSharedWebCredential`` (Security framework)
+
+  Trying to use this function will no longer crash Python.
+
+* #357: Calling ``Metal.MTLCopyAllDevices()`` no longer crashes
+
+  The reference count of the result of this function was handled incorrect,
+  causing access to an already deallocated value when the Python reference
+  was garbage collected.
+
+* #260: Add manual bindings for AXValueCreate and AXValueGetValue in ApplicationServices
+
+  Calling these crashed in previous versions.
+
+* #320, #324: Fix the type encoding for a number of CoreFoundation types in the Security bindings
+
+* #336: Add core support for 'final' classes
+
+  It is now possible to mark Objective-C classes as final,
+  that is to disable subclassing for such classes.
+
+  This is primarily meant to be used in framework bindings for
+  matching Objective-C semantics.
+
+  This adds two new APIs:
+
+  1. A keyword argument "final" when defining a new class::
+
+        class MyClass (NSObject, final=True):
+            pass
+
+  2. An read-write attribute "__objc_final__" on all subclasses
+     of NSObject.
+
+  Note that this is a separate concept from :func:`typing.final`.
+
 Version 7.2
 -----------
 

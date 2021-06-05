@@ -8,14 +8,29 @@ for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
-from pyobjc_setup import setup
+import os
 
-VERSION = "7.2"
+from pyobjc_setup import setup, Extension
+
+VERSION = "7.3"
 
 setup(
     name="pyobjc-framework-ApplicationServices",
     description="Wrappers for the framework ApplicationServices on macOS",
     packages=["ApplicationServices", "HIServices", "PrintCore"],
+    ext_modules=[
+        Extension(
+            "HIServices._HIServices",
+            ["Modules/_HIServices.m"],
+            extra_link_args=["-framework", "ApplicationServices"],
+            py_limited_api=True,
+            depends=[
+                os.path.join("Modules", fn)
+                for fn in os.listdir("Modules")
+                if fn.startswith("_HIServices")
+            ],
+        ),
+    ],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,

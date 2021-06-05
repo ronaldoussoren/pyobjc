@@ -203,6 +203,7 @@
     }
    },
    "AXValueCreate": {
+    "ignore": true,
     "args": {
      "1": {}
     },
@@ -219,6 +220,7 @@
     "variadic": false
    },
    "AXValueGetValue": {
+    "ignore": true,
     "args": {
      "0": {},
      "2": {}

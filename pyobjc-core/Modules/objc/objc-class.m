@@ -377,7 +377,7 @@ static PyObject*
 class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
     static PyObject*   all_python_classes = NULL;
-    static char*       keywords[]         = {"name", "bases", "dict", "protocols", NULL};
+    static char*       keywords[]         = {"name", "bases", "dict", "protocols", "final", NULL};
     char*              name;
     PyObject*          bases;
     PyObject*          dict;
@@ -403,9 +403,10 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     PyObject*          arg_protocols        = NULL;
     BOOL               isCFProxyClass       = NO;
     int                r;
+    int                final = 0;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO|O", keywords, &name, &bases, &dict,
-                                     &arg_protocols)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "sOO|Op", keywords, &name, &bases, &dict,
+                                     &arg_protocols, &final)) {
         return NULL;
     }
 
@@ -435,6 +436,12 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     if (!PyObjCClass_Check(py_super_class)) {
         PyErr_SetString(PyExc_TypeError, "first base class must "
                                          "be objective-C based");
+        return NULL;
+    }
+
+    if (PyObjCClass_IsFinal((PyTypeObject*)py_super_class)) {
+        PyErr_Format(PyExc_TypeError, "super class %s is final",
+                ((PyTypeObject*)py_super_class)->tp_name);
         return NULL;
     }
 
@@ -952,8 +959,10 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     info->delmethod            = delmethod;
     info->hasPythonImpl        = 1;
     info->isCFWrapper          = 0;
+    info->isFinal              = final;
     info->hiddenSelectors      = hiddenSelectors;
     info->hiddenClassSelectors = hiddenClassSelectors;
+    info->lookup_cache         = NULL;
 
     var = class_getInstanceVariable(objc_class, "__dict__");
     if (var != NULL) {
@@ -1923,6 +1932,25 @@ cls_set_useKVO(PyObject* self, PyObject* newVal,
     return 0;
 }
 
+static PyObject*
+cls_get_final(PyObject* self, void* closure __attribute__((__unused__)))
+{
+    return PyBool_FromLong(((PyObjCClassObject*)self)->isFinal);
+}
+
+static int
+cls_set_final(PyObject* self, PyObject* newVal,
+               void* closure __attribute__((__unused__)))
+{
+    if (newVal == NULL) {
+        PyErr_SetString(PyExc_TypeError, "Cannot delete __objc_final__ attribute");
+        return -1;
+    }
+
+    ((PyObjCClassObject*)self)->isFinal = PyObject_IsTrue(newVal);
+    return 0;
+}
+
 static PyGetSetDef class_getset[] = {
     {
         .name = "pyobjc_classMethods",
@@ -1945,6 +1973,12 @@ static PyGetSetDef class_getset[] = {
         .get  = cls_get_useKVO,
         .set  = cls_set_useKVO,
         .doc  = "Use KVO notifications when setting attributes from Python",
+    },
+    {
+        .name = "__objc_final__",
+        .get  = cls_get_final,
+        .set  = cls_set_final,
+        .doc  = "True if the class cannot be subclassed",
     },
     {
         /* Access __name__ through a property: Objective-C name
@@ -2148,7 +2182,9 @@ PyObjCClass_New(Class objc_class)
     info->delmethod       = NULL;
     info->hasPythonImpl   = 0;
     info->isCFWrapper     = 0;
+    info->isFinal         = 0;
     info->hiddenSelectors = hiddenSelectors;
+    info->lookup_cache    = NULL;
 
     objc_class_register(objc_class, result);
 

@@ -5,7 +5,7 @@
  * Central include file for PyObjC.
  */
 
-#define OBJC_VERSION "7.2"
+#define OBJC_VERSION "7.3"
 
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
@@ -55,7 +55,18 @@
  *
  * NOTE: Option is present for performance testing.
  */
-/*#define PyObjC_FAST_BUT_INEXACT 1*/
+/* #define PyObjC_FAST_BUT_INEXACT 1 */
+
+/* PyObjC_ENABLE_LOOKUP_CACHE: If defined the _type_lookup will cache
+ * found entries in leaf classes.
+ *
+ * A side effect of this is that methods introduced in categories might not
+ * be seen in the Python proxy and as such suffers from the same issue as
+ * PyObjC_FAST_BUT_INEXACT.
+ *
+ * NOTE: Option is present for performance testing.
+ */
+/* #define PyObjC_ENABLE_LOOKUP_CACHE 1 */
 
 /*
  * End of configuration block

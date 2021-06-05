@@ -13,7 +13,7 @@ and (Objective-)C frameworks
 """
 from pyobjc_setup import setup
 
-VERSION = "7.2"
+VERSION = "7.3"
 
 setup(
     name="pyobjc-framework-ExceptionHandling",

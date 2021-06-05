@@ -8,7 +8,7 @@ import sys
 
 import Cocoa
 import objc
-from HIServices import _metadata
+from HIServices import _metadata, _HIServices
 
 sys.modules["HIServices"] = mod = objc.ObjCLazyModule(
     "HIServices",
@@ -22,7 +22,10 @@ sys.modules["HIServices"] = mod = objc.ObjCLazyModule(
         "__loader__": globals().get("__loader__", None),
         "objc": objc,
     },
-    (Cocoa,),
+    (
+        _HIServices,
+        Cocoa,
+    ),
 )
 
 

@@ -1,5 +1,6 @@
 import glob
 import os
+import re
 import plistlib
 import shlex
 import tempfile
@@ -81,6 +82,8 @@ CFLAGS = [
     # "--analyze",
     "-Werror",
     "-I/usr/include/ffi",
+    # "-fvisibility=hidden",
+    # "-O3", "-flto",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -94,11 +97,13 @@ OBJC_LDFLAGS = [
     "Foundation",
     "-framework",
     "Carbon",
-    "-fvisibility=protected",
+    # "-fvisibility=protected",
     "-g",
     "-lffi",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
-    # "-O3",
+    "-fvisibility=hidden",
+    "-O3",
+    "-flto",
 ]
 
 
@@ -129,7 +134,7 @@ if get_config_var("Py_DEBUG"):
     # Running with Py_DEBUG, reduce optimization level
     # to make it easier to debug the code.
     cfg_vars = get_config_vars()
-    for k in vars:
+    for k in cfg_vars:
         if isinstance(cfg_vars[k], str) and "-O2" in cfg_vars[k]:
             cfg_vars[k] = cfg_vars[k].replace("-O2", "-O1 -g")
         elif isinstance(cfg_vars[k], str) and "-O3" in cfg_vars[k]:
@@ -472,6 +477,13 @@ def _fixup_compiler(use_ccache):
                 split = config_vars[env].split()
                 split[0] = cc if env != "CXX" else cc + "++"
                 config_vars[env] = " ".join(split)
+
+    cflags = get_config_var("CFLAGS")
+    if re.search(r"-arch\s+i386", cflags) is not None:
+        raise DistutilsPlatformError("i386 (32-bit) is not supported by PyObjC")
+
+    if re.search(r"-arch\s+ppc", cflags) is not None:
+        raise DistutilsPlatformError("PowerPC is not supported by PyObjC")
 
 
 class oc_build_ext(build_ext.build_ext):

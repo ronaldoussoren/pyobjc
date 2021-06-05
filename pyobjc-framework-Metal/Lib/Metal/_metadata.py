@@ -178,7 +178,9 @@ functions = {
         b"@^@@?",
         "",
         {
-            "retval": {"already_retained": True, "already_cfretained": True},
+            "retval": {
+                "already_retained": True,
+            },
             "arguments": {
                 0: {"type_modifier": "o"},
                 1: {
@@ -202,12 +204,12 @@ functions = {
     "MTLCreateSystemDefaultDevice": (
         b"@",
         "",
-        {"retval": {"already_retained": True, "already_cfretained": True}},
+        {"retval": {"already_retained": True}},
     ),
     "MTLCopyAllDevices": (
         b"@",
         "",
-        {"retval": {"already_retained": True, "already_cfretained": True}},
+        {"retval": {"already_retained": True}},
     ),
     "MTLSizeMake": (b"{_MTLSize=QQQ}QQQ",),
 }

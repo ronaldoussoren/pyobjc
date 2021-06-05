@@ -61,6 +61,7 @@ class TestSKSearch(TestCase):
 
         @objc.callbackFor(CoreServices.SKSearchResultsCreateWithQuery)
         def callback(idx, doc, ctx):
+            print("callback!")
             lst.append([idx, doc, ctx])
             return True
 
@@ -84,12 +85,12 @@ class TestSKSearch(TestCase):
         self.assertIsInstance(cnt, int)
 
         if cnt == 0:
-            # XXX: For some reason this doesn't work on OSX 10.7,
+            # XXX: For some reason this doesn't work on OSX 10.7 or later,
             # reason is unclear for now.
             pass
             return
 
-        self.failUnless(cnt > 0)
+        self.assertGreaterThan(cnt, 0)
 
         v, o1, o2, o3 = CoreServices.SKSearchResultsGetInfoInRange(
             res, CoreServices.CFRange(0, cnt), None, None, None

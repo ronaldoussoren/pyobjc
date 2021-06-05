@@ -494,6 +494,9 @@ Dynamic modification of classes
 
    The name of the class must be the same as the argument to :class:`Category`.
 
+   This will only add new methods to existing Objective-C classes, it is in
+   particular not possible to add new members/slots to existing classes.
+
 
 Plugin bundles
 --------------

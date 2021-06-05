@@ -10,6 +10,7 @@ __all__ = ("setup", "Extension", "Command")
 import os
 import pkg_resources
 import plistlib
+import re
 import shlex
 import shutil
 import subprocess
@@ -180,13 +181,11 @@ License :: OSI Approved :: MIT License
 Natural Language :: English
 Operating System :: MacOS :: MacOS X
 Programming Language :: Python
-Programming Language :: Python :: 2
-Programming Language :: Python :: 2.7
 Programming Language :: Python :: 3
-Programming Language :: Python :: 3.4
-Programming Language :: Python :: 3.5
 Programming Language :: Python :: 3.6
 Programming Language :: Python :: 3.7
+Programming Language :: Python :: 3.8
+Programming Language :: Python :: 3.9
 Programming Language :: Python :: Implementation :: CPython
 Programming Language :: Objective C
 Topic :: Software Development :: Libraries :: Python Modules
@@ -308,6 +307,13 @@ def _working_compiler(executable):
         binfile = os.path.basename(binfile)
         if os.path.exists(binfile):
             os.unlink(binfile)
+
+    cflags = get_config_var("CFLAGS")
+    if re.search(r"-arch\s+i386", cflags) is not None:
+        raise DistutilsPlatformError("i386 (32-bit) is not supported by PyObjC")
+
+    if re.search(r"-arch\s+ppc", cflags) is not None:
+        raise DistutilsPlatformError("PowerPC is not supported by PyObjC")
 
     return True
 

@@ -2,6 +2,8 @@ import objc
 
 from PyObjCTools.TestSupport import TestCase, min_os_level, os_level_between
 import LocalAuthentication
+import Security
+import Foundation
 
 
 class TestLAContext(TestCase):
@@ -103,3 +105,31 @@ class TestLAContext(TestCase):
             2,
             b"v" + objc._C_NSBOOL + b"@",
         )
+
+    def test_regr_security_types(self):
+        # Issue #324
+        auth_ctx = LocalAuthentication.LAContext.new()
+        access_control = Security.SecAccessControlCreateWithFlags(
+            None,
+            Security.kSecAttrAccessibleWhenUnlocked,
+            Security.kSecAccessControlUserPresence,
+            None,
+        )[0]
+
+        called = False
+
+        def callback(a, b):
+            nonlocal called
+            called = True
+
+        auth_ctx.evaluateAccessControl_operation_localizedReason_reply_(
+            access_control,
+            LocalAuthentication.LAAccessControlOperationCreateKey,
+            "test",
+            callback,
+        )
+
+        loop = Foundation.NSRunLoop.currentRunLoop()
+        loop.runUntilDate_(Foundation.NSDate.dateWithTimeIntervalSinceNow_(0.2))
+
+        self.assertTrue(called)
