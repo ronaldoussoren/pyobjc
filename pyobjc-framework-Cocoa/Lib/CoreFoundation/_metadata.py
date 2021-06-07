@@ -462,7 +462,7 @@ functions = {
             "arguments": {
                 2: {
                     "callable": {
-                        "retval": {"type": b"^{__CFData=}"},
+                        "retval": {"type": b"^{__CFData=}", "already_cfretained": 1},
                         "arguments": {
                             0: {"type": b"^{__CFMessagePort=}"},
                             1: {"type": b"i"},

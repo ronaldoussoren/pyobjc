@@ -2476,7 +2476,7 @@
         }
        ],
        "retval": {
-        "typestr": "^{__CFData=}"
+        "typestr": "^{__CFData=}", "already_cfretained": true
        }
       }
      },

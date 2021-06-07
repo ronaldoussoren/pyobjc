@@ -1,5 +1,4 @@
 import CoreFoundation
-import Foundation
 import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
@@ -106,10 +105,7 @@ class TestMessagePort(TestCase):
                 err, data = CoreFoundation.CFMessagePortSendRequest(
                     cli,
                     99,
-                    # XXX: Passing NSData is a workaround, for some reason
-                    # passing a bytes object causes a crash at the end
-                    # of the test (when the autorelease pool is drained).
-                    Foundation.NSData.dataWithData_(b"message"),
+                    b"message",
                     1.0,
                     1.0,
                     CoreFoundation.kCFRunLoopDefaultMode,
