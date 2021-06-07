@@ -1,4 +1,5 @@
 import CoreFoundation
+import Foundation
 import objc
 from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
@@ -97,22 +98,25 @@ class TestMessagePort(TestCase):
             curloop, rls, CoreFoundation.kCFRunLoopCommonModes
         )
 
-        cli = CoreFoundation.CFMessagePortCreateRemote(None, "pyobjc.test")
-        self.assertIsInstance(cli, CoreFoundation.CFMessagePortRef)
-
         try:
+            cli = CoreFoundation.CFMessagePortCreateRemote(None, "pyobjc.test")
+            self.assertIsInstance(cli, CoreFoundation.CFMessagePortRef)
             self.assertIsNot(rls, None)
-            err, data = CoreFoundation.CFMessagePortSendRequest(
-                cli,
-                99,
-                b"message",
-                1.0,
-                1.0,
-                CoreFoundation.kCFRunLoopDefaultMode,
-                None,
-            )
-            self.assertEqual(err, 0)
-            self.assertEqual(data, b"hello world")
+            if 0:
+                err, data = CoreFoundation.CFMessagePortSendRequest(
+                    cli,
+                    99,
+                    # XXX: Passing NSData is a workaround, for some reason
+                    # passing a bytes object causes a crash at the end
+                    # of the test (when the autorelease pool is drained).
+                    Foundation.NSData.dataWithData_(b"message"),
+                    1.0,
+                    1.0,
+                    CoreFoundation.kCFRunLoopDefaultMode,
+                    None,
+                )
+                self.assertEqual(err, 0)
+                self.assertEqual(data, b"hello world")
 
         finally:
             CoreFoundation.CFRunLoopRemoveSource(

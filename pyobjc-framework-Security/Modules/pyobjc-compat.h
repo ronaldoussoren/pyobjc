@@ -232,6 +232,14 @@
 #define MAC_OS_X_VERSION_11_3 110300
 #endif
 
+#ifndef MAC_OS_X_VERSION_11_4
+#define MAC_OS_X_VERSION_11_4 110400
+#endif
+
+#ifndef MAC_OS_X_VERSION_11_5
+#define MAC_OS_X_VERSION_11_5 110500
+#endif
+
 /*
  * Explicit support for weak-linking functions
  *
