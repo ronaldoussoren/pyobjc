@@ -20,7 +20,7 @@ else:
 
 misc = {}
 constants = """$RPApplicationInfoBundleIdentifierKey$RPRecordingErrorDomain$RPVideoSampleOrientationKey$"""
-enums = """$RPCameraPositionBack@2$RPCameraPositionFront@1$RPRecordingErrorActivePhoneCall@-5811$RPRecordingErrorAttemptToStartInRecordingState@-5830$RPRecordingErrorAttemptToStopNonRecording@-5829$RPRecordingErrorBroadcastInvalidSession@-5808$RPRecordingErrorBroadcastSetupFailed@-5819$RPRecordingErrorCarPlay@-5813$RPRecordingErrorCodeSuccessful@0$RPRecordingErrorContentResize@-5807$RPRecordingErrorDisabled@-5802$RPRecordingErrorEntitlements@-5810$RPRecordingErrorFailed@-5804$RPRecordingErrorFailedApplicationConnectionInterrupted@-5815$RPRecordingErrorFailedApplicationConnectionInvalid@-5814$RPRecordingErrorFailedAssetWriterExportCanceled@-5828$RPRecordingErrorFailedAssetWriterExportFailed@-5826$RPRecordingErrorFailedAssetWriterFailedToSave@-5823$RPRecordingErrorFailedAssetWriterInWrongState@-5825$RPRecordingErrorFailedIncorrectTimeStamps@-5821$RPRecordingErrorFailedMediaServicesFailure@-5817$RPRecordingErrorFailedNoAssetWriter@-5824$RPRecordingErrorFailedNoMatchingApplicationContext@-5816$RPRecordingErrorFailedToObtainURL@-5820$RPRecordingErrorFailedToProcessFirstSample@-5822$RPRecordingErrorFailedToRemoveFile@-5827$RPRecordingErrorFailedToSave@-5812$RPRecordingErrorFailedToStart@-5803$RPRecordingErrorFailedToStartCaptureStack@-5833$RPRecordingErrorFilePermissions@-5835$RPRecordingErrorInsufficientStorage@-5805$RPRecordingErrorInterrupted@-5806$RPRecordingErrorInvalidParameter@-5834$RPRecordingErrorPhotoFailure@-5831$RPRecordingErrorRecordingInvalidSession@-5832$RPRecordingErrorSystemDormancy@-5809$RPRecordingErrorUnknown@-5800$RPRecordingErrorUserDeclined@-5801$RPRecordingErrorVideoMixingFailure@-5818$RPSampleBufferTypeAudioApp@2$RPSampleBufferTypeAudioMic@3$RPSampleBufferTypeVideo@1$"""
+enums = """$RPRecordingErrorExportClipToURLInProgress@-5836$RPCameraPositionBack@2$RPCameraPositionFront@1$RPRecordingErrorActivePhoneCall@-5811$RPRecordingErrorAttemptToStartInRecordingState@-5830$RPRecordingErrorAttemptToStopNonRecording@-5829$RPRecordingErrorBroadcastInvalidSession@-5808$RPRecordingErrorBroadcastSetupFailed@-5819$RPRecordingErrorCarPlay@-5813$RPRecordingErrorCodeSuccessful@0$RPRecordingErrorContentResize@-5807$RPRecordingErrorDisabled@-5802$RPRecordingErrorEntitlements@-5810$RPRecordingErrorFailed@-5804$RPRecordingErrorFailedApplicationConnectionInterrupted@-5815$RPRecordingErrorFailedApplicationConnectionInvalid@-5814$RPRecordingErrorFailedAssetWriterExportCanceled@-5828$RPRecordingErrorFailedAssetWriterExportFailed@-5826$RPRecordingErrorFailedAssetWriterFailedToSave@-5823$RPRecordingErrorFailedAssetWriterInWrongState@-5825$RPRecordingErrorFailedIncorrectTimeStamps@-5821$RPRecordingErrorFailedMediaServicesFailure@-5817$RPRecordingErrorFailedNoAssetWriter@-5824$RPRecordingErrorFailedNoMatchingApplicationContext@-5816$RPRecordingErrorFailedToObtainURL@-5820$RPRecordingErrorFailedToProcessFirstSample@-5822$RPRecordingErrorFailedToRemoveFile@-5827$RPRecordingErrorFailedToSave@-5812$RPRecordingErrorFailedToStart@-5803$RPRecordingErrorFailedToStartCaptureStack@-5833$RPRecordingErrorFilePermissions@-5835$RPRecordingErrorInsufficientStorage@-5805$RPRecordingErrorInterrupted@-5806$RPRecordingErrorInvalidParameter@-5834$RPRecordingErrorPhotoFailure@-5831$RPRecordingErrorRecordingInvalidSession@-5832$RPRecordingErrorSystemDormancy@-5809$RPRecordingErrorUnknown@-5800$RPRecordingErrorUserDeclined@-5801$RPRecordingErrorVideoMixingFailure@-5818$RPSampleBufferTypeAudioApp@2$RPSampleBufferTypeAudioMic@3$RPSampleBufferTypeVideo@1$"""
 misc.update({})
 r = objc.registerMetaDataForSelector
 objc._updatingMetadata(True)
@@ -277,6 +277,48 @@ try:
         {
             "arguments": {
                 3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"RPScreenRecorder",
+        b"startClipBufferingWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"RPScreenRecorder",
+        b"stopClipBufferingWithCompletionHandler:",
+        {
+            "arguments": {
+                2: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},
+                    }
+                }
+            }
+        },
+    )
+    r(
+        b"RPScreenRecorder",
+        b"exportClipToURL:duration:completionHandler:",
+        {
+            "arguments": {
+                4: {
                     "callable": {
                         "retval": {"type": b"v"},
                         "arguments": {0: {"type": b"^v"}, 1: {"type": b"@"}},

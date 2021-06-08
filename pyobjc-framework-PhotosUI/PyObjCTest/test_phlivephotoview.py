@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 import PhotosUI
 
@@ -9,6 +9,9 @@ class TestPHLivePhotoViewHelper(PhotosUI.NSObject):
 
     def livePhotoView_didEndPlaybackWithStyle_(self, v, s):
         pass
+
+    def livePhotoView_canBeginPlaybackWithStyle_(self, v, s):
+        return 1
 
 
 class TestPHLivePhotoView(TestCase):
@@ -27,6 +30,8 @@ class TestPHLivePhotoView(TestCase):
         self.assertArgIsBOOL(PhotosUI.PHLivePhotoView.setMuted_, 0)
         self.assertArgIsBOOL(PhotosUI.PHLivePhotoView.stopPlaybackAnimated_, 0)
 
+    @min_sdk_level("10.12")
+    def testProtocolMethods(self):
         self.assertArgHasType(
             TestPHLivePhotoViewHelper.livePhotoView_willBeginPlaybackWithStyle_,
             1,
@@ -38,7 +43,17 @@ class TestPHLivePhotoView(TestCase):
             objc._C_NSInteger,
         )
 
-    @min_os_level("10.12")
+        self.assertResultHasType(
+            TestPHLivePhotoViewHelper.livePhotoView_canBeginPlaybackWithStyle_,
+            objc._C_NSBOOL,
+        )
+        self.assertArgHasType(
+            TestPHLivePhotoViewHelper.livePhotoView_canBeginPlaybackWithStyle_,
+            1,
+            objc._C_NSInteger,
+        )
+
+    @min_sdk_level("10.12")
     def testProtocols(self):
         self.assertIsInstance(
             objc.protocolNamed("PHLivePhotoViewDelegate"), objc.formal_protocol

@@ -45,6 +45,18 @@
    }
   },
   "externs": {
+   "kCGImagePropertyImageIndex": { "typestr": "@" },
+   "kCGImagePropertyGroups": { "typestr": "@" },
+   "kCGImagePropertyGroupIndex": { "typestr": "@" },
+   "kCGImagePropertyGroupType": { "typestr": "@" },
+   "kCGImagePropertyGroupTypeStereoPair": { "typestr": "@" },
+   "kCGImagePropertyGroupTypeAlternate": { "typestr": "@" },
+   "kCGImagePropertyGroupImagesAlternate": { "typestr": "@" },
+   "kCGImagePropertyGroupImageIndexLeft": { "typestr": "@" },
+   "kCGImagePropertyGroupImageIndexRight": { "typestr": "@" },
+   "kCGImagePropertyGroupImageIsLeftImage": { "typestr": "@" },
+   "kCGImagePropertyGroupImageIsRightImage": { "typestr": "@" },
+   "kCGImagePropertyGroupImageIsAlternateImage": { "typestr": "@" },
    "kCGImagePropertyPNGTransparency": { "typestr": "@" },
    "kCGImageAuxiliaryDataTypeSemanticSegmentationSkyMatte": { "typestr": "@" },
    "kCGImagePropertyExifSourceExposureTimesOfCompositeImage": {

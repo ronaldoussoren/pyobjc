@@ -14,6 +14,7 @@ import re as _re
 import struct as _struct
 import sys as _sys
 import unittest as _unittest
+import subprocess as _subprocess
 from distutils.sysconfig import get_config_var as _get_config_var
 
 import objc
@@ -181,6 +182,11 @@ def os_release():
     else:
         pl = _pl.readPlist("/System/Library/CoreServices/SystemVersion.plist")
     v = pl["ProductVersion"]
+    if v.startswith("10.16"):
+        # We're in a python compiled with an pre-macOS 11 SDK, which causes
+        # the system to ly to us. Use sw_vers to get the actual version.
+        v = _subprocess.check_output(["sw_vers", "-productVersion"]).decode().strip()
+
     return ".".join(v.split("."))
 
 

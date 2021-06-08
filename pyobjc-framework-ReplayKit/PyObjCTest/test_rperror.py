@@ -52,4 +52,5 @@ class TestRPError(TestCase):
         self.assertEqual(ReplayKit.RPRecordingErrorFailedToStartCaptureStack, -5833)
         self.assertEqual(ReplayKit.RPRecordingErrorInvalidParameter, -5834)
         self.assertEqual(ReplayKit.RPRecordingErrorFilePermissions, -5835)
+        self.assertEqual(ReplayKit.RPRecordingErrorExportClipToURLInProgress, -5836)
         self.assertEqual(ReplayKit.RPRecordingErrorCodeSuccessful, 0)

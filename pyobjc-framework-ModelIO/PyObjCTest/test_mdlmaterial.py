@@ -41,6 +41,7 @@ class TestMDLCamera(TestCase):
         self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat3, 7)
         self.assertEqual(ModelIO.MDLMaterialPropertyTypeFloat4, 8)
         self.assertEqual(ModelIO.MDLMaterialPropertyTypeMatrix44, 9)
+        self.assertEqual(ModelIO.MDLMaterialPropertyTypeBuffer, 10)
 
         self.assertEqual(ModelIO.MDLMaterialTextureWrapModeClamp, 0)
         self.assertEqual(ModelIO.MDLMaterialTextureWrapModeRepeat, 1)

@@ -41,6 +41,10 @@ class TestMDLTypes(TestCase):
     def testConstants10_12(self):
         self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescription, str)
 
+    @min_os_level("11.0")
+    def testConstants11_0(self):
+        self.assertIsInstance(ModelIO.kUTTypeUniversalSceneDescriptionMobile, str)
+
     def testProtocolObjects(self):
         objc.protocolNamed("MDLNamed")
         objc.protocolNamed("MDLComponent")

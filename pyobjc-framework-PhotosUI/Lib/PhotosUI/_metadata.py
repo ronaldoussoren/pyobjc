@@ -119,6 +119,15 @@ try:
     )
     r(
         b"NSObject",
+        b"livePhotoView:canBeginPlaybackWithStyle:",
+        {
+            "required": False,
+            "retval": {"type": b"Z"},
+            "arguments": {2: {"type": b"@"}, 3: {"type": sel32or64(b"i", b"q")}},
+        },
+    )
+    r(
+        b"NSObject",
         b"livePhotoView:willBeginPlaybackWithStyle:",
         {
             "required": False,

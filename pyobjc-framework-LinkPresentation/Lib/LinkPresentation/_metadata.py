@@ -49,6 +49,24 @@ try:
             }
         },
     )
+    r(
+        b"LPMetadataProvider",
+        b"startFetchingMetadataForRequest:completionHandler:",
+        {
+            "arguments": {
+                3: {
+                    "callable": {
+                        "retval": {"type": b"v"},
+                        "arguments": {
+                            0: {"type": b"^v"},
+                            1: {"type": b"@"},
+                            2: {"type": b"@"},
+                        },
+                    }
+                }
+            }
+        },
+    )
 finally:
     objc._updatingMetadata(False)
 expressions = {}

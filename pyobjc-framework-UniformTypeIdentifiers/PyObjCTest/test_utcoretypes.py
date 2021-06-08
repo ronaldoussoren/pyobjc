@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import UniformTypeIdentifiers
 
@@ -404,4 +404,10 @@ class TestUTCoreTypes(TestCase):
         )
         self.assertIsInstance(
             UniformTypeIdentifiers.UTTypeLog, UniformTypeIdentifiers.UTType
+        )
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            UniformTypeIdentifiers.UTTypeMakefile, UniformTypeIdentifiers.UTType
         )

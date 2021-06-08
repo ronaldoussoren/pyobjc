@@ -13,7 +13,9 @@
   "kJSTypedArrayTypeFloat32Array": { "value": 7 },
   "kJSTypedArrayTypeFloat64Array": { "value": 8 },
   "kJSTypedArrayTypeArrayBuffer": { "value": 9 },
-  "kJSTypedArrayTypeNone": { "value": 10 }
+  "kJSTypedArrayTypeNone": { "value": 10 },
+  "kJSTypedArrayTypeBigInt64Array": { "value": 11 },
+  "kJSTypedArrayTypeBigUint64Array": { "value": 12 }
  },
  "externs": {
    "kJSClassDefinitionEmpty": {

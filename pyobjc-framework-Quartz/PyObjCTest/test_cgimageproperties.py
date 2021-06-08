@@ -844,3 +844,18 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(
             Quartz.kCGImageAuxiliaryDataTypeSemanticSegmentationSkyMatte, str
         )
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(Quartz.kCGImagePropertyImageIndex, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroups, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupIndex, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupType, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupTypeStereoPair, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupTypeAlternate, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImagesAlternate, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIndexLeft, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIndexRight, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsLeftImage, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsRightImage, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsAlternateImage, str)

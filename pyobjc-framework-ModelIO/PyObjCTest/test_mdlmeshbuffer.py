@@ -36,6 +36,7 @@ class TestMDLMeshBuffer(TestCase):
     def testConstants(self):
         self.assertEqual(ModelIO.MDLMeshBufferTypeVertex, 1)
         self.assertEqual(ModelIO.MDLMeshBufferTypeIndex, 2)
+        self.assertEqual(ModelIO.MDLMeshBufferTypeCustom, 3)
 
     def testMethods(self):
         self.assertArgIsVariableSize(

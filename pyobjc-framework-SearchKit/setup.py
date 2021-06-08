@@ -5,7 +5,7 @@ Use the CoreServices package instead.
 """
 from pyobjc_setup import setup
 
-VERSION = "7.3"
+VERSION = "8.0b1"
 
 setup(
     name="pyobjc-framework-SearchKit",

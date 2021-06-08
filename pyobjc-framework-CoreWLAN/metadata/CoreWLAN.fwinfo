@@ -7,7 +7,8 @@
    "CWEventTypeRangingReportEvent": { "value": 10 },
    "kCWSecurityWPA3Personal": { "value": 11 },
    "kCWSecurityWPA3Enterprise": { "value": 12 },
-   "kCWSecurityWPA3Transition": { "value": 13 }
+   "kCWSecurityWPA3Transition": { "value": 13 },
+   "kCWPHYMode11ax": { "value": 6 }
   },
   "classes": {
    "CWConfiguration": {

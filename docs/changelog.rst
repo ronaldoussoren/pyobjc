@@ -3,6 +3,45 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
+Version 8.0b1
+-------------
+
+* ``PyObjCTest.TestSupport`` now never uses "10.16" as the
+  OS release but always uses the actual platform version, even
+  when Python was compiled using an old SDK.
+
+* Updated framework bindings for Xcode 13 beta 1
+
+  [INCOMPLETE]
+
+  Updated:
+  - ClassKit
+  - CoreWLAN
+  - ImageIO
+  - IOSurface
+  - JavaScriptCore
+  - LinkPresentation
+  - ModelIO
+  - PhotosUI
+  - ReplayKit
+  - UniformTypeIdentifiers
+
+  Unchanged:
+  - CallKit
+  - CoreML
+  - DeviceCheck
+  - FileProviderUI
+  - FinderSync
+  - MapKit
+  - MediaAccessibility
+  - QuickLookThumbnailing
+  - SafariServices
+  - ServiceManagement
+  - SpriteKit
+  - SyncServices
+  - VideoSubscriberAccount
+
+
 Version 7.3
 -----------
 

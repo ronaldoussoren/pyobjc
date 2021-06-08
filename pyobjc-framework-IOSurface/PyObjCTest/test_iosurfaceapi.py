@@ -34,6 +34,8 @@ class TestIOSurfaceAPI(TestCase):
         self.assertIsInstance(IOSurface.kIOSurfaceCacheMode, str)
         self.assertIsInstance(IOSurface.kIOSurfaceIsGlobal, str)
         self.assertIsInstance(IOSurface.kIOSurfacePixelFormat, str)
+        self.assertIsInstance(IOSurface.kIOSurfaceColorSpace, str)
+        self.assertIsInstance(IOSurface.kIOSurfaceICCProfile, str)
 
         self.assertEqual(IOSurface.kIOSurfaceLockReadOnly, 0x00000001)
         self.assertEqual(IOSurface.kIOSurfaceLockAvoidSync, 0x00000002)

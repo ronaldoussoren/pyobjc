@@ -6,6 +6,21 @@
    "NSObject": {
     "methods": [
      {
+      "retval": {
+       "type_override": "Z"
+      },
+      "args": {
+       "1": {
+        "type_override": [
+         "i",
+         "q"
+        ]
+       }
+      },
+      "class_method": false,
+      "selector": "livePhotoView:canBeginPlaybackWithStyle:"
+     },
+     {
       "args": {
        "1": {
         "type_override": [

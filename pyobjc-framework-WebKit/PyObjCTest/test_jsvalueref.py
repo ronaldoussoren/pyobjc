@@ -24,6 +24,8 @@ class TestJSValueRef(TestCase):
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeFloat64Array, 8)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeArrayBuffer, 9)
         self.assertEqual(JavaScriptCore.kJSTypedArrayTypeNone, 10)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeBigInt64Array, 11)
+        self.assertEqual(JavaScriptCore.kJSTypedArrayTypeBigUint64Array, 12)
 
     def test_functions(self):
         self.assertArgHasType(

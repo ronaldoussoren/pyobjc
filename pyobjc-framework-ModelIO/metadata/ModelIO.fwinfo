@@ -1,6 +1,7 @@
 {
  "definitions": {
   "externs": {
+   "kUTTypeUniversalSceneDescriptionMobile": { "typestr": "@" },
    "MDLVertexAttributeAnisotropy": { "typestr": "@" },
    "MDLVertexAttributeBinormal": { "typestr": "@" },
    "MDLVertexAttributeBitangent": { "typestr": "@" },
@@ -23,6 +24,8 @@
    "kUTTypeUniversalSceneDescription": { "typestr": "@" }
   },
   "enum": {
+   "MDLMeshBufferTypeCustom": { "value": 3 },
+   "MDLMaterialPropertyTypeBuffer": { "value": 10 },
    "MDLTransformOpRotationOrderXYZ": { "value": 1 },
    "MDLTransformOpRotationOrderXZY": { "value": 2 },
    "MDLTransformOpRotationOrderYXZ": { "value": 3 },

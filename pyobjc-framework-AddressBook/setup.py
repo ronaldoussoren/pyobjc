@@ -13,7 +13,7 @@ import os
 
 from pyobjc_setup import Extension, setup
 
-VERSION = "7.3"
+VERSION = "8.0b1"
 
 setup(
     name="pyobjc-framework-AddressBook",
