@@ -133,6 +133,7 @@ FRAMEWORK_WRAPPERS = [
     ("SearchKit", None, None),
     ("ServerNotification", "10.6", "10.9"),
     ("ServiceManagement", "10.6", None),
+    ("ShazamKit", "12.0", None),
     ("Social", "10.8", None),
     ("Speech", "10.15", None),
     ("SpriteKit", "10.9", None),
@@ -174,6 +175,7 @@ MACOS_TO_DARWIN = {
     "10.15": "19.0",
     "10.16": "20.0",
     "11.0": "20.0",
+    "12.0": "21.0",
 }
 
 

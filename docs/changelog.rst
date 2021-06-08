@@ -14,6 +14,9 @@ Version 8.0b1
 
   [INCOMPLETE]
 
+  New:
+  - ShazamKit
+
   Updated:
   - ClassKit
   - CoreWLAN
