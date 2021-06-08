@@ -15,3 +15,5 @@ API Notes
 ---------
 
 The entire "Accounts" framework on macOS 10.8 (or later) is available from Python.
+
+This framework is deprecated by Apple in macOS 12.

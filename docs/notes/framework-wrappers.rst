@@ -443,6 +443,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ServiceManagement </apinotes/ServiceManagement>`                               | `pyobjc-framework-ServiceManagement`_                |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`ShazamKit </apinotes/ShazamKit>`                                               | `pyobjc-framework-ShazamKit`_                        |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Social </apinotes/Social>`                                                     | `pyobjc-framework-Social`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`SoundAnalysis </apinotes/SoundAnalysis>`                                       | `pyobjc-framework-SoundAnalysis`_                    | Not wrapped yet                         |
@@ -658,3 +660,4 @@ prioritizing work.
 .. _`pyobjc-framework-AutomaticAssessmentConfiguration`: https://pypi.org/project/pyobjc-framework-AutomaticAssessmentConfiguration/
 .. _`pyobjc-framework-AdServices`: https://pypi.org/project/pyobjc-framework-AdServices/
 .. _`pyobjc-framework-PencilKit`: https://pypi.org/project/pyobjc-framework-PencilKit/
+.. _`pyobjc-framework-ShazamKit`: https://pypi.org/project/pyobjc-framework-ShazamKit/

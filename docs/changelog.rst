@@ -15,31 +15,41 @@ Version 8.0b1
   [INCOMPLETE]
 
   New:
+  - LocalAuthenticationUIView
   - ShazamKit
 
   Updated:
+  - iTunesLibrary
   - ClassKit
+  - CoreSpotlight
   - CoreWLAN
   - ImageIO
   - IOSurface
   - JavaScriptCore
   - LinkPresentation
   - ModelIO
+  - OSLog
   - PhotosUI
   - ReplayKit
   - UniformTypeIdentifiers
 
-  Unchanged:
+  Unchanged metadata:
+  - Accounts (The entire framework is deprecated)
   - CallKit
+  - Carbon
   - CoreML
+  - CryptoTokenKit
   - DeviceCheck
   - FileProviderUI
   - FinderSync
+  - ImageCaptureCore
+  - LocalAuthentication
   - MapKit
   - MediaAccessibility
   - QuickLookThumbnailing
   - SafariServices
   - ServiceManagement
+  - Speech
   - SpriteKit
   - SyncServices
   - VideoSubscriberAccount

@@ -193,6 +193,11 @@ try:
     )
     r(b"CSSearchableIndex", b"isIndexingAvailable", {"retval": {"type": b"Z"}})
     r(
+        b"CSImportExtension",
+        b"updateAttributes:forFileAtURL:error:",
+        {"retval": {"type": b"Z", "arguments": {"4": {"type_modifier": b"o"}}}},
+    )
+    r(
         b"NSObject",
         b"dataForSearchableIndex:itemIdentifier:typeIdentifier:error:",
         {

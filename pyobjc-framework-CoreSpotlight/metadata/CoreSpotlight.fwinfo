@@ -81,6 +81,18 @@
 
     ]
    },
+   "CSImportExtension": {
+    "methods": [
+     {
+      "selector": "updateAttributes:forFileAtURL:error:",
+      "class_method": false,
+      "retval": { "type_override": "Z" },
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "CSCustomAttributeKey": {
     "methods": [
      {

@@ -26,4 +26,4 @@ sys.modules["ShazamKit"] = mod = objc.ObjCLazyModule(
     (Cocoa,),
 )
 
-del sys.modules["Accessibility._metadata"]
+del sys.modules["ShazamKit._metadata"]
