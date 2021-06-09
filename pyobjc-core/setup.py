@@ -552,11 +552,11 @@ class oc_build_ext(build_ext.build_ext):
 
         CFLAGS.append(
             "-DPyObjC_BUILD_RELEASE=%02d%02d"
-            % (tuple(map(int, get_sdk_level(self.sdk_root).split("."))))
+            % (tuple(map(int, get_sdk_level(self.sdk_root).split(".")[:2])))
         )
         EXT_CFLAGS.append(
             "-DPyObjC_BUILD_RELEASE=%02d%02d"
-            % (tuple(map(int, get_sdk_level(self.sdk_root).split("."))))
+            % (tuple(map(int, get_sdk_level(self.sdk_root).split(".")[:2])))
         )
 
         _fixup_compiler(use_ccache=any(cmd in sys.argv for cmd in ["develop", "test"]))
