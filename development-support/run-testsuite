@@ -474,7 +474,7 @@ def main():
                     )
 
                 # Then run tests for all supported architectures
-                for arch in ("ppc", "i386", "x86_64", "arm64"):
+                for arch in ("x86_64", "arm64"):
                     if not supports_arch(interpreter, arch):
                         lg.info(
                             "skipping Python %s (%7s), unsupported architecture",
