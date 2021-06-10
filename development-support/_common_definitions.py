@@ -89,10 +89,9 @@ def system_report(path, py_versions):
             fp.write("Python {}:         {}\n".format(ver, py_version(ver)))
 
 
-def _install_virtualenv(interpreter):
+def _install_virtualenv_software(interpreter):
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "pip"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "setuptools"])
-    subprocess.check_call([interpreter, "-mpip", "install", "-U", "virtualenv"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "wheel"])
     subprocess.check_call([interpreter, "-mpip", "install", "-U", "twine"])
 
@@ -102,14 +101,14 @@ def virtualenv(interpreter):
     if os.path.exists("test-env"):
         shutil.rmtree("test-env")
 
-    _install_virtualenv(interpreter)
+    _install_virtualenv_software(interpreter)
 
-    subprocess.check_call([interpreter, "-mvirtualenv", "test-env"])
+    subprocess.check_call([interpreter, "-mvenv", "test-env"])
     if not os.path.exists("test-env/bin/python"):
         raise RuntimeError("VirtualEnv incomplete")
 
     try:
-        _install_virtualenv("test-env/bin/python")
+        _install_virtualenv_software("test-env/bin/python")
         yield os.path.abspath("test-env/bin/python")
 
     finally:

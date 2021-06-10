@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
+* ``development-support/run-testsuite`` now uses ``venv`` instead of
+  ``virtualenv``. This removes a development dependency.
+
 * PR# 367: Tweak the code that calculates ``PyObjC_BUILD_RELEASE`` in
   the various setup.py files to deal with versions with more than two
   labels (can happen when building using Xcode 13 beta)
