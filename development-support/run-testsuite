@@ -234,10 +234,12 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
             "/usr/bin/arch",
             "-%s" % (arch,),
             interpreter,
-            "-mcoverage",
-            "run",
-            "--branch",
-            "--parallel",
+            # XXX: Coverage support is disabled for now because
+            # I've never actually used it.
+            # "-mcoverage",
+            # "run",
+            # "--branch",
+            # "--parallel",
             "setup.py",
             "test",
             "--verbosity=3",
@@ -527,27 +529,27 @@ def main():
 
     # Save HTML coverage reports
     # TODO: Find a way to combine all of this in 1 big report
-    with virtualenv("python{}".format(options.python_versions[-1])) as interpreter:
-        subprocess.check_call(
-            [interpreter, "-mpip", "install", "--no-warn-script-location", "coverage"]
-        )
-        for project in build_order:
-            proj_dir = os.path.join(TOP_DIR, project)
-            if not os.path.exists(os.path.join(proj_dir, ".coverage")):
-                continue
-
-            subprocess.check_call([interpreter, "-mcoverage", "combine"], cwd=proj_dir)
-            subprocess.check_call(
-                [
-                    interpreter,
-                    "-mcoverage",
-                    "html",
-                    "--include=Lib/*",
-                    "--omit=*/_metadata.py",
-                    "--title=%s" % (project,),
-                ],
-                cwd=proj_dir,
-            )
+    # with virtualenv("python{}".format(options.python_versions[-1])) as interpreter:
+    #    subprocess.check_call(
+    #        [interpreter, "-mpip", "install", "--no-warn-script-location", "coverage"]
+    #    )
+    #    for project in build_order:
+    #        proj_dir = os.path.join(TOP_DIR, project)
+    #        if not os.path.exists(os.path.join(proj_dir, ".coverage")):
+    #            continue
+    #
+    #        subprocess.check_call([interpreter, "-mcoverage", "combine"], cwd=proj_dir)
+    #        subprocess.check_call(
+    #            [
+    #                interpreter,
+    #                "-mcoverage",
+    #                "html",
+    #                "--include=Lib/*",
+    #                "--omit=*/_metadata.py",
+    #                "--title=%s" % (project,),
+    #            ],
+    #            cwd=proj_dir,
+    #        )
 
     end_time = time.time()
     print("Testing took", format_seconds(end_time - start_time))
