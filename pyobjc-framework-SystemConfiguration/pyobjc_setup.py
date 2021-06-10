@@ -3,6 +3,10 @@ Generic setup.py file for PyObjC framework wrappers.
 
 This file should only be changed in pyobjc-core and then copied
 to all framework wrappers.
+
+To change this file:
+    - Change the copy in pyobjc-core/Tools/pyobjc_setup.py
+    - Run development-support/update-shared-files
 """
 
 __all__ = ("setup", "Extension", "Command")
