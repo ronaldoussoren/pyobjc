@@ -12,6 +12,8 @@ The framework name links to API notes for that framework, the python packages li
 +======================================================================================+======================================================+=========================================+
 | _AVKit_SwiftUI                                                                       | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| _CoreData_CloudKit                                                                   | -                                                    | Swift only API                          |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _SpriteKit_SwiftUI                                                                   | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _StoreKit_SwiftUI                                                                    | -                                                    | Swift only API                          |
@@ -23,6 +25,8 @@ The framework name links to API notes for that framework, the python packages li
 | _AuthenticationServices_SwiftUI                                                      | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | _MapKit_SwiftUI                                                                      | -                                                    | Swift only API                          |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| _MusicKit_SwiftUI                                                                    | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`dispatch </apinotes/libdispatch>`                                              | `pyobjc-framework-libdispatch`_                      |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -87,6 +91,8 @@ The framework name links to API notes for that framework, the python packages li
 | Carbon                                                                               | -                                                    | Framework will not be wrapped.          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CFNetwork </apinotes/CFNetwork>`                                               | `pyobjc-framework-CFNetwork`_                        |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`CHIP </apinotes/CHIP>`                                                         | `pyobjc-framework-CHIP`_                             |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`ClassKit </apinotes/ClassKit>`                                                 | `pyobjc-framework-ClassKit`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -174,6 +180,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | CoreXR                                                                               | -                                                    | No public API.                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| CreateML                                                                             | -                                                    | Swift only API                          |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | CryptoKit                                                                            | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CryptoTokenKit </apinotes/CryptoTokenKit>`                                     | `pyobjc-framework-CryptoTokenKit`_                   |                                         |
@@ -236,6 +244,8 @@ The framework name links to API notes for that framework, the python packages li
 | GLUT                                                                                 | -                                                    | Will not be wrapped                     |
 |                                                                                      |                                                      | Use `PyOpenGL`_ instead.                |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| GroupActivities                                                                      | -                                                    | Swift only API                          |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | GSS                                                                                  | -                                                    | Will not be wrapped.                    |
 |                                                                                      |                                                      | Use `gssapi`_ instead.                  |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -265,6 +275,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`InstantMessage </apinotes/InstantMessage>`                                     | `pyobjc-framework-InstantMessage`_                   |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Intents </apinotes/Intents>`                                                   | `pyobjc-framework-Intents`_                          |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`IntentsUI </apinotes/IntentsUI>`                                               | `pyobjc-framework-IntentsUI`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | IOBluetooth                                                                          | -                                                    | Will not be wrapped.                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -305,7 +317,11 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`LocalAuthentication </apinotes/LocalAuthentication>`                           | `pyobjc-framework-LocalAuthentication`_              |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`LocalAuthenticationUIView </apinotes/LocalAuthenticationUIView>`               | `pyobjc-framework-LocalAuthenticationUIView`_        |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MapKit </apinotes/MapKit>`                                                     | `pyobjc-framework-MapKit`_                           |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`MailKit </apinotes/MailKit>`                                                   | `pyobjc-framework-MailKit`_                          |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MediaAccessibility </apinotes/MediaAccessibility>`                             | `pyobjc-framework-MediaAccessibility`_               |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -332,6 +348,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`ModelIO </apinotes/ModelIO>`                                                   | `pyobjc-framework-ModelIO`_                          |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MultipeerConnectivity </apinotes/MultipeerConnectivity>`                       | `pyobjc-framework-MultipeerConnectivity`_            |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| MusicKit                                                                             | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`NaturalLanguage </apinotes/NaturalLanguage>`                                   | `pyobjc-framework-NaturalLanguage`_                  |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -377,6 +395,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`PencilKit </apinotes/PencilKit>`                                               | `pyobjc-framework-PencilKit`_                        |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`PHASE </apinotes/PHASE>`                                                       | `pyobjc-framework-PHASE`_                            |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`Photos </apinotes/Photos>`                                                     | `pyobjc-framework-Photos`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`PhotosUI </apinotes/PhotosUI>`                                                 | `pyobjc-framework-PhotosUI`_                         |                                         |
@@ -410,6 +430,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | QuickTime                                                                            | -                                                    | Will not be wrapped. Removed in         |
 |                                                                                      |                                                      | macOS 10.15.                            |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| RealityFoundation                                                                    | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | RealityKit                                                                           | -                                                    | Swift only framework.                   |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -464,6 +486,8 @@ The framework name links to API notes for that framework, the python packages li
 | :doc:`SystemConfiguration </apinotes/SystemConfiguration>`                           | `pyobjc-framework-SystemConfiguration`_              |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`SystemExtensions </apinotes/SystemExtensions>`                                 | `pyobjc-framework-SystemExtensions`_                 |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| TabularData                                                                          | -                                                    | Swift only API                          |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | Tcl                                                                                  | -                                                    | Will not be wrapped.                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -531,17 +555,24 @@ prioritizing work.
 
 .. _`pyobjc-framework-AVFoundation`: https://pypi.org/project/pyobjc-framework-AVFoundation/
 .. _`pyobjc-framework-AVKit`: https://pypi.org/project/pyobjc-framework-AVKit/
+.. _`pyobjc-framework-Accessibility`: https://pypi.org/project/pyobjc-framework-Accessibility/
 .. _`pyobjc-framework-Accounts`: https://pypi.org/project/pyobjc-framework-Accounts/
+.. _`pyobjc-framework-AdServices`: https://pypi.org/project/pyobjc-framework-AdServices/
 .. _`pyobjc-framework-AdSupport`: https://pypi.org/project/pyobjc-framework-AdSupport/
 .. _`pyobjc-framework-AddressBook`: https://pypi.org/project/pyobjc-framework-AddressBook/
+.. _`pyobjc-framework-AppTrackingTransparency`: https://pypi.org/project/pyobjc-framework-AppTrackingTransparency/
 .. _`pyobjc-framework-AppleScriptKit`: https://pypi.org/project/pyobjc-framework-AppleScriptKit/
 .. _`pyobjc-framework-AppleScriptObjC`: https://pypi.org/project/pyobjc-framework-AppleScriptObjC/
 .. _`pyobjc-framework-ApplicationServices`: https://pypi.org/project/pyobjc-framework-ApplicationServices/
 .. _`pyobjc-framework-AuthenticationServices`: https://pypi.org/project/pyobjc-framework-AuthenticationServices/
+.. _`pyobjc-framework-AutomaticAssessmentConfiguration`: https://pypi.org/project/pyobjc-framework-AutomaticAssessmentConfiguration/
 .. _`pyobjc-framework-Automator`: https://pypi.org/project/pyobjc-framework-Automator/
 .. _`pyobjc-framework-BusinessChat`: https://pypi.org/project/pyobjc-framework-BusinessChat/
 .. _`pyobjc-framework-CFNetwork`: https://pypi.org/project/pyobjc-framework-CFNetwork/
+.. _`pyobjc-framework-CHIP`: https://pypi.org/project/pyobjc-framework-CHIP/
 .. _`pyobjc-framework-CalendarStore`: https://pypi.org/project/pyobjc-framework-CalendarStore/
+.. _`pyobjc-framework-CallKit`: https://pypi.org/project/pyobjc-framework-CallKit/
+.. _`pyobjc-framework-ClassKit`: https://pypi.org/project/pyobjc-framework-ClassKit/
 .. _`pyobjc-framework-CloudKit`: https://pypi.org/project/pyobjc-framework-CloudKit/
 .. _`pyobjc-framework-Cocoa`: https://pypi.org/project/pyobjc-framework-Cocoa/
 .. _`pyobjc-framework-Collaboration`: https://pypi.org/project/pyobjc-framework-Collaboration/
@@ -554,6 +585,7 @@ prioritizing work.
 .. _`pyobjc-framework-CoreData`: https://pypi.org/project/pyobjc-framework-CoreData/
 .. _`pyobjc-framework-CoreHaptics`: https://pypi.org/project/pyobjc-framework-CoreHaptics/
 .. _`pyobjc-framework-CoreLocation`: https://pypi.org/project/pyobjc-framework-CoreLocation/
+.. _`pyobjc-framework-CoreMIDI`: https://pypi.org/project/pyobjc-framework-CoreMIDI/
 .. _`pyobjc-framework-CoreML`: https://pypi.org/project/pyobjc-framework-CoreML/
 .. _`pyobjc-framework-CoreMediaIO`: https://pypi.org/project/pyobjc-framework-CoreMediaIO/
 .. _`pyobjc-framework-CoreMedia`: https://pypi.org/project/pyobjc-framework-CoreMedia/
@@ -573,8 +605,8 @@ prioritizing work.
 .. _`pyobjc-framework-ExecutionPolicy`: https://pypi.org/project/pyobjc-framework-ExecutionPolicy/
 .. _`pyobjc-framework-ExternalAccessory`: https://pypi.org/project/pyobjc-framework-ExternalAccessory/
 .. _`pyobjc-framework-FSEvents`: https://pypi.org/project/pyobjc-framework-FSEvents/
-.. _`pyobjc-framework-FileProvider`: https://pypi.org/project/pyobjc-framework-FileProvider/
 .. _`pyobjc-framework-FileProviderUI`: https://pypi.org/project/pyobjc-framework-FileProviderUI/
+.. _`pyobjc-framework-FileProvider`: https://pypi.org/project/pyobjc-framework-FileProvider/
 .. _`pyobjc-framework-FinderSync`: https://pypi.org/project/pyobjc-framework-FinderSync/
 .. _`pyobjc-framework-GameCenter`: https://pypi.org/project/pyobjc-framework-GameCenter/
 .. _`pyobjc-framework-GameController`: https://pypi.org/project/pyobjc-framework-GameController/
@@ -586,19 +618,26 @@ prioritizing work.
 .. _`pyobjc-framework-InputMethodKit`: https://pypi.org/project/pyobjc-framework-InputMethodKit/
 .. _`pyobjc-framework-InstallerPlugins`: https://pypi.org/project/pyobjc-framework-InstallerPlugins/
 .. _`pyobjc-framework-InstantMessage`: https://pypi.org/project/pyobjc-framework-InstantMessage/
+.. _`pyobjc-framework-IntentsUI`: https://pypi.org/project/pyobjc-framework-IntentsUI/
 .. _`pyobjc-framework-Intents`: https://pypi.org/project/pyobjc-framework-Intents/
+.. _`pyobjc-framework-KernelManagement`: https://pypi.org/project/pyobjc-framework-KernelManagement/
 .. _`pyobjc-framework-LatentSemanticMapping`: https://pypi.org/project/pyobjc-framework-LatentSemanticMapping/
 .. _`pyobjc-framework-LaunchServices`: https://pypi.org/project/pyobjc-framework-LaunchServices/
 .. _`pyobjc-framework-LinkPresentation`: https://pypi.org/project/pyobjc-framework-LinkPresentation/
+.. _`pyobjc-framework-LocalAuthenticationUIView`: https://pypi.org/project/pyobjc-framework-LocalAuthenticationUIView/
 .. _`pyobjc-framework-LocalAuthentication`: https://pypi.org/project/pyobjc-framework-LocalAuthentication/
+.. _`pyobjc-framework-MLCompute`: https://pypi.org/project/pyobjc-framework-MLCompute/
+.. _`pyobjc-framework-MailKit`: https://pypi.org/project/pyobjc-framework-MailKit/
 .. _`pyobjc-framework-MapKit`: https://pypi.org/project/pyobjc-framework-MapKit/
 .. _`pyobjc-framework-MediaAccessibility`: https://pypi.org/project/pyobjc-framework-MediaAccessibility/
 .. _`pyobjc-framework-MediaLibrary`: https://pypi.org/project/pyobjc-framework-MediaLibrary/
 .. _`pyobjc-framework-MediaPlayer`: https://pypi.org/project/pyobjc-framework-MediaPlayer/
 .. _`pyobjc-framework-MediaToolbox`: https://pypi.org/project/pyobjc-framework-MediaToolbox/
 .. _`pyobjc-framework-Message`: https://pypi.org/project/pyobjc-framework-Message/
-.. _`pyobjc-framework-Metal`: https://pypi.org/project/pyobjc-framework-Metal/
 .. _`pyobjc-framework-MetalKit`: https://pypi.org/project/pyobjc-framework-MetalKit/
+.. _`pyobjc-framework-MetalPerformanceShadersGraph`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShadersGraph/
+.. _`pyobjc-framework-MetalPerformanceShaders`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShaders/
+.. _`pyobjc-framework-Metal`: https://pypi.org/project/pyobjc-framework-Metal/
 .. _`pyobjc-framework-ModelIO`: https://pypi.org/project/pyobjc-framework-ModelIO/
 .. _`pyobjc-framework-MultipeerConnectivity`: https://pypi.org/project/pyobjc-framework-MultipeerConnectivity/
 .. _`pyobjc-framework-NaturalLanguage`: https://pypi.org/project/pyobjc-framework-NaturalLanguage/
@@ -607,7 +646,11 @@ prioritizing work.
 .. _`pyobjc-framework-Network`: https://pypi.org/project/pyobjc-framework-Network/
 .. _`pyobjc-framework-NotificationCenter`: https://pypi.org/project/pyobjc-framework-NotificationCenter/
 .. _`pyobjc-framework-OSAKit`: https://pypi.org/project/pyobjc-framework-OSAKit/
+.. _`pyobjc-framework-OSLog`: https://pypi.org/project/pyobjc-framework-OSLog/
 .. _`pyobjc-framework-OpenDirectory`: https://pypi.org/project/pyobjc-framework-OpenDirectory/
+.. _`pyobjc-framework-PHASE`: https://pypi.org/project/pyobjc-framework-PHASE/
+.. _`pyobjc-framework-PassKit`: https://pypi.org/project/pyobjc-framework-PassKit/
+.. _`pyobjc-framework-PencilKit`: https://pypi.org/project/pyobjc-framework-PencilKit/
 .. _`pyobjc-framework-PhotosUI`: https://pypi.org/project/pyobjc-framework-PhotosUI/
 .. _`pyobjc-framework-Photos`: https://pypi.org/project/pyobjc-framework-Photos/
 .. _`pyobjc-framework-PreferencePanes`: https://pypi.org/project/pyobjc-framework-PreferencePanes/
@@ -616,15 +659,18 @@ prioritizing work.
 .. _`pyobjc-framework-QTKit`: https://pypi.org/project/pyobjc-framework-QTKit/
 .. _`pyobjc-framework-Quartz`: https://pypi.org/project/pyobjc-framework-Quartz/
 .. _`pyobjc-framework-QuickLookThumbnailing`: https://pypi.org/project/pyobjc-framework-QuickLookThumbnailing/
+.. _`pyobjc-framework-ReplayKit`: https://pypi.org/project/pyobjc-framework-ReplayKit/
 .. _`pyobjc-framework-SafariServices`: https://pypi.org/project/pyobjc-framework-SafariServices/
 .. _`pyobjc-framework-SceneKit`: https://pypi.org/project/pyobjc-framework-SceneKit/
 .. _`pyobjc-framework-ScreenSaver`: https://pypi.org/project/pyobjc-framework-ScreenSaver/
+.. _`pyobjc-framework-ScreenTime`: https://pypi.org/project/pyobjc-framework-ScreenTime/
 .. _`pyobjc-framework-ScriptingBridge`: https://pypi.org/project/pyobjc-framework-ScriptingBridge/
 .. _`pyobjc-framework-SecurityFoundation`: https://pypi.org/project/pyobjc-framework-SecurityFoundation/
 .. _`pyobjc-framework-SecurityInterface`: https://pypi.org/project/pyobjc-framework-SecurityInterface/
 .. _`pyobjc-framework-Security`: https://pypi.org/project/pyobjc-framework-Security/
 .. _`pyobjc-framework-ServerNotification`: https://pypi.org/project/pyobjc-framework-ServerNotification/
 .. _`pyobjc-framework-ServiceManagement`: https://pypi.org/project/pyobjc-framework-ServiceManagement/
+.. _`pyobjc-framework-ShazamKit`: https://pypi.org/project/pyobjc-framework-ShazamKit/
 .. _`pyobjc-framework-Social`: https://pypi.org/project/pyobjc-framework-Social/
 .. _`pyobjc-framework-SoundAnalysis`: https://pypi.org/project/pyobjc-framework-SoundAnalysis/
 .. _`pyobjc-framework-Speech`: https://pypi.org/project/pyobjc-framework-Speech/
@@ -633,31 +679,14 @@ prioritizing work.
 .. _`pyobjc-framework-SyncServices`: https://pypi.org/project/pyobjc-framework-SyncServices/
 .. _`pyobjc-framework-SystemConfiguration`: https://pypi.org/project/pyobjc-framework-SystemConfiguration/
 .. _`pyobjc-framework-SystemExtensions`: https://pypi.org/project/pyobjc-framework-SystemExtensions/
+.. _`pyobjc-framework-UniformTypeIdentifiers`: https://pypi.org/project/pyobjc-framework-UniformTypeIdentifiers/
+.. _`pyobjc-framework-UserNotificationsUI`: https://pypi.org/project/pyobjc-framework-UserNotificationsUI/
 .. _`pyobjc-framework-UserNotifications`: https://pypi.org/project/pyobjc-framework-UserNotifications/
 .. _`pyobjc-framework-VideoSubscriberAccount`: https://pypi.org/project/pyobjc-framework-VideoSubscriberAccount/
 .. _`pyobjc-framework-VideoToolbox`: https://pypi.org/project/pyobjc-framework-VideoToolbox/
+.. _`pyobjc-framework-Virtualization`: https://pypi.org/project/pyobjc-framework-Virtualization/
 .. _`pyobjc-framework-Vision`: https://pypi.org/project/pyobjc-framework-Vision/
 .. _`pyobjc-framework-WebKit`: https://pypi.org/project/pyobjc-framework-WebKit/
 .. _`pyobjc-framework-XgridFoundation`: https://pypi.org/project/pyobjc-framework-XgridFoundation/
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
-.. _`pyobjc-framework-OSLog`: https://pypi.org/project/pyobjc-framework-OSLog/
-.. _`pyobjc-framework-AppTrackingTransparency`: https://pypi.org/project/pyobjc-framework-AppTrackingTransparency/
-.. _`pyobjc-framework-KernelManagement`: https://pypi.org/project/pyobjc-framework-KernelManagement/
-.. _`pyobjc-framework-ScreenTime`: https://pypi.org/project/pyobjc-framework-ScreenTime/
-.. _`pyobjc-framework-UserNotificationsUI`: https://pypi.org/project/pyobjc-framework-UserNotificationsUI/
-.. _`pyobjc-framework-ClassKit`: https://pypi.org/project/pyobjc-framework-ClassKit/
-.. _`pyobjc-framework-CallKit`: https://pypi.org/project/pyobjc-framework-CallKit/
-.. _`pyobjc-framework-Accessibility`: https://pypi.org/project/pyobjc-framework-Accessibility/
-.. _`pyobjc-framework-MLCompute`: https://pypi.org/project/pyobjc-framework-MLCompute/
-.. _`pyobjc-framework-ReplayKit`: https://pypi.org/project/pyobjc-framework-ReplayKit/
-.. _`pyobjc-framework-PassKit`: https://pypi.org/project/pyobjc-framework-PassKit/
-.. _`pyobjc-framework-UniformTypeIdentifiers`: https://pypi.org/project/pyobjc-framework-UniformTypeIdentifiers/
-.. _`pyobjc-framework-CoreMIDI`: https://pypi.org/project/pyobjc-framework-CoreMIDI/
-.. _`pyobjc-framework-MetalPerformanceShaders`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShaders/
-.. _`pyobjc-framework-MetalPerformanceShadersGraph`: https://pypi.org/project/pyobjc-framework-MetalPerformanceShadersGraph/
-.. _`pyobjc-framework-Virtualization`: https://pypi.org/project/pyobjc-framework-Virtualization/
-.. _`pyobjc-framework-AutomaticAssessmentConfiguration`: https://pypi.org/project/pyobjc-framework-AutomaticAssessmentConfiguration/
-.. _`pyobjc-framework-AdServices`: https://pypi.org/project/pyobjc-framework-AdServices/
-.. _`pyobjc-framework-PencilKit`: https://pypi.org/project/pyobjc-framework-PencilKit/
-.. _`pyobjc-framework-ShazamKit`: https://pypi.org/project/pyobjc-framework-ShazamKit/
