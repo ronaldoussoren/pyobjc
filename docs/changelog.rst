@@ -6,6 +6,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
+* #365: The ``PyObjCTools`` namespace package no longer has an ``__init__.py``
+  file in the source tree (that is, the tree switches to implicit namespace
+  packages instead of the older setuptools style for namespace pacakges).
+
+  This primarily affects testing with recent versions of pip/setuptools (which
+  seem to no longer install the ``__init__.py`` file for namespace packages).
+
 * ``development-support/run-testsuite`` now uses ``venv`` instead of
   ``virtualenv``. This removes a development dependency.
 
@@ -18,6 +25,10 @@ Version 8.0b1
 * ``PyObjCTest.TestSupport`` now never uses "10.16" as the
   OS release but always uses the actual platform version, even
   when Python was compiled using an old SDK.
+
+* Removed bindings for ``InterfaceBuilderKit``. This was a way to integrate
+  with InterfaceBuilder in old versions of Xcode, but support for that was
+  dropped before the release of Mac OS X 10.8.
 
 * Updated framework bindings for Xcode 13 beta 1
 

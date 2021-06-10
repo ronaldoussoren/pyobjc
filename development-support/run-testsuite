@@ -219,16 +219,7 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
     k = {}
     k["env"] = os.environ.copy()
     k["env"]["PATH"] = os.path.dirname(interpreter) + ":" + k["env"]["PATH"]
-    if project == "pyobjc-framework-InterfaceBuilderKit":
-        # The InterfaceBuilderKit framework requires additinal setup when testing.
-        k["env"]["DYLD_FRAMEWORK_PATH"] = (
-            subprocess.check_output(["xcode-select", "-print-path"])
-            .decode("utf-8")
-            .strip()
-            + "/Library/PrivateFrameworks/"
-        )
 
-    print(interpreter)
     p = subprocess.Popen(
         [
             "/usr/bin/arch",

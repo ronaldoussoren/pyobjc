@@ -85,7 +85,6 @@ FRAMEWORK_WRAPPERS = [
     ("Intents", "10.12", None),
     ("InstallerPlugins", None, None),
     ("InstantMessage", "10.5", None),
-    ("InterfaceBuilderKit", "10.5", "10.7"),
     ("IOSurface", "10.6", None),
     ("KernelManagement", "10.16", None),
     ("LatentSemanticMapping", None, None),
