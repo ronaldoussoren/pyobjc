@@ -6,6 +6,13 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
+* #354: Add an option to install all framework bindings, including those not
+  relevant for the current platform. To use this:
+
+  .. sourcecode:: sh
+
+     $ pip install 'pyobjc[allbindings]'
+
 * #365: The ``PyObjCTools`` namespace package no longer has an ``__init__.py``
   file in the source tree (that is, the tree switches to implicit namespace
   packages instead of the older setuptools style for namespace pacakges).

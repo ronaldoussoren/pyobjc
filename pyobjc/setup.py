@@ -185,7 +185,7 @@ def version_key(version):
     return tuple(int(x) for x in version.split("."))
 
 
-def framework_requires():
+def framework_requires(include_all=False):
     if sys.platform != "darwin":
         raise SystemExit("ERROR: Requires macOS to install or build")
 
@@ -205,7 +205,10 @@ def framework_requires():
         else:
             marker = ""
 
-        result.append("pyobjc-framework-%s==%s%s" % (name, VERSION, marker))
+        if include_all:
+            result.append("pyobjc-framework-%s==%s" % (name, VERSION))
+        else:
+            result.append("pyobjc-framework-%s==%s%s" % (name, VERSION, marker))
 
     return result
 
@@ -595,7 +598,7 @@ class oc_egg_info(egg_info.egg_info):
             )
 
 
-dist = setup(
+setup(
     name="pyobjc",
     version=VERSION,
     description="Python<->ObjC Interoperability Module",
@@ -607,6 +610,9 @@ dist = setup(
     platforms=["macOS"],
     packages=[],
     install_requires=BASE_REQUIRES + framework_requires(),
+    extras_require={
+        "allbindings": BASE_REQUIRES + framework_requires(include_all=True)
+    },
     python_requires=">=3.6",
     setup_requires=[],
     classifiers=CLASSIFIERS,

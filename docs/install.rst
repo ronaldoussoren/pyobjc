@@ -32,6 +32,16 @@ Installing or upgrading PyObjC using `pip`_ is easy:
 For most users this will install PyObjC using `wheel <https://pypi.org/project/wheel>`_ binary
 archives, which means you don't have to have a compiler on your machine.
 
+Some use cases require installation of all framework bindings, not just those that are
+relevant for the current system:
+
+.. sourcecode:: sh
+
+   $ pip install -U 'pyobjc[allbindings]'
+
+This requires using binary wheels, otherwise this can attempt to install bindings that
+require a newer SDK than available on the current machine.
+
 .. note::
 
    Pip will install PyObjC 5 for users of Python 2.7, but only when using
