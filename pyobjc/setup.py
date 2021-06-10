@@ -20,7 +20,7 @@ VERSION = "8.0b1"
 # removed column is ``None`` when the framework is present ont he latest
 # supported OSX release.
 FRAMEWORK_WRAPPERS = [
-    # Name                      Introcuded          Removed
+    # Name                      Introduced          Removed
     ("libdispatch", "10.8", None),
     ("Accessibility", "10.16", None),
     ("AdServices", "10.16", None),
