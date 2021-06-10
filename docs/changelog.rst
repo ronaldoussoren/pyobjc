@@ -6,6 +6,12 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
+* PR# 367: Tweak the code that calculates ``PyObjC_BUILD_RELEASE`` in
+  the various setup.py files to deal with versions with more than two
+  labels (can happen when building using Xcode 13 beta)
+
+  PR by Eric Lin (Tzu Hsiang Lin), github user eric100lin.
+
 * ``PyObjCTest.TestSupport`` now never uses "10.16" as the
   OS release but always uses the actual platform version, even
   when Python was compiled using an old SDK.

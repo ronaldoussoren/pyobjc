@@ -446,17 +446,18 @@ def Extension(*args, **kwds):
             cflags.append(data)
             cflags.append(
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
-                % (tuple(map(int, version.split("."))))
+                % (tuple(map(int, version.split(".")[:2])))
             )
         else:
             cflags.append(
                 "-DPyObjC_BUILD_RELEASE=%02d%02d"
-                % (tuple(map(int, os_level.split("."))))
+                % (tuple(map(int, os_level.split(".")[:2])))
             )
 
     else:
         cflags.append(
-            "-DPyObjC_BUILD_RELEASE=%02d%02d" % (tuple(map(int, os_level.split("."))))
+            "-DPyObjC_BUILD_RELEASE=%02d%02d"
+            % (tuple(map(int, os_level.split(".")[:2])))
         )
 
     if os_level == "10.4":
