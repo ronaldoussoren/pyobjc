@@ -647,6 +647,15 @@ Types
       explictly implements the pickle protocol. This is needed because the pickle will
       write an incomplete serialization of Objective-C objects for protocol 2 or later.
 
+   .. method:: __class_getitem__(*args)
+      :classmethod:
+
+      Return an object representing the specialization of a generic class by type arguments found in key.
+
+      .. note::
+
+         This feature requires Python 3.9 or later.
+
    .. note::
 
       The wrapper classes for the *NSString* class cluster aren't subclasses

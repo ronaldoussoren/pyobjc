@@ -6,6 +6,25 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
+* #318: Implement support for ``__class_getitem__`` for Objective-C classes
+
+  The result of this is that effectively all Objective-C classes can be used
+  as generic classes, without runtime type checking. This is meant to be used
+  with optional type checking.
+
+  Usage:
+
+  .. sourcecode:: python
+
+        def create_integers(count: int) -> NSArray[int]:
+            return NSArray[int].arrayWithArray_([i for i in range(count)])
+
+  .. note::
+
+     This requires typing stubs for framework bindings to be really useful,
+     and those do not yet exist.
+
+
 * #354: Add an option to install all framework bindings, including those not
   relevant for the current platform. To use this:
 

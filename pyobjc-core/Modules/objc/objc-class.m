@@ -2052,6 +2052,12 @@ static PyMethodDef metaclass_methods[] = {{.ml_name  = "__dir__",
                                            .ml_meth  = (PyCFunction)metaclass_dir,
                                            .ml_flags = METH_NOARGS,
                                            .ml_doc   = "dir() hook, don't call directly"},
+#if PY_VERSION_HEX > 0x03090000
+                                      {.ml_name  = "__class_getitem__",
+                                       .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                       .ml_flags = METH_O,
+                                       .ml_doc   = "See PEP 585"},
+#endif
                                           {
                                               .ml_name = NULL /* SENTINEL */
                                           }};
@@ -2060,6 +2066,7 @@ static PyMethodDef class_methods[] = {{.ml_name  = "__dir__",
                                        .ml_meth  = (PyCFunction)meth_dir,
                                        .ml_flags = METH_NOARGS,
                                        .ml_doc   = "dir() hook, don't call directly"},
+
                                       {
                                           .ml_name = NULL /* SENTINEL */
                                       }};
