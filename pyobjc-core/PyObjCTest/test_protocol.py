@@ -280,32 +280,27 @@ class TestFormalProtocols(TestCase):
 
     def testIncorrectlyDefiningFormalProtocols(self):
         # Some bad calls to objc.formal_protocol
-        self.assertRaises(TypeError, objc.formal_protocol, [], None, ())
-        self.assertRaises(TypeError, objc.formal_protocol, "supers", (NSObject,), ())
-        self.assertRaises(
-            TypeError,
-            objc.formal_protocol,
-            "supers",
-            objc.protocolNamed("NSLocking"),
-            (),
-        )
-        self.assertRaises(
-            TypeError,
-            objc.formal_protocol,
-            "supers",
-            [objc.protocolNamed("NSLocking"), "hello"],
-            (),
-        )
-        self.assertRaises(
-            TypeError,
-            objc.formal_protocol,
-            "supers",
-            None,
-            [
-                objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"),
-                "hello",
-            ],  # noqa: E231
-        )
+        with self.assertRaises(TypeError):
+            objc.formal_protocol([], None, ())
+
+        with self.assertRaises(TypeError):
+            objc.formal_protocol("supers", (NSObject,), ())
+
+        with self.assertRaises(TypeError):
+            objc.formal_protocol("supers", objc.protocolNamed("NSLocking"), ())
+
+        with self.assertRaises(TypeError):
+            objc.formal_protocol("supers", [objc.protocolNamed("NSLocking")], "hello")
+
+        with self.assertRaises(TypeError):
+            objc.formal_protocol(
+                "supers",
+                [objc.protocolNamed("NSLocking")],
+                [
+                    objc.selector(None, selector=b"fooMethod:", signature=b"v@:i"),
+                    "hello",
+                ],
+            )
 
     def testMethodInfo(self):
         self.assertEqual(

@@ -90,9 +90,9 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         for (i = 0; i < len; i++) {
             PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
             if (!PyObjCFormalProtocol_Check(v)) {
+                Py_DECREF(supers);
                 PyErr_SetString(PyExc_TypeError,
                                 "supers need to be a sequence of objc.formal_protocols");
-                Py_DECREF(supers);
                 return NULL;
             }
         }
@@ -118,18 +118,6 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         }
     }
 
-#if (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
-    if (objc_allocateProtocol == NULL) {
-        /* Protocol creation API is new in OSX 10.7, can will be weak-linked when
-         * building on OSX 10.7 with a 10.6 deployment target.
-         */
-        Py_DECREF(selectors);
-        PyErr_SetString(PyObjCExc_Error,
-                        "Cannot create formal protocols on this platform");
-        return NULL;
-    }
-#endif
-
     theProtocol = objc_allocateProtocol(name);
     if (theProtocol == NULL) {
         PyErr_NoMemory();
@@ -148,7 +136,7 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     for (i = 0; i < len; i++) {
         PyObject*   sel          = PySequence_Fast_GET_ITEM(selectors, i);
         SEL         theSel       = PyObjCSelector_GetSelector(sel);
-        const char* theSignature = PyObjCSelector_Signature(sel);
+        const char* theSignature = PyObjCSelector_GetNativeSignature(sel);
 
         if (theSignature == NULL) {
             goto error;
@@ -157,20 +145,49 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         protocol_addMethodDescription(theProtocol, theSel, theSignature,
                                       (BOOL)PyObjCSelector_Required(sel),
                                       PyObjCSelector_IsClassMethod(sel) ? NO : YES);
-    }
 
+#ifndef protocol_getMethodDescription
+        /* See issue #17 */
+        struct objc_method_description descr = protocol_getMethodDescription(theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
+                                      PyObjCSelector_IsClassMethod(sel) ? NO : YES);
+        if (descr.name == NULL) {
+            PyErr_Format(PyExc_RuntimeError, "Cannot find '%s' in newly constructed protocol (before registration)", sel_getName(theSel));
+            goto error;
+        }
+#endif
+    }
     objc_registerProtocol(theProtocol);
+
+#ifndef protocol_getMethodDescription
+        /* See issue #17 */
+    for (i = 0; i < len; i++) {
+        PyObject*   sel          = PySequence_Fast_GET_ITEM(selectors, i);
+        SEL         theSel       = PyObjCSelector_GetSelector(sel);
+
+        struct objc_method_description descr = protocol_getMethodDescription(theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
+                                      PyObjCSelector_IsClassMethod(sel) ? NO : YES);
+        if (descr.name == NULL) {
+            PyErr_Format(PyExc_RuntimeError, "Cannot find '%s' in newly constructed protocol (after registration)", sel_getName(theSel));
+            goto error;
+        }
+    }
+#endif
 
     result = (PyObjCFormalProtocol*)PyObject_New(PyObjCFormalProtocol,
                                                  &PyObjCFormalProtocol_Type);
-    if (result == NULL)
-        goto error;
-
     Py_DECREF(selectors);
     Py_DECREF(supers);
 
+    if (result == NULL) {
+        return NULL;
+    }
+
+
     result->objc = theProtocol;
-    PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result);
+    if (PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result) < 0) {
+        Py_DECREF(result);
+        goto error;
+    }
     return (PyObject*)result;
 
 error:

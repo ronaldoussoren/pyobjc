@@ -6,6 +6,26 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
+Backward incompatible changes
+.............................
+
+* Removed bindings for ``InterfaceBuilderKit``. This was a way to integrate
+  with InterfaceBuilder in old versions of Xcode, but support for that was
+  dropped before the release of Mac OS X 10.8.
+
+* It is no longer possible to deploy to macOS 10.7 or earlier when you attempt to
+  create a formal protocol. Protocol creation already failed on those platform
+  due to lack of the required runtime API, and that will now result in a crash
+  because PyObjC no longer checks for availability of that runtime API.
+
+Other changes
+.............
+
+
+* Creating protocols that contain methods that have a method signature containing
+  PyObjC custom type encodings now works (those encodings are translated to
+  the corresponding Objective-C encoding.
+
 * #318: Implement support for ``__class_getitem__`` for Objective-C classes
 
   The result of this is that effectively all Objective-C classes can be used
@@ -52,9 +72,6 @@ Version 8.0b1
   OS release but always uses the actual platform version, even
   when Python was compiled using an old SDK.
 
-* Removed bindings for ``InterfaceBuilderKit``. This was a way to integrate
-  with InterfaceBuilder in old versions of Xcode, but support for that was
-  dropped before the release of Mac OS X 10.8.
 
 * Updated framework bindings for Xcode 13 beta 1
 
