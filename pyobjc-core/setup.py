@@ -54,7 +54,7 @@ def get_sdk_level(sdk):
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
-    if sdkname == "MacOSX.sdk":
+    if sdkname == "MacOSX.sdk" or "." not in sdkname[6:-4]:
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
                 pl = plistlib.load(fp)
