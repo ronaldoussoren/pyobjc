@@ -13,6 +13,10 @@ Backward incompatible changes
   with InterfaceBuilder in old versions of Xcode, but support for that was
   dropped before the release of Mac OS X 10.8.
 
+* Bindings for the Objective-C runtime API related to "associated objects" is
+  now enabled unconditionally. This will cause problems when running or building
+  on macOS 10.6 or earlier.
+
 * It is no longer possible to deploy to macOS 10.7 or earlier when you attempt to
   create a formal protocol. Protocol creation already failed on those platform
   due to lack of the required runtime API, and that will now result in a crash

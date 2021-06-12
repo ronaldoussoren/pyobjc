@@ -2074,6 +2074,116 @@ struct objc_typestr_values {
 
                            {NULL, 0}};
 
+struct objc_typestr_long_values {
+    char* name;
+    char*  value;
+} objc_typestr_long_values[] = {
+   { "_C_CFTYPEID", @encode(CFTypeID) },
+   { "_C_NSInteger", @encode(NSInteger) },
+   { "_C_NSUInteger", @encode(NSUInteger) },
+   { "_C_CFIndex", @encode(CFIndex) },
+   { "_C_CGFloat", @encode(CGFloat) },
+   { "_C_FSRef", @encode(FSRef) },
+   { "_sockaddr_type", @encode(struct sockaddr) },
+   {NULL, 0}
+};
+
+struct objc_int_values {
+    char* name;
+    long  value;
+} objc_int_values[] = {
+    // { "NAME", value },
+    { "MAC_OS_X_VERSION_MAX_ALLOWED", MAC_OS_X_VERSION_MAX_ALLOWED },
+    { "MAC_OS_X_VERSION_MIN_REQUIRED", MAC_OS_X_VERSION_MIN_REQUIRED },
+    { "MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0 },
+    { "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1 },
+    { "MAC_OS_X_VERSION_10_2", MAC_OS_X_VERSION_10_2 },
+    { "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3 },
+    { "MAC_OS_X_VERSION_10_4", MAC_OS_X_VERSION_10_4 },
+    { "MAC_OS_X_VERSION_10_5", MAC_OS_X_VERSION_10_5 },
+    { "MAC_OS_X_VERSION_10_6", MAC_OS_X_VERSION_10_6 },
+    { "MAC_OS_X_VERSION_10_7", MAC_OS_X_VERSION_10_7 },
+    { "MAC_OS_X_VERSION_10_8", MAC_OS_X_VERSION_10_8 },
+    { "MAC_OS_X_VERSION_10_9", MAC_OS_X_VERSION_10_9 },
+    { "MAC_OS_X_VERSION_10_10", MAC_OS_X_VERSION_10_10 },
+    { "MAC_OS_X_VERSION_10_10_2", MAC_OS_X_VERSION_10_10_2 },
+    { "MAC_OS_X_VERSION_10_10_3", MAC_OS_X_VERSION_10_10_3 },
+    { "MAC_OS_X_VERSION_10_11", MAC_OS_X_VERSION_10_11 },
+    { "MAC_OS_X_VERSION_10_11_2", MAC_OS_X_VERSION_10_11_2 },
+    { "MAC_OS_X_VERSION_10_11_3", MAC_OS_X_VERSION_10_11_3 },
+    { "MAC_OS_X_VERSION_10_11_4", MAC_OS_X_VERSION_10_11_4 },
+    { "MAC_OS_X_VERSION_10_12", MAC_OS_X_VERSION_10_12 },
+    { "MAC_OS_X_VERSION_10_12_1", MAC_OS_X_VERSION_10_12_1 },
+    { "MAC_OS_X_VERSION_10_12_2", MAC_OS_X_VERSION_10_12_2 },
+    { "MAC_OS_X_VERSION_10_12_4", MAC_OS_X_VERSION_10_12_4 },
+    { "MAC_OS_X_VERSION_10_13", MAC_OS_X_VERSION_10_13 },
+    { "MAC_OS_X_VERSION_10_13_1", MAC_OS_X_VERSION_10_13_1 },
+    { "MAC_OS_X_VERSION_10_13_2", MAC_OS_X_VERSION_10_13_2 },
+    { "MAC_OS_X_VERSION_10_13_3", MAC_OS_X_VERSION_10_13_3 },
+    { "MAC_OS_X_VERSION_10_13_4", MAC_OS_X_VERSION_10_13_4 },
+    { "MAC_OS_X_VERSION_10_13_5", MAC_OS_X_VERSION_10_13_5 },
+    { "MAC_OS_X_VERSION_10_13_6", MAC_OS_X_VERSION_10_13_6 },
+    { "MAC_OS_X_VERSION_10_14", MAC_OS_X_VERSION_10_14 },
+    { "MAC_OS_X_VERSION_10_14_1", MAC_OS_X_VERSION_10_14_1 },
+    { "MAC_OS_X_VERSION_10_14_2", MAC_OS_X_VERSION_10_14_2 },
+    { "MAC_OS_X_VERSION_10_14_3", MAC_OS_X_VERSION_10_14_3 },
+    { "MAC_OS_X_VERSION_10_14_4", MAC_OS_X_VERSION_10_14_4 },
+    { "MAC_OS_X_VERSION_10_14_5", MAC_OS_X_VERSION_10_14_5 },
+    { "MAC_OS_X_VERSION_10_14_6", MAC_OS_X_VERSION_10_14_6 },
+    { "MAC_OS_X_VERSION_10_15", MAC_OS_X_VERSION_10_15 },
+    { "MAC_OS_X_VERSION_10_15_1", MAC_OS_X_VERSION_10_15_1 },
+    { "MAC_OS_X_VERSION_10_15_2", MAC_OS_X_VERSION_10_15_2 },
+    { "MAC_OS_X_VERSION_10_15_3", MAC_OS_X_VERSION_10_15_3 },
+    { "MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_4 },
+    { "MAC_OS_X_VERSION_10_15_5", MAC_OS_X_VERSION_10_15_5 },
+    { "MAC_OS_X_VERSION_10_15_6", MAC_OS_X_VERSION_10_15_6 },
+    { "MAC_OS_X_VERSION_10_16", MAC_OS_X_VERSION_10_16 },
+    { "MAC_OS_X_VERSION_11_0", MAC_OS_X_VERSION_11_0 },
+    { "MAC_OS_X_VERSION_11_1", MAC_OS_X_VERSION_11_1 },
+    { "MAC_OS_X_VERSION_11_2", MAC_OS_X_VERSION_11_2 },
+    { "MAC_OS_X_VERSION_11_3", MAC_OS_X_VERSION_11_3 },
+    { "MAC_OS_X_VERSION_11_4", MAC_OS_X_VERSION_11_4 },
+    { "MAC_OS_X_VERSION_11_5", MAC_OS_X_VERSION_11_5 },
+    { "MAC_OS_X_VERSION_12_0", MAC_OS_X_VERSION_12_0 },
+    { "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE },
+    { "_NSNotFound", NSNotFound },
+    { "OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN },
+    { "OBJC_ASSOCIATION_RETAIN_NONATOMIC", OBJC_ASSOCIATION_RETAIN_NONATOMIC },
+    { "OBJC_ASSOCIATION_COPY_NONATOMIC", OBJC_ASSOCIATION_COPY_NONATOMIC },
+    { "OBJC_ASSOCIATION_RETAIN", OBJC_ASSOCIATION_RETAIN },
+    { "OBJC_ASSOCIATION_COPY", OBJC_ASSOCIATION_COPY },
+    { "_size_sockaddr_ip4", sizeof(struct sockaddr_in) },
+    { "_size_sockaddr_ip6", sizeof(struct sockaddr_in6) },
+    { NULL, 0 }
+};
+
+struct objc_float_values {
+    char* name;
+    double  value;
+} objc_float_values[] = {
+    { "_FLT_MIN", FLT_MIN },
+    { "_FLT_MAX", FLT_MAX },
+    { NULL, 0 }
+};
+
+struct objc_string_values {
+    char* name;
+    char* value;
+} objc_string_values[] = {
+    { "__version__", OBJC_VERSION },
+    { "platform", "MACOSX" },
+
+#if defined(__x86_64__)
+    { "arch", "x86_64" },
+#elif defined(__arm64__)
+    { "arch", "arm64" },
+#else
+#   error "Unsupported CPU architecture"
+#endif
+
+    { NULL, 0 }
+};
+
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT, "_objc", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
@@ -2336,6 +2446,43 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     }
 
     {
+        struct objc_int_values* cur = objc_int_values;
+
+        for (; cur->name != NULL; cur++) {
+            if (PyModule_AddIntConstant(m, cur->name, cur->value) < 0) {
+                return NULL;
+            }
+        }
+    }
+
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_CURRENT", calc_current_version()) < 0) {
+        return NULL;
+    }
+
+    {
+        struct objc_float_values* cur = objc_float_values;
+        PyObject* t = PyFloat_FromDouble(cur->value);
+        if (t == NULL) {
+            return NULL;
+        }
+
+        for (; cur->name != NULL; cur++) {
+            if (PyModule_AddObject(m, cur->name, t) < 0) {
+                return NULL;
+            }
+        }
+    }
+
+    {
+        struct objc_string_values* cur = objc_string_values;
+        for (; cur->name != NULL; cur++) {
+            if (PyModule_AddStringConstant(m, cur->name, cur->value) < 0) {
+                return NULL;
+            }
+        }
+    }
+
+    {
         struct objc_typestr_values* cur = objc_typestr_values;
 
         for (; cur->name != NULL; cur++) {
@@ -2349,485 +2496,24 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         }
     }
 
-    /* Add _C_CFTYPEID to avoid hardcoding this in our python code */
-    if (PyModule_AddObject(m, "_C_CFTYPEID", PyBytes_FromString(@encode(CFTypeID))) < 0) {
-        return NULL;
+    {
+        struct objc_typestr_long_values* cur = objc_typestr_long_values;
+
+        for (; cur->name != NULL; cur++) {
+            PyObject* t = PyBytes_FromString(cur->value);
+            if (t == NULL) {
+                return NULL;
+            }
+            if (PyModule_AddObject(m, cur->name, t)) {
+                return NULL;
+            }
+        }
     }
 
-    /* Likewise for _C_NSInteger and _C_NSUInteger */
-    if (PyModule_AddObject(m, "_C_NSInteger", PyBytes_FromString(@encode(NSInteger)))
-        < 0) {
-        return NULL;
-    }
-    if (PyModule_AddObject(m, "_C_NSUInteger", PyBytes_FromString(@encode(NSUInteger)))
-        < 0) {
-        return NULL;
-    }
-    if (PyModule_AddObject(m, "_C_CFIndex", PyBytes_FromString(@encode(CFIndex))) < 0) {
-        return NULL;
-    }
-    if (PyModule_AddObject(m, "_C_CGFloat", PyBytes_FromString(@encode(CGFloat))) < 0) {
-        return NULL;
-    }
-    if (PyModule_AddObject(m, "_C_FSRef", PyBytes_FromString(@encode(FSRef))) < 0) {
-        return NULL;
-    }
-    if (PyModule_AddIntConstant(m, "_size_sockaddr_ip4", sizeof(struct sockaddr_in))
-        < 0) {
-        return NULL;
-    }
-    if (PyModule_AddIntConstant(m, "_size_sockaddr_ip6", sizeof(struct sockaddr_in6))
-        < 0) {
-        return NULL;
-    }
-    if (PyModule_AddStringConstant(m, "__version__", OBJC_VERSION) < 0) {
-        return NULL;
-    }
-
-    if (PyModule_AddObject(m, "_sockaddr_type",
-                           PyBytes_FromString(@encode(struct sockaddr)))
-        < 0) {
-        return NULL;
-    }
 
     PyObjCPointerWrapper_Init();
 
-#if PyObjC_BUILD_RELEASE >= 1006
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
-    if (objc_setAssociatedObject != NULL) {
-#endif /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6 */
-        if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN)
-            < 0) {
-            return NULL;
-        }
-        if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_RETAIN_NONATOMIC",
-                                    OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            < 0) {
-            return NULL;
-        }
-        if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_COPY_NONATOMIC",
-                                    OBJC_ASSOCIATION_COPY_NONATOMIC)
-            < 0) {
-            return NULL;
-        }
-        if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_RETAIN", OBJC_ASSOCIATION_RETAIN)
-            < 0) {
-            return NULL;
-        }
-        if (PyModule_AddIntConstant(m, "OBJC_ASSOCIATION_COPY", OBJC_ASSOCIATION_COPY)
-            < 0) {
-            return NULL;
-        }
-#if MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
-    } else {
-        /* Build on a system where object associations are available, running on
-         * a platform where they aren't. Disable the wrappers.
-         */
-        if (PyDict_DelItemString(d, "setAssociatedObject") < 0) {
-            PyErr_Clear();
-        }
-        if (PyDict_DelItemString(d, "getAssociatedObject") < 0) {
-            PyErr_Clear();
-        }
-        if (PyDict_DelItemString(d, "removeAssociatedObjects") < 0) {
-            PyErr_Clear();
-        }
-    }
-#endif /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6 */
-#endif /* PyObjC_BUILD_RELEASE >= 1006 */
 
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_CURRENT", calc_current_version())
-        < 0) {
-        return NULL;
-    }
-
-#ifdef MAC_OS_X_VERSION_MAX_ALLOWED
-    /* An easy way to check for the MacOS X version we did build for */
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_MAX_ALLOWED",
-                                MAC_OS_X_VERSION_MAX_ALLOWED)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_MAX_ALLOWED */
-
-#ifdef MAC_OS_X_VERSION_MIN_REQUIRED
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_MIN_REQUIRED",
-                                MAC_OS_X_VERSION_MAX_ALLOWED)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_MIN_REQUIRED */
-
-#ifdef MAC_OS_X_VERSION_10_0
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_1 */
-
-#ifdef MAC_OS_X_VERSION_10_1
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_1 */
-
-#ifdef MAC_OS_X_VERSION_10_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_2", MAC_OS_X_VERSION_10_2) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_2 */
-
-#ifdef MAC_OS_X_VERSION_10_3
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_3 */
-
-#ifdef MAC_OS_X_VERSION_10_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_4", MAC_OS_X_VERSION_10_4) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_4 */
-
-#ifdef MAC_OS_X_VERSION_10_5
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_5", MAC_OS_X_VERSION_10_5) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_5 */
-
-#ifdef MAC_OS_X_VERSION_10_6
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_6", MAC_OS_X_VERSION_10_6) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_6 */
-
-#ifdef MAC_OS_X_VERSION_10_7
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_7", MAC_OS_X_VERSION_10_7) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_7 */
-
-#ifdef MAC_OS_X_VERSION_10_8
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_8", MAC_OS_X_VERSION_10_8) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_8 */
-
-#ifdef MAC_OS_X_VERSION_10_9
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_9", MAC_OS_X_VERSION_10_9) < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_9 */
-
-#ifdef MAC_OS_X_VERSION_10_10
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_10", MAC_OS_X_VERSION_10_10)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_10 */
-
-#ifdef MAC_OS_X_VERSION_10_10_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_10_2", MAC_OS_X_VERSION_10_10_2)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_10_2 */
-
-#ifdef MAC_OS_X_VERSION_10_10_3
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_10_3", MAC_OS_X_VERSION_10_10_3)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_10_3 */
-
-#ifdef MAC_OS_X_VERSION_10_11
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_11", MAC_OS_X_VERSION_10_11)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_11 */
-
-#ifdef MAC_OS_X_VERSION_10_11_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_11_2", MAC_OS_X_VERSION_10_11_2)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_11_2 */
-
-#ifdef MAC_OS_X_VERSION_10_11_3
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_11_3", MAC_OS_X_VERSION_10_11_3)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_11_3 */
-
-#ifdef MAC_OS_X_VERSION_10_11_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_11_4", MAC_OS_X_VERSION_10_11_4)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_11_4 */
-
-#ifdef MAC_OS_X_VERSION_10_12
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_12", MAC_OS_X_VERSION_10_12)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_12 */
-
-#ifdef MAC_OS_X_VERSION_10_12_1
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_12_1", MAC_OS_X_VERSION_10_12_1)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_12_1 */
-
-#ifdef MAC_OS_X_VERSION_10_12_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_12_2", MAC_OS_X_VERSION_10_12_2)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_12_2 */
-
-#ifdef MAC_OS_X_VERSION_10_12_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_12_4", MAC_OS_X_VERSION_10_12_4)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_12_4 */
-
-#ifdef MAC_OS_X_VERSION_10_13
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13", MAC_OS_X_VERSION_10_13)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_13 */
-
-#ifdef MAC_OS_X_VERSION_10_13_1
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_1", MAC_OS_X_VERSION_10_13_1)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_13_1 */
-
-#ifdef MAC_OS_X_VERSION_10_13_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_2", MAC_OS_X_VERSION_10_13_2)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_13_2 */
-
-#ifdef MAC_OS_X_VERSION_10_13_3
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_3", MAC_OS_X_VERSION_10_13_3)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_13_3 */
-
-#ifdef MAC_OS_X_VERSION_10_13_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_4", MAC_OS_X_VERSION_10_13_4)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_13_4 */
-
-#ifdef MAC_OS_X_VERSION_10_13_5
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_5", MAC_OS_X_VERSION_10_13_5)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_13_5 */
-
-#ifdef MAC_OS_X_VERSION_10_13_6
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_13_6", MAC_OS_X_VERSION_10_13_6)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_13_6 */
-
-#ifdef MAC_OS_X_VERSION_10_14
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14", MAC_OS_X_VERSION_10_14)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_14 */
-
-#ifdef MAC_OS_X_VERSION_10_14_1
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_1", MAC_OS_X_VERSION_10_14_1)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_14_1 */
-
-#ifdef MAC_OS_X_VERSION_10_14_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_2", MAC_OS_X_VERSION_10_14_2)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_14_2 */
-
-#ifdef MAC_OS_X_VERSION_10_14_3
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_3", MAC_OS_X_VERSION_10_14_3)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_14_3 */
-
-#ifdef MAC_OS_X_VERSION_10_14_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_4", MAC_OS_X_VERSION_10_14_4)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_14_4 */
-
-#ifdef MAC_OS_X_VERSION_10_14_5
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_5", MAC_OS_X_VERSION_10_14_5)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_14_5 */
-
-#ifdef MAC_OS_X_VERSION_10_14_6
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_14_6", MAC_OS_X_VERSION_10_14_6)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_14_6 */
-
-#ifdef MAC_OS_X_VERSION_10_15
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15", MAC_OS_X_VERSION_10_15)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_15 */
-
-#ifdef MAC_OS_X_VERSION_10_15_1
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_1", MAC_OS_X_VERSION_10_15_1)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_15_1 */
-
-#ifdef MAC_OS_X_VERSION_10_15_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_2", MAC_OS_X_VERSION_10_15_2)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_15_2 */
-
-#ifdef MAC_OS_X_VERSION_10_15_3
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_3", MAC_OS_X_VERSION_10_15_3)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_15_3 */
-
-#ifdef MAC_OS_X_VERSION_10_15_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_4)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_15_4 */
-
-#ifdef MAC_OS_X_VERSION_10_15_5
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_5", MAC_OS_X_VERSION_10_15_5)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_15_5 */
-
-#ifdef MAC_OS_X_VERSION_10_15_6
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_15_6", MAC_OS_X_VERSION_10_15_6)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_15_6 */
-
-#ifdef MAC_OS_X_VERSION_10_16
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_10_16", MAC_OS_X_VERSION_10_16)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_10_16 */
-
-#ifdef MAC_OS_X_VERSION_11_0
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_0", MAC_OS_X_VERSION_11_0)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_11_0 */
-
-#ifdef MAC_OS_X_VERSION_11_1
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_1", MAC_OS_X_VERSION_11_1)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_11_1 */
-
-#ifdef MAC_OS_X_VERSION_11_2
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_2", MAC_OS_X_VERSION_11_2)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_11_2 */
-
-#ifdef MAC_OS_X_VERSION_11_3
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_3", MAC_OS_X_VERSION_11_3)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_11_3 */
-
-#ifdef MAC_OS_X_VERSION_11_4
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_4", MAC_OS_X_VERSION_11_4)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_11_4 */
-
-#ifdef MAC_OS_X_VERSION_11_5
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_11_5", MAC_OS_X_VERSION_11_5)
-        < 0) {
-        return NULL;
-    }
-#endif /* MAC_OS_X_VERSION_11_5 */
-
-    if (PyModule_AddIntConstant(m, "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE) < 0) {
-        return NULL;
-    }
-
-    if (PyModule_AddIntConstant(m, "_NSNotFound", NSNotFound) < 0) {
-        return NULL;
-    }
-
-    if ((v = PyFloat_FromDouble(FLT_MIN)) == NULL) {
-        return NULL;
-    }
-    if (PyModule_AddObject(m, "_FLT_MIN", v) < 0) {
-        return NULL;
-    }
-
-    if ((v = PyFloat_FromDouble(FLT_MAX)) == NULL) {
-        return NULL;
-    }
-    if (PyModule_AddObject(m, "_FLT_MAX", v) < 0) {
-        return NULL;
-    }
-
-    if (PyModule_AddStringConstant(m, "platform", "MACOSX") < 0) {
-        return NULL;
-    }
-
-#if defined(__x86_64__)
-    if (PyModule_AddStringConstant(m, "arch", "x86_64") < 0) {
-        return NULL;
-    }
-#elif defined(__arm64__)
-    if (PyModule_AddStringConstant(m, "arch", "arm64") < 0) {
-        return NULL;
-    }
-#else
-# error "Unsupported CPU architecture"
-#endif
 
 
     /* Issue #298, at least in Xcode 11.3 the following code results in
