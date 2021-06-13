@@ -154,8 +154,8 @@ functions = {
         {
             "retval": {"already_cfretained": True},
             "arguments": {
-                2: {"c_array_lengt_in_arg": 1, "type_modifier": "n"},
-                3: {"c_array_lengt_in_arg": 1, "type_modifier": "o"},
+                2: {"c_array_length_in_arg": 1, "type_modifier": "n"},
+                3: {"c_array_length_in_arg": 1, "type_modifier": "o"},
             },
         },
     ),

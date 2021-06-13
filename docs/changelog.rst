@@ -56,6 +56,9 @@ Other changes
 
      $ pip install 'pyobjc[allbindings]'
 
+* Fix bindings for ``SKIndexCopyDocumentRefsForDocumentIDs``, that binding
+  didn't work due to a typo in the metadata.
+
 * #365: The ``PyObjCTools`` namespace package no longer has an ``__init__.py``
   file in the source tree (that is, the tree switches to implicit namespace
   packages instead of the older setuptools style for namespace pacakges).
