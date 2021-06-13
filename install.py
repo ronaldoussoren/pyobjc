@@ -221,15 +221,9 @@ def build_project(project, extra_args):
         shutil.rmtree(os.path.join(proj_dir, "build"))
 
     print("Installing {!r} using {!r}".format(project, sys.executable))
-    status = subprocess.call(
+    subprocess.check_call(
         [sys.executable, "setup.py", "install"] + extra_args, cwd=proj_dir
     )
-
-    if status != 0:
-        print("Installing {!r} failed (status {})".format(project, status))
-        return False
-
-    return True
 
 
 def version_key(version):
@@ -242,9 +236,8 @@ def main():
         sys.exit(1)
 
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
-        ok = build_project(project, sys.argv[1:])
-        if not ok:
-            break
+        print(f"\nBuilding {project}...\n")
+        build_project(project, sys.argv[1:])
 
 
 if __name__ == "__main__":
