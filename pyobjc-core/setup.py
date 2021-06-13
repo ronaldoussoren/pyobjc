@@ -491,7 +491,7 @@ def _fixup_compiler(use_ccache):
 
 
 class oc_build_ext(build_ext.build_ext):
-    user_options = [
+    user_options = build_ext.build_ext.user_options + [
         (
             "deployment-target=",
             None,
