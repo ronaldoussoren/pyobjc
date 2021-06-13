@@ -84,7 +84,6 @@ CFLAGS = [
     "-Wshorten-64-to-32",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
-    "-Werror",
     "-I/usr/include/ffi",
     # "-fvisibility=hidden",
     # "-O3", "-flto",
