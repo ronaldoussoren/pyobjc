@@ -40,7 +40,7 @@ def main():
             if cur == base:
                 row.append(f"{cur:.3f}")
             else:
-                row.append(f"{cur:.3f} ({((cur-base)/base)*100:.1f}%)")
+                row.append(f"{cur:.3f} ({((cur-base)/base)*100:+.1f}%)")
         print(fmt.format(*row))
 
 
