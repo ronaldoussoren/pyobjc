@@ -1086,6 +1086,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     _method_stub_userdata* userdata = (_method_stub_userdata*)_userdata;
     PyObject*              callable = userdata->callable;
     PyObjCMethodSignature* methinfo = userdata->methinfo;
+    Py_ssize_t            methinfo_size = Py_SIZE(methinfo);
     Py_ssize_t             i, startArg;
     PyObject*              res;
     PyObject*              v           = NULL;
@@ -1110,7 +1111,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    if (!callable) {
+    if (unlikely(callable == NULL)) {
         PyErr_SetString(PyObjCExc_InternalError, "Missing callable in closure object");
         goto error;
     }
@@ -1128,7 +1129,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
     if (userdata->closureType == PyObjC_Method) {
 #if PY_VERSION_HEX < 0x03090000
-        arglist = PyTuple_New(Py_SIZE(methinfo) - 1 + (insertArg?1:0));
+        arglist = PyTuple_New(methinfo_size - 1 + (insertArg?1:0));
         if (arglist == NULL) {
             Py_XDECREF(insertArg);
             goto error;
@@ -1163,7 +1164,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         pyself = NULL;
 
 #if PY_VERSION_HEX < 0x03090000
-        arglist = PyTuple_New(Py_SIZE(methinfo) - 1 + (insertArg?1:0));
+        arglist = PyTuple_New(methinfo_size - 1 + (insertArg?1:0));
         if (arglist == NULL) {
             Py_XDECREF(insertArg);
             goto error;
@@ -1178,7 +1179,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         pyself   = NULL;
 
 #if PY_VERSION_HEX < 0x03090000
-        arglist = PyTuple_New(Py_SIZE(methinfo) + (insertArg?1:0));
+        arglist = PyTuple_New(methinfo_size + (insertArg?1:0));
         if (arglist == NULL) {
             Py_XDECREF(insertArg);
             goto error;
@@ -1189,7 +1190,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         }
     }
 
-    for (i = startArg; i < Py_SIZE(methinfo); i++) {
+    for (i = startArg; i < methinfo_size; i++) {
 
         const char* argtype = methinfo->argtype[i]->type;
 
@@ -1280,7 +1281,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                 have_output++;
             }
 
-            if (userdata->argCount == Py_SIZE(methinfo) - 1) {
+            if (userdata->argCount == methinfo_size - 1) {
                 /* Python method has parameters for the output
                  * arguments as well, pass a placeholder value.
                  */
@@ -1412,11 +1413,11 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         goto error;
     }
 
-    if (!have_output) {
+    if (likely(!have_output)) {
         if (*rettype != _C_VOID) {
             const char* unqualified_type = PyObjCRT_SkipTypeQualifiers(rettype);
 
-            if (unqualified_type[0] == _C_PTR || unqualified_type[0] == _C_CHARPTR) {
+            if (unlikely(unqualified_type[0] == _C_PTR || unqualified_type[0] == _C_CHARPTR)) {
                 const char* rest = unqualified_type + 1;
                 if (*unqualified_type == _C_CHARPTR) {
                     rest = gCharEncoding;
@@ -1922,7 +1923,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
             }
         }
 
-        if (haveCountArg) {
+        if (unlikely(haveCountArg)) {
             if (real_res == NULL) {
                 idx = 0;
             } else {
