@@ -1086,48 +1086,91 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     _method_stub_userdata* userdata = (_method_stub_userdata*)_userdata;
     PyObject*              callable = userdata->callable;
     PyObjCMethodSignature* methinfo = userdata->methinfo;
-    Py_ssize_t             i, startArg;
-    PyObject*              arglist;
+    Py_ssize_t             i, startArg, curArg = 0;
+    PyObject*              arglist = NULL;
     PyObject*              res;
     PyObject*              v           = NULL;
     int                    have_output = 0;
     const char*            rettype;
-    PyObject*              pyself;
+    PyObject*              pyself =  NULL;
     int                    cookie;
     Py_ssize_t             count;
     BOOL                   haveCountArg;
-
-    PyGILState_STATE state = PyGILState_Ensure();
+    PyObject*              insertArg = NULL;
 
     rettype = methinfo->rettype->type;
 
-    arglist = PyList_New(0);
+    PyGILState_STATE state = PyGILState_Ensure();
 
-    /* First translate 'self' from Objective-C to python */
+    if (!callable) {
+        PyErr_SetString(PyObjCExc_InternalError, "Missing callable in closure object");
+        goto error;
+    }
+
+    /* Avoid calling a PyObjCPythonSelector directory, it does
+     * additional work that we don't need.
+     */
+    if (PyObjCPythonSelector_Check(callable)) {
+        if (((PyObjCSelector*)callable)->sel_self != NULL) {
+            insertArg = ((PyObjCSelector*)callable)->sel_self;
+            Py_INCREF(insertArg);
+        }
+        callable = ((PyObjCPythonSelector*)callable)->callable;
+    }
+
     if (userdata->closureType == PyObjC_Method) {
-        pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
-        if (pyself == NULL) {
-            goto error;
-        }
-
-        pyself = PyObjC_AdjustSelf(pyself);
-        if (pyself == NULL) {
-            goto error;
-        }
-
-        if (PyList_Append(arglist, pyself) == -1) {
+        arglist = PyTuple_New(Py_SIZE(methinfo) - 1 + (insertArg?1:0));
+        if (arglist == NULL) {
+            Py_XDECREF(insertArg);
             goto error;
         }
 
         startArg = 2;
 
+        pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
+        if (pyself == NULL) {
+            Py_XDECREF(insertArg);
+            Py_DECREF(arglist);
+            goto error;
+        }
+
+        pyself = PyObjC_AdjustSelf(pyself);
+        if (pyself == NULL) {
+            Py_DECREF(arglist);
+            goto error;
+        }
+        if (insertArg) {
+            PyTuple_SET_ITEM(arglist, curArg++, insertArg);
+        }
+
+        PyTuple_SET_ITEM(arglist, curArg++, pyself);
+        Py_INCREF(pyself);
+
     } else if (userdata->closureType == PyObjC_Block) {
         startArg = 1;
-        pyself   = NULL;
+        pyself = NULL;
+
+        arglist = PyTuple_New(Py_SIZE(methinfo) - 1 + (insertArg?1:0));
+        if (arglist == NULL) {
+            Py_XDECREF(insertArg);
+            goto error;
+        }
+        if (insertArg) {
+            PyTuple_SET_ITEM(arglist, curArg++, insertArg);
+        }
 
     } else {
         startArg = 0;
         pyself   = NULL;
+
+        arglist = PyTuple_New(Py_SIZE(methinfo) + (insertArg?1:0));
+        if (arglist == NULL) {
+            Py_XDECREF(insertArg);
+            goto error;
+        }
+        if (insertArg) {
+            PyTuple_SET_ITEM(arglist, curArg++, insertArg);
+        }
     }
 
     for (i = startArg; i < Py_SIZE(methinfo); i++) {
@@ -1291,7 +1334,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         default:
             v = pythonify_c_value(argtype, args[i]);
 
-            if (PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL) {
+            if (unlikely(PyObjCObject_IsBlock(v) && PyObjCObject_GetBlock(v) == NULL)) {
                 /* Value is an (Objective-)C block for which we don't have a Python
                  * signature
                  *
@@ -1328,47 +1371,21 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
             goto error;
         }
 
-        if (PyList_Append(arglist, v) == -1) {
-            Py_DECREF(v);
-            Py_DECREF(arglist);
-            goto error;
-        }
-        Py_DECREF(v);
-    }
-
-    /* Avoid calling a PyObjCPythonSelector directory, it does
-     * additional work that we don't need.
-     */
-    if (PyObjCPythonSelector_Check(callable)) {
-        if (((PyObjCSelector*)callable)->sel_self != NULL) {
-            if (PyList_Insert(arglist, 0, ((PyObjCSelector*)callable)->sel_self) < 0) {
-                Py_DECREF(arglist);
-                goto error;
-            }
-        }
-        callable = ((PyObjCPythonSelector*)callable)->callable;
-    }
-
-    v = PyList_AsTuple(arglist);
-    if (v == NULL) {
-        Py_DECREF(arglist);
-
-        if (pyself) {
-            PyObjCObject_ReleaseTransient(pyself, cookie);
+        if (curArg >= PyTuple_GET_SIZE(arglist)) {
+            printf("overflow!\n");
+            abort();
         }
 
-        goto error;
+        PyTuple_SET_ITEM(arglist, curArg, v);
+        curArg++; v = NULL;
     }
 
-    Py_DECREF(arglist);
-    arglist = v;
 
-    if (!callable) {
-        PyErr_SetString(PyObjCExc_InternalError, "Missing callable in closure object");
-        Py_DECREF(arglist);
-        goto error;
+    for (Py_ssize_t j = 0; j < PyTuple_GET_SIZE(arglist); j++) {
+        if (PyTuple_GET_ITEM(arglist, j) == NULL) {
+            printf("arg %ld == NULL\n", (long)j); fflush(stdout);
+        }
     }
-
     res = PyObject_Call(callable, arglist, NULL);
     Py_DECREF(arglist);
 
