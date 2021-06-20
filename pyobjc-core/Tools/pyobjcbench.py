@@ -100,6 +100,35 @@ def function_call():
     )
 
 
-descriptor_lookup()
-descriptor_call()
-function_call()
+def call_from_objc():
+    setup = textwrap.dedent(
+        """\
+    import objc
+    NSObject = objc.lookUpClass("NSObject")
+    NSArray = objc.lookUpClass("NSArray")
+    class CallFromObjC1(NSObject):
+        __slots__ = ("count",)
+
+        def init(self):
+            self = super().init()
+            self.count = 0
+            return self
+
+        def aSelector(self):
+            self.count += 1
+
+    o = CallFromObjC1.new()
+    a = NSArray.arrayWithArray_([o]*10)
+    """
+    )
+
+    print_bench(
+        "call no-args from objc",
+        timeit.timeit(setup=setup, stmt="a.makeObjectsPerformSelector_(b'aSelector')"),
+    )
+
+
+# descriptor_lookup()
+# descriptor_call()
+# function_call()
+call_from_objc()
