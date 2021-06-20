@@ -22,12 +22,35 @@ from __future__ import print_function
 
 import textwrap
 import timeit
+import sys
+import pathlib
 
 import objc
 
+if len(sys.argv) == 2 and sys.argv[1] == "--record":
+    record_fp = open(
+        pathlib.Path(__file__).parent
+        / "results"
+        / f"pyobjcbench-{objc.__version__}.txt",
+        "w",
+    )
 
-def print_bench(title, time):
-    print(f"{title:30s}: {time:.3f}")
+    def print_bench(title, time):
+        print(f"{title:30s}: {time:.3f}")
+        print(f"{title:30s}: {time:.3f}", file=record_fp)
+
+    def print_header(key, value):
+        print(f"@{key} {value}")
+        print(f"@{key} {value}", file=record_fp)
+
+
+else:
+
+    def print_bench(title, time):
+        print(f"{title:30s}: {time:.3f}")
+
+    def print_header(key, value):
+        print(f"@{key} {value}")
 
 
 NSObject = objc.lookUpClass("NSObject")
@@ -128,7 +151,10 @@ def call_from_objc():
     )
 
 
-# descriptor_lookup()
-# descriptor_call()
-# function_call()
+print_header("python", ".".join(str(x) for x in sys.version_info[:3]))
+print_header("objc", objc.__version__)
+print()
+descriptor_lookup()
+descriptor_call()
+function_call()
 call_from_objc()
