@@ -56,7 +56,15 @@ else:
 NSObject = objc.lookUpClass("NSObject")
 NSArray = objc.lookUpClass("NSArray")
 
+BENCHMARKS = []
 
+
+def benchmark(func):
+    BENCHMARKS.append(func)
+    return func
+
+
+@benchmark
 def descriptor_lookup():
     print_bench(
         "object description lookup",
@@ -81,6 +89,7 @@ def descriptor_lookup():
     print()
 
 
+@benchmark
 def descriptor_call():
     print_bench(
         "object description call",
@@ -105,6 +114,7 @@ def descriptor_call():
     print()
 
 
+@benchmark
 def function_call():
     print_bench(
         "python function call",
@@ -123,6 +133,7 @@ def function_call():
     )
 
 
+@benchmark
 def call_from_objc():
     setup = textwrap.dedent(
         """\
@@ -151,10 +162,55 @@ def call_from_objc():
     )
 
 
+@benchmark
+def hasattr_speed():
+    print()
+    print_bench(
+        "hasattr object is True",
+        timeit.timeit(setup="o = object()", stmt="hasattr(o, '__repr__')"),
+    )
+    print_bench(
+        "hasattr NSObject is True",
+        timeit.timeit(
+            setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+            "o = NSObject.alloc().init()",
+            stmt="hasattr(o, 'description')",
+        ),
+    )
+    print_bench(
+        "hasattr NSArray is True",
+        timeit.timeit(
+            setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+            "o = NSArray.alloc().init()",
+            stmt="hasattr(o, 'description')",
+        ),
+    )
+    print()
+    print_bench(
+        "hasattr object is False",
+        timeit.timeit(setup="o = object()", stmt="hasattr(o, 'attribute')"),
+    )
+    print_bench(
+        "hasattr NSObject is False",
+        timeit.timeit(
+            setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+            "o = NSObject.alloc().init()",
+            stmt="hasattr(o, 'invalidselector')",
+        ),
+    )
+    print_bench(
+        "hasattr NSArray is False",
+        timeit.timeit(
+            setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+            "o = NSArray.alloc().init()",
+            stmt="hasattr(o, 'invalidselector')",
+        ),
+    )
+    print()
+
+
 print_header("python", ".".join(str(x) for x in sys.version_info[:3]))
 print_header("objc", objc.__version__)
 print()
-descriptor_lookup()
-descriptor_call()
-function_call()
-call_from_objc()
+for func in BENCHMARKS:
+    func()
