@@ -64,28 +64,33 @@ setup(
         Extension(
             "Quartz.CoreVideo._CVPixelBuffer",
             ["Modules/_CVPixelBuffer.m"],
+            extra_link_args=["-framework", "Quartz"],
             py_limited_api=True,
         ),
         # CoreGraphics
         Extension(
             "Quartz.CoreGraphics._inlines",
             ["Modules/_CoreGraphics_inlines.m"],
+            extra_link_args=["-framework", "Quartz"],
             py_limited_api=True,
         ),
         Extension(
             "Quartz.CoreGraphics._callbacks",
             ["Modules/_callbacks.m"],
             extra_compile_args=["-Wno-deprecated-declarations"],
+            extra_link_args=["-framework", "Quartz"],
             # py_limited_api=True,
         ),
         Extension(
             "Quartz.CoreGraphics._doubleindirect",
             ["Modules/_doubleindirect.m"],
+            extra_link_args=["-framework", "Quartz"],
             py_limited_api=True,
         ),
         Extension(
             "Quartz.CoreGraphics._sortandmap",
             ["Modules/_sortandmap.m"],
+            extra_link_args=["-framework", "Quartz"],
             py_limited_api=True,
         ),
         Extension(
