@@ -1861,7 +1861,7 @@ class TestParseBridgeSupport(TestCase):
                 },
             )
 
-            from distutils.sysconfig import get_config_var
+            from setuptools._distutils.sysconfig import get_config_var
 
             self.assertNotIn("protocols", module_globals)
             self.assertEqual(

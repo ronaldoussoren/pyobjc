@@ -69,7 +69,7 @@ Follow these steps:
 
    .. sourcecode:: python
 
-        from distutils.core import setup
+        from setuptools import setup
         import py2app
 
         setup(

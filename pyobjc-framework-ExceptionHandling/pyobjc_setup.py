@@ -28,9 +28,9 @@ from setuptools import Extension as _Extension
 from setuptools import setup as _setup
 from setuptools.command import build_ext, build_py, develop, egg_info, install_lib, test
 
-from distutils import log
-from distutils.errors import DistutilsError, DistutilsPlatformError
-from distutils.command import build, install
+from setuptools._distutils import log
+from setuptools._distutils.errors import DistutilsError, DistutilsPlatformError
+from setuptools.command import build, install
 
 
 class oc_build_py(build_py.build_py):
@@ -238,7 +238,7 @@ def get_sdk_level():
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
-    if sdkname == "MacOSX.sdk":
+    if sdkname == "MacOSX.sdk" or "." not in sdkname[6:-4]:
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
                 pl = plistlib.load(fp)
@@ -466,9 +466,6 @@ def Extension(*args, **kwds):
 
     if os_level == "10.4":
         cflags.append("-DNO_OBJC2_RUNTIME")
-
-    if "-Werror" not in cflags:
-        cflags.append("-Werror")
 
     if "extra_compile_args" in kwds:
         kwds["extra_compile_args"] = kwds["extra_compile_args"] + cflags

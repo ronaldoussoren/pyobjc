@@ -9,10 +9,14 @@ import subprocess
 import warnings
 from setuptools import Extension, setup
 from setuptools.command import build_ext, build_py, egg_info, install_lib, test
-from distutils import log
-from distutils.errors import DistutilsError, DistutilsPlatformError, DistutilsSetupError
-from distutils.sysconfig import get_config_var as _get_config_var
-from distutils.sysconfig import get_config_vars
+from setuptools._distutils import log
+from setuptools._distutils.errors import (
+    DistutilsError,
+    DistutilsPlatformError,
+    DistutilsSetupError,
+)
+from setuptools._distutils.sysconfig import get_config_var as _get_config_var
+from setuptools._distutils.sysconfig import get_config_vars
 
 from pkg_resources import add_activation_listener, normalize_path, require, working_set
 
@@ -50,7 +54,7 @@ def get_sdk_level(sdk):
     sdkname = os.path.basename(sdk)
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
-    if sdkname == "MacOSX.sdk":
+    if sdkname == "MacOSX.sdk" or "." not in sdkname[6:-4]:
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
                 pl = plistlib.load(fp)
@@ -80,7 +84,6 @@ CFLAGS = [
     "-Wshorten-64-to-32",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     # "--analyze",
-    "-Werror",
     "-I/usr/include/ffi",
     # "-fvisibility=hidden",
     # "-O3", "-flto",
@@ -487,7 +490,7 @@ def _fixup_compiler(use_ccache):
 
 
 class oc_build_ext(build_ext.build_ext):
-    user_options = [
+    user_options = build_ext.build_ext.user_options + [
         (
             "deployment-target=",
             None,

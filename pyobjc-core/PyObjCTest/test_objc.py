@@ -104,7 +104,7 @@ class TestPrivate(TestCase):
 
         v = resolve("distutils.command.sdist.show_formats")
 
-        from distutils.command.sdist import show_formats
+        from setuptools.command.sdist import show_formats
 
         self.assertIs(v, show_formats)
 

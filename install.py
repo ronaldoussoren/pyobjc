@@ -15,7 +15,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from distutils.sysconfig import get_config_var
+from setuptools._distutils.sysconfig import get_config_var
 
 TOPDIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -122,7 +122,7 @@ def get_sdk_level():
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
 
-    if sdkname == "MacOSX.sdk":
+    if sdkname == "MacOSX.sdk" or "." not in sdkname[6:-4]:
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
                 pl = plistlib.load(fp)
@@ -221,15 +221,9 @@ def build_project(project, extra_args):
         shutil.rmtree(os.path.join(proj_dir, "build"))
 
     print("Installing {!r} using {!r}".format(project, sys.executable))
-    status = subprocess.call(
+    subprocess.check_call(
         [sys.executable, "setup.py", "install"] + extra_args, cwd=proj_dir
     )
-
-    if status != 0:
-        print("Installing {!r} failed (status {})".format(project, status))
-        return False
-
-    return True
 
 
 def version_key(version):
@@ -242,9 +236,8 @@ def main():
         sys.exit(1)
 
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
-        ok = build_project(project, sys.argv[1:])
-        if not ok:
-            break
+        print(f"\nBuilding {project}...\n")
+        build_project(project, sys.argv[1:])
 
 
 if __name__ == "__main__":

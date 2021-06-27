@@ -15,7 +15,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from distutils.sysconfig import get_config_var
+from setuptools._distutils.sysconfig import get_config_var
 
 TOPDIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -122,7 +122,7 @@ def get_sdk_level():
     assert sdkname.startswith("MacOSX")
     assert sdkname.endswith(".sdk")
 
-    if sdkname == "MacOSX.sdk":
+    if sdkname == "MacOSX.sdk" or "." not in sdkname[6:-4]:
         try:
             with open(os.path.join(sdk, "SDKSettings.plist"), "rb") as fp:
                 pl = plistlib.load(fp)
