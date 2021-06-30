@@ -1,5 +1,5 @@
 """
-Wrappers for the "AudioVideoBriding" framework on macOS.
+Wrappers for the "AudioVideoBridging" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -11,10 +11,10 @@ from pyobjc_setup import setup
 VERSION = "8.0b1"
 
 setup(
-    name="pyobjc-framework-AudioVideoBriding",
-    description="Wrappers for the framework AudioVideoBriding on macOS",
+    name="pyobjc-framework-AudioVideoBridging",
+    description="Wrappers for the framework AudioVideoBridging on macOS",
     min_os_level="10.8",
-    packages=["AudioVideoBriding"],
+    packages=["AudioVideoBridging"],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,
