@@ -7,6 +7,7 @@ documentation for details on how to use these functions and classes.
 
 import sys
 
+import CoreAudio
 import CoreMedia
 import Foundation
 import objc
@@ -26,7 +27,7 @@ sys.modules["AVFoundation"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,  # noqa: F405
         "__loader__": globals().get("__loader__", None),
     },
-    (AVFoundation._AVFoundation, CoreMedia, Foundation),
+    (AVFoundation._AVFoundation, CoreAudio, CoreMedia, Foundation),
 )
 
 
