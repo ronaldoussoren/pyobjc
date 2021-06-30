@@ -3,20 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVPlayerItem(TestCase):
-    @min_os_level("10.7")
-    def testConstants(self):
-        self.assertIsInstance(AVFoundation.AVPlayerItemTimeJumpedNotification, str)
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemDidPlayToEndTimeNotification, str
-        )
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemFailedToPlayToEndTimeNotification, str
-        )
-
-        self.assertIsInstance(
-            AVFoundation.AVPlayerItemFailedToPlayToEndTimeErrorKey, str
-        )
-
+    def test_constants(self):
         self.assertEqual(AVFoundation.AVPlayerItemStatusUnknown, 0)
         self.assertEqual(AVFoundation.AVPlayerItemStatusReadyToPlay, 1)
         self.assertEqual(AVFoundation.AVPlayerItemStatusFailed, 2)
@@ -31,6 +18,20 @@ class TestAVPlayerItem(TestCase):
         self.assertEqual(AVFoundation.AVVariantPreferenceNone, 0)
         self.assertEqual(
             AVFoundation.AVVariantPreferenceScalabilityToLosslessAudio, 1 << 0
+        )
+
+    @min_os_level("10.7")
+    def testConstants(self):
+        self.assertIsInstance(AVFoundation.AVPlayerItemTimeJumpedNotification, str)
+        self.assertIsInstance(
+            AVFoundation.AVPlayerItemDidPlayToEndTimeNotification, str
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerItemFailedToPlayToEndTimeNotification, str
+        )
+
+        self.assertIsInstance(
+            AVFoundation.AVPlayerItemFailedToPlayToEndTimeErrorKey, str
         )
 
     @min_os_level("10.9")
@@ -111,8 +112,8 @@ class TestAVPlayerItem(TestCase):
             AVFoundation.AVPlayerItem.setAudioSpatializationAllowed_, 0
         )
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayerItem.startsOnFirstEligibleVariant)
         self.assertArgIsBOOL(
             AVFoundation.AVPlayerItem.setStartsOnFirstEligibleVariant_, 0

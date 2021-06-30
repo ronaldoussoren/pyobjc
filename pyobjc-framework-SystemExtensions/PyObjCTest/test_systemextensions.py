@@ -57,3 +57,13 @@ class TestSystemExtensions(TestCase):
         SystemExtensions.OSSystemExtensionRequest
         SystemExtensions.OSSystemExtensionProperties
         SystemExtensions.OSSystemExtensionManager
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(SystemExtensions.OSSystemExtensionProperties.isEnabled)
+        self.assertResultIsBOOL(
+            SystemExtensions.OSSystemExtensionProperties.isAwaitingUserApproval
+        )
+        self.assertResultIsBOOL(
+            SystemExtensions.OSSystemExtensionProperties.isUninstalling
+        )

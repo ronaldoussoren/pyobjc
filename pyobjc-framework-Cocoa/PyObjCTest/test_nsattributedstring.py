@@ -1,4 +1,5 @@
 import objc
+import Foundation
 import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
@@ -234,6 +235,66 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(AppKit.NSTextEffectAttributeName, str)
         self.assertIsInstance(AppKit.NSTextEffectLetterpressStyle, str)
 
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertEqual(Foundation.NSInlinePresentationIntentEmphasized, 1 << 0)
+        self.assertEqual(
+            Foundation.NSInlinePresentationIntentStronglyEmphasized, 1 << 1
+        )
+        self.assertEqual(Foundation.NSInlinePresentationIntentCode, 1 << 2)
+        self.assertEqual(Foundation.NSInlinePresentationIntentStrikethrough, 1 << 5)
+        self.assertEqual(Foundation.NSInlinePresentationIntentSoftBreak, 1 << 6)
+        self.assertEqual(Foundation.NSInlinePresentationIntentLineBreak, 1 << 7)
+
+        self.assertIsInstance(Foundation.NSInlinePresentationIntentAttributeName, str)
+        self.assertIsInstance(Foundation.NSAlternateDescriptionAttributeName, str)
+        self.assertIsInstance(Foundation.NSImageURLAttributeName, str)
+        self.assertIsInstance(Foundation.NSLanguageIdentifierAttributeName, str)
+
+        self.assertEqual(
+            Foundation.NSAttributedStringMarkdownParsingFailureReturnError, 0
+        )
+        self.assertEqual(
+            Foundation.NSAttributedStringMarkdownParsingFailureReturnPartiallyParsedIfPossible,
+            1,
+        )
+
+        self.assertEqual(Foundation.NSAttributedStringMarkdownInterpretedSyntaxFull, 0)
+        self.assertEqual(
+            Foundation.NSAttributedStringMarkdownInterpretedSyntaxInlineOnly, 1
+        )
+
+        self.assertEqual(
+            Foundation.NSAttributedStringFormattingInsertArgumentAttributesWithoutMerging,
+            1 << 0,
+        )
+        self.assertEqual(
+            Foundation.NSAttributedStringFormattingApplyReplacementIndexAttribute,
+            1 << 1,
+        )
+
+        self.assertIsInstance(Foundation.NSReplacementIndexAttributeName, str)
+        self.assertIsInstance(Foundation.NSMorphologyAttributeName, str)
+        self.assertIsInstance(Foundation.NSInflectionRuleAttributeName, str)
+        self.assertIsInstance(Foundation.NSPresentationIntentAttributeName, str)
+
+        self.assertEqual(Foundation.NSPresentationIntentKindParagraph, 0)
+        self.assertEqual(Foundation.NSPresentationIntentKindHeader, 1)
+        self.assertEqual(Foundation.NSPresentationIntentKindOrderedList, 2)
+        self.assertEqual(Foundation.NSPresentationIntentKindUnorderedList, 3)
+        self.assertEqual(Foundation.NSPresentationIntentKindListItem, 4)
+        self.assertEqual(Foundation.NSPresentationIntentKindCodeBlock, 5)
+        self.assertEqual(Foundation.NSPresentationIntentKindBlockQuote, 6)
+        self.assertEqual(Foundation.NSPresentationIntentKindThematicBreak, 7)
+        self.assertEqual(Foundation.NSPresentationIntentKindTable, 8)
+        self.assertEqual(Foundation.NSPresentationIntentKindTableHeaderRow, 9)
+        self.assertEqual(Foundation.NSPresentationIntentKindTableRow, 10)
+        self.assertEqual(Foundation.NSPresentationIntentKindTableCell, 11)
+
+        self.assertEqual(Foundation.NSPresentationIntentTableColumnAlignmentLeft, 0)
+        self.assertEqual(Foundation.NSPresentationIntentTableColumnAlignmentCenter, 1)
+        self.assertEqual(Foundation.NSPresentationIntentTableColumnAlignmentRight, 2)
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertArgHasType(
@@ -256,4 +317,45 @@ class TestNSAttributedString(TestCase):
             AppKit.NSAttributedString.enumerateAttribute_inRange_options_usingBlock_,
             3,
             b"v@" + AppKit.NSRange.__typestr__ + b"o^" + objc._C_NSBOOL,
+        )
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(
+            Foundation.NSAttributedStringMarkdownParsingOptions.allowsExtendedAttributes
+        )
+        self.assertArgIsBOOL(
+            Foundation.NSAttributedStringMarkdownParsingOptions.setAllowsExtendedAttributes_,
+            0,
+        )
+
+        self.assertArgIsOut(
+            Foundation.NSAttributedString.initWithContentsOfMarkdownFileAtURL_options_baseURL_error_,
+            3,
+        )
+        self.assertArgIsOut(
+            Foundation.NSAttributedString.initWithMarkdown_options_baseURL_error_, 3
+        )
+        self.assertArgIsOut(
+            Foundation.NSAttributedString.initWithMarkdownString_options_baseURL_error_,
+            3,
+        )
+
+        self.assertArgIsPrintf(
+            Foundation.NSAttributedString.initWithFormat_options_locale_, 0
+        )
+        self.assertArgIsPrintf(
+            Foundation.NSAttributedString.localizedAttributedStringWithFormat_, 0
+        )
+        self.assertArgIsPrintf(
+            Foundation.NSAttributedString.localizedAttributedStringWithFormat_options_,
+            0,
+        )
+
+        self.assertArgIsPrintf(
+            Foundation.NSMutableAttributedString.appendLocalizedFormat_, 0
+        )
+
+        self.assertResultIsBOOL(
+            Foundation.NSPresentationIntent.isEquivalentToPresentationIntent_
         )

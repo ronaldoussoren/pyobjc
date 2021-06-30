@@ -38,6 +38,6 @@ class TestIPOptions(TestCase):
     def test_funtions10_15(self):
         Network.nw_ip_options_set_local_address_preference
 
-    @min_os_level("10.16")
-    def test_funtions10_16(self):
+    @min_os_level("11.0")
+    def test_funtions11_0(self):
         Network.nw_ip_options_set_disable_multicast_loopback

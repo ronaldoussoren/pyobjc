@@ -74,6 +74,9 @@
    }
   },
   "externs": {
+   "SKStoreProductParameterCustomProductPageIdentifier": {
+    "typestr": "d"
+   },
    "SKDownloadTimeRemainingUnknown": {
     "typestr": "d"
    }

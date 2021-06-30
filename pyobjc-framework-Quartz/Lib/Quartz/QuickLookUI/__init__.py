@@ -15,6 +15,7 @@ sys.modules["Quartz.QuickLookUI"] = mod = objc.ObjCLazyModule(
     "Quartz.QuickLookUI",
     "com.apple.QuickLookUIFramework",
     objc.pathForFramework(
+        # XXX: This moved to a separate framework in macOS 12
         "/System/Library/Frameworks/Quartz.framework/Frameworks/QuickLookUI.framework"
     ),
     _metadata.__dict__,

@@ -4,8 +4,8 @@ import Network
 
 
 class TestGroupDescriptor(TestCase):
-    @min_os_level("10.16")
-    def test_functions(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         self.assertResultIsRetained(Network.nw_group_descriptor_create_multicast)
         Network.nw_group_descriptor_add_endpoint
 

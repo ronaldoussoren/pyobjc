@@ -40,3 +40,23 @@ class TestCKModifyRecordsOperation(TestCase):
             0,
             b"v@@@",
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBlock(
+            CloudKit.CKModifyRecordsOperation.perRecordSaveBlock, b"v@@@"
+        )
+        self.assertArgIsBlock(
+            CloudKit.CKModifyRecordsOperation.setPerRecordSaveBlock_,
+            0,
+            b"v@@@",
+        )
+
+        self.assertResultIsBlock(
+            CloudKit.CKModifyRecordsOperation.perRecordDeleteBlock, b"v@@@"
+        )
+        self.assertArgIsBlock(
+            CloudKit.CKModifyRecordsOperation.setPerRecordDeleteBlock_,
+            0,
+            b"v@@@",
+        )

@@ -19,8 +19,8 @@ class TestSKCloudServiceController(TestCase):
             StoreKit.SKCloudServiceCapabilityAddToCloudMusicLibrary, 1 << 8
         )
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(
             StoreKit.SKCloudServiceCapabilitiesDidChangeNotification, str
         )
@@ -29,8 +29,8 @@ class TestSKCloudServiceController(TestCase):
         )
         self.assertIsInstance(StoreKit.SKStorefrontIdentifierDidChangeNotification, str)
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             StoreKit.SKCloudServiceController.requestAuthorization_,
             0,

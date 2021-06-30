@@ -61,3 +61,15 @@ class TestCKFetchDatabaseChangesOperation(TestCase):
             CloudKit.CKFetchDatabaseChangesOperation.recordZoneWithIDWasPurgedBlock,
             b"v@",
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            CloudKit.CKFetchDatabaseChangesOperation.setRecordZoneWithIDWasDeletedDueToUserEncryptedDataResetBlock_,
+            0,
+            b"v@",
+        )
+        self.assertResultIsBlock(
+            CloudKit.CKFetchDatabaseChangesOperation.recordZoneWithIDWasDeletedDueToUserEncryptedDataResetBlock,
+            b"v@",
+        )

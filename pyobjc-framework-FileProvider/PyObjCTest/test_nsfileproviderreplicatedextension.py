@@ -4,6 +4,12 @@ import objc
 
 
 class TestNSFileProviderReplicatedExtensionHelper(FileProvider.NSObject):
+    def setInteractionSuppressed_forIdentifier_(self, a, b):
+        pass
+
+    def isInteractionSuppressedForIdentifier_(self, a):
+        return 1
+
     def enumeratorForContainerItemIdentifier_request_error_(self, a, b, c):
         pass
 
@@ -79,9 +85,10 @@ class TestNSFileProviderReplicatedExtension(TestCase):
         self.assertEqual(FileProvider.NSFileProviderItemContentModificationDate, 1 << 7)
         self.assertEqual(FileProvider.NSFileProviderItemFileSystemFlags, 1 << 8)
         self.assertEqual(FileProvider.NSFileProviderItemExtendedAttributes, 1 << 9)
+        self.assertEqual(FileProvider.NSFileProviderItemTypeAndCreator, 1 << 10)
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("NSFileProviderEnumerating")
         objc.protocolNamed("NSFileProviderReplicatedExtension")
         objc.protocolNamed("NSFileProviderIncrementalContentFetching")
@@ -93,7 +100,19 @@ class TestNSFileProviderReplicatedExtension(TestCase):
     def test_protocols11_3(self):
         objc.protocolNamed("NSFileProviderDomainState")
 
+    @min_sdk_level("12.0")
+    def test_protocols12_0(self):
+        objc.protocolNamed("NSFileProviderUserInteractionSuppressing")
+
     def test_methods(self):
+        self.assertArgIsBOOL(
+            TestNSFileProviderReplicatedExtensionHelper.setInteractionSuppressed_forIdentifier_,
+            0,
+        ),
+        self.assertResultIsBOOL(
+            TestNSFileProviderReplicatedExtensionHelper.isInteractionSuppressedForIdentifier_
+        )
+
         self.assertArgHasType(
             TestNSFileProviderReplicatedExtensionHelper.enumeratorForContainerItemIdentifier_request_error_,
             2,

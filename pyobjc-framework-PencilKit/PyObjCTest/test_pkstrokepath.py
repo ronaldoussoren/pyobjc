@@ -4,7 +4,7 @@ import PencilKit
 
 
 class TestPKStrokePath(TestCase):
-    @min_os_level("10.16")
+    @min_os_level("11.0")
     def test_methods(self):
         self.assertArgIsBlock(
             PencilKit.PKStrokePath.enumerateInterpolatedPointsInRange_strideByDistance_usingBlock_,

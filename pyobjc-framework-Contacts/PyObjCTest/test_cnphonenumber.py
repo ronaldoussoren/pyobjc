@@ -13,6 +13,6 @@ class TestCNPhoneNumber(TestCase):
         self.assertIsInstance(Contacts.CNLabelPhoneNumberOtherFax, str)
         self.assertIsInstance(Contacts.CNLabelPhoneNumberPager, str)
 
-    @min_os_level("10.16.1")
+    @min_os_level("11.1")
     def testConstants11_1(self):
         self.assertIsInstance(Contacts.CNLabelPhoneNumberAppleWatch, str)

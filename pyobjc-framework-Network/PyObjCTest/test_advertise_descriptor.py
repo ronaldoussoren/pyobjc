@@ -43,8 +43,8 @@ class TestAdvertiseDescriptor(TestCase):
             Network.nw_advertise_descriptor_copy_txt_record_object
         )
 
-    @min_os_level("10.16")
-    def test_functions10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         self.assertResultIsRetained(
             Network.nw_advertise_descriptor_copy_txt_record_object
         )

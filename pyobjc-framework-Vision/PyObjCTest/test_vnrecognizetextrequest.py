@@ -21,3 +21,10 @@ class TestVNRecognizeTextRequest(TestCase):
         self.assertArgIsBOOL(
             Vision.VNRecognizeTextRequest.setUsesLanguageCorrection_, 0
         )
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertArgIsOut(
+            Vision.VNRecognizeTextRequest.supportedRecognitionLanguagesAndReturnError_,  # noqa: B950
+            0,
+        )

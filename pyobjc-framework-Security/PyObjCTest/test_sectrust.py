@@ -218,6 +218,10 @@ class TestSecTrusted(TestCase):
             Security.SecTrustEvaluateAsyncWithError, 2, SecTrustWithErrorCallback
         )
 
-    @min_os_level("10.16")
-    def test_functions10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         self.assertResultIsCFRetained(Security.SecTrustCopyKey)
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        self.assertResultIsCFRetained(Security.SecTrustCopyCertificateChain)

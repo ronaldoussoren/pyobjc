@@ -12,8 +12,18 @@
    "kPDFWidgetOnState": { "value": 1 },
    "kPDFDisplayDirectionVertical": { "value": 0 },
    "kPDFDisplayDirectionHorizontal": { "value": 1 }
+   "PDFAllowsLowQualityPrinting": { "value": 1 },
+   "PDFAllowsHighQualityPrinting": { "value": 2 },
+   "PDFAllowsDocumentChanges": { "value": 4 },
+   "PDFAllowsDocumentAssembly": { "value": 8 },
+   "PDFAllowsContentCopying": { "value": 16 },
+   "PDFAllowsContentAccessibility": { "value": 32 },
+   "PDFAllowsCommenting": { "value": 64 },
+   "PDFAllowsFormFieldEntry": { "value": 128 },
   },
   "externs": {
+   "PDFDocumentFoundSelectionKey": { "typestr": "@" },
+   "PDFDocumentPageIndexKey": { "typestr": "@" },
    "kPDFDestinationUnspecifiedValue": { "typestr": [ "f", "d" ] },
    "PDFAppearanceCharacteristicsKeyBackgroundColor": { "typestr": "@" },
    "PDFAppearanceCharacteristicsKeyBorderColor": { "typestr": "@" },

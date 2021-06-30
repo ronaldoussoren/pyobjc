@@ -21,6 +21,12 @@ class TestCHHapticParameter(TestCase):
             CoreHaptics.CHHapticPatternKeyParameterCurveControlPoints, str
         )
 
+    @min_sdk_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            CoreHaptics.CHHapticPatternKeyEventWaveformUseVolumeEnvelope, str
+        )
+
     @min_sdk_level("10.15")
     def test_methods10_15(self):
         self.assertArgIsOut(

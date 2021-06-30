@@ -49,8 +49,8 @@ class TestICCameraDevice(TestCase):
         self.assertIsInstance(ImageCaptureCore.ICDeleteErrorDeviceMissing, str)
         self.assertIsInstance(ImageCaptureCore.ICDeleteErrorCanceled, str)
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(ImageCaptureCore.ICTruncateAfterSuccessfulDownload, str)
 
     @os_level_between("10.11", "10.11")

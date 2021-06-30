@@ -124,5 +124,13 @@ class TestAVVideoComposition(TestCase):
             b"v@",
         )
 
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVVideoComposition.findUnusedTrackIDWithCompletionHandler_,  # noqa: B950
+            0,
+            b"v" + objc._C_NSInteger + b"@",
+        )
+
     def testProtocols(self):
         objc.protocolNamed("AVVideoCompositionValidationHandling")

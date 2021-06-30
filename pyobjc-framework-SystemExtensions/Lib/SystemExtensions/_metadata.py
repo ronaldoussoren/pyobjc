@@ -57,6 +57,22 @@ try:
         b"requestNeedsUserApproval:",
         {"required": True, "retval": {"type": b"v"}, "arguments": {2: {"type": b"@"}}},
     )
+    r(
+        b"OSSystemExtensionProperties",
+        b"isEnabled",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"OSSystemExtensionProperties",
+        b"isAwaitingUserApproval",
+        {"retval": {"type": b"Z"}},
+    )
+    r(
+        b"OSSystemExtensionProperties",
+        b"isUninstalling",
+        {"retval": {"type": b"Z"}},
+    )
+
 finally:
     objc._updatingMetadata(False)
 expressions = {}

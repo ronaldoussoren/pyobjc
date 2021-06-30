@@ -47,3 +47,8 @@ class TestCKError(TestCase):
         self.assertEqual(CloudKit.CKErrorParticipantMayNeedVerification, 33)
         self.assertEqual(CloudKit.CKErrorServerResponseLost, 34)
         self.assertEqual(CloudKit.CKErrorAssetNotAvailable, 35)
+        self.assertEqual(CloudKit.CKErrorAccountTemporarilyUnavailable, 36)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(CloudKit.CKErrorUserDidResetEncryptedDataKey, str)

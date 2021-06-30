@@ -16,8 +16,8 @@ class TestCLSActivity(TestCase):
         self.assertEqual(ClassKit.CLSErrorCodeInvalidUpdate, 8)
         self.assertEqual(ClassKit.CLSErrorCodePartialFailure, 9)
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(ClassKit.CLSErrorObjectKey, str)
         self.assertIsInstance(ClassKit.CLSErrorUnderlyingErrorsKey, str)
 

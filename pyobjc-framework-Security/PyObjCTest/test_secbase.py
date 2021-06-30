@@ -329,6 +329,7 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSecVerifyActionFailed, -67825)
         self.assertEqual(Security.errSecInvalidCertAuthority, -67826)
         self.assertEqual(Security.errSecInvaldCRLAuthority, -67827)
+        self.assertEqual(Security.errSecInvalidCRLAuthority, -67827)
         self.assertEqual(Security.errSecInvalidCRLEncoding, -67828)
         self.assertEqual(Security.errSecInvalidCRLType, -67829)
         self.assertEqual(Security.errSecInvalidCRL, -67830)
@@ -354,6 +355,7 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSecInvalidTupleGroup, -67850)
         self.assertEqual(Security.errSecInvalidBaseACLs, -67851)
         self.assertEqual(Security.errSecInvalidTupleCredendtials, -67852)
+        self.assertEqual(Security.errSecInvalidTupleCredentials, -67852)
         self.assertEqual(Security.errSecInvalidEncoding, -67853)
         self.assertEqual(Security.errSecInvalidValidityPeriod, -67854)
         self.assertEqual(Security.errSecInvalidRequestor, -67855)
@@ -404,6 +406,7 @@ class TestSecBase(TestCase):
         self.assertEqual(Security.errSecCertificateNameNotAllowed, -67900)
         self.assertEqual(Security.errSecCertificateValidityPeriodTooLong, -67901)
         self.assertEqual(Security.errSecCertificateIsCA, -67902)
+        self.assertEqual(Security.errSecCertificateDuplicateExtension, -67903)
 
         self.assertEqual(Security.errSSLProtocol, -9800)
         self.assertEqual(Security.errSSLNegotiation, -9801)

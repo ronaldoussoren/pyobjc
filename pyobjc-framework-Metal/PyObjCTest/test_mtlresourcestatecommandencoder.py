@@ -39,8 +39,8 @@ class TestMTLResourceStateCommandEncoder(TestCase):
         self.assertIsInstance(v.mipMapLevel, int)
         self.assertIsInstance(v.sliceId, int)
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("MTLResourceStateCommandEncoder")
 
     def test_methods(self):

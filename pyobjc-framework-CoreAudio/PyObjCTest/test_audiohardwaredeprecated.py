@@ -21,6 +21,12 @@ AudioStreamPropertyListenerProc = b"iIII^v"
 
 class TestAudioHardwareDeprecated(TestCase):
     def testConstants(self):
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceMasterSubDeviceKey, b"master")
+        self.assertEqual(
+            CoreAudio.kAudioAggregateDevicePropertyMasterSubDevice,
+            CoreAudio.kAudioAggregateDevicePropertyMainSubDevice,
+        )
+
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyScopeInput,
             CoreAudio.kAudioObjectPropertyScopeInput,
@@ -78,6 +84,9 @@ class TestAudioHardwareDeprecated(TestCase):
         self.assertEqual(CoreAudio.kAudioHardwarePropertyDeviceForUID, fourcc(b"duid"))
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyPlugInForBundleID, fourcc(b"pibi")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioHardwarePropertyProcessIsMaster, fourcc(b"mast")
         )
 
         self.assertEqual(

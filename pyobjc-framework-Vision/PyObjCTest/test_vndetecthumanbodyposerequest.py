@@ -3,8 +3,8 @@ import Vision
 
 
 class TestVNDetectHumanBodyPoseRequest(TestCase):
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
 
         self.assertIsInstance(Vision.VNBodyLandmarkKeyNose, str)
         self.assertIsInstance(Vision.VNBodyLandmarkKeyLeftEye, str)
@@ -76,8 +76,8 @@ class TestVNDetectHumanBodyPoseRequest(TestCase):
 
         self.assertEqual(Vision.VNDetectHumanBodyPoseRequestRevision1, 1)
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsOut(
             Vision.VNDetectHumanBodyPoseRequest.supportedRecognizedPointKeysForRevision_error_,
             1,

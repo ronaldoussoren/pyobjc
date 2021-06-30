@@ -31,3 +31,10 @@ class TestNSParagraphStyle(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSMutableParagraphStyle.setAllowsDefaultTighteningForTruncation_, 0
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(AppKit.NSParagraphStyle.usesDefaultHyphenation)
+        self.assertArgIsBOOL(
+            AppKit.NSMutableParagraphStyle.setUsesDefaultHyphenation_, 0
+        )

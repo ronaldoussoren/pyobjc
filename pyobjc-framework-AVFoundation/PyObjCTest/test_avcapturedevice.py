@@ -123,3 +123,9 @@ class TestAVCaptureDevice(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVCaptureDevice.setTorchModeOnWithLevel_error_, 1
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVCaptureDeviceFormat.isHighPhotoQualitySupported
+        )

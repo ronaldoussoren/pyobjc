@@ -3,8 +3,8 @@ import Vision
 
 
 class TestVNGeometryUtils(TestCase):
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsOut(Vision.VNGeometryUtils.boundingCircleForContour_error_, 1)
         self.assertArgIsOut(Vision.VNGeometryUtils.boundingCircleForPoints_error_, 1)
 

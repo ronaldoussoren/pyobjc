@@ -36,6 +36,7 @@ class TestAudioHardwareBase(TestCase):
             CoreAudio.kAudioObjectPropertyScopePlayThrough, fourcc(b"ptru")
         )
         self.assertEqual(CoreAudio.kAudioObjectPropertyElementMaster, 0)
+        self.assertEqual(CoreAudio.kAudioObjectPropertyElementMain, 0)
 
         self.assertEqual(
             CoreAudio.kAudioObjectPropertySelectorWildcard, fourcc(b"****")

@@ -4,8 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 
 
 class TestSKStoreProductViewController(TestCase):
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(StoreKit.SKStoreProductParameterITunesItemIdentifier, str)
         self.assertIsInstance(StoreKit.SKStoreProductParameterProductIdentifier, str)
         self.assertIsInstance(StoreKit.SKStoreProductParameterAffiliateToken, str)
@@ -15,12 +15,18 @@ class TestSKStoreProductViewController(TestCase):
             StoreKit.SKStoreProductParameterAdvertisingPartnerToken, str
         )
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            StoreKit.SKStoreProductParameterCustomProductPageIdentifier, str
+        )
+
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("SKStoreProductViewControllerDelegate")
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             StoreKit.SKStoreProductViewController.loadProductWithParameters_completionBlock_,
             1,

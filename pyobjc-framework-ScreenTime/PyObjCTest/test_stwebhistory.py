@@ -4,6 +4,6 @@ import ScreenTime
 
 
 class TestSTWebHistory(TestCase):
-    @min_os_level("10.16")
-    def test_methods(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsOut(ScreenTime.STWebHistory.initWithBundleIdentifier_error_, 1)

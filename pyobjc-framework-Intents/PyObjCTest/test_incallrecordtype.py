@@ -9,6 +9,11 @@ class TestINCallRecordType(TestCase):
         self.assertEqual(Intents.INCallRecordTypeOutgoing, 1)
         self.assertEqual(Intents.INCallRecordTypeMissed, 2)
         self.assertEqual(Intents.INCallRecordTypeReceived, 3)
+        self.assertEqual(Intents.INCallRecordTypeLatest, 4)
+        self.assertEqual(Intents.INCallRecordTypeVoicemail, 5)
+        self.assertEqual(Intents.INCallRecordTypeRinging, 6)
+        self.assertEqual(Intents.INCallRecordTypeInProgress, 7)
+        self.assertEqual(Intents.INCallRecordTypeOnHold, 8)
 
         self.assertEqual(Intents.INCallRecordTypeLatest, 4)
         self.assertEqual(Intents.INCallRecordTypeVoicemail, 5)

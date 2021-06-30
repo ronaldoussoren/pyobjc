@@ -13,11 +13,28 @@ class TestMTLAccelerationStructure(TestCase):
         # self.assertIsInstance(v.intersectionFunctionTableOffset, int)
         # self.assertIsInstance(v.accelerationStructureIndex, int)
 
+        # Vector types in fields
+        self.assertNotHasAttr(Metal, "MTLAccelerationStructureUserIDInstanceDescriptor")
+
+        v = Metal.MTLAccelerationStructureMotionInstanceDescriptor()
+        self.assertIsInstance(v.options, int)
+        self.assertIsInstance(v.mask, int)
+        self.assertIsInstance(v.intersectionFunctionTableOffset, int)
+        self.assertIsInstance(v.accelerationStructureIndex, int)
+        self.assertIsInstance(v.userID, int)
+        self.assertIsInstance(v.motionTransformsStartIndex, int)
+        self.assertIsInstance(v.motionTransformsCount, int)
+        self.assertIsInstance(v.motionStartBorderMode, int)
+        self.assertIsInstance(v.motionEndBorderMode, int)
+        self.assertIsInstance(v.motionStartTime, int)
+        self.assertIsInstance(v.motionEndTime, int)
+
     def test_constants(self):
 
         self.assertEqual(Metal.MTLAccelerationStructureUsageNone, 0)
         self.assertEqual(Metal.MTLAccelerationStructureUsageRefit, 1 << 0)
         self.assertEqual(Metal.MTLAccelerationStructureUsagePreferFastBuild, 1 << 1)
+        self.assertEqual(Metal.MTLAccelerationStructureUsageExtendedLimits, 1 << 2)
 
         self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionNone, 0)
         self.assertEqual(
@@ -31,8 +48,15 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionOpaque, 1 << 2)
         self.assertEqual(Metal.MTLAccelerationStructureInstanceOptionNonOpaque, 1 << 3)
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+        self.assertEqual(Metal.MTLMotionBorderModeClamp, 0)
+        self.assertEqual(Metal.MTLMotionBorderModeVanish, 1)
+
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeDefault, 0)
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeUserID, 1)
+        self.assertEqual(Metal.MTLAccelerationStructureInstanceDescriptorTypeMotion, 2)
+
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertResultIsBOOL(Metal.MTLAccelerationStructureGeometryDescriptor.opaque)
         self.assertArgIsBOOL(
             Metal.MTLAccelerationStructureGeometryDescriptor.setOpaque_, 0

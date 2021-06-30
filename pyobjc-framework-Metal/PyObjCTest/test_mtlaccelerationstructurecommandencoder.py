@@ -29,10 +29,15 @@ class TestMTLAccelerationStructureCommandEncoderHelper(Metal.NSObject):
     def sampleCountersInBuffer_atSampleIndex_withBarrier_(self, a, b, c):
         pass
 
+    def writeCompactedAccelerationStructureSize_toBuffer_offset_sizeDataType_(
+        self, a, b, c, d
+    ):
+        pass
+
 
 class TestMTLAccelerationStructureCommandEncoder(TestCase):
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("MTLAccelerationStructureCommandEncoder")
 
     def test_methods(self):
@@ -95,4 +100,15 @@ class TestMTLAccelerationStructureCommandEncoder(TestCase):
         self.assertArgIsBOOL(
             TestMTLAccelerationStructureCommandEncoderHelper.sampleCountersInBuffer_atSampleIndex_withBarrier_,
             2,
+        )
+
+        self.assertArgHasType(
+            TestMTLAccelerationStructureCommandEncoderHelper.writeCompactedAccelerationStructureSize_toBuffer_offset_sizeDataType_,
+            2,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLAccelerationStructureCommandEncoderHelper.writeCompactedAccelerationStructureSize_toBuffer_offset_sizeDataType_,
+            3,
+            objc._C_NSUInteger,
         )

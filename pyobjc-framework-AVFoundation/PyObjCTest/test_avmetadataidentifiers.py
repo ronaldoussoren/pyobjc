@@ -892,8 +892,8 @@ class TestAVMetadataIdentifiers(TestCase):
                 str,
             )
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(
             AVFoundation.AVMetadataCommonIdentifierAccessibilityDescription, str
         )
@@ -908,4 +908,10 @@ class TestAVMetadataIdentifiers(TestCase):
         self.assertIsInstance(
             AVFoundation.AVMetadataIdentifierQuickTimeMetadataLocationHorizontalAccuracyInMeters,
             str,
+        )
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVMetadataIdentifierQuickTimeMetadataIsMontage, str
         )

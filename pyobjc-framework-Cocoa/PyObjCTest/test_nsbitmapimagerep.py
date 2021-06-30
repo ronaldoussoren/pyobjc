@@ -279,6 +279,10 @@ class TestBadCreation(TestCase):
         self.assertEqual(AppKit.NS16BitBigEndianBitmapFormat, (1 << 10))
         self.assertEqual(AppKit.NS32BitBigEndianBitmapFormat, (1 << 11))
 
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(AppKit.NSImageIPTCData, str)
+
     def testTiffCompression(self):
         lst, nr = AppKit.NSBitmapImageRep.getTIFFCompressionTypes_count_(None, None)
         self.assertIsInstance(lst, tuple)

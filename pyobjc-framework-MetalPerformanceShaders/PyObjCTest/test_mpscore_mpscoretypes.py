@@ -102,6 +102,14 @@ class TestMPSCore_MPSCoreTypes(TestCase):
             MetalPerformanceShaders.MPSAliasingStrategyPreferNonTemporaryMemory, 1 << 3
         )
 
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeAlternateEncodingBit, 0x80000000
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSDataTypeBool,
+            MetalPerformanceShaders.MPSDataTypeAlternateEncodingBit | 8,
+        )
+
     def test_structs(self):
         v = MetalPerformanceShaders.MPSOffset()
         self.assertIsInstance(v.x, int)

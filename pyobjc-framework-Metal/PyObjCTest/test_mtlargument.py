@@ -80,11 +80,18 @@ class TestMTLArgument(TestCase):
         self.assertEqual(Metal.MTLDataTypeRGB10A2Unorm, 75)
         self.assertEqual(Metal.MTLDataTypeRG11B10Float, 76)
         self.assertEqual(Metal.MTLDataTypeRGB9E5Float, 77)
-
         self.assertEqual(Metal.MTLDataTypeRenderPipeline, 78)
         self.assertEqual(Metal.MTLDataTypeComputePipeline, 79)
-
         self.assertEqual(Metal.MTLDataTypeIndirectCommandBuffer, 80)
+        self.assertEqual(Metal.MTLDataTypeLong, 81)
+        self.assertEqual(Metal.MTLDataTypeLong2, 82)
+        self.assertEqual(Metal.MTLDataTypeLong3, 83)
+        self.assertEqual(Metal.MTLDataTypeLong4, 84)
+        self.assertEqual(Metal.MTLDataTypeULong, 85)
+        self.assertEqual(Metal.MTLDataTypeULong2, 86)
+        self.assertEqual(Metal.MTLDataTypeULong3, 87)
+        self.assertEqual(Metal.MTLDataTypeULong4, 88)
+
         self.assertEqual(Metal.MTLDataTypeVisibleFunctionTable, 115)
         self.assertEqual(Metal.MTLDataTypeIntersectionFunctionTable, 116)
         self.assertEqual(Metal.MTLDataTypePrimitiveAccelerationStructure, 117)

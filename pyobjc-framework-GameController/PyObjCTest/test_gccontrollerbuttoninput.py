@@ -34,8 +34,8 @@ class TestGCControllerButtonInput(TestCase):
             b"v@f" + objc._C_NSBOOL,
         )
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBlock(
             GameController.GCControllerButtonInput.touchedChangedHandler,
             b"v@f" + objc._C_NSBOOL + objc._C_NSBOOL,

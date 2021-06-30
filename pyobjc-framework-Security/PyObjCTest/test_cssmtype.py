@@ -420,6 +420,8 @@ class Testcssmtype(TestCase):
         self.assertFalse(hasattr(Security, "CSSM_ALGID_XORBaseAndData"))
         self.assertFalse(hasattr(Security, "CSSM_ALGID_ExtractFromKey"))
         self.assertFalse(hasattr(Security, "CSSM_ALGID_SSL3PreMasterGen"))
+        self.assertFalse(hasattr(Security, "CSSM_ALGID_SSL3PrePrimaryGen"))
+        self.assertFalse(hasattr(Security, "CSSM_ALGID_SSL3PrimaryDerive"))
         self.assertFalse(hasattr(Security, "CSSM_ALGID_SSL3MasterDerive"))
         self.assertFalse(hasattr(Security, "CSSM_ALGID_SSL3KeyAndMacDerive"))
         self.assertFalse(hasattr(Security, "CSSM_ALGID_SSL3MD5_MAC"))

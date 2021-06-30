@@ -85,8 +85,8 @@ class TestConnectionReport(TestCase):
 
         self.assertResultIsRetained(Network.nw_data_transfer_report_copy_path_interface)
 
-    @min_os_level("10.16")
-    def test_functions10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         Network.nw_resolution_report_get_source
         Network.nw_resolution_report_get_milliseconds
         Network.nw_resolution_report_get_endpoint_count
@@ -105,3 +105,7 @@ class TestConnectionReport(TestCase):
             1,
             nw_report_resolution_report_enumerator_t,
         )
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        Network.nw_data_transfer_report_get_path_radio_type

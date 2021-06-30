@@ -188,7 +188,7 @@ class TestCFBundle(TestCase):
         url = CoreFoundation.CFBundleCopyExecutableURL(bundle)
         self.assertIsInstance(url, CoreFoundation.CFURLRef)
         array = CoreFoundation.CFBundleCopyExecutableArchitectures(bundle)
-        if os_level_key(os_release()) >= os_level_key("10.16"):
+        if os_level_key(os_release()) >= os_level_key("11.0"):
             self.assertIs(array, None)
         else:
             self.assertIsNot(array, None)
@@ -285,7 +285,7 @@ class TestCFBundle(TestCase):
         array = CoreFoundation.CFBundleCopyLocalizationsForURL(bundle)
         self.assertIsInstance(array, CoreFoundation.CFArrayRef)
         array = CoreFoundation.CFBundleCopyExecutableArchitecturesForURL(bundle)
-        if os_level_key(os_release()) >= os_level_key("10.16"):
+        if os_level_key(os_release()) >= os_level_key("11.0"):
             self.assertIs(array, None)
         else:
             self.assertIsInstance(array, CoreFoundation.CFArrayRef)
@@ -324,8 +324,8 @@ class TestCFBundle(TestCase):
             CoreFoundation.kCFBundleExecutableArchitectureARM64, 0x0100000C
         )
 
-    @min_os_level("10.16")
-    def test_functions_10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         self.assertResultIsBOOL(CoreFoundation.CFBundleIsExecutableLoadable)
         self.assertResultIsBOOL(CoreFoundation.CFBundleIsExecutableLoadableForURL)
         self.assertResultIsBOOL(CoreFoundation.CFBundleIsArchitectureLoadable)

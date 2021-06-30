@@ -15,8 +15,8 @@ class TestWKUserScript(TestCase):
             WebKit.WKUserScript.initWithSource_injectionTime_forMainFrameOnly_, 2
         )
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertArgIsBOOL(
             WebKit.WKUserScript.initWithSource_injectionTime_forMainFrameOnly_inContentWorld_,
             2,

@@ -272,3 +272,26 @@ class TestNSWorkspace(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSWorkspaceOpenConfiguration.setRequiresUniversalLinks_, 0
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            AppKit.NSWorkspace.setDefaultApplicationAtURL_toOpenContentTypeOfFileAtURL_completionHandler_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            AppKit.NSWorkspace.setDefaultApplicationAtURL_toOpenURLsWithScheme_completionHandler_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            AppKit.NSWorkspace.setDefaultApplicationAtURL_toOpenFileAtURL_completionHandler_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            AppKit.NSWorkspace.setDefaultApplicationAtURL_toOpenContentType_completionHandler_,
+            2,
+            b"v@",
+        )

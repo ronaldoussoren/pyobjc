@@ -51,14 +51,14 @@ class TestCIContext(TestCase):
             Quartz.kCIImageRepresentationSemanticSegmentationTeethMatteImage, str
         )
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(
             Quartz.kCIImageRepresentationSemanticSegmentationGlassesMatteImage, str
         )
 
-    @min_os_level("10.16.1")
-    def testConstants10_16_1(self):
+    @min_os_level("11.1")
+    def testConstants11_1(self):
         self.assertIsInstance(
             Quartz.kCIImageRepresentationSemanticSegmentationSkyMatteImage, str
         )
@@ -89,4 +89,19 @@ class TestCIContext(TestCase):
         self.assertArgIsOut(
             Quartz.CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_,
             5,
+        )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsOut(
+            Quartz.CIContext.HEIF10RepresentationOfImage_colorSpace_options_error_,
+            3,
+        )
+
+        self.assertResultIsBOOL(
+            Quartz.CIContext.writeHEIFRepresentationOfImage_format_colorSpace_options_error_
+        )
+        self.assertArgIsOut(
+            Quartz.CIContext.writeHEIFRepresentationOfImage_format_colorSpace_options_error_,
+            4,
         )

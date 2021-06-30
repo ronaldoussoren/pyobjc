@@ -3,8 +3,8 @@ import WebKit
 
 
 class TestWKDownload(TestCase):
-    @min_os_level("10.16")
-    def testMethods(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertArgIsBlock(
             WebKit.WKDownload.cancel_,
             0,

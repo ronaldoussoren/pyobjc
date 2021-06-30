@@ -1,0 +1,24 @@
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
+import UserNotifications
+import objc
+
+
+class TestUNNotificationContent(TestCase):
+    def test_constants(self):
+        self.assertEqual(UserNotifications.UNNotificationInterruptionLevelPassive, 0)
+        self.assertEqual(UserNotifications.UNNotificationInterruptionLevelActive, 1)
+        self.assertEqual(
+            UserNotifications.UNNotificationInterruptionLevelTimeSensitive, 2
+        )
+        self.assertEqual(UserNotifications.UNNotificationInterruptionLevelCritical, 3)
+
+    @min_sdk_level("12.0")
+    def test_protocols12_0(self):
+        objc.protocolNamed("UNNotificationContentProviding")
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertArgIsOut(
+            UserNotifications.UNNotificationContent.contentByUpdatingWithProvider_error_,
+            1,
+        )

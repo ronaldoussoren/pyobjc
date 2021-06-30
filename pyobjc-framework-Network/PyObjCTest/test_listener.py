@@ -54,3 +54,7 @@ class TestListener(TestCase):
     def test_functions10_15(self):
         Network.nw_listener_get_new_connection_limit
         Network.nw_listener_set_new_connection_limit
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        Network.nw_listener_set_new_connection_group_handler

@@ -9,7 +9,9 @@
    "kMIDIObjectType_ExternalMask": { "value": 16 },
    "MIDINetworkConnectionPolicy_NoOne": { "value": 0 },
    "MIDINetworkConnectionPolicy_HostsInContactList": { "value": 1 },
-   "MIDINetworkConnectionPolicy_Anyone": { "value": 2 }
+   "MIDINetworkConnectionPolicy_Anyone": { "value": 2 },
+   "kMIDIMessageTypeUnknownF": { "value": 15 },
+   "kMIDIStatusActiveSensing": { "value": 254 }
   },
   "externs": {
    "MIDINetworkBonjourServiceType": { "typestr": "@" },

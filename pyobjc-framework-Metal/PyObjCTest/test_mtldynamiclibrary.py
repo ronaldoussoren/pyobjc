@@ -17,8 +17,8 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertEqual(Metal.MTLDynamicLibraryErrorDependencyLoadFailure, 4)
         self.assertEqual(Metal.MTLDynamicLibraryErrorUnsupported, 5)
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("MTLDynamicLibrary")
 
     def test_methods(self):

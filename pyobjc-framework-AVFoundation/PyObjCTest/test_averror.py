@@ -108,6 +108,8 @@ class TestAVError(TestCase):
         self.assertEqual(AVFoundation.AVErrorIncorrectlyConfigured, -11875)
         self.assertEqual(AVFoundation.AVErrorSegmentStartedWithNonSyncSample, -11876)
         self.assertEqual(AVFoundation.AVErrorRosettaNotInstalled, -11877)
+        self.assertEqual(AVFoundation.AVErrorOperationCancelled, -11878)
+        self.assertEqual(AVFoundation.AVErrorContentKeyRequestCancelled, -11879)
 
     @min_os_level("10.10")
     def testConstants10_10(self):

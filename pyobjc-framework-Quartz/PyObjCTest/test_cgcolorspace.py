@@ -93,13 +93,17 @@ class TestCGColorSpace(TestCase):
         self.assertIsInstance(Quartz.kCGColorSpaceITUR_2020_PQ, str)
         self.assertIsInstance(Quartz.kCGColorSpaceDisplayP3_PQ, str)
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(Quartz.kCGColorSpaceITUR_2100_PQ, str)
         self.assertIsInstance(Quartz.kCGColorSpaceITUR_2100_HLG, str)
 
         self.assertIsInstance(Quartz.kCGColorSpaceExtendedITUR_2020, str)
         self.assertIsInstance(Quartz.kCGColorSpaceExtendedDisplayP3, str)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(Quartz.kCGColorSpaceExtendedRange, str)
 
     def testFunctions(self):
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateDeviceGray)
@@ -240,10 +244,15 @@ class TestCGColorSpace(TestCase):
     def testFunctions10_15(self):
         Quartz.CGColorSpaceIsHDR
 
-    @min_os_level("10.16")
-    def testFunctions10_16(self):
+    @min_os_level("11.0")
+    def testFunctions11_0(self):
         Quartz.CGColorSpaceUsesITUR_2100TF
 
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateLinearized)
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateExtended)
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateExtendedLinearized)
+
+    @min_os_level("12.0")
+    def testFunctions12_0(self):
+        self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateWithColorSyncProfile)
+        self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateWithPlatformColorSpace)

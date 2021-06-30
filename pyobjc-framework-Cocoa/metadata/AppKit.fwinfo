@@ -1220,6 +1220,13 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "isProtectedDataAvailable"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "isAutomaticCustomizeTouchBarMenuItemEnabled"
      },
      {
@@ -11802,6 +11809,34 @@
       "retval": {
        "type_override": "Z"
       },
+      "selector": "allowsAutomaticKeyEquivalentMirroring"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "allowsAutomaticKeyEquivalentLocalization"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": "type_override": "Z"
+      },
+      "selector": "setAllowsAutomaticKeyEquivalentMirroring:"
+     },
+     {
+      "class_method": false,
+      "args": {
+       "0": "type_override": "Z"
+      },
+      "selector": "setAllowsAutomaticKeyEquivalentLocalization:"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
       "selector": "hasSubmenu"
      },
      {
@@ -12565,6 +12600,15 @@
       },
       "class_method": false,
       "selector": "setAllowsDefaultTighteningForTruncation:"
+     },
+     {
+      "args": {
+       "0": {
+        "type_override": "Z"
+       }
+      },
+      "class_method": false,
+      "selector": "setUsesDefaultHyphenation:"
      }
     ]
    },
@@ -12602,6 +12646,11 @@
    },
    "NSObject": {
     "methods": [
+     {
+      "selector": "applicationSupportsSecureRestorableState:",
+      "class_method": false,
+      "retval" { "type_override": "Z" }
+     },
      {
       "args": {
        "1": {
@@ -18243,6 +18292,13 @@
        "type_override": "Z"
       },
       "selector": "allowsDefaultTighteningForTruncation"
+     },
+     {
+      "class_method": false,
+      "retval": {
+       "type_override": "Z"
+      },
+      "selector": "usesDefaultHyphenation"
      }
     ]
    },
@@ -29243,6 +29299,12 @@
    }
   },
   "enum": {
+   "NSTextElementProviderEnumerationOptionsNone": {
+    "value": 0
+   },
+   "NSTextElementProviderEnumerationOptionsReverse": {
+    "value": 1
+   },
    "NSAccessibilityAnnotationPositionEnd": {
     "value": 2
    },
@@ -29320,6 +29382,9 @@
    },
    "NSAccessibilityCustomRotorTypeVisitedLink": {
     "value": 20
+   },
+   "NSAccessibilityCustomRotorTypeAudiograph": {
+    "value": 21
    },
    "NSAlertStyleCritical": {
     "value": 2
@@ -30740,6 +30805,15 @@
    }
   },
   "externs": {
+   "NSImageIPTCData": {
+    "typestr": "@"
+   },
+   "NSApplicationProtectedDataWillBecomeUnavailableNotification": {
+    "typestr": "@"
+   },
+   "NSApplicationProtectedDataDidBecomeAvailableNotification": {
+    "typestr": "@"
+   },
    "NSAboutPanelOptionApplicationIcon": {
     "typestr": "@"
    },

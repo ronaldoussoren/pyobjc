@@ -24,8 +24,8 @@ class TestCLSContext(TestCase):
         self.assertEqual(ClassKit.CLSContextTypeCourse, 16)
         self.assertEqual(ClassKit.CLSContextTypeCustom, 17)
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(ClassKit.CLSContextTopicMath, str)
         self.assertIsInstance(ClassKit.CLSContextTopicScience, str)
         self.assertIsInstance(ClassKit.CLSContextTopicLiteracyAndWriting, str)

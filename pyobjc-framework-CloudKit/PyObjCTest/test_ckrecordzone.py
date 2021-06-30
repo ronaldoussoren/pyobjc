@@ -14,4 +14,6 @@ class TestCKRecordZone(TestCase):
         self.assertEqual(CloudKit.CKRecordZoneCapabilityFetchChanges, 1 << 0)
         self.assertEqual(CloudKit.CKRecordZoneCapabilityAtomic, 1 << 1)
         self.assertEqual(CloudKit.CKRecordZoneCapabilitySharing, 1 << 2)
+        self.assertEqual(CloudKit.CKRecordZoneCapabilityZoneWideSharing, 1 << 3)
+
         self.assertIsInstance(CloudKit.CKRecordZoneDefaultName, str)

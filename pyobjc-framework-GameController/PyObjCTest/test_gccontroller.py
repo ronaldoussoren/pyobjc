@@ -45,8 +45,8 @@ class TestGCController(TestCase):
     def testMethods10_15(self):
         self.assertResultIsBOOL(GameController.GCController.isSnapshot)
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(GameController.GCController.supportsHIDDevice_)
 
     @min_os_level("11.3")
@@ -64,8 +64,8 @@ class TestGCController(TestCase):
         self.assertIsInstance(GameController.GCControllerDidDisconnectNotification, str)
         self.assertEqual(GameController.GCControllerPlayerIndexUnset, -1)
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(
             GameController.GCControllerDidBecomeCurrentNotification, str
         )

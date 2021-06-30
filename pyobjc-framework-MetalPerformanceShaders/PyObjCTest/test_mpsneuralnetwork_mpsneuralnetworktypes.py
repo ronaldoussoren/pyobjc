@@ -97,6 +97,10 @@ class TestMPSNeuralNetwork_MPSNeuralNetworkTypes(TestCase):
             MetalPerformanceShaders.MPSNNPaddingMethodCustomWhitelistForNodeFusion,
             1 << 13,
         )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSNNPaddingMethodCustomAllowForNodeFusion,
+            1 << 13,
+        )
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodCustom, 1 << 14)
         self.assertEqual(MetalPerformanceShaders.MPSNNPaddingMethodSizeMask, 0x7F0)
         self.assertEqual(

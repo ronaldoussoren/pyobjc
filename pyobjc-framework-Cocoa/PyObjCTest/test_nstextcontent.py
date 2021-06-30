@@ -4,12 +4,12 @@ import objc
 
 
 class TestNSTextContent(TestCase):
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(AppKit.NSTextContentTypeUsername, str)
         self.assertIsInstance(AppKit.NSTextContentTypePassword, str)
         self.assertIsInstance(AppKit.NSTextContentTypeOneTimeCode, str)
 
-    @min_sdk_level("10.16")
+    @min_sdk_level("11.0")
     def test_protocols(self):
         objc.protocolNamed("NSTextContent")

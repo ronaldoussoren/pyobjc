@@ -28,6 +28,12 @@ class TestCHHapticEngine(TestCase):
 
         self.assertEqual(CoreHaptics.CHHapticEngineStoppedReasonSystemError, -1)
 
+    @min_sdk_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            CoreHaptics.CHHapticAudioResourceKeyUseVolumeEnvelope, str
+        )
+
     @min_sdk_level("10.15")
     def test_methods10_15(self):
         self.assertResultIsBlock(

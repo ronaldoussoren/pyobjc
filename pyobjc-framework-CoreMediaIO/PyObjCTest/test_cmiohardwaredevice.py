@@ -121,6 +121,7 @@ class TestCMIOHardwareDevice(TestCase):
             CoreMediaIO.kCMIODevicePropertyStreamConfiguration, fourcc(b"slay")
         )
         self.assertEqual(CoreMediaIO.kCMIODevicePropertyDeviceMaster, fourcc(b"pmnh"))
+        self.assertEqual(CoreMediaIO.kCMIODevicePropertyDeviceControl, fourcc(b"pmnh"))
         self.assertEqual(
             CoreMediaIO.kCMIODevicePropertyExcludeNonDALAccess, fourcc(b"ixna")
         )

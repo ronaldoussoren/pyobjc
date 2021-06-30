@@ -29,6 +29,7 @@ class TestNSAccessibilityCustomRotor(TestCase):
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeTextField, 18)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeUnderlinedText, 19)
         self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeVisitedLink, 20)
+        self.assertEqual(AppKit.NSAccessibilityCustomRotorTypeAudiograph, 21)
 
     @min_sdk_level("10.13")
     def testProtocols(self):

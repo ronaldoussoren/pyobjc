@@ -3,12 +3,12 @@ import CoreML
 
 
 class TestMLModelCollection(TestCase):
-    @min_os_level("10.16")
-    def test_constants(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(CoreML.MLModelCollectionDidChangeNotification, str)
 
-    @min_os_level("10.16")
-    def test_methods(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             CoreML.MLModelCollection.beginAccessingModelCollectionWithIdentifier_completionHandler_,
             1,

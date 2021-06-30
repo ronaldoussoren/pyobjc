@@ -12,8 +12,8 @@ class TestGKPlayer(TestCase):
         self.assertEqual(GameKit.GKPhotoSizeSmall, 0)
         self.assertEqual(GameKit.GKPhotoSizeNormal, 1)
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(GameKit.GKPlayerIDNoLongerAvailable, str)
 
     def testMethods(self):
@@ -33,6 +33,6 @@ class TestGKPlayer(TestCase):
     def testMethods10_15(self):
         self.assertResultIsBOOL(GameKit.GKPlayer.scopedIDsArePersistent)
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(GameKit.GKPlayer.isInvitable)

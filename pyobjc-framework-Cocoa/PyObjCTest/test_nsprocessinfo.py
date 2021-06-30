@@ -57,6 +57,12 @@ class TestNSProcessInfo(TestCase):
             Foundation.NSProcessInfoThermalStateDidChangeNotification, str
         )
 
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            Foundation.NSProcessInfoPowerStateDidChangeNotification, str
+        )
+
     @min_os_level("10.6")
     def testNSDisabledSuddenTermination(self):
         # annoyingly we cannot easily test if this has an effect, but
@@ -114,6 +120,10 @@ class TestNSProcessInfo(TestCase):
     def testMethods10_15(self):
         self.assertResultIsBOOL(Foundation.NSProcessInfo.isMacCatalystApp)
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(Foundation.NSProcessInfo.isiOSAppOnMac)
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(Foundation.NSProcessInfo.isLowPowerModeEnabled)

@@ -23,6 +23,17 @@ class TestAVPlayer(TestCase):
         self.assertEqual(AVFoundation.AVPlayerHDRModeHDR10, 0x2)
         self.assertEqual(AVFoundation.AVPlayerHDRModeDolbyVision, 0x4)
 
+        self.assertEqual(
+            AVFoundation.AVPlayerAudiovisualBackgroundPlaybackPolicyAutomatic, 1
+        )
+        self.assertEqual(
+            AVFoundation.AVPlayerAudiovisualBackgroundPlaybackPolicyPauses, 2
+        )
+        self.assertEqual(
+            AVFoundation.AVPlayerAudiovisualBackgroundPlaybackPolicyContinuesIfPossible,
+            3,
+        )
+
     @min_os_level("10.12")
     def testConstants10_12(self):
         self.assertIsInstance(
@@ -39,6 +50,45 @@ class TestAVPlayer(TestCase):
     def testConstants10_15(self):
         self.assertIsInstance(
             AVFoundation.AVPlayerEligibleForHDRPlaybackDidChangeNotification,
+            str,  # noqa: B950
+        )
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVPlayerRateDidChangeReasonKey,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerRateDidChangeReasonSetRateCalled,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerRateDidChangeReasonSetRateFailed,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerRateDidChangeReasonAudioSessionInterrupted,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerRateDidChangeReasonAppBackgrounded,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerWaitingForCoordinatedPlaybackReason,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorEventsDidChangeNotification,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerInterstitialEventMonitorCurrentEventDidChangeNotification,
+            str,  # noqa: B950
+        )
+        self.assertIsInstance(
+            AVFoundation.AVPlayerWaitingDuringInterstitialEventReason,
             str,  # noqa: B950
         )
 
@@ -124,3 +174,12 @@ class TestAVPlayer(TestCase):
     @min_os_level("10.15")
     def testMethods10_15(self):
         self.assertResultIsBOOL(AVFoundation.AVPlayer.eligibleForHDRPlayback)
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVPlayer.automaticallyHandlesInterstitialEvents
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVPlayer.setAutomaticallyHandlesInterstitialEvents_, 0
+        )

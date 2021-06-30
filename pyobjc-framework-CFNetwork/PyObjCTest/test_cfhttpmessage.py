@@ -21,8 +21,8 @@ class TestCFHTTPMessage(TestCase):
         self.assertIsInstance(CFNetwork.kCFHTTPVersion2_0, str)
         self.assertIsInstance(CFNetwork.kCFHTTPAuthenticationSchemeKerberos, str)
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(CFNetwork.kCFHTTPVersion3_0, str)
 
     def testConstants(self):

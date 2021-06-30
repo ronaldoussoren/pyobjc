@@ -26,6 +26,12 @@ class TestAVMovie(TestCase):
             AVFoundation.AVFragmentedMovieWasDefragmentedNotification, str
         )
 
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVMovieShouldSupportAliasDataReferencesKey, str
+        )
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(AVFoundation.AVMovie.canContainMovieFragments)
@@ -81,4 +87,50 @@ class TestAVMovie(TestCase):
         self.assertArgIsOut(
             AVFoundation.AVMutableMovie.insertTimeRange_ofAsset_atTime_copySampleData_error_,  # noqa: B950
             4,
+        )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVMovie.loadTrackWithTrackID_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVMovie.loadTracksWithMediaType_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVMovie.loadTracksWithMediaCharacteristic_completionHandler_,
+            1,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVMutableMovie.loadTrackWithTrackID_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVMutableMovie.loadTracksWithMediaType_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVMutableMovie.loadTracksWithMediaCharacteristic_completionHandler_,
+            1,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            AVFoundation.AVFragmentedMovie.loadTrackWithTrackID_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVFragmentedMovie.loadTracksWithMediaType_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVFragmentedMovie.loadTracksWithMediaCharacteristic_completionHandler_,
+            1,
+            b"v@@",
         )

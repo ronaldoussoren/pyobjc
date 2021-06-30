@@ -18,8 +18,8 @@ class TestNSFileProviderEnumerationHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderEnumeration(TestCase):
-    @min_os_level("10.16")
-    def test_constants(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(
             FileProvider.NSFileProviderInitialPageSortedByDate, FileProvider.NSData
         )
@@ -27,8 +27,8 @@ class TestNSFileProviderEnumeration(TestCase):
             FileProvider.NSFileProviderInitialPageSortedByName, FileProvider.NSData
         )
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("NSFileProviderEnumerationObserver")
         objc.protocolNamed("NSFileProviderChangeObserver")
         objc.protocolNamed("NSFileProviderEnumerator")
@@ -50,8 +50,8 @@ class TestNSFileProviderEnumeration(TestCase):
             TestNSFileProviderEnumerationHelper.suggestedBatchSize, objc._C_NSUInteger
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsOut(
             FileProvider.NSFileProviderExtension.enumeratorForContainerItemIdentifier_error_,
             1,

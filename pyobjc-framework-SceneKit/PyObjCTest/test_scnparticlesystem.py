@@ -110,3 +110,8 @@ class TestSCNParticleSystem(TestCase):
             2,
             SCNParticleModifierBlock,
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(SceneKit.SCNParticleSystem.writesToDepthBuffer)
+        self.assertArgIsBOOL(SceneKit.SCNParticleSystem.setWritesToDepthBuffer_, 0)

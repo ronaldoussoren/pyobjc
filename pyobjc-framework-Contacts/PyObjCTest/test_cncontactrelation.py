@@ -473,7 +473,7 @@ class TestCNContactRelation(TestCase):
             Contacts.CNLabelContactRelationSonInLawOrBrotherInLaw, str
         )
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(Contacts.CNLabelContactRelationGranddaughterOrNiece, str)
         self.assertIsInstance(Contacts.CNLabelContactRelationGrandsonOrNephew, str)

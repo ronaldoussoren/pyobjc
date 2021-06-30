@@ -9,8 +9,8 @@ class TestGCControllerTouchpad(TestCase):
         self.assertEqual(GameController.GCTouchStateDown, 1)
         self.assertEqual(GameController.GCTouchStateMoving, 2)
 
-    @min_os_level("10.16")
-    def test_methods(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertResultIsBlock(
             GameController.GCControllerTouchpad.touchDown, b"vfff" + objc._C_NSBOOL
         )

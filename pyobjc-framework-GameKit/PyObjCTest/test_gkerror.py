@@ -41,3 +41,4 @@ class TestGKError(TestCase):
         self.assertEqual(GameKit.GKErrorFriendListDescriptionMissing, 100)
         self.assertEqual(GameKit.GKErrorFriendListRestricted, 101)
         self.assertEqual(GameKit.GKErrorFriendListDenied, 102)
+        self.assertEqual(GameKit.GKErrorFriendRequestNotAvailable, 103)

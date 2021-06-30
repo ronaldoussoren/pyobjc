@@ -55,6 +55,8 @@
   },
   "externs": {
    "kColorSyncExtendedRange": { "typestr": "@" },
+   "kColorSyncTransformProfileSequnce": { "typestr": "@" },
+   "kColorSyncConvertUseExtendedRange": { "typestr": "@" },
    "kColorSyncTranformInfo": { "typestr": "@" },
    "kColorSyncTransformCreator": { "typestr": "@" },
    "kColorSyncTransformSrcSpace": { "typestr": "@" },
@@ -429,6 +431,12 @@
      "1": { "typestr": "^{__CFString=}" }
     }
    },
+   "ColorSyncTransformGetProfileSequence": {
+    "retval": { "typestr": "^{__CFArray=}" },
+    "args": {
+     "0": { "typestr": "^{ColorSyncTransform=}" }
+    }
+   },
    "ColorSyncProfileCopyTagSignatures": {
     "retval": { "typestr": "^{__CFArray=}", "already_cfretained": true },
     "args": {
@@ -542,6 +550,18 @@
      "0": { "typestr": "^{ColorSyncTransform=}" },
      "1": { "typestr": "@" },
      "2": { "typestr": "@" }
+    }
+   },
+   "ColorSyncProfileIsPQBased": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" },
+    }
+   },
+   "ColorSyncProfileIsHLGBased": {
+    "retval": { "typestr": "B" },
+    "args": {
+     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" },
     }
    },
    "ColorSyncTransformConvert": {

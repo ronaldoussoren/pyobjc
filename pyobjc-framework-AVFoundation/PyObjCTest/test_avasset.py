@@ -32,6 +32,56 @@ class TestAVAsset(TestCase):
             AVFoundation.AVURLAsset.mayRequireContentKeysForMediaDataProcessing
         )
 
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVAsset.loadTrackWithTrackID_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAsset.loadTracksWithMediaType_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAsset.loadTracksWithMediaCharacteristic_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAsset.loadMetadataForFormat_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAsset.loadChapterMetadataGroupsWithTitleLocale_containingItemsWithCommonKeys_completionHandler_,
+            2,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAsset.loadChapterMetadataGroupsBestMatchingPreferredLanguages_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAsset.loadMediaSelectionGroupForMediaCharacteristic_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVURLAsset.findCompatibleTrackForCompositionTrack_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVURLAsset.loadTrackWithTrackID_completionHandler_, 1, b"v@@"
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVURLAsset.loadTracksWithMediaType_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVURLAsset.loadTracksWithMediaCharacteristic_completionHandler_,
+            1,
+            b"v@@",
+        )
+
     @min_os_level("10.7")
     def testConstants(self):
         self.assertEqual(AVFoundation.AVAssetReferenceRestrictionForbidNone, 0)
@@ -58,6 +108,12 @@ class TestAVAsset(TestCase):
         )
         self.assertIsInstance(AVFoundation.AVURLAssetReferenceRestrictionsKey, str)
 
+    @min_os_level("10.10")
+    def testConstants10_10(self):
+        self.assertIsInstance(
+            AVFoundation.AVURLAssetShouldSupportAliasDataReferencesKey, str
+        )
+
     @min_os_level("10.11")
     def testConstants10_11(self):
         self.assertIsInstance(AVFoundation.AVAssetDurationDidChangeNotification, str)
@@ -81,6 +137,10 @@ class TestAVAsset(TestCase):
         self.assertIsInstance(
             AVFoundation.AVURLAssetAllowsConstrainedNetworkAccessKey, str
         )
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(AVFoundation.AVURLAssetURLRequestAttributionKey, str)
 
     @min_sdk_level("10.11")
     def testProtocols(self):

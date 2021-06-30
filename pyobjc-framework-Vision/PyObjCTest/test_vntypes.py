@@ -12,6 +12,10 @@ class TestVNTypes(TestCase):
         self.assertEqual(Vision.VNElementTypeFloat, 1)
         self.assertEqual(Vision.VNElementTypeDouble, 2)
 
+        self.assertEqual(Vision.VNChiralityUnknown, 0)
+        self.assertEqual(Vision.VNChiralityLeft, -1)
+        self.assertEqual(Vision.VNChiralityRight, 1)
+
     @min_os_level("10.13")
     def testConstants10_13(self):
         self.assertIsInstance(Vision.VNBarcodeSymbologyAztec, str)
@@ -31,3 +35,12 @@ class TestVNTypes(TestCase):
         self.assertIsInstance(Vision.VNBarcodeSymbologyPDF417, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyQR, str)
         self.assertIsInstance(Vision.VNBarcodeSymbologyUPCE, str)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(Vision.VNBarcodeSymbologyCodabar, str)
+        self.assertIsInstance(Vision.VNBarcodeSymbologyGS1DataBar, str)
+        self.assertIsInstance(Vision.VNBarcodeSymbologyGS1DataBarExpanded, str)
+        self.assertIsInstance(Vision.VNBarcodeSymbologyGS1DataBarLimited, str)
+        self.assertIsInstance(Vision.VNBarcodeSymbologyMicroPDF417, str)
+        self.assertIsInstance(Vision.VNBarcodeSymbologyMicroQR, str)

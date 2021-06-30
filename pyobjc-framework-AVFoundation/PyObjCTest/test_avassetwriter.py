@@ -46,14 +46,14 @@ class TestAVAssetWriter(TestCase):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.startWriting)
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.finishWriting)
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetWriter.producesCombinableFragments)
         self.assertArgIsBOOL(
             AVFoundation.AVAssetWriter.setProducesCombinableFragments_, 0
         )
 
-    @min_sdk_level("10.16")
+    @min_sdk_level("11.0")
     def test_protocols(self):
         objc.protocolNamed("AVAssetWriterDelegate")
 

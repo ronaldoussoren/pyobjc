@@ -4,6 +4,9 @@ import objc
 
 
 class TestNSApplicationHelper(AppKit.NSObject):
+    def applicationShouldAutomaticallyLocalizeKeyEquivalents_(self, a):
+        pass
+
     def copyWithZone_(self, zone):
         return self
 
@@ -44,6 +47,9 @@ class TestNSApplicationHelper(AppKit.NSObject):
         return 1
 
     def application_delegateHandlesKey_(self, a, k):
+        return 1
+
+    def applicationSupportsSecureRestorableState_(self, a):
         return 1
 
 
@@ -222,6 +228,9 @@ class TestNSApplication(TestCase):
         )
 
     def testDelegateMethods(self):
+        self.assertResultIsBOOL(
+            TestNSApplicationHelper.applicationShouldAutomaticallyLocalizeKeyEquivalents_
+        )
         self.assertResultIsBOOL(TestNSApplicationHelper.application_openFile_)
         self.assertResultIsBOOL(TestNSApplicationHelper.application_openTempFile_)
         self.assertResultIsBOOL(
@@ -261,6 +270,9 @@ class TestNSApplication(TestCase):
         )
 
         self.assertResultIsBOOL(TestNSApplicationHelper.application_delegateHandlesKey_)
+        self.assertResultIsBOOL(
+            TestNSApplicationHelper.applicationSupportsSecureRestorableState_
+        )
 
     @min_os_level("10.6")
     def testConstants10_6(self):
@@ -344,6 +356,15 @@ class TestNSApplication(TestCase):
     def testConstants10_14(self):
         self.assertIsInstance(AppKit.NSAppearanceDocumentAttribute, str)
 
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            AppKit.NSApplicationProtectedDataWillBecomeUnavailableNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSApplicationProtectedDataDidBecomeAvailableNotification, str
+        )
+
     @min_os_level("10.6")
     def testMethods10_6(self):
         self.assertResultIsBOOL(AppKit.NSApplication.setActivationPolicy_)
@@ -358,6 +379,11 @@ class TestNSApplication(TestCase):
     @min_os_level("10.14")
     def testMethods10_14(self):
         self.assertResultIsBOOL(AppKit.NSApplication.isRegisteredForRemoteNotifications)
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
+        self.assertResultIsBOOL(AppKit.NSApplication.isProtectedDataAvailable)
 
     @min_sdk_level("10.10")
     def testProtocols(self):

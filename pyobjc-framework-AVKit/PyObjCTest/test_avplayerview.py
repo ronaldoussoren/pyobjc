@@ -12,8 +12,17 @@ class TestAVPlayerViewHelper(AVKit.NSObject):
     def playerViewShouldAutomaticallyDismissAtPictureInPictureStart_(self, a):
         return 1
 
+    def playerView_restoreUserInterfaceForFullScreenExitWithCompletionHandler_(
+        self, a, b
+    ):
+        pass
+
 
 class TestAVPlayerView(TestCase):
+    @min_sdk_level("12.0")
+    def test_protocols12_0(self):
+        objc.protocolNamed("AVPlayerViewDelegate")
+
     @min_os_level("10.9")
     def testClasses(self):
         self.assertIsInstance(AVKit.AVPlayerView, objc.objc_class)
@@ -58,6 +67,12 @@ class TestAVPlayerView(TestCase):
         )
         self.assertResultIsBOOL(
             TestAVPlayerViewHelper.playerViewShouldAutomaticallyDismissAtPictureInPictureStart_  # noqa: B950
+        )
+
+        self.assertArgIsBlock(
+            TestAVPlayerViewHelper.playerView_restoreUserInterfaceForFullScreenExitWithCompletionHandler_,  # noqa: B950
+            1,
+            b"vZ",
         )
 
     @min_os_level("10.9")

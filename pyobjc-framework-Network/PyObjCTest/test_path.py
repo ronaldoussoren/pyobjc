@@ -46,6 +46,6 @@ class TestPath(TestCase):
             Network.nw_path_enumerate_gateways, 1, nw_path_enumerate_gateways_block_t
         )
 
-    @min_os_level("10.16")
-    def test_functions10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         Network.nw_path_get_unsatisfied_reason

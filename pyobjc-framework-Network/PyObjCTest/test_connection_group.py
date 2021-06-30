@@ -11,8 +11,8 @@ class TestConnectionGroup(TestCase):
         self.assertEqual(Network.nw_connection_group_state_failed, 3)
         self.assertEqual(Network.nw_connection_group_state_cancelled, 4)
 
-    @min_os_level("10.16")
-    def test_functions10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         self.assertResultIsRetained(Network.nw_connection_group_create)
         self.assertResultIsRetained(Network.nw_connection_group_copy_descriptor)
         self.assertResultIsRetained(Network.nw_connection_group_copy_parameters)
@@ -61,3 +61,24 @@ class TestConnectionGroup(TestCase):
             4,
             nw_connection_group_send_completion_t,
         )
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        self.assertResultIsRetained(
+            Network.nw_connection_group_copy_protocol_metadata_for_message
+        )
+        self.assertResultIsRetained(
+            Network.nw_connection_group_extract_connection_for_message
+        )
+        self.assertResultIsRetained(Network.nw_connection_group_extract_connection)
+        Network.nw_connection_group_reinsert_extracted_connection
+
+        nw_connection_group_new_connection_handler_t = b"v@"
+
+        self.assertArgIsBlock(
+            Network.nw_connection_group_set_new_connection_handler,
+            0,
+            nw_connection_group_new_connection_handler_t,
+        )
+
+        self.assertResultIsRetained(Network.nw_connection_group_copy_protocol_metadata)

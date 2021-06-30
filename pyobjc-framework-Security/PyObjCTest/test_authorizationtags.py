@@ -11,3 +11,4 @@ class TestMDS(TestCase):
         self.assertEqual(Security.kAuthorizationEnvironmentPrompt, b"prompt")
         self.assertEqual(Security.kAuthorizationEnvironmentIcon, b"icon")
         self.assertEqual(Security.kAuthorizationPamResult, b"pam_result")
+        self.assertEqual(Security.kAuthorizationFlags, b"flags")

@@ -4,6 +4,9 @@ import objc
 
 
 class TestNSFileProviderItemHelper(FileProvider.NSObject):
+    def typeAndCreator(self):
+        return 1
+
     def capabilities(self):
         return 1
 
@@ -51,6 +54,11 @@ class TestNSFileProviderItemHelper(FileProvider.NSObject):
 
 
 class TestNSFileProviderItem(TestCase):
+    def test_structs(self):
+        v = FileProvider.NSFileProviderTypeAndCreator()
+        self.assertIsInstance(v.type, int)
+        self.assertIsInstance(v.creator, int)
+
     def test_constants(self):
         self.assertEqual(
             FileProvider.NSFileProviderItemCapabilitiesAllowsReading, 1 << 0
@@ -112,11 +120,15 @@ class TestNSFileProviderItem(TestCase):
             FileProvider.NSFileProviderTrashContainerItemIdentifier, str
         )
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("NSFileProviderItem")
 
     def test_methods(self):
+        self.assertResultHasType(
+            TestNSFileProviderItemHelper.typeAndCreator,
+            FileProvider.NSFileProviderTypeAndCreator.__typestr__,
+        )
         self.assertResultHasType(
             TestNSFileProviderItemHelper.capabilities, objc._C_NSUInteger
         )

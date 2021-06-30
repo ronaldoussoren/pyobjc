@@ -43,10 +43,24 @@ class TestPDFDocument(TestCase):
         self.assertIsInstance(Quartz.PDFDocumentModificationDateAttribute, str)
         self.assertIsInstance(Quartz.PDFDocumentKeywordsAttribute, str)
 
+        self.assertEqual(Quartz.PDFAllowsLowQualityPrinting, 1 << 0)
+        self.assertEqual(Quartz.PDFAllowsHighQualityPrinting, 1 << 1)
+        self.assertEqual(Quartz.PDFAllowsDocumentChanges, 1 << 2)
+        self.assertEqual(Quartz.PDFAllowsDocumentAssembly, 1 << 3)
+        self.assertEqual(Quartz.PDFAllowsContentCopying, 1 << 4)
+        self.assertEqual(Quartz.PDFAllowsContentAccessibility, 1 << 5)
+        self.assertEqual(Quartz.PDFAllowsCommenting, 1 << 6)
+        self.assertEqual(Quartz.PDFAllowsFormFieldEntry, 1 << 7)
+
     @min_os_level("10.13")
     def test_constants10_13(self):
         self.assertIsInstance(Quartz.PDFDocumentOwnerPasswordOption, str)
         self.assertIsInstance(Quartz.PDFDocumentUserPasswordOption, str)
+
+    @min_os_level("11.1")
+    def test_constants11_1(self):
+        self.assertIsInstance(Quartz.PDFDocumentFoundSelectionKey, str)
+        self.assertIsInstance(Quartz.PDFDocumentPageIndexKey, str)
 
     def testMethods(self):
         self.assertResultIsBOOL(Quartz.PDFDocument.isEncrypted)

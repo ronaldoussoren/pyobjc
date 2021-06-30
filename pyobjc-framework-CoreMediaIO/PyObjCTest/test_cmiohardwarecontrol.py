@@ -101,6 +101,12 @@ class TestCMIOHardwareControl(TestCase):
         self.assertEqual(
             CoreMediaIO.kCMIOFeatureControlPropertyAbsoluteUnitName, fourcc(b"fcun")
         )
+        self.assertEqual(
+            CoreMediaIO.kCMIOFeatureControlPropertyNativeData, fourcc(b"fcnd")
+        )
+        self.assertEqual(
+            CoreMediaIO.kCMIOFeatureControlPropertyNativeDataRange, fourcc(b"fcdr")
+        )
 
         self.assertEqual(
             CoreMediaIO.kCMIOExposureControlPropertyRegionOfInterest, fourcc(b"eroi")

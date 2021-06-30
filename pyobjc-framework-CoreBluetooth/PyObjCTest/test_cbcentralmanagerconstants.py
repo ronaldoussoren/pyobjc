@@ -39,14 +39,16 @@ class TestCBCentral(TestCase):
             CoreBluetooth.CBCentralManagerRestoredStateScanOptionsKey, str
         )
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
-        self.assertIsInstance(
-            CoreBluetooth.CBConnectionEventMatchingOptionServiceUUIDs, str
-        )
-        self.assertIsInstance(
-            CoreBluetooth.CBConnectionEventMatchingOptionPeripheralUUIDs, str
-        )
+    # @min_os_level("11.0")
+    # def testConstants11_0(self):
+    # XXX: unavailable according to macOS 12 SDK.
+    # self.assertIsInstance(
+    #   CoreBluetooth.CBConnectionEventMatchingOptionServiceUUIDs, str
+    # )
+    # self.assertIsInstance(
+    #    CoreBluetooth.CBConnectionEventMatchingOptionPeripheralUUIDs, str
+    # )
+    # pass
 
     @min_os_level("10.14")
     def testConstants10_14(self):

@@ -8,7 +8,7 @@ class TestWebPagePreferences(TestCase):
         self.assertEqual(WebKit.WKContentModeMobile, 1)
         self.assertEqual(WebKit.WKContentModeDesktop, 2)
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertResultIsBOOL(WebKit.WKWebpagePreferences.allowsContentJavaScript)
         self.assertArgIsBOOL(WebKit.WKWebpagePreferences.setAllowsContentJavaScript_, 0)

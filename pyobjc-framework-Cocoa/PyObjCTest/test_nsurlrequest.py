@@ -28,6 +28,9 @@ class TestNSURLRequest(TestCase):
         self.assertEqual(Foundation.NSURLNetworkServiceTypeResponsiveAV, 9)
         self.assertEqual(Foundation.NSURLNetworkServiceTypeCallSignaling, 11)
 
+        self.assertEqual(Foundation.NSURLRequestAttributionDeveloper, 0)
+        self.assertEqual(Foundation.NSURLRequestAttributionUser, 1)
+
     def testMethods(self):
         self.assertResultIsBOOL(Foundation.NSURLRequest.HTTPShouldHandleCookies)
         self.assertArgIsBOOL(

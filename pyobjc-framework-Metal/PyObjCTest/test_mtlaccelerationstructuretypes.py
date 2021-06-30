@@ -23,3 +23,7 @@ class TestMTLAccelerationStructureTypes(TestCase):
         # self.assertIsInstance(v.mask, int)
         # self.assertIsInstance(v.intersectionFunctionTableOffset, int)
         # self.assertIsInstance(v.accelerationStructureIndex, int)
+
+    def test_functions(self):
+        # MTLPackedFloat3 is not available (See above)
+        self.assertNotHasAttr(Metal, "MTLPackedFloat3Make")

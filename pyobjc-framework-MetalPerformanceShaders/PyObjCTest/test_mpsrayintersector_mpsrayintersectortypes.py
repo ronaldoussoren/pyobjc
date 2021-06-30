@@ -43,3 +43,27 @@ class TestMPSRayIntersector_MPSInstanceAccelerationStructure(TestCase):
             MetalPerformanceShaders,
             "MPSIntersectionDistancePrimitiveIndexInstanceIndexCoordinates",
         )
+
+        v = MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndex()
+        self.assertIsInstance(v.distance, float)
+        self.assertIsInstance(v.primitiveIndex, int)
+        self.assertIsInstance(v.bufferIndex, int)
+
+        # XXX: Vector
+        self.assertNotHasAttr(
+            MetalPerformanceShaders,
+            "MPSIntersectionDistancePrimitiveIndexBufferIndexCoordinates",
+        )
+
+        v = (
+            MetalPerformanceShaders.MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndex()
+        )
+        self.assertIsInstance(v.distance, float)
+        self.assertIsInstance(v.primitiveIndex, int)
+        self.assertIsInstance(v.instanceIndex, int)
+
+        # XXX: Vector
+        self.assertNotHasAttr(
+            MetalPerformanceShaders,
+            "MPSIntersectionDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates",
+        )

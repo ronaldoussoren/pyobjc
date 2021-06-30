@@ -575,8 +575,8 @@ class TestPickle(TestCase):
             Foundation.NSMutableString.applyTransform_reverse_range_updatedRange_, 3
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         # XXX: exposing this not very useful.
         self.assertArgIsBlock(
             Foundation.NSString.initWithCharactersNoCopy_length_deallocator_,

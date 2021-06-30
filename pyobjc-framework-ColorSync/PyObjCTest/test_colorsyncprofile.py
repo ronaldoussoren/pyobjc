@@ -110,9 +110,15 @@ class TestColorSyncProfile(TestCase):
         self.assertArgIsInOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 1)
         self.assertArgIsOut(ColorSync.ColorSyncIterateInstalledProfilesWithOptions, 4)
 
-    @min_os_level("10.16")
-    def testFunctions10_16(self):
+    @min_os_level("11.0")
+    def testFunctions11_0(self):
         self.assertResultHasType(ColorSync.ColorSyncProfileIsMatrixBased, objc._C_BOOL)
+
+    @min_os_level("11.0")
+    def testFunctions12_0(self):
+        # XXX: introduced in 12.0 SDK, but available on 11?
+        self.assertResultHasType(ColorSync.ColorSyncProfileIsPQBased, objc._C_BOOL)
+        self.assertResultHasType(ColorSync.ColorSyncProfileIsHLGBased, objc._C_BOOL)
 
     @min_os_level("10.13")
     def testConstants(self):
@@ -186,8 +192,8 @@ class TestColorSyncProfile(TestCase):
         )
         self.assertEqual(ColorSync.COLORSYNC_MD5_LENGTH, 16)
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(ColorSync.kColorSyncProfileCacheSeed, str)
         self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)
         self.assertIsInstance(ColorSync.kColorSyncWaitForCacheReply, str)

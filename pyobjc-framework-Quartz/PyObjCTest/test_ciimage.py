@@ -80,15 +80,15 @@ class TestCIImage(TestCase):
             Quartz.kCIImageAuxiliarySemanticSegmentationTeethMatte, str
         )
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(Quartz.kCIImageToneMapHDRtoSDR, str)
         self.assertIsInstance(
             Quartz.kCIImageAuxiliarySemanticSegmentationGlassesMatte, str
         )
 
-    @min_os_level("10.16.1")
-    def testConstants10_16_1(self):
+    @min_os_level("11.1")
+    def testConstants11_1(self):
         self.assertIsInstance(Quartz.kCIImageAuxiliarySemanticSegmentationSkyMatte, str)
 
     def testMethods(self):

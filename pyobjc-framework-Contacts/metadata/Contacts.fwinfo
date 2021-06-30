@@ -1,6 +1,7 @@
 {
  "definitions": {
   "enum": {
+   "CNErrorCodeChangeHistoryInvalidFetchRequest": { "value": 605 },
    "CNErrorCodeVCardMalformed": { "value": 700 },
    "CNErrorCodeNoAccessableWritableContainers": { "value": 101 },
    "CNErrorCodeVCardSummarizationError": { "value": 701 },

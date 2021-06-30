@@ -947,8 +947,8 @@ class TestCIFilterBuiltins(TestCase):
         objc.protocolNamed("CINoiseReduction")
         objc.protocolNamed("CIZoomBlur")
 
-    @min_sdk_level("10.16")
-    def test_protocols10_16(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("CIColorAbsoluteDifference")
         objc.protocolNamed("CIColorThreshold")
         objc.protocolNamed("CIColorThresholdOtsu")

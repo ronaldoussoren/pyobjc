@@ -34,6 +34,16 @@ misc.update(
     }
 )
 functions = {
+    "ColorSyncProfileIsHLGBased": (
+        b"B^{ColorSyncProfile=}",
+        "",
+        {},
+    ),
+    "ColorSyncProfileIsPQBased": (
+        b"B^{ColorSyncProfile=}",
+        "",
+        {},
+    ),
     "ColorSyncProfileCopyDescriptionString": (
         b"^{__CFString=}^{ColorSyncProfile=}",
         "",

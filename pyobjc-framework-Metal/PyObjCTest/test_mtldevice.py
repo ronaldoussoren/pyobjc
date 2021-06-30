@@ -110,6 +110,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def newLibraryWithSource_options_error_(self, a, b, c):
         return 1
 
+    def newLibraryWithDescriptor_error_(self, a, b):
+        return 1
+
     def maxThreadgroupMemoryLength(self):
         return 1
 
@@ -195,6 +198,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def supportsDynamicLibraries(self):
         return 1
 
+    def supportsRenderDynamicLibraries(self):
+        return 1
+
     def newDynamicLibrary_errror_(self, a, b):
         return 1
 
@@ -211,6 +217,12 @@ class TestMTLDeviceHelper(Metal.NSObject):
         return 1
 
     def supportsFunctionPointers(self):
+        return 1
+
+    def supportsFunctionPointersFromRender(self):
+        return 1
+
+    def supportsRaytracingFromRender(self):
         return 1
 
     def supportsBinaryFunctionPointers(self):
@@ -501,6 +513,10 @@ class TestMTLDevice(TestCase):
         )
 
         self.assertArgHasType(
+            TestMTLDeviceHelper.newLibraryWithDescriptor_error_, 1, b"o^@"
+        )
+
+        self.assertArgHasType(
             TestMTLDeviceHelper.newTextureWithDescriptor_iosurface_plane_,
             1,
             b"^{__IOSurface=}",
@@ -710,6 +726,7 @@ class TestMTLDevice(TestCase):
             TestMTLDeviceHelper.supportsCounterSampling_, 0, objc._C_NSUInteger
         )
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsDynamicLibraries)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRenderDynamicLibraries)
         self.assertArgHasType(TestMTLDeviceHelper.newDynamicLibrary_error_, 1, b"o^@")
         self.assertArgHasType(
             TestMTLDeviceHelper.newDynamicLibraryWithURL_error_, 1, b"o^@"
@@ -723,6 +740,8 @@ class TestMTLDevice(TestCase):
             Metal.MTLAccelerationStructureSizes.__typestr__,
         )
         self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFunctionPointers)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsFunctionPointersFromRender)
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsRaytracingFromRender)
 
         self.assertArgHasType(
             TestMTLDeviceHelper.newRenderPipelineStateWithTileDescriptor_options_reflection_error_,

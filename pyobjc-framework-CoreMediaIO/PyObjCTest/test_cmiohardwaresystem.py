@@ -11,6 +11,9 @@ class TestCMIOHardwareSystem(TestCase):
             CoreMediaIO.kCMIOHardwarePropertyProcessIsMaster, fourcc(b"mast")
         )
         self.assertEqual(
+            CoreMediaIO.kCMIOHardwarePropertyProcessIsMain, fourcc(b"mast")
+        )
+        self.assertEqual(
             CoreMediaIO.kCMIOHardwarePropertyIsInitingOrExiting, fourcc(b"inot")
         )
         self.assertEqual(CoreMediaIO.kCMIOHardwarePropertyDevices, fourcc(b"dev#"))

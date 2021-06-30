@@ -23,10 +23,17 @@ class TestWKWebViewConfiguration(TestCase):
             WebKit.WKWebViewConfiguration.setAllowsAirPlayForMediaPlayback_, 0
         )
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(
             WebKit.WKWebViewConfiguration.limitsNavigationsToAppBoundDomains
+        )
+
+    @min_os_level("11.3")
+    def testMethods11_3(self):
+        self.assertResultIsBOOL(WebKit.WKWebViewConfiguration.upgradeKnownHostsToHTTPS)
+        self.assertArgIsBOOL(
+            WebKit.WKWebViewConfiguration.setUpgradeKnownHostsToHTTPS_, 0
         )
 
     def testConstants(self):

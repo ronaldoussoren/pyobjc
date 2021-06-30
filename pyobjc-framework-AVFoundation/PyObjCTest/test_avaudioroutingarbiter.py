@@ -10,7 +10,7 @@ class TestAVAudioRoutingArbiter(TestCase):
             AVFoundation.AVAudioRoutingArbitrationCategoryPlayAndRecordVoice, 2
         )
 
-    @min_os_level("10.16")
+    @min_os_level("11.0")
     def test_methods(self):
         self.assertArgIsBlock(
             AVFoundation.AVAudioRoutingArbiter.beginArbitrationWithCategory_completionHandler_,

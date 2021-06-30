@@ -28,6 +28,6 @@ class TestPathMonitor(TestCase):
         Network.nw_path_monitor_start
         Network.nw_path_monitor_cancel
 
-    @min_os_level("10.16")
-    def test_functions10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         Network.nw_path_monitor_prohibit_interface_type

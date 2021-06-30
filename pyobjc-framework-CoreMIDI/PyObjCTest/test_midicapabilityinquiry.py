@@ -17,8 +17,8 @@ class TestMIDICapabilityInquiryHelper(CoreMIDI.NSObject):
 
 
 class TestMIDICapabilityInquiry(TestCase):
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("MIDICIProfileResponderDelegate")
 
     def test_structs(self):
@@ -58,8 +58,8 @@ class TestMIDICapabilityInquiry(TestCase):
             MIDICIProfileChangedBlock,
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             CoreMIDI.MIDICISession.initWithDiscoveredNode_dataReadyHandler_disconnectHandler_,
             1,

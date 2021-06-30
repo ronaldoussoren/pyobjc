@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, min_sdk_level, expectedFailure
+from PyObjCTools.TestSupport import TestCase, min_sdk_level
 import CoreMIDI
 
 
@@ -10,6 +10,7 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDIMessageTypeSysEx, 0x3)
         self.assertEqual(CoreMIDI.kMIDIMessageTypeChannelVoice2, 0x4)
         self.assertEqual(CoreMIDI.kMIDIMessageTypeData128, 0x5)
+        self.assertEqual(CoreMIDI.kMIDIMessageTypeUnknownF, 0xF)
 
         self.assertEqual(CoreMIDI.kMIDICVStatusNoteOff, 0x8)
         self.assertEqual(CoreMIDI.kMIDICVStatusNoteOn, 0x9)
@@ -38,6 +39,7 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDIStatusContinue, 0xFB)
         self.assertEqual(CoreMIDI.kMIDIStatusStop, 0xFC)
         self.assertEqual(CoreMIDI.kMIDIStatusActiveSending, 0xFE)
+        self.assertEqual(CoreMIDI.kMIDIStatusActiveSensing, 0xFE)
         self.assertEqual(CoreMIDI.kMIDIStatusSystemReset, 0xFF)
 
         self.assertEqual(CoreMIDI.kMIDISysExStatusComplete, 0x0)
@@ -66,9 +68,9 @@ class TestMIDIMessages(TestCase):
         self.assertIsInstance(v.word2, int)
         self.assertIsInstance(v.word3, int)
 
-    @expectedFailure
-    @min_sdk_level("10.16")
-    def test_functions(self):
+    # @expectedFailure  # XXX: Inline functions
+    @min_sdk_level("11.0")
+    def test_functions11_0(self):
         CoreMIDI.MIDIMessageTypeForUPWord
         CoreMIDI.MIDI1UPChannelVoiceMessage
         CoreMIDI.MIDI1UPNoteOff
@@ -92,3 +94,8 @@ class TestMIDIMessages(TestCase):
         CoreMIDI.MIDI2ChannelPressure
         CoreMIDI.MIDI2PitchBend
         CoreMIDI.MIDI2PerNotePitchBend
+
+    @min_sdk_level("12.0")
+    def test_functions12_0(self):
+        CoreMIDI.MIDI1UPSysEx
+        CoreMIDI.MIDI1UPSysExArray

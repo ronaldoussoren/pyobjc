@@ -29,8 +29,8 @@ class TestAVAssetDownloadTask(TestCase):
             str,  # noqa: B950
         )
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(
             AVFoundation.AVAssetDownloadTaskMinimumRequiredPresentationSizeKey, str
         )
@@ -68,3 +68,13 @@ class TestAVAssetDownloadTask(TestCase):
     @min_os_level("10.15")
     def test_protocols(self):
         objc.protocolNamed("AVAssetDownloadDelegate")
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(
+            AVFoundation.AVAssetDownloadConfiguration.optimizesAuxiliaryContentConfigurations
+        )
+        self.assertArgIsBOOL(
+            AVFoundation.AVAssetDownloadConfiguration.setOptimizesAuxiliaryContentConfigurations_,
+            0,
+        )

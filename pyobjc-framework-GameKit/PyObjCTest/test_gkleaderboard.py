@@ -33,8 +33,8 @@ class TestGKLeaderboard(TestCase):
             GameKit.GKLeaderboard.loadScoresWithCompletionHandler_, 0, b"v@@"
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             GameKit.GKLeaderboard.loadLeaderboardsWithIDs_completionHandler_, 1, b"v@@"
         )
@@ -60,8 +60,8 @@ class TestGKLeaderboard(TestCase):
         )
 
     @expectedFailure
-    @min_os_level("10.16")
-    def test_methods10_16_missing(self):
+    @min_os_level("11.0")
+    def test_methods11_0_missing(self):
         self.assertArgIsBlock(
             GameKit.GKLeaderboard.submitScore_context_player_loaderboardIDs_completionHandler_,
             4,

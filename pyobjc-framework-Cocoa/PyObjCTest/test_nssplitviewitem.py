@@ -34,7 +34,7 @@ class TestNSSplitViewItem(TestCase):
         self.assertResultIsBOOL(AppKit.NSSplitViewItem.isSpringLoaded)
         self.assertArgIsBOOL(AppKit.NSSplitViewItem.setSpringLoaded_, 0)
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(AppKit.NSSplitViewItem.allowsFullHeightLayout)
         self.assertArgIsBOOL(AppKit.NSSplitViewItem.setAllowsFullHeightLayout_, 0)

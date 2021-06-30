@@ -16,6 +16,9 @@ class TestMTLBinaryArchiveHelper(Metal.NSObject):
     def serializeToURL_error_(self, a, b):
         pass
 
+    def addFunctionWithDescriptor_library_error_(self, a, b, c):
+        return 1
+
 
 class TestMTLBinaryArchive(TestCase):
     def test_constants(self):
@@ -24,8 +27,8 @@ class TestMTLBinaryArchive(TestCase):
         self.assertEqual(Metal.MTLBinaryArchiveErrorUnexpectedElement, 2)
         self.assertEqual(Metal.MTLBinaryArchiveErrorCompilationFailure, 3)
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("MTLBinaryArchive")
 
     def test_methods(self):
@@ -55,4 +58,12 @@ class TestMTLBinaryArchive(TestCase):
         )
         self.assertArgHasType(
             TestMTLBinaryArchiveHelper.serializeToURL_error_, 1, b"o^@"
+        )
+        self.assertResultIsBOOL(
+            TestMTLBinaryArchiveHelper.addFunctionWithDescriptor_library_error_
+        )
+        self.assertArgHasType(
+            TestMTLBinaryArchiveHelper.addFunctionWithDescriptor_library_error_,
+            2,
+            b"o^@",
         )

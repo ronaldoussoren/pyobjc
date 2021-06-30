@@ -35,7 +35,27 @@ class TestMPSGraphCore(TestCase):
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicit, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleTF_VALID, 1)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingStyleTF_SAME, 2)
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphPaddingStyleExplicitOffset, 3
+        )
 
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeConstant, 0)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeReflect, 1)
         self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeSymmetric, 2)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeClampToEdge, 3)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModeZero, 4)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphPaddingModePeriodic, 5)
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphPaddingModeAntiPeriodic, 6
+        )
+
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeMin, 0)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeMax, 1)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeSum, 2)
+        self.assertEqual(MetalPerformanceShadersGraph.MPSGraphReductionModeProduct, 3)
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReductionModeArgumentMin, 4
+        )
+        self.assertEqual(
+            MetalPerformanceShadersGraph.MPSGraphReductionModeArgumentMax, 5
+        )

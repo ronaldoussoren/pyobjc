@@ -8,3 +8,9 @@ class TestSNClassifySoundRequest(TestCase):
         self.assertArgIsOut(
             SoundAnalysis.SNClassifySoundRequest.initWithMLModel_error_, 1
         )
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertArgIsOut(
+            SoundAnalysis.SNClassifySoundRequest.initWithClassifierIdentifier_error_, 1
+        )

@@ -89,6 +89,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyProcessIsMaster, fourcc(b"mast")
         )
+        self.assertEqual(CoreAudio.kAudioHardwarePropertyProcessIsMain, fourcc(b"main"))
         self.assertEqual(
             CoreAudio.kAudioHardwarePropertyIsInitingOrExiting, fourcc(b"inot")
         )
@@ -161,6 +162,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(
             CoreAudio.kAudioDevicePropertyIOThreadOSWorkgroup, fourcc(b"oswg")
         )
+        self.assertEqual(CoreAudio.kAudioDevicePropertyProcessMute, fourcc(b"appm"))
 
         self.assertEqual(CoreAudio.kAudioDevicePropertyJackIsConnected, fourcc(b"jack"))
         self.assertEqual(CoreAudio.kAudioDevicePropertyVolumeScalar, fourcc(b"volm"))
@@ -277,6 +279,7 @@ class TestAudioHardware(TestCase):
         self.assertEqual(CoreAudio.kAudioAggregateDeviceNameKey, b"name")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceSubDeviceListKey, b"subdevices")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceMasterSubDeviceKey, b"master")
+        self.assertEqual(CoreAudio.kAudioAggregateDeviceMainSubDeviceKey, b"master")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceClockDeviceKey, b"clock")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceIsPrivateKey, b"private")
         self.assertEqual(CoreAudio.kAudioAggregateDeviceIsStackedKey, b"stacked")
@@ -292,6 +295,9 @@ class TestAudioHardware(TestCase):
         )
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertyMasterSubDevice, fourcc(b"amst")
+        )
+        self.assertEqual(
+            CoreAudio.kAudioAggregateDevicePropertyMainSubDevice, fourcc(b"amst")
         )
         self.assertEqual(
             CoreAudio.kAudioAggregateDevicePropertyClockDevice, fourcc(b"apcd")

@@ -2,6 +2,9 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "enum": {
+   "VZMacAuxiliaryStorageInitializationOptionAllowOverwrite": { "value": 1 }
+  },
   "classes": {
    "VZDiskImageStorageDeviceAttachment": {
     "methods": [

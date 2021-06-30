@@ -106,3 +106,19 @@ class TestCMSync(TestCase):
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMasterClock)
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyMaster)
         self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyUltimateMasterClock)
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        self.assertArgIsOut(CoreMedia.CMTimebaseCreateWithSourceClock, 2)
+        self.assertArgIsCFRetained(CoreMedia.CMTimebaseCreateWithSourceClock, 2)
+
+        self.assertArgIsOut(CoreMedia.CMTimebaseCreateWithSourceTimebase, 2)
+        self.assertArgIsCFRetained(CoreMedia.CMTimebaseCreateWithSourceTimebase, 2)
+
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopySourceTimebase)
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopySourceClock)
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopySource)
+        self.assertResultIsCFRetained(CoreMedia.CMTimebaseCopyUltimateSourceClock)
+
+        CoreMedia.CMTimebaseSetSourceClock
+        CoreMedia.CMTimebaseSetSourceTimebase

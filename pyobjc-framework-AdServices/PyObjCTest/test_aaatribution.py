@@ -8,6 +8,6 @@ class TestAAAtribution(TestCase):
         self.assertEqual(AdServices.AAAttributionErrorCodeInternalError, 2)
         self.assertEqual(AdServices.AAAttributionErrorCodePlatformNotSupported, 3)
 
-    @min_os_level("10.16.1")
-    def test_methods10_16_1(self):
+    @min_os_level("11.1")
+    def test_methods11_1(self):
         self.assertArgIsOut(AdServices.AAAttribution.attributionTokenWithError_, 0)

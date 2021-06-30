@@ -3,8 +3,8 @@ import Vision
 
 
 class TestVNObservation(TestCase):
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(Vision.VNRecognizedPointGroupKeyAll, str)
 
     @min_os_level("10.15")
@@ -26,8 +26,8 @@ class TestVNObservation(TestCase):
             2,
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsOut(Vision.VNContoursObservation.contourAtIndex_error_, 1)
         self.assertArgIsOut(Vision.VNContoursObservation.contourAtIndexPath_error_, 1)
 
@@ -37,3 +37,7 @@ class TestVNObservation(TestCase):
         self.assertArgIsOut(
             Vision.VNRecognizedPointsObservation.keypointsMultiArrayAndReturnError_, 0
         )
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(Vision.VNHumanObservation.upperBodyOnly)

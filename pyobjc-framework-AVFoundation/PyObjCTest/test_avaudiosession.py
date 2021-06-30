@@ -93,8 +93,8 @@ class TestAVAudioSession(TestCase):
             AVFoundation.AVAudioSessionPromptStyleNormal, fourcc(b"nrml")
         )  # noqa: B950
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(AVFoundation.AVAudioSessionInterruptionNotification, str)
         self.assertIsInstance(AVFoundation.AVAudioSessionRouteChangeNotification, str)
         self.assertIsInstance(

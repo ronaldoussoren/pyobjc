@@ -436,6 +436,7 @@ class TestCFOpenDirectoryConstants(TestCase):
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerError, 5202)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsServerTimeout, 5203)
         self.assertEqual(CFOpenDirectory.kODErrorCredentialsContactMaster, 5204)
+        self.assertEqual(CFOpenDirectory.kODErrorCredentialsContactPrimary, 5204)
         self.assertEqual(
             CFOpenDirectory.kODErrorCredentialsServerCommunicationError, 5205
         )
@@ -628,3 +629,7 @@ class TestCFOpenDirectoryConstants(TestCase):
     @min_os_level("10.15")
     def testConstants10_15(self):
         self.assertIsInstance(CFOpenDirectory.kODBackOffSeconds, str)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(CFOpenDirectory.kODAuthenticationTypeMPPEPrimaryKeys, str)

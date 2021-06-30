@@ -22,6 +22,18 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def imageblockMemoryLengthForDimensions_(self, a):
         return 1
 
+    def functionHandleWithFunction_stage_(self, a, b):
+        return 1
+
+    def newVisibleFunctionTableWithDescriptor_stage_(self, a, b):
+        return 1
+
+    def newIntersectionFunctionTableWithDescriptor_stage_(self, a, b):
+        return 1
+
+    def newRenderPipelineStateWithAdditionalBinaryFunctions_stage_(self, a, b):
+        return 1
+
 
 class TestMTLRenderPipeline(TestCase):
     def test_constants(self):
@@ -90,6 +102,27 @@ class TestMTLRenderPipeline(TestCase):
             TestMTLRenderPipelineHelper.supportIndirectCommandBuffers
         )
 
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.functionHandleWithFunction_stage_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.newVisibleFunctionTableWithDescriptor_stage_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.newIntersectionFunctionTableWithDescriptor_stage_,
+            1,
+            objc._C_NSUInteger,
+        )
+        self.assertArgHasType(
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_stage_,
+            1,
+            objc._C_NSUInteger,
+        )
+
     @min_os_level("10.11")
     def test_methods10_11(self):
         self.assertResultIsBOOL(
@@ -143,5 +176,43 @@ class TestMTLRenderPipeline(TestCase):
             Metal.MTLRenderPipelineDescriptor.alloc()
             .init()
             .setSupportIndirectCommandBuffers_,
+            0,
+        )
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .supportAddingVertexBinaryFunctions
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .setSupportAddingVertexBinaryFunctions_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .supportAddingFragmentBinaryFunctions
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLRenderPipelineDescriptor.alloc()
+            .init()
+            .setSupportAddingFragmentBinaryFunctions_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            Metal.MTLTileRenderPipelineDescriptor.alloc()
+            .init()
+            .supportAddingBinaryFunctions
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLTileRenderPipelineDescriptor.alloc()
+            .init()
+            .setSupportAddingBinaryFunctions_,
             0,
         )

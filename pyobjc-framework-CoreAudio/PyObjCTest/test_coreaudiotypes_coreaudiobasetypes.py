@@ -676,6 +676,122 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Atmos_9_1_6, (193 << 16) | 16)
 
         self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Mono,
+            CoreAudio.kAudioChannelLayoutTag_Mono,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Stereo,
+            CoreAudio.kAudioChannelLayoutTag_Stereo,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Quadraphonic,
+            CoreAudio.kAudioChannelLayoutTag_Quadraphonic,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_4_0_A,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_4_0_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_4_0_B,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_4_0_B,
+        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Logic_4_0_C, (197 << 16) | 4)
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_0_A,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_0_B,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_B,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_0_C,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_C,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_0_D,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_0_D,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_1_A,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_1_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_1_B,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_1_B,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_1_C,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_1_C,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_5_1_D,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_5_1_D,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_6_0_A,
+            CoreAudio.kAudioChannelLayoutTag_AAC_6_0,
+        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Logic_6_0_B, (198 << 16) | 6)
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_6_0_C,
+            CoreAudio.kAudioChannelLayoutTag_AudioUnit_6_0,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_6_1_A,
+            CoreAudio.kAudioChannelLayoutTag_AAC_6_1,
+        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Logic_6_1_B, (199 << 16) | 7)
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_6_1_C,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_6_1_A,
+        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Logic_6_1_D, (200 << 16) | 7)
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_7_1_A,
+            CoreAudio.kAudioChannelLayoutTag_AudioUnit_7_1,
+        )
+        self.assertEqual(CoreAudio.kAudioChannelLayoutTag_Logic_7_1_B, (201 << 16) | 8)
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_7_1_C,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_7_1_C,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_7_1_SDDS_A,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_7_1_A,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_7_1_SDDS_B,
+            CoreAudio.kAudioChannelLayoutTag_MPEG_7_1_B,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_7_1_SDDS_C,
+            CoreAudio.kAudioChannelLayoutTag_Emagic_Default_7_1,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Atmos_5_1_2,
+            CoreAudio.kAudioChannelLayoutTag_Atmos_5_1_2,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Atmos_5_1_4,
+            CoreAudio.kAudioChannelLayoutTag_Atmos_5_1_4,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Atmos_7_1_2,
+            CoreAudio.kAudioChannelLayoutTag_Atmos_7_1_2,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Atmos_7_1_4_A,
+            CoreAudio.kAudioChannelLayoutTag_Atmos_7_1_4,
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Atmos_7_1_4_B, (202 << 16) | 12
+        )
+        self.assertEqual(
+            CoreAudio.kAudioChannelLayoutTag_Logic_Atmos_7_1_6, (203 << 16) | 14
+        )
+
+        self.assertEqual(
             CoreAudio.kAudioChannelLayoutTag_DiscreteInOrder, (147 << 16) | 0
         )
 

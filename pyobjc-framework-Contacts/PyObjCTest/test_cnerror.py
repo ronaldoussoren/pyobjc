@@ -31,6 +31,7 @@ class TestCNError(TestCase):
         self.assertEqual(Contacts.CNErrorCodeClientIdentifierCollision, 602)
         self.assertEqual(Contacts.CNErrorCodeChangeHistoryExpired, 603)
         self.assertEqual(Contacts.CNErrorCodeChangeHistoryInvalidAnchor, 604)
+        self.assertEqual(Contacts.CNErrorCodeChangeHistoryInvalidFetchRequest, 605)
 
         self.assertEqual(Contacts.CNErrorCodeVCardMalformed, 700)
         self.assertEqual(Contacts.CNErrorCodeVCardSummarizationError, 701)

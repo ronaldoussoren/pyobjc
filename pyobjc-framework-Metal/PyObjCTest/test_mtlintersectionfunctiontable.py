@@ -30,8 +30,8 @@ class TestMTLIntersectionFunctionTable(TestCase):
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureTriangleData, 1 << 1)
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureWorldSpaceData, 1 << 2)
 
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("MTLIntersectionFunctionTable")
 
     def test_methods(self):

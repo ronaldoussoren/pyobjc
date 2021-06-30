@@ -10,6 +10,14 @@ class TestNSTextStorageHelper(AppKit.NSObject):
     def textStorage_didProcessEditing_range_changeInLength_(self, s, e, r, x):
         pass
 
+    def processEditingForTextStorage_edited_range_changeInLength_invalidateRange_(
+        self, a, b, c, d, e
+    ):
+        pass
+
+    def performEditingTransactionForTextStorage_withBlock_(self, a, b):
+        pass
+
 
 class TestNSTextStorage(TestCase):
     def testConstants(self):
@@ -25,6 +33,10 @@ class TestNSTextStorage(TestCase):
     @min_sdk_level("10.10")
     def testProtocolObjects(self):
         objc.protocolNamed("NSTextStorageDelegate")
+
+    @min_sdk_level("12.0")
+    def testProtocolObjects12_0(self):
+        objc.protocolNamed("NSTextStorageObserving")
 
     def testProtocols(self):
         self.assertArgHasType(
@@ -57,4 +69,31 @@ class TestNSTextStorage(TestCase):
             TestNSTextStorageHelper.textStorage_didProcessEditing_range_changeInLength_,
             3,
             objc._C_NSInteger,
+        )
+
+        self.assertArgHasType(
+            TestNSTextStorageHelper.processEditingForTextStorage_edited_range_changeInLength_invalidateRange_,
+            1,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextStorageHelper.processEditingForTextStorage_edited_range_changeInLength_invalidateRange_,
+            2,
+            AppKit.NSRange.__typestr__,
+        )
+        self.assertArgHasType(
+            TestNSTextStorageHelper.processEditingForTextStorage_edited_range_changeInLength_invalidateRange_,
+            3,
+            objc._C_NSInteger,
+        )
+        self.assertArgHasType(
+            TestNSTextStorageHelper.processEditingForTextStorage_edited_range_changeInLength_invalidateRange_,
+            4,
+            AppKit.NSRange.__typestr__,
+        )
+
+        self.assertArgIsBlock(
+            TestNSTextStorageHelper.performEditingTransactionForTextStorage_withBlock_,
+            1,
+            b"v",
         )

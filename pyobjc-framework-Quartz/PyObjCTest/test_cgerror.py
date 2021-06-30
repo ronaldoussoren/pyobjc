@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 import Quartz
 
 
@@ -32,3 +32,7 @@ class TestCGError(TestCase):
         self.assertEqual(Quartz.kCGErrorForkFailed, 1028)
         self.assertEqual(Quartz.kCGErrorRetryRegistration, 1029)
         self.assertEqual(Quartz.kCGErrorLast, Quartz.kCGErrorRetryRegistration)
+
+    @min_os_level("12.0")
+    def testFunctions(self):
+        self.assertArgIsFunction(Quartz.CGErrorSetCallback, 0, b"v", True)

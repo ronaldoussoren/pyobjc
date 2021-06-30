@@ -19,3 +19,14 @@ class TestCKFetchRecordZonesOperation(TestCase):
         self.assertResultIsBlock(
             CloudKit.CKFetchRecordZonesOperation.fetchRecordZonesCompletionBlock, b"v@@"
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            CloudKit.CKFetchRecordZonesOperation.setPerRecordZoneCompletionBlock_,
+            0,
+            b"v@@@",
+        )
+        self.assertResultIsBlock(
+            CloudKit.CKFetchRecordZonesOperation.perRecordZoneCompletionBlock, b"v@@@"
+        )

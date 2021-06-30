@@ -4,6 +4,16 @@ import objc
 
 
 class TestWKWebView(TestCase):
+    def testConstants(self):
+        self.assertEqual(WebKit.WKMediaPlaybackStateNone, 0)
+        self.assertEqual(WebKit.WKMediaPlaybackStatePlaying, 1)
+        self.assertEqual(WebKit.WKMediaPlaybackStatePaused, 2)
+        self.assertEqual(WebKit.WKMediaPlaybackStateSuspended, 3)
+
+        self.assertEqual(WebKit.WKMediaCaptureStateNone, 0)
+        self.assertEqual(WebKit.WKMediaCaptureStateActive, 1)
+        self.assertEqual(WebKit.WKMediaCaptureStateMuted, 2)
+
     @min_os_level("10.10")
     def testMethods10_10(self):
         self.assertResultIsBOOL(WebKit.WKWebView.isLoading)
@@ -44,8 +54,8 @@ class TestWKWebView(TestCase):
             WebKit.WKWebView.findString_withConfiguration_completionHandler_, 2, b"v@"
         )
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertArgIsBlock(
             WebKit.WKWebView.evaluateJavaScript_inFrame_inContentWorld_completionHandler_,
             3,
@@ -81,4 +91,38 @@ class TestWKWebView(TestCase):
         )
         self.assertArgIsBlock(
             WebKit.WKWebView.resumeDownloadFromResumeData_completionHandler_, 1, b"v@"
+        )
+
+    @min_os_level("11.3")
+    def testMethods11_3(self):
+        self.assertArgIsBlock(
+            WebKit.WKWebView.closeAllMediaPresentationsWithCompletionHandler_,
+            0,
+            b"v",
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.pauseAllMediaPlaybackWithCompletionHandler_,
+            0,
+            b"v",
+        )
+
+        self.assertArgIsBOOL(
+            WebKit.WKWebView.setAllMediaPlaybackSuspended_completionHandler_, 0
+        )
+        self.assertArgIsBlock(
+            WebKit.WKWebView.setAllMediaPlaybackSuspended_completionHandler_,
+            1,
+            b"v",
+        )
+
+        self.assertArgIsBlock(
+            WebKit.WKWebView.requestMediaPlaybackStateWithCompletionHandler_,
+            0,
+            b"vq",
+        )
+
+        self.assertArgIsBlock(
+            WebKit.WKWebView.setMicrophoneCaptureState_completionHandler_,
+            1,
+            b"v",
         )

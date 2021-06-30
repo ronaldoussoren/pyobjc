@@ -10,3 +10,4 @@ class TestPKPaymentMethod(TestCase):
         self.assertEqual(PassKit.PKPaymentMethodTypeCredit, 2)
         self.assertEqual(PassKit.PKPaymentMethodTypePrepaid, 3)
         self.assertEqual(PassKit.PKPaymentMethodTypeStore, 4)
+        self.assertEqual(PassKit.PKPaymentMethodTypeEMoney, 5)

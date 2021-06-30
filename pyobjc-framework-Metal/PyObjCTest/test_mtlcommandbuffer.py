@@ -57,11 +57,13 @@ class TestMTLCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLCommandBufferErrorTimeout, 2)
         self.assertEqual(Metal.MTLCommandBufferErrorPageFault, 3)
         self.assertEqual(Metal.MTLCommandBufferErrorBlacklisted, 4)
+        self.assertEqual(Metal.MTLCommandBufferErrorAccessRevoked, 4)
         self.assertEqual(Metal.MTLCommandBufferErrorNotPermitted, 7)
         self.assertEqual(Metal.MTLCommandBufferErrorOutOfMemory, 8)
         self.assertEqual(Metal.MTLCommandBufferErrorInvalidResource, 9)
         self.assertEqual(Metal.MTLCommandBufferErrorMemoryless, 10)
         self.assertEqual(Metal.MTLCommandBufferErrorDeviceRemoved, 11)
+        self.assertEqual(Metal.MTLCommandBufferErrorStackOverflow, 12)
 
         self.assertEqual(Metal.MTLDispatchTypeSerial, 0)
         self.assertEqual(Metal.MTLDispatchTypeConcurrent, 1)
@@ -77,8 +79,8 @@ class TestMTLCommandBuffer(TestCase):
         self.assertEqual(Metal.MTLCommandEncoderErrorStatePending, 3)
         self.assertEqual(Metal.MTLCommandEncoderErrorStateFaulted, 4)
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(Metal.MTLCommandBufferEncoderInfoErrorKey, str)
 
     @min_sdk_level("10.11")
@@ -127,7 +129,7 @@ class TestMTLCommandBuffer(TestCase):
             TestMTLCommandBufferHelper.encodeSignalEvent_value_, 1, objc._C_ULNGLNG
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertResultIsBOOL(Metal.MTLCommandBufferDescriptor.retainedReferences)
         self.assertArgIsBOOL(Metal.MTLCommandBufferDescriptor.setRetainedReferences_, 0)

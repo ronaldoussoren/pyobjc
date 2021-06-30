@@ -203,8 +203,8 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_UsingGPURegistryID, str
         )
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_PrioritizeEncodingSpeedOverQuality,
             str,
@@ -219,13 +219,52 @@ class TestVTCompressionProperties(TestCase):
             VideoToolbox.kVTCompressionPropertyKey_PreserveDynamicHDRMetadata, str
         )
 
-    @min_os_level("10.16.3")
-    def test_constants10_16_3(self):
+    @min_os_level("11.3")
+    def test_constants11_3(self):
         self.assertIsInstance(
             VideoToolbox.kVTCompressionPropertyKey_BaseLayerFrameRateFraction,
             str,
         )
         self.assertIsInstance(
             VideoToolbox.kVTVideoEncoderSpecification_EnableLowLatencyRateControl,
+            str,
+        )
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_H264_ConstrainedBaseline_AutoLevel,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTProfileLevel_H264_ConstrainedHigh_AutoLevel,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_BaseLayerBitRateFraction,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_SupportsBaseFrameQP,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTEncodeFrameOptionKey_BaseFrameQP,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_MaxAllowedFrameQP,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTCompressionPropertyKey_EnableLTR,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTEncodeFrameOptionKey_ForceLTRRefresh,
+            str,
+        )
+        self.assertIsInstance(
+            VideoToolbox.kVTSampleAttachmentKey_RequireLTRAcknowledgementToken,
             str,
         )

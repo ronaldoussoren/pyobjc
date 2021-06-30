@@ -570,10 +570,22 @@ class TestCMFormatDescription(TestCase):
             CoreMedia.kCMFormatDescriptionExtension_ContainsAlphaChannel, str
         )
 
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(
             CoreMedia.kCMFormatDescriptionExtension_ProtectedContentOriginalFormat, str
+        )
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_BitsPerComponent, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_HorizontalFieldOfView, str
+        )
+        self.assertIsInstance(
+            CoreMedia.kCMFormatDescriptionExtension_AmbientViewingEnvironment, str
         )
 
     def test_structs(self):

@@ -15,8 +15,8 @@ class TestASCredentialIdentityStore(TestCase):
             AuthenticationServices.ASCredentialIdentityStoreErrorCodeStoreBusy, 2
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             AuthenticationServices.ASCredentialIdentityStore.getCredentialIdentityStoreStateWithCompletion_,
             0,

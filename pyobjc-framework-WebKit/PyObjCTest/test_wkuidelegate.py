@@ -29,6 +29,16 @@ class TestWKUIDelegateHelper(WebKit.NSObject):
     ):
         pass
 
+    def webView_requestMediaCapturePermissionForOrigin_initiatedByFrame_type_decisionHandler_(
+        self, a, b, c, d
+    ):
+        pass
+
+    def webView_requestDeviceOrientationAndMotionPermissionForOrigin_initiatedByFrame_type_decisionHandler_(
+        self, a, b, c, d
+    ):
+        pass
+
 
 class TestWKUIDelegate(TestCase):
     @min_os_level("10.10")
@@ -61,3 +71,23 @@ class TestWKUIDelegate(TestCase):
             3,
             b"v@",
         )
+
+        self.assertArgIsBlock(
+            TestWKUIDelegateHelper.webView_requestMediaCapturePermissionForOrigin_initiatedByFrame_type_decisionHandler_,  # noqa: B950
+            4,
+            b"vq",
+        )
+        self.assertArgIsBlock(
+            TestWKUIDelegateHelper.webView_requestDeviceOrientationAndMotionPermissionForOrigin_initiatedByFrame_type_decisionHandler_,  # noqa: B950
+            4,
+            b"vq",
+        )
+
+    def test_constants(self):
+        self.assertEqual(WebKit.WKPermissionDecisionPrompt, 0)
+        self.assertEqual(WebKit.WKPermissionDecisionGrant, 1)
+        self.assertEqual(WebKit.WKPermissionDecisionDeny, 2)
+
+        self.assertEqual(WebKit.WKMediaCaptureTypeCamera, 0)
+        self.assertEqual(WebKit.WKMediaCaptureTypeMicrophone, 1)
+        self.assertEqual(WebKit.WKMediaCaptureTypeCameraAndMicrophone, 2)

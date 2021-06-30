@@ -30,7 +30,8 @@ class TestWKPreferences(TestCase):
             WebKit.WKPreferences.setFraudulentWebsiteWarningEnabled_, 0
         )
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertResultIsBOOL(WebKit.WKPreferences.textInteractionEnabled)
+        self.assertResultIsBOOL(WebKit.WKPreferences.isTextInteractionEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setTextInteractionEnabled_, 0)

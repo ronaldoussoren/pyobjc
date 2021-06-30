@@ -17,3 +17,7 @@ class TestUNError(TestCase):
         self.assertEqual(
             UserNotifications.UNErrorCodeNotificationInvalidNoContent, 1401
         )
+        self.assertEqual(
+            UserNotifications.UNErrorCodeContentProvidingObjectNotAllowed, 1500
+        )
+        self.assertEqual(UserNotifications.UNErrorCodeContentProvidingInvalid, 1501)

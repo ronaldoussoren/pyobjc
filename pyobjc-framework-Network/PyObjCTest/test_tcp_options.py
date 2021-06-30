@@ -1,9 +1,14 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import Network
 
 
 class TestTCPOptions(TestCase):
+    def test_constants(self):
+        self.assertEqual(Network.nw_multipath_version_unspecified, -1)
+        self.assertEqual(Network.nw_multipath_version_0, 0)
+        self.assertEqual(Network.nw_multipath_version_1, 1)
+
     def test_functions(self):
         self.assertResultIsRetained(Network.nw_protocol_copy_tcp_definition)
 
@@ -27,3 +32,7 @@ class TestTCPOptions(TestCase):
         Network.nw_protocol_metadata_is_tcp
         Network.nw_tcp_get_available_receive_buffer
         Network.nw_tcp_get_available_send_buffer
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        Network.nw_tcp_options_set_multipath_force_version

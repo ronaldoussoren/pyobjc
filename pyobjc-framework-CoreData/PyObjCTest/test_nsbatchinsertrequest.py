@@ -3,8 +3,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestNSBatchInsertRequest(TestCase):
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertResultIsBlock(CoreData.NSBatchInsertRequest.dictionaryHandler, b"Z@")
         self.assertArgIsBlock(
             CoreData.NSBatchInsertRequest.setDictionaryHandler_, 0, b"Z@"

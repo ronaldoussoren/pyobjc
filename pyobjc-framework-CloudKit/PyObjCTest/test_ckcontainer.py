@@ -17,6 +17,7 @@ class TestCKContainer(TestCase):
         self.assertEqual(CloudKit.CKAccountStatusAvailable, 1)
         self.assertEqual(CloudKit.CKAccountStatusRestricted, 2)
         self.assertEqual(CloudKit.CKAccountStatusNoAccount, 3)
+        self.assertEqual(CloudKit.CKAccountStatusTemporarilyUnavailable, 4)
         self.assertEqual(CloudKit.CKApplicationPermissionUserDiscoverability, 1)
         self.assertEqual(CloudKit.CKApplicationPermissionStatusInitialState, 0)
         self.assertEqual(CloudKit.CKApplicationPermissionStatusCouldNotComplete, 1)
@@ -98,6 +99,27 @@ class TestCKContainer(TestCase):
         )
         self.assertArgIsBlock(
             CloudKit.CKContainer.fetchLongLivedOperationWithID_completionHandler_,
+            1,
+            b"v@@",
+        )
+
+        self.assertArgIsBlock(
+            CloudKit.CKContainer.discoverAllIdentitiesWithCompletionHandler_,
+            0,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            CloudKit.CKContainer.discoverUserIdentityWithEmailAddress_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            CloudKit.CKContainer.discoverUserIdentityWithPhoneNumber_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            CloudKit.CKContainer.discoverUserIdentityWithUserRecordID_completionHandler_,
             1,
             b"v@@",
         )

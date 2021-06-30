@@ -132,6 +132,15 @@ class TestNSTextView(TestCase):
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextList, str)
         self.assertIsInstance(AppKit.NSTouchBarItemIdentifierTextFormat, str)
 
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            AppKit.NSTextViewWillSwitchToNSLayoutManagerNotification, str
+        )
+        self.assertIsInstance(
+            AppKit.NSTextViewDidSwitchToNSLayoutManagerNotification, str
+        )
+
     def testMethods(self):
         self.assertResultIsBOOL(AppKit.NSTextView.shouldDrawInsertionPoint)
         # self.assertArgIsBOOL(AppKit.NSTextView.setShouldDrawInsertionPoint_, 0)

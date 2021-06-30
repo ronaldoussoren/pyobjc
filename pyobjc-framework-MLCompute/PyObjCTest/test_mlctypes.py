@@ -7,9 +7,11 @@ class MLCTypes(TestCase):
     def test_constants(self):
         self.assertEqual(MLCompute.MLCDataTypeInvalid, 0)
         self.assertEqual(MLCompute.MLCDataTypeFloat32, 1)
+        self.assertEqual(MLCompute.MLCDataTypeFloat16, 2)
         self.assertEqual(MLCompute.MLCDataTypeBoolean, 4)
         self.assertEqual(MLCompute.MLCDataTypeInt64, 5)
         self.assertEqual(MLCompute.MLCDataTypeInt32, 7)
+        self.assertEqual(MLCompute.MLCDataTypeInt8, 8)
         self.assertNotHasAttr(MLCompute, "MLCDataTypeCount")
 
         self.assertEqual(MLCompute.MLCRandomInitializerTypeInvalid, 0)
@@ -21,6 +23,7 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCDeviceTypeCPU, 0)
         self.assertEqual(MLCompute.MLCDeviceTypeGPU, 1)
         self.assertEqual(MLCompute.MLCDeviceTypeAny, 2)
+        self.assertEqual(MLCompute.MLCDeviceTypeANE, 3)
         self.assertNotHasAttr(MLCompute, "MLCDeviceTypeCount")
 
         self.assertEqual(MLCompute.MLCGraphCompilationOptionsNone, 0x00)
@@ -36,6 +39,11 @@ class MLCTypes(TestCase):
         self.assertEqual(MLCompute.MLCExecutionOptionsSynchronous, 0x02)
         self.assertEqual(MLCompute.MLCExecutionOptionsProfiling, 0x04)
         self.assertEqual(MLCompute.MLCExecutionOptionsForwardForInference, 0x08)
+        self.assertEqual(MLCompute.MLCExecutionOptionsPerLayerProfiling, 0x10)
+
+        self.assertEqual(MLCompute.MLCGradientClippingTypeByValue, 0)
+        self.assertEqual(MLCompute.MLCGradientClippingTypeByNorm, 1)
+        self.assertEqual(MLCompute.MLCGradientClippingTypeByGlobalNorm, 2)
 
         self.assertEqual(MLCompute.MLCArithmeticOperationAdd, 0)
         self.assertEqual(MLCompute.MLCArithmeticOperationSubtract, 1)
@@ -180,3 +188,7 @@ class MLCTypes(TestCase):
     @min_os_level("11.3")
     def test_functions11_3(self):
         MLCompute.MLCComparisonOperationDebugDescription
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        MLCompute.MLCGradientClippingTypeDebugDescription

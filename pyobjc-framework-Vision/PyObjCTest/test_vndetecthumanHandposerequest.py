@@ -3,8 +3,8 @@ import Vision
 
 
 class TestVNDetectHumanHandPoseRequest(TestCase):
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(Vision.VNHandLandmarkKeyThumbCMC, str)
         self.assertIsInstance(Vision.VNHandLandmarkKeyThumbMP, str)
         self.assertIsInstance(Vision.VNHandLandmarkKeyThumbIP, str)
@@ -72,8 +72,19 @@ class TestVNDetectHumanHandPoseRequest(TestCase):
 
         self.assertEqual(Vision.VNDetectHumanHandPoseRequestRevision1, 1)
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+        self.assertEqual(Vision.VNHumanHandPoseObservationChirality, Vision.VNChirality)
+        self.assertEqual(
+            Vision.VNHumanHandPoseObservationChiralityUnknown, Vision.VNChiralityUnknown
+        )
+        self.assertEqual(
+            Vision.VNHumanHandPoseObservationChiralityLeft, Vision.VNChiralityLeft
+        )
+        self.assertEqual(
+            Vision.VNHumanHandPoseObservationChiralityRight, Vision.VNChiralityRight
+        )
+
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsOut(
             Vision.VNDetectHumanHandPoseRequest.supportedRecognizedPointKeysForRevision_error_,
             1,

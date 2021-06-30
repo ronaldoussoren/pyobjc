@@ -38,6 +38,9 @@ class TestPKPaymentAuthorizationControllerHelper(PassKit.NSObject):
     ):
         pass
 
+    def paymentAuthorizationController_didChangeCouponCode_handler_(self, a, b, c):
+        pass
+
 
 class TestPKPaymentAuthorizationController(TestCase):
     def test_protocols(self):
@@ -82,6 +85,11 @@ class TestPKPaymentAuthorizationController(TestCase):
         )
         self.assertArgIsBlock(
             TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didSelectPaymentMethod_completion_,
+            2,
+            b"v@",
+        )
+        self.assertArgIsBlock(
+            TestPKPaymentAuthorizationControllerHelper.paymentAuthorizationController_didChangeCouponCode_handler_,
             2,
             b"v@",
         )

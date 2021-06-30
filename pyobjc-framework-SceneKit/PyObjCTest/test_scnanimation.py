@@ -22,6 +22,9 @@ class TestSCNAnimationHelper(SceneKit.NSObject):
     def removeAnimationForKey_blendOutDuration_(self, k, d):
         pass
 
+    def removeAllAnimationsWithBlendOutDuration_(self, a):
+        pass
+
 
 class TestSCNAnimation(TestCase):
     @min_os_level("10.10")
@@ -46,6 +49,17 @@ class TestSCNAnimation(TestCase):
         )
         self.assertArgHasType(
             TestSCNAnimationHelper.removeAnimationForKey_fadeOutDuration_,
+            1,
+            objc._C_CGFloat,
+        )
+
+        self.assertArgHasType(
+            TestSCNAnimationHelper.removeAllAnimationsWithBlendOutDuration_,
+            0,
+            objc._C_CGFloat,
+        )
+        self.assertArgHasType(
+            TestSCNAnimationHelper.removeAnimationForKey_blendOutDuration_,
             1,
             objc._C_CGFloat,
         )

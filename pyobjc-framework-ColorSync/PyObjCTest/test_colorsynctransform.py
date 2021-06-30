@@ -20,6 +20,10 @@ class TestColorSyncTransform(TestCase):
         self.assertArgIsIn(ColorSync.ColorSyncTransformConvert, 7)
         self.assertArgIsVariableSize(ColorSync.ColorSyncTransformConvert, 7)
 
+    @min_os_level("11.0")
+    def testFunctions11_0(self):
+        ColorSync.ColorSyncTransformGetProfileSequence
+
     @min_os_level("10.13")
     def testConstants(self):
         self.assertEqual(ColorSync.kColorSync1BitGamut, 1)
@@ -110,7 +114,7 @@ class TestColorSyncTransform(TestCase):
     def testConstants10_14(self):
         self.assertIsInstance(ColorSync.kColorSyncTransformInfo, str)
 
-    @min_os_level("10.15")
-    def testConstants10_16(self):
-        # XXX: Header says available in 10.16
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(ColorSync.kColorSyncExtendedRange, str)
+        self.assertIsInstance(ColorSync.kColorSyncTransformProfileSequnce, str)

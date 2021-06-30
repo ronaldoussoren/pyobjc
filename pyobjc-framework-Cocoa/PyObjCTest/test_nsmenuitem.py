@@ -24,3 +24,17 @@ class TestNSMenuItem(TestCase):
     def testMethods10_13(self):
         self.assertResultIsBOOL(AppKit.NSMenuItem.allowsKeyEquivalentWhenHidden)
         self.assertArgIsBOOL(AppKit.NSMenuItem.setAllowsKeyEquivalentWhenHidden_, 0)
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(
+            AppKit.NSMenuItem.allowsAutomaticKeyEquivalentLocalization
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSMenuItem.setAllowsAutomaticKeyEquivalentLocalization_, 0
+        )
+
+        self.assertResultIsBOOL(AppKit.NSMenuItem.allowsAutomaticKeyEquivalentMirroring)
+        self.assertArgIsBOOL(
+            AppKit.NSMenuItem.setAllowsAutomaticKeyEquivalentMirroring_, 0
+        )

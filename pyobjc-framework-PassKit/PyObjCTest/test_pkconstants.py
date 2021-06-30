@@ -73,6 +73,7 @@ class TestPKConstants(TestCase):
         self.assertEqual(PassKit.PKPaymentButtonTypeSupport, 13)
         self.assertEqual(PassKit.PKPaymentButtonTypeContribute, 14)
         self.assertEqual(PassKit.PKPaymentButtonTypeTip, 15)
+        self.assertEqual(PassKit.PKPaymentButtonTypeContinue, 16)
 
     @min_os_level("11.5")
     def test_constants11_5(self):

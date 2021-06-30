@@ -101,8 +101,8 @@ class TestNSFontDescriptor(TestCase):
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignMonospaced, str)
         self.assertIsInstance(AppKit.NSFontDescriptorSystemDesignRounded, str)
 
-    @min_os_level("10.16")
-    def testConstants10_16(self):
+    @min_os_level("11.0")
+    def testConstants11_0(self):
         self.assertIsInstance(AppKit.NSFontTextStyleLargeTitle, str)
         self.assertIsInstance(AppKit.NSFontTextStyleTitle1, str)
         self.assertIsInstance(AppKit.NSFontTextStyleTitle2, str)

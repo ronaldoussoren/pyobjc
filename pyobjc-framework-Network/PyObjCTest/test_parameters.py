@@ -32,6 +32,9 @@ class TestParameters(TestCase):
         self.assertEqual(Network.nw_parameters_expired_dns_behavior_allow, 1)
         self.assertEqual(Network.nw_parameters_expired_dns_behavior_prohibit, 2)
 
+        self.assertEqual(Network.nw_parameters_attribution_developer, 1)
+        self.assertEqual(Network.nw_parameters_attribution_user, 2)
+
     def test_functions(self):
         self.assertResultIsRetained(Network.nw_parameters_create_secure_tcp)
         self.assertArgIsBlock(
@@ -122,6 +125,12 @@ class TestParameters(TestCase):
         Network.nw_parameters_set_prohibit_constrained
         Network.nw_parameters_get_prohibit_constrained
 
-    @min_os_level("10.16")
-    def test_functions10_16(self):
+    @min_os_level("11.0")
+    def test_functions11_0(self):
         Network.nw_parameters_set_privacy_context
+
+    @min_os_level("12.0")
+    def test_functions12_0(self):
+        self.assertResultIsRetained(Network.nw_parameters_create_quic)
+        Network.nw_parameters_set_attribution
+        Network.nw_parameters_get_attribution

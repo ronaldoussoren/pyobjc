@@ -9,8 +9,8 @@ class TestMTLFunctionHandleHelper(Metal.NSObject):
 
 
 class TestMTLFunctionHandle(TestCase):
-    @min_sdk_level("10.16")
-    def test_protocols(self):
+    @min_sdk_level("11.0")
+    def test_protocols11_0(self):
         objc.protocolNamed("MTLFunctionHandle")
 
     def test_methods(self):

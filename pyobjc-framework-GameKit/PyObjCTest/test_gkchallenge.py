@@ -50,8 +50,8 @@ class TestGKChallenge(TestCase):
             b"v@",
         )
 
-    @min_os_level("10.16")
-    def testMethods10_16(self):
+    @min_os_level("11.0")
+    def testMethods11_0(self):
         self.assertArgIsBlock(
             GameKit.GKScore.reportLeaderboardScores_withEligibleChallenges_withCompletionHandler_,
             2,

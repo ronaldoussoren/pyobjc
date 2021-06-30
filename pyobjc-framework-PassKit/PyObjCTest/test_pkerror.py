@@ -20,6 +20,8 @@ class TestPKError(TestCase):
         self.assertEqual(PassKit.PKPaymentShippingContactInvalidError, 1)
         self.assertEqual(PassKit.PKPaymentBillingContactInvalidError, 2)
         self.assertEqual(PassKit.PKPaymentShippingAddressUnserviceableError, 3)
+        self.assertEqual(PassKit.PKPaymentCouponCodeInvalidError, 4)
+        self.assertEqual(PassKit.PKPaymentCouponCodeExpiredError, 5)
 
         self.assertEqual(PassKit.PKAddPaymentPassErrorUnsupported, 0)
         self.assertEqual(PassKit.PKAddPaymentPassErrorUserCancelled, 1)

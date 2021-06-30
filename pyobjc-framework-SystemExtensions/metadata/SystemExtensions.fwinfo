@@ -5,7 +5,27 @@
   "enum": {
    "OSSystemExtensionErrorAuthorizationRequired": { "value": 13 }
   },
-  "classes": {},
+  "classes": {
+   "OSSystemExtensionProperties": {
+    "methods": [
+     {
+      "selector": "isEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isAwaitingUserApproval",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isUninstalling",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "functions": {},
   "informal_protocols": {}

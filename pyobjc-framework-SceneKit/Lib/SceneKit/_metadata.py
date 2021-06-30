@@ -137,6 +137,11 @@ try:
     r(b"CAAnimation", b"usesSceneTimeBase", {"retval": {"type": b"Z"}})
     r(
         b"NSObject",
+        b"removeAllAnimationsWithBlendOutDuration:",
+        {"required": True, "arguments": {2: {"type": b"d"}}},
+    )
+    r(
+        b"NSObject",
         b"actionForKey:",
         {"required": True, "retval": {"type": b"@"}, "arguments": {2: {"type": b"@"}}},
     )

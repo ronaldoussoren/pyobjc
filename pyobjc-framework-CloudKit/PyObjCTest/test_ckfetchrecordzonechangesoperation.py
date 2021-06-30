@@ -58,3 +58,14 @@ class TestCKFetchRecordZoneChangesOperation(TestCase):
         self.assertArgIsBOOL(
             CloudKit.CKFetchRecordZoneChangesOperation.setFetchAllChanges_, 0
         )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            CloudKit.CKFetchRecordZoneChangesOperation.setRecordWasChangedBlock_,
+            0,
+            b"v@@@",
+        )
+        self.assertResultIsBlock(
+            CloudKit.CKFetchRecordZoneChangesOperation.recordWasChangedBlock, b"v@@@"
+        )

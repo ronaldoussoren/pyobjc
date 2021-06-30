@@ -73,6 +73,7 @@ class TestPhotosTypes(TestCase):
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumAnimated, 214)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumLongExposures, 215)
         self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumUnableToUpload, 216)
+        self.assertEqual(Photos.PHAssetCollectionSubtypeSmartAlbumRAW, 217)
         self.assertEqual(Photos.PHAssetCollectionSubtypeAny, sys.maxsize)
 
         self.assertEqual(Photos.PHAssetEditOperationDelete, 1)

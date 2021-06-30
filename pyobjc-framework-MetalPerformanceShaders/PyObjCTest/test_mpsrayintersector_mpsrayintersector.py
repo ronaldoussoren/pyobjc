@@ -55,6 +55,22 @@ class TestMPSRayIntersector_MPSRayIntersector(TestCase):
             MetalPerformanceShaders.MPSIntersectionDataTypeDistancePrimitiveIndexInstanceIndexCoordinates,
             4,
         )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSIntersectionDataTypeDistancePrimitiveIndexBufferIndex,
+            5,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSIntersectionDataTypeDistancePrimitiveIndexBufferIndexCoordinates,
+            6,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSIntersectionDataTypeDistancePrimitiveIndexBufferIndexInstanceIndex,
+            7,
+        )
+        self.assertEqual(
+            MetalPerformanceShaders.MPSIntersectionDataTypeDistancePrimitiveIndexBufferIndexInstanceIndexCoordinates,
+            8,
+        )
 
         self.assertEqual(MetalPerformanceShaders.MPSRayMaskOperatorAnd, 0)
         self.assertEqual(MetalPerformanceShaders.MPSRayMaskOperatorNotAnd, 1)

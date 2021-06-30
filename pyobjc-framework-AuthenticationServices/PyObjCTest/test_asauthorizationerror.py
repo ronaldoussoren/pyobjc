@@ -11,3 +11,6 @@ class TestASAuthorization(TestCase):
         )
         self.assertEqual(AuthenticationServices.ASAuthorizationErrorNotHandled, 1003)
         self.assertEqual(AuthenticationServices.ASAuthorizationErrorFailed, 1004)
+        self.assertEqual(
+            AuthenticationServices.ASAuthorizationErrorNotInteractive, 1005
+        )

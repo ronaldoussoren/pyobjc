@@ -9,6 +9,8 @@ class TestNSJSONSerialization(TestCase):
         self.assertEqual(Foundation.NSJSONReadingMutableLeaves, (1 << 1))
         self.assertEqual(Foundation.NSJSONReadingAllowFragments, (1 << 2))
         self.assertEqual(Foundation.NSJSONReadingFragmentsAllowed, (1 << 2))
+        self.assertEqual(Foundation.NSJSONReadingJSON5Allowed, (1 << 3))
+        self.assertEqual(Foundation.NSJSONReadingTopLevelDictionaryAssumed, (1 << 4))
 
         self.assertEqual(Foundation.NSJSONWritingPrettyPrinted, (1 << 0))
         self.assertEqual(Foundation.NSJSONWritingSortedKeys, (1 << 1))

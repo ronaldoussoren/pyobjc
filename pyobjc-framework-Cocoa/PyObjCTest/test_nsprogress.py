@@ -66,3 +66,7 @@ class TestNSProgress(TestCase):
     @min_os_level("10.10")
     def testConstants10_10(self):
         self.assertIsInstance(AppKit.NSProgressFileOperationKindUploading, str)
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(AppKit.NSProgressFileOperationKindDuplicating, str)

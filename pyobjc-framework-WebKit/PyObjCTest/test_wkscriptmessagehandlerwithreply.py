@@ -9,8 +9,8 @@ class TestWKScriptMessageHandlerWithReplyHelper(WebKit.NSObject):
 
 
 class TestWKScriptMessageHandlerWithReply(TestCase):
-    @min_sdk_level("10.16")
-    def testProtocols10_16(self):
+    @min_sdk_level("11.0")
+    def testProtocols11_0(self):
         objc.protocolNamed("WKScriptMessageHandlerWithReply")
 
     def testMethods(self):

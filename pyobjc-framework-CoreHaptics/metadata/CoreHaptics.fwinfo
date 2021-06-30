@@ -2,7 +2,14 @@
 // for information on how to update this file.
 {
  "definitions": {
+  "extern": {
+   "CHHapticPatternKeyEventWaveformUseVolumeEnvelope": { "typestr": "@" },
+   "CHHapticAudioResourceKeyUseVolumeEnvelope": { "typestr": "@" }
+  },
   "enum": {
+   "CHHapticErrorCodeInvalidEngineParameter": { "value": -4816 },
+   "CHHapticErrorCodeFileNotFound": { "value": -4851 },
+   "CHHapticErrorCodeInsufficientPower": { "value": -4897 },
    "CHHapticTimeImmediate": { "value": 0.0 }
   },
   "classes": {

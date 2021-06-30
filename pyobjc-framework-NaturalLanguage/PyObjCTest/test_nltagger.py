@@ -36,8 +36,8 @@ class TestNLTagger(TestCase):
             b"v" + objc._C_NSInteger + b"@",
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsOut(
             NaturalLanguage.NLTagger.tagHypothesesAtIndex_unit_scheme_maximumCount_tokenRange_,
             4,

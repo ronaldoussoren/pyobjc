@@ -14,8 +14,16 @@ class TestNSFileProviderManager(TestCase):
             FileProvider.NSFileProviderManagerDisconnectionOptionsTemporary, 1 << 0
         )
 
-    @min_os_level("10.16")
-    def test_methods10_16(self):
+        self.assertEqual(FileProvider.NSFileProviderDomainRemovalModeRemoveAll, 0)
+        self.assertEqual(
+            FileProvider.NSFileProviderDomainRemovalModePreserveDirtyUserData, 1
+        )
+        self.assertEqual(
+            FileProvider.NSFileProviderDomainRemovalModePreserveDownloadedUserData, 2
+        )
+
+    @min_os_level("11.0")
+    def test_methods11_0(self):
         self.assertArgIsBlock(
             FileProvider.NSFileProviderManager.signalEnumeratorForContainerItemIdentifier_completionHandler_,  # noqa:  B950
             1,
@@ -108,6 +116,14 @@ class TestNSFileProviderManager(TestCase):
 
         self.assertResultHasType(
             TestNSFileProviderManagerHelper.refreshInterval, objc._C_DBL
+        )
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertArgIsBlock(
+            FileProvider.NSFileProviderManager.removeDomain_mode_completionHandler_,  # noqa:  B950
+            2,
+            b"v@",
         )
 
     @min_sdk_level("11.3")

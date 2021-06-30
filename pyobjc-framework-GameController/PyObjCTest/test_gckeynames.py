@@ -3,8 +3,8 @@ import GameController
 
 
 class TestGCKeyNames(TestCase):
-    @min_os_level("10.16")
-    def test_constants10_16(self):
+    @min_os_level("11.0")
+    def test_constants11_0(self):
         self.assertIsInstance(GameController.GCKeyA, str)
         self.assertIsInstance(GameController.GCKeyB, str)
         self.assertIsInstance(GameController.GCKeyC, str)
@@ -142,3 +142,14 @@ class TestGCKeyNames(TestCase):
         self.assertIsInstance(GameController.GCKeyRightShift, str)
         self.assertIsInstance(GameController.GCKeyRightAlt, str)
         self.assertIsInstance(GameController.GCKeyRightGUI, str)
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(GameController.GCKeyF13, str)
+        self.assertIsInstance(GameController.GCKeyF14, str)
+        self.assertIsInstance(GameController.GCKeyF15, str)
+        self.assertIsInstance(GameController.GCKeyF16, str)
+        self.assertIsInstance(GameController.GCKeyF17, str)
+        self.assertIsInstance(GameController.GCKeyF18, str)
+        self.assertIsInstance(GameController.GCKeyF19, str)
+        self.assertIsInstance(GameController.GCKeyF20, str)

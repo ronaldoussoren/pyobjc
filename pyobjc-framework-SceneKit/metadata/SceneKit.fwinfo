@@ -108,6 +108,15 @@
     "methods": [
      {
       "args": {
+       "0": {
+        "type_override": "d"
+       }
+      },
+      "class_method": false,
+      "selector": "removeAllAnimationsWithBlendOutDuration:"
+     },
+     {
+      "args": {
        "2": {
         "type_override": "d"
        }

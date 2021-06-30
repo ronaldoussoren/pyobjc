@@ -14,3 +14,6 @@ class TestGKGameCenterViewController(TestCase):
         self.assertEqual(GameKit.GKGameCenterViewControllerStateChallenges, 2)
         self.assertEqual(GameKit.GKGameCenterViewControllerStateLocalPlayerProfile, 3)
         self.assertEqual(GameKit.GKGameCenterViewControllerStateDashboard, 4)
+        self.assertEqual(
+            GameKit.GKGameCenterViewControllerStateLocalPlayerFriendsList, 5
+        )

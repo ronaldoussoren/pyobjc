@@ -22,6 +22,29 @@ class TestAVAssetTrack(TestCase):
     def testMethods10_13(self):
         self.assertResultIsBOOL(AVFoundation.AVAssetTrack.isDecodable)
 
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBlock(
+            AVFoundation.AVAssetTrack.loadSegmentForTrackTime_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAssetTrack.loadSamplePresentationTimeForTrackTime_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAssetTrack.loadMetadataForFormat_completionHandler_,
+            1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            AVFoundation.AVAssetTrack.loadAssociatedTracksOfType_completionHandler_,
+            1,
+            b"v@@",
+        )
+
     @min_os_level("10.9")
     def testConstants10_9(self):
         self.assertIsInstance(AVFoundation.AVTrackAssociationTypeAudioFallback, str)

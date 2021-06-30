@@ -50,6 +50,10 @@ class TestCVPixelFormatDescription(TestCase):
 
         Quartz.CVPixelFormatDescriptionRegisterDescriptionWithPixelFormatType({}, tp)
 
+    @min_os_level("12.0")
+    def testFunctions12_0(self):
+        self.assertResultIsBOOL(Quartz.CVIsCompressedPixelFormatAvailable)
+
     @min_os_level("10.6")
     def testConstants10_6(self):
         self.assertIsInstance(Quartz.kCVPixelFormatBlackBlock, str)
