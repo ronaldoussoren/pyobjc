@@ -22,6 +22,12 @@ class TestNSTextSelectionNavigationHelper(TestCase):
     def enumerateContainerBoundariesFromLocation_reverse_usingBlock_(self, a, b, c):
         pass
 
+    def enumerateSubstringsFromLocation_options_usingBlock_(self, a, b, c):
+        pass
+
+    def textLayoutOrientationAtLocation_(self, a):
+        return 1
+
 
 class TestNSTextSelectionNavigation(TestCase):
     def test_constants(self):
@@ -43,6 +49,12 @@ class TestNSTextSelectionNavigation(TestCase):
         self.assertEqual(AppKit.NSTextSelectionNavigationModifierExtend, 1 << 0)
         self.assertEqual(AppKit.NSTextSelectionNavigationModifierVisual, 1 << 1)
         self.assertEqual(AppKit.NSTextSelectionNavigationModifierMultiple, 1 << 2)
+
+        self.assertEqual(AppKit.NSTextSelectionNavigationWritingDirectionLeftToRight, 0)
+        self.assertEqual(AppKit.NSTextSelectionNavigationWritingDirectionRightToLeft, 1)
+
+        self.assertEqual(AppKit.NSTextSelectionNavigationLayoutOrientationHorizontal, 0)
+        self.assertEqual(AppKit.NSTextSelectionNavigationLayoutOrientationVertical, 1)
 
     @min_sdk_level("12.0")
     def test_protocols(self):
@@ -87,6 +99,27 @@ class TestNSTextSelectionNavigation(TestCase):
 
         self.assertResultHasType(
             TestNSTextSelectionNavigationHelper.textWritingModeAtLocation_,
+            objc._C_NSInteger,
+        )
+
+        self.assertArgIsBlock(
+            TestNSTextSelectionNavigationHelper.enumerateSubstringsFromLocation_options_usingBlock_,
+            2,
+            b"v@@@o^Z",
+        )
+
+        self.assertArgIsBOOL(
+            TestNSTextSelectionNavigationHelper.enumerateContainerBoundariesFromLocation_reverse_usingBlock_,
+            1,
+        )
+        self.assertArgIsBlock(
+            TestNSTextSelectionNavigationHelper.enumerateContainerBoundariesFromLocation_reverse_usingBlock_,
+            2,
+            b"v@o^Z",
+        )
+
+        self.assertResultHasType(
+            TestNSTextSelectionNavigationHelper.textLayoutOrientationAtLocation_,
             objc._C_NSInteger,
         )
 

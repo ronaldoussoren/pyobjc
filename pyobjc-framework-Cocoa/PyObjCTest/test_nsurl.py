@@ -154,6 +154,9 @@ class TestNSURL(TestCase):
             Foundation.NSURLBookmarkCreationSecurityScopeAllowOnlyReadAccess, (1 << 12)
         )
         self.assertEqual(Foundation.NSURLBookmarkResolutionWithSecurityScope, (1 << 10))
+        self.assertEqual(
+            Foundation.NSURLBookmarkCreationWithoutImplicitSecurityScope, (1 << 29)
+        )
 
         self.assertIsInstance(Foundation.NSURLKeysOfUnsetValuesKey, str)
 

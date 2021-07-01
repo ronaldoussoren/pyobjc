@@ -306,6 +306,12 @@ class TestCoreAudioBaseTypes(TestCase):
         self.assertEqual(CoreAudio.kAudioChannelLabel_HOA_ACN_15, (2 << 16) | 15)
         self.assertEqual(CoreAudio.kAudioChannelLabel_HOA_ACN_65024, (2 << 16) | 65024)
 
+        self.assertEqual(
+            CoreAudio.kAudioChannelLabel_HOA_SN3D,
+            CoreAudio.kAudioChannelLabel_HOA_ACN_0,
+        )
+        self.assertEqual(CoreAudio.kAudioChannelLabel_HOA_N3D, 3 << 16)
+
         self.assertEqual(CoreAudio.kAudioChannelLabel_BeginReserved, 0xF0000000)
         self.assertEqual(CoreAudio.kAudioChannelLabel_EndReserved, 0xFFFFFFFE)
 

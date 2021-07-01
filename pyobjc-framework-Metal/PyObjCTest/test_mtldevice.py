@@ -225,6 +225,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def supportsRaytracingFromRender(self):
         return 1
 
+    def supportsPrimitiveMotionBlur(self):
+        return 1
+
     def supportsBinaryFunctionPointers(self):
         return 1
 
@@ -273,6 +276,9 @@ class TestMTLDeviceHelper(Metal.NSObject):
     def convertSparseTileRegions_toPixelRegions_withTileSize_numRegions_(
         self, a, b, c, d
     ):
+        pass
+
+    def newLibraryWithDescriptor_completionHandler_(self, a, b):
         pass
 
 
@@ -850,3 +856,11 @@ class TestMTLDevice(TestCase):
             3,
             objc._C_NSUInteger,
         )
+
+        self.assertArgIsBlock(
+            TestMTLDeviceHelper.newLibraryWithDescriptor_completionHandler_,
+            1,
+            MTLNewLibraryCompletionHandler,
+        )
+
+        self.assertResultIsBOOL(TestMTLDeviceHelper.supportsPrimitiveMotionBlur)

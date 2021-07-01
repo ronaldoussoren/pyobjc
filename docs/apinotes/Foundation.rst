@@ -189,3 +189,8 @@ The method ``getUUIDBytes:`` returns an instance of bytes of length 16.
 - ``initWithCharactersNoCopy:length:deallocator:``, ``initWithBytesNoCopy:length:encoding:deallocator:``:
   These methods are available from Python, but are not really useful because the pointer argument for
   the deallocator will not be the same as the argument passed in the first argument of this selector.
+
+``NSAttributedString``
+......................
+
+- ``initWithFormat:options:locale:arguments:`` cannot be  used from Python.

@@ -11,6 +11,9 @@ sec_protocol_pre_shared_key_selection_t = b"v@@@?"
 
 
 class TestSecProtocolOptions(TestCase):
+    def test_constants(self):
+        self.assertEqual(Security.SEC_PROTOCOL_CERT_COMPRESSION_DEFAULT, 1)
+
     @min_os_level("10.14")
     def test_functions(self):
         Security.sec_protocol_options_set_local_identity

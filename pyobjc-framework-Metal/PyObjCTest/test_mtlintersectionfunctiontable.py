@@ -29,6 +29,9 @@ class TestMTLIntersectionFunctionTable(TestCase):
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureInstancing, 1 << 0)
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureTriangleData, 1 << 1)
         self.assertEqual(Metal.MTLIntersectionFunctionSignatureWorldSpaceData, 1 << 2)
+        self.assertEqual(Metal.MTLIntersectionFunctionSignatureInstanceMotion, 1 << 3)
+        self.assertEqual(Metal.MTLIntersectionFunctionSignaturePrimitiveMotion, 1 << 4)
+        self.assertEqual(Metal.MTLIntersectionFunctionSignatureExtendedLimits, 1 << 5)
 
     @min_sdk_level("11.0")
     def test_protocols11_0(self):

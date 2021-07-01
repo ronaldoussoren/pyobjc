@@ -67,6 +67,12 @@ class TestMTLArgumentEncoderHelper(Metal.NSObject):
     def setIntersectionFunctionTables_withRange_(self, a, b):
         pass
 
+    def setComputePipelineState_atIndex_(self, a, b):
+        pass
+
+    def setComputePipelineStates_withRange_(self, a, b):
+        pass
+
 
 class TestMTLArgumentEncoder(TestCase):
     @min_sdk_level("10.13")
@@ -244,6 +250,26 @@ class TestMTLArgumentEncoder(TestCase):
         )
         self.assertArgHasType(
             TestMTLArgumentEncoderHelper.setIntersectionFunctionTables_withRange_,
+            1,
+            Metal.NSRange.__typestr__,
+        )
+
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setComputePipelineState_atIndex_,
+            1,
+            objc._C_NSUInteger,
+        )
+
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setComputePipelineState_withRange_,
+            0,
+            b"n^@",
+        )
+        self.assertArgSizeInArg(
+            TestMTLArgumentEncoderHelper.setComputePipelineState_withRange_, 0, 1
+        )
+        self.assertArgHasType(
+            TestMTLArgumentEncoderHelper.setComputePipelineState_withRange_,
             1,
             Metal.NSRange.__typestr__,
         )

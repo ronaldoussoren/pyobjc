@@ -72,17 +72,6 @@ class TestVNDetectHumanHandPoseRequest(TestCase):
 
         self.assertEqual(Vision.VNDetectHumanHandPoseRequestRevision1, 1)
 
-        self.assertEqual(Vision.VNHumanHandPoseObservationChirality, Vision.VNChirality)
-        self.assertEqual(
-            Vision.VNHumanHandPoseObservationChiralityUnknown, Vision.VNChiralityUnknown
-        )
-        self.assertEqual(
-            Vision.VNHumanHandPoseObservationChiralityLeft, Vision.VNChiralityLeft
-        )
-        self.assertEqual(
-            Vision.VNHumanHandPoseObservationChiralityRight, Vision.VNChiralityRight
-        )
-
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertArgIsOut(

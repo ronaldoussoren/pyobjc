@@ -3,11 +3,6 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, expectedFailure
 
 
 class TestAVCaptureDevice(TestCase):
-    @expectedFailure
-    def testMissingConstants(self):
-        # Present in header files, but not actually exposed
-        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
-
     @min_os_level("10.7")
     def testConstants(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceWasConnectedNotification, str)
@@ -54,6 +49,13 @@ class TestAVCaptureDevice(TestCase):
         self.assertEqual(AVFoundation.AVAuthorizationStatusDenied, 2)
         self.assertEqual(AVFoundation.AVAuthorizationStatusAuthorized, 3)
 
+        self.assertEqual(AVFoundation.AVCaptureMicrophoneModeStandard, 0)
+        self.assertEqual(AVFoundation.AVCaptureMicrophoneModeWideSpectrum, 1)
+        self.assertEqual(AVFoundation.AVCaptureMicrophoneModeVoiceIsolation, 2)
+
+        self.assertEqual(AVFoundation.AVCaptureSystemUserInterfaceVideoEffects, 1)
+        self.assertEqual(AVFoundation.AVCaptureSystemUserInterfaceMicrophoneModes, 2)
+
     @min_os_level("10.15")
     def test_constants10_15(self):
         self.assertIsInstance(AVFoundation.AVCaptureDeviceTypeExternalUnknown, str)
@@ -62,6 +64,7 @@ class TestAVCaptureDevice(TestCase):
             AVFoundation.AVCaptureDeviceTypeBuiltInWideAngleCamera, str
         )
 
+        self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
         self.assertIsInstance(AVFoundation.AVCaptureMaxAvailableTorchLevel, float)
 
     @min_os_level("10.7")
@@ -129,3 +132,7 @@ class TestAVCaptureDevice(TestCase):
         self.assertResultIsBOOL(
             AVFoundation.AVCaptureDeviceFormat.isHighPhotoQualitySupported
         )
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectEnabled)
+
+        self.assertResultIsBOOL(AVFoundation.AVCaptureDevice.isPortraitEffectActive)

@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase, expectedFailure
+from PyObjCTools.TestSupport import TestCase, expectedFailure, min_os_level
 import Quartz
 
 
@@ -102,3 +102,8 @@ class TestCVBuffer(TestCase):
             )
             self.assertIsInstance(v, Quartz.CFDictionaryRef)
             self.assertFalse("pyobjc.test2" in v)
+
+    @min_os_level("12.0")
+    def testFunctions12_0(self):
+        self.assertResultIsCFRetained(Quartz.CVBufferCopyAttachments)
+        self.assertResultIsCFRetained(Quartz.CVBufferCopyAttachment)

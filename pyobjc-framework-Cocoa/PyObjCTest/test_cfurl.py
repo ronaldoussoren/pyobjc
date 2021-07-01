@@ -594,6 +594,10 @@ class TestURL(TestCase):
         self.assertEqual(
             CoreFoundation.kCFURLBookmarkResolutionWithSecurityScope, 1 << 10
         )
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkResolutionWithoutImplicitStartAccessing,
+            1 << 15,
+        )
 
     @min_os_level("10.9")
     def testConstants10_9(self):
@@ -707,6 +711,9 @@ class TestURL(TestCase):
         )
         self.assertEqual(
             CoreFoundation.kCFURLBookmarkResolutionWithSecurityScope, 1 << 10
+        )
+        self.assertEqual(
+            CoreFoundation.kCFURLBookmarkCreationWithoutImplicitSecurityScope, 1 << 29
         )
 
         self.assertIsInstance(CoreFoundation.kCFURLKeysOfUnsetValuesKey, str)

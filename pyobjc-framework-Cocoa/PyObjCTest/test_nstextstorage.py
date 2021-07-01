@@ -15,7 +15,7 @@ class TestNSTextStorageHelper(AppKit.NSObject):
     ):
         pass
 
-    def performEditingTransactionForTextStorage_withBlock_(self, a, b):
+    def performEditingTransactionForTextStorage_usingBlock_(self, a, b):
         pass
 
 
@@ -93,7 +93,7 @@ class TestNSTextStorage(TestCase):
         )
 
         self.assertArgIsBlock(
-            TestNSTextStorageHelper.performEditingTransactionForTextStorage_withBlock_,
+            TestNSTextStorageHelper.performEditingTransactionForTextStorage_usingBlock_,
             1,
             b"v",
         )

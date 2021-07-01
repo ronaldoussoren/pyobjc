@@ -172,6 +172,13 @@ class TestCMSampleBuffer(TestCase):
             str,
         )
 
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            CoreMedia.kCMSampleAttachmentKey_CryptorSubsampleAuxiliaryData,
+            str,
+        )
+
     def test_types(self):
         self.assertIsCFType(CoreMedia.CMSampleBufferRef)
 

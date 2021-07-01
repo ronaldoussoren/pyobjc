@@ -22,10 +22,6 @@ class TestAVPlayerInterstitialEventController(TestCase):
     @min_os_level("11.3")
     def test_constants11_3(self):
         self.assertIsInstance(
-            AVFoundation.AVPlayerInterstitialEventObserverCurrentEventDidChangeNotification,
-            str,
-        )
-        self.assertIsInstance(
             AVFoundation.AVPlayerWaitingDuringInterstitialEventReason, str
         )
 

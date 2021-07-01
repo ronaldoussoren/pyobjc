@@ -19,7 +19,7 @@ class TestNSTextContentManagerHelper(AppKit.NSObject):
     def adjustedRangeFromRange_inEditingTextSelection_(self, a, b):
         return 1
 
-    def textContentManager_shouldEnumerateTextElement_withOptions_(self, a, b, c):
+    def textContentManager_shouldEnumerateTextElement_options_(self, a, b, c):
         return 1
 
     def textContentStorage_textParagraphWithRange_(self, a, b):
@@ -28,8 +28,8 @@ class TestNSTextContentManagerHelper(AppKit.NSObject):
 
 class TestNSTextContentManager(TestCase):
     def test_constants(self):
-        self.assertEqual(AppKit.NSTextElementProviderEnumerationOptionsNone, 0)
-        self.assertEqual(AppKit.NSTextElementProviderEnumerationOptionsReverse, 1 << 0)
+        self.assertEqual(AppKit.NSTextContentManagerEnumerationOptionsNone, 0)
+        self.assertEqual(AppKit.NSTextContentManagerEnumerationOptionsReverse, 1 << 0)
 
     @min_os_level("12.0")
     def test_constants12_0(self):
@@ -69,10 +69,10 @@ class TestNSTextContentManager(TestCase):
         )
 
         self.assertResultIsBOOL(
-            TestNSTextContentManagerHelper.textContentManager_shouldEnumerateTextElement_withOptions_
+            TestNSTextContentManagerHelper.textContentManager_shouldEnumerateTextElement_options_
         )
         self.assertArgHasType(
-            TestNSTextContentManagerHelper.textContentManager_shouldEnumerateTextElement_withOptions_,
+            TestNSTextContentManagerHelper.textContentManager_shouldEnumerateTextElement_options_,
             2,
             objc._C_NSUInteger,
         )
@@ -90,20 +90,20 @@ class TestNSTextContentManager(TestCase):
         )
         self.assertResultIsBOOL(AppKit.NSTextContentManager.hasEditingTransaction)
         self.assertArgIsBlock(
-            AppKit.NSTextContentManager.performEditingTransactionWithBlock_, 0, b"v"
+            AppKit.NSTextContentManager.performEditingTransactionUsingBlock, 0, b"v"
         )
 
         self.assertResultIsBOOL(
-            AppKit.NSTextContentManager.synchronizesTextLayoutManagersAutomatically
+            AppKit.NSTextContentManager.automaticallySynchronizesTextLayoutManagers
         )
         self.assertArgIsBOOL(
-            AppKit.NSTextContentManager.setSynchronizesTextLayoutManagersAutomatically_,
+            AppKit.NSTextContentManager.setAutomaticallySynchronizesTextLayoutManagers_,
             0,
         )
 
         self.assertResultIsBOOL(
-            AppKit.NSTextContentManager.synchronizesToBackingStoreAutomatically
+            AppKit.NSTextContentManager.automaticallySynchronizesToBackingStore
         )
         self.assertArgIsBOOL(
-            AppKit.NSTextContentManager.setSynchronizesToBackingStoreAutomatically_, 0
+            AppKit.NSTextContentManager.setAutomaticallySynchronizesToBackingStore_, 0
         )
