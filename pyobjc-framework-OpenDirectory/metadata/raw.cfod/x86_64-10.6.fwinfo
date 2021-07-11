@@ -1006,7 +1006,7 @@
     "typestr": "@"
    },
    "kODSessionProxyUsername": {
-    "typestr": "@"
+    "typestr": "^{__CFString=}"
    }
   },
   "formal_protocols": {},
