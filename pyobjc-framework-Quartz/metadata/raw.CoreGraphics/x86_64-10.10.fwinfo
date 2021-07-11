@@ -6057,7 +6057,7 @@
      },
      {
       "name": "encoding",
-      "typestr": "[256S]"
+      "typestr": "^S"
      }
     ],
     "retval": {
