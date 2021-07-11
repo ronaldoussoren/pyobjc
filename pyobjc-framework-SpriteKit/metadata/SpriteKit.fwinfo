@@ -15,6 +15,7 @@
    "SKTileAdjacencyUpperLeftCorner": { "value": "SKTileAdjacencyUp | SKTileAdjacencyUpperRight | SKTileAdjacencyRight | SKTileAdjacencyDown | SKTileAdjacencyLowerLeft | SKTileAdjacencyLeft | SKTileAdjacencyUpperLeft" }
   },
   "enum": {
+   "SK_VERSION": { "ignore": true },
    "SKTileAdjacencyUp": { "value": 1 },
    "SKTileAdjacencyUpperRight": { "value": 2 },
    "SKTileAdjacencyRight": { "value": 4 },

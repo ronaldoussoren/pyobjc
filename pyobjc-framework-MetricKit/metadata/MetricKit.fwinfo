@@ -1,0 +1,14 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {},
+  "formal_protocols": {},
+  "functions": {
+   "_MXSignpostMetricsSnapshot": {
+    "retval": {}
+   }
+  },
+  "informal_protocols": {}
+ }
+}

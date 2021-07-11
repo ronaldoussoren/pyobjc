@@ -1,0 +1,111 @@
+// objective.metadata exceptions file, see its document
+// for information on how to update this file.
+{
+ "definitions": {
+  "classes": {
+   "AVB17221ACMPInterface": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "sendACMPResponseMessage:error:"
+     }
+    ]
+   },
+   "AVB17221AECPInterface": {
+    "methods": [
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "sendResponse:toMACAddress:error:"
+     }
+    ]
+   },
+   "AVB17221EntityDiscovery": {
+    "methods": [
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "addLocalEntity:error:"
+     },
+     {
+      "args": {
+       "1": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "removeLocalEntity:error:"
+     },
+     {
+      "args": {
+       "2": {
+        "type_modifier": "o"
+       }
+      },
+      "class_method": false,
+      "selector": "changeEntityWithEntityID:toNewGPTPGrandmasterID:error:"
+     }
+    ]
+   },
+   "AVBIPAddress": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithIPv6Address:"
+     },
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithSockAddr:"
+     }
+    ]
+   },
+   "AVBMACAddress": {
+    "methods": [
+     {
+      "args": {
+       "0": {}
+      },
+      "class_method": false,
+      "selector": "initWithBytes:"
+     },
+     {
+      "class_method": false,
+      "retval": {},
+      "selector": "bytes"
+     }
+    ],
+    "properties": [
+     {
+      "attributes": [
+       "assign",
+       "readonly"
+      ],
+      "name": "bytes"
+     }
+    ]
+   }
+  },
+  "formal_protocols": {},
+  "functions": {},
+  "informal_protocols": {}
+ }
+}

@@ -555,13 +555,13 @@
    "ColorSyncProfileIsPQBased": {
     "retval": { "typestr": "B" },
     "args": {
-     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" },
+     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" }
     }
    },
    "ColorSyncProfileIsHLGBased": {
     "retval": { "typestr": "B" },
     "args": {
-     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" },
+     "0": { "name": "transform", "typestr": "^{ColorSyncTransform=}" }
     }
    },
    "ColorSyncTransformConvert": {
