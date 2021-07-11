@@ -1,5 +1,3 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
   "aliases": {
@@ -11821,14 +11819,14 @@
      {
       "class_method": false,
       "args": {
-       "0": "type_override": "Z"
+       "0": { "type_override": "Z" }
       },
       "selector": "setAllowsAutomaticKeyEquivalentMirroring:"
      },
      {
       "class_method": false,
       "args": {
-       "0": "type_override": "Z"
+       "0": { "type_override": "Z" }
       },
       "selector": "setAllowsAutomaticKeyEquivalentLocalization:"
      },
@@ -12649,7 +12647,7 @@
      {
       "selector": "applicationSupportsSecureRestorableState:",
       "class_method": false,
-      "retval" { "type_override": "Z" }
+      "retval": { "type_override": "Z" }
      },
      {
       "args": {
