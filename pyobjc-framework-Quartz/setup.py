@@ -48,7 +48,7 @@ import os
 from pyobjc_setup import Extension, setup
 
 subpackages = [
-    "Quartz.%s" % (fn,)
+    f"Quartz.{fn}"
     for fn in os.listdir("Lib/Quartz")
     if os.path.exists(os.path.join("Lib/Quartz", fn, "__init__.py"))
 ]

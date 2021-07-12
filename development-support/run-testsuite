@@ -223,7 +223,7 @@ def run_tests(*, interpreter, arch, py_ver, project, state_dir):
     p = subprocess.Popen(
         [
             "/usr/bin/arch",
-            "-%s" % (arch,),
+            f"-{arch}",
             interpreter,
             # XXX: Coverage support is disabled for now because
             # I've never actually used it.
@@ -338,7 +338,7 @@ def system_supports_arch(interpreter, arch):
 
     try:
         subprocess.check_output(
-            ["/usr/bin/arch", "-%s" % (arch,), interpreter, "-c", ""]
+            ["/usr/bin/arch", f"-{arch}", interpreter, "-c", ""]
         )
     except subprocess.CalledProcessError:
         return False
@@ -440,11 +440,11 @@ def main():
 
     for py_ver in options.python_versions:
         for variant in variants(py_ver, options.permitted_variants):
-            lg.info("Preparing variant %r of python %s" % (variant, py_ver))
+            lg.info(f"Preparing variant {variant!r} of python {py_ver}")
 
             setup_variant(py_ver, variant)
 
-            with virtualenv("python{}".format(py_ver)) as interpreter:
+            with virtualenv(f"python{py_ver}") as interpreter:
                 # Install tools
                 subprocess.check_call(
                     [
@@ -496,7 +496,7 @@ def main():
                         arch,
                         interpreter,
                     )
-                    state_dir = os.path.join(osx_dir, "%s-%s" % (variant, arch))
+                    state_dir = os.path.join(osx_dir, f"{variant}-{arch}")
 
                     for project in ["pyobjc"] + build_order:
                         run_tests(

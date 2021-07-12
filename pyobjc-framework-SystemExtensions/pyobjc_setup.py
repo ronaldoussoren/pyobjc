@@ -95,7 +95,7 @@ class oc_test(test.test):
                 to_remove.append(dirname)
 
         for dirname in to_remove:
-            log.info("removing installed %r from sys.path before testing" % (dirname,))
+            log.info(f"removing installed {dirname!r} from sys.path before testing")
             sys.path.remove(dirname)
 
         pkg_resources.working_set.__init__()
@@ -121,7 +121,7 @@ class oc_test(test.test):
 
         add_activation_listener(lambda dist: dist.activate())
         working_set.__init__()
-        require("%s==%s" % (ei_cmd.egg_name, ei_cmd.egg_version))
+        require(f"{ei_cmd.egg_name}=={ei_cmd.egg_version}")
 
     def remove_from_sys_path(self):
         from pkg_resources import working_set
@@ -165,7 +165,7 @@ class oc_test(test.test):
                 "skip=": len(getattr(result, "skipped", [])),
                 "testSeconds": (time_after - time_before),
             }
-            print("SUMMARY: %s" % (summary,))
+            print(f"SUMMARY: {summary}")
             if not result.wasSuccessful():
                 raise DistutilsError("some tests failed")
 
@@ -341,7 +341,7 @@ def _fixup_compiler():
         # Check if compiler is LLVM-GCC, that's known to
         # generate bad code.
         data = os.popen(
-            "'%s' --version 2>/dev/null" % (cc.replace("'", "'\"'\"'"),)
+            "'{}' --version 2>/dev/null".format(cc.replace("'", "'\"'\"'"))
         ).read()
         if "llvm-gcc" in data:
             cc = None
@@ -362,7 +362,7 @@ def _fixup_compiler():
         raise SystemExit("Cannot locate a working compiler")
 
     if cc != oldcc:
-        print("Use '%s' instead of '%s' as the compiler" % (cc, oldcc))
+        print(f"Use '{cc}' instead of '{oldcc}' as the compiler")
 
         config_vars = get_config_vars()
         for env in ("BLDSHARED", "LDSHARED", "CC", "CXX"):
@@ -389,7 +389,7 @@ class pyobjc_build_ext(build_ext.build_ext):
             os.makedirs(include_root)
             if dist.has_metadata("include"):
                 for fn in dist.metadata_listdir("include"):
-                    data = dist.get_metadata("include/%s" % (fn,))
+                    data = dist.get_metadata(f"include/{fn}")
                     fp = open(os.path.join(include_root, fn), "w")
                     try:
                         fp.write(data)
@@ -526,11 +526,11 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
                     "versions %s upto and including %s" % (min_os_level, max_os_level)
                 )
             else:
-                msg = "This distribution is only supported on MacOSX >= %s" % (
+                msg = "This distribution is only supported on MacOSX >= {}".format(
                     min_os_level,
                 )
         elif max_os_level is not None:
-            msg = "This distribution is only supported on MacOSX <= %s" % (
+            msg = "This distribution is only supported on MacOSX <= {}".format(
                 max_os_level,
             )
         else:
@@ -545,7 +545,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
 
         class no_test(oc_test):
             def run(self, msg=msg):
-                print("WARNING: %s\n" % (msg,))
+                print(f"WARNING: {msg}\n")
                 print(
                     "SUMMARY: {'testSeconds': 0.0, 'count': 0, 'fails': 0, "
                     "'errors': 0, 'xfails': 0, 'skip': 65, 'xpass': 0, "
@@ -566,14 +566,14 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
     plat_name = "MacOS X"
     plat_versions = []
     if min_os_level is not None and min_os_level == max_os_level:
-        plat_versions.append("==%s" % (min_os_level,))
+        plat_versions.append(f"=={min_os_level}")
     else:
         if min_os_level is not None:
-            plat_versions.append(">=%s" % (min_os_level,))
+            plat_versions.append(f">={min_os_level}")
         if max_os_level is not None:
-            plat_versions.append("<=%s" % (max_os_level,))
+            plat_versions.append(f"<={max_os_level}")
     if plat_versions:
-        plat_name += " (%s)" % (", ".join(plat_versions),)
+        plat_name += " ({})".format(", ".join(plat_versions))
 
     if os.path.isfile("Modules/pyobjc-api.h") or "ext_modules" not in k:
         if "setup_requires" in k:
@@ -588,17 +588,17 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
         k["long_description"] += "\n"
         k[
             "long_description"
-        ] += "* `Documentation <https://%s.readthedocs.io/en/latest/>`_\n\n" % (
+        ] += "* `Documentation <https://{}.readthedocs.io/en/latest/>`_\n\n".format(
             REPO_NAME,
         )
         k[
             "long_description"
-        ] += "* `Issue Tracker <https://github.com/ronaldoussoren/%s/issues>`_\n\n" % (
+        ] += "* `Issue Tracker <https://github.com/ronaldoussoren/{}/issues>`_\n\n".format(
             REPO_NAME,
         )
         k[
             "long_description"
-        ] += "* `Repository <https://github.com/ronaldoussoren/%s/>`_\n\n" % (
+        ] += "* `Repository <https://github.com/ronaldoussoren/{}/>`_\n\n".format(
             REPO_NAME,
         )
         k["long_description_content_type"] = "text/x-rst; charset=UTF-8"

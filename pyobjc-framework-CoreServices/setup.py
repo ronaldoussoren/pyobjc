@@ -13,7 +13,7 @@ from pyobjc_setup import Extension, setup
 VERSION = "8.0b1"
 
 subpackages = [
-    "CoreServices.%s" % (fn,)
+    f"CoreServices.{fn}"
     for fn in os.listdir("Lib/CoreServices")
     if os.path.exists(os.path.join("Lib/CoreServices", fn, "__init__.py"))
 ]

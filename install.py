@@ -7,7 +7,6 @@ Usage:
 This accepts the same commandline arguments as "python setup.py install"
 in a setuptools using project.
 """
-from __future__ import print_function
 
 import os
 import plistlib
@@ -210,23 +209,23 @@ def build_project(project, extra_args):
     proj_dir = os.path.join(TOPDIR, project)
 
     # First ask distutils to clean up
-    print("Cleaning {!r} using {!r}".format(project, sys.executable))
+    print(f"Cleaning {project!r} using {sys.executable!r}")
     status = subprocess.call([sys.executable, "setup.py", "clean"], cwd=proj_dir)
     if status != 0:
-        print("Cleaning of {!r} failed, status {}".format(project, status))
+        print(f"Cleaning of {project!r} failed, status {status}")
         return False
 
     # Explicitly remove the 'build' directory, just in case...
     if os.path.exists(os.path.join(proj_dir, "build")):
         shutil.rmtree(os.path.join(proj_dir, "build"))
 
-    print("Installing {!r} using {!r}".format(project, sys.executable))
+    print(f"Installing {project!r} using {sys.executable!r}")
     status = subprocess.call(
         [sys.executable, "setup.py", "install"] + extra_args, cwd=proj_dir
     )
 
     if status != 0:
-        print("Installing {!r} failed (status {})".format(project, status))
+        print(f"Installing {project!r} failed (status {status})")
         return False
 
     return True

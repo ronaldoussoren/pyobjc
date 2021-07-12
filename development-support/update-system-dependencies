@@ -24,7 +24,7 @@ def main():
     for ver in PY_VERSIONS:
         subprocess.check_call(
             [
-                "python{}".format(ver),
+                f"python{ver}",
                 "-mpip",
                 "install",
                 "--upgrade",
@@ -38,7 +38,7 @@ def main():
     # Homebrew:
     for path in ("/usr/local/bin/python", "/usr/local/bin/python3"):
         if not os.path.exists(path):
-            print("WARNING: No %r" % (path,))
+            print(f"WARNING: No {path!r}")
 
         subprocess.check_call(
             [

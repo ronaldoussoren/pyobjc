@@ -18,7 +18,7 @@ VMs = ["catalina.local"]
 def is_up(vm):
     try:
         socket.gethostbyname(vm)
-    except socket.error:
+    except OSError:
         return False
 
     return True
@@ -112,9 +112,9 @@ def main():
         if nm == "pyobjc":
             continue
         pattern = nm.replace("-", "?") + "-*"
-        print("{}:".format(nm))
+        print(f"{nm}:")
         for fn in sorted(files_matching(pattern, "distribution-dir")):
-            print("  {}".format(fn))
+            print(f"  {fn}")
         print()
 
     print()

@@ -60,7 +60,7 @@ def xcode_version():
         data = data.decode("utf-8")
         lines = data.splitlines()
         assert len(lines) >= 2
-        return "{} ({})".format(lines[0], lines[-1])
+        return f"{lines[0]} ({lines[-1]})"
 
     except subprocess.CalledProcessError:
         return "Xcode not installed (cmd line tools)"
@@ -69,7 +69,7 @@ def xcode_version():
 def py_version(ver):
     return (
         subprocess.check_output(
-            ["python{}".format(ver), "-c", "import sys; print(sys.version)"]
+            [f"python{ver}", "-c", "import sys; print(sys.version)"]
         )
         .decode("utf-8")
         .splitlines()[0]
@@ -78,15 +78,15 @@ def py_version(ver):
 
 def system_report(path, py_versions):
     with open(path, "w") as fp:
-        fp.write("Build at:           {}\n".format(time.ctime()))
-        fp.write("macOS version:      {}\n".format(mac_ver()))
-        fp.write("Xcode version:      {}\n".format(xcode_version()))
-        fp.write("ID of checkout:     {}\n".format(repository_id()))
-        fp.write("Status of checkout: {}\n".format(repository_commit_state()))
+        fp.write(f"Build at:           {time.ctime()}\n")
+        fp.write(f"macOS version:      {mac_ver()}\n")
+        fp.write(f"Xcode version:      {xcode_version()}\n")
+        fp.write(f"ID of checkout:     {repository_id()}\n")
+        fp.write(f"Status of checkout: {repository_commit_state()}\n")
         fp.write("\n")
 
         for ver in py_versions:
-            fp.write("Python {}:         {}\n".format(ver, py_version(ver)))
+            fp.write(f"Python {ver}:         {py_version(ver)}\n")
 
 
 def _install_virtualenv_software(interpreter):

@@ -65,15 +65,15 @@ def main():
         # Collect sdist archive with most recent python version.
         status = subprocess.call(
             [
-                "python{}".format(detect_pyversions()[-1]),
+                f"python{detect_pyversions()[-1]}",
                 "setup.py",
                 "sdist",
-                "--dist-dir={}".format(DIST_DIR),
+                f"--dist-dir={DIST_DIR}",
             ],
             cwd=os.path.join(TOP_DIR, nm),
         )
         if status != 0:
-            print("WARNING: Building wheel for {} failed".format(nm))
+            print(f"WARNING: Building wheel for {nm} failed")
             failed.append((nm, "sdist", ""))
 
         for ver in detect_pyversions():
@@ -81,10 +81,10 @@ def main():
                 setup_variant(ver, variant)
                 status = subprocess.call(
                     [
-                        "python{}".format(ver),
+                        f"python{ver}",
                         "setup.py",
                         "bdist_wheel",
-                        "--dist-dir={}".format(DIST_DIR),
+                        f"--dist-dir={DIST_DIR}",
                     ],
                     cwd=os.path.join(TOP_DIR, nm),
                 )
@@ -105,9 +105,9 @@ def main():
         if nm == "pyobjc":
             continue
         pattern = nm.replace("-", "?") + "-*"
-        print("{}:".format(nm))
+        print(f"{nm}:")
         for fn in sorted(files_matching(pattern, DIST_DIR)):
-            print("  {}".format(fn))
+            print(f"  {fn}")
         print()
 
     if failed:

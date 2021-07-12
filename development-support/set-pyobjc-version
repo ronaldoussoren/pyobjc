@@ -19,7 +19,7 @@ DRYRUN = False
 topdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 if len(sys.argv) != 2:
-    print("Usage: %s VERSION" % (sys.argv[0],))
+    print(f"Usage: {sys.argv[0]} VERSION")
     sys.exit(1)
 
 VERSION = sys.argv[1]
@@ -47,14 +47,14 @@ else:
 print("Updating 'pyobjc'")
 fn = os.path.join(topdir, "pyobjc", "setup.py")
 r = re.compile("^VERSION = .*$", re.MULTILINE)
-data = r.sub("VERSION = '%s'" % (VERSION,), load_file(fn))
+data = r.sub(f"VERSION = '{VERSION}'", load_file(fn))
 save_file(fn, data)
 
 # pyobjc-core, version is in a header file
 print("Updating 'pyobjc-core'")
 fn = os.path.join(topdir, "pyobjc-core", "Modules", "objc", "pyobjc.h")
 r = re.compile("^#define OBJC_VERSION .*$", re.MULTILINE)
-data = r.sub('#define OBJC_VERSION "%s"' % (VERSION,), load_file(fn))
+data = r.sub(f'#define OBJC_VERSION "{VERSION}"', load_file(fn))
 save_file(fn, data)
 
 # and the various framework wrappers
@@ -62,14 +62,14 @@ for subdir in os.listdir(topdir):
     if not subdir.startswith("pyobjc-framework-"):
         continue
 
-    print("Updating '%s'" % (subdir,))
+    print(f"Updating '{subdir}'")
     fn = os.path.join(topdir, subdir, "setup.py")
     r = re.compile("^VERSION = .*$", re.MULTILINE)
-    data = r.sub("VERSION = '%s'" % (VERSION,), load_file(fn))
+    data = r.sub(f"VERSION = '{VERSION}'", load_file(fn))
     save_file(fn, data)
 
 # documentation
 fn = os.path.join(topdir, "docs", "conf.py")
 r = re.compile("^version = .*$", re.MULTILINE)
-data = r.sub('version = "%s"' % (VERSION,), load_file(fn))
+data = r.sub(f'version = "{VERSION}"', load_file(fn))
 save_file(fn, data)

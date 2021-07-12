@@ -31,7 +31,7 @@ def main():
         for variant in variants(ver):
             setup_variant(ver, variant)
 
-            with virtualenv("python{}".format(ver)) as interpreter:
+            with virtualenv(f"python{ver}") as interpreter:
                 log = subprocess.check_output(
                     [
                         interpreter,
@@ -41,20 +41,20 @@ def main():
                         DIST_DIR,
                         "--no-index",
                         "--no-cache-dir",
-                        "pyobjc=={}".format(pyobjc_ver()),
+                        f"pyobjc=={pyobjc_ver()}",
                     ]
                 ).decode("utf-8")
 
                 sys.stdout.write(log)
                 if "Building wheels for collected packages" in log:
-                    print("WARNING: non-wheel install: {}".format(ver))
+                    print(f"WARNING: non-wheel install: {ver}")
                     sys.exit(1)
                 for ln in log.splitlines():
                     if (
                         "Running setup.py install" in ln
                         and "Running setup.py install for pyobjc:" not in ln
                     ):
-                        print("WARNING: non-wheel install: {}".format(ver))
+                        print(f"WARNING: non-wheel install: {ver}")
                         sys.exit(1)
 
                 subprocess.check_call(

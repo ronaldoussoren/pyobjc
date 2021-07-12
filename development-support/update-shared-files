@@ -32,12 +32,12 @@ def main():
                 continue
 
             if not os.path.exists(destination):
-                print("Add missing: {}".format(destination))
+                print(f"Add missing: {destination}")
                 shutil.copy(source, destination)
 
             else:
                 if contents(source) != contents(destination):
-                    print("Update: {}".format(destination))
+                    print(f"Update: {destination}")
                     shutil.copy(source, destination)
 
 

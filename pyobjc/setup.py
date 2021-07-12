@@ -64,6 +64,7 @@ FRAMEWORK_WRAPPERS = [
     ("CoreText", None, None),
     ("CoreWLAN", "10.6", None),
     ("CryptoTokenKit", "10.10", None),
+    ("DataDetection", "12.0", None),
     ("DeviceCheck", "10.15", None),
     ("DictionaryServices", "10.5", None),
     ("DiscRecording", None, None),
@@ -93,7 +94,7 @@ FRAMEWORK_WRAPPERS = [
     ("LaunchServices", None, None),
     ("LinkPresentation", "10.15", None),
     ("LocalAuthentication", "10.10", None),
-    ("LocalAuthenticationUIView", "12.0", None),
+    ("LocalAuthenticationEmbeddedUI", "12.0", None),
     ("MailKit", "12.0", None),
     ("MapKit", "10.9", None),
     ("MediaAccessibility", "10.9", None),
@@ -199,20 +200,20 @@ def framework_requires(include_all=False):
 
         marker = []
         if introduced is not None:
-            marker.append('platform_release>="%s"' % (MACOS_TO_DARWIN[introduced],))
+            marker.append(f'platform_release>="{MACOS_TO_DARWIN[introduced]}"')
 
         if removed is not None:
-            marker.append('platform_release<"%s"' % (MACOS_TO_DARWIN[removed],))
+            marker.append(f'platform_release<"{MACOS_TO_DARWIN[removed]}"')
 
         if marker:
-            marker = ";%s" % (" and ".join(marker),)
+            marker = ";{}".format(" and ".join(marker))
         else:
             marker = ""
 
         if include_all:
-            result.append("pyobjc-framework-%s==%s" % (name, VERSION))
+            result.append(f"pyobjc-framework-{name}=={VERSION}")
         else:
-            result.append("pyobjc-framework-%s==%s%s" % (name, VERSION, marker))
+            result.append(f"pyobjc-framework-{name}=={VERSION}{marker}")
 
     return result
 
@@ -354,7 +355,7 @@ class oc_test(Command):
 
             for fn in header_files:
                 if not os.path.exists(os.path.join(subdir, fn)):
-                    print("Framework wrapper for %s does not contain %s" % (nm, fn))
+                    print(f"Framework wrapper for {nm} does not contain {fn}")
                     failures += 1
 
                 else:
@@ -362,7 +363,7 @@ class oc_test(Command):
                         data = fp.read()
 
                     if data != templates[fn]:
-                        print("Framework wrapper for %s contains stale %s" % (nm, fn))
+                        print(f"Framework wrapper for {nm} contains stale {fn}")
                         failures += 1
 
         print("  validating framework setup files...")
@@ -454,7 +455,7 @@ class oc_test(Command):
                         failures += 1
 
                 if found_version != VERSION:
-                    print("Bad version in wrapper for %s" % (nm,))
+                    print(f"Bad version in wrapper for {nm}")
                     failures += 1
 
         print("  validating sdist archives...")
@@ -462,7 +463,7 @@ class oc_test(Command):
         for nm in ("pyobjc", "pyobjc-core") + tuple(
             sorted(nm for nm in os.listdir("..") if nm.startswith("pyobjc-framework-"))
         ):
-            print("    %s" % (nm,))
+            print(f"    {nm}")
             subdir = os.path.join("..", nm)
             if os.path.exists(os.path.join(subdir, "dist")):
                 shutil.rmtree(os.path.join(subdir, "dist"))
@@ -476,18 +477,18 @@ class oc_test(Command):
             files = glob.glob(os.path.join(subdir, "dist", "*.tar.gz"))
 
             if not files:
-                print("No sdist in %s" % (nm,))
+                print(f"No sdist in {nm}")
                 failures += 1
 
             elif len(files) > 1:
-                print("Too many sdist in %s" % (nm,))
+                print(f"Too many sdist in {nm}")
                 failures += 1
 
             else:
                 t = tarfile.open(files[0], "r:gz")
                 for fn in t.getnames():
                     if fn.startswith("/"):
-                        print("Absolute path in sdist for %s" % (nm,))
+                        print(f"Absolute path in sdist for {nm}")
                         failures += 1
 
                     for p in (
@@ -503,9 +504,7 @@ class oc_test(Command):
                     ):
 
                         if p in fn:
-                            print(
-                                "Unwanted pattern %r in sdist for %s: %s" % (p, nm, fn)
-                            )
+                            print(f"Unwanted pattern {p!r} in sdist for {nm}: {fn}")
                             failures += 1
 
         print("  validating long description...")
@@ -513,7 +512,7 @@ class oc_test(Command):
             sorted(nm for nm in os.listdir("..") if nm.startswith("pyobjc-framework-"))
         ):
             subdir = os.path.join("..", nm)
-            print("    %s" % (nm,))
+            print(f"    {nm}")
             with cwd(subdir):
                 try:
                     subprocess.check_output(
@@ -555,7 +554,7 @@ class oc_test(Command):
 def frameworks_in_table(filename):
     result = {}
     in_table = False
-    with open(filename, "r") as stream:
+    with open(filename) as stream:
 
         for line in stream:
             if not in_table:

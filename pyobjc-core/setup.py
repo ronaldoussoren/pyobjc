@@ -83,7 +83,8 @@ CFLAGS = [
     "-Werror",
     "-I/usr/include/ffi",
     # "-fvisibility=hidden",
-    # "-O3", "-flto",
+    "-O3",
+    "-flto",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -220,7 +221,7 @@ class oc_test(test.test):
                 to_remove.append(dirname)
 
         for dirname in to_remove:
-            log.info("removing installed %r from sys.path before testing" % (dirname,))
+            log.info(f"removing installed {dirname!r} from sys.path before testing")
             sys.path.remove(dirname)
 
         working_set.__init__(sys.path)
@@ -245,7 +246,7 @@ class oc_test(test.test):
 
         add_activation_listener(lambda dist: dist.activate())
         working_set.__init__()
-        require("%s==%s" % (ei_cmd.egg_name, ei_cmd.egg_version))
+        require(f"{ei_cmd.egg_name}=={ei_cmd.egg_version}")
 
         from PyObjCTools import TestSupport
 
@@ -300,7 +301,7 @@ class oc_test(test.test):
                 "xpass": len(getattr(result, "expectedSuccesses", [])),
                 "skip": len(getattr(result, "skipped", [])),
             }
-            print("SUMMARY: %s" % (summary,))
+            print(f"SUMMARY: {summary}")
 
             if not result.wasSuccessful():
                 raise DistutilsError("some tests failed")
@@ -340,7 +341,7 @@ class oc_egg_info(egg_info.egg_info):
             )
 
     def write_header(self, basename, filename):
-        with open(os.path.join("Modules/objc/", os.path.basename(basename)), "r") as fp:
+        with open(os.path.join("Modules/objc/", os.path.basename(basename))) as fp:
             data = fp.read()
         if not self.dry_run:
             if not os.path.exists(os.path.dirname(filename)):
@@ -440,7 +441,7 @@ def _fixup_compiler(use_ccache):
         # Check if compiler is LLVM-GCC, that's known to
         # generate bad code.
         with os.popen(
-            "'%s' --version 2>/dev/null" % (cc.replace("'", "'\"'\"'"),)
+            "'{}' --version 2>/dev/null".format(cc.replace("'", "'\"'\"'"))
         ) as fp:
             data = fp.read()
         if "llvm-gcc" in data:
@@ -466,10 +467,10 @@ def _fixup_compiler(use_ccache):
         p = _find_executable("ccache")
         if p is not None:
             log.info("Detected and using 'ccache'")
-            cc = "%s %s" % (p, cc)
+            cc = f"{p} {cc}"
 
     if cc != oldcc:
-        log.info("Use '%s' instead of '%s' as the compiler" % (cc, oldcc))
+        log.info(f"Use '{cc}' instead of '{oldcc}' as the compiler")
 
         config_vars = get_config_vars()
         for env in ("BLDSHARED", "LDSHARED", "CC", "CXX"):
@@ -524,7 +525,7 @@ class oc_build_ext(build_ext.build_ext):
                 self.sdk_root = "/"
 
         if not os.path.exists(self.sdk_root):
-            raise DistutilsSetupError("SDK root %r does not exist" % (self.sdk_root,))
+            raise DistutilsSetupError(f"SDK root {self.sdk_root!r} does not exist")
 
         if not os.path.exists(
             os.path.join(self.sdk_root, "usr/include/objc/runtime.h")
@@ -635,7 +636,7 @@ def package_version():
     for the version is the main header file of the objc._objc
     extension.
     """
-    fp = open("Modules/objc/pyobjc.h", "r")
+    fp = open("Modules/objc/pyobjc.h")
     for ln in fp.readlines():
         if ln.startswith("#define OBJC_VERSION"):
             fp.close()
