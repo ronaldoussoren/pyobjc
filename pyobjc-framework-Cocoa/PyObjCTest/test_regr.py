@@ -49,7 +49,7 @@ class TestRegr(TestCase):
             os.close(fp)
             os.dup2(dupped, 2)
 
-        with open("/tmp/pyobjc-thread.txt", "r") as fp:
+        with open("/tmp/pyobjc-thread.txt") as fp:
             data = fp.read()
         self.assertTrue("does this print?" in data)
 

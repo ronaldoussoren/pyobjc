@@ -40,7 +40,7 @@ class FilteringArrayController(NSArrayController):
     searchType = kLiteralSearch
 
     def arrangeObjects_(self, objects):
-        supermethod = super(FilteringArrayController, self).arrangeObjects_
+        supermethod = super().arrangeObjects_
         try:
             regex = regexForSearchString(self.searchString, self.searchType)
         except:  # noqa: E722, B001

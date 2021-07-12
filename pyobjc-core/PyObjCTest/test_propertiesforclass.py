@@ -134,4 +134,4 @@ class TestPropertiesForClass(TestCase):
         for item in lst:
             if item["name"] == name:
                 return item
-        self.fail("property not found: %s" % (name,))
+        self.fail(f"property not found: {name}")

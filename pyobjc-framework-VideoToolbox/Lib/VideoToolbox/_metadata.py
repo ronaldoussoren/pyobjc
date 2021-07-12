@@ -137,7 +137,7 @@ functions = {
                         "arguments": {
                             0: {"type": "^v"},
                             1: {"type": "i"},
-                            2: {"type": [u"I", u"Q"]},
+                            2: {"type": ["I", "Q"]},
                             3: {"type": "^{opaqueCMSampleBuffer=}"},
                         },
                     }

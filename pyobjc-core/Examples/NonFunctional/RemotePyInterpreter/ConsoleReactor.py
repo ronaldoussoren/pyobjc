@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import sys
 
 from Foundation import NSObject, NSLog
@@ -10,7 +8,7 @@ __all__ = ["ConsoleReactor"]
 
 class ConsoleReactor(NSObject):
     def init(self):
-        self = super(ConsoleReactor, self).init()
+        self = super().init()
         self.pool = None
         self.netReprCenter = None
         self.connection = None
@@ -67,7 +65,7 @@ class ConsoleReactor(NSObject):
 
     def sendResult_sequence_(self, rval, seq):
         nr = self.netReprCenter
-        code = "__result__[%r] = %s" % (seq, nr.netrepr(rval))
+        code = f"__result__[{seq!r}] = {nr.netrepr(rval)}"
         self.writeCode_(code)
 
     def sendException_sequence_(self, e, seq):
@@ -87,7 +85,7 @@ class ConsoleReactor(NSObject):
 
     def deferCallback_sequence_value_(self, callback, seq, value):
         self.commands[seq] = callback
-        self.writeCode_("pipe.respond(%r, netrepr(%s))" % (seq, value))
+        self.writeCode_(f"pipe.respond({seq!r}, netrepr({value}))")
 
     def handleExpectCommand_(self, command):
         # NSLog(u'handleExpectCommand_')
@@ -111,7 +109,7 @@ class ConsoleReactor(NSObject):
 
             if isinstance(obj, RemoteObjectReference):
                 self.deferCallback_sequence_value_(
-                    displayhook_respond, seq, "repr(%s)" % (netrepr(obj),)
+                    displayhook_respond, seq, f"repr({netrepr(obj)})"
                 )
             else:
                 self.doCallback_sequence_args_(displayhook_local, seq, args)

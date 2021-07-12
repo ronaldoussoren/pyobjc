@@ -176,7 +176,7 @@ class TestNSDictionaryInterface(TestCase):
         class Exc(Exception):
             pass
 
-        class BadCmp(object):
+        class BadCmp:
             def __eq__(self, other):
                 raise Exc()
 
@@ -398,7 +398,7 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         class Exc(Exception):
             pass
 
-        class BadEq(object):
+        class BadEq:
             def __eq__(self, other):
                 raise Exc()
 
@@ -409,7 +409,7 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         d[BadEq()] = 42
         self.assertRaises(KeyError, d.__getitem__, 23)
 
-        class BadHash(object):
+        class BadHash:
             fail = False
 
             def __hash__(self):
@@ -516,7 +516,7 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
 
         self.assertRaises(Exc, d.update, FailingUserDict())
 
-        class badseq(object):
+        class badseq:
             def __iter__(self):
                 return self
 
@@ -540,7 +540,7 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         class Exc(Exception):
             pass
 
-        class BadHash(object):
+        class BadHash:
             fail = False
 
             def __hash__(self):
@@ -600,7 +600,7 @@ class TestNSMutableDictionaryInterface(TestNSDictionaryInterface):
         class Exc(Exception):
             pass
 
-        class BadHash(object):
+        class BadHash:
             fail = False
 
             def __hash__(self):

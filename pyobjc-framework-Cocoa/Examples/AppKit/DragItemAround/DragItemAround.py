@@ -18,7 +18,7 @@ class DraggableItemView(Cocoa.NSView):
 
     def initWithFrame_(self, frame):
         """."""
-        result = super(DraggableItemView, self).initWithFrame_(frame)
+        result = super().initWithFrame_(frame)
         if result is not None:
             result._location = self._locationDefault
             result._itemColor = self._itemColorDefault
@@ -87,7 +87,7 @@ class DraggableItemView(Cocoa.NSView):
             handled = True
             self.setItemPropertiesToDefault_(self)
         if handled is False:
-            super(DraggableItemView, self).keyDown_(event)
+            super().keyDown_(event)
 
     @objc.IBAction
     def changeColor_(self, sender):

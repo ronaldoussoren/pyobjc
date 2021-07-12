@@ -29,5 +29,5 @@ class TestConveniences(TestCase):
             self.assertEqual(
                 hash(o),
                 expect,
-                "o.hash() == 0x%X | %r != %r" % (o.hash(), hash(o), expect),
+                f"o.hash() == 0x{o.hash():X} | {hash(o)!r} != {expect!r}",
             )

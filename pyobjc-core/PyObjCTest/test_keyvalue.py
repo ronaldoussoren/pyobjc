@@ -49,7 +49,7 @@ from PyObjCTest.testbndl import PyObjCTest_KeyValueObserver
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class KeyValueClass2(object):
+class KeyValueClass2:
     def __init__(self):
         self.key3 = 3
         self._key4 = "4"
@@ -83,7 +83,7 @@ class KeyValueClass2(object):
         self.key5 = value * 5
 
 
-class KeyValueClass3(object):
+class KeyValueClass3:
     __slots__ = ("foo",)
 
     def __init__(self):

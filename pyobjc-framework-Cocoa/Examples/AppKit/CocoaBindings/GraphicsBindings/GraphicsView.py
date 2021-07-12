@@ -51,7 +51,7 @@ class GraphicsView(NSView):
         return ["graphics", "selectedObjects"]
 
     def initWithFrame_(self, frameRect):
-        return super(GraphicsView, self).initWithFrame_(frameRect)
+        return super().initWithFrame_(frameRect)
 
     def graphics(self):
         if not self.graphicsContainer:

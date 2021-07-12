@@ -125,7 +125,7 @@ class TestCopying(TestCase):
         # implementation.
         o = MyCopyClass.alloc().init()
 
-        self.assertFalse((o.copyWithZone_.__metadata__()["classmethod"]))
+        self.assertFalse(o.copyWithZone_.__metadata__()["classmethod"])
         self.assertTrue(o.copyWithZone_.__metadata__()["retval"]["already_retained"])
         # self.assertEqual(
         #    o.copyWithZone_.callable,
@@ -145,7 +145,7 @@ class TestCopying(TestCase):
 
     def testMultipleInheritance1(self):
         # New-style class mixin
-        class MixinClass1(object):
+        class MixinClass1:
             def mixinMethod(self):
                 return "foo"
 
@@ -175,13 +175,13 @@ class TestCopying(TestCase):
 
     def testMultipleInheritance3(self):
         # New-style class mixin
-        class MixinClass3(object):
+        class MixinClass3:
             def mixinMethod(self):
                 return "foo"
 
         class MITestClass3(NSObject, MixinClass3):
             def init(self):
-                return super(MITestClass3, self).init()
+                return super().init()
 
         self.assertHasAttr(MITestClass3, "mixinMethod")
 
@@ -191,7 +191,7 @@ class TestCopying(TestCase):
 
 class TestClassMethods(TestCase):
     def testClassMethod(self):
-        """ check that classmethod()-s are converted to selectors """
+        """check that classmethod()-s are converted to selectors"""
 
         class ClassMethodTest(NSObject):
             def clsMeth(self):
@@ -203,7 +203,7 @@ class TestClassMethods(TestCase):
         self.assertTrue(ClassMethodTest.clsMeth.isClassMethod)
 
     def testStaticMethod(self):
-        """ check that staticmethod()-s are not converted to selectors """
+        """check that staticmethod()-s are not converted to selectors"""
 
         class StaticMethodTest(NSObject):
             def stMeth(self):

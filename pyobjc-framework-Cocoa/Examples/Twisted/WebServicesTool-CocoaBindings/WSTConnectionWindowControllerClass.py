@@ -374,7 +374,7 @@ class WSTConnectionWindowController(AppKit.NSWindowController):
             return
         for aSignature in methodSignature:
             if isinstance(aSignature, list) and len(aSignature) > 0:
-                signature = "%s %s(%s)" % (
+                signature = "{} {}({})".format(
                     aSignature[0],
                     aMethod.methodName(),
                     ", ".join(aSignature[1:]),
@@ -393,7 +393,7 @@ class WSTConnectionWindowController(AppKit.NSWindowController):
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
         # log.err(why)
         aMethod.setMethodSignature_(
-            "<error> %s %s" % (aMethod.methodName(), why.getBriefTraceback())
+            f"<error> {aMethod.methodName()} {why.getBriefTraceback()}"
         )
         self.replaceObjectInMethodArrayAtIndex_withObject_(index, aMethod)
 
@@ -402,7 +402,7 @@ class WSTConnectionWindowController(AppKit.NSWindowController):
             aMethod.setMethodDescription_(v or "No description available.")
 
         self.setStatusTextFieldMessage_(
-            "Retrieving documentation for method %s..." % (aMethod.methodName(),)
+            f"Retrieving documentation for method {aMethod.methodName()}..."
         )
         self.startWorking()
         self.k_server.callRemote(

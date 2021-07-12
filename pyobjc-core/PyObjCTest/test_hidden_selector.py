@@ -2,7 +2,7 @@ import objc
 from PyObjCTools.TestSupport import TestCase
 
 
-class hidden_method(object):
+class hidden_method:
     def __pyobjc_class_setup__(self, name, class_dict, instance_methods, class_methods):
         @objc.selector
         def method(self):

@@ -31,4 +31,4 @@ def protocolNamed(name):
             PROTOCOL_CACHE.setdefault(pname, p)
             if pname == name:
                 return p
-    raise ProtocolError("protocol %r does not exist" % (name,), name)
+    raise ProtocolError(f"protocol {name!r} does not exist", name)

@@ -21,8 +21,8 @@ if not hasattr(Quartz, "PMCGImageCreateWithEPSDataProvider"):
 
 def getEPSBBox(epspath):
     try:
-        fp = open(epspath, "rU")
-    except IOError:
+        fp = open(epspath)
+    except OSError:
         return Quartz.CGRectZero
 
     try:

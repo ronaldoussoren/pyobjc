@@ -62,9 +62,9 @@ class PythonBrowserWindowController(Cocoa.NSWindowController):
 
     def setWindowTitleForObject_(self, obj):
         if hasattr(obj, "__name__"):
-            title = "PythonBrowser -- %s: %s" % (type(obj).__name__, obj.__name__)
+            title = f"PythonBrowser -- {type(obj).__name__}: {obj.__name__}"
         else:
-            title = "PythonBrowser -- %s" % (type(obj).__name__,)
+            title = f"PythonBrowser -- {type(obj).__name__}"
         self.window().setTitle_(title)
 
     def setObject_(self, obj):

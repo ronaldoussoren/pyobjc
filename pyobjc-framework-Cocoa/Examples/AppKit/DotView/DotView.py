@@ -35,7 +35,7 @@ class DotView(Cocoa.NSView):
 
     def initWithFrame_(self, frame):
         self.center = (50.0, 50.0)
-        super(DotView, self).initWithFrame_(frame)
+        super().initWithFrame_(frame)
         self.radius = 10.0
         self.color = Cocoa.NSColor.redColor()
         return self

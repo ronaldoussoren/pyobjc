@@ -30,7 +30,7 @@ class TestSetProperty(TestCase):
         aSet = {1, 2}
         o.aSet = aSet
 
-        self.assertEqual(repr(o.aSet), "<set proxy for property aSet %r>" % (aSet,))
+        self.assertEqual(repr(o.aSet), f"<set proxy for property aSet {aSet!r}>")
 
     def testDefault(self):
         with OCObserve.alloc().init() as observer:
@@ -311,7 +311,7 @@ class TestSetProperty(TestCase):
         v = sorted(o.pyobjc_instanceMethods.enumeratorOfASet())
         self.assertEqual(v, [1, 2])
 
-        class Testing(object):
+        class Testing:
             def __hash__(self):
                 return 42
 

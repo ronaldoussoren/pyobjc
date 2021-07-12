@@ -17,7 +17,7 @@ class TLayerDemo(Cocoa.NSObject):
         Cocoa.NSColorPanel.sharedColorPanel().setShowsAlpha_(True)
 
     def init(self):
-        self = super(TLayerDemo, self).init()
+        self = super().init()
         if self is None:
             return None
 
@@ -39,7 +39,7 @@ class TLayerDemo(Cocoa.NSObject):
 
     def dealloc(self):
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
-        super(TLayerDemo, self).dealloc()
+        super().dealloc()
 
     def window(self):
         return self.tlayerView.window()

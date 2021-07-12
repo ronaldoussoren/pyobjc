@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import errno
 import os
 import stat
@@ -16,7 +14,7 @@ def T_or_F(x):
         return "FALSE"
 
 
-class Settings(object):
+class Settings:
     __slots__ = (
         "sinceWhen",
         "latency",
@@ -189,7 +187,7 @@ def fsevents_callback(
 
         new_size = get_directory_size(path, recursive)
         if new_size < 0:
-            print("Could not update size on %s" % (path,))
+            print(f"Could not update size on {path}")
 
         else:
             print(
@@ -294,7 +292,7 @@ def main(argv=None):
 #
 
 
-class dir_item(object):
+class dir_item:
     __slots__ = ("dirname", "size")
 
 

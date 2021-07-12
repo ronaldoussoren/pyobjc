@@ -255,7 +255,7 @@ def doExampleAxialShading(context):
     del shading
 
 
-class MyStartEndColor(object):
+class MyStartEndColor:
     def __init__(self):
         self.startColor = [0.0] * 3
         self.endColor = [0.0] * 3

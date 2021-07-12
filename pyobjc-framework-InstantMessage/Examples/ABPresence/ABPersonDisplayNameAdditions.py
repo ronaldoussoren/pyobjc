@@ -26,9 +26,9 @@ class ABPerson(objc.Category(AddressBook.ABPerson)):
 
         if hasLastName and hasFirstName:
             if lastNameFirst:
-                return Cocoa.NSString.stringWithString_("%s %s" % (lastName, firstName))
+                return Cocoa.NSString.stringWithString_(f"{lastName} {firstName}")
             else:
-                return Cocoa.NSString.stringWithString_("%s %s" % (firstName, lastName))
+                return Cocoa.NSString.stringWithString_(f"{firstName} {lastName}")
 
         if hasLastName:
             return lastName

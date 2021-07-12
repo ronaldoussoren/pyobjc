@@ -398,7 +398,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
             if (type(aSignature) == types.ListType) and (  # noqa: E721
                 len(aSignature) > 0
             ):
-                signature = "%s %s(%s)" % (
+                signature = "{} {}({})".format(
                     aSignature[0],
                     aMethod,
                     string.join(aSignature[1:], ", "),
@@ -415,7 +415,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
     def couldntProcessSignatureForMethod(self, why, index, aMethod):
 
         # log.err(why)
-        self._methodSignatures[aMethod] = "<error> %s %s" % (
+        self._methodSignatures[aMethod] = "<error> {} {}".format(
             aMethod,
             why.getBriefTraceback(),
         )
@@ -452,9 +452,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
             return v
 
         desc[aMethod] = "<description is being retrieved>"
-        self.setStatusTextFieldMessage_(
-            "Retrieving signature for method %s..." % (aMethod,)
-        )
+        self.setStatusTextFieldMessage_(f"Retrieving signature for method {aMethod}...")
         self.startWorking()
         return (
             self._server.callRemote(self._methodPrefix + "methodHelp", aMethod)

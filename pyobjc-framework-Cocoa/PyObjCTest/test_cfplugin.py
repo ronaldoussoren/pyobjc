@@ -59,4 +59,4 @@ class TestPluginNotSuppported(TestCase):
         for sym in symbols:
             with self.subTest(sym):
                 if hasattr(CoreFoundation, sym):
-                    self.fail("Unsupported symbol present: %s" % (sym,))
+                    self.fail(f"Unsupported symbol present: {sym}")

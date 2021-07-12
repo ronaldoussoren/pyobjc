@@ -11,7 +11,7 @@ class DemoView(Cocoa.NSView):
     _demoNumber = objc.ivar(type=objc._C_INT)
 
     def initWithFrame_(self, frameRect):
-        self = super(DemoView, self).initWithFrame_(frameRect)
+        self = super().initWithFrame_(frameRect)
         if self is None:
             return None
 

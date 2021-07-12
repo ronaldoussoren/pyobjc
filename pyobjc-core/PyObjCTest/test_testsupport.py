@@ -22,7 +22,7 @@ from PyObjCTools.TestSupport import (
 )
 
 
-class Method(object):
+class Method:
     def __init__(self, argno, meta, selector=False):
         self._selector = selector
         if argno is None:
@@ -320,19 +320,19 @@ class TestTestSupport(TestCase):
     def test_assert_opaque(self):
         self.assertRaises(self.failureException, self.assertIsOpaquePointer, int)
 
-        class N(object):
+        class N:
             @property
             def __pointer__(self):
                 pass
 
         self.assertRaises(self.failureException, self.assertIsOpaquePointer, N)
 
-        class N(object):
+        class N:
             __typestr__ = b"^q"
 
         self.assertRaises(self.failureException, self.assertIsOpaquePointer, N)
 
-        class N(object):
+        class N:
             __typestr__ = b"^q"
 
             @property
@@ -1272,7 +1272,7 @@ class TestTestSupport(TestCase):
         NSObject = objc.lookUpClass("NSObject")
         self.assertIsNot(NSObject, None)
 
-        class PoolClass(object):
+        class PoolClass:
             def init(self):
                 allocs[0] += 1
 

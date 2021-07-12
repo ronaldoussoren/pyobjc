@@ -85,7 +85,7 @@ class WhereIsMyMacAppDelegate(Cocoa.NSObject):
         path = Cocoa.NSBundle.mainBundle().pathForResource_ofType_(
             "HTMLFormatString", "html"
         )
-        with open(path, "r") as fp:
+        with open(path) as fp:
             htmlString = fp.read() % (
                 newLocation.coordinate().latitude,
                 newLocation.coordinate().longitude,
@@ -99,7 +99,7 @@ class WhereIsMyMacAppDelegate(Cocoa.NSObject):
             "%f, %f"
             % (newLocation.coordinate().latitude, newLocation.coordinate().longitude)
         )
-        self.accuracyLabel.setStringValue_("%f" % (newLocation.horizontalAccuracy(),))
+        self.accuracyLabel.setStringValue_(f"{newLocation.horizontalAccuracy():f}")
 
     def locationManager_didFailWithError_(self, manager, error):
         self.webView.mainFrame.loadHTMLString_baseURL_(

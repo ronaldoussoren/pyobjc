@@ -6,7 +6,7 @@ NSObject = objc.lookUpClass("NSObject")
 NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
 
-class Base(object):
+class Base:
     def __init__(self, ondel):
         self.ondel = ondel
 

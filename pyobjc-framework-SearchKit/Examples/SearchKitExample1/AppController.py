@@ -231,7 +231,7 @@ class AppController(Cocoa.NSObject):
 
             documentName = SearchKit.SKDocumentGetName(hit)
 
-            textOfResults += "Score: %f ==> %s\n" % (score, documentName)
+            textOfResults += f"Score: {score:f} ==> {documentName}\n"
 
         self.searchResultsTextView.setString_(textOfResults)
 

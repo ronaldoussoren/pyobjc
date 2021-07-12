@@ -15,7 +15,7 @@ class Class1:
     pass
 
 
-class Class2(object):
+class Class2:
     pass
 
 

@@ -13,7 +13,7 @@ class CIMicroPaintView(SampleCIView):
     brushSize = objc.ivar(objc._C_FLT)
 
     def initWithFrame_(self, frame):
-        self = super(CIMicroPaintView, self).initWithFrame_(frame)
+        self = super().initWithFrame_(frame)
         if self is None:
             return None
 

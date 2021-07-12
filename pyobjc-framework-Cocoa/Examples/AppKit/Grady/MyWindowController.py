@@ -16,7 +16,7 @@ class MyWindowController(Cocoa.NSWindowController):
     radialExplainText = objc.IBOutlet()
 
     def initWithPath_(self, newPath):
-        return super(MyWindowController, self).initWithWindowNibName_("TestWindow")
+        return super().initWithWindowNibName_("TestWindow")
 
     def awakeFromNib(self):
         # make sure our angle text input keep the right format

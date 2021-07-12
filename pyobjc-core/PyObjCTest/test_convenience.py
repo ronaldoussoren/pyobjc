@@ -34,7 +34,7 @@ class OC_WithHash(objc.lookUpClass("NSObject")):
 
 class OC_Compared(objc.lookUpClass("NSObject")):
     def initWithValue_(self, value):
-        self = super(OC_Compared, self).init()
+        self = super().init()
         if self is None:
             return None
 
@@ -478,7 +478,7 @@ class TestBasicConveniences(TestCase):
         self.assertEqual(o._.host, "www.python.org")
         self.assertEqual(o._["host"], "www.python.org")
         self.assertRaises(TypeError, lambda: o._[42])
-        self.assertEqual(repr(o._), "<KVC accessor for %r>" % (o,))
+        self.assertEqual(repr(o._), f"<KVC accessor for {o!r}>")
         self.assertRaises(AttributeError, getattr, o._, "nosuchattr")
         self.assertRaises(AttributeError, getattr, o._, "")
         self.assertRaises(TypeError, o._.__getitem__, 42)

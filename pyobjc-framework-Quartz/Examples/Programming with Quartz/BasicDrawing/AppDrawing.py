@@ -62,7 +62,7 @@ def GetURL(name):
         return
 
     if url is None:
-        print("Couldn't get URL for %r" % (name,))
+        print(f"Couldn't get URL for {name!r}")
 
     return url
 
@@ -222,7 +222,7 @@ def doCompatibleEPSDrawing(context):
 
 
 def DispatchDrawing(context, drawingType):
-    """ Drawing dispatcher """
+    """Drawing dispatcher"""
     if drawingType == UIHandling.kHICommandSimpleRect:
         DrawingBasics.doSimpleRect(context)
 

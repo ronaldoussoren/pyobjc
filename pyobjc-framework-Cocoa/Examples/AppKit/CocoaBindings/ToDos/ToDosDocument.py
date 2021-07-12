@@ -26,7 +26,7 @@ class ToDosDocument(NSDocument):
     toDos = objc.ivar()
 
     def init(self):
-        self = super(ToDosDocument, self).init()
+        self = super().init()
         if self is None:
             return None
         self.toDos = NSMutableArray()

@@ -38,7 +38,7 @@ class ToDoDocument(Cocoa.NSDocument):
         )
 
     def init(self):
-        self = super(ToDoDocument, self).init()
+        self = super().init()
         if self is None:
             return self
         self._activeDays = None

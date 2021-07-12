@@ -34,7 +34,7 @@ def importExternalTestCases(pathPattern="test_*.py", root=".", package=None):
         try:
             module = __import__(modName)
         except ImportError as msg:
-            print("SKIP %s: %s" % (modName, msg))
+            print(f"SKIP {modName}: {msg}")
             continue
 
         if "." in modName:

@@ -19,7 +19,7 @@ class CIBevelView(SampleCIView):
     shadedFilter = objc.ivar()
 
     def initWithFrame_(self, frameRect):
-        self = super(CIBevelView, self).initWithFrame_(frameRect)
+        self = super().initWithFrame_(frameRect)
         if self is None:
             return None
 

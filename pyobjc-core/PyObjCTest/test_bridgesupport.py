@@ -481,13 +481,11 @@ def iter_framework_dir(framework_dir):
 
         fn = os.path.join(framework_dir, dn, "Frameworks")
         if os.path.exists(fn):
-            for item in iter_framework_dir(fn):
-                yield item
+            yield from iter_framework_dir(fn)
 
 
 def iter_system_bridgesupport_files():
-    for item in iter_framework_dir("/System/Library/Frameworks"):
-        yield item
+    yield from iter_framework_dir("/System/Library/Frameworks")
 
 
 def contains_any(name, fragments):
@@ -563,7 +561,7 @@ class TestBridgeSupportParser(TestCase):
                 )
 
         test_func.__name__ = _test_name
-        test_func.__doc__ = "System bridgesupport %r" % (fn,)
+        test_func.__doc__ = f"System bridgesupport {fn!r}"
 
         # XXX: This test is not very useful due to the
         # quality of the XML files in macOS as of 10.13.
@@ -1320,7 +1318,7 @@ class TestBridgeSupportParser(TestCase):
     def assertIsIdentifier(self, value):
         m = IDENTIFIER.match(value)
         if m is None:
-            self.fail("'%s' is not an identifier" % (value,))
+            self.fail(f"'{value}' is not an identifier")
 
     def assert_valid_callable(self, meta, function):
         if function:
@@ -1542,7 +1540,7 @@ class TestBridgeSupportParser(TestCase):
                 self.assertIsNot(tollfreeName, None)
 
             else:
-                self.fail("Wrong item length in cftypes: %s" % (item,))
+                self.fail(f"Wrong item length in cftypes: {item}")
 
             self.assertIsInstance(name, str)
             self.assertIsInstance(encoding, bytes)
@@ -1610,7 +1608,7 @@ class TestBridgeSupportParser(TestCase):
         return prs
 
 
-class Patcher(object):
+class Patcher:
     def __init__(self):
         self._changes = {}
 
@@ -1652,7 +1650,7 @@ class TestParseBridgeSupport(TestCase):
         # - Verify changes to globals where possible
         # - Verify 'updatingmetadata' state
 
-        class InlineTab(object):
+        class InlineTab:
             pass
 
         def loadConstant(name, typestr, magic):
@@ -1664,7 +1662,7 @@ class TestParseBridgeSupport(TestCase):
             if "raise" in name:
                 raise AttributeError(name)
 
-            return "<constant %r>" % (name,)
+            return f"<constant {name!r}>"
 
         SENTINEL = object()
 
@@ -1679,7 +1677,7 @@ class TestParseBridgeSupport(TestCase):
                 if tollfreeName is SENTINEL:
                     raise ValueError("Must specify a typeid when not toll-free")
 
-            return "<cftype %r>" % (name,)
+            return f"<cftype {name!r}>"
 
         metadata_registry = {}
 
@@ -1699,7 +1697,7 @@ class TestParseBridgeSupport(TestCase):
             self.assertIsInstance(doc, (str, type(None)))
             self.assertEqual(len(objc.splitSignature(typestr)), 1)
             self.assertStartswith(typestr, objc._C_PTR)
-            return "<pointer %r>" % (name,)
+            return f"<pointer {name!r}>"
 
         def createStructType(name, typestr, fieldnames, doc=None, pack=-1):
             self.assertIsInstance(name, str)
@@ -1711,7 +1709,7 @@ class TestParseBridgeSupport(TestCase):
             if fieldnames is not None:
                 for nm in fieldnames:
                     self.assertIsInstance(nm, (str, bytes))
-            return "<struct %r>" % (name,)
+            return f"<struct {name!r}>"
 
         def createStructAlias(name, typestr, structType):
             self.assertIsInstance(name, str)
@@ -1723,7 +1721,7 @@ class TestParseBridgeSupport(TestCase):
                 self.assertIsInstance(item, objc.selector)
                 self.assertIs(item.callable, None)
 
-            return "<informal_protocol %r>" % (name,)
+            return f"<informal_protocol {name!r}>"
 
         def loadBundleFunctions(
             bundle, module_globals, functionInfo, skip_undefined=True
@@ -1745,7 +1743,7 @@ class TestParseBridgeSupport(TestCase):
                 if "inline" in item[0]:
                     continue
 
-                module_globals[item[0]] = "<function %r>" % (item[0],)
+                module_globals[item[0]] = f"<function {item[0]!r}>"
 
         def loadFunctionList(
             function_list, module_globals, functionInfo, skip_undefined=True
@@ -1764,7 +1762,7 @@ class TestParseBridgeSupport(TestCase):
                 if len(item) > 3:
                     self.assertIsInstance(item[3], dict)
                 if item[0] not in module_globals:
-                    module_globals[item[0]] = "<inline_function %r>" % (item[0],)
+                    module_globals[item[0]] = f"<inline_function {item[0]!r}>"
 
         _meta_updates = []
 
@@ -1990,7 +1988,7 @@ class TestInitFrameworkWrapper(TestCase):
                 if raise_exception is not None:
                     raise raise_exception()
 
-            class MockModule(object):
+            class MockModule:
                 pass
 
             p.patch("objc.parseBridgeSupport", parseBridgeSupport)
@@ -2058,12 +2056,12 @@ class TestInitFrameworkWrapper(TestCase):
 
             SENTINEL = object()
 
-            class InlineTab(object):
+            class InlineTab:
                 pass
 
             bundle_resources = {}
 
-            class Bundle(object):
+            class Bundle:
                 def __init__(self, calls=None):
                     if calls is None:
                         calls = []
@@ -2082,7 +2080,7 @@ class TestInitFrameworkWrapper(TestCase):
                     return self.calls == other.calls
 
                 def __repr__(self):
-                    return "<Bundle calls=%r>" % (self.calls,)
+                    return f"<Bundle calls={self.calls!r}>"
 
             load_calls = []
             bundle_exception = None

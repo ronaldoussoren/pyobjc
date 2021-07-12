@@ -4,7 +4,6 @@ Helper code for implementing unittests.
 This module is unsupported and is primairily used in the PyObjC
 testsuite.
 """
-from __future__ import print_function
 
 import contextlib
 import gc as _gc
@@ -292,9 +291,7 @@ def min_python_release(version):
                 pass
     """
     parts = tuple(map(int, version.split(".")))
-    return onlyIf(
-        _sys.version_info[:2] >= parts, "Requires Python %s or later" % (version,)
-    )
+    return onlyIf(_sys.version_info[:2] >= parts, f"Requires Python {version} or later")
 
 
 def _sort_key(version):
@@ -303,7 +300,7 @@ def _sort_key(version):
         parts.append("0")
 
     if len(parts) != 3:
-        raise ValueError("Invalid version: %r" % (version,))
+        raise ValueError(f"Invalid version: {version!r}")
 
     return tuple(int(x) for x in parts)
 
@@ -326,7 +323,7 @@ def min_sdk_level(release):
     """
     v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
     return onlyIf(
-        v >= os_level_key(release), "Requires build with SDK %s or later" % (release,)
+        v >= os_level_key(release), f"Requires build with SDK {release} or later"
     )
 
 
@@ -341,7 +338,7 @@ def max_sdk_level(release):
     """
     v = (objc.PyObjC_BUILD_RELEASE // 100, objc.PyObjC_BUILD_RELEASE % 100, 0)
     return onlyIf(
-        v <= os_level_key(release), "Requires build with SDK %s or later" % (release,)
+        v <= os_level_key(release), f"Requires build with SDK {release} or later"
     )
 
 
@@ -357,7 +354,7 @@ def min_os_level(release):
     """
     return onlyIf(
         os_level_key(os_release()) >= os_level_key(release),
-        "Requires OSX %s or later" % (release,),
+        f"Requires OSX {release} or later",
     )
 
 
@@ -373,7 +370,7 @@ def max_os_level(release):
     """
     return onlyIf(
         os_level_key(os_release()) <= os_level_key(release),
-        "Requires OSX upto %s" % (release,),
+        f"Requires OSX upto {release}",
     )
 
 
@@ -391,7 +388,7 @@ def os_level_between(min_release, max_release):
         os_level_key(min_release)
         <= os_level_key(os_release())
         <= os_level_key(max_release),
-        "Requires OSX %s upto %s" % (min_release, max_release),
+        f"Requires OSX {min_release} upto {max_release}",
     )
 
 
@@ -697,16 +694,16 @@ class TestCase(_unittest.TestCase):
 
     def assertIsCFType(self, tp, message=None):
         if not isinstance(tp, objc.objc_class):
-            self.fail(message or "%r is not a CFTypeRef type" % (tp,))
+            self.fail(message or f"{tp!r} is not a CFTypeRef type")
 
         if any(x is tp for x in _nscftype):
-            self.fail(message or "%r is not a unique CFTypeRef type" % (tp,))
+            self.fail(message or f"{tp!r} is not a unique CFTypeRef type")
 
         for cls in tp.__bases__:
             if "NSCFType" in cls.__name__:
                 return
 
-        self.fail(message or "%r is not a CFTypeRef type" % (tp,))
+        self.fail(message or f"{tp!r} is not a CFTypeRef type")
 
         # NOTE: Don't test if this is a subclass of one of the known
         #       CF roots, this tests is mostly used to ensure that the
@@ -720,17 +717,15 @@ class TestCase(_unittest.TestCase):
 
     def assertIsOpaquePointer(self, tp, message=None):
         if not hasattr(tp, "__pointer__"):
-            self.fail(message or "%r is not an opaque-pointer" % (tp,))
+            self.fail(message or f"{tp!r} is not an opaque-pointer")
 
         if not hasattr(tp, "__typestr__"):
-            self.fail(message or "%r is not an opaque-pointer" % (tp,))
+            self.fail(message or f"{tp!r} is not an opaque-pointer")
 
     def assertResultIsNullTerminated(self, method, message=None):
         info = method.__metadata__()
         if not info.get("retval", {}).get("c_array_delimited_by_null"):
-            self.fail(
-                message or "result of %r is not a null-terminated array" % (method,)
-            )
+            self.fail(message or f"result of {method!r} is not a null-terminated array")
 
     def assertIsNullTerminated(self, method, message=None):
         info = method.__metadata__()
@@ -782,9 +777,7 @@ class TestCase(_unittest.TestCase):
     def assertResultIsVariableSize(self, method, message=None):
         info = method.__metadata__()
         if not info.get("retval", {}).get("c_array_of_variable_length", False):
-            self.fail(
-                message or "result of %r is not a variable sized array" % (method,)
-            )
+            self.fail(message or f"result of {method!r} is not a variable sized array")
 
     def assertArgSizeInResult(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -812,7 +805,7 @@ class TestCase(_unittest.TestCase):
             offset = 0
         info = method.__metadata__()
         if not info.get("variadic"):
-            self.fail(message or "%r is not a variadic function" % (method,))
+            self.fail(message or f"{method!r} is not a variadic function")
 
         try:
             if not info["arguments"][argno + offset].get("printf_format"):
@@ -835,9 +828,9 @@ class TestCase(_unittest.TestCase):
 
         try:
             if not info["arguments"][argno + offset]["already_cfretained"]:
-                self.fail(message or "%r is not cfretained" % (method,))
+                self.fail(message or f"{method!r} is not cfretained")
         except (KeyError, IndexError):
-            self.fail(message or "%r is not cfretained" % (method,))
+            self.fail(message or f"{method!r} is not cfretained")
 
     def assertArgIsNotCFRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -847,7 +840,7 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         try:
             if info["arguments"][argno + offset]["already_cfretained"]:
-                self.fail(message or "%r is cfretained" % (method,))
+                self.fail(message or f"{method!r} is cfretained")
         except (KeyError, IndexError):
             pass
 
@@ -855,12 +848,12 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
 
         if not info.get("retval", {}).get("already_cfretained", False):
-            self.fail(message or "%r is not cfretained" % (method,))
+            self.fail(message or f"{method!r} is not cfretained")
 
     def assertResultIsNotCFRetained(self, method, message=None):
         info = method.__metadata__()
         if info.get("retval", {}).get("already_cfretained", False):
-            self.fail(message or "%r is cfretained" % (method,))
+            self.fail(message or f"{method!r} is cfretained")
 
     def assertArgIsRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -871,9 +864,9 @@ class TestCase(_unittest.TestCase):
 
         try:
             if not info["arguments"][argno + offset]["already_retained"]:
-                self.fail(message or "%r is not retained" % (method,))
+                self.fail(message or f"{method!r} is not retained")
         except (KeyError, IndexError):
-            self.fail(message or "%r is not retained" % (method,))
+            self.fail(message or f"{method!r} is not retained")
 
     def assertArgIsNotRetained(self, method, argno, message=None):
         if isinstance(method, objc.selector):
@@ -883,19 +876,19 @@ class TestCase(_unittest.TestCase):
         info = method.__metadata__()
         try:
             if info["arguments"][argno + offset]["already_retained"]:
-                self.fail(message or "%r is retained" % (method,))
+                self.fail(message or f"{method!r} is retained")
         except (KeyError, IndexError):
             pass
 
     def assertResultIsRetained(self, method, message=None):
         info = method.__metadata__()
         if not info.get("retval", {}).get("already_retained", False):
-            self.fail(message or "%r is not retained" % (method,))
+            self.fail(message or f"{method!r} is not retained")
 
     def assertResultIsNotRetained(self, method, message=None):
         info = method.__metadata__()
         if info.get("retval", {}).get("already_retained", False):
-            self.fail(message or "%r is retained" % (method,))
+            self.fail(message or f"{method!r} is retained")
 
     def assertResultHasType(self, method, tp, message=None):
         info = method.__metadata__()
@@ -907,7 +900,7 @@ class TestCase(_unittest.TestCase):
         ):
             self.fail(
                 message
-                or "result of %r is not of type %r, but %r" % (method, tp, typestr)
+                or f"result of {method!r} is not of type {tp!r}, but {typestr!r}"
             )
 
     def assertArgHasType(self, method, argno, tp, message=None):
@@ -1003,22 +996,18 @@ class TestCase(_unittest.TestCase):
             i = info["retval"]
         except (KeyError, IndexError):
             self.fail(
-                message or "result of %s has no metadata (or doesn't exist)" % (method,)
+                message or f"result of {method} has no metadata (or doesn't exist)"
             )
 
         else:
             typestr = i.get("type", b"@")
 
         if typestr != b"^?":
-            self.fail(
-                message or "result of %s is not of type function_pointer" % (method,)
-            )
+            self.fail(message or f"result of {method} is not of type function_pointer")
 
         st = i.get("callable")
         if st is None:
-            self.fail(
-                message or "result of %s is not of type function_pointer" % (method,)
-            )
+            self.fail(message or f"result of {method} is not of type function_pointer")
 
         try:
             iface = st["retval"]["type"]
@@ -1093,12 +1082,11 @@ class TestCase(_unittest.TestCase):
             typestr = info["retval"]["type"]
             if typestr != b"@?":
                 self.fail(
-                    message
-                    or "result of %s is not of type block: %s" % (method, typestr)
+                    message or f"result of {method} is not of type block: {typestr}"
                 )
         except KeyError:
             self.fail(
-                message or "result of %s is not of type block: %s" % (method, b"v")
+                message or "result of {} is not of type block: {}".format(method, b"v")
             )
 
         st = info["retval"].get("callable")
@@ -1138,12 +1126,12 @@ class TestCase(_unittest.TestCase):
             i = info["retval"]
         except (KeyError, IndexError):
             self.fail(
-                message or "result of %s has no metadata (or doesn't exist)" % (method,)
+                message or f"result of {method} has no metadata (or doesn't exist)"
             )
 
         typestr = i.get("type", b"@")
         if typestr != objc._C_SEL:
-            self.fail(message or "result of %s is not of type SEL" % (method,))
+            self.fail(message or f"result of {method} is not of type SEL")
 
         st = i.get("sel_of_type")
         if st != sel_type and _typemap(st) != _typemap(sel_type):
@@ -1184,8 +1172,7 @@ class TestCase(_unittest.TestCase):
         typestr = info["retval"]["type"]
         if typestr != objc._C_NSBOOL:
             self.fail(
-                message
-                or "result of %s is not of type BOOL, but %r" % (method, typestr)
+                message or f"result of {method} is not of type BOOL, but {typestr!r}"
             )
 
     def assertArgIsBOOL(self, method, argno, message=None):
@@ -1372,7 +1359,7 @@ class TestCase(_unittest.TestCase):
 
         def assertStartswith(self, value, test, message=None):  # pragma: no cover
             if not value.startswith(test):
-                self.fail(message or "%r does not start with %r" % (value, test))
+                self.fail(message or f"{value!r} does not start with {test!r}")
 
     if not hasattr(_unittest.TestCase, "assertIs"):  # pragma: no cover
 
@@ -1388,7 +1375,7 @@ class TestCase(_unittest.TestCase):
 
         def assertIsNot(self, value, test, message=None):
             if value is test:
-                self.fail(message or "%r is %r" % (value, test))
+                self.fail(message or f"{value!r} is {test!r}")
 
     if not hasattr(_unittest.TestCase, "assertIsNone"):  # pragma: no cover
 
@@ -1399,27 +1386,27 @@ class TestCase(_unittest.TestCase):
 
         def assertIsNotNone(self, value, message=None):
             if value is None:
-                self.fail(message, "%r is not None" % (value,))
+                self.fail(message, f"{value!r} is not None")
 
     if not hasattr(_unittest.TestCase, "assertHasAttr"):  # pragma: no cover
 
         def assertHasAttr(self, value, key, message=None):
             if not hasattr(value, key):
-                self.fail(message or "%s is not an attribute of %r" % (key, value))
+                self.fail(message or f"{key} is not an attribute of {value!r}")
 
     if not hasattr(_unittest.TestCase, "assertNotHasAttr"):  # pragma: no cover
 
         def assertNotHasAttr(self, value, key, message=None):
             if hasattr(value, key):
-                self.fail(message or "%s is an attribute of %r" % (key, value))
+                self.fail(message or f"{key} is an attribute of {value!r}")
 
     def assertIsSubclass(self, value, types, message=None):
         if not issubclass(value, types):
-            self.fail(message or "%s is not a subclass of %r" % (value, types))
+            self.fail(message or f"{value} is not a subclass of {types!r}")
 
     def assertIsNotSubclass(self, value, types, message=None):
         if issubclass(value, types):
-            self.fail(message or "%s is a subclass of %r" % (value, types))
+            self.fail(message or f"{value} is a subclass of {types!r}")
 
     if not hasattr(_unittest.TestCase, "assertIsInstance"):  # pragma: no cover
 
@@ -1435,51 +1422,72 @@ class TestCase(_unittest.TestCase):
 
         def assertIsNotInstance(self, value, types, message=None):
             if isinstance(value, types):
-                self.fail(message or "%s is an instance of %r" % (value, types))
+                self.fail(message or f"{value} is an instance of {types!r}")
 
     if not hasattr(_unittest.TestCase, "assertIn"):  # pragma: no cover
 
         def assertIn(self, value, seq, message=None):
             if value not in seq:
-                self.fail(message or "%r is not in %r" % (value, seq))
+                self.fail(message or f"{value!r} is not in {seq!r}")
 
     if not hasattr(_unittest.TestCase, "assertNotIn"):  # pragma: no cover
 
         def assertNotIn(self, value, seq, message=None):
             if value in seq:
-                self.fail(message or "%r is in %r" % (value, seq))
+                self.fail(message or f"{value!r} is in {seq!r}")
 
     if not hasattr(_unittest.TestCase, "assertGreaterThan"):  # pragma: no cover
 
         def assertGreaterThan(self, val, test, message=None):
             if not (val > test):
-                self.fail(message or "%r <= %r" % (val, test))
+                self.fail(message or f"{val!r} <= {test!r}")
 
     if not hasattr(_unittest.TestCase, "assertGreaterEqual"):  # pragma: no cover
 
         def assertGreaterEqual(self, val, test, message=None):
             if not (val >= test):
-                self.fail(message or "%r < %r" % (val, test))
+                self.fail(message or f"{val!r} < {test!r}")
 
     if not hasattr(_unittest.TestCase, "assertLessThan"):  # pragma: no cover
 
         def assertLessThan(self, val, test, message=None):
             if not (val < test):
-                self.fail(message or "%r >= %r" % (val, test))
+                self.fail(message or f"{val!r} >= {test!r}")
 
     if not hasattr(_unittest.TestCase, "assertLessEqual"):  # pragma: no cover
 
         def assertLessEqual(self, val, test, message=None):
             if not (val <= test):
-                self.fail(message or "%r > %r" % (val, test))
+                self.fail(message or f"{val!r} > {test!r}")
 
     if not hasattr(_unittest.TestCase, "assertAlmostEquals"):  # pragma: no cover
 
         def assertAlmostEquals(self, val1, val2, message=None):
             self.failUnless(
                 abs(val1 - val2) < 0.00001,
-                message or "abs(%r - %r) >= 0.00001" % (val1, val2),
+                message or f"abs({val1!r} - {val2!r}) >= 0.00001",
             )
+
+    def assertClassIsFinal(self, cls):
+        if not isinstance(cls, objc.objc_class):
+            self.fail(f"{cls} is not an Objective-C class")
+        elif not cls.__objc_final__:
+            self.fail(f"{cls} is not an final class")
+
+    def assertProtocolExists(self, name):
+        ok = True
+        try:
+            proto = objc.protocolNamed(name)
+
+        except objc.ProtocolError:
+            ok = False
+
+        if not ok:
+            self.fail(f"Protocol {name!r} does not exist")
+
+        if not isinstance(proto, objc.formal_protocol):
+            # Should never happen
+            self.fail(f"Protocol {name!r} is not a protocol, but {type(proto)}")
 
     def run(self, *args):
         """

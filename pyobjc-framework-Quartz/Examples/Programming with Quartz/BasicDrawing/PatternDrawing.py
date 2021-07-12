@@ -408,7 +408,7 @@ def doStencilPattern(context):
     Quartz.CGContextFillRect(context, Quartz.CGRectMake(140, 40, 105, 80))
 
 
-class MyPDFPatternInfo(object):
+class MyPDFPatternInfo:
     rect = None
     pdfDoc = None
 

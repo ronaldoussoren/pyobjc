@@ -322,7 +322,7 @@ class TestCategory(TestCase):
 
         try:
 
-            class NSObject(objc.Category(NSObject), object):
+            class NSObject(objc.Category(NSObject)):
                 pass
 
             self.fail("Can use objc.Category with MI")

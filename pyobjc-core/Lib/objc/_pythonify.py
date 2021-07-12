@@ -36,7 +36,7 @@ class OC_PythonLong(int):
     def __setattr__(self, attr, value):
         if attr != "__pyobjc_object__":
             raise AttributeError(
-                "'%s' object has no attribute '%s')" % (self.__class__.__name__, attr)
+                f"'{self.__class__.__name__}' object has no attribute '{attr}')"
             )
         self.__dict__["__pyobjc_object__"] = value
 
@@ -58,7 +58,7 @@ def numberWrapper(obj):
         import warnings
 
         warnings.warn(
-            "NSNumber instance doesn't implement objCType? %r" % (obj,), RuntimeWarning
+            f"NSNumber instance doesn't implement objCType? {obj!r}", RuntimeWarning
         )
         return obj
 

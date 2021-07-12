@@ -18,7 +18,7 @@ class TestInspectSignatures(TestCase):
                     value = None
 
                 if value is None:
-                    self.fail("No inspect.signature for %s" % (nm,))
+                    self.fail(f"No inspect.signature for {nm}")
 
     @min_python_release("3.4")
     def test_class_signature(self):
@@ -64,4 +64,4 @@ class TestInspectSignatures(TestCase):
                             continue
 
                     if value is None:
-                        self.fail("No inspect.signature for %s.%s" % (cls.__name__, nm))
+                        self.fail(f"No inspect.signature for {cls.__name__}.{nm}")

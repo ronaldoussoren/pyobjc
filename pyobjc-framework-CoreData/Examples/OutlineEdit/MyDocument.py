@@ -12,7 +12,7 @@ class MyDocument(CoreData.NSPersistentDocument):
     outlineTreeController = objc.IBOutlet()
 
     def initWithType_error_(self, tp, error):
-        self, error = super(MyDocument, self).initWithType_error_(tp, error)
+        self, error = super().initWithType_error_(tp, error)
         if self is None:
             return (None, error)
 

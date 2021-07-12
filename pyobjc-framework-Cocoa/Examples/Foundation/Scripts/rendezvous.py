@@ -2,7 +2,6 @@
 """
 This script using NSNetServiceBrowser to look for local HTTP servers.
 """
-from __future__ import print_function
 
 import objc
 from Foundation import NSDate, NSNetServiceBrowser, NSObject, NSRunLoop
@@ -15,9 +14,9 @@ class PrintingResolverDelegate(NSObject):
         addresses = service.addresses()
         if len(addresses) == 0:
             return
-        print("%s.%s" % (service.name(), service.domain()))
+        print(f"{service.name()}.{service.domain()}")
         for address in service.addresses():
-            print("   %s" % (address,))
+            print(f"   {address}")
         print("")
         service.setDelegate_(None)
 
@@ -49,7 +48,7 @@ class PrintingBrowserDelegate(NSObject):
     def netServiceBrowser_didFindService_moreComing_(
         self, browser, aNetService, moreComing
     ):
-        print("Found a service: %s %s" % (aNetService.name(), aNetService.domain()))
+        print(f"Found a service: {aNetService.name()} {aNetService.domain()}")
         self.services.append(aNetService)
         if not moreComing:
             browser.stop()
@@ -57,7 +56,7 @@ class PrintingBrowserDelegate(NSObject):
     def netServiceBrowser_didRemoveService_moreComing_(
         self, browser, aNetService, moreComing
     ):
-        print("Service removed: %s" % (aNetService.name(),))
+        print(f"Service removed: {aNetService.name()}")
         if not moreComing:
             browser.stop()
 

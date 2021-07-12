@@ -53,7 +53,7 @@ class PyObjCMessageRunner(NSObject):
         """
         Designated initializer.
         """
-        self = super(PyObjCMessageRunner, self).init()
+        self = super().init()
         if not self:
             return None
 
@@ -142,7 +142,7 @@ class PyObjCAppHelperRunLoopStopper(NSObject):
     currentRunLoopStopper = classmethod(currentRunLoopStopper)
 
     def init(self):
-        self = super(PyObjCAppHelperRunLoopStopper, self).init()
+        self = super().init()
         self.shouldStop = False
         return self
 

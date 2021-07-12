@@ -6,7 +6,7 @@ import objc
 from AppKit import NSAnimationContext, NSGraphicsContext
 
 
-class _ctxHelper(object):
+class _ctxHelper:
     def __enter__(self):
         NSGraphicsContext.saveGraphicsState()
 

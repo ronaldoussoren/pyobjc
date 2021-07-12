@@ -23,7 +23,7 @@ def serveonce(clientsock, name="stdin"):
     clientfile = clientsock.makefile("r+b", 0)
     g = {
         "__name__": "__socketclient__",
-        "__file__": "<%s>" % (name,),
+        "__file__": f"<{name}>",
         "__clientsock__": clientsock,
         "__clientfile__": clientfile,
         "__runsocketcode__": runsocketcode,

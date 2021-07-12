@@ -10,7 +10,7 @@ from netrepr import NetRepr, RemoteObjectPool, RemoteObjectReference
 IMPORT_MODULES = ["netrepr", "remote_console", "remote_pipe", "remote_bootstrap"]
 source = []
 for fn in IMPORT_MODULES:
-    for line in open(fn + ".py", "rU"):
+    for line in open(fn + ".py"):
         source.append(line)
     source.append("\n\n")
 SOURCE = repr("".join(source)) + "\n"
@@ -95,7 +95,7 @@ def client_loop(f):
                     if obj is None:
                         pass
                     elif isinstance(obj, RemoteObjectReference):
-                        writecode('interp.write(repr(%s) + "\\n")' % (netrepr(obj),))
+                        writecode(f'interp.write(repr({netrepr(obj)}) + "\\n")')
                     else:
                         print(repr(obj))
                 elif name.startswith("RemoteFileLike."):
@@ -105,7 +105,7 @@ def client_loop(f):
                 else:
                     print(name, args)
                 if code is None:
-                    code = "__result__[%r] = %r" % (seq, rval)
+                    code = f"__result__[{seq!r}] = {rval!r}"
                 writecode(code)
         finally:
             pool.pop()

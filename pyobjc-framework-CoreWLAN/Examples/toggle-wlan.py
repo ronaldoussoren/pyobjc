@@ -21,6 +21,6 @@ if ok:
 
     sys.exit(0)
 else:
-    print("Could not toggle WLAN power: %s" % (error.localizedDescription(),))
+    print(f"Could not toggle WLAN power: {error.localizedDescription()}")
 
     sys.exit(1)

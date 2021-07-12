@@ -18,4 +18,4 @@ class DNDTableView(NSTableView):
         # or http://developer.apple.com/documentation/Cocoa/Conceptual/DragandDrop/Tasks/faq.html#//apple_ref/doc/uid/20002248/BBCFIJGF  # noqa: B950
         if not flag:
             return NSDragOperationLink  # link for external dragged URLs
-        return super(DNDTableView, self).draggingSourceOperationMaskForLocal_(flag)
+        return super().draggingSourceOperationMaskForLocal_(flag)

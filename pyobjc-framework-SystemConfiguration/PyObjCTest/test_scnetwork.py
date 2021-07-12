@@ -9,7 +9,7 @@ def resolver_available():
     try:
         socket.gethostbyname("www.python.org")
         return True
-    except socket.error:
+    except OSError:
         return False
 
 

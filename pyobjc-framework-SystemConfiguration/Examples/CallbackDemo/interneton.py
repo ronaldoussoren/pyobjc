@@ -31,7 +31,7 @@ from SystemConfiguration import (
 
 
 def resultAvailable(target, flags, info):
-    print("got network reachability status for %s:" % (info,))
+    print(f"got network reachability status for {info}:")
 
     if flags & kSCNetworkFlagsTransientConnection:
         print("- transient connection")

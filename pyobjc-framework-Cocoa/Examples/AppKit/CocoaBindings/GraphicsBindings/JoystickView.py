@@ -62,7 +62,7 @@ class JoystickView(NSView):
         return NSNumber
 
     def initWithFrame_(self, frameRect):
-        self = super(JoystickView, self).initWithFrame_(frameRect)
+        self = super().initWithFrame_(frameRect)
         if self is None:
             return None
         self.maxOffset = 15.0

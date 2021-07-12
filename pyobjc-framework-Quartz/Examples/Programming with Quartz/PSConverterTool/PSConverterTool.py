@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import sys
 
 import Cocoa
@@ -8,7 +6,7 @@ import Quartz
 DEBUG = 1
 
 
-class MyConverterData(object):
+class MyConverterData:
     def __init__(self):
         self.doProgress = False
         self.abortConverter = False
@@ -29,7 +27,7 @@ def end_document_callback(info, success):
     else:
         success = "failed"
 
-    print("\nEnd Document: %s\n" % (success,), file=info.outStatusFile)
+    print(f"\nEnd Document: {success}\n", file=info.outStatusFile)
 
 
 def begin_page_callback(info, pageno, page_info):
@@ -140,7 +138,7 @@ def main(args=None):
         args = sys.argv
 
     if len(args) != 3:
-        print("Usage: %s inputfile outputfile." % (args[0],))
+        print(f"Usage: {args[0]} inputfile outputfile.")
         return 0
 
     infile = args[1]

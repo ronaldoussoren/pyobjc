@@ -70,11 +70,11 @@ class TestNSAffineTransformStruct(TestCase):
         Q = (1, 2, 3, 4, 5, 7)
 
         self.assertTrue(not (p == P[:4]))
-        self.assertTrue((p != P[:4]))
+        self.assertTrue(p != P[:4])
         self.assertTrue(not (p <= P[:4]))
         self.assertTrue(not (p < P[:4]))
-        self.assertTrue((p > P[:4]))
-        self.assertTrue((p >= P[:4]))
+        self.assertTrue(p > P[:4])
+        self.assertTrue(p >= P[:4])
 
         self.assertTrue(not (p < p))
         self.assertTrue(not (p < P))

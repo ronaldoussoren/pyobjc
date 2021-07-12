@@ -41,14 +41,14 @@ registerMetaDataForSelector(
 
 
 def _ensure_array(anArray):
-    """ Return *anArray* as a list, tuple or NSArray """
+    """Return *anArray* as a list, tuple or NSArray"""
     if not isinstance(anArray, (NSArray, list, tuple)):
         anArray = list(anArray)
     return anArray
 
 
 def nsarray_reverse(self):
-    """ Reverse an array """
+    """Reverse an array"""
     begin = 0
     end = len(self) - 1
     while begin < end:
@@ -69,7 +69,7 @@ def nsarray_index(self, item, start=0, stop=_index_sentinel):
     if start == 0 and stop is _index_sentinel:
         res = self.indexOfObject_(container_wrap(item))
         if res == NSNotFound:
-            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            raise ValueError(f"{type(self).__name__}.index(x): x not in list")
 
     else:
         itemcount = self.count()
@@ -87,10 +87,10 @@ def nsarray_index(self, item, start=0, stop=_index_sentinel):
             stop = itemcount
 
         if itemcount == 0:
-            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            raise ValueError(f"{type(self).__name__}.index(x): x not in list")
 
         if start >= itemcount:
-            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            raise ValueError(f"{type(self).__name__}.index(x): x not in list")
 
         if stop >= itemcount:
             stop = itemcount - 1
@@ -102,14 +102,14 @@ def nsarray_index(self, item, start=0, stop=_index_sentinel):
             ln = stop - start
 
         if ln == 0:
-            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            raise ValueError(f"{type(self).__name__}.index(x): x not in list")
 
         if ln > sys.maxsize:  # pragma: no cover
             ln = sys.maxsize
 
         res = self.indexOfObject_inRange_(item, (start, ln))
         if res == NSNotFound:
-            raise ValueError("%s.index(x): x not in list" % (type(self).__name__,))
+            raise ValueError(f"{type(self).__name__}.index(x): x not in list")
 
     return res
 
@@ -180,7 +180,7 @@ def nsarray_pop(self, idx=-1):
 def nsarray_remove(self, obj):
     idx = self.indexOfObject_(obj)
     if idx == NSNotFound:
-        raise ValueError("%s.remove(x): x not in list" % (type(self).__name__,))
+        raise ValueError(f"{type(self).__name__}.remove(x): x not in list")
     self.removeObjectAtIndex_(idx)
 
 

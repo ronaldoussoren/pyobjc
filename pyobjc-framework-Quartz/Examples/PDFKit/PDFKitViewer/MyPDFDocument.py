@@ -18,13 +18,13 @@ class MyPDFDocument(Cocoa.NSDocument):
     def dealloc(self):
         Cocoa.NSNotificationCenter.defaultCenter().removeObserver_(self)
         self._searchResults = None
-        super(MyPDFDocument, self).dealloc()
+        super().dealloc()
 
     def windowNibName(self):
         return "MyDocument"
 
     def windowControllerDidLoadNib_(self, controller):
-        super(MyPDFDocument, self).windowControllerDidLoadNib_(controller)
+        super().windowControllerDidLoadNib_(controller)
 
         if self.fileName():
             pdfDoc = Quartz.PDFDocument.alloc().initWithURL_(

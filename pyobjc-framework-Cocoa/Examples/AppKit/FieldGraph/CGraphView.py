@@ -27,7 +27,7 @@ class CGraphView(Cocoa.NSView):
     mapScaleDisplay = objc.IBOutlet()
 
     def initWithFrame_(self, frame):
-        super(CGraphView, self).initWithFrame_(frame)
+        super().initWithFrame_(frame)
         self.setGridColor()
         self.setRmsColor()
         self.setGraphColor()

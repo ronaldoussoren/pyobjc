@@ -14,7 +14,6 @@ General guidelines for use:
   installVerboseExceptionHandler.  It may be removed at any time by calling
   removeDebuggingHandler.
 """
-from __future__ import print_function
 
 import os
 import sys
@@ -93,7 +92,7 @@ def _run_atos(stack):
         else:
             return None
 
-    return os.popen("%s -p %s %s" % (_atos_command, os.getpid(), stack))
+    return os.popen(f"{_atos_command} -p {os.getpid()} {stack}")
 
 
 def nsLogObjCException(exception):

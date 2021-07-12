@@ -60,10 +60,10 @@ def test_%s(self):
         result,
     )
 
-    return result["test_%s" % (name,)]
+    return result[f"test_{name}"]
 
 
 for n in names:
-    methods["test_%s" % (n,)] = make_test(n)
+    methods[f"test_{n}"] = make_test(n)
 
 CTests = type(TestCase)("CTests", (TestCase,), methods)

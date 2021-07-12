@@ -8,7 +8,7 @@ class Converter(NSObject):
     dollarsToConvert = objc.ivar.double()
 
     def init(self):
-        self = super(Converter, self).init()
+        self = super().init()
         self.exchangeRate = 3
         self.dollarsToConvert = 4
         return self

@@ -85,7 +85,7 @@ class TestNSDictionaryInteraction(TestCase):
 
             self.assertTrue(
                 hasattr(Foundation.NSMutableDictionary, nm),
-                "NSMutableDictionary has no method '%s'" % (nm,),
+                f"NSMutableDictionary has no method '{nm}'",
             )
 
     def testRepeatedAllocInit(self):

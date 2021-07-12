@@ -35,7 +35,7 @@ class TinyTinyDocument(Cocoa.NSDocument):
             self.readFromUTF8_(self.path)
 
     def readFromUTF8_(self, path):
-        with open(path, "r") as f:
+        with open(path) as f:
             text = f.read()
 
         if sys.version_info[0] == 2:

@@ -58,7 +58,7 @@ class CustomWindow(Cocoa.NSWindow):
     def initWithContentRect_styleMask_backing_defer_(
         self, contentRect, aStyle, bufferingType, flag
     ):
-        result = super(CustomWindow, self).initWithContentRect_styleMask_backing_defer_(
+        result = super().initWithContentRect_styleMask_backing_defer_(
             contentRect,
             Cocoa.NSBorderlessWindowMask,
             Cocoa.NSBackingStoreBuffered,

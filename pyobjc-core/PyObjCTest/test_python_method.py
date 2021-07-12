@@ -12,7 +12,7 @@ class TestPythonMethod(TestCase):
         self.assertEqual(o.callable, 1)
 
     def test_usage_basic(self):
-        class MyClass(object):
+        class MyClass:
             @objc.python_method
             def my_method(self, a):
                 return a * 2

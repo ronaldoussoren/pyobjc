@@ -2,7 +2,7 @@ import objc
 from PyObjCTools.TestSupport import TestCase
 
 
-class specialproperty(object):
+class specialproperty:
     def __init__(self):
         self.name = None
 

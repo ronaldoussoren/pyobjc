@@ -78,7 +78,7 @@ def main(*args):
     setup()
     try:
         for arg in args:
-            url = NSURL.URLWithString_("pydoc:///%s" % (arg,))
+            url = NSURL.URLWithString_(f"pydoc:///{arg}")
             print(NSString.stringWithContentsOfURL_(url))
     finally:
         teardown()

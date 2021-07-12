@@ -186,7 +186,7 @@ class TestBlocks(TestCase):
 
         self.assertEqual(lst, [42, 43])
 
-        class Helper(object):
+        class Helper:
             def __init__(self):
                 self.values = []
 

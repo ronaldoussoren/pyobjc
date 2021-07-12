@@ -5,9 +5,7 @@ from objc import super
 class CaseInsensitivePredicateTemplate(Cocoa.NSPredicateEditorRowTemplate):
     def predicateWithSubpredicates_(self, subpredicates):
         # we only make NSComparisonPredicates
-        predicate = super(
-            CaseInsensitivePredicateTemplate, self
-        ).predicateWithSubpredicates_(subpredicates)
+        predicate = super().predicateWithSubpredicates_(subpredicates)
 
         # construct an identical predicate, but add the
         # NSCaseInsensitivePredicateOption flag

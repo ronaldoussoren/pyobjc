@@ -3,7 +3,6 @@ Some basic tests for converting values to and from Objective-C
 
 TODO: This only tests C values at the moment.
 """
-from __future__ import absolute_import
 
 import array
 import sys

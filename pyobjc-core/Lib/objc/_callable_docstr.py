@@ -72,7 +72,7 @@ def describe_type(typestr):
             nm = typestr[:idx]
             if not nm:
                 nm = b"<?>"
-            return "struct %s" % (nm.decode("utf-8"),)
+            return "struct {}".format(nm.decode("utf-8"))
 
     if typestr.startswith(objc._C_ARY_B):
         typestr = typestr[1:]
@@ -81,7 +81,7 @@ def describe_type(typestr):
             d += typestr[:1]
             typestr = typestr[1:]
 
-        return "%s[%s]" % (describe_type(typestr), d.decode("utf-8"))
+        return "{}[{}]".format(describe_type(typestr), d.decode("utf-8"))
 
     if typestr.startswith(objc._C_UNION_B):
         typestr = typestr[1:]
@@ -93,7 +93,7 @@ def describe_type(typestr):
             nm = typestr[:idx]
             if not nm:
                 nm = b"<?>"
-            return "union %s" % (nm.decode("utf-8"),)
+            return "union {}".format(nm.decode("utf-8"))
 
     return "<?>"
 
@@ -144,7 +144,7 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
         if metadata.get("variadic"):
             hdr_name.append(", ...")
 
-        header = "%s (%s)%s;" % (
+        header = "{} ({}){};".format(
             "+" if metadata["classmethod"] else "-",
             describe_type(metadata["retval"]["type"]),
             "".join(hdr_name),
@@ -172,7 +172,7 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
         if not hdr_name:
             hdr_name.append("void")
 
-        header = "%s %s(%s);" % (
+        header = "{} {}({});".format(
             describe_type(metadata["retval"]["type"]),
             name,
             "".join(hdr_name),
@@ -181,7 +181,7 @@ def describe_callable_metadata(name, metadata, offset="", ismethod=False):
     result = [header]
     if metadata.get("suggestion"):
         result.append("")
-        result.append("WARNING: %s" % (metadata["suggestion"],))
+        result.append("WARNING: {}".format(metadata["suggestion"]))
 
     if arg_info:
         result.append("")

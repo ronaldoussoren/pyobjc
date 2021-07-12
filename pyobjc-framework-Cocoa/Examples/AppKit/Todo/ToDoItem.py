@@ -25,7 +25,7 @@ class ToDoItem(Cocoa.NSObject):
     )
 
     def init(self):
-        self = super(ToDoItem, self).init()
+        self = super().init()
         if self is None:
             return None
 
@@ -57,7 +57,7 @@ class ToDoItem(Cocoa.NSObject):
         return descr
 
     def initWithName_andDate_(self, aName, aDate):
-        self = super(ToDoItem, self).init()
+        self = super().init()
         if self is None:
             return None
 

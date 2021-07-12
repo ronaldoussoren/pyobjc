@@ -27,7 +27,7 @@ class TestCFHost(TestCase):
             # value = socket.gethostbyname("www.python.org")
             socket.gethostbyname("www.python.org")
             expected_resolution = True
-        except socket.error:
+        except OSError:
             expected_resolution = False
 
         addr = b" " * 24

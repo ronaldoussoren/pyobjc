@@ -4,7 +4,7 @@ import Cocoa
 import Quartz
 
 
-class ExportInfo(object):
+class ExportInfo:
     command = None
     fileType = None
     useQTForExport = False
@@ -297,7 +297,7 @@ def drawPoint(context, p):
 
 def printCTM(context):
     t = Quartz.CGContextGetCTM(context)
-    print("CurrentCTM is %r" % (t,))
+    print(f"CurrentCTM is {t!r}")
 
 
 kTickLength = 5

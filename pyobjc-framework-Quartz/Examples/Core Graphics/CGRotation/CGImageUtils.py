@@ -6,7 +6,7 @@ import objc
 import Quartz
 
 
-class ImageInfo(object):
+class ImageInfo:
     __slots__ = (
         "fRotation",
         "fScaleX",

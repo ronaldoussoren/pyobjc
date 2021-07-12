@@ -690,7 +690,7 @@ class TestArrayProperty(TestCase):
         self.assertFalse(isinstance(o.array, list))
 
         self.assertEqual(
-            repr(o.array), "<array proxy for property array %r>" % ([3, 4, 5],)
+            repr(o.array), f"<array proxy for property array {[3, 4, 5]!r}>"
         )
 
     def testFinding(self):

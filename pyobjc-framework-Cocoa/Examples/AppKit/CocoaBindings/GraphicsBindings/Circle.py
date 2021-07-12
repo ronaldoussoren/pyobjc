@@ -46,7 +46,7 @@ class Circle(NSObject):
         return ["xLoc", "yLoc", "shadowOffset", "shadowAngle", "color", "radius"]
 
     def init(self):
-        self = super(Circle, self).init()
+        self = super().init()
         if self is None:
             return None
 

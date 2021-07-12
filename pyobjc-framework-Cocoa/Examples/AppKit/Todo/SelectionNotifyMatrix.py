@@ -6,7 +6,7 @@ RowSelectedNotification = "RowSelectedNotification"
 
 class SelectionNotifyMatrix(Cocoa.NSMatrix):
     def mouseDown_(self, theEvent):
-        super(SelectionNotifyMatrix, self).mouseDown_(theEvent)
+        super().mouseDown_(theEvent)
 
         row = self.selectedRow()
         if row != -1:
@@ -15,7 +15,7 @@ class SelectionNotifyMatrix(Cocoa.NSMatrix):
             )
 
     def selectCellAtRow_column_(self, row, col):
-        super(SelectionNotifyMatrix, self).selectCellAtRow_column_(row, col)
+        super().selectCellAtRow_column_(row, col)
 
         Cocoa.NSNotificationCenter.defaultCenter().postNotificationName_object_userInfo_(
             RowSelectedNotification, self, None

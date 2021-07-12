@@ -165,7 +165,7 @@ class nsdict_keys(nsdict_view):
     def __repr__(self):
         keys = list(self.__value)
 
-        return "<nsdict_keys({0})>".format(keys)
+        return f"<nsdict_keys({keys})>"
 
     def __len__(self):
         return len(self.__value)
@@ -187,7 +187,7 @@ class nsdict_values(nsdict_view):
         values = list(self)
         values.sort()
 
-        return "<nsdict_values({0})>".format(values)
+        return f"<nsdict_values({values})>"
 
     def __len__(self):
         return len(self.__value)
@@ -212,7 +212,7 @@ class nsdict_items(nsdict_view):
         values = list(self)
         values.sort()
 
-        return "<nsdict_items({0})>".format(values)
+        return f"<nsdict_items({values})>"
 
     def __len__(self):
         return len(self.__value)
@@ -290,7 +290,7 @@ def nsdict_new(cls, *args, **kwds):
         return cls.dictionaryWithDictionary_(d)
 
     else:
-        raise TypeError("dict expected at most 1 arguments, got {0}".format(len(args)))
+        raise TypeError(f"dict expected at most 1 arguments, got {len(args)}")
 
     if kwds:
         d = {}

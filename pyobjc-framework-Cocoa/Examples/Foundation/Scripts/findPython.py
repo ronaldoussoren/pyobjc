@@ -28,17 +28,17 @@ def libraryNameForSymbol(symbol):
     objc.loadBundleFunctions(bndl, d, FUNCTIONS)
     for (fn, _sig) in FUNCTIONS:
         if fn not in d:
-            raise ValueError("Couldn't find function %s" % (fn,))
+            raise ValueError(f"Couldn't find function {fn}")
     symbol = b"_" + symbol
     if not d["NSIsSymbolNameDefined"](symbol):
         # symbol not defined
         return None
     sym = d["NSLookupAndBindSymbol"](symbol)
     if not sym:
-        raise ValueError("Couldn't bind symbol %r" % (symbol,))
+        raise ValueError(f"Couldn't bind symbol {symbol!r}")
     mod = d["NSModuleForSymbol"](sym)
     if not mod:
-        raise ValueError("Couldn't find module for symbol %r" % (symbol,))
+        raise ValueError(f"Couldn't find module for symbol {symbol!r}")
     return d["NSLibraryNameForModule"](mod)
 
 

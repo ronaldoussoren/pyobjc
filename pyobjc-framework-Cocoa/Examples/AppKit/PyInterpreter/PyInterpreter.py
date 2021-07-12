@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import keyword
 import sys
 import time
@@ -36,7 +34,7 @@ except AttributeError:
     sys.ps2 = "... "
 
 
-class PseudoUTF8Output(object):
+class PseudoUTF8Output:
     softspace = 0
 
     def __init__(self, writemethod):
@@ -58,7 +56,7 @@ class PseudoUTF8Output(object):
         return True
 
 
-class PseudoUTF8Input(object):
+class PseudoUTF8Input:
     softspace = 0
 
     def __init__(self, readlinemethod):
@@ -226,7 +224,7 @@ class PyInterpreter(NSObject):
     #
 
     def awakeFromNib(self):
-        self = super(PyInterpreter, self).init()
+        self = super().init()
         self._font = NSFont.userFixedPitchFontOfSize_(10)
         self._stderrColor = NSColor.redColor()
         self._stdoutColor = NSColor.blueColor()

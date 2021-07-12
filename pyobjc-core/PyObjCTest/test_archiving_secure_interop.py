@@ -76,7 +76,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 )
 
                 if data is None:
-                    self.fail("Cannot create archive: %s" % (error,))
+                    self.fail(f"Cannot create archive: {error}")
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
@@ -98,7 +98,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 )
 
                 if data is None:
-                    self.fail("Cannot create archive: %s" % (error,))
+                    self.fail(f"Cannot create archive: {error}")
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
@@ -120,7 +120,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 )
 
                 if data is None:
-                    self.fail("Cannot create archive: %s" % (error,))
+                    self.fail(f"Cannot create archive: {error}")
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
@@ -156,7 +156,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 )
 
                 if data is None:
-                    self.fail("Cannot create archive: %s" % (error,))
+                    self.fail(f"Cannot create archive: {error}")
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
@@ -178,7 +178,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 )
 
                 if data is None:
-                    self.fail("Cannot create archive: %s" % (error,))
+                    self.fail(f"Cannot create archive: {error}")
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
@@ -201,7 +201,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 )
 
                 if data is None:
-                    self.fail("Cannot create archive: %s" % (error,))
+                    self.fail(f"Cannot create archive: {error}")
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())
@@ -227,7 +227,7 @@ if os_level_key(os_release()) >= os_level_key("10.13"):
                 )
 
                 if data is None:
-                    self.fail("Cannot create archive: %s" % (error,))
+                    self.fail(f"Cannot create archive: {error}")
 
                 with tempfile.NamedTemporaryFile() as fp:
                     fp.write(data.bytes())

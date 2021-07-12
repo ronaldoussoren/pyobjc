@@ -48,12 +48,12 @@ class ArrayTests(seq_tests.CommonTest):
         self.assertEqual(NSArray("hello"), NSArray(["h", "e", "l", "l", "o"]))
 
     def test_truth(self):
-        super(ArrayTests, self).test_truth()
+        super().test_truth()
         self.assertTrue(not NSArray())
         self.assertTrue(NSArray([1, 2]))
 
     def test_len(self):
-        super(ArrayTests, self).test_len()
+        super().test_len()
 
     def test_count(self):
         # Disable test_count because NSArray.count

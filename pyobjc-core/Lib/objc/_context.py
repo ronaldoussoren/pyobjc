@@ -29,7 +29,7 @@ __all__ = ("context",)
 from typing import Any
 
 
-class ContextRegistry(object):
+class ContextRegistry:
     def __init__(self):
         self._registry = {}
 

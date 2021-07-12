@@ -20,7 +20,7 @@ class BookmarksDocument(NSDocument):
     bookmarksArray = objc.ivar("bookmarksArray")
 
     def init(self):
-        self = super(BookmarksDocument, self).init()
+        self = super().init()
         if self is None:
             return None
         self.bookmarksArray = NSMutableArray.array()

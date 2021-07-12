@@ -59,7 +59,7 @@ class FontSampleDisplayView(NSView):
         )
 
     def initWithFrame_(self, frameRect):
-        self = super(FontSampleDisplayView, self).initWithFrame_(frameRect)
+        self = super().initWithFrame_(frameRect)
         dnc = NSNotificationCenter.defaultCenter()
         dnc.addObserver_selector_name_object_(
             self, "redisplay:", NSUserDefaultsDidChangeNotification, None

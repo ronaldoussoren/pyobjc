@@ -10,7 +10,7 @@ def as_unicode(s, encoding="utf-8"):
     elif issubclass(typ, bytes):
         s = str(s, encoding, "replace")
     else:
-        raise TypeError("expecting basestring, not %s" % (typ.__name__,))
+        raise TypeError(f"expecting basestring, not {typ.__name__}")
     return s
 
 
@@ -23,11 +23,11 @@ def as_str(s, encoding="utf-8"):
     elif issubclass(typ, str):
         s = s.encode(encoding)
     else:
-        raise TypeError("expecting basestring, not %s" % (typ.__name__,))
+        raise TypeError(f"expecting basestring, not {typ.__name__}")
     return s
 
 
-class RemotePipe(object):
+class RemotePipe:
     def __init__(self, runcode, clientfile, netReprCenter, namespace, pool):
         self.runcode = runcode
         self.pool = pool
@@ -63,7 +63,7 @@ class RemotePipe(object):
         return self.result.pop(ident)
 
 
-class RemoteFileLike(object):
+class RemoteFileLike:
     softspace = 0
     closed = False
     encoding = "utf-8"

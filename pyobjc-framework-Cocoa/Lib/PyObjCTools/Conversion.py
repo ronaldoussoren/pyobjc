@@ -93,7 +93,7 @@ def serializePropertyList(aPropertyList, format="xml"):  # noqa: A002
     try:
         formatOption = FORMATS[format]
     except KeyError:
-        raise ValueError("Invalid format: %s" % (format,))
+        raise ValueError(f"Invalid format: {format}")
     (
         data,
         err,

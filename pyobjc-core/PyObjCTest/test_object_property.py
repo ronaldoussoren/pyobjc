@@ -142,13 +142,13 @@ class TestObjectProperty(TestCase):
 
             @p5.getter
             def p5(self):
-                return "-%s-" % (self.p4,)
+                return f"-{self.p4}-"
 
             p5.depends_on("p4")
 
             @OCTestObjectProperty2.p9.getter
             def p9(self):
-                return "+%s+" % (self.p4,)
+                return f"+{self.p4}+"
 
             p9.depends_on("p4")
 

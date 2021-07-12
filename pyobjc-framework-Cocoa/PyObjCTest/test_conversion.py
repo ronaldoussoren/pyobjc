@@ -10,7 +10,7 @@ import objc
 
 class TestConversion(TestCase):
     def test_toPythonDecimal(self):
-        v = Cocoa.NSDecimalNumber.decimalNumberWithString_(u"42.5")
+        v = Cocoa.NSDecimalNumber.decimalNumberWithString_("42.5")
         d = Conversion.toPythonDecimal(v)
         self.assertIsInstance(d, decimal.Decimal)
         self.assertEqual(str(d), "42.5")

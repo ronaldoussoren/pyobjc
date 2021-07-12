@@ -118,7 +118,7 @@ class TestLatentSemanticMapping(TestCase):
         # fn = __file__
         # fn = os.path.splitext(fn)[0] + ".py"
         fn = "/usr/share/dict/README"
-        with open(fn, "r") as fp:
+        with open(fn) as fp:
             for line in fp:
                 t = LatentSemanticMapping.LSMTextCreate(None, map1)
                 LatentSemanticMapping.LSMTextAddWords(

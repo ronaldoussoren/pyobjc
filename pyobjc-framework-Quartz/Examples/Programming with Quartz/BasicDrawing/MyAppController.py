@@ -12,7 +12,7 @@ _useQT = False
 def getURLToExport(suffix):
     savePanel = Cocoa.NSSavePanel.savePanel()
 
-    initialFileName = "BasicDrawing.%s" % (suffix,)
+    initialFileName = f"BasicDrawing.{suffix}"
 
     if (
         savePanel.runModalForDirectory_file_(None, initialFileName)

@@ -78,7 +78,7 @@ class TestError(TestCase):
             v,
             (
                 "Operation could not be completed. failure reason",
-                "The operation couldn%st be completed. failure reason" % (chr(0x2019),),
+                f"The operation couldn{chr(0x2019)}t be completed. failure reason",
             ),
         )
 

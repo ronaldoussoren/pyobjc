@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import os
 import zipfile
 
@@ -27,7 +25,7 @@ def split_groups(info):
 
 def zip_directory(input_dir, output_file, verbose):
     if verbose:
-        print("Zip {} -> {}".format(input_dir, output_file))
+        print(f"Zip {input_dir} -> {output_file}")
 
     zf = zipfile.ZipFile(output_file, "w")
     basename = os.path.basename(output_file)[:-4]
@@ -53,7 +51,7 @@ def zip_directory(input_dir, output_file, verbose):
 
 def convert_script_example(name, input_file, output_dir, verbose):
     if verbose:
-        print("Fetching example {} from {}".format(name, input_file))
+        print(f"Fetching example {name} from {input_file}")
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -71,7 +69,7 @@ def convert_script_example(name, input_file, output_dir, verbose):
         print("=" * len(name), file=fp)
         print("", file=fp)
         print(
-            "* :download:`Download example <{}>`".format(os.path.basename(input_file)),
+            f"* :download:`Download example <{os.path.basename(input_file)}>`",
             file=fp,
         )
         print("", file=fp)
@@ -79,7 +77,7 @@ def convert_script_example(name, input_file, output_dir, verbose):
         print("", file=fp)
 
         lang = "python"
-        with open(input_file, "rU") as src_fp:
+        with open(input_file) as src_fp:
             source = src_fp.read()
 
         print("", file=fp)
@@ -88,18 +86,18 @@ def convert_script_example(name, input_file, output_dir, verbose):
         print("." * len(path), file=fp)
         print("", file=fp)
 
-        print(".. sourcecode:: {}".format(lang), file=fp)
+        print(f".. sourcecode:: {lang}", file=fp)
         print("", file=fp)
         for ln in source.splitlines():
-            print("    {}".format(ln.rstrip()), file=fp)
+            print(f"    {ln.rstrip()}", file=fp)
         print("", file=fp)
 
 
 def convert_example(name, input_dir, output_dir, verbose):
     if verbose:
-        print("Fetching example {} from {}".format(name, input_dir))
+        print(f"Fetching example {name} from {input_dir}")
 
-    zipname = "PyObjCExample-{}.zip".format(name)
+    zipname = f"PyObjCExample-{name}.zip"
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
@@ -117,14 +115,14 @@ def convert_example(name, input_dir, output_dir, verbose):
             readme = fp.read()
 
     else:
-        print("WARNING: Example at {} does not contain a readme".format(input_dir))
+        print(f"WARNING: Example at {input_dir} does not contain a readme")
         readme = "A PyObjC Example without documentation"
 
     with open(os.path.join(output_dir, "index.rst"), "w") as fp:
         print(name, file=fp)
         print("=" * len(name), file=fp)
         print("", file=fp)
-        print("* :download:`Download example <{}>`".format(zipname), file=fp)
+        print(f"* :download:`Download example <{zipname}>`", file=fp)
         print("", file=fp)
         print(readme, file=fp)
         print("", file=fp)
@@ -156,7 +154,7 @@ def convert_example(name, input_dir, output_dir, verbose):
                 else:
                     continue
 
-                with open(os.path.join(dirpath, fn), "rU") as src_fp:
+                with open(os.path.join(dirpath, fn)) as src_fp:
                     source = src_fp.read()
 
                 print(".. rst-class:: tabbertab", file=fp)
@@ -165,10 +163,10 @@ def convert_example(name, input_dir, output_dir, verbose):
                 print("." * len(path), file=fp)
                 print("", file=fp)
 
-                print(".. sourcecode:: {}".format(lang), file=fp)
+                print(f".. sourcecode:: {lang}", file=fp)
                 print("", file=fp)
                 for ln in source.splitlines():
-                    print("    {}".format(ln.rstrip()), file=fp)
+                    print(f"    {ln.rstrip()}", file=fp)
                 print("", file=fp)
 
         # TODO: Store other links with examples and add them to this list
@@ -248,7 +246,7 @@ def copy_zip_contents(zfout, zfin, relpath):
 
 def merge_example_zips(output_fn, input_directory, verbose):
     if verbose:
-        print("Merging example zips in {} into {}".format(input_directory, output_fn))
+        print(f"Merging example zips in {input_directory} into {output_fn}")
 
     if os.path.exists(output_fn):
         os.unlink(output_fn)
@@ -326,9 +324,9 @@ def build_examples(app):
                     print("", file=fp)
                     for path in items:
                         if project == "pyobjc-core":
-                            print("   core/{}".format(path), file=fp)
+                            print(f"   core/{path}", file=fp)
                         else:
-                            print("   {}/{}".format(project[17:], path), file=fp)
+                            print(f"   {project[17:]}/{path}", file=fp)
                     print("", file=fp)
 
 

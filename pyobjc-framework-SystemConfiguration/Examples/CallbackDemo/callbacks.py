@@ -8,7 +8,6 @@ In an ideal world this would be a nice GUI.
 Usage:
     python callbacks.py
 """
-from __future__ import print_function
 
 import signal
 

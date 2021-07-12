@@ -4,7 +4,7 @@ from MyBaseGradientView import MyBaseGradientView
 
 class MyRectGradientView(MyBaseGradientView):
     def init(self):
-        self = super(MyRectGradientView, self).init()
+        self = super().init()
         if self is None:
             return self
 

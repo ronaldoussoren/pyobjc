@@ -533,22 +533,22 @@ functions = {
                             0: {"type": "^v"},
                             1: {
                                 "type": [
-                                    u"n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}",
-                                    u"n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}",
+                                    "n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}",
+                                    "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}",
                                 ]
                             },
                             2: {"type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"},
                             3: {
                                 "type": [
-                                    u"n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}",
-                                    u"n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}",
+                                    "n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}",
+                                    "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}",
                                 ]
                             },
                             4: {"type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}"},
                             5: {
                                 "type": [
-                                    u"N^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}",
-                                    u"N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}",
+                                    "N^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}",
+                                    "N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}",
                                 ]
                             },
                         },

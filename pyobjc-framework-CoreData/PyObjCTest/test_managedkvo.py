@@ -10,7 +10,7 @@ class CoreDataTestObject(CoreData.NSManagedObject):
         raise AttributeError(k)
 
     def __setattr__(self, k, v):
-        super(CoreDataTestObject, self).__setattr__(k, v)
+        super().__setattr__(k, v)
 
     pass
 

@@ -18,7 +18,6 @@ PyObjC primitives:
 * objc.repythonify for a number of types
 
 """
-from __future__ import print_function
 
 import textwrap
 import timeit

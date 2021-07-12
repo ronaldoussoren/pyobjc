@@ -192,7 +192,7 @@ def accessor(func, typeSignature=b"@"):
 
         return selector(func, signature=typeSignature + b"@:")
 
-    raise TypeError("%s not recognized as an accessor" % (funcName,))
+    raise TypeError(f"{funcName} not recognized as an accessor")
 
 
 def typedSelector(signature):
@@ -355,7 +355,7 @@ def synthesize(
 
     classDict = sys._getframe(1).f_locals
 
-    setterName = "set%s%s_" % (name[0].upper(), name[1:])
+    setterName = f"set{name[0].upper()}{name[1:]}_"
 
     if copy:
         setter = textwrap.dedent(

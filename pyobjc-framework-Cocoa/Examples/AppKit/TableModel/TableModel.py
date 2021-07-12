@@ -88,7 +88,7 @@ class TableModel(NSObject):
         else:
             items = list(self.tableView.selectedRowEnumerator())
             word = "Row"
-        label = "%s%s: %s" % (
+        label = "{}{}: {}".format(
             word,
             ("s", "")[len(items) == 1],
             ", ".join([str(x) for x in items]),

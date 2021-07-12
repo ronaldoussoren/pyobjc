@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 20.8b1
+    rev: 21.6b0
     hooks:
       - id: black
         language_version: python3.9
@@ -9,7 +9,7 @@ repos:
         types: []
 
   - repo: https://gitlab.com/pycqa/flake8
-    rev: 3.8.4
+    rev: 3.9.2
     hooks:
       - id: flake8
         args: ["--config", ".flake8" ]
@@ -46,7 +46,7 @@ repos:
         args: ['--py36-plus']
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+    rev: v4.0.1
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer

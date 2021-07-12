@@ -68,7 +68,7 @@ def _as_string(value):
     return value
 
 
-class _BridgeSupportParser(object):
+class _BridgeSupportParser:
     """
     Parser for the bridge support file format.
 
@@ -100,7 +100,7 @@ class _BridgeSupportParser(object):
             raise objc.error("invalid root node in bridgesupport file")
 
         for node in root:
-            method = getattr(self, "do_%s" % (node.tag,), None)
+            method = getattr(self, f"do_{node.tag}", None)
             if method is None:
                 continue
 
@@ -586,7 +586,7 @@ class _BridgeSupportParser(object):
                 value = value.encode("latin1")
             except UnicodeError as e:
                 warnings.warn(
-                    "Error parsing BridgeSupport data for constant %s: %s" % (name, e),
+                    f"Error parsing BridgeSupport data for constant {name}: {e}",
                     RuntimeWarning,
                 )
                 return
@@ -662,7 +662,7 @@ def _parseBridgeSupport(data, globals, frameworkName, *args, **kwds):  # noqa: A
         import warnings
 
         warnings.warn(
-            "Error parsing BridgeSupport data for %s: %s" % (frameworkName, e),
+            f"Error parsing BridgeSupport data for {frameworkName}: {e}",
             RuntimeWarning,
         )
 
@@ -817,7 +817,7 @@ def _structConvenience(structname, structencoding):
             return objc.ivar(name=name, type=structencoding)
 
     makevar.__name__ = structname
-    makevar.__doc__ = "Create *ivar* for type encoding %r" % (structencoding,)
+    makevar.__doc__ = f"Create *ivar* for type encoding {structencoding!r}"
     if hasattr(objc.ivar, "__qualname__"):
         makevar.__qualname__ = objc.ivar.__qualname__ + "." + structname
     _ivar_dict[structname] = classmethod(makevar)

@@ -78,7 +78,7 @@ class AppController(Cocoa.NSObject):
 
     def init(self):
         # Allocate our data storage
-        self = super(AppController, self).init()
+        self = super().init()
         if self is None:
             return None
 

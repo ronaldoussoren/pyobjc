@@ -2,7 +2,7 @@ import objc
 from AppKit import __bundle__
 
 
-class _NSApp(object):
+class _NSApp:
     """
     Helper class to emulate NSApp in Python.
     """

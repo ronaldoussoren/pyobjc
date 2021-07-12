@@ -1114,7 +1114,7 @@ class TestPrintfFormat(TestCase):
         with self.subTest("%p"):
             obj = object()
             v = o.makeArrayWithCFormat_(b"%p", obj)
-            self.assertEqual(list(v), ["%p", "%#x" % (id(obj),)])
+            self.assertEqual(list(v), ["%p", f"{id(obj):#x}"])
 
         with self.subTest("%lc%lc"):
             v = o.makeArrayWithCFormat_(b"%lc%lc", "d", "e")

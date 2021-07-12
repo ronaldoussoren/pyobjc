@@ -3,7 +3,6 @@
 This script prints some information on 'My Card'  record using
 the AddressBook C API.
 """
-from __future__ import print_function
 
 from AddressBook import (
     ABGetMe,

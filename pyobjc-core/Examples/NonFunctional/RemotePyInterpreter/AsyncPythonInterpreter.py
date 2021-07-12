@@ -26,7 +26,7 @@ from Foundation import (
 IMPORT_MODULES = ["netrepr", "remote_console", "remote_pipe", "remote_bootstrap"]
 source = []
 for fn in IMPORT_MODULES:
-    for line in open(fn + ".py", "rU"):
+    for line in open(fn + ".py"):
         source.append(line)
     source.append("\n\n")
 SOURCE = repr("".join(source)) + "\n"
@@ -55,7 +55,7 @@ class AsyncPythonInterpreter(NSObject):
     commandReactor = objc.IBOutlet("commandReactor")
 
     def init(self):
-        self = super(AsyncPythonInterpreter, self).init()
+        self = super().init()
         self.host = None
         self.port = None
         self.interpreterPath = None

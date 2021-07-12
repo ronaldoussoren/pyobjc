@@ -9,7 +9,7 @@ def type_string(obj):
     return getattr(objType, "__module__", "-") + "." + objType.__name__
 
 
-class NetRepr(object):
+class NetRepr:
     def __init__(self, objectPool):
         self.objectPool = objectPool
         self.cache = {}
@@ -30,8 +30,8 @@ class NetRepr(object):
         if cls.__module__ == "exceptions":
             rval = cls.__name__ + self.netrepr_tuple(e.args)
         else:
-            rval = "Exception(%r)" % (
-                "[Remote] %s.%s %s" % (cls.__module__, cls.__name__, e),
+            rval = "Exception({!r})".format(
+                f"[Remote] {cls.__module__}.{cls.__name__} {e}",
             )
         return rval
 
@@ -50,8 +50,8 @@ class NetRepr(object):
                 cached = self.get(self.cache, obj_id, None)
                 if cached is None:
                     # ident = next(self._identfactory)
-                    self.cache[obj_id] = "__cached__(%r)" % (obj_id,)
-                    cached = "__cache__(%r, %r)" % (obj_id, obj)
+                    self.cache[obj_id] = f"__cached__({obj_id!r})"
+                    cached = f"__cache__({obj_id!r}, {obj!r})"
                 return cached
         return self.netrepr_default(obj)
 
@@ -62,7 +62,7 @@ class NetRepr(object):
         return method()
 
 
-class BaseObjectPool(object):
+class BaseObjectPool:
     def __init__(self):
         self.idents = {}
         self.refs = {}
@@ -81,7 +81,7 @@ class BaseObjectPool(object):
 
     def autorelease(self, ref):
         if not self.pools:
-            raise RuntimeError("no autoreleasepool for %r" % (ref,))
+            raise RuntimeError(f"no autoreleasepool for {ref!r}")
         pool = self.pools[-1]
         pool[ref] = pool.get(ref, 0) + 1
 
@@ -99,7 +99,7 @@ class BaseObjectPool(object):
 
     def referenceForObject(self, obj):
         raise TypeError(
-            "Can not create a reference to %r, the bridge is unidirectional" % (obj,)
+            f"Can not create a reference to {obj!r}, the bridge is unidirectional"
         )
 
 
@@ -142,7 +142,7 @@ class ObjectPool(BaseObjectPool):
         return rval
 
 
-class BaseObjectReference(object):
+class BaseObjectReference:
     def __init__(self, objectPool, ident, type_string):
         self.ident = ident
         self.type_string = type_string
@@ -182,12 +182,12 @@ class BaseObjectReference(object):
         return self
 
     def __repr__(self):
-        return "%s(%r, %r)" % (type(self).__name__, self.ident, self.type_string)
+        return f"{type(self).__name__}({self.ident!r}, {self.type_string!r})"
 
 
 class RemoteObjectReference(BaseObjectReference):
     def __netrepr__(self):
-        return "__obj__(%r)" % (self.ident,)
+        return f"__obj__({self.ident!r})"
 
 
 class ObjectReference(BaseObjectReference):
@@ -208,7 +208,7 @@ class ObjectReference(BaseObjectReference):
         BaseObjectReference.dealloc(self)
 
     def __netrepr__(self):
-        return "__ref__(%r, %r)" % (self.ident, self.type_string)
+        return f"__ref__({self.ident!r}, {self.type_string!r})"
 
 
 def test_netrepr():

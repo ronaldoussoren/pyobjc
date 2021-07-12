@@ -54,7 +54,7 @@ enums = """$NS16BitBigEndianBitmapFormat@1024$NS16BitLittleEndianBitmapFormat@25
 misc.update(
     {
         "NSImageResizingModeStretch": selAorI(1, 0),
-        "NSAttachmentCharacter": u"\ufffc",
+        "NSAttachmentCharacter": "\ufffc",
         "NSImageResizingModeTile": selAorI(0, 1),
     }
 )

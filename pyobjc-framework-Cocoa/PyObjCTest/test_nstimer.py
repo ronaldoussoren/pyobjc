@@ -4,7 +4,7 @@ import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class PythonClass(object):
+class PythonClass:
     def __init__(self):
         self.fireCount = 0
 

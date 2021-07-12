@@ -7,7 +7,6 @@ addressbook.
 Usage:
     python exportBook.py output.csv
 """
-from __future__ import print_function
 
 import csv
 import sys
@@ -62,18 +61,18 @@ else:
 
 
 def personToFields(person, fieldnames):
-    """ Extract the specified fields from a person object """
+    """Extract the specified fields from a person object"""
     return [encodeField(person.valueForProperty_(nm)) for nm in fieldnames]
 
 
 def bookFields(book, fieldnames):
-    """ Generate the records for all people in the book """
+    """Generate the records for all people in the book"""
     for person in book.people():
         yield personToFields(person, fieldnames)
 
 
 def main(argv=None):
-    """ main entry point """
+    """main entry point"""
 
     if argv is None:
         argv = sys.argv[1:]

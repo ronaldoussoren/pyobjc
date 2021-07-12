@@ -27,11 +27,11 @@ def _getattribute(obj, name):
     dotted_path = name.split(".")
     for subpath in dotted_path:
         if subpath == "<locals>":
-            raise AttributeError("Can't get local attribute %r on %r" % (name, obj))
+            raise AttributeError(f"Can't get local attribute {name!r} on {obj!r}")
         try:
             obj = getattr(obj, subpath)
         except AttributeError:
-            raise AttributeError("Can't get attribute %r on %r" % (name, obj))
+            raise AttributeError(f"Can't get attribute {name!r} on {obj!r}")
     return obj
 
 
@@ -200,7 +200,7 @@ def save_global(coder, obj, name=None):
 
     except (ImportError, KeyError, AttributeError):
         raise PicklingError(
-            "Can't pickle %r: it's not found as %s.%s" % (obj, module_name, name)
+            f"Can't pickle {obj!r}: it's not found as {module_name}.{name}"
         )
     else:
         if obj2 is not obj:
@@ -361,7 +361,7 @@ def load_inst(coder, setValue):
         value = cls(*initargs)
     except TypeError as err:
         raise TypeError(
-            "in constructor for %s: %s" % (cls.__name__, str(err)), sys.exc_info()[2]
+            f"in constructor for {cls.__name__}: {str(err)}", sys.exc_info()[2]
         )
 
     # We now have the object, but haven't set the correct
@@ -552,7 +552,7 @@ def pyobjectDecode(coder, setValue):
         tp = coder.decodeValueOfObjCType_at_(objc._C_INT, None)
     f = decode_dispatch.get(tp)
     if f is None:
-        raise UnpicklingError("Unknown object kind: %s" % (tp,))
+        raise UnpicklingError(f"Unknown object kind: {tp}")
 
     return f(coder, setValue)
 

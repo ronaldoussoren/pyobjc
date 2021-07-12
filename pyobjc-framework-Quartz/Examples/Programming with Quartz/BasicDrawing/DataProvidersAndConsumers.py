@@ -50,7 +50,7 @@ def createRGBRampDataProvider():
     return dataProvider
 
 
-class MyImageDataInfo(object):
+class MyImageDataInfo:
     fp = None
     totalBytesRead = 0
     skippedBytes = 0
@@ -69,7 +69,7 @@ def skipBytesSequentialAccessDP(data, count):
         data.fp.seek(count, os.SEEK_CUR)
         data.skippedBytes += count
 
-    except IOError as msg:
+    except OSError as msg:
         print("Couldn't seek %d bytes because of %s" % (count, msg))
 
 
@@ -97,7 +97,7 @@ def createSequentialAccessDPForURL(url):
 
     fp = open(pathString, "rb")
     if fp is None:
-        print("Couldn't open path to file %s!" % (pathString,))
+        print(f"Couldn't open path to file {pathString}!")
         return None
 
     imageDataInfoP = MyImageDataInfo()

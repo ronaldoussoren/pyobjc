@@ -253,7 +253,7 @@ def nsset_add(self, value):
     self.addObject_(container_wrap(value))
 
 
-class nsset__iter__(object):
+class nsset__iter__:
     def __init__(self, value):
         self._size = len(value)
         self._enum = value.objectEnumerator()

@@ -8,7 +8,6 @@ doesn't use PPP :-)
 Usage:
     python netcon.py
 """
-from __future__ import print_function
 
 from CoreFoundation import CFRunLoopGetCurrent, CFRunLoopRun, kCFRunLoopCommonModes
 from SystemConfiguration import (

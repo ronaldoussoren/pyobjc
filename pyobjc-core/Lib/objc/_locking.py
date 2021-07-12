@@ -7,7 +7,7 @@ can also be used manually.
 import objc as _objc
 
 
-class object_lock(object):
+class object_lock:
     """
     A context manager that implements the same feature as
     @synchronized statements in Objective-C. Locking can also

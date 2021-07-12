@@ -45,9 +45,7 @@ def update_setObject_forKey_(self, *args, **kwds):
     if len(args) == 0:
         pass
     elif len(args) != 1:
-        raise TypeError(
-            "update expected at most 1 arguments, got {0}".format(len(args))
-        )
+        raise TypeError(f"update expected at most 1 arguments, got {len(args)}")
 
     else:
         other = args[0]
@@ -97,7 +95,7 @@ def popitem_setObject_forKey_(self):
         it = self.keyEnumerator()
         k = container_unwrap(it.nextObject(), StopIteration)
     except (StopIteration, IndexError):
-        raise KeyError("popitem on an empty %s" % (type(self).__name__,))
+        raise KeyError(f"popitem on an empty {type(self).__name__}")
     else:
         result = (k, container_unwrap(self.objectForKey_(k), KeyError))
         self.removeObjectForKey_(k)

@@ -4,7 +4,6 @@ Parse a PDF file and print some information about it.
 Usage:
     python parse_page_contents.py inputfile ...
 """
-from __future__ import print_function
 
 import sys
 
@@ -13,7 +12,7 @@ import objc
 import Quartz
 
 
-class MyDataScan(object):
+class MyDataScan:
     def __init__(self):
         self.numImagesWithColorThisPage = 0
         self.numImageMasksThisPage = 0
@@ -125,7 +124,7 @@ def myOperator_Do(s, info):
     # obtained from the stack.
     xobject = Quartz.CGPDFContentStreamGetResource(cs, "XObject", name)
     if xobject is None:
-        print("Couldn't get XObject with name %s" % (name,))
+        print(f"Couldn't get XObject with name {name}")
         return
 
     # An XObject must be a stream so obtain the value from the xobject
@@ -134,7 +133,7 @@ def myOperator_Do(s, info):
         xobject, Quartz.kCGPDFObjectTypeStream, None
     )
     if not res:
-        print("XObject '%s' is not a stream" % (name,))
+        print(f"XObject '{name}' is not a stream")
         return
 
     print(stream)
@@ -143,7 +142,7 @@ def myOperator_Do(s, info):
     # with the stream. This code only cares about the dictionary.
     info_dict = Quartz.CGPDFStreamGetDictionary(stream)
     if info_dict is None:
-        print("Couldn't obtain dictionary from stream %s!" % (name,))
+        print(f"Couldn't obtain dictionary from stream {name}!")
         return
 
     # An XObject dict has a Subtype that indicates what kind it is.
@@ -271,11 +270,11 @@ def main(args=None):
         args = sys.argv
 
     if len(args) < 2:
-        print("Usage: %s inputfile ... " % (args[0],))
+        print(f"Usage: {args[0]} inputfile ... ")
         return 1
 
     for inputFileName in args[1:]:
-        print("Beginning Document %r" % (inputFileName,))
+        print(f"Beginning Document {inputFileName!r}")
 
         if not isinstance(inputFileName, bytes):
             inputFileName = inputFileName.encode("utf-8")

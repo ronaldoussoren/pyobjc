@@ -128,7 +128,7 @@ class MyQuartzView(Cocoa.NSView):
         global startPoint, startRadius, startExtend
         global endPoint, endRadius, endExtend
 
-        super(MyQuartzView, self).initWithFrame_(frameRect)
+        super().initWithFrame_(frameRect)
 
         startPoint = Quartz.CGPoint(0, 0)
         startRadius = 0

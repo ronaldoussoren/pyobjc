@@ -421,8 +421,7 @@ class TestOnlySetsTuple(test.test_set.TestOnlySetsTuple):
 class TestOnlySetsString(test.test_set.TestOnlySetsString):
     def setUp(self):
         def gen():
-            for i in range(0, 10, 2):
-                yield i
+            yield from range(0, 10, 2)
 
         self.set = NSMutableSet((1, 2, 3))
         self.other = gen()

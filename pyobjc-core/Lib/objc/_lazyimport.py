@@ -55,7 +55,7 @@ def _loadBundle(frameworkName, frameworkIdentifier, frameworkPath):
     return bundle
 
 
-class GetAttrMap(object):
+class GetAttrMap:
     __slots__ = ("_container",)
 
     def __init__(self, container):
@@ -104,7 +104,7 @@ class ObjCLazyModule(ModuleType):
         initialdict=None,
         parents=(),
     ):
-        super(ObjCLazyModule, self).__init__(name)
+        super().__init__(name)
 
         if frameworkIdentifier is not None or frameworkPath is not None:
             self.__bundle = self.__dict__["__bundle__"] = _loadBundle(
@@ -365,7 +365,7 @@ class ObjCLazyModule(ModuleType):
                 return result
 
         if self.__varmap:
-            m = re.search(r"\$%s(@[^$]*)?\$" % (name,), self.__varmap)
+            m = re.search(fr"\${name}(@[^$]*)?\$", self.__varmap)
             if m is not None:
                 tp = m.group(1)
                 if not tp:
@@ -391,7 +391,7 @@ class ObjCLazyModule(ModuleType):
                 return result
 
         if self.__enummap:
-            m = re.search(r"\$%s@([^$]*)\$" % (name,), self.__enummap)
+            m = re.search(fr"\${name}@([^$]*)\$", self.__enummap)
             if m is not None:
                 result = self.__prs_enum(m.group(1))
                 if name in self.__enum_deprecated:

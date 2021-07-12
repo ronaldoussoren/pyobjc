@@ -143,7 +143,7 @@ class Controller(NSObject):
 
             # display a modal sheet explaining why the selection cannot be changed.
             NSBeginInformationalAlertSheet(
-                "The '%s' action is running." % (selectedWorkflow,),
+                f"The '{selectedWorkflow}' action is running.",
                 "OK",
                 None,
                 None,

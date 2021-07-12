@@ -1,5 +1,3 @@
-from __future__ import with_statement
-
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 

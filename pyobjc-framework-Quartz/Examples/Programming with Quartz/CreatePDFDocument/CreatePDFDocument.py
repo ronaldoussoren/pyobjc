@@ -111,7 +111,7 @@ def addEncryptionKeys(info_dict):
 
     ownerPasswordRef = createPasswordString(ownerPassword)
     if ownerPasswordRef is None:
-        print("Invalid owner password %s!" % (ownerPassword,))
+        print(f"Invalid owner password {ownerPassword}!")
         return
 
     if hasattr(Quartz, "kCGPDFContextOwnerPassword"):

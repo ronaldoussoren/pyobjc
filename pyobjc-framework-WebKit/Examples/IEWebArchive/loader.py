@@ -11,7 +11,7 @@ from WebKit import WebArchive, WebResource
 #     return HMTLoad(filename).asWebArchive()
 
 
-class MHTLoader(object):
+class MHTLoader:
     """
     A loader for .mht files, and archive format used by MS Internet Explorer
     on Windows.
@@ -29,7 +29,7 @@ class MHTLoader(object):
         self.loadFile(filename)
 
     def loadFile(self, filename):
-        with open(filename, "r") as fp:
+        with open(filename) as fp:
             msg = email.message_from_file(fp)
 
         for part in msg.walk():

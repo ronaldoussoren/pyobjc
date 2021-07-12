@@ -10,10 +10,10 @@ import Quartz
 
 
 def usage(name):
-    print("Usage %s [inputfile]" % (name,))
+    print(f"Usage {name} [inputfile]")
 
 
-class MyPDFData(object):
+class MyPDFData:
     pdfDoc = None
     mediaRect = None
 

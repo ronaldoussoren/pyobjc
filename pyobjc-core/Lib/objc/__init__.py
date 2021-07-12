@@ -63,7 +63,7 @@ YES = True
 NO = False
 
 
-class autorelease_pool(object):
+class autorelease_pool:
     """
     A context manager that runs the body of the block with a fresh
     autorelease pool. The actual release pool is not accessible.

@@ -104,7 +104,7 @@ class TestArrayOperators(TestCase):
     def test_distinctUnionOfObjects(self):
         arrayOperators = KeyValueCoding._ArrayOperators
 
-        class Int(object):
+        class Int:
             def __init__(self, value):
                 self._value = value
 
@@ -147,7 +147,7 @@ class TestArrayOperators(TestCase):
             KeyError, KeyValueCoding.getKeyPath, values, "@distinctUnionOfObjects.a.b"
         )
 
-        class Rec(object):
+        class Rec:
             def __init__(self, b):
                 self.b = b
 
@@ -165,7 +165,7 @@ class TestArrayOperators(TestCase):
     def test_unionOfArrays(self):
         arrayOperators = KeyValueCoding._ArrayOperators
 
-        class Rec(object):
+        class Rec:
             def __init__(self, **kwds):
                 for k, v in kwds.items():
                     setattr(self, k, v)
@@ -176,7 +176,7 @@ class TestArrayOperators(TestCase):
             def __hash__(self):
                 raise TypeError
 
-        class Str(object):
+        class Str:
             def __init__(self, value):
                 self._value = value
 
@@ -319,7 +319,7 @@ class TestArrayOperators(TestCase):
     def testUnionOfSets(self):
         arrayOperators = KeyValueCoding._ArrayOperators
 
-        class Rec(object):
+        class Rec:
             def __init__(self, n):
                 self.n = n
 
@@ -349,7 +349,7 @@ class TestPythonObject(TestCase):
         self.assertEqual(KeyValueCoding.getKey(lst, "b"), [2, null])
 
     def test_attr_get(self):
-        class Record(object):
+        class Record:
             __slots__ = ("slot1", "__dict__")
 
             def __init__(self, **kwds):
@@ -394,7 +394,7 @@ class TestPythonObject(TestCase):
         )
 
     def test_accessor_get(self):
-        class Object(object):
+        class Object:
             def get_attr1(self):
                 return "attr1"
 
@@ -468,7 +468,7 @@ class TestPythonObject(TestCase):
         self.assertEqual(v, {"a": 44, "b": "C", "c": {"a": "A"}})
 
     def test_attr_set(self):
-        class R(object):
+        class R:
             @property
             def attr3(self):
                 return self._attr3
@@ -530,7 +530,7 @@ class TestPythonObject(TestCase):
         )
 
     def test_accessor(self):
-        class Record(object):
+        class Record:
             def __init__(self):
                 self._attr1 = 1
                 self._attr2 = 2
@@ -684,7 +684,7 @@ class TestKVCHelper(TestCase):
         )
         self._trace[:] = []
 
-        class Object(object):
+        class Object:
             pass
 
         v = Object()

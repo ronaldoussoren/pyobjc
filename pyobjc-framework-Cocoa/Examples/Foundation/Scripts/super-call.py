@@ -16,7 +16,7 @@ class MyObject(NSObject):
             N = 0
 
             # Call super-class implementation.
-            super(MyObject, self).init()
+            super().init()
 
         else:
             print("Cyclic call detected")

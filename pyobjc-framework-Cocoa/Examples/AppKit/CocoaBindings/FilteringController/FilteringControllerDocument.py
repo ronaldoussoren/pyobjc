@@ -16,7 +16,7 @@ class FilteringControllerDocument(NSDocument):
     peopleController = objc.IBOutlet()
 
     def init(self):
-        self = super(FilteringControllerDocument, self).init()
+        self = super().init()
         if self is None:
             return None
         self._k_people = []
@@ -26,7 +26,7 @@ class FilteringControllerDocument(NSDocument):
         return "FilteringControllerDocument"
 
     def windowControllerDidLoadNib_(self, controller):
-        super(FilteringControllerDocument, self).windowControllerDidLoadNib_(controller)
+        super().windowControllerDidLoadNib_(controller)
 
     def dataRepresentationOfType_(self, aType):
         return NSKeyedArchiver.archivedDataWithRootObject_(self._k_people)

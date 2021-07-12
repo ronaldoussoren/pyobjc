@@ -183,7 +183,7 @@ class MyNSLayoutManager(Cocoa.NSLayoutManager):
         self._clippingInfo = info
 
     def init(self):
-        self = super(MyNSLayoutManager, self).init()
+        self = super().init()
         if self is None:
             return None
 
@@ -201,9 +201,7 @@ class MyNSLayoutManager(Cocoa.NSLayoutManager):
     # to use as the True baseline for the text drawing.
     def drawGlyphsForGlyphRange_atPoint_(self, glyphsToShow, origin):
         self._yStartPosition = origin.y
-        super(MyNSLayoutManager, self).drawGlyphsForGlyphRange_atPoint_(
-            glyphsToShow, origin
-        )
+        super().drawGlyphsForGlyphRange_atPoint_(glyphsToShow, origin)
 
     # This is the rendering method of NSLayoutManager that the
     # code overrides to perform its custom rendering.

@@ -6,7 +6,7 @@ import objc
 def getURLToExport(suffix):
     savePanel = Cocoa.NSSavePanel.savePanel()
 
-    initialFileName = "Quartz2DBasics.%s" % (suffix,)
+    initialFileName = f"Quartz2DBasics.{suffix}"
 
     if (
         savePanel.runModalForDirectory_file_(None, initialFileName)

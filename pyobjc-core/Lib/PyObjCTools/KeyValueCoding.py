@@ -25,7 +25,6 @@ See the Cocoa documentation on the Apple developer website for more
 information on Key-Value coding. The protocol is basicly used to enable
 weaker coupling between the view and model layers.
 """
-from __future__ import unicode_literals
 
 import collections.abc
 import types
@@ -66,7 +65,7 @@ def msum(iterable):
     return sum(partials, 0.0)
 
 
-class _ArrayOperators(object):
+class _ArrayOperators:
     @staticmethod
     def avg(obj, segments):
         path = ".".join(segments)
@@ -240,7 +239,7 @@ def getKey(obj, key):
     try:
         return getattr(obj, "_" + key)
     except AttributeError:
-        raise KeyError("Key %s does not exist" % (key,))
+        raise KeyError(f"Key {key} does not exist")
 
 
 def setKey(obj, key, value):
@@ -294,7 +293,7 @@ def setKey(obj, key, value):
                 setattr(obj, key, value)
                 return
             except AttributeError:
-                raise KeyError("Key %s does not exist" % (key,))
+                raise KeyError(f"Key {key} does not exist")
 
     try:
         getattr(obj, "_" + key)
@@ -307,7 +306,7 @@ def setKey(obj, key, value):
     try:
         setattr(obj, key, value)
     except AttributeError:
-        raise KeyError("Key %s does not exist" % (key,))
+        raise KeyError(f"Key {key} does not exist")
 
 
 def getKeyPath(obj, keypath):
@@ -332,7 +331,7 @@ def getKeyPath(obj, keypath):
             try:
                 oper = getattr(_ArrayOperators, e[1:])
             except AttributeError:
-                raise KeyError("Array operator %s not implemented" % (e,))
+                raise KeyError(f"Array operator {e} not implemented")
             return oper(cur, elemiter)
         cur = getKey(cur, e)
     return cur
@@ -357,7 +356,7 @@ def setKeyPath(obj, keypath, value):
     return setKey(cur, elements[-1], value)
 
 
-class kvc(object):
+class kvc:
     def __init__(self, obj):
         self.__pyobjc_object__ = obj
 

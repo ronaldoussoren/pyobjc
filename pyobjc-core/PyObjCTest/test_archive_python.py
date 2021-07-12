@@ -67,7 +67,7 @@ class frozenset_subclass(frozenset):
     pass
 
 
-class with_getstate(object):
+class with_getstate:
     def __init__(self, value=None):
         self.value = value
 
@@ -78,7 +78,7 @@ class with_getstate(object):
         self.value = value
 
 
-class only_getstate(object):
+class only_getstate:
     def __init__(self, slots=None, dct=None):
         self._slots = slots
         self._dct = dct
@@ -87,7 +87,7 @@ class only_getstate(object):
         return (self._dct, self._slots)
 
 
-class with_reduce_func(object):
+class with_reduce_func:
     def __init__(self, *args):
         self.args = args
 
@@ -95,7 +95,7 @@ class with_reduce_func(object):
         return with_reduce_func, self.args
 
 
-class reduce_global(object):
+class reduce_global:
     def __reduce__(self):
         return "reduce_global"
 
@@ -106,7 +106,7 @@ reduce_global = reduce_global()
 def C__repr__(self):
     # Quick hack to add a proper __repr__ to class C in
     # pickletester, makes it a lot easier to debug.
-    return "<%s instance at %#x: %r>" % (
+    return "<{} instance at {:#x}: {!r}>".format(
         self.__class__.__name__,
         id(self),
         self.__dict__,
@@ -155,15 +155,15 @@ class a_classic_class_with_state:
             setattr(self, k, v)
 
 
-class a_newstyle_class(object):
+class a_newstyle_class:
     pass
 
 
-class newstyle_with_slots(object):
+class newstyle_with_slots:
     __slots__ = ("a", "b", "__dict__")
 
 
-class newstyle_with_setstate(object):
+class newstyle_with_setstate:
     def __setstate__(self, state):
         self.state = state
 
@@ -174,7 +174,7 @@ def make_instance(state):
     return o
 
 
-class a_reducing_class(object):
+class a_reducing_class:
     def __reduce__(self):
         return make_instance, (self.__dict__,)
 
@@ -209,7 +209,7 @@ class TestKeyedArchiveSimple(TestCase):
             pycoder.decode_dispatch[pycoder.kOP_GLOBAL] = orig
 
     def test_reducing_issues(self):
-        class Error1(object):
+        class Error1:
             def __reduce__(self):
                 return dir, "foo"
 
@@ -221,7 +221,7 @@ class TestKeyedArchiveSimple(TestCase):
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
-        class Error2(object):
+        class Error2:
             def __reduce__(self):
                 return "foo", (1, 2)
 
@@ -371,7 +371,7 @@ class TestKeyedArchiveSimple(TestCase):
         self.assertIs(v, reduce_global)
 
     def test_reduce_invalid(self):
-        class invalid_reduce(object):
+        class invalid_reduce:
             def __reduce__(self):
                 return 42
 
@@ -383,7 +383,7 @@ class TestKeyedArchiveSimple(TestCase):
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
-        class invalid_reduce(object):
+        class invalid_reduce:
             def __reduce__(self):
                 return (1,)
 
@@ -395,7 +395,7 @@ class TestKeyedArchiveSimple(TestCase):
         if self.archiverClass is NSKeyedArchiver:
             archiver.finishEncoding()
 
-        class invalid_reduce(object):
+        class invalid_reduce:
             def __reduce__(self):
                 return (1, 2, 3, 4, 5, 6)
 

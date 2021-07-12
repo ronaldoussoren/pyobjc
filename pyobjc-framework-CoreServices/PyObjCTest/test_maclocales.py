@@ -5,7 +5,7 @@ from PyObjCTools.TestSupport import TestCase, expectedFailure
 class TestMacLocales(TestCase):
     def assert_not_wrapped(self, name):
         self.assertTrue(
-            not hasattr(CoreServices, name), "%r exposed in bindings" % (name,)
+            not hasattr(CoreServices, name), f"{name!r} exposed in bindings"
         )
 
     def test_constants(self):

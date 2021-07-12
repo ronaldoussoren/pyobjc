@@ -49,7 +49,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
         # We don't load the environment.plist yet, do that when we're
         # actually selected. That way we can easier pick up manual changes.
 
-        self = super(EnvironmentPane, self).initWithBundle_(bundle)
+        self = super().initWithBundle_(bundle)
         if self is None:
             return None
 
@@ -172,11 +172,11 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
         self.changed = True
 
     def numberOfRowsInTableView_(self, aView):
-        """ Return the number of environment variables """
+        """Return the number of environment variables"""
         return len(self.keys)
 
     def tableView_objectValueForTableColumn_row_(self, aView, aCol, rowIndex):
-        """ Get the name of value of an environment variable """
+        """Get the name of value of an environment variable"""
         name = aCol.identifier()
         envname = self.keys[rowIndex]
 
@@ -188,7 +188,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
     def tableView_setObjectValue_forTableColumn_row_(
         self, aView, value, aCol, rowIndex
     ):
-        """ Change the name or value of an environment variable """
+        """Change the name or value of an environment variable"""
         if self.environ is None:
             aView.reloadData()
             return
@@ -222,7 +222,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
                 self.changed = True
 
     def tableViewSelectionDidChange_(self, notification):
-        """ The delete button should only be active if a row is selected """
+        """The delete button should only be active if a row is selected"""
         if self.mainTable.numberOfSelectedRows() == 0:
             self.deleteButton.setEnabled_(False)
         else:
@@ -230,7 +230,7 @@ class EnvironmentPane(PreferencePanes.NSPreferencePane):
 
     @objc.python_method
     def runAlertSheet(self, title, message):
-        """ Run an alertsheet without callbacks """
+        """Run an alertsheet without callbacks"""
         Cocoa.NSBeginAlertSheet(
             title,
             Cocoa.NSLocalizedString("OK", ""),

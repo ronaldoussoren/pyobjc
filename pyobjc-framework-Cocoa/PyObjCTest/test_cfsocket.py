@@ -22,7 +22,7 @@ def onTheNetwork():
         finally:
             sd.close()
 
-    except socket.error:
+    except OSError:
         cached_info = False
         return False
 

@@ -23,7 +23,7 @@ class FilteringArrayController(NSArrayController):
         Creates and returns a new object of the class specified by objectClass.
         Set default values, and keep reference to new object -- see arrangeObjects_
         """
-        self.newObj = super(FilteringArrayController, self).newObject()
+        self.newObj = super().newObject()
         self.newObj.setValue_forKey_("First", "firstName")
         self.newObj.setValue_forKey_("Last", "lastName")
         return self.newObj
@@ -31,7 +31,7 @@ class FilteringArrayController(NSArrayController):
     def arrangeObjects_(self, objects):
         if self._k_searchString is None or self._k_searchString == "":
             self.newObj = None
-            return super(FilteringArrayController, self).arrangeObjects_(objects)
+            return super().arrangeObjects_(objects)
 
         # Create array of objects that match search string.
         # Also add any newly-created object unconditionally:
@@ -55,7 +55,7 @@ class FilteringArrayController(NSArrayController):
                     lowerName = item.valueForKeyPath_("lastName").lower()
                     if lowerSearch in lowerName:
                         matchedObjects.append(item)
-        return super(FilteringArrayController, self).arrangeObjects_(matchedObjects)
+        return super().arrangeObjects_(matchedObjects)
 
     def searchString(self):
         return self._k_searchString

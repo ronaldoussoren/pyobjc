@@ -11,7 +11,7 @@ class DragSupportDataSource(Cocoa.NSObject):
     registeredTableViews = objc.ivar()
 
     def init(self):
-        self = super(DragSupportDataSource, self).init()
+        self = super().init()
         if self is None:
             return None
 

@@ -160,7 +160,7 @@ def exportCGImageToFileWithQT(image, url, outputFormat, dpi):
         imageExportType = LaunchServices.kQTFileTypeJPEG
 
     else:
-        print("Requested image export format %r unsupported" % (outputFormat,))
+        print(f"Requested image export format {outputFormat!r} unsupported")
         return
 
         result, dataRef, dataRefType = Quartz.QTNewDataReferenceFromCFURL(

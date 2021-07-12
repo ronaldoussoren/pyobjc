@@ -28,7 +28,7 @@ kEventHotKeyReleasedSubtype = 9
 
 class HotKeyApp(Cocoa.NSApplication):
     def finishLaunching(self):
-        super(HotKeyApp, self).finishLaunching()
+        super().finishLaunching()
         # register cmd-control-J
         self.hotKeyRef = RegisterEventHotKey(
             38, cmdKey | controlKey, (0, 0), GetApplicationEventTarget(), 0
@@ -43,7 +43,7 @@ class HotKeyApp(Cocoa.NSApplication):
             Cocoa.NSRunAlertPanel(
                 "Hot Key Pressed", "Hot Key Pressed", None, None, None
             )
-        super(HotKeyApp, self).sendEvent_(theEvent)
+        super().sendEvent_(theEvent)
 
 
 if __name__ == "__main__":

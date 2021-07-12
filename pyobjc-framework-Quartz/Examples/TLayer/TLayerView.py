@@ -23,7 +23,7 @@ class TLayerView(Cocoa.NSView):
         circleRadius = 100
         colors = [(0.5, 0.0, 0.5, 1), (1.0, 0.7, 0.0, 1), (0.0, 0.5, 0.0, 1)]
 
-        self = super(TLayerView, self).initWithFrame_(frame)
+        self = super().initWithFrame_(frame)
         if self is None:
             return None
 
@@ -113,7 +113,7 @@ class TLayerView(Cocoa.NSView):
             self.dragCircleAtIndex_withEvent_(index, event)
 
     def setFrame_(self, frame):
-        super(TLayerView, self).setFrame_(frame)
+        super().setFrame_(frame)
         self.setNeedsDisplay_(True)
 
     def drawRect_(self, rect):

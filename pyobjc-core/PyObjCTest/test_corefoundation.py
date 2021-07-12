@@ -84,7 +84,7 @@ class TestCoreFoundation(TestCase):
         cftype = objc.lookUpClass("NSCFType")
 
         def myMethod(self, arg):
-            return "%s %s" % (self.__class__.__name__, arg)
+            return f"{self.__class__.__name__} {arg}"
 
         self.assertNotHasAttr(CFUUIDRef, "myMethod")
 

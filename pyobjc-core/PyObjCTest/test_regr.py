@@ -16,15 +16,15 @@ rct = structargs.StructArgClass.someRect.__metadata__()["retval"]["type"]
 
 class OCTestRegrWithGetItem(NSObject):
     def objectForKey_(self, k):
-        return "ofk: %s" % (k,)
+        return f"ofk: {k}"
 
     def __getitem__(self, k):
-        return "gi: %s" % (k,)
+        return f"gi: {k}"
 
 
 class OCTestRegrWithGetItem2(OCTestRegrWithGetItem):
     def objectForKey_(self, k):
-        return "ofk2: %s" % (k,)
+        return f"ofk2: {k}"
 
 
 class ReturnAStruct(NSObject):

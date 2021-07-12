@@ -6,7 +6,7 @@ __all__ = ("CGSavedGState", "CGTransparencyLayer", "CGContextPage")
 import Quartz.CoreGraphics as CG
 
 
-class CGSavedGState(object):
+class CGSavedGState:
     """
     Context manager for saving and restoring the graphics state.
 
@@ -36,7 +36,7 @@ class CGSavedGState(object):
         return False
 
 
-class CGTransparencyLayer(object):
+class CGTransparencyLayer:
     """
     Context manager for working in a transparancylayer.
 
@@ -73,7 +73,7 @@ class CGTransparencyLayer(object):
         return False
 
 
-class CGContextPage(object):
+class CGContextPage:
     """
     Context manager for saving and restoring the graphics state.
 

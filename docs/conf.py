@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # PyObjC documentation build configuration file, created by
 # sphinx-quickstart on Wed Oct 31 16:07:23 2012.

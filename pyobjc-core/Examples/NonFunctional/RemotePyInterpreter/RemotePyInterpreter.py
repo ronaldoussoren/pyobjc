@@ -57,7 +57,7 @@ class RemotePyInterpreterReactor(ConsoleReactor):
 
             if isinstance(obj, RemoteObjectReference):
                 self.deferCallback_sequence_value_(
-                    displayhook_respond, seq, "repr(%s)" % (netrepr(obj),)
+                    displayhook_respond, seq, f"repr({netrepr(obj)})"
                 )
             else:
                 self.doCallback_sequence_args_(displayhook_local, seq, args)
@@ -100,11 +100,11 @@ class RemotePyInterpreterReactor(ConsoleReactor):
             )
 
     def close(self):
-        super(RemotePyInterpreterReactor, self).close()
+        super().close()
         self.delegate = None
 
 
-class PseudoUTF8Input(object):
+class PseudoUTF8Input:
     softspace = 0
 
     def __init__(self, readlinemethod):
@@ -181,7 +181,7 @@ class RemotePyInterpreterDocument(NSDocument):
     def displayName(self):
         if not hasattr(self, "version"):
             return "Starting..."
-        return "Python %s - %s - %s" % (self.version, self.executable, self.pid)
+        return f"Python {self.version} - {self.executable} - {self.pid}"
 
     def updateChangeCount_(self, val):
         return

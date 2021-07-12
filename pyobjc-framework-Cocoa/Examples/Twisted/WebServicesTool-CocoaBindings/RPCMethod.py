@@ -5,7 +5,7 @@ from objc import super
 
 class RPCMethod(NSObject):
     def initWithDocument_name_(self, aDocument, aName):
-        self = super(RPCMethod, self).init()
+        self = super().init()
         self.document = aDocument
         self.k_methodName = aName
         self.k_methodSignature = None

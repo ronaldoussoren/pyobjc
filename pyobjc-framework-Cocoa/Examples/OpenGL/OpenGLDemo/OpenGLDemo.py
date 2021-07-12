@@ -62,7 +62,7 @@ class OpenGLDemoView(NSOpenGLView):
             0,
         ]
         fmt = NSOpenGLPixelFormat.alloc().initWithAttributes_(attribs)
-        self = super(OpenGLDemoView, self).initWithFrame_pixelFormat_(frame, fmt)
+        self = super().initWithFrame_pixelFormat_(frame, fmt)
         return self
 
     @objc.IBAction

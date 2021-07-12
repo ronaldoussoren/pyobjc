@@ -393,7 +393,7 @@ def drawImageWithCGImageDataSource(context, url):
         print("myCreateImageFromImageSource didn't create a CGImage!")
         return
 
-    print("xdpi = %2.f, ydpi = %2.f" % (xdpi, ydpi))
+    print(f"xdpi = {xdpi:2.f}, ydpi = {ydpi:2.f}")
     imageRect = Quartz.CGRectMake(
         0.0, 0.0, Quartz.CGImageGetWidth(image) / 3, Quartz.CGImageGetHeight(image) / 3
     )
@@ -421,7 +421,7 @@ def drawImageWithCGImageDataSource(context, url):
     del image
 
 
-class MyIncrementalData(object):
+class MyIncrementalData:
     data = None
     dataSize = 0
     repCount = 0

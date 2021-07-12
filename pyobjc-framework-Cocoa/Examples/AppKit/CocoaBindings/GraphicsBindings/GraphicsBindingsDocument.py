@@ -21,7 +21,7 @@ class GraphicsBindingsDocument(NSDocument):
     graphics = objc.ivar()
 
     def init(self):
-        self = super(GraphicsBindingsDocument, self).init()
+        self = super().init()
         if self is None:
             return None
         self.graphics = []  # NSMutableArray.array()
@@ -40,7 +40,7 @@ class GraphicsBindingsDocument(NSDocument):
         )
 
     def windowControllerDidLoadNib_(self, controller):
-        super(GraphicsBindingsDocument, self).windowControllerDidLoadNib_(controller)
+        super().windowControllerDidLoadNib_(controller)
 
         # we can't do these in IB at the moment, as
         # we don't have palette items for them
@@ -92,7 +92,7 @@ class GraphicsBindingsDocument(NSDocument):
         while self.bindings:
             obj, binding = self.bindings.pop()
             obj.unbind_(binding)
-        super(GraphicsBindingsDocument, self).close()
+        super().close()
 
     def dataRepresentationOfType_(self, aType):
         return NSKeyedArchiver.archivedDataWithRootObject_(self.graphics)

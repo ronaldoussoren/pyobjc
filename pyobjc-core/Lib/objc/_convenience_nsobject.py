@@ -61,7 +61,7 @@ def nsobject__le__(self, other):
     return bool(self.isLessThanOrEqualTo_(other))
 
 
-class kvc(object):
+class kvc:
     """
     Key-Value-Coding accessor for Cocoa objects.
 
@@ -75,7 +75,7 @@ class kvc(object):
         self.__object = value
 
     def __repr__(self):
-        return "<KVC accessor for %r>" % (self.__object,)
+        return f"<KVC accessor for {self.__object!r}>"
 
     def __getattr__(self, key):
         try:
@@ -93,7 +93,7 @@ class kvc(object):
         if not key.startswith("_"):
             return self.__object.setValue_forKey_(value, key)
         else:
-            super(kvc, self).__setattr__(key, value)
+            super().__setattr__(key, value)
 
     def __getitem__(self, key):
         if not isinstance(key, str):

@@ -1,7 +1,6 @@
 """
 Print some information about calendars
 """
-from __future__ import print_function
 
 from CalendarStore import CalCalendarStore
 

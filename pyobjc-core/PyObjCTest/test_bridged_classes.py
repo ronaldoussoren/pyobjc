@@ -175,7 +175,7 @@ class TestBridgedClasses(TestCase):
         cls = OCTestClasses.classForObject_(value)
         self.assertEqual(cls.__name__, "OC_PythonObject")
 
-        class O(object):  # noqa: E742
+        class O:  # noqa: E742
             pass
 
         value = O()

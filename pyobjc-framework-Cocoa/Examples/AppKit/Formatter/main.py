@@ -21,7 +21,7 @@ class MyFormatter(NSFormatter):
             return True, None, None
 
         print("Have data")
-        return False, None, NSString.stringWithString_("Foo the %s" % ("bar",))
+        return False, None, NSString.stringWithString_("Foo the {}".format("bar"))
 
 
 AppHelper.runEventLoop()
