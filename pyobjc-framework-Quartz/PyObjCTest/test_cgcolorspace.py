@@ -256,3 +256,6 @@ class TestCGColorSpace(TestCase):
     def testFunctions12_0(self):
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateWithColorSyncProfile)
         self.assertResultIsCFRetained(Quartz.CGColorSpaceCreateWithPlatformColorSpace)
+
+        Quartz.CGColorSpaceIsPQBased
+        Quartz.CGColorSpaceIsHLGBased

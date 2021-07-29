@@ -18,6 +18,9 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper(
     def pictureInPictureController_didTransitionToRenderSize_(self, a, b):
         pass
 
+    def pictureInPictureControllerShouldProhibitBackgroundAudioPlayback_(self, a):
+        return 1
+
 
 class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCase):
     @min_sdk_level("10.12")
@@ -53,4 +56,7 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCas
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_skipByInterval_completionHandler_,  # noqa: B950
             2,
             b"v",
+        )
+        self.assertResultIsBOOL(
+            TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureControllerShouldProhibitBackgroundAudioPlayback_  # noqa: B950
         )

@@ -74,6 +74,10 @@ class TestLAContext(TestCase):
             LocalAuthentication.LAErrorBiometryDisconnected,
             LocalAuthentication.kLAErrorBiometryDisconnected,
         )
+        self.assertEqual(
+            LocalAuthentication.LAErrorInvalidDimensions,
+            LocalAuthentication.kLAErrorInvalidDimensions,
+        )
 
     @min_os_level("10.11")
     def testConstants10_11(self):

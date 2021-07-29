@@ -9,6 +9,12 @@ import GameController
 
 
 class TestGCMicroGamepad(TestCase):
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(GameController.GCInputMicroGamepadDpad)
+        self.assertIsInstance(GameController.GCInputMicroGamepadButtonA)
+        self.assertIsInstance(GameController.GCInputMicroGamepadButtonX)
+
     @expectedFailureIf(os_release() == "10.11")
     @min_os_level("10.11")
     def testClasses(self):

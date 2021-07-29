@@ -1024,6 +1024,13 @@
    "CIKernel": {
     "methods": [
      {
+      "selector": "kernelsWithMetalString:error:",
+      "class_method": true,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "kernelWithFunctionName:fromMetalLibraryData:error:",
       "class_method": true,
       "args": {

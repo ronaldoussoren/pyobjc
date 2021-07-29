@@ -54,6 +54,20 @@ class TestCLLocation(TestCase):
             CoreLocation.CLLocationCoordinate2D.__typestr__,
         )
 
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertArgIsBOOL(
+            CoreLocation.CLLocationSourceInformation.initWithSoftwareSimulationState_andExternalAccessoryState_,
+            1,
+        )
+
+        self.assertResultIsBOOL(
+            CoreLocation.CLLocationSourceInformation.isSimulatedBySoftware
+        )
+        self.assertResultIsBOOL(
+            CoreLocation.CLLocationSourceInformation.isProducedByAccessory
+        )
+
     @min_os_level("10.7")
     def testFunctions10_7(self):
         self.assertResultIsBOOL(CoreLocation.CLLocationCoordinate2DIsValid)

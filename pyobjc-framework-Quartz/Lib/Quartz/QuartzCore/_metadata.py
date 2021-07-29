@@ -422,6 +422,11 @@ try:
     )
     r(
         b"CIKernel",
+        b"kernelsWithMetalString:error:",
+        {"arguments": {3: {"type_modifier": b"o"}}},
+    )
+    r(
+        b"CIKernel",
         b"kernelWithFunctionName:fromMetalLibraryData:error:",
         {"arguments": {4: {"type_modifier": b"o"}}},
     )

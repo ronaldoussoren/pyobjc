@@ -29,6 +29,13 @@ class TestVTVideoEncoderList(TestCase):
             VideoToolbox.kVTVideoEncoderList_SupportsFrameReordering, str
         )
 
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(
+            VideoToolbox.kVTVideoEncoderListOption_IncludeStandardDefinitionDVEncoders,
+            str,
+        )
+
     def test_functions(self):
         self.assertArgIsOut(VideoToolbox.VTCopyVideoEncoderList, 1)
         self.assertArgIsCFRetained(VideoToolbox.VTCopyVideoEncoderList, 1)

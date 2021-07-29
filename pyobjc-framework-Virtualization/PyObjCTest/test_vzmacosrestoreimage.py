@@ -7,7 +7,12 @@ class TestVZMacOSRestoreImage(TestCase):
     @min_os_level("12.0")
     def test_methods(self):
         self.assertArgIsBlock(
-            Virtualization.VZMacOSRestoreImage.loadRestoreImageFromURL_completionHandler_,
+            Virtualization.VZMacOSRestoreImage.loadFileURL_completionHandler_,
             1,
+            b"v@@",
+        )
+        self.assertArgIsBlock(
+            Virtualization.VZMacOSRestoreImage.fetchLatestSupportedWithCompletionHandler_,
+            0,
             b"v@@",
         )

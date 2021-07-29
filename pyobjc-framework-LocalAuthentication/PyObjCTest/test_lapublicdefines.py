@@ -40,6 +40,7 @@ class TestLAPublicDefines(TestCase):
         self.assertEqual(LocalAuthentication.kLAErrorWatchNotAvailable, -11)
         self.assertEqual(LocalAuthentication.kLAErrorBiometryNotPaired, -12)
         self.assertEqual(LocalAuthentication.kLAErrorBiometryDisconnected, -13)
+        self.assertEqual(LocalAuthentication.kLAErrorInvalidDimensions, -14)
         self.assertEqual(
             LocalAuthentication.kLAErrorDomain, "com.apple.LocalAuthentication"
         )

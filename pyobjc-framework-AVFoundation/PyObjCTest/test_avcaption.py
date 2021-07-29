@@ -3,7 +3,24 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
 class TestAVCaption(TestCase):
+    def test_structs(self):
+        v = AVFoundation.AVCaptionDimension()
+        self.assertIsInstance(v.value, float)
+        self.assertIsInstance(v.units, int)
+
+        v = AVFoundation.AVCaptionPoint()
+        self.assertIsInstance(v.x, AVFoundation.AVCaptionDimension())
+        self.assertIsInstance(v.y, AVFoundation.AVCaptionDimension())
+
+        v = AVFoundation.AVCaptionSize()
+        self.assertIsInstance(v.width, AVFoundation.AVCaptionDimension())
+        self.assertIsInstance(v.height, AVFoundation.AVCaptionDimension())
+
     def test_constants(self):
+        self.assertEqual(AVFoundation.AVCaptionUnitsTypeUnspecified, 0)
+        self.assertEqual(AVFoundation.AVCaptionUnitsTypeCells, 1)
+        self.assertEqual(AVFoundation.AVCaptionUnitsTypePercent, 2)
+
         self.assertEqual(AVFoundation.AVCaptionUnitTypeCell, 0)
         self.assertEqual(AVFoundation.AVCaptionUnitTypeRelativeToEnclosingRegion, 1)
 
@@ -67,3 +84,9 @@ class TestAVCaption(TestCase):
         self.assertArgIsOut(AVFoundation.AVCaption.decorationAtIndex_range_, 1)
         self.assertArgIsOut(AVFoundation.AVCaption.textCombineAtIndex_range_, 1)
         self.assertArgIsOut(AVFoundation.AVCaption.rubyAtIndex_range_, 1)
+
+    @min_os_level("12.0")
+    def test_functions(self):
+        AVFoundation.AVCaptionDimensionMake
+        AVFoundation.AVCaptionPointMake
+        AVFoundation.AVCaptionSize

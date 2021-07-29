@@ -42,6 +42,7 @@ class TestPDFView(TestCase):
         self.assertEqual(Quartz.kPDFIconArea, 64)
         self.assertEqual(Quartz.kPDFPopupArea, 128)
         self.assertEqual(Quartz.kPDFImageArea, 256)
+        self.assertEqual(Quartz.kPDFAnyArea, Quartz.NSIntegerMax)
 
         self.assertIsInstance(Quartz.PDFViewDocumentChangedNotification, str)
         self.assertIsInstance(Quartz.PDFViewChangedHistoryNotification, str)

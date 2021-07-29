@@ -26,6 +26,7 @@ class TestAudioHardwareBase(TestCase):
         self.assertEqual(
             CoreAudio.kAudioHardwareUnsupportedOperationError, fourcc(b"unop")
         )
+        self.assertEqual(CoreAudio.kAudioHardwareNotReadyError, fourcc(b"nrdy"))
         self.assertEqual(CoreAudio.kAudioDeviceUnsupportedFormatError, fourcc(b"!dat"))
         self.assertEqual(CoreAudio.kAudioDevicePermissionsError, fourcc(b"!hog"))
 

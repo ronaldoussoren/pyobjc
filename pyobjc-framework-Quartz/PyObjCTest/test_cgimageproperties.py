@@ -859,3 +859,4 @@ class TestCGImageProperties(TestCase):
         self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsLeftImage, str)
         self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsRightImage, str)
         self.assertIsInstance(Quartz.kCGImagePropertyGroupImageIsAlternateImage, str)
+        self.assertIsInstance(Quartz.kCGImagePropertyPNGPixelsAspectRatio, str)

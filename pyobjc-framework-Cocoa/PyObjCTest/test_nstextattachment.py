@@ -1,5 +1,5 @@
 import AppKit
-from PyObjCTools.TestSupport import TestCase, min_sdk_level
+from PyObjCTools.TestSupport import TestCase, min_sdk_level, min_os_level
 import objc
 
 
@@ -72,6 +72,20 @@ class TestNSTextAttachment(TestCase):
         self.assertArgIsBOOL(
             AppKit.NSTextAttachmentCell.trackMouse_inRect_ofView_atCharacterIndex_untilMouseUp_,
             4,
+        )
+
+    @min_os_level("12.0")
+    def testMethods12_0(self):
+        self.assertResultIsBOOL(AppKit.NSTextAttachment.allowsTextAttachmentView)
+        self.assertArgIsBOOL(AppKit.NSTextAttachment.setAllowsTextAttachmentView_, 0)
+        self.assertResultIsBOOL(AppKit.NSTextAttachment.usesTextAttachmentView)
+        self.assertArgIsBOOL(AppKit.NSTextAttachment.setUsesTextAttachmentView_, 0)
+
+        self.assertResultIsBOOL(
+            AppKit.NSTextAttachmentViewProvider.tracksTextAttachmentViewBounds
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextAttachmentViewProvider.setTracksTextAttachmentViewBounds_, 0
         )
 
     @min_sdk_level("10.11")

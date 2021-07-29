@@ -107,3 +107,5 @@ class TestCVBuffer(TestCase):
     def testFunctions12_0(self):
         self.assertResultIsCFRetained(Quartz.CVBufferCopyAttachments)
         self.assertResultIsCFRetained(Quartz.CVBufferCopyAttachment)
+
+        self.assertResultIsBOOL(Quartz.CVBufferHasAttachment)

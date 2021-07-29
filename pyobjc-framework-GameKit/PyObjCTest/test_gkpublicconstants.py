@@ -17,3 +17,5 @@ class TestGKPublicConstants(TestCase):
         self.assertEqual(GameKit.GKPeerStateDisconnected, 3)
         self.assertEqual(GameKit.GKPeerStateConnecting, 4)
         self.assertEqual(GameKit.GKPeerStateConnectedRelay, 5)
+
+        self.assertIsInstance(GameKit.GKVoiceChatServiceErrorDomain, str)

@@ -20,3 +20,19 @@ class TestMPSGraphPoolingOps(TestCase):
             MetalPerformanceShadersGraph.MPSGraphPooling4DOpDescriptor.setIncludeZeroPadToAverage_,
             0,
         )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphPooling4DOpDescriptor.ceilMode
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphPooling4DOpDescriptor.setCeilMode_,
+            0,
+        )
+
+        self.assertResultIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphPooling4DOpDescriptor.includeZeroPadToAverage
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraphPooling4DOpDescriptor.setIncludeZeroPadToAverage_,
+            0,
+        )

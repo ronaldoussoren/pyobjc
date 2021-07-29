@@ -3,6 +3,25 @@ import CoreMIDI
 
 
 class TestMIDIMessages(TestCase):
+    def test_structs(self):
+        v = CoreMIDI.MIDIMessage_64()
+        self.assertIsInstance(v.word0, int)
+        self.assertIsInstance(v.word1, int)
+
+        v = CoreMIDI.MIDIMessage_96()
+        self.assertIsInstance(v.word0, int)
+        self.assertIsInstance(v.word1, int)
+        self.assertIsInstance(v.word2, int)
+
+        v = CoreMIDI.MIDIMessage_128()
+        self.assertIsInstance(v.word0, int)
+        self.assertIsInstance(v.word1, int)
+        self.assertIsInstance(v.word2, int)
+        self.assertIsInstance(v.word3, int)
+
+        # XXX: Contains a union
+        self.assertNotHasAttr(CoreMIDI, "MIDIUniversalMessage")
+
     def test_constants(self):
         self.assertEqual(CoreMIDI.kMIDIMessageTypeUtility, 0x0)
         self.assertEqual(CoreMIDI.kMIDIMessageTypeSystem, 0x1)
@@ -46,27 +65,22 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDISysExStatusStart, 0x1)
         self.assertEqual(CoreMIDI.kMIDISysExStatusContinue, 0x2)
         self.assertEqual(CoreMIDI.kMIDISysExStatusEnd, 0x3)
+        self.assertEqual(CoreMIDI.kMIDISysExStatusMixedDataSetHeader, 0x8)
+        self.assertEqual(CoreMIDI.kMIDISysExStatusMixedDataSetPayload, 0x9)
+
+        self.asertEqual(CoreMIDI.kMIDIUtilityStatusNOOP, 0x0)
+        self.asertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionClock, 0x1)
+        self.asertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionTimestamp, 0x2)
 
         self.assertEqual(CoreMIDI.kMIDINoteAttributeNone, 0x0)
         self.assertEqual(CoreMIDI.kMIDINoteAttributeManufacturerSpecific, 0x1)
         self.assertEqual(CoreMIDI.kMIDINoteAttributeProfileSpecific, 0x2)
         self.assertEqual(CoreMIDI.kMIDINoteAttributePitch, 0x3)
 
-    def test_structs(self):
-        v = CoreMIDI.MIDIMessage_64()
-        self.assertIsInstance(v.word0, int)
-        self.assertIsInstance(v.word1, int)
+        self.assertEqual(CoreMIDI.kMIDIProgramChangeBankValid, 0x1)
 
-        v = CoreMIDI.MIDIMessage_96()
-        self.assertIsInstance(v.word0, int)
-        self.assertIsInstance(v.word1, int)
-        self.assertIsInstance(v.word2, int)
-
-        v = CoreMIDI.MIDIMessage_128()
-        self.assertIsInstance(v.word0, int)
-        self.assertIsInstance(v.word1, int)
-        self.assertIsInstance(v.word2, int)
-        self.assertIsInstance(v.word3, int)
+        self.assertEqual(CoreMIDI.kMIDIPerNoteManagementReset, 0x1)
+        self.assertEqual(CoreMIDI.kMIDIPerNoteManagementDetach, 0x2)
 
     # @expectedFailure  # XXX: Inline functions
     @min_sdk_level("11.0")
@@ -99,3 +113,6 @@ class TestMIDIMessages(TestCase):
     def test_functions12_0(self):
         CoreMIDI.MIDI1UPSysEx
         CoreMIDI.MIDI1UPSysExArray
+
+        # 'MIDIUniversalMessage' is not available in Python
+        self.assertNotHasAttr(CoreMIDI, "MIDIEventListForEachEvent")

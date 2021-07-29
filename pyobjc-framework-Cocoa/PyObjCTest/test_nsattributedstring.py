@@ -245,6 +245,8 @@ class TestNSAttributedString(TestCase):
         self.assertEqual(Foundation.NSInlinePresentationIntentStrikethrough, 1 << 5)
         self.assertEqual(Foundation.NSInlinePresentationIntentSoftBreak, 1 << 6)
         self.assertEqual(Foundation.NSInlinePresentationIntentLineBreak, 1 << 7)
+        self.assertEqual(Foundation.NSInlinePresentationIntentInlineHTML, 1 << 8)
+        self.assertEqual(Foundation.NSInlinePresentationIntentBlockHTML, 1 << 9)
 
         self.assertIsInstance(Foundation.NSInlinePresentationIntentAttributeName, str)
         self.assertIsInstance(Foundation.NSAlternateDescriptionAttributeName, str)
@@ -277,6 +279,7 @@ class TestNSAttributedString(TestCase):
         self.assertIsInstance(Foundation.NSMorphologyAttributeName, str)
         self.assertIsInstance(Foundation.NSInflectionRuleAttributeName, str)
         self.assertIsInstance(Foundation.NSPresentationIntentAttributeName, str)
+        self.assertIsInstance(Foundation.NSInflectionAlternativeAttributeName, str)
 
         self.assertEqual(Foundation.NSPresentationIntentKindParagraph, 0)
         self.assertEqual(Foundation.NSPresentationIntentKindHeader, 1)
