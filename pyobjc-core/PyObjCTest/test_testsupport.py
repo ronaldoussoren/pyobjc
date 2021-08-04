@@ -102,15 +102,15 @@ class TestTestSupport(TestCase):
             TestSupport._get_config_var = orig_get_config_var
 
     def test_os_release(self):
-        import platform
+        import subprocess
 
         TestSupport._os_release = "10.10"
         self.assertEqual(os_release(), "10.10")
         TestSupport._os_release = None
 
-        self.assertEqual(
-            TestSupport.os_release(), ".".join(platform.mac_ver()[0].split("."))
-        )
+        value = subprocess.check_output(["sw_vers", "-productVersion"]).strip().decode()
+
+        self.assertEqual(TestSupport.os_release(), value)
 
     def test_fourcc(self):
         import struct

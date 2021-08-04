@@ -12645,6 +12645,16 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "processEditingForTextStorage:edited:range:changeInLength:invalidateRange:",
+      "class_method": false,
+      "args": {
+       "1":  { "type_override": "q" },
+       "2":  { "type_override": "{_NSRange=QQ}" },
+       "3":  { "type_override": "q" },
+       "4":  { "type_override": "{_NSRange=QQ}" }
+      }
+     },
+     {
       "selector": "applicationSupportsSecureRestorableState:",
       "class_method": false,
       "retval": { "type_override": "Z" }

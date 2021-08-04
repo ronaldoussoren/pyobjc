@@ -30,12 +30,12 @@ class TestWKUIDelegateHelper(WebKit.NSObject):
         pass
 
     def webView_requestMediaCapturePermissionForOrigin_initiatedByFrame_type_decisionHandler_(
-        self, a, b, c, d
+        self, a, b, c, d, e
     ):
         pass
 
     def webView_requestDeviceOrientationAndMotionPermissionForOrigin_initiatedByFrame_type_decisionHandler_(
-        self, a, b, c, d
+        self, a, b, c, d, e
     ):
         pass
 

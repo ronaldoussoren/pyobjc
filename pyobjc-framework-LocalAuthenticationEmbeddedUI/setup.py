@@ -1,5 +1,5 @@
 """
-Wrappers for the "LocalAuthenticationUIView" framework on macOS.
+Wrappers for the "LocalAuthenticationEmbeddedUI" framework on macOS.
 
 These wrappers don't include documentation, please check Apple's documention
 for information on how to use this framework and PyObjC's documentation
@@ -12,10 +12,10 @@ from pyobjc_setup import setup
 VERSION = "8.0b1"
 
 setup(
-    name="pyobjc-framework-LocalAuthenticationUIView",
-    description="Wrappers for the framework LocalAuthenticationUIView on macOS",
+    name="pyobjc-framework-LocalAuthenticationEmbeddedUI",
+    description="Wrappers for the framework LocalAuthenticationEmbeddedUI on macOS",
     min_os_level="12.0",
-    packages=["LocalAuthenticationUIView"],
+    packages=["LocalAuthenticationEmbeddedUI"],
     version=VERSION,
     install_requires=[
         "pyobjc-core>=" + VERSION,

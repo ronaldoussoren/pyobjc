@@ -4,14 +4,15 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import Quartz
 
 
-class TestQLPreviewPanelHelper(Quartz.NSObject):
+# XXX: This test file needs to be merged with test_ql... !!!
+class TestPLPreviewPanelHelper(Quartz.NSObject):
     def previewPanel_handleEvent_(self, a, b):
         return 1
 
     def previewPanel_sourceFrameOnScreenForPreviewItem_(self, a, b):
         return 1
 
-    def previewPanel_transitionImageForPreviewItem_contentRect_(self, a, b):
+    def previewPanel_transitionImageForPreviewItem_contentRect_(self, a, b, c):
         return 1
 
 
@@ -25,15 +26,15 @@ class TestQLPreviewPanel(TestCase):
         objc.protocolNamed("QLPreviewPanelDataSource")
 
     def test_methods(self):
-        self.assertResultIsBOOL(TestQLPreviewPanelHelper.previewPanel_handleEvent_)
+        self.assertResultIsBOOL(TestPLPreviewPanelHelper.previewPanel_handleEvent_)
 
         self.assertResultHasType(
-            TestQLPreviewPanelHelper.previewPanel_sourceFrameOnScreenForPreviewItem_,
+            TestPLPreviewPanelHelper.previewPanel_sourceFrameOnScreenForPreviewItem_,
             Quartz.NSRect.__typestr__,
         )
 
         self.assertArgHasType(
-            TestQLPreviewPanelHelper.previewPanel_transitionImageForPreviewItem_contentRect_,
+            TestPLPreviewPanelHelper.previewPanel_transitionImageForPreviewItem_contentRect_,
             2,
-            Quartz.NSRect.__typestr__,
+            b"n^" + Quartz.NSRect.__typestr__,
         )

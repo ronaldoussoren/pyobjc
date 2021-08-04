@@ -1794,6 +1794,27 @@
    "NSAttributedString": {
     "methods": [
      {
+      "selector": "localizedAttributedStringWithFormat:options:",
+      "class_method": true,
+      "args": {
+       "0": { "printf_format": true }
+      }
+     },
+     {
+      "selector": "localizedAttributedStringWithFormat:",
+      "class_method": true,
+      "args": {
+       "0": { "printf_format": true }
+      }
+     },
+     {
+      "selector": "initWithFormat:options:locale:",
+      "class_method": false,
+      "args": {
+       "0": { "printf_format": true }
+      }
+     },
+     {
       "args": {
        "1": {
         "type_modifier": "o"
@@ -6597,6 +6618,13 @@
    },
    "NSMutableAttributedString": {
     "methods": [
+     {
+      "selector": "appendLocalizedFormat:",
+      "class_method": false,
+      "args": {
+       "0": { "printf_format": true }
+      }
+     },
      {
       "args": {
        "2": {

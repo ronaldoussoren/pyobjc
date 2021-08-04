@@ -8,7 +8,7 @@ class TestMXSignpost_Private(TestCase):
         self.assertEqual(MetricKit._METRICS_SIGNPOST_TYPE_TOKEN, b"signpost:metrics")
         self.assertEqual(
             MetricKit._MXSIGNPOST_METRICS_SNAPSHOT_FORMAT,
-            "\n%{public, " + MetricKit._METRICS_SIGNPOST_TYPE_TOKEN + "}@",
+            b"\n%{public, " + MetricKit._METRICS_SIGNPOST_TYPE_TOKEN + b"}@",
         )
 
     def test_functions(self):

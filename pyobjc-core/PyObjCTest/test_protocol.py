@@ -303,7 +303,7 @@ class TestFormalProtocols(TestCase):
             )
 
     def testMethodInfo(self):
-        self.assertEqual(
+        self.assertCountEqual(
             MyProtocol.instanceMethods(),
             [
                 {"typestr": b"I@:", "required": True, "selector": b"protoMethod"},
@@ -549,7 +549,7 @@ class TestFormalProtocols2(TestCase):
         )
 
     def testMethodInfo(self):
-        self.assertEqual(
+        self.assertCountEqual(
             MyProtocol3.instanceMethods(),
             [
                 {"typestr": b"I@:", "required": True, "selector": b"protoMethod"},

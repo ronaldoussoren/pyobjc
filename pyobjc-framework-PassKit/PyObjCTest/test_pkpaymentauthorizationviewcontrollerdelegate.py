@@ -107,7 +107,7 @@ class TestPKAddPaymentPassRequest(TestCase):
         )
 
         self.assertArgIsBlock(
-            TestPKAddPaymentPassRequestHelper.paymentAuthorizationViewController_didChangeCouponCode_completion_,
+            TestPKAddPaymentPassRequestHelper.paymentAuthorizationViewController_didChangeCouponCode_handler_,
             2,
             b"v@",
         )

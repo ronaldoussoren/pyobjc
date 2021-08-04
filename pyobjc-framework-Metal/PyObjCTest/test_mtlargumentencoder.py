@@ -261,15 +261,15 @@ class TestMTLArgumentEncoder(TestCase):
         )
 
         self.assertArgHasType(
-            TestMTLArgumentEncoderHelper.setComputePipelineState_withRange_,
+            TestMTLArgumentEncoderHelper.setComputePipelineStates_withRange_,
             0,
             b"n^@",
         )
         self.assertArgSizeInArg(
-            TestMTLArgumentEncoderHelper.setComputePipelineState_withRange_, 0, 1
+            TestMTLArgumentEncoderHelper.setComputePipelineStates_withRange_, 0, 1
         )
         self.assertArgHasType(
-            TestMTLArgumentEncoderHelper.setComputePipelineState_withRange_,
+            TestMTLArgumentEncoderHelper.setComputePipelineStates_withRange_,
             1,
             Metal.NSRange.__typestr__,
         )

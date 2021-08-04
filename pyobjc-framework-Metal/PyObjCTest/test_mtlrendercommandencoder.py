@@ -180,7 +180,7 @@ class TestMTLRenderCommandEncoderHelper(Metal.NSObject):
     def setFragmentIntersectionFunctionTable_atBufferIndex_(self, a, b):
         pass
 
-    def setFragmentIntersectionFunctionTables_atBufferIndex_(self, a, b):
+    def setFragmentIntersectionFunctionTables_withBufferRange_(self, a, b):
         pass
 
     def setFragmentAccelerationStructure_atBufferIndex_(self, a, b):
@@ -384,16 +384,16 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setVertexVisibleFunctionTable_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexVisibleFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexVisibleFunctionTables_withBufferRange_,
             1,
             Metal.NSRange.__typestr__,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setVertexVisibleFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexVisibleFunctionTables_withBufferRange_,
             0,
             1,
         )
@@ -401,16 +401,16 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setVertexIntersectionFunctionTable_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setVertexIntersectionFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexIntersectionFunctionTables_withBufferRange_,
             1,
             Metal.NSRange.__typestr__,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setVertexIntersectionFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setVertexIntersectionFunctionTables_withBufferRange_,
             0,
             1,
         )
@@ -423,16 +423,16 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setFragmentVisibleFunctionTable_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setFragmentVisibleFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setFragmentVisibleFunctionTables_withBufferRange_,
             1,
             Metal.NSRange.__typestr__,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.TestMTLRenderCommandEncoderHelper.setFragmentVisibleFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setFragmentVisibleFunctionTables_withBufferRange_,
             0,
             1,
         )
@@ -440,22 +440,22 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setFragmentIntersectionFunctionTable_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setFragmentIntersectionFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setFragmentIntersectionFunctionTables_withBufferRange_,
             1,
             Metal.NSRange.__typestr__,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setFragmentIntersectionFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setFragmentIntersectionFunctionTables_withBufferRange_,
             0,
             1,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setFragmentAccelerationStructure_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )
 
         self.assertArgHasType(
@@ -982,15 +982,15 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileVisibleFunctionTable_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setTileVisibleFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setTileVisibleFunctionTables_withBufferRange_,
             1,
             Metal.NSRange.__typestr__,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setTileVisibleFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setTileVisibleFunctionTables_withBufferRange_,
             0,
             1,
         )
@@ -998,20 +998,20 @@ class TestMTLRenderCommandEncoder(TestCase):
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileIntersectionFunctionTable_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLRenderCommandEncoderHelper.setTileIntersectionFunctionTables_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setTileIntersectionFunctionTables_withBufferRange_,
             1,
             Metal.NSRange.__typestr__,
         )
         self.assertArgSizeInArg(
-            TestMTLRenderCommandEncoderHelper.setTileIntersectionFunctionTable_atBufferRange_,
+            TestMTLRenderCommandEncoderHelper.setTileIntersectionFunctionTables_withBufferRange_,
             0,
             1,
         )
         self.assertArgHasType(
             TestMTLRenderCommandEncoderHelper.setTileAccelerationStructure_atBufferIndex_,
             1,
-            objc._C_NSUinteger,
+            objc._C_NSUInteger,
         )

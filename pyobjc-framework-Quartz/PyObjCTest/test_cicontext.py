@@ -99,9 +99,17 @@ class TestCIContext(TestCase):
         )
 
         self.assertResultIsBOOL(
-            Quartz.CIContext.writeHEIFRepresentationOfImage_format_colorSpace_options_error_
+            Quartz.CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_
         )
         self.assertArgIsOut(
-            Quartz.CIContext.writeHEIFRepresentationOfImage_format_colorSpace_options_error_,
+            Quartz.CIContext.writeHEIFRepresentationOfImage_toURL_format_colorSpace_options_error_,
+            5,
+        )
+
+        self.assertResultIsBOOL(
+            Quartz.CIContext.writeHEIF10RepresentationOfImage_toURL_colorSpace_options_error_
+        )
+        self.assertArgIsOut(
+            Quartz.CIContext.writeHEIF10RepresentationOfImage_toURL_colorSpace_options_error_,
             4,
         )

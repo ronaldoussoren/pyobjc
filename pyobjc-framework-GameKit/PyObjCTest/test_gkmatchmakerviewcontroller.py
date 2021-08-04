@@ -32,7 +32,7 @@ class TestGKMatchmakerViewController(TestCase):
             GameKit.GKMatchmakerViewController.canStartWithMinimumPlayers
         )
         self.assertArgIsBOOL(
-            GameKit.GKMatchmakerViewController.setCanStartWithMinimumPlayers_, 1
+            GameKit.GKMatchmakerViewController.setCanStartWithMinimumPlayers_, 0
         )
 
     def testProtocols(self):

@@ -13,6 +13,9 @@
    "kMIDIMessageTypeUnknownF": { "value": 15 },
    "kMIDIStatusActiveSensing": { "value": 254 }
   },
+  "structs": {
+   "MIDIUniversalMessage": { "ignore": true }
+  },
   "externs": {
    "MIDINetworkBonjourServiceType": { "typestr": "@" },
    "MIDINetworkNotificationContactsDidChange": { "typestr": "@" },
@@ -187,6 +190,7 @@
   },
   "formal_protocols": {},
   "functions": {
+   "MIDIEventListForEachEvent": { "ignore": true },
    "MIDIClientCreate": {
     "args": {
      "0": {},

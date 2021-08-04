@@ -169,7 +169,7 @@
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -219,7 +219,7 @@
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -349,7 +349,7 @@
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -399,7 +399,7 @@
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -1319,7 +1319,7 @@
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",
@@ -1750,7 +1750,7 @@
           }
          },
          "retval": {
-          "type": null
+          "type": "v"
          }
         },
         "typestr": "@?",

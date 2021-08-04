@@ -32,6 +32,5 @@ class TestWKPreferences(TestCase):
 
     @min_os_level("11.0")
     def testMethods11_0(self):
-        self.assertResultIsBOOL(WebKit.WKPreferences.textInteractionEnabled)
         self.assertResultIsBOOL(WebKit.WKPreferences.isTextInteractionEnabled)
         self.assertArgIsBOOL(WebKit.WKPreferences.setTextInteractionEnabled_, 0)

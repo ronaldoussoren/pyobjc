@@ -6,10 +6,10 @@ class TestAVCaptionFormatConformer(TestCase):
     @min_os_level("12.0")
     def test_methods12_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVCaptionFormatConformer.conformsCaptionsTimeRange
+            AVFoundation.AVCaptionFormatConformer.conformsCaptionsToTimeRange
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVCaptionFormatConformer.setConformsCaptionsTimeRange_, 0
+            AVFoundation.AVCaptionFormatConformer.setConformsCaptionsToTimeRange_, 0
         )
 
         self.assertArgIsOut(

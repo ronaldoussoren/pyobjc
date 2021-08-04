@@ -127,6 +127,70 @@
    "AVAudio3DVector": { "alias": "AVAudio3DPoint" }
   },
   "classes": {
+   "AVCaptionFormatConformer": {
+    "methods": [
+     {
+      "selector": "conformedCaptionForCaption:error:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
+   "AVCaption": {
+    "methods": [
+     {
+      "selector": "rubyAtIndex:range:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "textCombineAtIndex:range:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "decorationAtIndex:range:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "fontStyleAtIndex:range:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "fontWeightAtIndex:range:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "textColorAtIndex:range:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     },
+     {
+      "selector": "backgroundColorAtIndex:range:",
+      "class_method": false,
+      "args": {
+       "1": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "AVAudioSourceNode": {
     "methods": [
      {
@@ -447,6 +511,22 @@
    },
    "AVAsset": {
     "methods": [
+     {
+      "args": {
+       "1": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "@" },
+	  "2": { "typestr": "@" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      },
+      "class_method": false,
+      "selector": "findCompatibleTrackForCompositionTrack:completionHandler:"
+     },
      {
       "retval": { "type_override": "Z" },
       "class_method": false,
@@ -1142,6 +1222,21 @@
    "AVAudioPCMBuffer": {
     "methods": [
      {
+      "selector": "initWithPCMFormat:bufferListNoCopy:deallocator:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+	 "arguments": {
+	  "0": { "typestr": "^v" },
+	  "1": { "typestr": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" }
+	 },
+	 "retval": { "typestr": "v" }
+	}
+       }
+      }
+     },
+     {
       "class_method": false,
       "retval": {},
       "selector": "floatChannelData"
@@ -1382,6 +1477,16 @@
    },
    "AVCaptureDevice": {
     "methods": [
+     {
+      "selector": "isPortraitEffectEnabled",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "isPortraitEffectActive",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
      {
       "selector": "requestAccessForMediaType:completionHandler:",
       "class_method": false,

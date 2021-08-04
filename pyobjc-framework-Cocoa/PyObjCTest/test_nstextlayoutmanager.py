@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSTextLayoutManagerHelper(AppKit.NSObject):
-    def textLayoutManager_shouldBreakLineBeforeLocation_hyphenating_(self, a, b):
+    def textLayoutManager_shouldBreakLineBeforeLocation_hyphenating_(self, a, b, c):
         return 1
 
 
@@ -41,7 +41,7 @@ class TestNSTextLayoutManager(TestCase):
         )
         self.assertArgIsBOOL(
             TestNSTextLayoutManagerHelper.textLayoutManager_shouldBreakLineBeforeLocation_hyphenating_,
-            1,
+            2,
         )
 
     @min_os_level("12.0")
@@ -72,14 +72,7 @@ class TestNSTextLayoutManager(TestCase):
         self.assertArgIsBlock(
             AppKit.NSTextLayoutManager.enumerateRenderingAttributesFromLocation_reverse_usingBlock_,
             2,
-            b"Z@",
-        )
-
-        self.assertResultIsBlock(
-            AppKit.NSTextLayoutManager.renderingAttributesValidator, b"v@@"
-        )
-        self.assertArgIsBlock(
-            AppKit.NSTextLayoutManager.setRenderingAttributesValidator_, 0, b"v@@"
+            b"Z@@@",
         )
 
         self.assertArgIsBlock(

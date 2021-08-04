@@ -77,7 +77,7 @@ class TestConnectionGroup(TestCase):
 
         self.assertArgIsBlock(
             Network.nw_connection_group_set_new_connection_handler,
-            0,
+            1,
             nw_connection_group_new_connection_handler_t,
         )
 

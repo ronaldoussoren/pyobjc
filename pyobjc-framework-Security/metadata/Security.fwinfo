@@ -1,6 +1,7 @@
 {
  "definitions": {
   "cftypes": {
+   "SecKeychainSearchRef": { "ignore": true },
    "SecTransformImplementationRef": {
     "typestr": "^{OpaqueSecTransformImplementation=}",
     "opaque": true
@@ -99,6 +100,13 @@
    "SecKeychainCallbackInfo": { "typestr": "{SecKeychainCallbackInfo=I@@i}", "fieldnames": [ "version", "item", "keychain", "pid" ] }
   },
   "enum": {
+   "kSecSubjectItemAttr": { "ignore": true },
+   "kSecIssuerItemAttr": { "ignore": true },
+   "kSecSerialNumberItemAttr": { "ignore": true },
+   "kSecPublicKeyHashItemAttr": { "ignore": true },
+   "kSecSubjectKeyIdentifierItemAttr": { "ignore": true },
+   "kSecCertTypeItemAttr": { "ignore": true },
+   "kSecCertEncodingItemAttr": { "ignore": true },
    "kSecCSAllowNetworkAccess": { "value": 65536 },
    "errSecCertificateIsCA": { "value": -67902 },
    "kSecCodeSignatureLinkerSigned": { "value": 131072 },
@@ -1349,6 +1357,7 @@
    "kAuthorizationEmptyEnvironment": { "value": "None" }
   },
   "externs": {
+   "kSecSubjectItemAttr": { "ignore": true },
    "kSecUseDataProtectionKeychain": { "typestr": "@" },
    "kSecTransformActionCanExecute": { "typestr": "@" },
    "kSecTransformActionStartingExecution": { "typestr": "@" },
@@ -1939,13 +1948,50 @@
   "classes": {
   },
   "functions": {
+   "SecCertificateGetAlgorithmID": { "ignore": true },
+   "SecCertificateSetPreference": { "ignore": true },
+   "SecCertificateCopyPreference": { "ignore": true },
+   "SecPolicyGetTPHandle": { "ignore": true },
+   "SecCertificateGetCLHandle": { "ignore": true },
+   "SecKeychainItemFreeContent": { "ignore": true },
+   "SecKeychainFreeAttributeInfo": { "ignore": true },
+   "SecPolicySetProperties": { "ignore": true },
+   "SecCertificateGetIssuer": { "ignore": true },
+   "SecKeychainItemModifyContent": { "ignore": true },
+   "SecKeychainItemCopyContent": { "ignore": true },
+   "SecPolicySetValue": { "ignore": true },
+   "SecCertificateGetSubject": { "ignore": true },
+   "SecKeychainSearchCopyNext": { "ignore": true },
+   "SecPolicySearchCopyNext": { "ignore": true },
+   "SecPolicyGetValue": { "ignore": true },
+   "SecCertificateGetType": { "ignore": true },
+   "SecKeychainItemFreeAttributesAndData": { "ignore": true },
+   "SecIdentitySearchCopyNext": { "ignore": true },
+   "SecPolicySearchCreate": { "ignore": true },
+   "SecKeychainSearchCreateFromAttributes": { "ignore": true },
+   "SecPolicyGetOID": { "ignore": true },
+   "CMSEncode": { "ignore": true },
+   "SecCertificateGetData": { "ignore": true },
+   "SecKeychainItemGetUniqueRecordID": { "ignore": true },
+   "SecKeychainItemModifyAttributesAndData": { "ignore": true },
+   "SecKeychainItemGetDLDBHandle": { "ignore": true },
+   "SecKeychainItemCopyAttributesAndData": { "ignore": true },
+   "SecIdentitySearchCreate": { "ignore": true },
+   "SecPolicySearchGetTypeID": { "ignore": true },
+   "SecKeychainSearchGetTypeID": { "ignore": true },
+   "SecPolicyCreateWithOID": { "ignore": true },
+   "CMSEncoderSetEncapsulatedContentType": { "ignore": true },
+   "SecCertificateCreateFromData": { "ignore": true },
+   "SecKeychainAttributeInfoForItemID": { "ignore": true },
+   "SecTrustSetParameters": { "ignore": true },
+   "SecTrustGetResult": { "ignore": true },
+   "SecTrustGetCssmResult": { "ignore": true },
+   "SecTrustGetCssmResultCode": { "ignore": true },
+   "SecTrustGetTPHandle": { "ignore": true },
    "SecCodeCreateWithXPCMessage": {
     "args": {
-     "0": { "typestr": "@" },
-     "1": { "typestr": "I" },
-     "2": { "typestr": "o^@", "already_cfretained": true }
-    },
-    "retval": { "typestr": "i" }
+     "2": { "type_modifier": "o", "already_cfretained": true }
+    }
    },
    "sec_protocol_options_set_peer_authentication_optional": {
     "retval": { "typestr": "v" },
@@ -1955,15 +2001,7 @@
     }
    },
    "SecTrustCopyKey": {
-    "retval": { "typestr": "v", "already_cfretained": true },
-    "args": {
-     "0": { "typestr": "@" }
-    }
-   },
-   "SecCreateSharedWebCredentialPassword": {
-    "retval": { "typestr": "@", "already_cfretained": true },
-    "args": {
-    }
+    "retval": { "already_cfretained": true }
    },
    "SecRequestSharedWebCredential": {
     "retval": { "typestr": "v" },
@@ -3270,25 +3308,6 @@
     },
     "retval": { "type_override": "B" }
    },
-   "SecKeychainAddCallback": {
-    "args":  {
-     "0": {
-      "type_override": "^?",
-      "callable_retained": true,
-      "callable": {
-       "arguments": {
-        "0": { "type": "I" },
-	"1": { "type": "n^{SecKeychainCallbackInfo=I@@i}" },
-	"2": { "type": "^v" }
-       },
-       "retval": { "type": "i" }
-      }
-     },
-     "1": { "type_override": "I" },
-     "2": { "type_override": "^v" }
-    },
-    "retval": { "type_override": "i" }
-   },
    "SecKeychainRemoveCallback": {
     "args":  {
      "0": {
@@ -3305,35 +3324,6 @@
      }
     },
     "retval": { "type_override": "i" }
-   },
-   "SecTransformRegister": {
-    "args":  {
-     "0": { "type_override": "@" },
-     "1": {
-      "type_override": "^?",
-      "callable_retained": true,
-      "callable": {
-       "arguments": {
-        "0": { "type": "@" },
-	"1": { "type": "@" },
-	"2": { "type": "^{OpaqueSecTransformImplementation=}" }
-       },
-       "retval": {
-        "type": "@?",
-	"callable": {
-	 "arguments": {
-	  "0": {  "type": "^v" }
-	 },
-	 "retval": {
-	  "type": "@"
-	 }
-	}
-       }
-      }
-     },
-     "2": { "type_override": "o^@" }
-    },
-    "retval": { "type_override": "Z" }
    },
    "sec_protocol_options_are_equal":  {
     "retval": { "type_override": "B" },
@@ -5328,6 +5318,11 @@
      "type_override": "@",
      "already_retained": true
     }
+   },
+   "SecCreateSharedWebCredentialPassword": {
+    "args": {
+    },
+    "retval": { "type_override": "^{__CFString=}", "already_cfretained": true }
    },
    "sec_protocol_metadata_create_secret": {
     "args": {

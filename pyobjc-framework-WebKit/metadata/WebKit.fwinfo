@@ -1563,6 +1563,28 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "webView:requestDeviceOrientationAndMotionPermissionForOrigin:initiatedByFrame:type:decisionHandler:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "type_override": "@?",
+        "callable": {
+         "arguments": {
+          "0": {
+           "typestr": "^v"
+          },
+          "1": {
+           "typestr": "q"
+          }
+         },
+         "retval": {
+          "typestr": "v"
+         }
+        }
+       }
+      }
+     },
+     {
       "args": {
        "2": {
         "callable": {
@@ -3427,10 +3449,6 @@
    }
   },
   "enum": {
-   "WKMediaPlaybackStateNone": { "value": 0 },
-   "WKMediaPlaybackStatePaused": { "value": 1 },
-   "WKMediaPlaybackStateSuspended": { "value": 2 },
-   "WKMediaPlaybackStatePlaying": { "value": 3 },
    "WKDownloadRedirectPolicyCancel": { "value": 0 },
    "WKDownloadRedirectPolicyAllow": { "value": 1 },
    "WKNavigationActionPolicyDownload": { "value": 2 },

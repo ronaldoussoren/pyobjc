@@ -143,14 +143,3 @@ class TestGCKeyCodes(TestCase):
         self.assertIsInstance(GameController.GCKeyCodeRightShift, int)
         self.assertIsInstance(GameController.GCKeyCodeRightAlt, int)
         self.assertIsInstance(GameController.GCKeyCodeRightGUI, int)
-
-    @min_os_level("12.0")
-    def test_constants12_0(self):
-        self.assertIsInstance(GameController.GCKeyCodeKeyF13, int)
-        self.assertIsInstance(GameController.GCKeyCodeKeyF14, int)
-        self.assertIsInstance(GameController.GCKeyCodeKeyF15, int)
-        self.assertIsInstance(GameController.GCKeyCodeKeyF16, int)
-        self.assertIsInstance(GameController.GCKeyCodeKeyF17, int)
-        self.assertIsInstance(GameController.GCKeyCodeKeyF18, int)
-        self.assertIsInstance(GameController.GCKeyCodeKeyF19, int)
-        self.assertIsInstance(GameController.GCKeyCodeKeyF20, int)

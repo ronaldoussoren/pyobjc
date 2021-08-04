@@ -12,17 +12,17 @@ class TestQLPreviewReply(TestCase):
         self.assertArgIsBlock(
             Quartz.QLPreviewReply.initWithContextSize_isBitmap_drawingBlock_,
             2,
-            "Z{CGContext=@o^@",
+            b"Z^{CGContext=}@o^@",
         )
 
         self.assertArgIsBlock(
             Quartz.QLPreviewReply.initWithDataOfContentType_contentSize_dataCreationBlock_,
             2,
-            "@@o^@",
+            b"@@o^@",
         )
 
         self.assertArgIsBlock(
             Quartz.QLPreviewReply.initForPDFWithPageSize_documentCreationBlock_,
             1,
-            "@@o^@",
+            b"@@o^@",
         )

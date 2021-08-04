@@ -22,6 +22,13 @@
    "CIRenderDestinationAlphaUnpremultiplied": { "value": 2 }
   },
   "externs": {
+   "CIRAWDecoderVersionNone": { "typestr": "@" },
+   "CIRAWDecoderVersion8": { "typestr": "@" },
+   "CIRAWDecoderVersion8DNG": { "typestr": "@" },
+   "CIRAWDecoderVersion7": { "typestr": "@" },
+   "CIRAWDecoderVersion7DNG": { "typestr": "@" },
+   "CIRAWDecoderVersion6": { "typestr": "@" },
+   "CIRAWDecoderVersion6DNG": { "typestr": "@" },
    "kCIContextName": { "typestr": "@" },
    "kCIInputEnableEDRModeKey": { "typestr": "@" },
    "kCIContextAllowLowPower": { "typestr": "@" },
@@ -100,6 +107,130 @@
    "kCIFormatRGf": { "typestr": "i" }
   },
   "classes": {
+   "CIRAWFilter": {
+    "methods": [
+     {
+      "selector": "isLocalToneMapSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setLocalToneMapSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isMoireReductionSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setMoireReductionSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isDetailSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setDetailSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isContrastSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setContrastSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isSharpnessSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setSharpnessSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isColorNoiseReductionSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setColorNoiseReductionSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isLuminanceNoiseReductionSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setLuminanceNoiseReductionSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isLensCorrectionEnabled",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setLensCorrectionEnabled:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isLensCorrectionSupported",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setLensCorrectionSupported:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "isGamutMappingEnabled",
+      "class_method": true,
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "setGamutMappingEnabled:",
+      "class_method": true,
+      "args": {
+       "0": { "type_override": "Z" }
+      }
+     }
+    ]
+   },
    "CADisplayLink": {
     "methods": [
      {
@@ -598,10 +729,25 @@
    "CIContext": {
     "methods": [
      {
+      "selector": "HEIF10RepresentationOfImage:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     },
+     {
       "selector": "writePNGRepresentationOfImage:toURL:format:colorSpace:options:error:",
       "class_method": false,
       "args": {
        "5": { "type_modifier": "o" }
+      },
+      "retval": { "type_override": "Z" }
+     },
+     {
+      "selector": "writeHEIF10RepresentationOfImage:toURL:colorSpace:options:error:",
+      "class_method": false,
+      "args": {
+       "4": { "type_modifier": "o" }
       },
       "retval": { "type_override": "Z" }
      },

@@ -181,7 +181,7 @@ class TestAVBConstants(TestCase):
             AudioVideoBridging.AVB17221AECPMessageTypeVendorUniqueCommand, 0x6
         )
         self.assertEqual(
-            AudioVideoBridging.AVB17221AECPMessageTypeVendorUniqueRespons, 0x7
+            AudioVideoBridging.AVB17221AECPMessageTypeVendorUniqueResponse, 0x7
         )
 
         self.assertEqual(AudioVideoBridging.AVB17221AECPStatusSuccess, 0x00)

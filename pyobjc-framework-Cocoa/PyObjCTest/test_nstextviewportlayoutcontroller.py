@@ -4,7 +4,7 @@ import objc
 
 
 class TestNSTextViewportLayoutControllerHelper(AppKit.NSObject):
-    def viewportBoundsForTextViewportLayoutController_(self):
+    def viewportBoundsForTextViewportLayoutController_(self, a):
         return 1
 
 

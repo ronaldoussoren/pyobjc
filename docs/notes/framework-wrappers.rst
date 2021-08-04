@@ -190,6 +190,8 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CryptoTokenKit </apinotes/CryptoTokenKit>`                                     | `pyobjc-framework-CryptoTokenKit`_                   |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
+| :doc:`DataDetection </apinotes/DataDetection>`                                       | `pyobjc-framework-DataDetection`_                    |                                         |
++--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | DeveloperToolsSupport                                                                | -                                                    | Swift only framework                    |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`DeviceCheck </apinotes/DeviceCheck>`                                           | `pyobjc-framework-DeviceCheck`_                      |                                         |
@@ -327,7 +329,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`LocalAuthentication </apinotes/LocalAuthentication>`                           | `pyobjc-framework-LocalAuthentication`_              |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`LocalAuthenticationUIView </apinotes/LocalAuthenticationUIView>`               | `pyobjc-framework-LocalAuthenticationUIView`_        |                                         |
+| :doc:`LocalAuthenticationEmbeddedUI </apinotes/LocalAuthenticationEmbeddedUI>`       | `pyobjc-framework-LocalAuthenticationEmbeddedUI`_    |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`MapKit </apinotes/MapKit>`                                                     | `pyobjc-framework-MapKit`_                           |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
@@ -639,7 +641,7 @@ prioritizing work.
 .. _`pyobjc-framework-LatentSemanticMapping`: https://pypi.org/project/pyobjc-framework-LatentSemanticMapping/
 .. _`pyobjc-framework-LaunchServices`: https://pypi.org/project/pyobjc-framework-LaunchServices/
 .. _`pyobjc-framework-LinkPresentation`: https://pypi.org/project/pyobjc-framework-LinkPresentation/
-.. _`pyobjc-framework-LocalAuthenticationUIView`: https://pypi.org/project/pyobjc-framework-LocalAuthenticationUIView/
+.. _`pyobjc-framework-LocalAuthenticationEmbeddedUI`: https://pypi.org/project/pyobjc-framework-LocalAuthenticationEmbeddedUI/
 .. _`pyobjc-framework-LocalAuthentication`: https://pypi.org/project/pyobjc-framework-LocalAuthentication/
 .. _`pyobjc-framework-MLCompute`: https://pypi.org/project/pyobjc-framework-MLCompute/
 .. _`pyobjc-framework-MailKit`: https://pypi.org/project/pyobjc-framework-MailKit/
@@ -706,3 +708,4 @@ prioritizing work.
 .. _`pyobjc-framework-iTunesLibrary`: https://pypi.org/project/pyobjc-framework-iTunesLibrary/
 .. _`pyobjc-framework-libdispatch`: https://pypi.org/project/pyobjc-framework-libdispatch/
 .. _`pyobjc-framework-AudioVideoBridging`: https://pypi.org/project/pyobjc-framework-AudioVideoBridging/
+.. _`pyobjc-framework-DataDetection`: https://pypi.org/project/pyobjc-framework-DataDetection/

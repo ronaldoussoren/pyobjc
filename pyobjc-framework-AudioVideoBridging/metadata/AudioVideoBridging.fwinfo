@@ -1,7 +1,8 @@
-// objective.metadata exceptions file, see its document
-// for information on how to update this file.
 {
  "definitions": {
+  "expressions": {
+   "kAVB17221EntityPropertyChangedCanChangeMask": { "value": "(AVB17221EntityPropertyChangedTimeToLive | AVB17221EntityPropertyChangedAvailableIndex | AVB17221EntityPropertyChangedGPTPGrandmasterID | AVB17221EntityPropertyChangedGPTPDomainNumber | AVB17221EntityPropertyChangedEntityCapabilities )" }
+  },
   "classes": {
    "AVB17221ACMPInterface": {
     "methods": [
@@ -64,7 +65,7 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_of_fixed_length": 16 }
       },
       "class_method": false,
       "selector": "initWithIPv6Address:"
@@ -82,14 +83,14 @@
     "methods": [
      {
       "args": {
-       "0": {}
+       "0": { "type_modifier": "n", "c_array_of_fixed_length": 6  }
       },
       "class_method": false,
       "selector": "initWithBytes:"
      },
      {
       "class_method": false,
-      "retval": {},
+      "retval": { "c_array_of_fixed_length": 6 },
       "selector": "bytes"
      }
     ],

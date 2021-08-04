@@ -18,6 +18,59 @@
   },
   "formal_protocols": {},
   "functions": {
+   "nw_quic_set_application_error": {
+    "args": {
+     "2": {
+      "type_modifier": "n",
+      "c_array_delimited_by_null": true
+     }
+    }
+   },
+   "nw_quic_get_application_error_reason": {
+    "retval": {
+     "c_array_delimited_by_null": true
+    }
+   },
+   "nw_quic_copy_sec_protocol_metadata": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_connection_group_copy_protocol_metadata": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_quic_copy_sec_protocol_options": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_quic_create_options": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_connection_group_extract_connection": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_parameters_create_quic": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_connection_group_copy_protocol_metadata_for_message": {
+    "retval": {
+     "already_retained": true
+    }
+   },
+   "nw_protocol_copy_quic_definition": {
+    "retval": {
+     "already_retained": true
+    }
+   },
    "nw_advertise_descriptor_copy_txt_record_object": {
     "retval": {
      "already_retained": true
@@ -62,6 +115,25 @@
    "nw_browse_result_copy_txt_record_object": {
     "retval": {
      "already_retained": true
+    }
+   },
+   "nw_connection_group_set_new_connection_handler": {
+    "args": {
+     "1": {
+      "callable": {
+       "arguments": {
+        "0": {
+         "type": "^v"
+        },
+        "1": {
+         "type": "@"
+        }
+       },
+       "retval": {
+        "type": "v"
+       }
+      }
+     }
     }
    },
    "nw_browse_result_enumerate_interfaces": {

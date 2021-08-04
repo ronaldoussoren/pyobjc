@@ -85,10 +85,10 @@ class TestAVPlaybackCoordinator(TestCase):
             AVFoundation.AVCoordinatedPlaybackParticipant.isReadyToPlay
         )
         self.assertResultIsBOOL(
-            AVFoundation.AVCoordinatedPlaybackParticipant.pauseSnapsToMediaTimeOfOriginator
+            AVFoundation.AVPlaybackCoordinator.pauseSnapsToMediaTimeOfOriginator
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVCoordinatedPlaybackParticipant.setPauseSnapsToMediaTimeOfOriginator_,
+            AVFoundation.AVPlaybackCoordinator.setPauseSnapsToMediaTimeOfOriginator_,
             0,
         )
         self.assertResultIsBOOL(

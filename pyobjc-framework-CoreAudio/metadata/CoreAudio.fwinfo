@@ -10,6 +10,14 @@
    }
   },
   "enum": {
+   "kAudioChannelLayoutTag_Logic_4_0_C": { "value": 12910596 },
+   "kAudioChannelLayoutTag_Logic_6_0_B": { "value": 12976134 },
+   "kAudioChannelLayoutTag_Logic_6_1_B": { "value": 13041671 },
+   "kAudioChannelLayoutTag_Logic_6_1_D": { "value": 13107207 },
+   "kAudioChannelLayoutTag_Logic_7_1_B": { "value": 13172744 },
+   "kAudioChannelLayoutTag_Logic_Atmos_7_1_4_B": { "value": 13238284 },
+   "kAudioChannelLayoutTag_Logic_Atmos_7_1_6": { "value": 13303822 },
+   "kAudioChannelLabel_HOA_N3D": { "value": 196608 },
    "kAudioChannelLayoutTag_Atmos_5_1_2": { "value": 12713992 },
    "kAudioChannelLayoutTag_Atmos_5_1_4": { "value": 12779530 },
    "kAudioChannelLayoutTag_Atmos_7_1_2": { "value": 12845066 },
@@ -48,6 +56,33 @@
    "kAudioFormatMPEGD_USAC": { "value": 1970495843 }
   },
   "aliases": {
+   "kAudioChannelLayoutTag_Logic_Mono": { "alias": "kAudioChannelLayoutTag_Mono" },
+   "kAudioChannelLayoutTag_Logic_Stereo": { "alias": "kAudioChannelLayoutTag_Stereo" },
+   "kAudioChannelLayoutTag_Logic_Quadraphonic": { "alias": "kAudioChannelLayoutTag_Quadraphonic" },
+   "kAudioChannelLayoutTag_Logic_4_0_A": { "alias": "kAudioChannelLayoutTag_MPEG_4_0_A" },
+   "kAudioChannelLayoutTag_Logic_4_0_B": { "alias": "kAudioChannelLayoutTag_MPEG_4_0_B" },
+   "kAudioChannelLayoutTag_Logic_5_0_A": { "alias": "kAudioChannelLayoutTag_MPEG_5_0_A" },
+   "kAudioChannelLayoutTag_Logic_5_0_B": { "alias": "kAudioChannelLayoutTag_MPEG_5_0_B" },
+   "kAudioChannelLayoutTag_Logic_5_0_C": { "alias": "kAudioChannelLayoutTag_MPEG_5_0_C" },
+   "kAudioChannelLayoutTag_Logic_5_0_D": { "alias": "kAudioChannelLayoutTag_MPEG_5_0_D" },
+   "kAudioChannelLayoutTag_Logic_5_1_A": { "alias": "kAudioChannelLayoutTag_MPEG_5_1_A" },
+   "kAudioChannelLayoutTag_Logic_5_1_B": { "alias": "kAudioChannelLayoutTag_MPEG_5_1_B" },
+   "kAudioChannelLayoutTag_Logic_5_1_C": { "alias": "kAudioChannelLayoutTag_MPEG_5_1_C" },
+   "kAudioChannelLayoutTag_Logic_5_1_D": { "alias": "kAudioChannelLayoutTag_MPEG_5_1_D" },
+   "kAudioChannelLayoutTag_Logic_6_0_A": { "alias": "kAudioChannelLayoutTag_AAC_6_0" },
+   "kAudioChannelLayoutTag_Logic_6_0_C": { "alias": "kAudioChannelLayoutTag_AudioUnit_6_0" },
+   "kAudioChannelLayoutTag_Logic_6_1_A": { "alias": "kAudioChannelLayoutTag_AAC_6_1" },
+   "kAudioChannelLayoutTag_Logic_6_1_C": { "alias": "kAudioChannelLayoutTag_MPEG_6_1_A" },
+   "kAudioChannelLayoutTag_Logic_7_1_A": { "alias": "kAudioChannelLayoutTag_AudioUnit_7_1" },
+   "kAudioChannelLayoutTag_Logic_7_1_C": { "alias": "kAudioChannelLayoutTag_MPEG_7_1_C" },
+   "kAudioChannelLayoutTag_Logic_7_1_SDDS_A": { "alias": "kAudioChannelLayoutTag_MPEG_7_1_A" },
+   "kAudioChannelLayoutTag_Logic_7_1_SDDS_B": { "alias": "kAudioChannelLayoutTag_MPEG_7_1_B" },
+   "kAudioChannelLayoutTag_Logic_7_1_SDDS_C": { "alias": "kAudioChannelLayoutTag_Emagic_Default_7_1" },
+   "kAudioChannelLayoutTag_Logic_Atmos_5_1_2": { "alias": "kAudioChannelLayoutTag_Atmos_5_1_2" },
+   "kAudioChannelLayoutTag_Logic_Atmos_5_1_4": { "alias": "kAudioChannelLayoutTag_Atmos_5_1_4" },
+   "kAudioChannelLayoutTag_Logic_Atmos_7_1_2": { "alias": "kAudioChannelLayoutTag_Atmos_7_1_2" },
+   "kAudioChannelLayoutTag_Logic_Atmos_7_1_4_A": { "alias": "kAudioChannelLayoutTag_Atmos_7_1_4" },
+   "kAudioChannelLabel_HOA_SN3D": { "alias": "kAudioChannelLabel_HOA_ACN_0" },
    "kAudioChannelLayoutTag_WAVE_2_1": { "alias": "kAudioChannelLayoutTag_DVD_4" },
    "kAudioChannelLayoutTag_WAVE_3_0": { "alias": "kAudioChannelLayoutTag_MPEG_3_0_A" },
    "kAudioChannelLayoutTag_WAVE_4_0_A": { "alias": "kAudioChannelLayoutTag_ITU_2_2" },
@@ -183,11 +218,11 @@
       "callable": {
        "arguments": {
         "0": { "type": "^v" },
-        "1": { "type": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+        "1": { "type":  "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
         "2": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
-        "3": { "type": ["n^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] },
+        "3": { "type":  "n^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" },
         "4": { "type": "^{AudioBufferList=I[1{AudioBuffer=II^v}]}" },
-        "5": { "type": ["N^{AudioTimeStamp=dQdQ{SMPTETime=ssLLLssss}LL}", "N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" ] }
+        "5": { "type":  "N^{AudioTimeStamp=dQdQ{SMPTETime=ssIIIssss}II}" }
        },
        "retval": { "type": "v" }
       }

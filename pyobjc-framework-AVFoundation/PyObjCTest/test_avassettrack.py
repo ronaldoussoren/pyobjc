@@ -32,7 +32,7 @@ class TestAVAssetTrack(TestCase):
         self.assertArgIsBlock(
             AVFoundation.AVAssetTrack.loadSamplePresentationTimeForTrackTime_completionHandler_,
             1,
-            b"v@@",
+            b"v" + AVFoundation.CMTime.__typestr__ + b"@",
         )
         self.assertArgIsBlock(
             AVFoundation.AVAssetTrack.loadMetadataForFormat_completionHandler_,

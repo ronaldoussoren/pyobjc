@@ -72,28 +72,20 @@ class TestCIRAWFilter(TestCase):
         self.assertArgIsBOOL(Quartz.CIRAWFilter.setGamutMappingEnabled_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isLensCorrectionSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setLensCorrectionSupported_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isLensCorrectionEnabled)
         self.assertArgIsBOOL(Quartz.CIRAWFilter.setLensCorrectionEnabled_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isLuminanceNoiseReductionSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setLuminanceNoiseReductionSupported_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isColorNoiseReductionSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setColorNoiseReductionSupported_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isSharpnessSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setSharpnessSupported_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isContrastSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setContrastSupported_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isDetailSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setsDetailSupported_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isMoireReductionSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setMoireReductionSupported_, 0)
 
         self.assertResultIsBOOL(Quartz.CIRAWFilter.isLocalToneMapSupported)
-        self.assertArgIsBOOL(Quartz.CIRAWFilter.setLocalToneMapSupported_, 0)

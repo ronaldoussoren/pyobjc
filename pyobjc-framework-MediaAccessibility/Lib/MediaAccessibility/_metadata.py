@@ -100,7 +100,7 @@ functions = {
         {"arguments": {1: {"null_accepted": True, "type_modifier": "o"}}},
     ),
     "MAImageCaptioningCopyMetadataTagPath": (
-        "@",
+        b"@",
         "",
         {"retval": {"already_cfretained": True}},
     ),

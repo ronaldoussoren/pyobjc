@@ -6,7 +6,7 @@ SecTransformActionBlock = b"@"
 SecTransformAttributeActionBlock = b"@@@"
 SecTransformDataBlock = b"@@"
 SecTransformInstanceBlock = b"@"
-SecTransformCreateFP = b"@?@@" + Security.SecTransformImplementationRef.__typestr__
+SecTransformCreateFP = b"@?^{__CFString=}@^{OpaqueSecTransformImplementation=}"
 
 
 class TestSecCustomTransform(TestCase):
@@ -118,13 +118,11 @@ class TestSecCustomTransform(TestCase):
     @min_os_level("10.7")
     def test_functions_10_7(self):
         self.assertResultHasType(Security.SecTransformRegister, objc._C_NSBOOL)
-        self.assertArgHasType(Security.SecTransformRegister, 0, objc._C_ID)
+        self.assertArgHasType(Security.SecTransformRegister, 0, b"^{__CFString=}")
         self.assertArgIsFunction(
             Security.SecTransformRegister, 1, SecTransformCreateFP, 1
         )
-        self.assertArgHasType(
-            Security.SecTransformRegister, 2, objc._C_OUT + objc._C_PTR + objc._C_ID
-        )
+        self.assertArgHasType(Security.SecTransformRegister, 2, b"o^^{__CFError=}")
 
         self.assertResultHasType(Security.SecTransformCreate, objc._C_ID)
         self.assertResultIsCFRetained(Security.SecTransformCreate)

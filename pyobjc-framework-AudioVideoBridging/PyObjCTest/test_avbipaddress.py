@@ -5,7 +5,7 @@ import AudioVideoBridging
 class TestAVBIPAddress(TestCase):
     def test_methods(self):
         self.assertArgIsIn(AudioVideoBridging.AVBIPAddress.initWithIPv6Address_, 0)
-        self.assertArgSizeIs(
+        self.assertArgIsFixedSize(
             AudioVideoBridging.AVBIPAddress.initWithIPv6Address_, 0, 16
         )
 

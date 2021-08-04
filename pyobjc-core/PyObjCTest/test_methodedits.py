@@ -317,12 +317,12 @@ class TestCategory(TestCase):
         self.assertTrue(not o.myCategoryMethod2())
 
     def testCategoryMultipleInheritance(self):
-
         NSObject = objc.lookUpClass("NSObject")
+        object_class = object
 
         try:
 
-            class NSObject(objc.Category(NSObject)):
+            class NSObject(objc.Category(NSObject), object_class):
                 pass
 
             self.fail("Can use objc.Category with MI")
