@@ -160,7 +160,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CoreServices/LauchServices </apinotes/LaunchServices>`                         | `pyobjc-framework-LaunchServices`_                   |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
-| :doc:`CoreServices/SharedFileList </apinotes/LaunchServices>`                        | `pyobjc-framweork-LaunchServices`_                   | Use "import LaunchServices"             |
+| :doc:`CoreServices/SharedFileList </apinotes/LaunchServices>`                        | `pyobjc-framework-LaunchServices`_                   | Use "import LaunchServices"             |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 | :doc:`CoreServices/FSEvents </apinotes/FSEvents>`                                    | `pyobjc-framework-FSEvents`_                         |                                         |
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
