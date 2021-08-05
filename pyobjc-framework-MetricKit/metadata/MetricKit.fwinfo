@@ -4,6 +4,12 @@
  "definitions": {
   "classes": {},
   "formal_protocols": {},
+  "literals": {
+   "_MXSIGNPOST_METRICS_SNAPSHOT_FORMAT": {
+    "value": "\n%{public, signpost:metrics}@",
+    "unicode": false
+   }
+  },
   "functions": {
    "_MXSignpostMetricsSnapshot": {
     "retval": {}
