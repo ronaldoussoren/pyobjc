@@ -311,8 +311,6 @@ class TestAVBConstants(TestCase):
         )
         self.assertEqual(AudioVideoBridging.AVB17221ACMPFlagsStreamingUsingUDP, 0x0200)
 
-        self.assertEqual(AudioVideoBridging.AVB17221ACMPIPFlagNone, 0x0000)
-
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeAcquireEntity, 0x0000)
         self.assertEqual(AudioVideoBridging.AVB17221AEMCommandTypeLockEntity, 0x0001)
         self.assertEqual(

@@ -1,0 +1,11 @@
+from PyObjCTools.TestSupport import TestCase
+import MailKit
+
+
+class TestMEExtensionManager(TestCase):
+    def test_methods(self):
+        self.assertArgIsBlock(
+            MailKit.MEExtensionManager.reloadContentBlockerWithIdentifier_completionHandler_,
+            1,
+            b"v@",
+        )

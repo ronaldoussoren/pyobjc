@@ -119,6 +119,11 @@
    "INPerson": {
     "methods": [
      {
+      "selector": "isContactSuggestion",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     },
+     {
       "args": {
        "6": {
         "type_override": "Z"

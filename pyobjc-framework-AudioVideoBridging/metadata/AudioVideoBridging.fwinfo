@@ -60,24 +60,6 @@
      }
     ]
    },
-   "AVBIPAddress": {
-    "methods": [
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithIPv6Address:"
-     },
-     {
-      "args": {
-       "0": {}
-      },
-      "class_method": false,
-      "selector": "initWithSockAddr:"
-     }
-    ]
-   },
    "AVBMACAddress": {
     "methods": [
      {

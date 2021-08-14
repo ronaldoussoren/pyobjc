@@ -131,6 +131,16 @@ class TestCVPixelBuffer(TestCase):
         self.assertEqual(
             Quartz.kCVPixelFormatType_64RGBA_DownscaledProResRAW, fourcc(b"bp64")
         )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange, fourcc(b"sv22")
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_444YpCbCr16BiPlanarVideoRange, fourcc(b"sv44")
+        )
+        self.assertEqual(
+            Quartz.kCVPixelFormatType_444YpCbCr16VideoRange_16A_TriPlanar,
+            fourcc(b"s4as"),
+        )
 
         self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_RGGB, 0)
         self.assertEqual(Quartz.kCVVersatileBayer_BayerPattern_GRBG, 1)

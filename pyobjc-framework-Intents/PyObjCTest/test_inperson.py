@@ -8,3 +8,7 @@ class TestINPerson(TestCase):
         self.assertEqual(Intents.INPersonSuggestionTypeNone, 0)
         self.assertEqual(Intents.INPersonSuggestionTypeSocialProfile, 1)
         self.assertEqual(Intents.INPersonSuggestionTypeInstantMessageAddress, 2)
+
+    @min_os_level("12.0")
+    def test_methods(self):
+        self.assertResultIsBOOL(Intents.INPerson.isContactSuggestion)

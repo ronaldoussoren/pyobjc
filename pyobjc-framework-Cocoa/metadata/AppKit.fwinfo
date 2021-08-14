@@ -29297,6 +29297,18 @@
    }
   },
   "enum": {
+   "NSAppKitVersionNumber10_15": { "value": 1894 },
+   "NSAppKitVersionNumber10_15_1": { "value": 1894.1 },
+   "NSAppKitVersionNumber10_15_2": { "value": 1894.2 },
+   "NSAppKitVersionNumber10_15_3": { "value": 1894.3 },
+   "NSAppKitVersionNumber10_15_4": { "value": 1894.4 },
+   "NSAppKitVersionNumber10_15_5": { "value": 1894.5 },
+   "NSAppKitVersionNumber10_15_6": { "value": 1894.6 },
+   "NSAppKitVersionNumber11_0": { "value": 2022 },
+   "NSAppKitVersionNumber11_1": { "value": 2022.2 },
+   "NSAppKitVersionNumber11_2": { "value": 2022.3 },
+   "NSAppKitVersionNumber11_3": { "value": 2022.4 },
+   "NSAppKitVersionNumber11_4": { "value": 2022.5 },
    "NSTextElementProviderEnumerationOptionsNone": {
     "value": 0
    },

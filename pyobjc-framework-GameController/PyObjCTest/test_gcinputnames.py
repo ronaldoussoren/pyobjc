@@ -33,3 +33,7 @@ class TestGCInputNames(TestCase):
         self.assertIsInstance(GameController.GCInputDualShockTouchpadOne, str)
         self.assertIsInstance(GameController.GCInputDualShockTouchpadTwo, str)
         self.assertIsInstance(GameController.GCInputDualShockTouchpadButton, str)
+
+    @min_os_level("12.0")
+    def test_constants12_0(self):
+        self.assertIsInstance(GameController.GCInputButtonShare, str)

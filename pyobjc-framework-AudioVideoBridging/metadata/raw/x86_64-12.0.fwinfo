@@ -2763,163 +2763,6 @@
     "protocols": [],
     "super": "AVBInterface"
    },
-   "AVBIPAddress": {
-    "categories": [],
-    "methods": [
-     {
-      "args": [
-       {
-        "typestr": "^C",
-        "typestr_special": false
-       }
-      ],
-      "class_method": false,
-      "retval": {
-       "typestr": "@",
-       "typestr_special": false
-      },
-      "selector": "initWithIPv6Address:",
-      "visibility": "public"
-     },
-     {
-      "args": [
-       {
-        "typestr": "@",
-        "typestr_special": false
-       }
-      ],
-      "class_method": false,
-      "retval": {
-       "typestr": "@",
-       "typestr_special": false
-      },
-      "selector": "initWithIPv6AddressData:",
-      "visibility": "public"
-     },
-     {
-      "args": [
-       {
-        "typestr": "I",
-        "typestr_special": false
-       }
-      ],
-      "class_method": false,
-      "retval": {
-       "typestr": "@",
-       "typestr_special": false
-      },
-      "selector": "initWithIPv4Address:",
-      "visibility": "public"
-     },
-     {
-      "args": [
-       {
-        "typestr": "^{sockaddr=CC[14c]}",
-        "typestr_special": false
-       }
-      ],
-      "class_method": false,
-      "retval": {
-       "typestr": "@",
-       "typestr_special": false
-      },
-      "selector": "initWithSockAddr:",
-      "visibility": "public"
-     },
-     {
-      "args": [],
-      "class_method": false,
-      "retval": {
-       "typestr": "Z",
-       "typestr_special": true
-      },
-      "selector": "representsIPv4Address",
-      "visibility": "public"
-     },
-     {
-      "args": [],
-      "class_method": false,
-      "retval": {
-       "typestr": "@",
-       "typestr_special": false
-      },
-      "selector": "ipv6Address",
-      "visibility": "public"
-     },
-     {
-      "args": [
-       {
-        "typestr": "@",
-        "typestr_special": false
-       }
-      ],
-      "class_method": false,
-      "retval": {
-       "typestr": "v",
-       "typestr_special": false
-      },
-      "selector": "setIpv6Address:",
-      "visibility": "public"
-     },
-     {
-      "args": [],
-      "class_method": false,
-      "retval": {
-       "typestr": "I",
-       "typestr_special": false
-      },
-      "selector": "ipv4Address",
-      "visibility": "public"
-     },
-     {
-      "args": [
-       {
-        "typestr": "I",
-        "typestr_special": false
-       }
-      ],
-      "class_method": false,
-      "retval": {
-       "typestr": "v",
-       "typestr_special": false
-      },
-      "selector": "setIpv4Address:",
-      "visibility": "public"
-     }
-    ],
-    "name": "AVBIPAddress",
-    "properties": [
-     {
-      "attributes": [
-       "assign",
-       "readonly"
-      ],
-      "name": "representsIPv4Address",
-      "typestr": "Z",
-      "typestr_special": true
-     },
-     {
-      "attributes": [
-       "copy"
-      ],
-      "name": "ipv6Address",
-      "typestr": "@",
-      "typestr_special": false
-     },
-     {
-      "attributes": [
-       "assign"
-      ],
-      "name": "ipv4Address",
-      "typestr": "I",
-      "typestr_special": false
-     }
-    ],
-    "protocols": [
-     "NSCopying"
-    ],
-    "super": "NSObject"
-   },
    "AVBInterface": {
     "categories": [],
     "methods": [
@@ -3258,7 +3101,6 @@
    "AVB17221ACMPFlagsStreamingUsingUDP": 512,
    "AVB17221ACMPFlagsStreamingWait": 8,
    "AVB17221ACMPFlagsSupportsEncrypted": 16,
-   "AVB17221ACMPIPFlagNone": 0,
    "AVB17221ACMPMessageTypeConnectRXCommand": 6,
    "AVB17221ACMPMessageTypeConnectRXResponse": 7,
    "AVB17221ACMPMessageTypeConnectTXCommand": 0,
@@ -3792,7 +3634,6 @@
   "AVBCentralManager.h",
   "AVBConstants.h",
   "AVBEthernetInterface.h",
-  "AVBIPAddress.h",
   "AVBInterface.h",
   "AVBMACAddress.h"
  ],

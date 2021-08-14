@@ -204,6 +204,12 @@
    }
   },
   "externs": {
+   "kCGColorSpaceLinearDisplayP3": {
+    "typestr": "@"
+   },
+   "kCGColorSpaceLinearITUR_2020": {
+    "typestr": "@"
+   },
    "kCIInputLocalToneMapAmountKey": {
     "typestr": "@"
    },

@@ -17,11 +17,22 @@
    "GCDualSenseAdaptiveTriggerStatusVibrationIsVibrating": { "value": 6 }
   },
   "externs": {
+   "GCInputMicroGamepadButtonMenu": { "typestr": "@" },
+   "GCInputButtonShare": { "typestr": "@" },
    "GCInputDirectionalDpad": { "typestr": "@" },
    "GCInputDirectionalCardinalDpad": { "typestr": "@" },
    "GCHapticDurationInfinite": { "typestr": "f" }
   },
   "classes": {
+   "GCPhysicalInputProfile": {
+    "methods": [
+     {
+      "selector": "hasRemappedElements",
+      "class_method": false,
+      "retval": { "type_override": "Z" }
+     }
+    ]
+   },
    "GCKeyboardInput": {
     "methods": [
      {

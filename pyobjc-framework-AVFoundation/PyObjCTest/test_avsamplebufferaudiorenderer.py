@@ -27,3 +27,10 @@ class TestAVSampleBufferAudioRenderer(TestCase):
         self.assertIsInstance(
             AVFoundation.AVSampleBufferAudioRendererFlushTimeKey, str
         )  # noqa: B950
+
+    @min_os_level("12.0")
+    def testConstants12_0(self):
+        self.assertIsInstance(
+            AVFoundation.AVSampleBufferAudioRendererOutputConfigurationDidChangeNotification,  # noqa: B950
+            str,
+        )

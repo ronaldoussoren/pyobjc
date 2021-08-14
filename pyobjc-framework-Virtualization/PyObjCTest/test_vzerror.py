@@ -10,3 +10,4 @@ class TestVZError(TestCase):
         self.assertEqual(Virtualization.VZErrorInvalidVirtualMachineState, 3)
         self.assertEqual(Virtualization.VZErrorInvalidVirtualMachineStateTransition, 4)
         self.assertEqual(Virtualization.VZErrorInvalidDiskImage, 5)
+        self.assertEqual(Virtualization.VZErrorVirtualMachineLimitExceeded, 6)

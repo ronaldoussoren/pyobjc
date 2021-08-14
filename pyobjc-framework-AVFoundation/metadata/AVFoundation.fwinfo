@@ -51,6 +51,7 @@
    "AVCaptureAutoFocusRangeRestrictionNone": { "value": 0 }
   },
   "externs": {
+   "AVSampleBufferAudioRendererOutputConfigurationDidChangeNotification": { "typestr": "@" },
    "AVAssetDownloadTaskPrefersLosslessAudioKey": { "typestr": "@" },
    "AVPlayerWaitingDuringInterstitialEventReason": { "typestr": "@" },
    "AVPlayerInterstitialEventObserverCurrentEventDidChangeNotification": { "typestr": "@" },

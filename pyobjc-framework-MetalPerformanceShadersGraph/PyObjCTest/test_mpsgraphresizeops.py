@@ -1,4 +1,4 @@
-from PyObjCTools.TestSupport import TestCase
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 import MetalPerformanceShadersGraph
 
@@ -24,5 +24,16 @@ class TestMPSGraphResizeOps(TestCase):
         )
         self.assertArgIsBOOL(
             MetalPerformanceShadersGraph.MPSGraph.resizeWithGradientTensor_input_mode_centerResult_alignCorners_layout_name_,  # noqa: B950
+            4,
+        )
+
+    @min_os_level("12.0")
+    def test_methods12_0(self):
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.resizeTensor_sizeTensor_mode_centerResult_alignCorners_layout_name_,
+            3,
+        )
+        self.assertArgIsBOOL(
+            MetalPerformanceShadersGraph.MPSGraph.resizeTensor_sizeTensor_mode_centerResult_alignCorners_layout_name_,
             4,
         )
