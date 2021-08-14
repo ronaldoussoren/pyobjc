@@ -94,6 +94,13 @@
      },
      {
       "class_method": false,
+      "selector": "isNull",
+      "retval": {
+       "type_override": "Z"
+      }
+     },
+     {
+      "class_method": false,
       "selector": "toBool",
       "retval": {
        "type_override": "Z"

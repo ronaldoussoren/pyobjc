@@ -27,4 +27,4 @@ sys.modules["AudioVideoBridging"] = mod = objc.ObjCLazyModule(
 )
 
 
-del sys.modules["AudioVideoBriding._metadata"]
+del sys.modules["AudioVideoBridging._metadata"]

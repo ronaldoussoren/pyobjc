@@ -6,6 +6,17 @@
    "VZMacAuxiliaryStorageInitializationOptionAllowOverwrite": { "value": 1 }
   },
   "classes": {
+   "VZMacAuxiliaryStorage": {
+    "methods": [
+     {
+      "selector": "initCreatingStorageAtURL:hardwareModel:options:error:",
+      "class_method": false,
+      "args": {
+       "3": { "type_modifier": "o" }
+      }
+     }
+    ]
+   },
    "VZDiskImageStorageDeviceAttachment": {
     "methods": [
      {

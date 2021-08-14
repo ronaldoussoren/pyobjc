@@ -101,8 +101,6 @@ def virtualenv(interpreter):
     if os.path.exists("test-env"):
         shutil.rmtree("test-env")
 
-    _install_virtualenv_software(interpreter)
-
     subprocess.check_call([interpreter, "-mvenv", "test-env"])
     if not os.path.exists("test-env/bin/python"):
         raise RuntimeError("VirtualEnv incomplete")

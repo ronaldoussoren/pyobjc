@@ -178,8 +178,8 @@ class TestAVPlayer(TestCase):
     @min_os_level("12.0")
     def testMethods12_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVPlayer.automaticallyHandlesInterstitialEvents
+            AVFoundation.AVPlayerItem.automaticallyHandlesInterstitialEvents
         )
         self.assertArgIsBOOL(
-            AVFoundation.AVPlayer.setAutomaticallyHandlesInterstitialEvents_, 0
+            AVFoundation.AVPlayerItem.setAutomaticallyHandlesInterstitialEvents_, 0
         )

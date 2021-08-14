@@ -9,7 +9,7 @@ import sys
 
 import Foundation
 import objc
-from . import _metadata
+from . import _metadata, _MetricKit
 
 sys.modules["MetricKit"] = mod = objc.ObjCLazyModule(
     "MetricKit",
@@ -23,7 +23,7 @@ sys.modules["MetricKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Foundation,),
+    (Foundation, _MetricKit),
 )
 
 

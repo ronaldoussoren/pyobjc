@@ -26,8 +26,8 @@ class TestMTLAccelerationStructure(TestCase):
         self.assertIsInstance(v.motionTransformsCount, int)
         self.assertIsInstance(v.motionStartBorderMode, int)
         self.assertIsInstance(v.motionEndBorderMode, int)
-        self.assertIsInstance(v.motionStartTime, int)
-        self.assertIsInstance(v.motionEndTime, int)
+        self.assertIsInstance(v.motionStartTime, float)
+        self.assertIsInstance(v.motionEndTime, float)
 
     def test_constants(self):
 

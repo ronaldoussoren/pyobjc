@@ -204,6 +204,11 @@
    "kColorSyncFixedPointRange": { "typestr": "@" }
   },
   "functions": {
+   "ColorSyncIterateInstalledProfilesWithOptions": {
+    "args": {
+     "1": { "type_modifier": "N" }
+    }
+   },
    "ColorSyncCMMGetTypeID": {
     "args": {
     },

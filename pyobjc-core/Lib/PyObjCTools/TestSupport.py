@@ -280,6 +280,24 @@ def onlyOn64Bit(function):
     return onlyIf(not is32Bit(), "64-bit only")(function)
 
 
+def arch_only(arch):
+    """
+    Usage::
+        class Tests (unittest.TestCase):
+
+            @arch_only("arm64")
+            def testArm64(self):
+                pass
+
+    The test runs only when the specified architecture matches
+    """
+
+    def decorator(function):
+        return onlyIf(objc.arch == arch, f"{arch} only")(function)
+
+    return decorator
+
+
 def min_python_release(version):
     """
     Usage::

@@ -12,7 +12,11 @@ class TestJSValue(TestCase):
         self.assertResultIsBOOL(JavaScriptCore.JSValue.deleteProperty_)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.hasProperty_)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isUndefined)
-        self.assertResultIsBOOL(JavaScriptCore.JSValue.isNull)
+
+        # XXX: On macOS 12 there is a class method 'isNull' shadowing the instance method
+        #      This only affects this test pattern, not normal users of the API.
+        self.assertResultIsBOOL(JavaScriptCore.JSValue.pyobjc_instanceMethods.isNull)
+
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isBoolean)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isNumber)
         self.assertResultIsBOOL(JavaScriptCore.JSValue.isString)

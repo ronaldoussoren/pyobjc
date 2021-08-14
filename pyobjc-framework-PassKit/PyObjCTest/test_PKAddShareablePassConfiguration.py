@@ -18,7 +18,7 @@ class TestPKAddShareablePassConfiguration(TestCase):
         )
 
         self.assertArgIsBlock(
-            PassKit.PKAddShareablePassConfiguration.configurationForPassMetadata_provisioningPolicyIdentifier_primaryAction_completions_,  # noqa: B950
+            PassKit.PKAddShareablePassConfiguration.configurationForPassMetadata_provisioningPolicyIdentifier_primaryAction_completion_,  # noqa: B950
             3,
             b"v@@",
         )

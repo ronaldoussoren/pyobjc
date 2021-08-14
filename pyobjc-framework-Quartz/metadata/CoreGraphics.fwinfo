@@ -697,9 +697,14 @@
      "c_array_of_variable_length": true
     }
    },
+   "CGConvertColorDataWithFormat": {
+    "args": {
+     "2": { "type_modifier": "o", "c_array_of_variable_length": true },
+     "4": { "type_modifier": "n", "c_array_of_variable_length": true }
+    }
+   },
    "CGDisplayBestModeForParametersAndRefreshRateWithProperty": {
     "args": {
-     "5": {},
      "6": {
       "type_modifier": "o"
      }

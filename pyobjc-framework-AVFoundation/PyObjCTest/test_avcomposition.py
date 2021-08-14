@@ -15,26 +15,33 @@ class TestAVComposition(TestCase):
     @min_os_level("12.0")
     def test_methods12_0(self):
         self.assertArgIsBlock(
-            AVFoundation.AVComposition.loadTrackWithTrackID_completionHandler_, b"v@@"
+            AVFoundation.AVComposition.loadTrackWithTrackID_completionHandler_,
+            1,
+            b"v@@",
         )
         self.assertArgIsBlock(
             AVFoundation.AVComposition.loadTracksWithMediaType_completionHandler_,
+            1,
             b"v@@",
         )
         self.assertArgIsBlock(
             AVFoundation.AVComposition.loadTracksWithMediaCharacteristic_completionHandler_,
+            1,
             b"v@@",
         )
 
         self.assertArgIsBlock(
             AVFoundation.AVMutableComposition.loadTrackWithTrackID_completionHandler_,
+            1,
             b"v@@",
         )
         self.assertArgIsBlock(
             AVFoundation.AVMutableComposition.loadTracksWithMediaType_completionHandler_,
+            1,
             b"v@@",
         )
         self.assertArgIsBlock(
             AVFoundation.AVMutableComposition.loadTracksWithMediaCharacteristic_completionHandler_,
+            1,
             b"v@@",
         )

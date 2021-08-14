@@ -22,7 +22,7 @@ class TestMPSGraphExecutable(TestCase):
             MetalPerformanceShadersGraph.MPSGraphExecutableExecutionDescriptor.completionHandler,
             MPSGraphExecutableCompletionHandler,
         )
-        self.assertResultIsBlock(
+        self.assertArgIsBlock(
             MetalPerformanceShadersGraph.MPSGraphExecutableExecutionDescriptor.setCompletionHandler_,
             0,
             MPSGraphExecutableCompletionHandler,

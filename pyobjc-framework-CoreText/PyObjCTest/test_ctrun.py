@@ -112,8 +112,9 @@ class TestCTRun(TestCase):
             self.assertIsInstance(r[i], CGSize)
 
         v = CoreText.CTRunGetAdvancesPtr(run)
-        self.assertIsInstance(v, objc.varlist)
-        self.assertIsInstance(v[0], CGSize)
+        if v is not objc.NULL:
+            self.assertIsInstance(v, objc.varlist)
+            self.assertIsInstance(v[0], CGSize)
 
     @min_os_level("10.11")
     def testFunctions10_11(self):

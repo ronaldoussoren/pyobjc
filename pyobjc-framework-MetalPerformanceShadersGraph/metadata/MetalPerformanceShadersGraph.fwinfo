@@ -2,7 +2,190 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "classes": {},
+  "classes": {
+   "MPSGraph": {
+    "methods": [
+     {
+      "selector": "depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:",
+      "class_method": false,
+      "args": {
+       "5": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "spaceToDepth2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:",
+      "class_method": false,
+      "args": {
+       "5": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "depthToSpace2DTensor:widthAxisTensor:heightAxisTensor:depthAxisTensor:blockSize:usePixelShuffleOrder:name:",
+      "class_method": false,
+      "args": {
+       "5": { "type_override": "Z" }
+      }
+     },
+     {
+      "selector": "controlDependencyWithOperations:dependentBlock:name:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" }
+         },
+         "retval": { "type": "@" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "ifWithPredicateTensor:thenBlock:elseBlock:name:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" }
+         },
+         "retval": { "type": "@" }
+        }
+       },
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" }
+         },
+         "retval": { "type": "@" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "whileWithInitialInputs:before:after:name:",
+      "class_method": false,
+      "args": {
+       "1": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "@" }
+        }
+       },
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" }
+         },
+         "retval": { "type": "@" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "forLoopWithLowerBound:upperBound:step:initialBodyArguments:body:name:",
+      "class_method": false,
+      "args": {
+       "4": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "@" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "forLoopWithNumberOfIterations:initialBodyArguments:body:name:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "@" }
+        }
+       }
+      }
+     }
+    ]
+   },
+   "MPSGraphExecutableExecutionDescriptor": {
+    "methods": [
+     {
+      "selector": "completionHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+         "1": { "type": "@" },
+         "2": { "type": "@" }
+        },
+        "retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setCompletionHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     },
+     {
+      "selector": "scheduledHandler",
+      "class_method": false,
+      "retval": {
+       "callable": {
+        "arguments": {
+         "0": { "type": "^v" },
+         "1": { "type": "@" },
+         "2": { "type": "@" }
+        },
+        "retval": { "type": "v" }
+       }
+      }
+     },
+     {
+      "selector": "setScheduledHandler:",
+      "class_method": false,
+      "args": {
+       "0": {
+        "callable": {
+         "arguments": {
+          "0": { "type": "^v" },
+          "1": { "type": "@" },
+          "2": { "type": "@" }
+         },
+         "retval": { "type": "v" }
+        }
+       }
+      }
+     }
+    ]
+   }
+  },
   "formal_protocols": {},
   "functions": {},
   "informal_protocols": {},

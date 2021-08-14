@@ -16,6 +16,12 @@ class TestAVVideoCompositingHelper(AVFoundation.NSObject):
     def supportsWideColorSourceFrames(self):
         return 1
 
+    def canConformColorOfSourceFrames(self):
+        return 1
+
+    def supportsHDRSourceFrames(self):
+        return 1
+
 
 class TestAVVideoCompositing(TestCase):
     def testStructs(self):
@@ -39,13 +45,13 @@ class TestAVVideoCompositing(TestCase):
     @min_os_level("11.0")
     def testMethods11_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVVideoCompositionRenderContext.supportsHDRSourceFrames
+            AVFoundation.TestAVVideoCompositingHelper.supportsHDRSourceFrames
         )
 
     @min_os_level("12.0")
     def testMethods12_0(self):
         self.assertResultIsBOOL(
-            AVFoundation.AVVideoCompositionRenderContext.canConformColorOfSourceFrames
+            AVFoundation.TestAVVideoCompositingHelper.canConformColorOfSourceFrames
         )
 
     def testProtocolMethods(self):

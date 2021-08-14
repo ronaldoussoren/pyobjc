@@ -4,4 +4,4 @@ import Vision
 
 class TestVNDetectDocumentSegmentationRequest(TestCase):
     def test_constants(self):
-        self.assertEquals(Vision.VNDetectDocumentSegmentationRequestRevision1, 1)
+        self.assertEqual(Vision.VNDetectDocumentSegmentationRequestRevision1, 1)

@@ -4,8 +4,8 @@ from PyObjCTools.TestSupport import TestCase, min_os_level
 
 class TestStore(TestCase):
     def test_constants(self):
-        self.asssertEqual(OSLog.OSLogStoreSystem, 0)
-        self.asssertEqual(OSLog.OSLogStoreCurrentProcessIdentifier, 1)
+        self.assertEqual(OSLog.OSLogStoreSystem, 0)
+        self.assertEqual(OSLog.OSLogStoreCurrentProcessIdentifier, 1)
 
     @min_os_level("10.15")
     def test_methods10_15(self):

@@ -66,6 +66,16 @@
    "kCMFormatDescriptionExtension_AlternativeTransferCharacteristics": { "typestr": "@" }
   },
   "functions": {
+  "CMTimebaseCreateWithSourceClock": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
+  "CMTimebaseCreateWithSourceTimebase": {
+   "args": {
+    "2": { "type_modifier": "o", "already_cfretained": true }
+   }
+  },
   "CMAudioSampleBufferCreateWithPacketDescriptionsAndMakeDataReadyHandler": {
    "args": {
     "6": { "type_modifier": "n", "c_array_length_in_arg": 5 },

@@ -19,6 +19,11 @@ setup(
     packages=["CoreMIDI"],
     ext_modules=[
         Extension(
+            "CoreMIDI._inlines",
+            ["Modules/_CoreMIDI_inlines.m"],
+            extra_link_args=["-framework", "CoreMIDI"],
+        ),
+        Extension(
             "CoreMIDI._CoreMIDI",
             ["Modules/_CoreMIDI.m"],
             extra_link_args=["-framework", "CoreMIDI"],
@@ -28,7 +33,7 @@ setup(
                 for fn in os.listdir("Modules")
                 if fn.startswith("_CoreMIDI")
             ],
-        )
+        ),
     ],
     version=VERSION,
     install_requires=["pyobjc-core>=" + VERSION, "pyobjc-framework-Cocoa>=" + VERSION],

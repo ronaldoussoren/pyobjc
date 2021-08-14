@@ -1,12 +1,20 @@
 import objc
-from PyObjCTools.TestSupport import TestCase, os_release
+import platform
+from PyObjCTools.TestSupport import TestCase
 
 
 class TestConstants(TestCase):
     def test_version_current(self):
         self.assertIsInstance(objc.MAC_OS_X_VERSION_CURRENT, int)
 
-        v = os_release().split(".")[:2]
+        # Use platform.mac_ver() to calculate the expected value,
+        # that matches the version seen by ObjC code. The test
+        # function os_release() returns the actual system version.
+        # The two will be different when running on macOS 11 or later
+        # with a binary compiled using the 10.15 SDK (or earlier).
+
+        # v = os_release().split(".")[:2]
+        v = platform.mac_ver()[0].split(".")[:2]
         v = "MAC_OS_X_VERSION_%s_%s" % tuple(v)
 
         self.assertGreaterEqual(objc.MAC_OS_X_VERSION_CURRENT, getattr(objc, v))

@@ -7,7 +7,7 @@ class MLCTypes(TestCase):
     def test_constants(self):
         self.assertEqual(MLCompute.MLCDataTypeInvalid, 0)
         self.assertEqual(MLCompute.MLCDataTypeFloat32, 1)
-        self.assertEqual(MLCompute.MLCDataTypeFloat16, 2)
+        self.assertEqual(MLCompute.MLCDataTypeFloat16, 3)
         self.assertEqual(MLCompute.MLCDataTypeBoolean, 4)
         self.assertEqual(MLCompute.MLCDataTypeInt64, 5)
         self.assertEqual(MLCompute.MLCDataTypeInt32, 7)

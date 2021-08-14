@@ -10,14 +10,14 @@ import sys
 import Foundation
 import objc
 from CoreMIDI import _metadata
-from CoreMIDI import _CoreMIDI
+from CoreMIDI import _CoreMIDI, _inlines
 
 sys.modules["CoreMIDI"] = mod = objc.ObjCLazyModule(
     "CoreMIDI",
     "com.apple.audio.midi.CoreMIDI",
     "/System/Library/Frameworks/CoreMIDI.framework",
     _metadata.__dict__,
-    None,
+    _inlines._inline_list_,
     {
         "__doc__": __doc__,
         "objc": objc,

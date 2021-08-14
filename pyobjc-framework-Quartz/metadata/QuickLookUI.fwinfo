@@ -20,6 +20,15 @@
    "NSObject": {
     "methods": [
      {
+      "selector": "previewPanel:transitionImageForPreviewItem:contentRect:",
+      "class_method": false,
+      "args": {
+       "2": {
+        "type_modifier": "n"
+       }
+      }
+     },
+     {
       "selector": "preparePreviewOfFileAtURL:completionHandler:",
       "class_method": false,
       "args": {

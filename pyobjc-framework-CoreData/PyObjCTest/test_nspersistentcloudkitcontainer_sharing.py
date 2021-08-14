@@ -11,13 +11,13 @@ class TestNSPersistentCloudKitContainer_Sharing(TestCase):
         )
 
         self.assertArgIsBlock(
-            CoreData.NSPersistentCloudKitContainer.purgeObjectsAndRecordsInZoneWithID_intoPersistentStore_completion_,
+            CoreData.NSPersistentCloudKitContainer.purgeObjectsAndRecordsInZoneWithID_inPersistentStore_completion_,
             2,
             b"v@@",
         )
 
         self.assertArgIsBlock(
-            CoreData.NSPersistentCloudKitContainer.persistUpdatedShare_intoPersistentStore_completion_,
+            CoreData.NSPersistentCloudKitContainer.persistUpdatedShare_inPersistentStore_completion_,
             2,
             b"v@@",
         )

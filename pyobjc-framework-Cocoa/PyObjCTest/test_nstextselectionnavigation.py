@@ -3,7 +3,7 @@ from PyObjCTools.TestSupport import TestCase, min_os_level, min_sdk_level
 import objc
 
 
-class TestNSTextSelectionNavigationHelper(TestCase):
+class TestNSTextSelectionNavigationHelper(AppKit.NSObject):
     def locationFromLocation_withOffset_(self, a, b):
         return 1
 
@@ -84,7 +84,7 @@ class TestNSTextSelectionNavigation(TestCase):
         self.assertArgHasType(
             TestNSTextSelectionNavigationHelper.lineFragmentRangeForPoint_inContainerAtLocation_,
             0,
-            objc._C_DBL,
+            AppKit.NSPoint.__typestr__,
         )
 
         self.assertArgIsBOOL(
@@ -95,11 +95,6 @@ class TestNSTextSelectionNavigation(TestCase):
             TestNSTextSelectionNavigationHelper.enumerateContainerBoundariesFromLocation_reverse_usingBlock_,
             2,
             b"v@o^Z",
-        )
-
-        self.assertResultHasType(
-            TestNSTextSelectionNavigationHelper.textWritingModeAtLocation_,
-            objc._C_NSInteger,
         )
 
         self.assertArgIsBlock(
@@ -141,8 +136,12 @@ class TestNSTextSelectionNavigation(TestCase):
         )
 
         self.assertArgIsBOOL(
-            AppKit.NSTextSelectionNavigation.destinationSelectionForTextSelection_direction_destination_extending_,
+            AppKit.NSTextSelectionNavigation.destinationSelectionForTextSelection_direction_destination_extending_confined_,
             3,
+        )
+        self.assertArgIsBOOL(
+            AppKit.NSTextSelectionNavigation.destinationSelectionForTextSelection_direction_destination_extending_confined_,
+            4,
         )
         self.assertArgIsBOOL(
             AppKit.NSTextSelectionNavigation.textSelectionsInteractingAtPoint_inContainerAtLocation_anchors_modifiers_selecting_bounds_,  # noqa: B950

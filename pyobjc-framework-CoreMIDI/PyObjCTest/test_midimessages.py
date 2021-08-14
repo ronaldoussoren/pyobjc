@@ -68,9 +68,9 @@ class TestMIDIMessages(TestCase):
         self.assertEqual(CoreMIDI.kMIDISysExStatusMixedDataSetHeader, 0x8)
         self.assertEqual(CoreMIDI.kMIDISysExStatusMixedDataSetPayload, 0x9)
 
-        self.asertEqual(CoreMIDI.kMIDIUtilityStatusNOOP, 0x0)
-        self.asertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionClock, 0x1)
-        self.asertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionTimestamp, 0x2)
+        self.assertEqual(CoreMIDI.kMIDIUtilityStatusNOOP, 0x0)
+        self.assertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionClock, 0x1)
+        self.assertEqual(CoreMIDI.kMIDIUtilityStatusJitterReductionTimestamp, 0x2)
 
         self.assertEqual(CoreMIDI.kMIDINoteAttributeNone, 0x0)
         self.assertEqual(CoreMIDI.kMIDINoteAttributeManufacturerSpecific, 0x1)

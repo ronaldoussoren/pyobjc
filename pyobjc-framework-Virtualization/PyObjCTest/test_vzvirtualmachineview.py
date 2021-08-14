@@ -6,9 +6,9 @@ import Virtualization
 class TestVZVirtualMachineView(TestCase):
     def test_methods(self):
         self.assertResultIsBOOL(
-            Virtualization.VZVirtualMachineView.capturesSystem,
+            Virtualization.VZVirtualMachineView.capturesSystemKeys,
         )
         self.assertArgIsBOOL(
-            Virtualization.VZVirtualMachineView.setCapturesSystem_,
-            1,
+            Virtualization.VZVirtualMachineView.setCapturesSystemKeys_,
+            0,
         )

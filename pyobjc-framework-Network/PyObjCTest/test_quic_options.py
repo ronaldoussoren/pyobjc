@@ -36,8 +36,6 @@ class TestQUICOptions(TestCase):
         Network.nw_quic_set_initial_max_stream_data_unidirectional
         Network.nw_protocol_metadata_is_quic
         self.assertResultIsRetained(Network.nw_quic_copy_sec_protocol_metadata)
-        Network.nw_quic_get_stream_id
-        Network.nw_quic_set_stream_id
         Network.nw_quic_get_stream_application_error
         Network.nw_quic_set_stream_application_error
         Network.nw_quic_get_local_max_streams_bidirectional
@@ -45,8 +43,8 @@ class TestQUICOptions(TestCase):
         Network.nw_quic_get_local_max_streams_unidirectional
         Network.nw_quic_set_local_max_streams_unidirectional
         Network.nw_quic_get_remote_max_streams_bidirectional
-        Network.nw_quic_set_remote_max_streams_bidirectional
         Network.nw_quic_get_application_error
+        Network.nw_quic_get_stream_id
         self.assertResultIsNullTerminated(Network.nw_quic_get_application_error_reason)
         self.assertArgIsNullTerminated(Network.nw_quic_set_application_error, 2)
         Network.nw_quic_get_keepalive_interval

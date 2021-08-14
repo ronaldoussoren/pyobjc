@@ -20,7 +20,7 @@ class TestAVAudioBuffer(TestCase):
         # No special handling is needed for the audiobufferlist, this type has
         # special handling in the CoreAudio bindings
         self.assertArgIsBlock(
-            AVFoundation.AVAudioBuffer.initWithPCMFormat_bufferListNoCopy_deallocator_,
+            AVFoundation.AVAudioPCMBuffer.initWithPCMFormat_bufferListNoCopy_deallocator_,
             2,
             b"v^{AudioBufferList=I[1{AudioBuffer=II^v}]}",
         )

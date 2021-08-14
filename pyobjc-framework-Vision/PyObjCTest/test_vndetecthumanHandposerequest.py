@@ -1,11 +1,11 @@
-from PyObjCTools.TestSupport import TestCase, min_os_level
+from PyObjCTools.TestSupport import TestCase, os_level_between
 import Vision
 
 
 class TestVNDetectHumanHandPoseRequest(TestCase):
-    @min_os_level("11.0")
+    @os_level_between("11.0", "11.5")
     def test_constants11_0(self):
-        self.assertIsInstance(Vision.VNHandLandmarkKeyThumbCMC, str)
+        # self.assertIsInstance(Vision.VNHandLandmarkKeyThumbCMC, str)
         self.assertIsInstance(Vision.VNHandLandmarkKeyThumbMP, str)
         self.assertIsInstance(Vision.VNHandLandmarkKeyThumbIP, str)
         self.assertIsInstance(Vision.VNHandLandmarkKeyThumbTIP, str)
@@ -72,7 +72,7 @@ class TestVNDetectHumanHandPoseRequest(TestCase):
 
         self.assertEqual(Vision.VNDetectHumanHandPoseRequestRevision1, 1)
 
-    @min_os_level("11.0")
+    @os_level_between("11.0", "11.5")
     def test_methods11_0(self):
         self.assertArgIsOut(
             Vision.VNDetectHumanHandPoseRequest.supportedRecognizedPointKeysForRevision_error_,

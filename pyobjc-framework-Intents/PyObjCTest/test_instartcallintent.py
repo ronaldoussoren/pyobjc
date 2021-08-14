@@ -10,16 +10,16 @@ class TestINStartCallIntentHelper(Intents.NSObject):
     def confirmStartCall_completion_(self, a, b):
         pass
 
-    def resolveCallRecordToCallBackForStartCall_withComletion_(self, a, b):
+    def resolveCallRecordToCallBackForStartCall_withCompletion_(self, a, b):
         pass
 
-    def resolveDestinationTypeForStartCall_withComletion_(self, a, b):
+    def resolveDestinationTypeForStartCall_withCompletion_(self, a, b):
         pass
 
-    def resolveContactsForStartCall_withComletion_(self, a, b):
+    def resolveContactsForStartCall_withCompletion_(self, a, b):
         pass
 
-    def resolveCallCapabilityForStartCall_withComletion_(self, a, b):
+    def resolveCallCapabilityForStartCall_withCompletion_(self, a, b):
         pass
 
 
@@ -36,22 +36,22 @@ class TestINStartCallIntent(TestCase):
             TestINStartCallIntentHelper.confirmStartCall_completion_, 1, b"v@"
         )
         self.assertArgIsBlock(
-            TestINStartCallIntentHelper.resolveCallRecordToCallBackForStartCall_withComletion_,
+            TestINStartCallIntentHelper.resolveCallRecordToCallBackForStartCall_withCompletion_,
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            TestINStartCallIntentHelper.resolveDestinationTypeForStartCall_withComletion_,
+            TestINStartCallIntentHelper.resolveDestinationTypeForStartCall_withCompletion_,
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            TestINStartCallIntentHelper.resolveContactsForStartCall_withComletion_,
+            TestINStartCallIntentHelper.resolveContactsForStartCall_withCompletion_,
             1,
             b"v@",
         )
         self.assertArgIsBlock(
-            TestINStartCallIntentHelper.resolveCallCapabilityForStartCall_withComletion_,
+            TestINStartCallIntentHelper.resolveCallCapabilityForStartCall_withCompletion_,
             1,
             b"v@",
         )

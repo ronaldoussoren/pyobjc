@@ -2,7 +2,7 @@
 // for information on how to update this file.
 {
  "definitions": {
-  "enums": {
+  "enum": {
    "CXCallDirectoryPhoneNumberMax": { "value": 9223372036854775806 }
   },
   "classes": {},

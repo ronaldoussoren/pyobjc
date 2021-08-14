@@ -31,7 +31,7 @@ class TestMTLRenderPipelineHelper(Metal.NSObject):
     def newIntersectionFunctionTableWithDescriptor_stage_(self, a, b):
         return 1
 
-    def newRenderPipelineStateWithAdditionalBinaryFunctions_stage_(self, a, b):
+    def newRenderPipelineStateWithAdditionalBinaryFunctions_error_(self, a, b):
         return 1
 
 
@@ -118,9 +118,9 @@ class TestMTLRenderPipeline(TestCase):
             objc._C_NSUInteger,
         )
         self.assertArgHasType(
-            TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_stage_,
+            TestMTLRenderPipelineHelper.newRenderPipelineStateWithAdditionalBinaryFunctions_error_,
             1,
-            objc._C_NSUInteger,
+            b"o^@",
         )
 
     @min_os_level("10.11")

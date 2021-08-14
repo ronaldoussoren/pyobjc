@@ -12,7 +12,7 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper(
     def pictureInPictureControllerTimeRangeForPlayback_(self, a):
         return 1
 
-    def pictureInPictureControllerIsPlaybackPaused_(self):
+    def pictureInPictureControllerIsPlaybackPaused_(self, a):
         return 1
 
     def pictureInPictureController_didTransitionToRenderSize_(self, a, b):
@@ -20,6 +20,9 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper(
 
     def pictureInPictureControllerShouldProhibitBackgroundAudioPlayback_(self, a):
         return 1
+
+    def pictureInPictureController_skipInterval_completionHandler_(self, a, b, c):
+        pass
 
 
 class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCase):
@@ -36,8 +39,8 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCas
             1,
         )
         self.assertResultHasType(
-            TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureControllerTimeRangeForPlayback,
-            AVKit.CMTimeRange.__typestr__,
+            TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureControllerTimeRangeForPlayback_,  # noqa: B950
+            b"{_CMTimeRange={_CMTime=qiIq}{_CMTime=qiIq}}",
         )
         self.assertResultIsBOOL(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureControllerIsPlaybackPaused_
@@ -45,15 +48,15 @@ class TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupport(TestCas
         self.assertArgHasType(
             TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_didTransitionToRenderSize_,  # noqa: B950
             1,
-            AVKit.CMVideoDimensions.__typestr__,
+            b"{_CMVideoDimensions=ii}",
         )
         self.assertArgHasType(
-            TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_skipByInterval_completionHandler_,  # noqa: B950
+            TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_skipInterval_completionHandler_,  # noqa: B950
             1,
-            AVKit.CMTime.__typestr__,
+            b"{_CMTime=qiIq}",
         )
         self.assertArgIsBlock(
-            TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_skipByInterval_completionHandler_,  # noqa: B950
+            TestAVPictureInPictureController_AVSampleBufferDisplayLayerSupportHelper.pictureInPictureController_skipInterval_completionHandler_,  # noqa: B950
             2,
             b"v",
         )

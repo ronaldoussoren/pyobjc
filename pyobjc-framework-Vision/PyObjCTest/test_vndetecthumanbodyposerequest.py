@@ -79,22 +79,6 @@ class TestVNDetectHumanBodyPoseRequest(TestCase):
     @min_os_level("11.0")
     def test_methods11_0(self):
         self.assertArgIsOut(
-            Vision.VNDetectHumanBodyPoseRequest.supportedRecognizedPointKeysForRevision_error_,
-            1,
-        )
-        self.assertArgIsOut(
-            Vision.VNDetectHumanBodyPoseRequest.supportedRecognizedPointGroupKeysForRevision_error_,
-            1,
-        )
-        self.assertArgIsOut(
-            Vision.VNDetectHumanBodyPoseRequest.supportedIdentifiedPointKeysForRevision_error_,
-            1,
-        )
-        self.assertArgIsOut(
-            Vision.VNDetectHumanBodyPoseRequest.supportedIdentifiedPointGroupKeysForRevision_error_,
-            1,
-        )
-        self.assertArgIsOut(
             Vision.VNDetectHumanBodyPoseRequest.supportedJointNamesForRevision_error_, 1
         )
         self.assertArgIsOut(

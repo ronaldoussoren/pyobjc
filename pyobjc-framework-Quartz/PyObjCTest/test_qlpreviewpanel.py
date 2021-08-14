@@ -42,7 +42,7 @@ class TestQLPreviewPanel(TestCase):
         self.assertArgHasType(
             TestQLPreviewPanelHelper.previewPanel_transitionImageForPreviewItem_contentRect_,
             2,
-            objc._C_PTR + NSRect.__typestr__,
+            objc._C_IN + objc._C_PTR + NSRect.__typestr__,
         )
 
     @min_os_level("10.6")

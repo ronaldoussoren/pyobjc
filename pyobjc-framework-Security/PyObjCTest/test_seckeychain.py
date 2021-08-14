@@ -4,7 +4,9 @@ import Security
 from PyObjCTools.TestSupport import TestCase, fourcc
 import objc
 
-SecKeychainCallback = b"iIn^" + Security.SecKeychainCallbackInfo.__typestr__ + b"^v"
+SecKeychainCallback = (
+    b"iI^{SecKeychainCallbackInfo=I^{__SecKeychainItem=}^{__SecKeychain=}i}^v"
+)
 
 
 class TestSecKeychain(TestCase):

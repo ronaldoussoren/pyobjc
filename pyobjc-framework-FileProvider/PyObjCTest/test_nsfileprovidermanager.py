@@ -123,7 +123,7 @@ class TestNSFileProviderManager(TestCase):
         self.assertArgIsBlock(
             FileProvider.NSFileProviderManager.removeDomain_mode_completionHandler_,  # noqa:  B950
             2,
-            b"v@",
+            b"v@@",
         )
 
     @min_sdk_level("11.3")

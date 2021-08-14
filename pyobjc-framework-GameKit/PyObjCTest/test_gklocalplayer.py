@@ -106,13 +106,6 @@ class TestGKLocalPlayer(TestCase):
         self.assertResultIsBOOL(
             GameKit.GKLocalPlayer.isPresentingFriendRequestViewController
         )
-        self.assertResultIsBOOL(
-            GameKit.GKLocalPlayer.presentFriendRequestCreatorFromViewController_error_
-        )
-        self.assertArgIsOut(
-            GameKit.GKLocalPlayer.presentFriendRequestCreatorFromViewController_error_,
-            1,
-        )
 
     def testProtocols(self):
         objc.protocolNamed("GKLocalPlayerListener")

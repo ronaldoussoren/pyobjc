@@ -15,5 +15,5 @@ class TestINFocusStatusCenter(TestCase):
         self.assertArgIsBlock(
             Intents.INFocusStatusCenter.requestAuthorizationWithCompletionHandler_,
             0,
-            b"v" + objc._C_NSUInteger,
+            b"v" + objc._C_NSInteger,
         )

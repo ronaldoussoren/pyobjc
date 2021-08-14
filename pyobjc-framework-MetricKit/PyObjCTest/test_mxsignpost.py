@@ -3,15 +3,11 @@ import MetricKit
 
 
 class TestMXSignpost(TestCase):
-    def test_functions(self):
-        # XXX: Should mock _MXSignpostEventEmit_guaranteed_args
-        MetricKit.MXSignpostEventEmit
+    def test_functions_macros(self):
+        # Functin macros using _MXSignpostEventEmit_guaranteed_args, which
+        # is not available on macOS.
 
-        # XXX: Should mock _MXSignpostIntervalBegin_guaranteed_args
-        MetricKit.MXSignpostIntervalBegin
-
-        # XXX: Should mock _MXSignpostAnimationIntervalBegin_guaranteed_args
-        MetricKit.MXSignpostAnimationIntervalBegin
-
-        # XXX: Should mock _MXSignpostIntervalEnd_guaranteed_args
-        MetricKit.MXSignpostIntervalEnd
+        self.assertNotHasAttr(MetricKit, "MXSignpostEventEmit")
+        self.assertNotHasAttr(MetricKit, "MXSignpostIntervalBegin")
+        self.assertNotHasAttr(MetricKit, "MXSignpostAnimationIntervalBegin")
+        self.assertNotHasAttr(MetricKit, "MXSignpostIntervalEnd")

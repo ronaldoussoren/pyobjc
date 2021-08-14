@@ -131,5 +131,9 @@ class TestMTLCommandBuffer(TestCase):
 
     @min_os_level("11.0")
     def test_methods11_0(self):
-        self.assertResultIsBOOL(Metal.MTLCommandBufferDescriptor.retainedReferences)
-        self.assertArgIsBOOL(Metal.MTLCommandBufferDescriptor.setRetainedReferences_, 0)
+        self.assertResultIsBOOL(
+            Metal.MTLCommandBufferDescriptor.new().retainedReferences
+        )
+        self.assertArgIsBOOL(
+            Metal.MTLCommandBufferDescriptor.new().setRetainedReferences_, 0
+        )

@@ -79,7 +79,6 @@ class TestNSTextAttachment(TestCase):
         self.assertResultIsBOOL(AppKit.NSTextAttachment.allowsTextAttachmentView)
         self.assertArgIsBOOL(AppKit.NSTextAttachment.setAllowsTextAttachmentView_, 0)
         self.assertResultIsBOOL(AppKit.NSTextAttachment.usesTextAttachmentView)
-        self.assertArgIsBOOL(AppKit.NSTextAttachment.setUsesTextAttachmentView_, 0)
 
         self.assertResultIsBOOL(
             AppKit.NSTextAttachmentViewProvider.tracksTextAttachmentViewBounds

@@ -9,20 +9,17 @@ class TestAVCaption(TestCase):
         self.assertIsInstance(v.units, int)
 
         v = AVFoundation.AVCaptionPoint()
-        self.assertIsInstance(v.x, AVFoundation.AVCaptionDimension())
-        self.assertIsInstance(v.y, AVFoundation.AVCaptionDimension())
+        self.assertIsInstance(v.x, AVFoundation.AVCaptionDimension)
+        self.assertIsInstance(v.y, AVFoundation.AVCaptionDimension)
 
         v = AVFoundation.AVCaptionSize()
-        self.assertIsInstance(v.width, AVFoundation.AVCaptionDimension())
-        self.assertIsInstance(v.height, AVFoundation.AVCaptionDimension())
+        self.assertIsInstance(v.width, AVFoundation.AVCaptionDimension)
+        self.assertIsInstance(v.height, AVFoundation.AVCaptionDimension)
 
     def test_constants(self):
         self.assertEqual(AVFoundation.AVCaptionUnitsTypeUnspecified, 0)
         self.assertEqual(AVFoundation.AVCaptionUnitsTypeCells, 1)
         self.assertEqual(AVFoundation.AVCaptionUnitsTypePercent, 2)
-
-        self.assertEqual(AVFoundation.AVCaptionUnitTypeCell, 0)
-        self.assertEqual(AVFoundation.AVCaptionUnitTypeRelativeToEnclosingRegion, 1)
 
         self.assertEqual(AVFoundation.AVCaptionRegionDisplayAlignmentBefore, 0)
         self.assertEqual(AVFoundation.AVCaptionRegionDisplayAlignmentCenter, 1)

@@ -288,5 +288,11 @@ static void __attribute__((__used__)) use_protocols(void)
 #if PyObjC_BUILD_RELEASE >= 1200
     p = PyObjC_IdToPython(@protocol(NSTextElementProvider));
     Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTextContentManagerDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTextContentStorageDelegate));
+    Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(NSTextLayoutManagerDelegate));
+    Py_XDECREF(p);
 #endif
 }

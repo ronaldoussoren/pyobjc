@@ -58,7 +58,7 @@ class TestNSFileProviderTesting(TestCase):
             TestNSFileProviderTestingHelper.changedFields, objc._C_NSUInteger
         )
         self.assertResultHasType(
-            TestNSFileProviderTestingHelper.type, objc._C_NSUInteger
+            TestNSFileProviderTestingHelper.type, objc._C_NSInteger
         )
 
     @min_os_level("11.3")

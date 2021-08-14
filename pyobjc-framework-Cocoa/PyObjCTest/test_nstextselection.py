@@ -2,11 +2,6 @@ import AppKit
 from PyObjCTools.TestSupport import TestCase, min_os_level
 
 
-class TestNSTextRangeHelper(AppKit.NSObject):
-    def compare_(self, a):
-        pass
-
-
 class TestNSTextSelection(TestCase):
     def test_constants(self):
         self.assertEqual(AppKit.NSTextSelectionGranularityCharacter, 0)

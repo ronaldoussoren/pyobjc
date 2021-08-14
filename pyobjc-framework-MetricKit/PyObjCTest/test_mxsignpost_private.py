@@ -8,12 +8,15 @@ class TestMXSignpost_Private(TestCase):
         self.assertEqual(MetricKit._METRICS_SIGNPOST_TYPE_TOKEN, b"signpost:metrics")
         self.assertEqual(
             MetricKit._MXSIGNPOST_METRICS_SNAPSHOT_FORMAT,
-            "\n%{public, " + MetricKit._METRICS_SIGNPOST_TYPE_TOKEN + "}@",
+            b"\n%{public, " + MetricKit._METRICS_SIGNPOST_TYPE_TOKEN + b"}@",
         )
 
-    def test_functions(self):
-        # Mock os_signpost...
-        MetricKit._MXSignpostEventEmit_guaranteed_args
-        MetricKit._MXSignpostIntervalBegin_guaranteed_args
-        MetricKit._MXSignpostAnimationIntervalBegin_guaranteed_args
-        MetricKit._MXSignpostIntervalEnd_guaranteed_args
+    def test_function_macros(self):
+        # These function macros use _MXSignpostMetricsSnapshot() which
+        # is not available on macOS, hence these should not be exposed:
+        self.assertNotHasAttr(MetricKit, "_MXSignpostEventEmit_guaranteed_args")
+        self.assertNotHasAttr(MetricKit, "_MXSignpostIntervalBegin_guaranteed_args")
+        self.assertNotHasAttr(
+            MetricKit, "_MXSignpostAnimationIntervalBegin_guaranteed_args"
+        )
+        self.assertNotHasAttr(MetricKit, "_MXSignpostIntervalEnd_guaranteed_args")

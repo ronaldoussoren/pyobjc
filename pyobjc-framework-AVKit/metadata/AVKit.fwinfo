@@ -13,6 +13,22 @@
     "NSObject": {
      "methods": [
       {
+       "selector": "pictureInPictureController:skipInterval:completionHandler:",
+       "class_method": false,
+       "args": {
+        "1": { "type_override": "{_CMTime=qiIq}" },
+	"2": {
+         "type_override": "@?",
+	 "callable": {
+ 	  "arguments": {
+      	   "0": { "typestr": "^v" }
+	  },
+	  "retval": { "typestr": "v" }
+	 }
+        }
+       }
+      },
+      {
        "class_method": false,
        "selector": "playerView:restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:",
        "args": {
