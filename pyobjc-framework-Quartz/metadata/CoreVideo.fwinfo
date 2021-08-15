@@ -30,7 +30,7 @@
    "COREVIDEO_SUPPORTS_IOSURFACE_PREFETCH": { "ignore": true }
   },
   "enum": {
-   "CVPixelFormatType_422YpCbCr16BiPlanarVideoRange": { "value": 1937125938 },
+   "kCVPixelFormatType_422YpCbCr16BiPlanarVideoRange": { "value": 1937125938 },
    "kCVPixelFormatType_444YpCbCr16BiPlanarVideoRange": { "value": 1937126452 },
    "kCVPixelFormatType_444YpCbCr16VideoRange_16A_TriPlanar": { "value": 1932812659 },
    "kCVPixelFormatType_64RGBALE": { "value": 1815491698 },

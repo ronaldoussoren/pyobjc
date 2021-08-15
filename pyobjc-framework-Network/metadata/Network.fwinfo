@@ -18,6 +18,15 @@
   },
   "formal_protocols": {},
   "functions": {
+   "nw_group_descriptor_create_multiplex": {
+    "retval": {
+     "already_retained": true,
+     "typestr": "@"
+    },
+    "args": {
+     "0": { "typestr": "@" }
+    }
+   },
    "nw_quic_set_application_error": {
     "args": {
      "2": {
