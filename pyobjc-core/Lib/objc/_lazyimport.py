@@ -326,8 +326,11 @@ class ObjCLazyModule(ModuleType):
             except AttributeError:
                 all_names.update(dir(p))
 
-        # Add all class names
-        all_names.update(cls.__name__ for cls in getClassList())
+        # Add all class names, ignoring names with a dot because
+        # those are not valid attribute names (and in general are private)
+        all_names.update(
+            cls.__name__ for cls in getClassList() if "." not in cls.__name__
+        )
 
         return [v for v in all_names if not v.startswith("_")]
 
