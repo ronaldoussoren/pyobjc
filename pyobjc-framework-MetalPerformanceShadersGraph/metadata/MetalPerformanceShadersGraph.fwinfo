@@ -6,6 +6,14 @@
    "MPSGraph": {
     "methods": [
      {
+      "selector": "resizeTensor:sizeTensor:mode:centerResult:alignCorners:layout:name:",
+      "class_method": false,
+      "args": {
+       "3": { "type_override": "Z" },
+       "4": { "type_override": "Z" }
+      }
+     },
+     {
       "selector": "depthToSpace2DTensor:widthAxis:heightAxis:depthAxis:blockSize:usePixelShuffleOrder:name:",
       "class_method": false,
       "args": {

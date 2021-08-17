@@ -88,7 +88,7 @@ class TestQueueAPI(TestCase):
         self.assertArgHasType(
             libdispatch.dispatch_apply_f, 2, objc._C_PTR + objc._C_VOID
         )
-        self.assertArgIsFunction(libdispatch.dispatch_apply_f, 3, b"v^vL", 1)
+        self.assertArgIsFunction(libdispatch.dispatch_apply_f, 3, b"v^vQ", 1)
 
         self.assertResultHasType(libdispatch.dispatch_get_current_queue, objc._C_ID)
 

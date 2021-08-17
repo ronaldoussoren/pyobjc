@@ -15,6 +15,8 @@ class TestTime(TestCase):
         self.assertEqual(libdispatch.DISPATCH_TIME_NOW, 0)
         self.assertEqual(libdispatch.DISPATCH_TIME_FOREVER, 0xFFFFFFFFFFFFFFFF)
 
+        self.assertEqual(libdispatch.DISPATCH_WALLTIME_NOW, 0xFFFFFFFFFFFFFFFE)
+
     def test_structs(self):
 
         tv = libdispatch.timespec(50, 100)

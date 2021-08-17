@@ -60,6 +60,12 @@ Other changes
   A number of C extensions in the Quartz bindings package were not
   linked to a framework. Those now link to the Quartz framework.
 
+* #378: Fix raising ``ImportError`` when doing ``from ApplicationServices import *``
+
+  The root cause for this were private classes in system frameworks that contain
+  a dot in their name (for example ``Swift.DispatchQueueShim``. Those names are
+  both private and invalid attribute names.
+
 * Creating protocols that contain methods that have a method signature containing
   PyObjC custom type encodings now works (those encodings are translated to
   the corresponding Objective-C encoding.
