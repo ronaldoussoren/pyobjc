@@ -23,8 +23,15 @@ as easily cause a crash when such a signal gets in.
 import os
 import signal
 import traceback
+import warnings
 
 __all__ = ["dumpStackOnFatalSignal", "resetFatalSignals"]
+
+warnings.warn(
+    "PyObjCTools.Signals is deprecated and will be removed in PyObjC 9",
+    DeprecationWarning,
+)
+
 
 originalHandlers = None
 

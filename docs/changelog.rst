@@ -6,6 +6,9 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
+* PyObjC 8 only ships with source archives and "univeral2" binary
+  wheels (Python 3.? and later). There are no longer "x86_64" binary wheels.
+
 Backward incompatible changes
 .............................
 
@@ -22,9 +25,40 @@ Backward incompatible changes
   due to lack of the required runtime API, and that will now result in a crash
   because PyObjC no longer checks for availability of that runtime API.
 
+* #371: Remove manual bindings for a number of old CoreGraphics APIs
+
+  The following functions are no longer available:
+
+  * ``CGDataProviderCreate``
+
+  * ``CGDataProviderCreateDirectAccess``
+
+  These functions were removed as a public API in macOS 10.8, but were still
+  available through PyObjC through old backward compatiblity code. That code has
+  now been removed.
+
+Upcoming incompatible changes
+.............................
+
+* The module :mod:`PyObjCTools.Signals` is deprecated and will be removed
+  in PyObjC 9.
+
 Other changes
 .............
 
+* #374: Use pyupgrade to modernize the code base
+
+  Also added to the pre-commit configuration to ensure I don't regress.
+
+* The *AVFoundation* bindings (in ``pyobjc-framework-AVFoundation``) now have
+  an install dependency on the *CoreAudio* bindings (``pyobjc-framework-CoreAudio``).
+
+  This is needed for a new API introduced in macOS 12.
+
+* #371: Link extensions in the Quartz bindings to the Quartz frameworks
+
+  A number of C extensions in the Quartz bindings package were not
+  linked to a framework. Those now link to the Quartz framework.
 
 * Creating protocols that contain methods that have a method signature containing
   PyObjC custom type encodings now works (those encodings are translated to
@@ -79,35 +113,89 @@ Other changes
   OS release but always uses the actual platform version, even
   when Python was compiled using an old SDK.
 
+* Adjusted PyObjC testcases to check for 11.0 instead of 10.16
+  now that testsupport uses the real platform version.
 
-* Updated framework bindings for Xcode 13 beta 1
-
-  [INCOMPLETE]
+* Updated framework bindings for Xcode 13 beta 5
 
   New:
-  - LocalAuthenticationUIView
+  - AudioVideoBridging (introduced in macOS 10.8)
+  - DataDetection
+  - IntentsUI
+  - LocalAuthenticationEmbeddedUI
+  - MailKit
+  - MetricKit
   - ShazamKit
 
   Updated:
   - iTunesLibrary
+  - Accessibility
+  - AddressBook
+  - AuthenticationServices
+  - AVFAudio
+  - AVFoundation
+  - AVPlayer
   - ClassKit
+  - CloudKit
+  - Contacts
+  - CoreAudioTypes
+  - CoreAudio
+  - CoreBluetooth
+  - CoreData
+  - CoreFoundation
+  - CoreGraphics
+  - CoreHaptics
+  - CoreImage
+  - CoreMedia
+  - CoreMediaIO
+  - CoreMIDI
   - CoreSpotlight
+  - CoreVideo
   - CoreWLAN
+  - EventKit
+  - FileProvider
+  - Foundation
+  - GameController
+  - GameKit
   - ImageIO
   - IOSurface
   - JavaScriptCore
   - LinkPresentation
+  - MetalPerformanceShaders
+  - MetalPerformanceShadersGraph
+  - MLCompute
   - ModelIO
+  - OpenDirectory
   - OSLog
+  - PassKit
+  - PDFKit
+  - Photos
   - PhotosUI
+  - QuickLookUI
   - ReplayKit
+  - SceneKit
+  - SoundAnalysis
+  - StoreKit
+  - SystemExtensions
   - UniformTypeIdentifiers
+  - UserNotifications
+  - VideoToolbox
+  - Virtualization
+  - Vision
+  - WebKit
 
   Unchanged metadata:
   - Accounts (The entire framework is deprecated)
+  - ApplicationServices
+  - AutomaticAssessmentConfiguration
   - CallKit
   - Carbon
+  - CFNetwork
+  - CoreLocation
   - CoreML
+  - CoreMotion
+  - CoreServices
+  - CoreText
   - CryptoTokenKit
   - DeviceCheck
   - FileProviderUI
@@ -116,12 +204,20 @@ Other changes
   - LocalAuthentication
   - MapKit
   - MediaAccessibility
+  - MediaPlayer
+  - NetworkExtension
+  - PencilKit
+  - QuickLook
+  - Quartz
+  - QuartzCore
   - QuickLookThumbnailing
   - SafariServices
   - ServiceManagement
   - Speech
   - SpriteKit
   - SyncServices
+  - SystemConfiguration
+  - UserNotificationsUI
   - VideoSubscriberAccount
 
 
