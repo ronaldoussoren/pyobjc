@@ -11,7 +11,8 @@ runtime.
 If you do try to use a protocol defined in Python with ``NSXPCInterface``
 you'll get an error similar to this:
 
-::
+.. sourcecode:: none
+
        NSInvalidArgumentException - NSXPCInterface: Unable to get extended method signature from Protocol data (MyProtocol / runCommand:withReply:). Use of clang is required for NSXPCInterface.
 
 
