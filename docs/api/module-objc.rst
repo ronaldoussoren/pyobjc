@@ -945,6 +945,13 @@ Types
       * 64-bit programs starting from macOS 10.7, but only when PyObjC was build with
         the 10.7 SDK (or later)
 
+   .. note::
+
+      The protocols created by PyObjC are not compatible with NSXPCInterface because that
+      class needs information ("extended method signature") that cannot be registered through
+      the public API for the Objective-C runtime. See :doc:`../notes/using-nsxpcinterface` for
+      more information.
+
    .. data:: __name__
 
       Read-only property with the name of the protocol

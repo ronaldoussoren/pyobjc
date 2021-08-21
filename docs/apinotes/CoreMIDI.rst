@@ -25,3 +25,7 @@ The following functions are not available from Python:
 
 * ``MIDIEndpointSetRefCons``
 * ``MIDIEndpointGetRefCons``
+
+Type ``MIDIUniversalMessage`` is not available from Python at this time
+because it contains a C union. Because of that ``MIDIUniversalMessage``
+is not available either.

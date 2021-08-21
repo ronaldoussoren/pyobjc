@@ -53,6 +53,7 @@ General documentation
    metadata/index
    tutorials/index
    notes/quartz-vs-coregraphics
+   notes/using-nsxpcinterface
    examples/index
    notes/framework-wrappers.rst
    notes/codesigning.rst
