@@ -52,9 +52,15 @@ class oc_egg_info(egg_info.egg_info):
         egg_info.egg_info.run(self)
 
         path = os.path.join(self.egg_info, "PKG-INFO")
-        with open(path, "a+") as fp:
+        with open(path) as fp:
+            contents = fp.read()
+
+        first, middle, last = contents.partition("\n\n")
+
+        with open(path, "w") as fp:
+            fp.write(first)
             fp.write(
-                "Project-URL: Documentation, "
+                "\nProject-URL: Documentation, "
                 "https://%s.readthedocs.io/en/latest/\n" % (REPO_NAME,)
             )
             fp.write(
@@ -63,8 +69,10 @@ class oc_egg_info(egg_info.egg_info):
             )
             fp.write(
                 "Project-URL: Repository, "
-                "https://github.com/ronaldoussoren/%s\n" % (REPO_NAME,)
+                "https://github.com/ronaldoussoren/%s" % (REPO_NAME,)
             )
+            fp.write(middle)
+            fp.write(last)
 
 
 class oc_test(test.test):
