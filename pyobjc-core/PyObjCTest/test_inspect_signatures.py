@@ -49,6 +49,7 @@ class TestInspectSignatures(TestCase):
                     "__abstractmethods__",
                     "__prepare__",
                     "__init_subclass__",
+                    "__annotations__",
                 ):
                     continue
                 obj = getattr(cls, nm)

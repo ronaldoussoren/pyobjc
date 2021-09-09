@@ -16,5 +16,5 @@ class TestMEMessageActionHandler(TestCase):
         self.assertArgIsBlock(
             TestMEMessageActionHandlerHelper.decideActionForMessage_completionHandler_,
             1,
-            "v@",
+            b"v@",
         )

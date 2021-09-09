@@ -4,7 +4,7 @@ import ShazamKit
 
 class TestSHCustomCatalog(TestCase):
     def test_classes(self):
-        ShazamKit.SHCustomatalog
+        ShazamKit.SHCustomCatalog
 
     def test_methods(self):
         self.assertResultIsBOOL(

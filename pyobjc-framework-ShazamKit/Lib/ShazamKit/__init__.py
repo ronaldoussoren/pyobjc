@@ -9,7 +9,7 @@ import sys
 
 import Cocoa
 import objc
-from . import _metadata
+from . import _metadata, _ShazamKit
 
 sys.modules["ShazamKit"] = mod = objc.ObjCLazyModule(
     "ShazamKit",
@@ -23,7 +23,10 @@ sys.modules["ShazamKit"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (Cocoa,),
+    (
+        _ShazamKit,
+        Cocoa,
+    ),
 )
 
 del sys.modules["ShazamKit._metadata"]

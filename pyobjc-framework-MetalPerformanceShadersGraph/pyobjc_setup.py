@@ -208,9 +208,14 @@ Topic :: Software Development :: User Interfaces
 
 
 def get_os_level():
-    with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
-        pl = plistlib.load(fp)
-    v = pl["ProductVersion"]
+    # Retrieve the productVersion by invoking sw_vers, code tries
+    # to retrieve the version in-process will retrieve a compatibility
+    # version when compiled with an SDK older than 11.0.
+    v = (
+        subprocess.check_output(["/usr/bin/sw_vers", "-productVersion"])
+        .decode()
+        .strip()
+    )
     return ".".join(v.split(".")[:2])
 
 

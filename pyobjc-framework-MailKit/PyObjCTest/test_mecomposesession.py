@@ -27,7 +27,7 @@ class TestMEComposeSession(TestCase):
         self.assertArgIsBlock(
             TestMEComposeSessionHelper.session_annotateAddressesWithCompletionHandler_,
             1,
-            b"v@@",
+            b"v@",
         )
         self.assertArgIsBlock(
             TestMEComposeSessionHelper.session_canSendMessageWithCompletionHandler_,

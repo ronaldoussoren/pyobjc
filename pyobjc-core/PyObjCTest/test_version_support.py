@@ -6,7 +6,7 @@ import objc
 
 class TestVersionSupport(TestCase):
     def test_macos_available(self):
-        self.assertFalse(objc.macos_available(11, 20, 20))
+        self.assertFalse(objc.macos_available(99, 20, 20))
 
         with open("/System/Library/CoreServices/SystemVersion.plist", "rb") as fp:
             if hasattr(plistlib, "load"):

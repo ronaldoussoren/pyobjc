@@ -16,21 +16,21 @@ class TestMEMessageEncoder(TestCase):
         objc.protocolNamed("MEMessageEncoder")
 
     def test_methods(self):
-        self.asssertArgIsBlock(
+        self.assertArgIsBlock(
             TestMEMessageEncoderHelper.getEncodingStatusForMessage_completionHandler_,
             1,
             b"v@",
         )
 
-        self.asssertArgIsBOOL(
+        self.assertArgIsBOOL(
             TestMEMessageEncoderHelper.encodeMessage_shouldSign_shouldEncrypt_completionHandler_,
             1,
         )
-        self.asssertArgIsBOOL(
+        self.assertArgIsBOOL(
             TestMEMessageEncoderHelper.encodeMessage_shouldSign_shouldEncrypt_completionHandler_,
             2,
         )
-        self.asssertArgIsBlock(
+        self.assertArgIsBlock(
             TestMEMessageEncoderHelper.encodeMessage_shouldSign_shouldEncrypt_completionHandler_,
             3,
             b"v@",

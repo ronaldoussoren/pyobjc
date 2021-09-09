@@ -11,10 +11,10 @@ class TestMEOutgoingMessageEncodingStatus(TestCase):
         self.assertResultIsBOOL(MailKit.MEOutgoingMessageEncodingStatus.canEncrypt)
 
         self.assertArgIsBOOL(
-            MailKit.MEOutgoingMessageEncodingStatus.initWithCanSign_canEncrypt_securityError_,
+            MailKit.MEOutgoingMessageEncodingStatus.initWithCanSign_canEncrypt_securityError_addressesFailingEncryption_,
             0,
         )
         self.assertArgIsBOOL(
-            MailKit.MEOutgoingMessageEncodingStatus.initWithCanSign_canEncrypt_securityError_,
+            MailKit.MEOutgoingMessageEncodingStatus.initWithCanSign_canEncrypt_securityError_addressesFailingEncryption_,
             1,
         )
