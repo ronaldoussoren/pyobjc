@@ -78,6 +78,8 @@ def main():
 
         for ver in detect_pyversions():
             for variant in variants(ver):
+                if any(variant.endswith(x) for x in ("-x86_64", "-arm64")):
+                    continue
                 setup_variant(ver, variant)
                 status = subprocess.call(
                     [
@@ -89,13 +91,13 @@ def main():
                     cwd=os.path.join(TOP_DIR, nm),
                 )
 
-            if status != 0:
-                print(
-                    "WARNING: Building wheel for {} failed (python {})".format(
-                        nm, variant
+                if status != 0:
+                    print(
+                        "WARNING: Building wheel for {} failed (python {})".format(
+                            nm, variant
+                        )
                     )
-                )
-                failed.append((nm, "wheel", variant))
+                    failed.append((nm, "wheel", variant))
 
     print()
     print("Collected files")
