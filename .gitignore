@@ -8,6 +8,7 @@ htmlcov
 new-bindings
 .eggs
 wheel-dir
+distribution-dir
 test-results
 test-env
 testenv
