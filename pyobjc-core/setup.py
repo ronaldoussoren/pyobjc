@@ -82,7 +82,7 @@ CFLAGS = [
     # "--analyze",
     "-Werror",
     "-I/usr/include/ffi",
-    # "-fvisibility=hidden",
+    "-fvisibility=hidden",
     "-O3",
     "-flto",
 ]
@@ -568,7 +568,10 @@ class oc_build_ext(build_ext.build_ext):
             % (tuple(map(int, get_sdk_level(self.sdk_root).split(".")[:2])))
         )
 
-        _fixup_compiler(use_ccache=any(cmd in sys.argv for cmd in ["develop", "test"]))
+        _fixup_compiler(
+            use_ccache="PYOBJC_USE_CCACHE" in os.environ
+            or any(cmd in sys.argv for cmd in ["develop", "test"])
+        )
 
         build_ext.build_ext.run(self)
         extensions = self.extensions
