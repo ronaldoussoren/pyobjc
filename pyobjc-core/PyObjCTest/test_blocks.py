@@ -4,131 +4,258 @@
 
 import objc
 from PyObjCTest.block import OCTestBlock
-from PyObjCTools.TestSupport import TestCase, onlyIf, min_os_level
+from PyObjCTools.TestSupport import TestCase, min_os_level
 
 NSRect_tp = b"{CGRect={CGPoint=dd}{CGSize=dd}}"
 
-objc.parseBridgeSupport(
-    """\
-    <?xml version='1.0'?>
-    <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
-    <signatures version='1.0'>
-      <class name='OCTestBlock'>
-        <method selector='getStructBlock'>
-          <retval block='true' >
-              <retval type='%(NSRect_tp)s' />
-              <arg type='d' />
-              <arg type='d' />
-              <arg type='d' />
-              <arg type='d' />
-          </retval>
-        </method>
-        <method selector='getIntBlock'>
-          <retval block='true' >
-              <retval type='i' />
-          </retval>
-        </method>
-        <method selector='getFloatBlock'>
-          <retval block='true' >
-              <retval type='d' />
-              <arg type='d' />
-              <arg type='d' />
-          </retval>
-        </method>
-        <method selector='callOptionalBlock:withValue:'>
-          <arg index='0' block='true'>
-            <retval type='@'/>
-            <arg type='@' />
-          </arg>
-        </method>
-        <method selector='callIntBlock:withValue:'>
-          <arg index='0' block='true' >
-              <retval type='v' />
-              <arg type='i' />
-          </arg>
-        </method>
-        <method selector='callDoubleBlock:withValue:andValue:'>
-          <arg index='0' block='true' >
-              <retval type='d' />
-              <arg type='d' />
-              <arg type='d' />
-          </arg>
-        </method>
-        <method selector='callStructBlock:withA:b:c:d:'>
-          <arg index='0' block='true' >
-              <retval type='%(NSRect_tp)s' />
-              <arg type='d' />
-              <arg type='d' />
-              <arg type='d' />
-              <arg type='d' />
-          </arg>
-        </method>
-        <method selector='signatureForBlock1:'>
-          <arg index='0' block='true'>
-           <retval type='d' />
-           <arg type='d' />
-           <arg type='d' />
-          </arg>
-        </method>
-        <method selector='signatureForBlock2:'>
-          <arg index='0' block='true'>
-           <retval type='@' />
-           <arg type='@' />
-          </arg>
-        </method>
-        <method selector='signatureForBlock3:'>
-          <arg index='0' block='true'>
-           <retval type='@' />
-           <arg type='s' />
-          </arg>
-        </method>
-        <method selector='signatureForBlock4:'>
-          <arg index='0' block='true'>
-           <retval type='c' />
-           <arg type='i' />
-           <arg type='i' />
-           <arg type='f' />
-          </arg>
-        </method>
-      </class>
-      <class name='NSObject'>
-        <method selector='processBlock:'>
-          <retval type='d' />
-          <arg index='0' block='true' type='@?'>
-            <retval type='d'/>
-            <arg type='d' />
-            <arg type='d' />
-          </arg>
-        </method>
-        <method selector='callWithCompletion:'>
-          <arg index='0' block='true' type='@?'>
-            <retval type='v'/>
-            <arg type='@' />
-          </arg>
-        </method>
-        <method selector='optionalBlock:'>
-          <retval type='@' />
-          <arg index='0' block='true' type='@?'>
-            <retval type='@'/>
-            <arg type='@' />
-          </arg>
-        </method>
-      </class>
-    </signatures>
-    """
-    % {"NSRect_tp": NSRect_tp.decode("ascii")},
-    globals(),
-    "PyObjCTest",
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getStructBlock",
+    {
+        "retval": {
+            "callable": {
+                "retval": {"type": NSRect_tp},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"d"},
+                    2: {"type": b"d"},
+                    3: {"type": b"d"},
+                    4: {"type": b"d"},
+                },
+            }
+        }
+    },
 )
-
-# The blocks tests can only run when PyObjC was compiled with
-# GCC 4.2 or later.
-v = OCTestBlock.alloc().init()
-if hasattr(v, "getIntBlock"):
-    blocksEnabled = True
-else:
-    blocksEnabled = False
-del v
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getIntBlock",
+    {
+        "retval": {
+            "callable": {
+                "retval": {"type": b"i"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                },
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"getFloatBlock",
+    {
+        "retval": {
+            "callable": {
+                "retval": {"type": b"d"},
+                "arguments": {
+                    0: {"type": b"^v"},
+                    1: {"type": b"d"},
+                    2: {"type": b"d"},
+                },
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"callOptionalBlock:withValue:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"@"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"@"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"callIntBlock:withValue:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"v"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"i"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"callDoubleBlock:withValue:andValue:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"d"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"d"},
+                        2: {"type": b"d"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"callStructBlock:withA:b:c:d:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": NSRect_tp},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"d"},
+                        2: {"type": b"d"},
+                        3: {"type": b"d"},
+                        4: {"type": b"d"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"signatureForBlock1:",
+    {
+        "arguments": {
+            2: {
+                "type": b"@?",
+                "callable": {
+                    "retval": {"type": b"d"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"d"},
+                        2: {"type": b"d"},
+                    },
+                },
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"signatureForBlock2:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"@"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"@"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"signatureForBlock3:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"@"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"s"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"OCTestBlock",
+    b"signatureForBlock4:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "retval": {"type": b"c"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"i"},
+                        2: {"type": b"i"},
+                        3: {"type": b"f"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"processBlock:",
+    {
+        "retval": {"type": b"d"},
+        "arguments": {
+            2: {
+                "type": b"@?",
+                "callable": {
+                    "retval": {"type": b"d"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"d"},
+                        2: {"type": b"d"},
+                    },
+                },
+            }
+        },
+    },
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"callWithCompletion:",
+    {
+        "arguments": {
+            2: {
+                "callable": {
+                    "type": b"@?",
+                    "retval": {"type": b"v"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"@"},
+                    },
+                }
+            }
+        }
+    },
+)
+objc.registerMetaDataForSelector(
+    b"NSObject",
+    b"optionalBlock:",
+    {
+        "arguments": {
+            2: {
+                "type": b"@?",
+                "callable": {
+                    "retval": {"type": b"@"},
+                    "arguments": {
+                        0: {"type": b"^v"},
+                        1: {"type": b"@"},
+                    },
+                },
+            }
+        }
+    },
+)
 
 
 class BlocksHelper(objc.lookUpClass("NSObject")):
@@ -160,7 +287,6 @@ class BlockWithStoredCompletion(objc.lookUpClass("NSObject")):
 
 class TestBlocks(TestCase):
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testOptionalBlock(self):
         obj = OCTestBlock.alloc().init()
 
@@ -170,7 +296,6 @@ class TestBlocks(TestCase):
         )
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC(self):
         obj = OCTestBlock.alloc().init()
 
@@ -221,7 +346,6 @@ class TestBlocks(TestCase):
         self.assertEqual(helper.values, [42, 43])
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def test_block_with_varargs(self):
         obj = OCTestBlock.alloc().init()
 
@@ -247,7 +371,6 @@ class TestBlocks(TestCase):
         self.assertRaises(TypeError, obj.callIntBlock_withValue_, helper.callback, 43)
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testStackBlocksWithDirectUse(self):
         obj = OCTestBlock.alloc().init()
         tester = BlocksCompletion.alloc().init()
@@ -261,7 +384,6 @@ class TestBlocks(TestCase):
         self.assertEqual(a, ["hello", "world"])
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testStackBlocksWithIndirectUse(self):
         obj = OCTestBlock.alloc().init()
         tester = BlockWithStoredCompletion.alloc().init()
@@ -283,7 +405,6 @@ class TestBlocks(TestCase):
         self.assertEqual(a, ["hello", "world"])
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC2(self):
         obj = OCTestBlock.alloc().init()
 
@@ -298,7 +419,6 @@ class TestBlocks(TestCase):
         )
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockToObjC3(self):
         obj = OCTestBlock.alloc().init()
 
@@ -309,7 +429,6 @@ class TestBlocks(TestCase):
         self.assertEqual(v, ((1.5, 2.5), (3.5, 4.5)))
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockFromObjC(self):
         obj = OCTestBlock.alloc().init()
 
@@ -321,7 +440,6 @@ class TestBlocks(TestCase):
         self.assertEqual(value, 42)
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockFromObjC2(self):
         obj = OCTestBlock.alloc().init()
 
@@ -333,7 +451,6 @@ class TestBlocks(TestCase):
         self.assertEqual(value, 9.5)
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockFromObjC3(self):
         obj = OCTestBlock.alloc().init()
 
@@ -342,7 +459,6 @@ class TestBlocks(TestCase):
         self.assertEqual(v, ((1.5, 2.5), (3.5, 4.5)))
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockSignatures(self):
         obj = OCTestBlock.alloc().init()
 
@@ -367,7 +483,6 @@ class TestBlocks(TestCase):
         )
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlockArgumentToPython(self):
         obj = OCTestBlock.alloc().init()
         helper = BlocksHelper.alloc().init()
@@ -378,7 +493,6 @@ class TestBlocks(TestCase):
         self.assertEqual(value, "no block")
 
     @min_os_level("10.6")
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlocksWithoutMetadata(self):
         obj = OCTestBlock.alloc().init()
 
@@ -403,16 +517,16 @@ BLOCK_SELF_TYPE = objc._C_PTR + objc._C_VOID
 
 
 class TestBlockRuntimeSignature(TestCase):
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlock1(self):
         obj = OCTestBlock.alloc().init()
         signature = obj.signatureForBlock1_(lambda a, b: a * b)
+        print(obj.signatureForBlock1_.__metadata__())
+        print(signature)
         self.assertEqual(
             signature,
             (objc._C_DBL + BLOCK_SELF_TYPE + objc._C_DBL + objc._C_DBL).decode("utf-8"),
         )
 
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlock2(self):
         obj = OCTestBlock.alloc().init()
         signature = obj.signatureForBlock2_(lambda a: a)
@@ -420,7 +534,6 @@ class TestBlockRuntimeSignature(TestCase):
             signature, (objc._C_ID + BLOCK_SELF_TYPE + objc._C_ID).decode("utf-8")
         )
 
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlock3(self):
         obj = OCTestBlock.alloc().init()
         signature = obj.signatureForBlock3_(lambda a: a)
@@ -428,7 +541,6 @@ class TestBlockRuntimeSignature(TestCase):
             signature, (objc._C_ID + BLOCK_SELF_TYPE + objc._C_SHT).decode("utf-8")
         )
 
-    @onlyIf(blocksEnabled, "no blocks")
     def testBlock4(self):
         obj = OCTestBlock.alloc().init()
         signature = obj.signatureForBlock4_(lambda a, b, c: a)

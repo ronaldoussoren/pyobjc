@@ -1788,14 +1788,15 @@ class TestParseBridgeSupport(TestCase):
             metadata_registry = {}
             module_globals = {}
 
-            objc.parseBridgeSupport(
-                b"""\
-            <signatures>
-            </signatures>
-            """,
-                module_globals,
-                "TestFramework",
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.parseBridgeSupport(
+                    b"""\
+                <signatures>
+                </signatures>
+                """,
+                    module_globals,
+                    "TestFramework",
+                )
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(metadata_registry, {})
@@ -1845,7 +1846,8 @@ class TestParseBridgeSupport(TestCase):
               </informal_protocol>
             </signatures>
             """
-            objc.parseBridgeSupport(xml, module_globals, "TestFramework")
+            with self.assertWarns(DeprecationWarning):
+                objc.parseBridgeSupport(xml, module_globals, "TestFramework")
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(
@@ -1900,9 +1902,10 @@ class TestParseBridgeSupport(TestCase):
               </function>
             </signatures>
             """
-            objc.parseBridgeSupport(
-                xml, module_globals, "TestFramework2", inlineTab=InlineTab()
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.parseBridgeSupport(
+                    xml, module_globals, "TestFramework2", inlineTab=InlineTab()
+                )
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(metadata_registry, {})
@@ -1940,12 +1943,13 @@ class TestParseBridgeSupport(TestCase):
               </function>
             </signatures>
             """
-            objc.parseBridgeSupport(
-                xml,
-                module_globals,
-                "TestFramework2",
-                dylib_path="/usr/lib/libxml2.dylib",
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.parseBridgeSupport(
+                    xml,
+                    module_globals,
+                    "TestFramework2",
+                    dylib_path="/usr/lib/libxml2.dylib",
+                )
 
             self.assertEqual(_meta_updates, [True, False])
             self.assertEqual(metadata_registry, {})
@@ -2157,12 +2161,13 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper(
-                "TestFramework",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "TestFramework",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2183,13 +2188,14 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper(
-                "TestFramework",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                frameworkResourceName="TestResources",
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "TestFramework",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    frameworkResourceName="TestResources",
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2210,9 +2216,10 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper(
-                "TestFramework", "/Library/Framework/Test.framework", None, g
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "TestFramework", "/Library/Framework/Test.framework", None, g
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2233,13 +2240,14 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper(
-                "TestFramework",
-                "/Library/Framework/Test.framework",
-                None,
-                g,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "TestFramework",
+                    "/Library/Framework/Test.framework",
+                    None,
+                    g,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2260,7 +2268,8 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g)
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper("TestFramework", None, "com.apple.Test", g)
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2281,9 +2290,10 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper(
-                "TestFramework", None, "com.apple.Test", g, scan_classes=False
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "TestFramework", None, "com.apple.Test", g, scan_classes=False
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2304,13 +2314,14 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper(
-                "TestFramework",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=InlineTab(),
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "TestFramework",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=InlineTab(),
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2331,14 +2342,15 @@ class TestInitFrameworkWrapper(TestCase):
             load_calls = []
             parse_calls = []
             g = {}
-            objc.initFrameworkWrapper(
-                "TestFramework",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=InlineTab(),
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "TestFramework",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=InlineTab(),
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2372,14 +2384,15 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2412,14 +2425,15 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2472,14 +2486,15 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2540,14 +2555,15 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2597,14 +2613,15 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2643,14 +2660,15 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2693,14 +2711,15 @@ class TestInitFrameworkWrapper(TestCase):
             parse_calls = []
             g = {}
             inlineTab = InlineTab()
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
             basic_verify(g)
             self.assertEqual(len(g), 2)
             self.assertEqual(
@@ -2745,16 +2764,17 @@ class TestInitFrameworkWrapper(TestCase):
             def bundle_exception(name, path, identifier):
                 raise ImportError(name)
 
-            self.assertRaises(
-                ImportError,
-                objc.initFrameworkWrapper,
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                self.assertRaises(
+                    ImportError,
+                    objc.initFrameworkWrapper,
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
 
             self.assertEqual(load_calls, [])
             self.assertEqual(parse_calls, [])
@@ -2774,14 +2794,15 @@ class TestInitFrameworkWrapper(TestCase):
                 if identifier is not SENTINEL:
                     raise ImportError(name)
 
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-                scan_classes=False,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                    scan_classes=False,
+                )
 
             self.assertEqual(
                 load_calls,
@@ -2807,13 +2828,14 @@ class TestInitFrameworkWrapper(TestCase):
                 if identifier is not SENTINEL:
                     raise ImportError(name)
 
-            objc.initFrameworkWrapper(
-                "Test",
-                "/Library/Framework/Test.framework",
-                "com.apple.Test",
-                g,
-                inlineTab=inlineTab,
-            )
+            with self.assertWarns(DeprecationWarning):
+                objc.initFrameworkWrapper(
+                    "Test",
+                    "/Library/Framework/Test.framework",
+                    "com.apple.Test",
+                    g,
+                    inlineTab=inlineTab,
+                )
 
             self.assertEqual(
                 load_calls,

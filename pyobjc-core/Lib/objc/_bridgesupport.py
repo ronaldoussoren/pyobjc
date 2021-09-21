@@ -605,6 +605,7 @@ def parseBridgeSupport(
     warnings.warn(
         "This function will be removed in PyObjC 9, switch to the modern metadata system",
         DeprecationWarning,
+        stacklevel=2,
     )
 
     if dylib_path:
@@ -700,6 +701,7 @@ def initFrameworkWrapper(
     warnings.warn(
         "This function will be removed in PyObjC 9, switch to the modern metadata system",
         DeprecationWarning,
+        stacklevel=2,
     )
     if frameworkResourceName is None:
         frameworkResourceName = frameworkName
