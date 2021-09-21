@@ -22,6 +22,11 @@ As of PyObjC 2.4 [1]_ use of bridgesupport files is deprecated, the
    are therefore not used by PyObjC.
 
 
+.. warning::
+
+   Support for BridgeSupport XML files is deprecated and will be removed in
+   PyObjC 9.
+
 Basic structure and use
 -----------------------
 
@@ -630,6 +635,8 @@ API description
    .. versionchanged:: 2.5
       The function is available again.
 
+   .. versionchanged:: 8.0
+      This function is deprecated, and will be removed in PyObjC 9.
 
 
 .. function:: initFrameworkWrapper(frameworkName, frameworkPath, frameworkIdentifier, globals[, inlineTab [, scan_classes[, frameworkResourceName]]])
@@ -663,6 +670,9 @@ API description
 
    .. versionchanged:: 2.5
       The function is available again.
+
+   .. versionchanged:: 8.0
+      This function is deprecated, and will be removed in PyObjC 9.
 
 .. _`pkg_resources.resource_string()`: https://setuptools.readthedocs.io/en/latest/pkg_resources.html
 

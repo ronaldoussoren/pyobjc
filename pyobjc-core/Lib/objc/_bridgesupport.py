@@ -1,5 +1,7 @@
 """
 Backward compatibity with bridgesupport files
+
+This functionality is deprecated and will be removed in PyObjC 9.
 """
 __all__ = ("initFrameworkWrapper", "parseBridgeSupport")
 
@@ -600,6 +602,10 @@ _libraries = []
 def parseBridgeSupport(
     xmldata, globals, frameworkName, dylib_path=None, inlineTab=None  # noqa: A002
 ):
+    warnings.warn(
+        "This function will be removed in PyObjC 9, switch to the modern metadata system",
+        DeprecationWarning,
+    )
 
     if dylib_path:
         _get_ctypes()
@@ -691,6 +697,10 @@ def initFrameworkWrapper(
     either one embedded in the framework or one in a BrigeSupport library
     directory).
     """
+    warnings.warn(
+        "This function will be removed in PyObjC 9, switch to the modern metadata system",
+        DeprecationWarning,
+    )
     if frameworkResourceName is None:
         frameworkResourceName = frameworkName
 

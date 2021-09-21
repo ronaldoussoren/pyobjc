@@ -43,12 +43,19 @@ Upcoming incompatible changes
 * The module :mod:`PyObjCTools.Signals` is deprecated and will be removed
   in PyObjC 9.
 
+* :func:`objc.initFrameworkWrapper` and :func:`objc.parseBridgeSupport`
+  are deprecated and will be removed in PyObjC 9.
+
+  These functions implement support for ".bridgesupport" XML files,
+  something that PyObjC hasn't used itself in a number of releases (in
+  part because system versions of those files are at best incomplete).
+
 Performance
 ...........
 
 Most performance changes use features introduced in Python 3.9.
 
-* Implement the "vectorcall" protocol for :type:`objc.function`, :type:`objc.WeakRef`
+* Implement the "vectorcall" protocol for :type:`objc.function`, :type:`objc.WeakRef`.
 
   This reduces the interpreter overhead for calling instances of these objects.
 

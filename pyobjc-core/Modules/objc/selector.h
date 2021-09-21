@@ -31,6 +31,9 @@ typedef struct {
     int                    sel_flags;
     PyObjCMethodSignature* sel_methinfo;
     Py_ssize_t             sel_mappingcount;
+#if PY_VERSION_HEX >= 0x03090000
+    vectorcallfunc         vectorcall;
+#endif
 } PyObjCSelector;
 
 typedef struct {
