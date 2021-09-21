@@ -84,7 +84,7 @@ CFLAGS = [
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
     "-O3",
-    "-flto",
+    # "-flto",
 ]
 
 # CFLAGS for other (test) extensions:
@@ -104,7 +104,7 @@ OBJC_LDFLAGS = [
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     "-fvisibility=hidden",
     "-O3",
-    "-flto",
+    # "-flto",
 ]
 
 
