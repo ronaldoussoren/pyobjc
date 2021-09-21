@@ -320,7 +320,7 @@ PyTypeObject PyObjCFunc_Type = {
     .tp_dealloc                                    = func_dealloc,
     .tp_repr                                       = func_repr,
     .tp_call                                       = func_call,
-#if 0  && PY_VERSION_HEX >= 0x03090000
+#if PY_VERSION_HEX >= 0x03090000
     .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
     .tp_vectorcall_offset                          = offsetof(func_object, vectorcall),
 #else
@@ -353,16 +353,15 @@ PyObjCFunc_WithMethodSignature(PyObject* name, void* func,
     result->module   = NULL;
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
-#if PY_VERSION_HEX >= 0x03090000
-    result->vectorcall = func_vectorcall;
-#endif
-
 
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (result->cif == NULL) {
         Py_DECREF(result);
         return NULL;
     }
+#if PY_VERSION_HEX >= 0x03090000
+    result->vectorcall = func_vectorcall;
+#endif
 
     return (PyObject*)result;
 }
@@ -398,6 +397,9 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
         Py_DECREF(result);
         return NULL;
     }
+#if PY_VERSION_HEX >= 0x03090000
+    result->vectorcall = func_vectorcall;
+#endif
 
     return (PyObject*)result;
 }
