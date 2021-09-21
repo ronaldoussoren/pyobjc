@@ -43,6 +43,15 @@ Upcoming incompatible changes
 * The module :mod:`PyObjCTools.Signals` is deprecated and will be removed
   in PyObjC 9.
 
+Performance
+...........
+
+Most performance changes use features introduced in Python 3.9.
+
+* Implement the "vectorcall" protocol for :type:`objc.function`, :type:`objc.WeakRef`
+
+  This reduces the interpreter overhead for calling instances of these objects.
+
 Other changes
 .............
 
