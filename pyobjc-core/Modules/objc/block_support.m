@@ -240,14 +240,16 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
 #ifdef __arm64__
     cif_arg_count = PyObjCFFI_ParseArguments(
-        signature, 1, args,
+        signature, 1,
+        PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
         align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
             + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, arglist,
         values);
 #else
     cif_arg_count = PyObjCFFI_ParseArguments(
-        signature, 1, args,
+        signature, 1,
+        PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
         align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
             + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist,

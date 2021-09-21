@@ -37,7 +37,7 @@ extern PyObjCBlockFunction PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*, P
 extern void                PyObjCFFI_FreeBlockFunction(PyObjCBlockFunction);
 extern int PyObjCFFI_CountArguments(PyObjCMethodSignature*, Py_ssize_t, Py_ssize_t*,
                                     Py_ssize_t*, Py_ssize_t*, Py_ssize_t*, BOOL*);
-extern Py_ssize_t PyObjCFFI_ParseArguments(PyObjCMethodSignature*, Py_ssize_t, PyObject*,
+extern Py_ssize_t PyObjCFFI_ParseArguments(PyObjCMethodSignature*, Py_ssize_t, PyObject*const*, size_t,
                                            Py_ssize_t, unsigned char*, Py_ssize_t, void**,
                                            struct byref_attr*, ffi_type**, void**);
 extern PyObject*  PyObjCFFI_BuildResult(PyObjCMethodSignature*, Py_ssize_t argOffset,

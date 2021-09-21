@@ -455,6 +455,13 @@ extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
 
 #ifndef Py_LIMITED_API
 
+static inline PyObject**
+PyTuple_ITEMS(PyObject* tuple)
+{
+    return &PyTuple_GET_ITEM(tuple, 0);
+}
+
+
 /* This is a crude hack to disable a otherwise useful warning in the context of
  * PyTuple_SET_ITEM, without disabling it everywhere
  */

@@ -1,6 +1,10 @@
 /*
  * Wrapper for simple global functions. Simple functions are those without
  * arguments that require additional effort.
+ *
+ * TODO:
+ * - Cache FFI for non-variadic functions (calculate on first call)
+ * - "Simple" variant
  */
 #include "pyobjc.h"
 
@@ -13,6 +17,9 @@ typedef struct {
     PyObject*              doc;
     PyObject*              name;
     PyObject*              module;
+#if PY_VERSION_HEX >= 0x03090000
+    vectorcallfunc         vectorcall;
+#endif
 } func_object;
 
 static PyObject*
@@ -74,7 +81,7 @@ func_repr(PyObject* _self)
 }
 
 static PyObject*
-func_call(PyObject* s, PyObject* args, PyObject* kwds)
+func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwnames)
 {
     func_object* self = (func_object*)s;
     Py_ssize_t   byref_in_count;
@@ -94,6 +101,18 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     ffi_cif*          cifptr;
 
     PyObject* retval;
+
+    if (kwnames != NULL && (!PyTuple_Check(kwnames) || PyTuple_GET_SIZE(kwnames) != 0)) {
+        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+        return NULL;
+    }
+
+    /*
+     * The PY_VECTORCALL_ARGUMENTS_OFFSET feature is not used by this function.
+     * fetch the raw number of arguments to make it possible to ignore that flag
+     * in the rest of the implementation.
+     */
+    nargsf = PyVectorcall_NARGS(nargsf);
 
     if (PyObjC_DeprecationVersion && self->methinfo->deprecated
         && self->methinfo->deprecated <= PyObjC_DeprecationVersion) {
@@ -126,11 +145,6 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
         return NULL;
     }
 
-    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
-        return NULL;
-    }
-
     argbuf_len = PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type);
     argbuf_len = align(argbuf_len, sizeof(void*));
     r = PyObjCFFI_CountArguments(self->methinfo, 0, &byref_in_count, &byref_out_count,
@@ -150,18 +164,18 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
             return NULL;
         }
 
-        if (PyTuple_Size(args) < Py_SIZE(self->methinfo)) {
+        if (nargsf < (size_t)Py_SIZE(self->methinfo)) {
             PyErr_Format(PyExc_TypeError,
                          "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
                          "d",
-                         Py_SIZE(self->methinfo) - 2, PyTuple_Size(args));
+                         Py_SIZE(self->methinfo) - 2, nargsf);
             return NULL;
         }
 
-    } else if (PyTuple_Size(args) != Py_SIZE(self->methinfo)) {
+    } else if (nargsf != (size_t)Py_SIZE(self->methinfo)) {
         PyErr_Format(PyExc_TypeError,
                      "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                     Py_SIZE(self->methinfo), PyTuple_Size(args));
+                     Py_SIZE(self->methinfo), nargsf);
         return NULL;
     }
 
@@ -172,7 +186,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
     }
 
     cif_arg_count = PyObjCFFI_ParseArguments(
-        self->methinfo, 0, args,
+        self->methinfo, 0, args, nargsf,
         align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type), sizeof(void*)),
         argbuf, argbuf_len, byref, byref_attr, arglist, values);
 
@@ -235,7 +249,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
                                    byref_out_count, NULL, 0, values);
 
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + PyTuple_Size(args), byref,
+        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref,
                                 byref_attr)
             < 0) {
             goto error;
@@ -253,7 +267,7 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
 error:
     if (variadicAllArgs) {
-        PyObjCFFI_FreeByRef(PyTuple_Size(args), byref, byref_attr);
+        PyObjCFFI_FreeByRef(nargsf, byref, byref_attr); /* XXX: Compare with call above */
 
     } else {
         PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo), byref, byref_attr);
@@ -263,6 +277,17 @@ error:
         PyMem_Free(argbuf);
     }
     return NULL;
+}
+
+static PyObject*
+func_call(PyObject* s, PyObject* args, PyObject* kwds)
+{
+    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
+        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+        return NULL;
+    }
+
+    return func_vectorcall(s, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
 }
 
 static void
@@ -295,9 +320,15 @@ PyTypeObject PyObjCFunc_Type = {
     .tp_dealloc                                    = func_dealloc,
     .tp_repr                                       = func_repr,
     .tp_call                                       = func_call,
+#if 0  && PY_VERSION_HEX >= 0x03090000
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
+    .tp_vectorcall_offset                          = offsetof(func_object, vectorcall),
+#else
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+#endif
+
     .tp_getattro                                   = PyObject_GenericGetAttr,
     .tp_setattro                                   = PyObject_GenericSetAttr,
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
     .tp_doc       = "Wrapper around a Objective-C function",
     .tp_methods   = func_methods,
     .tp_members   = func_members,
@@ -322,6 +353,10 @@ PyObjCFunc_WithMethodSignature(PyObject* name, void* func,
     result->module   = NULL;
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
+#if PY_VERSION_HEX >= 0x03090000
+    result->vectorcall = func_vectorcall;
+#endif
+
 
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
     if (result->cif == NULL) {

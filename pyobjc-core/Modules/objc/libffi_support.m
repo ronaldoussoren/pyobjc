@@ -552,14 +552,15 @@ extract_count(const char* type, void* pvalue)
 
 /* Support for printf format strings */
 static Py_ssize_t
-parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
+parse_printf_args(PyObject* py_format, PyObject*const* args, size_t nargs,
+                  Py_ssize_t argoffset,
                   void** byref, struct byref_attr* byref_attr, ffi_type** arglist,
                   void** values, Py_ssize_t curarg)
 {
     /* Walk the format string as a UTF-8 encoded ASCII value. This isn't
      * perfect but keeps the code simple.
      */
-    Py_ssize_t maxarg = PyTuple_Size(argtuple);
+    Py_ssize_t maxarg = nargs;
 
     PyObject*   encoded;
     const char* format;
@@ -647,7 +648,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 return -1;
             }
 
-            if (depythonify_c_value(@encode(int), PyTuple_GET_ITEM(argtuple, argoffset),
+            if (depythonify_c_value(@encode(int), args[argoffset],
                                     byref[curarg])
                 < 0) {
                 Py_DECREF(encoded);
@@ -685,7 +686,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 }
 
                 if (depythonify_c_value(@encode(int),
-                                        PyTuple_GET_ITEM(argtuple, argoffset),
+                                        args[argoffset],
                                         byref[curarg])
                     < 0) {
                     Py_DECREF(encoded);
@@ -757,7 +758,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
 
             byref[curarg]   = PyMem_Malloc(sizeof(int));
             arglist[curarg] = signature_to_ffi_type(@encode(int));
-            v               = PyTuple_GET_ITEM(argtuple, argoffset);
+            v               = args[argoffset];
             if (PyUnicode_Check(v)) {
 
                 if (PyUnicode_GetLength(v) != 1) {
@@ -800,7 +801,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 PyErr_NoMemory();
                 return -1;
             }
-            if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset),
+            if (depythonify_c_value(&typecode, args[argoffset],
                                     byref[curarg])
                 < 0) {
                 Py_DECREF(encoded);
@@ -841,7 +842,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 Py_DECREF(encoded);
                 return -1;
             }
-            if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset),
+            if (depythonify_c_value(&typecode, args[argoffset],
                                     byref[curarg])
                 < 0) {
                 Py_DECREF(encoded);
@@ -871,7 +872,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 return -1;
             }
 
-            if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset),
+            if (depythonify_c_value(&typecode, args[argoffset],
                                     byref[curarg])
                 < 0) {
                 Py_DECREF(encoded);
@@ -890,7 +891,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
             if (*format == 'S' || typecode == _C_LNG) {
                 /* whar_t */
                 v = byref_attr[curarg].obj =
-                    PyUnicode_FromObject(PyTuple_GET_ITEM(argtuple, argoffset));
+                    PyUnicode_FromObject(args[argoffset]);
                 if (byref_attr[curarg].obj == NULL) {
                     Py_DECREF(encoded);
                     return -1;
@@ -913,7 +914,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                     Py_DECREF(encoded);
                     return -1;
                 }
-                if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset),
+                if (depythonify_c_value(&typecode, args[argoffset],
                                         byref[curarg])
                     < 0) {
                     Py_DECREF(encoded);
@@ -937,7 +938,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 Py_DECREF(encoded);
                 return -1;
             }
-            if (depythonify_c_value(&typecode, PyTuple_GET_ITEM(argtuple, argoffset),
+            if (depythonify_c_value(&typecode, args[argoffset],
                                     byref[curarg])
                 < 0) {
                 Py_DECREF(encoded);
@@ -958,7 +959,7 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
                 Py_DECREF(encoded);
                 return -1;
             }
-            *((char**)byref[curarg]) = (char*)PyTuple_GET_ITEM(argtuple, argoffset);
+            *((char**)byref[curarg]) = (char*)(args[argoffset]);
             values[curarg]           = byref[curarg];
             arglist[curarg]          = signature_to_ffi_type(@encode(void*));
 
@@ -1002,12 +1003,12 @@ parse_printf_args(PyObject* py_format, PyObject* argtuple, Py_ssize_t argoffset,
 }
 
 static Py_ssize_t
-parse_varargs_array(PyObjCMethodSignature* methinfo, PyObject* argtuple,
+parse_varargs_array(PyObjCMethodSignature* methinfo, PyObject*const* args, size_t nargs,
                     Py_ssize_t argoffset, void** byref, ffi_type** arglist, void** values,
                     Py_ssize_t count)
 {
     Py_ssize_t curarg = Py_SIZE(methinfo) - 1;
-    Py_ssize_t maxarg = PyTuple_Size(argtuple);
+    Py_ssize_t maxarg = nargs;
     Py_ssize_t argSize;
 
     if (byref == NULL) {
@@ -1044,7 +1045,7 @@ parse_varargs_array(PyObjCMethodSignature* methinfo, PyObject* argtuple,
         if (byref[curarg] == NULL) {
             return -1;
         }
-        if (depythonify_c_value(argType->type, PyTuple_GET_ITEM(argtuple, argoffset),
+        if (depythonify_c_value(argType->type, args[argoffset],
                                 byref[curarg])
             < 0) {
 
@@ -2634,7 +2635,7 @@ block_capsule_cleanup(PyObject* ptr)
 
 Py_ssize_t
 PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
-                         PyObject* args, Py_ssize_t argbuf_cur, unsigned char* argbuf,
+                         PyObject*const* args, size_t nargs, Py_ssize_t argbuf_cur, unsigned char* argbuf,
                          Py_ssize_t argbuf_len
                          __attribute__((__unused__)), /* only used in debug builds */
                          void** byref, struct byref_attr* byref_attr, ffi_type** arglist,
@@ -2681,7 +2682,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 resttype = gCharEncoding;
             }
 
-            argument = PyTuple_GET_ITEM(args, py_arg);
+            argument = args[py_arg];
             py_arg++;
 
             if (argument == Py_None) {
@@ -2829,7 +2830,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
             if (argtype[0] == _C_OUT)
                 argtype++;
 
-            argument = PyTuple_GET_ITEM(args, py_arg);
+            argument = args[py_arg];
             switch (*argtype) {
             case _C_STRUCT_B:
             case _C_ARY_B:
@@ -3298,7 +3299,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
             if (argtype[0] == _C_OUT
                 && (argtype[1] == _C_PTR || argtype[1] == _C_CHARPTR)) {
-                argument = PyTuple_GET_ITEM(args, py_arg);
+                argument = args[py_arg];
                 py_arg++;
 
                 const char* resttype = argtype + 2;
@@ -3345,7 +3346,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 if (argtype[0] == _C_OUT)
                     argtype++;
 
-                argument = PyTuple_GET_ITEM(args, py_arg);
+                argument = args[py_arg];
                 py_arg++;
 
                 switch (*argtype) {
@@ -3427,7 +3428,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
     if (printf_format) {
         Py_ssize_t r;
 
-        r = parse_printf_args(printf_format, args, py_arg, byref, byref_attr, arglist,
+        r = parse_printf_args(printf_format, args, nargs, py_arg, byref, byref_attr, arglist,
                               values, Py_SIZE(methinfo));
         if (r == -1) {
             return -1;
@@ -3441,7 +3442,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
     } else if (methinfo->variadic && methinfo->null_terminated_array) {
         Py_ssize_t r;
 
-        r = parse_varargs_array(methinfo, args, py_arg, byref, arglist, values, -1);
+        r = parse_varargs_array(methinfo, args, nargs, py_arg, byref, arglist, values, -1);
 
         if (r == -1) {
             return -1;
@@ -3458,7 +3459,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
             return -1;
         }
 
-        r = parse_varargs_array(methinfo, args, py_arg, byref, arglist, values, cnt);
+        r = parse_varargs_array(methinfo, args, nargs, py_arg, byref, arglist, values, cnt);
 
         if (r == -1) {
             return -1;
@@ -4182,7 +4183,7 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
         argbuf_cur = align(resultSize, sizeof(void*));
     }
 
-    r = PyObjCFFI_ParseArguments(methinfo, 2, args, argbuf_cur, argbuf, argbuf_len, byref,
+    r = PyObjCFFI_ParseArguments(methinfo, 2, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), argbuf_cur, argbuf, argbuf_len, byref,
                                  byref_attr, arglist, values);
     if (r == -1) {
         goto error_cleanup;
