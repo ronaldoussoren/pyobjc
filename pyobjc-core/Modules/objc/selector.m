@@ -893,6 +893,12 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
 static char gSheetMethodSignature[] = {_C_VOID, _C_ID,  _C_SEL,  _C_ID,
                                        _C_INT,  _C_PTR, _C_VOID, 0};
 
+
+#if PY_VERSION_HEX >= 0x03090000
+/* XXX: Reorder code to take away need for forward declaration */
+static PyObject* pysel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames);
+#endif
+
 PyObject*
 PyObjCSelector_New(PyObject* callable, SEL selector, const char* signature,
                    int class_method, Class cls)
@@ -924,6 +930,9 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* signature,
         Py_DECREF(result);
         return NULL;
     }
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.vectorcall = pysel_vectorcall;
+#endif
 
     if (PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature) == -1) {
         Py_DECREF(result);
@@ -1094,8 +1103,21 @@ pysel_repr(PyObject* _self)
     return rval;
 }
 
+/*
+ * Combined implementation for pysel_call (Python 3.8 and earlier)
+ * and pysel_vectorcall (Python 3.9 and later). For most other types
+ * the call implementation just forwards to the vectorcall implementation,
+ * that's not done here because python selectors support keyword arguments.
+ *
+ * This does result in some preprocessor logic below, the additional complexity
+ * is not too bad though.
+ */
 static PyObject*
+#if PY_VERSION_HEX < 0x03090000
 pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
+#else
+pysel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+#endif
 {
     PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
     PyObject*             result;
@@ -1109,12 +1131,20 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
     if (!PyMethod_Check(self->callable)) {
         if (self->base.sel_self == NULL) {
             PyObject* self_arg;
-            if (PyTuple_Size(args) < 1) {
+#if PY_VERSION_HEX < 0x03090000
+            if (PyTuple_GET_SIZE(args) < 1) {
+#else
+            if (PyVectorcall_NARGS(nargsf) < 1) {
+#endif
                 PyErr_SetString(PyObjCExc_Error, "need self argument");
                 return NULL;
             }
 
+#if PY_VERSION_HEX < 0x03090000
             self_arg = PyTuple_GET_ITEM(args, 0);
+#else
+            self_arg = args[0];
+#endif
 
             if (!PyObjCObject_Check(self_arg) && !PyObjCClass_Check(self_arg)) {
                 PyErr_Format(PyExc_TypeError,
@@ -1132,9 +1162,14 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
      * Assume callable will check arguments
      */
     if (self->base.sel_self == NULL) {
+#if PY_VERSION_HEX < 0x03090000
         result = PyObject_Call(self->callable, args, kwargs);
+#else
+        result = PyObject_Vectorcall(self->callable, args, nargsf, kwnames);
+#endif
 
     } else {
+#if PY_VERSION_HEX < 0x03090000
         Py_ssize_t argc        = PyTuple_Size(args);
         PyObject*  actual_args = PyTuple_New(argc + 1);
         Py_ssize_t i;
@@ -1154,6 +1189,33 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
 
         result = PyObject_Call(self->callable, actual_args, kwargs);
         Py_DECREF(actual_args);
+#else
+
+        if (nargsf & PY_VECTORCALL_ARGUMENTS_OFFSET) {
+            /* We're allowed to use args[-1]; */
+            PyObject* tmp = args[-1];
+            ((PyObject**)args)[-1] = self->base.sel_self;
+
+            result = PyObject_Vectorcall(self->callable, args-1, PyVectorcall_NARGS(nargsf)+1, kwnames);
+            ((PyObject**)args)[-1] = tmp;
+        } else {
+             /* Need to insert the self argument, but cannot use the args array for that
+              * Allocate a new array thats 2 larger, that way we can use PY_VECTORCALL_ARGUMENTS_OFFSET
+              * when performing the call.
+              */
+             PyObject** temp_args = malloc((PyVectorcall_NARGS(nargsf)+2)*sizeof(PyObject*));
+             if (temp_args == NULL) {
+                 PyErr_NoMemory();
+                 return NULL;
+             }
+             temp_args[0] = Py_None;
+             temp_args[1] = self->base.sel_self;
+             memcpy(temp_args+2, args, PyVectorcall_NARGS(nargsf) * sizeof(PyObject*));
+
+             result = PyObject_Vectorcall(self->callable, temp_args+1, (PyVectorcall_NARGS(nargsf)+1)|PY_VECTORCALL_ARGUMENTS_OFFSET, kwnames);
+             free(temp_args);
+         }
+#endif
     }
 
     if (result && (self->base.sel_self) && (PyObjCObject_Check(self->base.sel_self))
@@ -1506,6 +1568,9 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
         Py_DECREF(result);
         return NULL;
     }
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.vectorcall = pysel_vectorcall;
+#endif
 
     if (meth->base.sel_native_signature) {
         result->base.sel_native_signature =
@@ -1597,9 +1662,15 @@ PyTypeObject PyObjCPythonSelector_Type = {
     .tp_dealloc                                    = pysel_dealloc,
     .tp_repr                                       = pysel_repr,
     .tp_hash                                       = pysel_hash,
+#if PY_VERSION_HEX < 0x03090000
     .tp_call                                       = pysel_call,
-    .tp_getattro                                   = PyObject_GenericGetAttr,
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+#else
+    .tp_call                                       = PyVectorcall_Call,
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL|Py_TPFLAGS_METHOD_DESCRIPTOR,
+    .tp_vectorcall_offset                          = offsetof(PyObjCPythonSelector, base.vectorcall),
+#endif
+    .tp_getattro                                   = PyObject_GenericGetAttr,
     .tp_richcompare                                = pysel_richcompare,
     .tp_getset                                     = pysel_getset,
     .tp_base                                       = &PyObjCSelector_Type,
