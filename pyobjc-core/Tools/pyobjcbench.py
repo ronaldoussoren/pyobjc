@@ -27,10 +27,12 @@ import pathlib
 import objc
 
 if len(sys.argv) == 2 and sys.argv[1] == "--record":
+    records_dir = pathlib.Path(__file__).parent / "results"
+    if not records_dir.is_dir():
+        records_dir.mkdir()
+
     record_fp = open(
-        pathlib.Path(__file__).parent
-        / "results"
-        / f"pyobjcbench-{objc.__version__}.txt",
+        records_dir / f"pyobjcbench-{objc.__version__}.txt",
         "w",
     )
 
