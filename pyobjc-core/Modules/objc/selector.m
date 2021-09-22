@@ -626,6 +626,9 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
         Py_DECREF(result);
         return NULL;
     }
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.vectorcall = objcsel_vectorcall;
+#endif
 
     if (meth->base.sel_native_signature != NULL) {
         result->base.sel_native_signature =
@@ -704,7 +707,12 @@ PyTypeObject PyObjCNativeSelector_Type = {
     .tp_repr                                       = objcsel_repr,
     .tp_call                                       = objcsel_call,
     .tp_getattro                                   = PyObject_GenericGetAttr,
+#if PY_VERSION_HEX >= 0x03090000
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL|Py_TPFLAGS_METHOD_DESCRIPTOR,
+    .tp_vectorcall_offset                          = offsetof(PyObjCNativeSelector, base.vectorcall),
+#else
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+#endif
     .tp_richcompare                                = objcsel_richcompare,
     .tp_getset                                     = objcsel_getset,
     .tp_base                                       = &PyObjCSelector_Type,
@@ -868,6 +876,9 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     result->base.sel_class    = class;
     result->base.sel_methinfo = NULL;
     result->base.sel_flags    = 0;
+#if PY_VERSION_HEX >= 0x03090000
+    result->base.vectorcall = objcsel_vectorcall;
+#endif
     if (class_method) {
         result->base.sel_flags |= PyObjCSelector_kCLASS_METHOD;
     }
