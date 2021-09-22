@@ -335,7 +335,7 @@ def _working_compiler(executable):
     return True
 
 
-def _fixup_compiler():
+def _fixup_compiler(use_ccache):
     if "CC" in os.environ:
         # CC is in the environment, always use explicit
         # overrides.
@@ -374,6 +374,11 @@ def _fixup_compiler():
     if not _working_compiler(cc):
         raise SystemExit("Cannot locate a working compiler")
 
+    if use_ccache:
+        ccache = _find_executable("ccache")
+        if ccache:
+            cc = f"{ccache} {cc}"
+
     if cc != oldcc:
         print(f"Use '{cc}' instead of '{oldcc}' as the compiler")
 
@@ -387,7 +392,7 @@ def _fixup_compiler():
 
 class pyobjc_build_ext(build_ext.build_ext):
     def run(self):
-        _fixup_compiler()
+        _fixup_compiler("PYOBJC_USE_CCACHE" in os.environ)
 
         # Ensure that the PyObjC header files are available
         # in 2.3 and later the headers are in the egg,
