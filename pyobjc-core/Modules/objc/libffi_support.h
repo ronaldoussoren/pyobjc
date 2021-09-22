@@ -31,7 +31,7 @@ extern IMP   PyObjCFFI_MakeClosure(PyObjCMethodSignature*, PyObjCFFI_ClosureFunc
 extern void* PyObjCFFI_FreeClosure(IMP);
 extern IMP   PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature*, SEL, PyObject*);
 extern IMP   PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector*);
-extern PyObject*           PyObjCFFI_Caller(PyObject*, PyObject*, PyObject*);
+extern PyObject*           PyObjCFFI_Caller(PyObject*, PyObject*, PyObject*const*, size_t);
 extern void                PyObjCFFI_FreeIMP(IMP);
 extern PyObjCBlockFunction PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature*, PyObject*);
 extern void                PyObjCFFI_FreeBlockFunction(PyObjCBlockFunction);

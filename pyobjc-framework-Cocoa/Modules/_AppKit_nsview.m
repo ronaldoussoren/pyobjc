@@ -1,6 +1,6 @@
 static PyObject*
 call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
-                                      PyObject* arguments)
+                                      PyObject*const* arguments, size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -9,9 +9,11 @@ call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
     PyObject *        arg1, *arg2;
     NSInteger         count;
 
-    if (!PyArg_ParseTuple(arguments, "OO", &arg1, &arg2)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
         return NULL;
     }
+    arg1 = arguments[0];
+    arg2 = arguments[1];
 
     if (arg1 != Py_None) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");

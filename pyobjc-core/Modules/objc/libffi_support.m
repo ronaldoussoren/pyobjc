@@ -3969,7 +3969,7 @@ PyObjCRT_ResultUsesStret(const char* typestr)
 #endif /* !__arm64__ */
 
 PyObject*
-PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
+PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject*const* args, size_t nargs)
 {
     Py_ssize_t             argbuf_len      = 0;
     Py_ssize_t             argbuf_cur      = 0;
@@ -4059,42 +4059,42 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
         }
 
         if (methinfo->null_terminated_array) {
-            if (PyTuple_Size(args) < Py_SIZE(methinfo) - 3) {
+            if (nargs < (size_t)Py_SIZE(methinfo) - 3) {
                 PyErr_Format(PyExc_TypeError,
                              "Need %" PY_FORMAT_SIZE_T
                              "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                             Py_SIZE(methinfo) - 3, PyTuple_Size(args));
+                             Py_SIZE(methinfo) - 3, nargs);
                 goto error_cleanup;
             }
 
-        } else if (PyTuple_Size(args) < Py_SIZE(methinfo) - 2) {
+        } else if (nargs < (size_t)Py_SIZE(methinfo) - 2) {
             PyErr_Format(PyExc_TypeError,
                          "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
                          "d",
-                         Py_SIZE(methinfo) - 2, PyTuple_Size(args));
+                         Py_SIZE(methinfo) - 2, nargs);
             goto error_cleanup;
         }
 
-        if (PyTuple_Size(args) > MAX_ARGCOUNT - 1) {
+        if (nargs > MAX_ARGCOUNT - 1) {
             PyErr_Format(PyExc_TypeError,
                          "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
                          "d arguments",
-                         MAX_ARGCOUNT, PyTuple_Size(args));
+                         MAX_ARGCOUNT, nargs);
             goto error_cleanup;
         }
 
-    } else if (PyTuple_Size(args) != Py_SIZE(methinfo) - 2) {
+    } else if (nargs != (size_t)Py_SIZE(methinfo) - 2) {
         if (Py_SIZE(methinfo) > MAX_ARGCOUNT) {
             PyErr_Format(PyExc_TypeError,
                          "At most %d arguments are supported, got %" PY_FORMAT_SIZE_T
                          "d arguments",
-                         MAX_ARGCOUNT, PyTuple_Size(args));
+                         MAX_ARGCOUNT, nargs);
             goto error_cleanup;
         }
 
         PyErr_Format(PyExc_TypeError,
                      "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                     Py_SIZE(methinfo) - 2, PyTuple_Size(args));
+                     Py_SIZE(methinfo) - 2, nargs);
         goto error_cleanup;
     }
 
@@ -4183,7 +4183,7 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
         argbuf_cur = align(resultSize, sizeof(void*));
     }
 
-    r = PyObjCFFI_ParseArguments(methinfo, 2, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), argbuf_cur, argbuf, argbuf_len, byref,
+    r = PyObjCFFI_ParseArguments(methinfo, 2, args, nargs, argbuf_cur, argbuf, argbuf_len, byref,
                                  byref_attr, arglist, values);
     if (r == -1) {
         goto error_cleanup;
@@ -4267,7 +4267,7 @@ PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* args)
                                    byref_out_count, self, flags, values);
 
     if (unlikely(variadicAllArgs)) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + PyTuple_Size(args), byref, byref_attr)
+        if (PyObjCFFI_FreeByRef(Py_SIZE(methinfo) + nargs, byref, byref_attr)
             < 0) {
             goto error_cleanup;
         }
@@ -4299,7 +4299,7 @@ error_cleanup:
     if (methinfo->shortcut_signature) {
         /* pass */
     } else if (variadicAllArgs) {
-        PyObjCFFI_FreeByRef(PyTuple_Size(args), byref, byref_attr);
+        PyObjCFFI_FreeByRef(nargs, byref, byref_attr);
 
     } else {
         PyObjCFFI_FreeByRef(Py_SIZE(methinfo), byref, byref_attr);

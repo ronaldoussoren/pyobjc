@@ -12,7 +12,7 @@
 
 static PyObject*
 call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* self,
-                                                   PyObject* arguments)
+                                                   PyObject*const* arguments, size_t nargs)
 {
     PyObject*           result;
     PyObject*           v;
@@ -22,7 +22,10 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
     NSPoint             points[3];
     NSBezierPathElement res;
 
-    if (!PyArg_ParseTuple(arguments, Py_ARG_NSInteger, &idx)) {
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(NSInteger), arguments[0], &idx) == -1) {
         return NULL;
     }
 
@@ -92,7 +95,7 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
 
 static PyObject*
 call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
-                                               PyObject* arguments)
+                                               PyObject*const* arguments, size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -102,7 +105,11 @@ call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
     PyObject*         seq;
     int               i, len;
 
-    if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSInteger, &pointList, &idx)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
+        return NULL;
+    }
+    pointList = arguments[0];
+    if (PyObjC_PythonToObjC(@encode(NSInteger), arguments[1], &idx) == -1) {
         return NULL;
     }
 

@@ -1,16 +1,15 @@
 #include "pyobjc.h"
 
 static PyObject*
-call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSData_bytes(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     const void*       bytes;
     NSUInteger        bytes_len;
     PyObject*         result;
     struct objc_super super;
+    Py_buffer info;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -40,14 +39,10 @@ call_NSData_bytes(PyObject* method, PyObject* self, PyObject* arguments)
         return PyBytes_FromStringAndSize("", 0);
     }
 
-    /* 2.7 or later: use a memory view */
-    Py_buffer info;
     if (PyBuffer_FillInfo(&info, self, (void*)bytes, bytes_len, 1, PyBUF_FULL_RO) < 0) {
         return NULL;
     }
-    result = PyMemoryView_FromBuffer(&info);
-
-    return result;
+    return PyMemoryView_FromBuffer(&info);
 }
 
 static void
@@ -113,16 +108,15 @@ error:
 }
 
 static PyObject*
-call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     void*             bytes;
     NSUInteger        bytes_len;
     PyObject*         result;
     struct objc_super super;
+    Py_buffer info;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -153,8 +147,6 @@ call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject* argu
         return NULL;
     }
 
-    /* 2.7 or later: use a memory view */
-    Py_buffer info;
     if (PyBuffer_FillInfo(&info, self, bytes, bytes_len, 0, PyBUF_FULL) < 0) {
         return NULL;
     }

@@ -27,17 +27,18 @@ Installing or upgrading PyObjC using `pip`_ is easy:
 
 .. sourcecode:: sh
 
-   $ pip install -U pyobjc
+   $ pip3 install -U pyobjc
 
 For most users this will install PyObjC using `wheel <https://pypi.org/project/wheel>`_ binary
 archives, which means you don't have to have a compiler on your machine.
 
 Some use cases require installation of all framework bindings, not just those that are
-relevant for the current system:
+relevant for the current system. In PyObjC 8 you can install framework bindings using the
+*allbindings** extra:
 
 .. sourcecode:: sh
 
-   $ pip install -U 'pyobjc[allbindings]'
+   $ pip3 install -U 'pyobjc[allbindings]'
 
 This requires using binary wheels, otherwise this can attempt to install bindings that
 require a newer SDK than available on the current machine.
@@ -97,23 +98,9 @@ that list contains an option to install the "Command Line Tools".
 
 If you use OSX 10.9 or later, open a Terminal window and run ``xcode-select --install``.
 
-.. note::
-
-   The Command Line Tools package may not be automaticly updated when you install
-   a new version of Xcode. Every time Xcode is updated through the Mac App Store
-   you need to start Xcode to check if there is a new version of the Command Line Tools.
-
 
 Advanced installation options
 -----------------------------
-
-PyObjC for PowerPC systems
-..........................
-
-To build a version of PyObjC that runs on PowerPC systems you need a system
-running macOS 10.6 (or earlier) running Xcode 3. The version of Xcode that
-is available in the Mac App Store can not create PowerPC binaries.
-
 
 Distributing binaries to other macOS releases
 .............................................

@@ -460,7 +460,7 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
 }
 
 static PyObject*
-objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
+objcsel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf,PyObject* kwnames)
 {
     PyObjCNativeSelector*  self    = (PyObjCNativeSelector*)_self;
     PyObject*              pyself  = self->base.sel_self;
@@ -469,21 +469,18 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
     PyObject*              pyres;
     PyObjCMethodSignature* methinfo;
 
-    if (kwds != NULL && PyObject_Size(kwds) != 0) {
-        PyErr_SetString(PyExc_TypeError,
-                        "Objective-C selectorrs don't support keyword arguments");
+    if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
     }
 
     if (pyself == NULL) {
-        Py_ssize_t argslen;
-        argslen = PyTuple_Size(args);
-        if (argslen < 1) {
+        /* XXX: Fold this into execution of callfunc, that also checks for bound/unbound */
+        if (PyVectorcall_NARGS(nargsf) < 1) {
             PyErr_SetString(PyExc_TypeError, "Missing argument: self");
             return NULL;
         }
 
-        pyself = PyTuple_GET_ITEM(args, 0);
+        pyself = args[0];
         if (pyself == NULL) {
             return NULL;
         }
@@ -521,8 +518,9 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
         self->sel_call_func = execute;
     }
 
+    /* XXX: The if statement below can be simplified, both cases are mostly the same */
     if (self->base.sel_self != NULL) {
-        pyres = res = execute((PyObject*)self, self->base.sel_self, args);
+        pyres = res = execute((PyObject*)self, self->base.sel_self, args, PyVectorcall_NARGS(nargsf));
         if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) >= 1
             && PyTuple_GET_ITEM(pyres, 0) == pyself) {
 
@@ -538,31 +536,13 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
         }
 
     } else {
-        PyObject*  arglist;
         PyObject*  myClass;
-        Py_ssize_t i;
-        Py_ssize_t argslen;
-
-        argslen = PyTuple_Size(args);
-        arglist = PyTuple_New(argslen - 1);
-
-        for (i = 1; i < argslen; i++) {
-            PyObject* v = PyTuple_GET_ITEM(args, i);
-            if (v == NULL) {
-                Py_DECREF(arglist);
-                return NULL;
-            }
-
-            PyTuple_SET_ITEM(arglist, i - 1, v);
-            Py_INCREF(v);
-        }
 
         myClass = PyObjCClass_New(self->base.sel_class);
         if (!(PyObject_IsInstance(pyself, myClass)
               || (PyUnicode_Check(pyself)
                   && class_isSubclassOf(self->base.sel_class, [NSString class])))) {
 
-            Py_DECREF(arglist);
             Py_DECREF(myClass);
             PyErr_Format(PyExc_TypeError,
                          "Expecting instance of %s as self, got one "
@@ -572,7 +552,7 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
         }
         Py_DECREF(myClass);
 
-        pyres = res = execute((PyObject*)self, pyself, arglist);
+        pyres = res = execute((PyObject*)self, pyself, args+1, PyVectorcall_NARGS(nargsf)-1);
         if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
             && PyTuple_GET_ITEM(pyres, 0) == pyself) {
             pyres = pyself;
@@ -584,8 +564,6 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
                 PyObjCObject_ClearObject(pyself);
             }
         }
-
-        Py_DECREF(arglist);
     }
 
     if (pyres && PyObjCObject_Check(pyres)) {
@@ -595,6 +573,7 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
             ((PyObjCObject*)pyself)->flags &= ~PyObjCObject_kUNINITIALIZED;
             if (self->base.sel_self && self->base.sel_self != pyres
                 && !PyErr_Occurred()) {
+                /* XXX: This needs documentation, the logic is not 100% rigorous */
                 PyObjCObject_ClearObject(self->base.sel_self);
             }
         }
@@ -602,6 +581,18 @@ objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 
     return res;
 }
+
+static PyObject*
+objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
+{
+    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
+        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+        return NULL;
+    }
+
+    return objcsel_vectorcall(_self, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
+}
+
 
 static PyObject*
 objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)

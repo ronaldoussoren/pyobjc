@@ -77,13 +77,13 @@ build_itemset(AuthorizationItemSet* itemset)
 }
 
 static PyObject*
-call_authorizationRights(PyObject* method, PyObject* self, PyObject* arguments)
+call_authorizationRights(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     struct objc_super    super;
     AuthorizationRights* rights;
     PyObject*            py_rights;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) {
         return NULL;
     }
 
@@ -113,7 +113,7 @@ call_authorizationRights(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static PyObject*
-call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* arguments)
+call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     struct objc_super   super;
     AuthorizationRights rights;
@@ -121,9 +121,10 @@ call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* argumen
 
     rights.items = NULL;
 
-    if (!PyArg_ParseTuple(arguments, "O", &py_rights)) {
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
         return NULL;
     }
+    py_rights = arguments[0];
 
     if (!parse_itemset(py_rights, &rights)) {
         return NULL;

@@ -5,9 +5,8 @@
 
 static PyObject*
 call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObject* self,
-                                                         PyObject* arguments)
+                                                         PyObject*const* arguments, size_t nargs)
 {
-    PyObject*         rangeObj;
     NSRange           aRange;
     NSRange           leftoverRange;
     NSRange*          leftoverPtr;
@@ -17,14 +16,17 @@ call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObj
     PyObject*         res;
     PyObject *        buf1, *buf2;
 
-    if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger "OO", &buf1, &maxLength,
-                          &rangeObj, &buf2)) {
+    if (PyObjC_CheckArgCount(method, 4, 4, nargs) == -1) {
         return NULL;
     }
-
-    if (PyObjC_PythonToObjC(@encode(NSRange), rangeObj, &aRange) < 0) {
+    buf1 = arguments[0];
+    if (PyObjC_PythonToObjC(@encode(NSUInteger), arguments[1], &maxLength) == -1) {
         return NULL;
     }
+    if (PyObjC_PythonToObjC(@encode(NSRange), arguments[2], &aRange)) {
+        return NULL;
+    }
+    buf1 = arguments[3];
 
     if (buf1 != Py_None) {
         PyErr_SetString(PyExc_ValueError, "output buffer must be None");
@@ -80,7 +82,7 @@ call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObj
     }
 
     if (leftoverPtr != NULL) {
-        rangeObj = PyObjC_ObjCToPython(@encode(NSRange), &leftoverRange);
+        PyObject* rangeObj = PyObjC_ObjCToPython(@encode(NSRange), &leftoverRange);
         if (rangeObj == NULL) {
             Py_DECREF(res);
             return NULL;
@@ -94,7 +96,7 @@ call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObj
 }
 
 static PyObject*
-call_NSString_getCString_maxLength_(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSString_getCString_maxLength_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     char*             buf;
     NSUInteger        maxLength;
@@ -102,9 +104,14 @@ call_NSString_getCString_maxLength_(PyObject* method, PyObject* self, PyObject* 
     PyObject*         res;
     PyObject*         py_buf;
 
-    if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_buf, &maxLength)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
         return NULL;
     }
+    py_buf = arguments[0];
+    if (PyObjC_PythonToObjC(@encode(NSUInteger), arguments[1], &maxLength) == -1) {
+        return NULL;
+    }
+
     if (py_buf != Py_None) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;

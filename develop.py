@@ -241,7 +241,8 @@ def main():
         sys.exit(1)
 
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
-        build_project(project, sys.argv[1:])
+        if not build_project(project, sys.argv[1:]):
+            sys.exit(1)
 
 
 if __name__ == "__main__":

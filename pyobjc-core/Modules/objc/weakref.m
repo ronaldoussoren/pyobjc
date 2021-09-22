@@ -45,14 +45,12 @@ weakref_vectorcall(PyObject* object, PyObject*const* args __attribute__((__unuse
     PyObjC_WeakRef* self       = (PyObjC_WeakRef*)object;
     NSObject*       tmp;
 
-    if (kwnames != NULL && (!PyTuple_Check(kwnames) || PyTuple_GET_SIZE(kwnames) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+    if (PyObjC_CheckNoKwnames(object, kwnames) == -1) {
         return NULL;
     }
 
-    if (PyVectorcall_NARGS(nargsf) != 0) {
-       PyErr_Format(PyExc_TypeError, "function takes no arguments, %zd given", PyVectorcall_NARGS(nargsf));
-       return NULL;
+    if (PyObjC_CheckArgCount(object, 0, 0, nargsf) == -1) {
+        return NULL;
     }
 
     tmp = objc_loadWeak(&self->object);

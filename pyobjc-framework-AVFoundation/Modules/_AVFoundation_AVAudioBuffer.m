@@ -4,7 +4,7 @@
 
 static PyObject*
 call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
-                                       PyObject* arguments)
+                                       PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     float**           res;
     AVAudioFormat*    format;
@@ -12,7 +12,7 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
     PyObject*         result;
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) {
         return NULL;
     }
 
@@ -64,7 +64,7 @@ call_AVAudioPCMBuffer_floatChannelData(PyObject* method, PyObject* self,
 
 static PyObject*
 call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
-                                       PyObject* arguments)
+                                       PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     int16_t**         res;
     AVAudioFormat*    format;
@@ -72,7 +72,7 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
     PyObject*         result;
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) {
         return NULL;
     }
 
@@ -124,7 +124,7 @@ call_AVAudioPCMBuffer_int16ChannelData(PyObject* method, PyObject* self,
 
 static PyObject*
 call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
-                                       PyObject* arguments)
+                                       PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     int32_t**         res;
     AVAudioFormat*    format;
@@ -132,7 +132,7 @@ call_AVAudioPCMBuffer_int32ChannelData(PyObject* method, PyObject* self,
     PyObject*         result;
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) {
         return NULL;
     }
 

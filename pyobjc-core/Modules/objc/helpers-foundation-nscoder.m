@@ -2,33 +2,39 @@
 
 static PyObject*
 call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
-                                       PyObject* arguments)
+                                       PyObject*const* arguments, size_t nargs)
 {
-    char*             typestr;
     PyObject*         value;
     void*             buf;
     Py_ssize_t        size;
     int               err;
     struct objc_super super;
-    Py_ssize_t        typestr_len;
+    Py_buffer         view;
 
-    if (!PyArg_ParseTuple(arguments, "y#O", &typestr, &typestr_len, &value)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+
+    if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
+    /* XXX: Check that view is a null terminated string */
+    value = arguments[1];
 
-    size = PyObjCRT_SizeOfType(typestr);
+    size = PyObjCRT_SizeOfType(view.buf);
     if (size == -1) {
+        PyBuffer_Release(&view);
         return NULL;
     }
 
     buf = PyMem_Malloc(size);
     if (buf == NULL) {
+        PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
     }
 
-    err = depythonify_c_value(typestr, value, buf);
+    err = depythonify_c_value(view.buf, value, buf);
     if (err == -1) {
+        PyBuffer_Release(&view);
         PyMem_Free(buf);
         return NULL;
     }
@@ -38,7 +44,7 @@ call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
         @try {
             if (isIMP) {
                 ((void (*)(id, SEL, char*, void*))(PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     buf);
 
             } else {
@@ -46,7 +52,7 @@ call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
                 objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
                 ((void (*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), typestr, buf);
+                    &super, PyObjCSelector_GetSelector(method), view.buf, buf);
             }
 
         } @catch (NSObject* localException) {
@@ -55,6 +61,7 @@ call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     PyMem_Free(buf);
+    PyBuffer_Release(&view);
 
     if (PyErr_Occurred()) {
         return NULL;
@@ -130,9 +137,8 @@ error:
 
 static PyObject*
 call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
-                                             PyObject* arguments)
+                                             PyObject*const* arguments, size_t nargs)
 {
-    char*             typestr;
     NSUInteger        count;
     NSUInteger        i;
     Py_ssize_t        value_len;
@@ -141,25 +147,35 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     Py_ssize_t        size;
     int               err;
     struct objc_super super;
-    Py_ssize_t        typestr_len;
+    Py_buffer         view;
 
-    if (!PyArg_ParseTuple(arguments, "y#" Py_ARG_NSUInteger "O", &typestr, &typestr_len,
-                          &count, &value)) {
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1) return NULL;
+
+    if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
+    /* XXX: Check that view is a null-terminated string */
+    if (depythonify_c_value(@encode(NSUInteger), arguments[1], &count) == -1) {
+        PyBuffer_Release(&view);
+        return NULL;
+    }
+    value = arguments[2];
 
-    size = PyObjCRT_SizeOfType(typestr);
+    size = PyObjCRT_SizeOfType(view.buf);
     if (size == -1) {
+        PyBuffer_Release(&view);
         return NULL;
     }
 
     buf = PyMem_Malloc(size * (count + 1));
     if (buf == NULL) {
+        PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
     }
 
     if (!PySequence_Check(value)) {
+        PyBuffer_Release(&view);
         PyMem_Free(buf);
         PyErr_SetString(PyExc_TypeError, "Need sequence of objects");
         return NULL;
@@ -167,19 +183,22 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
 
     value_len = PySequence_Size(value);
     if (value_len == -1) {
+        PyBuffer_Release(&view);
         PyMem_Free(buf);
         return NULL;
 
     } else if ((NSUInteger)value_len > count) {
+        PyBuffer_Release(&view);
         PyMem_Free(buf);
         PyErr_SetString(PyExc_ValueError, "Inconsistent arguments");
         return NULL;
     }
 
     for (i = 0; i < count; i++) {
-        err = depythonify_c_value(typestr, PySequence_GetItem(value, i),
+        err = depythonify_c_value(view.buf, PySequence_GetItem(value, i),
                                   ((char*)buf) + (size * i));
         if (err == -1) {
+            PyBuffer_Release(&view);
             PyMem_Free(buf);
             return NULL;
         }
@@ -190,7 +209,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
         @try {
             if (isIMP) {
                 ((void (*)(id, SEL, char*, NSUInteger, void*))(PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     count, buf);
             } else {
                 objc_superSetReceiver(super, PyObjCObject_GetObject(self));
@@ -198,7 +217,7 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
 
                 ((void (*)(struct objc_super*, SEL, char*, NSUInteger,
                            void*))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), typestr, count, buf);
+                    &super, PyObjCSelector_GetSelector(method), view.buf, count, buf);
             }
 
         } @catch (NSObject* localException) {
@@ -207,6 +226,8 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     PyMem_Free(buf);
+    PyBuffer_Release(&view);
+
     if (PyErr_Occurred())
         return NULL;
 
@@ -301,30 +322,36 @@ error:
 
 static PyObject*
 call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
-                                       PyObject* arguments)
+                                       PyObject*const* arguments, size_t nargs)
 {
-    char*             typestr;
-    PyObject*         value;
     void*             buf;
-    Py_ssize_t        size, typestr_len;
+    PyObject*         value;
+    Py_ssize_t        size;
     struct objc_super super;
     PyObject*         py_buf;
+    Py_buffer         view;
 
-    if (!PyArg_ParseTuple(arguments, "y#O", &typestr, &typestr_len, &py_buf)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+
+    if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
+    py_buf = arguments[1];
 
     if (py_buf != Py_None) {
+        PyBuffer_Release(&view);
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;
     }
 
-    size = PyObjCRT_SizeOfType(typestr);
+    size = PyObjCRT_SizeOfType(view.buf);
     if (size == -1) {
+        PyBuffer_Release(&view);
         return NULL;
     }
     buf = PyMem_Malloc(size);
     if (buf == NULL) {
+        PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
     }
@@ -334,14 +361,14 @@ call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
         @try {
             if (isIMP) {
                 ((void (*)(id, SEL, char*, void*))(PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     buf);
             } else {
                 objc_superSetReceiver(super, PyObjCObject_GetObject(self));
                 objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
                 ((void (*)(struct objc_super*, SEL, char*, void*))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), typestr, buf);
+                    &super, PyObjCSelector_GetSelector(method), view.buf, buf);
             }
 
         } @catch (NSObject* localException) {
@@ -351,11 +378,13 @@ call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
 
     if (PyErr_Occurred()) {
         PyMem_Free(buf);
+        PyBuffer_Release(&view);
         return NULL;
     }
 
-    value = pythonify_c_value(typestr, buf);
+    value = pythonify_c_value(view.buf, buf);
     PyMem_Free(buf);
+    PyBuffer_Release(&view);
     if (value == NULL) {
         return NULL;
     }
@@ -423,26 +452,36 @@ error:
 
 static PyObject*
 call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
-                                            PyObject* arguments)
+                                            PyObject*const* arguments, size_t nargs)
 {
-    char*             typestr;
     PyObject*         value;
     void*             buf;
-    Py_ssize_t        size, typestr_len;
+    Py_ssize_t        size;
     struct objc_super super;
     PyObject*         py_buf;
+    Py_buffer         view;
 
-    if (!PyArg_ParseTuple(arguments, "y#On", &typestr, &typestr_len, &py_buf, &size)) {
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1) return NULL;
+
+    if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
+        return NULL;
+    }
+    /* XXX: Verify that view is a null-terminated string */
+    py_buf = arguments[1];
+    if (depythonify_c_value(@encode(Py_ssize_t), arguments[2], &size) == -1) {
+        PyBuffer_Release(&view);
         return NULL;
     }
 
     if (py_buf != Py_None) {
+        PyBuffer_Release(&view);
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;
     }
 
     buf = PyMem_Malloc(size);
     if (buf == NULL) {
+        PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
     }
@@ -452,7 +491,7 @@ call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
         @try {
             if (isIMP) {
                 ((void (*)(id, SEL, char*, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     buf, size);
             } else {
                 objc_superSetReceiver(super, PyObjCObject_GetObject(self));
@@ -460,7 +499,7 @@ call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
 
                 ((void (*)(struct objc_super*, SEL, char*, void*,
                            NSUInteger))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), typestr, buf, size);
+                    &super, PyObjCSelector_GetSelector(method), view.buf, buf, size);
             }
 
         } @catch (NSObject* localException) {
@@ -469,16 +508,19 @@ call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        PyBuffer_Release(&view);
         PyMem_Free(buf);
         return NULL;
     }
 
-    value = pythonify_c_value(typestr, buf);
+    value = pythonify_c_value(view.buf, buf);
     PyMem_Free(buf);
     if (value == NULL) {
+        PyBuffer_Release(&view);
         return NULL;
     }
 
+    PyBuffer_Release(&view);
     return value;
 }
 
@@ -548,9 +590,8 @@ error:
 
 static PyObject*
 call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
-                                             PyObject* arguments)
+                                             PyObject*const* arguments, size_t nargs)
 {
-    char*             typestr;
     NSUInteger        count;
     NSUInteger        i;
     PyObject*         result;
@@ -558,25 +599,37 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     void*             buf;
     Py_ssize_t        size;
     struct objc_super super;
-    Py_ssize_t        typestr_len;
+    Py_buffer         view;
 
-    if (!PyArg_ParseTuple(arguments, "y#" Py_ARG_NSUInteger "O", &typestr, &typestr_len,
-                          &count, &py_buf)) {
+
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1) return NULL;
+
+    if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
+        return NULL;
+    }
+    /* XXX: Check that view is a null-terminated string */
+    if (depythonify_c_value(@encode(NSUInteger), arguments[1], &count) == -1) {
+        PyBuffer_Release(&view);
         return NULL;
     }
 
+    py_buf = arguments[2];
+
     if (py_buf != Py_None) {
+        PyBuffer_Release(&view);
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;
     }
 
-    size = PyObjCRT_SizeOfType(typestr);
+    size = PyObjCRT_SizeOfType(view.buf);
     if (size == -1) {
+        PyBuffer_Release(&view);
         return NULL;
     }
 
     buf = PyMem_Malloc(size * (count + 1));
     if (buf == NULL) {
+        PyBuffer_Release(&view);
         PyErr_NoMemory();
         return NULL;
     }
@@ -586,7 +639,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
         @try {
             if (isIMP) {
                 ((void (*)(id, SEL, char*, NSUInteger, void*))(PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), typestr,
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     count, buf);
             } else {
                 objc_superSetReceiver(super, PyObjCObject_GetObject(self));
@@ -595,7 +648,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
                 ((void (*)(struct objc_super*, SEL, char*, NSUInteger,
                            void*))objc_msgSendSuper)(&super,
                                                      PyObjCSelector_GetSelector(method),
-                                                     typestr, (NSUInteger)count, buf);
+                                                     view.buf, (NSUInteger)count, buf);
             }
 
         } @catch (NSObject* localException) {
@@ -604,18 +657,20 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     Py_END_ALLOW_THREADS
 
     if (PyErr_Occurred()) {
+        PyBuffer_Release(&view);
         PyMem_Free(buf);
         return NULL;
     }
 
     result = PyTuple_New(count);
     if (result == NULL) {
+        PyBuffer_Release(&view);
         PyMem_Free(buf);
         return NULL;
     }
 
     for (i = 0; i < count; i++) {
-        PyTuple_SetItem(result, i, pythonify_c_value(typestr, ((char*)buf) + (size * i)));
+        PyTuple_SetItem(result, i, pythonify_c_value(view.buf, ((char*)buf) + (size * i)));
         if (PyTuple_GetItem(result, i) == NULL) {
             Py_DECREF(result);
             PyMem_Free(buf);
@@ -623,6 +678,7 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
         }
     }
 
+    PyBuffer_Release(&view);
     PyMem_Free(buf);
     return result;
 }
@@ -713,22 +769,24 @@ error:
 }
 
 static PyObject*
-call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
-    char*      bytes;
-    Py_ssize_t size;
     Py_ssize_t length;
+    Py_buffer  view;
 
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, "y#n", &bytes, &size, &length)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+
+    if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
 
-    if (length > size) {
+    if (length > view.len) {
         PyErr_Format(PyExc_ValueError,
                      "length %" PY_FORMAT_SIZE_T "d > len(buf) %" PY_FORMAT_SIZE_T "d",
-                     length, size);
+                     length, view.len);
+        PyBuffer_Release(&view);
         return NULL;
     }
 
@@ -737,19 +795,21 @@ call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self, PyObject* arg
         @try {
             if (isIMP) {
                 ((void (*)(id, SEL, void*, NSUInteger))(PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), bytes,
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
                     length);
             } else {
                 objc_superSetReceiver(super, PyObjCObject_GetObject(self));
                 objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
                 ((void (*)(struct objc_super*, SEL, void*, NSUInteger))objc_msgSendSuper)(
-                    &super, PyObjCSelector_GetSelector(method), bytes, length);
+                    &super, PyObjCSelector_GetSelector(method), view.buf, length);
             }
         } @catch (NSObject* localException) {
             PyObjCErr_FromObjC(localException);
         }
     Py_END_ALLOW_THREADS
+
+    PyBuffer_Release(&view);
 
     if (PyErr_Occurred())
         return NULL;
@@ -822,7 +882,7 @@ error:
 
 static PyObject*
 call_NSCoder_decodeBytesWithReturnedLength_(PyObject* method, PyObject* self,
-                                            PyObject* arguments)
+                                            PyObject*const* arguments, size_t nargs)
 {
     char*             bytes;
     NSUInteger        size = 0;
@@ -831,9 +891,10 @@ call_NSCoder_decodeBytesWithReturnedLength_(PyObject* method, PyObject* self,
     PyObject*         py_buf;
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, "O", &py_buf)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) return NULL;
+
+    py_buf = arguments[0];
+
     if (py_buf != Py_None) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;
@@ -970,7 +1031,7 @@ error:
 
 static PyObject*
 call_NSCoder_decodeBytesForKey_returnedLength_(PyObject* method, PyObject* self,
-                                               PyObject* arguments)
+                                               PyObject*const* arguments, size_t nargs)
 {
     char*             bytes;
     NSUInteger        size = 0;
@@ -980,9 +1041,12 @@ call_NSCoder_decodeBytesForKey_returnedLength_(PyObject* method, PyObject* self,
     id                key;
     struct objc_super super;
 
-    if (!PyArg_ParseTuple(arguments, "O&O", PyObjCObject_Convert, &key, &py_buf)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+
+    if (depythonify_c_value(@encode(id), arguments[0], &key) == -1)  {
         return NULL;
     }
+    py_buf = arguments[1];
 
     if (py_buf != NULL) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
@@ -1138,24 +1202,47 @@ error:
 
 static PyObject*
 call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
-                                        PyObject* arguments)
+                                        PyObject*const* arguments, size_t nargs)
 {
-    char*             bytes;
-    Py_ssize_t        size;
     id                key;
     struct objc_super super;
+    Py_buffer         view;
 
+#if 0
+    /* XXX: This doesn't match the objective-C API (missing 'length')!
+     *
+     * The converted code matches the PyArg_Parse stanza and needs to be fixed
+     * (with a backward compat note in the changelog)
+     *
+     * Plan:
+     * - Make 'length' an optional argument for now (but warnings.warn about it)
+     * - Document change in changelog
+     * - Make length required in PyObjC 9.
+
+     */
     if (!PyArg_ParseTuple(arguments, "y#O&", &bytes, &size, PyObjCObject_Convert, &key)) {
         return NULL;
     }
+#endif
+
+
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+    if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
+        return NULL;
+    }
+    if (depythonify_c_value(@encode(id), arguments[1], &key) == -1) {
+        PyBuffer_Release(&view);
+        return NULL;
+    }
+
 
     int isIMP = PyObjCIMP_Check(method);
     Py_BEGIN_ALLOW_THREADS
         @try {
             if (isIMP) {
                 ((void (*)(id, SEL, void*, NSUInteger, id))(PyObjCIMP_GetIMP(method)))(
-                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), bytes,
-                    size, key);
+                    PyObjCObject_GetObject(self), PyObjCIMP_GetSelector(method), view.buf,
+                    (NSUInteger)view.len, key);
             } else {
                 objc_superSetReceiver(super, PyObjCObject_GetObject(self));
                 objc_superSetClass(super, PyObjCSelector_GetClass(method));
@@ -1163,7 +1250,7 @@ call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
                 ((void (*)(struct objc_super*, SEL, void*, NSUInteger,
                            id))objc_msgSendSuper)(&super,
                                                   PyObjCSelector_GetSelector(method),
-                                                  bytes, (NSUInteger)size, key);
+                                                  view.buf, (NSUInteger)view.len, key);
             }
 
         } @catch (NSObject* localException) {
@@ -1171,9 +1258,11 @@ call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
         }
     Py_END_ALLOW_THREADS
 
-    if (PyErr_Occurred())
-        return NULL;
+    PyBuffer_Release(&view);
 
+    if (PyErr_Occurred()) {
+        return NULL;
+    }
     Py_INCREF(Py_None);
     return Py_None;
 }

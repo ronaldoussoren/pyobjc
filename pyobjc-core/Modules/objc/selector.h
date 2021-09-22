@@ -19,7 +19,7 @@
  * @param args The other arguments
  * @result Returns the return value, or NULL if an exception occurred
  */
-typedef PyObject* (*PyObjC_CallFunc)(PyObject* meth, PyObject* self, PyObject* args);
+typedef PyObject* (*PyObjC_CallFunc)(PyObject* meth, PyObject* self, PyObject*const* args, size_t nargs);
 
 typedef struct {
     PyObject_HEAD

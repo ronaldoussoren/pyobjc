@@ -55,9 +55,59 @@ Performance
 
 Most performance changes use features introduced in Python 3.9.
 
-* Implement the "vectorcall" protocol for :type:`objc.function`, :type:`objc.WeakRef`.
+* Implement the "vectorcall" protocol for :class:`objc.function`, :class:`objc.WeakRef`,
+  :class:`objc.selector`, :class:`objc.IMP`.
 
   This reduces the interpreter overhead for calling instances of these objects.
+
+New features
+............
+
+* Updated framework bindings for macOS 12 (Xcode 13 beta 5)
+
+  New:
+
+  - AudioVideoBridging (introduced in macOS 10.8)
+
+  - DataDetection
+
+  - IntentsUI
+
+  - LocalAuthenticationEmbeddedUI
+
+  - MailKit
+
+  - MetricKit
+
+  - ShazamKit
+
+
+* #318: Implement support for ``__class_getitem__`` for Objective-C classes
+
+  The result of this is that effectively all Objective-C classes can be used
+  as generic classes, without runtime type checking. This is meant to be used
+  with optional type checking (for example MyPy)
+
+  Usage:
+
+  .. sourcecode:: python
+
+        def create_integers(count: int) -> NSArray[int]:
+            return NSArray[int].arrayWithArray_([i for i in range(count)])
+
+  .. note::
+
+     This requires typing stubs for framework bindings to be really useful,
+     and those do not yet exist.
+
+
+* #354: Add an option to install all framework bindings, including those not
+  relevant for the current platform. To use this:
+
+  .. sourcecode:: sh
+
+     $ pip install 'pyobjc[allbindings]'
+
 
 Other changes
 .............
@@ -86,32 +136,6 @@ Other changes
   PyObjC custom type encodings now works (those encodings are translated to
   the corresponding Objective-C encoding.
 
-* #318: Implement support for ``__class_getitem__`` for Objective-C classes
-
-  The result of this is that effectively all Objective-C classes can be used
-  as generic classes, without runtime type checking. This is meant to be used
-  with optional type checking.
-
-  Usage:
-
-  .. sourcecode:: python
-
-        def create_integers(count: int) -> NSArray[int]:
-            return NSArray[int].arrayWithArray_([i for i in range(count)])
-
-  .. note::
-
-     This requires typing stubs for framework bindings to be really useful,
-     and those do not yet exist.
-
-
-* #354: Add an option to install all framework bindings, including those not
-  relevant for the current platform. To use this:
-
-  .. sourcecode:: sh
-
-     $ pip install 'pyobjc[allbindings]'
-
 * Fix bindings for ``SKIndexCopyDocumentRefsForDocumentIDs``, that binding
   didn't work due to a typo in the metadata.
 
@@ -137,110 +161,6 @@ Other changes
 
 * Adjusted PyObjC testcases to check for 11.0 instead of 10.16
   now that testsupport uses the real platform version.
-
-* Updated framework bindings for Xcode 13 beta 5
-
-  New:
-  - AudioVideoBridging (introduced in macOS 10.8)
-  - DataDetection
-  - IntentsUI
-  - LocalAuthenticationEmbeddedUI
-  - MailKit
-  - MetricKit
-  - ShazamKit
-
-  Updated:
-  - iTunesLibrary
-  - Accessibility
-  - AddressBook
-  - AuthenticationServices
-  - AVFAudio
-  - AVFoundation
-  - AVPlayer
-  - ClassKit
-  - CloudKit
-  - Contacts
-  - CoreAudioTypes
-  - CoreAudio
-  - CoreBluetooth
-  - CoreData
-  - CoreFoundation
-  - CoreGraphics
-  - CoreHaptics
-  - CoreImage
-  - CoreMedia
-  - CoreMediaIO
-  - CoreMIDI
-  - CoreSpotlight
-  - CoreVideo
-  - CoreWLAN
-  - EventKit
-  - FileProvider
-  - Foundation
-  - GameController
-  - GameKit
-  - ImageIO
-  - IOSurface
-  - JavaScriptCore
-  - LinkPresentation
-  - MetalPerformanceShaders
-  - MetalPerformanceShadersGraph
-  - MLCompute
-  - ModelIO
-  - OpenDirectory
-  - OSLog
-  - PassKit
-  - PDFKit
-  - Photos
-  - PhotosUI
-  - QuickLookUI
-  - ReplayKit
-  - SceneKit
-  - SoundAnalysis
-  - StoreKit
-  - SystemExtensions
-  - UniformTypeIdentifiers
-  - UserNotifications
-  - VideoToolbox
-  - Virtualization
-  - Vision
-  - WebKit
-
-  Unchanged metadata:
-  - Accounts (The entire framework is deprecated)
-  - ApplicationServices
-  - AutomaticAssessmentConfiguration
-  - CallKit
-  - Carbon
-  - CFNetwork
-  - CoreLocation
-  - CoreML
-  - CoreMotion
-  - CoreServices
-  - CoreText
-  - CryptoTokenKit
-  - DeviceCheck
-  - FileProviderUI
-  - FinderSync
-  - ImageCaptureCore
-  - LocalAuthentication
-  - MapKit
-  - MediaAccessibility
-  - MediaPlayer
-  - NetworkExtension
-  - PencilKit
-  - QuickLook
-  - Quartz
-  - QuartzCore
-  - QuickLookThumbnailing
-  - SafariServices
-  - ServiceManagement
-  - Speech
-  - SpriteKit
-  - SyncServices
-  - SystemConfiguration
-  - UserNotificationsUI
-  - VideoSubscriberAccount
 
 
 Version 7.3

@@ -1369,3 +1369,34 @@ PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
 
     return result;
 }
+
+int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf)
+{
+    size_t nargs = PyVectorcall_NARGS(nargsf);
+    if (nargs < min_args || nargs > max_args) {
+        if (min_args == max_args) {
+            if (min_args == 0) {
+                PyErr_Format(PyExc_TypeError,
+                    "%R expected no arguments, got %zu", callable, nargs);
+            } else {
+                PyErr_Format(PyExc_TypeError,
+                    "%R expected %zu arguments, got %zu", callable, min_args, nargs);
+            }
+        } else {
+            PyErr_Format(PyExc_TypeError,
+                    "%R expected between %zu and %zu arguments, got %zu",
+                    callable, min_args, max_args, nargs);
+        }
+        return -1;
+    }
+    return 0;
+}
+
+int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames)
+{
+    if (kwnames == NULL) return 0;
+    if (PyObject_Size(kwnames) == 0) return 0;
+    if (PyErr_Occurred()) return -1;
+    PyErr_Format(PyExc_TypeError, "%R does not accept keyword arguments", callable);
+    return -1;
+}

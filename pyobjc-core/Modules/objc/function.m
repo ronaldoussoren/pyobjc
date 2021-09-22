@@ -102,8 +102,8 @@ func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwna
 
     PyObject* retval;
 
-    if (kwnames != NULL && (!PyTuple_Check(kwnames) || PyTuple_GET_SIZE(kwnames) != 0)) {
-        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+
+    if (PyObjC_CheckNoKwnames(s, kwnames) == -1) {
         return NULL;
     }
 
@@ -166,15 +166,14 @@ func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwna
 
         if (nargsf < (size_t)Py_SIZE(self->methinfo)) {
             PyErr_Format(PyExc_TypeError,
-                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T
-                         "d",
+                         "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
                          Py_SIZE(self->methinfo) - 2, nargsf);
             return NULL;
         }
 
     } else if (nargsf != (size_t)Py_SIZE(self->methinfo)) {
         PyErr_Format(PyExc_TypeError,
-                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
                      Py_SIZE(self->methinfo), nargsf);
         return NULL;
     }
@@ -346,6 +345,9 @@ PyObjCFunc_WithMethodSignature(PyObject* name, void* func,
     if (result == NULL)
         return NULL;
 
+#if PY_VERSION_HEX >= 0x03090000
+    result->vectorcall = func_vectorcall;
+#endif
     result->function = func;
     result->doc      = NULL;
     result->name     = name;
@@ -359,9 +361,6 @@ PyObjCFunc_WithMethodSignature(PyObject* name, void* func,
         Py_DECREF(result);
         return NULL;
     }
-#if PY_VERSION_HEX >= 0x03090000
-    result->vectorcall = func_vectorcall;
-#endif
 
     return (PyObject*)result;
 }
@@ -376,6 +375,9 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
     if (result == NULL)
         return NULL;
 
+#if PY_VERSION_HEX >= 0x03090000
+    result->vectorcall = func_vectorcall;
+#endif
     result->function = NULL;
     result->doc      = NULL;
     result->name     = NULL;
@@ -397,9 +399,6 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
         Py_DECREF(result);
         return NULL;
     }
-#if PY_VERSION_HEX >= 0x03090000
-    result->vectorcall = func_vectorcall;
-#endif
 
     return (PyObject*)result;
 }

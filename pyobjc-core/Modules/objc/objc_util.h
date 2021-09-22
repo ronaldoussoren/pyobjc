@@ -15,6 +15,9 @@ extern PyObject* PyObjCExc_UnknownPointerError;
 extern PyObject* PyObjCExc_DeprecationWarning;
 extern PyObject* PyObjCExc_ObjCPointerWarning;
 
+extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf);
+extern int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames);
+
 extern int PyObjCUtil_Init(PyObject* module);
 
 extern void PyObjCErr_FromObjC(NSObject* localException);

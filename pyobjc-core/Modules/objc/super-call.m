@@ -401,7 +401,8 @@ PyObjCUnsupportedMethod_IMP(ffi_cif* cif __attribute__((__unused__)),
 
 PyObject*
 PyObjCUnsupportedMethod_Caller(PyObject* meth, PyObject* self,
-                               PyObject* args __attribute__((__unused__)))
+                               PyObject*const* args __attribute__((__unused__)),
+                               size_t nargs __attribute__((__unused__)))
 {
     PyErr_Format(PyExc_TypeError, "Cannot call '%s' on '%R' from Python",
                  sel_getName(PyObjCSelector_GetSelector(meth)), self);

@@ -38,7 +38,7 @@ typedef void Py_buffer;
  * Do not increase when adding a new function, the struct_len field
  * can be used for detecting if a function has been added.
  */
-#define PYOBJC_API_VERSION 21
+#define PYOBJC_API_VERSION 22
 
 #define PYOBJC_API_NAME "__C_API__"
 
@@ -47,7 +47,7 @@ typedef void Py_buffer;
  */
 typedef int(RegisterMethodMappingFunctionType)(Class, SEL,
                                                PyObject* (*)(PyObject*, PyObject*,
-                                                             PyObject*),
+                                                             PyObject*const*, size_t),
                                                void (*)(void*, void*, void**, void*));
 
 struct pyobjc_api {
@@ -70,7 +70,7 @@ struct pyobjc_api {
                                     PyObject* (*pythonify)(void*),
                                     int (*depythonify)(PyObject*, void*));
     void (*unsupported_method_imp)(void*, void*, void**, void*);
-    PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*);
+    PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*const*, size_t);
     void (*err_python_to_objc_gil)(PyGILState_STATE* state);
     int (*simplify_sig)(const char* signature, char* buf, size_t buflen);
     void (*free_c_array)(int, Py_buffer*);
@@ -91,6 +91,8 @@ struct pyobjc_api {
     int (*memview_check)(PyObject*);
     PyObject* (*memview_new)(void);
     Py_buffer* (*memview_getbuffer)(PyObject*);
+    int (*checkargcount)(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf);
+    int (*checknokwnames)(PyObject* callable, PyObject* kwnames);
 };
 
 #ifndef PYOBJC_BUILD
@@ -132,6 +134,8 @@ static struct pyobjc_api* PyObjC_API;
 #define PyObjCMemView_Check (PyObjC_API->memview_check)
 #define PyObjCMemView_New (PyObjC_API->memview_new)
 #define PyObjCMemView_GetBuffer (PyObjC_API->memview_getbuffer)
+#define PyObjC_CheckArgCount (PyObjC_API->checkargcount)
+#define PyObjC_CheckNoKwnames (PyObjC_API->checknokwnames)
 
 typedef void (*PyObjC_Function_Pointer)(void);
 typedef struct PyObjC_function_map {

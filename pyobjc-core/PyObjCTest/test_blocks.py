@@ -520,8 +520,6 @@ class TestBlockRuntimeSignature(TestCase):
     def testBlock1(self):
         obj = OCTestBlock.alloc().init()
         signature = obj.signatureForBlock1_(lambda a, b: a * b)
-        print(obj.signatureForBlock1_.__metadata__())
-        print(signature)
         self.assertEqual(
             signature,
             (objc._C_DBL + BLOCK_SELF_TYPE + objc._C_DBL + objc._C_DBL).decode("utf-8"),

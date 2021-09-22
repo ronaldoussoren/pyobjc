@@ -761,13 +761,19 @@ IS_DECIMAL(const char* typestr)
 
 static PyObject*
 call_NSDecimalNumber_decimalNumberWithDecimal_(PyObject* method, PyObject* self,
-                                               PyObject* arguments)
+                                               PyObject*const* arguments, size_t nargs)
 {
     struct objc_super super;
     NSDecimal*        aDecimal;
     id                res;
 
-    if (!PyArg_ParseTuple(arguments, "O&", Decimal_Convert, &aDecimal)) {
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) return NULL;
+
+    if (Decimal_Check(arguments[0])) {
+        aDecimal = &Decimal_Value(arguments[0]);
+    } else {
+        PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'",
+                 Py_TYPE(arguments[0])->tp_name);
         return NULL;
     }
 
@@ -793,13 +799,19 @@ call_NSDecimalNumber_decimalNumberWithDecimal_(PyObject* method, PyObject* self,
 
 static PyObject*
 call_NSDecimalNumber_initWithDecimal_(PyObject* method, PyObject* self,
-                                      PyObject* arguments)
+                                      PyObject*const* arguments, size_t nargs)
 {
     struct objc_super super;
     NSDecimal*        aDecimal;
     id                res;
 
-    if (!PyArg_ParseTuple(arguments, "O&", Decimal_Convert, &aDecimal)) {
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) return NULL;
+
+    if (Decimal_Check(arguments[0])) {
+        aDecimal = &Decimal_Value(arguments[0]);
+    } else {
+        PyErr_Format(PyExc_TypeError, "Expecting an NSDecimal, got instance of '%s'",
+                 Py_TYPE(arguments[0])->tp_name);
         return NULL;
     }
 
@@ -877,13 +889,12 @@ error:
 }
 
 static PyObject*
-call_NSDecimalNumber_decimalValue(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSDecimalNumber_decimalValue(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     struct objc_super super;
     NSDecimal         aDecimal;
-    if (!PyArg_ParseTuple(arguments, "")) {
-        return NULL;
-    }
+
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -891,7 +902,7 @@ call_NSDecimalNumber_decimalValue(PyObject* method, PyObject* self, PyObject* ar
             objc_superSetClass(super, PyObjCSelector_GetClass(method));
 
 #if defined(__i386__) || defined(__arm64__)
-            /* The call below doesn't work on i386, I'm not sure why.
+            /* XXX: The call below doesn't work on i386, I'm not sure why.
              * Because nobody will every subclass NSDecimalNumber this is not
              * really a problem.
              */

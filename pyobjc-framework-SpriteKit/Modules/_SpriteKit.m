@@ -1,4 +1,3 @@
-#define Py_LIMITED_API 0x03060000
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
 #include "pyobjc-api.h"
@@ -13,16 +12,40 @@
 #include "_SpriteKit_protocols.m"
 
 static PyObject*
-call_vF3_vF3(PyObject* method, PyObject* self, PyObject* arguments)
+call_vF3_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     /* calling of method that returns vector_float3 and has a vector_float3 as an argument
      */
     float             f1, f2, f3;
     struct objc_super super;
+    PyObject* pyvec;
 
-    if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
-        return 0;
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
+        return NULL;
     }
+
+    pyvec = PySequence_Fast(arguments[0], "Expecting a 3 tuple of floats");
+    if (pyvec == NULL) {
+        return NULL;
+    }
+    if (PySequence_Fast_GET_SIZE(pyvec) != 3) {
+        PyErr_SetString(PyExc_ValueError, "Expecting a 3 tuple of floats");
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    Py_DECREF(pyvec);
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 
@@ -48,17 +71,41 @@ call_vF3_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 
 #if 0
 static PyObject*
-call_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
+call_id_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     /* calling of method that returns id and has a vector_float3 as an argument */
     float f1, f2, f3;
     struct objc_super super;
     id result;
+    PyObject* pyvec;
 
-
-    if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
-        return 0;
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
+        return NULL;
     }
+
+    pyvec = PySequence_Fast(arguments[0], "Expecting a 3 tuple of floats");
+    if (pyvec == NULL) {
+        return NULL;
+    }
+    if (PySequence_Fast_GET_SIZE(pyvec) != 3) {
+        PyErr_SetString(PyExc_ValueError, "Expecting a 3 tuple of floats");
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    Py_DECREF(pyvec);
+
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 
@@ -85,16 +132,40 @@ call_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 #endif
 
 static PyObject*
-callC_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
+callC_id_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     /* calling of method that returns id and has a vector_float3 as an argument */
     float             f1, f2, f3;
     struct objc_super super;
     id                result;
+    PyObject* pyvec;
 
-    if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
-        return 0;
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
+        return NULL;
     }
+
+    pyvec = PySequence_Fast(arguments[0], "Expecting a 3 tuple of floats");
+    if (pyvec == NULL) {
+        return NULL;
+    }
+    if (PySequence_Fast_GET_SIZE(pyvec) != 3) {
+        PyErr_SetString(PyExc_ValueError, "Expecting a 3 tuple of floats");
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    Py_DECREF(pyvec);
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 
@@ -119,14 +190,14 @@ callC_id_vF3(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static PyObject*
-call_vF3_v(PyObject* method, PyObject* self, PyObject* arguments)
+call_vF3_v(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     /* calling of method that returns vector_float3 and has no arguments */
     struct objc_super super;
     vector_float3     vec;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
-        return 0;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) {
+        return NULL;
     }
 
     Py_BEGIN_ALLOW_THREADS
@@ -150,15 +221,39 @@ call_vF3_v(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static PyObject*
-call_v_vF3(PyObject* method, PyObject* self, PyObject* arguments)
+call_v_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     /* calling of method that returns void and has a vector_float3 as an argument */
     float             f1, f2, f3;
     struct objc_super super;
+    PyObject* pyvec;
 
-    if (!PyArg_ParseTuple(arguments, "(fff)", &f1, &f2, &f3)) {
-        return 0;
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
+        return NULL;
     }
+
+    pyvec = PySequence_Fast(arguments[0], "Expecting a 3 tuple of floats");
+    if (pyvec == NULL) {
+        return NULL;
+    }
+    if (PySequence_Fast_GET_SIZE(pyvec) != 3) {
+        PyErr_SetString(PyExc_ValueError, "Expecting a 3 tuple of floats");
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3) == -1) {
+        Py_DECREF(pyvec);
+        return NULL;
+    }
+    Py_DECREF(pyvec);
 
     vector_float3 vec = (vector_float3){f1, f2, f3};
 

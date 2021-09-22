@@ -7,30 +7,11 @@ typedef struct {
     PyObjCMethodSignature* signature;
     SEL                    selector;
     int                    flags;
+#if PY_VERSION_HEX >= 0x03090000
+    vectorcallfunc         vectorcall;
+#endif
 } PyObjCIMPObject;
 
-PyObject*
-PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
-              PyObjCMethodSignature* signature, int flags)
-{
-    PyObjCIMPObject* result;
-
-    result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
-    if (result == NULL)
-        return NULL;
-
-    result->imp       = imp;
-    result->selector  = selector;
-    result->callfunc  = callfunc;
-    result->signature = signature;
-
-    if (signature) {
-        Py_INCREF(signature);
-    }
-
-    result->flags = flags;
-    return (PyObject*)result;
-}
 
 SEL
 PyObjCIMP_GetSelector(PyObject* self)
@@ -90,51 +71,38 @@ PyObjCIMP_GetSignature(PyObject* self)
 /* ========================================================================= */
 
 static PyObject*
-imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
+imp_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
     PyObjC_CallFunc  execute = NULL;
     PyObject*        res;
     PyObject*        pyres;
-    Py_ssize_t       argslen;
-    PyObject*        arglist;
-    Py_ssize_t       i;
 
-    if (kwds != NULL && PyObject_Size(kwds) != 0) {
-        PyErr_SetString(PyExc_TypeError,
-                        "Objective-C selectors don't support keyword arguments");
+    if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
         return NULL;
     }
 
-    argslen = PyTuple_Size(args);
-    if (argslen < 1) {
+    /*
+     * The PY_VECTORCALL_ARGUMENTS_OFFSET feature is not used by this function.
+     * fetch the raw number of arguments to make it possible to ignore that flag
+     * in the rest of the implementation.
+     */
+    nargsf = PyVectorcall_NARGS(nargsf);
+
+    if (nargsf < 1) {
         PyErr_SetString(PyExc_TypeError, "Missing argument: self");
         return NULL;
     }
 
-    pyself = PyTuple_GET_ITEM(args, 0);
+    pyself = args[0];
     if (pyself == NULL) {
         return NULL;
     }
 
     execute = self->callfunc;
 
-    arglist = PyTuple_New(argslen - 1);
-    for (i = 1; i < argslen; i++) {
-        PyObject* v = PyTuple_GET_ITEM(args, i);
-
-        if (v == NULL) {
-            Py_DECREF(arglist);
-            return NULL;
-        }
-
-        PyTuple_SET_ITEM(arglist, i - 1, v);
-        Py_INCREF(v);
-    }
-
-    pyres = res = execute((PyObject*)self, pyself, arglist);
-    Py_DECREF(arglist);
+    pyres = res = execute((PyObject*)self, pyself, args+1, nargsf-1);
 
     if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
         && PyTuple_GET_ITEM(pyres, 0) == pyself) {
@@ -162,6 +130,16 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
     }
 
     return res;
+}
+
+static PyObject*
+imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
+{
+    if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
+        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+        return NULL;
+    }
+    return imp_vectorcall(_self, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
 }
 
 static PyObject*
@@ -303,9 +281,15 @@ PyTypeObject PyObjCIMP_Type = {
     .tp_itemsize                           = 0,
     .tp_dealloc                            = imp_dealloc,
     .tp_repr                               = imp_repr,
-    .tp_call                               = imp_call,
     .tp_getattro                           = PyObject_GenericGetAttr,
-    .tp_flags                              = Py_TPFLAGS_DEFAULT,
+    .tp_call                               = imp_call,
+#if PY_VERSION_HEX >= 0x03090000
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
+    .tp_vectorcall_offset                          = offsetof(PyObjCIMPObject, vectorcall),
+#else
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+#endif
+
     .tp_methods                            = imp_methods,
     .tp_getset                             = imp_getset,
 };
@@ -313,7 +297,7 @@ PyTypeObject PyObjCIMP_Type = {
 /* ========================================================================= */
 
 static PyObject*
-call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args)
+call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject*const* args, size_t nargs)
 {
     PyObject* sel;
     SEL       selector;
@@ -321,9 +305,8 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
     PyObject* attr;
     PyObject* res;
 
-    if (!PyArg_ParseTuple(args, "O", &sel)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) return NULL;
+    sel = args[0];
 
     if (depythonify_c_value(@encode(SEL), sel, &selector) == -1) {
         return NULL;
@@ -388,7 +371,7 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject* args
 }
 
 static PyObject*
-call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
+call_methodForSelector_(PyObject* method, PyObject* self, PyObject*const* args, size_t nargs)
 {
     PyObject*         sel;
     SEL               selector;
@@ -397,9 +380,9 @@ call_methodForSelector_(PyObject* method, PyObject* self, PyObject* args)
     PyObject*         attr;
     PyObject*         res;
 
-    if (!PyArg_ParseTuple(args, "O", &sel)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) return NULL;
+    sel = args[0];
+
 
     if (depythonify_c_value(@encode(SEL), sel, &selector) == -1) {
         return NULL;
@@ -486,4 +469,30 @@ PyObjCIMP_SetUpMethodWrappers(void)
         return -1;
 
     return 0;
+}
+
+PyObject*
+PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
+              PyObjCMethodSignature* signature, int flags)
+{
+    PyObjCIMPObject* result;
+
+    result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
+    if (result == NULL)
+        return NULL;
+
+    result->imp       = imp;
+    result->selector  = selector;
+    result->callfunc  = callfunc;
+    result->signature = signature;
+#if PY_VERSION_HEX >= 0x03090000
+    result->vectorcall = imp_vectorcall;
+#endif
+
+    if (signature) {
+        Py_INCREF(signature);
+    }
+
+    result->flags = flags;
+    return (PyObject*)result;
 }

@@ -1,6 +1,6 @@
 static PyObject*
 call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
-                                       PyObject* arguments)
+                                       PyObject*const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -10,7 +10,11 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
     void*              buf;
     Py_ssize_t         sz;
 
-    if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_value, &index)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
+        return NULL;
+    }
+    py_value = arguments[0];
+    if (PyObjC_PythonToObjC(@encode(NSUInteger), arguments[1], &index) == -1) {
         return NULL;
     }
 
@@ -76,7 +80,7 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
 }
 
 static PyObject*
-call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -85,9 +89,10 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject* ar
     void*              buf;
     Py_ssize_t         sz;
 
-    if (!PyArg_ParseTuple(arguments, "O", &py_value)) {
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
         return NULL;
     }
+    py_value = arguments[0];
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -151,7 +156,7 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject* ar
 
 static PyObject*
 call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
-                                       PyObject* arguments)
+                                       PyObject*const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -161,10 +166,13 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
     void*              buf;
     Py_ssize_t         sz;
 
-    if (!PyArg_ParseTuple(arguments, "O" Py_ARG_NSUInteger, &py_value, &index)) {
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
         return NULL;
     }
-
+    py_value = arguments[0];
+    if (PyObjC_PythonToObjC(@encode(NSUInteger), arguments[1], &index) == -1) {
+        return NULL;
+    }
     if (py_value != Py_None) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;
@@ -231,7 +239,7 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
 }
 
 static PyObject*
-call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -240,9 +248,10 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject* ar
     void*              buf;
     Py_ssize_t         sz;
 
-    if (!PyArg_ParseTuple(arguments, "O", &py_value)) {
-        return NULL;
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
+       return NULL;
     }
+    py_value = arguments[0];
 
     if (py_value != Py_None) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");

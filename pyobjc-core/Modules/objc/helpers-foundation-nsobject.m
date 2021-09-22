@@ -14,7 +14,7 @@
 
 #ifdef PyObjC_EXPLICT_DESCRIPTION_HELPER
 static PyObject*
-call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSObject_description(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     id                result = nil;
     struct objc_super spr;
@@ -22,9 +22,7 @@ call_NSObject_description(PyObject* method, PyObject* self, PyObject* arguments)
     NSObject*         anObject;
     SEL               aSel;
 
-    if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP    = PyObjCIMP_GetIMP(method);
@@ -114,7 +112,7 @@ imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
 #endif /* PyObjC_EXPLICT_DESCRIPTION_HELPER */
 
 static PyObject*
-call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSObject_alloc(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     id                result = nil;
     struct objc_super spr;
@@ -122,9 +120,7 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject* arguments)
     Class             aClass;
     SEL               aSel;
 
-    if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     if (unlikely(!PyObjCClass_Check(self))) {
         PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'",
@@ -218,16 +214,14 @@ imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
 }
 
 static PyObject*
-call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     struct objc_super spr;
     IMP               anIMP;
     Class             aClass;
     SEL               aSel;
 
-    if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
@@ -322,16 +316,14 @@ imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
 }
 
 static PyObject*
-call_NSObject_release(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSObject_release(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     struct objc_super spr;
     IMP               anIMP;
     Class             aClass;
     SEL               aSel;
 
-    if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
@@ -378,7 +370,7 @@ call_NSObject_release(PyObject* method, PyObject* self, PyObject* arguments)
 }
 
 static PyObject*
-call_NSObject_retain(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSObject_retain(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
     struct objc_super spr;
     IMP               anIMP;
@@ -386,9 +378,7 @@ call_NSObject_retain(PyObject* method, PyObject* self, PyObject* arguments)
     SEL               aSel;
     id                retval = nil;
 
-    if (unlikely(PyArg_ParseTuple(arguments, "") < 0)) {
-        return NULL;
-    }
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
 
     if (!PyObjCObject_Check(self)) {
         PyErr_Format(PyExc_TypeError,

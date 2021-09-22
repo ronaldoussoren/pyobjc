@@ -76,7 +76,7 @@ makesockaddr(struct sockaddr* addr, int addrlen)
 }
 
 static PyObject*
-call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject* arguments)
+call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -84,7 +84,7 @@ call_NSNetService_addresses(PyObject* method, PyObject* self, PyObject* argument
     NSInteger         len, i;
     NSData*           item;
 
-    if (!PyArg_ParseTuple(arguments, "")) {
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) {
         return NULL;
     }
 

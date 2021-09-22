@@ -82,6 +82,6 @@ extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void**, void*);
  *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
  *     the method cannot be called from Python.
  */
-extern PyObject* PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*);
+extern PyObject* PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*const*, size_t);
 
 #endif /* PyObjC_SUPER_CALL_H */

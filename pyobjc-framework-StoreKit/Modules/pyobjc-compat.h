@@ -420,6 +420,14 @@
 #define Py_SET_REFCNT(obj, count) do { Py_REFCNT((obj)) = (count); } while(0)
 #endif
 
+#if PY_VERSION_HEX < 0x03090000
+
+/* For use on Python 3.8 and earlier. PyObjC doesn't use the
+ * "flag" bit internally.
+ */
+#define PyVectorcall_NARGS(nargsf) (nargsf)
+#endif
+
 /* Use CLINIC_SEP between the prototype and
  * description in doc strings, to get clean
  * docstrings.
@@ -439,6 +447,7 @@ extern int       PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 extern PyObject* PyBytes_InternFromString(const char* v);
 extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
 
+
 /*
  * A micro optimization: when using Python 3.3 or later it
  * is possible to access a 'char*' with an ASCII representation
@@ -454,6 +463,13 @@ extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
 #ifdef __clang__
 
 #ifndef Py_LIMITED_API
+
+static inline PyObject**
+PyTuple_ITEMS(PyObject* tuple)
+{
+    return &PyTuple_GET_ITEM(tuple, 0);
+}
+
 
 /* This is a crude hack to disable a otherwise useful warning in the context of
  * PyTuple_SET_ITEM, without disabling it everywhere
