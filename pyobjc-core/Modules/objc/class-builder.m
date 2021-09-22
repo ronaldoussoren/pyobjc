@@ -1620,7 +1620,9 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
             }
             PyMem_Free(argbuf);
             argbuf = NULL;
-            continue;
+            v = Py_None;
+            Py_INCREF(Py_None);
+            break;
         default:
             v = pythonify_c_value(type, argbuf);
         }

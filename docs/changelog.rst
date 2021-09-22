@@ -6,11 +6,33 @@ An overview of the relevant changes in new, and older, releases.
 Version 8.0b1
 -------------
 
-* PyObjC 8 only ships with source archives and "univeral2" binary
-  wheels (Python 3.? and later). There are no longer "x86_64" binary wheels.
-
 Backward incompatible changes
 .............................
+
+* In PyObjC 7 and earlier it was possible to leave out "output" arguments when
+  calling a method with a Python implementation:
+
+  .. sourcecode:: python
+
+      class MyClass(NSObject):
+
+          @objc.typedSelector(b"@@:o^@")
+          def methodWithOutput_(self, a):
+              return 1, 2
+
+
+      o = MyClass.alloc().init()
+      print(o.methodWithOutput_())
+
+  This no longer works, it is always necessary to pass in all arguments, which
+  was already true for methods implemented in Objective-C. That is:
+
+  .. sourcecode:: python
+
+     print(o.methodWithOutput_(None))
+
+  This change both simplifies the PyObjC code base and was required to cleanly
+  implement vectorcall support (see the section on performance below).
 
 * Removed bindings for ``InterfaceBuilderKit``. This was a way to integrate
   with InterfaceBuilder in old versions of Xcode, but support for that was
@@ -59,6 +81,10 @@ Most performance changes use features introduced in Python 3.9.
   :class:`objc.selector`, :class:`objc.IMP`.
 
   This reduces the interpreter overhead for calling instances of these objects.
+
+* Implement Py_TPFLAGS_METHOD_DESCRIPTOR for native selectors.
+
+* Use vectorcall in the method stub that forwards Objective-C calls to Python.
 
 New features
 ............
@@ -111,6 +137,10 @@ New features
 
 Other changes and bugfixes
 ..........................
+
+* PyObjC 8 only ships with source archives and "univeral2" binary
+  wheels (Python 3.? and later). There are no longer "x86_64" binary wheels.
+
 
 * #374: Use pyupgrade to modernize the code base
 

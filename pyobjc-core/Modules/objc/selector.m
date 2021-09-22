@@ -1094,160 +1094,6 @@ pysel_repr(PyObject* _self)
     return rval;
 }
 
-/*
- * XXX: This function shouldn't be necesary anymore, output arguments are
- *      required since long ago!
- * Calling the method from Python is sligtly complicated by the fact that
- * output arguments are optionally present (both in the method signature
- * and the actual argument list).
- *
- * pysel_call needs to compensate for this, which is done by this function.
- */
-static PyObject*
-compensate_arglist(PyObject* _self, PyObject* args, PyObject* kwds)
-{
-    /* XXX: need to do a full metadata processing run here to get exactly the right
-     * semantics, we also have to do a metadata run on the result!
-     */
-    PyObjCPythonSelector* self = (PyObjCPythonSelector*)_self;
-    BOOL                  argsmatch;
-    Py_ssize_t            i;
-    Py_ssize_t            first_arg;
-
-    if (self->base.sel_methinfo == NULL) {
-        /* Make sure we actually have metadata */
-        /* XXX: this is unclean... */
-        PyObjCSelector_GetMetadata(_self);
-    }
-    if (self->numoutput == 0) {
-        Py_INCREF(args);
-        return args;
-    }
-
-    if (kwds && PyDict_Size(kwds) != 0) {
-        /* XXX: we cannot do anything here without reimplementing Python's argument
-         * matching code...
-         */
-        Py_INCREF(args);
-        return args;
-    }
-
-    argsmatch = ((PyTuple_Size(args) + (self->base.sel_self ? 1 : 0)) == self->argcount);
-
-    first_arg = self->base.sel_self ? 0 : 1;
-
-    if (self->argcount
-        == Py_SIZE(self->base.sel_methinfo)
-               - 1) { /* the selector has an implicit '_sel' argument as well */
-        /* All arguments are present, including output arguments */
-        if (argsmatch) {
-            for (i = 2; i < Py_SIZE(self->base.sel_methinfo); i++) {
-                if (self->base.sel_methinfo->argtype[i]->type[0] == _C_OUT) {
-                    PyObject* a = PyTuple_GET_ITEM(args, first_arg + i - 2);
-                    if (a != Py_None && a != PyObjC_NULL) {
-                        PyErr_Format(PyExc_TypeError,
-                                     "argument %" PY_FORMAT_SIZE_T
-                                     "d is an output argument but is passed a value "
-                                     "other than None or objc.NULL",
-                                     i - 1 - first_arg);
-                        return NULL;
-                    }
-                }
-            }
-            Py_INCREF(args);
-            return args;
-
-        } else {
-            if ((PyTuple_Size(args) + (self->base.sel_self ? 1 : 0))
-                != (self->argcount - self->numoutput)) {
-                /* There's the wrong number of arguments */
-                PyErr_Format(PyExc_TypeError,
-                             "expecting %" PY_FORMAT_SIZE_T
-                             "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                             self->argcount - (self->base.sel_self ? 1 : 0),
-                             PyTuple_Size(args));
-                return NULL;
-            }
-
-            PyObject*  real_args;
-            Py_ssize_t pyarg;
-
-            real_args = PyTuple_New(self->argcount - (self->base.sel_self ? 1 : 0));
-            if (real_args == NULL) {
-                return NULL;
-            }
-
-            pyarg = 0;
-            if (self->base.sel_self == NULL) {
-                pyarg = 1;
-                PyTuple_SET_ITEM(real_args, 0, PyTuple_GET_ITEM(args, 0));
-                Py_INCREF(PyTuple_GET_ITEM(args, 0));
-            }
-
-            PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-            for (i = 2; i < Py_SIZE(methinfo); i++) {
-                if (methinfo->argtype[i]->type[0] == _C_OUT) {
-                    PyTuple_SET_ITEM(real_args, i - 2 + first_arg, Py_None);
-                    Py_INCREF(Py_None);
-                } else {
-                    PyTuple_SET_ITEM(real_args, i - 2 + first_arg,
-                                     PyTuple_GET_ITEM(args, pyarg));
-                    Py_INCREF(PyTuple_GET_ITEM(args, pyarg));
-                    pyarg++;
-                }
-            }
-
-            return real_args;
-        }
-
-    } else {
-        /* Not all arguments are present, output arguments should
-         * be excluded.
-         */
-        if (argsmatch) {
-            Py_INCREF(args);
-            return args;
-        } else {
-            if (PyTuple_Size(args) + (self->base.sel_self ? 1 : 0)
-                != self->argcount + self->numoutput) {
-                /* There's the wrong number of arguments */
-                PyErr_Format(PyExc_TypeError,
-                             "expecting %" PY_FORMAT_SIZE_T
-                             "d arguments, got %" PY_FORMAT_SIZE_T "d",
-                             self->argcount - (self->base.sel_self ? 1 : 0),
-                             PyTuple_Size(args));
-                return NULL;
-            }
-            PyObject*  real_args;
-            Py_ssize_t pyarg;
-
-            real_args = PyTuple_New(self->argcount - (self->base.sel_self ? 1 : 0));
-            if (real_args == NULL) {
-                return NULL;
-            }
-
-            pyarg = 0;
-            if (self->base.sel_self == NULL) {
-                pyarg = 1;
-                PyTuple_SET_ITEM(real_args, 0, PyTuple_GET_ITEM(args, 0));
-                Py_INCREF(PyTuple_GET_ITEM(args, 0));
-            }
-
-            PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(_self);
-            for (i = 2; i < Py_SIZE(methinfo); i++) {
-                if (methinfo->argtype[i]->type[0] != _C_OUT) {
-                    PyTuple_SET_ITEM(real_args, pyarg,
-                                     PyTuple_GET_ITEM(args, i - 2 + first_arg));
-                    Py_INCREF(PyTuple_GET_ITEM(args, i - 2 + first_arg));
-                    pyarg++;
-                }
-            }
-
-            return real_args;
-        }
-    }
-}
-
 static PyObject*
 pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
 {
@@ -1260,16 +1106,10 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
         return NULL;
     }
 
-    args = compensate_arglist(_self, args, kwargs);
-    if (args == NULL) {
-        return NULL;
-    }
-
     if (!PyMethod_Check(self->callable)) {
         if (self->base.sel_self == NULL) {
             PyObject* self_arg;
             if (PyTuple_Size(args) < 1) {
-                Py_DECREF(args);
                 PyErr_SetString(PyObjCExc_Error, "need self argument");
                 return NULL;
             }
@@ -1277,7 +1117,6 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
             self_arg = PyTuple_GET_ITEM(args, 0);
 
             if (!PyObjCObject_Check(self_arg) && !PyObjCClass_Check(self_arg)) {
-                Py_DECREF(args);
                 PyErr_Format(PyExc_TypeError,
                              "Expecting an Objective-C class or "
                              "instance as self, got a %s",
@@ -1294,7 +1133,6 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
      */
     if (self->base.sel_self == NULL) {
         result = PyObject_Call(self->callable, args, kwargs);
-        Py_DECREF(args);
 
     } else {
         Py_ssize_t argc        = PyTuple_Size(args);
@@ -1316,7 +1154,6 @@ pysel_call(PyObject* _self, PyObject* args, PyObject* kwargs)
 
         result = PyObject_Call(self->callable, actual_args, kwargs);
         Py_DECREF(actual_args);
-        Py_DECREF(args);
     }
 
     if (result && (self->base.sel_self) && (PyObjCObject_Check(self->base.sel_self))
