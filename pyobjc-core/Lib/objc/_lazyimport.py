@@ -352,7 +352,7 @@ class ObjCLazyModule(ModuleType):
     def __get_constant(self, name):
         if self.__varmap_dct:
             if name in self.__varmap_dct:
-                tp = self.__varmap_dct.pop(name)
+                tp = self.__varmap_dct[name]
                 if tp.startswith("=="):
                     tp = tp[2:]
                     magic = 2
@@ -362,6 +362,7 @@ class ObjCLazyModule(ModuleType):
                 else:
                     magic = 0
                 result = objc._loadConstant(name, tp, magic)
+                self.__varmap_dct.pop(name)
                 if name in self.__varmap_deprecated:
                     _check_deprecated(name, self.__varmap_deprecated[name])
 
@@ -403,17 +404,14 @@ class ObjCLazyModule(ModuleType):
 
         if self.__funcmap:
             if name in self.__funcmap:
-                # NOTE: Remove 'name' from funcmap because
-                #       it won't be needed anymore (either the
-                #       function doesn't exist, or it is loaded)
-                #       Should use slightly less memory.
-                info = self.__funcmap.pop(name)
+                info = self.__funcmap[name]
 
                 func_list = [(name,) + info]
 
                 d = {}
                 objc.loadBundleFunctions(self.__bundle, d, func_list)
                 if name in d:
+                    self.__funcmap.pop(name)
                     return d[name]
 
                 if self.__inlinelist is not None:
@@ -428,15 +426,17 @@ class ObjCLazyModule(ModuleType):
                 # NOTE: 'name' is popped because it is no longer needed
                 #       in the metadata and popping should slightly reduce
                 #       memory usage.
-                info = self.__expressions.pop(name)
+                info = self.__expressions[name]
                 try:
-                    return eval(info, {}, self.__expressions_mapping)
+                    result = eval(info, {}, self.__expressions_mapping)
+                    self.__expressions.pop(name)
+                    return result
                 except:  # noqa: E722, B001. Ignore all errors in evaluation the expression.
                     pass
 
         if self.__aliases:
             if name in self.__aliases:
-                alias = self.__aliases.pop(name)
+                alias = self.__aliases[name]
                 if alias == "ULONG_MAX":
                     result = (sys.maxsize * 2) + 1
                 elif alias == "LONG_MAX":
@@ -457,6 +457,8 @@ class ObjCLazyModule(ModuleType):
                     result = 0xFFFFFFFF
                 else:
                     result = getattr(self, alias)
+
+                self.__aliases.pop(name)
 
                 if name in self.__aliases_deprecated:
                     _check_deprecated(name, self.__aliases_deprecated[name])

@@ -109,8 +109,8 @@ New features
      $ pip install 'pyobjc[allbindings]'
 
 
-Other changes
-.............
+Other changes and bugfixes
+..........................
 
 * #374: Use pyupgrade to modernize the code base
 
@@ -162,6 +162,11 @@ Other changes
 * Adjusted PyObjC testcases to check for 11.0 instead of 10.16
   now that testsupport uses the real platform version.
 
+* #385: Fix race condition the lazy importer
+
+  When two threads simultaniously try to get an attribute from a framework
+  binding one of them might fail with an attribute error because information
+  for resolving the name was removed before actually resolving the name.
 
 Version 7.3
 -----------
