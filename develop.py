@@ -14,7 +14,7 @@ import shlex
 import shutil
 import subprocess
 import sys
-from distutils.sysconfig import get_config_var
+from sysconfig import get_config_var
 
 TOPDIR = os.path.dirname(os.path.abspath(__file__))
 
