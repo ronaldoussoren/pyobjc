@@ -91,13 +91,13 @@ def descriptor_lookup():
 
 
 @benchmark
-def descriptor_call():
+def bound_method_call():
     print_bench(
-        "object description call",
+        "object description bound call",
         timeit.timeit(setup="m = object().__repr__", stmt="m()"),
     )
     print_bench(
-        "NSObject description call",
+        "NSObject description bound call",
         timeit.timeit(
             setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
             "m = NSObject.alloc().init().description",
@@ -105,11 +105,61 @@ def descriptor_call():
         ),
     )
     print_bench(
-        "NSArray description call",
+        "NSArray description bound call",
         timeit.timeit(
             setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
             "m = NSArray.alloc().init().description",
             stmt="m()",
+        ),
+    )
+    print()
+
+
+@benchmark
+def unbound_method_call():
+    print_bench(
+        "object description unbound call",
+        timeit.timeit(setup="o = object()", stmt="o.__repr__()"),
+    )
+    print_bench(
+        "NSObject description unbound call",
+        timeit.timeit(
+            setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+            "o = NSObject.alloc().init()",
+            stmt="o.description()",
+        ),
+    )
+    print_bench(
+        "NSArray description unbound call",
+        timeit.timeit(
+            setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+            "o = NSArray.alloc().init()",
+            stmt="o.description()",
+        ),
+    )
+    print()
+
+
+@benchmark
+def imp_call():
+    print_bench(
+        "object description IMP call",
+        timeit.timeit(setup="o = object(); m = object.__repr__", stmt="m(o)"),
+    )
+    print_bench(
+        "NSObject description IMP call",
+        timeit.timeit(
+            setup='import objc; NSObject = objc.lookUpClass("NSObject"); '
+            "o = NSObject.alloc().init(); m = o.methodForSelector_(b'description')",
+            stmt="m(o)",
+        ),
+    )
+    print_bench(
+        "NSArray description call",
+        timeit.timeit(
+            setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
+            "o = NSArray.alloc().init(); m = o.methodForSelector_(b'description')",
+            stmt="m(o)",
         ),
     )
     print()
@@ -163,7 +213,7 @@ def call_from_objc():
     )
 
 
-@benchmark
+# @benchmark
 def hasattr_speed():
     print()
     print_bench(

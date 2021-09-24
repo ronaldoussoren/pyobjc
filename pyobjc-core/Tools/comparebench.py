@@ -29,9 +29,9 @@ def main():
     keys = list(results[0]["bench"].keys())
 
     headers = ("test name",) + tuple(r["objc"] for r in results)
-    fmt = " | ".join(["{:30s}"] + ["{:16s}"] * len(results))
+    fmt = " | ".join(["{:40s}"] + ["{:16s}"] * len(results))
     print(fmt.format(*headers))
-    print("+".join(["-" * 31] + ["-" * 18] * len(results)))
+    print("+".join(["-" * 41] + ["-" * 18] * len(results)))
     for key in keys:
         base = results[0]["bench"][key]
         row = [key]
