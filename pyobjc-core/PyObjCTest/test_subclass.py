@@ -218,7 +218,7 @@ class TestClassMethods(TestCase):
 
 
 class TestOverridingSpecials(TestCase):
-    def testOverrideSpecialMethods(self):
+    def testOverrideSpecialMethods_alloc(self):
         aList = [0]
 
         class ClassWithAlloc(NSObject):
@@ -231,6 +231,9 @@ class TestOverridingSpecials(TestCase):
         self.assertEqual(aList[0], 1)
         self.assertIsInstance(o, NSObject)
         del o
+
+    def testOverrideSpecialMethods_retain_release(self):
+        aList = []
 
         class ClassWithRetaining(NSObject):
             def retain(self):
@@ -245,7 +248,6 @@ class TestOverridingSpecials(TestCase):
             def __del__(self):
                 aList.append("__del__")
 
-        del aList[:]
         o = ClassWithRetaining.alloc().init()
         v = o.retainCount()
         o.retain()
@@ -274,12 +276,14 @@ class TestOverridingSpecials(TestCase):
 
         self.assertEqual(aList, ["retain", "release", "release", "__del__"])
 
+    def testOverrideSpecialMethods_retainCount(self):
+        aList = []
+
         class ClassWithRetainCount(NSObject):
             def retainCount(self):
                 aList.append("retainCount")
                 return objc.super(ClassWithRetainCount, self).retainCount()
 
-        del aList[:]
         o = ClassWithRetainCount.alloc().init()
         self.assertEqual(aList, [])
         v = o.retainCount()

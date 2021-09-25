@@ -67,17 +67,10 @@ imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
                          void** args __attribute__((__unused__)), void* callable)
 {
     int       err;
-    PyObject* arglist = NULL;
     PyObject* v       = NULL;
     PyObject* result  = NULL;
 
     PyObjC_BEGIN_WITH_GIL
-
-        arglist = PyTuple_New(1);
-        if (unlikely(arglist == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
         v = PyObjC_IdToPython(*(id*)args[0]);
         if (unlikely(v == NULL)) {
             Py_DECREF(arglist);
@@ -89,16 +82,13 @@ imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyTuple_SET_ITEM(arglist, 0, v);
-        v = NULL;
-
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
+        PyObject* args[2] = { NULL, v };
+        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (unlikely(result == NULL)) {
-            Py_DECREF(arglist);
+            Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        Py_DECREF(arglist);
+        Py_DECREF(v);
 
         err = depythonify_c_value(@encode(id), result, resp);
         Py_DECREF(result);
@@ -171,38 +161,28 @@ imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
                    void** args __attribute__((__unused__)), void* callable)
 {
     int       err;
-    PyObject* arglist = NULL;
     PyObject* v       = NULL;
     PyObject* result  = NULL;
 
     PyObjC_BEGIN_WITH_GIL
 
-        arglist = PyTuple_New(1);
-        if (unlikely(arglist == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
         v = PyObjC_IdToPython(*(id*)args[0]);
         if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
             PyObjC_GIL_FORWARD_EXC();
         }
         v = PyObjC_AdjustSelf(v);
         if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyTuple_SET_ITEM(arglist, 0, v);
-        v = NULL;
+        PyObject* args[2] = { NULL, v };
+        result = PyObject_Vectorcall((PyObject*)callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
+        Py_DECREF(v); v = NULL;
         if (unlikely(result == NULL)) {
-            Py_DECREF(arglist);
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        Py_DECREF(arglist);
 
         err = depythonify_c_value(@encode(id), result, resp);
         Py_DECREF(result);
@@ -274,33 +254,24 @@ imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
                      void*    resp __attribute__((__unused__)),
                      void** args __attribute__((__unused__)), void* callable)
 {
-    PyObject* arglist = NULL;
     PyObject* v       = NULL;
     PyObject* result  = NULL;
 
     PyObjC_BEGIN_WITH_GIL
 
-        arglist = PyTuple_New(1);
-        if (unlikely(arglist == NULL)) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
         v = PyObjC_IdToPython(*(id*)args[0]);
         if (unlikely(v == NULL)) {
-            Py_DECREF(arglist);
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyTuple_SET_ITEM(arglist, 0, v);
-        v = NULL;
+        PyObject* args[2] = { NULL, v };
+        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
         if (unlikely(result == NULL)) {
-            Py_DECREF(arglist);
+            Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        Py_DECREF(arglist);
+        Py_DECREF(v);
 
         if (unlikely(result != Py_None)) {
             PyErr_Format(PyExc_TypeError,
@@ -428,35 +399,24 @@ imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
                      void*    resp __attribute__((__unused__)),
                      void** args __attribute__((__unused__)), void* callable)
 {
-    PyObject* arglist = NULL;
     PyObject* result  = NULL;
     PyObject* pyself;
     int       cookie;
 
     PyObjC_BEGIN_WITH_GIL
 
-        arglist = PyTuple_New(1);
-        if (arglist == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
         pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
         if (pyself == NULL) {
-            Py_DECREF(arglist);
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyTuple_SET_ITEM(arglist, 0, pyself);
-        Py_INCREF(pyself);
 
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
+        PyObject* args[2] = { NULL, pyself };
+        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) {
-            Py_DECREF(arglist);
             PyObjCObject_ReleaseTransient(pyself, cookie);
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        Py_DECREF(arglist);
         PyObjCObject_ReleaseTransient(pyself, cookie);
 
         if (result != Py_None) {
@@ -477,36 +437,23 @@ imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
                     void*    resp __attribute__((__unused__)),
                     void** args __attribute__((__unused__)), void* callable)
 {
-    PyObject* arglist = NULL;
     PyObject* result  = NULL;
     PyObject* pyself;
     int       cookie;
     int       err;
 
     PyObjC_BEGIN_WITH_GIL
-
-        arglist = PyTuple_New(1);
-        if (arglist == NULL) {
-            PyObjC_GIL_FORWARD_EXC();
-        }
-
         pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
         if (pyself == NULL) {
-            Py_DECREF(arglist);
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyTuple_SET_ITEM(arglist, 0, pyself);
-        Py_INCREF(pyself);
-
-        result = PyObject_Call((PyObject*)callable, arglist, NULL);
+        PyObject* args[2] = { NULL, pyself };
+        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) {
-            Py_DECREF(arglist);
             PyObjCObject_ReleaseTransient(pyself, cookie);
             PyObjC_GIL_FORWARD_EXC();
         }
-
-        Py_DECREF(arglist);
 
         err = depythonify_c_value(@encode(id), result, resp);
         Py_DECREF(result);

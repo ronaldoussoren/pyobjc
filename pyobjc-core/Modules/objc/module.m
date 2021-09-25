@@ -1679,7 +1679,8 @@ PyObjC_callable_docstr_get(PyObject* callable, void* closure __attribute__((__un
         Py_INCREF(Py_None);
         return Py_None;
     }
-    return PyObject_CallFunction(PyObjC_CallableDocFunction, "O", callable);
+    PyObject* args[2] = { NULL, callable };
+    return PyObject_Vectorcall(PyObjC_CallableDocFunction, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
 PyObject*
@@ -1691,7 +1692,8 @@ PyObjC_callable_signature_get(PyObject* callable,
         Py_INCREF(Py_None);
         return Py_None;
     }
-    return PyObject_CallFunction(PyObjC_CallableSignatureFunction, "O", callable);
+    PyObject* args[2] = { NULL, callable };
+    return PyObject_Vectorcall(PyObjC_CallableSignatureFunction, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
 static PyObject*
@@ -2298,6 +2300,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     }
 #endif /* PyObjC_BUILD_RELEASE >= 1007 */
 
+    if (PyObjC_setup_names() < 0) {
+        return NULL;
+    }
     if (PyObjC_setup_nsdata() < 0) {
         return NULL;
     }

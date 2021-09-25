@@ -18,6 +18,8 @@ extern PyObject* PyObjCExc_ObjCPointerWarning;
 extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf);
 extern int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames);
 
+extern PyObject* PyObjC_MakeCVoidP(void* ptr);
+
 extern int PyObjCUtil_Init(PyObject* module);
 
 extern void PyObjCErr_FromObjC(NSObject* localException);
@@ -27,9 +29,6 @@ extern void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
     __attribute__((__noreturn__));
 
 extern NSException* PyObjCErr_AsExc(void);
-
-extern PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
-                                   BOOL* isAlloc, BOOL* isCFAlloc);
 
 extern char* PyObjCUtil_Strdup(const char* value);
 
@@ -104,4 +103,21 @@ align(Py_ssize_t offset, Py_ssize_t alignment)
         Py_XDECREF(_py_tmp);                                                             \
     } while (0)
 
+
+extern PyObject* PyObjCNM_insert;
+extern PyObject* PyObjCNM_append;
+extern PyObject* PyObjCNM_strftime;
+extern PyObject* PyObjCNM_keys;
+extern PyObject* PyObjCNM_clear;
+extern PyObject* PyObjCNM_discard;
+extern PyObject* PyObjCNM_add;
+extern PyObject* PyObjCNM_values;
+extern PyObject* PyObjCNM_description;
+extern PyObject* PyObjCNM___get__;
+extern PyObject* PyObjCNM_date_format_string;
+
+extern int PyObjC_setup_names(void);
+
+extern PyObject* PyObjC_CallCopyFunc(PyObject* arg);
+extern PyObject* PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);
 #endif /* OBJC_UTIL */

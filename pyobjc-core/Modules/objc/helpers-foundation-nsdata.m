@@ -54,25 +54,18 @@ imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** ar
     void** pretval = (void**)resp;
 
     PyObject* result;
-    PyObject* arglist = NULL;
     PyObject* pyself  = NULL;
     int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    arglist = PyTuple_New(1);
-    if (arglist == NULL)
-        goto error;
-
     pyself = PyObjCObject_NewTransient(self, &cookie);
     if (pyself == NULL)
         goto error;
-    PyTuple_SetItem(arglist, 0, pyself);
-    Py_INCREF(pyself);
 
-    result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist);
-    arglist = NULL;
+    PyObject* arglist[2] = { NULL, pyself };
+
+    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -99,7 +92,6 @@ imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** ar
     return;
 
 error:
-    Py_XDECREF(arglist);
     if (pyself) {
         PyObjCObject_ReleaseTransient(pyself, cookie);
     }
@@ -163,25 +155,17 @@ imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* r
     // SEL _meth = *(SEL*)args[1];
     void**    pretval = (void**)resp;
     PyObject* result;
-    PyObject* arglist = NULL;
     PyObject* pyself  = NULL;
     int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    arglist = PyTuple_New(1);
-    if (arglist == NULL)
-        goto error;
-
     pyself = PyObjCObject_NewTransient(self, &cookie);
     if (pyself == NULL)
         goto error;
-    PyTuple_SetItem(arglist, 0, pyself);
-    Py_INCREF(pyself);
 
-    result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist);
-    arglist = NULL;
+    PyObject* arglist[2] = { NULL, pyself };
+    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -206,7 +190,6 @@ imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* r
     return;
 
 error:
-    Py_XDECREF(arglist);
     if (pyself) {
         PyObjCObject_ReleaseTransient(pyself, cookie);
     }

@@ -189,8 +189,10 @@
                 PyObjC_GIL_FORWARD_EXC();
             }
         }
+        PyObject* args[3] = { NULL, value, v };
 
-        w = PyObject_CallMethod(value, "append", "N", v);
+        w = PyObject_VectorcallMethod(PyObjCNM_append, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        Py_DECREF(v);
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -224,7 +226,16 @@
             }
         }
 
-        w = PyObject_CallMethod(value, "insert", "nN", theIndex, v);
+        PyObject* args[4] = { NULL, value, NULL, v };
+        args[2] = PyLong_FromUnsignedLong(idx);
+        if (args[2] == NULL) {
+            PyObjC_GIL_FORWARD_EXC();
+        }
+
+        w = PyObject_VectorcallMethod(PyObjCNM_insert, args+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        Py_DECREF(v);
+        Py_DECREF(args[2]);
+
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -509,7 +520,9 @@
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
-                v = PyObject_CallFunction(PyObjC_Decoder, "NN", cdr, setValue);
+                v = PyObjC_CallDecoder(cdr, setValue);
+                Py_DECREF(cdr);
+                Py_DECREF(setValue);
 
                 if (v == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
@@ -585,7 +598,8 @@
 {
     if (PyObjC_CopyFunc) {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, value, NULL);
+
+            PyObject* copy = PyObjC_CallCopyFunc(value);
 
             if (copy == NULL) {
                 PyObjC_GIL_FORWARD_EXC();

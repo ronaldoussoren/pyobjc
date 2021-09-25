@@ -1520,9 +1520,13 @@ class TestCase(_unittest.TestCase):
         try:
             _unittest.TestCase.run(self, *args)
         finally:
+            print("collect")
             _gc.collect()
+            print("del pool")
             del p
+            print("collect 2")
             _gc.collect()
+            print("-")
 
 
 main = _unittest.main

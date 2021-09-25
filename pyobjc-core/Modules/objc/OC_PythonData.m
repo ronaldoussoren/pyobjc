@@ -229,7 +229,7 @@
                 selfAsPython = PyObjCObject_New(self, 0, YES);
                 setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-                v2 = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+                v2 = PyObjC_CallDecoder(cdr, setValue);
                 Py_DECREF(cdr);
                 Py_DECREF(setValue);
                 Py_DECREF(selfAsPython);

@@ -121,3 +121,91 @@ PyObjC_Unicode_Fast_Bytes(PyObject* object)
     }
     return (const char*)(PyUnicode_DATA(object));
 }
+
+#if PY_VERSION_HEX < 0x03090000
+/*
+ * Internal compatibility stubs for some parts of the vectorcall API.
+ *
+ * This implementation does not support keyword names, ass that both
+ * complicates the implementation and is not necessary for PyObjC.
+ */
+
+PyObject*
+PyObject_Vectorcall(PyObject* callable, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+{
+    size_t i;
+    if (kwnames != NULL) {
+        PyErr_SetString(PyExc_RuntimeError, "PyObjC's vectorcall compat does not support keyword arguments");
+        return NULL;
+    }
+
+    PyObject* tuple = PyTuple_New(PyVectorcall_NARGS(nargsf));
+    if (tuple == NULL) {
+        return NULL;
+    }
+
+    for (i = 0; i < PyVectorcall_NARGS(nargsf); i++) {
+        if (args[i] == NULL) {
+            PyErr_SetString(PyExc_RuntimeError, "NULL argument");
+            Py_DECREF(tuple);
+            return NULL;
+        }
+        PyTuple_SET_ITEM(tuple, i, args[i]);
+        Py_INCREF(args[i]);
+    }
+
+    PyObject* res = PyObject_CallObject(callable, tuple);
+    Py_DECREF(tuple);
+    return res;
+}
+
+PyObject*
+PyObject_VectorcallMethod(PyObject *name, PyObject *const *args, size_t nargsf, PyObject *kwnames)
+{
+    size_t i;
+    if (kwnames != NULL) {
+        PyErr_SetString(PyExc_RuntimeError, "PyObjC's vectorcall compat does not support keyword arguments");
+        return NULL;
+    }
+    if (name == NULL) {
+        PyObjC_Assert(PyErr_Occurred(), NULL);
+        return NULL;
+    }
+    if (PyVectorcall_NARGS(nargsf) == 0) {
+        PyErr_SetString(PyExc_ValueError, "Missing first argument");
+        return NULL;
+    }
+
+    PyObject* callable = PyObject_GetAttr(args[0], name);
+    if (callable == NULL) {
+        return NULL;
+    }
+
+    if (PyVectorcall_NARGS(nargsf) == 1) {
+        PyObject* res = PyObject_CallFunction(callable, NULL);
+        Py_DECREF(callable);
+        return res;
+    }
+
+    PyObject* tuple = PyTuple_New(PyVectorcall_NARGS(nargsf)-1);
+    if (tuple == NULL) {
+        return NULL;
+    }
+
+    for (i = 1; i < PyVectorcall_NARGS(nargsf); i++) {
+        if (args[i] == NULL) {
+            PyErr_SetString(PyExc_RuntimeError, "NULL argument");
+            Py_DECREF(tuple);
+            return NULL;
+        }
+        PyTuple_SET_ITEM(tuple, i-1, args[i]);
+        Py_INCREF(args[i]);
+    }
+
+    PyObject* res = PyObject_CallObject(callable, tuple);
+    Py_DECREF(tuple);
+    Py_DECREF(callable);
+    return res;
+}
+
+#endif

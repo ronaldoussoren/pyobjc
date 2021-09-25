@@ -843,7 +843,9 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     }
 
     if (PyObjC_MakeBundleForClass != NULL && PyObjC_MakeBundleForClass != Py_None) {
-        PyObject* m = PyObject_CallObject(PyObjC_MakeBundleForClass, NULL);
+        PyObject* args[1] = { NULL };
+
+        PyObject* m = PyObject_Vectorcall(PyObjC_MakeBundleForClass, args+1, 0|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (m == NULL) {
             (void)PyObjCClass_UnbuildClass(objc_class);
             Py_DECREF(old_dict);
@@ -2663,7 +2665,6 @@ static int
 update_convenience_methods(PyObject* cls)
 {
     PyObject*  res;
-    PyObject*  args;
     PyObject*  dict;
     PyObject*  k;
     PyObject*  v;
@@ -2682,19 +2683,11 @@ update_convenience_methods(PyObject* cls)
         return -1;
     }
 
-    args = PyTuple_New(2);
-    if (args == NULL) {
-        Py_DECREF(dict);
-        return -1;
-    }
 
-    PyTuple_SET_ITEM(args, 0, cls);
-    PyTuple_SET_ITEM(args, 1, dict);
-    Py_INCREF(cls);
+    PyObject* args[3] = { NULL, cls, dict };
 
-    res = PyObject_Call(PyObjC_ClassExtender, args, NULL);
+    res = PyObject_Vectorcall(PyObjC_ClassExtender, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     if (res == NULL) {
-        Py_DECREF(args);
         return -1;
     }
     Py_DECREF(res);
@@ -2723,8 +2716,7 @@ update_convenience_methods(PyObject* cls)
         }
     }
 
-    Py_DECREF(args);
-
+    Py_DECREF(dict);
     return 0;
 }
 

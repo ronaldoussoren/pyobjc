@@ -322,7 +322,9 @@
 
     } else {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* keys = PyObject_CallMethod(value, "keys", NULL);
+            PyObject* args[2] = { NULL, value };
+
+            PyObject* keys = PyObject_VectorcallMethod(PyObjCNM_keys, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             if (keys == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -449,7 +451,8 @@
                 selfAsPython = PyObjCObject_New(self, 0, YES);
                 setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-                v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+                v = PyObjC_CallDecoder(cdr, setValue);
+
                 Py_DECREF(cdr);
                 Py_DECREF(setValue);
                 Py_DECREF(selfAsPython);
@@ -522,7 +525,7 @@
         NSObject* result;
 
         PyObjC_BEGIN_WITH_GIL
-            PyObject* copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, value, NULL);
+            PyObject* copy = PyObjC_CallCopyFunc(value);
             if (copy == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }

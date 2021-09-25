@@ -1098,15 +1098,8 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     Py_ssize_t             count;
     BOOL                   haveCountArg;
     PyObject*              insertArg = NULL;
-#if PY_VERSION_HEX >= 0x03090000
     PyObject*              arglist[64];
     Py_ssize_t             curArg = 1; /* Leave space for PY_VECTORCALL_ARGUMENTS_OFFSET */
-#   define SET_ARG(idx, value) arglist[(idx)] = (value)
-#else /* Python 3.8 and earlier */
-    PyObject*              arglist = NULL;
-    Py_ssize_t             curArg = 0;
-#   define SET_ARG(idx, value) PyTuple_SET_ITEM(arglist, (idx), (value))
-#endif
 
     rettype = methinfo->rettype->type;
 
@@ -1129,14 +1122,6 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     }
 
     if (userdata->closureType == PyObjC_Method) {
-#if PY_VERSION_HEX < 0x03090000
-        arglist = PyTuple_New(methinfo_size - 1 + (insertArg?1:0));
-        if (arglist == NULL) {
-            Py_XDECREF(insertArg);
-            goto error;
-        }
-#endif
-
         startArg = 2;
 
         pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
@@ -1148,46 +1133,29 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
 
         pyself = PyObjC_AdjustSelf(pyself);
         if (pyself == NULL) {
-#if PY_VERSION_HEX < 0x03090000
-            Py_DECREF(arglist);
-#endif
             goto error;
         }
         if (insertArg) {
-            SET_ARG(curArg++, insertArg);
+            arglist[curArg++] =  insertArg;
         }
 
-        SET_ARG(curArg++, pyself);
+        arglist[curArg++] = pyself;
         Py_INCREF(pyself);
 
     } else if (userdata->closureType == PyObjC_Block) {
         startArg = 1;
         pyself = NULL;
 
-#if PY_VERSION_HEX < 0x03090000
-        arglist = PyTuple_New(methinfo_size - 1 + (insertArg?1:0));
-        if (arglist == NULL) {
-            Py_XDECREF(insertArg);
-            goto error;
-        }
-#endif
         if (insertArg) {
-            SET_ARG(curArg++, insertArg);
+            arglist[curArg++] = insertArg;
         }
 
     } else {
         startArg = 0;
         pyself   = NULL;
 
-#if PY_VERSION_HEX < 0x03090000
-        arglist = PyTuple_New(methinfo_size + (insertArg?1:0));
-        if (arglist == NULL) {
-            Py_XDECREF(insertArg);
-            goto error;
-        }
-#endif
         if (insertArg) {
-            SET_ARG(curArg++, insertArg);
+            arglist[curArg++] = insertArg;
         }
     }
 
@@ -1385,30 +1353,21 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         }
 
         if (v == NULL) {
-#if PY_VERSION_HEX < 0x03090000
-            Py_DECREF(arglist);
-#else
             for (Py_ssize_t j = 1; j < curArg; j++) {
                 Py_DECREF(arglist[j]);
             }
-#endif
             goto error;
         }
 
-        SET_ARG(curArg, v);
+        arglist[curArg] = v;
         curArg++; v = NULL;
     }
 
 
-#if PY_VERSION_HEX >= 0x03090000
     res = PyObject_Vectorcall(callable, arglist+1, ((size_t)(curArg-1)) | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     for (Py_ssize_t j = 1; j < curArg; j++) {
         Py_DECREF(arglist[j]);
     }
-#else
-    res = PyObject_Call(callable, arglist, NULL);
-    Py_DECREF(arglist);
-#endif
 
     if (res == NULL) {
         goto error;

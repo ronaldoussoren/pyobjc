@@ -89,7 +89,8 @@ object_repr(PyObject* _self)
          * Don't call 'description' for uninitialized objects, that
          * is undefined behaviour and will crash the interpreter sometimes.
          */
-        res = PyObject_CallMethod((PyObject*)self, "description", NULL);
+        PyObject* args[2] = { NULL, (PyObject*)self };
+        res = PyObject_VectorcallMethod(PyObjCNM_description, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (res == NULL) {
             PyErr_Clear();
         } else {
@@ -902,6 +903,7 @@ as_cobject(PyObject* self)
     return PyCapsule_New(PyObjCObject_GetObject(self), "objc.__object__", NULL);
 }
 
+/* XXX: Move this function to objc_util.m */
 PyObject*
 PyObjC_get_c_void_p(void)
 {
@@ -909,7 +911,7 @@ PyObjC_get_c_void_p(void)
     if (c_void_p == NULL) {
         PyObject* mod_ctypes = PyImport_ImportModule("ctypes");
         if (mod_ctypes == NULL) {
-            /* ctypes is nota available */
+            /* ctypes is not available */
             return NULL;
         }
 
@@ -926,19 +928,7 @@ PyObjC_get_c_void_p(void)
 static PyObject*
 as_ctypes_voidp(PyObject* self)
 {
-    PyObject* c_void_p;
-
-    if (PyObjCObject_GetObject(self) == nil) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-
-    c_void_p = PyObjC_get_c_void_p();
-    if (c_void_p == NULL) {
-        return NULL;
-    }
-
-    return PyObject_CallFunction(c_void_p, "k", (long)PyObjCObject_GetObject(self));
+    return PyObjC_MakeCVoidP(PyObjCObject_GetObject(self));
 }
 
 /*

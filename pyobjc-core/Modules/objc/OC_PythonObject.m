@@ -107,7 +107,7 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 
     } else {
         PyObjC_BEGIN_WITH_GIL
-            copy = PyObject_CallFunctionObjArgs(PyObjC_CopyFunc, pyObject, NULL);
+            copy = PyObjC_CallCopyFunc(pyObject);
             if (copy == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -498,6 +498,10 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
 
         retbuffer = alloca(retsize);
 
+        /* XXX: Convert this to vectorcall, needs with some
+         * luck this can be done without creating a bound
+         * method.
+         */
         pymethod = get_method_for_selector(pyObject, aSelector);
 
         if (!pymethod) {
@@ -687,7 +691,9 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
+        PyObject* args[3] = { NULL, pyObject, keyName };
+
+        val = PyObject_Vectorcall(getKeyFunc, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         if (val == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -742,7 +748,9 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
+        PyObject* args[4] = { NULL, pyObject, keyName, pyValue };
+
+        val = PyObject_Vectorcall(setKeyFunc, args+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         Py_DECREF(pyValue);
         if (val == NULL) {
@@ -798,7 +806,9 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        val = PyObject_CallFunction(getKeyFunc, "OO", pyObject, keyName);
+        PyObject* args[3] = { NULL, pyObject, keyName };
+
+        val = PyObject_Vectorcall(getKeyFunc, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         if (val == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -848,7 +858,9 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        val = PyObject_CallFunction(setKeyFunc, "OOO", pyObject, keyName, pyValue);
+        PyObject* args[4] = { NULL, pyObject, keyName, pyValue };
+
+        val = PyObject_Vectorcall(setKeyFunc, args+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         Py_DECREF(pyValue);
         if (val == NULL) {
@@ -1041,7 +1053,7 @@ getModuleFunction(char* modname, char* funcname)
             selfAsPython = PyObjCObject_New(self, 0, YES);
             setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-            v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+            v = PyObjC_CallDecoder(cdr, setValue);
             Py_DECREF(cdr);
             Py_DECREF(setValue);
             Py_DECREF(selfAsPython);
@@ -1231,7 +1243,9 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            PyObject* r = PyObject_CallFunction(PyObjC_Encoder, "OO", pyObject, cdr);
+            PyObject* args[3] = { NULL, pyObject, cdr };
+
+            PyObject* r = PyObject_Vectorcall(PyObjC_Encoder, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(cdr);
             if (r == NULL) {
                 exc = PyObjCErr_AsExc();

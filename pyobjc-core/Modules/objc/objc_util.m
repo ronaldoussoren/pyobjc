@@ -1400,3 +1400,71 @@ int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames)
     PyErr_Format(PyExc_TypeError, "%R does not accept keyword arguments", callable);
     return -1;
 }
+
+PyObject*
+PyObjC_MakeCVoidP(void* ptr)
+{
+    if (ptr == NULL) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+    PyObject* c_void_p = PyObjC_get_c_void_p();
+    if (c_void_p == NULL) {
+        return NULL;
+    }
+
+    PyObject* pyptr = PyLong_FromVoidPtr(ptr);
+    if (pyptr == NULL) {
+        return NULL;
+    }
+    PyObject* args[2] = { NULL, pyptr };
+    PyObject* res = PyObject_Vectorcall(c_void_p, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(pyptr);
+    return res;
+}
+
+PyObject* PyObjCNM_insert;
+PyObject* PyObjCNM_append;
+PyObject* PyObjCNM_strftime;
+PyObject* PyObjCNM_keys;
+PyObject* PyObjCNM_clear;
+PyObject* PyObjCNM_discard;
+PyObject* PyObjCNM_add;
+PyObject* PyObjCNM_values;
+PyObject* PyObjCNM_description;
+PyObject* PyObjCNM___get__;
+PyObject* PyObjCNM_date_format_string;
+
+int
+PyObjC_setup_names(void)
+{
+    if ((PyObjCNM_insert = PyUnicode_FromString("insert")) == NULL) return -1;
+    if ((PyObjCNM_append = PyUnicode_FromString("append")) == NULL) return -1;
+    if ((PyObjCNM_strftime = PyUnicode_FromString("strftime")) == NULL) return -1;
+    if ((PyObjCNM_keys = PyUnicode_FromString("keys")) == NULL) return -1;
+    if ((PyObjCNM_clear = PyUnicode_FromString("clear")) == NULL) return -1;
+    if ((PyObjCNM_discard = PyUnicode_FromString("discard")) == NULL) return -1;
+    if ((PyObjCNM_add = PyUnicode_FromString("add")) == NULL) return -1;
+    if ((PyObjCNM_values = PyUnicode_FromString("values")) == NULL) return -1;
+    if ((PyObjCNM_description = PyUnicode_FromString("description")) == NULL) return -1;
+    if ((PyObjCNM___get__ = PyUnicode_FromString("__get__")) == NULL) return -1;
+    if ((PyObjCNM_date_format_string = PyUnicode_FromString("%Y-%m-%d %H:%M:%S %z")) == NULL) return -1;
+
+    return 0;
+}
+
+PyObject*
+PyObjC_CallCopyFunc(PyObject* arg)
+{
+    PyObject* args[2] = { NULL, arg };
+
+    return PyObject_Vectorcall(PyObjC_CopyFunc, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+}
+
+PyObject*
+PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
+{
+    PyObject* args[3] = { NULL, cdr, setValue };
+
+    return PyObject_Vectorcall(PyObjC_Decoder, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+}

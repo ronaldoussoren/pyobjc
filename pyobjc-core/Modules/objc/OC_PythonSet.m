@@ -214,7 +214,7 @@
             selfAsPython = PyObjCObject_New(self, 0, YES);
             setValue     = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-            v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+            v = PyObjC_CallDecoder(cdr, setValue);
             Py_DECREF(cdr);
             Py_DECREF(setValue);
             Py_DECREF(selfAsPython);
@@ -247,7 +247,7 @@
     (void)zone;
     if (PyObjC_CopyFunc != NULL) {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* tmp = PyObject_CallFunction(PyObjC_CopyFunc, "O", value);
+            PyObject* tmp = PyObjC_CallCopyFunc(value);
             if (tmp == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -504,7 +504,8 @@
              */
             PyObject* r;
 
-            r = PyObject_CallMethod(value, "clear", NULL);
+            PyObject* args[3] = { NULL, value };
+            r = PyObject_VectorcallMethod(PyObjCNM_clear, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             if (r == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -536,7 +537,8 @@
         } else {
             PyObject* r;
 
-            r = PyObject_CallMethod(value, "discard", "O", tmp);
+            PyObject* args[3] = { NULL, value, tmp };
+            r = PyObject_VectorcallMethod(PyObjCNM_discard, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(tmp);
             if (r == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
@@ -570,7 +572,8 @@
         } else {
             PyObject* r;
 
-            r = PyObject_CallMethod(value, "add", "O", tmp);
+            PyObject* args[3] = { NULL, value, tmp };
+            r = PyObject_VectorcallMethod(PyObjCNM_add, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(tmp);
             if (r == NULL) {
                 PyObjC_GIL_FORWARD_EXC();

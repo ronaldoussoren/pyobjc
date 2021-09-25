@@ -4,6 +4,10 @@ typedef struct {
     PyObject_HEAD
 
     PyObject* callable;
+#if PY_VERSION_HEX >= 0x03090000
+    vectorcallfunc         vectorcall;
+#endif
+
 } PyObjCPythonMethod;
 
 PyObject*
@@ -27,27 +31,6 @@ static PyMemberDef meth_members[] = {{
                                          .name = NULL /* SENTINEL */
                                      }};
 
-static PyObject*
-meth_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
-{
-    static char*        keywords[] = {"callable", NULL};
-    PyObject*           callable;
-    PyObjCPythonMethod* result;
-
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &callable)) {
-        return NULL;
-    }
-
-    result =
-        (PyObjCPythonMethod*)PyObject_New(PyObjCPythonMethod, &PyObjCPythonMethod_Type);
-    if (result == NULL) {
-        return NULL;
-    }
-    result->callable = callable;
-    Py_INCREF(callable);
-
-    return (PyObject*)result;
-}
 
 static PyObject*
 meth_descr_get(PyObject* self, PyObject* obj, PyObject* class)
@@ -95,6 +78,39 @@ meth_call(PyObject* self, PyObject* args, PyObject* kwds)
     return PyObject_Call(((PyObjCPythonMethod*)self)->callable, args, kwds);
 }
 
+#if PY_VERSION_HEX >= 0x03090000
+static PyObject*
+meth_vectorcall(PyObject* self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+{
+    return PyObject_Vectorcall(((PyObjCPythonMethod*)self)->callable, args, nargsf, kwnames);
+}
+#endif
+
+static PyObject*
+meth_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+{
+    static char*        keywords[] = {"callable", NULL};
+    PyObject*           callable;
+    PyObjCPythonMethod* result;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &callable)) {
+        return NULL;
+    }
+
+    result =
+        (PyObjCPythonMethod*)PyObject_New(PyObjCPythonMethod, &PyObjCPythonMethod_Type);
+    if (result == NULL) {
+        return NULL;
+    }
+    result->callable = callable;
+    Py_INCREF(callable);
+#if PY_VERSION_HEX >= 0x03090000
+    result->vectorcall = meth_vectorcall;
+#endif
+
+    return (PyObject*)result;
+}
+
 PyDoc_STRVAR(meth_doc,
              "objc.python_method(callable)\n" CLINIC_SEP
              "\nReturns a descriptor that won't be converted to a selector object \n"
@@ -106,7 +122,12 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_itemsize                                   = 0,
     .tp_dealloc                                    = meth_dealloc,
     .tp_getattro                                   = PyObject_GenericGetAttr,
+#if PY_VERSION_HEX >= 0x03090000
+    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL|Py_TPFLAGS_METHOD_DESCRIPTOR,
+    .tp_vectorcall_offset                          = offsetof(PyObjCPythonMethod, vectorcall),
+#else
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+#endif
     .tp_doc                                        = meth_doc,
     .tp_members                                    = meth_members,
     .tp_new                                        = meth_new,

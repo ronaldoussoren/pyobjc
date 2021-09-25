@@ -269,7 +269,9 @@
 
         if (PyObjC_NSNumberWrapper && rval) {
             PyObject* val = rval;
-            rval = PyObject_CallFunctionObjArgs(PyObjC_NSNumberWrapper, val, NULL);
+
+            PyObject* args[2] = { NULL, val };
+            rval = PyObject_Vectorcall(PyObjC_NSNumberWrapper, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(val);
         }
     }

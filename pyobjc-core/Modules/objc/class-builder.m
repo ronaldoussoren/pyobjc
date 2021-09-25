@@ -6,6 +6,12 @@
 
 #import <Foundation/NSInvocation.h>
 
+/* XXX: See comment at definition */
+static PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
+                                   BOOL* isAlloc, BOOL* isCFAlloc);
+
+
+
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_respondsToSelector(ffi_cif* cif, void* retval, void** args,
@@ -578,14 +584,16 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
         /*
          * Check if the value has a class-setup hook, and if it does
          * call said hook.
+         * XXX: Create utility function for "call optional method"
+         *      or use VectorcallMethod and handle AttributeError.
          */
         PyObject* m = PyObject_GetAttrString(value, "__pyobjc_class_setup__");
         if (m == NULL) {
             PyErr_Clear();
 
         } else {
-            PyObject* rv = PyObject_CallFunction(m, "OOOO", key, class_dict,
-                                                 instance_methods, class_methods);
+            PyObject* args[5] = { NULL, key, class_dict, instance_methods, class_methods };
+            PyObject* rv = PyObject_Vectorcall(m, args+1, 4|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(m);
             if (rv == NULL) {
                 goto error_cleanup;
@@ -1183,7 +1191,8 @@ free_ivars(id self, PyObject* cls)
          *
          * XXX: PyMapping_Values?
          */
-        clsValues = PyObject_CallMethod(clsDict, "values", NULL);
+        PyObject* args[2] = { NULL, clsDict };
+        clsValues = PyObject_VectorcallMethod(PyObjCNM_values, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(clsDict);
         if (clsValues == NULL) {
             PyErr_Clear();
@@ -1287,7 +1296,12 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
         delmethod = PyObjCClass_GetDelMethod(cls);
         if (delmethod != NULL) {
             PyObject* s = _PyObjCObject_NewDeallocHelper(self);
-            obj         = PyObject_CallFunction(delmethod, "O", s);
+#if PY_VERSION_HEX >= 0x03090000
+            PyObject* args[2] = { NULL, s };
+            obj = PyObject_Vectorcall(delmethod, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+#else
+            obj = PyObject_CallFunctionObjArgs(delmethod, s, NULL);
+#endif
             _PyObjCObject_FreeDeallocHelper(s);
             if (obj == NULL) {
                 PyErr_WriteUnraisable(delmethod);
@@ -1843,8 +1857,11 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
 
 /*
  * XXX: Function PyObjC_CallPython should be moved
+ *
+ * XXX: Move API to vectorcall convention, and possibly inline in
+ * its sole caller.
  */
-PyObject*
+static PyObject*
 PyObjC_CallPython(id self, SEL selector, PyObject* arglist, BOOL* isAlloc,
                   BOOL* isCFAlloc)
 {

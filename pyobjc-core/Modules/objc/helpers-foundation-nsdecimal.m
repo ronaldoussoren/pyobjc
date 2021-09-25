@@ -844,31 +844,23 @@ imp_NSDecimalNumber_initWithDecimal_(ffi_cif* cif __attribute__((__unused__)), v
     id*       pretval  = (id*)resp;
 
     PyObject* result  = NULL;
-    PyObject* arglist = NULL;
     PyObject* v       = NULL;
     PyObject* pyself  = NULL;
     int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    arglist = PyTuple_New(2);
-    if (arglist == NULL)
-        goto error;
-
     pyself = PyObjCObject_NewTransient(self, &cookie);
     if (pyself == NULL)
         goto error;
-    PyTuple_SetItem(arglist, 0, pyself);
-    Py_INCREF(pyself);
 
     v = Decimal_New(&aDecimal);
     if (v == NULL)
         goto error;
-    PyTuple_SetItem(arglist, 1, v);
 
-    result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist);
-    arglist = NULL;
+    PyObject* arglist[3]  = { NULL, pyself, v };
+    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v); v = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -881,7 +873,7 @@ imp_NSDecimalNumber_initWithDecimal_(ffi_cif* cif __attribute__((__unused__)), v
 
 error:
     *pretval = nil;
-    Py_XDECREF(arglist);
+    Py_XDECREF(v);
     if (pyself) {
         PyObjCObject_ReleaseTransient(pyself, cookie);
     }
@@ -933,33 +925,24 @@ imp_NSDecimalNumber_decimalNumberWithDecimal_(ffi_cif* cif __attribute__((__unus
     id*       pretval  = (id*)resp;
 
     PyObject* result  = NULL;
-    PyObject* arglist = NULL;
     PyObject* v       = NULL;
     PyObject* pyself  = NULL;
-    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
-
-    arglist = PyTuple_New(2);
-    if (arglist == NULL)
-        goto error;
 
     pyself = PyObjCClass_New(self);
     if (pyself == NULL)
         goto error;
-    PyTuple_SetItem(arglist, 0, pyself);
-    Py_INCREF(pyself);
 
     v = Decimal_New(&aDecimal);
     if (v == NULL)
         goto error;
-    PyTuple_SetItem(arglist, 1, v);
 
-    result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist);
-    arglist = NULL;
-    Py_DECREF(pyself);
-    pyself = NULL;
+    PyObject* arglist[3] = { NULL, pyself, v };
+
+    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v); v = NULL;
+    Py_DECREF(pyself); pyself = NULL;
     if (result == NULL)
         goto error;
 
@@ -970,10 +953,8 @@ imp_NSDecimalNumber_decimalNumberWithDecimal_(ffi_cif* cif __attribute__((__unus
 
 error:
     *pretval = nil;
-    Py_XDECREF(arglist);
-    if (pyself) {
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-    }
+    Py_XDECREF(v);
+    Py_XDECREF(pyself);
     PyObjCErr_ToObjCWithGILState(&state);
 }
 
@@ -986,27 +967,17 @@ imp_NSDecimalNumber_decimalValue(ffi_cif* cif __attribute__((__unused__)), void*
     NSDecimal* res     = NULL;
 
     PyObject* result  = NULL;
-    PyObject* arglist = NULL;
     PyObject* v       = NULL;
-    PyObject* pyself  = NULL;
-    int       cookie  = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
-
-    arglist = PyTuple_New(1);
-    if (arglist == NULL)
-        goto error;
 
     v = PyObjC_IdToPython(self);
     if (v == NULL)
         goto error;
-    PyTuple_SetItem(arglist, 0, v);
 
-    result = PyObject_Call((PyObject*)callable, arglist, NULL);
-    Py_DECREF(arglist);
-    arglist = NULL;
-    PyObjCObject_ReleaseTransient(pyself, cookie);
-    pyself = NULL;
+    PyObject* arglist[2] = { NULL, v };
+    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v); v = NULL;
     if (result == NULL)
         goto error;
 
@@ -1022,10 +993,7 @@ imp_NSDecimalNumber_decimalValue(ffi_cif* cif __attribute__((__unused__)), void*
     return;
 
 error:
-    Py_XDECREF(arglist);
-    if (pyself) {
-        PyObjCObject_ReleaseTransient(pyself, cookie);
-    }
+    Py_XDECREF(v);
     PyObjCErr_ToObjCWithGILState(&state);
 }
 

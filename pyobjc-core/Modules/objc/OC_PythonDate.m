@@ -113,7 +113,8 @@
             PyObject* selfAsPython = PyObjCObject_New(self, 0, YES);
             setValue = PyObject_GetAttrString(selfAsPython, "pyobjcSetValue_");
 
-            PyObject* v = PyObject_CallFunction(PyObjC_Decoder, "OO", cdr, setValue);
+            PyObject* v = PyObjC_CallDecoder(cdr, setValue);
+
             Py_DECREF(cdr);
             Py_DECREF(setValue);
             Py_DECREF(selfAsPython);
@@ -142,7 +143,13 @@
         PyObjC_BEGIN_WITH_GIL
             PyObject* v;
 
-            v = PyObject_CallMethod(value, "strftime", "s", "%Y-%m-%d %H:%M:%S %z");
+
+            PyObject* args[3] = { NULL, value, PyObjCNM_date_format_string };
+            if (args[2] == NULL) {
+                PyObjC_GIL_FORWARD_EXC();
+            }
+            v = PyObject_VectorcallMethod(PyObjCNM_strftime, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+
             if (v == NULL) {
                 /* Raise ObjC exception */
                 PyObjC_GIL_FORWARD_EXC();
@@ -177,9 +184,15 @@
 
                 snprintf(buf, sizeof(buf), "%%Y-%%m-%%d %%H:%%M:%%S %c%02ld%02ld", posneg,
                          (long)hours, (long)minutes);
-                v = PyObject_CallMethod(value, "strftime", "s", buf);
+                args[2] = PyUnicode_FromString(buf);
+                if (args[2] == NULL) {
+                     PyObjC_GIL_FORWARD_EXC();
+                }
+                v = PyObject_VectorcallMethod(PyObjCNM_strftime, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                Py_DECREF(args[2]);
                 if (v == NULL) {
                     /* Raise ObjC exception */
+                    PyObjC_GIL_FORWARD_EXC();
                 }
 
 #pragma clang diagnostic push

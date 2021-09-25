@@ -301,12 +301,17 @@ struct_copy(PyObject* self)
         PyObject* t = GET_STRUCT_FIELD(self, member);
 
         if (t != NULL) {
+            /*
+             * XXX: Maybe change to unconditional (vector) call, with fallback
+             * to current behaviour on attributeerror?
+             */
             PyObject* m = PyObject_GetAttrString(t, "__pyobjc_copy__");
             if (m == NULL) {
                 PyErr_Clear();
                 SET_STRUCT_FIELD(result, member, t);
             } else {
-                PyObject* c = PyObject_CallObject(m, NULL);
+                PyObject* args[1] = { NULL };
+                PyObject* c = PyObject_Vectorcall(m, args+1, 0|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
                 Py_DECREF(m);
                 if (c == NULL) {
                     Py_DECREF(result);

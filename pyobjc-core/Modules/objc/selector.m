@@ -1860,7 +1860,9 @@ PyObjCSelector_FromFunction(PyObject* pyname, PyObject* callable,
          */
         PyObject* tmp;
         is_class_method = 1;
-        tmp = PyObject_CallMethod(callable, "__get__", "OO", Py_None, template_class);
+
+        PyObject* args[4] = { NULL, callable, Py_None, template_class };
+        tmp = PyObject_VectorcallMethod(PyObjCNM___get__, args+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (tmp == NULL) {
             return NULL;
         }

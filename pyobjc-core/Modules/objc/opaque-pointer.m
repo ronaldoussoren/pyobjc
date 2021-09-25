@@ -34,20 +34,7 @@ as_cobject(PyObject* self)
 static PyObject*
 as_ctypes_voidp(PyObject* self)
 {
-    PyObject* c_void_p;
-
-    if (((OpaquePointerObject*)self)->pointer_value == NULL) {
-        Py_INCREF(Py_None);
-        return Py_None;
-    }
-
-    c_void_p = PyObjC_get_c_void_p();
-    if (c_void_p == NULL) {
-        return NULL;
-    }
-
-    return PyObject_CallFunction(c_void_p, "k",
-                                 (long)((OpaquePointerObject*)self)->pointer_value);
+    return PyObjC_MakeCVoidP(((OpaquePointerObject*)self)->pointer_value);
 }
 
 static PyObject*
