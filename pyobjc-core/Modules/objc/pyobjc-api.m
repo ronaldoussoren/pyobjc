@@ -119,6 +119,8 @@ struct pyobjc_api objc_api = {
     .memview_check             = PyObjCMemView_Check,
     .memview_new               = PyObjCMemView_New,
     .memview_getbuffer         = PyObjCMemView_GetBuffer,
+    .checkargcount             = PyObjC_CheckArgCount,
+    .checknokwnames            = PyObjC_CheckNoKwnames,
 };
 
 int
