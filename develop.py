@@ -242,6 +242,7 @@ def main():
 
     for project in ["pyobjc-core"] + sorted_framework_wrappers():
         if not build_project(project, sys.argv[1:]):
+            print("Cannot build one of the projects, bailing out")
             sys.exit(1)
 
 
