@@ -1644,6 +1644,14 @@
      "type_override": "v"
     }
    },
+   "dispatch_workloop_create": {
+     "args": { "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true } },
+     "retval": { "already_retained": true }
+   },
+   "dispatch_workloop_create_inactive": {
+     "args": { "0": { "type_override": "^t", "type_modifier": "n", "c_array_delimited_by_null": true } },
+     "retval": { "already_retained": true }
+   },
    "dispatch_write": {
     "args": {
      "0": { "type_override": "i" },

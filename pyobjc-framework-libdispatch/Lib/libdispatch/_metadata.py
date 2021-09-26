@@ -844,8 +844,22 @@ functions = {
     ),
     "dispatch_wait": (b"l@Q",),
     "dispatch_io_set_high_water": (b"v@L",),
-    "dispatch_workloop_create": (b"@^c",),
-    "dispatch_workloop_create_inactive": (b"@^c",),
+    "dispatch_workloop_create": (
+        b"@^t",
+        "",
+        {
+            "arguments": {0: {"type_modifier": "n", "c_array_delimited_by_null": True}},
+            "retval": {"already_retained": True},
+        },
+    ),
+    "dispatch_workloop_create_inactive": (
+        b"@^t",
+        "",
+        {
+            "arguments": {0: {"type_modifier": "n", "c_array_delimited_by_null": True}},
+            "retval": {"already_retained": True},
+        },
+    ),
     "_dispatch_once": (b"v^q@?",),
     "dispatch_data_create_map": (
         b"@@o^^vo^L",
