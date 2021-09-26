@@ -135,6 +135,7 @@ class TestNSGraphics(TestCase):
         img = AppKit.NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(  # noqa: B950
             None, 255, 255, 8, 4, True, False, AppKit.NSCalibratedRGBColorSpace, 0, 0, 0
         )
+
         context = AppKit.NSGraphicsContext.graphicsContextWithBitmapImageRep_(img)
         current = AppKit.NSGraphicsContext.currentContext()
         try:
@@ -261,6 +262,8 @@ class TestNSGraphics(TestCase):
             self.assertEqual(len(v), 5)
             self.assertIsInstance(v[0], int)
 
+        del img
+        del context
         AppKit.NSBeep()
         count = AppKit.NSCountWindows(None)
         self.assertIsInstance(count, int)
@@ -274,7 +277,6 @@ class TestNSGraphics(TestCase):
             AppKit.NSEnableScreenUpdates()
         except objc.error:
             pass
-
         self.assertArgIsSEL(AppKit.NSShowAnimationEffect, 4, b"v@:^v")
         self.assertArgHasType(AppKit.NSShowAnimationEffect, 5, b"^v")
         try:

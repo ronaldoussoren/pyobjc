@@ -740,18 +740,22 @@ error:
 static PyObject*
 call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
 {
-    Py_ssize_t length;
+    NSUInteger length;
     Py_buffer  view;
 
     struct objc_super super;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
 
+    if  (depythonify_c_value(@encode(NSUInteger), arguments[1], &length)) {
+        return NULL;
+    }
+
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
 
-    if (length > view.len) {
+    if (length > (size_t)view.len) {
         PyErr_Format(PyExc_ValueError,
                      "length %" PY_FORMAT_SIZE_T "d > len(buf) %" PY_FORMAT_SIZE_T "d",
                      length, view.len);

@@ -425,8 +425,23 @@
 /* For use on Python 3.8 and earlier. PyObjC doesn't use the
  * "flag" bit internally.
  */
-#define PyVectorcall_NARGS(nargsf) (nargsf)
+
+#ifndef PY_VECTORCALL_ARGUMENTS_OFFSET
+#define PY_VECTORCALL_ARGUMENTS_OFFSET ((size_t)1 << (8 * sizeof(size_t) - 1))
 #endif
+
+#define PyVectorcall_NARGS(nargsf) ((nargsf)&~PY_VECTORCALL_ARGUMENTS_OFFSET)
+
+#ifdef OBJC_VERSION
+/* Don't use PyObject prefixed symbols in our binaries */
+#define PyObject_Vectorcall PyObjC_Vectorcall
+#define PyObject_VectorcallMethod PyObjC_VectorcallMethod
+
+extern PyObject* PyObject_Vectorcall(PyObject* callable, PyObject*const* args, size_t nargsf, PyObject* kwnames);
+extern PyObject* PyObject_VectorcallMethod(PyObject *name, PyObject *const *args, size_t nargsf, PyObject *kwnames);
+#endif
+
+#endif /* Python < 3.9 */
 
 /* Use CLINIC_SEP between the prototype and
  * description in doc strings, to get clean
@@ -523,5 +538,6 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyObjC_END_WITH_GIL                                                              \
     PyGILState_Release(_GILState);                                                       \
     }
+
 
 #endif /* PyObjC_COMPAT_H */

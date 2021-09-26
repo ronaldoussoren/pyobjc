@@ -2,24 +2,20 @@ static PyObject*
 call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject* self,
                                                      PyObject*const* arguments, size_t nargs)
 {
-    PyObject*          a1;
-    PyObject*          a2;
     PyObject*          result;
     struct objc_super  super;
-    NSTIFFCompression* list;
-    NSInteger          numTypes;
+    NSTIFFCompression* list = NULL;
+    NSInteger          numTypes = 0;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
         return NULL;
     }
-    a1 = arguments[0];
-    a2 = arguments[1];
 
-    if (a1 != Py_None) {
+    if (arguments[0] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "buffer must be None");
         return NULL;
     }
-    if (a2 != Py_None) {
+    if (arguments[1] != Py_None) {
         PyErr_SetString(PyExc_ValueError, "length must be None");
         return NULL;
     }
@@ -48,6 +44,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject*
         return NULL;
     }
 
+    /* XXX: Use Py_BuildValue */
     PyTuple_SetItem(result, 1, PyLong_FromLong(numTypes));
     if (PyTuple_GetItem(result, 1) == NULL) {
         Py_DECREF(result);
@@ -74,7 +71,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
                                      PyObject*const* arguments, size_t nargs)
 {
     PyObject*         result;
-    const void*       dataPlanes[5];
+    const void*       dataPlanes[5] = {0};
     int               width, height;
     int               bps, spp;
     BOOL              hasAlpha, isPlanar;
@@ -135,8 +132,8 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
     if (PyObjC_PythonToObjC(@encode(int), arguments[4], &spp) == -1) {
         goto error_cleanup;
     }
-    hasAlpha = PyObject_IsTrue(arguments[5]);
-    isPlanar = PyObject_IsTrue(arguments[6]);
+    hasAlpha = (BOOL)PyObject_IsTrue(arguments[5]);
+    isPlanar = (BOOL)PyObject_IsTrue(arguments[6]);
     if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString) == -1) {
         goto error_cleanup;
     }
@@ -175,9 +172,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
         return NULL;
     }
 
-    result = PyObjC_IdToPython(newImageRep);
-
-    return result;
+    return PyObjC_IdToPython(newImageRep);
 
 error_cleanup : {
     int j = i;
@@ -195,7 +190,7 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
                                            PyObject*const* arguments, size_t nargs)
 {
     PyObject*         result;
-    const void*       dataPlanes[5];
+    const void*       dataPlanes[5] = {0};
     int               width, height;
     int               bps, spp;
     BOOL              hasAlpha, isPlanar;
@@ -211,7 +206,7 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
         planeBuffers[i].buf = NULL;
     }
 
-    if (PyObjC_CheckArgCount(method, 10, 10, nargs) == -1) {
+    if (PyObjC_CheckArgCount(method, 11, 11, nargs) == -1) {
         return NULL;
     }
     py_allPlanes = arguments[0];
@@ -257,18 +252,18 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
     if (PyObjC_PythonToObjC(@encode(int), arguments[4], &spp) == -1) {
         goto error_cleanup;
     }
-    hasAlpha = PyObject_IsTrue(arguments[5]);
-    isPlanar = PyObject_IsTrue(arguments[6]);
+    hasAlpha = (BOOL)PyObject_IsTrue(arguments[5]);
+    isPlanar = (BOOL)PyObject_IsTrue(arguments[6]);
     if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString) == -1) {
         goto error_cleanup;
     }
-    if (PyObjC_PythonToObjC(@encode(int), arguments[7], &format) == -1) {
+    if (PyObjC_PythonToObjC(@encode(int), arguments[8], &format) == -1) {
         goto error_cleanup;
     }
-    if (PyObjC_PythonToObjC(@encode(int), arguments[8], &bpr) == -1) {
+    if (PyObjC_PythonToObjC(@encode(int), arguments[9], &bpr) == -1) {
         goto error_cleanup;
     }
-    if (PyObjC_PythonToObjC(@encode(int), arguments[9], &bpp) == -1) {
+    if (PyObjC_PythonToObjC(@encode(int), arguments[10], &bpp) == -1) {
         goto error_cleanup;
     }
 
