@@ -3,7 +3,7 @@ What's new in PyObjC
 
 An overview of the relevant changes in new, and older, releases.
 
-Version 8.0b1
+Version 8.0b2
 -------------
 
 Backward incompatible changes
@@ -75,37 +75,41 @@ Upcoming incompatible changes
 Performance
 ...........
 
-Most performance changes use features introduced in Python 3.9.
+Most performance changes use features introduced in Python 3.9, performance
+in older Python versions is unchanged except for the effects of general cleanup.
 
 * Implement the "vectorcall" protocol for :class:`objc.function`, :class:`objc.WeakRef`,
-  :class:`objc.selector`, :class:`objc.IMP`.
+  :class:`objc.selector`, :class:`objc.IMP`, :type:`objc.python_method`.
 
   This reduces the interpreter overhead for calling instances of these objects.
 
-* Implement Py_TPFLAGS_METHOD_DESCRIPTOR for native selectors.
+* Implement Py_TPFLAGS_METHOD_DESCRIPTOR for :type:`objc.selector`,
+  :type:`objc.python_method`.
 
 * Use vectorcall in the method stub that forwards Objective-C calls to Python.
+
+* Convert internal calls into Python to the vectorcall protocol (pyobjc-core)
 
 New features
 ............
 
 * Updated framework bindings for macOS 12 (Xcode 13 beta 5)
 
-  New:
+* New framework bindings for the following frameworks:
 
   - AudioVideoBridging (introduced in macOS 10.8)
 
-  - DataDetection
+  - DataDetection (introduced in macOS 12.0)
 
-  - IntentsUI
+  - IntentsUI (introduced in macOS 12.0)
 
-  - LocalAuthenticationEmbeddedUI
+  - LocalAuthenticationEmbeddedUI (introduced in macOS 12.0)
 
-  - MailKit
+  - MailKit (introduced in macOS 12.0)
 
-  - MetricKit
+  - MetricKit (introduced in macOS 12.0)
 
-  - ShazamKit
+  - ShazamKit (introduced in macOS 12.0)
 
 
 * #318: Implement support for ``__class_getitem__`` for Objective-C classes
