@@ -3,6 +3,15 @@
 {
  "definitions": {
   "classes": {
+   "PKStoredValuePassProperties": {
+    "methods": [
+     {
+      "class_method": false,
+      "retval": { "type_override": "Z"},
+      "selector": "isInStation"
+     }
+    ]
+   },
    "PKIssuerProvisioningExtensionPassEntry": {
     "methods": [
      {

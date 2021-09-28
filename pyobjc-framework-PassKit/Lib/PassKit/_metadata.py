@@ -904,6 +904,7 @@ try:
     )
     r(b"PKStoredValuePassBalance", b"isEqualToBalance:", {"retval": {"type": b"Z"}})
     r(b"PKStoredValuePassProperties", b"isBlacklisted", {"retval": {"type": b"Z"}})
+    r(b"PKStoredValuePassProperties", b"isInStation", {"retval": {"type": b"Z"}})
     r(b"PKStoredValuePassProperties", b"isBlocked", {"retval": {"type": b"Z"}})
     r(
         b"PKSuicaPassProperties",
