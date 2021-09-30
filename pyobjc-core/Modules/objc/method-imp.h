@@ -33,6 +33,8 @@ extern PyObjC_CallFunc        PyObjCIMP_GetCallFunc(PyObject* self);
 extern PyObjCMethodSignature* PyObjCIMP_GetSignature(PyObject* self);
 extern int                    PyObjCIMP_GetFlags(PyObject* self);
 extern SEL                    PyObjCIMP_GetSelector(PyObject* self);
+extern ffi_cif*               PyObjCIMP_GetCIF(PyObject* self);
+extern int                    PyObjCIMP_SetCIF(PyObject* self, ffi_cif* cif);
 
 extern int PyObjCIMP_SetUpMethodWrappers(void);
 

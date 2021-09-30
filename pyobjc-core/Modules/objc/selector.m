@@ -459,6 +459,15 @@ objcsel_richcompare(PyObject* a, PyObject* b, int op)
     }
 }
 
+static void
+objcsel_dealloc(PyObject* obj)
+{
+    if (((PyObjCNativeSelector*)obj)->sel_cif != NULL) {
+        PyObjCFFI_FreeCIF(((PyObjCNativeSelector*)obj)->sel_cif);
+    }
+    sel_dealloc(obj);
+}
+
 static PyObject*
 objcsel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf,PyObject* kwnames)
 {
@@ -582,6 +591,106 @@ objcsel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf,PyObject
     return res;
 }
 
+#if PY_VERSION_HEX >= 0x03090000
+static PyObject*
+objcsel_vectorcall_simple(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+{
+    PyObjCNativeSelector*  self    = (PyObjCNativeSelector*)_self;
+    PyObject*              pyself  = self->base.sel_self;
+    PyObject*              res;
+    PyObject*              pyres;
+    PyObjCMethodSignature* methinfo;
+
+    if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
+        return NULL;
+    }
+    if (pyself == NULL) {
+        if (PyVectorcall_NARGS(nargsf) < 1) {
+            PyErr_SetString(PyExc_TypeError, "Missing argument: self");
+            return NULL;
+        }
+
+        pyself = args[0];
+        if (pyself == NULL) {
+            PyErr_SetString(PyExc_TypeError, "Got NULL for self");
+            return NULL;
+        }
+
+        args = args + 1;
+        nargsf = PyVectorcall_NARGS(nargsf) - 1;
+    }
+
+    methinfo = PyObjCSelector_GetMetadata(_self);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
+    if (PyObjC_DeprecationVersion && methinfo->deprecated
+        && methinfo->deprecated <= PyObjC_DeprecationVersion) {
+        char  buf[128];
+        Class cls = PyObjCSelector_GetClass(_self);
+        SEL   sel = PyObjCSelector_GetSelector(_self);
+
+        snprintf(buf, 128, "%c[%s %s] is a deprecated API (macOS %d.%d)",
+                 PyObjCSelector_IsClassMethod(_self) ? '+' : '-', class_getName(cls),
+                 sel_getName(sel), methinfo->deprecated / 100,
+                 methinfo->deprecated % 100);
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            return NULL;
+        }
+    }
+    if (!(self->base.sel_flags & PyObjCSelector_kCLASS_METHOD)) {
+        /*
+         * Class methods should always be bound, therefore we only
+         * have to validate the type of self for instance methods.
+         */
+        PyObject* myClass = PyObjCClass_New(self->base.sel_class);
+
+        if (!(PyObject_IsInstance(pyself, myClass)
+              || (PyUnicode_Check(pyself)
+                  && class_isSubclassOf(self->base.sel_class, [NSString class])))) {
+
+            Py_DECREF(myClass);
+            PyErr_Format(PyExc_TypeError,
+                         "Expecting instance of %s as self, got one "
+                         "of %s",
+                         class_getName(self->base.sel_class), Py_TYPE(pyself)->tp_name);
+            return NULL;
+        }
+        Py_DECREF(myClass);
+    }
+
+    pyres = res = PyObjCFFI_Caller_SimpleSEL((PyObject*)self, pyself, args, nargsf);
+    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) >= 1
+        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
+
+        pyres = pyself;
+    }
+
+    if (PyObjCObject_Check(pyself)
+        && (((PyObjCObject*)pyself)->flags
+            & PyObjCObject_kUNINITIALIZED)) {
+        if (pyself != pyres && !PyErr_Occurred()) {
+            PyObjCObject_ClearObject(pyself);
+        }
+    }
+
+    if (pyres && PyObjCObject_Check(pyres)) {
+        if (self->base.sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
+            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
+        } else if (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED) {
+            ((PyObjCObject*)pyself)->flags &= ~PyObjCObject_kUNINITIALIZED;
+            if (self->base.sel_self && self->base.sel_self != pyres
+                && !PyErr_Occurred()) {
+                PyObjCObject_ClearObject(self->base.sel_self);
+            }
+        }
+    }
+    return res;
+}
+#endif
+
+
 static PyObject*
 objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 {
@@ -626,9 +735,6 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
         Py_DECREF(result);
         return NULL;
     }
-#if PY_VERSION_HEX >= 0x03090000
-    result->base.vectorcall = objcsel_vectorcall;
-#endif
 
     if (meth->base.sel_native_signature != NULL) {
         result->base.sel_native_signature =
@@ -643,6 +749,8 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
 
     result->base.sel_flags = meth->base.sel_flags;
     result->base.sel_class = meth->base.sel_class;
+    result->base.sel_methinfo = NULL;
+    result->sel_cif = NULL;
 
     if (meth->sel_call_func == NULL) {
         if (class_isMetaClass(meth->base.sel_class)) {
@@ -677,6 +785,14 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
         }
     }
 
+#if PY_VERSION_HEX >= 0x03090000
+    if (result->base.sel_methinfo->shortcut_signature) {
+        result->base.sel_vectorcall = objcsel_vectorcall_simple;
+    } else {
+        result->base.sel_vectorcall = objcsel_vectorcall;
+    }
+#endif
+
     result->base.sel_self = obj;
     if (result->base.sel_self) {
         Py_INCREF(result->base.sel_self);
@@ -703,13 +819,13 @@ PyTypeObject PyObjCNativeSelector_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc.native_selector",
     .tp_basicsize                                  = sizeof(PyObjCNativeSelector),
     .tp_itemsize                                   = 0,
-    .tp_dealloc                                    = sel_dealloc,
+    .tp_dealloc                                    = objcsel_dealloc,
     .tp_repr                                       = objcsel_repr,
     .tp_call                                       = objcsel_call,
     .tp_getattro                                   = PyObject_GenericGetAttr,
 #if PY_VERSION_HEX >= 0x03090000
     .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL|Py_TPFLAGS_METHOD_DESCRIPTOR,
-    .tp_vectorcall_offset                          = offsetof(PyObjCNativeSelector, base.vectorcall),
+    .tp_vectorcall_offset                          = offsetof(PyObjCNativeSelector, base.sel_vectorcall),
 #else
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
 #endif
@@ -874,11 +990,8 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
 
     result->base.sel_self     = NULL;
     result->base.sel_class    = class;
-    result->base.sel_methinfo = NULL;
     result->base.sel_flags    = 0;
-#if PY_VERSION_HEX >= 0x03090000
-    result->base.vectorcall = objcsel_vectorcall;
-#endif
+    result->base.sel_methinfo = NULL;
     if (class_method) {
         result->base.sel_flags |= PyObjCSelector_kCLASS_METHOD;
     }
@@ -886,7 +999,16 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
         || sel_isEqual(selector, @selector(allocWithZone:))) {
         result->base.sel_flags |= PyObjCSelector_kRETURNS_UNINITIALIZED;
     }
+    result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
+#if PY_VERSION_HEX >= 0x03090000
+    if (result->base.sel_methinfo->shortcut_signature) {
+        result->base.sel_vectorcall = objcsel_vectorcall_simple;
+    } else {
+        result->base.sel_vectorcall = objcsel_vectorcall;
+    }
+#endif
     result->sel_call_func = NULL;
+    result->sel_cif = NULL;
     return (PyObject*)result;
 }
 
@@ -931,7 +1053,7 @@ PyObjCSelector_New(PyObject* callable, SEL selector, const char* signature,
         return NULL;
     }
 #if PY_VERSION_HEX >= 0x03090000
-    result->base.vectorcall = pysel_vectorcall;
+    result->base.sel_vectorcall = pysel_vectorcall;
 #endif
 
     if (PyObjC_RemoveInternalTypeCodes((char*)result->base.sel_native_signature) == -1) {
@@ -1559,6 +1681,7 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
     }
 
     result = PyObject_New(PyObjCPythonSelector, &PyObjCPythonSelector_Type);
+    result->base.sel_methinfo = NULL;
     result->base.sel_selector = meth->base.sel_selector;
     result->base.sel_class    = meth->base.sel_class;
     result->base.sel_python_signature =
@@ -1569,7 +1692,7 @@ pysel_descr_get(PyObject* _meth, PyObject* obj, PyObject* class)
         return NULL;
     }
 #if PY_VERSION_HEX >= 0x03090000
-    result->base.vectorcall = pysel_vectorcall;
+    result->base.sel_vectorcall = pysel_vectorcall;
 #endif
 
     if (meth->base.sel_native_signature) {
@@ -1668,7 +1791,7 @@ PyTypeObject PyObjCPythonSelector_Type = {
 #else
     .tp_call                                       = PyVectorcall_Call,
     .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL|Py_TPFLAGS_METHOD_DESCRIPTOR,
-    .tp_vectorcall_offset                          = offsetof(PyObjCPythonSelector, base.vectorcall),
+    .tp_vectorcall_offset                          = offsetof(PyObjCPythonSelector, base.sel_vectorcall),
 #endif
     .tp_getattro                                   = PyObject_GenericGetAttr,
     .tp_richcompare                                = pysel_richcompare,

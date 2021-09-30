@@ -3429,6 +3429,45 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
     return Py_SIZE(methinfo);
 }
 
+#if PY_VERSION_HEX >= 0x03090000
+Py_ssize_t
+PyObjCFFI_ParseArguments_Simple(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
+                         PyObject*const* args,
+                         size_t nargs __attribute__((__unused__)),  /* Only used in debug builds */
+                         Py_ssize_t argbuf_cur, unsigned char* argbuf,
+                         Py_ssize_t argbuf_len
+                         __attribute__((__unused__)), /* only used in debug builds */
+                         void** values)
+   /*
+    * A variant of ParseArguments for "simple" functions (see method-signature.m for the definition
+    */
+{
+    void*      arg;
+    Py_ssize_t meth_arg_count = Py_SIZE(methinfo);
+
+    PyObjC_Assert(methinfo->shortcut_signature, -1);
+    PyObjC_Assert(meth_arg_count - argOffset <= (Py_ssize_t)nargs, -1);
+
+    for (Py_ssize_t i = argOffset, py_arg = 0; i < meth_arg_count; i++, py_arg++) {
+
+        const char* argtype  = methinfo->argtype[i]->type;
+        PyObject* argument = args[py_arg];
+        argbuf_cur = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
+        arg        = values[i] = argbuf + argbuf_cur;
+        argbuf_cur += PyObjCRT_SizeOfType(argtype);
+        PyObjC_Assert(argbuf_cur <= argbuf_len, -1);
+
+        int error = depythonify_c_value(argtype, argument, arg);
+        if (error == -1) {
+            return -1;
+        }
+    }
+
+    return 0;
+}
+#endif
+
+
 PyObject*
 PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                       void* pRetval, void** byref, struct byref_attr* byref_attr,
@@ -3874,6 +3913,113 @@ error_cleanup:
     return NULL;
 }
 
+#if PY_VERSION_HEX >= 0x03090000
+PyObject*
+PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo,
+                      void* pRetval,
+                      PyObject* self, int flags
+                      )
+   /*
+    * A variant of ParseArguments for "simple" functions (see method-signature.m for the definition
+    */
+{
+    PyObject*  objc_result = NULL;
+
+    PyObjC_Assert(methinfo->shortcut_signature, -1);
+
+    if ((*methinfo->rettype->type != _C_VOID)) {
+        const char* tp    = methinfo->rettype->type;
+
+        if (unlikely(tp[0] == _C_ID && tp[1] == '?')) {
+            /* The value is a block, those values are
+             * treated slightly differently than normal:
+             * - always use -copy on them to ensure we
+             *   can safely store them.
+             * - try to attach the calling signature to the
+             *   block.
+             */
+            id v        = [*(id*)pRetval copy];
+            objc_result = pythonify_c_return_value(tp, &v);
+            [v release];
+            if (objc_result == NULL) {
+                return NULL;
+            }
+
+            if (PyObjCObject_IsBlock(objc_result)
+                && PyObjCObject_GetBlock(objc_result) == NULL) {
+                /* Result is an (Objective-)C block for which we don't have a Python
+                 * signature
+                 *
+                 * 1) Try to extract from the metadata system
+                 * 2) Try to extract from the ObjC runtime
+                 *
+                 * Both systems may not have the required information.
+                 *
+                 * XXX: Move to separate function!
+                 */
+
+                if (methinfo->rettype->callable != NULL) {
+                    PyObjCObject_SET_BLOCK(objc_result, methinfo->rettype->callable);
+                    Py_INCREF(methinfo->rettype->callable);
+                } else {
+                    const char* signature = PyObjCBlock_GetSignature(objc_result);
+                    if (signature != NULL) {
+                        PyObjCMethodSignature* sig =
+                            PyObjCMethodSignature_FromSignature(signature, YES);
+
+                        if (sig == NULL) {
+                            Py_DECREF(objc_result);
+                            return NULL;
+                        }
+                        PyObjCObject_SET_BLOCK(objc_result, sig);
+                        sig = NULL;
+                    }
+                }
+            }
+        } else {
+
+            objc_result = pythonify_c_return_value(tp, pRetval);
+            if (objc_result == NULL) {
+                return NULL;
+            }
+        }
+
+        if (unlikely(methinfo->rettype->alreadyRetained)) {
+            if (PyObjCObject_Check(objc_result)) {
+                /* pythonify_c_return_value has retained the object, but we already
+                 * own a reference, therefore give the ref away again
+                 */
+                [PyObjCObject_GetObject(objc_result) release];
+            }
+        } else if (unlikely(methinfo->rettype->alreadyCFRetained)) {
+            if (PyObjCObject_Check(objc_result)) {
+                /* pythonify_c_return_value has retained the object, but we already
+                 * own a reference, therefore give the ref away again
+                 */
+                CFRelease(PyObjCObject_GetObject(objc_result));
+            }
+        }
+    } else {
+        Py_INCREF(Py_None);
+        objc_result = Py_None;
+    }
+
+    /* XXX: This is for selectors only, need to change this !!!! */
+    /* XXX restructure the if statement to put the most like to be false bit first */
+
+    if (unlikely(self != NULL && objc_result != self && PyObjCObject_Check(self)
+        && PyObjCObject_Check(objc_result)
+        && !(flags & PyObjCSelector_kRETURNS_UNINITIALIZED)
+        && (((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED))) {
+        [PyObjCObject_GetObject(objc_result) release];
+        PyObjCObject_ClearObject(self);
+    }
+
+    return objc_result;
+}
+
+#endif
+
 int
 PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_attr)
 {
@@ -4270,6 +4416,375 @@ error_cleanup:
     }
     return NULL;
 }
+
+#if PY_VERSION_HEX >= 0x03090000
+PyObject*
+PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self, PyObject*const* args, size_t nargs)
+{
+    unsigned char     argbuf[256];
+    void*             values[MAX_ARGCOUNT_SIMPLE];
+
+    Py_ssize_t             argbuf_cur      = 0;
+    PyObjCMethodSignature* methinfo;
+    PyObjCNativeSelector*  meth        = (PyObjCNativeSelector*)aMeth;
+    id                     self_obj    = nil;
+    struct objc_super      super;
+    struct objc_super*     superPtr;
+    Py_ssize_t             r;
+    void*                  msgResult;
+    Py_ssize_t             resultSize;
+#ifndef __arm64__
+    int                    useStret;
+#endif
+    int                    flags;
+    SEL                    theSel;
+    int                    isUninitialized;
+    const char*            rettype;
+    ffi_cif*               cif;
+
+    PyObjC_Assert(methinfo->shortcut_signature, NULL);
+
+    if (PyObjCIMP_Check(aMeth)) {
+        methinfo = PyObjCIMP_GetSignature(aMeth);
+        flags    = PyObjCIMP_GetFlags(aMeth);
+        cif      = PyObjCIMP_GetCIF(aMeth);
+
+    } else {
+        methinfo = PyObjCSelector_GetMetadata(aMeth);
+        if (methinfo == NULL) {
+            return NULL;
+        }
+        flags = meth->base.sel_flags;
+        cif = meth->sel_cif;
+    }
+
+    if (unlikely(methinfo->suggestion != NULL)) {
+        PyErr_Format(PyExc_TypeError, "%R: %s", self, methinfo->suggestion);
+        return NULL;
+    }
+
+    if (unlikely(cif == NULL)) {
+        cif = PyObjCFFI_CIFForSignature(methinfo);
+        if (cif == NULL) {
+            return NULL;
+        }
+        if (PyObjCIMP_Check(aMeth)) {
+            if (PyObjCIMP_SetCIF(aMeth, cif) == -1) {
+                PyObjCFFI_FreeCIF(cif);
+                return NULL;
+            }
+        } else {
+            PyObjCSelector_SET_CIF(aMeth, cif);
+        }
+    }
+
+    rettype         = methinfo->rettype->type;
+    resultSize      = methinfo->shortcut_result_size;
+
+    if (nargs != (size_t)Py_SIZE(methinfo) - 2) { /* XXX: can this underflow? */
+        PyErr_Format(PyExc_TypeError,
+                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+                     Py_SIZE(methinfo) - 1, nargs);
+        goto error_cleanup;
+    }
+
+    /* Set 'self' argument, for class methods we use the class */
+    if (flags & PyObjCSelector_kCLASS_METHOD) {
+        if (PyObjCObject_Check(self)) {
+            self_obj = PyObjCObject_GetObject(self);
+            if (self_obj != NULL) {
+                self_obj = object_getClass(self_obj);
+            }
+
+        } else if (PyObjCClass_Check(self)) {
+            self_obj = PyObjCClass_GetClass(self);
+
+        } else if (PyType_Check(self)
+                   && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
+            PyObject* c = PyObjCClass_ClassForMetaClass(self);
+            if (c == NULL) {
+                self_obj = nil;
+
+            } else {
+                self_obj = PyObjCClass_GetClass(c);
+            }
+
+        } else {
+            PyErr_Format(
+                PyExc_TypeError,
+                "Need objective-C object or class as self, not an instance of '%s'",
+                Py_TYPE(self)->tp_name);
+            goto error_cleanup;
+        }
+
+    } else {
+        int err;
+        if (PyObjCObject_Check(self)) {
+            self_obj = PyObjCObject_GetObject(self);
+
+        } else {
+            err = depythonify_c_value(@encode(id), self, &self_obj);
+            if (err == -1) {
+                goto error_cleanup;
+            }
+        }
+    }
+#ifndef __arm64__
+    useStret = 0;
+#endif
+
+    if (unlikely(PyObjCIMP_Check(aMeth))) {
+        theSel     = PyObjCIMP_GetSelector(aMeth);
+        values[0]  = &self_obj;
+        values[1]  = &theSel;
+        msgResult  = argbuf;
+        argbuf_cur = align(resultSize, sizeof(void*));
+
+    } else {
+        objc_superSetReceiver(super, self_obj);
+        if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
+            objc_superSetClass(super, object_getClass(meth->base.sel_class));
+        } else {
+            objc_superSetClass(super, meth->base.sel_class);
+        }
+#ifndef __arm64__
+        useStret = PyObjCRT_ResultUsesStret(rettype);
+        if (useStret == -1) {
+            goto error_cleanup;
+        }
+#endif
+
+        superPtr   = &super;
+        values[0]  = &superPtr;
+        values[1]  = &meth->base.sel_selector;
+        theSel     = meth->base.sel_selector;
+        msgResult  = argbuf;
+        argbuf_cur = align(resultSize, sizeof(void*));
+    }
+
+    /* Ignore 'self' while parsing arguments */
+    r = PyObjCFFI_ParseArguments_Simple(methinfo, 2, args, nargs, argbuf_cur, argbuf, sizeof(argbuf), values);
+    if (r == -1) {
+        goto error_cleanup;
+    }
+
+    if (likely(PyObjCObject_Check(self))) {
+        isUninitialized = ((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED;
+        ((PyObjCObject*)self)->flags &= ~PyObjCObject_kUNINITIALIZED;
+    } else {
+        isUninitialized = NO;
+    }
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            if (unlikely(PyObjCIMP_Check(aMeth))) {
+                ffi_call(cif, FFI_FN(PyObjCIMP_GetIMP(aMeth)), msgResult, values);
+            } else {
+
+#ifdef __arm64__
+                ffi_call(cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+#else
+                if (unlikely(useStret)) {
+                    ffi_call(cif, FFI_FN(objc_msgSendSuper_stret), msgResult, values);
+                } else {
+                    ffi_call(cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+                }
+#endif
+            }
+
+        } @catch (NSObject* localException) {
+
+            /* XXX: This is allowed because the function acquires the GIL, but
+             * that's fairly expensive. Maybe avoid doing that?
+             */
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
+
+    if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
+        ((PyObjCObject*)self)->flags |= PyObjCObject_kUNINITIALIZED;
+    }
+
+    if (PyErr_Occurred()) /* XXX: Should this before the previous check? */
+        goto error_cleanup;
+
+    return PyObjCFFI_BuildResult_Simple(methinfo, msgResult, self, flags);
+
+error_cleanup:
+    return NULL;
+}
+
+PyObject*
+PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self, PyObject*const* args, size_t nargsf)
+{
+    unsigned char     argbuf[256];
+    void*             values[MAX_ARGCOUNT_SIMPLE];
+
+    Py_ssize_t             argbuf_cur      = 0;
+    PyObjCMethodSignature* methinfo;
+    PyObjCNativeSelector*  meth        = (PyObjCNativeSelector*)aMeth;
+    id                     self_obj    = nil;
+    struct objc_super      super;
+    struct objc_super*     superPtr;
+    Py_ssize_t             r;
+    void*                  msgResult;
+    Py_ssize_t             resultSize;
+#ifndef __arm64__
+    int                    useStret;
+#endif
+    int                    flags;
+    SEL                    theSel;
+    int                    isUninitialized = NO;
+    const char*            rettype;
+    ffi_cif*               cif;
+
+
+    methinfo = meth->base.sel_methinfo;
+    flags = meth->base.sel_flags;
+    cif = meth->sel_cif;
+
+    if (unlikely(!methinfo->shortcut_signature)) {
+        PyErr_Format(PyExc_TypeError, "%R is not a simple selector", self);
+        return NULL;
+    }
+
+    if (unlikely(methinfo->suggestion != NULL)) {
+        PyErr_Format(PyExc_TypeError, "%R: %s", self, methinfo->suggestion);
+        return NULL;
+    }
+
+    if (unlikely(cif == NULL)) {
+        cif = PyObjCFFI_CIFForSignature(methinfo);
+        if (cif == NULL) {
+            return NULL;
+        }
+        if (PyObjCIMP_Check(aMeth)) {
+            if (PyObjCIMP_SetCIF(aMeth, cif) == -1) {
+                PyObjCFFI_FreeCIF(cif);
+                return NULL;
+            }
+        } else {
+            PyObjCSelector_SET_CIF(aMeth, cif);
+        }
+    }
+
+    rettype         = methinfo->rettype->type;
+    resultSize = methinfo->shortcut_result_size;
+    if (unlikely(PyVectorcall_NARGS(nargsf) != Py_SIZE(methinfo) - 2)) {
+        PyErr_Format(PyExc_TypeError,
+                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+                     Py_SIZE(methinfo) - 1, PyVectorcall_NARGS(nargsf));
+        goto error_cleanup;
+    }
+
+    /* Set 'self' argument, for class methods we use the class */
+    if (flags & PyObjCSelector_kCLASS_METHOD) {
+        if (PyObjCObject_Check(self)) {
+            self_obj = PyObjCObject_GetObject(self);
+            if (self_obj != NULL) {
+                self_obj = object_getClass(self_obj);
+            }
+
+        } else if (PyObjCClass_Check(self)) {
+            self_obj = PyObjCClass_GetClass(self);
+
+        } else if (PyType_Check(self)
+                   && PyType_IsSubtype((PyTypeObject*)self, &PyType_Type)) {
+            PyObject* c = PyObjCClass_ClassForMetaClass(self);
+            if (c == NULL) {
+                self_obj = nil;
+
+            } else {
+                self_obj = PyObjCClass_GetClass(c);
+            }
+
+        } else {
+            PyErr_Format(
+                PyExc_TypeError,
+                "Need objective-C object or class as self, not an instance of '%s'",
+                Py_TYPE(self)->tp_name);
+            goto error_cleanup;
+        }
+
+    } else {
+        int err;
+        if (likely(PyObjCObject_Check(self))) {
+            self_obj = PyObjCObject_GetObject(self);
+            isUninitialized = ((PyObjCObject*)self)->flags & PyObjCObject_kUNINITIALIZED;
+            ((PyObjCObject*)self)->flags &= ~PyObjCObject_kUNINITIALIZED;
+
+        } else {
+            err = depythonify_c_value(@encode(id), self, &self_obj);
+            if (err == -1) {
+                goto error_cleanup;
+            }
+        }
+    }
+#ifndef __arm64__
+    useStret = 0;
+#endif
+    objc_superSetReceiver(super, self_obj);
+    if (meth->base.sel_flags & PyObjCSelector_kCLASS_METHOD) {
+        objc_superSetClass(super, object_getClass(meth->base.sel_class));
+    } else {
+        objc_superSetClass(super, meth->base.sel_class);
+    }
+#ifndef __arm64__
+    useStret = PyObjCRT_ResultUsesStret(rettype);
+    if (useStret == -1) {
+        goto error_cleanup;
+    }
+#endif
+
+    superPtr   = &super;
+    values[0]  = &superPtr;
+    values[1]  = &meth->base.sel_selector;
+    theSel     = meth->base.sel_selector;
+    msgResult  = argbuf;
+    argbuf_cur = align(resultSize, sizeof(void*));
+
+    /* Ignore 'self' while parsing arguments */
+    r = PyObjCFFI_ParseArguments_Simple(methinfo, 2, args, PyVectorcall_NARGS(nargsf), argbuf_cur, argbuf, sizeof(argbuf), values);
+    if (r == -1) {
+        goto error_cleanup;
+    }
+
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+#ifdef __arm64__
+            ffi_call(cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+#else
+            if (unlikely(useStret)) {
+                ffi_call(cif, FFI_FN(objc_msgSendSuper_stret), msgResult, values);
+            } else {
+                ffi_call(cif, FFI_FN(objc_msgSendSuper), msgResult, values);
+            }
+#endif
+
+        } @catch (NSObject* localException) {
+
+            /* XXX: This is allowed because the function acquires the GIL, but
+             * that's fairly expensive. Maybe avoid doing that?
+             */
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
+
+    if (unlikely(isUninitialized && PyObjCObject_Check(self))) {
+        ((PyObjCObject*)self)->flags |= PyObjCObject_kUNINITIALIZED;
+    }
+
+    if (PyErr_Occurred()) /* XXX: Should this before the previous check? */
+        goto error_cleanup;
+
+    return PyObjCFFI_BuildResult_Simple(methinfo, msgResult, self, flags);
+
+error_cleanup:
+    return NULL;
+}
+#endif /* PY_VERSION_HEX >= 0x03090000 */
+
 
 /*
  * PyObjCFFI_CIFForSignature - Create CIF for a method signature

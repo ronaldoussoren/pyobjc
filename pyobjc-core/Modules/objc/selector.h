@@ -12,6 +12,8 @@
 #define PyObjCSelector_kRETURNS_UNINITIALIZED 0x000010
 #define PyObjCSelector_kNATIVE 0x000020
 
+#include <ffi/ffi.h>
+
 /*!
  * @typedef PyObjC_CallFunc
  * @param meth A selector object
@@ -32,13 +34,14 @@ typedef struct {
     PyObjCMethodSignature* sel_methinfo;
     Py_ssize_t             sel_mappingcount;
 #if PY_VERSION_HEX >= 0x03090000
-    vectorcallfunc         vectorcall;
+    vectorcallfunc         sel_vectorcall;
 #endif
 } PyObjCSelector;
 
 typedef struct {
     PyObjCSelector  base;
     PyObjC_CallFunc sel_call_func;
+    ffi_cif*        sel_cif;
 } PyObjCNativeSelector;
 
 typedef struct {
@@ -74,6 +77,8 @@ extern PyObject*              PyObjCSelector_FindNative(PyObject* self, const ch
 
 #define PyObjCSelector_GET_CLASS(obj) (((PyObjCSelector*)(obj))->sel_class)
 #define PyObjCSelector_GET_SELECTOR(obj) (((PyObjCSelector*)(obj))->sel_selector)
+#define PyObjCSelector_GET_CIF(obj) (((PyObjCNativeSelector*)(obj))->sel_cif)
+#define PyObjCSelector_SET_CIF(obj, cif) (((PyObjCNativeSelector*)(obj))->sel_cif = (cif))
 
 extern PyObject* PyObjCSelector_New(PyObject* callable, SEL selector,
                                     const char* signature, int class_method, Class class);

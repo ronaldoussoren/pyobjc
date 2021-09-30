@@ -9,6 +9,7 @@
 
 #define MAX_ARGCOUNT 64
 
+
 struct byref_attr {
     int       token;
     PyObject*  obj;
@@ -40,6 +41,8 @@ extern int PyObjCFFI_CountArguments(PyObjCMethodSignature*, Py_ssize_t, Py_ssize
 extern Py_ssize_t PyObjCFFI_ParseArguments(PyObjCMethodSignature*, Py_ssize_t, PyObject*const*, size_t,
                                            Py_ssize_t, unsigned char*, Py_ssize_t, void**,
                                            struct byref_attr*, ffi_type**, void**);
+
+
 extern PyObject*  PyObjCFFI_BuildResult(PyObjCMethodSignature*, Py_ssize_t argOffset,
                                         void*              pRetval, void**,
                                         struct byref_attr* byref_attr, Py_ssize_t,
@@ -48,5 +51,22 @@ extern int        PyObjCFFI_FreeByRef(Py_ssize_t, void**, struct byref_attr*);
 extern ffi_type*  PyObjCFFI_Typestr2FFI(const char*);
 extern PyObjC_callback_function PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature*,
                                                               PyObject*);
+
+#if PY_VERSION_HEX >= 0x03090000
+  /*
+   * "Simple" variants that reduce calling overhead for a large subset
+   * of APIs.
+   */
+#define MAX_ARGCOUNT_SIMPLE 8
+extern PyObject*           PyObjCFFI_Caller_Simple(PyObject*, PyObject*, PyObject*const*, size_t);
+extern PyObject*           PyObjCFFI_Caller_SimpleSEL(PyObject*, PyObject*, PyObject*const*, size_t);
+
+extern Py_ssize_t PyObjCFFI_ParseArguments_Simple(PyObjCMethodSignature*, Py_ssize_t,
+	PyObject*const*, size_t, Py_ssize_t, unsigned char*,
+				 Py_ssize_t, void**);
+extern PyObject* PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature*,
+                      void*,
+                      PyObject*, int);
+#endif
 
 #endif /* PyObjC_FFI_SUPPORT_H */

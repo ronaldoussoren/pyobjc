@@ -278,6 +278,88 @@ error:
     return NULL;
 }
 
+#if PY_VERSION_HEX >= 0x03090000
+/*
+ * A variant of func_vectorcall that only handles "simple" functions. This allows
+ * for a number of simplifications that significantly speed up functions calls
+ * (about 50% faster on my M1 laptop)
+ */
+static PyObject*
+func_vectorcall_simple(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+{
+    func_object* self = (func_object*)s;
+
+    unsigned char     argbuf[256];
+    void*             values[MAX_ARGCOUNT_SIMPLE];
+
+
+    if (!self->methinfo->shortcut_signature) {
+        PyErr_Format(PyObjCExc_InternalError, "%R is not a simple function", self);
+        return NULL;
+    }
+
+    if (unlikely(kwnames != NULL && (PyTuple_CheckExact(kwnames) && PyTuple_GET_SIZE(kwnames) != 0))) {
+        PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
+        return NULL;
+    }
+
+    /*
+     * The PY_VECTORCALL_ARGUMENTS_OFFSET feature is not used by this function.
+     * fetch the raw number of arguments to make it possible to ignore that flag
+     * in the rest of the implementation.
+     */
+    nargsf = PyVectorcall_NARGS(nargsf);
+
+    if (unlikely(PyObjC_DeprecationVersion && self->methinfo->deprecated
+        && self->methinfo->deprecated <= PyObjC_DeprecationVersion)) {
+        char buf[128];
+
+        if (PyUnicode_Check(self->name)) {
+            snprintf(buf, 128, "%s() is a deprecated API (macOS %d.%d)",
+                     PyUnicode_AsUTF8(self->name), self->methinfo->deprecated / 100,
+                     self->methinfo->deprecated % 100);
+        } else {
+            snprintf(buf, 128, "function is a deprecated API");
+        }
+
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            return NULL;
+        }
+    }
+
+    if (unlikely(nargsf != (size_t)Py_SIZE(self->methinfo))) {
+        PyErr_Format(PyExc_TypeError,
+                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %" PY_FORMAT_SIZE_T "d",
+                     Py_SIZE(self->methinfo), nargsf);
+        return NULL;
+    }
+    if (unlikely(PyObjCFFI_ParseArguments_Simple(
+        self->methinfo, 0, args, nargsf,
+        align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type), sizeof(void*)),
+        argbuf, sizeof(argbuf), /*arglist,*/ values) == -1)) {
+
+        goto error;
+    }
+
+    Py_BEGIN_ALLOW_THREADS
+        @try {
+            ffi_call(self->cif, FFI_FN(self->function), argbuf, values);
+        } @catch (NSObject* localException) {
+            PyObjCErr_FromObjC(localException);
+        }
+    Py_END_ALLOW_THREADS
+
+    if (unlikely(PyErr_Occurred())) {
+        goto error;
+    }
+
+    return PyObjCFFI_BuildResult_Simple(self->methinfo, argbuf, NULL, 0);
+
+error:
+    return NULL;
+}
+#endif
+
 static PyObject*
 func_call(PyObject* s, PyObject* args, PyObject* kwds)
 {
@@ -389,6 +471,12 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
         Py_DECREF(result);
         return NULL;
     }
+
+#if PY_VERSION_HEX >= 0x03090000
+    if (result->methinfo->shortcut_signature) {
+        result->vectorcall = func_vectorcall_simple;
+    }
+#endif
 
     result->function = func;
 

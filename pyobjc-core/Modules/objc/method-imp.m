@@ -10,8 +10,32 @@ typedef struct {
 #if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc         vectorcall;
 #endif
+    ffi_cif*               cif;
 } PyObjCIMPObject;
 
+
+ffi_cif*
+PyObjCIMP_GetCIF(PyObject* self)
+{
+    if (!PyObjCIMP_Check(self)) {
+        PyErr_BadInternalCall();
+        return NULL;
+    }
+
+    return ((PyObjCIMPObject*)self)->cif;
+}
+
+int
+PyObjCIMP_SetCIF(PyObject* self, ffi_cif* cif)
+{
+    if (!PyObjCIMP_Check(self)) {
+        PyErr_BadInternalCall();
+        return -1;
+    }
+
+    ((PyObjCIMPObject*)self)->cif = cif;
+    return 0;
+}
 
 SEL
 PyObjCIMP_GetSelector(PyObject* self)
@@ -485,6 +509,7 @@ PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
     result->selector  = selector;
     result->callfunc  = callfunc;
     result->signature = signature;
+    result->cif = NULL;
 #if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = imp_vectorcall;
 #endif

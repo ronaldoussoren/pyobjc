@@ -188,6 +188,7 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     /* FIXME: structs/unions/... also use byref */
     Py_ssize_t byref_in_count = 0, byref_out_count = 0, plain_count = 0, argbuf_len = 0;
     BOOL       variadic_args = NO;
+    Py_ssize_t i;
 
     if (methinfo == 0) {
         PyErr_SetString(PyObjCExc_InternalError, "methinfo not set");
@@ -195,8 +196,13 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     }
     methinfo->shortcut_signature   = NO;
     methinfo->shortcut_argbuf_size = 0;
+    methinfo->shortcut_result_size = 0;
 
-    /* return 0; */
+#if PY_VERSION_HEX < 0x03090000
+    /* Shortcut not used in older python versions */
+    return 0;
+
+#else /*  PY_VERSION_HEX >= 0x03090000 */
 
     if (methinfo == NULL || methinfo->variadic) {
         return 0;
@@ -205,6 +211,49 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     if (PyObjCMethodSignature_Validate(methinfo) == -1)
         return -1;
 #endif /* PyObjC_DEBUG */
+
+    for (i = 0; i < Py_SIZE(methinfo); i++) {
+        switch (*methinfo->argtype[i]->type) {
+            /* Pointer-like return values aren't "simple" */
+            case _C_CONST:
+            case _C_OUT:
+            case _C_IN:
+            case _C_INOUT:
+            case _C_PTR:
+            case _C_CHARPTR:
+                return 0;
+
+            case _C_ID:
+                if (methinfo->argtype[i]->type[1] == '?') {
+                    /* Blocks are not simple */
+                    return 0;
+                }
+        }
+    }
+
+    switch (*methinfo->rettype->type) {
+        /* Pointer-like return values aren't "simple" */
+        case _C_OUT:
+        case _C_IN:
+        case _C_INOUT:
+        case _C_PTR:
+        case _C_CHARPTR:
+            return 0;
+    }
+
+
+    if (Py_SIZE(methinfo) > MAX_ARGCOUNT_SIMPLE) {
+        return 0;
+    }
+
+    Py_ssize_t result_size = PyObjCRT_SizeOfReturnType(methinfo->rettype->type);
+    if (result_size == -1) {
+        PyErr_Clear();
+        return 0;
+    }
+    if (result_size > 128) {
+        return 0;
+    }
 
     int r = PyObjCFFI_CountArguments(methinfo, 0, &byref_in_count, &byref_out_count,
                                      &plain_count, &argbuf_len, &variadic_args);
@@ -226,9 +275,10 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
     }
 
     methinfo->shortcut_signature   = YES;
-    methinfo->shortcut_signature   = NO; /* XXX */
     methinfo->shortcut_argbuf_size = (unsigned int)argbuf_len;
+    methinfo->shortcut_result_size = (unsigned int)result_size;
     return 0;
+#endif /* PY_VERSION_HEX >= 0x03090000 */
 }
 
 static struct _PyObjC_ArgDescr*
