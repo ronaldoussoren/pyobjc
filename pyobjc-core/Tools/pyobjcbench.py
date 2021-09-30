@@ -155,7 +155,7 @@ def imp_call():
         ),
     )
     print_bench(
-        "NSArray description call",
+        "NSArray description IMP call",
         timeit.timeit(
             setup='import objc; NSArray = objc.lookUpClass("NSArray"); '
             "o = NSArray.alloc().init(); m = o.methodForSelector_(b'description')",
