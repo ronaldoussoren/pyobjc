@@ -22,20 +22,24 @@
 #ifndef PyObjC_METHOD_IMP_H
 #define PyObjC_METHOD_IMP_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern PyTypeObject PyObjCIMP_Type;
 
 #define PyObjCIMP_Check(obj) PyObject_TypeCheck(obj, &PyObjCIMP_Type)
 
-extern PyObject*              PyObjCIMP_New(IMP imp, SEL sel, PyObjC_CallFunc callfunc,
-                                            PyObjCMethodSignature* signature, int flags);
-extern IMP                    PyObjCIMP_GetIMP(PyObject* self);
-extern PyObjC_CallFunc        PyObjCIMP_GetCallFunc(PyObject* self);
-extern PyObjCMethodSignature* PyObjCIMP_GetSignature(PyObject* self);
-extern int                    PyObjCIMP_GetFlags(PyObject* self);
-extern SEL                    PyObjCIMP_GetSelector(PyObject* self);
-extern ffi_cif*               PyObjCIMP_GetCIF(PyObject* self);
-extern int                    PyObjCIMP_SetCIF(PyObject* self, ffi_cif* cif);
+extern PyObject* _Nullable    PyObjCIMP_New(IMP imp, SEL sel, PyObjC_CallFunc callfunc,
+                                            PyObjCMethodSignature* signature, int flags) __attribute__ ((warn_unused_result));
+extern _Nullable IMP                    PyObjCIMP_GetIMP(PyObject* self) __attribute__ ((warn_unused_result));
+extern _Nullable PyObjC_CallFunc        PyObjCIMP_GetCallFunc(PyObject* self) __attribute__ ((warn_unused_result));
+extern PyObjCMethodSignature* _Nullable PyObjCIMP_GetSignature(PyObject* self) __attribute__ ((warn_unused_result));
+extern int                    PyObjCIMP_GetFlags(PyObject* self) __attribute__ ((warn_unused_result));
+extern _Nullable SEL                    PyObjCIMP_GetSelector(PyObject* self) __attribute__ ((warn_unused_result));
+extern ffi_cif* _Nullable     PyObjCIMP_GetCIF(PyObject* self) __attribute__ ((warn_unused_result));
+extern int                    PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nonnull cif) __attribute__ ((warn_unused_result));
 
-extern int PyObjCIMP_SetUpMethodWrappers(void);
+extern int PyObjCIMP_SetUpMethodWrappers(void) __attribute__ ((warn_unused_result));
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_METHOD_IMP_H */

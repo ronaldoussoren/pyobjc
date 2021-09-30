@@ -17,6 +17,7 @@ typedef struct {
 ffi_cif*
 PyObjCIMP_GetCIF(PyObject* self)
 {
+    /* XXX: Maybe move checks outside this function */
     if (!PyObjCIMP_Check(self)) {
         PyErr_BadInternalCall();
         return NULL;
