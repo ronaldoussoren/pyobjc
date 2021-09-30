@@ -568,6 +568,9 @@ PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
 {
     PyObjCIMPObject* result;
 
+    PyObjC_Assert(callfunc != NULL, NULL);
+    PyObjC_Assert(signature != NULL, NULL);
+
     result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
     if (result == NULL)
         return NULL;
