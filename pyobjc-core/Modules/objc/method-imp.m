@@ -156,6 +156,73 @@ imp_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* k
     return res;
 }
 
+#if PY_VERSION_HEX >= 0x03090000
+static PyObject*
+imp_vectorcall_simple(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+{
+    PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
+    PyObject*        pyself;
+    PyObjC_CallFunc  execute = NULL;
+    PyObject*        res;
+    PyObject*        pyres;
+
+    PyObjC_Assert(self->signature->shortcut_signature, NULL);
+
+    if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
+        return NULL;
+    }
+
+    /*
+     * The PY_VECTORCALL_ARGUMENTS_OFFSET feature is not used by this function.
+     * fetch the raw number of arguments to make it possible to ignore that flag
+     * in the rest of the implementation.
+     */
+    nargsf = PyVectorcall_NARGS(nargsf);
+
+    if (nargsf < 1) {
+        PyErr_SetString(PyExc_TypeError, "Missing argument: self");
+        return NULL;
+    }
+
+    pyself = args[0];
+    if (pyself == NULL) {
+        return NULL;
+    }
+
+    execute = self->callfunc;
+
+    pyres = res = PyObjCFFI_Caller_Simple(_self, pyself, args+1, nargsf-1);
+
+
+    if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
+        && PyTuple_GET_ITEM(pyres, 0) == pyself) {
+        pyres = pyself;
+    }
+
+    if (PyObjCObject_Check(pyself)
+        && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
+        if (pyself != pyres && !PyErr_Occurred()) {
+            PyObjCObject_ClearObject(pyself);
+        }
+    }
+
+    if (pyres && PyObjCObject_Check(res)) {
+        if (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
+            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
+
+        } else if (((PyObjCObject*)pyres)->flags & PyObjCObject_kUNINITIALIZED) {
+            ((PyObjCObject*)pyres)->flags &= ~PyObjCObject_kUNINITIALIZED;
+            if (pyself && pyself != pyres && PyObjCObject_Check(pyself)
+                && !PyErr_Occurred()) {
+                PyObjCObject_ClearObject(pyself);
+            }
+        }
+    }
+
+    return res;
+}
+#endif
+
 static PyObject*
 imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
 {
@@ -510,14 +577,20 @@ PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
     result->callfunc  = callfunc;
     result->signature = signature;
     result->cif = NULL;
-#if PY_VERSION_HEX >= 0x03090000
-    result->vectorcall = imp_vectorcall;
-#endif
 
+    /* XXX: Can signature ever be NULL? */
     if (signature) {
         Py_INCREF(signature);
     }
 
     result->flags = flags;
+
+#if PY_VERSION_HEX >= 0x03090000
+    if (signature && signature->shortcut_signature) {
+        result->vectorcall = imp_vectorcall_simple;
+    } else {
+        result->vectorcall = imp_vectorcall;
+    }
+#endif
     return (PyObject*)result;
 }

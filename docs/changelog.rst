@@ -90,8 +90,8 @@ in older Python versions is unchanged except for the effects of general cleanup.
 
 * Convert internal calls into Python to the vectorcall protocol (pyobjc-core)
 
-* Add more optimized vectorcall implementation to :class:`objc.function` and
-  :class:`objc.selector` for simpler callables.
+* Add more optimized vectorcall implementation to :class:`objc.function`,
+  :class:`objc.IMP` and :class:`objc.selector` for simpler callables.
 
   XXX: To describe wat 'simpler' actually is...
 
