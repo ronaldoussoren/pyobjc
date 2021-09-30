@@ -468,129 +468,6 @@ objcsel_dealloc(PyObject* obj)
     sel_dealloc(obj);
 }
 
-static PyObject*
-objcsel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf,PyObject* kwnames)
-{
-    PyObjCNativeSelector*  self    = (PyObjCNativeSelector*)_self;
-    PyObject*              pyself  = self->base.sel_self;
-    PyObjC_CallFunc        execute = NULL;
-    PyObject*              res;
-    PyObject*              pyres;
-    PyObjCMethodSignature* methinfo;
-
-    if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
-        return NULL;
-    }
-
-    if (pyself == NULL) {
-        /* XXX: Fold this into execution of callfunc, that also checks for bound/unbound */
-        if (PyVectorcall_NARGS(nargsf) < 1) {
-            PyErr_SetString(PyExc_TypeError, "Missing argument: self");
-            return NULL;
-        }
-
-        pyself = args[0];
-        if (pyself == NULL) {
-            return NULL;
-        }
-    }
-
-    methinfo = PyObjCSelector_GetMetadata(_self);
-    if (methinfo == NULL) {
-        return NULL;
-    }
-
-    if (PyObjC_DeprecationVersion && methinfo->deprecated
-        && methinfo->deprecated <= PyObjC_DeprecationVersion) {
-        char  buf[128];
-        Class cls = PyObjCSelector_GetClass(_self);
-        SEL   sel = PyObjCSelector_GetSelector(_self);
-
-        assert(cls);
-        assert(sel);
-
-        snprintf(buf, 128, "%c[%s %s] is a deprecated API (macOS %d.%d)",
-                 PyObjCSelector_IsClassMethod(_self) ? '+' : '-', class_getName(cls),
-                 sel_getName(sel), methinfo->deprecated / 100,
-                 methinfo->deprecated % 100);
-        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
-            return NULL;
-        }
-    }
-
-    if (self->sel_call_func) {
-        execute = self->sel_call_func;
-    } else {
-        execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector);
-        if (execute == NULL)
-            return NULL;
-        self->sel_call_func = execute;
-    }
-
-    /* XXX: The if statement below can be simplified, both cases are mostly the same */
-    if (self->base.sel_self != NULL) {
-        pyres = res = execute((PyObject*)self, self->base.sel_self, args, PyVectorcall_NARGS(nargsf));
-        if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) >= 1
-            && PyTuple_GET_ITEM(pyres, 0) == pyself) {
-
-            pyres = pyself;
-        }
-
-        if (PyObjCObject_Check(self->base.sel_self)
-            && (((PyObjCObject*)self->base.sel_self)->flags
-                & PyObjCObject_kUNINITIALIZED)) {
-            if (self->base.sel_self != pyres && !PyErr_Occurred()) {
-                PyObjCObject_ClearObject(self->base.sel_self);
-            }
-        }
-
-    } else {
-        PyObject*  myClass;
-
-        myClass = PyObjCClass_New(self->base.sel_class);
-        if (!(PyObject_IsInstance(pyself, myClass)
-              || (PyUnicode_Check(pyself)
-                  && class_isSubclassOf(self->base.sel_class, [NSString class])))) {
-
-            Py_DECREF(myClass);
-            PyErr_Format(PyExc_TypeError,
-                         "Expecting instance of %s as self, got one "
-                         "of %s",
-                         class_getName(self->base.sel_class), Py_TYPE(pyself)->tp_name);
-            return NULL;
-        }
-        Py_DECREF(myClass);
-
-        pyres = res = execute((PyObject*)self, pyself, args+1, PyVectorcall_NARGS(nargsf)-1);
-        if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
-            && PyTuple_GET_ITEM(pyres, 0) == pyself) {
-            pyres = pyself;
-        }
-
-        if (PyObjCObject_Check(pyself)
-            && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
-            if (pyself != pyres && !PyErr_Occurred()) {
-                PyObjCObject_ClearObject(pyself);
-            }
-        }
-    }
-
-    if (pyres && PyObjCObject_Check(pyres)) {
-        if (self->base.sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
-            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
-        } else if (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED) {
-            ((PyObjCObject*)pyself)->flags &= ~PyObjCObject_kUNINITIALIZED;
-            if (self->base.sel_self && self->base.sel_self != pyres
-                && !PyErr_Occurred()) {
-                /* XXX: This needs documentation, the logic is not 100% rigorous */
-                PyObjCObject_ClearObject(self->base.sel_self);
-            }
-        }
-    }
-
-    return res;
-}
-
 #if PY_VERSION_HEX >= 0x03090000
 static PyObject*
 objcsel_vectorcall_simple(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
@@ -692,6 +569,142 @@ objcsel_vectorcall_simple(PyObject* _self, PyObject*const* args, size_t nargsf, 
 
 
 static PyObject*
+objcsel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf,PyObject* kwnames)
+{
+    /* XXX: Need logic to reset sel_call_func and sel_vectocall when
+     * the methodinfo changes, but here and in the "simple" variant.
+     * This way extensions can register a new call_func even after the
+     * method has been resolved.
+     */
+
+    PyObjCNativeSelector*  self    = (PyObjCNativeSelector*)_self;
+    PyObject*              pyself  = self->base.sel_self;
+    PyObjC_CallFunc        execute = NULL;
+    PyObject*              res;
+    PyObject*              pyres;
+    PyObjCMethodSignature* methinfo;
+
+    if (PyObjC_CheckNoKwnames(_self, kwnames) == -1) {
+        return NULL;
+    }
+
+    if (pyself == NULL) {
+        /* XXX: Fold this into execution of callfunc, that also checks for bound/unbound */
+        if (PyVectorcall_NARGS(nargsf) < 1) {
+            PyErr_SetString(PyExc_TypeError, "Missing argument: self");
+            return NULL;
+        }
+
+        pyself = args[0];
+        if (pyself == NULL) {
+            return NULL;
+        }
+    }
+
+    methinfo = PyObjCSelector_GetMetadata(_self);
+    if (methinfo == NULL) {
+        return NULL;
+    }
+
+    if (PyObjC_DeprecationVersion && methinfo->deprecated
+        && methinfo->deprecated <= PyObjC_DeprecationVersion) {
+        char  buf[128];
+        Class cls = PyObjCSelector_GetClass(_self);
+        SEL   sel = PyObjCSelector_GetSelector(_self);
+
+        assert(cls);
+        assert(sel);
+
+        snprintf(buf, 128, "%c[%s %s] is a deprecated API (macOS %d.%d)",
+                 PyObjCSelector_IsClassMethod(_self) ? '+' : '-', class_getName(cls),
+                 sel_getName(sel), methinfo->deprecated / 100,
+                 methinfo->deprecated % 100);
+        if (PyErr_Warn(PyObjCExc_DeprecationWarning, buf) < 0) {
+            return NULL;
+        }
+    }
+
+    if (self->sel_call_func) {
+        execute = self->sel_call_func;
+    } else {
+        execute = PyObjC_FindCallFunc(self->base.sel_class, self->base.sel_selector);
+        if (execute == NULL)
+            return NULL;
+        self->sel_call_func = execute;
+#if PY_VERSION_HEX >= 0x03090000
+        /* Update the vectorcall slot when a faster call is possible */
+        if (methinfo->shortcut_signature && execute == PyObjCFFI_Caller) {
+            self->base.sel_vectorcall = objcsel_vectorcall_simple;
+        }
+#endif
+    }
+
+    /* XXX: The if statement below can be simplified, both cases are mostly the same */
+    if (self->base.sel_self != NULL) {
+        pyres = res = execute((PyObject*)self, self->base.sel_self, args, PyVectorcall_NARGS(nargsf));
+        if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) >= 1
+            && PyTuple_GET_ITEM(pyres, 0) == pyself) {
+
+            pyres = pyself;
+        }
+
+        if (PyObjCObject_Check(self->base.sel_self)
+            && (((PyObjCObject*)self->base.sel_self)->flags
+                & PyObjCObject_kUNINITIALIZED)) {
+            if (self->base.sel_self != pyres && !PyErr_Occurred()) {
+                PyObjCObject_ClearObject(self->base.sel_self);
+            }
+        }
+
+    } else {
+        PyObject*  myClass;
+
+        myClass = PyObjCClass_New(self->base.sel_class);
+        if (!(PyObject_IsInstance(pyself, myClass)
+              || (PyUnicode_Check(pyself)
+                  && class_isSubclassOf(self->base.sel_class, [NSString class])))) {
+
+            Py_DECREF(myClass);
+            PyErr_Format(PyExc_TypeError,
+                         "Expecting instance of %s as self, got one "
+                         "of %s",
+                         class_getName(self->base.sel_class), Py_TYPE(pyself)->tp_name);
+            return NULL;
+        }
+        Py_DECREF(myClass);
+
+        pyres = res = execute((PyObject*)self, pyself, args+1, PyVectorcall_NARGS(nargsf)-1);
+        if (pyres != NULL && PyTuple_Check(pyres) && PyTuple_GET_SIZE(pyres) > 1
+            && PyTuple_GET_ITEM(pyres, 0) == pyself) {
+            pyres = pyself;
+        }
+
+        if (PyObjCObject_Check(pyself)
+            && (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED)) {
+            if (pyself != pyres && !PyErr_Occurred()) {
+                PyObjCObject_ClearObject(pyself);
+            }
+        }
+    }
+
+    if (pyres && PyObjCObject_Check(pyres)) {
+        if (self->base.sel_flags & PyObjCSelector_kRETURNS_UNINITIALIZED) {
+            ((PyObjCObject*)pyres)->flags |= PyObjCObject_kUNINITIALIZED;
+        } else if (((PyObjCObject*)pyself)->flags & PyObjCObject_kUNINITIALIZED) {
+            ((PyObjCObject*)pyself)->flags &= ~PyObjCObject_kUNINITIALIZED;
+            if (self->base.sel_self && self->base.sel_self != pyres
+                && !PyErr_Occurred()) {
+                /* XXX: This needs documentation, the logic is not 100% rigorous */
+                PyObjCObject_ClearObject(self->base.sel_self);
+            }
+        }
+    }
+
+    return res;
+}
+
+
+static PyObject*
 objcsel_call(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
@@ -786,7 +799,7 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
     }
 
 #if PY_VERSION_HEX >= 0x03090000
-    if (result->base.sel_methinfo->shortcut_signature) {
+    if (result->base.sel_methinfo->shortcut_signature && result->sel_call_func == PyObjCFFI_Caller) {
         result->base.sel_vectorcall = objcsel_vectorcall_simple;
     } else {
         result->base.sel_vectorcall = objcsel_vectorcall;
@@ -1001,11 +1014,7 @@ PyObjCSelector_NewNative(Class class, SEL selector, const char* signature,
     }
     result->base.sel_methinfo = PyObjCSelector_GetMetadata((PyObject*)result);
 #if PY_VERSION_HEX >= 0x03090000
-    if (result->base.sel_methinfo->shortcut_signature) {
-        result->base.sel_vectorcall = objcsel_vectorcall_simple;
-    } else {
-        result->base.sel_vectorcall = objcsel_vectorcall;
-    }
+    result->base.sel_vectorcall = objcsel_vectorcall;
 #endif
     result->sel_call_func = NULL;
     result->sel_cif = NULL;

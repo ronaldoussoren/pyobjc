@@ -586,7 +586,7 @@ PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
     result->flags = flags;
 
 #if PY_VERSION_HEX >= 0x03090000
-    if (signature && signature->shortcut_signature) {
+    if (signature && signature->shortcut_signature && callfunc == PyObjCFFI_Caller) {
         result->vectorcall = imp_vectorcall_simple;
     } else {
         result->vectorcall = imp_vectorcall;
