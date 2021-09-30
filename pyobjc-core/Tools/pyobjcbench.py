@@ -186,6 +186,8 @@ def function_call():
 
 @benchmark
 def call_from_objc():
+    # XXX: This needs a helper module, there's unnecessary
+    #      overhead in statement under test.
     setup = textwrap.dedent(
         """\
     import objc
@@ -201,6 +203,7 @@ def call_from_objc():
 
         def aSelector(self):
             self.count += 1
+
 
     o = CallFromObjC1.new()
     a = NSArray.arrayWithArray_([o]*10)
