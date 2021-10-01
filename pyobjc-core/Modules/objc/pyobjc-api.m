@@ -28,15 +28,6 @@ python_to_id(PyObject* object)
     return result;
 }
 
-static PyObject*
-id_to_python(id object)
-{
-    PyObject* result;
-
-    result = pythonify_c_value(@encode(id), &object);
-    return result;
-}
-
 static Class
 sel_get_class(PyObject* sel)
 {

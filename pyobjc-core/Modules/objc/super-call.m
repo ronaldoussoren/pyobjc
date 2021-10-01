@@ -6,9 +6,14 @@
  *
  * - Call the method from python
  * - Call the python implementation of a method from Objective-C
+ *
+ * XXX: Add API to dump the registry for inspection.
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+/* XXX: Consider using a minimal python type instead of a capsule */
 struct registry {
     PyObjC_CallFunc       call_to_objc;
     PyObjCFFI_ClosureFunc call_to_python;
@@ -44,14 +49,20 @@ init_registry(void)
 static void
 memblock_capsule_cleanup(PyObject* ptr)
 {
-    PyMem_Free(PyCapsule_GetPointer(ptr, "objc.__memblock__"));
+    void* mem = PyCapsule_GetPointer(ptr, "objc.__memblock__");
+
+#ifdef PyObjC_DEBUG
+    if (mem == NULL) PyObjCErr_InternalError();
+#endif
+
+    PyMem_Free(mem);
 }
 
 /*
  * Add a custom mapping for a method in a class
  */
 int
-PyObjC_RegisterMethodMapping(Class class, SEL sel, PyObjC_CallFunc call_to_objc,
+PyObjC_RegisterMethodMapping(_Nullable Class class, SEL sel, PyObjC_CallFunc call_to_objc,
                              PyObjCFFI_ClosureFunc call_to_python)
 {
     struct registry* v;
@@ -94,8 +105,10 @@ PyObjC_RegisterMethodMapping(Class class, SEL sel, PyObjC_CallFunc call_to_objc,
     v->call_to_python = call_to_python;
 
     entry = PyTuple_New(2);
-    if (entry == NULL)
+    if (entry == NULL) {
+        PyMem_Free(v);
         return -1;
+    }
 
     PyTuple_SET_ITEM(entry, 0, pyclass);
     PyTuple_SET_ITEM(entry, 1,
@@ -191,7 +204,10 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
     return 0;
 }
 
-static struct registry*
+/*
+ * May of may not raise an exception when the return value is NULL
+ */
+static struct registry* _Nullable
 search_special(Class class, SEL sel)
 {
     PyObject*  result        = NULL;
@@ -263,10 +279,6 @@ search_special(Class class, SEL sel)
     return PyCapsule_GetPointer(result, "objc.__memblock__");
 
 error:
-    if (!PyErr_Occurred()) {
-        PyErr_Format(PyObjCExc_Error, "PyObjC: don't know how to call method '%s'",
-                     sel_getName(sel));
-    }
     return NULL;
 }
 
@@ -288,11 +300,10 @@ PyObjC_FindCallFunc(Class class, SEL sel)
     return PyObjCFFI_Caller;
 }
 
-static struct registry*
+static struct registry* _Nullable
 find_signature(const char* signature)
 {
     PyObject*        o;
-    struct registry* r;
     char             signature_buf[1024];
     int              res;
 
@@ -314,21 +325,14 @@ find_signature(const char* signature)
     if (o == NULL)
         goto error;
 
-    r = PyCapsule_GetPointer(o, "objc.__memblock__");
-    return r;
+    return PyCapsule_GetPointer(o, "objc.__memblock__");
 
 error:
-    if (!PyErr_Occurred()) {
-        PyErr_Format(PyObjCExc_Error,
-                     "PyObjC: don't know how to call a method with "
-                     "signature '%s'",
-                     signature);
-    }
     return NULL;
 }
 
 extern IMP
-PyObjC_MakeIMP(Class class, Class super_class, PyObject* sel, PyObject* imp)
+PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject* imp)
 {
     struct registry*       generic;
     struct registry*       special;
@@ -408,3 +412,5 @@ PyObjCUnsupportedMethod_Caller(PyObject* meth, PyObject* self,
                  sel_getName(PyObjCSelector_GetSelector(meth)), self);
     return NULL;
 }
+
+NS_ASSUME_NONNULL_END

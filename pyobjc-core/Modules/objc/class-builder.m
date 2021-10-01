@@ -1869,7 +1869,7 @@ PyObjC_CallPython(id self, SEL selector, PyObject* arglist, BOOL* isAlloc,
     PyObject* pymeth = NULL;
     PyObject* result;
 
-    pyself = pythonify_c_value(@encode(id), &self);
+    pyself = id_to_python(self);
     if (pyself == NULL) {
         return NULL;
     }
@@ -2042,7 +2042,7 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
             [[self class] accessInstanceVariablesDirectly]) {
 
             PyGILState_STATE state = PyGILState_Ensure();
-            PyObject*        val   = pythonify_c_value(@encode(id), &value);
+            PyObject*        val   = id_to_python(value);
             if (val == NULL) {
                 PyErr_Clear();
                 PyGILState_Release(state);

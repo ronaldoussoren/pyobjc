@@ -288,7 +288,7 @@ PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)), PyObject*
 
         if (value == NULL) {
             if (!skip_undefined) {
-                PyErr_SetString(PyObjCExc_Error, "cannot find a function");
+                PyErr_Format(PyObjCExc_Error, "cannot find a function: %R", item);
                 Py_DECREF(seq);
                 return NULL;
             }

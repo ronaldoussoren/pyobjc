@@ -107,7 +107,7 @@ FindWrapper(const char* signature)
 static PyObject*
 ID_to_py(void* idValue)
 {
-    return pythonify_c_value(@encode(id), &idValue);
+    return id_to_python((id)idValue);
 }
 
 static int

@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
+#include <sys/un.h>
 #include <sys/socket.h>
 
 #import <Foundation/Foundation.h>
@@ -12,6 +13,7 @@
 + (NSObject*)sockAddrToValue:(struct sockaddr*)addr;
 + (void)getIPv4Addr:(struct sockaddr*)buf;
 + (void)getIPv6Addr:(struct sockaddr*)buf;
++ (void)getUnixAddr:(struct sockaddr*)buf;
 @end
 
 static NSString*
@@ -54,6 +56,11 @@ addr2string(void* addr, int addrlen)
                                                                ->sin6_scope_id)]];
         return array;
         break;
+    case AF_UNIX:
+        [array addObject:@"UNIX"];
+        [array addObject: [NSString stringWithUTF8String:((struct sockaddr_un*)addr)->sun_path]];
+        return array;
+
     default:
         return NULL;
     }
@@ -90,6 +97,14 @@ addr2string(void* addr, int addrlen)
     ((char*)&addr->sin6_addr)[13] = 0;
     ((char*)&addr->sin6_addr)[14] = 0;
     ((char*)&addr->sin6_addr)[15] = 1;
+}
+
++ (void)getUnixAddr:(struct sockaddr*)buf
+{
+    struct sockaddr_un* addr = (struct sockaddr_un*)buf;
+    addr->sun_family         = AF_UNIX;
+    strcpy(addr->sun_path, "/tmp/socket.addr");
+    addr->sun_len = sizeof(*addr);
 }
 @end
 

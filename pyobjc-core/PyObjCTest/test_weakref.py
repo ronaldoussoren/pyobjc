@@ -56,3 +56,38 @@ class TestObjCWeakRef(TestCase):
 
         del pool
         self.assertIs(r(), None)
+
+    @min_os_level("10.7")
+    def test_weakref_call_interface(self):
+
+        pool = NSAutoreleasePool.alloc().init()
+
+        o = NSObject.alloc().init()
+        a = NSArray.arrayWithObject_(o)
+
+        r = objc.WeakRef(object=o)
+        self.assertIs(r(), o)
+
+        with self.assertRaises(TypeError):
+            r(1)
+
+        with self.assertRaises(TypeError):
+            objc.WeakRef(value=o)
+
+        with self.assertRaises(TypeError):
+            objc.WeakRef(o, value=o)
+
+        with self.assertRaises(TypeError):
+            objc.WeakRef(o, o)
+
+        del o
+        del a
+        del pool
+        del r
+
+    @min_os_level("10.7")
+    def test_no_subclassing(self):
+        with self.assertRaisesRegex(TypeError, ".*not an acceptable base type"):
+
+            class MyRef(objc.WeakRef):
+                pass

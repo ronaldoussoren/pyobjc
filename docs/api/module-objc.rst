@@ -1031,15 +1031,17 @@ Types
    .. method:: __getitem__(index)
 
       Returns the value of the *index*-th element of the array. Supports numeric
-      indexes as well as slices with step 1. Negative indexes are not supported because
-      these objects have an undefined length.
+      indexes as well as slices with step 1 and a specified stop index.
+
+      Negative indexes are not supported because these objects have an unspecified length.
 
    .. method:: __setitem__(index, value)
 
       Sets the value of the *index*-th element of the array. Supports numeric
-      indexes as well as slices with step 1 (but assigning to a slice is only possible
-      when that does not resize the array). Negative indexes are not supported because
-      these objects have an undefined length.
+      indexes as well as slices with step 1 and a specified stop index  (but assigning
+      to a slice is only possible when that does not resize the array).
+
+      Negative indexes are not supported because these objects have an unspecified length.
 
       .. warning::
 

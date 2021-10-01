@@ -15,6 +15,8 @@
 #include <sys/un.h>
 #include <arpa/inet.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 static PyObject* socket_error    = NULL;
 static PyObject* socket_gaierror = NULL;
 
@@ -46,7 +48,7 @@ setup_exceptions(void)
     return 0;
 }
 
-static PyObject*
+static PyObject* _Nullable
 set_gaierror(int error)
 {
     if (error == EAI_SYSTEM) {
@@ -73,17 +75,17 @@ set_gaierror(int error)
     return NULL;
 }
 
-static PyObject*
+static PyObject* _Nullable
 makeipaddr(struct sockaddr* addr, int addrlen)
 {
     char buf[NI_MAXHOST];
     int  r;
 
     r = getnameinfo(addr, addrlen, buf, sizeof(buf), NULL, 0, NI_NUMERICHOST);
-    if (r) {
+    if (r != 0) {
         return set_gaierror(r);
     }
-    return PyBytes_FromString(buf);
+    return PyUnicode_FromString(buf);
 }
 
 static int
@@ -118,6 +120,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         case AF_INET6:
             siz = 16;
             break;
+
 
         default:
             freeaddrinfo(res);
@@ -161,13 +164,14 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
     }
     memset(&hints, 0, sizeof(hints));
     hints.ai_family = af;
-    error           = getaddrinfo(name, NULL, &hints, &res);
+    error = getaddrinfo(name, NULL, &hints, &res);
     if (error) {
         set_gaierror(error);
         return -1;
     }
-    if (res->ai_addrlen < addr_ret_size)
+    if (res->ai_addrlen < addr_ret_size) {
         addr_ret_size = res->ai_addrlen;
+    }
     memcpy((char*)addr_ret, res->ai_addr, addr_ret_size);
     freeaddrinfo(res);
     switch (addr_ret->sa_family) {
@@ -205,6 +209,7 @@ PyObjC_SockAddrToPython(void* value)
     }
 
     case AF_UNIX: {
+        /* XXX: Check for correctness */
         struct sockaddr_un* a = (struct sockaddr_un*)value;
         return PyUnicode_DecodeFSDefault(a->sun_path);
     }
@@ -225,7 +230,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
         char*               path;
         Py_ssize_t          len;
 
-        addr->sun_family = AF_INET;
+        addr->sun_family = AF_UNIX;
 
         if (PyUnicode_Check(value)) {
             value = PyUnicode_EncodeFSDefault(value);
@@ -240,6 +245,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             Py_DECREF(value);
             return -1;
         }
+        /* XXX: Check for correctnless (NUL byte at end, embedded NUL?) */
         if (len >= (Py_ssize_t)sizeof(addr->sun_path)) {
             PyErr_SetString(PyExc_OSError, "AF_UNIX path too long");
             Py_DECREF(value);
@@ -291,3 +297,5 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
         return 0;
     }
 }
+
+NS_ASSUME_NONNULL_END

@@ -1438,6 +1438,7 @@ PyObject* PyObjCNM_date_format_string;
 int
 PyObjC_setup_names(void)
 {
+    /* XXX: Intern the strings */
     if ((PyObjCNM_insert = PyUnicode_FromString("insert")) == NULL) return -1;
     if ((PyObjCNM_append = PyUnicode_FromString("append")) == NULL) return -1;
     if ((PyObjCNM_strftime = PyUnicode_FromString("strftime")) == NULL) return -1;

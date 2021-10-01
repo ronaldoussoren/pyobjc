@@ -34,6 +34,7 @@ extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
   and returns an equivalent Python object where C structures and
   arrays are represented as tuples. */
 extern PyObject* pythonify_c_value(const char* type, void* datum);
+extern PyObject* id_to_python(id obj);
 extern PyObject* pythonify_c_return_value(const char* type, void* datum);
 
 extern PyObject* pythonify_c_array_nullterminated(const char* type, void* datum,

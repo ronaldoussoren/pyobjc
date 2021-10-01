@@ -1876,29 +1876,9 @@ pythonify_c_value(const char* type, void* datum)
         retobject = (PyObject*)PyFloat_FromDouble(*(double*)datum);
         break;
 
-    case _C_ID: {
-        id obj = *(id*)datum;
-
-#if 1
-        /* In theory this is a no-op, in practice this gives us EOF 4.5
-         * support.
-         *
-         * EOF can return references to 'to-be-restored' objects,
-         * calling any method on them fully restores them, 'self' is
-         * the safest method to call.
-         */
-        obj = [obj self];
-#endif
-
-        if (obj == nil) {
-            retobject = Py_None;
-            Py_INCREF(retobject);
-
-        } else {
-            retobject = [obj __pyobjc_PythonObject__];
-        }
+    case _C_ID:
+        retobject = id_to_python(*(id*)datum);
         break;
-    }
 
     case _C_SEL:
         if (*(SEL*)datum == NULL) {
@@ -3088,4 +3068,30 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
             return YES;
         }
     }
+}
+
+
+PyObject*
+id_to_python(id obj)
+{
+    PyObject* retobject;
+#if 1
+    /* In theory this is a no-op, in practice this gives us EOF 4.5
+     * support.
+     *
+     * EOF can return references to 'to-be-restored' objects,
+     * calling any method on them fully restores them, 'self' is
+     * the safest method to call.
+     */
+    obj = [obj self];
+#endif
+
+    if (obj == nil) {
+        retobject = Py_None;
+        Py_INCREF(retobject);
+
+    } else {
+        retobject = [obj __pyobjc_PythonObject__];
+    }
+    return retobject;
 }

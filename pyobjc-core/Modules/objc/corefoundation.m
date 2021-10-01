@@ -26,7 +26,7 @@ cf_repr(PyObject* self)
 
     CFStringRef repr = CFCopyDescription(PyObjCObject_GetObject(self));
     if (repr) {
-        PyObject* result = pythonify_c_value(@encode(id), &repr);
+        PyObject* result = id_to_python((id)repr);
         CFRelease(repr);
         return result;
 

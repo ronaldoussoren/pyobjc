@@ -6,6 +6,7 @@
  * implemented in Objective-C)
  */
 
+
 #define PyObjCSelector_kCLASS_METHOD 0x000001
 #define PyObjCSelector_kHIDDEN 0x000002
 #define PyObjCSelector_kREQUIRED 0x000004
@@ -64,7 +65,7 @@ extern PyObject*   PyObjCSelector_Copy(PyObject* obj);
 extern const char* PyObjCSelector_Signature(PyObject* obj);
 #define PyObjCSelector_GetNativeSignature(obj)                                           \
     (((PyObjCSelector*)obj)->sel_native_signature)
-extern SEL                    PyObjCSelector_GetSelector(PyObject* obj);
+extern SEL          PyObjCSelector_GetSelector(PyObject* obj);
 extern int                    PyObjCSelector_GetFlags(PyObject* obj);
 extern Class                  PyObjCSelector_GetClass(PyObject* obj);
 extern int                    PyObjCSelector_Required(PyObject* obj);
@@ -86,5 +87,6 @@ extern SEL       PyObjCSelector_DefaultSelector(const char* methname);
 extern PyObject* PyObjCSelector_FromFunction(PyObject* pyname, PyObject* callable,
                                              PyObject* template_class,
                                              PyObject* protocols);
+
 
 #endif /* PyObjC_SELECTOR_H */

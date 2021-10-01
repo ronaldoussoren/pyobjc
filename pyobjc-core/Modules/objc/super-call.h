@@ -1,5 +1,7 @@
 #ifndef PyObjC_SUPER_CALL_H
 #define PyObjC_SUPER_CALL_H
+
+NS_ASSUME_NONNULL_BEGIN
 /*!
  * @header super-call.h
  * @abstract Finding the right functions to call Objective-C methods
@@ -16,14 +18,15 @@ extern BOOL PyObjC_UpdatingMetaData;
 /*!
  * @function PyObjC_RegisterMethodMapping
  * @abstract Register a mapping for a specific method
- * @param aClass         Class for which this mapping is valid (+subclasses)
+ * @param aClass         Class for which this mapping is valid (+subclasses),
+ *                       use Nil to specify all classes.
  * @param sel            The selector with a custom mapping
  * @param call_to_objc   Function for calling into Objective-C (from Python),
  *                      the default is 'PyObjCFFI_Caller'.
  * @param call_to_python Function for calling into Python (from Objective-C)
  * @result Returns 0 on success, -1 on error.
  */
-extern int PyObjC_RegisterMethodMapping(Class aClass, SEL sel,
+extern int PyObjC_RegisterMethodMapping(_Nullable Class aClass, SEL sel,
                                         PyObjC_CallFunc       call_to_objc,
                                         PyObjCFFI_ClosureFunc call_to_python);
 
@@ -43,7 +46,7 @@ extern int PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call
  * @abstract Find the function to call into Objective-C
  * @param aClass     An Objective-C class
  * @param sel        A selector
- * @result Returns a function or NULL
+ * @result Returns a function
  * @discussion
  *     This finds the function that can be used to call the Objective-C
  *     implementation of the specified method.
@@ -64,7 +67,7 @@ extern PyObjC_CallFunc PyObjC_FindCallFunc(Class aClass, SEL sel);
  *      function will convert it's arguments to Python objects and call 'imp'.
  *      The result of 'imp' will be converted back to Objective-C.
  */
-extern IMP PyObjC_MakeIMP(Class aClass, Class aSuperClass, PyObject* sel, PyObject* imp);
+extern _Nullable IMP PyObjC_MakeIMP(Class aClass, _Nullable Class aSuperClass, PyObject* sel, PyObject* imp);
 
 /*!
  * @constant PyObjCUnsupportedMethod_IMP
@@ -73,7 +76,7 @@ extern IMP PyObjC_MakeIMP(Class aClass, Class aSuperClass, PyObject* sel, PyObje
  *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
  *     the method cannot be implemented in Python.
  */
-extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void**, void*);
+extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void*_Nullable*_Nullable, void*);
 
 /*!
  * @constant PyOBjCUnsupportedMethod_Caller
@@ -82,6 +85,8 @@ extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void**, void*);
  *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
  *     the method cannot be called from Python.
  */
-extern PyObject* PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*const*, size_t);
+extern PyObject* _Nullable PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*_Nonnull const*_Nullable, size_t);
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_SUPER_CALL_H */

@@ -10,10 +10,12 @@
 
 #if PyObjC_BUILD_RELEASE >= 1007
 
+NS_ASSUME_NONNULL_BEGIN
+
 PyDoc_STRVAR(weakref_cls_doc,
              "objc.WeakRef(object)\n" CLINIC_SEP "\n"
              "Create zeroing weak reference to a Cocoa object.\n"
-             "Raises `VAlueError` when *object* is not a Cocoa \n"
+             "Raises `ValueError` when *object* is not a Cocoa \n"
              "object.\n"
              "\n"
              "NOTE: Some Cocoa classes do not support weak references, \n"
@@ -39,8 +41,8 @@ weakref_dealloc(PyObject* object)
     Py_TYPE(object)->tp_free(object);
 }
 
-static PyObject*
-weakref_vectorcall(PyObject* object, PyObject*const* args __attribute__((__unused__)), size_t nargsf, PyObject* kwnames)
+static PyObject* _Nullable
+weakref_vectorcall(PyObject* object, PyObject*const* _Nullable args __attribute__((__unused__)), size_t nargsf, PyObject* _Nullable kwnames)
 {
     PyObjC_WeakRef* self       = (PyObjC_WeakRef*)object;
     NSObject*       tmp;
@@ -54,11 +56,13 @@ weakref_vectorcall(PyObject* object, PyObject*const* args __attribute__((__unuse
     }
 
     tmp = objc_loadWeak(&self->object);
-    return pythonify_c_value(@encode(id), &tmp);
+    return id_to_python(tmp);
 }
 
-static PyObject*
-weakref_call(PyObject* s, PyObject* args, PyObject* kwds)
+#if PY_VERSION_HEX < 0x03090000
+
+static PyObject* _Nullable
+weakref_call(PyObject* s, PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
         PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
@@ -68,10 +72,13 @@ weakref_call(PyObject* s, PyObject* args, PyObject* kwds)
     return weakref_vectorcall(s, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
 }
 
+#endif /* PY_VERSION_HEX < 0x03090000 */
 
-static PyObject*
-weakref_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args,
-            PyObject* kwds)
+
+/* XXX: vectorcall variant for weakref_new? */
+static PyObject* _Nullable
+weakref_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable args,
+            PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"object", NULL};
 
@@ -116,16 +123,19 @@ PyTypeObject PyObjCWeakRef_Type = {
     .tp_basicsize                                  = sizeof(PyObjC_WeakRef),
     .tp_itemsize                                   = 0,
     .tp_dealloc                                    = weakref_dealloc,
-    .tp_call                                       = weakref_call,
 #if PY_VERSION_HEX >= 0x03090000
     .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
     .tp_vectorcall_offset                          = offsetof(PyObjC_WeakRef, vectorcall),
+    .tp_call                                       = PyVectorcall_Call,
 #else
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_call                                       = weakref_call,
 #endif
     .tp_getattro                                   = PyObject_GenericGetAttr,
     .tp_doc                                        = weakref_cls_doc,
     .tp_new                                        = weakref_new,
 };
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_BUILD_RELEASE >= 1007 */

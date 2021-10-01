@@ -9,6 +9,7 @@
 
 #include <ctype.h>
 #include <netinet/in.h>
+#include <sys/un.h>
 #include <stddef.h>
 #include <sys/socket.h>
 
@@ -451,7 +452,7 @@ currentBundle(PyObject* self __attribute__((__unused__)))
     if (!(bundle_address && sscanf(bundle_address, "%p", &rval) == 1)) {
         rval = [NSBundle mainBundle];
     }
-    return pythonify_c_value(@encode(id), &rval);
+    return id_to_python(rval);
 }
 
 PyDoc_STRVAR(loadBundle_doc,
@@ -2156,6 +2157,8 @@ struct objc_int_values {
     { "OBJC_ASSOCIATION_COPY", OBJC_ASSOCIATION_COPY },
     { "_size_sockaddr_ip4", sizeof(struct sockaddr_in) },
     { "_size_sockaddr_ip6", sizeof(struct sockaddr_in6) },
+    { "_size_sockaddr_un", sizeof(struct sockaddr_un) },
+    { "_size_sockaddr", sizeof(struct sockaddr) },
     { NULL, 0 }
 };
 

@@ -59,6 +59,10 @@ Backward incompatible changes
   available through PyObjC through old backward compatiblity code. That code has
   now been removed.
 
+* For compatibility with Python's socket APIs functions that return a
+  "struct sockaddr" (either by reference or as a function result) will now
+  encode the IP address as a string and not a bytes object.
+
 Upcoming incompatible changes
 .............................
 
@@ -207,6 +211,8 @@ Other changes and bugfixes
   for resolving the name was removed before actually resolving the name.
 
 * Fix various issues with invalid indices in :type:`objc.varlist`
+
+* Fix support for ``AF_UNIX`` in the support code for ``struct sockaddr``.
 
 Version 7.3
 -----------
