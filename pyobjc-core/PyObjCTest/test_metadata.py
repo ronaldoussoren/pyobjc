@@ -1392,20 +1392,101 @@ class TestVariableLengthValue(TestCase):
         # self.fail((type(v), v))
         # self.fail((v[0:2], type(v[0:2])))
         self.assertEqual(v[0:2], (1, 3))
+        self.assertEqual(v[0:2:1], (1, 3))
+        self.assertEqual(v[:2], (1, 3))
+
+        # XXX: Needs check on message as well.
+        with self.assertRaisesRegex(ValueError, "Slice end must be specified"):
+            v[2:]
+        with self.assertRaisesRegex(ValueError, ".*slice steps other than 1"):
+            v[1:4:2]
+        with self.assertRaisesRegex(ValueError, ".*slice steps other than 1"):
+            v[4:2:-1]
+        with self.assertRaisesRegex(ValueError, ".*slice steps other than 1"):
+            v[0:1:2]
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, "vier")]
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice("nul", 4)]
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, 4, "een")]
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, 4.0)]
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0.0, 4)]
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, 4, 1.0)]
+        with self.assertRaisesRegex(IndexError, ".*out of range.*"):
+            v[slice(0, sys.maxsize // 2 + 4)]
+        with self.assertRaisesRegex(IndexError, ".*out of range.*"):
+            v[sys.maxsize // 2 + 10]
 
         self.assertEqual(v.as_tuple(5), (1, 3, 5, 7, 11))
         self.assertEqual(v.as_tuple(0), ())
         self.assertEqual(v.as_tuple(8), (1, 3, 5, 7, 11, 13, 17, 19))
+        self.assertEqual(v.as_tuple(count=2), (1, 3))
+
+        with self.assertRaises(TypeError):
+            v.as_tuple("twee")
+        with self.assertRaises(TypeError):
+            v.as_tuple(1, 2)
+        with self.assertRaises(TypeError):
+            v.as_tuple(count="drie")
+        with self.assertRaises(TypeError):
+            v.as_tuple(1, count=2)
+
+        with self.assertRaises(OverflowError):
+            v.as_tuple(sys.maxsize // 2 + 4)
 
         v = o.unknownLengthMutable()
         self.assertIsInstance(v, objc.varlist)
 
         v[1] = 42
         self.assertEqual(v[1], 42)
+
+        v[:5] = range(5, 10)
+        self.assertEqual(v[5], 0)
+
+        v[:5:1] = range(6, 11)
+        self.assertEqual(v[6], 0)
+
         v[0:10] = range(10)
         self.assertEqual(v[0], 0)
         self.assertEqual(v[5], 5)
         self.assertEqual(v[8], 8)
+
+        with self.assertRaisesRegex(
+            ValueError, "slice assignment doesn't support resizing"
+        ):
+            v[0:10] = range(8)
+        with self.assertRaisesRegex(
+            ValueError, "slice assignment doesn't support resizing"
+        ):
+            v[0:10] = range(12)
+        with self.assertRaisesRegex(ValueError, "Slice end must be specified"):
+            v[0:] = range(12)
+
+        with self.assertRaisesRegex(ValueError, ".*slice steps other than 1"):
+            v[0:10:2] = range(5)
+
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, "vier")] = range(4)
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice("nul", 4)] = range(4)
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, 4, "een")] = range(4)
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, 4.0)] = range(4)
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0.0, 4)] = range(4)
+        with self.assertRaisesRegex(ValueError, "Slice index of unsupported type.*"):
+            v[slice(0, 4, 1.0)] = range(4)
+        with self.assertRaisesRegex(IndexError, ".*out of range.*"):
+            v[slice(sys.maxsize // 2 - 10, sys.maxsize // 2 + 10)] = range(20)
+        with self.assertRaisesRegex(IndexError, ".*out of range.*"):
+            v[slice(sys.maxsize // 2 + 10, sys.maxsize // 2 + 20)] = range(10)
+        with self.assertRaisesRegex(IndexError, ".*out of range.*"):
+            v[sys.maxsize // 2 + 10] = 1
 
         data = v.as_buffer(4)
         self.assertEqual(data[0], 0)
@@ -1418,6 +1499,18 @@ class TestVariableLengthValue(TestCase):
 
         else:
             self.assertEqual(v[0], 0x000F0F0F)
+
+        with self.assertRaises(TypeError):
+            v.as_buffer("twee")
+        with self.assertRaises(TypeError):
+            v.as_buffer(1, 2)
+        with self.assertRaises(TypeError):
+            v.as_buffer(count="drie")
+        with self.assertRaises(TypeError):
+            v.as_buffer(1, count=2)
+
+        with self.assertRaises(OverflowError):
+            v.as_buffer(sys.maxsize // 2 + 4)
 
     def testInput(self):
         o = OC_MetaDataTest.alloc().init()

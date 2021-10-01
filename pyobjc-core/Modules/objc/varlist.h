@@ -15,8 +15,12 @@
 #ifndef PyObjC_VARLIST_H
 #define PyObjC_VARLIST_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern PyTypeObject PyObjC_VarList_Type;
 
-extern PyObject* PyObjC_VarList_New(const char* tp, void* array);
+extern PyObject* _Nullable PyObjC_VarList_New(const char* tp, void* array);
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_VARLIST_H */

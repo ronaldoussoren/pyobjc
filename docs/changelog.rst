@@ -150,7 +150,6 @@ Other changes and bugfixes
 * PyObjC 8 only ships with source archives and "univeral2" binary
   wheels (Python 3.? and later). There are no longer "x86_64" binary wheels.
 
-
 * #374: Use pyupgrade to modernize the code base
 
   Also added to the pre-commit configuration to ensure I don't regress.
@@ -206,6 +205,8 @@ Other changes and bugfixes
   When two threads simultaniously try to get an attribute from a framework
   binding one of them might fail with an attribute error because information
   for resolving the name was removed before actually resolving the name.
+
+* Fix various issues with invalid indices in :type:`objc.varlist`
 
 Version 7.3
 -----------
