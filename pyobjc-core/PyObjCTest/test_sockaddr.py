@@ -1,4 +1,5 @@
 import objc
+import os
 from PyObjCTest.sockaddr import PyObjCTestSockAddr
 from PyObjCTools.TestSupport import TestCase
 import socket
@@ -94,8 +95,14 @@ class TestSocketInterop(TestCase):
                 self.assertEqual(std_addr, oc_addr)
 
         with self.subTest("UNIX"):
-            with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sd:
-                sd.bind("/tmp/sock.addr")
-                std_addr = sd.getsockname()
-                oc_addr = SOCK_FUNCTIONS["getsockname"](sd.fileno(), None, 100)[1]
-                self.assertEqual(std_addr, oc_addr)
+            if os.path.exists("/tmp/pyobjc.sock.addr"):
+                os.unlink("/tmp/pyobjc.sock.addr")
+            try:
+                with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sd:
+                    sd.bind("/tmp/pyobjc.sock.addr")
+                    std_addr = sd.getsockname()
+                    oc_addr = SOCK_FUNCTIONS["getsockname"](sd.fileno(), None, 100)[1]
+                    self.assertEqual(std_addr, oc_addr)
+            finally:
+                if os.path.exists("/tmp/pyobjc.sock.addr"):
+                    os.unlink("/tmp/pyobjc.sock.addr")
