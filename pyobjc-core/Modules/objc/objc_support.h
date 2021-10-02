@@ -79,6 +79,8 @@ extern const char* PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 
 /*
  * Compatibility with pyobjc-api.h
+ *
+ * XXX: deprecate (and then remove) both of these.
  */
 static inline id
 PyObjC_PythonToId(PyObject* value)

@@ -93,6 +93,7 @@
 #import "selector.h"
 
 #import "libffi_support.h"
+#import "block-as-imp.h"
 
 #import "ObjCPointer.h"
 #import "block_support.h"

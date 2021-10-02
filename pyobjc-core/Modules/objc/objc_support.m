@@ -3082,6 +3082,8 @@ id_to_python(id obj)
      * EOF can return references to 'to-be-restored' objects,
      * calling any method on them fully restores them, 'self' is
      * the safest method to call.
+     *
+     * XXX: Is this still necessary?
      */
     obj = [obj self];
 #endif
@@ -3091,7 +3093,10 @@ id_to_python(id obj)
         Py_INCREF(retobject);
 
     } else {
-        retobject = [obj __pyobjc_PythonObject__];
+        retobject = PyObjC_FindPythonProxy(obj);
+        if (retobject == NULL) {
+            retobject = [obj __pyobjc_PythonObject__];
+        }
     }
     return retobject;
 }

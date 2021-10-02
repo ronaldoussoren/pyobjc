@@ -1,5 +1,8 @@
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+
 /* A basic wrapper for C's "FILE*"
  * that implements a usable API.
  */
@@ -10,8 +13,8 @@ struct file_object {
     FILE* fp;
 };
 
-static PyObject*
-file_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable
+file_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable args, PyObject* _Nullable kwds )
 {
     static char* keywords[] = {"path", "mode", NULL};
     FILE*        fp;
@@ -41,7 +44,7 @@ file_dealloc(PyObject* self)
     PyObject_Free(self);
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_close(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
@@ -62,7 +65,7 @@ file_close(PyObject* _self)
     return Py_None;
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_errors(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
@@ -78,7 +81,7 @@ file_errors(PyObject* _self)
     return PyBool_FromLong(result);
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_at_eof(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
@@ -94,7 +97,7 @@ file_at_eof(PyObject* _self)
     return PyBool_FromLong(result);
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_tell(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
@@ -114,7 +117,7 @@ file_tell(PyObject* _self)
     return PyLong_FromLong(offset);
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_seek(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"offset", "whence", NULL};
@@ -143,7 +146,7 @@ file_seek(PyObject* _self, PyObject* args, PyObject* kwds)
     return Py_None;
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_fileno(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
@@ -163,7 +166,7 @@ file_fileno(PyObject* _self)
     return PyLong_FromLong(fd);
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_write(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"buffer", NULL};
@@ -186,7 +189,7 @@ file_write(PyObject* _self, PyObject* args, PyObject* kwds)
     return Py_BuildValue("k", (unsigned long)result);
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_readline(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
@@ -201,7 +204,7 @@ file_readline(PyObject* _self)
     }
 }
 
-static PyObject*
+static PyObject* _Nullable
 file_read(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"size", NULL};
@@ -285,7 +288,7 @@ PyTypeObject FILE_Type = {
 };
 
 PyObject*
-FILE_create(FILE* fp)
+FILE_create(FILE* _Nullable fp)
 {
     struct file_object* self;
     if (fp == NULL) {
@@ -298,7 +301,7 @@ FILE_create(FILE* fp)
     return (PyObject*)self;
 }
 
-FILE*
+FILE* _Nullable
 FILE_get(PyObject* fp)
 {
     if (!FILE_Check(fp)) {
@@ -308,3 +311,5 @@ FILE_get(PyObject* fp)
 
     return ((struct file_object*)fp)->fp;
 }
+
+NS_ASSUME_NONNULL_END

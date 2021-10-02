@@ -379,12 +379,17 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
         return retval;
     } else {
         PyErr_Clear();
+
         methinfo = PyObjCMethodSignature_ForSelector(
             class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
             PyObjCSelector_GetSelector(sel), PyObjCSelector_Signature(sel),
             PyObjCNativeSelector_Check(sel));
         if (methinfo == NULL) {
             return NULL;
+        }
+        retval = blockimpForSignature(PyObjCSelector_GetSelector(sel), PyObjCSelector_Signature(sel), imp, methinfo);
+        if (retval != NULL) {
+            return retval;
         }
         retval =
             PyObjCFFI_MakeIMPForSignature(methinfo, PyObjCSelector_GetSelector(sel), imp);

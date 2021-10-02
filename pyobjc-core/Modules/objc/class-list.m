@@ -4,6 +4,8 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 Py_ssize_t
 PyObjC_ClassCount(void)
 {
@@ -38,16 +40,7 @@ PyObjC_GetClassList(void)
         Class* newBuffer;
         bufferLen = neededLen;
 
-        /* Realloc(NULL, ...) might not work, call Malloc when
-         * the buffer is NULL.
-         */
-        if (buffer == NULL) {
-            newBuffer = PyMem_Malloc(sizeof(Class) * bufferLen);
-
-        } else {
-            newBuffer = PyMem_Realloc(buffer, sizeof(Class) * bufferLen);
-        }
-
+        newBuffer = PyMem_Realloc(buffer, sizeof(Class) * bufferLen);
         if (newBuffer == NULL) {
             PyErr_NoMemory();
             goto error;
@@ -87,3 +80,5 @@ error:
     Py_XDECREF(result);
     return NULL;
 }
+
+NS_ASSUME_NONNULL_END

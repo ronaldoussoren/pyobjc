@@ -1,6 +1,8 @@
 #ifndef PyObjC_CLASS_LIST_H
 #define PyObjC_CLASS_LIST_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  * PYOBJC_EXPECTED_CLASS_COUNT: Hint about the number of classes to expect
  *
@@ -25,6 +27,8 @@ Py_ssize_t PyObjC_ClassCount(void);
  *     This function returns a list containing the wrappers for all classes
  *     in the Objective-C runtime.
  */
-PyObject* PyObjC_GetClassList(void);
+PyObject* _Nullable PyObjC_GetClassList(void);
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_CLASS_LIST_H */

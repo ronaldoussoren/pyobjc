@@ -2162,6 +2162,69 @@ _coloncount(SEL sel)
     return result;
 }
 
+Py_ssize_t
+validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* methinfo)
+{
+    BOOL       haveVarArgs  = NO;
+    BOOL       haveVarKwds  = NO;
+    BOOL       haveKwOnly   = NO;
+    Py_ssize_t defaultCount = 0;
+    Py_ssize_t nargs;
+
+    nargs = _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
+    if (nargs == -1) {
+        return -1;
+    }
+
+    if (haveKwOnly) {
+        PyErr_Format(PyObjCExc_BadPrototypeError,
+                     "%R has keyword-only arguments without defaults", callable);
+        return -1;
+    }
+
+    if (((nargs - defaultCount) <= Py_SIZE(methinfo) - 1)
+        && (nargs >= Py_SIZE(methinfo) - 1) && !haveVarArgs
+        && !haveVarKwds) {
+        /* OK */
+
+    } else if ((nargs <= 1) && haveVarArgs && haveVarKwds) {
+        /* OK */
+
+    } else {
+        /* Wrong number of arguments, raise an error */
+        if (defaultCount) {
+            PyErr_Format(
+                PyObjCExc_BadPrototypeError,
+                "Objective-C expects %" PY_FORMAT_SIZE_T
+                "d arguments, Python argument has from %d to %d arguments for %R",
+                Py_SIZE(methinfo) - 1, nargs - defaultCount,
+                nargs, callable);
+        } else {
+            PyErr_Format(PyObjCExc_BadPrototypeError,
+                         "Objective-C expects %" PY_FORMAT_SIZE_T
+                         "d arguments, Python argument has %d arguments for %R",
+                         Py_SIZE(methinfo) - 1, nargs, callable);
+        }
+        return -1;
+    }
+
+    if (!haveVarArgs && !haveVarKwds) {
+        /* Check if the number of colons is correct */
+        int cc = _coloncount(sel);
+
+        if (cc != 0
+            && !((nargs - defaultCount - 1 <= cc)
+                 && (nargs >= cc))) {
+            PyErr_Format(
+                PyObjCExc_BadPrototypeError,
+                "Python signature doesn't match implied Objective-C signature for %R",
+                callable);
+            return -1;
+        }
+    }
+    return nargs;
+}
+
 IMP
 PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel,
                               PyObject* callable)
@@ -2179,69 +2242,11 @@ PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel,
     stubUserdata->closureType = PyObjC_Method;
 
     if (callable) {
-        BOOL       haveVarArgs  = NO;
-        BOOL       haveVarKwds  = NO;
-        BOOL       haveKwOnly   = NO;
-        Py_ssize_t defaultCount = 0;
-        stubUserdata->argCount =
-            _argcount(callable, &haveVarArgs, &haveVarKwds, &haveKwOnly, &defaultCount);
+        stubUserdata->argCount = validate_callable_signature(callable, sel, methinfo);
         if (stubUserdata->argCount == -1) {
             Py_DECREF(methinfo);
             PyMem_Free(stubUserdata);
             return NULL;
-        }
-
-        if (haveKwOnly) {
-            PyErr_Format(PyObjCExc_BadPrototypeError,
-                         "%R has keyword-only arguments without defaults", callable);
-            Py_DECREF(methinfo);
-            PyMem_Free(stubUserdata);
-            return NULL;
-        }
-
-        if (((stubUserdata->argCount - defaultCount) <= Py_SIZE(methinfo) - 1)
-            && (stubUserdata->argCount >= Py_SIZE(methinfo) - 1) && !haveVarArgs
-            && !haveVarKwds) {
-            /* OK */
-
-        } else if ((stubUserdata->argCount <= 1) && haveVarArgs && haveVarKwds) {
-            /* OK */
-
-        } else {
-            /* Wrong number of arguments, raise an error */
-            if (defaultCount) {
-                PyErr_Format(
-                    PyObjCExc_BadPrototypeError,
-                    "Objective-C expects %" PY_FORMAT_SIZE_T
-                    "d arguments, Python argument has from %d to %d arguments for %R",
-                    Py_SIZE(methinfo) - 1, stubUserdata->argCount - defaultCount,
-                    stubUserdata->argCount, callable);
-            } else {
-                PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "Objective-C expects %" PY_FORMAT_SIZE_T
-                             "d arguments, Python argument has %d arguments for %R",
-                             Py_SIZE(methinfo) - 1, stubUserdata->argCount, callable);
-            }
-            Py_DECREF(methinfo);
-            PyMem_Free(stubUserdata);
-            return NULL;
-        }
-
-        if (!haveVarArgs && !haveVarKwds) {
-            /* Check if the number of colons is correct */
-            int cc = _coloncount(sel);
-
-            if (cc != 0
-                && !((stubUserdata->argCount - defaultCount - 1 <= cc)
-                     && (stubUserdata->argCount >= cc))) {
-                PyErr_Format(
-                    PyObjCExc_BadPrototypeError,
-                    "Python signature doesn't match implied Objective-C signature for %R",
-                    callable);
-                Py_DECREF(methinfo);
-                PyMem_Free(stubUserdata);
-                return NULL;
-            }
         }
 
         stubUserdata->callable = callable;

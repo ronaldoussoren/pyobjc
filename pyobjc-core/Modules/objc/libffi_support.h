@@ -51,6 +51,8 @@ extern int        PyObjCFFI_FreeByRef(Py_ssize_t, void**, struct byref_attr*);
 extern ffi_type*  PyObjCFFI_Typestr2FFI(const char*);
 extern PyObjC_callback_function PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature*,
                                                               PyObject*);
+extern Py_ssize_t validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* methinfo);
+
 
 #if PY_VERSION_HEX >= 0x03090000
   /*

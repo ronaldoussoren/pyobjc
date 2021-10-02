@@ -113,7 +113,7 @@ ID_to_py(void* idValue)
 static int
 py_to_ID(PyObject* obj, void* output)
 {
-    return depythonify_c_value(@encode(id), obj, output);
+    return depythonify_python_object(obj, output);
 }
 
 int
