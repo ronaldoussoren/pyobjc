@@ -151,6 +151,9 @@ New features
 Other changes and bugfixes
 ..........................
 
+* PyObjC only ships "Universal 2" wheels for Python 3.8 and later. Those work
+  with single-architecture builds of Python as well.
+
 * PyObjC 8 only ships with source archives and "univeral2" binary
   wheels (Python 3.? and later). There are no longer "x86_64" binary wheels.
 
