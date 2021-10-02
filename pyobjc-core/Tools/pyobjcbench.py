@@ -17,6 +17,8 @@ PyObjC primitives:
 
 * objc.repythonify for a number of types
 
+* Add benchmark with ctypes for calling functions
+
 """
 
 import textwrap
