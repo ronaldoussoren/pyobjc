@@ -1657,9 +1657,9 @@ PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)), PyObject* args,
 
     if (magic) {
         if (magic == 2) {
-            v = PyObjCCF_NewSpecial(type, *(void**)buf);
+            v = PyObjCCF_NewSpecialFromTypeEncoding(type, *(void**)buf);
         } else {
-            v = PyObjCCF_NewSpecial(type, buf);
+            v = PyObjCCF_NewSpecialFromTypeEncoding(type, buf);
         }
     } else {
         if (*type == _C_CHARPTR) {

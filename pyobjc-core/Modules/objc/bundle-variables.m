@@ -73,7 +73,7 @@ PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)), PyObject* args
         }
 
     } else {
-        PyObject* py_val = PyObjCCF_NewSpecial2(typeid, value);
+        PyObject* py_val = PyObjCCF_NewSpecialFromTypeID(typeid, value);
         if (py_val == NULL) {
             return NULL;
         }

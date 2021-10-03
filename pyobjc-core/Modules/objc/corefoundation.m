@@ -11,12 +11,14 @@
  */
 #include "pyobjc.h"
 
-#include <CoreFoundation/CoreFoundation.h>
+#import <CoreFoundation/CoreFoundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static PyObject* gTypeid2class        = NULL;
 PyObject*        PyObjC_NSCFTypeClass = NULL;
 
-static PyObject*
+static PyObject* _Nullable
 cf_repr(PyObject* self)
 {
     if (PyObjCObject_GetFlags(self) & PyObjCObject_kMAGIC_COOKIE) {
@@ -31,41 +33,39 @@ cf_repr(PyObject* self)
         return result;
 
     } else {
-        char buf[128];
-        snprintf(buf, sizeof(buf), "<%s object at %p>", Py_TYPE(self)->tp_name,
+        return PyUnicode_FromFormat("<%s object at %p>", Py_TYPE(self)->tp_name,
                  PyObjCObject_GetObject(self));
-
-        return PyUnicode_FromString(buf);
     }
 }
 
-PyObject*
+PyObject* _Nullable
 PyObjC_TryCreateCFProxy(NSObject* value)
 {
     PyObject* rval = NULL;
 
-    if (gTypeid2class != NULL) {
-        PyObject*     cfid;
-        PyTypeObject* tp;
+    if (gTypeid2class == NULL) return NULL;
 
-        cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
-        tp   = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
-        Py_DECREF(cfid);
-        if (tp == NULL && PyErr_Occurred()) {
-            return NULL;
-        }
+    PyObject*     cfid;
+    PyTypeObject* tp;
 
-        if (tp != NULL) {
-            rval = tp->tp_alloc(tp, 0);
-            if (rval == NULL) {
-                return NULL;
-            }
-
-            ((PyObjCObject*)rval)->objc_object = value;
-            ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
-            CFRetain(value);
-        }
+    cfid = PyLong_FromLong(CFGetTypeID((CFTypeRef)value));
+    tp   = (PyTypeObject*)PyDict_GetItem(gTypeid2class, cfid);
+    Py_DECREF(cfid);
+    if (tp == NULL && PyErr_Occurred()) {
+        return NULL;
     }
+
+    if (tp == NULL) return NULL;
+
+    rval = tp->tp_alloc(tp, 0);
+    if (rval == NULL) {
+        return NULL;
+    }
+
+    ((PyObjCObject*)rval)->objc_object = value;
+    ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
+    CFRetain(value);
+
     return rval;
 }
 
@@ -73,7 +73,7 @@ PyObjC_TryCreateCFProxy(NSObject* value)
 /* Implementation for: -(PyObject*)__pyobjc_PythonObject__ on NSCFType. We cannot
  * define a category on that type because the class definition isn't public.
  */
-static PyObject*
+static PyObject* _Nullable
 pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 {
     PyObject* rval = NULL;
@@ -100,7 +100,7 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 }
 #endif
 
-PyObject*
+PyObject* _Nullable
 PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 {
     PyObject*          args;
@@ -109,9 +109,6 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     PyObject*          bases;
     PyObjCClassObject* info;
 
-    /*
-     * First look for an already registerd type
-     */
     if (encoding[0] != _C_ID) {
         if (PyObjCPointerWrapper_RegisterID(name, encoding) == -1) {
             return NULL;
@@ -145,10 +142,6 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
         return result;
     }
 
-    /*
-     * If that doesn't exist create a new one.
-     */
-
     dict = PyDict_New();
     if (dict == NULL) {
         Py_DECREF(cf);
@@ -167,6 +160,9 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     PyTuple_SetItem(args, 1, bases);
     PyTuple_SetItem(args, 2, dict);
 
+    /* XXX: Check if this always equivalent to PyObject_Call(PyObjCClass_Type, args, NULL)
+     *      if so, switch to vectorcall.
+     */
     result = PyType_Type.tp_new(&PyObjCClass_Type, args, NULL);
     Py_DECREF(args);
     if (result == NULL) {
@@ -201,7 +197,7 @@ PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
     return result;
 }
 
-static const char* gNames[] = {
+static const char* _Nullable gNames[] = {
     "__NSCFType",
     "NSCFType",
     NULL,
@@ -267,10 +263,9 @@ PyObjCCFType_Setup(void)
  * object. Such objects are sometimes used in CoreFoundation
  * (sadly enough).
  */
-PyObject*
-PyObjCCF_NewSpecial(char* typestr, void* datum)
+PyObject* _Nullable
+PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* datum)
 {
-    PyObject* rval = NULL;
     PyObject* v    = PyDict_GetItemStringWithError(PyObjC_TypeStr2CFTypeID, typestr);
     CFTypeID typeid;
 
@@ -288,37 +283,7 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
         return NULL;
     }
 
-    if (gTypeid2class != NULL) {
-        PyObject*     cfid;
-        PyTypeObject* tp;
-
-        cfid = PyLong_FromLong(typeid);
-        tp   = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
-        Py_DECREF(cfid);
-
-        if (tp == NULL && PyErr_Occurred()) {
-            return NULL;
-        }
-
-        if (tp != NULL) {
-            rval = tp->tp_alloc(tp, 0);
-            if (rval == NULL) {
-                return NULL;
-            }
-
-            ((PyObjCObject*)rval)->objc_object = (id)datum;
-            ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
-                                           | PyObjCObject_kSHOULD_NOT_RELEASE
-                                           | PyObjCObject_kMAGIC_COOKIE;
-        }
-
-    } else {
-        rval = NULL;
-        PyErr_Format(PyExc_ValueError, "Sorry, cannot wrap special value of typeid %d\n",
-                     (int)typeid);
-    }
-
-    return rval;
+    return PyObjCCF_NewSpecialFromTypeID(typeid, datum);
 }
 
 /*
@@ -328,38 +293,36 @@ PyObjCCF_NewSpecial(char* typestr, void* datum)
  * (sadly enough).
  */
 PyObject*
-PyObjCCF_NewSpecial2(CFTypeID typeid, void* datum)
+PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
 {
     PyObject* rval = NULL;
 
     if (gTypeid2class != NULL) {
-        PyObject*     cfid;
-        PyTypeObject* tp;
-
-        cfid = PyLong_FromLong(typeid);
-        tp   = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
-        Py_DECREF(cfid);
-        if (tp == NULL && PyErr_Occurred()) {
-            return NULL;
-        }
-
-        if (tp != NULL) {
-            rval = tp->tp_alloc(tp, 0);
-            if (rval == NULL) {
-                return NULL;
-            }
-
-            ((PyObjCObject*)rval)->objc_object = (id)datum;
-            ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
-                                           | PyObjCObject_kSHOULD_NOT_RELEASE
-                                           | PyObjCObject_kMAGIC_COOKIE;
-        }
-
-    } else {
-        rval = NULL;
         PyErr_Format(PyExc_ValueError, "Sorry, cannot wrap special value of typeid %d\n",
                      (int)typeid);
+        return NULL;
     }
 
+    PyObject*     cfid;
+    PyTypeObject* tp;
+
+    cfid = PyLong_FromLong(typeid);
+    tp   = (PyTypeObject*)PyDict_GetItemWithError(gTypeid2class, cfid);
+    Py_DECREF(cfid);
+    if (tp == NULL) {
+        return NULL;
+    }
+
+    rval = tp->tp_alloc(tp, 0);
+    if (rval == NULL) {
+        return NULL;
+    }
+
+    ((PyObjCObject*)rval)->objc_object = (id)datum;
+    ((PyObjCObject*)rval)->flags   = PyObjCObject_kDEFAULT
+                                   | PyObjCObject_kSHOULD_NOT_RELEASE
+                                   | PyObjCObject_kMAGIC_COOKIE;
     return rval;
 }
+
+NS_ASSUME_NONNULL_END
