@@ -33,6 +33,7 @@ extensions = [
     "sphinx.ext.ifconfig",
     "sphinx.ext.extlinks",
     "examples",
+    "sphinxcontrib.blockdiag",
     "sphinx_sitemap",
 ]
 
@@ -124,7 +125,7 @@ html_theme_options = {}
 # "<project> v<release> documentation".
 html_title = "PyObjC - the Python to Objective-C bridge"
 
-html_add_permalinks = ""
+# html_add_permalinks = ""
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 # html_short_title = None

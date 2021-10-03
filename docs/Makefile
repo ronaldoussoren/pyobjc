@@ -1,7 +1,7 @@
 all:
 	@echo "Usage:"
-	@echo "  make html     # create html output"
-	@echo "  make view     # show html output"
+	@echo "  make html          # create html output"
+	@echo "  make view          # show html output"
 	@echo "  make linkcheck     # check links"
 
 html:
@@ -13,4 +13,4 @@ linkcheck:
 view:
 	open _build/html/index.html
 
-.PHONY: html view
+.PHONY: html view linkcheck

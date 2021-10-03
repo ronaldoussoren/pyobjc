@@ -674,7 +674,7 @@ API description
    .. versionchanged:: 8.0
       This function is deprecated, and will be removed in PyObjC 9.
 
-.. _`pkg_resources.resource_string()`: https://setuptools.readthedocs.io/en/latest/pkg_resources.html
+.. _`pkg_resources.resource_string()`: https://setuptools.pypa.io/en/latest/pkg_resources.html
 
 .. rubric:: Footnotes
 
