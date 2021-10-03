@@ -3,6 +3,8 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef struct {
     PyObject_HEAD
 
@@ -10,16 +12,18 @@ typedef struct {
 } OpaquePointerObject;
 
 static PyMemberDef opaque_members[] = {
-    {.name   = "__pointer__",
-     .type   = T_LONG,
-     .offset = offsetof(OpaquePointerObject, pointer_value),
-     .flags  = READONLY,
-     .doc    = "raw value of the pointer"},
+    {
+        .name   = "__pointer__",
+        .type   = T_LONG,
+        .offset = offsetof(OpaquePointerObject, pointer_value),
+        .flags  = READONLY,
+        .doc    = "raw value of the pointer"},
     {
         .name = NULL /* SENTINEL */
-    }};
+    }
+};
 
-static PyObject*
+static PyObject* _Nullable
 as_cobject(PyObject* self)
 {
     if (((OpaquePointerObject*)self)->pointer_value == NULL) {
@@ -31,27 +35,29 @@ as_cobject(PyObject* self)
                          NULL);
 }
 
-static PyObject*
+static PyObject* _Nullable
 as_ctypes_voidp(PyObject* self)
 {
     return PyObjC_MakeCVoidP(((OpaquePointerObject*)self)->pointer_value);
 }
 
-static PyObject*
+static PyObject* _Nullable
 opaque_sizeof(PyObject* self)
 {
     return PyLong_FromSsize_t(Py_TYPE(self)->tp_basicsize);
 }
 
 static PyMethodDef opaque_methods[] = {
-    {.ml_name  = "__cobject__",
-     .ml_meth  = (PyCFunction)as_cobject,
-     .ml_flags = METH_NOARGS,
-     .ml_doc   = "get a CObject representing this object"},
-    {.ml_name  = "__c_void_p__",
-     .ml_meth  = (PyCFunction)as_ctypes_voidp,
-     .ml_flags = METH_NOARGS,
-     .ml_doc   = "get a ctypes.void_p representing this object"},
+    {
+        .ml_name  = "__cobject__",
+        .ml_meth  = (PyCFunction)as_cobject,
+        .ml_flags = METH_NOARGS,
+        .ml_doc   = "get a CObject representing this object"},
+    {
+        .ml_name  = "__c_void_p__",
+        .ml_meth  = (PyCFunction)as_ctypes_voidp,
+        .ml_flags = METH_NOARGS,
+        .ml_doc   = "get a ctypes.void_p representing this object"},
     {
         .ml_name  = "__sizeof__",
         .ml_meth  = (PyCFunction)opaque_sizeof,
@@ -59,10 +65,11 @@ static PyMethodDef opaque_methods[] = {
     },
     {
         .ml_name = NULL /* SENTINEL */
-    }};
+    }
+};
 
-static PyObject*
-opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable
+opaque_new(PyTypeObject* type, PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"cobject", "c_void_p", NULL};
     PyObject*    cobject    = NULL;
@@ -87,7 +94,7 @@ opaque_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
         }
 
         p = PyCapsule_GetPointer(cobject, "objc.__opaque__");
-        if (PyErr_Occurred()) {
+        if (p == NULL && PyErr_Occurred()) {
             return NULL;
         }
 
@@ -148,6 +155,15 @@ opaque_dealloc(PyObject* self)
     PyObject_Del(self);
 }
 
+static int
+opaque_traverse(PyObject *self, visitproc visit, void *arg)
+{
+#if PY_VERSION_HEX >= 0x03090000
+    Py_VISIT(Py_TYPE(self));
+#endif /* PY_VERSION_HEX >= 0x03090000 */
+    return 0;
+}
+
 static void
 opaque_from_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
               void* userdata)
@@ -194,8 +210,8 @@ opaque_to_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
  *             @encode(NSZone*),
  *             NSZonePointer_doc));
  */
-PyObject*
-PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char* docstr)
+PyObject* _Nullable
+PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char* _Nullable docstr)
 {
     static const char convert_cif_signature[] = {_C_INT, _C_PTR,  _C_VOID,
                                                  _C_PTR, _C_VOID, 0};
@@ -203,7 +219,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     static ffi_cif*   convert_cif             = NULL;
     static ffi_cif*   new_cif                 = NULL;
 
-    PyHeapTypeObject*                   newType  = NULL;
+    PyObject*                           newType  = NULL;
     PyObjCPointerWrapper_ToPythonFunc   from_c   = NULL;
     PyObjCPointerWrapper_FromPythonFunc to_c     = NULL;
     ffi_closure*                        cl_to_c  = NULL;
@@ -212,7 +228,6 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     int                                 r;
     PyObject*                           v = NULL;
     PyObject*                           w = NULL;
-    const char*                         name_dot;
     void* codeloc = NULL;
 
     if (new_cif == NULL) {
@@ -235,56 +250,57 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
         }
     }
 
-    newType = (PyHeapTypeObject*)PyType_Type.tp_alloc(&PyType_Type, 0);
+    PyType_Slot opaque_slots[] = {
+       {
+           .slot = Py_tp_dealloc,
+           .pfunc = (void*)opaque_dealloc,
+       },
+       {
+           .slot = Py_tp_new,
+           .pfunc = (void*)opaque_new,
+       },
+       {
+           .slot = Py_tp_members,
+           .pfunc = (void*)opaque_members,
+       },
+       {
+           .slot = Py_tp_methods,
+           .pfunc = (void*)opaque_methods,
+       },
+       {
+           .slot = Py_tp_traverse,
+           .pfunc = (void*)opaque_traverse,
+       },
+       {
+           /* Must be next to last */
+           .slot = Py_tp_doc,
+           .pfunc = (void*)docstr,
+       },
+
+       { .slot = 0, .pfunc = NULL } /* Sentinel */
+    };
+
+    if (docstr == NULL) {
+        /* Set slot with Py_tp_doc to NULL */
+        PyType_Slot* docslot = opaque_slots + 5;
+        if (docslot->slot != Py_tp_doc) {
+             PyErr_SetString(PyExc_RuntimeError, "tp_doc not in expected slot");
+             goto error_cleanup;
+        }
+       docslot->slot = 0;
+    }
+
+    PyType_Spec opaque_spec = {
+        .name = name,
+        .basicsize = sizeof(OpaquePointerObject),
+        .itemsize = 0,
+        .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+        .slots = opaque_slots,
+    };
+
+    newType = PyType_FromSpec(&opaque_spec);
     if (newType == NULL) {
-        return NULL;
-    }
-
-    newType->ht_type.tp_basicsize = sizeof(OpaquePointerObject);
-    newType->ht_type.tp_dealloc   = opaque_dealloc;
-    newType->ht_type.tp_getattro  = PyObject_GenericGetAttr;
-    newType->ht_type.tp_flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE;
-    newType->ht_type.tp_methods   = opaque_methods;
-    newType->ht_type.tp_members   = opaque_members;
-    newType->ht_type.tp_new       = opaque_new;
-
-    newType->ht_type.tp_as_number   = &newType->as_number;
-    newType->ht_type.tp_as_mapping  = &newType->as_mapping;
-    newType->ht_type.tp_as_sequence = &newType->as_sequence;
-    newType->ht_type.tp_as_buffer   = &newType->as_buffer;
-
-    /* Force type to be a heap type. Not only is that technically correct,
-     * it also makes the type mutable (annoyingly enough all heap types
-     * and only heap types are mutable).
-     */
-    newType->ht_type.tp_flags |= Py_TPFLAGS_HEAPTYPE;
-    newType->ht_type.tp_flags &= ~Py_TPFLAGS_HAVE_GC;
-
-    name_dot = strchr(name, '.');
-    if (name_dot != NULL && name_dot[1] != '\0') {
-        newType->ht_name = PyUnicode_FromString(name_dot + 1);
-    } else {
-        newType->ht_name = PyUnicode_FromString(name);
-    }
-    if (newType->ht_name == NULL) {
-        PyMem_Free(newType);
-        PyErr_NoMemory();
-        return NULL;
-    }
-
-    newType->ht_type.tp_name = PyUnicode_AsUTF8(newType->ht_name);
-    if (newType->ht_type.tp_name == NULL) {
-        PyMem_Free(newType);
-        PyErr_NoMemory();
-        return NULL;
-    }
-
-    newType->ht_qualname = newType->ht_name;
-    Py_INCREF(newType->ht_qualname);
-
-    v = PyDict_New();
-    if (v == NULL) {
-        goto error_cleanup;
+         goto error_cleanup;
     }
 
     w = PyBytes_FromString(typestr);
@@ -292,45 +308,11 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
         goto error_cleanup;
     }
 
-    if (PyDict_SetItemString(v, "__typestr__", w) != 0) {
-        Py_CLEAR(w);
+    if (PyObject_SetAttrString(newType, "__typestr__", w) == -1) {
+        Py_CLEAR(newType);
         goto error_cleanup;
     }
-
     Py_CLEAR(w);
-
-    if (name_dot == NULL || name_dot[1] == '\0') {
-        w = PyUnicode_FromString("objc");
-        if (w == NULL) {
-            goto error_cleanup;
-        }
-        if (PyDict_SetItemString(v, "__module__", w) != 0) {
-            Py_CLEAR(w);
-            goto error_cleanup;
-        }
-        Py_CLEAR(w);
-    } else {
-        w = PyUnicode_FromStringAndSize(name, name_dot - name);
-        if (w == NULL) {
-            goto error_cleanup;
-        }
-        if (PyDict_SetItemString(v, "__module__", w) != 0) {
-            Py_CLEAR(w);
-            goto error_cleanup;
-        }
-        Py_CLEAR(w);
-    }
-
-    newType->ht_type.tp_dict = v;
-    v                        = NULL;
-
-    if (docstr != NULL) {
-        newType->ht_type.tp_doc = PyObjCUtil_Strdup(docstr);
-        if (newType->ht_type.tp_doc == NULL) {
-            PyErr_NoMemory();
-            goto error_cleanup;
-        }
-    }
 
 #ifdef HAVE_CLOSURE_POOL
 
@@ -353,10 +335,6 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     if (cl_to_c == NULL) {
         goto error_cleanup;
     }
-
-    newType->ht_type.tp_alloc = PyType_GenericAlloc;
-    Py_INCREF(Py_TYPE(&(newType->ht_type)));
-    PyType_Ready((PyTypeObject*)newType);
 
 #if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
@@ -421,6 +399,7 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     }
     if (rv != FFI_OK) {
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
+        Py_XDECREF(newType);
         goto error_cleanup;
     }
     Py_INCREF(newType); /* Store reference, hence INCREF */
@@ -429,20 +408,14 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
 
     r = PyObjCPointerWrapper_Register(name, typestr, from_c, to_c);
     if (r == -1) {
+        Py_XDECREF(newType);
+        Py_XDECREF(newType);
         goto error_cleanup;
     }
 
     return (PyObject*)newType;
 
 error_cleanup:
-    if (newType) {
-        if (newType->ht_type.tp_name)
-            PyMem_Free((char*)newType->ht_type.tp_name);
-        if (newType->ht_type.tp_doc)
-            PyMem_Free((char*)newType->ht_type.tp_doc);
-        Py_XDECREF(newType->ht_type.tp_dict);
-        PyMem_Free(newType);
-    }
 
 #ifdef HAVE_CLOSURE_POOL
 #if PyObjC_BUILD_RELEASE >= 1015
@@ -477,8 +450,10 @@ error_cleanup:
     }
 #pragma clang diagnostic pop
 #endif
-
+    Py_XDECREF(newType);
     Py_XDECREF(v);
     Py_XDECREF(w);
     return NULL;
 }
+
+NS_ASSUME_NONNULL_END

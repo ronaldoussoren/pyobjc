@@ -73,6 +73,7 @@ API of the opaque pointer types but does not exist as a real type.
 
    * *cobject*: A PyCapsule object with name "objc.__opaque__" that represents
      an opaque pointer value.
+
    * *c_void_p*: An instance of :class:`ctypes.c_void_p` or
      :class:`int <__builtin__.int>` that represents an opaque pointer value.
 

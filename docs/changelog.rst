@@ -87,12 +87,12 @@ Most performance changes use features introduced in Python 3.9, performance
 in older Python versions is unchanged except for the effects of general cleanup.
 
 * Implement the "vectorcall" protocol for :class:`objc.function`, :class:`objc.WeakRef`,
-  :class:`objc.selector`, :class:`objc.IMP`, :type:`objc.python_method`.
+  :class:`objc.selector`, :class:`objc.IMP`, :class:`objc.python_method`.
 
   This reduces the interpreter overhead for calling instances of these objects.
 
-* Implement Py_TPFLAGS_METHOD_DESCRIPTOR for :type:`objc.selector`,
-  :type:`objc.python_method`.
+* Implement Py_TPFLAGS_METHOD_DESCRIPTOR for :class:`objc.selector`,
+  :class:`objc.python_method`.
 
 * Use vectorcall in the method stub that forwards Objective-C calls to Python.
 
@@ -217,9 +217,14 @@ Other changes and bugfixes
   binding one of them might fail with an attribute error because information
   for resolving the name was removed before actually resolving the name.
 
-* Fix various issues with invalid indices in :type:`objc.varlist`
+* Fix various issues with invalid indices in :class:`objc.varlist`
 
 * Fix support for ``AF_UNIX`` in the support code for ``struct sockaddr``.
+
+* The implementation for opaque pointer types (such as the proxy for
+  'NSZone*') has switched to :c:func:`PyType_FromSpec`.
+
+* Added "nullability" attributes to Objectice-C sources for pyobjc-core.
 
 Version 7.3
 -----------
