@@ -229,6 +229,8 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     PyObject*                           v = NULL;
     PyObject*                           w = NULL;
     void* codeloc = NULL;
+    char* dot;
+    char buf[256];
 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
@@ -290,8 +292,18 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
        docslot->slot = 0;
     }
 
+    dot = strchr(name, '.');
+    if(dot == NULL) {
+        if (strlen(name) > sizeof(buf) - sizeof("objc.")) {
+            PyErr_SetString(PyExc_ValueError, "dotless name is too long");
+            goto error_cleanup;
+        }
+        strcpy(buf, "objc.");
+        strcpy(buf+5, name);
+    }
+
     PyType_Spec opaque_spec = {
-        .name = name,
+        .name = dot != NULL ? name : buf,
         .basicsize = sizeof(OpaquePointerObject),
         .itemsize = 0,
         .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,

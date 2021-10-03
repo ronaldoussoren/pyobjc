@@ -32,6 +32,15 @@ class TestFromPython(TestCase):
         self.assertEqual(tp.__qualname__, "BarHandle")
         self.assertEqual(repr(tp), "<class 'Mod.BarHandle'>")
 
+    def testDoc(self):
+        docstr = "A doc string"
+        tp = objc.createOpaquePointerType("Mod.BarHandle", b"^{TestDoc1=}", docstr)
+        self.assertEqual(tp.__doc__, docstr)
+
+        docstr = None
+        tp = objc.createOpaquePointerType("Mod.BarHandle", b"^{TestDoc1=}", docstr)
+        self.assertEqual(tp.__doc__, None)
+
 
 class TestFromC(TestCase):
     def testMutable(self):
