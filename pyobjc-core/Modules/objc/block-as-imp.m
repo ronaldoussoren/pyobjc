@@ -12,7 +12,6 @@
 #include "pyobjc.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
 static id create_void_noargs(PyObject* callable, PyObjCMethodSignature* methinfo __attribute__((__unused__)))
 {
     Py_INCREF(callable);

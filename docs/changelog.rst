@@ -63,6 +63,10 @@ Backward incompatible changes
   "struct sockaddr" (either by reference or as a function result) will now
   encode the IP address as a string and not a bytes object.
 
+* The (undocumented) API in pyobjc-api.h (used in some framework bindings to
+  integratie with pyobjc-core) has changed in an incompatible way, in particular
+  the API for "caller" functions now mostly mirrors the vectorcall convension.
+
 Upcoming incompatible changes
 .............................
 

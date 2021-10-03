@@ -2315,6 +2315,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     if (PyObjC_setup_nsobject() < 0) {
         return NULL;
     }
+    if (PyObjC_setup_simple_methods() < 0) {
+        return NULL;
+    }
 
     if (PyObjCCFType_Setup() == -1) {
         return NULL;
