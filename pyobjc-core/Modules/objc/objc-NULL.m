@@ -3,12 +3,15 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 PyObject* PyObjC_NULL = NULL;
 
 static PyObject*
 obj_repr(PyObject* self __attribute__((__unused__)))
 {
-    return PyUnicode_FromString("objc.NULL");
+    Py_INCREF(PyObjCNM_objc_NULL);
+    return PyObjCNM_objc_NULL;
 }
 
 PyTypeObject PyObjC_NULL_Type = {
@@ -19,7 +22,7 @@ PyTypeObject PyObjC_NULL_Type = {
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
 };
 
-PyObject*
+PyObject* _Nullable
 PyObjCInitNULL(void)
 {
     PyObject* result;
@@ -29,3 +32,5 @@ PyObjCInitNULL(void)
 
     return result;
 }
+
+NS_ASSUME_NONNULL_END
