@@ -7,5 +7,3 @@ python:
   install:
     - requirements: docs/old-setuptools.txt
     - requirements: docs/requirements.txt
-    - method: pip
-      path: .
