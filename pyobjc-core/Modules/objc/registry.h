@@ -1,11 +1,15 @@
 #ifndef PyObjC_registry_H
 #define PyObjC_registry_H
 
-extern PyObject* PyObjC_NewRegistry(void);
-extern int       PyObjC_AddToRegistry(PyObject*, PyObject*, PyObject*, PyObject*);
-extern PyObject* PyObjC_FindInRegistry(PyObject*, Class, SEL);
+NS_ASSUME_NONNULL_BEGIN
 
-typedef PyObject* (*PyObjC_ItemTransform)(PyObject*);
-extern PyObject* PyObjC_CopyRegistry(PyObject*, PyObjC_ItemTransform);
+extern PyObject* _Nullable PyObjC_NewRegistry(void);
+extern int       PyObjC_AddToRegistry(PyObject*, PyObject*, PyObject*, PyObject*);
+extern PyObject* _Nullable PyObjC_FindInRegistry(PyObject*, Class, SEL);
+
+typedef PyObject* _Nullable (*PyObjC_ItemTransform)(PyObject*);
+extern PyObject* _Nullable PyObjC_CopyRegistry(PyObject*, PyObjC_ItemTransform);
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_registry_H */

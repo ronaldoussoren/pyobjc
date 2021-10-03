@@ -6,9 +6,11 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 BOOL PyObjC_UpdatingMetaData = NO;
 
-PyObject*
+PyObject* _Nullable
 PyObjC_NewRegistry(void)
 {
     return PyDict_New();
@@ -24,6 +26,8 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     if (item == NULL) {
         return -1;
     }
+
+    /* XXX: Add type checking (bytes, unicode) */
 
     sublist = PyDict_GetItemWithError(registry, selector);
     if (sublist == NULL && PyErr_Occurred()) {
@@ -43,12 +47,15 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     if (!PyObjC_UpdatingMetaData) {
         PyObjC_MappingCount += 1;
     }
+    /* XXX: Do something to ensure that adding a class
+     * again removes the older registration.
+     */
     result = PyList_Append(sublist, item);
     Py_DECREF(item);
     return result;
 }
 
-PyObject*
+PyObject* _Nullable
 PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 {
     Py_ssize_t i;
@@ -79,11 +86,7 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
             continue;
         }
 
-        if (!PyTuple_CheckExact(cur)) {
-            PyErr_SetString(PyObjCExc_InternalError,
-                            "Exception registry element isn't a tuple");
-            return NULL;
-        }
+        PyObjC_Assert(PyTuple_CheckExact(cur), NULL);
 
         PyObject* nm = PyTuple_GET_ITEM(cur, 0);
         if (PyUnicode_Check(nm)) {
@@ -126,7 +129,7 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
     return found_value;
 }
 
-PyObject*
+PyObject* _Nullable
 PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
 {
     PyObject*  result = PyDict_New();
@@ -140,7 +143,15 @@ PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
     while (PyDict_Next(registry, &pos, &key, &sublist)) {
         Py_ssize_t i, len;
         PyObject*  sl_new;
-        len    = PyList_Size(sublist);
+
+#ifdef  PyObjC_DEBUG
+        if (!PyList_CheckExact(sublist)) {
+             PyErr_SetString(PyObjCExc_InternalError, "sublist of registry is not a list");
+             goto error;
+        }
+#endif
+
+        len    = PyList_GET_SIZE(sublist);
         sl_new = PyList_New(len);
         if (sl_new == NULL)
             goto error;
@@ -170,3 +181,5 @@ error:
     Py_DECREF(result);
     return NULL;
 }
+
+NS_ASSUME_NONNULL_END
