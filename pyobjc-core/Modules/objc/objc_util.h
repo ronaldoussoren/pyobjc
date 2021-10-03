@@ -115,6 +115,7 @@ extern PyObject* PyObjCNM_values;
 extern PyObject* PyObjCNM_description;
 extern PyObject* PyObjCNM___get__;
 extern PyObject* PyObjCNM_date_format_string;
+extern PyObject* PyObjCNM_objc_memview_object;
 
 extern int PyObjC_setup_names(void);
 

@@ -1,5 +1,7 @@
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef struct {
     PyObject_HEAD
     IMP                    imp;
@@ -14,48 +16,46 @@ typedef struct {
 } PyObjCIMPObject;
 
 
-ffi_cif*
+
+#define ASSERT_IS_IMP(self, retval) \
+     if (!PyObjCIMP_Check(self)) { \
+        PyErr_BadInternalCall(); \
+        return retval; \
+     }
+
+/*
+ * XXX: Inspect users and consider removing
+ * the type check (or move it to a debug assertion
+ */
+ffi_cif* _Nullable
 PyObjCIMP_GetCIF(PyObject* self)
 {
-    /* XXX: Maybe move checks outside this function */
-    if (!PyObjCIMP_Check(self)) {
-        PyErr_BadInternalCall();
-        return NULL;
-    }
+    ASSERT_IS_IMP(self, NULL)
 
     return ((PyObjCIMPObject*)self)->cif;
 }
 
 int
-PyObjCIMP_SetCIF(PyObject* self, ffi_cif* cif)
+PyObjCIMP_SetCIF(PyObject* self, ffi_cif* _Nullable cif)
 {
-    if (!PyObjCIMP_Check(self)) {
-        PyErr_BadInternalCall();
-        return -1;
-    }
+    ASSERT_IS_IMP(self, -1)
 
     ((PyObjCIMPObject*)self)->cif = cif;
     return 0;
 }
 
-SEL
+SEL _Nullable
 PyObjCIMP_GetSelector(PyObject* self)
 {
-    if (!PyObjCIMP_Check(self)) {
-        PyErr_BadInternalCall();
-        return NULL;
-    }
+    ASSERT_IS_IMP(self, NULL)
 
     return ((PyObjCIMPObject*)self)->selector;
 }
 
-IMP
+IMP _Nullable
 PyObjCIMP_GetIMP(PyObject* self)
 {
-    if (!PyObjCIMP_Check(self)) {
-        PyErr_BadInternalCall();
-        return NULL;
-    }
+    ASSERT_IS_IMP(self, NULL)
 
     return ((PyObjCIMPObject*)self)->imp;
 }
@@ -63,40 +63,31 @@ PyObjCIMP_GetIMP(PyObject* self)
 int
 PyObjCIMP_GetFlags(PyObject* self)
 {
-    if (!PyObjCIMP_Check(self)) {
-        PyErr_BadInternalCall();
-        return -1;
-    }
+    ASSERT_IS_IMP(self, -1)
 
     return ((PyObjCIMPObject*)self)->flags;
 }
 
-PyObjC_CallFunc
+PyObjC_CallFunc _Nullable
 PyObjCIMP_GetCallFunc(PyObject* self)
 {
-    if (!PyObjCIMP_Check(self)) {
-        PyErr_BadInternalCall();
-        return NULL;
-    }
+    ASSERT_IS_IMP(self, NULL)
 
     return ((PyObjCIMPObject*)self)->callfunc;
 }
 
-PyObjCMethodSignature*
+PyObjCMethodSignature* _Nullable
 PyObjCIMP_GetSignature(PyObject* self)
 {
-    if (!PyObjCIMP_Check(self)) {
-        PyErr_BadInternalCall();
-        return NULL;
-    }
+    ASSERT_IS_IMP(self, NULL)
 
     return ((PyObjCIMPObject*)self)->signature;
 }
 
 /* ========================================================================= */
 
-static PyObject*
-imp_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+static PyObject* _Nullable
+imp_vectorcall(PyObject* _self, PyObject*const* _Nullable args, size_t nargsf, PyObject* _Nullable kwnames)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
@@ -158,8 +149,8 @@ imp_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* k
 }
 
 #if PY_VERSION_HEX >= 0x03090000
-static PyObject*
-imp_vectorcall_simple(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+static PyObject* _Nullable
+imp_vectorcall_simple(PyObject* _self, PyObject*const* _Nullable args, size_t nargsf, PyObject* _Nullable kwnames)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
@@ -224,8 +215,9 @@ imp_vectorcall_simple(PyObject* _self, PyObject*const* args, size_t nargsf, PyOb
 }
 #endif
 
-static PyObject*
-imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
+#if PY_VERSION_HEX < 0x03090000
+static PyObject* _Nullable
+imp_call(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
         PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
@@ -233,8 +225,9 @@ imp_call(PyObject* _self, PyObject* args, PyObject* kwds)
     }
     return imp_vectorcall(_self, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
 }
+#endif
 
-static PyObject*
+static PyObject* _Nullable
 imp_repr(PyObject* _self)
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
@@ -252,7 +245,7 @@ imp_dealloc(PyObject* _self)
 
 PyDoc_STRVAR(imp_signature_doc, "Objective-C signature for the IMP");
 
-static PyObject*
+static PyObject* _Nullable
 imp_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
@@ -266,7 +259,7 @@ imp_signature(PyObject* _self, void* closure __attribute__((__unused__)))
 
 PyDoc_STRVAR(imp_selector_doc, "Objective-C name for the IMP");
 
-static PyObject*
+static PyObject* _Nullable
 imp_selector(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
@@ -279,7 +272,9 @@ static PyObject*
 imp_class_method(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kCLASS_METHOD));
+    PyObject* result = (0 != (self->flags & PyObjCSelector_kCLASS_METHOD)) ? Py_True : Py_False;
+    Py_INCREF(result);
+    return result;
 }
 
 PyDoc_STRVAR(
@@ -291,44 +286,48 @@ static PyObject*
 imp_is_alloc(PyObject* _self, void* closure __attribute__((__unused__)))
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
-    return PyBool_FromLong(0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED));
+    PyObject* result = (0 != (self->flags & PyObjCSelector_kRETURNS_UNINITIALIZED)) ? Py_True : Py_False;
+    Py_INCREF(result);
+    return result;
 }
 
-static PyGetSetDef imp_getset[] = {{
-                                       .name = "isAlloc",
-                                       .get  = imp_is_alloc,
-                                       .doc  = imp_is_alloc_doc,
-                                   },
-                                   {
-                                       .name = "isClassMethod",
-                                       .get  = imp_class_method,
-                                       .doc  = imp_class_method_doc,
-                                   },
-                                   {
-                                       .name = "signature",
-                                       .get  = imp_signature,
-                                       .doc  = imp_signature_doc,
-                                   },
-                                   {
-                                       .name = "selector",
-                                       .get  = imp_selector,
-                                       .doc  = imp_selector_doc,
-                                   },
-                                   {
-                                       .name = "__name__",
-                                       .get  = imp_selector,
-                                       .doc  = imp_selector_doc,
-                                   },
-                                   {
-                                       .name = "__signature__",
-                                       .get  = PyObjC_callable_signature_get,
-                                       .doc  = "inspect.Signature for an IMP",
-                                   },
-                                   {
-                                       .name = NULL /* SENTINEL */
-                                   }};
+static PyGetSetDef imp_getset[] = {
+    {
+        .name = "isAlloc",
+        .get  = imp_is_alloc,
+        .doc  = imp_is_alloc_doc,
+    },
+    {
+        .name = "isClassMethod",
+        .get  = imp_class_method,
+        .doc  = imp_class_method_doc,
+    },
+    {
+        .name = "signature",
+        .get  = imp_signature,
+        .doc  = imp_signature_doc,
+    },
+    {
+        .name = "selector",
+        .get  = imp_selector,
+        .doc  = imp_selector_doc,
+    },
+    {
+        .name = "__name__",
+        .get  = imp_selector,
+        .doc  = imp_selector_doc,
+    },
+    {
+        .name = "__signature__",
+        .get  = PyObjC_callable_signature_get,
+        .doc  = "inspect.Signature for an IMP",
+    },
+    {
+        .name = NULL /* SENTINEL */
+    }
+};
 
-static PyObject*
+static PyObject* _Nullable
 imp_metadata(PyObject* self)
 {
     PyObject* result = PyObjCMethodSignature_AsDict(((PyObjCIMPObject*)self)->signature);
@@ -357,15 +356,17 @@ imp_metadata(PyObject* self)
     return result;
 }
 
-static PyMethodDef imp_methods[] = {{
-                                        .ml_name  = "__metadata__",
-                                        .ml_meth  = (PyCFunction)imp_metadata,
-                                        .ml_flags = METH_NOARGS,
-                                        .ml_doc   = "Return metadata for the method",
-                                    },
-                                    {
-                                        .ml_name = NULL /* SENTINEL */
-                                    }};
+static PyMethodDef imp_methods[] = {
+    {
+        .ml_name  = "__metadata__",
+        .ml_meth  = (PyCFunction)imp_metadata,
+        .ml_flags = METH_NOARGS,
+        .ml_doc   = "Return metadata for the method",
+    },
+    {
+        .ml_name = NULL /* SENTINEL */
+    }
+};
 
 PyTypeObject PyObjCIMP_Type = {
     PyVarObject_HEAD_INIT(NULL, 0).tp_name = "objc.IMP",
@@ -374,22 +375,54 @@ PyTypeObject PyObjCIMP_Type = {
     .tp_dealloc                            = imp_dealloc,
     .tp_repr                               = imp_repr,
     .tp_getattro                           = PyObject_GenericGetAttr,
-    .tp_call                               = imp_call,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
-    .tp_vectorcall_offset                          = offsetof(PyObjCIMPObject, vectorcall),
+    .tp_flags                              = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
+    .tp_vectorcall_offset                  = offsetof(PyObjCIMPObject, vectorcall),
+    .tp_call                               = PyVectorcall_Call,
 #else
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_flags                              = Py_TPFLAGS_DEFAULT,
+    .tp_call                               = imp_call,
 #endif
 
     .tp_methods                            = imp_methods,
     .tp_getset                             = imp_getset,
 };
 
+static PyObject* _Nullable
+PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
+              PyObjCMethodSignature* signature, int flags)
+{
+    PyObjCIMPObject* result;
+
+    PyObjC_Assert(callfunc != NULL, NULL);
+
+    result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
+    if (result == NULL)
+        return NULL;
+
+    result->imp       = imp;
+    result->selector  = selector;
+    result->callfunc  = callfunc;
+    result->signature = signature;
+    result->cif = NULL;
+    Py_INCREF(signature);
+
+    result->flags = flags;
+
+#if PY_VERSION_HEX >= 0x03090000
+    if (signature && signature->shortcut_signature && callfunc == PyObjCFFI_Caller) {
+        result->vectorcall = imp_vectorcall_simple;
+    } else {
+        result->vectorcall = imp_vectorcall;
+    }
+#endif
+    return (PyObject*)result;
+}
+
 /* ========================================================================= */
 
-static PyObject*
-call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject*const* args, size_t nargs)
+static PyObject* _Nullable
+call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject*const* _Nullable args, size_t nargs)
 {
     PyObject* sel;
     SEL       selector;
@@ -456,14 +489,18 @@ call_instanceMethodForSelector_(PyObject* method, PyObject* self, PyObject*const
         }
     }
 
+    PyObjCMethodSignature* methinfo =  PyObjCSelector_GetMetadata(attr);
+    if(methinfo == NULL) {
+        return NULL;
+    }
     res = PyObjCIMP_New(retval, selector, ((PyObjCNativeSelector*)attr)->sel_call_func,
-                        PyObjCSelector_GetMetadata(attr), PyObjCSelector_GetFlags(attr));
+                        methinfo, PyObjCSelector_GetFlags(attr));
     Py_DECREF(attr);
     return res;
 }
 
-static PyObject*
-call_methodForSelector_(PyObject* method, PyObject* self, PyObject*const* args, size_t nargs)
+static PyObject* _Nullable
+call_methodForSelector_(PyObject* method, PyObject* self, PyObject*const* _Nullable args, size_t nargs)
 {
     PyObject*         sel;
     SEL               selector;
@@ -563,38 +600,5 @@ PyObjCIMP_SetUpMethodWrappers(void)
     return 0;
 }
 
-PyObject*
-PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
-              PyObjCMethodSignature* signature, int flags)
-{
-    PyObjCIMPObject* result;
 
-    PyObjC_Assert(callfunc != NULL, NULL);
-    PyObjC_Assert(signature != NULL, NULL);
-
-    result = PyObject_New(PyObjCIMPObject, &PyObjCIMP_Type);
-    if (result == NULL)
-        return NULL;
-
-    result->imp       = imp;
-    result->selector  = selector;
-    result->callfunc  = callfunc;
-    result->signature = signature;
-    result->cif = NULL;
-
-    /* XXX: Can signature ever be NULL? */
-    if (signature) {
-        Py_INCREF(signature);
-    }
-
-    result->flags = flags;
-
-#if PY_VERSION_HEX >= 0x03090000
-    if (signature && signature->shortcut_signature && callfunc == PyObjCFFI_Caller) {
-        result->vectorcall = imp_vectorcall_simple;
-    } else {
-        result->vectorcall = imp_vectorcall;
-    }
-#endif
-    return (PyObject*)result;
-}
+NS_ASSUME_NONNULL_END

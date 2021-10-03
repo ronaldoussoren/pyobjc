@@ -1434,6 +1434,7 @@ PyObject* PyObjCNM_values;
 PyObject* PyObjCNM_description;
 PyObject* PyObjCNM___get__;
 PyObject* PyObjCNM_date_format_string;
+PyObject* PyObjCNM_objc_memview_bject;
 
 int
 PyObjC_setup_names(void)
@@ -1450,6 +1451,7 @@ PyObjC_setup_names(void)
     if ((PyObjCNM_description = PyUnicode_FromString("description")) == NULL) return -1;
     if ((PyObjCNM___get__ = PyUnicode_FromString("__get__")) == NULL) return -1;
     if ((PyObjCNM_date_format_string = PyUnicode_FromString("%Y-%m-%d %H:%M:%S %z")) == NULL) return -1;
+    if ((PyObjCNM_objc_memview_object = PyUnicode_FromString("objc.memview object")) == NULL) return -1;
 
     return 0;
 }
