@@ -1434,7 +1434,7 @@ PyObject* PyObjCNM_values;
 PyObject* PyObjCNM_description;
 PyObject* PyObjCNM___get__;
 PyObject* PyObjCNM_date_format_string;
-PyObject* PyObjCNM_objc_memview_bject;
+PyObject* PyObjCNM_objc_memview_object;
 
 int
 PyObjC_setup_names(void)
