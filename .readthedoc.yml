@@ -5,7 +5,7 @@ build:
 python:
   version: 3.7
   install:
-    - requirements: doc/old-setuptools.txt
-    - requirements: doc/requirements.txt
+    - requirements: docs/old-setuptools.txt
+    - requirements: docs/requirements.txt
     - method: pip
       path: .
