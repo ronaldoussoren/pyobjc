@@ -297,7 +297,7 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
 {
     PyObject* rval = NULL;
 
-    if (gTypeid2class != NULL) {
+    if (gTypeid2class == NULL) {
         PyErr_Format(PyExc_ValueError, "Sorry, cannot wrap special value of typeid %d\n",
                      (int)typeid);
         return NULL;
