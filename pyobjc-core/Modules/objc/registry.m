@@ -22,16 +22,18 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
 {
     int       result;
     PyObject* sublist;
-    PyObject* item = Py_BuildValue("(OO)", class_name, value);
-    if (item == NULL) {
+
+    if (!PyUnicode_Check(class_name) && !PyBytes_Check(class_name)) {
+        PyErr_SetString(PyExc_TypeError, "class_name should be str or bytes");
+        return -1;
+    }
+    if (!PyBytes_Check(selector)) {
+        PyErr_SetString(PyExc_TypeError, "selector should be bytes");
         return -1;
     }
 
-    /* XXX: Add type checking (bytes, unicode) */
-
     sublist = PyDict_GetItemWithError(registry, selector);
     if (sublist == NULL && PyErr_Occurred()) {
-        Py_DECREF(item);
         return -1;
     }
     if (sublist == NULL) {
@@ -39,7 +41,6 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
         result  = PyDict_SetItem(registry, selector, sublist);
         Py_DECREF(sublist);
         if (result == -1) {
-            Py_DECREF(item);
             return -1;
         }
     }
@@ -47,9 +48,31 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     if (!PyObjC_UpdatingMetaData) {
         PyObjC_MappingCount += 1;
     }
-    /* XXX: Do something to ensure that adding a class
-     * again removes the older registration.
+
+    /*
+     * Check if there is a registration for *class_name* in
+     * *sublist*, if so replace that registration.
      */
+    for (Py_ssize_t i = 0; i < PyList_GET_SIZE(sublist); i++) {
+        PyObject* item = PyList_GET_ITEM(sublist, i);
+
+        PyObjC_Assert(PyTuple_CheckExact(item), -1);
+        PyObjC_Assert(PyTuple_GET_SIZE(item) == 2, -1);
+
+        int r = PyObject_RichCompareBool(PyTuple_GET_ITEM(item, 0), class_name, Py_EQ);
+        if (r == -1) return -1;
+        if (r) {
+           Py_DECREF(PyTuple_GET_ITEM(item, 1));
+           PyTuple_SET_ITEM(item, 1, value);
+           Py_INCREF(value);
+           return 0;
+        }
+    }
+
+    PyObject* item = Py_BuildValue("(OO)", class_name, value);
+    if (item == NULL) {
+        return -1;
+    }
     result = PyList_Append(sublist, item);
     Py_DECREF(item);
     return result;

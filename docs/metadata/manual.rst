@@ -440,6 +440,7 @@ Metadata for Objective-C methods and classes
    Register a metadata structure for the given selector. The metadata is a dictionary,
    and the structure of that dictionary is described in the section `Metadata dictionaries`_.
 
+   Registrations replace pre-existing registrations for the same class and selector.
 
 .. function:: registerMappingType(type)
 
@@ -452,7 +453,7 @@ Metadata for Objective-C methods and classes
 
    .. versionadded: 3.0
 
-.. function:: addConvenienceForClass(classname, method)
+.. function:: addConvenienceForClass(classname, methods)
 
     Add a list of method the named class when that class is initialized, the class
     need not be loaded at the time of this call. These additional methods are not
