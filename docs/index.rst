@@ -54,6 +54,7 @@ General documentation
    tutorials/index
    notes/quartz-vs-coregraphics
    notes/using-nsxpcinterface
+   notes/ctypes
    examples/index
    notes/framework-wrappers.rst
    notes/codesigning.rst
