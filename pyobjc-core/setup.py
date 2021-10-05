@@ -97,8 +97,6 @@ OBJC_LDFLAGS = [
     "CoreFoundation",
     "-framework",
     "Foundation",
-    "-framework",
-    "Carbon",
     # "-fvisibility=protected",
     "-g",
     "-lffi",

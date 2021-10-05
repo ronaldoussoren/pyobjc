@@ -7,7 +7,7 @@ documentation for details on how to use these functions and classes.
 
 import sys
 
-import Foundation
+import AppKit
 import objc
 from Metal import _metadata, _Metal
 from Metal._inlines import _inline_list_
@@ -24,7 +24,7 @@ sys.modules["Metal"] = mod = objc.ObjCLazyModule(
         "__path__": __path__,
         "__loader__": globals().get("__loader__", None),
     },
-    (_Metal, Foundation),
+    (_Metal, AppKit),
 )
 
 

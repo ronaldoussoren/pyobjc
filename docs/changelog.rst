@@ -155,6 +155,11 @@ New features
 Other changes and bugfixes
 ..........................
 
+* #390: pyobjc-core is no longer linked with the Carbon framework.
+
+  Due to implicit dependencies this also required a change to the Metal
+  bindings: those now import AppKit instead of Foundation.
+
 * PyObjC only ships "Universal 2" wheels for Python 3.8 and later. Those work
   with single-architecture builds of Python as well.
 
