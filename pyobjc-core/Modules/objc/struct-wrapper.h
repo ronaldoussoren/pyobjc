@@ -101,7 +101,7 @@ PyObject* PyObjC_CreateRegisteredStruct(const char* signature, Py_ssize_t len,
  *     the struct tag and that are used for the same tasks.
  *
  *     An example of this are NSRect and CGRect (in 32-bit code
- *     this are two seperate struct types, in 64-bit code NSRect
+ *     this are two separate struct types, in 64-bit code NSRect
  *     is already an alias for CGRect). By using this function PyObjC
  *     ensures that NSRect is always an alias for CGRect in Python code.
  */

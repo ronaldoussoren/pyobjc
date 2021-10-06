@@ -409,7 +409,7 @@
     return [self compare:(NSNumber*)other] == NSOrderedSame;
 }
 
-- (NSComparisonResult)compare:(NSNumber*)aNumber
+- (NSComparisonResult)compare:(NSNumber*)number
 {
     /* Rely on -[NSNumber compare:] when the other value
      * is a number and we're not a python int that doesn't
@@ -417,8 +417,8 @@
      *
      * In all other cases use Python's comparison semantics.
      */
-    if ([aNumber isKindOfClass:[NSNumber class]]
-        && ![aNumber isKindOfClass:[OC_PythonNumber class]]) {
+    if ([number isKindOfClass:[NSNumber class]]
+        && ![number isKindOfClass:[OC_PythonNumber class]]) {
         int use_super = 0;
 
         PyObjC_BEGIN_WITH_GIL
@@ -435,12 +435,12 @@
         PyObjC_END_WITH_GIL;
 
         if (use_super) {
-            return [super compare:aNumber];
+            return [super compare:number];
         }
     }
 
     PyObjC_BEGIN_WITH_GIL
-        PyObject* other = PyObjC_IdToPython(aNumber);
+        PyObject* other = PyObjC_IdToPython(number);
         int       r, ok;
 
         if (other == NULL) {
@@ -465,10 +465,10 @@
 }
 
 #define COMPARE_METHOD(NAME, OPERATOR)                                                   \
-    -(BOOL)NAME : (NSObject*)aNumber                                                     \
+    -(BOOL)NAME : (NSObject*)number                                                     \
     {                                                                                    \
         PyObjC_BEGIN_WITH_GIL                                                            \
-            PyObject* other = PyObjC_IdToPython(aNumber);                                \
+            PyObject* other = PyObjC_IdToPython(number);                                \
             int       r;                                                                 \
             if (other == NULL) {                                                         \
                 PyObjC_GIL_FORWARD_EXC();                                                \
@@ -496,9 +496,9 @@ COMPARE_METHOD(isGreaterThanOrEqualTo, Py_GE)
 COMPARE_METHOD(isLessThan, Py_LT)
 COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 
-- (BOOL)isEqualToNumber:(NSNumber*)aNumber
+- (BOOL)isEqualToNumber:(NSNumber*)number
 {
-    return [self isEqualTo:aNumber];
+    return [self isEqualTo:number];
 }
 
 #if 0

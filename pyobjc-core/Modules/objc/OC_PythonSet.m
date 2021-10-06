@@ -418,7 +418,7 @@
 }
 
 /* It seems impossible to create an efficient implementation of this method,
- * iteration is basicly the only way to fetch the requested object
+ * iteration is basically the only way to fetch the requested object
  */
 - (id)member:(id)anObject
 {

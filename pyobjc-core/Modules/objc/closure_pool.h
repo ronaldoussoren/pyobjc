@@ -1,5 +1,5 @@
 /*
- * Closure require special memmory support on x86_64 and PPC64: executation must be
+ * Closure require special memory support on x86_64 and PPC64: execution must be
  * explicitly enabled for the memory used for closure.
  */
 #ifndef PyObjC_CLOSURE_POOL

@@ -31,7 +31,7 @@ use_map_jit(void)
 
         /*
          * In the unlikely event that sysctlbyname fails, or
-         * returns a value that is not useable we disable MAP_JIT
+         * returns a value that is not usable we disable MAP_JIT
          * support
          */
 

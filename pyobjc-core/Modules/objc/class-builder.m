@@ -1401,7 +1401,7 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     id   self      = *(id*)args[0];
     SEL  _meth     = *(SEL*)args[1];
     SEL  aSelector = *(SEL*)args[2];
-    int* pres      = (int*)retval; /* Actually BOOL. */
+    int* p_result  = (int*)retval; /* Actually BOOL. */
 
     struct objc_super spr;
     PyObject*         pyself;
@@ -1411,18 +1411,18 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
         /* First check if we respond */
         pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         if (pyself == NULL) {
-            *pres = NO;
+            *p_result = NO;
             PyObjC_GIL_RETURNVOID;
         }
         pymeth = PyObjCObject_FindSelector(pyself, aSelector);
         Py_DECREF(pyself);
         if (pymeth) {
-            *pres = YES;
+            *p_result = YES;
 
             if (PyObjCSelector_Check(pymeth)
                 && (((PyObjCSelector*)pymeth)->sel_flags
                     & PyObjCSelector_kCLASS_METHOD)) {
-                *pres = NO;
+                *p_result = NO;
             }
 
             Py_DECREF(pymeth);
@@ -1436,7 +1436,7 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
-    *pres = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
+    *p_result = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
                                                                        aSelector);
     return;
 }
@@ -1453,22 +1453,22 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
     struct objc_super   spr;
     PyObject*           pyself;
     PyObject*           pymeth;
-    NSMethodSignature** presult = (NSMethodSignature**)retval;
+    NSMethodSignature** p_result = (NSMethodSignature**)retval;
 
-    *presult = nil;
+    *p_result = nil;
 
     objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
     @try {
-        *presult = ((NSMethodSignature * (*)(struct objc_super*, SEL, SEL))
+        *p_result = ((NSMethodSignature * (*)(struct objc_super*, SEL, SEL))
                         objc_msgSendSuper)(&spr, _meth, aSelector);
 
     } @catch (NSObject* localException) {
-        *presult = nil;
+        *p_result = nil;
     }
 
-    if (*presult != nil) {
+    if (*p_result != nil) {
         return;
     }
 
@@ -1489,7 +1489,7 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
     PyObjC_END_WITH_GIL
 
     @try {
-        *presult = [NSMethodSignature
+        *p_result = [NSMethodSignature
             signatureWithObjCTypes:((PyObjCSelector*)pymeth)->sel_python_signature];
     } @catch (NSObject* localException) {
         PyObjC_BEGIN_WITH_GIL
@@ -1983,7 +1983,7 @@ object_method_valueForKey_(ffi_cif* cif __attribute__((__unused__)), void* retva
                     }
                 }
 
-                /* Check that we don't accidently return
+                /* Check that we don't accidentally return
                  * an accessor method.
                  */
                 if (PyObjCSelector_Check(res)

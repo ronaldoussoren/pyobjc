@@ -1,13 +1,13 @@
 /*
  * Support for libffi (http://sources.redhat.com/libffi)
  *
- * libffi is a library that makes it possible to dynamicly create calls
+ * libffi is a library that makes it possible to dynamically create calls
  * to C functions (without knowing the signature at compile-time). It also
- * provides a way to create closures, that is dynamicly create functions with
+ * provides a way to create closures, that is dynamically create functions with
  * a runtime specified interface.
  *
- * This file contains functions to dynamicly call objc_msgSendSuper and to
- * dynamicly create IMPs for use in Objective-C method dispatch tables. The
+ * This file contains functions to dynamically call objc_msgSendSuper and to
+ * dynamically create IMPs for use in Objective-C method dispatch tables. The
  * file 'register.m' contains compile-time generated equivalents of these.
  *
  * FIXME: There's way to much duplicated code in here, please refactor me.
@@ -199,7 +199,7 @@ array_to_ffi_type(const char* argtype)
         return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
     }
 
-    /* We don't have a type description yet, dynamicly
+    /* We don't have a type description yet, dynamically
      * create it.
      */
     field_count = atoi(argtype + 1);
@@ -272,7 +272,7 @@ struct_to_ffi_type(const char* argtype)
         return (ffi_type*)PyCapsule_GetPointer(v, "objc.__ffi_type__");
     }
 
-    /* We don't have a type description yet, dynamicly
+    /* We don't have a type description yet, dynamically
      * create it.
      */
     field_count = num_struct_fields(argtype);
@@ -2775,7 +2775,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                 } else {
                     PyErr_Format(
                         PyExc_TypeError,
-                        "Need explict buffer for variable-length array argument");
+                        "Need explicit buffer for variable-length array argument");
                     return -1;
                 }
 
@@ -3584,7 +3584,7 @@ PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                     break;
 
                 case PyObjC_kVariableLengthArray:
-                    /* FIXME: explict support for UniChar buffers */
+                    /* FIXME: explicit support for UniChar buffers */
                     if (*(void**)pRetval == NULL) {
                         Py_INCREF(PyObjC_NULL);
                         objc_result = PyObjC_NULL;

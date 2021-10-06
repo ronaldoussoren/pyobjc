@@ -9,7 +9,7 @@
  * fields.
  *
  * NOTE: The basic implementation is quite generic, but the end of this file
- * is only usefull for PyObjC.
+ * is only useful for PyObjC.
  */
 #include "pyobjc.h"
 
@@ -997,7 +997,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
     PyObject*  other_cur;
 
     if (Py_TYPE(self) == Py_TYPE(other)) {
-        /* Other has same type, shortcut comparisions to avoid
+        /* Other has same type, shortcut comparisons to avoid
          * treating "other" as a generic sequence
          */
 
@@ -1048,7 +1048,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
 
         default:
             /* Should never happen */
-            PyErr_SetString(PyExc_TypeError, "Invalid comparion");
+            PyErr_SetString(PyExc_TypeError, "Invalid comparison");
             return NULL;
         }
     }
@@ -1159,7 +1159,7 @@ struct_richcompare(PyObject* self, PyObject* other, int op)
         break;
     default:
         /* Should never happen */
-        PyErr_SetString(PyExc_TypeError, "Invalid comparion");
+        PyErr_SetString(PyExc_TypeError, "Invalid comparison");
         return NULL;
     }
 

@@ -188,7 +188,7 @@
     }
     if (v == 1) {
         /* Backward compatibility:
-         * PyObjC upto version 3 used this type to archive instances of bytes
+         * PyObjC up to version 3 used this type to archive instances of bytes
          */
         self = [super init];
         if (unlikely(self == nil))

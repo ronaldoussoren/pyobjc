@@ -57,7 +57,7 @@ static struct Struct2 invokeHelper = {0, 0, {0, 0, 0, 0, 0}};
 BEGIN_UNITTEST(CheckNSInvoke)
 /* This is not a 'real' unittest, but is used to disable a number of
  * other tests (in objc.test.test_methods2) when NSInvocation isn't
- * working correctly (MacOS X at least upto 10.2.6).
+ * working correctly (MacOS X at least up to 10.2.6).
  * [Panther previews also have this problem]
  *
  * Leopard is even worse, this test causes a crash of the interpreter when
@@ -482,7 +482,7 @@ FAIL_IF(aList == NULL);
 array = PyObjC_PythonToId(aList);
 FAIL_IF(array == nil);
 
-/* Check lenght */
+/* Check length */
 ASSERT_EQUALS(5, [array count], "%d");
 
 /* Check basic element access */
@@ -544,7 +544,7 @@ FAIL_IF(aTuple == NULL);
 array = PyObjC_PythonToId(aTuple);
 FAIL_IF(array == nil);
 
-/* Check lenght */
+/* Check length */
 ASSERT_EQUALS(5, [array count], "%d");
 
 /* Check basic element access */
@@ -615,7 +615,7 @@ BEGIN_UNITTEST(NSLogging)
 /* This is a pretty lame test ...
  *
  * What this does is tests that the proxies of plain Python objects
- * can be logged. This used to be impossible upto (and including)
+ * can be logged. This used to be impossible up to (and including)
  * release 1.1!
  */
 PyObject* o = (PyObject*)(Py_BuildValue("i", 10)->ob_type);

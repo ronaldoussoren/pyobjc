@@ -105,7 +105,7 @@ calc_current_version(void)
 
 @interface OC_NSAutoreleasePoolCollector : NSObject
 /*
- * This class is used to automaticly reset the
+ * This class is used to automatically reset the
  * global pool when an outer autorelease pool is
  * recycled. This avoids problems when a python
  * plugin is loaded in an Objective-C program.
@@ -775,7 +775,7 @@ PyDoc_STRVAR(PyObjC_loadFunctionList_doc,
              "loadFunctionList(list, module_globals, functionInfo, "
              "skip_undefined=True)\n" CLINIC_SEP "\n"
              "Load the specified functions. List should be a capsule object containing\n"
-             "an array of { char*, funcion } structs.");
+             "an array of { char*, function } structs.");
 PyDoc_STRVAR(PyObjC_loadSpecialVar_doc,
              "loadSpecialVar(bundle, module_globals, typeid, name, "
              "skip_undefined=True)\n" CLINIC_SEP "\n"
@@ -913,7 +913,7 @@ createOpaquePointerType(PyObject* self __attribute__((__unused__)), PyObject* ar
 }
 
 PyDoc_STRVAR(copyMetadataRegistry_doc, "_copyMetadataRegistry()\n" CLINIC_SEP "\n"
-                                       "Return a copy of the metdata registry.");
+                                       "Return a copy of the metadata registry.");
 static PyObject*
 copyMetadataRegistry(PyObject* self __attribute__((__unused__)), PyObject* args,
                      PyObject* kwds)
@@ -1248,7 +1248,7 @@ PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args
 PyDoc_STRVAR(_makeClosure_doc,
              "_makeClosure(callable, closureFor, argIndex=0)\n" CLINIC_SEP "\n"
              "Returns a closure object that can be used to call the function from\n"
-             "C. This object has no useable interface from Python.\n");
+             "C. This object has no usable interface from Python.\n");
 
 static void
 _callback_cleanup(PyObject* closure)
@@ -1513,7 +1513,7 @@ typestr2typestr(PyObject* args)
 PyDoc_STRVAR(PyObjC_setAssociatedObject_doc,
              "setAssociatedObject(object, key, value, "
              "policy=objc.OBJC_ASSOCIATION_RETAIN)\n" CLINIC_SEP "\n"
-             "Set the value for an object assiociation. Use 'None' as the\n"
+             "Set the value for an object association. Use 'None' as the\n"
              "value to clear an association.");
 static PyObject*
 PyObjC_setAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject* args,
@@ -1556,7 +1556,7 @@ PyObjC_setAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject*
 
 PyDoc_STRVAR(PyObjC_getAssociatedObject_doc,
              "getAssociatedObject(object, key)\n" CLINIC_SEP "\n"
-             "Get the value for an object assiociation. Returns None \n"
+             "Get the value for an object association. Returns None \n"
              "when they association doesn't exist.");
 static PyObject*
 PyObjC_getAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject* args,
@@ -1597,7 +1597,7 @@ PyObjC_getAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject*
 
 PyDoc_STRVAR(PyObjC_removeAssociatedObjects_doc,
              "removeAssociatedObjects(object)\n" CLINIC_SEP "\n"
-             "Remove all assocations from an object. This should in general not be used "
+             "Remove all associations from an object. This should in general not be used "
              "because\n"
              "it clear all references, including those made from unrelated code.\n");
 

@@ -234,6 +234,8 @@ Other changes and bugfixes
 * #391: Fix some spelling errors found by the
   `codespell <https://pypi.org/project/codespell/>`_ tool.
 
+  The codespell tool is also run as part of pre-commit hooks.
+
 Version 7.3
 -----------
 

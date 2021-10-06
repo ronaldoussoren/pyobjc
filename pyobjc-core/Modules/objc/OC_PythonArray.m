@@ -446,7 +446,7 @@
     switch (code) {
     case 1:
         /* This code was created by some previous versions of PyObjC
-         * (before 2.2) and is kept around for backward compatibilty.
+         * (before 2.2) and is kept around for backward compatibility.
          */
         PyObjC_BEGIN_WITH_GIL
             value = PyList_New(0);

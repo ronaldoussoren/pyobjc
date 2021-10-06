@@ -1158,7 +1158,7 @@ getModuleFunction(char* modname, char* funcname)
 /* NOTE: NSProxy does not implement isKindOfClass on Leopard, therefore we
  * have to provide it ourself.
  *
- * Luckily that's kind of easy, we know the entiry class hierarcy and also
+ * Luckily that's kind of easy, we know the entiry class hierarchy and also
  * know there are no subclasses.
  */
 - (BOOL)isKindOfClass:(Class)aClass
@@ -1213,7 +1213,7 @@ getModuleFunction(char* modname, char* funcname)
 
 /*
  * Fake implementation for _cfTypeID, which gets called by
- * system frameworks on some occassions.
+ * system frameworks on some occasions.
  */
 static BOOL     haveTypeID = NO;
 static CFTypeID _NSObjectTypeID;

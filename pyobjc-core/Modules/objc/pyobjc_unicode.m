@@ -177,7 +177,7 @@ PyTypeObject PyObjCUnicode_Type = {
  * This function therefore creates a "legacy string, ready" (see
  * unicodeobject.h in the python 3.3 source tree for more information)
  *
- * NOTE: This function has deep knowlegde about the layout of Unicode
+ * NOTE: This function has deep knowledge about the layout of Unicode
  * objects in Python 3.3, and needs to be updated when that
  * layout changes in later versions of Python.
  */

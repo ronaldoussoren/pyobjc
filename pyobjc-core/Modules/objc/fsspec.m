@@ -5,7 +5,7 @@
 #import <CoreServices/CoreServices.h>
 
 #if USE_TOOLBOX_OBJECT_GLUE
-/* As of the 10.12 SDK it is no longer safe to inlcude pymactoolbox.h
+/* As of the 10.12 SDK it is no longer safe to include pymactoolbox.h
  * (due to an include that can no longer be resolved). Therefore provide
  * local declarations.
  */

@@ -91,7 +91,7 @@ weakref_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable 
 
     if (!PyObjCObject_Check(tmp)) {
         PyErr_Format(PyExc_TypeError,
-                     "Excecting a Cocoa object, got instance of '%.100s'",
+                     "Executing a Cocoa object, got instance of '%.100s'",
                      Py_TYPE(tmp)->tp_name);
         return NULL;
     }
@@ -99,7 +99,7 @@ weakref_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable 
     if ((PyObjCObject_GetFlags(tmp) & PyObjCObject_kCFOBJECT) != 0) {
         PyErr_Format(
             PyExc_TypeError,
-            "Excecting a Cocoa object, got instance of CoreFoundation type '%.100s'",
+            "Executing a Cocoa object, got instance of CoreFoundation type '%.100s'",
             Py_TYPE(tmp)->tp_name);
         return NULL;
     }

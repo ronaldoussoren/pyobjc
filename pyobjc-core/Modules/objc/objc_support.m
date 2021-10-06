@@ -501,7 +501,7 @@ PyObjCRT_SkipTypeSpec(const char* type)
     }
 
     /* The compiler inserts a number after the actual signature,
-     * this number may or may not be usefull depending on the compiler
+     * this number may or may not be useful depending on the compiler
      * version. We never use it.
      */
     while (type && *type && isdigit(*type))
@@ -660,7 +660,7 @@ PyObjCRT_NextField(const char* type)
     }
 
     /* The compiler inserts a number after the actual signature,
-     * this number may or may not be usefull depending on the compiler
+     * this number may or may not be useful depending on the compiler
      * version. We never use it.
      */
     while (type && *type && isdigit(*type))
@@ -826,7 +826,7 @@ PyObjCRT_AlignOfType(const char* type)
         return PyObjCRT_AlignOfType(type + 1);
 
     case _C_BFLD:
-        /* Calculating the alignment of bitfields appears to need informatin
+        /* Calculating the alignment of bitfields appears to need information
          * that's not present here. This hack is good enough for now.
          */
         return 4;
@@ -2427,7 +2427,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
         abort();
 
     /* Pass by reference output arguments are sometimes passed a NULL
-     * pointer, this surpresses a core dump.
+     * pointer, this suppresses a core dump.
      */
     long long          temp;
     unsigned long long utemp;

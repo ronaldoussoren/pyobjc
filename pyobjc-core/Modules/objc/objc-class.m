@@ -2075,7 +2075,7 @@ static PyMethodDef class_methods[] = {{.ml_name  = "__dir__",
 
 /*
  * This is the class for type(NSObject), and is a subclass of type()
- * with an overridden tp_getattro that is used to dynamicly look up
+ * with an overridden tp_getattro that is used to dynamically look up
  * class methods.
  */
 PyTypeObject PyObjCMetaClass_Type = {
@@ -2655,7 +2655,7 @@ PyObjCClass_HasPythonImplementation(PyObject* cls)
  *     registered) and then updates the class __dict__.
  *
  *     NOTE: We change the __dict__ using a setattro function because the type
- *     doesn't notice the existance of new special methods otherwise.
+ *     doesn't notice the existence of new special methods otherwise.
  *
  *     NOTE2: We use PyType_Type.tp_setattro instead of PyObject_SetAttr because
  *     the tp_setattro of Objective-C class wrappers does not allow some of

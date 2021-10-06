@@ -2,7 +2,7 @@
  * This file implements support for the "Blocks" feature of Objective-C
  *
  * Most of the code in this file implements a single manually coded block that
- * is manipulated at runtime, basicly simularly to how method descriptors are
+ * is manipulated at runtime, basically simularly to how method descriptors are
  * manipulated by pyobjc.
  *
  * WARNING: The blocks implementation is technically private, the interfaces we
@@ -12,7 +12,7 @@
 
 /*
  * Definitions for block functions. These definitions are technically
- * private, but are the only way to interact with the block machinary.
+ * private, but are the only way to interact with the block machinery.
  *
  * Definitions are copied from the clang documentation on blocks.
  */
@@ -437,7 +437,7 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
 
     /* The value of "signature->signature" cannot be trusted, it
      * contains the raw signature without any updates from metadata.
-     * Futhermore the value is bogus for block signatures in metadata.
+     * Furthermore the value is bogus for block signatures in metadata.
      */
     block->descriptor->signature = block_signature(signature);
     if (block->descriptor->signature == NULL) {
@@ -488,7 +488,7 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 
     /* Stack blocks are allocated on the stack and cause problems with
      * Python's garbage collections. Therefore uncondationally copy them,
-     * which converts them to dynamicly allocated blocks.
+     * which converts them to dynamically allocated blocks.
      */
     self = [self copy];
 
@@ -516,7 +516,7 @@ pyobjc_PythonTransient(NSObject* self, SEL _sel __attribute__((__unused__)), int
 {
     /* Stack blocks are allocated on the stack and cause problems with
      * Python's garbage collections. Therefore uncondationally copy them,
-     * which converts them to dynamicly allocated blocks.
+     * which converts them to dynamically allocated blocks.
      */
 
     self = [self copy];

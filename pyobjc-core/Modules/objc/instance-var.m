@@ -302,7 +302,7 @@ PyDoc_STRVAR(
     "ivar(name, type='@', isOutlet=False) -> instance-variable\n" CLINIC_SEP "\n"
     "Creates a descriptor for accessing an Objective-C instance variable.\n\n"
     "This should only be used in the definition of Objective-C subclasses, and\n"
-    "will then automaticly define the instance variable in the objective-C side.\n"
+    "will then automatically define the instance variable in the objective-C side.\n"
     "\n"
     "'type' is optional and should be a signature string.\n"
     "\n"

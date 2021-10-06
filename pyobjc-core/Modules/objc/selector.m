@@ -1331,7 +1331,7 @@ pysel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf, PyObject*
             ((PyObject**)args)[-1] = tmp;
         } else {
              /* Need to insert the self argument, but cannot use the args array for that
-              * Allocate a new array thats 2 larger, that way we can use PY_VECTORCALL_ARGUMENTS_OFFSET
+              * Allocate a new array that's 2 larger, that way we can use PY_VECTORCALL_ARGUMENTS_OFFSET
               * when performing the call.
               */
              PyObject** temp_args = malloc((PyVectorcall_NARGS(nargsf)+2)*sizeof(PyObject*));
@@ -1407,7 +1407,7 @@ pysel_default_signature(SEL selector, PyObject* callable)
     result[arg_count + 3] = '\0';
 
     if (PyObject_GetBuffer(func_code->co_code, &buf, PyBUF_CONTIG_RO) == -1) {
-        /* This should not happend: A function where co_code does not implement
+        /* This should not happened: A function where co_code does not implement
          * the buffer protocol.
          */
         return NULL;

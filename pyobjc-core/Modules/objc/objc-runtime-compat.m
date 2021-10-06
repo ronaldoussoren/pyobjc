@@ -37,7 +37,7 @@ PyObjC_class_isSubclassOf(Class child, Class parent)
 
 #endif /* __x86_64__ */
 
-/* XXX: This should not be neccessary */
+/* XXX: This should not be necessary */
 #undef protocol_getMethodDescription
 struct objc_method_description
 PyObjC_protocol_getMethodDescription(Protocol* p, SEL aSel, BOOL isRequiredMethod,

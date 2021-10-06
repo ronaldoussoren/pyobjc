@@ -325,7 +325,7 @@ class JoystickView(NSView):
                 return
             if self.multipleSelectionForAngle:
                 # draw a circle with radius the shared offset
-                # dont' draw radius < 1.0, else invisible
+                # don't draw radius < 1.0, else invisible
                 drawRadius = self.offset
                 if drawRadius < 1.0:
                     drawRadius = 1.0

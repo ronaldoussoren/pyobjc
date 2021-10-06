@@ -8,7 +8,7 @@
  *
  * The IMP interface has one odd feature: the selector argument should not
  * be provided when calling it from Python. The reason for this is pragmatic:
- * 1) Doesn't seem to usefull to pass a SEL
+ * 1) Doesn't seem to useful to pass a SEL
  * 2) Makes the implementation easier
  *
  * Actually calling into Objective-C is done by code that is shared with the

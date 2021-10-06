@@ -671,7 +671,7 @@ code_compatible(char array_code, char type_code)
  *
  * The pythonList should either be a python sequence with appropriate entries,
  * an array.array whose element-types match the element-types of the
- * 'elementType' or an appropriatly typed and shaped numeric array.
+ * 'elementType' or an appropriately typed and shaped numeric array.
  */
 int
 PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,

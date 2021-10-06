@@ -31,7 +31,7 @@ check_index(PyObjC_VarList* self, Py_ssize_t idx)
     }
 
     if (idx >= PY_SSIZE_T_MAX / self->itemsize) {
-        /* Interger overflow, index cannot be correct */
+        /* Integer overflow, index cannot be correct */
         PyErr_Format(PyExc_IndexError, "Index '%" PY_FORMAT_SIZE_T "d' out of range",
                      idx);
         return -1;
@@ -54,7 +54,7 @@ object_as_tuple(PyObject* _self, PyObject* args, PyObject* kwds)
     }
 
     if (length >= PY_SSIZE_T_MAX / self->itemsize) {
-        /* Interger overflow, index cannot be correct */
+        /* Integer overflow, index cannot be correct */
         PyErr_Format(PyExc_OverflowError, "Index '%" PY_FORMAT_SIZE_T "d' out of range",
                      length);
         return NULL;

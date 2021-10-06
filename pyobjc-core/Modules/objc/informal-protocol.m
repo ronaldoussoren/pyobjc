@@ -10,7 +10,7 @@ PyDoc_STRVAR(
     "objc.informal_protocol(name, selector_list)\n" CLINIC_SEP "\n"
     "This class can be used to specify which methods are supported by an informal\n"
     "protocol. Instances of this type can by used while creating subclasses of \n"
-    "objective-C classes to automaticly specify method signatures et.al."
+    "objective-C classes to automatically specify method signatures et.al."
     "");
 
 typedef struct {
@@ -39,7 +39,7 @@ proto_dealloc(PyObject* object)
             int             r;
             PyObjCSelector* tmp = (PyObjCSelector*)PyTuple_GET_ITEM(self->selectors, i);
 
-            /* Remove method from the selector to protocol mappping,
+            /* Remove method from the selector to protocol mapping,
              * but only if this protocol is registered for the selector.
              */
             cur = PyDict_GetItemStringWithError(selToProtocolMapping,

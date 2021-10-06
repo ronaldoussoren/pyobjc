@@ -10,15 +10,15 @@
 
 /*!
  * @class OC_PythonDictionary
- * @abstract Objective-C proxy for Python dictonaries
+ * @abstract Objective-C proxy for Python dictionaries
  * @discussion
  *      Instances of this class are used as proxies for Python dicts when
  *      these are passed to Objective-C functions/methods. Because this class
  *      is a subclass of NSMutableDictonary Python dictionaries can be used
- *      whereever instances of NSDictionary or NSMutableDictionary are expected.
+ *      wherever instances of NSDictionary or NSMutableDictionary are expected.
  *
  *      NOTE: We currently only proxy real 'dict' objects this way, the generic
- *      PyMapping_* API is not flexible enough, and most sequence als implement
+ *      PyMapping_* API is not flexible enough, and most sequence also implement
  *      the generic mapping interface to deal with slices.
  */
 @interface OC_PythonDictionary : NSMutableDictionary {
