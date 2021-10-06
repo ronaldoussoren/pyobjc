@@ -45,7 +45,7 @@ Usual steps to use the ImageKit image browser in your application:
     * the id returned by ``imageUID`` MUST be different for each item
       displayed in the image-view. Moreover, the image browser build it's
       own internal cache according to this UID. the ``imageUID`` can be for
-      exemple the absolute path of an image existing on the filesystem or
+      example the absolute path of an image existing on the filesystem or
       another UID based on your own data structures.
 
     * ``imageRepresentationType`` return one of the following string constant

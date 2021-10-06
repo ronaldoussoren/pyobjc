@@ -1,5 +1,5 @@
 """
-This plugin adds an 'Python Address Label' action to "Adress" properties in
+This plugin adds an 'Python Address Label' action to "Address" properties in
 the AddressBook application.
 
 To install this plugin you have to build it (using 'python setup.py py2app')

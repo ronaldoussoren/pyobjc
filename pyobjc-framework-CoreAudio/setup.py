@@ -1,14 +1,14 @@
 """
 Wrappers for the "CoreAudio" framework on macOS.
 
-These wrappers don't include documentation, please check Apple's documention
+These wrappers don't include documentation, please check Apple's documentation
 for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks
 """
 
 #
-# Distutils doesn't undestand '.mm' as an extension
+# Distutils doesn't understand '.mm' as an extension
 #
 import distutils.unixccompiler
 import os

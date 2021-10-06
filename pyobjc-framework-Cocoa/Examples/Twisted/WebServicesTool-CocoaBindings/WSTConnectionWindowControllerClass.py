@@ -257,7 +257,7 @@ class WSTConnectionWindowController(AppKit.NSWindowController):
     setStatusTextFieldMessage_ = objc.accessor(setStatusTextFieldMessage_)
 
     def startWorking(self):
-        """Signal the UI there's work goin on."""
+        """Signal the UI there's work going on."""
         self.progressIndicator.startAnimation_(self)
 
     def stopWorking(self):

@@ -308,8 +308,8 @@ def test_summary(fp_out, state_dir):
 
     ok = True
     for proj in sorted(results):
-        # Note: DictionaryServices has a known crasher, ignore errors
-        # w.r.t. reporting if there were problems in the test run.
+        # Note: DictionaryServices has a known crashing testcase,
+        # ignore errors w.r.t. reporting if there were problems in the test run.
         row = [proj]
         for k in keys:
             info = results[proj][k]

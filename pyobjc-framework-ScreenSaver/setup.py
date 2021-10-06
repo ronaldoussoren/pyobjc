@@ -2,7 +2,7 @@
 Wrappers for the "ScreenSaver" framework on macOS. This frameworks allows
 you to write custom screensaver modules.
 
-These wrappers don't include documentation, please check Apple's documention
+These wrappers don't include documentation, please check Apple's documentation
 for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks

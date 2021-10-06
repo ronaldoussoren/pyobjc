@@ -43,7 +43,7 @@ _urlMap = {}
 
 def GetURL(name):
     """
-    Returns the CFURLRef for an embeded resource, or None of that cannot be found.
+    Returns the CFURLRef for an embedded resource, or None of that cannot be found.
     """
 
     global _mainBundle

@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <!DOCTYPE signatures SYSTEM "file://localhost/System/Library/DTDs/BridgeSupport.dtd">
-<signatures verison='1.0'>
+<signatures version='1.0'>
   <cftype gettypeid_func='CGImageDestinationGetTypeID' name='CGImageDestinationRef' type='^{CGImageDestination=}' type64='^{CGImageDestination=}' />
   <cftype gettypeid_func='CGImageSourceGetTypeID' name='CGImageSourceRef' type='^{CGImageSource=}' type64='^{CGImageSource=}' />
   <constant name='kCGImageDestinationBackgroundColor' type='^{__CFString=}' />

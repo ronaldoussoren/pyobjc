@@ -67,7 +67,7 @@ def IIGetOrientationTransform(image):
     w = Quartz.CGImageGetWidth(image.fImageRef)
     h = Quartz.CGImageGetHeight(image.fImageRef)
     if image.fProperties is not None:
-        # The Orientations listed here are mirroed from CGImageProperties.h,
+        # The Orientations listed here are mirrored from CGImageProperties.h,
         # listed under the kCGImagePropertyOrientation key.
         orientation = IIGetImageOrientation(image)
         if orientation == 1:
@@ -154,7 +154,7 @@ def IISaveImage(image, url, width, height):
     )
     if imageDest is not None:
         # And if we can, then we can start building our final image.
-        # We begin by creating a CGBitmapContext to host our desintation image.
+        # We begin by creating a CGBitmapContext to host our destination image.
 
         # Allocate enough space to hold our pixels
         imageData = objc.allocateBuffer(int(4 * width * height))
@@ -250,7 +250,7 @@ def IIApplyTransformation(image, context, bounds):
 def IIDrawImage(image, context, bounds):
     imageRect = Cocoa.NSRect()
     if image is not None and context is not None:
-        # Setup the image rect so that the image fills it's natural boudaries
+        # Setup the image rect so that the image fills it's natural boundaries
         # in the base coordinate system.
         imageRect.origin.x = 0.0
         imageRect.origin.y = 0.0

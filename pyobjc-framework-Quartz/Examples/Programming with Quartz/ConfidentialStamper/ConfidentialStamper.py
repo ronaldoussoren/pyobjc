@@ -104,7 +104,7 @@ def StampWithPDFDocument(context, sourcePDFDoc, stampFileDoc, stampMediaRect):
 # From an input PDF document and a PDF document whose contents you
 # want to draw on top of the other, create a new PDF document
 # containing all the pages of the input document with the first page
-# of the "stamping" overlayed.
+# of the "stamping" overlaid.
 def createStampedFileWithFile(inURL, stampURL, outURL):
     sourceFileData = myCreatePDFSourceDocument(inURL)
     if sourceFileData.pdfDoc is None:

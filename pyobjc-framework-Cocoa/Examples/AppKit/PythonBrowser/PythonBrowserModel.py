@@ -59,7 +59,7 @@ class PythonBrowserModel(NSObject):
         return item.isEditable()
 
 
-# objects of these types are not eligable for expansion in the outline view
+# objects of these types are not eligible for expansion in the outline view
 try:
     SIMPLE_TYPES = (str, unicode, int, long, float, complex)
 except NameError:
@@ -111,7 +111,7 @@ class PythonItem(NSObject):
     """Wrapper class for items to be displayed in the outline view."""
 
     # We keep references to all child items (once created). This is
-    # neccesary because NSOutlineView holds on to PythonItem instances
+    # necessary because NSOutlineView holds on to PythonItem instances
     # without retaining them. If we don't make sure they don't get
     # garbage collected, the app will crash. For the same reason this
     # class _must_ derive from NSObject, since otherwise autoreleased

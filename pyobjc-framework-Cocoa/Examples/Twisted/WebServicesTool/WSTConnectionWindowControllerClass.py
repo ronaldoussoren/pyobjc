@@ -13,7 +13,7 @@ import Cocoa
 # Note about multi-threading.
 # Although WST does its network stuff in a background thread, with Python 2.2
 # there are still moments where the app appears to hang briefly. This should
-# only be noticable when your DNS is slow-ish. The hang is caused by the
+# only be noticeable when your DNS is slow-ish. The hang is caused by the
 # socket.getaddrinfo() function, which is used (indirectly) when connecting
 # to a server, which is a frequent operation when using xmlrpclib (it makes
 # a new connection for each request). Up to (and including) version 2.3b1,
@@ -280,7 +280,7 @@ class WSTConnectionWindowController(Cocoa.NSWindowController):
         self.methodsTable.reloadData()
 
     def startWorking(self):
-        """Signal the UI there's work goin on."""
+        """Signal the UI there's work going on."""
         self.progressIndicator.startAnimation_(self)
 
     def stopWorking(self):

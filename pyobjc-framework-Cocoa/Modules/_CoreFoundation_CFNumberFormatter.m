@@ -129,7 +129,10 @@ mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__
                              PyObjC_ObjCToPython(@encode(CFRange), &range), n);
 
     } else {
-        return Py_BuildValue("NOO", PyBool_FromLong(0), Py_None, Py_None);
+        /* The weird formatting of the string literal is here to
+         * silence a codespell warning
+         */
+        return Py_BuildValue("NO" "O", PyBool_FromLong(0), Py_None, Py_None);
     }
 }
 

@@ -334,11 +334,11 @@ def runEventLoop(
 
                     NSLog("%@", error_str)
                 elif not unexpectedErrorAlert():
-                    NSLog("%@", "An exception has occured:")
+                    NSLog("%@", "An exception has occurred:")
                     traceback.print_exc()
                     sys.exit(0)
                 else:
-                    NSLog("%@", "An exception has occured:")
+                    NSLog("%@", "An exception has occurred:")
                     traceback.print_exc()
             else:
                 break

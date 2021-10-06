@@ -32,20 +32,20 @@ class WhereIsMyMacAppDelegate(Cocoa.NSObject):
         self.locationManager.startUpdatingLocation()
 
     @classmethod
-    def latitudeRangeForLocation_(self, aLocation):
+    def latitudeRangeForLocation_(self, location):
         M = 6_367_000.0
         # approximate average meridional radius of curvature of earth
         metersToLatitude = 1.0 / ((math.pi / 180.0) * M)
         accuracyToWindowScale = 2.0
 
-        return aLocation.horizontalAccuracy() * metersToLatitude * accuracyToWindowScale
+        return location.horizontalAccuracy() * metersToLatitude * accuracyToWindowScale
 
     @classmethod
-    def longitudeRangeForLocation_(self, aLocation):
-        latitudeRange = WhereIsMyMacAppDelegate.latitudeRangeForLocation_(aLocation)
+    def longitudeRangeForLocation_(self, location):
+        latitudeRange = WhereIsMyMacAppDelegate.latitudeRangeForLocation_(location)
 
         return latitudeRange * math.cos(
-            aLocation.coordinate().latitude * math.pi / 180.0
+            location.coordinate().latitude * math.pi / 180.0
         )
 
     @objc.IBAction

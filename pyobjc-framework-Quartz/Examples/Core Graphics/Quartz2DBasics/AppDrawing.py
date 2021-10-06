@@ -208,7 +208,7 @@ def drawAlphaRects(context):
         Quartz.CGContextAddPath(context, path)
         Quartz.CGContextFillPath(context)
 
-        # These transformations are cummulative.
+        # These transformations are cumulative.
         Quartz.CGContextRotateCTM(context, rotateAngle)
 
         tint -= tintAdjust
@@ -380,7 +380,7 @@ def drawUncachedForLayer(context):
 
     for _ in range(4):
         # Adjust the origin as the code loops. Recall that
-        # transformations are cummulative.
+        # transformations are cumulative.
         Quartz.CGContextTranslateCTM(context, 2 * Quartz.CGRectGetWidth(r), 0)
         Quartz.CGContextFillRect(context, r)  # Do the uncached drawing.
 

@@ -90,7 +90,7 @@ class AppController(Cocoa.NSObject):
             # our index file already exists... if we try to create one anyone,
             # the function will silently fail. So let's just be sure and
             # delete it. in a proper function, we would recognize it already
-            # exists and attmept to open it for editing rather than recreate
+            # exists and attempt to open it for editing rather than recreate
             # the whole thing.
             fm.removeFileAtPath_handler_(indexFile, None)
 
@@ -255,7 +255,7 @@ class AppController(Cocoa.NSObject):
 
         # add the document to the index
         if not SearchKit.SKIndexAddDocument(
-            self.myIndex,  # a reference ot the index added to
+            self.myIndex,  # a reference to the index added to
             aDocument,  # the document we want to add
             None,  # this could be a mime type hint in the form
             # of a CFStringRef

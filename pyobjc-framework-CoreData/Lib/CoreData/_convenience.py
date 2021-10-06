@@ -1,5 +1,5 @@
 """
-This adds some usefull conveniences to NSManagedObject and subclasses thereof
+This adds some useful conveniences to NSManagedObject and subclasses thereof
 
 These conveniences try to enable KVO by default on NSManagedObject instances,
 this no longer works on Leopard due to the way NSManagedObject is implemented
@@ -13,7 +13,7 @@ from Foundation import NSObject
 from objc import addConvenienceForClass, super
 
 # XXX: This is fairly crude, need further research.
-#      This code basicly tries to outsmart tricks that
+#      This code basically tries to outsmart tricks that
 #      CoreData plays, and that's asking for problems.
 if os.uname()[2] < "13.":
 

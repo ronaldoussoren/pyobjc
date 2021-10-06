@@ -5,7 +5,7 @@
 
 #if PyObjC_BUILD_RELEASE >= 1014
 /* The SDK included with Xcode 10 no longer includes a number
- * of header files, but does #incldue them in <oCarbon/Carbon.h>.
+ * of header files, but does #include them in <oCarbon/Carbon.h>.
  *
  * The defines below avoid trying to import these, which is
  * safe because we don't use any of the definitions from these files.

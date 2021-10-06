@@ -81,12 +81,12 @@ class Controller(Cocoa.NSObject):
         # public.image aka kUTTypeImage) This excludes PDF support that ImageIO
         # advertises, but won't actually use.
         if LaunchServices.UTTypeConformsTo(uti, LaunchServices.kUTTypeImage):
-            # Copy the decleration for the UTI (if it exists)
-            decleration = LaunchServices.UTTypeCopyDeclaration(uti)
-            if decleration is not None:
+            # Copy the declaration for the UTI (if it exists)
+            declaration = LaunchServices.UTTypeCopyDeclaration(uti)
+            if declaration is not None:
                 # Grab the tags for this UTI, which includes extensions, OSTypes and MIME types.
                 tags = Cocoa.CFDictionaryGetValue(
-                    decleration, LaunchServices.kUTTypeTagSpecificationKey
+                    declaration, LaunchServices.kUTTypeTagSpecificationKey
                 )
                 if tags is not None:
                     # We are interested specifically in the extensions that this UTI uses
@@ -110,7 +110,7 @@ class Controller(Cocoa.NSObject):
         return extensions
 
     # On Tiger NSOpenPanel only understands extensions, not UTIs, so we have to
-    # obtain a list of extentions from the UTIs that Image IO tells us it can
+    # obtain a list of extensions from the UTIs that Image IO tells us it can
     # handle.
     def createOpenTypesArray(self):
         if self.openImageIOSupportedTypes is None:

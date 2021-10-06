@@ -3,7 +3,7 @@ Wrappers for the "AddressBook" framework on macOS. The Address Book is
 a centralized database for contact and other information for people. Appliations
 that make use of the AddressBook framework all use the same database.
 
-These wrappers don't include documentation, please check Apple's documention
+These wrappers don't include documentation, please check Apple's documentation
 for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks

@@ -1,5 +1,5 @@
 """
-A number of usefull categories on Foundation classes
+A number of useful categories on Foundation classes
 """
 __all__ = ()
 import objc

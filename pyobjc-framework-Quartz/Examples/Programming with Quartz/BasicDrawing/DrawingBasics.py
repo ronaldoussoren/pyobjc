@@ -131,7 +131,7 @@ def doAlphaRects(context):
     for _ in range(numRects):
         Quartz.CGContextSetRGBFillColor(context, tint, 0.0, 0.0, tint)
         Quartz.CGContextFillRect(context, ourRect)
-        # These transformations are cummulative.
+        # These transformations are cumulative.
         Quartz.CGContextRotateCTM(context, rotateAngle)
         tint -= tintAdjust
 

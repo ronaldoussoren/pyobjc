@@ -363,7 +363,7 @@ def _fixup_compiler(use_ccache):
         cc = None
 
     if cc is None:
-        # Default compiler is not useable, try finding 'clang'
+        # Default compiler is not usable, try finding 'clang'
         cc = _find_executable("clang")
         if cc is None:
             cc = os.popen("/usr/bin/xcrun -find clang").read()
@@ -541,7 +541,7 @@ def setup(min_os_level=None, max_os_level=None, cmdclass=None, **kwds):
             if max_os_level is not None:
                 msg = (
                     "This distribution is only supported on MacOSX "
-                    "versions %s upto and including %s" % (min_os_level, max_os_level)
+                    "versions %s up to and including %s" % (min_os_level, max_os_level)
                 )
             else:
                 msg = "This distribution is only supported on MacOSX >= {}".format(

@@ -13,7 +13,7 @@ class PeopleDataSource(Cocoa.NSObject):
     def awakeFromNib(self):
         self._imPersonStatus = Cocoa.NSMutableArray.alloc().init()
 
-        # We don't need to query the staus of everyone, we will wait for
+        # We don't need to query the status of everyone, we will wait for
         # notifications of their status to arrive, so we just set them all up
         # as offline.
         self.setupABPeople()

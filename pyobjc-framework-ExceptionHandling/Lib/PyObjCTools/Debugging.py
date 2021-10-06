@@ -83,7 +83,7 @@ def _run_atos(stack):
 
             if os.uname()[2].startswith("13."):
                 # The atos command on OSX 10.9 gives a usage
-                # warning that's surpressed with the "-d" option.
+                # warning that's suppressed with the "-d" option.
                 _atos_command += " -d"
 
         elif os.path.exists("/usr/bin/xcrun"):

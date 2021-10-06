@@ -1,5 +1,5 @@
 # NOTE: This file only contains basic tests of the keyvalue observing header definitions,
-# test_keyvalue contains tests for the actualy KVC/KVO mechanisms.
+# test_keyvalue contains tests for the actually KVC/KVO mechanisms.
 import Foundation
 from PyObjCTools.TestSupport import TestCase, min_os_level
 

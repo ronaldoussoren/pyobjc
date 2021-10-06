@@ -1,5 +1,5 @@
 /*
- * Several methods of NSBezierPath cannot be handled automaticly because the
+ * Several methods of NSBezierPath cannot be handled automatically because the
  * size of a C-style array depends on the value of another argument.
  */
 
@@ -209,13 +209,13 @@ imp_NSBezierPath_elementAtIndex_associatedPoints_(void* cif __attribute__((__unu
     if (result == NULL)
         goto error;
 
-    seq = PySequence_Fast(result, "should return tuple of lenght 2");
+    seq = PySequence_Fast(result, "should return tuple of length 2");
     Py_DECREF(result);
     if (seq == NULL)
         goto error;
 
     if (PySequence_Fast_GET_SIZE(seq) != 2) {
-        PyErr_SetString(PyExc_ValueError, "should return tuple of lenght 2");
+        PyErr_SetString(PyExc_ValueError, "should return tuple of length 2");
         goto error;
     }
 

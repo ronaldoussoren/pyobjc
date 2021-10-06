@@ -103,7 +103,7 @@ def getTheSRGBColorSpace():
 
 
 def getTheDisplayColorSpace():
-    # This is a hack, basicly here because the C implementation uses APIs that
+    # This is a hack, basically here because the C implementation uses APIs that
     # aren't wrapped yet.
     return getTheRGBColorSpace()
 

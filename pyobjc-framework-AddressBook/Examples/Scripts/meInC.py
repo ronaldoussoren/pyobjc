@@ -20,7 +20,7 @@ def main():
     me = ABGetMe(book)
     emails = ABRecordCopyValue(me, kABEmailProperty)
 
-    print("You have %d email adresses" % (ABMultiValueCount(emails),))
+    print("You have %d email addresses" % (ABMultiValueCount(emails),))
 
     for idx in range(ABMultiValueCount(emails)):
         value = ABMultiValueCopyValueAtIndex(emails, idx)

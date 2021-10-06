@@ -195,9 +195,7 @@ class GraphicsView(NSView):
         # Selection should be handled by the graphic, but this is a
         # shortcut simply for display.
 
-        currentSelectionIndexes = (
-            self.selectionIndexes()
-        )  # ist das wir ein Array im Indezes?
+        currentSelectionIndexes = self.selectionIndexes()
         if currentSelectionIndexes is not None:
             path = NSBezierPath.bezierPath()
             index = currentSelectionIndexes.firstIndex()
@@ -219,7 +217,7 @@ class GraphicsView(NSView):
         for aGraphic in self.graphics():
             if aGraphic.hitTest_isSelected_(p, False):
                 break
-                # aGraphic soll spaeter einen Wert haben, falls es getroffene gibt!
+
         else:
             aGraphic = None
 

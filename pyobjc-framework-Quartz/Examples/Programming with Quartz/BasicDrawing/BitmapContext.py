@@ -470,7 +470,7 @@ def doAlphaOnlyContext(context):
     # the alpha data captured from the drawing. Create
     # the mask from the data in the context.
     mask = createMaskFromAlphaOnlyContext(alphaContext)
-    # This code is now finshed with the context so it can
+    # This code is now finished with the context so it can
     # release it.
     del alphaContext
 

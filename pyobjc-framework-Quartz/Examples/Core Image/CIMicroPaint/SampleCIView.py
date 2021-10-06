@@ -56,12 +56,12 @@ class SampleCIView(Cocoa.NSOpenGLView):
         self.setImage_dirtyRect_(image, Quartz.CGRectInfinite)
 
     def prepareOpenGL(self):
-        parm = 1
+        param = 1
 
         # Enable beam-synced updates.
 
         self.openGLContext().setValues_forParameter_(
-            (parm,), Cocoa.NSOpenGLCPSwapInterval
+            (param,), Cocoa.NSOpenGLCPSwapInterval
         )
 
         # Make sure that everything we don't need is disabled. Some of these

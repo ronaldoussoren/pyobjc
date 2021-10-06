@@ -1,7 +1,7 @@
 /*
  * Some code that deals with HFSTypeCodes.
  *
- * Needed for backward compatiblity with earlier versions of PyObjC.
+ * Needed for backward compatibility with earlier versions of PyObjC.
  */
 /* inline definition of PyMac_GetOSType pymactoolbox.h doesn't work in 64-bit mode */
 

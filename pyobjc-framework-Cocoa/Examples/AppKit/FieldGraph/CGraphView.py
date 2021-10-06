@@ -5,7 +5,7 @@ import objc
 from fieldMath import degToRad
 from objc import super
 
-# Convience global variables
+# Convenience global variables
 x, y = 0, 1
 llc, sze = 0, 1  # Left Lower Corner, Size
 

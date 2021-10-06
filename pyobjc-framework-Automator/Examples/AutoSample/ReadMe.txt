@@ -28,7 +28,7 @@ So methods in the Controller object can receive information about the status of 
 
 To run and display specific ``AMWorkflows``, we will want to call methods on the ``AMWorkflowController``.  So we can do that from methods implemented in the Controller object,  we have added an instance variable to the Controller object where we store a reference to the ``AMWorkflowController`` object.
 
-All of these releationships have been set up by control-dragging between objects in the Interface Builder interface.  You can use the connections inspector in Interface Builder to examine these connections.
+All of these relationships have been set up by control-dragging between objects in the Interface Builder interface.  You can use the connections inspector in Interface Builder to examine these connections.
 
 
 (c) We allocate and initialize all of the ``AMWorkflow`` instances for the workflows found in our Resources folder and we store them in a ``NSArray``.  It's worth noting that we populate the ``NSArray`` with ``NSDictionary`` records that include the ``AMWorkflow`` instance, the file name, and the path.

@@ -77,7 +77,7 @@ class MyWindowController(Cocoa.NSWindowController):
 
         self.datePickerModeRadios.cellWithTag_(1).setEnabled_(
             False
-        )  # not currently implemened in 10.4.x and earlier
+        )  # not currently implemented in 10.4.x and earlier
 
         self.minDatePicker.setDateValue_(Cocoa.NSDate.date())
         self.maxDatePicker.setDateValue_(Cocoa.NSDate.distantFuture())

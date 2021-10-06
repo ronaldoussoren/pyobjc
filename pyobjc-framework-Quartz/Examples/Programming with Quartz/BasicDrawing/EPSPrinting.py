@@ -31,7 +31,7 @@ def getEPSBBox(epspath):
         #  simple but very inefficient. In addition it does not ensure
         #  that the DSC comments are at the beginning of a line,
         #  nor does it handle (atend) style comments at all.
-        #  It will simply find the first occurance of a
+        #  It will simply find the first occurrence of a
         #  %%BoundingBox comment and if it is of the typical
         # form, it will obtain the bounding box data.
         #

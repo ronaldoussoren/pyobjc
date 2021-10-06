@@ -1,5 +1,5 @@
 """
-A number of usefull categories on AppKit classes
+A number of useful categories on AppKit classes
 """
 __all__ = ()
 import objc

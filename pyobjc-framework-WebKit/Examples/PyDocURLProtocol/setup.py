@@ -10,7 +10,7 @@ plist = {
     "NSMainNibFile": "PyDocBrowser",
     "NSAppleScriptEnabled": True,
     "CFBundleURLTypes": [
-        {"CFBundleURLName": "Python Documention URL", "CFBundleURLSchemes": ["pydoc"]}
+        {"CFBundleURLName": "Python Documentation URL", "CFBundleURLSchemes": ["pydoc"]}
     ],
 }
 

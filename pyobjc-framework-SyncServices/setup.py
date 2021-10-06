@@ -7,7 +7,7 @@ Sync Services, user data can be synced with other applications and
 devices on the same computer, or other computers over the network via
 MobileMe.
 
-These wrappers don't include documentation, please check Apple's documention
+These wrappers don't include documentation, please check Apple's documentation
 for information on how to use this framework and PyObjC's documentation
 for general tips and tricks regarding the translation between Python
 and (Objective-)C frameworks

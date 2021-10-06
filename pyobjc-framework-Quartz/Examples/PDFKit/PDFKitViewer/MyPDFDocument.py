@@ -147,9 +147,7 @@ class MyPDFDocument(Cocoa.NSDocument):
                 break
 
             elif (
-                self._pdfView.document().indexForPage_(
-                    outlineItem.destionation().page()
-                )
+                self._pdfView.document().indexForPage_(outlineItem.destination().page())
                 > newPageIndex
             ):
                 newlySelectedRow = i - 1

@@ -161,7 +161,7 @@ def myCGDataProviderCreateWithCFData(data):
 
     # Test to see if the Quartz version is available and if so, use it.
 
-    # XXX: force the replacment code to be used
+    # XXX: force the replacement code to be used
     # if hasattr(Quartz, 'CGDataProviderCreateWithCFData'):
     #    return CGDataProviderCreateWithCFData(data)
 

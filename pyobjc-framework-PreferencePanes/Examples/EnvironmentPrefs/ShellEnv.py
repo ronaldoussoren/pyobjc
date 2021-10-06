@@ -1,7 +1,7 @@
 """
 EnvironmentPane - PreferencePane for changing the global user environment
 
-This PreferencePane provides an easy to use UI for changeing
+This PreferencePane provides an easy to use UI for changing
 ~/.MacOSX/environment.plist. This plist is loaded by the loginwindow application
 when the user logs in and is used to initialize the "shell" environment.
 

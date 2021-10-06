@@ -30,7 +30,7 @@ class MyWindowController(Cocoa.NSWindowController):
         if isinstance(displayValue, Cocoa.NSControl):
             self.window().makeFirstResponder_(displayValue)
 
-        # create and initalize our query
+        # create and initialize our query
         self.query = Cocoa.NSMetadataQuery.alloc().init()
 
         # setup our Spotlight notifications
@@ -105,7 +105,7 @@ class MyWindowController(Cocoa.NSWindowController):
             self.progressSearchLabel.setStringValue_("Searching...")
 
         elif note.name() == Cocoa.NSMetadataQueryDidFinishGatheringNotification:
-            # at this point, the query will be done. You may recieve an update
+            # at this point, the query will be done. You may receive an update
             # later on.
             Cocoa.NSLog("search: finished gathering")
 
@@ -243,7 +243,7 @@ class MyWindowController(Cocoa.NSWindowController):
         if self.predicateEditor.numberOfRows() == 0:
             self.predicateEditor.addRow_(self)
 
-        # resize the window vertically to accomodate our views:
+        # resize the window vertically to accommodate our views:
 
         # get the new number of rows, which tells us the needed change in height,
         # note that we can't just get the view frame, because it's currently

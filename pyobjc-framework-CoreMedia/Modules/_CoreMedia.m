@@ -71,7 +71,7 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
         }
 
         if (PyUnicode_Check(PyTuple_GetItem(py_parameterSetPointers, i))) {
-            /* Explictly reject unicode objects, those implement the buffer protocol but
+            /* Explicitly reject unicode objects, those implement the buffer protocol but
              * are not usable here.
              */
             PyErr_Format(PyExc_TypeError,
