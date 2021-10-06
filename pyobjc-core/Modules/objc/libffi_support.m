@@ -3930,7 +3930,7 @@ PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo,
 {
     PyObject*  objc_result = NULL;
 
-    PyObjC_Assert(methinfo->shortcut_signature, -1);
+    PyObjC_Assert(methinfo->shortcut_signature, NULL);
 
     if ((*methinfo->rettype->type != _C_VOID)) {
         const char* tp    = methinfo->rettype->type;

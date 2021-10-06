@@ -1,6 +1,8 @@
 #ifndef PyObjC_ASSERT_H
 #define PyObjC_ASSERT_H
 
+extern PyObject* PyObjCExc_InternalError;
+
 #ifdef PyObjC_DEBUG
 
 #ifdef PyObjC_ERROR_ABORT

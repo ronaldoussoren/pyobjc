@@ -6,7 +6,6 @@ extern PyObject* PyObjCDict_GetItemStringWithError(PyObject* dict, const char* k
 
 extern PyObject* PyObjCExc_Error;
 extern PyObject* PyObjCExc_NoSuchClassError;
-extern PyObject* PyObjCExc_InternalError;
 extern PyObject* PyObjCExc_UnInitDeallocWarning;
 extern PyObject* PyObjCExc_ObjCRevivalWarning;
 extern PyObject* PyObjCExc_LockError;

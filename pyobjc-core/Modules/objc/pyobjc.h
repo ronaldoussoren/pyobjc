@@ -18,9 +18,6 @@
 
 #include <objc/objc.h>
 
-#import "pyobjc-assert.h"
-#include "pyobjc-compat.h"
-
 /*
  * Configuration block
  */
@@ -32,6 +29,9 @@
 #define PyObjC_DEBUG
 #endif
 #endif
+
+#import "pyobjc-assert.h"
+#import "pyobjc-compat.h"
 
 /* When this is defined the bridge adds a category to NSCFType (and known variants)
  * to help with the conversion to Python.
