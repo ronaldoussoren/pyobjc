@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/psf/black
-    rev: 21.6b0
+    rev: 21.9b0
     hooks:
       - id: black
         language_version: python3.9
@@ -40,10 +40,20 @@ repos:
 #      args: [ "-style=file" ]
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.21.0
+    rev: v2.29.0
     hooks:
     -   id: pyupgrade
         args: ['--py36-plus']
+
+#  - repo: https://github.com/codespell-project/codespell
+#    rev: v2.1.0
+#    hooks:
+#    -   id: codespell
+#        name: codespell
+#        description: Checks for common misspellings in text files.
+#        entry: codespell
+#        language: python
+#        types: [text]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
