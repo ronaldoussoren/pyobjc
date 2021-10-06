@@ -29,7 +29,7 @@ def decimal_new(cls, value=None):
             return cls.decimalNumberWithDecimal_(value)
         else:
             # The value is either an integer, or
-            # invalid (and numberWithLongLong_ wil raise
+            # invalid (and numberWithLongLong_ will raise
             # TypeError)
             try:
                 return cls.numberWithLongLong_(value)

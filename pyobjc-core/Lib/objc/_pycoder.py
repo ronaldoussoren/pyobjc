@@ -2,7 +2,7 @@
 Implementation of NSCoding for OC_PythonObject and friends
 
 A minor problem with NSCoding support is that NSCoding restores
-graphs recusively while Pickle does so depth-first (more of less).
+graphs recursively while Pickle does so depth-first (more of less).
 This can cause problems when the object state contains the
 object itself, which is why we need a 'setValue' callback for the
 load_* functions below.

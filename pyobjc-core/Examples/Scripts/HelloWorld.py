@@ -49,16 +49,16 @@ def main():
     win.setTitle_("HelloWorld")
     win.setLevel_(3)  # floating window
 
-    hel = NSButton.alloc().initWithFrame_(((10.0, 10.0), (80.0, 80.0)))
-    win.contentView().addSubview_(hel)
-    hel.setBezelStyle_(4)
-    hel.setTitle_("Hello!")
-    hel.setTarget_(app.delegate())
-    hel.setAction_("sayHello:")
+    hello = NSButton.alloc().initWithFrame_(((10.0, 10.0), (80.0, 80.0)))
+    win.contentView().addSubview_(hello)
+    hello.setBezelStyle_(4)
+    hello.setTitle_("Hello!")
+    hello.setTarget_(app.delegate())
+    hello.setAction_("sayHello:")
 
     beep = NSSound.alloc()
     beep.initWithContentsOfFile_byReference_("/System/Library/Sounds/Tink.Aiff", 1)
-    hel.setSound_(beep)
+    hello.setSound_(beep)
 
     bye = NSButton.alloc().initWithFrame_(((100.0, 10.0), (80.0, 80.0)))
     win.contentView().addSubview_(bye)

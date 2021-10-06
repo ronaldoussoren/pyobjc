@@ -110,7 +110,7 @@ objc.registerMetaDataForSelector(
 )
 objc.registerMetaDataForSelector(
     b"OCTestBlock",
-    b"callStructBlock:withA:b:c:d:",
+    b"callStructBlock:a:b:c:d:",
     {
         "arguments": {
             2: {
@@ -425,7 +425,7 @@ class TestBlocks(TestCase):
         def callback(a, b, c, d):
             return ((a, b), (c, d))
 
-        v = obj.callStructBlock_withA_b_c_d_(callback, 1.5, 2.5, 3.5, 4.5)
+        v = obj.callStructBlock_a_b_c_d_(callback, 1.5, 2.5, 3.5, 4.5)
         self.assertEqual(v, ((1.5, 2.5), (3.5, 4.5)))
 
     @min_os_level("10.6")

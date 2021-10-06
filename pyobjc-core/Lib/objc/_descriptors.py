@@ -338,7 +338,7 @@ def synthesize(
     """
     Use this in a class dictionary to syntheze simple setting/setter methods.
 
-    Note: this is only necessary to get propper behaviour when Key-Value coding
+    Note: this is only necessary to get proper behaviour when Key-Value coding
     is used and special features (like copying) are needed
 
     usage::

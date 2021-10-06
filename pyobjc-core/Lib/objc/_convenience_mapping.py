@@ -51,7 +51,7 @@ def update_setObject_forKey_(self, *args, **kwds):
         other = args[0]
         if hasattr(other, "keys"):
             # This mirrors the implementation of dict.update, but seems
-            # wrong for Python3 (with collectons.abc.Dict)
+            # wrong for Python3 (with collections.abc.Dict)
             for key in other.keys():
                 self[key] = other[key]
 
@@ -114,7 +114,7 @@ _CONVENIENCES_MAPPING_RW = _CONVENIENCES_MAPPING_RO + (
 
 def addConvenienceForBasicMapping(classname, readonly=True):
     """
-    Add the convience methods for a Cocoa mapping type
+    Add the convenience methods for a Cocoa mapping type
 
     Used to add the basic collections.abc.Mapping or collections.abc.MutableMapping
     APIs to a Cocoa class that has an API simular to NSDictionary.

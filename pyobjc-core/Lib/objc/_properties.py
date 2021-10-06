@@ -304,7 +304,7 @@ class object_property:
             return v
 
         if self._ro:
-            raise ValueError("Defining settter for read-only property")
+            raise ValueError("Defining setter for read-only property")
 
         self._setter = function
         return self

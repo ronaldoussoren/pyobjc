@@ -64,9 +64,9 @@ def prompt():
     sys.stdout.flush()
 
 
-def gotLine(observer, aLine):
-    if aLine:
-        print("you wrote:", aLine.rstrip())
+def gotLine(observer, line):
+    if line:
+        print("you wrote:", line.rstrip())
         prompt()
     else:
         print("")

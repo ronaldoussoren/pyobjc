@@ -152,7 +152,7 @@ else:
             cfg_vars[k] = cfg_vars[k].replace("-O3", "-O3")
 
 
-# XXX: bug in CPython 3.4 repository leaks unwanted compiler flag into disutils.
+# XXX: bug in CPython 3.4 repository leaks unwanted compiler flag into distutils.
 cfg_vars = get_config_vars()
 for k in cfg_vars:
     if (
@@ -460,7 +460,7 @@ def _fixup_compiler(use_ccache):
         cc = None
 
     if cc is None:
-        # Default compiler is not useable, try finding 'clang'
+        # Default compiler is not usable, try finding 'clang'
         cc = _find_executable("clang")
         if cc is None:
             cc = os.popen("/usr/bin/xcrun -find clang").read()
@@ -588,7 +588,7 @@ class oc_build_ext(build_ext.build_ext):
 def parse_package_metadata():
     """
     Read the 'metadata' section of 'setup.cfg' to calculate the package
-    metadata (at least those parts that can be configured staticly).
+    metadata (at least those parts that can be configured statically).
     """
     try:
         from ConfigParser import RawConfigParser

@@ -1,5 +1,5 @@
 """
-Backward compatibity with bridgesupport files
+Backward compatibility with bridgesupport files
 
 This functionality is deprecated and will be removed in PyObjC 9.
 """
@@ -35,7 +35,7 @@ for method in (
 # XML files.
 
 # NOTE: This search path only contains system locations to
-# avoid accidently reiying on system-specific functionality.
+# avoid accidentally reiying on system-specific functionality.
 BRIDGESUPPORT_DIRECTORIES = ["/System/Library/BridgeSupport"]
 
 _SENTINEL = object()
@@ -317,7 +317,7 @@ class _BridgeSupportParser:
         typestr = self.typestr2typestr(typestr)
 
         if typestr.startswith(objc._C_STRUCT_B):
-            # Look for structs with embbeded function pointers
+            # Look for structs with embedded function pointers
             # and ignore those
 
             def has_embedded_function(typestr):

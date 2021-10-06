@@ -257,7 +257,7 @@ def nsarray_radd(self, other):
 def nsarray_mul(self, other):
     """
     This tries to implement anNSArray * N
-    somewhat efficently (and definitely more
+    somewhat efficiently (and definitely more
     efficient that repeated appending).
     """
     result = NSMutableArray.array()

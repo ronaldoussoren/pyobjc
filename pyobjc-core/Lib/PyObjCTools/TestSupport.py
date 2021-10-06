@@ -388,7 +388,7 @@ def max_os_level(release):
     """
     return onlyIf(
         os_level_key(os_release()) <= os_level_key(release),
-        f"Requires OSX upto {release}",
+        f"Requires OSX up to {release}",
     )
 
 
@@ -406,7 +406,7 @@ def os_level_between(min_release, max_release):
         os_level_key(min_release)
         <= os_level_key(os_release())
         <= os_level_key(max_release),
-        f"Requires OSX {min_release} upto {max_release}",
+        f"Requires OSX {min_release} up to {max_release}",
     )
 
 
@@ -1481,7 +1481,7 @@ class TestCase(_unittest.TestCase):
     if not hasattr(_unittest.TestCase, "assertAlmostEquals"):  # pragma: no cover
 
         def assertAlmostEquals(self, val1, val2, message=None):
-            self.failUnless(
+            self.assertTrue(
                 abs(val1 - val2) < 0.00001,
                 message or f"abs({val1!r} - {val2!r}) >= 0.00001",
             )

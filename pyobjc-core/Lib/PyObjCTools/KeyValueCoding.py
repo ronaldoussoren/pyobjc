@@ -11,7 +11,7 @@ Public API:
     getKey(obj, key) -> value
     getKeyPath (obj, keypath) -> value
 
-A keypath is a string containing a sequence of keys seperated by dots. The
+A keypath is a string containing a sequence of keys separated by dots. The
 path is followed by repeated calls to 'getKey'. This can be used to easily
 access nested attributes.
 
@@ -22,7 +22,7 @@ making it easier to build applications as a platform independent core with
 a Cocoa GUI layer.
 
 See the Cocoa documentation on the Apple developer website for more
-information on Key-Value coding. The protocol is basicly used to enable
+information on Key-Value coding. The protocol is basically used to enable
 weaker coupling between the view and model layers.
 """
 
@@ -167,7 +167,7 @@ def getKey(obj, key):
     Get the attribute referenced by 'key'. The key is used
     to build the name of an attribute, or attribute accessor method.
 
-    The following attributes and accesors are tried (in this order):
+    The following attributes and accessors are tried (in this order):
 
     - Accessor 'getKey'
     - Accesoor 'get_key'
@@ -312,7 +312,7 @@ def setKey(obj, key, value):
 def getKeyPath(obj, keypath):
     """
     Get the value for the keypath. Keypath is a string containing a
-    path of keys, path elements are seperated by dots.
+    path of keys, path elements are separated by dots.
     """
     if not keypath:
         raise KeyError
@@ -340,7 +340,7 @@ def getKeyPath(obj, keypath):
 def setKeyPath(obj, keypath, value):
     """
     Set the value at 'keypath'. The keypath is a string containing a
-    path of keys, seperated by dots.
+    path of keys, separated by dots.
     """
     if obj is None:
         return
