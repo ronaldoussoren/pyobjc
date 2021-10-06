@@ -1,0 +1,4 @@
+[codespell]
+; PyObjCTest added temporarily
+skip = *.fwinfo,*.egg-info,*js,_build,PyObjCTest,*.rtf,_metadata.py,*.mht
+ignore-words-list=inout,doubleClick,doubleclick
