@@ -871,6 +871,10 @@ protocolsForClass(PyObject* self __attribute__((__unused__)), PyObject* args,
     }
 
     protocol_list = class_copyProtocolList(cls, &protocol_count);
+
+    /* Documented API: the list will only be NULL if the count is 0 */
+    PyObjC_Assert(protocol_count == 0 || protocol_list != NULL, NULL);
+
     for (i = 0; i < protocol_count; i++) {
         PyObject* protocol = PyObjCFormalProtocol_ForProtocol(protocol_list[i]);
         if (protocol == NULL) {
@@ -2147,6 +2151,7 @@ struct objc_int_values {
     { "MAC_OS_X_VERSION_11_3", MAC_OS_X_VERSION_11_3 },
     { "MAC_OS_X_VERSION_11_4", MAC_OS_X_VERSION_11_4 },
     { "MAC_OS_X_VERSION_11_5", MAC_OS_X_VERSION_11_5 },
+    { "MAC_OS_X_VERSION_11_6", MAC_OS_X_VERSION_11_6 },
     { "MAC_OS_X_VERSION_12_0", MAC_OS_X_VERSION_12_0 },
     { "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE },
     { "_NSNotFound", NSNotFound },

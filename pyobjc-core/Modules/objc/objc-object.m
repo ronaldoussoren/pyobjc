@@ -218,6 +218,13 @@ object_verify_type(PyObject* obj)
                 return -1;
             }
 
+            /* XXX: The correct way to do this is calling ``setattr(obj, "__class__", tp)``
+             * Investigate the impact of that. Performance shouldn't be an issue here,
+             * a isa change should not happen often.
+             *
+             * XXX2: the setattr call above works from Python, which is confusing behaviour
+             *       (it changes the class of the proxy, not the ISA)
+             */
             tmp          = Py_TYPE(obj);
             Py_SET_TYPE(obj, tp);
             Py_INCREF(tp);

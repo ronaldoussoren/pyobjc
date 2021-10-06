@@ -188,6 +188,13 @@
         PyObjC_Assert(result == self, nil);
         self = result;
         if (self != nil) {
+        /* XXX: This is dodgy, can we create the frozen set
+         * here instead of changing the type? Needs tests
+         * with various variants of nesting.
+         *
+         * At worst document that round-tripping a frozen
+         * set results in a non-frozen set.
+         */
 	    Py_SET_TYPE(value, &PyFrozenSet_Type);
         }
         return self;

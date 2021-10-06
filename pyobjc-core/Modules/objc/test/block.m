@@ -110,7 +110,7 @@ static void erase_signature(id _block);
 }
 
 - (NSRect)callStructBlock:(NSRect (^)(double, double, double, double))block
-                    withA:(double)a
+                        a:(double)a
                         b:(double)b
                         c:(double)c
                         d:(double)d

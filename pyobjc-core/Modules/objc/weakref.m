@@ -26,7 +26,7 @@ PyDoc_STRVAR(weakref_cls_doc,
 typedef struct {
     PyObject_HEAD
 
-    NSObject* object;
+    NSObject* _Nullable object;
 #if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc         vectorcall;
 #endif

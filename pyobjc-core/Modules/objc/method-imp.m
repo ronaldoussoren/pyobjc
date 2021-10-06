@@ -154,7 +154,6 @@ imp_vectorcall_simple(PyObject* _self, PyObject*const* _Nullable args, size_t na
 {
     PyObjCIMPObject* self = (PyObjCIMPObject*)_self;
     PyObject*        pyself;
-    PyObjC_CallFunc  execute = NULL;
     PyObject*        res;
     PyObject*        pyres;
 
@@ -180,8 +179,6 @@ imp_vectorcall_simple(PyObject* _self, PyObject*const* _Nullable args, size_t na
     if (pyself == NULL) {
         return NULL;
     }
-
-    execute = self->callfunc;
 
     pyres = res = PyObjCFFI_Caller_Simple(_self, pyself, args+1, nargsf-1);
 

@@ -203,7 +203,6 @@
 
 - (void)insertObject:(id)anObject atIndex:(NSUInteger)idx
 {
-    Py_ssize_t theIndex;
     PyObject*  v;
     PyObject*  w;
 
@@ -213,7 +212,6 @@
             PyObjC_GIL_FORWARD_EXC();
         PyObjC_END_WITH_GIL
     }
-    theIndex = idx;
 
     PyObjC_BEGIN_WITH_GIL
         if (unlikely(anObject == [NSNull null])) {

@@ -527,6 +527,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 }
 #endif
 
+
 - (Class)classForArchiver
 {
     PyObjC_BEGIN_WITH_GIL

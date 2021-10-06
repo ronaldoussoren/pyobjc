@@ -1768,11 +1768,11 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 {
     return indirectNumber;
 }
-- (void)setIndirectNumber:(NSNumber*)aNumber
+- (void)setIndirectNumber:(NSNumber*)number
 {
-    [aNumber retain];
+    [number retain];
     [indirectNumber release];
-    indirectNumber = aNumber;
+    indirectNumber = number;
 }
 @end
 
