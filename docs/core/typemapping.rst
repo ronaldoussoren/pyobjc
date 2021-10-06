@@ -5,7 +5,7 @@ Converting values between Python and Objective-C
 Introduction
 ------------
 
-PyObjC provides transparant conversion or proxying of values between Python
+PyObjC provides transparent conversion or proxying of values between Python
 and Objective-C. In general this works as expected, this document provides
 a detailed guide to how values are converted or proxied.
 
@@ -17,7 +17,7 @@ The Objective-C language not only has classes and objects, but also has the
 basic C types which are not classes. PyObjC converts between those and the
 corresponding Python type.
 
-The C type 'char' does not have a unambigous meaning in C, it is used for
+The C type 'char' does not have a unambiguous meaning in C, it is used for
 a number of tasks. In the table below the various tasks have been represented
 separately: booleans (*BOOL*), representing characters in text
 (*char*) and represeting small integers (*int8_t*).  PyObjC

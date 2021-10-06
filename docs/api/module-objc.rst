@@ -147,7 +147,7 @@ Deprecated functions for changing options
 
    .. note::
 
-      Setting this option to false is discouraged and is mostly usefull when porting
+      Setting this option to false is discouraged and is mostly useful when porting
       to Python 3.
 
    .. deprecated:: 3.0 Use :data:`objc.options` instead
@@ -215,7 +215,7 @@ for objects.
    :type key: an arbitrary object, the same object must be used to
                retrieve the value.
    :param value: value for the associated object
-   :param policy: policy for the assiocation (see below)
+   :param policy: policy for the association (see below)
 
    Associate *assoc* with *object* under name *name*.
 
@@ -232,7 +232,7 @@ for objects.
    :param object: an object (a Cocoa instance)
 
    Remove all associations for *object*. It is generally a bad idea to
-   use this function, because other libraries might have set assocations
+   use this function, because other libraries might have set associations
    as well.
 
 .. data:: OBJC_ASSOCIATION_ASSIGN
@@ -248,17 +248,17 @@ for objects.
 
 .. data:: OBJC_ASSOCIATION_COPY_NONATOMIC
 
-   Policy for creating a strong reference to a copy of the assocated object.
+   Policy for creating a strong reference to a copy of the associated object.
 
 .. data:: OBJC_ASSOCIATION_RETAIN
 
    Policy for creating a strong reference to the associated object, the
-   assocation is made atomically.
+   association is made atomically.
 
 .. data:: OBJC_ASSOCIATION_COPY
 
-   Policy for creating a strong reference to a copy of the assocated object,
-   the assocation is made atomically.
+   Policy for creating a strong reference to a copy of the associated object,
+   the association is made atomically.
 
 Utilities
 ---------
@@ -463,8 +463,8 @@ Dynamic modification of classes
    * unbound methods
 
    For the last two the method selector is calculated using the regular
-   algoritm for this (e.g. as if ``selector(item)`` was called). The last
-   two are instance methods by default, but automaticly made class methods
+   algorithm for this (e.g. as if ``selector(item)`` was called). The last
+   two are instance methods by default, but automatically made class methods
    when the class (or a superclass) has a class method with the same
    selector.
 
@@ -513,7 +513,7 @@ Plugin bundles
 Memory management
 -----------------
 
-PyObjC automaticly manages Cocoa reference counts for you, the functions
+PyObjC automatically manages Cocoa reference counts for you, the functions
 in this section help in finetuning this behaviour.
 
 .. function:: recycleAutoreleasePool()
@@ -551,7 +551,7 @@ use these functions in your code.
 .. function:: splitSignature(typestring)
 
    Split an encoded Objective-C signature string into the
-   encoding strings for seperate types.
+   encoding strings for separate types.
 
    :param typestring: an encoded method signature (byte string)
    :return: list of type signatures
@@ -584,7 +584,7 @@ Framework wrappers
 
    .. note::
 
-      This is basicly the same as :func:`id`, but for the Objective-C
+      This is basically the same as :func:`id`, but for the Objective-C
       object wrapped by PyObjC instead of python objects.
 
 
@@ -614,7 +614,7 @@ Types
 
       The normal way to create instances of (subclasses of) :class:`objc_object` is
       to call the normal Cocoa allocation method. Calling the class should only be used
-      to contruct a proxy from a pre-existing pointer value (for interoperability with
+      to construct a proxy from a pre-existing pointer value (for interoperability with
       other libraries).
 
 
@@ -644,7 +644,7 @@ Types
    .. method:: __reduce__()
 
       This method ensures that Objective-C objects will not be pickled unless the subclass
-      explictly implements the pickle protocol. This is needed because the pickle will
+      explicitly implements the pickle protocol. This is needed because the pickle will
       write an incomplete serialization of Objective-C objects for protocol 2 or later.
 
    .. method:: __class_getitem__(*args)
@@ -682,7 +682,7 @@ Types
 
       Instances of *NSString* can be mutable. Mutations to mutable Cocoa
       strings are not reflected in instances of :class:`pyobjc_unicode`, use
-      :meth:`nsstring` and explict conversion to the built-in unicode type when
+      :meth:`nsstring` and explicit conversion to the built-in unicode type when
       you work with mutable *NSString* values.
 
    .. note::
@@ -911,7 +911,7 @@ Types
    in Objective-C. Informal protocols are a documentation construct in Objective-C and
    as such are not present in the Objective-C runtime (as opposed to formal protocols).
 
-   Informal protocols are used by the bridge to automaticly update method signatures when
+   Informal protocols are used by the bridge to automatically update method signatures when
    a class appears to implement an informal protocol. This makes it possible the define
    a large subset of Cocoa functionality without manually setting method signatures.
 
@@ -1091,7 +1091,7 @@ Types
 .. class:: IMP
 
    This class is used to represent the actual implementation of an Objective-C
-   method (basicly a C function). Instances behave the same as unbound methods:
+   method (basically a C function). Instances behave the same as unbound methods:
    you can call them but need to specify the "self" argument.
 
    .. data:: isAlloc
@@ -1327,7 +1327,7 @@ Additional annotations for method and function arguments
 ........................................................
 
 Method arguments can have prefixes that closer describe their functionality.
-Those prefixes are inheritted from Distributed Objects are not used by the
+Those prefixes are inherited from Distributed Objects are not used by the
 Objective-C runtime, but are used by PyObjC.
 
 * When a pointer argument is an input argument it is prefixed by
@@ -1348,7 +1348,7 @@ Objective-C runtime, but are used by PyObjC.
   wait for a result from the other side. This is not used by PyObjC.
 
 When a pointer argument to a function prefixed by :const:`_C_IN`,
-:const:`_C_OUT` or :const:`_C_INOUT` the brige assumes that it is a pass by
+:const:`_C_OUT` or :const:`_C_INOUT` the bridge assumes that it is a pass by
 reference argument (that is, a pointer to a single value), unless other
 information is provided to the bridge.
 
@@ -1414,7 +1414,7 @@ unique integers and map those to objects.
 
 .. function:: context.unregister(value):
 
-   Remove an object from the context registery, this object must be have
+   Remove an object from the context registry, this object must be have
    been added to the registry before.
 
    :param value: An object in the context registry
@@ -1498,7 +1498,7 @@ Descriptors
    .. note::
 
       There is no function named *objc.classmethod*, use
-      :func:`classmethod <__builtin__.classmethod>` to explictly mark a function
+      :func:`classmethod <__builtin__.classmethod>` to explicitly mark a function
       as a class method.
 
 
@@ -1519,7 +1519,7 @@ Descriptors
    ================================================== =================================== =========================================
    *property*                                         Getter for a basic property.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
-   is\ *Property*                                     Likewise, for a boolean             PyObjC won't automaticly set the
+   is\ *Property*                                     Likewise, for a boolean             PyObjC won't automatically set the
                                                       property.                           correct property type, use
                                                                                           :func:`typeAccessor` instead of
                                                                                           :func:`accessor`.
@@ -1584,12 +1584,12 @@ Descriptors
                                                        from an unordered property.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    intersect\ *Property*\ _                            Remove all objects from
-                                                       an unorderd property that
+                                                       an unordered property that
                                                        are not in the set argument.
    -------------------------------------------------- ----------------------------------- -----------------------------------------
    validate\ *Property*\ _error_                       Validate the new value of a         For typed accessor's the value
                                                        property                            is wrapped in an *NSValue*
-                                                                                           (but numbers and booleans are automaticly
+                                                                                           (but numbers and booleans are automatically
                                                                                            unwrapped by the bridge)
    ================================================== =================================== =========================================
 
@@ -1629,7 +1629,7 @@ Descriptors
 
 .. function:: namedSelector(name [, signature])
 
-   Use this decorator to explictly set the Objective-C method name instead
+   Use this decorator to explicitly set the Objective-C method name instead
    of deducing it from the Python name. You can optionally set the method
    signature as well.
 
@@ -1709,7 +1709,7 @@ Descriptors
    copying values before storing them).
 
    The class :class:`object_property` provides simular features with
-   a nicer python interface: with that calss the property behaves
+   a nicer python interface: with that class the property behaves
    itself like a property for python code, with this function you
    still have to call accessor methods in your code.
 
@@ -1893,7 +1893,7 @@ the reason for this is that the use of :class:`ObjCPointer` is unwanted
    "file" type is used for that.
 
    This types provides a fairly limited file-like API for binary
-   I/O. Instances of this type don't close the stream automaticly and
+   I/O. Instances of this type don't close the stream automatically and
    don't implement a contextmanager.
 
    .. method:: at_eof()

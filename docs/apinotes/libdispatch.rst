@@ -17,7 +17,7 @@ API Notes
 .. note::
 
    These bindings are only available on macOS 10.8 or later. The dispatch library is
-   available on earlier releases of macOS, but in a way that is not compatbile with these
+   available on earlier releases of macOS, but in a way that is not compatible with these
    bindings.
 
 The libraries exposes a number APIs in two variants: one that has a block as an argument,

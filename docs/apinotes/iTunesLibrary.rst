@@ -12,7 +12,7 @@ These bindings are accessed through the ``iTunesLibrary`` package (that is,
 
 .. note::
 
-   Apple's documentation mentions that these APIs will not return useable data
+   Apple's documentation mentions that these APIs will not return usable data
    unless the application has been code signed.
 
 

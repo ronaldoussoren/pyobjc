@@ -87,7 +87,7 @@ Historical documents
    core/objc-gc
 
 
-PyObjC Developement
+PyObjC Development
 ===================
 
 PyObjC development is hosted at GitHub, in particular at <https://github.com/ronaldoussoren/pyobjc/>.
@@ -106,7 +106,7 @@ Important resources:
 
 * `Repository browser <https://github.com/ronaldoussoren/pyobjc>`_
 
-* Creating a checkout of the respository:
+* Creating a checkout of the repository:
 
   .. sourcecode:: sh
 

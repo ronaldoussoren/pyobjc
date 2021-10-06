@@ -54,7 +54,7 @@ API Notes
   Use ``CTParagraphStyleGetTabStops`` to fetch the tabstops from a style object, using
   ``CTParagraphStyleGetValueSpecifieker`` is not supported with key ``kCTParagraphStyleSpecifierTabStops``.
 
-* All types and constants definied in "SFNTLayoutTypes.h" and "SFNTTypes.h" are not yet supported
+* All types and constants defined in "SFNTLayoutTypes.h" and "SFNTTypes.h" are not yet supported
 
 * ``CTRunDelegateGetRefCon``
 

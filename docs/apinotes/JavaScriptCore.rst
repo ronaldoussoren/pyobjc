@@ -32,7 +32,7 @@ This is a context manager that makes it easier to deal with reference counts::
     with JavaScriptCore.autoreleasing(expression) as value:
        pass
 
-is more or less equivalant to::
+is more or less equivalent to::
 
      value = expression
      try:

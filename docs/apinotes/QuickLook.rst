@@ -12,4 +12,4 @@ These bindings are accessed through the ``Quartz`` package (that is, ``import Qu
 
 .. note::
 
-   This framework is deprected in macOS 10.15.
+   This framework is deprecated in macOS 10.15.

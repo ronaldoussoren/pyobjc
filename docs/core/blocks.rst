@@ -48,7 +48,7 @@ Implementing blocks in Python
 -----------------------------
 
 It is very easy to use Objective-C methods that have a block as one of their
-arguments: just pass an arbitrary callable. PyObjC will automaticly wrap your
+arguments: just pass an arbitrary callable. PyObjC will automatically wrap your
 callable in the right low-level datastructure.
 
 One of the side-effects of this is that the variour storage classes that are

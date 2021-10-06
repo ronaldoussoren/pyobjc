@@ -13,10 +13,10 @@ of macOS
 
 * "import Quartz"
 
-  PyObjC als provides bindings to the CoreGraphics frameworks, and does
+  PyObjC also provides bindings to the CoreGraphics frameworks, and does
   this through the "Quartz" package. This binds almost all of CoreGraphics
   (and the rest of Quartz), but does only provide a classic function-based
   API.
 
-  The PyObjC bindings are avaiable for all Python versions and macOS
+  The PyObjC bindings are available for all Python versions and macOS
   releases supported by PyObjC.

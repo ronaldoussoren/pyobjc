@@ -29,7 +29,7 @@ supports the wrappers for these types in ``Carbon.File``. The wrappers in
 
     .. sourcecode:: python
 
-        >>> ref = objc.FSRef.from_pathname("/Libray")
+        >>> ref = objc.FSRef.from_pathname("/Library")
         >>> isinstance(ref, objc.FSRef)
         True
 
@@ -63,7 +63,7 @@ supports the wrappers for these types in ``Carbon.File``. The wrappers in
     .. note::
 
        "FSSpec" is a deprecated type in Apple's APIs. The type is not
-       availble for 64-bit code, and shouldn't be used for new development.
+       available for 64-bit code, and shouldn't be used for new development.
 
     Instances of ``objc.FSSpec`` are opaque and don't provide access to
     specific fields in the structure. The following methods and properties

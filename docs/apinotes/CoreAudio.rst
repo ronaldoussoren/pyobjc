@@ -31,7 +31,7 @@ API Notes
   - AudioChannelLayout
   - AudioValueTranslation
 
-  In all cases you should explictly pass an instance of these structure to functions,
+  In all cases you should explicitly pass an instance of these structure to functions,
   even for pass-by-reference output parameters. This is needed due to the low-level
   structure of these types.
 

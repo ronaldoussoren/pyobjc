@@ -51,7 +51,7 @@ Cocoa type when reading them back, even when reading them back in Python. Progra
 than need high fidility when roundtripping object graphs therefore
 need to use keyed archiving when possible.
 
-For the classes mentioned in the previous paragraph PyObjC implementes
+For the classes mentioned in the previous paragraph PyObjC implements
 "NSSecureCoding", it doesn't do so for other Python classes.
 
 Python subclasses of a Cocoa class can only be archived when they
@@ -88,7 +88,7 @@ of times. Because of this it is not always possible to read back
 archives created with a newer version of PyObjC using older versions
 of PyObjC. As of PyObjC 3.0 there is a fairly good test suite for
 the NSCoding support in PyObjC and the intention is to not introduce
-futher backward incompatble changes for keyed archiving, and only
+further backward incompatible changes for keyed archiving, and only
 introduce changes for non-keyed archiver when there are no other
 solutions.
 
@@ -98,7 +98,7 @@ versions of PyObjC can read back newer archives.
 
   +-----------+--------------------+--------------------+--------------------------------------+
   | *Version* | *Backward*  |br|   | *Forward* |br|     | *Notes*                              |
-  |           | *compatible*       | *compatbile*       |                                      |
+  |           | *compatible*       | *compatible*       |                                      |
   +===========+====================+====================+======================================+
   | 2.5       | Yes                | Maybe              | Encoding of pure python objects      |
   |           |                    |                    | other than those with explicit       |

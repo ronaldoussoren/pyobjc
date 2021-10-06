@@ -15,4 +15,4 @@ API Notes
 The full API for the ModelIO framework is available from Python, except
 for methods that have a SIMD types as one of their arguments or as a return
 value (those require changes to PyObjC's core bridge).  Because of this these
-bindings are not very usefull at this time.
+bindings are not very useful at this time.

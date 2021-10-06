@@ -30,7 +30,7 @@ a manual wrapper that is not yet written.
 
 The 'refCon' must be an integer. The 'callbacks' argument must be None.
 
-Use :func:`context.register` if you want to store an arbirary python
+Use :func:`context.register` if you want to store an arbitrary python
 object.
 
 .. note::
@@ -38,4 +38,4 @@ object.
    Changing the API to allow arbitrary python objects here is not
    possible as the function ``DRGetRefCon`` doesn't return the callback
    info, and hence PyObjC cannot know how to bridge the result of that
-   function back to python unless we treat is as an arbirary 'handle'.
+   function back to python unless we treat is as an arbitrary 'handle'.

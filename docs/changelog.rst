@@ -56,7 +56,7 @@ Backward incompatible changes
   * ``CGDataProviderCreateDirectAccess``
 
   These functions were removed as a public API in macOS 10.8, but were still
-  available through PyObjC through old backward compatiblity code. That code has
+  available through PyObjC through old backward compatibility code. That code has
   now been removed.
 
 * For compatibility with Python's socket APIs functions that return a
@@ -65,7 +65,7 @@ Backward incompatible changes
 
 * The (undocumented) API in pyobjc-api.h (used in some framework bindings to
   integratie with pyobjc-core) has changed in an incompatible way, in particular
-  the API for "caller" functions now mostly mirrors the vectorcall convension.
+  the API for "caller" functions now mostly mirrors the vectorcall convention.
 
 Upcoming incompatible changes
 .............................
@@ -195,7 +195,7 @@ Other changes and bugfixes
 
 * #365: The ``PyObjCTools`` namespace package no longer has an ``__init__.py``
   file in the source tree (that is, the tree switches to implicit namespace
-  packages instead of the older setuptools style for namespace pacakges).
+  packages instead of the older setuptools style for namespace packages).
 
   This primarily affects testing with recent versions of pip/setuptools (which
   seem to no longer install the ``__init__.py`` file for namespace packages).
@@ -218,7 +218,7 @@ Other changes and bugfixes
 
 * #385: Fix race condition the lazy importer
 
-  When two threads simultaniously try to get an attribute from a framework
+  When two threads simultaneously try to get an attribute from a framework
   binding one of them might fail with an attribute error because information
   for resolving the name was removed before actually resolving the name.
 
@@ -230,6 +230,9 @@ Other changes and bugfixes
   'NSZone*') has switched to :c:func:`PyType_FromSpec`.
 
 * Added "nullability" attributes to Objectice-C sources for pyobjc-core.
+
+* #391: Fix some spelling errors found by the
+  `codespell <https://pypi.org/project/codespell/>`_ tool.
 
 Version 7.3
 -----------
@@ -496,9 +499,9 @@ Version 6.1
 Version 6.0.1
 -------------
 
-* #277: Remove debug print accidently left in production
+* #277: Remove debug print accidentally left in production
 
-* #278: Surpress "-Wunguarded-availability" warnings in the extension
+* #278: Suppress "-Wunguarded-availability" warnings in the extension
   AppKit._inlines
 
 
@@ -607,7 +610,7 @@ Version 5.1.2
 
 * #255: Calling completion handler failed due to incomplete runtime info
 
-  PyObjC's metadata system didn't automaticly set the call signature
+  PyObjC's metadata system didn't automatically set the call signature
   for blocks passed into a method implemented in Python. This causes problems
   when the ObjC or Swift block does not have signature information in the
   ObjC/blocks runtime.
@@ -678,7 +681,7 @@ Version 5.0b2
 * Finished bindings for CoreMedia, I noticed during review that the bindings were
   far from finished.
 
-* Fixed problem with unitialized memory in pyobjc-core
+* Fixed problem with uninitialized memory in pyobjc-core
 
 * The CarbonCore bindings included a number of symbols that shouldn't be exposed
 
@@ -781,7 +784,7 @@ Version 5.0a0
   version of macos:
 
   1) The constants "objc.MAC_OS_X_VERSION_CURRENT" can be
-     compared with one of the "objc.MAC_OS_X_VERSION\_..." contants.
+     compared with one of the "objc.MAC_OS_X_VERSION\_..." constants.
 
   2) The function "objc.macos_avaiable(major, minor[, patch])"
      returns true if the current macOS version is at least the
@@ -845,7 +848,7 @@ Version 4.2
 Version 4.1
 -----------
 
-* Protection agains buffer overflow and negative indexes in
+* Protection against buffer overflow and negative indexes in
   ``__getitem__`` and ``__setitem__`` for ``objc.varlist`` instances.
 
 * Fix incorrect metadata for ``+[NSEvent addLocalMonitorForEventsMatchingMask:handler:]``
@@ -863,7 +866,7 @@ Version 4.1
 
   Reported by Dave Fuller
 
-* Issue #218: Explictly cause an ImportError when reloading ```objc._objc```
+* Issue #218: Explicitly cause an ImportError when reloading ```objc._objc```
 
   Reloading the PyObjC core extension now raises an ImportError because
   this cannot work and used to raise a rather vague error.
@@ -973,7 +976,7 @@ Version 4.0b1
 
 * Using wrappers for C structs as sequences is deprecated, this
   feature was introduced a long while ago when the framework wrappers
-  were very incomplete and is no longer usefull.
+  were very incomplete and is no longer useful.
 
 * Add ``objc.options.structs_indexable``. When this option is True
   (the default) wrappers for C structs behave as before, when the
@@ -1088,7 +1091,7 @@ New features:
 
 * Issue #178: Add basic example for the Contacts framework
 
-  The Contacts framwork now contains a very simple example that shows how
+  The Contacts framework now contains a very simple example that shows how
   to fetch contacts from the contact store.  Apple's documentation on
   the framework contains more comprehensive sample code, which should make
   it clear how to use the framework.
@@ -1186,9 +1189,9 @@ the error can be avoided by decorating these methods with ``objc.python_method``
       @objc.python_method
       def mymethod(self, a, b): ...
 
-This cannnot be used for methods used from Objective-C, for those you will
+This cannot be used for methods used from Objective-C, for those you will
 have to rename the method or you will have to provide an appropriate selector
-explictly.
+explicitly.
 
 * Fix crash when using some APIs in the LaunchServices framework.
 
@@ -1498,7 +1501,7 @@ Version 3.0
   and ``Quartz.CGEventKeyboardGetUnicodeString``.
 
 * Issue #77: Passing a bound selector as a block argument failed when the block
-  was actually called because the trampoline that calls back to Python accidently
+  was actually called because the trampoline that calls back to Python accidentally
   ignored the bound ``self`` argument.
 
 * Issue #76: It is now possible to pass ``None`` to a method expecting a block
@@ -1527,7 +1530,7 @@ Version 3.0
   and hence requires Python 3.3. Decoding should work with earlier python
   versions as well.
 
-* Addd ``objc.autorelease_pool``, a context manager for managing an
+* Add ``objc.autorelease_pool``, a context manager for managing an
   autorelease pool. Usage::
 
        with objc.autorelease_pool():
@@ -1563,7 +1566,7 @@ Version 3.0
   Because of you can now order instances of ``NSDecimal`` and ``int``.
 
 * ``PyObjCTools.KeyValueCoding.ArrayOperators`` and
-  ``PyObjCTools.KeyValueCoding.arrayOperators`` were accidently public
+  ``PyObjCTools.KeyValueCoding.arrayOperators`` were accidentally public
   names in previous releases, and are now removed. Use the array operators
   in the KVC protocol instead.
 
@@ -1578,7 +1581,7 @@ Version 3.0
   providing arguments to the build_ext command), instead of editing the
   setup.py file.
 
-  Currently the following options are availabel for the build_ext command:
+  Currently the following options are available for the build_ext command:
 
   * ``--use-system-libffi``: When this option is used the build will use
     /usr/lib/libffi.dylib instead of the embedded copy of libffi. The latter
@@ -1629,7 +1632,7 @@ Version 3.0
 
   * There were some conflicts because a class implemented two selectors that caused
     the same python method to be added to the class *__dict__*. Which one was added
-    was basicly random.
+    was basically random.
 
   * The functionality required PyObjC to maintain a full *__dict__* for classes, even
     when most Cocoa methods were never called. Ensuring that the contents of *__dict__*
@@ -1659,7 +1662,7 @@ Version 3.0
     an colon. Two leading capitals are often used as a way to add some kind of namespacing
     to selector names (and avoid conflicts when a method with the same name is added later by the library provider)
 
-* Added *__new__* method to NSString, it is now possible to explictly convert a python string to a Cocoa
+* Added *__new__* method to NSString, it is now possible to explicitly convert a python string to a Cocoa
   string with ``NSString(someString)``
 
 * Added *__eq__* and *__ne__* methods to native selector objects, which mean you can now
@@ -1722,7 +1725,7 @@ Version 3.0
   and which will be available through pyobjc when deploying to 10.7)
 
 * The framework wrappers no longer export a "protocols" submodule. Those submodules were deprecated in
-  2.4 and did not contain information that is usefull for users of PyObjC.
+  2.4 and did not contain information that is useful for users of PyObjC.
 
 * Dropped the "objc.runtime" attribute (which was deprecated in PyObjC 2.0)
 
@@ -1828,7 +1831,7 @@ Version 3.0
 
     .. note::
 
-       There will be futher cleanup of this API before the 3.0 release.
+       There will be further cleanup of this API before the 3.0 release.
 
     Added a *name* argument to PyObjCPointerWrapper_Register.
 
@@ -1903,7 +1906,7 @@ Version 3.0
 * Removed workarounds for KVO bugs in macOS 10.3.9, which means KVO
   will likely not work properly anymore on that release of OS X.
 
-* Earlier versions of PyObjC accidently exposed ``-[NSObject respondsToSelector:]``
+* Earlier versions of PyObjC accidentally exposed ``-[NSObject respondsToSelector:]``
   as ``NSObject.respondsToSelector()`` as well as the expected
   ``NSObject.respondsToSelector_()``. The first incorrect binding no
   longer works.
@@ -2026,7 +2029,7 @@ Version 2.5.2
 Version 2.5.1
 -------------
 
-- PyObjC could crash when calling a method that is dynamicly generated
+- PyObjC could crash when calling a method that is dynamically generated
   (that is, the selector is not present in the class according to the
   Objective-C runtime but the instance responds to it anyway).
 
@@ -2042,7 +2045,7 @@ Version 2.5.1
   be read back as such.
 
   This increases interoperability with code that expects to read back a
-  non-keyed archive in a different proces. An example of this is the use
+  non-keyed archive in a different process. An example of this is the use
   of Growl (see issue #31)
 
   Instances of subclasses of unicode are not affected by this change, and
@@ -2054,7 +2057,7 @@ Version 2.5.1
 - Issue #41: the 'install.py' script in the root of pyobjc repository
   failed to perform an install when running in a clean checkout of the tree.
 
-- Issue #44: the various Cocoa frameworks only export @protocol defintions when
+- Issue #44: the various Cocoa frameworks only export @protocol definitions when
   they happen to be used by code in the framework. Added extensions to the
   various framework wrappers to ensure that all protocols are available to
   python code.
@@ -2086,7 +2089,7 @@ Version 2.5
      otherObject = NSObject(c_void_p=voip_p)
      assert anObject is otherObject
 
-  Note that it is save to contruct the python proxy from NSObject,
+  Note that it is save to construct the python proxy from NSObject,
   the class will return an instance of the correct proxy type (in this
   example an instance of NSArray)
 
@@ -2117,7 +2120,7 @@ Version 2.5
   code.
 
 - Issue #30: Explicitly check if the compiler works, and try to
-  fall back to clang if it doesn't. This uses a simular algoritm as
+  fall back to clang if it doesn't. This uses a simular algorithm as
   the fix for <https://bugs.python.org/issue13590> in Python's tracker.
 
 - Issue #22: Reimplement support for bridgesupport files
@@ -2156,7 +2159,7 @@ Version 2.5
 
      In the long run I'd like to make struct wrappers immutable to allow using
      them as dictionary keys. This is a first step in that direction and makes
-     it possible to verify that immutable struct wrappers are useable.
+     it possible to verify that immutable struct wrappers are usable.
 
 - Added :func:`objc.createStructAlias`, and deprecated
   :func:`objc.registerStructAlias`. The new function has a "name" argument
@@ -2180,7 +2183,7 @@ Version 2.5
   and is fully documented. The old name is temporarily available as
   an alias.
 
-- Move (deprected) decorator "signature" from objc._functions to objc._descriptors,
+- Move (deprecated) decorator "signature" from objc._functions to objc._descriptors,
   and remove the former module.
 
   .. note::
@@ -2201,10 +2204,10 @@ Version 2.5
 
 - Removed deprecated methods from PyObjCTools.TestSupport
 
-- :class:`collections.Sequence` objects are now automaticly proxied as NSArray
+- :class:`collections.Sequence` objects are now automatically proxied as NSArray
   instances
 
-- :class:`collections.Mapping` objects are now automaticly proxies as NSDictionary
+- :class:`collections.Mapping` objects are now automatically proxies as NSDictionary
   instances
 
 - Removed some objects and functions from objc._bridges that weren't public
@@ -2243,7 +2246,7 @@ Version 2.5
 - Fixed issues with :mod:`PyObjCTools.KeyValueCoding` that were found by improved
   unittests:
 
-  - ``getKey`` didn't work propertly on dictionaries (dictionaries were treated as sequences)
+  - ``getKey`` didn't work properly on dictionaries (dictionaries were treated as sequences)
 
   - ``getKeyPath(list, "@avg.field")`` didn't work when field wasn't a valid key for all
      items in the list, and likewise for the '@sum', '@min', '@max' special keys.
@@ -2302,7 +2305,7 @@ Version 2.5
   sets, that is calling ``cmp(anNSSet, aValue)`` will raise a TypeError exception unless
   both arguments are the same object (``anNSSet is aValue``).
 
-- Issue #36: explictly document that PyObjC does not support the Objective-C Garbage Collection
+- Issue #36: explicitly document that PyObjC does not support the Objective-C Garbage Collection
   system (introduced in OSX 10.5, deprecated in OSX 10.8), and also mention this in the
   documentation for the screen saver framework because the screen saver engine uses GC on
   OSX 10.6 and 10.7.
@@ -2386,7 +2389,7 @@ Version 2.4
      class MyClass (NSObject, Protocol1, Protocol2):
         pass
 
-  Note: The Python 2.x style works upto Python 3.2. In Python 3.3 and later
+  Note: The Python 2.x style works up to Python 3.2. In Python 3.3 and later
   the Python 2.x style declaration no longer works due to changes in the
   language.
 
@@ -2405,11 +2408,11 @@ Version 2.4
 
   Known issues:
 
-  * metadata conflict error when explictly implementing a prototype
+  * metadata conflict error when explicitly implementing a prototype
 
   * one test failure w.r.t. unichar argument arrays
 
-  Futhermore there are two refcounting test failures in both 3.2 and 3.3
+  Furthermore there are two refcounting test failures in both 3.2 and 3.3
 
 
 - Add ``objc.setObjCPointerIsError`` and ``objc.getObjCPointerIsError``.
@@ -2464,7 +2467,7 @@ Version 2.3
 - Add some experimental code that slightly reduces the amount of
   memory used when loading bridgesupport files.
 
-  Futher work is needed to investigate what causes the memory
+  Further work is needed to investigate what causes the memory
   usage to increase as much as it does, sadly enough Instruments
   doesn't play nice with ``--with-pymalloc`` and for some reason
   'import Foundation' crashes with ``--without-pymalloc``.
@@ -2495,13 +2498,13 @@ Version 2.3
   compatible with information gathered from the Objective-C runtime.
 
   This ensures that when a native method signature is incompatible
-  with the signature in a metadata file the brige won't garble the
+  with the signature in a metadata file the bridge won't garble the
   correct information (and that in turn avoids hard crashes).
 
 - PyObjC's support for ``NSCoding`` now also works with plain ``NSArchiver``
   instances, not just with ``NSKeyedArchiver``.
 
-- (This item is currenlty only true for python3, need tests for python 2.x)
+- (This item is currently only true for python3, need tests for python 2.x)
 
   NSDictionary now fully implements the dict API, except for the differences
   not below:
@@ -2635,12 +2638,12 @@ Version 2.3
   are minimal w.r.t. options for tweaking their behaviour. That will change in
   future versions of PyObjC.
 
-  Please let us know which hooks would be usefull.
+  Please let us know which hooks would be useful.
 
 - The documentation is now written using Sphinx.
 
   NOTE: This is an operation in progress, the documentation needs work to be
-  truly usefull.
+  truly useful.
 
 - The (undocument) module ``PyObjCTools.DistUtilsSupport`` is no longer
   present.
@@ -2763,7 +2766,7 @@ Version 2.2 (2009-11-24)
 
   * The docstring of a category is now ignored
 
-  * You'll get an explict error exception when trying to add and ``ivar`` to
+  * You'll get an explicit error exception when trying to add and ``ivar`` to
     a class
 
   * It's now possible to add class attributes in a category:
@@ -2789,7 +2792,7 @@ Version 2.2 (2009-11-24)
     PyObjC representation for ``FSRef`` and ``FSSpec`` structures.
 
 - Added more magic signature heuristics: the delegate selector for
-  sheets is now automaticly recognized, removing the need for
+  sheets is now automatically recognized, removing the need for
   the decorator ``AppHelper.didEndSelector`` (which will stay present
   for backward compatibility).
 
@@ -2802,14 +2805,14 @@ Version 2.2 (2009-11-24)
 - Added ``free_result`` attribute to the ``retval`` element in metadata
   files. When this attribute has value ``'true'`` the return value of the
   C function (or ObjC-method) will be free-ed using the function ``free()``,
-  otherwise the bridge assumes other code is reponsible to free the result.
+  otherwise the bridge assumes other code is responsible to free the result.
 
   This is to be used for low-level C API's that return a pointer to a
-  dynamicly allocated array that is to be free-ed by the caller. One example
+  dynamically allocated array that is to be free-ed by the caller. One example
   is the function ``DHCPClientPreferencesCopyApplicationOptions`` in the
   SystemConfiguration framework.
 
-- Added ``objc.context``, which is helpfull for dealing with "context"
+- Added ``objc.context``, which is helpful for dealing with "context"
   arguments as used by several Cocoa APIs. The context argument must be
   a number in Python, while you'd prefer to pass in an arbitrary object
   instead. The ``objc.context`` registry allows you to get a context
@@ -2901,7 +2904,7 @@ Version 2.2 (2009-11-24)
 
   * ``_C_CHAR_AS_TEXT``: A "char" in Objective-C that is used as a character
 
-  PyObjC will automaticly translate these values into the correct Objective-C
+  PyObjC will automatically translate these values into the correct Objective-C
   type encoding when communicating with the Objective-C runtime, making this
   change transparent to anyone but Python users.
 
@@ -2913,7 +2916,7 @@ Version 2.2 (2009-11-24)
 
 - Output arguments are no longer optional. They must be specified both in
   method implementations and method calls. In PyObjC 2.0 they were optional,
-  but raised a deprecation warning, for backward compatiblity with PyObjC 1.x.
+  but raised a deprecation warning, for backward compatibility with PyObjC 1.x.
 
   The backward compatibility code was removed because it made code more
   complicated and actually caused some bugs.
@@ -2975,7 +2978,7 @@ Version 2.2 (2009-11-24)
   all earlier versions of PyObjC (which wasn't noticed earlier because
   Apple's frameworks don't use this construction).
 
-- BUGFIX: correctly select the native implementation of the compatiblity
+- BUGFIX: correctly select the native implementation of the compatibility
   routines for the ObjC 2.0 runtime API when running on 10.5 (when compiled
   for OSX 10.3 or later).
 
@@ -3158,7 +3161,7 @@ Version 2.0 (MacOS X 10.5.0)
 
 
 - PyObjC has been split into several smaller packages: ``pyobjc-core`` contains
-  the core bridge and frameworks are wrapped as seperate setuptools packages.
+  the core bridge and frameworks are wrapped as separate setuptools packages.
 
 - Objective-C objects now have an implicit attribute named ``_`` which can
   be used a shortcut for Key-Value-Coding.
@@ -3221,7 +3224,7 @@ Version 2.0 (MacOS X 10.5.0)
   This is needed to capture all information about CF types.
 
 - This version introduces generic support for callback functions. The metadata
-  metioned before contains information about the signature for callback
+  mentioned before contains information about the signature for callback
   functions, the decorator ``callbackFor`` converts a plain function to
   one that can be used as a callback:
 
@@ -3278,7 +3281,7 @@ Version 2.0 (MacOS X 10.5.0)
   The already existing behaviour is the same as passing in ``None`` for all
   output arguments.
 
-  This is most useful for supressing an ``NSError`` value for methods that
+  This is most useful for suppressing an ``NSError`` value for methods that
   have an ``NSError**`` argument (when you don't want to look at that value),
   because generating that object might be expensive.
 
@@ -3308,7 +3311,7 @@ Version 2.0 (MacOS X 10.5.0)
   program crashes. The warning is ``objc.RevivedObjectiveCObjectWarning``.
 
 - Some functions and methods return an instance of ``objc.varlist``. These
-  objects behave a little like tuples, but don't have a defined lenght, you
+  objects behave a little like tuples, but don't have a defined length, you
   are responsible to not peak beyond the end of the actual array.
 
   The best way to deal with these objects is to convert them to real tuples
@@ -3424,12 +3427,12 @@ Version 1.4 (2006-06-14)
   reliably detect if the file was opened in append mode though.
 
 - Make it possible to override the KVO methods, like ``setValue:forKey:`` and
-  ``valueForKey:`` in Python for all levels in the inheritance hierarchie.
+  ``valueForKey:`` in Python for all levels in the inheritance hierarchy.
 
 - Fix issues with reference counts for ``__slots__``.
 
 - Experimental: use ``-autorelease`` instead of ``-release`` to release
-  values in destructors. This seems to solve at least one memory managment
+  values in destructors. This seems to solve at least one memory management
   issue.
 
 - A slight complication in the naming rule:
@@ -4159,7 +4162,7 @@ Version 1.0rc1 (2003-08-10)
   incomplete state of objects to the pickle.
 
 - The default repr() of ObjC objects is now the result of a call to the
-  ``description`` method. This method is not called for unitialized objects,
+  ``description`` method. This method is not called for uninitialized objects,
   because that might crash the interpreter; we use a default implementation
   in that case.
 
@@ -4213,13 +4216,13 @@ Version 1.0b1 (2003-07-05)
 
   If you build PyObjC from source you will have to build on a system that has
   the WebKit SDK installed to make use of this. Note that the additional
-  functionality will only be usuable on systems that have Safari 1.0 installed,
+  functionality will only be usable on systems that have Safari 1.0 installed,
   however as long as you don't use the additional functionality it is safe
   to run a 'WebKit-enabled' PyObjC on systems without Safari 1.0.
 
 - It is no longer necessary to specify which protocols are implemented by
 
-  a class, this information is automaticly deduced from the list of implemented
+  a class, this information is automatically deduced from the list of implemented
   methods. You'll still a runtime error if you implement some methods of a
   protocol and one of the unimplemented methods is required.
 
@@ -4253,7 +4256,7 @@ Version 1.0b1 (2003-07-05)
 - Improved unittests, greatly increasing the confidence in the correctness
   of the bridge.
 
-- All suppport for non-FFI builds has been removed.
+- All support for non-FFI builds has been removed.
 
 - Object state is completely stored in the Objective-C object.  This has no
   user-visible effects, but makes the implementation a lot easier to
@@ -4276,7 +4279,7 @@ Version 1.0b1 (2003-07-05)
 - Added support for custom conversion for pointer types. The end result is that
   we support more Cocoa APIs without special mappings.
 
-- The generator scripts are automaticly called when building PyObjC. This
+- The generator scripts are automatically called when building PyObjC. This
   should make it easier to support multiple versions of MacOS X.
 
 
@@ -4453,7 +4456,7 @@ Version 0.47, 29 October 1996
 
 - Misc/Makefile.pre.in automatically sets TARGET to ``pyobjc``.
 
-- ObjC.m splitted to ObjCObject.m ObjCMethod.m ObjCPointer.m
+- ObjC.m split to ObjCObject.m ObjCMethod.m ObjCPointer.m
   ObjCRuntime.m.
 
 - New (almost invisible) types: ObjCSequenceObject and
@@ -4491,7 +4494,7 @@ Version 0.45, 14 October 1996
 
 - Double syntax: to make it easier for us to test and choose the
   better candidate, the only one that will be present in the final 1.0
-  release. Keeping both would result in a speed penality.
+  release. Keeping both would result in a speed penalty.
 - Revisited streams, in particular GNUstep support.
 
 Version 0.44, 9 October 1996
@@ -4508,7 +4511,7 @@ Version 0.43, 7 October 1996
 - Completed ObjCStream implementation. There is now a new module, ObjCStreams
   which is automatically loaded by ObjC. You can access it as ObjC.streams.
 
-- Manual splitted in three parts: libPyObjC.tex with the chapter intro,
+- Manual split in three parts: libPyObjC.tex with the chapter intro,
   libObjC.tex describing the main module, libObjCStreams.tex explains the
   stream facilities.
 
@@ -4537,7 +4540,7 @@ Version 0.41, 2 October 1996
 
 - Setup.in directives changed. See the new file Modules/Setup.PyObjC.in
 
-- Distribuited as a standalone package. Special thanks to Bill Bumgarner.
+- Distributed as a standalone package. Special thanks to Bill Bumgarner.
 
 Version 0.4, 27 September 1996
 ------------------------------

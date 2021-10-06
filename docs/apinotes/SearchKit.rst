@@ -16,5 +16,5 @@ API Notes
 SKIndexClose
 ............
 
-Do not call this function, the garbage collector will automaticly close the index
+Do not call this function, the garbage collector will automatically close the index
 when it is no longer needed.

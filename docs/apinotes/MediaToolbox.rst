@@ -16,7 +16,7 @@ The full framework is available from Python. This framework was introduced in ma
 
   The "callbacks" argument must be a tuple of 7 items, corresponding to
   the fields in the C structure. The second item ("clientInfo") can be
-  an arbtrary python object.
+  an arbitrary python object.
 
   The third and later elements must be None or a Python callable.
 

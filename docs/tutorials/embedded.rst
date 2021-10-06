@@ -49,7 +49,7 @@ Follow these steps:
 
 3. Open ``CDInfoDocument.nib``.  Select the Class View, ``NSObject``, subclass
    as ``ITunesCommunication``.  Give the class an ``askITunes:`` action.
-   Instantiate the class as object ``ITunesCommunication``.  This wll be the
+   Instantiate the class as object ``ITunesCommunication``.  This will be the
    class that we write in Python.
 
 4. Go to the object view again, open the Window.

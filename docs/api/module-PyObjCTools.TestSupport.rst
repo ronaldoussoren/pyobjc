@@ -6,7 +6,7 @@
    :synopsis: Testing helpers
 
 This module provides classes and functions that are
-usefull for testing PyObjC itself including the framework
+useful for testing PyObjC itself including the framework
 wrappers.
 
 .. warning::
@@ -25,7 +25,7 @@ wrappers.
    Returns the SDK version used to compile Python,
    or :data:`None` when no version can be calculated.
 
-   The SDK version is a tupel with the major
+   The SDK version is a tuple with the major
    and minor versions of macOS (for example ``(10, 8)``).
 
 .. function:: fourcc(value)
@@ -74,7 +74,7 @@ wrappers.
 
 .. function:: is32Bit()
 
-   Returns :data:`True` if the proces is in 32-bit mode.
+   Returns :data:`True` if the process is in 32-bit mode.
 
 .. function:: onlyIf(expr, message)
 
@@ -85,13 +85,13 @@ wrappers.
 
    Decorator for enabling a test only when using Python 2.x.
 
-   This is basicly ``onlyIf(sys.version_info[0] == 2)``.
+   This is basically ``onlyIf(sys.version_info[0] == 2)``.
 
 .. function:: onlyPython3
 
    Decorator for enabling a test only when using Python 3.x.
 
-   This is basicly ``onlyIf(sys.version_info[0] == 3)``.
+   This is basically ``onlyIf(sys.version_info[0] == 3)``.
 
 .. function:: onlyOn32Bit
 

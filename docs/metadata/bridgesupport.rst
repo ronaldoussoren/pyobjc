@@ -40,7 +40,7 @@ PyObjC supports loading bridgesupport files when initializing a module
 using :func:`initFrameworkWrapper`, as well as parsing the contents of
 bridgesupport files using :func:`parseBridgeSupport`.
 
-The function :func:`initFrameworkWrapper` is basicly a one-step
+The function :func:`initFrameworkWrapper` is basically a one-step
 solution for wrapping a framework: it loads the framework bundle
 and bridgesupport file and then initializes the contents of the wrapper
 module.   Bridgesupport files are located using a search path:
@@ -147,7 +147,7 @@ supported child elements and attributes.
 The document can contain other elements, attributes, and extra whitespace and those will be ignored by
 the bridgesupport parser.
 
-Bridgesupport elements are processed in an undefined order, the side effects of alle elements that have
+Bridgesupport elements are processed in an undefined order, the side effects of all elements that have
 the same name will take place but it is undefined which definition will be bound to a name in the module
 globals dictionary.
 
@@ -387,7 +387,7 @@ This element does not have children, all information is encoded in attributes.
 
 * *name*: the name that will be added to the globals dictionary
 
-* *orginal*: the name from the globals dictionary that will be aliased. When
+* *original*: the name from the globals dictionary that will be aliased. When
   this object does not exist the *<function_pointer>* element will be ignored.
 
 
@@ -396,7 +396,7 @@ This element does not have children, all information is encoded in attributes.
 
 This element is used to describe an Objective-C informal protocol, that is a set of methods expected by an API that are described
 in the documentation but are not a formal ``@protocol`` definition. The information in informal protocol definitions are
-used by the bridge to automaticly adjust the method signatures of method that are defined in Python.
+used by the bridge to automatically adjust the method signatures of method that are defined in Python.
 
 .. sourcecode:: xml
 
@@ -594,7 +594,7 @@ The following attributes can be used with *<arg>* and *<retval>* elements:
 * *c_array_length_in_arg*: The argument or return value is an array whose length is passed in another argument. The value is the
   index of that argument (for methods index 0 is the first explicit argument). For *<arg>* nodes the value can also be two integers
   separated by a comma, in those cases the first value is the argument that contains the array length that should be passed to the
-  function while the second value the argument that contains the usuable length of the array when the function returns.
+  function while the second value the argument that contains the usable length of the array when the function returns.
 
 .. _`BridgeSupport(5)`: https://www.manpagez.com/man/5/BridgeSupport/
 

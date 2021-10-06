@@ -74,7 +74,7 @@ Push to GitHub.
 Update the PyObjC website
 -------------------------
 
-The PyObjC website is automaticly updated after push to GitHub.
+The PyObjC website is automatically updated after push to GitHub.
 
 Upload the new release
 ----------------------

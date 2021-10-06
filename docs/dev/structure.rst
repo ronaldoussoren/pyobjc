@@ -71,7 +71,7 @@ methods, such as ``[NSString stringWithCString:"bla"]``!
 
 When programming Cocoa in Python, you rarely need to worry about
 reference counts: the ``objc`` module makes this completely transparent to
-user.  This is mostly implemented in ``[de]pythonify_c_value``.  Additonal
+user.  This is mostly implemented in ``[de]pythonify_c_value``.  Additional
 code is needed when calling methods that transfer ownership of their return
 value (as described above) and when updating a instance variable in an
 Objective-C object (retain new and release old, in that order).  Both are

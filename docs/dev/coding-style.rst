@@ -41,7 +41,7 @@ The ``setup.py`` for a framework wrapper should defer most work to
    )
 
 The framework wrappers do *not* include a copy of ``pyobjc-api.h``, but
-dynamicly fetch that at build time.
+dynamically fetch that at build time.
 
 C code
 ------
@@ -51,7 +51,7 @@ instead of ``Py`` as the prefix for globally visible symbols.
 
 .. note::
 
-   Currently identation is done using tabs instead of spaces, I'm slowly migrating
+   Currently indentation is done using tabs instead of spaces, I'm slowly migrating
    code to use spaces for indentation.
 
 All (Objective-)C files in ``Modules/objc/`` should include ``"pyobjc.h"`` as

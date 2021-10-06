@@ -4,7 +4,7 @@ Using NSXPCInterface from Python
 The Foundation class ``NSXPCInterface`` requires an Objective-C
 protocol to define the API of the interface. Those protocols
 cannot be defined in Python using :class:`objc.formal_protocol`
-because the Cocoa class requires some data ("extended method sigantures")
+because the Cocoa class requires some data ("extended method signatures")
 that cannot be registered using the public API for the Objectie-C
 runtime.
 

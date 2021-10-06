@@ -22,7 +22,7 @@ NSAppleEventDescriptor, NSAppleEventManager
 ...........................................
 
 These classes are barely supported, interaction with the lowlevel AppleEvent
-machinery is not tested at all and probably doens't work.
+machinery is not tested at all and probably doesn't work.
 
 Use the ScriptingBridge and/or the `appscript library`_ instead of this
 class.
@@ -35,7 +35,7 @@ NSCoder
 
 * ``-encodeValuesOfObjCTypes:``: Use the basic encoding methods instead
 
-* ``-decodeValuesOfObjCTypes:``: Use the basic decodeing methods instead
+* ``-decodeValuesOfObjCTypes:``: Use the basic decoding methods instead
 
 
 NSData, NSMutableData
@@ -53,7 +53,7 @@ NSData, NSMutableData
 
   The ``freeWhenDone`` argument must be ``False``.
 
-  Use ``buffer(value)`` instead, those will automaticly be bridged to an instance of a
+  Use ``buffer(value)`` instead, those will automatically be bridged to an instance of a
   ``NSData`` subclass.
 
 
@@ -99,7 +99,7 @@ NSGeometry
 ...........
 
 * ``NSZeroPoint``, ``NSZeroSize``, ``NSZeroRect``: these are mutable. Do not use them
-  to initialize a variable that you'll modify later on, use the default contructor instead.
+  to initialize a variable that you'll modify later on, use the default constructor instead.
 
   This is, instead of::
 
@@ -159,7 +159,7 @@ Generic Macros
 NSPointerArray
 ..............
 
-This class is only useable when the array is configured for Object use.
+This class is only usable when the array is configured for Object use.
 
 
 NSPointerFunctions

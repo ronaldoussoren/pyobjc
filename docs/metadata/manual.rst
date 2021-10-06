@@ -36,7 +36,7 @@ The metadata is a Python dictionary with a particular structure (all keys are op
 
 * *arguments*: A dictionary containing more information on arguments. The keys of this dictionary are integers
   with the argument offset (for methods index 0 is the first implicit argument, index 2 is the first argument that is
-  visible in a prototype). The values are metadata dictionaries for the arguments and are decribed
+  visible in a prototype). The values are metadata dictionaries for the arguments and are described
   :ref:`later on <manual-metadata-argument-metadata>`.
 
   In metadata that is returned the *__metadata__()* method of :class:`function` and :class:`selector` objects the
@@ -78,7 +78,7 @@ Keys not listed above will be ignored by the bridge.
 
    The bridge currently does not copy the metadata when you register it with the functions listed above. Don't rely
    on that behavior, it might change in a future release and changes to metadata dictionaries may or may not affect
-   bridge behavior (basicly depending on if the change occurs before or after the bridge first uses the metadata)
+   bridge behavior (basically depending on if the change occurs before or after the bridge first uses the metadata)
 
 *c_array_lenght_in...* interpretation
 .....................................
@@ -90,7 +90,7 @@ determines the value to use for the array.
 For :data:`_C_INOUT` argument the value to use for converting to C and back from C is calculated both before and
 after the function call, which means that the length of the array passed to the function can have a different length
 than the array returned from the function.  This is used for function where a buffer is passed into the function and
-the function indicates the useable size of that buffer by modifiying a pass-by-reference argument.
+the function indicates the usable size of that buffer by modifiying a pass-by-reference argument.
 
 How the size of the C array is calculated depends on the *type* of the argument:
 
@@ -99,7 +99,7 @@ How the size of the C array is calculated depends on the *type* of the argument:
 * When the type is a integer (for example, *int*, *unsigned long* or *NSInteger*) the length
   is the value of the C argument.
 
-* When the type is *NSRange* or *CFRange* the length of the C array is the lenght of the range.
+* When the type is *NSRange* or *CFRange* the length of the C array is the length of the range.
 
 * When the type is *id* and the Objective-C instance responds to the "-count" selector the length
   of the C array is the result of calling that selector.
@@ -141,14 +141,14 @@ dictionary all keys are optional unless the description mentions otherwise.
   when the value is no longer used.
 
   Used by the bridge to correctly maintain the Objective-C reference count. Python users do not have to maintain the
-  reference count themselfes.
+  reference count themselves.
 
 * *already_cfretained*: Value :data:`True` indicates that the return value, or a pass-by-reference output parameter, is
   returned to the caller with an increased reference count. An Objective-C caller will have to call "CFRelease" on the value
   when the value is no longer used.
 
   Used by the bridge to correctly maintain the Objective-C reference count. Python users do not have to maintain the
-  reference count themselfes.
+  reference count themselves.
 
   .. note::
 
@@ -156,7 +156,7 @@ dictionary all keys are optional unless the description mentions otherwise.
 
      The two different keys are present to be able to support Objective-C Garbage Collection: in process with GC enabled
      the CoreFoundation and Cocoa retain count APIs behave differently. Because GC is on the way out and PyObjC doesn't
-     properly support GC anyway it is better to use *already_retained* where approprate and not use *already_cfretained*.
+     properly support GC anyway it is better to use *already_retained* where appropriate and not use *already_cfretained*.
 
 
 * *c_array_delimited_by_null*: When :data:`True`, and the argument or return value *type* is a pointer type, the value
@@ -164,8 +164,8 @@ dictionary all keys are optional unless the description mentions otherwise.
   will strip the null value in return values.
 
   When the *type_override* is :data:`_C_IN` or :data:`_C_INOUT` the input value must be a sequence of values (list, tuple,
-  ...). The bridge allocates a buffer of the right size, converts all values and appends the approprate null value. The
-  value can also be a buffer (such as an :class:`array.array` of the approprate structure), which then must contain a null
+  ...). The bridge allocates a buffer of the right size, converts all values and appends the appropriate null value. The
+  value can also be a buffer (such as an :class:`array.array` of the appropriate structure), which then must contain a null
   value at the end.
 
   When the *type_override* is :data:`_C_OUT` the argument must be either :data:`NULL` to indicate that a :c:data:`NULL`
@@ -177,31 +177,31 @@ dictionary all keys are optional unless the description mentions otherwise.
   two integers (for :data:`_C_INOUT` arguments).
 
   When the *type_override* is :data:`_C_IN` or :data:`_C_INOUT` the input value must be a sequence of values of the correct
-  lenght (at least the length that's expected by the function, additional items in the sequence are ignored).
+  length (at least the length that's expected by the function, additional items in the sequence are ignored).
 
   When the *type_override* is :data:`_C_OUT` the value can be :data:`NULL` (:c:data:`NULL` pointer passed to the function) or
   :data:`None` (PyObjC allocates a C array of the right size and writes nul bytes in the entire buffer).
 
   When the value of the key is a single integer this argument index for the argument that contains the expected size
   of the array. When the value of the key is a tuple of two integers these are the indexes for the argument that contains
-  the size that should be used when calling the function and the argument that contains the size of the array that is useable
+  the size that should be used when calling the function and the argument that contains the size of the array that is usable
   after the call.
 
 * *c_array_of_fixed_length*: When the *type* is a pointer type the actual argument (or result) is an C array of a fixed length. The value
   for this key is an integer that is the length of the C array.
 
 * *c_array_of_variable_length*: When the *type* is a pointer type the actual argument (or result) is a C array, but the
-  lenght of the array is unknown or cannot be described in metadata.
+  length of the array is unknown or cannot be described in metadata.
 
   For results the bridge will return a value of :class:`varlist`.
 
-  For arguments with *type_override* value :data:`_C_IN` or :data:`_C_INOUT` the value for the arugment must be a Python sequence
+  For arguments with *type_override* value :data:`_C_IN` or :data:`_C_INOUT` the value for the argument must be a Python sequence
   and the bridge will allocate a C array that is long enough to contain all items of that sequence; alternatively the argument
-  can be a Python buffer object (simular to :data:`_C_OUT` arugments).  For :data:`_C_OUT` arguments the value for the argument
+  can be a Python buffer object (simular to :data:`_C_OUT` arguments).  For :data:`_C_OUT` arguments the value for the argument
   must be either :data:`NULL` or a Python buffer object that will be passed to the function.
 
 * *c_array_length_in_result*: Only valid for argument metadata. When the argument *type* is a pointer type and the
-  *type_override* is :data:`_C_INOUT` or :data:`_C_OUT` the usuable length of the array is calculated from the return value.
+  *type_override* is :data:`_C_INOUT` or :data:`_C_OUT` the usable length of the array is calculated from the return value.
 
   The size of the buffer that needs to be allocated is determined using one of the other *c_array...* keys in the metadata
   dictionary.
@@ -229,7 +229,7 @@ dictionary all keys are optional unless the description mentions otherwise.
   type b"^v".
 
 * *callable_retained*: Then :data:`True` and *callable* is present and the argument type is b"^?" the callable argument
-  will be retained by the Objective-C funtion or method beyond the call.
+  will be retained by the Objective-C function or method beyond the call.
 
   This key is not used in return value metadata.
 
@@ -276,7 +276,7 @@ Creating and registering types
    The value of *typeId* is :data:`None` for tollfree bridged types, and the result
    of the "GetTypeID" function for the type for other types.
 
-   Returns the class object for the registerd type.
+   Returns the class object for the registered type.
 
 .. function:: createOpaquePointerType(name, typestr, doc)
 
@@ -320,7 +320,7 @@ Creating and registering types
       p.x = 5
       p[0] = 6
 
-   The generated type als has a number of methods:
+   The generated type also has a number of methods:
 
    * *_asdict()*:  Returns a dict that maps from field names to attribute values
 
@@ -347,8 +347,8 @@ Creating and registering types
 
 .. function:: registerStructAlias(typestr, structType)
 
-   Tell the brige that structures with encoding *typestr* should also be
-   coverted to Python using *structType* (a type created using :func:`createStructType`).
+   Tell the bridge that structures with encoding *typestr* should also be
+   converted to Python using *structType* (a type created using :func:`createStructType`).
 
    .. deprecated:: 2.5
       Use :func:`createStructAlias` instead.
@@ -356,8 +356,8 @@ Creating and registering types
 
 .. function:: createStructAlias(name, typestr, structType)
 
-   Tell the brige that structures with encoding *typestr* should also be
-   coverted to Python using *structType* (a type created using
+   Tell the bridge that structures with encoding *typestr* should also be
+   converted to Python using *structType* (a type created using
    :func:`createStructType`).
 
    This also adds a class method named *name* to :class:`objc.ivar`. This class
@@ -457,7 +457,7 @@ Metadata for Objective-C methods and classes
 
     Add a list of method the named class when that class is initialized, the class
     need not be loaded at the time of this call. These additional methods are not
-    added to the Objective-C class, but are only visibile in Python code.
+    added to the Objective-C class, but are only visible in Python code.
 
     The *methods* argument is a list of tuples (methodname, function).
 
@@ -472,7 +472,7 @@ Metadata for Objective-C methods and classes
 
       This uses :func:`addConvenienceForClass` to actually add the conveniences,
       and therefore will add the convenience methods regardless of the actual
-      existance of the Cocoa mapping selectors.
+      existence of the Cocoa mapping selectors.
 
    .. versionadded:: 3.0
 

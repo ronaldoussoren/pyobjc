@@ -17,7 +17,7 @@ Python package by Apple.
 Importing
 ---------
 
-The prefered way to import from packages in these bindings is::
+The preferred way to import from packages in these bindings is::
 
    import Quartz
 

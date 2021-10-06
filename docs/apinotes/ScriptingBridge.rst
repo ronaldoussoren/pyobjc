@@ -14,7 +14,7 @@ Basic usage
 -----------
 
 The Objective-C documentation for the scripting bridge frameworks
-focusses on static tools for creating proxy classes for scriptable
+focuses on static tools for creating proxy classes for scriptable
 applications. This is in general not needed when you're programming
 in Python.
 

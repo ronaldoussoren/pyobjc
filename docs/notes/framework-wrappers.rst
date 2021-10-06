@@ -551,7 +551,7 @@ The framework name links to API notes for that framework, the python packages li
 +--------------------------------------------------------------------------------------+------------------------------------------------------+-----------------------------------------+
 
 Frameworks that are marked as "Will not be wrapped" will not be wrapped, mostly because these frameworks are not
-usefull for Python programmers. Frameworks that are marked with "Not wrapped yet" will be wrapped in some future
+useful for Python programmers. Frameworks that are marked with "Not wrapped yet" will be wrapped in some future
 version of PyObjC although there is no explicit roadmap for this.
 
 Frameworks that are marked as "Swift only framework" have a public API for Swift, but not for other languages. These

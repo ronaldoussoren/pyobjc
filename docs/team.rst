@@ -6,7 +6,7 @@ Current
 
 The current maintainer, and primary author, for PyObjC is
 `Ronald Oussoren <ronaldoussoren@mac.com>`_. Ronald picked up
-the orginal version of PyObjC and rewrote it to be able to
+the original version of PyObjC and rewrote it to be able to
 subclass Cocoa classes instead of just being able to use existing
 Cocoa classes and objects.
 

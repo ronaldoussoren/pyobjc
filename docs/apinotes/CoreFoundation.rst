@@ -80,7 +80,7 @@ types or Objective-C classes.
 
 * ``CFBinaryHeapCreate``
 
-  The ``callbacks`` argument is not present in Python and is automaticly
+  The ``callbacks`` argument is not present in Python and is automatically
   set to a value that allows arbitrary objects that implement the
   ``compare:`` method.
 
@@ -125,7 +125,7 @@ CFFileDescriptor
 ................
 
 * The ``context`` argument for ``CFFileDescriptorCreate`` is a python object,
-  the ``CFFileDescriptorContext`` is automaticly added by the bridge.
+  the ``CFFileDescriptorContext`` is automatically added by the bridge.
 
 * The ``CFFileDescriptorGetContext`` results the python object that was
   used in ``CFFileDescriptorContext``, not a ``CFFileDescriptorContext``
@@ -144,7 +144,7 @@ CFMachPort
 
 * The ``context`` argument for ``CFMachPortCreate``  and
   ``CFMachPortCreateWithPort`` is a python object, the
-  ``CFMachPortContext`` is automaticly added by the bridge.
+  ``CFMachPortContext`` is automatically added by the bridge.
 
 * The ``CFMachPortGetContext`` results the python object that was
   used in ``CFMachPortContext``, not a ``CFMachPortContext``
@@ -166,7 +166,7 @@ CFMessagePort
 CFNumber
 ........
 
-Note that Python numbers are automaticly translated to/from Objective-C
+Note that Python numbers are automatically translated to/from Objective-C
 numbers (NSNumber, which toll-free bridged to CFNumber). This means the
 CFNumber functions should almost never be necessary.
 
@@ -283,7 +283,7 @@ CFXMLParser, CFXMLNode
 
 * These API's are not supported for now. The ``Create`` functions need
   manual wrappers, which haven't been written yet. There are also no
-  uninttests for the automaticly created bindings.
+  uninttests for the automatically created bindings.
 
 * Use a Python XML parser (such as ElementTree) instead.
 

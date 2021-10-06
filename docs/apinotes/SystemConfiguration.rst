@@ -32,8 +32,8 @@ SCNetworkCheckReachabilityByAddress
 ...................................
 
 The ``address`` argument should have a value that can also be used with the Python socket
-APIs (that is, a ``(host, port)`` tuple for IPv4 adresses or
+APIs (that is, a ``(host, port)`` tuple for IPv4 addresses or
 ``(host, port, flowinfo, scopeid)`` tuple for IPv6 addresses).
 
 The ``addrlen`` argument should be ``objc._size_sockaddr_ip4`` for IPv4 addresses and
-``_size_sockaddr_ip4`` for IPv6 adresses.
+``_size_sockaddr_ip6`` for IPv6 addresses.

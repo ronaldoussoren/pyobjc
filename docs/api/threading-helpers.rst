@@ -6,7 +6,7 @@ Utility methods for threading
 contexts, such as after a delay or on another thread.
 
 These methods can be called from Python (of course), but you need to be a bit
-carefull because the implementation of these methods won't catch exceptions
+careful because the implementation of these methods won't catch exceptions
 for you and therefore an uncaught exception in your python code can cause
 the runloop to stop due to an exception, which might terminate your program.
 
@@ -69,7 +69,7 @@ of your program.
 Enhanced methods
 ----------------
 
-The stock methods are quite useful, but at times it is usefull to get the
+The stock methods are quite useful, but at times it is useful to get the
 result back from the other thread. The methods below will call the selector
 on another thread and will return the result from that call in the current
 thread. If the call on the "other" thread raises an exception this exception

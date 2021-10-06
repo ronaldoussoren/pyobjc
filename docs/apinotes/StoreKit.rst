@@ -13,7 +13,7 @@ These bindings are accessed through the ``StoreKit`` package (that is, ``import 
 API Notes
 ---------
 
-This framework is available on OS X 10.7 or later, and is only usefull for
+This framework is available on OS X 10.7 or later, and is only useful for
 applications that are signed by Apple and distributed through the App Store.
 
 The entire framework is available from Python.

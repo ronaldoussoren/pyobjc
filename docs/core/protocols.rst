@@ -38,12 +38,12 @@ Informal protocols and PyObjC
 
 PyObjC has an explicit representation for informal protocols.  This makes
 it possible to use the protocol description to provide better error messages and
-to automaticly deduce the method signatures for classes that implement an
+to automatically deduce the method signatures for classes that implement an
 informal protocol.
 
 Informal protocols are represented using instances of
 :class:`objc.informal_protocol`.  Instances of this class are added to
-a internal registration in the bridge, and are automaticly used when a new
+a internal registration in the bridge, and are automatically used when a new
 class is declared. Because of this classes don't have to declare that they
 conform to an informal protocol.
 

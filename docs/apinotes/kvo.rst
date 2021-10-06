@@ -8,7 +8,7 @@ impossible to generate the right events for pure python objects (such as
 
 * _[1]: at least not without patching the Python interpreter itself.
 
-PyObjC will automaticly call ``willChangeValueForKey:`` and
+PyObjC will automatically call ``willChangeValueForKey:`` and
 ``didChangeValueForKey:`` when changing the attribute of an object that is
 a subclass of ``NSObject``. It is therefore not necessary to call those
 methods in most use-cases for Key-Value Observing.

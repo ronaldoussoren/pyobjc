@@ -115,15 +115,15 @@ version of macOS than the one you used for the build
 * Earlier version of macOS work fine, but you do need to ensure that
   Python itself is build with ``MACOSX_DEPLOYMENT_TARGET`` set to the earliest
   version of macOS you want to support. PyObC, and other extension packages,
-  should automaticly pick up the deployment target from the Python build.
+  should automatically pick up the deployment target from the Python build.
 
   .. note::
 
-     PyObjC contains code that explictly weak-links to a number of APIs that
+     PyObjC contains code that explicitly weak-links to a number of APIs that
      are not available on all macOS releases.
 
      You might still end up with an application that won't run on earlier
-     releases when you use another extension module that (accidently) hard links
+     releases when you use another extension module that (accidentally) hard links
      to an API that is not available in the earlier release.
 
 .. _pip: https://pypi.org/project/pip/

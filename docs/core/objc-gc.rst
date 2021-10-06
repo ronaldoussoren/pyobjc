@@ -1,7 +1,7 @@
 (Historical) Objective-C Garbage Collection
 ===========================================
 
-On macOS versions 10.5 upto 10.12 Objective-C supported optional Garbage Collection (GC) instead of
+On macOS versions 10.5 up to 10.12 Objective-C supported optional Garbage Collection (GC) instead of
 retain counts for code that is explicitly compiled to support (or require) garbage collection.
 
 PyObjC does *not* support the GC system, which means you cannot use PyObjC in host programs that

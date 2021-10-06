@@ -138,7 +138,7 @@ Accessor functions
    This function calls the regular Key-Value Coding method for Cocoa objects.
 
    :param object: An arbitrary object
-   :param keypath: The keypath, colon seperated keys
+   :param keypath: The keypath, colon separated keys
    :type keypath: string
 
 .. function setKeyPath(object, keypath, value)
@@ -150,7 +150,7 @@ Accessor functions
    the value is then set simularly to how :func:`setKey` sets the value.
 
    :param object: An arbitrary object
-   :param keypath: The keypath, colon seperated keys
+   :param keypath: The keypath, colon separated keys
    :type keypath: string
    :param value: The value to set
 

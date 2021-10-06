@@ -730,7 +730,7 @@ to create and use *Controller* objects using `Key-Value Observing`_ and
 `Key-Value Coding`_.  In order to create accessors compatible with this, you
 must use ``objc.accessor`` to create an appropriate selector descriptor.
 
-PyObjC automaticly emits the right `Key-Value Observing`_ notifications when
+PyObjC automatically emits the right `Key-Value Observing`_ notifications when
 you set attributes on an Objective-C class. This is however not supported for
 pure python objects. You should therefore use ``NSMutableArray`` instances
 instead of Python lists for instance variables that will be observed and contain
@@ -954,7 +954,7 @@ desirable to explicitly make shallow or deep copies of the mutable ivars.
 
 NOTE: PyObjC might introduce a helper class when you inherit from a class
 that implements ``NSCopying`` as an internal implementation detail.
-External code should not rely on the existance of this class.
+External code should not rely on the existence of this class.
 
 NOTE2: ``SomeClass.copyWithZone_`` should not be implemented unless a
 superclass already implements ``copyWithZone:``, or else the behavior
