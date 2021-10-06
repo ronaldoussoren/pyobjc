@@ -1127,7 +1127,6 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
         pyself = PyObjCObject_NewTransient(*(id*)args[0], &cookie);
         if (pyself == NULL) {
             Py_XDECREF(insertArg);
-            Py_DECREF(arglist);
             goto error;
         }
 
