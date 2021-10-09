@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef struct {
     PyObject_HEAD
 
-    void* pointer_value;
+    void* _Nullable pointer_value;
 } OpaquePointerObject;
 
 static PyMemberDef opaque_members[] = {

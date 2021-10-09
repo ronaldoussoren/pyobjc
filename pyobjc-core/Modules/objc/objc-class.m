@@ -1111,7 +1111,11 @@ metaclass_dir(PyObject* self)
 
     while (cls != NULL) {
         /* Now add all method names */
-        methods = class_copyMethodList(object_getClass(cls), &method_count);
+
+        /* class_copyMethodList only returns NULL when it sets method_count
+         * to 0
+         */
+        methods = (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
         for (i = 0; i < method_count; i++) {
             char*     name;
             PyObject* item;
@@ -1235,7 +1239,11 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
         }
 
         cls     = objc_metaclass_locate(base);
-        methods = class_copyMethodList(object_getClass(cls), &method_count);
+
+        /* class_copyMethodList only returns NULL when it sets method_count
+         * to 0
+         */
+        methods = (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
         for (j = 0; j < method_count; j++) {
             Method m = methods[j];
 
@@ -1452,7 +1460,12 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
         }
 
         cls     = PyObjCClass_GetClass(base);
-        methods = class_copyMethodList(cls, &method_count);
+
+        /* if the result of class_copyMethodList is NULL the method_count
+         * is set to 0. The code below will only use the result if method_count
+         * is greater than 0.
+         */
+        methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (j = 0; j < method_count; j++) {
             Method m = methods[j];
 
@@ -2012,7 +2025,11 @@ meth_dir(PyObject* self)
 
     while (cls != NULL) {
         /* Now add all method names */
-        methods = class_copyMethodList(cls, &method_count);
+
+        /* class_copyMethodList only returns NULL when it sets method_count
+         * to 0
+         */
+        methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (i = 0; i < method_count; i++) {
             char*     name;
             PyObject* item;
@@ -2302,6 +2319,8 @@ PyObjCClass_ListProperties(PyObject* aClass)
         const char* name = property_getName(props[i]);
         const char* attr = property_getAttributes(props[i]);
         const char* e;
+
+        if (!attr) continue;
 
         item = Py_BuildValue("{sssy}", "name", name, "raw_attr", attr);
         if (item == NULL) {

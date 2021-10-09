@@ -421,7 +421,10 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
 
         cls = PyObjCClass_GetClass(base);
 
-        methods = class_copyMethodList(cls, &method_count);
+        /* class_copyMethodList will only return NULL when it also
+         * sets method_count to 0.
+         */
+        methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (j = 0; j < method_count; j++) {
             Method m = methods[j];
             if (PyObjCClass_HiddenSelector(base, method_getName(m), NO)) {
@@ -964,14 +967,21 @@ meth_dir(PyObject* self)
     cls = object_getClass(PyObjCObject_GetObject(self));
     while (cls != NULL) {
         /* Now add all instance method names */
-        methods = class_copyMethodList(cls, &method_count);
+
+        /* class_copyMethodList will only return NULL when it sets
+         * method_count to 0
+         */
+        methods = (Method* _Nonnull)class_copyMethodList(cls, &method_count);
         for (i = 0; i < method_count; i++) {
             char*     name;
             PyObject* item;
+            SEL sel;
 
             /* Check if the selector should be hidden */
-            if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self),
-                                           method_getName(methods[i]), NO)) {
+            sel = method_getName(methods[i]);
+            if (sel == NULL) continue;
+
+            if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
                 continue;
             }
 

@@ -2280,7 +2280,7 @@ PyObjCFFI_FreeIMP(IMP imp)
     }
 }
 
-IMP
+IMP _Nullable
 PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
 {
     if (PyObjCNativeSelector_Check((PyObject*)aSelector)) {
@@ -2294,6 +2294,12 @@ PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
         } else {
             aMeth = class_getInstanceMethod(nativeSelector->base.sel_class,
                                             nativeSelector->base.sel_selector);
+        }
+
+        if (aMeth == NULL) {
+            PyErr_SetString(PyObjCExc_Error,
+                    "Native selector unexpectedly has no equivalent in Objective-C runtime");
+            return NULL;
         }
 
         return method_getImplementation(aMeth);
@@ -4446,7 +4452,7 @@ PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self, PyObject*const* args, s
     const char*            rettype;
     ffi_cif*               cif;
 
-    PyObjC_Assert(methinfo->shortcut_signature, NULL);
+
 
     if (PyObjCIMP_Check(aMeth)) {
         methinfo = PyObjCIMP_GetSignature(aMeth);
@@ -4461,6 +4467,8 @@ PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self, PyObject*const* args, s
         flags = meth->base.sel_flags;
         cif = meth->sel_cif;
     }
+
+    PyObjC_Assert(methinfo->shortcut_signature, NULL);
 
     if (unlikely(methinfo->suggestion != NULL)) {
         PyErr_Format(PyExc_TypeError, "%R: %s", self, methinfo->suggestion);

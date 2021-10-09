@@ -12,7 +12,7 @@ typedef struct {
 #if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc         vectorcall;
 #endif
-    ffi_cif*               cif;
+    ffi_cif* _Nullable     cif;
 } PyObjCIMPObject;
 
 
@@ -407,7 +407,8 @@ PyObjCIMP_New(IMP imp, SEL selector, PyObjC_CallFunc callfunc,
     result->flags = flags;
 
 #if PY_VERSION_HEX >= 0x03090000
-    if (signature && signature->shortcut_signature && callfunc == PyObjCFFI_Caller) {
+    if (signature && signature->shortcut_signature && (callfunc == PyObjCFFI_Caller)) {
+        PyObjC_Assert(signature->shortcut_signature, NULL);
         result->vectorcall = imp_vectorcall_simple;
     } else {
         result->vectorcall = imp_vectorcall;

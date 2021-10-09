@@ -280,7 +280,11 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     m = class_getClassMethod(self, sel);
     if (m) {
         /* A real Objective-C method */
-        return [NSMethodSignature signatureWithObjCTypes:method_getTypeEncoding(m)];
+        const char* typestr = method_getTypeEncoding(m);
+        if (typestr == NULL) {
+            return nil;
+        }
+        return [NSMethodSignature signatureWithObjCTypes:typestr];
     }
 
     [NSException
@@ -306,7 +310,11 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     m   = class_getInstanceMethod(cls, sel);
     if (m) {
         /* A real Objective-C method */
-        return [NSMethodSignature signatureWithObjCTypes:method_getTypeEncoding(m)];
+        const char* typestr = method_getTypeEncoding(m);
+        if (typestr == NULL) {
+            return nil;
+        }
+        return [NSMethodSignature signatureWithObjCTypes:typestr];
     }
 
     PyObjC_BEGIN_WITH_GIL

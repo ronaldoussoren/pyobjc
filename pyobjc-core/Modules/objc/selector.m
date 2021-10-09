@@ -634,6 +634,7 @@ objcsel_vectorcall(PyObject* _self, PyObject*const* args, size_t nargsf,PyObject
 #if PY_VERSION_HEX >= 0x03090000
         /* Update the vectorcall slot when a faster call is possible */
         if (methinfo->shortcut_signature && execute == PyObjCFFI_Caller) {
+            PyObjC_Assert(methinfo->shortcut_signature, NULL);
             self->base.sel_vectorcall = objcsel_vectorcall_simple;
         }
 #endif
@@ -799,7 +800,8 @@ objcsel_descr_get(PyObject* _self, PyObject* obj, PyObject* class)
     }
 
 #if PY_VERSION_HEX >= 0x03090000
-    if (result->base.sel_methinfo->shortcut_signature && result->sel_call_func == PyObjCFFI_Caller) {
+    /* XXX: 'sel_methinfo' should probably be _Nonnull */
+    if (result->base.sel_methinfo && result->base.sel_methinfo->shortcut_signature && result->sel_call_func == PyObjCFFI_Caller) {
         result->base.sel_vectorcall = objcsel_vectorcall_simple;
     } else {
         result->base.sel_vectorcall = objcsel_vectorcall;

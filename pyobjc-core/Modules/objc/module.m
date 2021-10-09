@@ -447,12 +447,13 @@ PyDoc_STRVAR(currentBundle_doc, "currentBundle()\n" CLINIC_SEP "\n"
 static PyObject*
 currentBundle(PyObject* self __attribute__((__unused__)))
 {
-    id    rval;
+    void* rval;
+    /* XXX: Replace scanf */
     char* bundle_address = getenv("PYOBJC_BUNDLE_ADDRESS");
     if (!(bundle_address && sscanf(bundle_address, "%p", &rval) == 1)) {
         rval = [NSBundle mainBundle];
     }
-    return id_to_python(rval);
+    return id_to_python((id)rval);
 }
 
 PyDoc_STRVAR(loadBundle_doc,

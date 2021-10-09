@@ -93,7 +93,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
 {
     struct addrinfo hints, *res;
     int             error;
-    uint32_t        d1, d2, d3, d4;
+    unsigned int    d1, d2, d3, d4;
     char            ch;
 
     memset((void*)addr_ret, '\0', sizeof(*addr_ret));
@@ -151,6 +151,7 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         sinaddr->sin_addr.s_addr = INADDR_BROADCAST;
         return sizeof(sinaddr->sin_addr);
     }
+    /* XXX: Replace sscanf */
     if (sscanf(name, "%u.%u.%u.%u%c", &d1, &d2, &d3, &d4, &ch) == 4 && 0 <= d1
         && d1 <= 255 && 0 <= d2 && d2 <= 255 && 0 <= d3 && d3 <= 255 && 0 <= d4
         && d4 <= 255) {
@@ -246,12 +247,13 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             return -1;
         }
         /* XXX: Check for correctnless (NUL byte at end, embedded NUL?) */
-        if (len >= (Py_ssize_t)sizeof(addr->sun_path)) {
+        if (len >= (Py_ssize_t)sizeof(addr->sun_path)-1) {
             PyErr_SetString(PyExc_OSError, "AF_UNIX path too long");
             Py_DECREF(value);
             return -1;
         }
         memcpy(addr->sun_path, path, len);
+        addr->sun_path[len] = 0;
         Py_DECREF(value);
         return 0;
 

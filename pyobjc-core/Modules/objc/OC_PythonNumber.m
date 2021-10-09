@@ -18,8 +18,10 @@
             /*
              * This should return an autoreleased value, but that causes
              * a crash in pyobjc-framework-Cocoa/test_regr.py
+             *
+             * XXX: Further investigate
              */
-            return [[NSNumber alloc] initWithUnsignedLongLong:lv];
+            return [[[NSNumber alloc] initWithUnsignedLongLong:lv] autorelease];
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
@@ -528,7 +530,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 #endif
 
 
-- (Class)classForArchiver
+- (Class _Nonnull)classForArchiver
 {
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_CheckExact(value)) {

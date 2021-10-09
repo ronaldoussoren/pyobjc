@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #ifndef NSINTEGER_DEFINED
 
 typedef unsigned int NSUInteger;
@@ -115,13 +117,13 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return gByteString;
 }
 
-- (NSObject*)BOOLArg:(BOOL)v1 andBOOLArg:(BOOL)v2
+- (NSObject* _Nullable)BOOLArg:(BOOL)v1 andBOOLArg:(BOOL)v2
 {
     return [NSArray arrayWithObjects:[NSNumber numberWithInt:(int)v1],
                                      [NSNumber numberWithInt:(int)v2], nil];
 }
 
-- (NSObject*)BOOLArrayOf4In:(BOOL*)value
+- (NSObject* _Nullable)BOOLArrayOf4In:(BOOL*)value
 {
     return [NSArray arrayWithObjects:[NSNumber numberWithInt:(int)value[0]],
                                      [NSNumber numberWithInt:(int)value[1]],
@@ -161,7 +163,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     _idx += 1;
 }
 
-- (NSObject*)BOOLArrayOf4InOut:(BOOL*)value
+- (NSObject* _Nullable)BOOLArrayOf4InOut:(BOOL*)value
 {
     NSObject* result =
         [NSArray arrayWithObjects:[NSNumber numberWithInt:(int)value[0]],
@@ -211,7 +213,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return v;
 }
 
-- (NSObject*)UniCharStringArg:(UniChar*)value
+- (NSObject* _Nullable)UniCharStringArg:(UniChar*)value
 {
     NSUInteger length = 0;
     while (value[length] != 0) {
@@ -220,7 +222,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return [NSString stringWithCharacters:value length:length];
 }
 
-- (NSObject*)UniCharArg:(UniChar)a andUniCharArg:(UniChar)b
+- (NSObject* _Nullable)UniCharArg:(UniChar)a andUniCharArg:(UniChar)b
 {
     return [NSArray arrayWithObjects:[NSString stringWithCharacters:&a length:1],
                                      [NSString stringWithCharacters:&b length:1], nil];
@@ -233,7 +235,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     buffer[2] = 'a';
     buffer[3] = 't';
 }
-- (NSObject*)UniCharArrayOf4InOut:(UniChar*)buffer
+- (NSObject* _Nullable)UniCharArrayOf4InOut:(UniChar*)buffer
 {
     NSObject* result = [NSString stringWithCharacters:buffer length:4];
     buffer[0]        = 'h';
@@ -242,32 +244,33 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     buffer[3]        = 'd';
     return result;
 }
-- (NSObject*)UniCharArrayOf4In:(UniChar*)buffer
+- (NSObject* _Nullable)UniCharArrayOf4In:(UniChar*)buffer
 {
     return [NSString stringWithCharacters:buffer length:4];
 }
 
-- (NSObject*)byteStringArg:(char*)value
+- (NSObject* _Nullable)byteStringArg:(char*)value
 {
     return [NSString stringWithCString:value encoding:NSISOLatin1StringEncoding];
 }
 
-- (NSObject*)byteArg:(char)a andbyteArg:(char)b
+- (NSObject* _Nullable)byteArg:(char)a andbyteArg:(char)b
 {
     char abuf[2];
     char bbuf[2];
+    NSObject* a1;
+    NSObject* a2;
 
     abuf[0] = a;
     abuf[1] = 0;
     bbuf[0] = b;
     bbuf[1] = 0;
 
-    return
-        [NSArray arrayWithObjects:[NSString stringWithCString:abuf
-                                                     encoding:NSISOLatin1StringEncoding],
-                                  [NSString stringWithCString:bbuf
-                                                     encoding:NSISOLatin1StringEncoding],
-                                  nil];
+    a1 = [NSString stringWithCString:abuf encoding:NSISOLatin1StringEncoding];
+    if (!a1) return nil;
+    a2 = [NSString stringWithCString:bbuf encoding:NSISOLatin1StringEncoding];
+    if (!a2) return nil;
+    return [NSArray arrayWithObjects:a1, a2, nil];
 }
 
 - (void)byteArrayOf4Out:(char*)buffer
@@ -278,7 +281,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     buffer[3] = 't';
 }
 
-- (NSObject*)byteArrayOf4InOut:(char*)buffer
+- (NSObject* _Nullable)byteArrayOf4InOut:(char*)buffer
 {
     char tmp[5];
     int  i;
@@ -295,7 +298,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return result;
 }
 
-- (NSObject*)byteArrayOf4In:(char*)buffer
+- (NSObject* _Nullable)byteArrayOf4In:(char*)buffer
 {
     char tmp[5];
     int  i;
@@ -306,7 +309,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return [NSString stringWithCString:tmp encoding:NSISOLatin1StringEncoding];
 }
 
-- (NSObject*)int8StringArg:(char*)value
+- (NSObject* _Nullable)int8StringArg:(char*)value
 {
     NSMutableArray* a = [[NSMutableArray alloc] init];
     int             i;
@@ -331,7 +334,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     buffer[3] = 't';
 }
 
-- (NSObject*)int8ArrayOf4InOut:(char*)buffer
+- (NSObject* _Nullable)int8ArrayOf4InOut:(char*)buffer
 {
     NSObject* result = [NSArray arrayWithObjects:[NSNumber numberWithInt:buffer[0]],
                                                  [NSNumber numberWithInt:buffer[1]],
@@ -344,7 +347,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return result;
 }
 
-- (NSObject*)int8ArrayOf4In:(char*)buffer
+- (NSObject* _Nullable )int8ArrayOf4In:(char*)buffer
 {
     NSObject* result = [NSArray arrayWithObjects:[NSNumber numberWithInt:buffer[0]],
                                                  [NSNumber numberWithInt:buffer[1]],
@@ -367,7 +370,7 @@ static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
                                         NULL,
                                         NULL};
 
-PyObject* PyInit_specialtypecodes(void);
+PyObject* _Nullable PyInit_specialtypecodes(void);
 
 PyObject* __attribute__((__visibility__("default"))) PyInit_specialtypecodes(void)
 {
@@ -390,3 +393,5 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_specialtypecodes(voi
 
     return m;
 }
+
+NS_ASSUME_NONNULL_END

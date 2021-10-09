@@ -10,6 +10,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 static int*
 makeIntArrayOf5(void)
 {
@@ -28,7 +30,7 @@ makeStringArray(void)
     return result;
 }
 
-static int*
+static int* _Nullable
 makeIntArrayOf_(int count)
 {
     static int* result = NULL;
@@ -47,25 +49,25 @@ makeIntArrayOf_(int count)
     return result;
 }
 
-static int*
+static int* _Nullable
 nullIntArrayOf5(void)
 {
     return NULL;
 }
 
-static char**
+static char** _Nullable
 nullStringArray(void)
 {
     return NULL;
 }
 
-static int*
+static int* _Nullable
 nullIntArrayOf_(int count __attribute__((__unused__)))
 {
     return NULL;
 }
 
-static NSArray*
+static NSArray* _Nullable
 makeIntArray_count_(int* data, unsigned count)
 {
     NSMutableArray* array;
@@ -79,7 +81,7 @@ makeIntArray_count_(int* data, unsigned count)
     return array;
 }
 
-static NSArray*
+static NSArray* _Nullable
 nullIntArray_count_(int* data, unsigned count)
 {
     if (data) {
@@ -89,13 +91,13 @@ nullIntArray_count_(int* data, unsigned count)
     }
 }
 
-static NSArray*
+static NSArray* _Nullable
 makeIntArray_countPtr_(int* data, unsigned* countPtr)
 {
     return makeIntArray_count_(data, *countPtr);
 }
 
-static NSArray*
+static NSArray* _Nullable
 make4Tuple_(double* data)
 {
     NSMutableArray* array;
@@ -109,7 +111,7 @@ make4Tuple_(double* data)
     return array;
 }
 
-static NSArray*
+static NSArray* _Nullable
 null4Tuple_(double* data)
 {
     if (data) {
@@ -119,7 +121,7 @@ null4Tuple_(double* data)
     }
 }
 
-static NSArray*
+static NSArray* _Nullable
 makeStringArray_(char** data)
 {
     NSMutableArray* array;
@@ -127,13 +129,16 @@ makeStringArray_(char** data)
     array = [NSMutableArray array];
 
     while (*data != NULL) {
-        [array addObject:[NSString stringWithUTF8String:*data]];
+        NSObject* val = [NSString stringWithUTF8String:*data];
+        if (val == NULL) continue;
+
+        [array addObject:val];
         data++;
     }
     return array;
 }
 
-static NSArray*
+static NSArray* _Nullable
 nullStringArray_(char** data)
 {
     if (data) {
@@ -143,7 +148,7 @@ nullStringArray_(char** data)
     }
 }
 
-static NSArray*
+static NSArray* _Nullable
 makeObjectArray_(id* data)
 {
     NSMutableArray* array;
@@ -303,20 +308,27 @@ swapX_andY_(double* x, double* y)
     *y       = t;
 }
 
-static NSArray*
+static NSArray* _Nullable
 input_output_inputAndOutput_(int* x, int* y, int* z)
 {
     char            buf[64];
+    NSString*       value;
     NSMutableArray* result = [NSMutableArray array];
 
     snprintf(buf, sizeof(buf), "%p", x);
-    [result addObject:[NSString stringWithUTF8String:buf]];
+    value = [NSString stringWithUTF8String:buf];
+    if (!value) return NULL;
+    [result addObject:value];
 
     snprintf(buf, sizeof(buf), "%p", y);
-    [result addObject:[NSString stringWithUTF8String:buf]];
+    value = [NSString stringWithUTF8String:buf];
+    if (!value) return NULL;
+    [result addObject:value];
 
     snprintf(buf, sizeof(buf), "%p", z);
-    [result addObject:[NSString stringWithUTF8String:buf]];
+    value = [NSString stringWithUTF8String:buf];
+    if (!value) return NULL;
+    [result addObject:value];
 
     if (y) {
         if (x) {
@@ -384,6 +396,7 @@ maybeReverseArray_(short* data)
 }
 
 static NSArray*
+__attribute__((__format__ (__NSString__, 1, 2)))
 makeArrayWithFormat_(NSString* fmt, ...)
 {
     va_list ap;
@@ -405,18 +418,24 @@ makeArrayWithFormat_(NSString* fmt, ...)
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
-static NSArray*
+static NSArray* _Nullable
+__attribute__((__format__ (__printf__, 1, 2)))
 makeArrayWithCFormat_(char* fmt, ...)
 {
     va_list ap;
     char    buffer[2048];
+    NSString* a1;
+    NSString* a2;
 
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
 
-    return [NSArray arrayWithObjects:[NSString stringWithUTF8String:fmt],
-                                     [NSString stringWithUTF8String:buffer], NULL];
+    a1 = [NSString stringWithUTF8String:fmt];
+    if (!a1) return NULL;
+    a2 = [NSString stringWithUTF8String:buffer];
+    if (!a2) return NULL;
+    return [NSArray arrayWithObjects:a1, a2, NULL];
 }
 
 #pragma GCC diagnostic pop
@@ -491,7 +510,7 @@ static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
                                         NULL,
                                         NULL};
 
-PyObject* PyInit_metadatafunction(void);
+PyObject* _Nullable PyInit_metadatafunction(void);
 
 PyObject* __attribute__((__visibility__("default"))) PyInit_metadatafunction(void)
 {
@@ -518,3 +537,5 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_metadatafunction(voi
 
     return m;
 }
+
+NS_ASSUME_NONNULL_END

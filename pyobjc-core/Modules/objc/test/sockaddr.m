@@ -8,15 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PyObjCTestSockAddr : NSObject {
 }
-+ (NSObject*)sockAddrToValue:(struct sockaddr*)addr;
++ (NSObject* _Nullable)sockAddrToValue:(struct sockaddr*)addr;
 + (void)getIPv4Addr:(struct sockaddr*)buf;
 + (void)getIPv6Addr:(struct sockaddr*)buf;
 + (void)getUnixAddr:(struct sockaddr*)buf;
 @end
 
-static NSString*
+static NSString* _Nullable
 addr2string(void* addr, int addrlen)
 {
     char buf[NI_MAXHOST];
@@ -30,35 +32,48 @@ addr2string(void* addr, int addrlen)
 }
 
 @implementation PyObjCTestSockAddr
-+ (NSObject*)sockAddrToValue:(struct sockaddr*)addr
++ (NSObject* _Nullable)sockAddrToValue:(struct sockaddr*)addr
 {
-    NSMutableArray* array = [NSMutableArray array];
+    NSMutableArray* _Nullable array = [NSMutableArray array];
+    NSObject* value;
 
     switch (addr->sa_family) {
     case AF_INET:
         [array addObject:@"IPv4"];
-        [array addObject:addr2string(addr, sizeof(struct sockaddr_in))];
-        [array
-            addObject:[NSNumber
-                          numberWithShort:ntohs(((struct sockaddr_in*)addr)->sin_port)]];
+        value = addr2string(addr, sizeof(struct sockaddr_in));
+        if (!value) return nil;
+        [array addObject:value];
+
+        value = [NSNumber numberWithShort:ntohs(((struct sockaddr_in*)addr)->sin_port)];
+        if (!value) return nil;
+        [array addObject: value];
         return array;
         break;
     case AF_INET6:
         [array addObject:@"IPv6"];
-        [array addObject:addr2string(addr, sizeof(struct sockaddr_in6))];
-        [array
-            addObject:[NSNumber
-                          numberWithShort:ntohs(
-                                              ((struct sockaddr_in6*)addr)->sin6_port)]];
-        [array addObject:[NSNumber numberWithUnsignedLong:(((struct sockaddr_in6*)addr)
-                                                               ->sin6_flowinfo)]];
-        [array addObject:[NSNumber numberWithUnsignedLong:(((struct sockaddr_in6*)addr)
-                                                               ->sin6_scope_id)]];
+        value = addr2string(addr, sizeof(struct sockaddr_in6));
+        if (!value) return nil;
+        [array addObject:value];
+
+        value = [NSNumber numberWithShort:ntohs(((struct sockaddr_in6*)addr)->sin6_port)];
+        if (!value) return nil;
+        [array addObject:value];
+
+        value = [NSNumber numberWithUnsignedLong:(((struct sockaddr_in6*)addr)
+                                                               ->sin6_flowinfo)];
+        if (!value) return nil;
+        [array addObject:value];
+        value = [NSNumber numberWithUnsignedLong:(((struct sockaddr_in6*)addr)
+                                                               ->sin6_scope_id)];
+        if (!value) return nil;
+        [array addObject:value];
         return array;
         break;
     case AF_UNIX:
         [array addObject:@"UNIX"];
-        [array addObject: [NSString stringWithUTF8String:((struct sockaddr_un*)addr)->sun_path]];
+        value =  [NSString stringWithUTF8String:((struct sockaddr_un*)addr)->sun_path];
+        if (!value) return nil;
+        [array addObject: value];
         return array;
 
     default:
@@ -113,7 +128,7 @@ static PyMethodDef mod_methods[] = {{0, 0, 0, 0}};
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT, "sockaddr", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
-PyObject* PyInit_sockaddr(void);
+PyObject* _Nullable PyInit_sockaddr(void);
 
 PyObject* __attribute__((__visibility__("default"))) PyInit_sockaddr(void)
 {
@@ -136,3 +151,5 @@ PyObject* __attribute__((__visibility__("default"))) PyInit_sockaddr(void)
 
     return m;
 }
+
+NS_ASSUME_NONNULL_END

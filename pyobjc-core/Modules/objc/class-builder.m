@@ -541,12 +541,13 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
 
     /* Allocate the class as soon as possible, for new selector objects */
     new_class = objc_allocateClassPair(super_class, name, 0);
-    if (new_class == 0) {
+    if (new_class == Nil) {
         PyErr_Format(PyObjCExc_Error, "Cannot allocateClassPair for %s", name);
         goto error_cleanup;
     }
 
-    new_meta_class = object_getClass(new_class);
+    /* Class is only Nil if new_class is nil */
+    new_meta_class = (Class _Nonnull)object_getClass(new_class);
 
     /* 0th round: protocols */
     protocol_count = PyList_Size(protocols);
@@ -1354,7 +1355,8 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
     cls = object_getClass(self);
     while (cls != (Class)userdata) {
         unsigned ivarCount, i;
-        Ivar*    ivarList = class_copyIvarList(cls, &ivarCount);
+        /* Returns NULL only when setting ivarCount to 0 */
+        Ivar*    ivarList = (Ivar* _Nonnull)class_copyIvarList(cls, &ivarCount);
 
         for (i = 0; i < ivarCount; i++) {
             Ivar        v = ivarList[i];

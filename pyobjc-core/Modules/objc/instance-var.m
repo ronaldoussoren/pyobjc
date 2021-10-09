@@ -96,6 +96,11 @@ ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__u
     } else {
         const char* encoding = ivar_getTypeEncoding(var);
 
+        if (encoding == NULL) {
+            PyErr_SetString(PyObjCExc_Error, "Cannot extract type encoding from ivar");
+            return NULL;
+        }
+
         if (encoding[0] == _C_ID) {
             /* An object */
             id value = object_getIvar(objc, var);

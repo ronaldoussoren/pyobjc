@@ -61,7 +61,8 @@ static void
 fill_super_cls(struct objc_super* super, Class cls, Class self)
 {
     objc_superSetReceiver(*super, self);
-    objc_superSetClass(*super, object_getClass(cls));
+    /* object_getClass will only return Nil if the argument is nil */
+    objc_superSetClass(*super, (Class _Nonnull)object_getClass(cls));
 }
 
 static int

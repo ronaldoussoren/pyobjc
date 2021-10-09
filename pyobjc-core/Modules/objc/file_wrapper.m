@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 struct file_object {
     PyObject_HEAD
 
-    FILE* fp;
+    FILE* _Nullable fp;
 };
 
 static PyObject* _Nullable

@@ -26,16 +26,16 @@ static void use_id(id x __attribute__((__unused__))){};
 - (int*)unknownLengthArray;
 
 /* In arrays: */
-- (NSArray*)makeIntArray:(int*)data count:(unsigned)count;
-- (NSArray*)makeIntArray:(int*)data halfCount:(unsigned)count;
-- (NSArray*)makeIntArray:(int*)data countPtr:(unsigned*)countPtr;
-- (NSArray*)nullIntArray:(int*)data count:(unsigned)count;
-- (NSArray*)makeStringArray:(char**)data;
-- (NSArray*)makeObjectArray:(id*)data;
-- (NSArray*)nullStringArray:(char**)data;
-- (NSArray*)make4Tuple:(double*)data;
-- (NSArray*)null4Tuple:(double*)data;
-- (NSArray*)makeVariableLengthArray:(int*)array halfCount:(int)cnt;
+- (NSArray* _Nullable)makeIntArray:(int*)data count:(unsigned)count;
+- (NSArray* _Nullable)makeIntArray:(int*)data halfCount:(unsigned)count;
+- (NSArray* _Nullable)makeIntArray:(int*)data countPtr:(unsigned*)countPtr;
+- (NSArray* _Nullable)nullIntArray:(int*)data count:(unsigned)count;
+- (NSArray* _Nullable)makeStringArray:(char**)data;
+- (NSArray* _Nullable)makeObjectArray:(id*)data;
+- (NSArray* _Nullable)nullStringArray:(char**)data;
+- (NSArray* _Nullable)make4Tuple:(double*)data;
+- (NSArray* _Nullable)null4Tuple:(double*)data;
+- (NSArray* _Nullable)makeVariableLengthArray:(int*)array halfCount:(int)cnt;
 
 /* Out arrays: */
 - (void)fillArray:(int*)data count:(int)count;
@@ -67,9 +67,9 @@ static void use_id(id x __attribute__((__unused__))){};
 - (void)swapX:(double*)x andY:(double*)y; /* inout */
 - (NSArray*)input:(int*)x output:(int*)y inputAndOutput:(int*)z;
 
-- (NSArray*)makeArrayWithFormat:(NSString*)fmt, ...;
-- (NSArray*)makeArrayWithCFormat:(char*)fmt, ...;
-- (NSArray*)makeArrayWithArguments:(id)arg, ...;
+- (NSArray* _Nullable)makeArrayWithFormat:(NSString*)fmt, ...;
+- (NSArray* _Nullable)makeArrayWithCFormat:(char*)fmt, ...;
+- (NSArray* _Nullable)makeArrayWithArguments:(id)arg, ...;
 
 /* Helpers for calling back into python: */
 
@@ -248,7 +248,9 @@ static void use_id(id x __attribute__((__unused__))){};
     array = [NSMutableArray array];
 
     while (*data != NULL) {
-        [array addObject:[NSString stringWithUTF8String:*data]];
+        NSObject* a = [NSString stringWithUTF8String:*data];
+        if (!a) return nil;
+        [array addObject:a];
         data++;
     }
     return array;
@@ -403,15 +405,22 @@ static void use_id(id x __attribute__((__unused__))){};
 {
     char            buf[64];
     NSMutableArray* result = [NSMutableArray array];
+    NSObject* a;
 
     snprintf(buf, sizeof(buf), "%p", x);
-    [result addObject:[NSString stringWithUTF8String:buf]];
+    a = [NSString stringWithUTF8String:buf];
+    if (!a) return nil;
+    [result addObject:a];
 
     snprintf(buf, sizeof(buf), "%p", y);
-    [result addObject:[NSString stringWithUTF8String:buf]];
+    a = [NSString stringWithUTF8String:buf];
+    if (!a) return nil;
+    [result addObject:a];
 
     snprintf(buf, sizeof(buf), "%p", z);
-    [result addObject:[NSString stringWithUTF8String:buf]];
+    a = [NSString stringWithUTF8String:buf];
+    if (!a) return nil;
+    [result addObject:a];
 
     if (y) {
         if (x) {
@@ -666,17 +675,23 @@ static void use_id(id x __attribute__((__unused__))){};
 #pragma GCC diagnostic ignored "-Wformat-nonliteral"
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
-- (NSArray*)makeArrayWithCFormat:(char*)fmt, ...
+- (NSArray* _Nullable)makeArrayWithCFormat:(char*)fmt, ...
 {
     va_list ap;
     char    buffer[2048];
+    NSObject* a1;
+    NSObject* a2;
 
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
 
-    return [NSArray arrayWithObjects:[NSString stringWithUTF8String:fmt],
-                                     [NSString stringWithUTF8String:buffer], NULL];
+    a1 = [NSString stringWithUTF8String:fmt];
+    if (!a1) return nil;
+    a2 = [NSString stringWithUTF8String:buffer];
+    if (!a2) return nil;
+
+    return [NSArray arrayWithObjects:a1, a2, nil];
 }
 #pragma GCC diagnostic pop
 #pragma clang diagnostic pop
