@@ -55,6 +55,11 @@ repos:
         language: python
         types: [text]
 
+#  - repo: https://github.com/pre-commit/mirrors-clang-format
+#    rev: 'v13.0.0'
+#    hooks:
+#    -   id: clang-format
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
