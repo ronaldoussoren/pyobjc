@@ -30,6 +30,10 @@
 #endif
 #endif
 
+#ifndef PyObjC_DEBUG
+#define PyObjC_DEBUG 1
+#endif
+
 #import "pyobjc-assert.h"
 #import "pyobjc-compat.h"
 
