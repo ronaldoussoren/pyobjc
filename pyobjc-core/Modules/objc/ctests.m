@@ -9,6 +9,8 @@
 
 #include <fcntl.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 struct Struct1 {
     int    f1;
     double f2;
@@ -58,10 +60,6 @@ BEGIN_UNITTEST(CheckNSInvoke)
 /* This is not a 'real' unittest, but is used to disable a number of
  * other tests (in objc.test.test_methods2) when NSInvocation isn't
  * working correctly (MacOS X at least up to 10.2.6).
- * [Panther previews also have this problem]
- *
- * Leopard is even worse, this test causes a crash of the interpreter when
- * running on PPC64.
  */
 
 PyObjCTest_NSInvoke* obj = [[PyObjCTest_NSInvoke alloc] init];
@@ -861,3 +859,5 @@ PyObjC_init_ctests(PyObject* m)
 
     return PyModule_AddObject(m, "_ctests", d);
 }
+
+NS_ASSUME_NONNULL_END

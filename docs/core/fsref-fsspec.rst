@@ -45,15 +45,6 @@ supports the wrappers for these types in ``Carbon.File``. The wrappers in
 
         Returns the POSIX path for the ``FSRef`` object.
 
-    .. method:: as_carbon
-
-        Returns a ``Carbon.File.FSRef`` instance for the ``FSRef`` object.
-
-        .. note::
-
-          This method is only available when ``Carbon`` support is
-          enabled in the Python build.
-
 
 .. class:: FSSpec
 
@@ -72,12 +63,3 @@ supports the wrappers for these types in ``Carbon.File``. The wrappers in
     .. attribute:: aref.data
 
         A bytestring containing the value of the ``FSSpec`` object.
-
-    .. method:: aref.as_carbon
-
-        Returns a ``Carbon.File.FSSpec`` instance for the ``FSSpec`` object.
-
-        .. note::
-
-          This method is only available when ``Carbon`` support is
-          enabled in the Python build.

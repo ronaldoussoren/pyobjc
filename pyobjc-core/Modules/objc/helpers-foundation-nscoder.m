@@ -1,8 +1,9 @@
 #include "pyobjc.h"
 
-static PyObject*
-call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
-                                       PyObject* const* arguments, size_t nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable call_NSCoder_encodeValueOfObjCType_at_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     PyObject*         value;
     void*             buf;
@@ -132,9 +133,8 @@ error:
     PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static PyObject*
-call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
-                                             PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_encodeArrayOfObjCType_count_at_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     NSUInteger        count;
     NSUInteger        i;
@@ -316,9 +316,8 @@ error:
     PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static PyObject*
-call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
-                                       PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     void*             buf;
     PyObject*         value;
@@ -441,9 +440,8 @@ error:
     return;
 }
 
-static PyObject*
-call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
-                                            PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_decodeValueOfObjCType_at_size_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     PyObject*         value;
     void*             buf;
@@ -578,9 +576,8 @@ error:
     return;
 }
 
-static PyObject*
-call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
-                                             PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_decodeArrayOfObjCType_count_at_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     NSUInteger        count;
     NSUInteger        i;
@@ -757,9 +754,10 @@ error:
     PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static PyObject*
-call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self,
-                                 PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_encodeBytes_length_(PyObject*        method,
+                                                            PyObject*        self,
+                                                            PyObject* const* arguments,
+                                                            size_t           nargs)
 {
     NSUInteger length;
     Py_buffer  view;
@@ -873,9 +871,8 @@ error:
     PyObjCErr_ToObjCWithGILState(&state);
 }
 
-static PyObject*
-call_NSCoder_decodeBytesWithReturnedLength_(PyObject* method, PyObject* self,
-                                            PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_decodeBytesWithReturnedLength_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     char*             bytes;
     NSUInteger        size = 0;
@@ -1015,9 +1012,8 @@ error:
     *pretval = NULL;
 }
 
-static PyObject*
-call_NSCoder_decodeBytesForKey_returnedLength_(PyObject* method, PyObject* self,
-                                               PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_decodeBytesForKey_returnedLength_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     char*             bytes;
     NSUInteger        size = 0;
@@ -1186,9 +1182,8 @@ error:
     *pretval = NULL;
 }
 
-static PyObject*
-call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
-                                        PyObject* const* arguments, size_t nargs)
+static PyObject* _Nullable call_NSCoder_encodeBytes_length_forKey_(
+    PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     id                key;
     struct objc_super super;
@@ -1417,3 +1412,5 @@ PyObjC_setup_nscoder(void)
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

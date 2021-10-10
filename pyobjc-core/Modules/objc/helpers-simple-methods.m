@@ -13,8 +13,10 @@
 
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if 0
-static PyObject*
+static PyObject* _Nullable
 call_void__noargs(PyObject* method, PyObject* self,
                                        PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
 {
@@ -100,3 +102,5 @@ PyObjC_setup_simple_methods(void)
     //    == -1) return -1;
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

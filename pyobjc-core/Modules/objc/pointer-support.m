@@ -15,6 +15,8 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 struct wrapper {
     const char* name;
     const char* signature;
@@ -43,39 +45,26 @@ static Py_ssize_t      item_count = 0;
 static size_t
 find_end_of_structname(const char* signature)
 {
-    if (signature[1] == _C_CONST && signature[2] == _C_STRUCT_B) {
-        char* end1;
-        char* end2;
+    if ((signature[1] == _C_CONST && signature[2] == _C_STRUCT_B)
+        || (signature[1] == _C_STRUCT_B)) {
 
-        end1 = strchr(signature, _C_STRUCT_E);
-        end2 = strchr(signature, '=');
+        char* end;
 
-        if (end2 == NULL) {
-            return (size_t)(end1 - signature);
+        end = strchr(signature, '=');
 
-        } else {
-            return (size_t)(end2 - signature);
-        }
-
-    } else if (signature[1] == _C_STRUCT_B) {
-        char* end1;
-        char* end2;
-
-        end1 = strchr(signature, _C_STRUCT_E);
-        end2 = strchr(signature, '=');
-
-        if (end2 == NULL) {
-            return (size_t)(end1 - signature);
+        if (end == NULL) {
+            end = strchr(signature, _C_STRUCT_E);
+            /* XXX: What if end is NULL */
+            return (size_t)(end - signature);
 
         } else {
-            return (size_t)(end2 - signature);
+            return (size_t)(end - signature);
         }
     }
     return strlen(signature);
 }
 
-static struct wrapper*
-FindWrapper(const char* signature)
+static struct wrapper* _Nullable FindWrapper(const char* signature)
 {
     Py_ssize_t i;
 
@@ -83,6 +72,7 @@ FindWrapper(const char* signature)
         if (strncmp(signature, items[i].signature, items[i].offset) == 0) {
             /* See comment just above find_end_of_structname */
             if (signature[1] == _C_CONST && signature[2] == _C_STRUCT_B) {
+                /* XXX: Shouldn't this adjust for _C_CONST? */
                 char ch = signature[items[i].offset];
                 if (ch == '=' || ch == _C_STRUCT_E) {
                     return items + i;
@@ -104,11 +94,7 @@ FindWrapper(const char* signature)
     return NULL;
 }
 
-static PyObject*
-ID_to_py(void* idValue)
-{
-    return id_to_python((id)idValue);
-}
+static PyObject* _Nullable ID_to_py(void* idValue) { return id_to_python((id)idValue); }
 
 static int
 py_to_ID(PyObject* obj, void* output)
@@ -129,44 +115,26 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
                               PyObjCPointerWrapper_ToPythonFunc   pythonify,
                               PyObjCPointerWrapper_FromPythonFunc depythonify)
 {
-    struct wrapper* value;
+    PyObjC_Assert(signature, -1);
+    PyObjC_Assert(pythonify, -1);
+    PyObjC_Assert(depythonify, -1);
 
-    /*
-     * Check if we already have a wrapper, if so replace that.
-     * This makes it possible to replace a default wrapper by something
-     * better.
-     */
-    if (signature == NULL) {
-        return -1;
-    }
-
-    value = FindWrapper(signature);
+    struct wrapper* value = FindWrapper(signature);
 
     if (value != NULL) {
+        /* Update existing registration */
         value->pythonify   = pythonify;
         value->depythonify = depythonify;
         return 0;
     }
 
-    if (items == NULL) {
-        items = PyMem_Malloc(sizeof(struct wrapper));
-        if (items == NULL) {
-            PyErr_NoMemory();
-            return -1;
-        }
-        item_count = 1;
-
-    } else {
-        struct wrapper* tmp;
-
-        tmp = PyMem_Realloc(items, sizeof(struct wrapper) * (item_count + 1));
-        if (tmp == NULL) {
-            PyErr_NoMemory();
-            return -1;
-        }
-        items = tmp;
-        item_count++;
+    struct wrapper* tmp = PyMem_Realloc(items, sizeof(struct wrapper) * (item_count + 1));
+    if (tmp == NULL) {
+        PyErr_NoMemory();
+        return -1;
     }
+    items = tmp;
+    item_count++;
 
     value = items + (item_count - 1);
 
@@ -193,8 +161,7 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
     return 0;
 }
 
-PyObject*
-PyObjCPointerWrapper_ToPython(const char* type, void* datum)
+PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char* type, void* datum)
 {
     struct wrapper* item;
     PyObject*       result;
@@ -259,11 +226,7 @@ PyObjCPointerWrapper_HaveWrapper(const char* type)
     return (FindWrapper(type) != NULL);
 }
 
-static PyObject*
-PyObjectPtr_New(void* obj)
-{
-    return (PyObject*)obj;
-}
+static PyObject* _Nullable PyObjectPtr_New(void* obj) { return (PyObject*)obj; }
 
 static int
 PyObjectPtr_Convert(PyObject* obj, void* pObj)
@@ -272,11 +235,7 @@ PyObjectPtr_Convert(PyObject* obj, void* pObj)
     return 0;
 }
 
-static PyObject*
-class_new(void* obj)
-{
-    return pythonify_c_value("#", obj);
-}
+static PyObject* _Nullable class_new(void* obj) { return pythonify_c_value("#", obj); }
 
 static int
 class_convert(PyObject* obj, void* pObj)
@@ -284,8 +243,7 @@ class_convert(PyObject* obj, void* pObj)
     return depythonify_c_value("#", obj, pObj);
 }
 
-static PyObject*
-FILE_New(void* obj)
+static PyObject* _Nullable FILE_New(void* obj)
 {
     FILE* fp = (FILE*)obj;
 
@@ -325,8 +283,7 @@ PyObjCPointerWrapper_Init(void)
     return 0;
 }
 
-const char*
-PyObjCPointerWrapper_Describe(const char* signature)
+const char* _Nullable PyObjCPointerWrapper_Describe(const char* signature)
 {
     struct wrapper* wrapper = FindWrapper(signature);
     if (wrapper == NULL)
@@ -334,3 +291,5 @@ PyObjCPointerWrapper_Describe(const char* signature)
 
     return wrapper->name;
 }
+
+NS_ASSUME_NONNULL_END

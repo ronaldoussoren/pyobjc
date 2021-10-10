@@ -247,6 +247,9 @@ Other changes and bugfixes
 * The implementation for opaque pointer types (such as the proxy for
   'NSZone*') has switched to :c:func:`PyType_FromSpec`.
 
+* The :meth:`objc.FSRef.from_path` and :meth:`objc.FSRef.as_pathname`,
+  methods now use the filesystem encoding instead of the default encoding.
+  C string.  This shouldn't affect any code, both encoding default to UTF-8 on macOS.
 
 
 Version 7.3

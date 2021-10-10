@@ -1,8 +1,11 @@
 #include "pyobjc.h"
 
-static PyObject*
-call_NSData_bytes(PyObject* method, PyObject* self,
-                  PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable call_NSData_bytes(PyObject* method, PyObject* self,
+                                             PyObject* const* arguments
+                                             __attribute__((__unused__)),
+                                             size_t nargs)
 {
     const void*       bytes;
     NSUInteger        bytes_len;
@@ -102,10 +105,11 @@ error:
     *pretval = NULL;
 }
 
-static PyObject*
-call_NSMutableData_mutableBytes(PyObject* method, PyObject* self,
-                                PyObject* const* arguments __attribute__((__unused__)),
-                                size_t           nargs)
+static PyObject* _Nullable call_NSMutableData_mutableBytes(PyObject*        method,
+                                                           PyObject*        self,
+                                                           PyObject* const* arguments
+                                                           __attribute__((__unused__)),
+                                                           size_t nargs)
 {
     void*             bytes;
     NSUInteger        bytes_len;
@@ -231,3 +235,5 @@ PyObjC_setup_nsdata(void)
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

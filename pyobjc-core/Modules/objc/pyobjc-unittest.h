@@ -1,5 +1,6 @@
 #ifndef PyObjC_UNITTEST_H
 #define PyObjC_UNITTEST_H
+
 /*!
  * @header pyobjc-unittest.h
  * @abstract Defining C-based unittests
@@ -32,8 +33,11 @@
 
 #include <stdarg.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+/* XXX: Remove { and } from the BEGIN and END macros to get nicer formatting  */
 #define BEGIN_UNITTEST(name)                                                             \
-    static PyObject* test_##name(PyObject* self __attribute__((__unused__)))             \
+    static PyObject* _Nullable test_##name(PyObject* self __attribute__((__unused__)))   \
     {
 
 #define END_UNITTEST                                                                     \
@@ -117,5 +121,7 @@ unittest_assert_failed(const char* file, int line, char* msg, ...)
     {                                                                                    \
         .ml_name = #name, .ml_meth = (PyCFunction)test_##name, .ml_flags = METH_NOARGS,  \
     }
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_UNITTEST_H */

@@ -4,22 +4,10 @@
 #include "pyobjc.h"
 #import <CoreServices/CoreServices.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma GCC diagnostic   ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
-#if USE_TOOLBOX_OBJECT_GLUE
-
-/* As of the 10.12 SDK it is no longer safe to include pymactoolbox.h
- * (due to an include that can no longer be resolved). Therefore
- * provide local declarations.
- */
-/*#include "pymactoolbox.h"*/
-
-extern int       PyMac_GetFSRef(PyObject*, FSRef*); /* argument parser for FSRef */
-extern PyObject* PyMac_BuildFSRef(FSRef*);          /* Convert FSRef to PyObject */
-extern PyObject* PyMac_Error(OSErr);                /* Uses PyMac_GetOSErrException */
-
-#endif
 
 /*
  * Interface of the FSRef type:
@@ -36,9 +24,6 @@ extern PyObject* PyMac_Error(OSErr);                /* Uses PyMac_GetOSErrExcept
  *
  * aref.data
  *  # -> read-only property with the bytes in the FSRef
- *
- * This is more or less the same interface as Carbon.File.FSRef, but
- * excluding API wrappers.
  */
 
 typedef struct {
@@ -47,8 +32,8 @@ typedef struct {
     FSRef ref;
 } PyObjC_FSRefObject;
 
-static PyObject*
-fsref_as_bytes(PyObject* ref, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable fsref_as_bytes(PyObject* ref, void* _Nullable closure
+                                          __attribute__((__unused__)))
 {
     if (!PyObjC_FSRefCheck(ref)) {
         PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
@@ -58,26 +43,12 @@ fsref_as_bytes(PyObject* ref, void* closure __attribute__((__unused__)))
                                      sizeof(FSRef));
 }
 
-static PyObject*
-fsref_sizeof(PyObject* ref)
+static PyObject* _Nullable fsref_sizeof(PyObject* ref)
 {
     return PyLong_FromSsize_t(Py_TYPE(ref)->tp_basicsize);
 }
 
-#if USE_TOOLBOX_OBJECT_GLUE
-static PyObject*
-fsref_as_carbon(PyObject* ref)
-{
-    if (!PyObjC_FSRefCheck(ref)) {
-        PyErr_SetString(PyExc_TypeError, "self is not a FSRef");
-    }
-
-    return PyMac_BuildFSRef((&((PyObjC_FSRefObject*)ref)->ref));
-}
-#endif /* USE_TOOLBOX_OBJECT_GLUE */
-
-static PyObject*
-fsref_as_path(PyObject* ref)
+static PyObject* _Nullable fsref_as_path(PyObject* ref)
 {
     OSStatus rc;
     UInt8    buffer[1024];
@@ -93,32 +64,30 @@ fsref_as_path(PyObject* ref)
         return NULL;
     }
 
-    return PyUnicode_DecodeUTF8((char*)buffer, strlen((char*)buffer), NULL);
+    return PyUnicode_DecodeFSDefault((char*)buffer);
 }
 
-static PyObject*
-fsref_from_path(PyObject* self __attribute__((__unused__)), PyObject* path)
+static PyObject* _Nullable fsref_from_path(PyObject* self __attribute__((__unused__)),
+                                           PyObject* path)
 {
     PyObject* value;
     FSRef     result;
     Boolean   isDirectory;
     OSStatus  rc;
 
-    if (PyUnicode_Check(path)) {
-        value = PyUnicode_AsEncodedString(path, NULL, NULL);
-
-    } else {
+    if (!PyUnicode_Check(path)) {
         PyErr_SetString(PyExc_TypeError, "Expecting string");
         return NULL;
     }
 
+    value = PyUnicode_EncodeFSDefault(path);
+    /* XXX: Add type assertion */
     if (value == NULL)
         return NULL;
 
     rc = FSPathMakeRef((UInt8*)PyBytes_AsString(value), &result, &isDirectory);
     Py_DECREF(value);
     if (rc != 0) {
-
         PyErr_Format(PyExc_OSError, "MAC Error %d", rc);
         return NULL;
     }
@@ -139,21 +108,12 @@ static PyMethodDef fsref_methods[] = {
     {.ml_name  = "as_pathname",
      .ml_meth  = (PyCFunction)fsref_as_path,
      .ml_flags = METH_NOARGS,
-     .ml_doc   = "as_pathname()\n" CLINIC_SEP
-               "\nReturn POSIX path for this object (Unicode string)"},
+     .ml_doc   = "as_pathname()\n" CLINIC_SEP "\nReturn POSIX path for this object"},
     {.ml_name  = "from_pathname",
      .ml_meth  = (PyCFunction)fsref_from_path,
      .ml_flags = METH_O | METH_CLASS,
      .ml_doc =
          "from_pathname(path)\n" CLINIC_SEP "\nCreate FSRef instance for an POSIX path"},
-
-#if USE_TOOLBOX_OBJECT_GLUE
-    {.ml_name  = "as_carbon",
-     .ml_meth  = (PyCFunction)fsref_as_carbon,
-     .ml_flags = METH_NOARGS,
-     .ml_doc   = "as_carbon()\n" CLINIC_SEP
-               "\nReturn Carbon.File.FSRef instance for this object"},
-#endif /* USE_TOOLBOX_OBJECT_GLUE */
 
     {
         .ml_name  = "__sizeof__",
@@ -178,15 +138,6 @@ PyTypeObject PyObjC_FSRefType = {
 int
 PyObjC_encode_fsref(PyObject* value, void* buffer)
 {
-#if USE_TOOLBOX_OBJECT_GLUE
-    /* We cannot test if 'arg' is an instance of Carbon.File.FSRef... */
-    if (PyMac_GetFSRef(value, (FSRef*)buffer) == 1) {
-        return 0;
-    }
-    PyErr_Clear();
-
-#endif /* USE_TOOLBOX_OBJECT_GLUE */
-
     if (PyObjC_FSRefCheck(value)) {
         *(FSRef*)buffer = ((PyObjC_FSRefObject*)value)->ref;
         return 0;
@@ -196,8 +147,7 @@ PyObjC_encode_fsref(PyObject* value, void* buffer)
     return -1;
 }
 
-PyObject*
-PyObjC_decode_fsref(void* buffer)
+PyObject* _Nullable PyObjC_decode_fsref(void* buffer)
 {
     PyObjC_FSRefObject* result = PyObject_New(PyObjC_FSRefObject, &PyObjC_FSRefType);
 
@@ -207,3 +157,5 @@ PyObjC_decode_fsref(void* buffer)
     result->ref = *(FSRef*)buffer;
     return (PyObject*)result;
 }
+
+NS_ASSUME_NONNULL_END

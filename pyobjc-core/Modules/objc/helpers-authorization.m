@@ -5,10 +5,12 @@
  */
 #import "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 struct auth_item_set {
-    char*        name;
-    size_t       valueLength;
-    void*        value;
+    char* _Nullable name;
+    size_t valueLength;
+    void* _Nullable value;
     unsigned int flags;
 };
 
@@ -18,8 +20,7 @@ IS_AUTHORIZATIONITEM(const char* typestr)
     return strncmp(typestr, "{_AuthorizationItem=^cL^vI}", 27) == 0;
 }
 
-PyObject*
-pythonify_authorizationitem(void* _value)
+PyObject* _Nullable pythonify_authorizationitem(void* _value)
 {
     struct auth_item_set* value = (struct auth_item_set*)_value;
     PyObject*             result;
@@ -209,3 +210,5 @@ depythonify_authorizationitem(PyObject* value, void* _out)
     Py_DECREF(seq);
     return 0;
 }
+
+NS_ASSUME_NONNULL_END
