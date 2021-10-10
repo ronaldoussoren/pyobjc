@@ -9,6 +9,8 @@
 #import "pyobjc.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  * @class OC_NSBundleHack
  * @abstract NSBundle hacks to support plugins
@@ -24,5 +26,7 @@
 
 @interface OC_NSBundleHackCheck : NSObject {
 }
-+ (NSBundle*)bundleForClass;
++ (NSBundle* _Nullable)bundleForClass;
 @end
+
+NS_ASSUME_NONNULL_END

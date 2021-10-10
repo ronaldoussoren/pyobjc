@@ -1,9 +1,10 @@
 #include "pyobjc.h"
-#import "OC_PythonDate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation OC_PythonDate
 
-+ (instancetype)dateWithPythonObject:(PyObject*)v
++ (instancetype _Nullable)dateWithPythonObject:(PyObject*)v
 {
     OC_PythonDate* res;
 
@@ -11,7 +12,7 @@
     return [res autorelease];
 }
 
-- (id)initWithPythonObject:(PyObject*)v
+- (id _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -98,7 +99,7 @@
     PyObjC_END_WITH_GIL
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     value = NULL;
 
@@ -229,8 +230,8 @@
     return [[self _make_oc_value] compare:anotherDate];
 }
 
-- (NSCalendarDate*)dateWithCalendarFormat:(NSString*)formatString
-                                 timeZone:(NSTimeZone*)timeZone
+- (NSCalendarDate*)dateWithCalendarFormat:(NSString* _Nullable)formatString
+                                 timeZone:(NSTimeZone* _Nullable)timeZone
 {
     return [[self _make_oc_value] dateWithCalendarFormat:formatString timeZone:timeZone];
 }
@@ -240,16 +241,16 @@
     return [[self _make_oc_value] description];
 }
 
-- (NSString*)descriptionWithCalendarFormat:(NSString*)formatString
-                                  timeZone:(NSTimeZone*)aTimeZone
-                                    locale:(id)localeDictionary
+- (NSString* _Nullable)descriptionWithCalendarFormat:(NSString* _Nullable)formatString
+                                            timeZone:(NSTimeZone* _Nullable)aTimeZone
+                                              locale:(id _Nullable)localeDictionary
 {
     return [[self _make_oc_value] descriptionWithCalendarFormat:formatString
                                                        timeZone:aTimeZone
                                                          locale:localeDictionary];
 }
 
-- (NSString*)descriptionWithLocale:(id)localeDictionary
+- (NSString*)descriptionWithLocale:(id _Nullable)localeDictionary
 {
     return [[self _make_oc_value] descriptionWithLocale:localeDictionary];
 }
@@ -293,3 +294,5 @@
 }
 
 @end /* implementation OC_PythonDate */
+
+NS_ASSUME_NONNULL_END

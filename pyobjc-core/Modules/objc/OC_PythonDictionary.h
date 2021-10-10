@@ -6,7 +6,7 @@
  *     dictionaries to Objective-C.
  */
 
-#import "pyobjc.h"
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
  * @class OC_PythonDictionary
@@ -25,16 +25,18 @@
     PyObject* value;
 }
 
-+ (OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)value;
-- (OC_PythonDictionary*)initWithPythonObject:(PyObject*)value;
++ (instancetype _Nullable)dictionaryWithPythonObject:(PyObject*)value;
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)value;
 - (void)dealloc;
 - (PyObject*)__pyobjc_PythonObject__;
 - (NSUInteger)count;
 - (NSEnumerator*)keyEnumerator;
 - (void)setObject:(id)object forKey:(id)key;
 - (void)removeObjectForKey:(id)key;
-- (id)objectForKey:(id)key;
+- (id _Nullable)objectForKey:(id)key;
 - (void)encodeWithCoder:(NSCoder*)coder;
-- (id)initWithCoder:(NSCoder*)coder;
+- (id _Nullable)initWithCoder:(NSCoder*)coder;
 
 @end /* interface OC_PythonDictionary */
+
+NS_ASSUME_NONNULL_END

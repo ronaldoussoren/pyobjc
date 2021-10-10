@@ -4,7 +4,8 @@
  * APIs because those are incomplete(!).
  */
 #include "pyobjc.h"
-#import "OC_PythonDictionary.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /*
  * OC_PythonDictionaryEnumerator - Enumerator for Python dictionaries
@@ -16,21 +17,21 @@
     Py_ssize_t           pos;
     BOOL                 valid;
 }
-+ (instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
-- (id)initWithWrappedDictionary:(OC_PythonDictionary*)value;
++ (instancetype _Nullable)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)value;
+- (id _Nullable)initWithWrappedDictionary:(OC_PythonDictionary*)value;
 - (void)dealloc;
-- (id)nextObject;
+- (id _Nullable)nextObject;
 
 @end /* interface OC_PythonDictionaryEnumerator */
 
 @implementation OC_PythonDictionaryEnumerator
 
-+ (instancetype)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
++ (instancetype _Nullable)enumeratorWithWrappedDictionary:(OC_PythonDictionary*)v
 {
     return [[[self alloc] initWithWrappedDictionary:v] autorelease];
 }
 
-- (id)initWithWrappedDictionary:(OC_PythonDictionary*)v
+- (id _Nullable)initWithWrappedDictionary:(OC_PythonDictionary*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -48,7 +49,7 @@
     [super dealloc];
 }
 
-- (id)nextObject
+- (id _Nullable)nextObject
 {
     id        key   = nil;
     PyObject* pykey = NULL;
@@ -80,14 +81,12 @@
 
 @implementation OC_PythonDictionary
 
-+ (OC_PythonDictionary*)dictionaryWithPythonObject:(PyObject*)v
++ (instancetype _Nullable)dictionaryWithPythonObject:(PyObject*)v
 {
-    OC_PythonDictionary* res = [[self alloc] initWithPythonObject:v];
-    [res autorelease];
-    return res;
+    return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
-- (OC_PythonDictionary*)initWithPythonObject:(PyObject*)v
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -175,7 +174,7 @@
     return result;
 }
 
-- (id)objectForKey:key
+- (id _Nullable)objectForKey:key
 {
     PyObject* v;
     PyObject* k;
@@ -229,7 +228,7 @@
     return result;
 }
 
-- (void)setObject:val forKey:key
+- (void)setObject:(id)val forKey:(id)key
 {
     PyObject* v    = NULL;
     PyObject* k    = NULL;
@@ -279,7 +278,7 @@
     PyObjC_END_WITH_GIL
 }
 
-- (void)removeObjectForKey:key
+- (void)removeObjectForKey:(id)key
 {
     PyObject* k;
 
@@ -313,11 +312,8 @@
 
 - (NSEnumerator*)keyEnumerator
 {
-    if (value == NULL) {
-        return nil;
-    }
-
-    if (PyDict_CheckExact(value)) {
+    /* XXX: Can value be NULL?? */
+    if (value && PyDict_CheckExact(value)) {
         return [OC_PythonDictionaryEnumerator enumeratorWithWrappedDictionary:self];
 
     } else {
@@ -343,8 +339,8 @@
     }
 }
 
-- (id)initWithObjects:(const id[])objects
-              forKeys:(const id<NSCopying>[])keys
+- (id)initWithObjects:(const id _Nonnull[])objects
+              forKeys:(const id<NSCopying> _Nonnull[])keys
                 count:(NSUInteger)count
 {
     /* This implementation is needed for our support for the NSCoding
@@ -415,7 +411,7 @@
     PyObjC_END_WITH_GIL
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     int code;
     if ([coder allowsKeyedCoding]) {
@@ -490,7 +486,7 @@
     }
 }
 
-- (Class)classForKeyedArchiver
+- (Class _Nullable)classForKeyedArchiver
 {
     return [OC_PythonDictionary class];
 }
@@ -520,7 +516,7 @@
     }
 }
 
-- (id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone* _Nullable)zone
 {
     if (PyObjC_CopyFunc) {
         NSObject* result;
@@ -548,7 +544,7 @@
     }
 }
 
-- (id)mutableCopyWithZone:(NSZone*)zone
+- (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
     if (PyObjC_CopyFunc) {
         NSObject* result;
@@ -583,3 +579,5 @@
 }
 
 @end /* interface OC_PythonDictionary */
+
+NS_ASSUME_NONNULL_END

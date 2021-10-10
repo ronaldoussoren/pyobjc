@@ -1,18 +1,15 @@
 #include "pyobjc.h"
 
-#import "OC_PythonArray.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation OC_PythonArray
 
-+ (OC_PythonArray*)arrayWithPythonObject:(PyObject*)v
++ (OC_PythonArray* _Nullable)arrayWithPythonObject:(PyObject*)v
 {
-    OC_PythonArray* res;
-
-    res = [[self alloc] initWithPythonObject:v];
-    return [res autorelease];
+    return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
-- (id)initWithPythonObject:(PyObject*)v
+- (id _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -31,6 +28,10 @@
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
+    /*
+     * XXX: Check if 'value' can ever be NULL
+     *      if not: replace by PyObjC_Assert check
+     */
     if (likely(value)) {
         Py_INCREF(value);
         return value;
@@ -351,12 +352,12 @@
     }
 }
 
-- (Class)classForKeyedArchiver
+- (Class _Nullable)classForKeyedArchiver
 {
     return [OC_PythonArray class];
 }
 
-- (id)initWithObjects:(const id[])objects count:(NSUInteger)count
+- (id)initWithObjects:(const id _Nonnull[])objects count:(NSUInteger)count
 {
     /* initWithObjects:count: is primarily present to support the NSCoding
      * protocol of NSArray.
@@ -431,7 +432,7 @@
     PyObjC_END_WITH_GIL
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     PyObject*       t;
     int             code;
@@ -447,7 +448,7 @@
 
     switch (code) {
     case 1:
-        /* This code was created by some previous versions of PyObjC
+        /* This code was used by some previous versions of PyObjC
          * (before 2.2) and is kept around for backward compatibility.
          */
         PyObjC_BEGIN_WITH_GIL
@@ -562,7 +563,6 @@
 
     case 5:
         /* tuple with more than MAX_INT elements */
-#ifdef __LP64__
         if ([coder allowsKeyedCoding]) {
             size = [coder decodeInt64ForKey:@"pylength"];
         } else {
@@ -579,12 +579,6 @@
         tmpVal = [super initWithCoder:coder];
         PyObjC_Assert(tmpVal == self, nil);
         return tmpVal;
-#else
-        [NSException raise:NSInvalidArgumentException
-                    format:@"decoding tuple with more than INT_MAX elements in 32-bit"];
-        [self release];
-        return nil;
-#endif
 
     default:
         [self release];
@@ -594,7 +588,7 @@
     }
 }
 
-- (id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone* _Nullable)zone
 {
     if (PyObjC_CopyFunc) {
         PyObjC_BEGIN_WITH_GIL
@@ -623,7 +617,7 @@
     }
 }
 
-- (id)mutableCopyWithZone:(NSZone*)zone
+- (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
     if (PyObjC_CopyFunc) {
         PyObjC_BEGIN_WITH_GIL
@@ -654,3 +648,5 @@
 }
 
 @end /* implementation OC_PythonArray */
+
+NS_ASSUME_NONNULL_END

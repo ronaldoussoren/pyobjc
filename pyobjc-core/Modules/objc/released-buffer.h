@@ -1,4 +1,5 @@
-
+NS_ASSUME_NONNULL_BEGIN
+/* Methods assume the GIL is held */
 @interface OCReleasedBuffer : NSObject {
     BOOL      have_buffer;
     Py_buffer buffer;
@@ -9,3 +10,4 @@
 - (void*)buffer;
 - (NSUInteger)length;
 @end
+NS_ASSUME_NONNULL_END

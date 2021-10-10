@@ -1,6 +1,8 @@
 #ifndef PyObjC_PythonEnumerator_H
 #define PyObjC_PythonEnumerator_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OC_PythonEnumerator : NSEnumerator {
     PyObject* value;
     BOOL      valid;
@@ -10,5 +12,7 @@
 - (id)initWithPythonObject:(PyObject*)object;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_PythonEnumerator_H */

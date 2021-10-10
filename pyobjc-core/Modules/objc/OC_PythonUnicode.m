@@ -1,17 +1,15 @@
 #include "pyobjc.h"
-#import "OC_PythonUnicode.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation OC_PythonUnicode
 
-+ (instancetype)unicodeWithPythonObject:(PyObject*)v
++ (instancetype _Nullable)unicodeWithPythonObject:(PyObject*)v
 {
-    OC_PythonUnicode* res;
-
-    res = [[self alloc] initWithPythonObject:v];
-    return [res autorelease];
+    return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
-- (id)initWithPythonObject:(PyObject*)v
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -23,6 +21,7 @@
 
 - (PyObject*)__pyobjc_PythonObject__
 {
+    /* XXX: Can value ever be NULL? */
     if (value == NULL) {
         Py_INCREF(Py_None);
         return Py_None;
@@ -98,7 +97,7 @@
     [super dealloc];
 }
 
-- (id)__realObject__
+- (id _Nullable)__realObject__
 {
 #ifdef Py_DEBUG
     if (!PyUnicode_IS_READY(value)) {
@@ -187,11 +186,13 @@
                   freeWhenDone:(BOOL)flag
 {
     int byteorder = 0;
+    /* XXX: Call super? */
     PyObjC_BEGIN_WITH_GIL
         /* Decode as a UTF-16 string in native byteorder */
         value =
             PyUnicode_DecodeUTF16((const char*)characters, length * 2, NULL, &byteorder);
         if (value == NULL) {
+            /* XXX: Maybe just return nil? */
             PyObjC_GIL_FORWARD_EXC();
         }
 
@@ -202,9 +203,9 @@
     return self;
 }
 
-- (id)initWithBytes:(const void*)bytes
-             length:(NSUInteger)length
-           encoding:(NSStringEncoding)encoding
+- (id _Nullable)initWithBytes:(const void*)bytes
+                       length:(NSUInteger)length
+                     encoding:(NSStringEncoding)encoding
 {
     char* py_encoding = NULL;
     int   byteorder   = 0;
@@ -320,7 +321,7 @@
     PyObjC_END_WITH_GIL
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     int ver;
     if ([coder allowsKeyedCoding]) {
@@ -403,27 +404,27 @@
     }
 }
 
-- (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
+- (NSObject* _Nullable)replacementObjectForArchiver:(NSArchiver*)archiver
+    __attribute__((__unused__))
 {
-    (void)(archiver);
     return self;
 }
 
-- (NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+- (NSObject* _Nullable)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+    __attribute__((__unused__))
 {
-    (void)(archiver);
     return self;
 }
 
-- (NSObject*)replacementObjectForCoder:(NSCoder*)archiver
+- (NSObject* _Nullable)replacementObjectForCoder:(NSCoder*)archiver
+    __attribute__((__unused__))
 {
-    (void)(archiver);
     return self;
 }
 
-- (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
+- (NSObject* _Nullable)replacementObjectForPortCoder:(NSPortCoder*)archiver
+    __attribute__((__unused__))
 {
-    (void)(archiver);
     return self;
 }
 
@@ -446,7 +447,7 @@
     return result;
 }
 
-- (Class)classForKeyedArchiver
+- (Class _Nullable)classForKeyedArchiver
 {
     return [OC_PythonUnicode class];
 }
@@ -460,3 +461,5 @@
 }
 
 @end /* implementation OC_PythonUnicode */
+
+NS_ASSUME_NONNULL_END

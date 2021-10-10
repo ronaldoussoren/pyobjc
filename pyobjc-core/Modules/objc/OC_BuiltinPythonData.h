@@ -1,6 +1,9 @@
 #import "pyobjc.h"
-#import "OC_PythonData.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface OC_BuiltinPythonData : OC_PythonData {
 }
 @end
+
+NS_ASSUME_NONNULL_END

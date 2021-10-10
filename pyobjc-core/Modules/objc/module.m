@@ -3,7 +3,6 @@
  * and the implementation of a number of exported functions.
  */
 #include "pyobjc.h"
-#include "OC_NSBundleHack.h"
 #include <objc/Protocol.h>
 #include <objc/objc-sync.h>
 

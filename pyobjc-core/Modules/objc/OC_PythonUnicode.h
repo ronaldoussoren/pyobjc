@@ -6,7 +6,7 @@
  *     in Objective-C.
  */
 
-#include "pyobjc.h"
+NS_ASSUME_NONNULL_BEGIN
 
 /*!
  * @class       OC_PythonUnicode
@@ -27,7 +27,7 @@
  *
  * Caller must own the GIL.
  */
-+ (id)unicodeWithPythonObject:(PyObject*)value;
++ (id _Nullable)unicodeWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -37,7 +37,7 @@
  *
  * Caller must own the GIL.
  */
-- (id)initWithPythonObject:(PyObject*)value;
+- (id _Nullable)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc
@@ -60,3 +60,5 @@
 - (void)getCharacters:(unichar*)buffer range:(NSRange)aRange;
 
 @end
+
+NS_ASSUME_NONNULL_END

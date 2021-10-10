@@ -1,16 +1,18 @@
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OC_PythonNumber
 
-+ (instancetype)numberWithPythonObject:(PyObject*)v
++ (instancetype _Nullable)numberWithPythonObject:(PyObject*)v
 {
-    OC_PythonNumber* res;
     if (PyLong_Check(v)) {
         unsigned long long lv = PyLong_AsUnsignedLongLong(v);
         if (PyErr_Occurred()) {
             PyErr_Clear();
         } else if (lv >= 1ULL << 63) {
             /* Workaround for round-trip problems... */
+            /* XXX: What kind of round-trip problems, and is this still relevant */
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wincompatible-pointer-types"
@@ -28,12 +30,10 @@
         }
     }
 
-    res = [[self alloc] initWithPythonObject:v];
-    [res autorelease];
-    return res;
+    return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
-- (instancetype)initWithPythonObject:(PyObject*)v
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -365,7 +365,7 @@
     PyObjC_END_WITH_GIL
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     if (PyObjC_Decoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
@@ -467,7 +467,7 @@
 }
 
 #define COMPARE_METHOD(NAME, OPERATOR)                                                   \
-    -(BOOL)NAME : (NSObject*)number                                                      \
+    -(BOOL)NAME : (NSObject* _Nullable)number                                            \
     {                                                                                    \
         PyObjC_BEGIN_WITH_GIL                                                            \
             PyObject* other = PyObjC_IdToPython(number);                                 \
@@ -503,33 +503,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     return [self isEqualTo:number];
 }
 
-#if 0
--(NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
-{
-    (void)archiver;
-    return (NSObject*)self;
-}
-
--(NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
-{
-    (void)archiver;
-    return (NSObject*)self;
-}
-
--(NSObject*)replacementObjectForCoder:(NSCoder*)archiver
-{
-    (void)archiver;
-    return (NSObject*)self;
-}
-
--(NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
-{
-    (void)archiver;
-    return (NSObject*)self;
-}
-#endif
-
-- (Class _Nonnull)classForArchiver
+- (Class)classForArchiver
 {
     PyObjC_BEGIN_WITH_GIL
         if (PyFloat_CheckExact(value)) {
@@ -552,7 +526,7 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     PyObjC_END_WITH_GIL
 }
 
-- (Class)classForKeyedArchiver
+- (Class _Nullable)classForKeyedArchiver
 {
     return [self classForArchiver];
 }
@@ -564,14 +538,18 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
 
 - (id)copy
 {
-    return [self copyWithZone:0];
+    return [self copyWithZone:NULL];
 }
 
-- (id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone* _Nullable)zone __attribute__((__unused__))
 {
-    (void)zone;
+    /* XXX: This is ok if value is a python builtin
+     *      but not for arbitrary python objects.
+     */
     [self retain];
     return self;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

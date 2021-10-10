@@ -1,17 +1,15 @@
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OC_PythonSet
 
-+ (instancetype)setWithPythonObject:(PyObject*)v
++ (instancetype _Nullable)setWithPythonObject:(PyObject*)v
 {
-    OC_PythonSet* res;
-
-    res = [[self alloc] initWithPythonObject:v];
-    [res autorelease];
-    return res;
+    return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
-- (id)initWithPythonObject:(PyObject*)v
+- (id _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -23,9 +21,10 @@
 
 - (PyObject*)__pyobjc_PythonObject__
 {
-    if (unlikely(value == NULL)) {
-        PyErr_SetString(PyObjCExc_InternalError, "NULL OC_PythonSet");
-        return NULL;
+    if (value == NULL) {
+        /* XXX: Why is this needed */
+        Py_INCREF(Py_None);
+        return Py_None;
     }
     Py_INCREF(value);
     return value;
@@ -91,7 +90,7 @@
     }
 }
 
-- (Class)classForKeyedArchiver
+- (Class _Nullable)classForKeyedArchiver
 {
     return [OC_PythonSet class];
 }
@@ -166,10 +165,9 @@
     return self;
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     int code;
-    id  result;
 
     if ([coder allowsKeyedCoding]) {
         code = [coder decodeInt32ForKey:@"pytype"];
@@ -179,29 +177,20 @@
     }
 
     if (code == 1) {
-        // value = PyFrozenSet_New(NULL);
         PyObjC_BEGIN_WITH_GIL
-            value = PySet_New(NULL);
+            /* This is safe: PySet_Add can be used
+             * with frozenset instances.
+             */
+            value = PyFrozenSet_New(NULL);
         PyObjC_END_WITH_GIL
 
-        result = [super initWithCoder:coder];
-        PyObjC_Assert(result == self, nil);
-        self = result;
-        if (self != nil) {
-            /* XXX: This is dodgy, can we create the frozen set
-             * here instead of changing the type? Needs tests
-             * with various variants of nesting.
-             *
-             * At worst document that round-tripping a frozen
-             * set results in a non-frozen set.
-             */
-            Py_SET_TYPE(value, &PyFrozenSet_Type);
-        }
-        return self;
+        return [super initWithCoder:coder];
+
     } else if (code == 2) {
         PyObjC_BEGIN_WITH_GIL
             value = PySet_New(NULL);
         PyObjC_END_WITH_GIL
+
         return [super initWithCoder:coder];
     }
 
@@ -247,7 +236,7 @@
 /*
  * Implementation of the NSMutableSet interface
  */
-- (id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone* _Nullable)zone
 {
     NSObject* result;
 
@@ -277,7 +266,7 @@
     }
 }
 
-- (id)mutableCopyWithZone:(NSZone*)zone
+- (id)mutableCopyWithZone:(NSZone* _Nullable)zone
 {
     NSObject* result;
 
@@ -323,7 +312,7 @@
     return result;
 }
 
-- (NSObject*)anyObject
+- (NSObject* _Nullable)anyObject
 {
     NSObject* result;
 
@@ -420,7 +409,7 @@
 /* It seems impossible to create an efficient implementation of this method,
  * iteration is basically the only way to fetch the requested object
  */
-- (id)member:(id)anObject
+- (id _Nullable)member:(id)anObject
 {
     NSObject* result = nil;
 
@@ -531,9 +520,11 @@
         }
 
         if (PyFrozenSet_CheckExact(value)) {
-            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenstring");
+            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
             PyObjC_GIL_FORWARD_EXC();
         }
+
+        /* XXX: Maybe just always use the vectorcall path? */
 
         if (PyAnySet_Check(value)) {
             int r = PySet_Discard(value, tmp);
@@ -567,9 +558,11 @@
         }
 
         if (PyFrozenSet_CheckExact(value)) {
-            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenstring");
+            PyErr_SetString(PyExc_TypeError, "Cannot mutate a frozenset");
             PyObjC_GIL_FORWARD_EXC();
         }
+
+        /* XXX: Maybe just always use the vectorcall path? */
 
         if (PyAnySet_Check(value)) {
             int r = PySet_Add(value, tmp);
@@ -600,3 +593,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -65,6 +65,8 @@ def get_sdk_level(sdk):
 CFLAGS = [
     "-g",
     "-fexceptions",
+    # Explicitly opt-out of ARC
+    "-fno-objc-arc",
     # Loads of warning flags
     "-Wall",
     "-Wstrict-prototypes",

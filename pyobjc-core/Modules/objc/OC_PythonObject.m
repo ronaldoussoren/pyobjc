@@ -9,6 +9,8 @@
  */
 
 #include "pyobjc.h"
+
+/* XXX: Are these includes still needed */
 #include "compile.h" /* From Python */
 #include <dlfcn.h>
 
@@ -27,27 +29,27 @@
 
 #import "OC_PythonUnicode.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+/* XXX: Is this still needed? */
 extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 
 @implementation OC_PythonObject
-+ (id<NSObject>)objectWithPythonObject:(PyObject*)obj
++ (id<NSObject> _Nullable)objectWithPythonObject:(PyObject*)obj
 {
     id instance;
     if (likely(PyObjCObject_Check(obj))) {
         instance = PyObjCObject_GetObject(obj);
     } else {
-        instance = [[self alloc] initWithPyObject:obj];
-        [instance autorelease];
+        instance = [[[self alloc] initWithPyObject:obj] autorelease];
     }
     return instance;
 }
 
-- (id)initWithPyObject:(PyObject*)obj
+- (id _Nullable)initWithPyObject:(PyObject*)obj
 {
     PyObjC_BEGIN_WITH_GIL
-        if (PyLong_Check(obj))
-            abort();
-
+        /* XXX: Why check for NULL here? */
         if (pyObject) {
             PyObjC_UnregisterObjCProxy(pyObject, self);
         }
@@ -95,7 +97,7 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
     [super dealloc];
 }
 
-- (id)copyWithZone:(NSZone*)zone
+- (id)copyWithZone:(NSZone* _Nullable)zone
 {
     (void)zone;
     NSObject* result = nil;
@@ -150,6 +152,7 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
             int       err;
             NSString* result;
 
+            /* XXX: use other function */
             err = depythonify_c_value(@encode(id), repr, &result);
             Py_DECREF(repr);
             if (err == -1) {
@@ -173,8 +176,7 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
                 format:@"%@ does not recognize -%s", self, sel_getName(aSelector)];
 }
 
-static inline PyObject*
-check_argcount(PyObject* pymethod, Py_ssize_t argcount)
+static inline PyObject* _Nullable check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 {
     PyCodeObject* func_code;
 
@@ -197,8 +199,7 @@ check_argcount(PyObject* pymethod, Py_ssize_t argcount)
 /*#F If the Python object @var{obj} implements a method whose name matches
   the Objective-C selector @var{aSelector} and accepts the correct number
   of arguments, return that method, otherwise NULL. */
-static PyObject*
-get_method_for_selector(PyObject* obj, SEL aSelector)
+static PyObject* _Nullable get_method_for_selector(PyObject* obj, SEL aSelector)
 {
     const char* meth_name;
     char        pymeth_name[256];
@@ -273,7 +274,7 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     PyObjC_END_WITH_GIL
 }
 
-+ (NSMethodSignature*)methodSignatureForSelector:(SEL)sel
++ (NSMethodSignature* _Nullable)methodSignatureForSelector:(SEL)sel
 {
     Method m;
 
@@ -293,7 +294,7 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     return nil;
 }
 
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)sel
+- (NSMethodSignature* _Nullable)methodSignatureForSelector:(SEL)sel
 {
     /* We can't call our superclass implementation, NSProxy just raises
      * an exception.
@@ -597,6 +598,9 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
 - (PyObject*)__pyobjc_PythonObject__
 {
     PyObjC_BEGIN_WITH_GIL
+        /* XXX: This is a bit too magic. Can pyObject ever be NULL?
+         * and why not return None in that case?
+         */
         if (pyObject == NULL) {
             PyObject* r = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
             PyObjC_GIL_RETURN(r);
@@ -645,8 +649,12 @@ get_method_for_selector(PyObject* obj, SEL aSelector)
     return YES;
 }
 
-static PyObject*
-getModuleFunction(char* modname, char* funcname)
+/* XXX:
+ * - Try to use PyImport_ImportModuleLevel here
+ * - Preferably switch to an objc.option for setting
+ *   the function.
+ */
+static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 {
     PyObject* func;
     PyObject* name;
@@ -719,7 +727,7 @@ getModuleFunction(char* modname, char* funcname)
     return res;
 }
 
-- (id)storedValueForKey:(NSString*)key
+- (id _Nullable)storedValueForKey:(NSString*)key
 {
     return [self valueForKey:key];
 }
@@ -777,7 +785,7 @@ getModuleFunction(char* modname, char* funcname)
     [self takeValue:value forKey:key];
 }
 
-- (NSDictionary*)valuesForKeys:(NSArray*)keys
+- (NSDictionary* _Nullable)valuesForKeys:(NSArray*)keys
 {
     NSMutableDictionary* result;
     NSEnumerator*        enumerator;
@@ -794,7 +802,7 @@ getModuleFunction(char* modname, char* funcname)
     return result;
 }
 
-- (id)valueForKeyPath:(NSString*)keyPath
+- (id _Nullable)valueForKeyPath:(NSString*)keyPath
 {
     static PyObject* getKeyFunc = NULL;
 
@@ -1047,7 +1055,7 @@ getModuleFunction(char* modname, char* funcname)
     PyObjC_END_WITH_GIL
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     pyObject = NULL;
 
@@ -1103,9 +1111,8 @@ getModuleFunction(char* modname, char* funcname)
     }
 }
 
-- (id)awakeAfterUsingCoder:(NSCoder*)coder
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)coder __attribute__((__unused__))
 {
-    (void)coder;
     return self;
 }
 
@@ -1113,27 +1120,26 @@ getModuleFunction(char* modname, char* funcname)
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 - (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver
+    __attribute__((__unused__))
 {
-    (void)archiver;
     return (NSObject*)self;
 }
 
 - (NSObject*)replacementObjectForPortCoder:(NSPortCoder*)archiver
+    __attribute__((__unused__))
 {
-    (void)archiver;
     return (NSObject*)self;
 }
 #pragma clang diagnostic pop
 
 - (NSObject*)replacementObjectForKeyedArchiver:(NSKeyedArchiver*)archiver
+    __attribute__((__unused__))
 {
-    (void)archiver;
     return (NSObject*)self;
 }
 
-- (NSObject*)replacementObjectForCoder:(NSCoder*)archiver
+- (NSObject*)replacementObjectForCoder:(NSCoder*)archiver __attribute__((__unused__))
 {
-    (void)archiver;
     return (NSObject*)self;
 }
 
@@ -1218,7 +1224,7 @@ getModuleFunction(char* modname, char* funcname)
     return NO;
 }
 
-+ (id)classFallbacksForKeyedArchiver
++ (id _Nullable)classFallbacksForKeyedArchiver
 {
     return nil;
 }
@@ -1279,3 +1285,5 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
                     format:@"encoding Python objects is not supported"];
     }
 }
+
+NS_ASSUME_NONNULL_END

@@ -15,6 +15,8 @@
  *              (except str, unicode) can be used everywhere where NSData
  *              is expected.
  */
+NS_ASSUME_NONNULL_BEGIN
+
 @interface OC_PythonData : NSData {
     PyObject* value;
 }
@@ -27,7 +29,7 @@
  *
  * Caller must own the GIL.
  */
-+ (OC_PythonData*)dataWithPythonObject:(PyObject*)value;
++ (instancetype _Nullable)dataWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -37,7 +39,7 @@
  *
  * Caller must own the GIL.
  */
-- (OC_PythonData*)initWithPythonObject:(PyObject*)value;
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc
@@ -65,3 +67,5 @@
 - (const void*)bytes;
 
 @end
+
+NS_ASSUME_NONNULL_END

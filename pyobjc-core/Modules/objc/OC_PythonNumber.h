@@ -1,13 +1,15 @@
-#include "pyobjc.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface OC_PythonNumber : NSNumber {
     PyObject* value;
 }
 
-+ (instancetype _Nullable)numberWithPythonObject:(PyObject* _Nonnull)value;
-- (instancetype _Nullable)initWithPythonObject:(PyObject* _Nonnull)value;
++ (instancetype _Nullable)numberWithPythonObject:(PyObject*)value;
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)value;
 - (void)dealloc;
-- (PyObject* _Nullable)__pyobjc_PythonObject__;
-- (Class _Nonnull)classForArchiver;
+- (PyObject*)__pyobjc_PythonObject__;
+- (Class)classForArchiver;
 
 @end
+
+NS_ASSUME_NONNULL_END

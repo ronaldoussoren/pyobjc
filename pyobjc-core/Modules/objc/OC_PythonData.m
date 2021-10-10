@@ -1,18 +1,15 @@
 #include "pyobjc.h"
-#import "OC_PythonData.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation OC_PythonData
 
-+ (OC_PythonData*)dataWithPythonObject:(PyObject*)v
++ (instancetype _Nullable)dataWithPythonObject:(PyObject*)v
 {
-    OC_PythonData* res;
-
-    res = [[self alloc] initWithPythonObject:v];
-    [res autorelease];
-    return res;
+    return [[[self alloc] initWithPythonObject:v] autorelease];
 }
 
-- (OC_PythonData*)initWithPythonObject:(PyObject*)v
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)v
 {
     self = [super init];
     if (unlikely(self == nil))
@@ -90,7 +87,7 @@
         if (temp == nil) {
             [self release];
             PyErr_Clear();
-            return 0;
+            PyObjC_GIL_RETURN(0);
         }
         rval = [temp length];
         [temp release];
@@ -106,12 +103,7 @@
     PyObjC_BEGIN_WITH_GIL
         OCReleasedBuffer* temp = [[OCReleasedBuffer alloc] initWithPythonBuffer:value
                                                                        writable:NO];
-        if (temp == nil) {
-            [self release];
-            PyErr_Clear();
-            return nil;
-        }
-        rval = [temp buffer];
+        rval                   = [temp buffer];
         [temp autorelease];
 
     PyObjC_END_WITH_GIL
@@ -131,7 +123,7 @@
     }
 }
 
-- (Class)classForKeyedArchiver
+- (Class _Nullable)classForKeyedArchiver
 {
     return [OC_PythonData class];
 }
@@ -176,7 +168,7 @@
     PyObjC_END_WITH_GIL
 }
 
-- (id)initWithCoder:(NSCoder*)coder
+- (id _Nullable)initWithCoder:(NSCoder*)coder
 {
     int v;
 
@@ -277,7 +269,7 @@
     return [self initWithBytes:[data bytes] length:[data length]];
 }
 
-- (id)initWithBytes:(const void*)bytes length:(NSUInteger)length
+- (id)initWithBytes:(const void* _Nullable)bytes length:(NSUInteger)length
 {
     PyObjC_BEGIN_WITH_GIL
         if (length > PY_SSIZE_T_MAX) {
@@ -301,7 +293,7 @@
     return self;
 }
 
-/* Ensure that we can be unarchived as a generic string by pure ObjC
+/* Ensure that we can be unarchived as a generic data object by pure ObjC
  * code.
  */
 + (NSArray*)classFallbacksForKeyedArchiver
@@ -310,3 +302,5 @@
 }
 
 @end /* implementation OC_PythonData */
+
+NS_ASSUME_NONNULL_END

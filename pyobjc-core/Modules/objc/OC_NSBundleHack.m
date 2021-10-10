@@ -1,10 +1,14 @@
 #include "pyobjc.h"
-#import "OC_NSBundleHack.h"
+/*
+ * XXX: Is this code still needed?
+ */
+
+NS_ASSUME_NONNULL_BEGIN
 
 static id (*bundleForClassIMP)(id, SEL, Class);
 
 @implementation OC_NSBundleHackCheck
-+ (NSBundle*)bundleForClass
++ (NSBundle* _Nullable)bundleForClass
 {
     return [NSBundle bundleForClass:[NSObject class]];
 }
@@ -87,3 +91,5 @@ static const char BUNDLE_FOR_CLASS_SIGNATURE[] = {_C_ID, _C_ID, _C_SEL, _C_CLASS
     }
 }
 @end
+
+NS_ASSUME_NONNULL_END

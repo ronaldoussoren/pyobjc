@@ -1,5 +1,6 @@
 #include "pyobjc.h"
-#import "OC_PythonNumber.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation OC_BuiltinPythonNumber
 
@@ -14,3 +15,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

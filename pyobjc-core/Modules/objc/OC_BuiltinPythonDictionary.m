@@ -1,5 +1,6 @@
 #include "pyobjc.h"
-#import "OC_PythonDictionary.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation OC_BuiltinPythonDictionary
 
@@ -8,7 +9,7 @@
     return YES;
 }
 
-- (Class)classForKeyedArchiver
+- (Class _Nullable)classForKeyedArchiver
 {
     return [OC_BuiltinPythonDictionary class];
 }
@@ -19,3 +20,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

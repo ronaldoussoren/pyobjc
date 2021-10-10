@@ -1,12 +1,12 @@
-#import "pyobjc.h"
+NS_ASSUME_NONNULL_BEGIN
 
 @interface OC_PythonDate : NSDate {
     PyObject* value;
     NSDate*   oc_value;
 }
 
-+ (instancetype)dateWithPythonObject:(PyObject*)value;
-- (instancetype)initWithPythonObject:(PyObject*)value;
++ (instancetype _Nullable)dateWithPythonObject:(PyObject*)value;
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)value;
 - (void)dealloc;
 - (PyObject*)__pyobjc_PythonObject__;
 
@@ -15,6 +15,8 @@
 
 /* NSCoding support */
 - (void)encodeWithCoder:(NSCoder*)coder;
-- (id)initWithCoder:(NSCoder*)coder;
+- (id _Nullable)initWithCoder:(NSCoder*)coder;
 
 @end
+
+NS_ASSUME_NONNULL_END

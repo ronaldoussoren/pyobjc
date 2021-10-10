@@ -9,14 +9,15 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OCReleasedBuffer
 - (instancetype)initWithPythonBuffer:(PyObject*)object writable:(BOOL)writable
 {
     int r;
 
-    self = [super init];
-    if (self == nil)
-        return nil;
+    /* -[NSObject init] is documented to not return nil */
+    self = (id _Nonnull)[super init];
 
     self->have_buffer = NO;
 
@@ -33,21 +34,26 @@
 
 - (void)dealloc
 {
-    if (self->have_buffer) {
-        PyBuffer_Release(&self->buffer);
-        self->have_buffer = NO;
-    }
+    PyObjC_BEGIN_WITH_GIL
+        if (have_buffer) {
+            PyBuffer_Release(&buffer);
+            have_buffer = NO;
+        }
+    PyObjC_END_WITH_GIL
     [super dealloc];
 }
 
 - (void*)buffer
 {
-    return self->buffer.buf;
+    /* XXX: Assert GIL is held */
+    return buffer.buf;
 }
 
 - (NSUInteger)length
 {
-    return (NSUInteger)self->buffer.len;
+    return (NSUInteger)buffer.len;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

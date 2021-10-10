@@ -92,6 +92,8 @@
 #import "OC_BuiltinPythonSet.h"
 #import "OC_BuiltinPythonUnicode.h"
 
+#import "OC_NSBundleHack.h"
+
 #import "method-signature.h"
 
 #import "selector.h"

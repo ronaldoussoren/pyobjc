@@ -24,14 +24,17 @@
 #ifndef _OC_PythonObject_H
 #define _OC_PythonObject_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 
+/* XXX: Also implement <NSObject>? */
 @interface OC_PythonObject : NSProxy <NSCopying> {
     PyObject* pyObject;
 }
 
-+ (id<NSObject>)objectWithPythonObject:(PyObject*)obj;
-- (id)initWithPyObject:(PyObject*)obj;
++ (id<NSObject> _Nullable)objectWithPythonObject:(PyObject*)obj;
+- (id _Nullable)initWithPyObject:(PyObject*)obj;
 
 /*!
  * @method pyObject
@@ -49,7 +52,7 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 - (PyObject*)__pyobjc_PythonObject__;
 - (void)forwardInvocation:(NSInvocation*)invocation;
 - (BOOL)respondsToSelector:(SEL)aSelector;
-- (NSMethodSignature*)methodSignatureForSelector:(SEL)selector;
+- (NSMethodSignature* _Nullable)methodSignatureForSelector:(SEL)selector;
 - (void)doesNotRecognizeSelector:(SEL)aSelector;
 
 /* NSObject protocol */
@@ -62,9 +65,9 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 + (BOOL)useStoredAccessor;
 + (BOOL)accessInstanceVariablesDirectly;
 - (id)valueForKey:(NSString*)key;
-- (NSDictionary*)valuesForKeys:(NSArray*)keys;
-- (id)valueForKeyPath:(NSString*)keyPath;
-- (id)storedValueForKey:(NSString*)key;
+- (NSDictionary* _Nullable)valuesForKeys:(NSArray*)keys;
+- (id _Nullable)valueForKeyPath:(NSString*)keyPath;
+- (id _Nullable)storedValueForKey:(NSString*)key;
 - (void)takeValue:value forKey:(NSString*)key;
 - (void)setValue:value forKey:(NSString*)key;
 - (void)setValue:value forKeyPath:(NSString*)key;
@@ -79,8 +82,8 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 
 /* These two are only present to *disable* coding, not implement it */
 - (void)encodeWithCoder:(NSCoder*)coder;
-- (id)initWithCoder:(NSCoder*)coder;
-+ (id)classFallbacksForKeyedArchiver;
+- (id _Nullable)initWithCoder:(NSCoder*)coder;
++ (id _Nullable)classFallbacksForKeyedArchiver;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (NSObject*)replacementObjectForArchiver:(NSArchiver*)archiver;
@@ -94,8 +97,10 @@ extern void PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder);
 + (Class)classForKeyedUnarchiver;
 - (Class)classForCoder;
 - (Class)classForPortCoder;
-- (id)awakeAfterUsingCoder:(NSCoder*)coder;
+- (id _Nullable)awakeAfterUsingCoder:(NSCoder*)coder;
 
 @end /* OC_PythonObject class interface */
+
+NS_ASSUME_NONNULL_END
 
 #endif /* _OC_PythonObject_H */

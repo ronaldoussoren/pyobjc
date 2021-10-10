@@ -8,6 +8,8 @@
 
 #import "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*!
  * @class       OC_PythonArray
  * @abstract    Objective-C proxy class for Python sequences
@@ -29,7 +31,7 @@
  *
  * Caller must own the GIL.
  */
-+ (OC_PythonArray*)arrayWithPythonObject:(PyObject*)value;
++ (instancetype _Nullable)arrayWithPythonObject:(PyObject*)value;
 
 /*!
  * @method initWithPythonObject:
@@ -39,7 +41,7 @@
  *
  * Caller must own the GIL.
  */
-- (id)initWithPythonObject:(PyObject*)value;
+- (instancetype _Nullable)initWithPythonObject:(PyObject*)value;
 
 /*!
  * @method dealloc
@@ -76,7 +78,7 @@
  * @param idx An index
  * @param newValue A replacement value
  */
-- (void)replaceObjectAtIndex:(NSUInteger)idx withObject:newValue;
+- (void)replaceObjectAtIndex:(NSUInteger)idx withObject:(id)newValue;
 
 /*!
  * @method getObjects:inRange:
@@ -91,7 +93,7 @@
  * @param buffer  The output buffer
  * @param range   The range of objects to fetch.
  */
-- (void)getObjects:(id*)buffer inRange:(NSRange)range;
+- (void)getObjects:(id _Nonnull* _Nonnull)buffer inRange:(NSRange)range;
 
 /*!
  * @method addObject:
@@ -133,6 +135,8 @@
  * @abstract Restore a python sequence from an NSCoder
  * @param coder The coder to use
  */
-- (id)initWithCoder:(NSCoder*)coder;
+- (id _Nullable)initWithCoder:(NSCoder*)coder;
 
 @end
+
+NS_ASSUME_NONNULL_END

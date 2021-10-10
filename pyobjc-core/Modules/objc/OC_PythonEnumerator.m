@@ -1,5 +1,7 @@
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation OC_PythonEnumerator
 
 + (instancetype)enumeratorWithPythonObject:(PyObject*)object
@@ -9,9 +11,8 @@
 
 - (id)initWithPythonObject:(PyObject*)object
 {
-    self = [super init];
-    if (self == nil)
-        return nil;
+    /* -[NSObject init] is documented as return self */
+    self = (id _Nonnull)[super init];
 
     SET_FIELD_INCREF(value, object);
     valid = YES;
@@ -47,7 +48,7 @@
     [super dealloc];
 }
 
-- (id)nextObject
+- (id _Nullable)nextObject
 {
     if (!valid) {
         return nil;
@@ -102,3 +103,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
