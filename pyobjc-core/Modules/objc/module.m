@@ -2295,11 +2295,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     }
 #endif /* !Py_HAVE_LOCAL_LOOKUP */
 
-#if PyObjC_BUILD_RELEASE >= 1007
     if (PyType_Ready(&PyObjCWeakRef_Type) < 0) {
         return NULL;
     }
-#endif /* PyObjC_BUILD_RELEASE >= 1007 */
 
     if (PyObjC_setup_names() < 0) {
         return NULL;

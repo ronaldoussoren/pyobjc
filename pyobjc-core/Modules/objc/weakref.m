@@ -8,8 +8,6 @@
  */
 #include "pyobjc.h"
 
-#if PyObjC_BUILD_RELEASE >= 1007
-
 NS_ASSUME_NONNULL_BEGIN
 
 PyDoc_STRVAR(weakref_cls_doc,
@@ -137,5 +135,3 @@ PyTypeObject PyObjCWeakRef_Type = {
 };
 
 NS_ASSUME_NONNULL_END
-
-#endif /* PyObjC_BUILD_RELEASE >= 1007 */
