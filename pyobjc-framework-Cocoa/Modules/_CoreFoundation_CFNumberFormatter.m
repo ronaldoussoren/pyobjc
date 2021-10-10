@@ -132,7 +132,9 @@ mod_CFNumberFormatterGetValueFromString(PyObject* self __attribute__((__unused__
         /* The weird formatting of the string literal is here to
          * silence a codespell warning
          */
-        return Py_BuildValue("NO" "O", PyBool_FromLong(0), Py_None, Py_None);
+        return Py_BuildValue("NO"
+                             "O",
+                             PyBool_FromLong(0), Py_None, Py_None);
     }
 }
 

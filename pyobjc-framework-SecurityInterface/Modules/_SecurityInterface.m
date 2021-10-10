@@ -77,7 +77,9 @@ build_itemset(AuthorizationItemSet* itemset)
 }
 
 static PyObject*
-call_authorizationRights(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_authorizationRights(PyObject* method, PyObject* self,
+                         PyObject* const* arguments __attribute__((__unused__)),
+                         size_t           nargs)
 {
     struct objc_super    super;
     AuthorizationRights* rights;
@@ -113,7 +115,8 @@ call_authorizationRights(PyObject* method, PyObject* self, PyObject*const* argum
 }
 
 static PyObject*
-call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_setAuthorizationRights_(PyObject* method, PyObject* self, PyObject* const* arguments,
+                             size_t nargs)
 {
     struct objc_super   super;
     AuthorizationRights rights;
@@ -158,16 +161,15 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_SecurityInterface",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "_SecurityInterface",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit__SecurityInterface(void);
 
@@ -177,7 +179,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__SecurityInterface(v
     Class     cls;
 
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

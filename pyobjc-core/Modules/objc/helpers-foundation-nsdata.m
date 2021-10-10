@@ -1,15 +1,17 @@
 #include "pyobjc.h"
 
 static PyObject*
-call_NSData_bytes(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_NSData_bytes(PyObject* method, PyObject* self,
+                  PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
 {
     const void*       bytes;
     NSUInteger        bytes_len;
     PyObject*         result;
     struct objc_super super;
-    Py_buffer info;
+    Py_buffer         info;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -54,8 +56,8 @@ imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** ar
     void** pretval = (void**)resp;
 
     PyObject* result;
-    PyObject* pyself  = NULL;
-    int       cookie  = 0;
+    PyObject* pyself = NULL;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -63,9 +65,10 @@ imp_NSData_bytes(ffi_cif* cif __attribute__((__unused__)), void* resp, void** ar
     if (pyself == NULL)
         goto error;
 
-    PyObject* arglist[2] = { NULL, pyself };
+    PyObject* arglist[2] = {NULL, pyself};
 
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -100,15 +103,18 @@ error:
 }
 
 static PyObject*
-call_NSMutableData_mutableBytes(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_NSMutableData_mutableBytes(PyObject* method, PyObject* self,
+                                PyObject* const* arguments __attribute__((__unused__)),
+                                size_t           nargs)
 {
     void*             bytes;
     NSUInteger        bytes_len;
     PyObject*         result;
     struct objc_super super;
-    Py_buffer info;
+    Py_buffer         info;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
 
     Py_BEGIN_ALLOW_THREADS
         @try {
@@ -155,8 +161,8 @@ imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* r
     // SEL _meth = *(SEL*)args[1];
     void**    pretval = (void**)resp;
     PyObject* result;
-    PyObject* pyself  = NULL;
-    int       cookie  = 0;
+    PyObject* pyself = NULL;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -164,8 +170,9 @@ imp_NSMutableData_mutableBytes(ffi_cif* cif __attribute__((__unused__)), void* r
     if (pyself == NULL)
         goto error;
 
-    PyObject* arglist[2] = { NULL, pyself };
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* arglist[2] = {NULL, pyself};
+    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)

@@ -67,7 +67,8 @@ extern PyObjC_CallFunc PyObjC_FindCallFunc(Class aClass, SEL sel);
  *      function will convert it's arguments to Python objects and call 'imp'.
  *      The result of 'imp' will be converted back to Objective-C.
  */
-extern _Nullable IMP PyObjC_MakeIMP(Class aClass, _Nullable Class aSuperClass, PyObject* sel, PyObject* imp);
+extern _Nullable IMP PyObjC_MakeIMP(Class aClass, _Nullable Class aSuperClass,
+                                    PyObject* sel, PyObject* imp);
 
 /*!
  * @constant PyObjCUnsupportedMethod_IMP
@@ -76,7 +77,8 @@ extern _Nullable IMP PyObjC_MakeIMP(Class aClass, _Nullable Class aSuperClass, P
  *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
  *     the method cannot be implemented in Python.
  */
-extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void*_Nullable*_Nullable, void*);
+extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void* _Nullable* _Nullable,
+                                        void*);
 
 /*!
  * @constant PyOBjCUnsupportedMethod_Caller
@@ -85,7 +87,8 @@ extern void PyObjCUnsupportedMethod_IMP(ffi_cif*, void*, void*_Nullable*_Nullabl
  *     PyObjC_RegisterMethodMapping and PyObjC_RegisterSignatureMapping if
  *     the method cannot be called from Python.
  */
-extern PyObject* _Nullable PyObjCUnsupportedMethod_Caller(PyObject*, PyObject*, PyObject*_Nonnull const*_Nullable, size_t);
+extern PyObject* _Nullable PyObjCUnsupportedMethod_Caller(
+    PyObject*, PyObject*, PyObject* _Nonnull const* _Nullable, size_t);
 
 NS_ASSUME_NONNULL_END
 

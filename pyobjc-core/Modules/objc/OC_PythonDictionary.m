@@ -322,9 +322,10 @@
 
     } else {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* args[2] = { NULL, value };
+            PyObject* args[2] = {NULL, value};
 
-            PyObject* keys = PyObject_VectorcallMethod(PyObjCNM_keys, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* keys = PyObject_VectorcallMethod(
+                PyObjCNM_keys, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             if (keys == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }

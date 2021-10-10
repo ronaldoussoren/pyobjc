@@ -1,10 +1,11 @@
 static PyObject*
 call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject* self,
-                                                     PyObject*const* arguments, size_t nargs)
+                                                     PyObject* const* arguments,
+                                                     size_t           nargs)
 {
     PyObject*          result;
     struct objc_super  super;
-    NSTIFFCompression* list = NULL;
+    NSTIFFCompression* list     = NULL;
     NSInteger          numTypes = 0;
 
     if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) {
@@ -68,7 +69,7 @@ call_NSBitmapImageRep_getTIFFCompressionTypes_count_(PyObject* method, PyObject*
 
 static PyObject*
 call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
-                                     PyObject*const* arguments, size_t nargs)
+                                     PyObject* const* arguments, size_t nargs)
 {
     PyObject*         result;
     const void*       dataPlanes[5] = {0};
@@ -91,21 +92,22 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
     }
     py_allPlanes = arguments[0];
     if (py_allPlanes != Py_None) {
-         PyObject* fast_planes = PySequence_Fast(py_allPlanes, "Expecting a 5 tuple or None");
-         if (fast_planes == NULL) {
-             /* XXX: Clearer error message */
-             PyErr_SetString(PyExc_TypeError,
-                 "First argument must be a 5 element Tuple or None.");
-             return NULL;
-         }
-         if (PySequence_Fast_GET_SIZE(fast_planes) != 5) {
-             /* XXX: Clearer error message */
-             PyErr_SetString(PyExc_TypeError,
-                 "First argument must be a 5 element Tuple or None.");
-             Py_DECREF(fast_planes);
-             return NULL;
-         }
-         for (i = 0; i < 5; i++) {
+        PyObject* fast_planes =
+            PySequence_Fast(py_allPlanes, "Expecting a 5 tuple or None");
+        if (fast_planes == NULL) {
+            /* XXX: Clearer error message */
+            PyErr_SetString(PyExc_TypeError,
+                            "First argument must be a 5 element Tuple or None.");
+            return NULL;
+        }
+        if (PySequence_Fast_GET_SIZE(fast_planes) != 5) {
+            /* XXX: Clearer error message */
+            PyErr_SetString(PyExc_TypeError,
+                            "First argument must be a 5 element Tuple or None.");
+            Py_DECREF(fast_planes);
+            return NULL;
+        }
+        for (i = 0; i < 5; i++) {
             PyObject* tmp = PySequence_Fast_GET_ITEM(fast_planes, i);
             if (tmp == Py_None) {
                 dataPlanes[i] = NULL;
@@ -117,7 +119,7 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
                     goto error_cleanup;
                 }
             }
-         }
+        }
     }
 
     if (PyObjC_PythonToObjC(@encode(int), arguments[1], &width) == -1) {
@@ -134,7 +136,8 @@ call_NSBitmapImageRep_initWithBitmap(PyObject* method, PyObject* self,
     }
     hasAlpha = (BOOL)PyObject_IsTrue(arguments[5]);
     isPlanar = (BOOL)PyObject_IsTrue(arguments[6]);
-    if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString) == -1) {
+    if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString)
+        == -1) {
         goto error_cleanup;
     }
     if (PyObjC_PythonToObjC(@encode(int), arguments[8], &bpr) == -1) {
@@ -187,7 +190,7 @@ error_cleanup : {
 
 static PyObject*
 call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
-                                           PyObject*const* arguments, size_t nargs)
+                                           PyObject* const* arguments, size_t nargs)
 {
     PyObject*         result;
     const void*       dataPlanes[5] = {0};
@@ -211,21 +214,22 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
     }
     py_allPlanes = arguments[0];
     if (py_allPlanes != Py_None) {
-         PyObject* fast_planes = PySequence_Fast(py_allPlanes, "Expecting a 5 tuple or None");
-         if (fast_planes == NULL) {
-             /* XXX: Clearer error message */
-             PyErr_SetString(PyExc_TypeError,
-                 "First argument must be a 5 element Tuple or None.");
-             return NULL;
-         }
-         if (PySequence_Fast_GET_SIZE(fast_planes) != 5) {
-             /* XXX: Clearer error message */
-             PyErr_SetString(PyExc_TypeError,
-                 "First argument must be a 5 element Tuple or None.");
-             Py_DECREF(fast_planes);
-             return NULL;
-         }
-         for (i = 0; i < 5; i++) {
+        PyObject* fast_planes =
+            PySequence_Fast(py_allPlanes, "Expecting a 5 tuple or None");
+        if (fast_planes == NULL) {
+            /* XXX: Clearer error message */
+            PyErr_SetString(PyExc_TypeError,
+                            "First argument must be a 5 element Tuple or None.");
+            return NULL;
+        }
+        if (PySequence_Fast_GET_SIZE(fast_planes) != 5) {
+            /* XXX: Clearer error message */
+            PyErr_SetString(PyExc_TypeError,
+                            "First argument must be a 5 element Tuple or None.");
+            Py_DECREF(fast_planes);
+            return NULL;
+        }
+        for (i = 0; i < 5; i++) {
             PyObject* tmp = PySequence_Fast_GET_ITEM(fast_planes, i);
             if (tmp == Py_None) {
                 dataPlanes[i] = NULL;
@@ -237,7 +241,7 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
                     goto error_cleanup;
                 }
             }
-         }
+        }
     }
 
     if (PyObjC_PythonToObjC(@encode(int), arguments[1], &width) == -1) {
@@ -254,7 +258,8 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
     }
     hasAlpha = (BOOL)PyObject_IsTrue(arguments[5]);
     isPlanar = (BOOL)PyObject_IsTrue(arguments[6]);
-    if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString) == -1) {
+    if (PyObjC_PythonToObjC(@encode(NSString*), arguments[7], &colorSpaceNameString)
+        == -1) {
         goto error_cleanup;
     }
     if (PyObjC_PythonToObjC(@encode(int), arguments[8], &format) == -1) {
@@ -301,7 +306,7 @@ call_NSBitmapImageRep_initWithBitmapFormat(PyObject* method, PyObject* self,
 
     return result;
 
-error_cleanup :
+error_cleanup:
     for (i = 0; i < 5; i++) {
         if (planeBuffers[i].buf != NULL) {
             PyBuffer_Release(&planeBuffers[i]);
@@ -312,7 +317,7 @@ error_cleanup :
 
 static PyObject*
 call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
-                                           PyObject*const* arguments, size_t nargs)
+                                           PyObject* const* arguments, size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -378,7 +383,8 @@ call_NSBitmapImageRep_getBitmapDataPlanes_(PyObject* method, PyObject* self,
 }
 
 static PyObject*
-call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_NSBitmapImageRep_bitmapData(PyObject* method, PyObject* self,
+                                 PyObject* const* arguments, size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;

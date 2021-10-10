@@ -47,7 +47,7 @@ typedef void Py_buffer;
  */
 typedef int(RegisterMethodMappingFunctionType)(Class, SEL,
                                                PyObject* (*)(PyObject*, PyObject*,
-                                                             PyObject*const*, size_t),
+                                                             PyObject* const*, size_t),
                                                void (*)(void*, void*, void**, void*));
 
 struct pyobjc_api {
@@ -70,7 +70,8 @@ struct pyobjc_api {
                                     PyObject* (*pythonify)(void*),
                                     int (*depythonify)(PyObject*, void*));
     void (*unsupported_method_imp)(void*, void*, void**, void*);
-    PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject*const*, size_t);
+    PyObject* (*unsupported_method_caller)(PyObject*, PyObject*, PyObject* const*,
+                                           size_t);
     void (*err_python_to_objc_gil)(PyGILState_STATE* state);
     int (*simplify_sig)(const char* signature, char* buf, size_t buflen);
     void (*free_c_array)(int, Py_buffer*);
@@ -91,7 +92,8 @@ struct pyobjc_api {
     int (*memview_check)(PyObject*);
     PyObject* (*memview_new)(void);
     Py_buffer* (*memview_getbuffer)(PyObject*);
-    int (*checkargcount)(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf);
+    int (*checkargcount)(PyObject* callable, size_t min_args, size_t max_args,
+                         size_t nargsf);
     int (*checknokwnames)(PyObject* callable, PyObject* kwnames);
 };
 

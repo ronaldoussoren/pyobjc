@@ -91,9 +91,9 @@ m_SecKeychainFindInternetPassword(PyObject* module __attribute__((__unused__)),
     if (py_accountName == Py_None) {
         accountName = NULL;
     } else {
-        accountName_token =
-            PyObjC_PythonToCArray(NO, NO, &string, py_accountName, (void**)&accountName,
-                                  &accountName_length, &accountName_buffer, &accountName_view);
+        accountName_token = PyObjC_PythonToCArray(
+            NO, NO, &string, py_accountName, (void**)&accountName, &accountName_length,
+            &accountName_buffer, &accountName_view);
         if (accountName_token == -1) {
             PyObjC_FreeCArray(serverName_token, &serverName_view);
             Py_XDECREF(serverName_buffer);
@@ -231,7 +231,7 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
     int                accountName_token;
     PyObject*          accountName_buffer = NULL;
     Py_buffer          accountName_view;
-    UInt32             password_length    = 0;
+    UInt32             password_length = 0;
     PyObject*          py_password_length;
     void*              passwordData = NULL;
     PyObject*          py_passwordData;
@@ -250,9 +250,9 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
         return NULL;
     }
 
-    serviceName_token =
-        PyObjC_PythonToCArray(NO, NO, &string, py_serviceName, (void**)&serviceName,
-                              &serviceName_length, &serviceName_buffer, &serviceName_view);
+    serviceName_token = PyObjC_PythonToCArray(NO, NO, &string, py_serviceName,
+                                              (void**)&serviceName, &serviceName_length,
+                                              &serviceName_buffer, &serviceName_view);
     if (serviceName_token == -1) {
         return NULL;
     }
@@ -260,9 +260,9 @@ m_SecKeychainFindGenericPassword(PyObject* module __attribute__((__unused__)),
     if (py_accountName == Py_None) {
         accountName = NULL;
     } else {
-        accountName_token =
-            PyObjC_PythonToCArray(NO, NO, &string, py_accountName, (void**)&accountName,
-                                  &accountName_length, &accountName_buffer, &accountName_view);
+        accountName_token = PyObjC_PythonToCArray(
+            NO, NO, &string, py_accountName, (void**)&accountName, &accountName_length,
+            &accountName_buffer, &accountName_view);
         if (accountName_token == -1) {
             PyObjC_FreeCArray(serviceName_token, &serviceName_view);
             Py_XDECREF(serviceName_buffer);
@@ -799,15 +799,7 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_Security",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_Security", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__Security(void);
 
@@ -815,7 +807,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__Security(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

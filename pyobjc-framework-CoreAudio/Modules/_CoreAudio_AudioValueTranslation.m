@@ -199,21 +199,18 @@ avt_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     Py_ssize_t                      input_bufsize  = -1;
     Py_ssize_t                      output_bufsize = -1;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                                     "|$nn",
-                                     keywords, &input_bufsize, &output_bufsize)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|$nn", keywords, &input_bufsize,
+                                     &output_bufsize)) {
         return NULL;
     }
 
     if ((input_bufsize != -1 && input_bufsize < 0)
-        || input_bufsize > (Py_ssize_t)UINT_MAX
-    ) {
+        || input_bufsize > (Py_ssize_t)UINT_MAX) {
         PyErr_SetString(PyExc_ValueError, "input bufsize out of range");
         return NULL;
     }
     if ((output_bufsize != -1 && output_bufsize < 0)
-        || output_bufsize > (Py_ssize_t)UINT_MAX
-    ) {
+        || output_bufsize > (Py_ssize_t)UINT_MAX) {
         PyErr_SetString(PyExc_ValueError, "output bufsize out of range");
         return NULL;
     }

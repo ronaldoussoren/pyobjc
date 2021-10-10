@@ -52,7 +52,8 @@ memblock_capsule_cleanup(PyObject* ptr)
     void* mem = PyCapsule_GetPointer(ptr, "objc.__memblock__");
 
 #ifdef PyObjC_DEBUG
-    if (mem == NULL) PyObjCErr_InternalError();
+    if (mem == NULL)
+        PyObjCErr_InternalError();
 #endif
 
     PyMem_Free(mem);
@@ -207,8 +208,7 @@ PyObjC_RegisterSignatureMapping(char* signature, PyObjC_CallFunc call_to_objc,
 /*
  * May of may not raise an exception when the return value is NULL
  */
-static struct registry* _Nullable
-search_special(Class class, SEL sel)
+static struct registry* _Nullable search_special(Class class, SEL sel)
 {
     PyObject*  result        = NULL;
     PyObject*  special_class = NULL;
@@ -300,12 +300,11 @@ PyObjC_FindCallFunc(Class class, SEL sel)
     return PyObjCFFI_Caller;
 }
 
-static struct registry* _Nullable
-find_signature(const char* signature)
+static struct registry* _Nullable find_signature(const char* signature)
 {
-    PyObject*        o;
-    char             signature_buf[1024];
-    int              res;
+    PyObject* o;
+    char      signature_buf[1024];
+    int       res;
 
     res = PyObjCRT_SimplifySignature(signature, signature_buf, sizeof(signature_buf));
     if (res == -1) {
@@ -387,7 +386,8 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
         if (methinfo == NULL) {
             return NULL;
         }
-        retval = blockimpForSignature(PyObjCSelector_GetSelector(sel), PyObjCSelector_Signature(sel), imp, methinfo);
+        retval = blockimpForSignature(PyObjCSelector_GetSelector(sel),
+                                      PyObjCSelector_Signature(sel), imp, methinfo);
         if (retval != NULL) {
             return retval;
         }
@@ -410,8 +410,8 @@ PyObjCUnsupportedMethod_IMP(ffi_cif* cif __attribute__((__unused__)),
 
 PyObject*
 PyObjCUnsupportedMethod_Caller(PyObject* meth, PyObject* self,
-                               PyObject*const* args __attribute__((__unused__)),
-                               size_t nargs __attribute__((__unused__)))
+                               PyObject* const* args __attribute__((__unused__)),
+                               size_t           nargs __attribute__((__unused__)))
 {
     PyErr_Format(PyExc_TypeError, "Cannot call '%s' on '%R' from Python",
                  sel_getName(PyObjCSelector_GetSelector(meth)), self);

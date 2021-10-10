@@ -129,10 +129,9 @@ acd_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     unsigned int                      channel_flags  = 0;
     float                             coordinates[3] = {0, 0, 0};
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                                     "|$II(fff)",
-                                     keywords, &channel_label, &channel_flags,
-                                     coordinates, coordinates + 1, coordinates + 2)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|$II(fff)", keywords, &channel_label,
+                                     &channel_flags, coordinates, coordinates + 1,
+                                     coordinates + 2)) {
         return NULL;
     }
 

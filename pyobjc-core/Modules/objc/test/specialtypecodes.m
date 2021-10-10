@@ -256,8 +256,8 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
 
 - (NSObject* _Nullable)byteArg:(char)a andbyteArg:(char)b
 {
-    char abuf[2];
-    char bbuf[2];
+    char      abuf[2];
+    char      bbuf[2];
     NSObject* a1;
     NSObject* a2;
 
@@ -267,9 +267,11 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     bbuf[1] = 0;
 
     a1 = [NSString stringWithCString:abuf encoding:NSISOLatin1StringEncoding];
-    if (!a1) return nil;
+    if (!a1)
+        return nil;
     a2 = [NSString stringWithCString:bbuf encoding:NSISOLatin1StringEncoding];
-    if (!a2) return nil;
+    if (!a2)
+        return nil;
     return [NSArray arrayWithObjects:a1, a2, nil];
 }
 
@@ -347,7 +349,7 @@ static char    gNumCharValues[]  = {1, 2, 3, 4};
     return result;
 }
 
-- (NSObject* _Nullable )int8ArrayOf4In:(char*)buffer
+- (NSObject* _Nullable)int8ArrayOf4In:(char*)buffer
 {
     NSObject* result = [NSArray arrayWithObjects:[NSNumber numberWithInt:buffer[0]],
                                                  [NSNumber numberWithInt:buffer[1]],

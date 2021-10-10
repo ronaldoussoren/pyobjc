@@ -697,7 +697,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
          * you want.
          */
 
-        int        have_buffer;
+        int have_buffer;
 
         if (PyUnicode_Check(pythonList)) {
             PyErr_Format(PyExc_TypeError, "Expecting byte-buffer, got %s",
@@ -705,7 +705,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        have_buffer = PyObject_GetBuffer(pythonList, view, writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO);
+        have_buffer = PyObject_GetBuffer(pythonList, view,
+                                         writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO);
         if (have_buffer == -1) {
             if (writable) {
                 /* Ensure that the expected semantics still work
@@ -763,7 +764,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                 Py_INCREF(pythonList);
 
             } else {
-                if ((exactSize && *size != view->len) || (!exactSize && *size > view->len)) {
+                if ((exactSize && *size != view->len)
+                    || (!exactSize && *size > view->len)) {
                     PyErr_Format(PyExc_ValueError,
                                  "Requesting buffer of %" PY_FORMAT_SIZE_T
                                  "d, have buffer "
@@ -818,7 +820,9 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             bytes_array = tmp;
         }
 
-        if (PyObject_GetBuffer(bytes_array, view, writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO) == -1) {
+        if (PyObject_GetBuffer(bytes_array, view,
+                               writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO)
+            == -1) {
             Py_DECREF(bytes_array);
             return -1;
         }
@@ -855,7 +859,7 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
          * simple type of the same type as the array, or a struct/array
          * containing only elements of the type of the array.
          */
-        char       code = array_typestr(pythonList);
+        char code = array_typestr(pythonList);
         if (code_compatible(code, *elementType)) {
             /* Simple array, ok */
 
@@ -892,7 +896,9 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
             return -1;
         }
 
-        if (PyObject_GetBuffer(pythonList, view, writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO) == -1) {
+        if (PyObject_GetBuffer(pythonList, view,
+                               writable ? PyBUF_CONTIG : PyBUF_CONTIG_RO)
+            == -1) {
             return -1;
         }
 
@@ -970,7 +976,6 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
                          seqlen, pycount);
             return -1;
         }
-
 
         PyObject* bytes_array = PyByteArray_FromStringAndSize(NULL, 0);
         if (bytes_array == NULL) {
@@ -1370,33 +1375,38 @@ PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
     return result;
 }
 
-int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf)
+int
+PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf)
 {
     size_t nargs = PyVectorcall_NARGS(nargsf);
     if (nargs < min_args || nargs > max_args) {
         if (min_args == max_args) {
             if (min_args == 0) {
-                PyErr_Format(PyExc_TypeError,
-                    "%R expected no arguments, got %zu", callable, nargs);
+                PyErr_Format(PyExc_TypeError, "%R expected no arguments, got %zu",
+                             callable, nargs);
             } else {
-                PyErr_Format(PyExc_TypeError,
-                    "%R expected %zu arguments, got %zu", callable, min_args, nargs);
+                PyErr_Format(PyExc_TypeError, "%R expected %zu arguments, got %zu",
+                             callable, min_args, nargs);
             }
         } else {
             PyErr_Format(PyExc_TypeError,
-                    "%R expected between %zu and %zu arguments, got %zu",
-                    callable, min_args, max_args, nargs);
+                         "%R expected between %zu and %zu arguments, got %zu", callable,
+                         min_args, max_args, nargs);
         }
         return -1;
     }
     return 0;
 }
 
-int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames)
+int
+PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames)
 {
-    if (kwnames == NULL) return 0;
-    if (PyObject_Size(kwnames) == 0) return 0;
-    if (PyErr_Occurred()) return -1;
+    if (kwnames == NULL)
+        return 0;
+    if (PyObject_Size(kwnames) == 0)
+        return 0;
+    if (PyErr_Occurred())
+        return -1;
     PyErr_Format(PyExc_TypeError, "%R does not accept keyword arguments", callable);
     return -1;
 }
@@ -1417,8 +1427,9 @@ PyObjC_MakeCVoidP(void* ptr)
     if (pyptr == NULL) {
         return NULL;
     }
-    PyObject* args[2] = { NULL, pyptr };
-    PyObject* res = PyObject_Vectorcall(c_void_p, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* args[2] = {NULL, pyptr};
+    PyObject* res =
+        PyObject_Vectorcall(c_void_p, args + 1, 1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     Py_DECREF(pyptr);
     return res;
 }
@@ -1441,19 +1452,34 @@ int
 PyObjC_setup_names(void)
 {
     /* XXX: Intern the strings */
-    if ((PyObjCNM_insert = PyUnicode_FromString("insert")) == NULL) return -1;
-    if ((PyObjCNM_append = PyUnicode_FromString("append")) == NULL) return -1;
-    if ((PyObjCNM_strftime = PyUnicode_FromString("strftime")) == NULL) return -1;
-    if ((PyObjCNM_keys = PyUnicode_FromString("keys")) == NULL) return -1;
-    if ((PyObjCNM_clear = PyUnicode_FromString("clear")) == NULL) return -1;
-    if ((PyObjCNM_discard = PyUnicode_FromString("discard")) == NULL) return -1;
-    if ((PyObjCNM_add = PyUnicode_FromString("add")) == NULL) return -1;
-    if ((PyObjCNM_values = PyUnicode_FromString("values")) == NULL) return -1;
-    if ((PyObjCNM_description = PyUnicode_FromString("description")) == NULL) return -1;
-    if ((PyObjCNM___get__ = PyUnicode_FromString("__get__")) == NULL) return -1;
-    if ((PyObjCNM_date_format_string = PyUnicode_FromString("%Y-%m-%d %H:%M:%S %z")) == NULL) return -1;
-    if ((PyObjCNM_objc_memview_object = PyUnicode_FromString("objc.memview object")) == NULL) return -1;
-    if ((PyObjCNM_objc_NULL = PyUnicode_FromString("objc.NULL")) == NULL) return -1;
+    if ((PyObjCNM_insert = PyUnicode_FromString("insert")) == NULL)
+        return -1;
+    if ((PyObjCNM_append = PyUnicode_FromString("append")) == NULL)
+        return -1;
+    if ((PyObjCNM_strftime = PyUnicode_FromString("strftime")) == NULL)
+        return -1;
+    if ((PyObjCNM_keys = PyUnicode_FromString("keys")) == NULL)
+        return -1;
+    if ((PyObjCNM_clear = PyUnicode_FromString("clear")) == NULL)
+        return -1;
+    if ((PyObjCNM_discard = PyUnicode_FromString("discard")) == NULL)
+        return -1;
+    if ((PyObjCNM_add = PyUnicode_FromString("add")) == NULL)
+        return -1;
+    if ((PyObjCNM_values = PyUnicode_FromString("values")) == NULL)
+        return -1;
+    if ((PyObjCNM_description = PyUnicode_FromString("description")) == NULL)
+        return -1;
+    if ((PyObjCNM___get__ = PyUnicode_FromString("__get__")) == NULL)
+        return -1;
+    if ((PyObjCNM_date_format_string = PyUnicode_FromString("%Y-%m-%d %H:%M:%S %z"))
+        == NULL)
+        return -1;
+    if ((PyObjCNM_objc_memview_object = PyUnicode_FromString("objc.memview object"))
+        == NULL)
+        return -1;
+    if ((PyObjCNM_objc_NULL = PyUnicode_FromString("objc.NULL")) == NULL)
+        return -1;
 
     return 0;
 }
@@ -1461,15 +1487,17 @@ PyObjC_setup_names(void)
 PyObject*
 PyObjC_CallCopyFunc(PyObject* arg)
 {
-    PyObject* args[2] = { NULL, arg };
+    PyObject* args[2] = {NULL, arg};
 
-    return PyObject_Vectorcall(PyObjC_CopyFunc, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    return PyObject_Vectorcall(PyObjC_CopyFunc, args + 1,
+                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
 PyObject*
 PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
 {
-    PyObject* args[3] = { NULL, cdr, setValue };
+    PyObject* args[3] = {NULL, cdr, setValue};
 
-    return PyObject_Vectorcall(PyObjC_Decoder, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    return PyObject_Vectorcall(PyObjC_Decoder, args + 1,
+                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }

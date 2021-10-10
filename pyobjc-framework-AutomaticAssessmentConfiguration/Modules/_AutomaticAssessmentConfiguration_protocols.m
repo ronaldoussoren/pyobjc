@@ -8,6 +8,7 @@ static void __attribute__((__used__)) use_protocols(void)
 {
     PyObject* p __attribute__((__unused__));
 #if PyObjC_BUILD_RELEASE >= 1016
-     p = PyObjC_IdToPython(@protocol(AEAssessmentSessionDelegate)); Py_XDECREF(p);
+    p = PyObjC_IdToPython(@protocol(AEAssessmentSessionDelegate));
+    Py_XDECREF(p);
 #endif
 }

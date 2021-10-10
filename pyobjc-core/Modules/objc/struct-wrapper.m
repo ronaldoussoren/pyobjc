@@ -80,7 +80,9 @@ struct_sq_item(PyObject* self, Py_ssize_t offset)
     len = STRUCT_LENGTH(self);
 
     if (offset < 0 || offset >= len) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+        PyErr_Format(PyExc_IndexError,
+                     "%.100s index out of range %" PY_FORMAT_SIZE_T
+                     "d (len %" PY_FORMAT_SIZE_T "d)",
                      Py_TYPE(self)->tp_name, offset, len);
         return NULL;
     }
@@ -151,7 +153,9 @@ struct_sq_ass_item(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+        PyErr_Format(PyExc_IndexError,
+                     "%.100s index out of range %" PY_FORMAT_SIZE_T
+                     "d (len %" PY_FORMAT_SIZE_T "d)",
                      Py_TYPE(self)->tp_name, offset, len);
         return -1;
     }
@@ -310,8 +314,9 @@ struct_copy(PyObject* self)
                 PyErr_Clear();
                 SET_STRUCT_FIELD(result, member, t);
             } else {
-                PyObject* args[1] = { NULL };
-                PyObject* c = PyObject_Vectorcall(m, args+1, 0|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                PyObject* args[1] = {NULL};
+                PyObject* c       = PyObject_Vectorcall(
+                          m, args + 1, 0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
                 Py_DECREF(m);
                 if (c == NULL) {
                     Py_DECREF(result);
@@ -692,8 +697,8 @@ set_defaults(PyObject* self, const char* typestr)
         } break;
 
         case _C_UNICHAR: {
-            char buffer[2] = { 0, 0 };
-            v             = PyUnicode_FromStringAndSize(buffer, 1);
+            char buffer[2] = {0, 0};
+            v              = PyUnicode_FromStringAndSize(buffer, 1);
         } break;
 
         case _C_CHAR_AS_INT:
@@ -896,7 +901,7 @@ make_init(const char* typestr)
     static ffi_cif* init_cif = NULL;
     ffi_closure*    cl       = NULL;
     ffi_status      rv;
-    void* codeloc;
+    void*           codeloc;
 
     typestr = PyObjCUtil_Strdup(typestr);
     if (typestr == NULL) {
@@ -940,7 +945,7 @@ make_init(const char* typestr)
         rv = ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr, codeloc);
     } else {
 #ifdef __arm64__
-       rv = FFI_BAD_ABI; /* Can't happen... */
+        rv = FFI_BAD_ABI; /* Can't happen... */
 #else
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -1712,7 +1717,9 @@ PyObjC_SetStructField(PyObject* self, Py_ssize_t offset, PyObject* newVal)
     len = STRUCT_LENGTH(self);
 
     if ((offset < 0) || (offset >= len)) {
-        PyErr_Format(PyExc_IndexError, "%.100s index out of range %" PY_FORMAT_SIZE_T "d (len %" PY_FORMAT_SIZE_T "d)",
+        PyErr_Format(PyExc_IndexError,
+                     "%.100s index out of range %" PY_FORMAT_SIZE_T
+                     "d (len %" PY_FORMAT_SIZE_T "d)",
                      Py_TYPE(self)->tp_name, offset, len);
         return -1;
     }

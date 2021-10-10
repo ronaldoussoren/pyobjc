@@ -6,7 +6,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (OC_CopyHelper)
+@interface
+NSObject (OC_CopyHelper)
 - (void)modify;
 @end
 
@@ -72,7 +73,7 @@
     intVal = val;
 }
 
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic   ignored "-Wdeprecated-declarations"
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 - (instancetype)copyWithZone:(NSZone*)zone

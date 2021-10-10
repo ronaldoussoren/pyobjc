@@ -189,9 +189,10 @@
                 PyObjC_GIL_FORWARD_EXC();
             }
         }
-        PyObject* args[3] = { NULL, value, v };
+        PyObject* args[3] = {NULL, value, v};
 
-        w = PyObject_VectorcallMethod(PyObjCNM_append, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        w = PyObject_VectorcallMethod(PyObjCNM_append, args + 1,
+                                      2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(v);
         if (unlikely(w == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
@@ -203,8 +204,8 @@
 
 - (void)insertObject:(id)anObject atIndex:(NSUInteger)idx
 {
-    PyObject*  v;
-    PyObject*  w;
+    PyObject* v;
+    PyObject* w;
 
     if (unlikely(idx > PY_SSIZE_T_MAX)) {
         PyObjC_BEGIN_WITH_GIL
@@ -224,13 +225,14 @@
             }
         }
 
-        PyObject* args[4] = { NULL, value, NULL, v };
-        args[2] = PyLong_FromUnsignedLong(idx);
+        PyObject* args[4] = {NULL, value, NULL, v};
+        args[2]           = PyLong_FromUnsignedLong(idx);
         if (args[2] == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        w = PyObject_VectorcallMethod(PyObjCNM_insert, args+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        w = PyObject_VectorcallMethod(PyObjCNM_insert, args + 1,
+                                      3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(v);
         Py_DECREF(args[2]);
 

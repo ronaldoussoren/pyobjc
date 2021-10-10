@@ -188,7 +188,7 @@ objc_class_register(Class objc_class, PyObject* py_class)
 
     if (NSMapGet(class_registry, objc_class)) {
         PyErr_Format(PyObjCExc_InternalError, "Registering class '%.100s' more than once",
-		class_getName(objc_class));
+                     class_getName(objc_class));
         return -1;
     }
 
@@ -377,7 +377,7 @@ static PyObject*
 class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
 {
     static PyObject*   all_python_classes = NULL;
-    static char*       keywords[]         = {"name", "bases", "dict", "protocols", "final", NULL};
+    static char*       keywords[] = {"name", "bases", "dict", "protocols", "final", NULL};
     char*              name;
     PyObject*          bases;
     PyObject*          dict;
@@ -441,7 +441,7 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
 
     if (PyObjCClass_IsFinal((PyTypeObject*)py_super_class)) {
         PyErr_Format(PyExc_TypeError, "super class %s is final",
-                ((PyTypeObject*)py_super_class)->tp_name);
+                     ((PyTypeObject*)py_super_class)->tp_name);
         return NULL;
     }
 
@@ -843,9 +843,10 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     }
 
     if (PyObjC_MakeBundleForClass != NULL && PyObjC_MakeBundleForClass != Py_None) {
-        PyObject* args[1] = { NULL };
+        PyObject* args[1] = {NULL};
 
-        PyObject* m = PyObject_Vectorcall(PyObjC_MakeBundleForClass, args+1, 0|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* m = PyObject_Vectorcall(PyObjC_MakeBundleForClass, args + 1,
+                                          0 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (m == NULL) {
             (void)PyObjCClass_UnbuildClass(objc_class);
             Py_DECREF(old_dict);
@@ -1115,7 +1116,8 @@ metaclass_dir(PyObject* self)
         /* class_copyMethodList only returns NULL when it sets method_count
          * to 0
          */
-        methods = (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
+        methods =
+            (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
         for (i = 0; i < method_count; i++) {
             char*     name;
             PyObject* item;
@@ -1238,12 +1240,13 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
             continue;
         }
 
-        cls     = objc_metaclass_locate(base);
+        cls = objc_metaclass_locate(base);
 
         /* class_copyMethodList only returns NULL when it sets method_count
          * to 0
          */
-        methods = (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
+        methods =
+            (Method* _Nonnull)class_copyMethodList(object_getClass(cls), &method_count);
         for (j = 0; j < method_count; j++) {
             Method m = methods[j];
 
@@ -1459,7 +1462,7 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
             continue;
         }
 
-        cls     = PyObjCClass_GetClass(base);
+        cls = PyObjCClass_GetClass(base);
 
         /* if the result of class_copyMethodList is NULL the method_count
          * is set to 0. The code below will only use the result if method_count
@@ -1954,8 +1957,7 @@ cls_get_final(PyObject* self, void* closure __attribute__((__unused__)))
 }
 
 static int
-cls_set_final(PyObject* self, PyObject* newVal,
-               void* closure __attribute__((__unused__)))
+cls_set_final(PyObject* self, PyObject* newVal, void* closure __attribute__((__unused__)))
 {
     if (newVal == NULL) {
         PyErr_SetString(PyExc_TypeError, "Cannot delete __objc_final__ attribute");
@@ -2072,10 +2074,10 @@ static PyMethodDef metaclass_methods[] = {{.ml_name  = "__dir__",
                                            .ml_flags = METH_NOARGS,
                                            .ml_doc   = "dir() hook, don't call directly"},
 #if PY_VERSION_HEX > 0x03090000
-                                      {.ml_name  = "__class_getitem__",
-                                       .ml_meth  = (PyCFunction)Py_GenericAlias,
-                                       .ml_flags = METH_O,
-                                       .ml_doc   = "See PEP 585"},
+                                          {.ml_name  = "__class_getitem__",
+                                           .ml_meth  = (PyCFunction)Py_GenericAlias,
+                                           .ml_flags = METH_O,
+                                           .ml_doc   = "See PEP 585"},
 #endif
                                           {
                                               .ml_name = NULL /* SENTINEL */
@@ -2320,7 +2322,8 @@ PyObjCClass_ListProperties(PyObject* aClass)
         const char* attr = property_getAttributes(props[i]);
         const char* e;
 
-        if (!attr) continue;
+        if (!attr)
+            continue;
 
         item = Py_BuildValue("{sssy}", "name", name, "raw_attr", attr);
         if (item == NULL) {
@@ -2702,10 +2705,10 @@ update_convenience_methods(PyObject* cls)
         return -1;
     }
 
+    PyObject* args[3] = {NULL, cls, dict};
 
-    PyObject* args[3] = { NULL, cls, dict };
-
-    res = PyObject_Vectorcall(PyObjC_ClassExtender, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    res = PyObject_Vectorcall(PyObjC_ClassExtender, args + 1,
+                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     if (res == NULL) {
         return -1;
     }
@@ -2894,7 +2897,7 @@ PyObjCClass_AddMethods(PyObject* classObject, PyObject** methods, Py_ssize_t met
     PyMem_Free(methodsToAdd);
     if (curClassMethodIndex != 0) {
         PyObjC_class_addMethodList(object_getClass(targetClass), classMethodsToAdd,
-                            (unsigned)curClassMethodIndex);
+                                   (unsigned)curClassMethodIndex);
     }
 
     PyMem_Free(classMethodsToAdd);

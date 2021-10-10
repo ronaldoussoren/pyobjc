@@ -147,9 +147,8 @@ ab_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     Py_ssize_t           bufsize      = -1;
     unsigned int         num_channels = 1;
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds,
-                                     "|$In",
-                                     keywords, &num_channels, &bufsize)) {
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|$In", keywords, &num_channels,
+                                     &bufsize)) {
         return NULL;
     }
 

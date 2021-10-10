@@ -5,7 +5,7 @@ typedef struct {
 
     PyObject* callable;
 #if PY_VERSION_HEX >= 0x03090000
-    vectorcallfunc         vectorcall;
+    vectorcallfunc vectorcall;
 #endif
 
 } PyObjCPythonMethod;
@@ -30,7 +30,6 @@ static PyMemberDef meth_members[] = {{
                                      {
                                          .name = NULL /* SENTINEL */
                                      }};
-
 
 static PyObject*
 meth_descr_get(PyObject* self, PyObject* obj, PyObject* class)
@@ -80,9 +79,10 @@ meth_call(PyObject* self, PyObject* args, PyObject* kwds)
 
 #if PY_VERSION_HEX >= 0x03090000
 static PyObject*
-meth_vectorcall(PyObject* self, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+meth_vectorcall(PyObject* self, PyObject* const* args, size_t nargsf, PyObject* kwnames)
 {
-    return PyObject_Vectorcall(((PyObjCPythonMethod*)self)->callable, args, nargsf, kwnames);
+    return PyObject_Vectorcall(((PyObjCPythonMethod*)self)->callable, args, nargsf,
+                               kwnames);
 }
 #endif
 
@@ -123,16 +123,17 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_dealloc                                    = meth_dealloc,
     .tp_getattro                                   = PyObject_GenericGetAttr,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL|Py_TPFLAGS_METHOD_DESCRIPTOR,
-    .tp_vectorcall_offset                          = offsetof(PyObjCPythonMethod, vectorcall),
+    .tp_flags =
+        Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL | Py_TPFLAGS_METHOD_DESCRIPTOR,
+    .tp_vectorcall_offset = offsetof(PyObjCPythonMethod, vectorcall),
 #else
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
 #endif
-    .tp_doc                                        = meth_doc,
-    .tp_members                                    = meth_members,
-    .tp_new                                        = meth_new,
-    .tp_descr_get                                  = meth_descr_get,
-    .tp_traverse                                   = meth_traverse,
-    .tp_clear                                      = meth_clear,
-    .tp_call                                       = meth_call,
+    .tp_doc       = meth_doc,
+    .tp_members   = meth_members,
+    .tp_new       = meth_new,
+    .tp_descr_get = meth_descr_get,
+    .tp_traverse  = meth_traverse,
+    .tp_clear     = meth_clear,
+    .tp_call      = meth_call,
 };

@@ -16,11 +16,16 @@
 
 static PyObjC_function_map function_map[] = {
 #if PyObjC_BUILD_RELEASE >= 1013
-    {"MPSFindIntegerDivisionParams", (PyObjC_Function_Pointer)&MPSFindIntegerDivisionParams},
-    {"MPSGetCustomKernelMaxBatchSize", (PyObjC_Function_Pointer)&MPSGetCustomKernelMaxBatchSize},
-    {"MPSGetCustomKernelBatchedDestinationIndex", (PyObjC_Function_Pointer)&MPSGetCustomKernelBatchedDestinationIndex},
-    {"MPSGetCustomKernelBatchedSourceIndex", (PyObjC_Function_Pointer)&MPSGetCustomKernelBatchedSourceIndex},
-    {"MPSGetCustomKernelBroadcastSourceIndex", (PyObjC_Function_Pointer)&MPSGetCustomKernelBroadcastSourceIndex},
+    {"MPSFindIntegerDivisionParams",
+     (PyObjC_Function_Pointer)&MPSFindIntegerDivisionParams},
+    {"MPSGetCustomKernelMaxBatchSize",
+     (PyObjC_Function_Pointer)&MPSGetCustomKernelMaxBatchSize},
+    {"MPSGetCustomKernelBatchedDestinationIndex",
+     (PyObjC_Function_Pointer)&MPSGetCustomKernelBatchedDestinationIndex},
+    {"MPSGetCustomKernelBatchedSourceIndex",
+     (PyObjC_Function_Pointer)&MPSGetCustomKernelBatchedSourceIndex},
+    {"MPSGetCustomKernelBroadcastSourceIndex",
+     (PyObjC_Function_Pointer)&MPSGetCustomKernelBroadcastSourceIndex},
 #endif
     {0, 0}};
 

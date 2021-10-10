@@ -165,7 +165,7 @@ avl_new(PyTypeObject* cls, PyObject* args, PyObject* kwds)
     result->avl_ownsstorage = 1;
     result->avl_items       = NULL;
     result->avl_layout      = PyMem_Malloc(sizeof(AudioChannelLayout)
-                                      + (num_channels * sizeof(AudioChannelDescription)));
+                                           + (num_channels * sizeof(AudioChannelDescription)));
     if (result->avl_layout == NULL) {
         Py_DECREF(result);
         return NULL;

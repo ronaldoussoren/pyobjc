@@ -71,7 +71,6 @@ static PyObjC_function_map function_map[] = {
 #endif
     {0, 0}};
 
-
 #if PyObjC_BUILD_RELEASE >= 1013
 #pragma clang diagnostic pop
 #endif

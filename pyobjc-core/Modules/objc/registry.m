@@ -10,11 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 BOOL PyObjC_UpdatingMetaData = NO;
 
-PyObject* _Nullable
-PyObjC_NewRegistry(void)
-{
-    return PyDict_New();
-}
+PyObject* _Nullable PyObjC_NewRegistry(void) { return PyDict_New(); }
 
 int
 PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selector,
@@ -60,12 +56,13 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
         PyObjC_Assert(PyTuple_GET_SIZE(item) == 2, -1);
 
         int r = PyObject_RichCompareBool(PyTuple_GET_ITEM(item, 0), class_name, Py_EQ);
-        if (r == -1) return -1;
+        if (r == -1)
+            return -1;
         if (r) {
-           Py_DECREF(PyTuple_GET_ITEM(item, 1));
-           PyTuple_SET_ITEM(item, 1, value);
-           Py_INCREF(value);
-           return 0;
+            Py_DECREF(PyTuple_GET_ITEM(item, 1));
+            PyTuple_SET_ITEM(item, 1, value);
+            Py_INCREF(value);
+            return 0;
         }
     }
 
@@ -78,8 +75,7 @@ PyObjC_AddToRegistry(PyObject* registry, PyObject* class_name, PyObject* selecto
     return result;
 }
 
-PyObject* _Nullable
-PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
+PyObject* _Nullable PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
 {
     Py_ssize_t i;
     Py_ssize_t len;
@@ -152,8 +148,8 @@ PyObjC_FindInRegistry(PyObject* registry, Class cls, SEL selector)
     return found_value;
 }
 
-PyObject* _Nullable
-PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
+PyObject* _Nullable PyObjC_CopyRegistry(PyObject*            registry,
+                                        PyObjC_ItemTransform value_transform)
 {
     PyObject*  result = PyDict_New();
     PyObject*  key;
@@ -167,10 +163,10 @@ PyObjC_CopyRegistry(PyObject* registry, PyObjC_ItemTransform value_transform)
         Py_ssize_t i, len;
         PyObject*  sl_new;
 
-#ifdef  PyObjC_DEBUG
+#ifdef PyObjC_DEBUG
         if (!PyList_CheckExact(sublist)) {
-             PyErr_SetString(PyObjCExc_InternalError, "sublist of registry is not a list");
-             goto error;
+            PyErr_SetString(PyObjCExc_InternalError, "sublist of registry is not a list");
+            goto error;
         }
 #endif
 

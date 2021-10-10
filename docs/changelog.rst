@@ -103,6 +103,28 @@ in older Python versions is unchanged except for the effects of general cleanup.
 
   XXX: To describe wat 'simpler' actually is...
 
+Generic Implementation Quality
+..............................
+
+* #391: Fix some spelling errors found by the
+  `codespell <https://pypi.org/project/codespell/>`_ tool.
+
+  The codespell tool is also run as part of pre-commit hooks.
+
+* #296: use clang-format for Objective-C code
+
+  The Objective-C code for the various extensions has been reformatted
+  using clang-format, and this enforced by a pre-commit hook.
+
+* #374: Use pyupgrade to modernize the code base
+
+  This is enforced by a pre-commit hook.
+
+* Added "nullability" attributes to Objectice-C sources for pyobjc-core.
+
+  This gives the compiler and clang static analyzer more information
+  that can be used to pinpoint possible bugs in the implementation.
+
 New features
 ............
 
@@ -166,10 +188,6 @@ Other changes and bugfixes
 * PyObjC 8 only ships with source archives and "univeral2" binary
   wheels (Python 3.? and later). There are no longer "x86_64" binary wheels.
 
-* #374: Use pyupgrade to modernize the code base
-
-  Also added to the pre-commit configuration to ensure I don't regress.
-
 * The *AVFoundation* bindings (in ``pyobjc-framework-AVFoundation``) now have
   an install dependency on the *CoreAudio* bindings (``pyobjc-framework-CoreAudio``).
 
@@ -229,12 +247,7 @@ Other changes and bugfixes
 * The implementation for opaque pointer types (such as the proxy for
   'NSZone*') has switched to :c:func:`PyType_FromSpec`.
 
-* Added "nullability" attributes to Objectice-C sources for pyobjc-core.
 
-* #391: Fix some spelling errors found by the
-  `codespell <https://pypi.org/project/codespell/>`_ tool.
-
-  The codespell tool is also run as part of pre-commit hooks.
 
 Version 7.3
 -----------

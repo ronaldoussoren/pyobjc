@@ -33,11 +33,11 @@ repos:
 #
 
 
-#  - repo: git://github.com/doublify/pre-commit-clang-format
-#    rev: master
-#    hooks:
-#    - id: clang-format
-#      args: [ "-style=file" ]
+  - repo: git://github.com/doublify/pre-commit-clang-format
+    rev: 62302476d0da01515660132d76902359bed0f782
+    hooks:
+    - id: clang-format
+      args: [ "-style=file" ]
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.29.0
@@ -49,11 +49,8 @@ repos:
     rev: v2.1.0
     hooks:
     -   id: codespell
-        name: codespell
-        description: Checks for common misspellings in text files.
-        entry: codespell
-        language: python
-        types: [text]
+        args: ["--config", ".codespellrc"]
+        exclude: PyObjCTest|_metadata\.py$|\.fwinfo$|\.rtf$|\.mht$
 
 #  - repo: https://github.com/pre-commit/mirrors-clang-format
 #    rev: 'v13.0.0'

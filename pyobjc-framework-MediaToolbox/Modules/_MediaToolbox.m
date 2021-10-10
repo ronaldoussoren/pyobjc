@@ -390,15 +390,7 @@ static PyMethodDef mod_methods[] = {
 };
 
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_MediaToolbox",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_MediaToolbox", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__MediaToolbox(void);
 
@@ -406,7 +398,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__MediaToolbox(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

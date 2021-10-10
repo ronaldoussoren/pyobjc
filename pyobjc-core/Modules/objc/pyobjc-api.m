@@ -77,7 +77,7 @@ struct pyobjc_api objc_api = {
     .struct_len  = sizeof(struct pyobjc_api),
     .register_method_mapping =
         /* Cast is needed because of ffi_cif */
-        (RegisterMethodMappingFunctionType*)PyObjC_RegisterMethodMapping,
+    (RegisterMethodMappingFunctionType*)PyObjC_RegisterMethodMapping,
     .obj_get_object           = PyObjCObject_GetObject,
     .cls_get_class            = PyObjCClass_GetClass,
     .python_to_id             = python_to_id,

@@ -179,39 +179,39 @@ static PyGetSetDef object_getset[] = {
     {0, 0, 0, 0, 0} /* Sentinel */
 };
 
-static PyObject* _Nullable
-object_new(PyTypeObject* tp __attribute__((__unused__)),
-           PyObject* _Nullable args __attribute__((__unused__)),
-           PyObject* _Nullable kwds __attribute__((__unused__)))
+static PyObject* _Nullable object_new(PyTypeObject* tp __attribute__((__unused__)),
+                                      PyObject* _Nullable args
+                                      __attribute__((__unused__)),
+                                      PyObject* _Nullable kwds
+                                      __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_ValueError, "Cannot create instances of this type");
     return NULL;
 }
 
-static PyObject* _Nullable
-object_dont_call(PyObject* self __attribute__((__unused__)),
-                 PyObject* _Nullable args __attribute__((__unused__)),
-                 PyObject* _Nullable kwds __attribute__((__unused__)))
+static PyObject* _Nullable object_dont_call(PyObject* self __attribute__((__unused__)),
+                                            PyObject* _Nullable args
+                                            __attribute__((__unused__)),
+                                            PyObject* _Nullable kwds
+                                            __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_ValueError, "Cannot call this method");
     return NULL;
 }
 
-static PyMethodDef object_methods[] = {
-    {
-        .ml_name  = "__copy__",
-        .ml_meth  = (PyCFunction)object_dont_call,
-        .ml_flags = METH_VARARGS | METH_KEYWORDS,
-    },
-    {
-        .ml_name  = "__reduce__",
-        .ml_meth  = (PyCFunction)object_dont_call,
-        .ml_flags = METH_VARARGS | METH_KEYWORDS,
-    },
-    {
-        .ml_name = NULL /* SENTINEL */
-    }
-};
+static PyMethodDef object_methods[] = {{
+                                           .ml_name  = "__copy__",
+                                           .ml_meth  = (PyCFunction)object_dont_call,
+                                           .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                       },
+                                       {
+                                           .ml_name  = "__reduce__",
+                                           .ml_meth  = (PyCFunction)object_dont_call,
+                                           .ml_flags = METH_VARARGS | METH_KEYWORDS,
+                                       },
+                                       {
+                                           .ml_name = NULL /* SENTINEL */
+                                       }};
 
 static PyTypeObject PyObjCOptions_Type = {
     PyVarObject_HEAD_INIT(&PyType_Type, 0).tp_name = "objc._OptionsType",

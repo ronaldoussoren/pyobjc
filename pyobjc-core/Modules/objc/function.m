@@ -18,7 +18,7 @@ typedef struct {
     PyObject*              name;
     PyObject*              module;
 #if PY_VERSION_HEX >= 0x03090000
-    vectorcallfunc         vectorcall;
+    vectorcallfunc vectorcall;
 #endif
 } func_object;
 
@@ -81,7 +81,7 @@ func_repr(PyObject* _self)
 }
 
 static PyObject*
-func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+func_vectorcall(PyObject* s, PyObject* const* args, size_t nargsf, PyObject* kwnames)
 {
     func_object* self = (func_object*)s;
     Py_ssize_t   byref_in_count;
@@ -96,12 +96,11 @@ func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwna
     ffi_type*         arglist[MAX_ARGCOUNT];
     void*             values[MAX_ARGCOUNT];
     void*             byref[MAX_ARGCOUNT]      = {0};
-    struct byref_attr byref_attr[MAX_ARGCOUNT] = { BYREF_ATTR_INT };
+    struct byref_attr byref_attr[MAX_ARGCOUNT] = {BYREF_ATTR_INT};
     ffi_cif           cif;
     ffi_cif*          cifptr;
 
     PyObject* retval;
-
 
     if (PyObjC_CheckNoKwnames(s, kwnames) == -1) {
         return NULL;
@@ -172,8 +171,7 @@ func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwna
         }
 
     } else if (nargsf != (size_t)Py_SIZE(self->methinfo)) {
-        PyErr_Format(PyExc_TypeError,
-                     "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
+        PyErr_Format(PyExc_TypeError, "Need %" PY_FORMAT_SIZE_T "d arguments, got %zu",
                      Py_SIZE(self->methinfo), nargsf);
         return NULL;
     }
@@ -204,8 +202,9 @@ func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwna
 #ifndef __arm64__
         if (@available(macOS 10.15, *)) {
 #endif
-            r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
-                             PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+            r = ffi_prep_cif_var(
+                &cif, FFI_DEFAULT_ABI, (int)Py_SIZE(self->methinfo), (int)cif_arg_count,
+                PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
 #ifndef __arm64__
         } else
 #endif
@@ -214,7 +213,8 @@ func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwna
 #ifndef __arm64__
         {
             r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-                             PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type), arglist);
+                             PyObjCFFI_Typestr2FFI(self->methinfo->rettype->type),
+                             arglist);
         }
 
 #else
@@ -248,8 +248,7 @@ func_vectorcall(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwna
                                    byref_out_count, NULL, 0, values);
 
     if (variadicAllArgs) {
-        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref,
-                                byref_attr)
+        if (PyObjCFFI_FreeByRef(Py_SIZE(self->methinfo) + nargsf, byref, byref_attr)
             < 0) {
             goto error;
         }
@@ -285,20 +284,21 @@ error:
  * (about 50% faster on my M1 laptop)
  */
 static PyObject*
-func_vectorcall_simple(PyObject* s, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+func_vectorcall_simple(PyObject* s, PyObject* const* args, size_t nargsf,
+                       PyObject* kwnames)
 {
     func_object* self = (func_object*)s;
 
-    unsigned char     argbuf[256];
-    void*             values[MAX_ARGCOUNT_SIMPLE];
-
+    unsigned char argbuf[256];
+    void*         values[MAX_ARGCOUNT_SIMPLE];
 
     if (!self->methinfo->shortcut_signature) {
         PyErr_Format(PyObjCExc_InternalError, "%R is not a simple function", self);
         return NULL;
     }
 
-    if (unlikely(kwnames != NULL && (PyTuple_CheckExact(kwnames) && PyTuple_GET_SIZE(kwnames) != 0))) {
+    if (unlikely(kwnames != NULL
+                 && (PyTuple_CheckExact(kwnames) && PyTuple_GET_SIZE(kwnames) != 0))) {
         PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
         return NULL;
     }
@@ -311,7 +311,7 @@ func_vectorcall_simple(PyObject* s, PyObject*const* args, size_t nargsf, PyObjec
     nargsf = PyVectorcall_NARGS(nargsf);
 
     if (unlikely(PyObjC_DeprecationVersion && self->methinfo->deprecated
-        && self->methinfo->deprecated <= PyObjC_DeprecationVersion)) {
+                 && self->methinfo->deprecated <= PyObjC_DeprecationVersion)) {
         char buf[128];
 
         if (PyUnicode_Check(self->name)) {
@@ -334,9 +334,11 @@ func_vectorcall_simple(PyObject* s, PyObject*const* args, size_t nargsf, PyObjec
         return NULL;
     }
     if (unlikely(PyObjCFFI_ParseArguments_Simple(
-        self->methinfo, 0, args, nargsf,
-        align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type), sizeof(void*)),
-        argbuf, sizeof(argbuf), /*arglist,*/ values) == -1)) {
+                     self->methinfo, 0, args, nargsf,
+                     align(PyObjCRT_SizeOfReturnType(self->methinfo->rettype->type),
+                           sizeof(void*)),
+                     argbuf, sizeof(argbuf), /*arglist,*/ values)
+                 == -1)) {
 
         goto error;
     }
@@ -402,14 +404,14 @@ PyTypeObject PyObjCFunc_Type = {
     .tp_repr                                       = func_repr,
     .tp_call                                       = func_call,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
-    .tp_vectorcall_offset                          = offsetof(func_object, vectorcall),
+    .tp_flags             = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL,
+    .tp_vectorcall_offset = offsetof(func_object, vectorcall),
 #else
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
 #endif
 
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_setattro                                   = PyObject_GenericSetAttr,
+    .tp_getattro  = PyObject_GenericGetAttr,
+    .tp_setattro  = PyObject_GenericSetAttr,
     .tp_doc       = "Wrapper around a Objective-C function",
     .tp_methods   = func_methods,
     .tp_members   = func_members,

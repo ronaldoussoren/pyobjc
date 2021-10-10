@@ -3,7 +3,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern IMP _Nullable blockimpForSignature(SEL sel, const char* typestr, PyObject* callable, PyObjCMethodSignature* methinfo);
+extern IMP _Nullable blockimpForSignature(SEL sel, const char* typestr,
+                                          PyObject*              callable,
+                                          PyObjCMethodSignature* methinfo);
 
 NS_ASSUME_NONNULL_END
 

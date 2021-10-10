@@ -3,8 +3,8 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
-#include <sys/un.h>
 #include <sys/socket.h>
+#include <sys/un.h>
 
 #import <Foundation/Foundation.h>
 
@@ -18,8 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)getUnixAddr:(struct sockaddr*)buf;
 @end
 
-static NSString* _Nullable
-addr2string(void* addr, int addrlen)
+static NSString* _Nullable addr2string(void* addr, int addrlen)
 {
     char buf[NI_MAXHOST];
     int  error;
@@ -41,39 +40,46 @@ addr2string(void* addr, int addrlen)
     case AF_INET:
         [array addObject:@"IPv4"];
         value = addr2string(addr, sizeof(struct sockaddr_in));
-        if (!value) return nil;
+        if (!value)
+            return nil;
         [array addObject:value];
 
         value = [NSNumber numberWithShort:ntohs(((struct sockaddr_in*)addr)->sin_port)];
-        if (!value) return nil;
-        [array addObject: value];
+        if (!value)
+            return nil;
+        [array addObject:value];
         return array;
         break;
     case AF_INET6:
         [array addObject:@"IPv6"];
         value = addr2string(addr, sizeof(struct sockaddr_in6));
-        if (!value) return nil;
+        if (!value)
+            return nil;
         [array addObject:value];
 
         value = [NSNumber numberWithShort:ntohs(((struct sockaddr_in6*)addr)->sin6_port)];
-        if (!value) return nil;
+        if (!value)
+            return nil;
         [array addObject:value];
 
-        value = [NSNumber numberWithUnsignedLong:(((struct sockaddr_in6*)addr)
-                                                               ->sin6_flowinfo)];
-        if (!value) return nil;
+        value = [NSNumber
+            numberWithUnsignedLong:(((struct sockaddr_in6*)addr)->sin6_flowinfo)];
+        if (!value)
+            return nil;
         [array addObject:value];
-        value = [NSNumber numberWithUnsignedLong:(((struct sockaddr_in6*)addr)
-                                                               ->sin6_scope_id)];
-        if (!value) return nil;
+        value = [NSNumber
+            numberWithUnsignedLong:(((struct sockaddr_in6*)addr)->sin6_scope_id)];
+        if (!value)
+            return nil;
         [array addObject:value];
         return array;
         break;
     case AF_UNIX:
         [array addObject:@"UNIX"];
-        value =  [NSString stringWithUTF8String:((struct sockaddr_un*)addr)->sun_path];
-        if (!value) return nil;
-        [array addObject: value];
+        value = [NSString stringWithUTF8String:((struct sockaddr_un*)addr)->sun_path];
+        if (!value)
+            return nil;
+        [array addObject:value];
         return array;
 
     default:

@@ -12,19 +12,16 @@ typedef struct {
 } OpaquePointerObject;
 
 static PyMemberDef opaque_members[] = {
-    {
-        .name   = "__pointer__",
-        .type   = T_LONG,
-        .offset = offsetof(OpaquePointerObject, pointer_value),
-        .flags  = READONLY,
-        .doc    = "raw value of the pointer"},
+    {.name   = "__pointer__",
+     .type   = T_LONG,
+     .offset = offsetof(OpaquePointerObject, pointer_value),
+     .flags  = READONLY,
+     .doc    = "raw value of the pointer"},
     {
         .name = NULL /* SENTINEL */
-    }
-};
+    }};
 
-static PyObject* _Nullable
-as_cobject(PyObject* self)
+static PyObject* _Nullable as_cobject(PyObject* self)
 {
     if (((OpaquePointerObject*)self)->pointer_value == NULL) {
         Py_INCREF(Py_None);
@@ -35,29 +32,25 @@ as_cobject(PyObject* self)
                          NULL);
 }
 
-static PyObject* _Nullable
-as_ctypes_voidp(PyObject* self)
+static PyObject* _Nullable as_ctypes_voidp(PyObject* self)
 {
     return PyObjC_MakeCVoidP(((OpaquePointerObject*)self)->pointer_value);
 }
 
-static PyObject* _Nullable
-opaque_sizeof(PyObject* self)
+static PyObject* _Nullable opaque_sizeof(PyObject* self)
 {
     return PyLong_FromSsize_t(Py_TYPE(self)->tp_basicsize);
 }
 
 static PyMethodDef opaque_methods[] = {
-    {
-        .ml_name  = "__cobject__",
-        .ml_meth  = (PyCFunction)as_cobject,
-        .ml_flags = METH_NOARGS,
-        .ml_doc   = "get a CObject representing this object"},
-    {
-        .ml_name  = "__c_void_p__",
-        .ml_meth  = (PyCFunction)as_ctypes_voidp,
-        .ml_flags = METH_NOARGS,
-        .ml_doc   = "get a ctypes.void_p representing this object"},
+    {.ml_name  = "__cobject__",
+     .ml_meth  = (PyCFunction)as_cobject,
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = "get a CObject representing this object"},
+    {.ml_name  = "__c_void_p__",
+     .ml_meth  = (PyCFunction)as_ctypes_voidp,
+     .ml_flags = METH_NOARGS,
+     .ml_doc   = "get a ctypes.void_p representing this object"},
     {
         .ml_name  = "__sizeof__",
         .ml_meth  = (PyCFunction)opaque_sizeof,
@@ -65,11 +58,10 @@ static PyMethodDef opaque_methods[] = {
     },
     {
         .ml_name = NULL /* SENTINEL */
-    }
-};
+    }};
 
-static PyObject* _Nullable
-opaque_new(PyTypeObject* type, PyObject* _Nullable args, PyObject* _Nullable kwds)
+static PyObject* _Nullable opaque_new(PyTypeObject* type, PyObject* _Nullable args,
+                                      PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"cobject", "c_void_p", NULL};
     PyObject*    cobject    = NULL;
@@ -156,7 +148,7 @@ opaque_dealloc(PyObject* self)
 }
 
 static int
-opaque_traverse(PyObject *self, visitproc visit, void *arg)
+opaque_traverse(PyObject* self, visitproc visit, void* arg)
 {
 #if PY_VERSION_HEX >= 0x03090000
     Py_VISIT(Py_TYPE(self));
@@ -210,8 +202,8 @@ opaque_to_c(ffi_cif* cif __attribute__((__unused__)), void* retval, void** args,
  *             @encode(NSZone*),
  *             NSZonePointer_doc));
  */
-PyObject* _Nullable
-PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char* _Nullable docstr)
+PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* typestr,
+                                                  const char* _Nullable docstr)
 {
     static const char convert_cif_signature[] = {_C_INT, _C_PTR,  _C_VOID,
                                                  _C_PTR, _C_VOID, 0};
@@ -219,18 +211,18 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     static ffi_cif*   convert_cif             = NULL;
     static ffi_cif*   new_cif                 = NULL;
 
-    PyObject*                           newType  = NULL;
-    PyObjCPointerWrapper_ToPythonFunc   from_c   = NULL;
-    PyObjCPointerWrapper_FromPythonFunc to_c     = NULL;
-    ffi_closure*                        cl_to_c  = NULL;
+    PyObject*                           newType   = NULL;
+    PyObjCPointerWrapper_ToPythonFunc   from_c    = NULL;
+    PyObjCPointerWrapper_FromPythonFunc to_c      = NULL;
+    ffi_closure*                        cl_to_c   = NULL;
     ffi_closure*                        cl_from_c = NULL;
     ffi_status                          rv;
     int                                 r;
-    PyObject*                           v = NULL;
-    PyObject*                           w = NULL;
-    void* codeloc = NULL;
-    char* dot;
-    char buf[256];
+    PyObject*                           v       = NULL;
+    PyObject*                           w       = NULL;
+    void*                               codeloc = NULL;
+    char*                               dot;
+    char                                buf[256];
 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
@@ -253,66 +245,66 @@ PyObjCCreateOpaquePointerType(const char* name, const char* typestr, const char*
     }
 
     PyType_Slot opaque_slots[] = {
-       {
-           .slot = Py_tp_dealloc,
-           .pfunc = (void*)opaque_dealloc,
-       },
-       {
-           .slot = Py_tp_new,
-           .pfunc = (void*)opaque_new,
-       },
-       {
-           .slot = Py_tp_members,
-           .pfunc = (void*)opaque_members,
-       },
-       {
-           .slot = Py_tp_methods,
-           .pfunc = (void*)opaque_methods,
-       },
-       {
-           .slot = Py_tp_traverse,
-           .pfunc = (void*)opaque_traverse,
-       },
-       {
-           /* Must be next to last */
-           .slot = Py_tp_doc,
-           .pfunc = (void*)docstr,
-       },
+        {
+            .slot  = Py_tp_dealloc,
+            .pfunc = (void*)opaque_dealloc,
+        },
+        {
+            .slot  = Py_tp_new,
+            .pfunc = (void*)opaque_new,
+        },
+        {
+            .slot  = Py_tp_members,
+            .pfunc = (void*)opaque_members,
+        },
+        {
+            .slot  = Py_tp_methods,
+            .pfunc = (void*)opaque_methods,
+        },
+        {
+            .slot  = Py_tp_traverse,
+            .pfunc = (void*)opaque_traverse,
+        },
+        {
+            /* Must be next to last */
+            .slot  = Py_tp_doc,
+            .pfunc = (void*)docstr,
+        },
 
-       { .slot = 0, .pfunc = NULL } /* Sentinel */
+        {.slot = 0, .pfunc = NULL} /* Sentinel */
     };
 
     if (docstr == NULL) {
         /* Set slot with Py_tp_doc to NULL */
         PyType_Slot* docslot = opaque_slots + 5;
         if (docslot->slot != Py_tp_doc) {
-             PyErr_SetString(PyExc_RuntimeError, "tp_doc not in expected slot");
-             goto error_cleanup;
+            PyErr_SetString(PyExc_RuntimeError, "tp_doc not in expected slot");
+            goto error_cleanup;
         }
-       docslot->slot = 0;
+        docslot->slot = 0;
     }
 
     dot = strchr(name, '.');
-    if(dot == NULL) {
+    if (dot == NULL) {
         if (strlen(name) > sizeof(buf) - sizeof("objc.")) {
             PyErr_SetString(PyExc_ValueError, "dotless name is too long");
             goto error_cleanup;
         }
         strcpy(buf, "objc.");
-        strcpy(buf+5, name);
+        strcpy(buf + 5, name);
     }
 
     PyType_Spec opaque_spec = {
-        .name = dot != NULL ? name : buf,
+        .name      = dot != NULL ? name : buf,
         .basicsize = sizeof(OpaquePointerObject),
-        .itemsize = 0,
-        .flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
-        .slots = opaque_slots,
+        .itemsize  = 0,
+        .flags     = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HEAPTYPE,
+        .slots     = opaque_slots,
     };
 
     newType = PyType_FromSpec(&opaque_spec);
     if (newType == NULL) {
-         goto error_cleanup;
+        goto error_cleanup;
     }
 
     w = PyBytes_FromString(typestr);

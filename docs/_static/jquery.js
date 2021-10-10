@@ -12,13 +12,12 @@ function J(a, c, d)
         d     = a.getAttribute(e);
         if (typeof d == "string") {
             try {
-                d = d === "true"
-                        ? !0
-                        : d === "false"
-                              ? !1
-                              : d === "null"
-                                    ? null
-                                    : +d + "" === d ? +d : H.test(d) ? p.parseJSON(d) : d
+                d = d === "true"    ? !0
+                    : d === "false" ? !1
+                    : d === "null"  ? null
+                    : +d + "" === d ? +d
+                    : H.test(d)     ? p.parseJSON(d)
+                                    : d
             } catch (f) {
             }
             p.data(a, c, d)
@@ -98,24 +97,22 @@ function bE(a, b)
         return;
     b.clearAttributes && b.clearAttributes(), b.mergeAttributes && b.mergeAttributes(a),
         c = b.nodeName.toLowerCase(),
-        c === "object" ? (b.parentNode && (b.outerHTML = a.outerHTML),
+        c === "object"                     ? (b.parentNode && (b.outerHTML = a.outerHTML),
                           p.support.html5Clone && a.innerHTML && !p.trim(b.innerHTML)
                               && (b.innerHTML = a.innerHTML))
-                       : c === "input" && bv.test(a.type)
-                             ? (b.defaultChecked = b.checked = a.checked,
-                                b.value !== a.value && (b.value = a.value))
-                             : c === "option" ? b.selected = a.defaultSelected
-                                              : c === "input" || c === "textarea"
-                                                    ? b.defaultValue = a.defaultValue
-                                                    : c === "script" && b.text !== a.text
-                                                          && (b.text = a.text),
+        : c === "input" && bv.test(a.type) ? (b.defaultChecked = b.checked = a.checked,
+                                              b.value !== a.value && (b.value = a.value))
+        : c === "option"                   ? b.selected = a.defaultSelected
+        : c === "input" || c === "textarea"
+            ? b.defaultValue = a.defaultValue
+            : c === "script" && b.text !== a.text && (b.text = a.text),
         b.removeAttribute(p.expando)
 }
 function bF(a)
 {
-    return typeof a.getElementsByTagName != "undefined"
-               ? a.getElementsByTagName("*")
-               : typeof a.querySelectorAll != "undefined" ? a.querySelectorAll("*") : []
+    return typeof   a.getElementsByTagName != "undefined" ? a.getElementsByTagName("*")
+           : typeof a.querySelectorAll != "undefined"     ? a.querySelectorAll("*")
+                                                          : []
 }
 function bG(a) { bv.test(a.type) && (a.defaultChecked = a.checked) }
 function bY(a, b)
@@ -573,7 +570,7 @@ p
                    k && e && (p.isPlainObject(e) || (f = p.isArray(e)))
                        ? (f ? (f = !1, g = d && p.isArray(d) ? d : [])
                             : g = d && p.isPlainObject(d) ? d : {},
-                          h[c]  = p.extend(k, g, e))
+                          h[c] = p.extend(k, g, e))
                        : e !== b && (h[c] = e)
                }
        return h
@@ -622,7 +619,7 @@ p
        },
        error : function(a) { throw new Error(a) },
        parseHTML : function(a, b, c) {
-           var                 d;
+           var d;
            return !a || typeof a != "string"
                       ? null
                       : (typeof b == "boolean" && (c = b, b = 0), b = b || e,
@@ -809,7 +806,7 @@ p
     .Callbacks =
     function(a) {
     a = typeof a == "string" ? F[a] || G(a) : p.extend({}, a);
-    var        c, d, e, f, g, h, i = [], j = !a.once && [], k = function(b) {
+    var c, d, e, f, g, h, i = [], j = !a.once && [], k = function(b) {
         c = a.memory && b, d = !0, h = f || 0, f = 0, g = i.length, e = !0;
         for (; i && h < g; h++)
             if (i[h].apply(b[0], b[1]) === !1 && a.stopOnFalse) {
@@ -1006,7 +1003,7 @@ p
                           g.style.marginRight = g.style.width = "0",
                           d.style.width                       = "1px", d.appendChild(g),
                           b.reliableMarginRight               = !parseFloat(
-                              (a.getComputedStyle(g, null) || {}).marginRight)),
+                                            (a.getComputedStyle(g, null) || {}).marginRight)),
                   typeof d.style.zoom != "undefined"
                       && (d.innerHTML = "",
                           d.style.cssText =
@@ -1056,7 +1053,7 @@ p.extend({
             if (d) {
                 p.isArray(b)
                     || (b in d ? b = [ b ]
-                               : (b          = p.camelCase(b),
+                               : (b = p.camelCase(b),
                                   b in d ? b = [ b ] : b = b.split(" ")));
                 for (e = 0, f = b.length; e < f; e++)
                     delete d[b[e]];
@@ -1069,8 +1066,9 @@ p.extend({
             if (!K(h[i]))
                 return
         }
-        g ? p.cleanData([ a ], !0)
-          : p.support.deleteExpando || h != h.window ? delete h[i] : h[i] = null
+        g                                          ? p.cleanData([ a ], !0)
+        : p.support.deleteExpando || h != h.window ? delete h[i]
+                                                   : h[i] = null
     },
     _data : function(a, b, c) { return p.data(a, b, c, !0) },
     acceptData : function(a) {
@@ -1147,9 +1145,10 @@ p.extend({
         queue : function(a, c) {
             var           d = 2;
             return typeof a != "string" && (c = a, a = "fx", d--),
-                   arguments.length < d
-                       ? p.queue(this[0], a)
-                       : c === b ? this : this.each(function() {
+                   arguments.length < d ? p.queue(this[0], a)
+                   : c === b
+                       ? this
+                       : this.each(function() {
                              var b = p.queue(this, a, c);
                              p._queueHooks(this, a),
                                  a === "fx" && b[0] !== "inprogress" && p.dequeue(this, a)
@@ -1269,7 +1268,8 @@ p.fn.extend({
                        c && "get" in c && (d = c.get(f, "value")) !== b
                            ? d
                            : (d = f.value, typeof d == "string" ? d.replace(P, "")
-                                                                : d == null ? "" : d);
+                                           : d == null          ? ""
+                                                                : d);
             return
         }
         return e = p.isFunction(a), this.each(function(d) {
@@ -1277,13 +1277,11 @@ p.fn.extend({
             if (this.nodeType !== 1)
                 return;
             e ? f = a.call(this, d, g.val()) : f = a,
-                f == null
-                    ? f = ""
-                    : typeof f == "number"
-                          ? f += ""
-                          : p.isArray(f)
-                                && (f = p.map(
-                                        f,
+                f == null ? f = ""
+                : typeof f == "number"
+                    ? f += ""
+                    : p.isArray(f)
+                          && (f = p.map(f,
                                         function(a) { return a == null ? "" : a + "" })),
                 c = p.valHooks[this.type] || p.valHooks[this.nodeName.toLowerCase()];
             if (!c || !("set" in c) || c.set(this, f, "value") === b)
@@ -1381,7 +1379,8 @@ p.fn.extend({
             value : {
                 get : function(a, b) {
                     return L && p.nodeName(a, "button") ? L.get(a, b)
-                                                        : b in a ? a.value : null
+                           : b in a                     ? a.value
+                                                        : null
                 },
                 set : function(a, b, c) {
                     if (L && p.nodeName(a, "button"))
@@ -1411,16 +1410,16 @@ p.fn.extend({
             return g = h !== 1 || !p.isXMLDoc(a),
                    g && (c = p.propFix[c] || c, f = p.propHooks[c]),
                    d !== b ? f && "set" in f && (e = f.set(a, d, c)) !== b ? e : a[c] = d
-                           : f && "get" in f && (e = f.get(a, c)) !== null ? e : a[c]
+                   : f && "get" in f && (e = f.get(a, c)) !== null ? e
+                                                                   : a[c]
         },
         propHooks : {
             tabIndex : {
                 get : function(a) {
                     var c = a.getAttributeNode("tabindex");
-                    return c && c.specified
-                               ? parseInt(c.value, 10)
-                               : R.test(a.nodeName) || S.test(a.nodeName) && a.href ? 0
-                                                                                    : b
+                    return c && c.specified ? parseInt(c.value, 10)
+                           : R.test(a.nodeName) || S.test(a.nodeName) && a.href ? 0
+                                                                                : b
                 }
             }
         }
@@ -1556,7 +1555,7 @@ p.fn.extend({
                                         : this.filter(a).length > 0)
     },
     closest : function(a, b) {
-        var                             c, d = 0, e = this.length, f = [],
+        var c, d = 0, e = this.length, f = [],
                g = bf.test(a) || typeof a != "string" ? p(a, b || this.context) : 0;
         for (; d < e; d++) {
             c = this[d];
@@ -1573,7 +1572,8 @@ p.fn.extend({
     index : function(a) {
         return a ? typeof a == "string" ? p.inArray(this[0], p(a))
                                         : p.inArray(a.jquery ? a[0] : a, this)
-                 : this[0] && this[0].parentNode ? this.prevAll().length : -1
+               : this[0] && this[0].parentNode ? this.prevAll().length
+                                               : -1
     },
     add : function(a, b) {
         var c = typeof a == "string" ? p(a, b) : p.makeArray(a && a.nodeType ? [ a ] : a),
@@ -1774,20 +1774,19 @@ bz
           }, null, a, arguments.length)
       },
       replaceWith : function(a) {
-          return bh(this[0])
-                     ? this.length ? this.pushStack(p(p.isFunction(a) ? a() : a),
-                                                    "replaceWith", a)
-                                   : this
-                     : p.isFunction(a)
-                           ? this.each(function(b) {
-                                 var c = p(this), d = c.html();
-                                 c.replaceWith(a.call(this, b, d))
-                             })
-                           : (typeof a != "string" && (a = p(a).detach()),
-                              this.each(function() {
-                                  var b = this.nextSibling, c = this.parentNode;
-                                  p(this).remove(), b ? p(b).before(a) : p(c).append(a)
-                              }))
+          return bh(this[0]) ? this.length ? this.pushStack(p(p.isFunction(a) ? a() : a),
+                                                            "replaceWith", a)
+                                           : this
+                 : p.isFunction(a)
+                     ? this.each(function(b) {
+                           var c = p(this), d = c.html();
+                           c.replaceWith(a.call(this, b, d))
+                       })
+                     : (typeof a != "string" && (a = p(a).detach()),
+                        this.each(function() {
+                            var b = this.nextSibling, c = this.parentNode;
+                            p(this).remove(), b ? p(b).before(a) : p(c).append(a)
+                        }))
       },
       detach : function(a) { return this.remove(a, !0) },
       domManip : function(a, c, d) {
@@ -1910,7 +1909,8 @@ bz
                           m = bq.test(h),
                           n = i === "table" && !m
                                   ? l.firstChild && l.firstChild.childNodes
-                                  : j[1] === "<table>" && !m ? l.childNodes : [];
+                              : j[1] === "<table>" && !m ? l.childNodes
+                                                         : [];
                           for (g = n.length - 1; g >= 0; --g)
                               p.nodeName(n[g], "tbody") && !n[g].childNodes.length
                                   && n[g].parentNode.removeChild(n[g])
@@ -1958,8 +1958,9 @@ bz
                               k[f] ? p.event.remove(e, f) : p.removeEvent(e, f, c.handle);
                       i[d]
                           && (delete i[d],
-                              j ? delete e[h]
-                                : e.removeAttribute ? e.removeAttribute(h) : e[h] = null,
+                              j                   ? delete e[h]
+                              : e.removeAttribute ? e.removeAttribute(h)
+                                                  : e[h] = null,
                               p.deletedIds.push(d))
                   }
               }
@@ -2133,7 +2134,8 @@ p.fn.extend({
                                                       : a.style.filter)
                                  || "")
                              ? .01 * parseFloat(RegExp.$1) + ""
-                             : b ? "1" : ""
+                         : b ? "1"
+                             : ""
               },
               set : function(a, b) {
                   var c = a.style, d = a.currentStyle,
@@ -2206,16 +2208,25 @@ p.fn.extend({
             })
             .map(function(a, b) {
                 var c = p(this).val();
-                return c == null ? null : p.isArray(c) ? p.map(c, function(a, c) {
-                    return { name: b.name, value: a.replace(cf, "\r\n") }
-                }) : {name : b.name, value : c.replace(cf, "\r\n")}
+                return c == null ? null
+                       : p.isArray(c)
+                           ? p.map(c,
+                                   function(a, c) {
+                                       return
+                                       {
+                                           name: b.name, value: a.replace(cf, "\r\n")
+                                       }
+                                   })
+                           : {name : b.name, value : c.replace(cf, "\r\n")}
             })
             .get()
     }
 }),
     p.param = function(a, c) {
         var d, e = [], f = function(a, b) {
-            b           = p.isFunction(b) ? b() : b == null ? "" : b,
+            b           = p.isFunction(b) ? b()
+                          : b == null     ? ""
+                                          : b,
             e[e.length] = encodeURIComponent(a) + "=" + encodeURIComponent(b)
         };
         c === b && (c = p.ajaxSettings && p.ajaxSettings.traditional);
@@ -2380,12 +2391,16 @@ cj = ct.exec(ck.toLowerCase()) || [],
                 l.url = ((a || l.url) + "").replace(cl, "").replace(cp, cj[1] + "//"),
                 l.dataTypes = p.trim(l.dataType || "*").toLowerCase().split(s),
                 l.crossDomain == null
-                    && (i = ct.exec(l.url.toLowerCase()) || !1,
-                        l.crossDomain =
-                            i
-                            && i.join(":") + (i[3] ? "" : i[1] === "http:" ? 80 : 443)
-                                   !== cj.join(":")
-                                           + (cj[3] ? "" : cj[1] === "http:" ? 80 : 443)),
+                    && (i             = ct.exec(l.url.toLowerCase()) || !1,
+                        l.crossDomain = i
+                                        && i.join(":")
+                                                   + (i[3]               ? ""
+                                                      : i[1] === "http:" ? 80
+                                                                         : 443)
+                                               !== cj.join(":")
+                                                       + (cj[3]               ? ""
+                                                          : cj[1] === "http:" ? 80
+                                                                              : 443)),
                 l.data && l.processData && typeof l.data != "string"
                     && (l.data = p.param(l.data, l.traditional)),
                 cA(cv, l, c, x);
@@ -2465,12 +2480,10 @@ p.ajaxSetup({
                 return f = c.jsonpCallback = p.isFunction(c.jsonpCallback)
                                                  ? c.jsonpCallback()
                                                  : c.jsonpCallback,
-                       g              = a[f],
-                       l ? c.url      = j.replace(cG, "$1" + f)
-                         : m ? c.data = i.replace(cG, "$1" + f)
-                             : k
-                                   && (c.url +=
-                                       (cF.test(j) ? "&" : "?") + c.jsonp + "=" + f),
+                       g                   = a[f],
+                       l   ? c.url    = j.replace(cG, "$1" + f)
+                                         : m ? c.data = i.replace(cG, "$1" + f)
+                                             : k && (c.url += (cF.test(j) ? "&" : "?") + c.jsonp + "=" + f),
                        c.converters["script json"] =
                            function() {
                            return h || p.error(f + " was not called"), h[0]
@@ -2631,7 +2644,7 @@ p.Animation = p.extend(cW, {
                        ? this.pos = b = p.easing[this.easing](
                              a, this.options.duration * a, 0, 1, this.options.duration)
                        : this.pos = b = a,
-                         this.now     = (this.end - this.start) * b + this.start,
+                         this.now = (this.end - this.start) * b + this.start,
                          this.options.step
                              && this.options.step.call(this.elem, this.now, this),
                          c && c.set ? c.set(this) : cZ.propHooks._default.set(this), this
@@ -2648,12 +2661,12 @@ p.Animation = p.extend(cW, {
                            : a.elem[a.prop]
             },
             set : function(a) {
-                p.fx.step[a.prop] ? p.fx.step[a.prop](a)
-                                  : a.elem.style
-                                            && (a.elem.style[p.cssProps[a.prop]] != null
-                                                || p.cssHooks[a.prop])
-                                        ? p.style(a.elem, a.prop, a.now + a.unit)
-                                        : a.elem[a.prop] = a.now
+                p.fx.step[a.prop]? p.fx.step[a.prop](a)
+                : a.elem.style
+                        && (a.elem.style[p.cssProps[a.prop]] != null
+                            || p.cssHooks[a.prop])
+                    ? p.style(a.elem, a.prop, a.now + a.unit)
+                           : a.elem[a.prop] = a.now
             }
         }
     },
@@ -2719,16 +2732,15 @@ p.Animation = p.extend(cW, {
                a, b) { p.fn[a] = function(a, c, d) { return this.animate(b, a, c, d) } }),
     p.speed =
         function(a, b, c) {
-        var d = a && typeof a == "object" ? p.extend({}, a) : {
+        var d      = a && typeof a == "object" ? p.extend({}, a) : {
             complete : c || !c && b || p.isFunction(a) && a,
             duration : a,
             easing : c && b || b && !p.isFunction(b) && b
         };
-        d.duration = p.fx.off ? 0
-                              : typeof d.duration == "number"
-                                    ? d.duration
-                                    : d.duration in p.fx.speeds ? p.fx.speeds[d.duration]
-                                                                : p.fx.speeds._default;
+        d.duration = p.fx.off                            ? 0
+                     : typeof     d.duration == "number" ? d.duration
+                     : d.duration in p.fx.speeds         ? p.fx.speeds[d.duration]
+                                                         : p.fx.speeds._default;
         if (d.queue == null || d.queue === !0)
             d.queue = "fx";
         return d.old = d.complete, d.complete = function() {
@@ -2853,16 +2865,14 @@ p.fn.offset =
                            h = d || (e === !0 || f === !0 ? "margin" : "border");
                        return p.access(this, function(c, d, e) {
                            var f;
-                           return p.isWindow(c)
-                                      ? c.document.documentElement["client" + a]
-                                      : c.nodeType === 9
-                                            ? (f = c.documentElement,
-                                               Math.max(c.body["scroll" + a],
-                                                        f["scroll" + a],
-                                                        c.body["offset" + a],
-                                                        f["offset" + a], f["client" + a]))
-                                            : e === b ? p.css(c, d, e, h)
-                                                      : p.style(c, d, e, h)
+                           return p.isWindow(c) ? c.document.documentElement["client" + a]
+                                  : c.nodeType === 9
+                                      ? (f = c.documentElement,
+                                         Math.max(c.body["scroll" + a], f["scroll" + a],
+                                                  c.body["offset" + a], f["offset" + a],
+                                                  f["client" + a]))
+                                  : e === b ? p.css(c, d, e, h)
+                                            : p.style(c, d, e, h)
                        }, c, g ? e : b, g, null)
                    }
                })

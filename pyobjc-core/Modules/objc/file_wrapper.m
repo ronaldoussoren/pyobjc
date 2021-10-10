@@ -2,7 +2,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-
 /* A basic wrapper for C's "FILE*"
  * that implements a usable API.
  */
@@ -13,8 +12,8 @@ struct file_object {
     FILE* _Nullable fp;
 };
 
-static PyObject* _Nullable
-file_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable args, PyObject* _Nullable kwds )
+static PyObject* _Nullable file_new(PyTypeObject* type __attribute__((__unused__)),
+                                    PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"path", "mode", NULL};
     FILE*        fp;
@@ -44,8 +43,7 @@ file_dealloc(PyObject* self)
     PyObject_Free(self);
 }
 
-static PyObject* _Nullable
-file_close(PyObject* _self)
+static PyObject* _Nullable file_close(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
 
@@ -65,8 +63,7 @@ file_close(PyObject* _self)
     return Py_None;
 }
 
-static PyObject* _Nullable
-file_errors(PyObject* _self)
+static PyObject* _Nullable file_errors(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
@@ -81,8 +78,7 @@ file_errors(PyObject* _self)
     return PyBool_FromLong(result);
 }
 
-static PyObject* _Nullable
-file_at_eof(PyObject* _self)
+static PyObject* _Nullable file_at_eof(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 result;
@@ -97,8 +93,7 @@ file_at_eof(PyObject* _self)
     return PyBool_FromLong(result);
 }
 
-static PyObject* _Nullable
-file_tell(PyObject* _self)
+static PyObject* _Nullable file_tell(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     long                offset;
@@ -117,8 +112,7 @@ file_tell(PyObject* _self)
     return PyLong_FromLong(offset);
 }
 
-static PyObject* _Nullable
-file_seek(PyObject* _self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable file_seek(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"offset", "whence", NULL};
 
@@ -146,8 +140,7 @@ file_seek(PyObject* _self, PyObject* args, PyObject* kwds)
     return Py_None;
 }
 
-static PyObject* _Nullable
-file_fileno(PyObject* _self)
+static PyObject* _Nullable file_fileno(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     int                 fd;
@@ -166,8 +159,7 @@ file_fileno(PyObject* _self)
     return PyLong_FromLong(fd);
 }
 
-static PyObject* _Nullable
-file_write(PyObject* _self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable file_write(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"buffer", NULL};
 
@@ -189,8 +181,7 @@ file_write(PyObject* _self, PyObject* args, PyObject* kwds)
     return Py_BuildValue("k", (unsigned long)result);
 }
 
-static PyObject* _Nullable
-file_readline(PyObject* _self)
+static PyObject* _Nullable file_readline(PyObject* _self)
 {
     struct file_object* self = (struct file_object*)_self;
     char                buffer[2048];
@@ -204,8 +195,7 @@ file_readline(PyObject* _self)
     }
 }
 
-static PyObject* _Nullable
-file_read(PyObject* _self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable file_read(PyObject* _self, PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"size", NULL};
 
@@ -301,8 +291,7 @@ FILE_create(FILE* _Nullable fp)
     return (PyObject*)self;
 }
 
-FILE* _Nullable
-FILE_get(PyObject* fp)
+FILE* _Nullable FILE_get(PyObject* fp)
 {
     if (!FILE_Check(fp)) {
         PyErr_SetString(PyExc_TypeError, "Not a FILE wrapper");

@@ -22,8 +22,7 @@ PyTypeObject PyObjC_NULL_Type = {
     .tp_flags                                      = Py_TPFLAGS_DEFAULT,
 };
 
-PyObject* _Nullable
-PyObjCInitNULL(void)
+PyObject* _Nullable PyObjCInitNULL(void)
 {
     PyObject* result;
 

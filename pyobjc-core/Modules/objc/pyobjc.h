@@ -96,8 +96,8 @@
 
 #import "selector.h"
 
-#import "libffi_support.h"
 #import "block-as-imp.h"
+#import "libffi_support.h"
 
 #import "ObjCPointer.h"
 #import "block_support.h"
@@ -117,6 +117,7 @@
 #import "informal-protocol.h"
 #import "instance-var.h"
 #import "ivar-accessor.h"
+#import "memview.h"
 #import "method-accessor.h"
 #import "method-imp.h"
 #import "objc-NULL.h"
@@ -139,7 +140,6 @@
 #import "super-call.h"
 #import "varlist.h"
 #import "weakref.h"
-#import "memview.h"
 
 #define PYOBJC_BUILD
 #import "pyobjc-api.h"
@@ -157,8 +157,10 @@
 /* module.m */
 NS_ASSUME_NONNULL_BEGIN
 extern PyObject* _Nullable PyObjC_TypeStr2CFTypeID;
-extern PyObject* _Nullable PyObjC_callable_docstr_get(PyObject* callable, void* _Nullable closure);
-extern PyObject* _Nullable PyObjC_callable_signature_get(PyObject* callable, void* _Nullable closure);
+extern PyObject* _Nullable PyObjC_callable_docstr_get(PyObject* callable,
+                                                      void* _Nullable closure);
+extern PyObject* _Nullable PyObjC_callable_signature_get(PyObject* callable,
+                                                         void* _Nullable closure);
 extern PyObject* _Nullable PyInit__objc(void);
 NS_ASSUME_NONNULL_END
 

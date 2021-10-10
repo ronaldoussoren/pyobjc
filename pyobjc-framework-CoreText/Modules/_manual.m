@@ -219,17 +219,18 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
             } else {
 
                 r          = PyObjC_PythonToObjC(@encode(CFArrayRef),
-                                        PySequence_Fast_GET_ITEM(s, 2), &aref);
+                                                 PySequence_Fast_GET_ITEM(s, 2), &aref);
                 cur->value = &aref;
             }
         } else {
-            r = PyObject_GetBuffer(PySequence_Fast_GET_ITEM(s, 2), views + i, PyBUF_CONTIG_RO);
+            r = PyObject_GetBuffer(PySequence_Fast_GET_ITEM(s, 2), views + i,
+                                   PyBUF_CONTIG_RO);
             if (r != -1) {
                 if ((size_t)views[i].len != cur->valueSize) {
                     PyErr_Format(PyExc_ValueError,
-                                 "Got buffer of %ld bytes, need %ld bytes", (long)views[i].len,
-                                 (long)cur->valueSize);
-                    PyBuffer_Release(views+i);
+                                 "Got buffer of %ld bytes, need %ld bytes",
+                                 (long)views[i].len, (long)cur->valueSize);
+                    PyBuffer_Release(views + i);
                     r = -1;
                 } else {
                     cur->value = views[i].buf;
@@ -255,7 +256,7 @@ m_CTParagraphStyleCreate(PyObject* self __attribute__((__unused__)), PyObject* a
 
     for (i = 0; i < len; i++) {
         if (settings[i].spec != kCTParagraphStyleSpecifierTabStops) {
-            PyBuffer_Release(views+i);
+            PyBuffer_Release(views + i);
         }
     }
 
@@ -282,7 +283,7 @@ setup_error:
     Py_DECREF(seq);
     for (Py_ssize_t j = 0; j < i; j++) {
         if (settings[j].spec != kCTParagraphStyleSpecifierTabStops) {
-            PyBuffer_Release(views+j);
+            PyBuffer_Release(views + j);
         }
     }
 
@@ -484,15 +485,7 @@ static PyMethodDef mod_methods[] = {
     }};
 
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_manual",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_manual", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__manual(void);
 

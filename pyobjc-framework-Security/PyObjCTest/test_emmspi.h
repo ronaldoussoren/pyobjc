@@ -1,4 +1,4 @@
-from                 PyObjCTools
+from PyObjCTools
         .TestSupport import*
 
             import Security

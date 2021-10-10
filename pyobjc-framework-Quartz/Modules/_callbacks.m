@@ -11,7 +11,6 @@
 #import <ApplicationServices/ApplicationServices.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-
 /*
  *
  * CGDataConsumerCreate
@@ -26,10 +25,9 @@ m_CGDataConsumerPutBytesCallback(void* _info, const void* buffer, size_t count)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    PyObject* result = PyObject_CallFunction(PyTuple_GetItem(info, 0),
-                                             "Oy#l",
-                                             PyTuple_GetItem(info, 2), buffer,
-                                             (Py_ssize_t)count, (Py_ssize_t)count);
+    PyObject* result =
+        PyObject_CallFunction(PyTuple_GetItem(info, 0), "Oy#l", PyTuple_GetItem(info, 2),
+                              buffer, (Py_ssize_t)count, (Py_ssize_t)count);
     if (result == NULL) {
         PyObjCErr_ToObjCWithGILState(&state);
     }
@@ -177,7 +175,8 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
     if (PyTuple_GetItem(result, 1) != buf) {
         Py_buffer view;
 
-        if (PyObject_GetBuffer(PyTuple_GetItem(result, 1), &view, PyBUF_CONTIG_RO) == -1) {
+        if (PyObject_GetBuffer(PyTuple_GetItem(result, 1), &view, PyBUF_CONTIG_RO)
+            == -1) {
             Py_DECREF(result);
             Py_DECREF(buf);
             PyObjCErr_ToObjCWithGILState(&state);
@@ -204,7 +203,6 @@ m_CGDataProviderGetBytesCallback(void* _info, void* buffer, size_t count)
     PyGILState_Release(state);
     return c_result;
 }
-
 
 static void
 m_CGDataProviderRewindCallback(void* _info)
@@ -246,7 +244,6 @@ m_CGDataProviderReleaseInfoCallback(void* _info)
 
     PyGILState_Release(state);
 }
-
 
 static off_t
 m_CGDataProviderSkipForwardCallback(void* _info, off_t count)
@@ -328,8 +325,8 @@ m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
     CGDataProviderRef result;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            result = CGDataProviderCreateSequential(
-                real_info, &m_CGDataProviderSequentialCallbacks);
+            result = CGDataProviderCreateSequential(real_info,
+                                                    &m_CGDataProviderSequentialCallbacks);
 
         } @catch (NSException* localException) {
             result = NULL;
@@ -356,9 +353,6 @@ m_CGDataProviderCreateSequential(PyObject* self __attribute__((__unused__)),
     return retval;
 }
 
-
-
-
 /*
  * CGDataProviderCreateWithData
  */
@@ -372,7 +366,7 @@ m_releaseData(void* _info, const void* data, size_t size)
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    tag = PyLong_AsLong(PyTuple_GetItem(info, 2));
+    tag  = PyLong_AsLong(PyTuple_GetItem(info, 2));
     view = PyTuple_GetItem(info, 3);
 
     if (PyTuple_GetItem(info, 1) != Py_None) {
@@ -414,7 +408,7 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)), PyObj
     int        tag;
     PyObject*  bufobj = NULL;
     PyObject*  view;
-    Py_ssize_t sz     = (Py_ssize_t)size;
+    Py_ssize_t sz = (Py_ssize_t)size;
     void*      arr;
 
     view = PyObjCMemView_New();
@@ -422,7 +416,8 @@ m_CGDataProviderCreateWithData(PyObject* self __attribute__((__unused__)), PyObj
         return NULL;
     }
 
-    tag = PyObjC_PythonToCArray(NO, YES, @encode(char), data, &arr, &sz, &bufobj, PyObjCMemView_GetBuffer(view));
+    tag = PyObjC_PythonToCArray(NO, YES, @encode(char), data, &arr, &sz, &bufobj,
+                                PyObjCMemView_GetBuffer(view));
     if (tag < 0) {
         return NULL;
     }
@@ -470,7 +465,7 @@ m_CGFunctionEvaluateCallback(void* _info, const CGFloat* inData, CGFloat* outDat
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    domdim = PyLong_AsLong(PyTuple_GetItem(info, 2));
+    domdim   = PyLong_AsLong(PyTuple_GetItem(info, 2));
     rangedim = PyLong_AsLong(PyTuple_GetItem(info, 3));
 
     PyObject* input;
@@ -534,7 +529,7 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     CGFunctionRef result    = NULL;
     PyObject*     domainBuf = NULL;
     Py_buffer     domainView;
-    PyObject*     rangeBuf  = NULL;
+    PyObject*     rangeBuf = NULL;
     Py_buffer     rangeView;
     int           rangeTag;
     int           domainTag;
@@ -558,8 +553,9 @@ m_CGFunctionCreate(PyObject* self __attribute__((__unused__)), PyObject* args)
     } else {
         /* Parse Array */
         Py_ssize_t cnt = domainDimension * 2;
-        domainTag      = PyObjC_PythonToCArray(NO, NO, @encode(CGFloat), domain,
-                                          (void**)&domainArr, &cnt, &domainBuf, &domainView);
+        domainTag =
+            PyObjC_PythonToCArray(NO, NO, @encode(CGFloat), domain, (void**)&domainArr,
+                                  &cnt, &domainBuf, &domainView);
         if (domainTag < 0) {
             return NULL;
         }
@@ -1639,15 +1635,7 @@ static PyMethodDef mod_methods[] = {
     }};
 
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_callbacks",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_callbacks", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__callbacks(void);
 

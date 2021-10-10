@@ -2,7 +2,7 @@
 
 static PyObject*
 call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
-                                       PyObject*const* arguments, size_t nargs)
+                                       PyObject* const* arguments, size_t nargs)
 {
     PyObject*         value;
     void*             buf;
@@ -11,7 +11,8 @@ call_NSCoder_encodeValueOfObjCType_at_(PyObject* method, PyObject* self,
     struct objc_super super;
     Py_buffer         view;
 
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
 
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
@@ -80,11 +81,11 @@ imp_NSCoder_encodeValueOfObjCType_at_(ffi_cif* cif __attribute__((__unused__)),
     char* typestr = *(char**)args[2];
     void* buf     = *(void**)args[3];
 
-    PyObject* result  = NULL;
-    PyObject* v1       = NULL;
-    PyObject* v2       = NULL;
-    PyObject* pyself  = NULL;
-    int       cookie  = 0;
+    PyObject* result = NULL;
+    PyObject* v1     = NULL;
+    PyObject* v2     = NULL;
+    PyObject* pyself = NULL;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -98,10 +99,13 @@ imp_NSCoder_encodeValueOfObjCType_at_(ffi_cif* cif __attribute__((__unused__)),
     if (v2 == NULL)
         goto error;
 
-    PyObject* arglist[4] = { NULL, pyself, v1, v2 };
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v1); v1 = NULL;
-    Py_DECREF(v2); v2 = NULL;
+    PyObject* arglist[4] = {NULL, pyself, v1, v2};
+    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                               3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v1);
+    v1 = NULL;
+    Py_DECREF(v2);
+    v2 = NULL;
 
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
@@ -130,7 +134,7 @@ error:
 
 static PyObject*
 call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
-                                             PyObject*const* arguments, size_t nargs)
+                                             PyObject* const* arguments, size_t nargs)
 {
     NSUInteger        count;
     NSUInteger        i;
@@ -142,7 +146,8 @@ call_NSCoder_encodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     struct objc_super super;
     Py_buffer         view;
 
-    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
+        return NULL;
 
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
@@ -238,10 +243,10 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(ffi_cif* cif __attribute__((__unused
     NSUInteger count   = *(NSUInteger*)args[3];
     void*      buf     = *(void**)args[4];
 
-    PyObject*  result  = NULL;
-    PyObject*  v1      = NULL;
-    PyObject*  v2      = NULL;
-    PyObject*  values  = NULL;
+    PyObject*  result = NULL;
+    PyObject*  v1     = NULL;
+    PyObject*  v2     = NULL;
+    PyObject*  values = NULL;
     Py_ssize_t size;
     NSUInteger i;
     PyObject*  pyself = NULL;
@@ -276,12 +281,16 @@ imp_NSCoder_encodeArrayOfObjCType_count_at_(ffi_cif* cif __attribute__((__unused
         PyTuple_SetItem(values, i, v);
     }
 
-    PyObject* arglist[5] = { NULL, pyself, v1, v2, values };
+    PyObject* arglist[5] = {NULL, pyself, v1, v2, values};
 
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 4|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v1); v1 = NULL;
-    Py_DECREF(v2); v2 = NULL;
-    Py_DECREF(values); values = NULL;
+    result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                 4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v1);
+    v1 = NULL;
+    Py_DECREF(v2);
+    v2 = NULL;
+    Py_DECREF(values);
+    values = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
 
@@ -309,7 +318,7 @@ error:
 
 static PyObject*
 call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
-                                       PyObject*const* arguments, size_t nargs)
+                                       PyObject* const* arguments, size_t nargs)
 {
     void*             buf;
     PyObject*         value;
@@ -318,7 +327,8 @@ call_NSCoder_decodeValueOfObjCType_at_(PyObject* method, PyObject* self,
     PyObject*         py_buf;
     Py_buffer         view;
 
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
 
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
@@ -388,8 +398,8 @@ imp_NSCoder_decodeValueOfObjCType_at_(ffi_cif* cif __attribute__((__unused__)),
     char* typestr = *(char**)args[2];
     void* buf     = *(void**)args[3];
 
-    PyObject* result  = NULL;
-    PyObject* v = NULL;
+    PyObject* result = NULL;
+    PyObject* v      = NULL;
     int       err;
     PyObject* pyself = NULL;
     int       cookie = 0;
@@ -404,9 +414,11 @@ imp_NSCoder_decodeValueOfObjCType_at_(ffi_cif* cif __attribute__((__unused__)),
     if (v == NULL)
         goto error;
 
-    PyObject* arglist[3] = { NULL, pyself, v };
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v); v = NULL;
+    PyObject* arglist[3] = {NULL, pyself, v};
+    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v);
+    v = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -431,7 +443,7 @@ error:
 
 static PyObject*
 call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
-                                            PyObject*const* arguments, size_t nargs)
+                                            PyObject* const* arguments, size_t nargs)
 {
     PyObject*         value;
     void*             buf;
@@ -440,7 +452,8 @@ call_NSCoder_decodeValueOfObjCType_at_size_(PyObject* method, PyObject* self,
     PyObject*         py_buf;
     Py_buffer         view;
 
-    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
+        return NULL;
 
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
@@ -513,9 +526,9 @@ imp_NSCoder_decodeValueOfObjCType_at_size_(ffi_cif* cif __attribute__((__unused_
     void*      buf     = *(void**)args[3];
     NSUInteger size    = *(NSUInteger*)args[4];
 
-    PyObject* result  = NULL;
-    PyObject* v1 = NULL;
-    PyObject* v2 = NULL;
+    PyObject* result = NULL;
+    PyObject* v1     = NULL;
+    PyObject* v2     = NULL;
     int       err;
     PyObject* pyself = NULL;
     int       cookie = 0;
@@ -534,11 +547,14 @@ imp_NSCoder_decodeValueOfObjCType_at_size_(ffi_cif* cif __attribute__((__unused_
     if (v2 == NULL)
         goto error;
 
-    PyObject* arglist[4] = { NULL, pyself, v1, v2 };
+    PyObject* arglist[4] = {NULL, pyself, v1, v2};
 
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v1); v1 = NULL;
-    Py_DECREF(v2); v2 = NULL;
+    result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v1);
+    v1 = NULL;
+    Py_DECREF(v2);
+    v2 = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -564,7 +580,7 @@ error:
 
 static PyObject*
 call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
-                                             PyObject*const* arguments, size_t nargs)
+                                             PyObject* const* arguments, size_t nargs)
 {
     NSUInteger        count;
     NSUInteger        i;
@@ -575,8 +591,8 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     struct objc_super super;
     Py_buffer         view;
 
-
-    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 3, 3, nargs) == -1)
+        return NULL;
 
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
@@ -644,7 +660,8 @@ call_NSCoder_decodeArrayOfObjCType_count_at_(PyObject* method, PyObject* self,
     }
 
     for (i = 0; i < count; i++) {
-        PyTuple_SetItem(result, i, pythonify_c_value(view.buf, ((char*)buf) + (size * i)));
+        PyTuple_SetItem(result, i,
+                        pythonify_c_value(view.buf, ((char*)buf) + (size * i)));
         if (PyTuple_GetItem(result, i) == NULL) {
             Py_DECREF(result);
             PyMem_Free(buf);
@@ -668,8 +685,8 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(ffi_cif* cif __attribute__((__unused
     void*      buf     = *(void**)args[4];
 
     PyObject*  result;
-    PyObject*  v1 = NULL;
-    PyObject*  v2 = NULL;
+    PyObject*  v1  = NULL;
+    PyObject*  v2  = NULL;
     PyObject*  seq = NULL;
     Py_ssize_t size;
     NSUInteger i;
@@ -695,11 +712,14 @@ imp_NSCoder_decodeArrayOfObjCType_count_at_(ffi_cif* cif __attribute__((__unused
     if (v2 == NULL)
         goto error;
 
-    PyObject* arglist[4] = { NULL, pyself, v1, v2 };
+    PyObject* arglist[4] = {NULL, pyself, v1, v2};
 
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v1); v1 = NULL;
-    Py_DECREF(v2); v2 = NULL;
+    result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v1);
+    v1 = NULL;
+    Py_DECREF(v2);
+    v2 = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL) {
@@ -738,16 +758,18 @@ error:
 }
 
 static PyObject*
-call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_NSCoder_encodeBytes_length_(PyObject* method, PyObject* self,
+                                 PyObject* const* arguments, size_t nargs)
 {
     NSUInteger length;
     Py_buffer  view;
 
     struct objc_super super;
 
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
 
-    if  (depythonify_c_value(@encode(NSUInteger), arguments[1], &length)) {
+    if (depythonify_c_value(@encode(NSUInteger), arguments[1], &length)) {
         return NULL;
     }
 
@@ -801,8 +823,8 @@ imp_NSCoder_encodeBytes_length_(ffi_cif* cif __attribute__((__unused__)),
     NSUInteger length = *(int*)args[3];
 
     PyObject* result;
-    PyObject* v1 = NULL;
-    PyObject* v2 = NULL;
+    PyObject* v1     = NULL;
+    PyObject* v2     = NULL;
     PyObject* pyself = NULL;
     int       cookie = 0;
 
@@ -820,11 +842,14 @@ imp_NSCoder_encodeBytes_length_(ffi_cif* cif __attribute__((__unused__)),
     if (v2 == NULL)
         goto error;
 
-    PyObject* arglist[4] = { NULL, pyself, v1, v2 };
+    PyObject* arglist[4] = {NULL, pyself, v1, v2};
 
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v1); v1 = NULL;
-    Py_DECREF(v2); v2 = NULL;
+    result = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                 3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v1);
+    v1 = NULL;
+    Py_DECREF(v2);
+    v2 = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -850,7 +875,7 @@ error:
 
 static PyObject*
 call_NSCoder_decodeBytesWithReturnedLength_(PyObject* method, PyObject* self,
-                                            PyObject*const* arguments, size_t nargs)
+                                            PyObject* const* arguments, size_t nargs)
 {
     char*             bytes;
     NSUInteger        size = 0;
@@ -859,7 +884,8 @@ call_NSCoder_decodeBytesWithReturnedLength_(PyObject* method, PyObject* self,
     PyObject*         py_buf;
     struct objc_super super;
 
-    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1)
+        return NULL;
 
     py_buf = arguments[0];
 
@@ -943,8 +969,8 @@ imp_NSCoder_decodeBytesWithReturnedLength_(ffi_cif* cif __attribute__((__unused_
     const void** pretval = (const void**)resp;
 
     PyObject* result;
-    PyObject* pyself  = NULL;
-    int       cookie  = 0;
+    PyObject* pyself = NULL;
+    int       cookie = 0;
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -952,8 +978,9 @@ imp_NSCoder_decodeBytesWithReturnedLength_(ffi_cif* cif __attribute__((__unused_
     if (pyself == NULL)
         goto error;
 
-    PyObject* arglist[2] = { NULL, pyself };
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* arglist[2] = {NULL, pyself};
+    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -990,7 +1017,7 @@ error:
 
 static PyObject*
 call_NSCoder_decodeBytesForKey_returnedLength_(PyObject* method, PyObject* self,
-                                               PyObject*const* arguments, size_t nargs)
+                                               PyObject* const* arguments, size_t nargs)
 {
     char*             bytes;
     NSUInteger        size = 0;
@@ -1000,9 +1027,10 @@ call_NSCoder_decodeBytesForKey_returnedLength_(PyObject* method, PyObject* self,
     id                key;
     struct objc_super super;
 
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
 
-    if (depythonify_c_value(@encode(id), arguments[0], &key) == -1)  {
+    if (depythonify_c_value(@encode(id), arguments[0], &key) == -1) {
         return NULL;
     }
     py_buf = arguments[1];
@@ -1104,10 +1132,13 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(ffi_cif* cif __attribute__((__unus
     if (v2 == NULL)
         goto error;
 
-    PyObject* arglist[3] = { NULL, v1, v2 };
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v1); v1 = NULL;
-    Py_DECREF(v2); v2 = NULL;
+    PyObject* arglist[3] = {NULL, v1, v2};
+    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                               2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v1);
+    v1 = NULL;
+    Py_DECREF(v2);
+    v2 = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)
@@ -1157,7 +1188,7 @@ error:
 
 static PyObject*
 call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
-                                        PyObject*const* arguments, size_t nargs)
+                                        PyObject* const* arguments, size_t nargs)
 {
     id                key;
     struct objc_super super;
@@ -1180,8 +1211,8 @@ call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
     }
 #endif
 
-
-    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 2, 2, nargs) == -1)
+        return NULL;
     if (PyObject_GetBuffer(arguments[0], &view, PyBUF_CONTIG_RO) == -1) {
         return NULL;
     }
@@ -1189,7 +1220,6 @@ call_NSCoder_encodeBytes_length_forKey_(PyObject* method, PyObject* self,
         PyBuffer_Release(&view);
         return NULL;
     }
-
 
     int isIMP = PyObjCIMP_Check(method);
     Py_BEGIN_ALLOW_THREADS
@@ -1233,9 +1263,9 @@ imp_NSCoder_encodeBytes_length_forKey_(ffi_cif* cif __attribute__((__unused__)),
     id         key    = *(id*)args[4];
 
     PyObject* result;
-    PyObject* v1 = NULL;
-    PyObject* v2 = NULL;
-    PyObject* v3 = NULL;
+    PyObject* v1     = NULL;
+    PyObject* v2     = NULL;
+    PyObject* v3     = NULL;
     PyObject* pyself = NULL;
     int       cookie = 0;
 
@@ -1257,11 +1287,15 @@ imp_NSCoder_encodeBytes_length_forKey_(ffi_cif* cif __attribute__((__unused__)),
     if (v3 == NULL)
         goto error;
 
-    PyObject* arglist[5] = { NULL, pyself, v1, v2, v3 };
-    result = PyObject_Vectorcall((PyObject*)callable, arglist+1, 4|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
-    Py_DECREF(v1); v1 = NULL;
-    Py_DECREF(v2); v2 = NULL;
-    Py_DECREF(v3); v3 = NULL;
+    PyObject* arglist[5] = {NULL, pyself, v1, v2, v3};
+    result               = PyObject_Vectorcall((PyObject*)callable, arglist + 1,
+                                               4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    Py_DECREF(v1);
+    v1 = NULL;
+    Py_DECREF(v2);
+    v2 = NULL;
+    Py_DECREF(v3);
+    v3 = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
     if (result == NULL)

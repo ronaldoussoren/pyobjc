@@ -28,7 +28,7 @@ typedef struct {
 
     NSObject* _Nullable object;
 #if PY_VERSION_HEX >= 0x03090000
-    vectorcallfunc         vectorcall;
+    vectorcallfunc vectorcall;
 #endif
 } PyObjC_WeakRef;
 
@@ -41,10 +41,12 @@ weakref_dealloc(PyObject* object)
     Py_TYPE(object)->tp_free(object);
 }
 
-static PyObject* _Nullable
-weakref_vectorcall(PyObject* object, PyObject*const* _Nullable args __attribute__((__unused__)), size_t nargsf, PyObject* _Nullable kwnames)
+static PyObject* _Nullable weakref_vectorcall(PyObject* object,
+                                              PyObject* const* _Nullable args
+                                              __attribute__((__unused__)),
+                                              size_t nargsf, PyObject* _Nullable kwnames)
 {
-    PyObjC_WeakRef* self       = (PyObjC_WeakRef*)object;
+    PyObjC_WeakRef* self = (PyObjC_WeakRef*)object;
     NSObject*       tmp;
 
     if (PyObjC_CheckNoKwnames(object, kwnames) == -1) {
@@ -61,8 +63,8 @@ weakref_vectorcall(PyObject* object, PyObject*const* _Nullable args __attribute_
 
 #if PY_VERSION_HEX < 0x03090000
 
-static PyObject* _Nullable
-weakref_call(PyObject* s, PyObject* _Nullable args, PyObject* _Nullable kwds)
+static PyObject* _Nullable weakref_call(PyObject* s, PyObject* _Nullable args,
+                                        PyObject* _Nullable kwds)
 {
     if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
         PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
@@ -74,11 +76,9 @@ weakref_call(PyObject* s, PyObject* _Nullable args, PyObject* _Nullable kwds)
 
 #endif /* PY_VERSION_HEX < 0x03090000 */
 
-
 /* XXX: vectorcall variant for weakref_new? */
-static PyObject* _Nullable
-weakref_new(PyTypeObject* type __attribute__((__unused__)), PyObject* _Nullable args,
-            PyObject* _Nullable kwds)
+static PyObject* _Nullable weakref_new(PyTypeObject* type __attribute__((__unused__)),
+                                       PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"object", NULL};
 
@@ -124,16 +124,16 @@ PyTypeObject PyObjCWeakRef_Type = {
     .tp_itemsize                                   = 0,
     .tp_dealloc                                    = weakref_dealloc,
 #if PY_VERSION_HEX >= 0x03090000
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VECTORCALL,
-    .tp_vectorcall_offset                          = offsetof(PyObjC_WeakRef, vectorcall),
-    .tp_call                                       = PyVectorcall_Call,
+    .tp_flags             = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL,
+    .tp_vectorcall_offset = offsetof(PyObjC_WeakRef, vectorcall),
+    .tp_call              = PyVectorcall_Call,
 #else
-    .tp_flags                                      = Py_TPFLAGS_DEFAULT,
-    .tp_call                                       = weakref_call,
+    .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_call  = weakref_call,
 #endif
-    .tp_getattro                                   = PyObject_GenericGetAttr,
-    .tp_doc                                        = weakref_cls_doc,
-    .tp_new                                        = weakref_new,
+    .tp_getattro = PyObject_GenericGetAttr,
+    .tp_doc      = weakref_cls_doc,
+    .tp_new      = weakref_new,
 };
 
 NS_ASSUME_NONNULL_END

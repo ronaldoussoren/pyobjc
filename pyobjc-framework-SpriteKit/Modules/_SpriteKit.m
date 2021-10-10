@@ -12,13 +12,13 @@
 #include "_SpriteKit_protocols.m"
 
 static PyObject*
-call_vF3_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_vF3_vF3(PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     /* calling of method that returns vector_float3 and has a vector_float3 as an argument
      */
     float             f1, f2, f3;
     struct objc_super super;
-    PyObject* pyvec;
+    PyObject*         pyvec;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
         return NULL;
@@ -33,15 +33,18 @@ call_vF3_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
@@ -132,13 +135,13 @@ call_id_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t 
 #endif
 
 static PyObject*
-callC_id_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+callC_id_vF3(PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     /* calling of method that returns id and has a vector_float3 as an argument */
     float             f1, f2, f3;
     struct objc_super super;
     id                result;
-    PyObject* pyvec;
+    PyObject*         pyvec;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
         return NULL;
@@ -153,15 +156,18 @@ callC_id_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
@@ -190,7 +196,8 @@ callC_id_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t
 }
 
 static PyObject*
-call_vF3_v(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_vF3_v(PyObject* method, PyObject* self,
+           PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
 {
     /* calling of method that returns vector_float3 and has no arguments */
     struct objc_super super;
@@ -221,12 +228,12 @@ call_vF3_v(PyObject* method, PyObject* self, PyObject*const* arguments __attribu
 }
 
 static PyObject*
-call_v_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_v_vF3(PyObject* method, PyObject* self, PyObject* const* arguments, size_t nargs)
 {
     /* calling of method that returns void and has a vector_float3 as an argument */
     float             f1, f2, f3;
     struct objc_super super;
-    PyObject* pyvec;
+    PyObject*         pyvec;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
         return NULL;
@@ -241,15 +248,18 @@ call_v_vF3(PyObject* method, PyObject* self, PyObject*const* arguments, size_t n
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 0), &f1)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 1), &f2)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
-    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3) == -1) {
+    if (PyObjC_PythonToObjC(@encode(float), PySequence_Fast_GET_ITEM(pyvec, 2), &f3)
+        == -1) {
         Py_DECREF(pyvec);
         return NULL;
     }
@@ -290,15 +300,7 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_SpriteKit",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_SpriteKit", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__SpriteKit(void);
 
@@ -306,7 +308,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__SpriteKit(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

@@ -148,10 +148,14 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
 
 #ifndef protocol_getMethodDescription
         /* See issue #17 */
-        struct objc_method_description descr = protocol_getMethodDescription(theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
-                                      PyObjCSelector_IsClassMethod(sel) ? NO : YES);
+        struct objc_method_description descr = protocol_getMethodDescription(
+            theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
+            PyObjCSelector_IsClassMethod(sel) ? NO : YES);
         if (descr.name == NULL) {
-            PyErr_Format(PyExc_RuntimeError, "Cannot find '%s' in newly constructed protocol (before registration)", sel_getName(theSel));
+            PyErr_Format(
+                PyExc_RuntimeError,
+                "Cannot find '%s' in newly constructed protocol (before registration)",
+                sel_getName(theSel));
             goto error;
         }
 #endif
@@ -159,15 +163,19 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     objc_registerProtocol(theProtocol);
 
 #ifndef protocol_getMethodDescription
-        /* See issue #17 */
+    /* See issue #17 */
     for (i = 0; i < len; i++) {
-        PyObject*   sel          = PySequence_Fast_GET_ITEM(selectors, i);
-        SEL         theSel       = PyObjCSelector_GetSelector(sel);
+        PyObject* sel    = PySequence_Fast_GET_ITEM(selectors, i);
+        SEL       theSel = PyObjCSelector_GetSelector(sel);
 
-        struct objc_method_description descr = protocol_getMethodDescription(theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
-                                      PyObjCSelector_IsClassMethod(sel) ? NO : YES);
+        struct objc_method_description descr = protocol_getMethodDescription(
+            theProtocol, theSel, (BOOL)PyObjCSelector_Required(sel),
+            PyObjCSelector_IsClassMethod(sel) ? NO : YES);
         if (descr.name == NULL) {
-            PyErr_Format(PyExc_RuntimeError, "Cannot find '%s' in newly constructed protocol (after registration)", sel_getName(theSel));
+            PyErr_Format(
+                PyExc_RuntimeError,
+                "Cannot find '%s' in newly constructed protocol (after registration)",
+                sel_getName(theSel));
             goto error;
         }
     }
@@ -181,7 +189,6 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     if (result == NULL) {
         return NULL;
     }
-
 
     result->objc = theProtocol;
     if (PyObjC_RegisterPythonProxy(result->objc, (PyObject*)result) < 0) {

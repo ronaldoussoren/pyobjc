@@ -409,15 +409,24 @@
  */
 
 #ifndef Py_SET_TYPE
-#define Py_SET_TYPE(obj, type) do { Py_TYPE((obj)) = (type); } while(0)
+#define Py_SET_TYPE(obj, type)                                                           \
+    do {                                                                                 \
+        Py_TYPE((obj)) = (type);                                                         \
+    } while (0)
 #endif
 
 #ifndef Py_SET_SIZE
-#define Py_SET_SIZE(obj, size) do { Py_SIZE((obj)) = (size); } while(0)
+#define Py_SET_SIZE(obj, size)                                                           \
+    do {                                                                                 \
+        Py_SIZE((obj)) = (size);                                                         \
+    } while (0)
 #endif
 
 #ifndef Py_SET_REFCNT
-#define Py_SET_REFCNT(obj, count) do { Py_REFCNT((obj)) = (count); } while(0)
+#define Py_SET_REFCNT(obj, count)                                                        \
+    do {                                                                                 \
+        Py_REFCNT((obj)) = (count);                                                      \
+    } while (0)
 #endif
 
 #if PY_VERSION_HEX < 0x03090000
@@ -430,15 +439,17 @@
 #define PY_VECTORCALL_ARGUMENTS_OFFSET ((size_t)1 << (8 * sizeof(size_t) - 1))
 #endif
 
-#define PyVectorcall_NARGS(nargsf) ((nargsf)&~PY_VECTORCALL_ARGUMENTS_OFFSET)
+#define PyVectorcall_NARGS(nargsf) ((nargsf) & ~PY_VECTORCALL_ARGUMENTS_OFFSET)
 
 #ifdef OBJC_VERSION
 /* Don't use PyObject prefixed symbols in our binaries */
 #define PyObject_Vectorcall PyObjC_Vectorcall
 #define PyObject_VectorcallMethod PyObjC_VectorcallMethod
 
-extern PyObject* PyObject_Vectorcall(PyObject* callable, PyObject*const* args, size_t nargsf, PyObject* kwnames);
-extern PyObject* PyObject_VectorcallMethod(PyObject *name, PyObject *const *args, size_t nargsf, PyObject *kwnames);
+extern PyObject* PyObject_Vectorcall(PyObject* callable, PyObject* const* args,
+                                     size_t nargsf, PyObject* kwnames);
+extern PyObject* PyObject_VectorcallMethod(PyObject* name, PyObject* const* args,
+                                           size_t nargsf, PyObject* kwnames);
 #endif
 
 #endif /* Python < 3.9 */
@@ -462,7 +473,6 @@ extern int       PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 extern PyObject* PyBytes_InternFromString(const char* v);
 extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
 
-
 /*
  * A micro optimization: when using Python 3.3 or later it
  * is possible to access a 'char*' with an ASCII representation
@@ -484,7 +494,6 @@ PyTuple_ITEMS(PyObject* tuple)
 {
     return &PyTuple_GET_ITEM(tuple, 0);
 }
-
 
 /* This is a crude hack to disable a otherwise useful warning in the context of
  * PyTuple_SET_ITEM, without disabling it everywhere
@@ -538,6 +547,5 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyObjC_END_WITH_GIL                                                              \
     PyGILState_Release(_GILState);                                                       \
     }
-
 
 #endif /* PyObjC_COMPAT_H */

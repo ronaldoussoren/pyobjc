@@ -14,7 +14,9 @@
 
 #ifdef PyObjC_EXPLICT_DESCRIPTION_HELPER
 static PyObject*
-call_NSObject_description(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_NSObject_description(PyObject* method, PyObject* self,
+                          PyObject* const* arguments __attribute__((__unused__)),
+                          size_t           nargs)
 {
     id                result = nil;
     struct objc_super spr;
@@ -22,7 +24,8 @@ call_NSObject_description(PyObject* method, PyObject* self, PyObject*const* argu
     NSObject*         anObject;
     SEL               aSel;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
 
     if (unlikely(PyObjCIMP_Check(method))) {
         anIMP    = PyObjCIMP_GetIMP(method);
@@ -67,8 +70,8 @@ imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
                          void** args __attribute__((__unused__)), void* callable)
 {
     int       err;
-    PyObject* v       = NULL;
-    PyObject* result  = NULL;
+    PyObject* v      = NULL;
+    PyObject* result = NULL;
 
     PyObjC_BEGIN_WITH_GIL
         v = PyObjC_IdToPython(*(id*)args[0]);
@@ -82,8 +85,9 @@ imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[2] = { NULL, v };
-        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* args[2] = {NULL, v};
+        result            = PyObject_Vectorcall(callable, args + 1,
+                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (unlikely(result == NULL)) {
             Py_DECREF(v);
             PyObjC_GIL_FORWARD_EXC();
@@ -102,7 +106,8 @@ imp_NSObject_description(ffi_cif* cif __attribute__((__unused__)), void* resp,
 #endif /* PyObjC_EXPLICT_DESCRIPTION_HELPER */
 
 static PyObject*
-call_NSObject_alloc(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_NSObject_alloc(PyObject* method, PyObject* self,
+                    PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
 {
     id                result = nil;
     struct objc_super spr;
@@ -110,7 +115,8 @@ call_NSObject_alloc(PyObject* method, PyObject* self, PyObject*const* arguments 
     Class             aClass;
     SEL               aSel;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
 
     if (unlikely(!PyObjCClass_Check(self))) {
         PyErr_Format(PyExc_TypeError, "Expecting Objective-C class, got instance of '%s'",
@@ -161,8 +167,8 @@ imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
                    void** args __attribute__((__unused__)), void* callable)
 {
     int       err;
-    PyObject* v       = NULL;
-    PyObject* result  = NULL;
+    PyObject* v      = NULL;
+    PyObject* result = NULL;
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -175,14 +181,15 @@ imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[2] = { NULL, v };
-        result = PyObject_Vectorcall((PyObject*)callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* args[2] = {NULL, v};
+        result            = PyObject_Vectorcall((PyObject*)callable, args + 1,
+                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
-        Py_DECREF(v); v = NULL;
+        Py_DECREF(v);
+        v = NULL;
         if (unlikely(result == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
-
 
         err = depythonify_c_value(@encode(id), result, resp);
         Py_DECREF(result);
@@ -194,14 +201,17 @@ imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
 }
 
 static PyObject*
-call_NSObject_dealloc(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_NSObject_dealloc(PyObject* method, PyObject* self,
+                      PyObject* const* arguments __attribute__((__unused__)),
+                      size_t           nargs)
 {
     struct objc_super spr;
     IMP               anIMP;
     Class             aClass;
     SEL               aSel;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
@@ -254,8 +264,8 @@ imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
                      void*    resp __attribute__((__unused__)),
                      void** args __attribute__((__unused__)), void* callable)
 {
-    PyObject* v       = NULL;
-    PyObject* result  = NULL;
+    PyObject* v      = NULL;
+    PyObject* result = NULL;
 
     PyObjC_BEGIN_WITH_GIL
 
@@ -264,8 +274,9 @@ imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[2] = { NULL, v };
-        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* args[2] = {NULL, v};
+        result            = PyObject_Vectorcall(callable, args + 1,
+                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
         if (unlikely(result == NULL)) {
             Py_DECREF(v);
@@ -287,14 +298,17 @@ imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
 }
 
 static PyObject*
-call_NSObject_release(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_NSObject_release(PyObject* method, PyObject* self,
+                      PyObject* const* arguments __attribute__((__unused__)),
+                      size_t           nargs)
 {
     struct objc_super spr;
     IMP               anIMP;
     Class             aClass;
     SEL               aSel;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
 
     if (unlikely(!PyObjCObject_Check(self))) {
         PyErr_Format(PyExc_TypeError,
@@ -341,7 +355,8 @@ call_NSObject_release(PyObject* method, PyObject* self, PyObject*const* argument
 }
 
 static PyObject*
-call_NSObject_retain(PyObject* method, PyObject* self, PyObject*const* arguments __attribute__((__unused__)), size_t nargs)
+call_NSObject_retain(PyObject* method, PyObject* self,
+                     PyObject* const* arguments __attribute__((__unused__)), size_t nargs)
 {
     struct objc_super spr;
     IMP               anIMP;
@@ -349,7 +364,8 @@ call_NSObject_retain(PyObject* method, PyObject* self, PyObject*const* arguments
     SEL               aSel;
     id                retval = nil;
 
-    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1) return NULL;
+    if (PyObjC_CheckArgCount(method, 0, 0, nargs) == -1)
+        return NULL;
 
     if (!PyObjCObject_Check(self)) {
         PyErr_Format(PyExc_TypeError,
@@ -399,7 +415,7 @@ imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
                      void*    resp __attribute__((__unused__)),
                      void** args __attribute__((__unused__)), void* callable)
 {
-    PyObject* result  = NULL;
+    PyObject* result = NULL;
     PyObject* pyself;
     int       cookie;
 
@@ -410,9 +426,9 @@ imp_NSObject_release(ffi_cif* cif __attribute__((__unused__)),
             PyObjC_GIL_FORWARD_EXC();
         }
 
-
-        PyObject* args[2] = { NULL, pyself };
-        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* args[2] = {NULL, pyself};
+        result            = PyObject_Vectorcall(callable, args + 1,
+                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) {
             PyObjCObject_ReleaseTransient(pyself, cookie);
             PyObjC_GIL_FORWARD_EXC();
@@ -437,7 +453,7 @@ imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
                     void*    resp __attribute__((__unused__)),
                     void** args __attribute__((__unused__)), void* callable)
 {
-    PyObject* result  = NULL;
+    PyObject* result = NULL;
     PyObject* pyself;
     int       cookie;
     int       err;
@@ -448,8 +464,9 @@ imp_NSObject_retain(ffi_cif* cif __attribute__((__unused__)),
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[2] = { NULL, pyself };
-        result = PyObject_Vectorcall(callable, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* args[2] = {NULL, pyself};
+        result            = PyObject_Vectorcall(callable, args + 1,
+                                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (result == NULL) {
             PyObjCObject_ReleaseTransient(pyself, cookie);
             PyObjC_GIL_FORWARD_EXC();

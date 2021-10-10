@@ -1341,7 +1341,7 @@ class TestBuffers(TestCase):
 
         input_value = b"hello " + b"world"
         v = o.addOneToVoids_count_(input_value, len(input_value))
-        self.assertIsInstance(v, type(b""))
+        self.assertIsInstance(v, bytes)
 
         self.assertEqual(input_value, b"hello world")
         self.assertEqual(input_value[0:5], b"hello")

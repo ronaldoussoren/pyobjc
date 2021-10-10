@@ -12,7 +12,8 @@
 
 static PyObject*
 call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* self,
-                                                   PyObject*const* arguments, size_t nargs)
+                                                   PyObject* const* arguments,
+                                                   size_t           nargs)
 {
     PyObject*           result;
     PyObject*           v;
@@ -95,7 +96,7 @@ call_NSBezierPath_elementAtIndex_associatedPoints_(PyObject* method, PyObject* s
 
 static PyObject*
 call_NSBezierPath_setAssociatedPoints_atIndex_(PyObject* method, PyObject* self,
-                                               PyObject*const* arguments, size_t nargs)
+                                               PyObject* const* arguments, size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;

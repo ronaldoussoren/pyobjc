@@ -78,7 +78,7 @@ class TestBridgedClasses(TestCase):
         self.assertEqual(cls.__name__, "OC_BuiltinPythonUnicode")
 
     def test_unicode_subclass(self):
-        class U(type("")):
+        class U(str):
             pass
 
         value = U()

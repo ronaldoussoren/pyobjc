@@ -6,20 +6,18 @@
 #import <ApplicationServices/ApplicationServices.h>
 
 static PyObject*
-m_AXValueCreate(
-    PyObject* mod __attribute__((__unused__)),
-    PyObject* args)
+m_AXValueCreate(PyObject* mod __attribute__((__unused__)), PyObject* args)
 {
-    UInt32 valueType;
-    PyObject* py_value;
+    UInt32     valueType;
+    PyObject*  py_value;
     AXValueRef value;
-    CGPoint point;
-    CGSize size;
-    CGRect rect;
-    CFRange range;
-    AXError error;
-    void* valuePtr;
-    PyObject* result;
+    CGPoint    point;
+    CGSize     size;
+    CGRect     rect;
+    CFRange    range;
+    AXError    error;
+    void*      valuePtr;
+    PyObject*  result;
 
     if (!PyArg_ParseTuple(args, "IO", &valueType, &py_value)) {
         return NULL;
@@ -71,28 +69,26 @@ m_AXValueCreate(
         Py_INCREF(Py_None);
         return Py_None;
     } else {
-        result =  PyObjC_ObjCToPython(@encode(AXValueRef), &value);
+        result = PyObjC_ObjCToPython(@encode(AXValueRef), &value);
         CFRelease(value);
         return result;
     }
 }
 
 static PyObject*
-m_AXValueGetValue(
-    PyObject* mod __attribute__((__unused__)),
-    PyObject* args)
+m_AXValueGetValue(PyObject* mod __attribute__((__unused__)), PyObject* args)
 {
-    UInt32 valueType;
-    PyObject* py_value;
-    PyObject* py_valuePtr;
+    UInt32     valueType;
+    PyObject*  py_value;
+    PyObject*  py_valuePtr;
     AXValueRef value;
-    CGPoint point;
-    CGSize size;
-    CGRect rect;
-    CFRange range;
-    AXError error;
-    void* valuePtr;
-    Boolean ok;
+    CGPoint    point;
+    CGSize     size;
+    CGRect     rect;
+    CFRange    range;
+    AXError    error;
+    void*      valuePtr;
+    Boolean    ok;
 
     if (!PyArg_ParseTuple(args, "OIO", &py_value, &valueType, &py_valuePtr)) {
         return NULL;
@@ -139,19 +135,24 @@ m_AXValueGetValue(
     } else {
         switch (valueType) {
         case kAXValueTypeCGPoint:
-            return Py_BuildValue("ON", Py_True, PyObjC_ObjCToPython(@encode(CGPoint), (void*)&point));
+            return Py_BuildValue("ON", Py_True,
+                                 PyObjC_ObjCToPython(@encode(CGPoint), (void*)&point));
 
         case kAXValueTypeCGSize:
-            return Py_BuildValue("ON", Py_True, PyObjC_ObjCToPython(@encode(CGSize), (void*)&size));
+            return Py_BuildValue("ON", Py_True,
+                                 PyObjC_ObjCToPython(@encode(CGSize), (void*)&size));
 
         case kAXValueTypeCGRect:
-            return Py_BuildValue("ON", Py_True, PyObjC_ObjCToPython(@encode(CGRect), (void*)&rect));
+            return Py_BuildValue("ON", Py_True,
+                                 PyObjC_ObjCToPython(@encode(CGRect), (void*)&rect));
 
         case kAXValueTypeCFRange:
-            return Py_BuildValue("ON", Py_True, PyObjC_ObjCToPython(@encode(CFRange), (void*)&range));
+            return Py_BuildValue("ON", Py_True,
+                                 PyObjC_ObjCToPython(@encode(CFRange), (void*)&range));
 
         case kAXValueTypeAXError:
-            return Py_BuildValue("ON", Py_True, PyObjC_ObjCToPython(@encode(AXError), (void*)&error));
+            return Py_BuildValue("ON", Py_True,
+                                 PyObjC_ObjCToPython(@encode(AXError), (void*)&error));
 
         default:
             /* We shouldn't get here, argument validation has already checked
@@ -163,33 +164,18 @@ m_AXValueGetValue(
     }
 }
 
-
 static PyMethodDef mod_methods[] = {
-    {
-        "AXValueCreate", (PyCFunction)m_AXValueCreate,
-        METH_VARARGS,
-        "AXValueCreate(/, type, value) -> axvalue"
-    },
-    {
-        "AXValueGetValue", (PyCFunction)m_AXValueGetValue,
-        METH_VARARGS,
-        "AXValueGetValue(/, axvalue, type, *None*) -> value"
-    },
+    {"AXValueCreate", (PyCFunction)m_AXValueCreate, METH_VARARGS,
+     "AXValueCreate(/, type, value) -> axvalue"},
+    {"AXValueGetValue", (PyCFunction)m_AXValueGetValue, METH_VARARGS,
+     "AXValueGetValue(/, axvalue, type, *None*) -> value"},
 
     {0, 0, 0, 0} /* sentinel */
 };
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_HIServices",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_HIServices", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__HIServices(void);
 
@@ -197,7 +183,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__HIServices(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

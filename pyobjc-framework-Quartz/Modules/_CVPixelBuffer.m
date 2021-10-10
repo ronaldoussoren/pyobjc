@@ -10,7 +10,7 @@
 static void
 mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddress)
 {
-    PyObject*        info  = (PyObject*)releaseRefCon;
+    PyObject*        info = (PyObject*)releaseRefCon;
     PyObject*        view;
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -18,7 +18,7 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
         PyObject* r = PyObject_CallFunction(PyTuple_GetItem(info, 0), "O",
                                             PyTuple_GetItem(info, 1));
         if (r == NULL) {
-            view = PyTuple_GetItem( info, 3);
+            view = PyTuple_GetItem(info, 3);
             PyBuffer_Release(PyObjCMemView_GetBuffer(view));
             Py_XDECREF(info);
             PyObjCErr_ToObjCWithGILState(&state);
@@ -27,12 +27,11 @@ mod_CVPixelBufferReleaseBytesCallback(void* releaseRefCon, const void* baseAddre
         Py_DECREF(r);
     }
 
-    view = PyTuple_GetItem( info, 3);
+    view = PyTuple_GetItem(info, 3);
     PyBuffer_Release(PyObjCMemView_GetBuffer(view));
     Py_DECREF(info);
     PyGILState_Release(state);
 }
-
 
 static PyObject*
 mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
@@ -96,7 +95,7 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
         return NULL;
     }
 
-    if (PyObject_GetBuffer(py_buffer, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) <0) {
+    if (PyObject_GetBuffer(py_buffer, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) < 0) {
         return NULL;
     }
 
@@ -110,8 +109,9 @@ mod_CVPixelBufferCreateWithBytes(PyObject* self __attribute__((__unused__)),
     Py_BEGIN_ALLOW_THREADS
         @try {
             rv = CVPixelBufferCreateWithBytes(
-                allocator, width, height, pixelFormatType, PyObjCMemView_GetBuffer(view)->buf,
-                bytesPerRow, mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
+                allocator, width, height, pixelFormatType,
+                PyObjCMemView_GetBuffer(view)->buf, bytesPerRow,
+                mod_CVPixelBufferReleaseBytesCallback, real_info, pixelBufferAttributes,
                 &pixelBuffer);
 
         } @catch (NSException* localException) {
@@ -142,16 +142,15 @@ static PyMethodDef mod_methods[] = {{"CVPixelBufferCreateWithBytes",
 
                                     {0, 0, 0, 0}};
 
-static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_CVPixelBuffer",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "_CVPixelBuffer",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit__CVPixelBuffer(void);
 

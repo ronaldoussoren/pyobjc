@@ -27,11 +27,11 @@ typedef NSObject<NSObject> ObjectClass;
 
 #if (PyObjC_BUILD_RELEASE >= 1005)
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wobjc-property-no-attribute"
-@property int            prop1;
-@property float          prop2;
-@property struct_s prop3;
+#pragma clang diagnostic                            push
+#pragma clang diagnostic                            ignored "-Wobjc-property-no-attribute"
+@property int                                       prop1;
+@property float                                     prop2;
+@property struct_s                                  prop3;
 @property id                                        prop4;
 @property(readonly) id                              prop5;
 @property(readwrite) id                             prop6;

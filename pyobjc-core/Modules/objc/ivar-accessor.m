@@ -207,7 +207,7 @@ PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
         /* XXX: See comment in objc-object.m, change python
          *      type by calling setattr(anObejct, "__class__", pycls)
          */
-        curType           = Py_TYPE(anObject);
+        curType = Py_TYPE(anObject);
         Py_SET_TYPE(anObject, (PyTypeObject*)pycls);
         Py_DECREF((PyObject*)curType);
         Py_INCREF(Py_None);

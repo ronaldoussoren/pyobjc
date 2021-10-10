@@ -186,16 +186,15 @@ static PyMethodDef mod_methods[] = {
 
     {0, 0, 0, 0}};
 
-static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_doubleindirect",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "_doubleindirect",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit__doubleindirect(void);
 

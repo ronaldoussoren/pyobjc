@@ -310,7 +310,7 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
     }
 
     if (py_data == Py_None) {
-       /* pass */
+        /* pass */
 
     } else if (PyUnicode_Check(py_data)) {
         PyErr_SetString(PyExc_TypeError, "Cannot use Unicode as backing store");
@@ -320,15 +320,14 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
         if (PyObject_GetBuffer(py_data, &view, PyBUF_CONTIG) == -1) {
             return NULL;
         }
-
     }
 
     CGContextRef ctx = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
-            ctx = CGBitmapContextCreate(py_data == Py_None ? NULL : view.buf,
-                                        width, height, bitsPerComponent,
-                                        bytesPerRow, colorSpace, bitmapInfo);
+            ctx = CGBitmapContextCreate(py_data == Py_None ? NULL : view.buf, width,
+                                        height, bitsPerComponent, bytesPerRow, colorSpace,
+                                        bitmapInfo);
 
         } @catch (NSException* localException) {
             ctx = NULL;
@@ -336,7 +335,7 @@ m_CGBitmapContextCreate(PyObject* self __attribute__((__unused__)), PyObject* ar
         }
     Py_END_ALLOW_THREADS
 
-   if (py_data != Py_None) {
+    if (py_data != Py_None) {
         /* This is not safe in general, but there is no way to keep the
          * buffer alive until after the bitmap context is deallocated.
          */
@@ -445,7 +444,8 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
             return NULL;
         }
 
-        if (PyObject_GetBuffer(py_data, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG) == -1) {
+        if (PyObject_GetBuffer(py_data, PyObjCMemView_GetBuffer(view), PyBUF_CONTIG)
+            == -1) {
             Py_DECREF(view);
             return NULL;
         }
@@ -463,14 +463,13 @@ m_CGBitmapContextCreateWithData(PyObject* self __attribute__((__unused__)),
     Py_INCREF(py_data);
     PyTuple_SET_ITEM(releaseInfo, 3, view);
 
-
     CGContextRef ctx = NULL;
     Py_BEGIN_ALLOW_THREADS
         @try {
             ctx = USE_10_6(CGBitmapContextCreateWithData)(
                 view ? PyObjCMemView_GetBuffer(view)->buf : NULL, width, height,
-                bitsPerComponent, bytesPerRow, colorSpace,
-                bitmapInfo, m_releasecallback, releaseInfo);
+                bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo, m_releasecallback,
+                releaseInfo);
 
         } @catch (NSException* localException) {
             ctx = NULL;
@@ -638,15 +637,7 @@ static PyMethodDef mod_methods[] = {
     }};
 
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_coregraphics",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_coregraphics", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__coregraphics(void);
 

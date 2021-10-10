@@ -9,5 +9,4 @@ static void __attribute__((__used__)) use_protocols(void)
     p = PyObjC_IdToPython(@protocol(UNNotificationContentProviding));
     Py_XDECREF(p);
 #endif
-
 }

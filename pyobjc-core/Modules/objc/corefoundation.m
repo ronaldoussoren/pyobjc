@@ -18,8 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 static PyObject* gTypeid2class        = NULL;
 PyObject*        PyObjC_NSCFTypeClass = NULL;
 
-static PyObject* _Nullable
-cf_repr(PyObject* self)
+static PyObject* _Nullable cf_repr(PyObject* self)
 {
     if (PyObjCObject_GetFlags(self) & PyObjCObject_kMAGIC_COOKIE) {
         return PyUnicode_FromFormat("<%s CoreFoundation magic instance %p>",
@@ -34,16 +33,16 @@ cf_repr(PyObject* self)
 
     } else {
         return PyUnicode_FromFormat("<%s object at %p>", Py_TYPE(self)->tp_name,
-                 PyObjCObject_GetObject(self));
+                                    PyObjCObject_GetObject(self));
     }
 }
 
-PyObject* _Nullable
-PyObjC_TryCreateCFProxy(NSObject* value)
+PyObject* _Nullable PyObjC_TryCreateCFProxy(NSObject* value)
 {
     PyObject* rval = NULL;
 
-    if (gTypeid2class == NULL) return NULL;
+    if (gTypeid2class == NULL)
+        return NULL;
 
     PyObject*     cfid;
     PyTypeObject* tp;
@@ -55,7 +54,8 @@ PyObjC_TryCreateCFProxy(NSObject* value)
         return NULL;
     }
 
-    if (tp == NULL) return NULL;
+    if (tp == NULL)
+        return NULL;
 
     rval = tp->tp_alloc(tp, 0);
     if (rval == NULL) {
@@ -63,7 +63,7 @@ PyObjC_TryCreateCFProxy(NSObject* value)
     }
 
     ((PyObjCObject*)rval)->objc_object = value;
-    ((PyObjCObject*)rval)->flags = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
+    ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT | PyObjCObject_kCFOBJECT;
     CFRetain(value);
 
     return rval;
@@ -73,8 +73,8 @@ PyObjC_TryCreateCFProxy(NSObject* value)
 /* Implementation for: -(PyObject*)__pyobjc_PythonObject__ on NSCFType. We cannot
  * define a category on that type because the class definition isn't public.
  */
-static PyObject* _Nullable
-pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
+static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
+                                               SEL       _sel __attribute__((__unused__)))
 {
     PyObject* rval = NULL;
 
@@ -100,8 +100,7 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
 }
 #endif
 
-PyObject* _Nullable
-PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
+PyObject* _Nullable PyObjCCFType_New(char* name, char* encoding, CFTypeID typeID)
 {
     PyObject*          args;
     PyObject*          dict;
@@ -263,10 +262,9 @@ PyObjCCFType_Setup(void)
  * object. Such objects are sometimes used in CoreFoundation
  * (sadly enough).
  */
-PyObject* _Nullable
-PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* datum)
+PyObject* _Nullable PyObjCCF_NewSpecialFromTypeEncoding(char* typestr, void* datum)
 {
-    PyObject* v    = PyDict_GetItemStringWithError(PyObjC_TypeStr2CFTypeID, typestr);
+    PyObject* v = PyDict_GetItemStringWithError(PyObjC_TypeStr2CFTypeID, typestr);
     CFTypeID typeid;
 
     if (v == NULL) {
@@ -319,7 +317,7 @@ PyObjCCF_NewSpecialFromTypeID(CFTypeID typeid, void* datum)
     }
 
     ((PyObjCObject*)rval)->objc_object = (id)datum;
-    ((PyObjCObject*)rval)->flags   = PyObjCObject_kDEFAULT
+    ((PyObjCObject*)rval)->flags       = PyObjCObject_kDEFAULT
                                    | PyObjCObject_kSHOULD_NOT_RELEASE
                                    | PyObjCObject_kMAGIC_COOKIE;
     return rval;

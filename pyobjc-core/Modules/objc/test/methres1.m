@@ -3,12 +3,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (MethodResolution1)
+@interface
+NSObject (MethodResolution1)
 - (id)oc_method1;
 - (id)ocmethod2;
 @end
 
-@implementation NSObject (MethodResolution1)
+@implementation
+NSObject (MethodResolution1)
 
 - (id)oc_method1
 {

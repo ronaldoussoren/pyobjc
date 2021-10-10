@@ -6,7 +6,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern int       PyObjC_SockAddrFromPython(PyObject*, void*);
+extern int PyObjC_SockAddrFromPython(PyObject*, void*);
 extern PyObject* _Nullable PyObjC_SockAddrToPython(void*);
 
 NS_ASSUME_NONNULL_END

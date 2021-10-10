@@ -34,7 +34,8 @@
  * the method  __pyobjc_PythonObject__, this helps to simplify
  * pythonify_c_value.
  */
-@interface NSObject (PyObjCSupport)
+@interface
+NSObject (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__;
 + (PyObject*)__pyobjc_PythonObject__;
 
@@ -42,7 +43,8 @@
 + (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
-@implementation NSObject (PyObjCSupport)
+@implementation
+NSObject (PyObjCSupport)
 
 - (PyObject*)__pyobjc_PythonObject__
 {
@@ -104,7 +106,8 @@
 
 @end /* PyObjCSupport */
 
-@interface NSProxy (PyObjCSupport)
+@interface
+NSProxy (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__;
 + (PyObject*)__pyobjc_PythonObject__;
 
@@ -112,7 +115,8 @@
 + (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
-@implementation NSProxy (PyObjCSupport)
+@implementation
+NSProxy (PyObjCSupport)
 
 - (PyObject*)__pyobjc_PythonObject__
 {
@@ -156,12 +160,14 @@
 }
 @end /* PyObjCSupport */
 
-@interface Protocol (PyObjCSupport)
+@interface
+Protocol (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__;
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
-@implementation Protocol (PyObjCSupport)
+@implementation
+Protocol (PyObjCSupport)
 
 - (PyObject*)__pyobjc_PythonObject__
 {
@@ -189,12 +195,14 @@
 @end /* PyObjCSupport */
 
 #if PyObjC_BUILD_RELEASE < 1008 || !defined(__LP64__)
-@interface Object (PyObjCSupport)
+@interface
+Object (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__;
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
-@implementation Object (PyObjCSupport)
+@implementation
+Object (PyObjCSupport)
 
 - (PyObject*)__pyobjc_PythonObject__
 {
@@ -224,12 +232,14 @@
 @end /* PyObjCSupport */
 #endif
 
-@interface NSString (PyObjCSupport)
+@interface
+NSString (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__;
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSString (PyObjCSupport) */
 
-@implementation NSString (PyObjCSupport)
+@implementation
+NSString (PyObjCSupport)
 
 - (PyObject*)__pyobjc_PythonObject__
 {
@@ -245,12 +255,14 @@
 
 @end /* NSString (PyObjCSupport) */
 
-@interface NSNumber (PyObjCSupport)
+@interface
+NSNumber (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__;
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSNumber (PyObjCSupport) */
 
-@implementation NSNumber (PyObjCSupport)
+@implementation
+NSNumber (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__
 {
     PyObject* rval;
@@ -270,8 +282,9 @@
         if (PyObjC_NSNumberWrapper && rval) {
             PyObject* val = rval;
 
-            PyObject* args[2] = { NULL, val };
-            rval = PyObject_Vectorcall(PyObjC_NSNumberWrapper, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* args[2] = {NULL, val};
+            rval              = PyObject_Vectorcall(PyObjC_NSNumberWrapper, args + 1,
+                                                    1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(val);
         }
     }
@@ -285,12 +298,14 @@
 }
 @end
 
-@interface NSDecimalNumber (PyObjCSupport)
+@interface
+NSDecimalNumber (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__;
 - (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSDecimalNumber (PyObjCSupport) */
 
-@implementation NSDecimalNumber (PyObjCSupport)
+@implementation
+NSDecimalNumber (PyObjCSupport)
 - (PyObject*)__pyobjc_PythonObject__
 {
     PyObject* rval;
@@ -3069,7 +3084,6 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
         }
     }
 }
-
 
 PyObject*
 id_to_python(id obj)

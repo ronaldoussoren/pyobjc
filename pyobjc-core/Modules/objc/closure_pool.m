@@ -96,7 +96,7 @@ PyObjC_ffi_closure_alloc(size_t size, void** codeloc)
     }
     ffi_closure* result = (ffi_closure*)closure_freelist;
     closure_freelist    = closure_freelist->next;
-    *codeloc = (void*)result;
+    *codeloc            = (void*)result;
     return result;
 }
 
@@ -108,4 +108,5 @@ PyObjC_ffi_closure_free(ffi_closure* cl)
     return 0;
 }
 
-#endif /* defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15 */
+#endif /* defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15  \
+        */

@@ -30,8 +30,7 @@ makeStringArray(void)
     return result;
 }
 
-static int* _Nullable
-makeIntArrayOf_(int count)
+static int* _Nullable makeIntArrayOf_(int count)
 {
     static int* result = NULL;
     int         i;
@@ -49,26 +48,16 @@ makeIntArrayOf_(int count)
     return result;
 }
 
-static int* _Nullable
-nullIntArrayOf5(void)
+static int* _Nullable nullIntArrayOf5(void) { return NULL; }
+
+static char** _Nullable nullStringArray(void) { return NULL; }
+
+static int* _Nullable nullIntArrayOf_(int count __attribute__((__unused__)))
 {
     return NULL;
 }
 
-static char** _Nullable
-nullStringArray(void)
-{
-    return NULL;
-}
-
-static int* _Nullable
-nullIntArrayOf_(int count __attribute__((__unused__)))
-{
-    return NULL;
-}
-
-static NSArray* _Nullable
-makeIntArray_count_(int* data, unsigned count)
+static NSArray* _Nullable makeIntArray_count_(int* data, unsigned count)
 {
     NSMutableArray* array;
     unsigned        i;
@@ -81,8 +70,7 @@ makeIntArray_count_(int* data, unsigned count)
     return array;
 }
 
-static NSArray* _Nullable
-nullIntArray_count_(int* data, unsigned count)
+static NSArray* _Nullable nullIntArray_count_(int* data, unsigned count)
 {
     if (data) {
         return makeIntArray_count_(data, count);
@@ -91,14 +79,12 @@ nullIntArray_count_(int* data, unsigned count)
     }
 }
 
-static NSArray* _Nullable
-makeIntArray_countPtr_(int* data, unsigned* countPtr)
+static NSArray* _Nullable makeIntArray_countPtr_(int* data, unsigned* countPtr)
 {
     return makeIntArray_count_(data, *countPtr);
 }
 
-static NSArray* _Nullable
-make4Tuple_(double* data)
+static NSArray* _Nullable make4Tuple_(double* data)
 {
     NSMutableArray* array;
     unsigned        i;
@@ -111,8 +97,7 @@ make4Tuple_(double* data)
     return array;
 }
 
-static NSArray* _Nullable
-null4Tuple_(double* data)
+static NSArray* _Nullable null4Tuple_(double* data)
 {
     if (data) {
         return make4Tuple_(data);
@@ -121,8 +106,7 @@ null4Tuple_(double* data)
     }
 }
 
-static NSArray* _Nullable
-makeStringArray_(char** data)
+static NSArray* _Nullable makeStringArray_(char** data)
 {
     NSMutableArray* array;
 
@@ -130,7 +114,8 @@ makeStringArray_(char** data)
 
     while (*data != NULL) {
         NSObject* val = [NSString stringWithUTF8String:*data];
-        if (val == NULL) continue;
+        if (val == NULL)
+            continue;
 
         [array addObject:val];
         data++;
@@ -138,8 +123,7 @@ makeStringArray_(char** data)
     return array;
 }
 
-static NSArray* _Nullable
-nullStringArray_(char** data)
+static NSArray* _Nullable nullStringArray_(char** data)
 {
     if (data) {
         return makeStringArray_(data);
@@ -148,8 +132,7 @@ nullStringArray_(char** data)
     }
 }
 
-static NSArray* _Nullable
-makeObjectArray_(id* data)
+static NSArray* _Nullable makeObjectArray_(id* data)
 {
     NSMutableArray* array;
 
@@ -308,8 +291,7 @@ swapX_andY_(double* x, double* y)
     *y       = t;
 }
 
-static NSArray* _Nullable
-input_output_inputAndOutput_(int* x, int* y, int* z)
+static NSArray* _Nullable input_output_inputAndOutput_(int* x, int* y, int* z)
 {
     char            buf[64];
     NSString*       value;
@@ -317,17 +299,20 @@ input_output_inputAndOutput_(int* x, int* y, int* z)
 
     snprintf(buf, sizeof(buf), "%p", x);
     value = [NSString stringWithUTF8String:buf];
-    if (!value) return NULL;
+    if (!value)
+        return NULL;
     [result addObject:value];
 
     snprintf(buf, sizeof(buf), "%p", y);
     value = [NSString stringWithUTF8String:buf];
-    if (!value) return NULL;
+    if (!value)
+        return NULL;
     [result addObject:value];
 
     snprintf(buf, sizeof(buf), "%p", z);
     value = [NSString stringWithUTF8String:buf];
-    if (!value) return NULL;
+    if (!value)
+        return NULL;
     [result addObject:value];
 
     if (y) {
@@ -395,8 +380,7 @@ maybeReverseArray_(short* data)
     return 2;
 }
 
-static NSArray*
-__attribute__((__format__ (__NSString__, 1, 2)))
+static NSArray* __attribute__((__format__(__NSString__, 1, 2)))
 makeArrayWithFormat_(NSString* fmt, ...)
 {
     va_list ap;
@@ -413,17 +397,16 @@ makeArrayWithFormat_(NSString* fmt, ...)
     return [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
 }
 
-#pragma GCC diagnostic push
+#pragma GCC diagnostic   push
 #pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic   ignored "-Wformat-nonliteral"
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
-static NSArray* _Nullable
-__attribute__((__format__ (__printf__, 1, 2)))
+static NSArray* _Nullable __attribute__((__format__(__printf__, 1, 2)))
 makeArrayWithCFormat_(char* fmt, ...)
 {
-    va_list ap;
-    char    buffer[2048];
+    va_list   ap;
+    char      buffer[2048];
     NSString* a1;
     NSString* a2;
 
@@ -432,13 +415,15 @@ makeArrayWithCFormat_(char* fmt, ...)
     va_end(ap);
 
     a1 = [NSString stringWithUTF8String:fmt];
-    if (!a1) return NULL;
+    if (!a1)
+        return NULL;
     a2 = [NSString stringWithUTF8String:buffer];
-    if (!a2) return NULL;
+    if (!a2)
+        return NULL;
     return [NSArray arrayWithObjects:a1, a2, NULL];
 }
 
-#pragma GCC diagnostic pop
+#pragma GCC diagnostic   pop
 #pragma clang diagnostic pop
 
 static int

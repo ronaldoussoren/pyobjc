@@ -1,6 +1,6 @@
 static PyObject*
 call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
-                                      PyObject*const* arguments, size_t nargs)
+                                      PyObject* const* arguments, size_t nargs)
 {
     PyObject*         result;
     struct objc_super super;
@@ -39,9 +39,7 @@ call_NSView_getRectsBeingDrawn_count_(PyObject* method, PyObject* self,
     if (PyErr_Occurred())
         return NULL;
 
-    v = PyObjC_CArrayToPython(
-        "{_NSRect={_NSPoint=dd}{_NSSize=dd}}",
-        rects, count);
+    v = PyObjC_CArrayToPython("{_NSRect={_NSPoint=dd}{_NSSize=dd}}", rects, count);
     if (v == NULL)
         return NULL;
 

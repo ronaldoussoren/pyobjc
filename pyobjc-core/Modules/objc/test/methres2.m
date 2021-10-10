@@ -3,12 +3,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSURL (MethodResolution2)
+@interface
+NSURL (MethodResolution2)
 - (id)oc_method1;
 - (id)ocmethod2;
 @end
 
-@implementation NSURL (MethodResolution2)
+@implementation
+NSURL (MethodResolution2)
 
 - (id)oc_method1
 {

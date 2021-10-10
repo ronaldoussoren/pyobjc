@@ -3,8 +3,8 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#import <MetricKit/MetricKit.h>
 #import <Foundation/Foundation.h>
+#import <MetricKit/MetricKit.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
@@ -17,15 +17,7 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_MetricKit",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_MetricKit", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__MetricKit(void);
 
@@ -33,7 +25,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__MetricKit(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

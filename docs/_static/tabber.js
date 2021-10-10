@@ -89,7 +89,7 @@ tabberObj.prototype.init = function(e) {
             aId      = aId.replace(/<tabnumberzero>/gi, i);
             aId      = aId.replace(/<tabnumberone>/gi, i + 1);
             aId      = aId.replace(/<tabtitle>/gi,
-                              t.headingText.replace(/[^a-zA-Z0-9\-]/gi, ''));
+                                   t.headingText.replace(/[^a-zA-Z0-9\-]/gi, ''));
             DOM_a.id = aId;
         }
         DOM_li.appendChild(DOM_a);

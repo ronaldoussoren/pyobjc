@@ -14,7 +14,8 @@ extern PyObject* PyObjCExc_UnknownPointerError;
 extern PyObject* PyObjCExc_DeprecationWarning;
 extern PyObject* PyObjCExc_ObjCPointerWarning;
 
-extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args, size_t nargsf);
+extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args,
+                                size_t nargsf);
 extern int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames);
 
 extern PyObject* PyObjC_MakeCVoidP(void* ptr);
@@ -101,7 +102,6 @@ align(Py_ssize_t offset, Py_ssize_t alignment)
         (op) = _py_val;                                                                  \
         Py_XDECREF(_py_tmp);                                                             \
     } while (0)
-
 
 extern PyObject* PyObjCNM_insert;
 extern PyObject* PyObjCNM_append;

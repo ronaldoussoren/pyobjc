@@ -93,10 +93,10 @@ error:
 
 #endif
 
-
 int
 PyObjC_setup_simple_methods(void)
 {
-//    if (PyObjC_RegisterSignatureMapping("v@:", call_void__noargs, imp_void__noargs) == -1) return -1;
+    //    if (PyObjC_RegisterSignatureMapping("v@:", call_void__noargs, imp_void__noargs)
+    //    == -1) return -1;
     return 0;
 }

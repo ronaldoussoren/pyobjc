@@ -9,9 +9,9 @@
 
 #include <ctype.h>
 #include <netinet/in.h>
-#include <sys/un.h>
 #include <stddef.h>
 #include <sys/socket.h>
+#include <sys/un.h>
 
 #import <Foundation/NSAutoreleasePool.h>
 #import <Foundation/NSBundle.h>
@@ -32,8 +32,6 @@ PyObject* PyObjCClass_DefaultModule = NULL;
 PyObject* PyObjC_TypeStr2CFTypeID = NULL;
 
 static NSAutoreleasePool* global_release_pool = nil;
-
-
 
 /* Calculate the current version of macOS in a format that
  * can be compared with MAC_OS_VERSION_X_... constants
@@ -120,7 +118,7 @@ calc_current_version(void)
 + (void)newAutoreleasePool
 {
     OC_NSAutoreleasePoolCollector* value = [[self alloc] init];
-    global_release_pool = [[NSAutoreleasePool alloc] init];
+    global_release_pool                  = [[NSAutoreleasePool alloc] init];
     (void)[value autorelease];
 }
 
@@ -1685,8 +1683,9 @@ PyObjC_callable_docstr_get(PyObject* callable, void* closure __attribute__((__un
         Py_INCREF(Py_None);
         return Py_None;
     }
-    PyObject* args[2] = { NULL, callable };
-    return PyObject_Vectorcall(PyObjC_CallableDocFunction, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* args[2] = {NULL, callable};
+    return PyObject_Vectorcall(PyObjC_CallableDocFunction, args + 1,
+                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
 PyObject*
@@ -1698,8 +1697,9 @@ PyObjC_callable_signature_get(PyObject* callable,
         Py_INCREF(Py_None);
         return Py_None;
     }
-    PyObject* args[2] = { NULL, callable };
-    return PyObject_Vectorcall(PyObjC_CallableSignatureFunction, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+    PyObject* args[2] = {NULL, callable};
+    return PyObject_Vectorcall(PyObjC_CallableSignatureFunction, args + 1,
+                               1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
 static PyObject*
@@ -1785,10 +1785,11 @@ done:
 
 #if PyObjC_BUILD_RELEASE >= 1100
 static PyObject*
-mod_dyld_shared_cache_contains_path(PyObject* mod __attribute__((__unused__)), PyObject* object)
+mod_dyld_shared_cache_contains_path(PyObject* mod __attribute__((__unused__)),
+                                    PyObject* object)
 {
     if (@available(macOS 10.16, *)) {
- 	if (!PyUnicode_Check(object)) {
+        if (!PyUnicode_Check(object)) {
             PyErr_SetString(PyExc_TypeError, "Expecting a string");
             return NULL;
         }
@@ -1800,7 +1801,8 @@ mod_dyld_shared_cache_contains_path(PyObject* mod __attribute__((__unused__)), P
         int result = _dyld_shared_cache_contains_path(path);
         return PyBool_FromLong(result);
     } else {
-        PyErr_SetString(PyExc_NotImplementedError, "_dyld_shared_cache_contains_path not available");
+        PyErr_SetString(PyExc_NotImplementedError,
+                        "_dyld_shared_cache_contains_path not available");
         return NULL;
     }
 }
@@ -1812,7 +1814,7 @@ static PyMethodDef mod_methods[] = {
         .ml_meth  = (PyCFunction)mod_propertiesForClass,
         .ml_flags = METH_O,
         .ml_doc   = "propertiesForClass(classObject)\n" CLINIC_SEP "\n"
-                  "Return information about properties from the runtime",
+                    "Return information about properties from the runtime",
     },
     {.ml_name  = "splitSignature",
      .ml_meth  = (PyCFunction)objc_splitSignature,
@@ -2084,116 +2086,107 @@ struct objc_typestr_values {
 
 struct objc_typestr_long_values {
     char* name;
-    char*  value;
-} objc_typestr_long_values[] = {
-   { "_C_CFTYPEID", @encode(CFTypeID) },
-   { "_C_NSInteger", @encode(NSInteger) },
-   { "_C_NSUInteger", @encode(NSUInteger) },
-   { "_C_CFIndex", @encode(CFIndex) },
-   { "_C_CGFloat", @encode(CGFloat) },
-   { "_C_FSRef", @encode(FSRef) },
-   { "_sockaddr_type", @encode(struct sockaddr) },
-   {NULL, 0}
-};
+    char* value;
+} objc_typestr_long_values[] = {{"_C_CFTYPEID", @encode(CFTypeID)},
+                                {"_C_NSInteger", @encode(NSInteger)},
+                                {"_C_NSUInteger", @encode(NSUInteger)},
+                                {"_C_CFIndex", @encode(CFIndex)},
+                                {"_C_CGFloat", @encode(CGFloat)},
+                                {"_C_FSRef", @encode(FSRef)},
+                                {"_sockaddr_type", @encode(struct sockaddr)},
+                                {NULL, 0}};
 
 struct objc_int_values {
     char* name;
     long  value;
 } objc_int_values[] = {
     // { "NAME", value },
-    { "MAC_OS_X_VERSION_MAX_ALLOWED", MAC_OS_X_VERSION_MAX_ALLOWED },
-    { "MAC_OS_X_VERSION_MIN_REQUIRED", MAC_OS_X_VERSION_MIN_REQUIRED },
-    { "MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0 },
-    { "MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1 },
-    { "MAC_OS_X_VERSION_10_2", MAC_OS_X_VERSION_10_2 },
-    { "MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3 },
-    { "MAC_OS_X_VERSION_10_4", MAC_OS_X_VERSION_10_4 },
-    { "MAC_OS_X_VERSION_10_5", MAC_OS_X_VERSION_10_5 },
-    { "MAC_OS_X_VERSION_10_6", MAC_OS_X_VERSION_10_6 },
-    { "MAC_OS_X_VERSION_10_7", MAC_OS_X_VERSION_10_7 },
-    { "MAC_OS_X_VERSION_10_8", MAC_OS_X_VERSION_10_8 },
-    { "MAC_OS_X_VERSION_10_9", MAC_OS_X_VERSION_10_9 },
-    { "MAC_OS_X_VERSION_10_10", MAC_OS_X_VERSION_10_10 },
-    { "MAC_OS_X_VERSION_10_10_2", MAC_OS_X_VERSION_10_10_2 },
-    { "MAC_OS_X_VERSION_10_10_3", MAC_OS_X_VERSION_10_10_3 },
-    { "MAC_OS_X_VERSION_10_11", MAC_OS_X_VERSION_10_11 },
-    { "MAC_OS_X_VERSION_10_11_2", MAC_OS_X_VERSION_10_11_2 },
-    { "MAC_OS_X_VERSION_10_11_3", MAC_OS_X_VERSION_10_11_3 },
-    { "MAC_OS_X_VERSION_10_11_4", MAC_OS_X_VERSION_10_11_4 },
-    { "MAC_OS_X_VERSION_10_12", MAC_OS_X_VERSION_10_12 },
-    { "MAC_OS_X_VERSION_10_12_1", MAC_OS_X_VERSION_10_12_1 },
-    { "MAC_OS_X_VERSION_10_12_2", MAC_OS_X_VERSION_10_12_2 },
-    { "MAC_OS_X_VERSION_10_12_4", MAC_OS_X_VERSION_10_12_4 },
-    { "MAC_OS_X_VERSION_10_13", MAC_OS_X_VERSION_10_13 },
-    { "MAC_OS_X_VERSION_10_13_1", MAC_OS_X_VERSION_10_13_1 },
-    { "MAC_OS_X_VERSION_10_13_2", MAC_OS_X_VERSION_10_13_2 },
-    { "MAC_OS_X_VERSION_10_13_3", MAC_OS_X_VERSION_10_13_3 },
-    { "MAC_OS_X_VERSION_10_13_4", MAC_OS_X_VERSION_10_13_4 },
-    { "MAC_OS_X_VERSION_10_13_5", MAC_OS_X_VERSION_10_13_5 },
-    { "MAC_OS_X_VERSION_10_13_6", MAC_OS_X_VERSION_10_13_6 },
-    { "MAC_OS_X_VERSION_10_14", MAC_OS_X_VERSION_10_14 },
-    { "MAC_OS_X_VERSION_10_14_1", MAC_OS_X_VERSION_10_14_1 },
-    { "MAC_OS_X_VERSION_10_14_2", MAC_OS_X_VERSION_10_14_2 },
-    { "MAC_OS_X_VERSION_10_14_3", MAC_OS_X_VERSION_10_14_3 },
-    { "MAC_OS_X_VERSION_10_14_4", MAC_OS_X_VERSION_10_14_4 },
-    { "MAC_OS_X_VERSION_10_14_5", MAC_OS_X_VERSION_10_14_5 },
-    { "MAC_OS_X_VERSION_10_14_6", MAC_OS_X_VERSION_10_14_6 },
-    { "MAC_OS_X_VERSION_10_15", MAC_OS_X_VERSION_10_15 },
-    { "MAC_OS_X_VERSION_10_15_1", MAC_OS_X_VERSION_10_15_1 },
-    { "MAC_OS_X_VERSION_10_15_2", MAC_OS_X_VERSION_10_15_2 },
-    { "MAC_OS_X_VERSION_10_15_3", MAC_OS_X_VERSION_10_15_3 },
-    { "MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_4 },
-    { "MAC_OS_X_VERSION_10_15_5", MAC_OS_X_VERSION_10_15_5 },
-    { "MAC_OS_X_VERSION_10_15_6", MAC_OS_X_VERSION_10_15_6 },
-    { "MAC_OS_X_VERSION_10_16", MAC_OS_X_VERSION_10_16 },
-    { "MAC_OS_X_VERSION_11_0", MAC_OS_X_VERSION_11_0 },
-    { "MAC_OS_X_VERSION_11_1", MAC_OS_X_VERSION_11_1 },
-    { "MAC_OS_X_VERSION_11_2", MAC_OS_X_VERSION_11_2 },
-    { "MAC_OS_X_VERSION_11_3", MAC_OS_X_VERSION_11_3 },
-    { "MAC_OS_X_VERSION_11_4", MAC_OS_X_VERSION_11_4 },
-    { "MAC_OS_X_VERSION_11_5", MAC_OS_X_VERSION_11_5 },
-    { "MAC_OS_X_VERSION_11_6", MAC_OS_X_VERSION_11_6 },
-    { "MAC_OS_X_VERSION_12_0", MAC_OS_X_VERSION_12_0 },
-    { "PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE },
-    { "_NSNotFound", NSNotFound },
-    { "OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN },
-    { "OBJC_ASSOCIATION_RETAIN_NONATOMIC", OBJC_ASSOCIATION_RETAIN_NONATOMIC },
-    { "OBJC_ASSOCIATION_COPY_NONATOMIC", OBJC_ASSOCIATION_COPY_NONATOMIC },
-    { "OBJC_ASSOCIATION_RETAIN", OBJC_ASSOCIATION_RETAIN },
-    { "OBJC_ASSOCIATION_COPY", OBJC_ASSOCIATION_COPY },
-    { "_size_sockaddr_ip4", sizeof(struct sockaddr_in) },
-    { "_size_sockaddr_ip6", sizeof(struct sockaddr_in6) },
-    { "_size_sockaddr_un", sizeof(struct sockaddr_un) },
-    { "_size_sockaddr", sizeof(struct sockaddr) },
-    { NULL, 0 }
-};
+    {"MAC_OS_X_VERSION_MAX_ALLOWED", MAC_OS_X_VERSION_MAX_ALLOWED},
+    {"MAC_OS_X_VERSION_MIN_REQUIRED", MAC_OS_X_VERSION_MIN_REQUIRED},
+    {"MAC_OS_X_VERSION_10_0", MAC_OS_X_VERSION_10_0},
+    {"MAC_OS_X_VERSION_10_1", MAC_OS_X_VERSION_10_1},
+    {"MAC_OS_X_VERSION_10_2", MAC_OS_X_VERSION_10_2},
+    {"MAC_OS_X_VERSION_10_3", MAC_OS_X_VERSION_10_3},
+    {"MAC_OS_X_VERSION_10_4", MAC_OS_X_VERSION_10_4},
+    {"MAC_OS_X_VERSION_10_5", MAC_OS_X_VERSION_10_5},
+    {"MAC_OS_X_VERSION_10_6", MAC_OS_X_VERSION_10_6},
+    {"MAC_OS_X_VERSION_10_7", MAC_OS_X_VERSION_10_7},
+    {"MAC_OS_X_VERSION_10_8", MAC_OS_X_VERSION_10_8},
+    {"MAC_OS_X_VERSION_10_9", MAC_OS_X_VERSION_10_9},
+    {"MAC_OS_X_VERSION_10_10", MAC_OS_X_VERSION_10_10},
+    {"MAC_OS_X_VERSION_10_10_2", MAC_OS_X_VERSION_10_10_2},
+    {"MAC_OS_X_VERSION_10_10_3", MAC_OS_X_VERSION_10_10_3},
+    {"MAC_OS_X_VERSION_10_11", MAC_OS_X_VERSION_10_11},
+    {"MAC_OS_X_VERSION_10_11_2", MAC_OS_X_VERSION_10_11_2},
+    {"MAC_OS_X_VERSION_10_11_3", MAC_OS_X_VERSION_10_11_3},
+    {"MAC_OS_X_VERSION_10_11_4", MAC_OS_X_VERSION_10_11_4},
+    {"MAC_OS_X_VERSION_10_12", MAC_OS_X_VERSION_10_12},
+    {"MAC_OS_X_VERSION_10_12_1", MAC_OS_X_VERSION_10_12_1},
+    {"MAC_OS_X_VERSION_10_12_2", MAC_OS_X_VERSION_10_12_2},
+    {"MAC_OS_X_VERSION_10_12_4", MAC_OS_X_VERSION_10_12_4},
+    {"MAC_OS_X_VERSION_10_13", MAC_OS_X_VERSION_10_13},
+    {"MAC_OS_X_VERSION_10_13_1", MAC_OS_X_VERSION_10_13_1},
+    {"MAC_OS_X_VERSION_10_13_2", MAC_OS_X_VERSION_10_13_2},
+    {"MAC_OS_X_VERSION_10_13_3", MAC_OS_X_VERSION_10_13_3},
+    {"MAC_OS_X_VERSION_10_13_4", MAC_OS_X_VERSION_10_13_4},
+    {"MAC_OS_X_VERSION_10_13_5", MAC_OS_X_VERSION_10_13_5},
+    {"MAC_OS_X_VERSION_10_13_6", MAC_OS_X_VERSION_10_13_6},
+    {"MAC_OS_X_VERSION_10_14", MAC_OS_X_VERSION_10_14},
+    {"MAC_OS_X_VERSION_10_14_1", MAC_OS_X_VERSION_10_14_1},
+    {"MAC_OS_X_VERSION_10_14_2", MAC_OS_X_VERSION_10_14_2},
+    {"MAC_OS_X_VERSION_10_14_3", MAC_OS_X_VERSION_10_14_3},
+    {"MAC_OS_X_VERSION_10_14_4", MAC_OS_X_VERSION_10_14_4},
+    {"MAC_OS_X_VERSION_10_14_5", MAC_OS_X_VERSION_10_14_5},
+    {"MAC_OS_X_VERSION_10_14_6", MAC_OS_X_VERSION_10_14_6},
+    {"MAC_OS_X_VERSION_10_15", MAC_OS_X_VERSION_10_15},
+    {"MAC_OS_X_VERSION_10_15_1", MAC_OS_X_VERSION_10_15_1},
+    {"MAC_OS_X_VERSION_10_15_2", MAC_OS_X_VERSION_10_15_2},
+    {"MAC_OS_X_VERSION_10_15_3", MAC_OS_X_VERSION_10_15_3},
+    {"MAC_OS_X_VERSION_10_15_4", MAC_OS_X_VERSION_10_15_4},
+    {"MAC_OS_X_VERSION_10_15_5", MAC_OS_X_VERSION_10_15_5},
+    {"MAC_OS_X_VERSION_10_15_6", MAC_OS_X_VERSION_10_15_6},
+    {"MAC_OS_X_VERSION_10_16", MAC_OS_X_VERSION_10_16},
+    {"MAC_OS_X_VERSION_11_0", MAC_OS_X_VERSION_11_0},
+    {"MAC_OS_X_VERSION_11_1", MAC_OS_X_VERSION_11_1},
+    {"MAC_OS_X_VERSION_11_2", MAC_OS_X_VERSION_11_2},
+    {"MAC_OS_X_VERSION_11_3", MAC_OS_X_VERSION_11_3},
+    {"MAC_OS_X_VERSION_11_4", MAC_OS_X_VERSION_11_4},
+    {"MAC_OS_X_VERSION_11_5", MAC_OS_X_VERSION_11_5},
+    {"MAC_OS_X_VERSION_11_6", MAC_OS_X_VERSION_11_6},
+    {"MAC_OS_X_VERSION_12_0", MAC_OS_X_VERSION_12_0},
+    {"PyObjC_BUILD_RELEASE", PyObjC_BUILD_RELEASE},
+    {"_NSNotFound", NSNotFound},
+    {"OBJC_ASSOCIATION_ASSIGN", OBJC_ASSOCIATION_ASSIGN},
+    {"OBJC_ASSOCIATION_RETAIN_NONATOMIC", OBJC_ASSOCIATION_RETAIN_NONATOMIC},
+    {"OBJC_ASSOCIATION_COPY_NONATOMIC", OBJC_ASSOCIATION_COPY_NONATOMIC},
+    {"OBJC_ASSOCIATION_RETAIN", OBJC_ASSOCIATION_RETAIN},
+    {"OBJC_ASSOCIATION_COPY", OBJC_ASSOCIATION_COPY},
+    {"_size_sockaddr_ip4", sizeof(struct sockaddr_in)},
+    {"_size_sockaddr_ip6", sizeof(struct sockaddr_in6)},
+    {"_size_sockaddr_un", sizeof(struct sockaddr_un)},
+    {"_size_sockaddr", sizeof(struct sockaddr)},
+    {NULL, 0}};
 
 struct objc_float_values {
-    char* name;
-    double  value;
-} objc_float_values[] = {
-    { "_FLT_MIN", FLT_MIN },
-    { "_FLT_MAX", FLT_MAX },
-    { NULL, 0 }
-};
+    char*  name;
+    double value;
+} objc_float_values[] = {{"_FLT_MIN", FLT_MIN}, {"_FLT_MAX", FLT_MAX}, {NULL, 0}};
 
 struct objc_string_values {
     char* name;
     char* value;
-} objc_string_values[] = {
-    { "__version__", OBJC_VERSION },
-    { "platform", "MACOSX" },
+} objc_string_values[] = {{"__version__", OBJC_VERSION},
+                          {"platform", "MACOSX"},
 
 #if defined(__x86_64__)
-    { "arch", "x86_64" },
+                          {"arch", "x86_64"},
 #elif defined(__arm64__)
-    { "arch", "arm64" },
+                          {"arch", "arm64"},
 #else
-#   error "Unsupported CPU architecture"
+#error "Unsupported CPU architecture"
 #endif
 
-    { NULL, 0 }
-};
+                          {NULL, 0}};
 
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT, "_objc", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
@@ -2472,13 +2465,14 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         }
     }
 
-    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_CURRENT", calc_current_version()) < 0) {
+    if (PyModule_AddIntConstant(m, "MAC_OS_X_VERSION_CURRENT", calc_current_version())
+        < 0) {
         return NULL;
     }
 
     {
         struct objc_float_values* cur = objc_float_values;
-        PyObject* t = PyFloat_FromDouble(cur->value);
+        PyObject*                 t   = PyFloat_FromDouble(cur->value);
         if (t == NULL) {
             return NULL;
         }
@@ -2527,11 +2521,7 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         }
     }
 
-
     PyObjCPointerWrapper_Init();
-
-
-
 
     /* Issue #298, at least in Xcode 11.3 the following code results in
      * a type encoding of "^{NSObject=#}" instead of "@" for the property:

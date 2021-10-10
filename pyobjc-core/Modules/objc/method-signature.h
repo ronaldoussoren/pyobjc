@@ -10,11 +10,12 @@ enum _PyObjC_PointerType
 #if __has_feature(objc_fixed_enum)
     : unsigned char
 #endif /* __has_feature(objc_fixed_enum) */
-{ PyObjC_kPointerPlain        = 0,
-  PyObjC_kNullTerminatedArray = 1,
-  PyObjC_kArrayCountInArg     = 2,
-  PyObjC_kFixedLengthArray    = 3,
-  PyObjC_kVariableLengthArray = 4,
+{
+    PyObjC_kPointerPlain        = 0,
+    PyObjC_kNullTerminatedArray = 1,
+    PyObjC_kArrayCountInArg     = 2,
+    PyObjC_kFixedLengthArray    = 3,
+    PyObjC_kVariableLengthArray = 4,
 };
 
 typedef struct _PyObjCMethodSignature PyObjCMethodSignature;
@@ -38,7 +39,7 @@ struct _PyObjC_ArgDescr {
     unsigned int             alreadyRetained : 1;
     unsigned int             alreadyCFRetained : 1;
     unsigned int
-                 callableRetained : 1; /* False iff the closure can be cleaned up after the call */
+        callableRetained : 1; /* False iff the closure can be cleaned up after the call */
     unsigned int tmpl : 1;
 };
 

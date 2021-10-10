@@ -11,22 +11,13 @@
  */
 #include "_CoreMIDI_protocols.m"
 
-
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
 };
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_CoreMIDI",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_CoreMIDI", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__CoreMIDI(void);
 
@@ -34,7 +25,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__CoreMIDI(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     return m;
 }

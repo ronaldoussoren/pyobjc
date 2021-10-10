@@ -214,33 +214,32 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
 
     for (i = 0; i < Py_SIZE(methinfo); i++) {
         switch (*methinfo->argtype[i]->type) {
-            /* Pointer-like return values aren't "simple" */
-            case _C_CONST:
-            case _C_OUT:
-            case _C_IN:
-            case _C_INOUT:
-            case _C_PTR:
-            case _C_CHARPTR:
-                return 0;
-
-            case _C_ID:
-                if (methinfo->argtype[i]->type[1] == '?') {
-                    /* Blocks are not simple */
-                    return 0;
-                }
-        }
-    }
-
-    switch (*methinfo->rettype->type) {
         /* Pointer-like return values aren't "simple" */
+        case _C_CONST:
         case _C_OUT:
         case _C_IN:
         case _C_INOUT:
         case _C_PTR:
         case _C_CHARPTR:
             return 0;
+
+        case _C_ID:
+            if (methinfo->argtype[i]->type[1] == '?') {
+                /* Blocks are not simple */
+                return 0;
+            }
+        }
     }
 
+    switch (*methinfo->rettype->type) {
+    /* Pointer-like return values aren't "simple" */
+    case _C_OUT:
+    case _C_IN:
+    case _C_INOUT:
+    case _C_PTR:
+    case _C_CHARPTR:
+        return 0;
+    }
 
     if (Py_SIZE(methinfo) > MAX_ARGCOUNT_SIMPLE) {
         return 0;
@@ -438,26 +437,26 @@ new_methodsignature(const char* signature)
     cur = PyObjCRT_SkipTypeQualifiers(retval->signature);
     PyObjC_Assert(cur != NULL, NULL);
     if (unlikely(cur[0] == _C_ID && cur[1] == _C_UNDEF)) {
-        retval->rettype = (__typeof__(retval->rettype)) & block_template;
+        retval->rettype = (__typeof__(retval->rettype))&block_template;
     } else if (unlikely(cur[0] == _C_PTR)) {
         retval->rettype =
-            (__typeof__(retval->rettype)) & ptr_templates[*(unsigned char*)(cur + 1)];
+            (__typeof__(retval->rettype))&ptr_templates[*(unsigned char*)(cur + 1)];
 
     } else if (unlikely(cur[0] == _C_IN && cur[1] == _C_PTR)) {
         retval->rettype =
-            (__typeof__(retval->rettype)) & ptr_in_templates[*(unsigned char*)(cur + 2)];
+            (__typeof__(retval->rettype))&ptr_in_templates[*(unsigned char*)(cur + 2)];
 
     } else if (unlikely(cur[0] == _C_OUT && cur[1] == _C_PTR)) {
         retval->rettype =
-            (__typeof__(retval->rettype)) & ptr_out_templates[*(unsigned char*)(cur + 2)];
+            (__typeof__(retval->rettype))&ptr_out_templates[*(unsigned char*)(cur + 2)];
 
     } else if (unlikely(cur[0] == _C_INOUT && cur[1] == _C_PTR)) {
-        retval->rettype = (__typeof__(retval->rettype))
-                          & ptr_inout_templates[*(unsigned char*)(cur + 2)];
+        retval->rettype =
+            (__typeof__(retval->rettype))&ptr_inout_templates[*(unsigned char*)(cur + 2)];
 
     } else {
         retval->rettype =
-            (__typeof__(retval->rettype)) & descr_templates[*(unsigned char*)(cur)];
+            (__typeof__(retval->rettype))&descr_templates[*(unsigned char*)(cur)];
     }
 
     if (unlikely(retval->rettype->type == NULL)) {
@@ -487,11 +486,11 @@ new_methodsignature(const char* signature)
             cur++;
         }
         if (unlikely(cur[0] == _C_ID && cur[1] == _C_UNDEF)) {
-            retval->argtype[nargs] =
-                (__typeof__(retval->argtype[nargs])) & block_template;
+            retval->argtype[nargs] = (__typeof__(retval->argtype[nargs]))&block_template;
         } else {
-            retval->argtype[nargs] = (__typeof__(retval->argtype[nargs]))
-                                     & descr_templates[*(unsigned char*)cur];
+            retval->argtype[nargs] =
+                (__typeof__(retval
+                                ->argtype[nargs]))&descr_templates[*(unsigned char*)cur];
         }
         if (unlikely(retval->argtype[nargs]->type == NULL)) {
             retval->argtype[nargs] = alloc_descr(NULL);

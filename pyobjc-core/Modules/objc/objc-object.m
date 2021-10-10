@@ -89,8 +89,9 @@ object_repr(PyObject* _self)
          * Don't call 'description' for uninitialized objects, that
          * is undefined behaviour and will crash the interpreter sometimes.
          */
-        PyObject* args[2] = { NULL, (PyObject*)self };
-        res = PyObject_VectorcallMethod(PyObjCNM_description, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* args[2] = {NULL, (PyObject*)self};
+        res               = PyObject_VectorcallMethod(PyObjCNM_description, args + 1,
+                                                      1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         if (res == NULL) {
             PyErr_Clear();
         } else {
@@ -166,8 +167,7 @@ object_dealloc(PyObject* obj)
                     NSLog(@"PyObjC: Exception during dealloc of proxy: %@",
                           localException);
                 }
-            Py_END_ALLOW_THREADS((PyObjCObject*)obj)
-            ->objc_object = nil;
+                Py_END_ALLOW_THREADS((PyObjCObject*)obj)->objc_object = nil;
         }
     }
 
@@ -218,14 +218,14 @@ object_verify_type(PyObject* obj)
                 return -1;
             }
 
-            /* XXX: The correct way to do this is calling ``setattr(obj, "__class__", tp)``
-             * Investigate the impact of that. Performance shouldn't be an issue here,
-             * a isa change should not happen often.
+            /* XXX: The correct way to do this is calling ``setattr(obj, "__class__",
+             * tp)`` Investigate the impact of that. Performance shouldn't be an issue
+             * here, a isa change should not happen often.
              *
-             * XXX2: the setattr call above works from Python, which is confusing behaviour
-             *       (it changes the class of the proxy, not the ISA)
+             * XXX2: the setattr call above works from Python, which is confusing
+             * behaviour (it changes the class of the proxy, not the ISA)
              */
-            tmp          = Py_TYPE(obj);
+            tmp = Py_TYPE(obj);
             Py_SET_TYPE(obj, tp);
             Py_INCREF(tp);
             Py_DECREF(tmp);
@@ -310,8 +310,8 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
 {
     Py_ssize_t i, n;
     PyObject * mro, *base, *dict;
-    PyObject* first_class = NULL;
-    PyObject*  descr = NULL;
+    PyObject*  first_class = NULL;
+    PyObject*  descr       = NULL;
     PyObject*  res;
     SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
 
@@ -362,7 +362,8 @@ _type_lookup(PyTypeObject* tp, PyObject* name)
             return NULL;
         } else if (descr != NULL) {
             if (first_class != NULL) {
-                if (PyObjCClass_AddToLookupCache((PyTypeObject*)first_class, name, descr) == -1) {
+                if (PyObjCClass_AddToLookupCache((PyTypeObject*)first_class, name, descr)
+                    == -1) {
                     PyErr_Clear();
                 }
             }
@@ -975,11 +976,12 @@ meth_dir(PyObject* self)
         for (i = 0; i < method_count; i++) {
             char*     name;
             PyObject* item;
-            SEL sel;
+            SEL       sel;
 
             /* Check if the selector should be hidden */
             sel = method_getName(methods[i]);
-            if (sel == NULL) continue;
+            if (sel == NULL)
+                continue;
 
             if (PyObjCClass_HiddenSelector((PyObject*)Py_TYPE(self), sel, NO)) {
                 continue;

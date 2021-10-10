@@ -8,12 +8,12 @@
 
 #include "pyobjc.h"
 
+#include <arpa/inet.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/un.h>
-#include <arpa/inet.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,8 +48,7 @@ setup_exceptions(void)
     return 0;
 }
 
-static PyObject* _Nullable
-set_gaierror(int error)
+static PyObject* _Nullable set_gaierror(int error)
 {
     if (error == EAI_SYSTEM) {
         if (socket_error == NULL) {
@@ -75,8 +74,7 @@ set_gaierror(int error)
     return NULL;
 }
 
-static PyObject* _Nullable
-makeipaddr(struct sockaddr* addr, int addrlen)
+static PyObject* _Nullable makeipaddr(struct sockaddr* addr, int addrlen)
 {
     char buf[NI_MAXHOST];
     int  r;
@@ -121,7 +119,6 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
             siz = 16;
             break;
 
-
         default:
             freeaddrinfo(res);
             PyErr_SetString(socket_error, "unsupported address family");
@@ -157,15 +154,14 @@ setipaddr(char* name, struct sockaddr* addr_ret, size_t addr_ret_size, int af)
         && d4 <= 255) {
         struct sockaddr_in* sinaddr;
         sinaddr                  = (struct sockaddr_in*)addr_ret;
-        sinaddr->sin_addr.s_addr = htonl((d1 << 24) | (d2 << 16)
-                                         | (d3 << 8) | (d4 << 0));
+        sinaddr->sin_addr.s_addr = htonl((d1 << 24) | (d2 << 16) | (d3 << 8) | (d4 << 0));
         sinaddr->sin_family      = AF_INET;
         sinaddr->sin_len         = sizeof(*sinaddr);
         return 4;
     }
     memset(&hints, 0, sizeof(hints));
     hints.ai_family = af;
-    error = getaddrinfo(name, NULL, &hints, &res);
+    error           = getaddrinfo(name, NULL, &hints, &res);
     if (error) {
         set_gaierror(error);
         return -1;
@@ -247,7 +243,7 @@ PyObjC_SockAddrFromPython(PyObject* value, void* buffer)
             return -1;
         }
         /* XXX: Check for correctnless (NUL byte at end, embedded NUL?) */
-        if (len >= (Py_ssize_t)sizeof(addr->sun_path)-1) {
+        if (len >= (Py_ssize_t)sizeof(addr->sun_path) - 1) {
             PyErr_SetString(PyExc_OSError, "AF_UNIX path too long");
             Py_DECREF(value);
             return -1;

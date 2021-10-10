@@ -143,7 +143,7 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     ffi_type*              arglist[MAX_ARGCOUNT];
     void*                  values[MAX_ARGCOUNT];
     void*                  byref[MAX_ARGCOUNT]      = {0};
-    struct byref_attr      byref_attr[MAX_ARGCOUNT] = { BYREF_ATTR_INT };
+    struct byref_attr      byref_attr[MAX_ARGCOUNT] = {BYREF_ATTR_INT};
     ffi_cif                cif;
     PyObject*              retval;
 
@@ -240,16 +240,13 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 
 #ifdef __arm64__
     cif_arg_count = PyObjCFFI_ParseArguments(
-        signature, 1,
-        PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
+        signature, 1, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
         align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
             + sizeof(void*),
-        argbuf, argbuf_len, byref, byref_attr, arglist,
-        values);
+        argbuf, argbuf_len, byref, byref_attr, arglist, values);
 #else
     cif_arg_count = PyObjCFFI_ParseArguments(
-        signature, 1,
-        PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
+        signature, 1, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args),
         align(PyObjCRT_SizeOfReturnType(signature->rettype->type), sizeof(void*))
             + sizeof(void*),
         argbuf, argbuf_len, byref, byref_attr, useStret ? arglist + 1 : arglist,
@@ -268,15 +265,12 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
 
     if (signature->variadic) {
-        r = ffi_prep_cif_var(
-            &cif, FFI_DEFAULT_ABI, (int)Py_SIZE(signature), (int)cif_arg_count,
-            PyObjCFFI_Typestr2FFI(signature->rettype->type),
-            arglist);
+        r = ffi_prep_cif_var(&cif, FFI_DEFAULT_ABI, (int)Py_SIZE(signature),
+                             (int)cif_arg_count,
+                             PyObjCFFI_Typestr2FFI(signature->rettype->type), arglist);
     } else {
-        r = ffi_prep_cif(
-            &cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
-            PyObjCFFI_Typestr2FFI(signature->rettype->type),
-            arglist);
+        r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI, (int)cif_arg_count,
+                         PyObjCFFI_Typestr2FFI(signature->rettype->type), arglist);
     }
 #pragma clang diagnostic pop
 
@@ -293,18 +287,21 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     }
 
 #if PyObjC_BUILD_RELEASE >= 1015
-    if (@available(macOS 10.15,*)) {
+    if (@available(macOS 10.15, *)) {
         if (signature->variadic) {
             r = ffi_prep_cif_var(
-                &cif, FFI_DEFAULT_ABI, (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)),
+                &cif, FFI_DEFAULT_ABI,
+                (int)(useStret ? Py_SIZE(signature) + 1 : Py_SIZE(signature)),
                 (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
-                useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                useStret ? &ffi_type_void
+                         : PyObjCFFI_Typestr2FFI(signature->rettype->type),
                 arglist);
         } else {
-            r = ffi_prep_cif(
-                &cif, FFI_DEFAULT_ABI, (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
-                useStret ? &ffi_type_void : PyObjCFFI_Typestr2FFI(signature->rettype->type),
-                arglist);
+            r = ffi_prep_cif(&cif, FFI_DEFAULT_ABI,
+                             (int)(useStret ? cif_arg_count + 1 : cif_arg_count),
+                             useStret ? &ffi_type_void
+                                      : PyObjCFFI_Typestr2FFI(signature->rettype->type),
+                             arglist);
         }
     } else
 #endif
@@ -342,9 +339,8 @@ PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_ar
     }
 
 #ifdef __arm64__
-    retval =
-        PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr, byref_out_count,
-                              NULL, 0, values);
+    retval = PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr,
+                                   byref_out_count, NULL, 0, values);
 #else
     retval =
         PyObjCFFI_BuildResult(signature, 1, argbuf, byref, byref_attr, byref_out_count,

@@ -172,7 +172,8 @@
 + (NSArray*)fetchArray:(NSCoder*)coder;
 @end
 
-@interface NSObject (IKnowWhatImDoing)
+@interface
+NSObject (IKnowWhatImDoing)
 - call;
 @end
 

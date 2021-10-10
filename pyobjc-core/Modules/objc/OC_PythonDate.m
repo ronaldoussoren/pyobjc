@@ -143,12 +143,12 @@
         PyObjC_BEGIN_WITH_GIL
             PyObject* v;
 
-
-            PyObject* args[3] = { NULL, value, PyObjCNM_date_format_string };
+            PyObject* args[3] = {NULL, value, PyObjCNM_date_format_string};
             if (args[2] == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
-            v = PyObject_VectorcallMethod(PyObjCNM_strftime, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            v = PyObject_VectorcallMethod(PyObjCNM_strftime, args + 1,
+                                          2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 
             if (v == NULL) {
                 /* Raise ObjC exception */
@@ -186,9 +186,10 @@
                          (long)hours, (long)minutes);
                 args[2] = PyUnicode_FromString(buf);
                 if (args[2] == NULL) {
-                     PyObjC_GIL_FORWARD_EXC();
+                    PyObjC_GIL_FORWARD_EXC();
                 }
-                v = PyObject_VectorcallMethod(PyObjCNM_strftime, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+                v = PyObject_VectorcallMethod(PyObjCNM_strftime, args + 1,
+                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
                 Py_DECREF(args[2]);
                 if (v == NULL) {
                     /* Raise ObjC exception */

@@ -23,7 +23,6 @@ struct PyObjC_method {
     const char* type;
 };
 
-
 #define _C_IN 'n'
 #define _C_INOUT 'N'
 #define _C_OUT 'o'
@@ -45,7 +44,6 @@ struct PyObjC_method {
 #define objc_superSetClass(super, cls) (super).super_class = (cls)
 #define objc_superGetClass(super) ((super).super_class)
 
-
 /* Some functions that are missing (oddly enough) */
 BOOL PyObjC_class_isSubclassOf(Class child, Class parent);
 #define class_isSubclassOf PyObjC_class_isSubclassOf
@@ -60,7 +58,6 @@ extern struct objc_method_description
 PyObjC_protocol_getMethodDescription(Protocol* p, SEL aSel, BOOL isRequiredMethod,
                                      BOOL isInstanceMethod);
 #define protocol_getMethodDescription PyObjC_protocol_getMethodDescription
-
 
 extern BOOL PyObjC_class_addMethodList(Class, struct PyObjC_method*, unsigned int);
 

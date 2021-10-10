@@ -146,15 +146,7 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_VideoToolbox",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_VideoToolbox", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__VideoToolbox(void);
 
@@ -162,7 +154,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__VideoToolbox(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

@@ -50,7 +50,7 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
     }
 
     for (i = 0; i < parameterSetCount; i++) {
-        long        expected_size;
+        long expected_size;
 
         if (PyLong_Check(PyTuple_GetItem(py_parameterSetSizes, i))) {
             expected_size = PyLong_AsLong(PyTuple_GetItem(py_parameterSetSizes, i));
@@ -79,7 +79,9 @@ parse_parameterset(Py_ssize_t parameterSetCount, PyObject* py_parameterSetPointe
             goto error;
         }
 
-        if (PyObject_GetBuffer(PyTuple_GetItem(py_parameterSetPointers, i), (*parameterSetViews) + i, PyBUF_CONTIG_RO) == -1) {
+        if (PyObject_GetBuffer(PyTuple_GetItem(py_parameterSetPointers, i),
+                               (*parameterSetViews) + i, PyBUF_CONTIG_RO)
+            == -1) {
             goto error;
         }
         if ((*parameterSetViews)[i].len < expected_size) {
@@ -103,7 +105,7 @@ error:
     }
     if (*parameterSetViews != NULL) {
         for (Py_ssize_t j = 0; j < i; j++) {
-            PyBuffer_Release((*parameterSetViews)+j);
+            PyBuffer_Release((*parameterSetViews) + j);
         }
         PyMem_Free(*parameterSetViews);
     }
@@ -120,7 +122,7 @@ clear_parameterset(size_t parameterSetCount, uint8_t** parameterSetPointers,
     PyMem_Free(parameterSetPointers);
     PyMem_Free(parameterSetSizes);
     for (i = 0; i < parameterSetCount; i++) {
-         PyBuffer_Release(parameterSetViews + i);
+        PyBuffer_Release(parameterSetViews + i);
     }
     PyMem_Free(parameterSetViews);
 }
@@ -180,7 +182,8 @@ m_CMVideoFormatDescriptionCreateFromH264ParameterSets(PyObject* mod
         allocator, parameterSetCount, (const uint8_t* const*)parameterSetPointers,
         parameterSetSizes, NALUnitHeaderLength, &formatDescriptionOut);
 
-    clear_parameterset(parameterSetCount, parameterSetPointers, parameterSetSizes, parameterSetViews);
+    clear_parameterset(parameterSetCount, parameterSetPointers, parameterSetSizes,
+                       parameterSetViews);
 
     if (rv == 0) {
         py_formatDescriptionOut =
@@ -260,7 +263,8 @@ m_CMVideoFormatDescriptionCreateFromHEVCParameterSets(PyObject* mod
 
 #pragma clang diagnostic pop
 
-    clear_parameterset(parameterSetCount, parameterSetPointers, parameterSetSizes, parameterSetViews);
+    clear_parameterset(parameterSetCount, parameterSetPointers, parameterSetSizes,
+                       parameterSetViews);
 
     if (rv == 0) {
         py_formatDescriptionOut =
@@ -290,15 +294,7 @@ static PyMethodDef mod_methods[] = {
 };
 
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_CoreMedia",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_CoreMedia", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__CoreMedia(void);
 
@@ -306,7 +302,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__CoreMedia(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
 #if PyObjC_BUILD_RELEASE >= 1013 && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_13
 

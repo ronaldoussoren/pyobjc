@@ -699,9 +699,10 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[3] = { NULL, pyObject, keyName };
+        PyObject* args[3] = {NULL, pyObject, keyName};
 
-        val = PyObject_Vectorcall(getKeyFunc, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        val = PyObject_Vectorcall(getKeyFunc, args + 1,
+                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         if (val == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -756,9 +757,10 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[4] = { NULL, pyObject, keyName, pyValue };
+        PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
 
-        val = PyObject_Vectorcall(setKeyFunc, args+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        val = PyObject_Vectorcall(setKeyFunc, args + 1,
+                                  3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         Py_DECREF(pyValue);
         if (val == NULL) {
@@ -814,9 +816,10 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[3] = { NULL, pyObject, keyName };
+        PyObject* args[3] = {NULL, pyObject, keyName};
 
-        val = PyObject_Vectorcall(getKeyFunc, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        val = PyObject_Vectorcall(getKeyFunc, args + 1,
+                                  2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         if (val == NULL) {
             PyObjC_GIL_FORWARD_EXC();
@@ -866,9 +869,10 @@ getModuleFunction(char* modname, char* funcname)
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        PyObject* args[4] = { NULL, pyObject, keyName, pyValue };
+        PyObject* args[4] = {NULL, pyObject, keyName, pyValue};
 
-        val = PyObject_Vectorcall(setKeyFunc, args+1, 3|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        val = PyObject_Vectorcall(setKeyFunc, args + 1,
+                                  3 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(keyName);
         Py_DECREF(pyValue);
         if (val == NULL) {
@@ -1251,9 +1255,10 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            PyObject* args[3] = { NULL, pyObject, cdr };
+            PyObject* args[3] = {NULL, pyObject, cdr};
 
-            PyObject* r = PyObject_Vectorcall(PyObjC_Encoder, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* r = PyObject_Vectorcall(PyObjC_Encoder, args + 1,
+                                              2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(cdr);
             if (r == NULL) {
                 exc = PyObjCErr_AsExc();

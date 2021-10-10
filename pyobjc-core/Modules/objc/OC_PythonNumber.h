@@ -1,6 +1,5 @@
 #include "pyobjc.h"
 
-
 @interface OC_PythonNumber : NSNumber {
     PyObject* value;
 }

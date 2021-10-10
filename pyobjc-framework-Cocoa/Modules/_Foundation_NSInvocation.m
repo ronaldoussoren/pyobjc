@@ -1,6 +1,6 @@
 static PyObject*
 call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
-                                       PyObject*const* arguments, size_t nargs)
+                                       PyObject* const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -80,7 +80,8 @@ call_NSInvocation_setArgument_atIndex_(PyObject* method, PyObject* self,
 }
 
 static PyObject*
-call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self,
+                                  PyObject* const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -156,7 +157,7 @@ call_NSInvocation_setReturnValue_(PyObject* method, PyObject* self, PyObject*con
 
 static PyObject*
 call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
-                                       PyObject*const* arguments, size_t nargs)
+                                       PyObject* const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -239,7 +240,8 @@ call_NSInvocation_getArgument_atIndex_(PyObject* method, PyObject* self,
 }
 
 static PyObject*
-call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self,
+                                  PyObject* const* arguments, size_t nargs)
 {
     struct objc_super  super;
     NSMethodSignature* signature;
@@ -249,7 +251,7 @@ call_NSInvocation_getReturnValue_(PyObject* method, PyObject* self, PyObject*con
     Py_ssize_t         sz;
 
     if (PyObjC_CheckArgCount(method, 1, 1, nargs) == -1) {
-       return NULL;
+        return NULL;
     }
     py_value = arguments[0];
 

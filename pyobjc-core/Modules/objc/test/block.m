@@ -6,7 +6,8 @@
 static void erase_signature(id _block);
 
 #if (PyObjC_BUILD_RELEASE >= 1006) && (__GNUC__ >= 4 && __GNUC_MINOR__ >= 2)
-@interface NSObject (IndirectBlockTest)
+@interface
+NSObject (IndirectBlockTest)
 - (double)processBlock:(double (^)(double, double))aBlock;
 - (id)optionalBlock:(id (^)(id))aBlock;
 - (void)callWithCompletion:(void (^)(id))aBlock;

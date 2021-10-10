@@ -188,14 +188,14 @@
         PyObjC_Assert(result == self, nil);
         self = result;
         if (self != nil) {
-        /* XXX: This is dodgy, can we create the frozen set
-         * here instead of changing the type? Needs tests
-         * with various variants of nesting.
-         *
-         * At worst document that round-tripping a frozen
-         * set results in a non-frozen set.
-         */
-	    Py_SET_TYPE(value, &PyFrozenSet_Type);
+            /* XXX: This is dodgy, can we create the frozen set
+             * here instead of changing the type? Needs tests
+             * with various variants of nesting.
+             *
+             * At worst document that round-tripping a frozen
+             * set results in a non-frozen set.
+             */
+            Py_SET_TYPE(value, &PyFrozenSet_Type);
         }
         return self;
     } else if (code == 2) {
@@ -511,8 +511,9 @@
              */
             PyObject* r;
 
-            PyObject* args[3] = { NULL, value };
-            r = PyObject_VectorcallMethod(PyObjCNM_clear, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* args[3] = {NULL, value};
+            r                 = PyObject_VectorcallMethod(PyObjCNM_clear, args + 1,
+                                                          1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             if (r == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -544,8 +545,9 @@
         } else {
             PyObject* r;
 
-            PyObject* args[3] = { NULL, value, tmp };
-            r = PyObject_VectorcallMethod(PyObjCNM_discard, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* args[3] = {NULL, value, tmp};
+            r                 = PyObject_VectorcallMethod(PyObjCNM_discard, args + 1,
+                                                          2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(tmp);
             if (r == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
@@ -579,8 +581,9 @@
         } else {
             PyObject* r;
 
-            PyObject* args[3] = { NULL, value, tmp };
-            r = PyObject_VectorcallMethod(PyObjCNM_add, args+1, 2|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* args[3] = {NULL, value, tmp};
+            r                 = PyObject_VectorcallMethod(PyObjCNM_add, args + 1,
+                                                          2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(tmp);
             if (r == NULL) {
                 PyObjC_GIL_FORWARD_EXC();

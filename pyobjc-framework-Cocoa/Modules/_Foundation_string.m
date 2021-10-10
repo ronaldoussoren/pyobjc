@@ -5,7 +5,8 @@
 
 static PyObject*
 call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObject* self,
-                                                         PyObject*const* arguments, size_t nargs)
+                                                         PyObject* const* arguments,
+                                                         size_t           nargs)
 {
     NSRange           aRange;
     NSRange           leftoverRange;
@@ -96,7 +97,8 @@ call_NSString_getCString_maxLength_range_remainingRange_(PyObject* method, PyObj
 }
 
 static PyObject*
-call_NSString_getCString_maxLength_(PyObject* method, PyObject* self, PyObject*const* arguments, size_t nargs)
+call_NSString_getCString_maxLength_(PyObject* method, PyObject* self,
+                                    PyObject* const* arguments, size_t nargs)
 {
     char*             buf;
     NSUInteger        maxLength;

@@ -10,7 +10,8 @@
 typedef struct _Foo* FooHandle;
 typedef struct _Bar* BarHandle;
 
-@interface NSObject (OC_LockingTest)
+@interface
+NSObject (OC_LockingTest)
 - (void)setLocked:(NSObject*)value;
 - (NSObject*)isLocked;
 - (void)appendToList:(NSObject*)value;

@@ -131,11 +131,13 @@ PyObjC_Unicode_Fast_Bytes(PyObject* object)
  */
 
 PyObject*
-PyObject_Vectorcall(PyObject* callable, PyObject*const* args, size_t nargsf, PyObject* kwnames)
+PyObject_Vectorcall(PyObject* callable, PyObject* const* args, size_t nargsf,
+                    PyObject* kwnames)
 {
     size_t i;
     if (kwnames != NULL) {
-        PyErr_SetString(PyExc_RuntimeError, "PyObjC's vectorcall compat does not support keyword arguments");
+        PyErr_SetString(PyExc_RuntimeError,
+                        "PyObjC's vectorcall compat does not support keyword arguments");
         return NULL;
     }
 
@@ -160,11 +162,13 @@ PyObject_Vectorcall(PyObject* callable, PyObject*const* args, size_t nargsf, PyO
 }
 
 PyObject*
-PyObject_VectorcallMethod(PyObject *name, PyObject *const *args, size_t nargsf, PyObject *kwnames)
+PyObject_VectorcallMethod(PyObject* name, PyObject* const* args, size_t nargsf,
+                          PyObject* kwnames)
 {
     size_t i;
     if (kwnames != NULL) {
-        PyErr_SetString(PyExc_RuntimeError, "PyObjC's vectorcall compat does not support keyword arguments");
+        PyErr_SetString(PyExc_RuntimeError,
+                        "PyObjC's vectorcall compat does not support keyword arguments");
         return NULL;
     }
     if (name == NULL) {
@@ -187,7 +191,7 @@ PyObject_VectorcallMethod(PyObject *name, PyObject *const *args, size_t nargsf, 
         return res;
     }
 
-    PyObject* tuple = PyTuple_New(PyVectorcall_NARGS(nargsf)-1);
+    PyObject* tuple = PyTuple_New(PyVectorcall_NARGS(nargsf) - 1);
     if (tuple == NULL) {
         return NULL;
     }
@@ -198,7 +202,7 @@ PyObject_VectorcallMethod(PyObject *name, PyObject *const *args, size_t nargsf, 
             Py_DECREF(tuple);
             return NULL;
         }
-        PyTuple_SET_ITEM(tuple, i-1, args[i]);
+        PyTuple_SET_ITEM(tuple, i - 1, args[i]);
         Py_INCREF(args[i]);
     }
 

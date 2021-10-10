@@ -3,14 +3,13 @@
 #include "Python.h"
 #include "pyobjc-api.h"
 
-#import <ReplayKit/ReplayKit.h>
 #import <Foundation/Foundation.h>
+#import <ReplayKit/ReplayKit.h>
 
 /* We include the source code here instead of
  * using the linker due to limitations in pyobjc-api.h
  */
 #include "_ReplayKit_protocols.m"
-
 
 static PyMethodDef mod_methods[] = {
     {0, 0, 0, 0} /* sentinel */
@@ -18,15 +17,7 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_ReplayKit",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+    PyModuleDef_HEAD_INIT, "_ReplayKit", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
 PyObject* PyInit__ReplayKit(void);
 
@@ -34,7 +25,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__ReplayKit(void)
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     return m;
 }

@@ -249,7 +249,8 @@ static void use_id(id x __attribute__((__unused__))){};
 
     while (*data != NULL) {
         NSObject* a = [NSString stringWithUTF8String:*data];
-        if (!a) return nil;
+        if (!a)
+            return nil;
         [array addObject:a];
         data++;
     }
@@ -405,21 +406,24 @@ static void use_id(id x __attribute__((__unused__))){};
 {
     char            buf[64];
     NSMutableArray* result = [NSMutableArray array];
-    NSObject* a;
+    NSObject*       a;
 
     snprintf(buf, sizeof(buf), "%p", x);
     a = [NSString stringWithUTF8String:buf];
-    if (!a) return nil;
+    if (!a)
+        return nil;
     [result addObject:a];
 
     snprintf(buf, sizeof(buf), "%p", y);
     a = [NSString stringWithUTF8String:buf];
-    if (!a) return nil;
+    if (!a)
+        return nil;
     [result addObject:a];
 
     snprintf(buf, sizeof(buf), "%p", z);
     a = [NSString stringWithUTF8String:buf];
-    if (!a) return nil;
+    if (!a)
+        return nil;
     [result addObject:a];
 
     if (y) {
@@ -670,15 +674,15 @@ static void use_id(id x __attribute__((__unused__))){};
     return [NSArray arrayWithObjects:fmt, [NSString stringWithUTF8String:buffer], NULL];
 }
 
-#pragma GCC diagnostic push
+#pragma GCC diagnostic   push
 #pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+#pragma GCC diagnostic   ignored "-Wformat-nonliteral"
 #pragma clang diagnostic ignored "-Wformat-nonliteral"
 
 - (NSArray* _Nullable)makeArrayWithCFormat:(char*)fmt, ...
 {
-    va_list ap;
-    char    buffer[2048];
+    va_list   ap;
+    char      buffer[2048];
     NSObject* a1;
     NSObject* a2;
 
@@ -687,13 +691,15 @@ static void use_id(id x __attribute__((__unused__))){};
     va_end(ap);
 
     a1 = [NSString stringWithUTF8String:fmt];
-    if (!a1) return nil;
+    if (!a1)
+        return nil;
     a2 = [NSString stringWithUTF8String:buffer];
-    if (!a2) return nil;
+    if (!a2)
+        return nil;
 
     return [NSArray arrayWithObjects:a1, a2, nil];
 }
-#pragma GCC diagnostic pop
+#pragma GCC diagnostic   pop
 #pragma clang diagnostic pop
 
 - (NSArray*)makeArrayWithArguments:(id)arg, ...

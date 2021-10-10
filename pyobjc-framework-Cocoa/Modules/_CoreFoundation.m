@@ -29,19 +29,19 @@
 static PyMethodDef mod_methods[] = {
     COREFOUNDATION_CFBAG_METHODS COREFOUNDATION_CFBINARYHEAP_METHODS
         COREFOUNDATION_BITVECTOR_METHODS COREFOUNDATION_CALENDAR_METHODS
-                                         COREFOUNDATION_DICTIONARY_METHODS
+            COREFOUNDATION_DICTIONARY_METHODS
 #if MAC_OS_X_VERSION_10_5 <= MAC_OS_X_VERSION_MAX_ALLOWED
                 COREFOUNDATION_FILEDESCRIPTOR_METHODS
 #endif
                     COREFOUNDATION_MACHPORT_METHODS COREFOUNDATION_MESSAGEPORT_METHODS
                         COREFOUNDATION_NUMBER_METHODS COREFOUNDATION_NUMBERFORMATTER_METHODS
-                                                      COREFOUNDATION_READSTREAM_METHODS
-                                                      COREFOUNDATION_RUNLOOP_METHODS
-                                                      COREFOUNDATION_RUNLOOPSOURCE_METHODS
-                                                      COREFOUNDATION_RUNLOOPTIMER_METHODS
-                                                      COREFOUNDATION_SET_METHODS
-                                                      COREFOUNDATION_SOCKET_METHODS
-                                                      COREFOUNDATION_TREE_METHODS
+                            COREFOUNDATION_READSTREAM_METHODS
+                                COREFOUNDATION_RUNLOOP_METHODS
+                                    COREFOUNDATION_RUNLOOPSOURCE_METHODS
+                                        COREFOUNDATION_RUNLOOPTIMER_METHODS
+                                            COREFOUNDATION_SET_METHODS
+                                                COREFOUNDATION_SOCKET_METHODS
+                                                    COREFOUNDATION_TREE_METHODS
                                                         COREFOUNDATION_WRITESTREAM_METHODS
 
     {0, 0, 0, 0} /* sentinel */
@@ -49,16 +49,15 @@ static PyMethodDef mod_methods[] = {
 
 /* Python glue */
 
-static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_CoreFoundation",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "_CoreFoundation",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit__CoreFoundation(void);
 
@@ -66,7 +65,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__CoreFoundation(void
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     /* Some C functions aren't available at runtime (e.g. when compiling on
      * OS X 10.5 but running on 10.4), so we use "#pragma weak" to weakly

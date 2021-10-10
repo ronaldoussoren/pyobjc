@@ -1023,7 +1023,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(charFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1035,7 +1035,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(ucharFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1047,7 +1047,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(shortFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1059,7 +1059,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(ushortFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1071,7 +1071,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(intFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1083,7 +1083,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(uintFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1095,7 +1095,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(longFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1107,7 +1107,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(ulongFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1233,7 +1233,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(longlongFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1245,7 +1245,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(ulonglongFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1257,7 +1257,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(floatFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1269,7 +1269,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(doubleFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1281,7 +1281,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(idFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1293,7 +1293,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(dummyFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1305,7 +1305,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(dummy2Func))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1317,7 +1317,7 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 
     SETUP_INVOCATION(inv, arg, @selector(nspointFunc))
 
-        [arg forwardInvocation:inv];
+    [arg forwardInvocation:inv];
     [inv getReturnValue:&res];
     return res;
 }
@@ -1651,7 +1651,8 @@ static char* g_charps[] = {"hello", "world", "foobar"};
 + (NSArray*)fetchArray:(NSCoder*)coder;
 @end
 
-@interface NSObject (IKnowWhatImDoing)
+@interface
+NSObject (IKnowWhatImDoing)
 - (id)call;
 @end
 
@@ -1929,7 +1930,7 @@ carrayMaker(PyObject* self __attribute__((__unused__)), PyObject* args)
     Py_ssize_t buflen;
     PyObject*  res;
     PyObject*  v = NULL;
-    Py_buffer   view;
+    Py_buffer  view;
 
     if (!PyArg_ParseTuple(args, "yOO", &signature, &o1, &o2)) {
         return NULL;

@@ -90,7 +90,7 @@ typedef struct _PyObjCClassObject {
     unsigned int useKVO : 1;
     unsigned int hasPythonImpl : 1;
     unsigned int isCFWrapper : 1;
-    unsigned int isFinal: 1;
+    unsigned int isFinal : 1;
 } PyObjCClassObject;
 
 extern PyObject* PyObjCClass_DefaultModule;
@@ -127,7 +127,7 @@ static inline int
 PyObjCClass_AddToLookupCache(PyTypeObject* _tp, PyObject* name, PyObject* value)
 {
 #ifdef PyObjC_ENABLE_LOOKUP_CACHE
-    int r;
+    int                r;
     PyObjCClassObject* tp = (PyObjCClassObject*)_tp;
     if (tp->lookup_cache == NULL) {
         tp->lookup_cache = PyDict_New();
@@ -141,12 +141,13 @@ PyObjCClass_AddToLookupCache(PyTypeObject* _tp, PyObject* name, PyObject* value)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-value"
 
-    &_tp; &name; &value;
+    &_tp;
+    &name;
+    &value;
 #pragma clang diagnostic pop
     return 0;
 #endif
 }
-
 
 static inline int
 PyObjCClass_IsCFWrapper(PyTypeObject* tp)
@@ -159,7 +160,6 @@ PyObjCClass_IsFinal(PyTypeObject* tp)
 {
     return ((PyObjCClassObject*)tp)->isFinal;
 }
-
 
 PyObject* objc_class_locate(Class objc_class);
 

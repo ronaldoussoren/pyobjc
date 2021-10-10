@@ -10,8 +10,6 @@
 static PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
                                    BOOL* isAlloc, BOOL* isCFAlloc);
 
-
-
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(ffi_cif* cif, void* retval, void** args, void* userarg);
 static void object_method_respondsToSelector(ffi_cif* cif, void* retval, void** args,
@@ -408,10 +406,10 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     PyObject*  value    = NULL;
     Py_ssize_t i;
     Py_ssize_t key_count;
-    Py_ssize_t protocol_count   = 0;
-    int        first_python_gen = 0;
-    Class      new_class        = NULL;
-    Class      new_meta_class   = NULL;
+    Py_ssize_t protocol_count     = 0;
+    int        first_python_gen   = 0;
+    Class      new_class          = NULL;
+    Class      new_meta_class     = NULL;
     PyObject*  py_superclass      = NULL;
     int        have_intermediate  = 0;
     PyObject*  instance_variables = NULL;
@@ -436,7 +434,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
         goto error_cleanup;
     }
 
-    if ( objc_lookUpClass(name) != NULL) {
+    if (objc_lookUpClass(name) != NULL) {
         /*
          * NOTE: we used to allow redefinition of a class if the
          * redefinition is in the same module. This code was removed
@@ -559,8 +557,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                 continue;
             }
 
-            if (!class_addProtocol(
-                    new_class, PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+            if (!class_addProtocol(new_class,
+                                   PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
                 goto error_cleanup;
             }
         }
@@ -593,8 +591,9 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             PyErr_Clear();
 
         } else {
-            PyObject* args[5] = { NULL, key, class_dict, instance_methods, class_methods };
-            PyObject* rv = PyObject_Vectorcall(m, args+1, 4|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* args[5] = {NULL, key, class_dict, instance_methods, class_methods};
+            PyObject* rv      = PyObject_Vectorcall(m, args + 1,
+                                                    4 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
             Py_DECREF(m);
             if (rv == NULL) {
                 goto error_cleanup;
@@ -1020,8 +1019,8 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             goto error_cleanup;
         }
 
-        if (!class_addIvar(new_class, PyObjCInstanceVariable_GetName(value), size,
-                              align, type)) {
+        if (!class_addIvar(new_class, PyObjCInstanceVariable_GetName(value), size, align,
+                           type)) {
 
             goto error_cleanup;
         }
@@ -1045,9 +1044,11 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             if (!PyObjCRT_SignaturesEqual(method_getTypeEncoding(meth),
                                           PyObjCSelector_GetNativeSignature(value))) {
 
-                PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R has signature that is not compatible with super-class: %s != %s",
-                             value, method_getTypeEncoding(meth), PyObjCSelector_GetNativeSignature(value));
+                PyErr_Format(
+                    PyObjCExc_BadPrototypeError,
+                    "%R has signature that is not compatible with super-class: %s != %s",
+                    value, method_getTypeEncoding(meth),
+                    PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }
@@ -1064,7 +1065,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
         }
 
         if (!class_addMethod(new_class, PyObjCSelector_GetSelector(value), imp,
-                                PyObjCSelector_GetNativeSignature(value))) {
+                             PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }
     }
@@ -1088,9 +1089,11 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             if (!PyObjCRT_SignaturesEqual(method_getTypeEncoding(meth),
                                           PyObjCSelector_GetNativeSignature(value))) {
 
-                PyErr_Format(PyObjCExc_BadPrototypeError,
-                             "%R has signature that is not compatible with super-class: %s != %s",
-                             value, method_getTypeEncoding(meth), PyObjCSelector_GetNativeSignature(value));
+                PyErr_Format(
+                    PyObjCExc_BadPrototypeError,
+                    "%R has signature that is not compatible with super-class: %s != %s",
+                    value, method_getTypeEncoding(meth),
+                    PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }
@@ -1106,7 +1109,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
         }
 
         if (!class_addMethod(new_meta_class, PyObjCSelector_GetSelector(value), imp,
-                                PyObjCSelector_GetNativeSignature(value))) {
+                             PyObjCSelector_GetNativeSignature(value))) {
             goto error_cleanup;
         }
     }
@@ -1192,8 +1195,9 @@ free_ivars(id self, PyObject* cls)
          *
          * XXX: PyMapping_Values?
          */
-        PyObject* args[2] = { NULL, clsDict };
-        clsValues = PyObject_VectorcallMethod(PyObjCNM_values, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+        PyObject* args[2] = {NULL, clsDict};
+        clsValues         = PyObject_VectorcallMethod(PyObjCNM_values, args + 1,
+                                                      1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
         Py_DECREF(clsDict);
         if (clsValues == NULL) {
             PyErr_Clear();
@@ -1298,8 +1302,9 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
         if (delmethod != NULL) {
             PyObject* s = _PyObjCObject_NewDeallocHelper(self);
 #if PY_VERSION_HEX >= 0x03090000
-            PyObject* args[2] = { NULL, s };
-            obj = PyObject_Vectorcall(delmethod, args+1, 1|PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
+            PyObject* args[2] = {NULL, s};
+            obj               = PyObject_Vectorcall(delmethod, args + 1,
+                                                    1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 #else
             obj = PyObject_CallFunctionObjArgs(delmethod, s, NULL);
 #endif
@@ -1356,7 +1361,7 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
     while (cls != (Class)userdata) {
         unsigned ivarCount, i;
         /* Returns NULL only when setting ivarCount to 0 */
-        Ivar*    ivarList = (Ivar* _Nonnull)class_copyIvarList(cls, &ivarCount);
+        Ivar* ivarList = (Ivar* _Nonnull)class_copyIvarList(cls, &ivarCount);
 
         for (i = 0; i < ivarCount; i++) {
             Ivar        v = ivarList[i];
@@ -1439,7 +1444,7 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     objc_superSetReceiver(spr, self);
 
     *p_result = ((int (*)(struct objc_super*, SEL, SEL))objc_msgSendSuper)(&spr, _meth,
-                                                                       aSelector);
+                                                                           aSelector);
     return;
 }
 
@@ -1464,7 +1469,7 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
 
     @try {
         *p_result = ((NSMethodSignature * (*)(struct objc_super*, SEL, SEL))
-                        objc_msgSendSuper)(&spr, _meth, aSelector);
+                         objc_msgSendSuper)(&spr, _meth, aSelector);
 
     } @catch (NSObject* localException) {
         *p_result = nil;
@@ -1636,7 +1641,7 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
             }
             PyMem_Free(argbuf);
             argbuf = NULL;
-            v = Py_None;
+            v      = Py_None;
             Py_INCREF(Py_None);
             break;
         default:

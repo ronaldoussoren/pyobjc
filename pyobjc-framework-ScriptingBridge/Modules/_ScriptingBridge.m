@@ -15,16 +15,15 @@ static PyMethodDef mod_methods[] = {
 };
 
 /* Python glue */
-static struct PyModuleDef mod_module = {
-     PyModuleDef_HEAD_INIT,
-     "_ScriptingBridge",
-     NULL,
-     0,
-     mod_methods,
-     NULL,
-     NULL,
-     NULL,
-     NULL};
+static struct PyModuleDef mod_module = {PyModuleDef_HEAD_INIT,
+                                        "_ScriptingBridge",
+                                        NULL,
+                                        0,
+                                        mod_methods,
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        NULL};
 
 PyObject* PyInit__ScriptingBridge(void);
 
@@ -32,7 +31,9 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__ScriptingBridge(voi
 {
     PyObject* m;
     m = PyModule_Create(&mod_module);
-    if (!m) { return NULL; }
+    if (!m) {
+        return NULL;
+    }
 
     if (PyObjC_ImportAPI(m) == -1)
         return NULL;

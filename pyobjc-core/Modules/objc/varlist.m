@@ -26,7 +26,8 @@ check_index(PyObjC_VarList* self, Py_ssize_t idx)
 {
     if (idx < 0) {
         /* Indeterminate size, cannot access from the 'end' */
-        PyErr_SetString(PyExc_ValueError, "objc.varlist does not support negative indexes");
+        PyErr_SetString(PyExc_ValueError,
+                        "objc.varlist does not support negative indexes");
         return -1;
     }
 
@@ -39,8 +40,8 @@ check_index(PyObjC_VarList* self, Py_ssize_t idx)
     return 0;
 }
 
-static PyObject* _Nullable
-object_as_tuple(PyObject* _self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable object_as_tuple(PyObject* _self, PyObject* args,
+                                           PyObject* kwds)
 {
     static char* keywords[] = {"count", NULL};
 
@@ -67,7 +68,7 @@ object_as_tuple(PyObject* _self, PyObject* args, PyObject* kwds)
 
     for (i = 0; i < length; i++) {
         PyObject* v = pythonify_c_value(self->typestr, ((unsigned char*)self->array)
-                                                                + (i * self->itemsize));
+                                                           + (i * self->itemsize));
         if (v == NULL) {
             Py_DECREF(result);
             return NULL;
@@ -77,14 +78,13 @@ object_as_tuple(PyObject* _self, PyObject* args, PyObject* kwds)
     return result;
 }
 
-
 PyDoc_STRVAR(object_as_buffer_doc,
              "as_buffer(count)\n" CLINIC_SEP "\n"
              "Return a memoryview referencing the memory for the first ``count`` "
              "elements of this list.");
 
-static PyObject* _Nullable
-object_as_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable object_as_buffer(PyObject* _self, PyObject* args,
+                                            PyObject* kwds)
 {
     static char* keywords[] = {"count", NULL};
 
@@ -114,9 +114,7 @@ object_as_buffer(PyObject* _self, PyObject* args, PyObject* kwds)
     return PyMemoryView_FromBuffer(&info);
 }
 
-
-static PyObject* _Nullable
-object__getitem__(PyObject* _self, Py_ssize_t idx)
+static PyObject* _Nullable object__getitem__(PyObject* _self, Py_ssize_t idx)
 {
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
 
@@ -128,9 +126,8 @@ object__getitem__(PyObject* _self, Py_ssize_t idx)
                              ((unsigned char*)self->array) + (idx * self->itemsize));
 }
 
-
-static PyObject* _Nullable
-object__getslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop)
+static PyObject* _Nullable object__getslice__(PyObject* _self, Py_ssize_t start,
+                                              Py_ssize_t stop)
 {
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
     PyObject*       result;
@@ -152,7 +149,7 @@ object__getslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop)
 
     for (idx = start; idx < stop; idx++) {
         PyObject* v = pythonify_c_value(self->typestr, ((unsigned char*)self->array)
-                                                                + (idx * self->itemsize));
+                                                           + (idx * self->itemsize));
         if (v == NULL) {
             Py_DECREF(result);
             return NULL;
@@ -196,8 +193,8 @@ object__setslice__(PyObject* _self, Py_ssize_t start, Py_ssize_t stop, PyObject*
 
     for (idx = start; idx < stop; idx++) {
         PyObject* v = PySequence_Fast_GET_ITEM(seq, idx - start);
-        int r = depythonify_c_value(self->typestr, v,
-                                ((unsigned char*)self->array) + (idx * self->itemsize));
+        int       r = depythonify_c_value(
+                  self->typestr, v, ((unsigned char*)self->array) + (idx * self->itemsize));
         if (r == -1) {
             Py_DECREF(seq);
             return -1;
@@ -250,8 +247,7 @@ sl_ind_get(PyObject* value, int is_start)
     }
 }
 
-static PyObject* _Nullable
-object_subscript(PyObject* self, PyObject* item)
+static PyObject* _Nullable object_subscript(PyObject* self, PyObject* item)
 {
     if (PyIndex_Check(item)) {
         Py_ssize_t i = PyNumber_AsSsize_t(item, PyExc_IndexError);
@@ -351,13 +347,11 @@ object_ass_subscript(PyObject* self, PyObject* item, PyObject* _Nullable value)
 static PyMappingMethods object_tp_as_mapping = {.mp_subscript     = object_subscript,
                                                 .mp_ass_subscript = object_ass_subscript};
 
-static PyObject* _Nullable
-object_new(PyTypeObject* type __attribute__((__unused__)),
-           PyObject*     args __attribute__((__unused__)),
-           PyObject*     kwds __attribute__((__unused__)))
+static PyObject* _Nullable object_new(PyTypeObject* type __attribute__((__unused__)),
+                                      PyObject*     args __attribute__((__unused__)),
+                                      PyObject*     kwds __attribute__((__unused__)))
 {
-    PyErr_SetString(PyExc_TypeError,
-                    "Cannot create instances of 'objc.varlist'");
+    PyErr_SetString(PyExc_TypeError, "Cannot create instances of 'objc.varlist'");
     return NULL;
 }
 
@@ -368,13 +362,13 @@ object_dealloc(PyObject* self)
 }
 
 PyDoc_STRVAR(object_doc,
-    "objc.varlist\n"
-    "\n"
-    "A list of an unspecified size. Use ``obj.as_tuple(count)`` to \n"
-    "convert to a python tuple, or ``obj[index]`` to fetch a single item");
+             "objc.varlist\n"
+             "\n"
+             "A list of an unspecified size. Use ``obj.as_tuple(count)`` to \n"
+             "convert to a python tuple, or ``obj[index]`` to fetch a single item");
 
-static PyObject* _Nullable
-object_typestr_get(PyObject* _self, void* _Nullable closure __attribute__((__unused__)))
+static PyObject* _Nullable object_typestr_get(PyObject* _self, void* _Nullable closure
+                                              __attribute__((__unused__)))
 {
     PyObjC_VarList* self = (PyObjC_VarList*)_self;
     return PyBytes_FromString(self->typestr);

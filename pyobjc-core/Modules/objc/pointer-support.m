@@ -217,7 +217,8 @@ PyObjCPointerWrapper_ToPython(const char* type, void* datum)
              * is the only such object I don't think its worthwhile
              * to add generic support for this.
              */
-            result = PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), *(void**)datum);
+            result =
+                PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), *(void**)datum);
 
             PyObjC_RegisterPythonProxy(*(id*)datum, result);
             return result;

@@ -467,10 +467,10 @@
 }
 
 #define COMPARE_METHOD(NAME, OPERATOR)                                                   \
-    -(BOOL)NAME : (NSObject*)number                                                     \
+    -(BOOL)NAME : (NSObject*)number                                                      \
     {                                                                                    \
         PyObjC_BEGIN_WITH_GIL                                                            \
-            PyObject* other = PyObjC_IdToPython(number);                                \
+            PyObject* other = PyObjC_IdToPython(number);                                 \
             int       r;                                                                 \
             if (other == NULL) {                                                         \
                 PyObjC_GIL_FORWARD_EXC();                                                \
@@ -528,7 +528,6 @@ COMPARE_METHOD(isLessThanOrEqualTo, Py_LE)
     return (NSObject*)self;
 }
 #endif
-
 
 - (Class _Nonnull)classForArchiver
 {

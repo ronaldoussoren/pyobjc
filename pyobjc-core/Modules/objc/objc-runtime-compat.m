@@ -8,7 +8,6 @@
 #define PYOBJC_COMPAT_IMPL
 #include "pyobjc.h"
 
-
 BOOL
 PyObjC_class_isSubclassOf(Class child, Class parent)
 {
@@ -25,10 +24,10 @@ PyObjC_class_isSubclassOf(Class child, Class parent)
     return NO;
 }
 
-
 #if defined(__x86_64__)
 
-@implementation Protocol (NSObjectCompat)
+@implementation
+Protocol (NSObjectCompat)
 - (id)self
 {
     return self;
