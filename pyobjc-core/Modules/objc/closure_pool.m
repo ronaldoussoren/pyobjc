@@ -9,17 +9,22 @@
 #if defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15
 
 #include <sys/mman.h>
+#include <sys/sysctl.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef struct freelist {
-    struct freelist* next;
+    struct freelist* _Nullable next;
 } freelist;
 
 static freelist* closure_freelist = NULL;
 
 #ifdef MAP_JIT
 
-#include <sys/sysctl.h>
-
+/*
+ * Checks  if the current system requires MAP_JIT. This
+ * flag only needs to be used on macOS 10.14 or later.
+ */
 static int
 use_map_jit(void)
 {
@@ -48,8 +53,7 @@ use_map_jit(void)
 
 #endif
 
-static freelist*
-allocate_block(void)
+static freelist* _Nullable allocate_block(void)
 {
 
     /* Allocate ffi_closure in groups of 10 VM pages */
@@ -81,13 +85,13 @@ allocate_block(void)
     return newblock;
 }
 
-ffi_closure*
-PyObjC_ffi_closure_alloc(size_t size, void** codeloc)
+ffi_closure* _Nullable PyObjC_ffi_closure_alloc(size_t size, void** codeloc)
 {
     if (size != sizeof(ffi_closure)) {
         PyErr_SetString(PyObjCExc_Error, "Allocating closure of unexpected size");
         return NULL;
     }
+    PyObjC_Assert(codeloc, NULL);
     if (closure_freelist == NULL) {
         closure_freelist = allocate_block();
         if (closure_freelist == NULL) {
@@ -108,5 +112,6 @@ PyObjC_ffi_closure_free(ffi_closure* cl)
     return 0;
 }
 
-#endif /* defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15  \
-        */
+NS_ASSUME_NONNULL_END
+
+#endif

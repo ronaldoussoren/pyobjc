@@ -31,6 +31,7 @@ scan-build:
             --enable-checker security.insecureAPI.bcopy \
             --enable-checker security.insecureAPI.bzero \
 	    python3 setup.py build_ext
+	open build/scan-build*/index.html
 
 
 .PHONY: info all test sanitize-test clean scan-build

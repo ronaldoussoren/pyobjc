@@ -14,6 +14,8 @@
 
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef struct {
     PyObject_HEAD
 
@@ -21,8 +23,7 @@ typedef struct {
     PyObject* type;
 } PyObjCPointer;
 
-void*
-PyObjCPointer_Ptr(PyObject* obj)
+void* _Nullable PyObjCPointer_Ptr(PyObject* obj)
 {
     if (!PyObjCPointer_Check(obj)) {
         PyErr_SetString(PyExc_TypeError, "Unexpected type");
@@ -35,11 +36,16 @@ static void
 PyObjCPointer_dealloc(PyObject* _self)
 {
     PyObjCPointer* self = (PyObjCPointer*)_self;
-    Py_CLEAR(self->type);
+    Py_XDECREF(self->type);
     PyObject_Free((PyObject*)self);
 }
 
 static PyMemberDef PyObjCPointer_members[] = {{
+                                                  /* XXX: "type" should be "typestr", but
+                                                   *      changing this is a backward
+                                                   *      incompatible change in a
+                                                   * deprecated type
+                                                   */
                                                   .name   = "type",
                                                   .type   = T_OBJECT,
                                                   .offset = offsetof(PyObjCPointer, type),
@@ -66,11 +72,18 @@ PyTypeObject PyObjCPointer_Type = {
     .tp_members = PyObjCPointer_members,
 };
 
-PyObject*
-PyObjCPointer_New(void* p, const char* t)
+PyObject* _Nullable PyObjCPointer_New(void* p, const char* t)
 {
-    Py_ssize_t  size    = PyObjCRT_SizeOfType(t);
+    Py_ssize_t size = PyObjCRT_SizeOfType(t);
+    if (size == -1) {
+        return NULL;
+    }
+
     const char* typeend = PyObjCRT_SkipTypeSpec(t);
+    if (typeend == NULL) {
+        return NULL;
+    }
+
     while (isdigit(typeend[-1])) {
         typeend--;
     }
@@ -87,13 +100,6 @@ PyObjCPointer_New(void* p, const char* t)
         return NULL;
     }
 
-    if (size == -1) {
-        return NULL;
-    }
-    if (typeend == NULL) {
-        return NULL;
-    }
-
     self = PyObject_NEW(PyObjCPointer, &PyObjCPointer_Type);
     if (self == NULL) {
         return NULL;
@@ -104,3 +110,5 @@ PyObjCPointer_New(void* p, const char* t)
 
     return (PyObject*)self;
 }
+
+NS_ASSUME_NONNULL_END

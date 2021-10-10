@@ -10,6 +10,8 @@
  */
 #import "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*
  * Definitions for block functions. These definitions are technically
  * private, but are the only way to interact with the block machinery.
@@ -41,7 +43,7 @@ struct block_descriptor {
 struct block_descriptor_basic {
     unsigned long int reserved;
     unsigned long int size;
-    void*             rest[1];
+    void* _Nullable rest[1];
 };
 
 struct block_literal {
@@ -50,11 +52,10 @@ struct block_literal {
     int   reserved;
     void (*invoke)(void*, ...);
     struct block_descriptor* descriptor;
-    PyObject*                invoke_cleanup;
+    PyObject* _Nullable invoke_cleanup;
 };
 
-const char*
-PyObjCBlock_GetSignature(void* _block)
+const char* _Nullable PyObjCBlock_GetSignature(void* _block)
 {
     struct block_literal* block = (struct block_literal*)_block;
 
@@ -105,14 +106,19 @@ oc_dispose_helper(void* _src)
 }
 
 static struct block_descriptor gDescriptorTemplate = {
-    0, sizeof(struct block_literal), oc_copy_helper, oc_dispose_helper, 0};
+    .reserved       = 0,
+    .size           = sizeof(struct block_literal),
+    .copy_helper    = oc_copy_helper,
+    .dispose_helper = oc_dispose_helper,
+    .signature      = 0,
+};
 
-static struct block_literal gLiteralTemplate = {0, /* ISA */
-                                                BLOCK_HAS_COPY_DISPOSE,
-                                                0,
-                                                0,
-                                                &gDescriptorTemplate,
-                                                0};
+static struct block_literal gLiteralTemplate = {.isa            = 0,
+                                                .flags          = BLOCK_HAS_COPY_DISPOSE,
+                                                .reserved       = 0,
+                                                .invoke         = NULL,
+                                                .descriptor     = &gDescriptorTemplate,
+                                                .invoke_cleanup = NULL};
 
 /*
  * PyObjCBlock_Call is exposed to python code as objc._block_call(block, signature, args,
@@ -123,8 +129,8 @@ static struct block_literal gLiteralTemplate = {0, /* ISA */
  * update the class dictionary as well (including those of subclasses). There is no public
  * API for that.
  */
-PyObject*
-PyObjCBlock_Call(PyObject* module __attribute__((__unused__)), PyObject* func_args)
+PyObject* _Nullable PyObjCBlock_Call(PyObject* module __attribute__((__unused__)),
+                                     PyObject* func_args)
 {
     PyObject*              self;
     PyObjCMethodSignature* signature;
@@ -379,11 +385,14 @@ error:
 static void
 PyObjCBlock_CleanupCapsule(PyObject* ptr)
 {
-    PyObjCFFI_FreeBlockFunction(PyCapsule_GetPointer(ptr, "objc.__block_release__"));
+    void* block_func = PyCapsule_GetPointer(ptr, "objc.__block_release__");
+    if (block_func == NULL)
+        return;
+
+    PyObjCFFI_FreeBlockFunction(block_func);
 }
 
-static char*
-block_signature(PyObjCMethodSignature* signature)
+static char* _Nullable block_signature(PyObjCMethodSignature* signature)
 {
     Py_ssize_t i;
     Py_ssize_t buflen = 1;
@@ -410,15 +419,11 @@ block_signature(PyObjCMethodSignature* signature)
     return buf;
 }
 
-void*
-PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
+void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
 {
     struct block_literal* block;
 
-    if (gGlobalBlockClass == NULL) {
-        PyErr_SetString(PyObjCExc_Error, "Blocks not supported on this platform");
-        return NULL;
-    }
+    PyObjC_Assert(gGlobalBlockClass, NULL);
 
     block = PyMem_Malloc(sizeof(struct block_literal) + sizeof(struct block_literal));
     if (block == NULL) {
@@ -435,11 +440,12 @@ PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* callable)
      * contains the raw signature without any updates from metadata.
      * Furthermore the value is bogus for block signatures in metadata.
      */
-    block->descriptor->signature = block_signature(signature);
-    if (block->descriptor->signature == NULL) {
+    char* typestr = block_signature(signature);
+    if (typestr == NULL) {
         PyMem_Free(block);
         return NULL;
     }
+    block->descriptor->signature = typestr;
     block->flags |= BLOCK_HAS_SIGNATURE;
     block->isa    = gGlobalBlockClass;
     block->invoke = PyObjCFFI_MakeBlockFunction(signature, callable);
@@ -477,8 +483,8 @@ PyObjCBlock_GetFunction(void* block)
  * Support for converting blocks to python objects.
  */
 
-static PyObject*
-pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
+static PyObject* _Nullable pyobjc_PythonObject(NSObject* self,
+                                               SEL       _sel __attribute__((__unused__)))
 {
     PyObject* rval;
 
@@ -507,8 +513,9 @@ pyobjc_PythonObject(NSObject* self, SEL _sel __attribute__((__unused__)))
     return rval;
 }
 
-static PyObject*
-pyobjc_PythonTransient(NSObject* self, SEL _sel __attribute__((__unused__)), int* cookie)
+static PyObject* _Nullable pyobjc_PythonTransient(NSObject* self,
+                                                  SEL  _sel __attribute__((__unused__)),
+                                                  int* cookie)
 {
     /* Stack blocks are allocated on the stack and cause problems with
      * Python's garbage collections. Therefore uncondationally copy them,
@@ -534,7 +541,13 @@ int
 PyObjCBlock_Setup(void)
 {
     Class StackBlock;
-    gGlobalBlockClass = objc_lookUpClass("__NSGlobalBlock__");
+    Class GlobalBlock = objc_lookUpClass("__NSGlobalBlock__");
+    if (GlobalBlock == NULL) {
+        /* This should never happen... */
+        PyErr_SetString(PyObjCExc_InternalError, "Cannot find __NSGlobalBlock__ class");
+        return -1;
+    }
+    gGlobalBlockClass = GlobalBlock;
 
     StackBlock = objc_lookUpClass("__NSStackBlock__");
     if (StackBlock != Nil) {
@@ -552,3 +565,5 @@ PyObjCBlock_Setup(void)
 
     return 0;
 }
+
+NS_ASSUME_NONNULL_END

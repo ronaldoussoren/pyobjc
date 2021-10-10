@@ -7,10 +7,15 @@
 
 #if defined(__x86_64__) && MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_15
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define HAVE_CLOSURE_POOL 1
 
-extern ffi_closure* PyObjC_ffi_closure_alloc(size_t size, void** code_loc);
-extern int          PyObjC_ffi_closure_free(ffi_closure* cl);
+extern ffi_closure* _Nullable PyObjC_ffi_closure_alloc(
+    size_t size, void* _Nullable* _Nonnull code_loc);
+extern int PyObjC_ffi_closure_free(ffi_closure* cl);
+
+NS_ASSUME_NONNULL_END
 
 #endif
 

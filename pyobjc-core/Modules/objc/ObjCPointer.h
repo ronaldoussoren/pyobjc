@@ -1,6 +1,8 @@
 #ifndef PyObjC_OBJC_POINTER_H
 #define PyObjC_OBJC_POINTER_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Python wrapper around C pointer
  *
  * NOTE: This class is almost never used, pointers in method interfaces are,
@@ -11,8 +13,12 @@
 extern PyTypeObject PyObjCPointer_Type;
 #define PyObjCPointer_Check(o) (Py_TYPE(o) == &PyObjCPointer_Type)
 
-extern PyObject* PyObjCPointer_New(void* ptr, const char* type)
-    __attribute__((__nonnull__(2))) __attribute__((__warn_unused_result__));
-extern void* PyObjCPointer_Ptr(PyObject* object) __attribute__((__nonnull__(1)));
+extern PyObject* _Nullable PyObjCPointer_New(void* ptr, const char* type)
+    __attribute__((__warn_unused_result__));
+
+/* XXX: Nullable because of type checking */
+extern void* _Nullable PyObjCPointer_Ptr(PyObject* object);
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_OBJC_POINTER_H */
