@@ -13,6 +13,8 @@
  *    defining subclasses of objective-C classes.
  */
 
+NS_ASSUME_NONNULL_BEGIN
+
 static void
 ivar_dealloc(PyObject* _ivar)
 {
@@ -24,8 +26,7 @@ ivar_dealloc(PyObject* _ivar)
     Py_TYPE(ivar)->tp_free((PyObject*)ivar);
 }
 
-static PyObject*
-ivar_repr(PyObject* _self)
+static PyObject* _Nullable ivar_repr(PyObject* _self)
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     if (self->isOutlet) {
@@ -44,8 +45,8 @@ ivar_repr(PyObject* _self)
     }
 }
 
-static PyObject*
-ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__unused__)))
+static PyObject* _Nullable ivar_descr_get(PyObject* _self, PyObject* _Nullable obj,
+                                          PyObject* type __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     Ivar                    var;
@@ -113,7 +114,7 @@ ivar_descr_get(PyObject* _self, PyObject* obj, PyObject* type __attribute__((__u
 }
 
 static int
-ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
+ivar_descr_set(PyObject* _self, PyObject* _Nullable obj, PyObject* _Nullable value)
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
     Ivar                    var;
@@ -221,7 +222,7 @@ ivar_descr_set(PyObject* _self, PyObject* obj, PyObject* value)
 }
 
 static int
-ivar_init(PyObject* _self, PyObject* args, PyObject* kwds)
+ivar_init(PyObject* _self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char*            keywords[]  = {"name", "type", "isOutlet", NULL};
     PyObjCInstanceVariable* self        = (PyObjCInstanceVariable*)_self;
@@ -265,8 +266,8 @@ ivar_init(PyObject* _self, PyObject* args, PyObject* kwds)
     return 0;
 }
 
-static PyObject*
-ivar_class_setup(PyObject* _self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable ivar_class_setup(PyObject* _self, PyObject* _Nullable args,
+                                            PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", "class_dict", "instance_method_list",
                                "class_method_list", NULL};
@@ -315,8 +316,8 @@ PyDoc_STRVAR(
     "value is assigned to");
 
 PyDoc_STRVAR(ivar_typestr_doc, "The Objective-C type encoding");
-static PyObject*
-ivar_get_typestr(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable ivar_get_typestr(PyObject* _self, void* _Nullable closure
+                                            __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 
@@ -324,8 +325,8 @@ ivar_get_typestr(PyObject* _self, void* closure __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(ivar_name_doc, "The Objective-C name");
-static PyObject*
-ivar_get_name(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable ivar_get_name(PyObject* _self, void* _Nullable closure
+                                         __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self = (PyObjCInstanceVariable*)_self;
 
@@ -338,8 +339,8 @@ ivar_get_name(PyObject* _self, void* closure __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(ivar_isOutlet_doc, "True if the instance variable is an IBOutlet");
-static PyObject*
-ivar_get_isOutlet(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable ivar_get_isOutlet(PyObject* _self, void* _Nullable closure
+                                             __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
     PyObject*               result = self->isOutlet ? Py_True : Py_False;
@@ -348,8 +349,8 @@ ivar_get_isOutlet(PyObject* _self, void* closure __attribute__((__unused__)))
 }
 
 PyDoc_STRVAR(ivar_isSlot_doc, "True if the instance variable is a Python slot");
-static PyObject*
-ivar_get_isSlot(PyObject* _self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable ivar_get_isSlot(PyObject* _self, void* _Nullable closure
+                                           __attribute__((__unused__)))
 {
     PyObjCInstanceVariable* self   = (PyObjCInstanceVariable*)_self;
     PyObject*               result = self->isSlot ? Py_True : Py_False;
@@ -443,8 +444,7 @@ PyObjCInstanceVariable_SetName(PyObject* value, PyObject* name)
     return (self->name == NULL ? -1 : 0);
 }
 
-PyObject*
-PyObjCInstanceVariable_New(char* name)
+PyObject* _Nullable PyObjCInstanceVariable_New(char* name)
 {
     PyObject* result;
 
@@ -471,3 +471,5 @@ PyObjCInstanceVariable_New(char* name)
     }
     return result;
 }
+
+NS_ASSUME_NONNULL_END

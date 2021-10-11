@@ -557,8 +557,11 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                 continue;
             }
 
+            /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
+             * checked */
             if (!class_addProtocol(new_class,
-                                   PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+                                   (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(
+                                       wrapped_protocol))) {
                 goto error_cleanup;
             }
         }

@@ -3,6 +3,8 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 PyDoc_STRVAR(
     proto_cls_doc,
     "objc.formal_protocol(name, supers, selector_list)\n" CLINIC_SEP "\n"
@@ -24,8 +26,7 @@ proto_dealloc(PyObject* object)
     Py_TYPE(object)->tp_free(object);
 }
 
-static PyObject*
-proto_repr(PyObject* object)
+static PyObject* _Nullable proto_repr(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     const char*           name;
@@ -39,15 +40,15 @@ proto_repr(PyObject* object)
                                 (void*)self);
 }
 
-static PyObject*
-proto_get__class__(PyObject* object __attribute__((__unused__)),
-                   void*     closure __attribute__((__unused__)))
+static PyObject* _Nullable proto_get__class__(PyObject* object
+                                              __attribute__((__unused__)),
+                                              void* closure __attribute__((__unused__)))
 {
     return PyObjCClass_New([Protocol class]);
 }
 
-static PyObject*
-proto_get__name__(PyObject* object, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable proto_get__name__(PyObject* object,
+                                             void* closure __attribute__((__unused__)))
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     const char*           name = protocol_getName(self->objc);
@@ -60,8 +61,8 @@ proto_get__name__(PyObject* object, void* closure __attribute__((__unused__)))
     return PyUnicode_FromString(name);
 }
 
-static PyObject*
-proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused__)),
+                                     PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", "supers", "selectors", NULL};
 
@@ -79,8 +80,8 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     }
 
     if (supers != Py_None) {
-        supers = PySequence_Fast(supers,
-                                 "supers need to be a sequence of objc.formal_protocols");
+        supers = PySequence_Fast(
+            supers, "supers need to be None or a sequence of objc.formal_protocols");
         if (supers == NULL) {
             return NULL;
         }
@@ -91,8 +92,9 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
             PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
             if (!PyObjCFormalProtocol_Check(v)) {
                 Py_DECREF(supers);
-                PyErr_SetString(PyExc_TypeError,
-                                "supers need to be a sequence of objc.formal_protocols");
+                PyErr_SetString(
+                    PyExc_TypeError,
+                    "supers need to be None or a sequence of objc.formal_protocols");
                 return NULL;
             }
         }
@@ -101,8 +103,8 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         Py_INCREF(supers);
     }
 
-    selectors =
-        PySequence_Fast(selectors, "selectors need to be a sequence of selectors");
+    selectors = PySequence_Fast(
+        selectors, "selectors need to be a sequence of objc.selector instances");
     if (selectors == NULL) {
         Py_DECREF(supers);
         return NULL;
@@ -112,7 +114,8 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     for (i = 0; i < len; i++) {
         PyObject* sel = PySequence_Fast_GET_ITEM(selectors, i);
         if (!PyObjCSelector_Check(sel)) {
-            PyErr_SetString(PyExc_TypeError, "Selectors is not a list of selectors");
+            PyErr_SetString(PyExc_TypeError,
+                            "Selectors is not a list of objc.selector instances");
             Py_DECREF(supers);
             return NULL;
         }
@@ -128,7 +131,14 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
         len = PySequence_Fast_GET_SIZE(supers);
         for (i = 0; i < len; i++) {
             PyObject* v = PySequence_Fast_GET_ITEM(supers, i);
-            protocol_addProtocol(theProtocol, PyObjCFormalProtocol_GetProtocol(v));
+            Protocol* p = PyObjCFormalProtocol_GetProtocol(v);
+            if (p == nil) {
+                /* XXX: Should never happen because we've already checked that 'v'
+                 *  is a formal protocol object.
+                 */
+                goto error;
+            }
+            protocol_addProtocol(theProtocol, p);
         }
     }
 
@@ -204,8 +214,7 @@ error:
     return NULL;
 }
 
-static PyObject*
-proto_name(PyObject* object)
+static PyObject* _Nullable proto_name(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     const char*           name = protocol_getName(self->objc);
@@ -218,8 +227,7 @@ proto_name(PyObject* object)
     return PyUnicode_FromString(name);
 }
 
-static PyObject*
-proto_conformsTo_(PyObject* object, PyObject* args)
+static PyObject* _Nullable proto_conformsTo_(PyObject* object, PyObject* _Nullable args)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     PyObject*             protocol;
@@ -229,11 +237,10 @@ proto_conformsTo_(PyObject* object, PyObject* args)
         return NULL;
     }
 
-    if (!PyObjCFormalProtocol_Check(protocol)) {
-        PyErr_SetString(PyExc_TypeError, "Expecting a formal protocol");
+    objc_protocol = PyObjCFormalProtocol_GetProtocol(protocol);
+    if (objc_protocol == NULL) {
         return NULL;
     }
-    objc_protocol = PyObjCFormalProtocol_GetProtocol(protocol);
 
     if (protocol_conformsToProtocol(self->objc, objc_protocol)) {
         return PyBool_FromLong(1);
@@ -276,8 +283,7 @@ append_method_list(PyObject* lst, Protocol* protocol, BOOL isRequired, BOOL isIn
     return 0;
 }
 
-static PyObject*
-instanceMethods(PyObject* object)
+static PyObject* _Nullable instanceMethods(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     int                   r;
@@ -302,8 +308,7 @@ instanceMethods(PyObject* object)
     return result;
 }
 
-static PyObject*
-classMethods(PyObject* object)
+static PyObject* _Nullable classMethods(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
     int                   r;
@@ -328,8 +333,7 @@ classMethods(PyObject* object)
     return result;
 }
 
-static PyObject*
-descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
+static PyObject* _Nullable descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
 {
     PyObjCFormalProtocol*          self      = (PyObjCFormalProtocol*)object;
     SEL                            aSelector = NULL;
@@ -369,8 +373,7 @@ descriptionForInstanceMethod_(PyObject* object, PyObject* sel)
     }
 }
 
-static PyObject*
-descriptionForClassMethod_(PyObject* object, PyObject* sel)
+static PyObject* _Nullable descriptionForClassMethod_(PyObject* object, PyObject* sel)
 {
     PyObjCFormalProtocol*          self      = (PyObjCFormalProtocol*)object;
     SEL                            aSelector = NULL;
@@ -474,9 +477,9 @@ PyTypeObject PyObjCFormalProtocol_Type = {
  * Return NULL if no information can be found, but does not set an
  * exception.
  */
-const char*
-PyObjCFormalProtocol_FindSelectorSignature(PyObject* object, SEL selector,
-                                           int isClassMethod)
+const char* _Nullable PyObjCFormalProtocol_FindSelectorSignature(PyObject* object,
+                                                                 SEL       selector,
+                                                                 int       isClassMethod)
 {
     PyObjCFormalProtocol*          self = (PyObjCFormalProtocol*)object;
     struct objc_method_description descr;
@@ -666,10 +669,11 @@ PyObjCFormalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_class
                     metadict);
 }
 
-PyObject*
-PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
+PyObject* _Nullable PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
 {
     PyObjCFormalProtocol* result;
+
+    PyObjC_Assert(protocol, NULL);
 
     result = (PyObjCFormalProtocol*)PyObject_New(PyObjCFormalProtocol,
                                                  &PyObjCFormalProtocol_Type);
@@ -682,8 +686,7 @@ PyObjCFormalProtocol_ForProtocol(Protocol* protocol)
     return (PyObject*)result;
 }
 
-Protocol*
-PyObjCFormalProtocol_GetProtocol(PyObject* object)
+Protocol* _Nullable PyObjCFormalProtocol_GetProtocol(PyObject* object)
 {
     PyObjCFormalProtocol* self = (PyObjCFormalProtocol*)object;
 
@@ -696,3 +699,5 @@ PyObjCFormalProtocol_GetProtocol(PyObject* object)
 
     return self->objc;
 }
+
+NS_ASSUME_NONNULL_END

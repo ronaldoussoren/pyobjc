@@ -12,8 +12,9 @@
 
 #include <dlfcn.h>
 
-static CFBundleRef
-CreateCFBundleFromNSBundle(NSBundle* bundle)
+NS_ASSUME_NONNULL_BEGIN
+
+static CFBundleRef _Nullable CreateCFBundleFromNSBundle(NSBundle* bundle)
 {
     CFURLRef bundleURL;
 
@@ -21,9 +22,9 @@ CreateCFBundleFromNSBundle(NSBundle* bundle)
     return CFBundleCreate(kCFAllocatorDefault, bundleURL);
 }
 
-PyObject*
-PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)), PyObject* args,
-                      PyObject* kwds)
+PyObject* _Nullable PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)),
+                                          PyObject* _Nullable args,
+                                          PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"bundle", "module_globals", "typeid",
                                "name",   "skip_undefined", NULL};
@@ -89,9 +90,9 @@ PyObjC_loadSpecialVar(PyObject* self __attribute__((__unused__)), PyObject* args
     return Py_None;
 }
 
-PyObject*
-PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)), PyObject* args,
-                           PyObject* kwds)
+PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)),
+                                               PyObject* _Nullable args,
+                                               PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"bundle", "module_globals", "variableInfo",
                                "skip_undefined", NULL};
@@ -196,9 +197,9 @@ PyObjC_loadBundleVariables(PyObject* self __attribute__((__unused__)), PyObject*
     return Py_None;
 }
 
-PyObject*
-PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)), PyObject* args,
-                           PyObject* kwds)
+PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__unused__)),
+                                               PyObject* _Nullable args,
+                                               PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"bundle", "module_globals", "functionInfo",
                                "skip_undefined", NULL};
@@ -331,8 +332,7 @@ struct functionlist {
     function func;
 };
 
-static function
-find_function(struct functionlist* functions, PyObject* name)
+static function _Nullable find_function(struct functionlist* functions, PyObject* name)
 {
     while (functions->name != NULL) {
         if (PyObjC_is_ascii_string(name, functions->name)) {
@@ -343,9 +343,9 @@ find_function(struct functionlist* functions, PyObject* name)
     return NULL;
 }
 
-PyObject*
-PyObjC_loadFunctionList(PyObject* self __attribute__((__unused__)), PyObject* args,
-                        PyObject* kwds)
+PyObject* _Nullable PyObjC_loadFunctionList(PyObject* self __attribute__((__unused__)),
+                                            PyObject* _Nullable args,
+                                            PyObject* _Nullable kwds)
 {
     static char*         keywords[] = {"function_list", "module_globals", "functionInfo",
                                "skip_undefined", NULL};
@@ -429,3 +429,5 @@ PyObjC_loadFunctionList(PyObject* self __attribute__((__unused__)), PyObject* ar
     Py_INCREF(Py_None);
     return Py_None;
 }
+
+NS_ASSUME_NONNULL_END

@@ -187,7 +187,9 @@ PyObject* _Nullable PyObjCPointerWrapper_ToPython(const char* type, void* datum)
             result =
                 PyObjCCF_NewSpecialFromTypeID(CFAllocatorGetTypeID(), *(void**)datum);
 
-            PyObjC_RegisterPythonProxy(*(id*)datum, result);
+            if (result != NULL) {
+                PyObjC_RegisterPythonProxy(*(id*)datum, result);
+            }
             return result;
         }
     }

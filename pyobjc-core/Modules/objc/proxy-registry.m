@@ -1,7 +1,9 @@
 #include "pyobjc.h"
 
-static NSMapTable* python_proxies = NULL;
-static NSMapTable* objc_proxies   = NULL;
+NS_ASSUME_NONNULL_BEGIN
+
+static NSMapTable* _Nonnull python_proxies;
+static NSMapTable* _Nonnull objc_proxies;
 
 /*
  * Iff true the python->objc proxy registry uses a zero-ing weakref
@@ -73,8 +75,7 @@ PyObjC_UnregisterObjCProxy(PyObject* original, id proxy)
     }
 }
 
-PyObject*
-PyObjC_FindPythonProxy(id original)
+PyObject* _Nullable PyObjC_FindPythonProxy(id original)
 {
     PyObject* v;
 
@@ -89,8 +90,7 @@ PyObjC_FindPythonProxy(id original)
     return v;
 }
 
-id
-PyObjC_FindObjCProxy(PyObject* original)
+id _Nullable PyObjC_FindObjCProxy(PyObject* original)
 {
     if (original == Py_None) {
         return nil;
@@ -100,8 +100,7 @@ PyObjC_FindObjCProxy(PyObject* original)
     }
 }
 
-id
-PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
+id _Nullable PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
 {
     id result = PyObjC_FindObjCProxy(value);
     if (result == NULL) {
@@ -114,3 +113,5 @@ PyObjC_FindOrRegisterObjCProxy(PyObject* value, id proxy)
         return result;
     }
 }
+
+NS_ASSUME_NONNULL_END

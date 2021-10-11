@@ -5,6 +5,8 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 PyDoc_STRVAR(
     proto_cls_doc,
     "objc.informal_protocol(name, selector_list)\n" CLINIC_SEP "\n"
@@ -16,8 +18,9 @@ PyDoc_STRVAR(
 typedef struct {
     PyObject_HEAD
 
-    PyObject* name;
-    PyObject* selectors;
+    /*  XXX: _Nullable because of dealloc impl, can this be avoided? */
+    PyObject* _Nullable name;
+    PyObject* _Nullable selectors;
 } PyObjCInformalProtocol;
 
 static PyObject* selToProtocolMapping = NULL;
@@ -61,8 +64,7 @@ proto_dealloc(PyObject* object)
     Py_TYPE(object)->tp_free(object);
 }
 
-static PyObject*
-proto_repr(PyObject* object)
+static PyObject* _Nullable proto_repr(PyObject* object)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)object;
     PyObject*               b    = NULL;
@@ -84,8 +86,8 @@ proto_repr(PyObject* object)
     return r;
 }
 
-static PyObject*
-proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable proto_new(PyTypeObject* type __attribute__((__unused__)),
+                                     PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", "selectors", NULL};
 
@@ -151,7 +153,7 @@ proto_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
 }
 
 static int
-proto_traverse(PyObject* _self, visitproc visit, void* arg)
+proto_traverse(PyObject* _self, visitproc visit, void* _Nullable arg)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)_self;
     Py_VISIT(self->name);
@@ -196,8 +198,8 @@ PyTypeObject PyObjCInformalProtocol_Type = {
  * Return NULL if no information can be found, but does not set an
  * exception.
  */
-PyObject*
-PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMethod)
+PyObject* _Nullable PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector,
+                                                        int isClassMethod)
 {
     PyObjCInformalProtocol* self = (PyObjCInformalProtocol*)obj;
     Py_ssize_t              i, len;
@@ -209,7 +211,7 @@ PyObjCInformalProtocol_FindSelector(PyObject* obj, SEL selector, int isClassMeth
                      "First argument is not an 'objc.informal_protocol' "
                      "but '%s'",
                      Py_TYPE(obj)->tp_name);
-        return 0;
+        return NULL;
     }
 
     seq = PySequence_Fast(self->selectors, "selector list not a sequence?");
@@ -341,8 +343,7 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
     return 1;
 }
 
-PyObject*
-PyObjCInformalProtocol_FindProtocol(SEL selector)
+PyObject* _Nullable PyObjCInformalProtocol_FindProtocol(SEL selector)
 {
     if (selToProtocolMapping == NULL)
         return NULL;
@@ -350,3 +351,5 @@ PyObjCInformalProtocol_FindProtocol(SEL selector)
     return PyDict_GetItemStringWithError(selToProtocolMapping,
                                          (char*)sel_getName(selector));
 }
+
+NS_ASSUME_NONNULL_END

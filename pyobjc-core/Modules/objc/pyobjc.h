@@ -105,7 +105,6 @@
 #import "block_support.h"
 #import "bundle-variables.h"
 #import "class-builder.h"
-#import "class-descriptor.h"
 #import "class-list.h"
 #import "closure_pool.h"
 #import "corefoundation.h"
