@@ -1,20 +1,27 @@
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef struct {
     PyObject_HEAD
 
-    PyObject* callable;
+    PyObject* _Nullable callable;
 #if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc vectorcall;
 #endif
 
 } PyObjCPythonMethod;
 
-PyObject*
-PyObjCPythonMethod_GetMethod(PyObject* value)
+PyObject* _Nullable PyObjCPythonMethod_GetMethod(PyObject* value)
 {
     if (!PyObjCPythonMethod_Check(value)) {
         PyErr_SetString(PyExc_TypeError, "Expecting a python-method object");
+        return NULL;
+    }
+
+    /* Should not happen... */
+    if (((PyObjCPythonMethod*)value)->callable == NULL) {
+        PyErr_SetString(PyExc_TypeError, "python-method without callable");
         return NULL;
     }
 
@@ -31,8 +38,8 @@ static PyMemberDef meth_members[] = {{
                                          .name = NULL /* SENTINEL */
                                      }};
 
-static PyObject*
-meth_descr_get(PyObject* self, PyObject* obj, PyObject* class)
+static PyObject* _Nullable meth_descr_get(PyObject* self, PyObject* _Nullable obj,
+                                          PyObject* class)
 {
     descrgetfunc f;
     PyObject*    result;
@@ -52,7 +59,7 @@ meth_descr_get(PyObject* self, PyObject* obj, PyObject* class)
 }
 
 static int
-meth_traverse(PyObject* self, visitproc visit, void* arg)
+meth_traverse(PyObject* self, visitproc visit, void* _Nullable arg)
 {
     return visit(((PyObjCPythonMethod*)self)->callable, arg);
 }
@@ -71,39 +78,47 @@ meth_dealloc(PyObject* self)
     Py_TYPE(self)->tp_free(self);
 }
 
-static PyObject*
-meth_call(PyObject* self, PyObject* args, PyObject* kwds)
+static PyObject* _Nullable meth_call(PyObject* self, PyObject* args, PyObject* kwds)
 {
+    if (((PyObjCPythonMethod*)self)->callable == NULL) {
+        PyErr_SetString(PyExc_TypeError, "python-method without callable");
+        return NULL;
+    }
     return PyObject_Call(((PyObjCPythonMethod*)self)->callable, args, kwds);
 }
 
 #if PY_VERSION_HEX >= 0x03090000
-static PyObject*
-meth_vectorcall(PyObject* self, PyObject* const* args, size_t nargsf, PyObject* kwnames)
+static PyObject* _Nullable meth_vectorcall(PyObject* self, PyObject* const* args,
+                                           size_t nargsf, PyObject* kwnames)
 {
+    if (((PyObjCPythonMethod*)self)->callable == NULL) {
+        PyErr_SetString(PyExc_TypeError, "python-method without callable");
+        return NULL;
+    }
     return PyObject_Vectorcall(((PyObjCPythonMethod*)self)->callable, args, nargsf,
                                kwnames);
 }
 #endif
 
-static PyObject*
-meth_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable meth_new(PyTypeObject* type __attribute__((__unused__)),
+                                    PyObject* args, PyObject* kwds)
 {
-    static char*        keywords[] = {"callable", NULL};
-    PyObject*           callable;
+    static char* keywords[] = {"callable", NULL};
+    PyObject* _Nonnull callable;
     PyObjCPythonMethod* result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O", keywords, &callable)) {
         return NULL;
     }
+    PyObjC_Assert(callable != NULL, NULL);
 
     result =
         (PyObjCPythonMethod*)PyObject_New(PyObjCPythonMethod, &PyObjCPythonMethod_Type);
     if (result == NULL) {
         return NULL;
     }
-    result->callable = callable;
     Py_INCREF(callable);
+    result->callable = callable;
 #if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = meth_vectorcall;
 #endif
@@ -137,3 +152,5 @@ PyTypeObject PyObjCPythonMethod_Type = {
     .tp_clear     = meth_clear,
     .tp_call      = meth_call,
 };
+
+NS_ASSUME_NONNULL_END

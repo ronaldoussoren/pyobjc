@@ -125,8 +125,6 @@ extern PyObject* PyObjCNM_date_format_string;
 extern PyObject* PyObjCNM_objc_memview_object;
 extern PyObject* PyObjCNM_objc_NULL;
 
-extern int PyObjC_setup_names(void);
-
 extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
 extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);
 

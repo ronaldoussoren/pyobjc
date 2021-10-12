@@ -10,6 +10,8 @@
 
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #ifndef Py_HAVE_LOCAL_LOOKUP
 
 /*
@@ -26,8 +28,7 @@ typedef struct {
     PyTypeObject* obj_type;
 } superobject;
 
-static PyObject*
-super_getattro(PyObject* self, PyObject* name)
+static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
 {
     superobject* su   = (superobject*)self;
     int          skip = su->obj_type == NULL;
@@ -174,3 +175,5 @@ PyTypeObject PyObjCSuper_Type = {
 };
 
 #endif /* !Py_HAVE_LOCAL_LOOKUP */
+
+NS_ASSUME_NONNULL_END

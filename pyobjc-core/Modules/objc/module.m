@@ -2314,9 +2314,6 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
         return NULL;
     }
 
-    if (PyObjC_setup_names() < 0) {
-        return NULL;
-    }
     if (PyObjC_setup_nsdata() < 0) {
         return NULL;
     }
