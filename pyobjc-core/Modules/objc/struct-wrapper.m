@@ -889,15 +889,16 @@ struct_init(ffi_cif* cif __attribute__((__unused__)), void* retval,
     return;
 }
 
-static initproc _Nullable make_init(const char* typestr)
+static initproc _Nullable make_init(const char* _typestr)
 {
     static ffi_cif* init_cif = NULL;
     ffi_closure*    cl       = NULL;
     ffi_status      rv;
     void*           codeloc;
+    const char*     typestr_copy;
 
-    typestr = PyObjCUtil_Strdup(typestr);
-    if (typestr == NULL) {
+    typestr_copy = PyObjCUtil_Strdup(_typestr);
+    if (typestr_copy == NULL) {
         return NULL;
     }
 
@@ -907,7 +908,7 @@ static initproc _Nullable make_init(const char* typestr)
         init_cif  = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (init_cif == NULL) {
-            PyMem_Free((void*)typestr);
+            PyMem_Free((void*)typestr_copy);
             return NULL;
         }
     }
@@ -929,13 +930,14 @@ static initproc _Nullable make_init(const char* typestr)
 #pragma clang diagnostic pop
 #endif
     if (cl == NULL) {
-        PyMem_Free((void*)typestr);
+        PyMem_Free((void*)typestr_copy);
         return NULL;
     }
 
 #if PyObjC_BUILD_RELEASE >= 1015
     if (@available(macOS 10.15, *)) {
-        rv = ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr, codeloc);
+        rv =
+            ffi_prep_closure_loc(cl, init_cif, struct_init, (char*)typestr_copy, codeloc);
     } else {
 #ifdef __arm64__
         rv = FFI_BAD_ABI; /* Can't happen... */
@@ -943,14 +945,14 @@ static initproc _Nullable make_init(const char* typestr)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
-        rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+        rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr_copy);
 
 #pragma clang diagnostic pop
 #endif
     }
 #else
 
-    rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr);
+    rv = ffi_prep_closure(cl, init_cif, struct_init, (char*)typestr_copy);
 #endif
 
     if (rv != FFI_OK) {
@@ -970,7 +972,7 @@ static initproc _Nullable make_init(const char* typestr)
         ffi_closure_free(cl);
 #pragma clang diagnostic pop
 #endif
-        PyMem_Free((void*)typestr);
+        PyMem_Free((void*)typestr_copy);
         PyErr_Format(PyExc_RuntimeError, "Cannot create FFI closure: %d", rv);
         return NULL;
     }
@@ -1281,9 +1283,10 @@ static struct StructTypeObject StructTemplate_Type = {
     .pack = -1};
 
 PyObject*
-PyObjC_MakeStructType(const char* name, const char* doc, initproc _Nullable tpinit,
-                      Py_ssize_t  numFields, const char* _Nonnull* _Nonnull fieldnames,
-                      const char* typestr, Py_ssize_t pack)
+PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
+                      initproc _Nullable tpinit, Py_ssize_t                  numFields,
+                      const char* _Nonnull* _Nonnull fieldnames, const char* typestr,
+                      Py_ssize_t pack)
 {
     struct StructTypeObject* result;
     PyMemberDef*             members;
@@ -1475,8 +1478,9 @@ PyObject* _Nullable PyObjC_CreateRegisteredStruct(
 }
 
 PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char* name,
-                                              const char* doc, initproc _Nullable tpinit,
-                                              Py_ssize_t  numFields,
+                                              const char* _Nullable doc,
+                                              initproc _Nullable tpinit,
+                                              Py_ssize_t numFields,
                                               const char* _Nonnull* _Nullable fieldnames,
                                               Py_ssize_t pack)
 {

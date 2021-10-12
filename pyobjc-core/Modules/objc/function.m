@@ -8,22 +8,23 @@
  */
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef struct {
     PyObject_HEAD
 
     ffi_cif*               cif;
     PyObjCMethodSignature* methinfo;
     void*                  function;
-    PyObject*              doc;
-    PyObject*              name;
-    PyObject*              module;
+    PyObject* _Nullable doc;
+    PyObject* name;
+    PyObject* _Nullable module;
 #if PY_VERSION_HEX >= 0x03090000
     vectorcallfunc vectorcall;
 #endif
 } func_object;
 
-static PyObject*
-func_metadata(PyObject* self)
+static PyObject* _Nullable func_metadata(PyObject* self)
 {
     return PyObjCMethodSignature_AsDict(((func_object*)self)->methinfo);
 }
@@ -66,8 +67,7 @@ static PyMemberDef func_members[] = {{
                                          .name = NULL /* SENTINEL */
                                      }};
 
-static PyObject*
-func_repr(PyObject* _self)
+static PyObject* _Nullable func_repr(PyObject* _self)
 {
     func_object* self = (func_object*)_self;
 
@@ -80,8 +80,8 @@ func_repr(PyObject* _self)
     }
 }
 
-static PyObject*
-func_vectorcall(PyObject* s, PyObject* const* args, size_t nargsf, PyObject* kwnames)
+static PyObject* _Nullable func_vectorcall(PyObject* s, PyObject* const* args,
+                                           size_t nargsf, PyObject* kwnames)
 {
     func_object* self = (func_object*)s;
     Py_ssize_t   byref_in_count;
@@ -283,9 +283,8 @@ error:
  * for a number of simplifications that significantly speed up functions calls
  * (about 50% faster on my M1 laptop)
  */
-static PyObject*
-func_vectorcall_simple(PyObject* s, PyObject* const* args, size_t nargsf,
-                       PyObject* kwnames)
+static PyObject* _Nullable func_vectorcall_simple(PyObject* s, PyObject* const* args,
+                                                  size_t nargsf, PyObject* kwnames)
 {
     func_object* self = (func_object*)s;
 
@@ -362,8 +361,9 @@ error:
 }
 #endif
 
-static PyObject*
-func_call(PyObject* s, PyObject* args, PyObject* kwds)
+#if PY_VERSION_HEX < 0x03090000
+static PyObject* _Nullable func_call(PyObject* s, PyObject* _Nullable args,
+                                     PyObject* _Nullable kwds)
 {
     if (kwds != NULL && (!PyDict_Check(kwds) || PyDict_Size(kwds) != 0)) {
         PyErr_SetString(PyExc_TypeError, "keyword arguments not supported");
@@ -372,16 +372,17 @@ func_call(PyObject* s, PyObject* args, PyObject* kwds)
 
     return func_vectorcall(s, PyTuple_ITEMS(args), PyTuple_GET_SIZE(args), NULL);
 }
+#endif
 
 static void
 func_dealloc(PyObject* s)
 {
     func_object* self = (func_object*)s;
 
-    Py_CLEAR(self->doc);
-    Py_CLEAR(self->name);
-    Py_CLEAR(self->module);
-    Py_CLEAR(self->methinfo);
+    Py_XDECREF(self->doc);
+    Py_XDECREF(self->name);
+    Py_XDECREF(self->module);
+    Py_XDECREF(self->methinfo);
     if (self->cif != NULL) {
         PyObjCFFI_FreeCIF(self->cif);
     }
@@ -389,8 +390,8 @@ func_dealloc(PyObject* s)
 }
 
 static PyObject*
-func_descr_get(PyObject* self, PyObject* obj __attribute__((__unused__)),
-               PyObject* type __attribute__((__unused__)))
+func_descr_get(PyObject* self, PyObject* _Nullable obj __attribute__((__unused__)),
+               PyObject* _Nullable type __attribute__((__unused__)))
 {
     Py_INCREF(self);
     return self;
@@ -402,12 +403,13 @@ PyTypeObject PyObjCFunc_Type = {
     .tp_itemsize                                   = 0,
     .tp_dealloc                                    = func_dealloc,
     .tp_repr                                       = func_repr,
-    .tp_call                                       = func_call,
 #if PY_VERSION_HEX >= 0x03090000
     .tp_flags             = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_VECTORCALL,
     .tp_vectorcall_offset = offsetof(func_object, vectorcall),
+    .tp_call              = PyVectorcall_Call,
 #else
     .tp_flags = Py_TPFLAGS_DEFAULT,
+    .tp_call  = func_call,
 #endif
 
     .tp_getattro  = PyObject_GenericGetAttr,
@@ -419,9 +421,8 @@ PyTypeObject PyObjCFunc_Type = {
     .tp_descr_get = func_descr_get,
 };
 
-PyObject*
-PyObjCFunc_WithMethodSignature(PyObject* name, void* func,
-                               PyObjCMethodSignature* methinfo)
+PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, void* func,
+                                                   PyObjCMethodSignature* methinfo)
 {
     func_object* result;
 
@@ -449,9 +450,8 @@ PyObjCFunc_WithMethodSignature(PyObject* name, void* func,
     return (PyObject*)result;
 }
 
-PyObject*
-PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
-               PyObject* meta)
+PyObject* _Nullable PyObjCFunc_New(PyObject* name, void* func, const char* signature,
+                                   PyObject* doc, PyObject* meta)
 {
     func_object* result;
 
@@ -462,11 +462,13 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
 #if PY_VERSION_HEX >= 0x03090000
     result->vectorcall = func_vectorcall;
 #endif
-    result->function = NULL;
-    result->doc      = NULL;
-    result->name     = NULL;
-    result->module   = NULL;
-    result->cif      = NULL;
+    result->function = func;
+
+    /* set later in this function */
+    result->doc    = (PyObject* _Nonnull)NULL;
+    result->name   = (PyObject* _Nonnull)NULL;
+    result->module = NULL;
+    result->cif    = NULL;
 
     result->methinfo = PyObjCMethodSignature_WithMetaData(signature, meta, NO);
     if (result->methinfo == NULL) {
@@ -480,8 +482,6 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
     }
 #endif
 
-    result->function = func;
-
     SET_FIELD_INCREF(result->doc, doc);
     SET_FIELD_INCREF(result->name, name);
     result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
@@ -493,8 +493,9 @@ PyObjCFunc_New(PyObject* name, void* func, const char* signature, PyObject* doc,
     return (PyObject*)result;
 }
 
-PyObjCMethodSignature*
-PyObjCFunc_GetMethodSignature(PyObject* func)
+PyObjCMethodSignature* _Nullable PyObjCFunc_GetMethodSignature(PyObject* func)
 {
     return ((func_object*)func)->methinfo;
 }
+
+NS_ASSUME_NONNULL_END

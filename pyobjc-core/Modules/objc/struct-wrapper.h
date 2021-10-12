@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
  *    fields.
  *
  */
-PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char*         doc,
+PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char* _Nullable doc,
                                           initproc _Nullable tpinit, Py_ssize_t numFields,
                                           const char* _Nonnull* _Nonnull fieldnames,
                                           const char* typestr, Py_ssize_t pack);
@@ -67,8 +67,9 @@ PyObject* _Nullable PyObjC_MakeStructType(const char* name, const char*         
  *    the type.
  */
 PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char* name,
-                                              const char* doc, initproc _Nullable tpinit,
-                                              Py_ssize_t  numFields,
+                                              const char* _Nullable doc,
+                                              initproc _Nullable tpinit,
+                                              Py_ssize_t numFields,
                                               const char* _Nonnull* _Nullable fieldnames,
                                               Py_ssize_t pack);
 

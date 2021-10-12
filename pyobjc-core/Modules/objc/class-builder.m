@@ -1043,15 +1043,21 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
 
         meth = class_getInstanceMethod(super_class, PyObjCSelector_GetSelector(value));
         if (meth) {
-            is_override = 1;
-            if (!PyObjCRT_SignaturesEqual(method_getTypeEncoding(meth),
+            is_override               = 1;
+            const char* meth_encoding = method_getTypeEncoding(meth);
+            if (meth_encoding == NULL) {
+                PyErr_Format(PyObjCExc_BadPrototypeError,
+                             "%R cannot determine super_class type encoding", value);
+                goto error_cleanup;
+            }
+
+            if (!PyObjCRT_SignaturesEqual(meth_encoding,
                                           PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(
                     PyObjCExc_BadPrototypeError,
                     "%R has signature that is not compatible with super-class: %s != %s",
-                    value, method_getTypeEncoding(meth),
-                    PyObjCSelector_GetNativeSignature(value));
+                    value, meth_encoding, PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }
@@ -1087,16 +1093,21 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
 
         meth = class_getClassMethod(super_class, PyObjCSelector_GetSelector(value));
         if (meth) {
-            is_override = 1;
+            is_override               = 1;
+            const char* meth_encoding = method_getTypeEncoding(meth);
+            if (meth_encoding == NULL) {
+                PyErr_Format(PyObjCExc_BadPrototypeError,
+                             "%R: Cannot determine superclass type encoding", value);
+                goto error_cleanup;
+            }
 
-            if (!PyObjCRT_SignaturesEqual(method_getTypeEncoding(meth),
+            if (!PyObjCRT_SignaturesEqual(meth_encoding,
                                           PyObjCSelector_GetNativeSignature(value))) {
 
                 PyErr_Format(
                     PyObjCExc_BadPrototypeError,
                     "%R has signature that is not compatible with super-class: %s != %s",
-                    value, method_getTypeEncoding(meth),
-                    PyObjCSelector_GetNativeSignature(value));
+                    value, meth_encoding, PyObjCSelector_GetNativeSignature(value));
                 goto error_cleanup;
             }
         }

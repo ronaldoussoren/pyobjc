@@ -4,18 +4,32 @@
 
 #include "pyobjc.h"
 
-#import <Foundation/Foundation.h>
+NS_ASSUME_NONNULL_BEGIN
 
-PyObject* PyObjCExc_Error                = NULL;
-PyObject* PyObjCExc_NoSuchClassError     = NULL;
-PyObject* PyObjCExc_InternalError        = NULL;
-PyObject* PyObjCExc_UnInitDeallocWarning = NULL;
-PyObject* PyObjCExc_ObjCRevivalWarning   = NULL;
-PyObject* PyObjCExc_LockError            = NULL;
-PyObject* PyObjCExc_BadPrototypeError    = NULL;
-PyObject* PyObjCExc_UnknownPointerError  = NULL;
-PyObject* PyObjCExc_DeprecationWarning   = NULL;
-PyObject* PyObjCExc_ObjCPointerWarning   = NULL;
+PyObject* PyObjCExc_Error;
+PyObject* PyObjCExc_NoSuchClassError;
+PyObject* PyObjCExc_InternalError;
+PyObject* PyObjCExc_UnInitDeallocWarning;
+PyObject* PyObjCExc_ObjCRevivalWarning;
+PyObject* PyObjCExc_LockError;
+PyObject* PyObjCExc_BadPrototypeError;
+PyObject* PyObjCExc_UnknownPointerError;
+PyObject* PyObjCExc_DeprecationWarning;
+PyObject* PyObjCExc_ObjCPointerWarning;
+
+PyObject* PyObjCNM_insert;
+PyObject* PyObjCNM_append;
+PyObject* PyObjCNM_strftime;
+PyObject* PyObjCNM_keys;
+PyObject* PyObjCNM_clear;
+PyObject* PyObjCNM_discard;
+PyObject* PyObjCNM_add;
+PyObject* PyObjCNM_values;
+PyObject* PyObjCNM_description;
+PyObject* PyObjCNM___get__;
+PyObject* PyObjCNM_date_format_string;
+PyObject* PyObjCNM_objc_memview_object;
+PyObject* PyObjCNM_objc_NULL;
 
 int
 PyObjCUtil_Init(PyObject* module)
@@ -42,13 +56,38 @@ PyObjCUtil_Init(PyObject* module)
     NEW_EXC(PyObjCExc_ObjCPointerWarning, "ObjCPointerWarning", PyExc_Warning);
 
 #undef NEW_EXC
+
+#define NEW_STR(identifier, strvalue)                                                    \
+    identifier = PyUnicode_InternFromString(strvalue);                                   \
+    if (identifier == NULL) {                                                            \
+        return -1;                                                                       \
+    }
+
+    NEW_STR(PyObjCNM_insert, "insert");
+    NEW_STR(PyObjCNM_append, "append");
+    NEW_STR(PyObjCNM_strftime, "strftime");
+    NEW_STR(PyObjCNM_keys, "keys");
+    NEW_STR(PyObjCNM_clear, "clear");
+    NEW_STR(PyObjCNM_discard, "discard");
+    NEW_STR(PyObjCNM_add, "add");
+    NEW_STR(PyObjCNM_values, "values");
+    NEW_STR(PyObjCNM_description, "description");
+    NEW_STR(PyObjCNM___get__, "__get__");
+    NEW_STR(PyObjCNM_date_format_string, "%Y-%m-%d %H:%M:%S %z");
+    NEW_STR(PyObjCNM_objc_memview_object, "objc.memview object");
+    NEW_STR(PyObjCNM_objc_NULL, "objc.NULL");
+
+#undef NEW_STR
+
     return 0;
 }
 
 static PyObject*
-ObjCErr_PyExcForName(const char* value)
+ObjCErr_PyExcForName(const char* _Nullable value)
 {
-    if (strcmp(value, "NSRangeException") == 0) {
+    if (value == NULL) {
+        return PyObjCExc_Error;
+    } else if (strcmp(value, "NSRangeException") == 0) {
         return PyExc_IndexError;
 
     } else if (strcmp(value, "NSInvalidArgumentException") == 0) {
@@ -185,6 +224,7 @@ PyObjCErr_FromObjC(NSObject* localException)
     PyObjC_END_WITH_GIL
 }
 
+/* XXX: To be removed */
 void
 PyObjCErr_ToObjC(void)
 {
@@ -315,7 +355,7 @@ PyObjCErr_AsExc(void)
 }
 
 void
-PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
+PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nullable state)
 {
     NSException* exc = PyObjCErr_AsExc();
     assert(exc != nil);
@@ -331,8 +371,7 @@ PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
     abort();
 }
 
-char*
-PyObjCUtil_Strdup(const char* value)
+char* _Nullable PyObjCUtil_Strdup(const char* value)
 {
     Py_ssize_t len;
     char*      result;
@@ -389,8 +428,7 @@ PyObjC_FreeCArray(int code, Py_buffer* view)
     }
 }
 
-static inline PyTypeObject*
-fetch_array_type(void)
+static inline PyTypeObject* _Nullable fetch_array_type(void)
 {
     static PyTypeObject* array_type = NULL;
 
@@ -675,8 +713,9 @@ code_compatible(char array_code, char type_code)
  */
 int
 PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
-                      PyObject* pythonList, void** array, Py_ssize_t* size,
-                      PyObject** bufobj, Py_buffer* view)
+                      PyObject* pythonList, void* _Nullable* _Nonnull array,
+                      Py_ssize_t* _Nullable size, PyObject* _Nullable* _Nonnull bufobj,
+                      Py_buffer* view)
 {
     Py_ssize_t eltsize = PyObjCRT_SizeOfType(elementType);
     Py_ssize_t i;
@@ -1018,8 +1057,8 @@ PyObjC_PythonToCArray(BOOL writable, BOOL exactSize, const char* elementType,
     }
 }
 
-PyObject*
-PyObjC_CArrayToPython(const char* elementType, void* array, Py_ssize_t size)
+PyObject* _Nullable PyObjC_CArrayToPython(const char* elementType, void* array,
+                                          Py_ssize_t size)
 {
     PyObject*  result;
     Py_ssize_t i;
@@ -1116,9 +1155,9 @@ PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
     return 0;
 }
 
-PyObject*
-PyObjC_CArrayToPython2(const char* elementType, void* array, Py_ssize_t size,
-                       bool alreadyRetained, bool alreadyCFRetained)
+PyObject* _Nullable PyObjC_CArrayToPython2(const char* elementType, void* array,
+                                           Py_ssize_t size, bool alreadyRetained,
+                                           bool alreadyCFRetained)
 {
     PyObject*  result;
     Py_ssize_t i;
@@ -1230,8 +1269,7 @@ PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string, size_
     return strncmp((const char*)(PyUnicode_DATA(unicode_string)), ascii_string, n) == 0;
 }
 
-PyObject*
-PyObjC_ImportName(const char* name)
+PyObject* _Nullable PyObjC_ImportName(const char* name)
 {
     PyObject* py_name;
     PyObject* mod;
@@ -1258,8 +1296,7 @@ PyObjC_ImportName(const char* name)
     }
 }
 
-PyObject*
-PyObjC_AdjustSelf(PyObject* object)
+PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object)
 {
     if (PyType_Check(object)
         && PyType_IsSubtype((PyTypeObject*)object, &PyObjCClass_Type)) {
@@ -1297,8 +1334,7 @@ PyObjCRT_SignaturesEqual(const char* sig1, const char* sig2)
     return strcmp(buf1, buf2) == 0;
 }
 
-PyObject*
-PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
+PyObject* _Nullable PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
 {
     PyObject*  values;
     PyObject*  seq;
@@ -1334,9 +1370,9 @@ PyObjC_FindSELInDict(PyObject* clsdict, SEL selector)
     return NULL;
 }
 
-char*
-PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
+char* _Nullable PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
 {
+    /* XXX: strXcpy instead */
     size_t res = snprintf(buf, buflen, "%s", sel_getName(sel));
     char*  cur;
 
@@ -1360,8 +1396,7 @@ PyObjC_SELToPythonName(SEL sel, char* buf, size_t buflen)
     return buf;
 }
 
-PyObject*
-PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
+PyObject* _Nullable PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key)
 {
     PyObject* result;
     PyObject* keystring = PyUnicode_FromString(key);
@@ -1399,7 +1434,7 @@ PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args, size_
 }
 
 int
-PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames)
+PyObjC_CheckNoKwnames(PyObject* callable, PyObject* _Nullable kwnames)
 {
     if (kwnames == NULL)
         return 0;
@@ -1411,8 +1446,7 @@ PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames)
     return -1;
 }
 
-PyObject*
-PyObjC_MakeCVoidP(void* ptr)
+PyObject* _Nullable PyObjC_MakeCVoidP(void* _Nullable ptr)
 {
     if (ptr == NULL) {
         Py_INCREF(Py_None);
@@ -1434,58 +1468,7 @@ PyObjC_MakeCVoidP(void* ptr)
     return res;
 }
 
-PyObject* PyObjCNM_insert;
-PyObject* PyObjCNM_append;
-PyObject* PyObjCNM_strftime;
-PyObject* PyObjCNM_keys;
-PyObject* PyObjCNM_clear;
-PyObject* PyObjCNM_discard;
-PyObject* PyObjCNM_add;
-PyObject* PyObjCNM_values;
-PyObject* PyObjCNM_description;
-PyObject* PyObjCNM___get__;
-PyObject* PyObjCNM_date_format_string;
-PyObject* PyObjCNM_objc_memview_object;
-PyObject* PyObjCNM_objc_NULL;
-
-int
-PyObjC_setup_names(void)
-{
-    /* XXX: Intern the strings */
-    if ((PyObjCNM_insert = PyUnicode_FromString("insert")) == NULL)
-        return -1;
-    if ((PyObjCNM_append = PyUnicode_FromString("append")) == NULL)
-        return -1;
-    if ((PyObjCNM_strftime = PyUnicode_FromString("strftime")) == NULL)
-        return -1;
-    if ((PyObjCNM_keys = PyUnicode_FromString("keys")) == NULL)
-        return -1;
-    if ((PyObjCNM_clear = PyUnicode_FromString("clear")) == NULL)
-        return -1;
-    if ((PyObjCNM_discard = PyUnicode_FromString("discard")) == NULL)
-        return -1;
-    if ((PyObjCNM_add = PyUnicode_FromString("add")) == NULL)
-        return -1;
-    if ((PyObjCNM_values = PyUnicode_FromString("values")) == NULL)
-        return -1;
-    if ((PyObjCNM_description = PyUnicode_FromString("description")) == NULL)
-        return -1;
-    if ((PyObjCNM___get__ = PyUnicode_FromString("__get__")) == NULL)
-        return -1;
-    if ((PyObjCNM_date_format_string = PyUnicode_FromString("%Y-%m-%d %H:%M:%S %z"))
-        == NULL)
-        return -1;
-    if ((PyObjCNM_objc_memview_object = PyUnicode_FromString("objc.memview object"))
-        == NULL)
-        return -1;
-    if ((PyObjCNM_objc_NULL = PyUnicode_FromString("objc.NULL")) == NULL)
-        return -1;
-
-    return 0;
-}
-
-PyObject*
-PyObjC_CallCopyFunc(PyObject* arg)
+PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg)
 {
     PyObject* args[2] = {NULL, arg};
 
@@ -1493,11 +1476,12 @@ PyObjC_CallCopyFunc(PyObject* arg)
                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
-PyObject*
-PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
+PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue)
 {
     PyObject* args[3] = {NULL, cdr, setValue};
 
     return PyObject_Vectorcall(PyObjC_Decoder, args + 1,
                                2 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
+
+NS_ASSUME_NONNULL_END

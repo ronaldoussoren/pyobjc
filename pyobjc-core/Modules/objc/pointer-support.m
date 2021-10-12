@@ -138,20 +138,22 @@ PyObjCPointerWrapper_Register(const char* name, const char* signature,
 
     value = items + (item_count - 1);
 
-    value->name = PyObjCUtil_Strdup(name);
-    if (value->name == NULL) {
+    char* tmp_name = PyObjCUtil_Strdup(name);
+    if (tmp_name == NULL) {
         PyErr_NoMemory();
         item_count--;
         return -1;
     }
+    value->name = tmp_name;
 
-    value->signature = PyObjCUtil_Strdup(signature);
-    if (value->signature == NULL) {
+    char* tmp_sig = PyObjCUtil_Strdup(signature);
+    if (tmp_sig == NULL) {
         PyMem_Free((void*)value->name);
         PyErr_NoMemory();
         item_count--;
         return -1;
     }
+    value->signature = tmp_sig;
 
     value->offset = find_end_of_structname(value->signature);
 

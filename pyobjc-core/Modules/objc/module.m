@@ -1004,10 +1004,25 @@ createStructType(PyObject* self __attribute__((__unused__)), PyObject* args,
         return NULL;
     }
 
-    name    = PyObjCUtil_Strdup(name);
+    name = PyObjCUtil_Strdup(name);
+    if (name == NULL) {
+        PyErr_NoMemory();
+        return NULL;
+    }
     typestr = PyObjCUtil_Strdup(typestr);
+    if (typestr == NULL) {
+        PyMem_Free(name);
+        PyErr_NoMemory();
+        return NULL;
+    }
     if (docstr) {
         docstr = PyObjCUtil_Strdup(docstr);
+        if (docstr == NULL) {
+            PyMem_Free(name);
+            PyMem_Free(typestr);
+            PyErr_NoMemory();
+            return NULL;
+        }
     }
 
     if (pyfieldnames != Py_None) {

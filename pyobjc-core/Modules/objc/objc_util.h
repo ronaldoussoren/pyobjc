@@ -1,7 +1,10 @@
 #ifndef OBJC_UTIL
 #define OBJC_UTIL
 
-extern PyObject* PyObjCDict_GetItemStringWithError(PyObject* dict, const char* key);
+NS_ASSUME_NONNULL_BEGIN
+
+extern PyObject* _Nullable PyObjCDict_GetItemStringWithError(PyObject*   dict,
+                                                             const char* key);
 #define PyDict_GetItemStringWithError PyObjCDict_GetItemStringWithError
 
 extern PyObject* PyObjCExc_Error;
@@ -16,21 +19,22 @@ extern PyObject* PyObjCExc_ObjCPointerWarning;
 
 extern int PyObjC_CheckArgCount(PyObject* callable, size_t min_args, size_t max_args,
                                 size_t nargsf);
-extern int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* kwnames);
+extern int PyObjC_CheckNoKwnames(PyObject* callable, PyObject* _Nullable kwnames);
 
-extern PyObject* PyObjC_MakeCVoidP(void* ptr);
+extern PyObject* _Nullable PyObjC_MakeCVoidP(void* _Nullable ptr);
 
 extern int PyObjCUtil_Init(PyObject* module);
 
 extern void PyObjCErr_FromObjC(NSObject* localException);
-extern void PyObjCErr_ToObjC(void) __attribute__((__noreturn__));
+extern void PyObjCErr_ToObjC(void) __attribute__((__noreturn__))
+__attribute__((__deprecated__("Use PyObjCErr_ToObjCWithGILState")));
 
-extern void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* state)
+extern void PyObjCErr_ToObjCWithGILState(PyGILState_STATE* _Nullable state)
     __attribute__((__noreturn__));
 
-extern NSException* PyObjCErr_AsExc(void);
+extern NSException* _Nullable PyObjCErr_AsExc(void);
 
-extern char* PyObjCUtil_Strdup(const char* value);
+extern char* _Nullable PyObjCUtil_Strdup(const char* value);
 
 extern NSMapTableKeyCallBacks   PyObjCUtil_PointerKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_PointerValueCallBacks;
@@ -39,12 +43,16 @@ extern NSMapTableKeyCallBacks   PyObjCUtil_ObjCIdentityKeyCallBacks;
 extern NSMapTableValueCallBacks PyObjCUtil_ObjCValueCallBacks;
 
 extern void PyObjC_FreeCArray(int, Py_buffer*);
-extern int  PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*, void**, Py_ssize_t*,
-                                  PyObject**, Py_buffer*);
-extern PyObject* PyObjC_CArrayToPython(const char*, void*, Py_ssize_t);
-extern PyObject* PyObjC_CArrayToPython2(const char*, void*, Py_ssize_t,
-                                        bool already_retained, bool already_cfretained);
-extern int       PyObjC_IsPythonKeyword(const char* word) __attribute__((__pure__));
+extern int  PyObjC_PythonToCArray(BOOL, BOOL, const char*, PyObject*,
+                                  void* _Nullable* _Nonnull, Py_ssize_t* _Nullable,
+                                  PyObject* _Nullable* _Nonnull, Py_buffer*);
+extern PyObject* _Nullable PyObjC_CArrayToPython(const char*, void*, Py_ssize_t);
+
+/* XXX: the '2' at the end of the name should be replaced by something more useful */
+extern PyObject* _Nullable PyObjC_CArrayToPython2(const char*, void*, Py_ssize_t,
+                                                  bool already_retained,
+                                                  bool already_cfretained);
+extern int PyObjC_IsPythonKeyword(const char* word) __attribute__((__pure__));
 
 extern int PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen);
 
@@ -56,14 +64,14 @@ extern int PyObjC_is_ascii_string(PyObject* unicode_string, const char* ascii_st
 extern int PyObjC_is_ascii_prefix(PyObject* unicode_string, const char* ascii_string,
                                   size_t n) __attribute__((__pure__));
 
-extern PyObject* PyObjC_ImportName(const char* name);
+extern PyObject* _Nullable PyObjC_ImportName(const char* name);
 
-extern PyObject* PyObjC_AdjustSelf(PyObject* object);
+extern PyObject* _Nullable PyObjC_AdjustSelf(PyObject* object);
 
-extern PyObject* PyObjC_FindSELInDict(PyObject*, SEL);
+extern PyObject* _Nullable PyObjC_FindSELInDict(PyObject*, SEL);
 extern int PyObjCRT_SignaturesEqual(const char*, const char*) __attribute__((__pure__));
 
-extern char* PyObjC_SELToPythonName(SEL, char*, size_t);
+extern char* _Nullable PyObjC_SELToPythonName(SEL, char*, size_t);
 
 static inline Py_ssize_t
 align(Py_ssize_t offset, Py_ssize_t alignment)
@@ -119,6 +127,9 @@ extern PyObject* PyObjCNM_objc_NULL;
 
 extern int PyObjC_setup_names(void);
 
-extern PyObject* PyObjC_CallCopyFunc(PyObject* arg);
-extern PyObject* PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);
+extern PyObject* _Nullable PyObjC_CallCopyFunc(PyObject* arg);
+extern PyObject* _Nullable PyObjC_CallDecoder(PyObject* cdr, PyObject* setValue);
+
+NS_ASSUME_NONNULL_END
+
 #endif /* OBJC_UTIL */
