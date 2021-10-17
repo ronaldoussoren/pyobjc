@@ -1,7 +1,8 @@
 #include "pyobjc.h"
 
-static Ivar
-find_ivar(NSObject* base, const char* name)
+NS_ASSUME_NONNULL_BEGIN
+
+static Ivar _Nullable find_ivar(NSObject* base, const char* name)
 {
     Class cur = object_getClass((id)base);
     Ivar  ivar;
@@ -16,8 +17,8 @@ find_ivar(NSObject* base, const char* name)
     return nil;
 }
 
-PyObject*
-PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
+PyObject* _Nullable PyObjCIvar_Info(PyObject* self __attribute__((__unused__)),
+                                    PyObject* object)
 {
     Class     cur;
     PyObject* v;
@@ -102,8 +103,8 @@ PyObjCIvar_Info(PyObject* self __attribute__((__unused__)), PyObject* object)
     return result;
 }
 
-PyObject*
-PyObjCIvar_Get(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+PyObject* _Nullable PyObjCIvar_Get(PyObject* self __attribute__((__unused__)),
+                                   PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"obj", "name", NULL};
 
@@ -154,8 +155,8 @@ PyObjCIvar_Get(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
     return result;
 }
 
-PyObject*
-PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+PyObject* _Nullable PyObjCIvar_Set(PyObject* self __attribute__((__unused__)),
+                                   PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"obj", "name", "value", "updateRefCounts", NULL};
 
@@ -276,3 +277,5 @@ PyObjCIvar_Set(PyObject* self __attribute__((__unused__)), PyObject* args, PyObj
     Py_INCREF(Py_None);
     return Py_None;
 }
+
+NS_ASSUME_NONNULL_END

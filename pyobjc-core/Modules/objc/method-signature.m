@@ -1,6 +1,8 @@
 #include "pyobjc.h"
 
-static PyObjCMethodSignature* new_methodsignature(const char*);
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObjCMethodSignature* _Nullable new_methodsignature(const char*);
 
 /*
  * Define static strings and struct _PyObjC_ArgDescr values that
@@ -109,8 +111,7 @@ static const struct _PyObjC_ArgDescr block_template = {
     .allowNULL = 1,
 };
 
-static PyObject*
-sig_str(PyObject* _self)
+static PyObject* _Nullable sig_str(PyObject* _self)
 {
     PyObjCMethodSignature* self = (PyObjCMethodSignature*)_self;
     PyObject*              v    = PyObjCMethodSignature_AsDict(self);
@@ -280,8 +281,8 @@ determine_if_shortcut(PyObjCMethodSignature* methinfo)
 #endif /* PY_VERSION_HEX >= 0x03090000 */
 }
 
-static struct _PyObjC_ArgDescr*
-alloc_descr(struct _PyObjC_ArgDescr* tmpl)
+static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
+    struct _PyObjC_ArgDescr* _Nullable tmpl)
 {
     struct _PyObjC_ArgDescr* retval = PyMem_Malloc(sizeof(*retval));
     if (retval == NULL) {
@@ -306,7 +307,8 @@ alloc_descr(struct _PyObjC_ArgDescr* tmpl)
     return retval;
 }
 
-static BOOL __attribute__((__unused__)) is_default_descr(struct _PyObjC_ArgDescr* descr)
+static BOOL
+is_default_descr(struct _PyObjC_ArgDescr* descr)
 {
     if (descr->type != NULL)
         return NO;
@@ -378,8 +380,7 @@ setup_type(struct _PyObjC_ArgDescr* meta, const char* type)
     return 0;
 }
 
-static PyObjCMethodSignature*
-new_methodsignature(const char* signature)
+static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signature)
 {
     Py_ssize_t             nargs, i;
     const char*            cur;
@@ -533,8 +534,8 @@ new_methodsignature(const char* signature)
     return retval;
 }
 
-char*
-PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, char* buf, size_t buflen)
+char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, char* buf,
+                                                     size_t buflen)
 {
     char*      result = buf;
     char*      end;
@@ -1180,8 +1181,7 @@ done:
 
 static PyObject* registry = NULL;
 
-static PyObjCMethodSignature*
-compiled_metadata(PyObject* metadata)
+static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
 {
     PyObjCMethodSignature* result;
     PyObject*              key;
@@ -1282,9 +1282,8 @@ PyObjC_registerMetaData(PyObject* class_name, PyObject* selector, PyObject* meta
     return r;
 }
 
-PyObjCMethodSignature*
-PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata,
-                                   BOOL is_native)
+PyObjCMethodSignature* _Nullable PyObjCMethodSignature_WithMetaData(
+    const char* signature, PyObject* _Nullable metadata, BOOL is_native)
 {
     PyObjCMethodSignature* methinfo;
 
@@ -1308,8 +1307,9 @@ PyObjCMethodSignature_WithMetaData(const char* signature, PyObject* metadata,
     return methinfo;
 }
 
-static struct _PyObjC_ArgDescr*
-merge_descr(struct _PyObjC_ArgDescr* descr, struct _PyObjC_ArgDescr* meta, BOOL is_native)
+static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* descr,
+                                                      struct _PyObjC_ArgDescr* meta,
+                                                      BOOL                     is_native)
 {
     if (meta == NULL) {
         return descr;
@@ -1513,10 +1513,9 @@ process_metadata_object(PyObjCMethodSignature* methinfo, PyObjCMethodSignature* 
     return determine_if_shortcut(methinfo);
 }
 
-PyObjCMethodSignature*
-PyObjCMethodSignature_ForSelector(Class cls, BOOL isClassMethod, SEL sel,
-                                  const char* signature,
-                                  BOOL        is_native __attribute__((__unused__)))
+PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
+    Class cls, BOOL isClassMethod, SEL sel, const char* signature,
+    BOOL is_native __attribute__((__unused__)))
 {
     PyObjCMethodSignature* methinfo;
     PyObject*              metadata;
@@ -1560,8 +1559,7 @@ PyObjCMethodSignature_ForSelector(Class cls, BOOL isClassMethod, SEL sel,
     return methinfo;
 }
 
-static PyObject*
-argdescr2dict(struct _PyObjC_ArgDescr* descr)
+static PyObject* _Nullable argdescr2dict(struct _PyObjC_ArgDescr* descr)
 {
     PyObject*   result;
     PyObject*   v;
@@ -1723,8 +1721,7 @@ error:
     return NULL;
 }
 
-PyObject*
-PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
+PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo)
 {
     PyObject*  result;
     PyObject*  v;
@@ -1825,9 +1822,10 @@ error:
     return NULL;
 }
 
-PyObject*
-PyObjC_copyMetadataRegistry(void)
+PyObject* _Nullable PyObjC_copyMetadataRegistry(void)
 {
     return PyObjC_CopyRegistry(registry,
                                (PyObjC_ItemTransform)PyObjCMethodSignature_AsDict);
 }
+
+NS_ASSUME_NONNULL_END

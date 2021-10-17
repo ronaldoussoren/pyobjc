@@ -236,9 +236,8 @@ build_intermediate_class(Class base_class, char* name)
                 continue;
             }
         }
-
         PyObjCMethodSignature* methinfo =
-            PyObjCMethodSignature_FromSignature(cur->typestr, NO);
+            PyObjCMethodSignature_WithMetaData(cur->typestr, NULL, NO);
         if (methinfo == NULL)
             goto error_cleanup;
         IMP closure = PyObjCFFI_MakeClosure(methinfo, cur->func, base_class);
@@ -972,7 +971,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
                 }
 
                 PyObjCMethodSignature* methinfo =
-                    PyObjCMethodSignature_FromSignature(cur->typestr, NO);
+                    PyObjCMethodSignature_WithMetaData(cur->typestr, NULL, NO);
                 if (methinfo == NULL)
                     goto error_cleanup;
 
@@ -1594,8 +1593,9 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
         return;
     }
 
-    signature = PyObjCMethodSignature_FromSignature(PyObjCSelector_Signature(pymeth), NO);
-    len       = Py_SIZE(signature);
+    signature =
+        PyObjCMethodSignature_WithMetaData(PyObjCSelector_Signature(pymeth), NULL, NO);
+    len = Py_SIZE(signature);
 
     Py_XDECREF(pymeth);
     pymeth = NULL;

@@ -211,6 +211,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     static ffi_cif*   convert_cif             = NULL;
     static ffi_cif*   new_cif                 = NULL;
 
+    /* XXX: 'name' should be copied, see BPO 45315 */
     PyObject*                           newType   = NULL;
     PyObjCPointerWrapper_ToPythonFunc   from_c    = NULL;
     PyObjCPointerWrapper_FromPythonFunc to_c      = NULL;
@@ -226,7 +227,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
-        signature = PyObjCMethodSignature_FromSignature(new_cif_signature, NO);
+        signature = PyObjCMethodSignature_WithMetaData(new_cif_signature, NULL, NO);
         new_cif   = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (new_cif == NULL) {
@@ -236,7 +237,7 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
 
     if (convert_cif == NULL) {
         PyObjCMethodSignature* signature;
-        signature   = PyObjCMethodSignature_FromSignature(convert_cif_signature, YES);
+        signature = PyObjCMethodSignature_WithMetaData(convert_cif_signature, NULL, YES);
         convert_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (convert_cif == NULL) {

@@ -294,7 +294,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)stringValue
 {
     PyObject* repr;
-    NSObject* result = nil;
+    NSString* result = nil;
 
     PyObjC_BEGIN_WITH_GIL
         repr = PyObject_Repr(value);
@@ -302,14 +302,13 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        result = PyObjC_PythonToId(repr);
-        Py_DECREF(repr);
-        if (PyErr_Occurred()) {
+        if (depythonify_python_object(repr, &result) == -1) {
+            Py_DECREF(repr);
             PyObjC_GIL_FORWARD_EXC();
         }
-
+        Py_DECREF(repr);
     PyObjC_END_WITH_GIL
-    return (NSString*)result;
+    return result;
 }
 
 /* NSCoding support */
@@ -359,7 +358,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
-        PyObject* v = PyObjC_IdToPython(other);
+        PyObject* v = id_to_python(other);
 
         SET_FIELD(value, v);
     PyObjC_END_WITH_GIL
@@ -369,7 +368,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     if (PyObjC_Decoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = PyObjC_IdToPython(coder);
+            PyObject* cdr = id_to_python(coder);
             PyObject* setValue;
             PyObject* selfAsPython;
             PyObject* v;
@@ -442,7 +441,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     PyObjC_BEGIN_WITH_GIL
-        PyObject* other = PyObjC_IdToPython(number);
+        PyObject* other = id_to_python(number);
         int       r, ok;
 
         if (other == NULL) {
@@ -470,7 +469,7 @@ NS_ASSUME_NONNULL_BEGIN
     -(BOOL)NAME : (NSObject* _Nullable)number                                            \
     {                                                                                    \
         PyObjC_BEGIN_WITH_GIL                                                            \
-            PyObject* other = PyObjC_IdToPython(number);                                 \
+            PyObject* other = id_to_python(number);                                      \
             int       r;                                                                 \
             if (other == NULL) {                                                         \
                 PyObjC_GIL_FORWARD_EXC();                                                \

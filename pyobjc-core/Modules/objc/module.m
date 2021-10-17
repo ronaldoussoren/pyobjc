@@ -1605,7 +1605,7 @@ PyObjC_getAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject*
     if (PyErr_Occurred())
         return NULL;
 
-    return PyObjC_IdToPython(value);
+    return id_to_python(value);
 }
 
 PyDoc_STRVAR(PyObjC_removeAssociatedObjects_doc,

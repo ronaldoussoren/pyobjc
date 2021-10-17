@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
-        PyObject* v = PyObjC_IdToPython(other);
+        PyObject* v = id_to_python(other);
 
         SET_FIELD(value, v);
     PyObjC_END_WITH_GIL
@@ -148,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
                 cur = Py_None;
                 Py_INCREF(Py_None);
             } else {
-                cur = PyObjC_IdToPython(objects[i]);
+                cur = id_to_python(objects[i]);
                 if (cur == NULL) {
                     PyObjC_GIL_FORWARD_EXC();
                 }
@@ -198,7 +198,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     if (PyObjC_Decoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = PyObjC_IdToPython(coder);
+            PyObject* cdr = id_to_python(coder);
             PyObject* setValue;
             PyObject* selfAsPython;
             PyObject* v;
@@ -248,11 +248,11 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            result = PyObjC_PythonToId(tmp);
-            Py_DECREF(tmp);
-            if (PyErr_Occurred()) {
+            if (depythonify_python_object(tmp, &result) == -1) {
+                Py_DECREF(tmp);
                 PyObjC_GIL_FORWARD_EXC();
             }
+            Py_DECREF(tmp);
 
             [result retain];
 
@@ -278,11 +278,11 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        result = PyObjC_PythonToId(tmp);
-        Py_DECREF(tmp);
-        if (PyErr_Occurred()) {
+        if (depythonify_python_object(tmp, &result) == -1) {
+            Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
         }
+        Py_DECREF(tmp);
 
         [result retain];
 
@@ -301,11 +301,12 @@ NS_ASSUME_NONNULL_BEGIN
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        result = (NSArray*)PyObjC_PythonToId(tmp);
-        Py_DECREF(tmp);
-        if (PyErr_Occurred()) {
+        if (depythonify_python_object(tmp, &result) == -1) {
+            Py_DECREF(tmp);
             PyObjC_GIL_FORWARD_EXC();
         }
+
+        Py_DECREF(tmp);
 
     PyObjC_END_WITH_GIL
 
@@ -335,11 +336,12 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            result = PyObjC_PythonToId(v);
-            Py_DECREF(v);
-            if (PyErr_Occurred()) {
+            if (depythonify_python_object(v, &result) == -1) {
+                Py_DECREF(v);
                 PyObjC_GIL_FORWARD_EXC();
             }
+
+            Py_DECREF(v);
         }
 
     PyObjC_END_WITH_GIL
@@ -357,7 +359,7 @@ NS_ASSUME_NONNULL_BEGIN
             tmp = Py_None;
             Py_INCREF(Py_None);
         } else {
-            tmp = PyObjC_IdToPython(anObject);
+            tmp = id_to_python(anObject);
             if (tmp == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -422,7 +424,7 @@ NS_ASSUME_NONNULL_BEGIN
             Py_INCREF(Py_None);
 
         } else {
-            tmpMember = PyObjC_IdToPython(anObject);
+            tmpMember = id_to_python(anObject);
             if (tmpMember == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -462,8 +464,7 @@ NS_ASSUME_NONNULL_BEGIN
                     if (v == Py_None) {
                         result = [NSNull null];
                     } else {
-                        result = PyObjC_PythonToId(v);
-                        if (PyErr_Occurred()) {
+                        if (depythonify_python_object(v, &result) == -1) {
                             Py_DECREF(tmp);
                             Py_DECREF(tmpMember);
                             PyObjC_GIL_FORWARD_EXC();
@@ -514,7 +515,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeObject:(id)anObject
 {
     PyObjC_BEGIN_WITH_GIL
-        PyObject* tmp = PyObjC_IdToPython(anObject);
+        PyObject* tmp = id_to_python(anObject);
         if (tmp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -552,7 +553,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addObject:(id)anObject
 {
     PyObjC_BEGIN_WITH_GIL
-        PyObject* tmp = PyObjC_IdToPython(anObject);
+        PyObject* tmp = id_to_python(anObject);
         if (tmp == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }

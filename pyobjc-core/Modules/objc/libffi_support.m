@@ -1319,7 +1319,7 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
                     const char* signature = PyObjCBlock_GetSignature(v);
                     if (signature != NULL) {
                         PyObjCMethodSignature* sig =
-                            PyObjCMethodSignature_FromSignature(signature, YES);
+                            PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
 
                         if (sig == NULL) {
                             Py_DECREF(v);
@@ -3655,7 +3655,7 @@ PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                         const char* signature = PyObjCBlock_GetSignature(objc_result);
                         if (signature != NULL) {
                             PyObjCMethodSignature* sig =
-                                PyObjCMethodSignature_FromSignature(signature, YES);
+                                PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
 
                             if (sig == NULL) {
                                 Py_DECREF(objc_result);
@@ -3957,7 +3957,7 @@ PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo, void* pRetval,
                     const char* signature = PyObjCBlock_GetSignature(objc_result);
                     if (signature != NULL) {
                         PyObjCMethodSignature* sig =
-                            PyObjCMethodSignature_FromSignature(signature, YES);
+                            PyObjCMethodSignature_WithMetaData(signature, NULL, YES);
 
                         if (sig == NULL) {
                             Py_DECREF(objc_result);

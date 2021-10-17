@@ -1,5 +1,5 @@
 /* Copyright (c) 1996,97,98 by Lele Gaifax. All Rights Reserved
- * Copyright (c) 2002-2017 Ronald Oussoren
+ * Copyright (c) 2002-2021 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -29,24 +29,30 @@
 
 #include <CoreFoundation/CFNumber.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*
  * Category on NSObject to make sure that every object supports
  * the method  __pyobjc_PythonObject__, this helps to simplify
  * pythonify_c_value.
+ *
+ * XXX: Are these categories really necessary? Check if
+ *      hardcoding the result (including the various OC_.. classes
+ *      leads to faster code)
  */
 @interface
 NSObject (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__;
-+ (PyObject*)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
++ (PyObject* _Nullable)__pyobjc_PythonObject__;
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
-+ (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
++ (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
 @implementation
 NSObject (PyObjCSupport)
 
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
 
@@ -72,21 +78,19 @@ NSObject (PyObjCSupport)
     return rval;
 }
 
-+ (PyObject*)__pyobjc_PythonObject__
++ (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
 
-    // rval = PyObjC_FindPythonProxy(self);
     rval = NULL;
     if (rval == NULL) {
         rval = (PyObject*)PyObjCClass_New(self);
-        // PyObjC_RegisterPythonProxy(self, rval);
     }
 
     return rval;
 }
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     PyObject* result = PyObjC_FindPythonProxy(self);
     if (result) {
@@ -98,7 +102,7 @@ NSObject (PyObjCSupport)
     return PyObjCObject_New(self, PyObjCObject_kSHOULD_NOT_RELEASE, NO);
 }
 
-+ (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
++ (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return (PyObject*)PyObjCClass_New(self);
@@ -108,17 +112,17 @@ NSObject (PyObjCSupport)
 
 @interface
 NSProxy (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__;
-+ (PyObject*)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
++ (PyObject* _Nullable)__pyobjc_PythonObject__;
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
-+ (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
++ (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
 @implementation
 NSProxy (PyObjCSupport)
 
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
 
@@ -130,7 +134,7 @@ NSProxy (PyObjCSupport)
     return rval;
 }
 
-+ (PyObject*)__pyobjc_PythonObject__
++ (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
 
@@ -141,7 +145,7 @@ NSProxy (PyObjCSupport)
     return rval;
 }
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     PyObject* result = PyObjC_FindPythonProxy(self);
     if (result) {
@@ -153,7 +157,7 @@ NSProxy (PyObjCSupport)
     return PyObjCObject_New(self, PyObjCObject_kSHOULD_NOT_RELEASE, NO);
 }
 
-+ (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
++ (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return (PyObject*)PyObjCClass_New(self);
@@ -162,14 +166,14 @@ NSProxy (PyObjCSupport)
 
 @interface
 Protocol (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__;
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* PyObjCSupport */
 
 @implementation
 Protocol (PyObjCSupport)
 
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
 
@@ -180,7 +184,7 @@ Protocol (PyObjCSupport)
     return rval;
 }
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     PyObject* rval;
 
@@ -193,61 +197,23 @@ Protocol (PyObjCSupport)
 }
 
 @end /* PyObjCSupport */
-
-#if PyObjC_BUILD_RELEASE < 1008 || !defined(__LP64__)
-@interface
-Object (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__;
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
-@end /* PyObjCSupport */
-
-@implementation
-Object (PyObjCSupport)
-
-- (PyObject*)__pyobjc_PythonObject__
-{
-    PyObject* rval;
-
-    rval = PyObjC_FindPythonProxy(self);
-    if (rval == NULL) {
-        rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kCLASSIC, NO);
-        PyObjC_RegisterPythonProxy(self, rval);
-    }
-    return rval;
-}
-
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
-{
-    PyObject* rval;
-
-    *cookie = 0;
-    rval    = PyObjC_FindPythonProxy(self);
-    if (rval == NULL) {
-        rval = (PyObject*)PyObjCObject_New(self, PyObjCObject_kCLASSIC, NO);
-        PyObjC_RegisterPythonProxy(self, rval);
-    }
-    return rval;
-}
-
-@end /* PyObjCSupport */
-#endif
 
 @interface
 NSString (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__;
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSString (PyObjCSupport) */
 
 @implementation
 NSString (PyObjCSupport)
 
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval = (PyObject*)PyObjCUnicode_New(self);
     return rval;
 }
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return (PyObject*)PyObjCUnicode_New(self);
@@ -257,22 +223,24 @@ NSString (PyObjCSupport)
 
 @interface
 NSNumber (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__;
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSNumber (PyObjCSupport) */
 
 @implementation
 NSNumber (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
 
     /* shortcut for booleans */
     if (kCFBooleanTrue == (CFBooleanRef)self) {
-        return PyBool_FromLong(1);
+        Py_INCREF(Py_True);
+        return Py_True;
 
     } else if (kCFBooleanFalse == (CFBooleanRef)self) {
-        return PyBool_FromLong(0);
+        Py_INCREF(Py_False);
+        return Py_False;
     }
 
     rval = PyObjC_FindPythonProxy(self);
@@ -291,7 +259,7 @@ NSNumber (PyObjCSupport)
     return rval;
 }
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return [self __pyobjc_PythonObject__];
@@ -300,13 +268,13 @@ NSNumber (PyObjCSupport)
 
 @interface
 NSDecimalNumber (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__;
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie;
+- (PyObject* _Nullable)__pyobjc_PythonObject__;
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie;
 @end /* NSDecimalNumber (PyObjCSupport) */
 
 @implementation
 NSDecimalNumber (PyObjCSupport)
-- (PyObject*)__pyobjc_PythonObject__
+- (PyObject* _Nullable)__pyobjc_PythonObject__
 {
     PyObject* rval;
 
@@ -319,7 +287,7 @@ NSDecimalNumber (PyObjCSupport)
     return rval;
 }
 
-- (PyObject*)__pyobjc_PythonTransient__:(int*)cookie
+- (PyObject* _Nullable)__pyobjc_PythonTransient__:(int*)cookie
 {
     *cookie = 0;
     return [self __pyobjc_PythonObject__];
@@ -350,8 +318,6 @@ ROUND(Py_ssize_t v, Py_ssize_t a)
 const char*
 PyObjCRT_SkipTypeQualifiers(const char* type)
 {
-    PyObjC_Assert(type != NULL, NULL);
-
     while (*type == _C_CONST || *type == _C_IN || *type == _C_INOUT || *type == _C_OUT
            || *type == _C_BYCOPY || *type == _C_BYREF || *type == _C_ONEWAY
            || *type == 'O') {
@@ -362,8 +328,7 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
     return type;
 }
 
-const char*
-PyObjCRT_SkipTypeSpec(const char* type)
+const char* _Nullable PyObjCRT_SkipTypeSpec(const char* type)
 {
     const char* start_type = type;
     PyObjC_Assert(type != NULL, NULL);
@@ -524,8 +489,8 @@ PyObjCRT_SkipTypeSpec(const char* type)
     return type;
 }
 
-const char*
-PyObjCRT_NextField(const char* type)
+/* XXX: How is this different from SKipTypeSpec (prev. function) */
+const char* _Nullable PyObjCRT_NextField(const char* type)
 {
     PyObjC_Assert(type != NULL, NULL);
 
@@ -742,15 +707,7 @@ PyObjCRT_AlignOfType(const char* type)
     case _C_FLT:
         return __alignof__(float);
     case _C_DBL:
-#if defined(__APPLE__) && defined(__i386__)
-        /* The ABI says natural alignment is 4 bytes, but
-         * GCC's __alignof__ says 8. The latter is wrong.
-         */
-        return 4;
-#else
         return __alignof__(double);
-#endif
-
     case _C_CHARPTR:
         return __alignof__(char*);
 #ifdef _C_ATOM
@@ -759,21 +716,10 @@ PyObjCRT_AlignOfType(const char* type)
 #endif
     case _C_PTR:
         return __alignof__(void*);
-#if defined(__APPLE__) && defined(__i386__)
-        /* The ABI says natural alignment is 4 bytes, but
-         * GCC's __alignof__ says 8. The latter is wrong.
-         */
-    case _C_LNG_LNG:
-        return 4;
-    case _C_ULNG_LNG:
-        return 4;
-#else
     case _C_LNG_LNG:
         return __alignof__(long long);
     case _C_ULNG_LNG:
         return __alignof__(unsigned long long);
-#endif
-
     case _C_ARY_B:
         while (isdigit(*++type)) /* do nothing */
             ;
@@ -964,6 +910,7 @@ PyObjCRT_SizeOfType(const char* type)
         if (strncmp(type, @encode(struct sockaddr), sizeof(@encode(struct sockaddr)) - 1)
             == 0) {
 
+            /* XXX: What about struct sockaddr_un? */
             return sizeof(struct sockaddr_in6);
         }
 
@@ -1055,9 +1002,9 @@ PyObjCRT_SizeOfType(const char* type)
     }
 }
 
-PyObject*
-pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyRetained,
-                                 BOOL alreadyCFRetained)
+PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* datum,
+                                                     BOOL alreadyRetained,
+                                                     BOOL alreadyCFRetained)
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
@@ -1191,8 +1138,7 @@ pythonify_c_array_nullterminated(const char* type, void* datum, BOOL alreadyReta
 
 /*#F Returns a tuple of objects representing the content of a C array
 of type @var{type} pointed by @var{datum}. */
-static PyObject*
-pythonify_c_array(const char* type, void* datum)
+static PyObject* _Nullable pythonify_c_array(const char* type, void* datum)
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
@@ -1234,8 +1180,7 @@ pythonify_c_array(const char* type, void* datum)
 
 /*#F Returns a tuple of objects representing the content of a C structure
 of type @var{type} pointed by @var{datum}. */
-static PyObject*
-pythonify_c_struct(const char* type, void* datum)
+static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
@@ -2149,116 +2094,18 @@ depythonify_signed_int_value(PyObject* argument, char* descr, long long* out,
     }
 }
 
-int
+int /* XXX: No longer necessary */
 depythonify_c_return_value(const char* type, PyObject* argument, void* datum)
 {
     PyObjC_Assert(type != NULL, -1);
     PyObjC_Assert(argument != NULL, -1);
     PyObjC_Assert(datum != NULL, -1);
 
-#if defined(__ppc__) || defined(__i386__)
-    long long          temp;
-    unsigned long long utemp;
-    int                r;
-
-    /* Small integers are promoted to integers when returning them */
-    switch (*type) {
-#ifdef _C_BOOL
-    case _C_BOOL:
-#endif
-    case _C_NSBOOL:
-        if (PyObject_IsTrue(argument)) {
-            *(int*)datum = YES;
-        } else {
-            *(int*)datum = NO;
-        }
-        return 0;
-
-    case _C_CHAR_AS_INT:
-        r = depythonify_signed_int_value(argument, "char", &temp, CHAR_MIN, CHAR_MAX);
-        if (r == 0) {
-            *(int*)datum = (int)temp;
-        }
-        return r;
-
-    case _C_CHAR_AS_TEXT:
-        if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
-            *(int*)datum = PyBytes_AsString(argument)[0];
-            return 0;
-#ifdef PyByteArray_Check
-        } else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
-            *(int*)datum = PyByteArray_AsString(argument)[0];
-            return 0;
-#endif
-        } else {
-            PyErr_Format(PyExc_ValueError, "Expecting byte string of length 1, got '%s'",
-                         Py_TYPE(argument)->tp_name);
-            return -1;
-        }
-        break;
-
-    case _C_CHR:
-        if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
-            *(int*)datum = PyBytes_AsString(argument)[0];
-            return 0;
-#ifdef PyByteArray_Check
-        } else if (PyByteArray_Check(argument) && PyByteArray_Size(argument) == 1) {
-            *(int*)datum = PyByteArray_AsString(argument)[0];
-            return 0;
-#endif
-        }
-
-        r = depythonify_signed_int_value(argument, "char", &temp, CHAR_MIN, CHAR_MAX);
-        if (r == 0) {
-            *(int*)datum = (int)temp;
-        }
-        return r;
-
-    case _C_UNICHAR:
-        if (PyUnicode_Check(argument) && PyUnicode_GetSize(argument) == 1) {
-            *(int*)datum = (int)(*PyUnicode_AsUnicode(argument));
-            return 0;
-        }
-        PyErr_Format(PyExc_ValueError, "Expecting unicode string of length 1, got a '%s'",
-                     Py_TYPE(argument)->tp_name);
-        return -1;
-
-    case _C_UCHR:
-        if (PyBytes_Check(argument) && PyBytes_Size(argument) == 1) {
-            *(unsigned int*)datum = PyBytes_AsString(argument)[0];
-            return 0;
-        }
-        r = depythonify_unsigned_int_value(argument, "unsigned char", &utemp, UCHAR_MAX);
-        if (r == 0) {
-            *(unsigned int*)datum = (unsigned int)utemp;
-        }
-        return r;
-
-    case _C_SHT:
-        r = depythonify_signed_int_value(argument, "short", &temp, SHRT_MIN, SHRT_MAX);
-        if (r == 0) {
-            *(int*)datum = (int)temp;
-        }
-        return r;
-
-    case _C_USHT:
-        r = depythonify_unsigned_int_value(argument, "unsigned short", &utemp, USHRT_MAX);
-        if (r == 0) {
-            *(unsigned int*)datum = (unsigned int)utemp;
-        }
-        return r;
-
-    default:
-        return depythonify_c_value(type, argument, datum);
-    }
-
-#else
     return depythonify_c_value(type, argument, datum);
-#endif
 }
 
-PyObject*
-pythonify_c_return_value(const char* type, void* datum) /* XXX */
+PyObject* _Nullable /*  XXX: No longer necessary */
+    pythonify_c_return_value(const char* type, void* datum) /* XXX */
 {
     PyObjC_Assert(type != NULL, NULL);
     PyObjC_Assert(datum != NULL, NULL);
@@ -2874,8 +2721,7 @@ depythonify_c_value(const char* type, PyObject* argument, void* datum)
     return 0;
 }
 
-const char*
-PyObjCRT_RemoveFieldNames(char* buf, const char* type)
+const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type)
 {
     PyObjC_Assert(buf != NULL, NULL);
     PyObjC_Assert(type != NULL, NULL);
@@ -2972,8 +2818,7 @@ PyObjCRT_RemoveFieldNames(char* buf, const char* type)
     }
 }
 
-PyObject*
-PyObjCObject_NewTransient(id objc_object, int* cookie)
+PyObject* _Nullable PyObjCObject_NewTransient(id objc_object, int* cookie)
 {
     return [(NSObject*)objc_object __pyobjc_PythonTransient__:cookie];
 }
@@ -3085,8 +2930,7 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
     }
 }
 
-PyObject*
-id_to_python(id obj)
+PyObject* _Nullable id_to_python(id obj)
 {
     PyObject* retobject;
 #if 1
@@ -3114,3 +2958,5 @@ id_to_python(id obj)
     }
     return retobject;
 }
+
+NS_ASSUME_NONNULL_END

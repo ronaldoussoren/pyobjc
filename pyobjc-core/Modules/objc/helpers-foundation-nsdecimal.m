@@ -248,8 +248,10 @@ PyObjC_number_to_decimal(PyObject* pyValue, NSDecimal* outResult)
         if (uniVal == NULL)
             return -1;
 
-        stringVal = PyObjC_PythonToId(uniVal);
-        Py_DECREF(uniVal);
+        if (depythonify_python_object(uniVal, &stringVal) == -1) {
+            Py_DECREF(uniVal);
+            return -1;
+        }
 
         Py_BEGIN_ALLOW_THREADS
             @try {
@@ -314,7 +316,11 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
         }
 
         if (PyObjCObject_Check(pyValue)) {
-            NSObject* value = PyObjC_PythonToId(pyValue);
+            NSObject* value;
+
+            if (depythonify_python_object(pyValue, &value) == -1) {
+                return -1;
+            }
 
             if ([value isKindOfClass:[NSDecimalNumber class]]) {
                 ((DecimalObject*)self)->value = [(NSDecimalNumber*)value decimalValue];
@@ -332,7 +338,9 @@ decimal_init(PyObject* self, PyObject* _Nullable args, PyObject* _Nullable kwds)
 
             NSString* stringVal;
 
-            stringVal = PyObjC_PythonToId(pyValue);
+            if (depythonify_python_object(pyValue, &stringVal) == -1) {
+                return -1;
+            }
             Py_BEGIN_ALLOW_THREADS
                 @try {
                     DecimalFromString(&Decimal_Value(self), stringVal, NULL);
@@ -703,7 +711,7 @@ static PyObject*
 decimal_repr(PyObject* self)
 {
     NSString* val  = NSDecimalString(&Decimal_Value(self), NULL);
-    PyObject* tmp  = PyObjC_IdToPython(val);
+    PyObject* tmp  = id_to_python(val);
     PyObject* repr = PyObject_Str(tmp);
     Py_DECREF(tmp);
     return repr;
@@ -800,7 +808,7 @@ static PyObject* _Nullable call_NSDecimalNumber_decimalNumberWithDecimal_(
         return NULL;
     }
 
-    return PyObjC_IdToPython(res);
+    return id_to_python(res);
 }
 
 static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
@@ -838,7 +846,7 @@ static PyObject* _Nullable call_NSDecimalNumber_initWithDecimal_(
         return NULL;
     }
 
-    return PyObjC_IdToPython(res);
+    return id_to_python(res);
 }
 
 static void
@@ -871,10 +879,14 @@ imp_NSDecimalNumber_initWithDecimal_(ffi_cif* cif __attribute__((__unused__)), v
     v = NULL;
     PyObjCObject_ReleaseTransient(pyself, cookie);
     pyself = NULL;
-    if (result == NULL)
+    if (result == NULL) {
         goto error;
+    }
 
-    *pretval = PyObjC_PythonToId(result);
+    if (depythonify_python_object(result, pretval) == -1) {
+        Py_DECREF(result);
+        goto error;
+    }
     Py_DECREF(result);
     PyGILState_Release(state);
     return;
@@ -958,10 +970,14 @@ imp_NSDecimalNumber_decimalNumberWithDecimal_(ffi_cif* cif __attribute__((__unus
     v = NULL;
     Py_DECREF(pyself);
     pyself = NULL;
-    if (result == NULL)
+    if (result == NULL) {
         goto error;
+    }
 
-    *pretval = PyObjC_PythonToId(result);
+    if (depythonify_python_object(result, pretval) == -1) {
+        Py_DECREF(result);
+        goto error;
+    }
     Py_DECREF(result);
     PyGILState_Release(state);
     return;
@@ -986,7 +1002,7 @@ imp_NSDecimalNumber_decimalValue(ffi_cif* cif __attribute__((__unused__)), void*
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    v = PyObjC_IdToPython(self);
+    v = id_to_python(self);
     if (v == NULL)
         goto error;
 

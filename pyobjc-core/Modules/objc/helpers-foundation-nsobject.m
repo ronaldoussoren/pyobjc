@@ -73,7 +73,7 @@ imp_NSObject_alloc(ffi_cif* cif __attribute__((__unused__)), void* resp,
 
     PyObjC_BEGIN_WITH_GIL
 
-        v = PyObjC_IdToPython(*(id*)args[0]);
+        v = id_to_python(*(id*)args[0]);
         if (unlikely(v == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -170,7 +170,7 @@ imp_NSObject_dealloc(ffi_cif* cif __attribute__((__unused__)),
 
     PyObjC_BEGIN_WITH_GIL
 
-        v = PyObjC_IdToPython(*(id*)args[0]);
+        v = id_to_python(*(id*)args[0]);
         if (unlikely(v == NULL)) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -309,7 +309,7 @@ static PyObject* _Nullable call_NSObject_retain(PyObject* method, PyObject* self
         return NULL;
     }
 
-    return PyObjC_IdToPython(retval);
+    return id_to_python(retval);
 }
 
 static void

@@ -2,6 +2,8 @@
 #define PyObjC_METHODSIGNATURE_H
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern PyTypeObject PyObjCMethodSignature_Type;
 #define PyObjCMethodSignature_Check(obj)                                                 \
     PyObject_TypeCheck(obj, &PyObjCMethodSignature_Type)
@@ -57,31 +59,27 @@ struct _PyObjCMethodSignature {
     int16_t                  arrayArg;
     int                      deprecated;
     struct _PyObjC_ArgDescr* rettype;
-    struct _PyObjC_ArgDescr* argtype[1];
+    struct _PyObjC_ArgDescr* _Nonnull argtype[1]; /* XXX: [1] to be replaced by [] */
 };
 
-extern PyObjCMethodSignature* PyObjCMethodSignature_WithMetaData(const char* signature,
-                                                                 PyObject*   metadata,
-                                                                 BOOL        is_native);
+extern PyObjCMethodSignature* _Nullable PyObjCMethodSignature_WithMetaData(
+    const char* signature, PyObject* _Nullable metadata, BOOL is_native);
 
-extern PyObjCMethodSignature*
-PyObjCMethodSignature_ForSelector(Class cls, BOOL isClassMethod, SEL sel,
-                                  const char* signature, BOOL is_native);
+extern PyObjCMethodSignature* _Nullable PyObjCMethodSignature_ForSelector(
+    Class cls, BOOL isClassMethod, SEL sel, const char* signature, BOOL is_native);
 
-extern char* PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, char* buf,
-                                                  size_t buflen);
+extern char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig,
+                                                            char* buf, size_t buflen);
 
 extern int PyObjC_registerMetaData(PyObject*, PyObject*, PyObject*);
 
-extern PyObject* PyObjC_copyMetadataRegistry(void);
+extern PyObject* _Nullable PyObjC_copyMetadataRegistry(void);
 
-extern PyObject* PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
-
-#define PyObjCMethodSignature_FromSignature(sig, is_native)                              \
-    PyObjCMethodSignature_WithMetaData((sig), NULL, (is_native))
+extern PyObject* _Nullable PyObjCMethodSignature_AsDict(PyObjCMethodSignature* methinfo);
 
 #ifdef PyObjC_DEBUG
 
+/* XXX: Is this used? */
 static inline int
 PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
 {
@@ -95,5 +93,7 @@ PyObjCMethodSignature_Validate(PyObjCMethodSignature* methinfo)
     return 0;
 }
 #endif /* PyObjC_DEBUG */
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_METHODSIGNATURE_H */

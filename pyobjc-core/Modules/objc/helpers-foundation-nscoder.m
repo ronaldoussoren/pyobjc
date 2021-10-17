@@ -1120,11 +1120,11 @@ imp_NSCoder_decodeBytesForKey_returnedLength_(ffi_cif* cif __attribute__((__unus
 
     PyGILState_STATE state = PyGILState_Ensure();
 
-    v1 = PyObjC_IdToPython(self);
+    v1 = id_to_python(self);
     if (v1 == NULL)
         goto error;
 
-    v2 = PyObjC_IdToPython(key);
+    v2 = id_to_python(key);
     if (v2 == NULL)
         goto error;
 
@@ -1278,7 +1278,7 @@ imp_NSCoder_encodeBytes_length_forKey_(ffi_cif* cif __attribute__((__unused__)),
     if (v2 == NULL)
         goto error;
 
-    v3 = PyObjC_IdToPython(key);
+    v3 = id_to_python(key);
     if (v3 == NULL)
         goto error;
 

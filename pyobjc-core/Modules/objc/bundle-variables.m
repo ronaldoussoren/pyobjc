@@ -155,8 +155,7 @@ PyObject* _Nullable PyObjC_loadBundleVariables(PyObject* self __attribute__((__u
             return NULL;
         }
 
-        name = PyObjC_PythonToId(py_name);
-        if (name == NULL && PyErr_Occurred()) {
+        if (depythonify_python_object(py_name, &name) == -1) {
             return NULL;
         }
 
@@ -301,7 +300,7 @@ PyObject* _Nullable PyObjC_loadBundleFunctions(PyObject* self __attribute__((__u
             if (cfBundle == NULL) {
                 py_name = PyUnicode_FromString(c_name);
             } else {
-                py_name = PyObjC_IdToPython(name);
+                py_name = id_to_python(name);
             }
 
             py_val = PyObjCFunc_New(py_name, value, signature, doc, meta);

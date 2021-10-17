@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
         return nil;
     }
 
-    NSObject* result = nil;
+    NSObject* result;
 
     PyObjC_BEGIN_WITH_GIL
         PyObject* object = PyIter_Next(value);
@@ -71,15 +71,11 @@ NS_ASSUME_NONNULL_BEGIN
         if (object == Py_None) {
             result = [NSNull null];
         } else {
-            result = PyObjC_PythonToId(object);
-        }
-        if (result == nil) {
-            if (PyErr_Occurred()) {
+            if (depythonify_python_object(object, &result) == -1) {
                 PyObjC_GIL_FORWARD_EXC();
-            } else {
-                PyObjC_GIL_RETURN([NSNull null]);
             }
         }
+        Py_DECREF(object);
 
     PyObjC_END_WITH_GIL
 

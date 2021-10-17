@@ -473,11 +473,13 @@ BEGIN_UNITTEST(PythonListAsNSArray)
 PyObject*       aList;
 NSMutableArray* array;
 NSArray*        array2;
+int             r;
 
 aList = Py_BuildValue("[iiiii]", 0, 1, 2, 3, 4);
 FAIL_IF(aList == NULL);
 
-array = PyObjC_PythonToId(aList);
+r = depythonify_python_object(aList, &array);
+FAIL_IF(r == -1);
 FAIL_IF(array == nil);
 
 /* Check length */
@@ -535,11 +537,13 @@ BEGIN_UNITTEST(PythonTupleAsNSArray)
 PyObject* aTuple;
 NSArray*  array;
 NSArray*  array2;
+int       r;
 
 aTuple = Py_BuildValue("(iiiii)", 0, 1, 2, 3, 4);
 FAIL_IF(aTuple == NULL);
 
-array = PyObjC_PythonToId(aTuple);
+r = depythonify_python_object(aTuple, &array);
+FAIL_IF(r == -1);
 FAIL_IF(array == nil);
 
 /* Check length */
@@ -578,11 +582,13 @@ PyObject*            aDictionary;
 NSMutableDictionary* dict;
 NSEnumerator*        iter;
 NSArray*             keys;
+int                  r;
 
 aDictionary = Py_BuildValue("{iiiiiiii}", 1, 2, 2, 4, 3, 6, 4, 8);
 FAIL_IF(aDictionary == NULL);
 
-dict = PyObjC_PythonToId(aDictionary);
+r = depythonify_python_object(aDictionary, &dict);
+FAIL_IF(r == -1);
 FAIL_IF(dict == nil);
 
 ASSERT_EQUALS(4, [dict count], "%d");
@@ -622,7 +628,8 @@ int       fd;
 int       stderr_orig;
 int       r;
 
-value = PyObjC_PythonToId(o);
+r = depythonify_python_object(o, &value);
+FAIL_IF(r == -1);
 FAIL_IF(value == nil);
 
 fd = open("/dev/null", O_WRONLY);

@@ -1,6 +1,6 @@
 /* Copyright (c) 1996,97 by Lele Gaifax. All Rights Reserved
  * Copyright 2002, 2003 Ronald Oussoren, Jack Jansen
- * Copyright 2003-2017 Ronald Oussoren
+ * Copyright 2003-2021 Ronald Oussoren
  *
  * This software may be used and distributed freely for any purpose
  * provided that this notice is included unchanged on any and all
@@ -100,7 +100,7 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
 - (id)copyWithZone:(NSZone* _Nullable)zone
 {
     (void)zone;
-    NSObject* result = nil;
+    NSObject* result;
     PyObject* copy;
 
     if (PyObjC_CopyFunc == NULL) {
@@ -114,7 +114,10 @@ extern NSString* const NSUnknownKeyException; /* Radar #3336042 */
                 PyObjC_GIL_FORWARD_EXC();
             }
 
-            result = PyObjC_PythonToId(copy);
+            if (depythonify_python_object(copy, &result) == -1) {
+                Py_DECREF(copy);
+                PyObjC_GIL_FORWARD_EXC();
+            }
             Py_DECREF(copy);
 
         PyObjC_END_WITH_GIL
@@ -702,7 +705,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             }
         }
 
-        keyName = PyObjC_IdToPython(key);
+        keyName = id_to_python(key);
         if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -754,12 +757,12 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             }
         }
 
-        keyName = PyObjC_IdToPython(key);
+        keyName = id_to_python(key);
         if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        pyValue = PyObjC_IdToPython(value);
+        pyValue = id_to_python(value);
         if (pyValue == NULL) {
             Py_DECREF(keyName);
             PyObjC_GIL_FORWARD_EXC();
@@ -819,7 +822,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             }
         }
 
-        keyName = PyObjC_IdToPython(keyPath);
+        keyName = id_to_python(keyPath);
         if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -866,12 +869,12 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
             }
         }
 
-        keyName = PyObjC_IdToPython(keyPath);
+        keyName = id_to_python(keyPath);
         if (keyName == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
 
-        pyValue = PyObjC_IdToPython(value);
+        pyValue = id_to_python(value);
         if (pyValue == NULL) {
             Py_DECREF(keyName);
             PyObjC_GIL_FORWARD_EXC();
@@ -979,7 +982,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
     }
 
     PyObjC_BEGIN_WITH_GIL
-        PyObject* otherPyObject = PyObjC_IdToPython(anObject);
+        PyObject* otherPyObject = id_to_python(anObject);
         if (otherPyObject == NULL) {
             PyErr_Clear();
             PyObjC_GIL_RETURN(NO);
@@ -1008,7 +1011,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
         return NSOrderedSame;
     }
     PyObjC_BEGIN_WITH_GIL
-        PyObject* otherPyObject = PyObjC_IdToPython(other);
+        PyObject* otherPyObject = id_to_python(other);
         if (otherPyObject == NULL) {
             PyObjC_GIL_FORWARD_EXC();
         }
@@ -1049,7 +1052,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 - (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
-        PyObject* value = PyObjC_IdToPython(other);
+        PyObject* value = id_to_python(other);
 
         SET_FIELD(pyObject, value);
     PyObjC_END_WITH_GIL
@@ -1061,7 +1064,7 @@ static PyObject* _Nullable getModuleFunction(char* modname, char* funcname)
 
     if (PyObjC_Decoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = PyObjC_IdToPython(coder);
+            PyObject* cdr = id_to_python(coder);
             PyObject* setValue;
             PyObject* selfAsPython;
             PyObject* v;
@@ -1256,7 +1259,7 @@ PyObjC_encodeWithCoder(PyObject* pyObject, NSCoder* coder)
         NSException* exc = nil;
 
         PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = PyObjC_IdToPython(coder);
+            PyObject* cdr = id_to_python(coder);
             if (cdr == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }

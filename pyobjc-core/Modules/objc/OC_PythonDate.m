@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
-        PyObject* v = PyObjC_IdToPython(other);
+        PyObject* v = id_to_python(other);
 
         SET_FIELD(value, v);
 
@@ -105,7 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     if (PyObjC_Decoder != NULL) {
         PyObjC_BEGIN_WITH_GIL
-            PyObject* cdr = PyObjC_IdToPython(coder);
+            PyObject* cdr = id_to_python(coder);
             if (cdr == NULL) {
                 PyObjC_GIL_FORWARD_EXC();
             }
@@ -156,9 +156,15 @@ NS_ASSUME_NONNULL_BEGIN
                 PyObjC_GIL_FORWARD_EXC();
             }
 
+            NSString* oc_v;
+            if (depythonify_python_object(v, &oc_v) == -1) {
+                Py_DECREF(v);
+                PyObjC_GIL_FORWARD_EXC();
+            }
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            oc_value = [NSDate dateWithString:PyObjC_PythonToId(v)];
+            oc_value = [NSDate dateWithString:oc_v];
 #pragma clang diagnostic pop
             [oc_value retain];
             Py_DECREF(v);
@@ -197,9 +203,14 @@ NS_ASSUME_NONNULL_BEGIN
                     PyObjC_GIL_FORWARD_EXC();
                 }
 
+                NSString* oc_v;
+                if (depythonify_python_object(v, &oc_v) == -1) {
+                    Py_DECREF(v);
+                    PyObjC_GIL_FORWARD_EXC();
+                }
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                oc_value = [NSDate dateWithString:PyObjC_PythonToId(v)];
+                oc_value = [NSDate dateWithString:oc_v];
 #pragma clang diagnostic pop
                 [oc_value retain];
                 Py_DECREF(v);

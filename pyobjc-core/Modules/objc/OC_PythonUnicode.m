@@ -315,7 +315,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pyobjcSetValue:(NSObject*)other
 {
     PyObjC_BEGIN_WITH_GIL
-        PyObject* v = PyObjC_IdToPython(other);
+        PyObject* v = id_to_python(other);
 
         SET_FIELD(value, v);
     PyObjC_END_WITH_GIL
@@ -339,7 +339,7 @@ NS_ASSUME_NONNULL_BEGIN
 
         if (PyObjC_Decoder != NULL) {
             PyObjC_BEGIN_WITH_GIL
-                PyObject* cdr = PyObjC_IdToPython(coder);
+                PyObject* cdr = id_to_python(coder);
                 PyObject* setValue;
                 PyObject* selfAsPython;
                 PyObject* v;

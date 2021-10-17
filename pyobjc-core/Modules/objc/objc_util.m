@@ -129,7 +129,7 @@ PyObjCErr_FromObjC(NSObject* localException)
                 PyErr_NormalizeException(&exc_type, &exc_value, &exc_traceback);
             }
 
-            PyObject* exc = PyObjC_IdToPython(localException);
+            PyObject* exc = id_to_python(localException);
             if (exc == NULL) {
                 PyErr_Clear();
             } else {
@@ -329,13 +329,25 @@ PyObjCErr_AsExc(void)
                      forKey:@"__pyobjc_exc_traceback__"];
     }
 
+    NSObject* oc_typerepr = nil;
+    NSObject* oc_repr     = nil;
+
+    if (typerepr) {
+        if (depythonify_python_object(typerepr, &oc_typerepr) == -1) {
+            /* Ignore errors in conversion */
+            PyErr_Clear();
+        }
+    }
+    if (repr) {
+        if (depythonify_python_object(repr, &oc_repr) == -1) {
+            /* Ignore errors in conversion */
+            PyErr_Clear();
+        }
+    }
+
     val = [NSException
         exceptionWithName:@"OC_PythonException"
-                   reason:[NSString
-                              stringWithFormat:@"%@: %@",
-                                               typerepr ? PyObjC_PythonToId(typerepr)
-                                                        : NULL,
-                                               repr ? PyObjC_PythonToId(repr) : NULL]
+                   reason:[NSString stringWithFormat:@"%@: %@", oc_typerepr, oc_repr]
                  userInfo:userInfo];
 
     Py_XDECREF(typerepr);

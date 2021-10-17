@@ -31,7 +31,7 @@ object_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObj
             return NULL;
         }
 
-        return PyObjC_IdToPython(p);
+        return id_to_python(p);
 
     } else if (c_void_p != NULL) {
         NSObject* p;
@@ -61,7 +61,7 @@ object_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObj
         }
 
         Py_DECREF(attrval);
-        return PyObjC_IdToPython(p);
+        return id_to_python(p);
 
     } else {
         PyErr_SetString(PyExc_TypeError,
@@ -794,7 +794,7 @@ obj_get_blocksignature(PyObject* self, void* closure __attribute__((__unused__))
         } else {
             const char* typestr = PyObjCBlock_GetSignature(PyObjCObject_GetObject(self));
             if (typestr != NULL) {
-                v = (PyObject*)PyObjCMethodSignature_FromSignature(typestr, YES);
+                v = (PyObject*)PyObjCMethodSignature_WithMetaData(typestr, NULL, YES);
                 if (v == NULL) {
                     return NULL;
                 }
