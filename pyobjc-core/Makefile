@@ -10,16 +10,18 @@ all:
 test:
 	python3 setup.py build_ext develop test --verbosity=3
 
-# The complicated way of starting Python is needed to ensure the
-# sanitizer library is actually loaded
-# XXX: Calc DYLD_INSERT_LIBRARIES dynamically as well
+# Build and test using various sanitizers.
+#
+# This needs a complicated way of starting to ensure that the
+# sanitizer library is loaded.
 sanitize-test:
 	rm -rf build dist
-	env DYLD_INSERT_LIBRARIES=/Users/ronald/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/lib/darwin/libclang_rt.asan_osx_dynamic.dylib CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/Python setup.py build_ext develop test --verbosity=3
+	env DYLD_INSERT_LIBRARIES=$(shell xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/*/lib/darwin/libclang_rt.asan_osx_dynamic.dylib CFLAGS="-fsanitize=address -fsanitize=undefined -fno-sanitize=vptr" $(shell python -c 'import sys; print(sys.base_prefix if hasattr(sys, "base_prefix") else sys.prefix)')/Resources/Python.app/Contents/MacOS/Python setup.py build_ext develop test --verbosity=3
 
 clean:
 	rm -rf build dist
 
+# Run a build with clang's static analyzer.
 scan-build:
 	test -d build || mkdir build
 	env CFLAGS="-DPyObjC_DEBUG" scan-build -o build   \
@@ -33,5 +35,20 @@ scan-build:
 	    python3 setup.py build_ext
 	open build/scan-build*/index.html
 
+# Run the test suite while recording C-level coverage
+c-coverage:
+	rm -rf build dist
+	mkdir build dist
+	python3 -mvenv build/cov-env
+	env CFLAGS="-coverage -fprofile-arcs -ftest-coverage" build/cov-env/bin/python3 setup.py develop
+	build/cov-env/bin/python3 setup.py test --verbosity=3
+	lcov --capture --directory . --output-file build/coverage.info
+	genhtml build/coverage.info --output-directory dist/c-coverage
+	open dist/c-coverage/index.html
 
-.PHONY: info all test sanitize-test clean scan-build
+# XXX: Maybe use this to run the tests to test both architectures, should lead to better coverage info:
+#-arch -arm64 build/cov-env/bin/python3 setup.py test --verbosity=3
+#-arch -x86_64 build/cov-env/bin/python3 setup.py test --verbosity=3
+
+
+.PHONY: info all test sanitize-test clean scan-build c-coverage
