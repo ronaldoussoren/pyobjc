@@ -85,7 +85,7 @@ CFLAGS = [
     "-Werror",
     "-I/usr/include/ffi",
     "-fvisibility=hidden",
-    # "-O0", "-g"
+    # -O0", "-g"
     "-O3",
     "-flto",
 ]
@@ -104,7 +104,8 @@ OBJC_LDFLAGS = [
     "-lffi",
     # "-fsanitize=address", "-fsanitize=undefined", "-fno-sanitize=vptr",
     "-fvisibility=hidden",
-    # "-O0", "-g"
+    # "-O0",
+    # "-g"
     "-O3",
     "-flto",
 ]

@@ -136,7 +136,7 @@ sig_dealloc(PyObject* _self)
         PyMem_Free((char*)self->signature);
     }
 
-    if (!self->rettype->tmpl) {
+    if (self->rettype && !self->rettype->tmpl) {
         if (self->rettype->typeOverride) {
             PyMem_Free((char*)self->rettype->type);
         }
@@ -953,7 +953,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_na
 
         const char* type = PyBytes_AsString(bytes);
 
-        PyObjC_Assert(descr->type != NULL, -1);
+        /* XXX: This assertion is not really useful and needs to be more clear */
+        PyObjC_Assert(!is_native || descr->type != NULL, -1);
 
         if (is_native && !PyObjC_signatures_compatible(descr->type, type)) {
             /* The new signature is not compatible enough, ignore the
