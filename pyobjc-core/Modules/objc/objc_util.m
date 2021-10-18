@@ -543,7 +543,7 @@ array_elem_code(const char* typestr)
         return '\0';
     }
 
-    while (typestr && *typestr != _C_ARY_E) {
+    while (*typestr != _C_ARY_E) {
         switch (*typestr) {
         case _C_ARY_B:
             tmp = array_elem_code(typestr);
@@ -580,17 +580,24 @@ array_elem_code(const char* typestr)
             res = *typestr;
         }
 
-        typestr = PyObjCRT_SkipTypeSpec(typestr);
+        const char* next = PyObjCRT_SkipTypeSpec(typestr);
+        if (next == NULL) {
+            return '\0';
+        }
+        typestr = next;
     }
     return res;
 }
 
 static char
-struct_elem_code(const char* typestr)
+struct_elem_code(const char* start_typestr)
 {
     char res = '\0';
     char tmp;
 
+    PyObjC_Assert(start_typestr != NULL, '\0');
+
+    const char* _Nullable typestr = start_typestr;
     if (*typestr++ != _C_STRUCT_B) {
         return '\0';
     }
@@ -1136,6 +1143,9 @@ PyObjC_IsPythonKeyword(const char* word)
     return 0;
 }
 
+/*
+ * XXX: This function may or may not raise an exception on error.
+ */
 int
 PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
 {
@@ -1148,6 +1158,9 @@ PyObjCRT_SimplifySignature(const char* signature, char* buf, size_t buflen)
 
     while (*cur != '\0') {
         next = end = PyObjCRT_SkipTypeSpec(cur);
+        if (end == NULL) {
+            return -1;
+        }
         end -= 1;
         while (end != cur && isdigit(*end)) {
             end--;

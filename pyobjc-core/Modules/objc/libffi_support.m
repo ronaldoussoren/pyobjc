@@ -357,7 +357,10 @@ PyObjCFFI_Typestr2FFI(const char* argtype)
 static ffi_type*
 signature_to_ffi_type(const char* argtype)
 {
-    argtype = PyObjCRT_SkipTypeQualifiers(argtype);
+    const char* _Nullable t = PyObjCRT_SkipTypeQualifiers(argtype);
+    if (t == NULL)
+        return NULL;
+    argtype = t;
     switch (*argtype) {
     case _C_VOID:
         return &ffi_type_void;
@@ -1084,6 +1087,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     Py_ssize_t curArg = 1; /* Leave space for PY_VECTORCALL_ARGUMENTS_OFFSET */
 
     rettype = methinfo->rettype->type;
+    if (rettype == NULL) {
+        PyErr_SetString(PyObjCExc_InternalError, "closure has NULL returntype");
+        goto error;
+    }
 
     PyGILState_STATE state = PyGILState_Ensure();
 
@@ -1143,6 +1150,10 @@ method_stub(ffi_cif* cif __attribute__((__unused__)), void* resp, void** args,
     for (i = startArg; i < methinfo_size; i++) {
 
         const char* argtype = methinfo->argtype[i]->type;
+        if (argtype == NULL) {
+            PyErr_SetString(PyObjCExc_InternalError, "closure has NULL returntype");
+            goto error;
+        }
 
         switch (*argtype) {
 
@@ -2621,6 +2632,7 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
         int         error    = 0;
         PyObject*   argument = NULL;
         const char* argtype  = methinfo->argtype[i]->type;
+        PyObjC_Assert(argtype != NULL, -1);
 
         if (unlikely(argtype[0] == _C_OUT
                      && ((argtype[1] == _C_PTR
@@ -3247,6 +3259,10 @@ PyObjCFFI_ParseArguments(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
         for (i = argOffset; i < meth_arg_count; i++) {
             PyObject*   argument = NULL;
             const char* argtype  = methinfo->argtype[i]->type;
+            if (argtype == NULL) {
+                PyErr_SetString(PyObjCExc_InternalError, "NULL argument type");
+                return -1;
+            }
 
             if (argtype[0] == _C_OUT
                 && (argtype[1] == _C_PTR || argtype[1] == _C_CHARPTR)) {
@@ -3444,9 +3460,10 @@ PyObjCFFI_ParseArguments_Simple(
 
     for (Py_ssize_t i = argOffset, py_arg = 0; i < meth_arg_count; i++, py_arg++) {
 
-        const char* argtype  = methinfo->argtype[i]->type;
-        PyObject*   argument = args[py_arg];
-        argbuf_cur           = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
+        const char* argtype = methinfo->argtype[i]->type;
+        PyObjC_Assert(argtype != NULL, -1);
+        PyObject* argument = args[py_arg];
+        argbuf_cur         = align(argbuf_cur, PyObjCRT_AlignOfType(argtype));
         arg = values[i] = argbuf + argbuf_cur;
         argbuf_cur += PyObjCRT_SizeOfType(argtype);
         PyObjC_Assert(argbuf_cur <= argbuf_len, -1);
@@ -3737,7 +3754,8 @@ PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
 
         for (i = argOffset; i < Py_SIZE(methinfo); i++) {
             const char* argtype = methinfo->argtype[i]->type;
-            PyObject*   v       = NULL;
+            PyObjC_Assert(argtype != NULL, NULL);
+            PyObject* v = NULL;
 
             switch (*argtype) {
             case _C_INOUT:
@@ -3780,6 +3798,9 @@ PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                             } else {
                                 v = pythonify_c_value(resttype, arg);
                             }
+                            if (v == NULL) {
+                                goto error_cleanup;
+                            }
                             if (methinfo->argtype[i]->alreadyRetained
                                 && PyObjCObject_Check(v)) {
                                 [PyObjCObject_GetObject(v) release];
@@ -3788,8 +3809,6 @@ PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
                                 && PyObjCObject_Check(v)) {
                                 CFRelease(PyObjCObject_GetObject(v));
                             }
-                            if (!v)
-                                goto error_cleanup;
                             break;
 
                         case PyObjC_kFixedLengthArray:
@@ -4812,6 +4831,7 @@ PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
     int         i;
 
     rettype = methinfo->rettype->type;
+    PyObjC_Assert(rettype != NULL, NULL);
 
     cl_ret_type = PyObjCFFI_Typestr2FFI(rettype);
     if (cl_ret_type == NULL) {

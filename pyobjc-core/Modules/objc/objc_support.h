@@ -36,7 +36,7 @@ extern BOOL PyObjC_signatures_compatible(const char* type1, const char* type2);
   and returns an equivalent Python object where C structures and
   arrays are represented as tuples. */
 extern PyObject* _Nullable pythonify_c_value(const char* type, void* datum);
-extern PyObject* _Nullable id_to_python(id obj);
+extern PyObject* _Nullable id_to_python(id _Nullable obj);
 extern PyObject* _Nullable pythonify_c_return_value(const char* type, void* datum);
 
 extern PyObject* _Nullable pythonify_c_array_nullterminated(const char* type, void* datum,
@@ -75,8 +75,8 @@ extern Py_ssize_t PyObjCRT_SizeOfType(const char* type) __attribute__((__pure__)
 extern Py_ssize_t PyObjCRT_AlignOfType(const char* type) __attribute__((__pure__));
 extern const char* _Nullable PyObjCRT_SkipTypeSpec(const char* type);
 extern const char* _Nullable PyObjCRT_NextField(const char* type);
-extern const char* _Nullable PyObjCRT_SkipTypeQualifiers(const char* type);
-extern Py_ssize_t PyObjCRT_AlignedSize(const char* type) __attribute__((__pure__));
+extern const char* PyObjCRT_SkipTypeQualifiers(const char* type);
+extern Py_ssize_t  PyObjCRT_AlignedSize(const char* type) __attribute__((__pure__));
 
 extern const char* _Nullable PyObjCRT_RemoveFieldNames(char* buf, const char* type);
 

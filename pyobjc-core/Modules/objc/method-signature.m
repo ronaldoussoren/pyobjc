@@ -289,6 +289,7 @@ static struct _PyObjC_ArgDescr* _Nullable alloc_descr(
         PyErr_NoMemory();
         return NULL;
     }
+    /* XXX: Try to refactor this to ensure the type value can be _Nonnull */
     retval->type              = tmpl ? tmpl->type : NULL;
     retval->typeOverride      = NO;
     retval->modifier          = '\0';
@@ -409,10 +410,16 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
         return NULL;
     }
 
+    char* signature_copy = PyObjCUtil_Strdup(signature);
+    if (signature_copy == NULL) {
+        return NULL;
+    }
+
     retval =
         PyObject_NewVar(PyObjCMethodSignature, &PyObjCMethodSignature_Type, nargs /*+1*/);
 
     if (retval == NULL) {
+        PyMem_Free(signature_copy);
         PyErr_NoMemory();
         return NULL;
     }
@@ -429,11 +436,7 @@ static PyObjCMethodSignature* _Nullable new_methodsignature(const char* signatur
     retval->shortcut_signature    = NO;
     retval->shortcut_argbuf_size  = 0;
     retval->null_terminated_array = NO;
-    retval->signature             = PyObjCUtil_Strdup(signature);
-    if (retval->signature == NULL) {
-        Py_DECREF(retval);
-        return NULL;
-    }
+    retval->signature             = signature_copy;
 
     cur = PyObjCRT_SkipTypeQualifiers(retval->signature);
     PyObjC_Assert(cur != NULL, NULL);
@@ -543,23 +546,39 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
     NSUInteger i;
     size_t     r;
 
+    /* XXX: snprintf is overkill here */
     r = snprintf(buf, buflen, "%s", [sig methodReturnType]);
     if (r > buflen) {
+        PyErr_SetString(PyObjCExc_InternalError, "NSMethodsignature too large");
         return NULL;
     }
 
-    end  = (char*)PyObjCRT_SkipTypeSpec(buf);
+    /* XXX: The side effect of checking the value is nice,
+     * but otherwise ``end = buf + r`` would work just as well.
+     */
+    end = (char*)PyObjCRT_SkipTypeSpec(buf);
+    if (end == NULL) {
+        return NULL;
+    }
     *end = '\0';
     buflen -= (end - buf);
     buf = end;
 
     for (i = 0; i < arg_count; i++) {
+        /* XXX: snprintf is overkill here */
         r = snprintf(buf, buflen, "%s", [sig getArgumentTypeAtIndex:i]);
         if (r > buflen) {
+            PyErr_SetString(PyObjCExc_InternalError, "NSMethodsignature too large");
             return NULL;
         }
 
+        /* XXX: The side effect of checking the value is nice,
+         * but otherwise ``end = buf + r`` would work just as well.
+         */
         end = (char*)PyObjCRT_SkipTypeSpec(buf);
+        if (end == NULL) {
+            return NULL;
+        }
         buflen -= (end - buf);
         buf = end;
     }
@@ -574,7 +593,7 @@ char* _Nullable PyObjC_NSMethodSignatureToTypeString(NSMethodSignature* sig, cha
  * -2: 'descr' is template, but would have to be updated.
  */
 static int
-setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
+setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* _Nullable meta, BOOL is_native)
 {
     PyObject* d;
     char      typeModifier = 0;
@@ -934,6 +953,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
         const char* type = PyBytes_AsString(bytes);
 
+        PyObjC_Assert(descr->type != NULL, -1);
+
         if (is_native && !PyObjC_signatures_compatible(descr->type, type)) {
             /* The new signature is not compatible enough, ignore the
              * override.
@@ -994,7 +1015,6 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 
             if (descr->typeOverride) {
                 PyMem_Free((void*)(descr->type));
-                descr->type = NULL;
             }
 
             /* Skip existing modifiers, we're overriding those */
@@ -1006,7 +1026,8 @@ setup_descr(struct _PyObjC_ArgDescr* descr, PyObject* meta, BOOL is_native)
 }
 
 static int
-process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* metadata, BOOL is_native)
+process_metadata_dict(PyObjCMethodSignature* methinfo, PyObject* _Nullable metadata,
+                      BOOL                   is_native)
 {
     PyObject* v;
 
@@ -1226,8 +1247,9 @@ static PyObjCMethodSignature* _Nullable compiled_metadata(PyObject* metadata)
     result->shortcut_signature    = NO;
     result->shortcut_argbuf_size  = 0;
     result->null_terminated_array = NO;
-    result->rettype               = NULL;
-    result->signature             = NULL;
+    /* XXX: This will be set to a non-null value in all non-error paths */
+    result->rettype   = (struct _PyObjC_ArgDescr* _Nonnull)NULL;
+    result->signature = NULL;
     for (i = 0; i < max_idx; i++) {
         result->argtype[i] = NULL;
     }
@@ -1394,8 +1416,7 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
             }
 
             if (descr->typeOverride) {
-                to_free     = (char*)(descr->type);
-                descr->type = NULL;
+                to_free = (char*)(descr->type);
             }
 
             /* Skip existing modifiers, we're overriding those */
@@ -1404,11 +1425,6 @@ static struct _PyObjC_ArgDescr* _Nullable merge_descr(struct _PyObjC_ArgDescr* d
             PyObjC_Assert(tp != NULL, NULL);
             descr->typeOverride = YES;
             descr->type         = tp;
-
-#ifdef PyObjC_DEBUG
-            descr->type =
-                PyMem_Realloc((void*)(descr->type), strlen(withoutModifiers) + 3);
-#endif /* PyObjC_DEBUG */
 
             if (to_free) {
                 PyMem_Free(to_free);

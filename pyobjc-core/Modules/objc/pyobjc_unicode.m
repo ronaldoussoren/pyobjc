@@ -1,6 +1,14 @@
 /*
  * Custom subclass of PyUnicode_Type, to allow for transparent bridging of
  * strings
+ *
+ * XXX: The code in this file has too much knowledge about the
+ *      impl. of CPytho's Unicode type. Try to find a better solution
+ *      (which might require changes to CPython...)
+ *
+ * XXX: This type is needed because it is not possible to have a
+ *      type that behaves like a string, but isn't a subclass of
+ *      PyUnicode_Type. At least not when the CPython C API is involved :-(.
  */
 
 #include "pyobjc.h"
@@ -8,11 +16,13 @@
 #include <Foundation/NSString.h>
 #include <stddef.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef struct {
     PyUnicodeObject base;
-    PyObject*       weakrefs;
-    id              nsstr;
-    PyObject*       py_nsstr;
+    PyObject* _Nullable weakrefs;
+    id nsstr;
+    PyObject* _Nullable py_nsstr;
 
 } PyObjCUnicodeObject;
 
@@ -34,32 +44,32 @@ class_dealloc(PyObject* obj)
     PyObjC_UnregisterPythonProxy(uobj->nsstr, obj);
     Py_CLEAR(py_nsstr);
 
-    if (uobj->nsstr) {
-        [uobj->nsstr release];
-        uobj->nsstr = nil;
-    }
-
     if (weakrefs) {
         PyObject_ClearWeakRefs(obj);
+    }
+
+    if (uobj->nsstr) {
+        [uobj->nsstr release];
     }
 
     PyUnicode_Type.tp_dealloc(obj);
 }
 
-static PyObject*
-meth_nsstring(PyObject* self)
+static PyObject* _Nullable meth_nsstring(PyObject* self)
 {
     PyObjCUnicodeObject* uobj = (PyObjCUnicodeObject*)self;
 
     if (uobj->py_nsstr == NULL) {
         uobj->py_nsstr = PyObjCObject_New(uobj->nsstr, PyObjCObject_kDEFAULT, YES);
+        if (uobj->py_nsstr == NULL) {
+            return NULL;
+        }
     }
     Py_INCREF(uobj->py_nsstr);
     return uobj->py_nsstr;
 }
 
-static PyObject*
-meth_getattro(PyObject* o, PyObject* attr_name)
+static PyObject* _Nullable meth_getattro(PyObject* o, PyObject* attr_name)
 {
     PyObject* res;
     res = PyObject_GenericGetAttr(o, attr_name);
@@ -77,8 +87,7 @@ meth_getattro(PyObject* o, PyObject* attr_name)
     return res;
 }
 
-static PyObject*
-meth_reduce(PyObject* self)
+static PyObject* _Nullable meth_reduce(PyObject* self)
 {
     PyObject* retVal = NULL;
     PyObject* v      = NULL;
@@ -123,8 +132,9 @@ static PyMethodDef class_methods[] = {{.ml_name  = "nsstring",
                                           .ml_name = NULL /* SENTINEL */
                                       }};
 
-static PyObject*
-nsstring_get__pyobjc_object__(PyObject* self, void* closure __attribute__((__unused__)))
+static PyObject* _Nullable nsstring_get__pyobjc_object__(PyObject* self,
+                                                         void* _Nullable closure
+                                                         __attribute__((__unused__)))
 {
     return meth_nsstring(self);
 }
@@ -139,10 +149,9 @@ static PyGetSetDef nsstring_getsetters[] = {
         .name = NULL /* SENTINEL */
     }};
 
-static PyObject*
-class_new(PyTypeObject* type __attribute__((__unused__)),
-          PyObject*     args __attribute__((__unused__)),
-          PyObject*     kwds __attribute__((__unused__)))
+static PyObject* _Nullable class_new(PyTypeObject* type __attribute__((__unused__)),
+                                     PyObject*     args __attribute__((__unused__)),
+                                     PyObject*     kwds __attribute__((__unused__)))
 {
     PyErr_SetString(PyExc_TypeError,
                     "Cannot create instances of 'objc.unicode' in Python");
@@ -181,8 +190,7 @@ PyTypeObject PyObjCUnicode_Type = {
  * objects in Python 3.3, and needs to be updated when that
  * layout changes in later versions of Python.
  */
-PyObject*
-PyObjCUnicode_New(NSString* value)
+PyObject* _Nullable PyObjCUnicode_New(NSString* value)
 {
     PyObjCUnicodeObject*    result;
     PyASCIIObject*          ascii;
@@ -406,3 +414,5 @@ error:
     PyErr_NoMemory();
     return NULL;
 }
+
+NS_ASSUME_NONNULL_END

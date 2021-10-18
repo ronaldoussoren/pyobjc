@@ -26,10 +26,10 @@ struct _PyObjC_ArgDescr {
     /* If typeOverride the type field should be freed when the descriptor
      * is cleaned up, otherwise is isn't owned by this descriptor.
      */
-    const char*            type;
-    PyObjCMethodSignature* callable;
+    const char* _Nullable type;
+    PyObjCMethodSignature* _Nullable callable;
 
-    const char*              sel_type;
+    const char* _Nullable sel_type;
     char                     modifier;
     int16_t                  arrayArg;
     int16_t                  arrayArgOut;
@@ -48,8 +48,8 @@ struct _PyObjC_ArgDescr {
 struct _PyObjCMethodSignature {
     PyObject_VAR_HEAD
 
-        const char*          signature;
-    PyObject*                suggestion;
+        const char* signature;
+    PyObject* _Nullable suggestion;
     unsigned char            variadic : 1;
     unsigned char            null_terminated_array : 1;
     unsigned char            free_result : 1;

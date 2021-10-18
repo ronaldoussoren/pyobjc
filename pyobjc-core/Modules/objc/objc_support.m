@@ -328,12 +328,15 @@ PyObjCRT_SkipTypeQualifiers(const char* type)
     return type;
 }
 
-const char* _Nullable PyObjCRT_SkipTypeSpec(const char* type)
+const char* _Nullable PyObjCRT_SkipTypeSpec(const char* start_type)
 {
-    const char* start_type = type;
-    PyObjC_Assert(type != NULL, NULL);
+    const char* _Nullable type = start_type;
+    PyObjC_Assert(start_type != NULL, NULL);
 
     type = PyObjCRT_SkipTypeQualifiers(type);
+    if (type == NULL) {
+        return NULL;
+    }
 
     switch (*type) {
     case '"':
@@ -490,11 +493,16 @@ const char* _Nullable PyObjCRT_SkipTypeSpec(const char* type)
 }
 
 /* XXX: How is this different from SKipTypeSpec (prev. function) */
-const char* _Nullable PyObjCRT_NextField(const char* type)
+const char* _Nullable PyObjCRT_NextField(const char* start_type)
 {
-    PyObjC_Assert(type != NULL, NULL);
+    PyObjC_Assert(start_type != NULL, NULL);
+
+    const char* _Nullable type = start_type;
 
     type = PyObjCRT_SkipTypeQualifiers(type);
+    if (type == NULL) {
+        return NULL;
+    }
 
     switch (*type) {
     /* The following are one character type codes */
@@ -538,9 +546,10 @@ const char* _Nullable PyObjCRT_NextField(const char* type)
 
         while (isdigit(*++type))
             ;
-        type = PyObjCRT_SkipTypeSpec(type);
+        type = (const char* _Nonnull)PyObjCRT_SkipTypeSpec(type);
         if (unlikely(type == NULL)) {
             if (!PyErr_Occurred()) {
+                /* XXX: Can this happen? */
                 PyErr_SetString(PyObjCExc_InternalError,
                                 "Unexpected NULL while parsing array encoding type");
             }
@@ -567,6 +576,8 @@ const char* _Nullable PyObjCRT_NextField(const char* type)
                 if (type != NULL) {
                     type++;
                 } else {
+                    PyErr_SetString(PyObjCExc_InternalError,
+                                    "Struct with invalid embedded field name");
                     return NULL;
                 }
             }
@@ -585,8 +596,7 @@ const char* _Nullable PyObjCRT_NextField(const char* type)
                          *type, _C_STRUCT_E);
             return NULL;
         }
-        if (type)
-            type++;
+        type++;
         break;
 
     case _C_UNION_B:
@@ -631,6 +641,9 @@ const char* _Nullable PyObjCRT_NextField(const char* type)
 
         /* Just skip the following typespec */
         type = PyObjCRT_NextField(type + 1);
+        if (type == NULL) {
+            return NULL;
+        }
         break;
 
     default:
@@ -663,8 +676,9 @@ PyObjC_EmbeddedAlignOfType(const char* type)
 }
 
 Py_ssize_t
-PyObjCRT_AlignOfType(const char* type)
+PyObjCRT_AlignOfType(const char* start_type)
 {
+    const char* _Nullable type = start_type;
     PyObjC_Assert(type != NULL, -1);
 
     switch (*type) {
@@ -739,8 +753,13 @@ PyObjCRT_AlignOfType(const char* type)
             while (type != NULL && *type != _C_STRUCT_E) {
                 if (*type == '"') {
                     type = strchr(type + 1, '"');
-                    if (type)
-                        type++;
+                    if (type == NULL) {
+                        PyErr_SetString(
+                            PyObjCExc_InternalError,
+                            "Struct encoding with invalid embedded field name");
+                        return -1;
+                    }
+                    type++;
                 }
 
                 if (have_align) {
@@ -769,10 +788,14 @@ PyObjCRT_AlignOfType(const char* type)
             ;
         while (*type != _C_UNION_E) {
             Py_ssize_t item_align = PyObjCRT_AlignOfType(type);
-            if (item_align == -1)
+            if (item_align == -1) {
                 return -1;
+            }
             maxalign = MAX(maxalign, item_align);
             type     = PyObjCRT_SkipTypeSpec(type);
+            if (type == NULL) {
+                return -1;
+            }
         }
         return maxalign;
     }
@@ -824,9 +847,11 @@ return the size of an object specified by type
 */
 
 Py_ssize_t
-PyObjCRT_SizeOfType(const char* type)
+PyObjCRT_SizeOfType(const char* start_type)
 {
-    PyObjC_Assert(type != NULL, -1);
+    PyObjC_Assert(start_type != NULL, -1);
+
+    const char* _Nullable type = start_type;
 
     Py_ssize_t itemSize;
     switch (*type) {
@@ -927,8 +952,13 @@ PyObjCRT_SizeOfType(const char* type)
         while (*type != _C_STRUCT_E) {
             if (*type == '"') {
                 type = strchr(type + 1, '"');
-                if (type)
-                    type++;
+                if (type == NULL) {
+                    PyErr_Format(PyObjCExc_InternalError,
+                                 "Struct with invalid embedded field name: %s",
+                                 start_type);
+                    return -1;
+                }
+                type++;
             }
 
             if (have_align) {
@@ -951,6 +981,9 @@ PyObjCRT_SizeOfType(const char* type)
                 return -1;
             acc_size += itemSize;
             type = PyObjCRT_SkipTypeSpec(type);
+            if (type == NULL) {
+                return -1;
+            }
         }
 
         if (max_align) {
@@ -973,6 +1006,9 @@ PyObjCRT_SizeOfType(const char* type)
                 return -1;
             max_size = MAX(max_size, itemSize);
             type     = PyObjCRT_SkipTypeSpec(type);
+            if (type == NULL) {
+                return -1;
+            }
         }
 
         return max_size;
@@ -1195,6 +1231,10 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
     const char* type_end   = PyObjCRT_SkipTypeSpec(type);
     Py_ssize_t  pack;
 
+    if (type_end == NULL) {
+        return NULL;
+    }
+
     /* Hacked up support for socket addresses */
     if (strncmp(type, @encode(struct sockaddr), sizeof(@encode(struct sockaddr)) - 1)
         == 0) {
@@ -1237,10 +1277,17 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
             nitems++;
             if (*item == '"') {
                 item = strchr(item + 1, '"');
-                if (item)
-                    item++;
+                if (item == NULL) {
+                    PyErr_SetString(PyObjCExc_InternalError,
+                                    "Struct encoding with invalid embedded field");
+                    return NULL;
+                }
+                item++;
             }
             item = PyObjCRT_SkipTypeSpec(item);
+            if (item == NULL) {
+                return NULL;
+            }
         }
 
         haveTuple = 1;
@@ -1270,8 +1317,15 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
 
         if (*item == '"') {
             item = strchr(item + 1, '"');
-            if (item)
+            if (item == NULL) {
+                /* Invalid emmbedded name */
+                PyErr_Format(PyObjCExc_InternalError,
+                             "Encoding with invalid embedded name");
+                Py_DECREF(ret);
+                return NULL;
+            } else {
                 item++;
+            }
         }
 
         if (!have_align) {
@@ -1313,6 +1367,10 @@ static PyObject* _Nullable pythonify_c_struct(const char* type, void* datum)
         itemidx++;
         offset += PyObjCRT_SizeOfType(item);
         item = PyObjCRT_SkipTypeSpec(item);
+        if (item == NULL) {
+            Py_DECREF(ret);
+            return NULL;
+        }
     }
 
     return ret;
@@ -1662,6 +1720,9 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
         }
         nitems++;
         type = PyObjCRT_SkipTypeSpec(type);
+        if (type == NULL) {
+            return -1;
+        }
     }
 
     if (PyObjCStruct_Check(arg)) {
@@ -1712,12 +1773,15 @@ depythonify_c_struct(const char* types, PyObject* arg, void* datum)
         error = depythonify_c_value(type, argument, ((char*)datum) + offset);
         if (error == -1) {
             Py_DECREF(seq);
-            return error;
+            return -1;
         }
 
         itemidx++;
         offset += PyObjCRT_SizeOfType(type);
         type = PyObjCRT_SkipTypeSpec(type);
+        if (type == NULL) {
+            return -1;
+        }
     }
     Py_DECREF(seq);
     return 0;
@@ -2930,7 +2994,7 @@ PyObjC_signatures_compatible(const char* type1, const char* type2)
     }
 }
 
-PyObject* _Nullable id_to_python(id obj)
+PyObject* _Nullable id_to_python(id _Nullable obj)
 {
     PyObject* retobject;
 #if 1

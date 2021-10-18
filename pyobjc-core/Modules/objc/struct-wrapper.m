@@ -675,6 +675,9 @@ set_defaults(PyObject* self, const char* typestr)
             }
         }
         next = PyObjCRT_SkipTypeSpec(typestr);
+        if (next == NULL) {
+            return -1;
+        }
         switch (*typestr) {
 #ifdef _C_BOOL
         case _C_BOOL:
@@ -1563,6 +1566,9 @@ PyObject* _Nullable PyObjC_RegisterStructType(const char* signature, const char*
             }
             numFields++;
             sigcur = PyObjCRT_NextField(sigcur);
+            if (sigcur == NULL) {
+                return NULL;
+            }
         }
         fieldnames[numFields] = NULL;
         freeNames             = 1;

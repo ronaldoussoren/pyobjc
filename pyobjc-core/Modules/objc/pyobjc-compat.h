@@ -486,6 +486,8 @@ extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
  *
  * This slightly reduces the object allocation rate during
  * attribute access.
+ *
+ * XXX: Use PyUnicode_AsUTF8 instead.
  */
 extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
 

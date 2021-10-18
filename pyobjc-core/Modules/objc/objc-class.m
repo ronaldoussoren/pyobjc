@@ -388,8 +388,8 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     PyObject*          v;
     Py_ssize_t         i;
     Py_ssize_t         len;
-    Class              objc_class     = NULL;
-    Class              super_class    = NULL;
+    Class              objc_class = NULL;
+    Class              super_class; /* XXX    = NULL; */
     PyObject*          py_super_class = NULL;
     PyObjCClassObject* info;
     PyObject*          keys;
@@ -438,6 +438,10 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
                                          "be objective-C based");
         return NULL;
     }
+    if (py_super_class == (PyObject*)&PyObjCObject_Type) {
+        PyErr_SetString(PyExc_TypeError, "Cannot directly inherit from objc.objc_object");
+        return NULL;
+    }
 
     if (PyObjCClass_IsFinal((PyTypeObject*)py_super_class)) {
         PyErr_Format(PyExc_TypeError, "super class %s is final",
@@ -446,10 +450,15 @@ class_new(PyTypeObject* type __attribute__((__unused__)), PyObject* args, PyObje
     }
 
     super_class = PyObjCClass_GetClass(py_super_class);
-    if (super_class) {
-        if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
-            return NULL;
-        }
+    if (super_class == Nil) {
+        /* This will always set an exception, only the root has
+         * a Nil class and that's excluded above.
+         */
+        PyObjC_Assert(PyErr_Occurred(), NULL);
+        return NULL;
+    }
+    if (PyObjCClass_CheckMethodList(py_super_class, 1) < 0) {
+        return NULL;
     }
 
     hiddenSelectors = PyDict_New();
@@ -2496,7 +2505,13 @@ PyObjCClass_GetClass(PyObject* cls)
         return ((PyObjCClassObject*)cls)->class;
 
     } else if (PyObjCMetaClass_Check(cls)) {
-        return objc_metaclass_locate(cls);
+        Class result = objc_metaclass_locate(cls);
+        if (result == Nil) {
+            PyErr_Format(PyObjCExc_InternalError, "Cannot find class for meta class %R",
+                         cls);
+            return Nil;
+        }
+        return result;
 
     } else {
         PyErr_Format(PyObjCExc_InternalError,

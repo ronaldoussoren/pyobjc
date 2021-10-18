@@ -713,7 +713,7 @@ decimal_repr(PyObject* self)
     NSString* val  = NSDecimalString(&Decimal_Value(self), NULL);
     PyObject* tmp  = id_to_python(val);
     PyObject* repr = PyObject_Str(tmp);
-    Py_DECREF(tmp);
+    Py_XDECREF(tmp);
     return repr;
 }
 

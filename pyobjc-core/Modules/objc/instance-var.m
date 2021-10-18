@@ -444,7 +444,7 @@ PyObjCInstanceVariable_SetName(PyObject* value, PyObject* name)
     return (self->name == NULL ? -1 : 0);
 }
 
-PyObject* _Nullable PyObjCInstanceVariable_New(char* name)
+PyObject* _Nullable PyObjCInstanceVariable_New(const char* name)
 {
     PyObject* result;
 

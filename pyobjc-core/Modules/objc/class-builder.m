@@ -6,9 +6,11 @@
 
 #import <Foundation/NSInvocation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* XXX: See comment at definition */
-static PyObject* PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
-                                   BOOL* isAlloc, BOOL* isCFAlloc);
+static PyObject* _Nullable PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
+                                             BOOL* isAlloc, BOOL* isCFAlloc);
 
 /* Special methods for Python subclasses of Objective-C objects */
 static void object_method_dealloc(ffi_cif* cif, void* retval, void** args, void* userarg);
@@ -161,19 +163,16 @@ do_slots(PyObject* super_class, PyObject* clsdict)
         slot_value = PySequence_Fast_GET_ITEM(slots, i);
 
         if (PyUnicode_Check(slot_value)) {
-            PyObject* bytes = PyUnicode_AsEncodedString(slot_value, NULL, NULL);
-
-            if (bytes == NULL) {
+            const char* slot_name = PyUnicode_AsUTF8(slot_value);
+            if (slot_name == NULL) {
                 return -1;
             }
 
-            var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(
-                PyBytes_AsString(bytes));
-            Py_DECREF(bytes);
+            var = (PyObjCInstanceVariable*)PyObjCInstanceVariable_New(slot_name);
 
         } else {
-            PyErr_Format(PyExc_TypeError,
-                         "__slots__ entry %" PY_FORMAT_SIZE_T "d is not a string", i);
+            PyErr_Format(PyExc_TypeError, "__slots__ entry %R is not a string",
+                         slot_value);
             Py_DECREF(slots);
             return -1;
         }
@@ -215,8 +214,7 @@ do_slots(PyObject* super_class, PyObject* clsdict)
  * methods.
  */
 
-static Class
-build_intermediate_class(Class base_class, char* name)
+static Class _Nullable build_intermediate_class(Class base_class, char* name)
 {
     Class intermediate_class = nil;
 
@@ -257,7 +255,7 @@ error_cleanup:
         objc_disposeClassPair(intermediate_class);
     }
 
-    return NULL;
+    return Nil;
 }
 
 /*
@@ -282,6 +280,7 @@ error_cleanup:
 
 /* PyObjC uses a number of typecode descriptors that aren't available in
  * the objc runtime. Remove these from the type string (inline).
+ *
  */
 static void
 tc2tc(char* buf)
@@ -334,7 +333,11 @@ exit:
                 buf++;
             }
             tc2tc(buf);
-            buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            char* new_buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            if (new_buf == NULL) {
+                /* Should not happen! */
+                PyObjCErr_InternalError();
+            }
         }
         break;
 
@@ -351,7 +354,9 @@ exit:
                 buf++;
             }
             tc2tc(buf);
+            /* XXX: The line below doesn't do anything...
             buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            */
         }
         break;
 
@@ -363,14 +368,18 @@ exit:
     }
 }
 
+/* XXX: This function and tc2tc should be in objc_support.m  */
 int
 PyObjC_RemoveInternalTypeCodes(char* buf)
 {
-    while (buf && *buf) {
-        tc2tc(buf);
-        buf = (char*)PyObjCRT_SkipTypeSpec(buf);
-        if (buf == NULL)
+    char* _Nullable cur = buf;
+
+    while (*cur) {
+        tc2tc(cur);
+        cur = (char*)PyObjCRT_SkipTypeSpec(cur);
+        if (cur == NULL) {
             return -1;
+        }
     }
     return 0;
 }
@@ -394,10 +403,10 @@ need_intermediate(PyObject* class_dict)
     return NO;
 }
 
-Class
-PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
-                       PyObject* class_dict, PyObject* meta_dict,
-                       PyObject* hiddenSelectors, PyObject* hiddenClassSelectors)
+Class _Nullable PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
+                                       PyObject* class_dict, PyObject* meta_dict,
+                                       PyObject* hiddenSelectors,
+                                       PyObject* hiddenClassSelectors)
 {
     PyObject*  seq;
     PyObject*  key_list = NULL;
@@ -415,65 +424,54 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     PyObject*  instance_methods   = NULL;
     PyObject*  class_methods      = NULL;
 
+    PyObjC_Assert(super_class != Nil, Nil);
+
     if (!PyList_Check(protocols)) {
         PyErr_Format(PyObjCExc_InternalError,
                      "protocol list not a python 'list' but '%s'",
                      Py_TYPE(protocols)->tp_name);
-        goto error_cleanup;
+        return Nil;
     }
 
     if (!PyDict_Check(class_dict)) {
         PyErr_Format(PyObjCExc_InternalError, "class dict not a python 'dict', but '%s'",
                      Py_TYPE(class_dict)->tp_name);
-        goto error_cleanup;
-    }
-
-    if (super_class == NULL) {
-        PyErr_SetString(PyObjCExc_InternalError, "must have super_class");
-        goto error_cleanup;
+        return Nil;
     }
 
     if (objc_lookUpClass(name) != NULL) {
-        /*
-         * NOTE: we used to allow redefinition of a class if the
-         * redefinition is in the same module. This code was removed
-         * because that functionality isn't possible with the ObjC 2.0
-         * runtime API.
-         */
-
         PyErr_Format(PyObjCExc_Error, "%s is overriding existing Objective-C class",
                      name);
-        goto error_cleanup;
+        return Nil;
     }
 
     if (strspn(name, IDENT_CHARS) != strlen(name)) {
         PyErr_Format(PyObjCExc_Error, "'%s' not a valid name", name);
-        goto error_cleanup;
+        return Nil;
     }
 
-    PyDict_SetItemString(class_dict, "__objc_python_subclass__", Py_True);
+    if (PyDict_SetItemString(class_dict, "__objc_python_subclass__", Py_True) == -1) {
+        return Nil;
+    }
 
     py_superclass = PyObjCClass_New(super_class);
     if (py_superclass == NULL) {
-        return NULL;
+        return Nil;
     }
 
     instance_variables = PySet_New(NULL);
     if (instance_variables == NULL) {
-        return NULL;
+        goto error_cleanup;
     }
 
     instance_methods = PySet_New(NULL);
     if (instance_methods == NULL) {
-        Py_DECREF(instance_variables);
-        return NULL;
+        goto error_cleanup;
     }
 
     class_methods = PySet_New(NULL);
     if (class_methods == NULL) {
-        Py_DECREF(instance_variables);
-        Py_DECREF(instance_methods);
-        return NULL;
+        goto error_cleanup;
     }
 
     /* We must override copyWithZone: for python classes because the
@@ -492,22 +490,31 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
         && need_intermediate(class_dict)) {
         Class intermediate_class;
         char  buf[1024];
+        int   r;
 
         have_intermediate = 1;
 
-        snprintf(buf, 1024, "_PyObjCCopying_%s", class_getName(super_class));
+        r = snprintf(buf, 1024, "_PyObjCCopying_%s", class_getName(super_class));
+        if (r < 0 || r >= (int)sizeof(buf)) {
+            /* Formatting the name failed */
+            PyErr_SetString(PyObjCExc_InternalError,
+                            "Cannot calculate name of intermediate class");
+            goto error_cleanup;
+        }
+
         intermediate_class = objc_lookUpClass(buf);
         if (intermediate_class == NULL) {
             intermediate_class = build_intermediate_class(super_class, buf);
-            if (intermediate_class == NULL)
+            if (intermediate_class == Nil)
                 goto error_cleanup;
         }
         Py_DECREF(py_superclass);
 
         super_class   = intermediate_class;
         py_superclass = PyObjCClass_New(super_class);
-        if (py_superclass == NULL)
-            return NULL;
+        if (py_superclass == Nil) {
+            goto error_cleanup;
+        }
     }
 
     if (do_slots(py_superclass, class_dict) < 0) {
@@ -531,8 +538,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     }
 
     key_count = PyList_Size(key_list);
-    if (PyErr_Occurred()) {
-        Py_DECREF(key_list);
+    if (key_count == -1) {
         goto error_cleanup;
     }
 
@@ -548,25 +554,23 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
 
     /* 0th round: protocols */
     protocol_count = PyList_Size(protocols);
-    if (protocol_count > 0) {
-        for (i = 0; i < protocol_count; i++) {
-            PyObject* wrapped_protocol;
-            wrapped_protocol = PyList_GET_ITEM(protocols, i);
-            if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
-                continue;
-            }
-
-            /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
-             * checked */
-            if (!class_addProtocol(new_class,
-                                   (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(
-                                       wrapped_protocol))) {
-                goto error_cleanup;
-            }
-        }
-    }
-    if (PyErr_Occurred()) {
+    if (protocol_count == -1) {
         goto error_cleanup;
+    }
+    for (i = 0; i < protocol_count; i++) {
+        PyObject* wrapped_protocol;
+        wrapped_protocol = PyList_GET_ITEM(protocols, i);
+        if (!PyObjCFormalProtocol_Check(wrapped_protocol)) {
+            continue;
+        }
+
+        /* PyObjCFormalProtocol_GetProtocol() is nonnull because we've already type
+         * checked */
+        if (!class_addProtocol(
+                new_class,
+                (Protocol* _Nonnull)PyObjCFormalProtocol_GetProtocol(wrapped_protocol))) {
+            goto error_cleanup;
+        }
     }
 
     /* First step: call class setup hooks of entries in the class dict */
@@ -607,7 +611,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     /* The class_setup_hooks may have changed the class dictionary, hence
      * we need to recalculate the key list.
      */
-    Py_XDECREF(key_list);
+    Py_CLEAR(key_list);
 
     key_list = PyDict_Keys(class_dict);
     if (key_list == NULL) {
@@ -615,7 +619,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     }
 
     key_count = PyList_Size(key_list);
-    if (PyErr_Occurred()) {
+    if (key_count == -1) {
         Py_DECREF(key_list);
         goto error_cleanup;
     }
@@ -623,7 +627,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     /* Step 2b: Collect methods and instance variables in the class dict
      *          into the 3 sets.
      *
-     * FIXME: This work should be done by the class setup hook instead.
+     * XXX: This work should be done by the class setup hook instead.
      */
     for (i = 0; i < key_count; i++) {
         key = PyList_GET_ITEM(key_list, i);
@@ -810,8 +814,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     }
 
     /* Keylist is not needed anymore */
-    Py_DECREF(key_list);
-    key_list = NULL;
+    Py_CLEAR(key_list);
 
     /* Step 3: Check instance variables */
 
@@ -827,11 +830,15 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
         value = PySequence_Fast_GET_ITEM(instance_variables, i);
 
         if (!PyObjCInstanceVariable_Check(value)) {
+            /* XXX: Why is this needed? */
             continue;
         }
 
         /* Our only check for now is that instance variable names must be unique */
         /* XXX: Is this really necessary? */
+        /* XXX: This doesn't check that the new class has unique instance variables!
+         *      Add test before fixing this
+         */
         if (class_getInstanceVariable(super_class, PyObjCInstanceVariable_GetName(value))
             != NULL) {
             PyErr_Format(PyObjCExc_Error,
@@ -959,6 +966,9 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
          */
 
         if (!have_intermediate) {
+            /* XXX: This loop is also in the function that builds the
+             *      intermediate class, refactor this.
+             */
             struct method_info* cur;
             for (cur = gMethods; cur->method_name != NULL; cur++) {
                 if (unlikely(cur->selector == NULL)) {
@@ -1012,6 +1022,9 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
             size = sizeof(PyObject*);
         } else {
             type = PyObjCInstanceVariable_GetType(value);
+            if (type == NULL) {
+                goto error_cleanup;
+            }
             size = PyObjCRT_SizeOfType(type);
         }
         align = PyObjCRT_AlignOfType(type);
@@ -1139,7 +1152,7 @@ PyObjCClass_BuildClass(Class super_class, PyObject* protocols, char* name,
     /*
      * NOTE: Class is not registered yet, we do that as lately as possible
      * because it is impossible to remove the registration from the
-     * objective-C runtime (at least on MacOS X).
+     * objective-C runtime.
      */
     return new_class;
 
@@ -1197,6 +1210,7 @@ free_ivars(id self, PyObject* cls)
             break;
         }
 
+        /* XXX: Why does this not access the dict slot directly? */
         clsDict = PyObject_GetAttrString(cls, "__dict__");
         if (clsDict == NULL) {
             PyErr_Clear();
@@ -1264,12 +1278,15 @@ free_ivars(id self, PyObject* cls)
                         NSLog(@"ignoring exception %@ in destructor", localException);
                     }
                 Py_END_ALLOW_THREADS
-                *(id*)(((char*)self) + ivar_getOffset(var)) = NULL;
+                *(id*)(((char*)self) + ivar_getOffset(var)) = nil;
             }
             Py_DECREF(o);
         }
         Py_DECREF(iter);
 
+        /* XXX: Why does this use cls.__bases__()[0] instead of
+         *      the type slot with the primary superclass?
+         */
         o = PyObject_GetAttrString(cls, "__bases__");
         if (o == NULL) {
             PyErr_Clear();
@@ -1310,10 +1327,14 @@ object_method_dealloc(ffi_cif* cif __attribute__((__unused__)),
         PyErr_Fetch(&ptype, &pvalue, &ptraceback);
 
         cls = PyObjCClass_New(object_getClass(self));
+        /* XXX: Check for  cls being NULL and for object_getClass returning Nil */
+        /*      Both should never happen... */
 
         delmethod = PyObjCClass_GetDelMethod(cls);
         if (delmethod != NULL) {
             PyObject* s = _PyObjCObject_NewDeallocHelper(self);
+            /* XXX: Why not use Vectorcall uncondationally (through compat layer on py3.8
+             * and earlier)? */
 #if PY_VERSION_HEX >= 0x03090000
             PyObject* args[2] = {NULL, s};
             obj               = PyObject_Vectorcall(delmethod, args + 1,
@@ -1376,6 +1397,13 @@ object_method_copyWithZone_(ffi_cif* cif __attribute__((__unused__)), void* resp
         /* Returns NULL only when setting ivarCount to 0 */
         Ivar* ivarList = (Ivar* _Nonnull)class_copyIvarList(cls, &ivarCount);
 
+        /* XXX: This code is not 100% consistent with the code freeing slots,
+         *      in particular for ObjC variables, and the 'isSlot' attribute.
+         *      Document why this is (both here, and if necessary in user docs).
+         *      It might be possible to make the two consistent, but that could
+         *      break backward compatibility.
+         *      This code also needs tests!
+         */
         for (i = 0; i < ivarCount; i++) {
             Ivar        v = ivarList[i];
             const char* typestr;
@@ -1428,7 +1456,7 @@ object_method_respondsToSelector(ffi_cif* cif __attribute__((__unused__)), void*
     PyObject*         pymeth;
 
     PyObjC_BEGIN_WITH_GIL
-        /* First check if we respond */
+        /* First check if this class respond */
         pyself = PyObjCObject_New(self, PyObjCObject_kDEFAULT, YES);
         if (pyself == NULL) {
             *p_result = NO;
@@ -1480,6 +1508,12 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
     objc_superSetClass(spr, (Class)userdata);
     objc_superSetReceiver(spr, self);
 
+    /*
+     * XXX: This checks self and super in a different order than the
+     *      previous function, without a clear reason. Note that either
+     *      order should work because we check that Python methods overriding
+     *      an existing method have a compatible signature.
+     */
     @try {
         *p_result = ((NSMethodSignature * (*)(struct objc_super*, SEL, SEL))
                          objc_msgSendSuper)(&spr, _meth, aSelector);
@@ -1509,6 +1543,7 @@ object_method_methodSignatureForSelector(ffi_cif* cif __attribute__((__unused__)
     PyObjC_END_WITH_GIL
 
     @try {
+        /* XXX: Shouldn't this be sel_native_signature? */
         *p_result = [NSMethodSignature
             signatureWithObjCTypes:((PyObjCSelector*)pymeth)->sel_python_signature];
     } @catch (NSObject* localException) {
@@ -1569,7 +1604,8 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
             @throw;
 
             /* Avoid compiler warnings */
-            theSelector = @selector(init);
+            /* XXX: Is this really necessary with current compilers? */
+            __builtin_unreachable();
         }
     Py_END_ALLOW_THREADS
 
@@ -1882,9 +1918,8 @@ object_method_forwardInvocation(ffi_cif* cif __attribute__((__unused__)),
  * XXX: Move API to vectorcall convention, and possibly inline in
  * its sole caller.
  */
-static PyObject*
-PyObjC_CallPython(id self, SEL selector, PyObject* arglist, BOOL* isAlloc,
-                  BOOL* isCFAlloc)
+static PyObject* _Nullable PyObjC_CallPython(id self, SEL selector, PyObject* arglist,
+                                             BOOL* isAlloc, BOOL* isCFAlloc)
 {
     PyObject* pyself = NULL;
     PyObject* pymeth = NULL;
@@ -2100,3 +2135,5 @@ object_method_setValue_forKey_(ffi_cif* cif __attribute__((__unused__)),
         }
     }
 }
+
+NS_ASSUME_NONNULL_END

@@ -1,6 +1,9 @@
 #ifndef PyObjC_ASSERT_H
 #define PyObjC_ASSERT_H
 
+NS_ASSUME_NONNULL_BEGIN
+
+/* XXX: defined in pyobjc_util.m, move declaration */
 extern PyObject* PyObjCExc_InternalError;
 
 #ifdef PyObjC_DEBUG
@@ -49,5 +52,7 @@ extern PyObject* PyObjCExc_InternalError;
 #define PyObjC_Assert(expr, retval) ((void)0)
 
 #endif
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_ASSERT_H */

@@ -120,10 +120,14 @@ Generic Implementation Quality
 
   This is enforced by a pre-commit hook.
 
-* Added "nullability" attributes to Objectice-C sources for pyobjc-core.
+* #388: Added "nullability" attributes to Objectice-C sources for pyobjc-core.
 
   This gives the compiler and clang static analyzer more information
   that can be used to pinpoint possible bugs in the implementation.
+
+* Add more error checking to pyobjc-core to catch (very) unlikely error conditions.
+
+  This is a side effect of the previous item.
 
 New features
 ............
@@ -251,6 +255,9 @@ Other changes and bugfixes
   methods now use the filesystem encoding instead of the default encoding.
   C string.  This shouldn't affect any code, both encoding default to UTF-8 on macOS.
 
+* Inheriting directly from :type:`objc.objc_object` now raises :type:`TypeError`
+  instead of :type:`objc.InternalError`. User code should always inherit from
+  a Cocoa class.
 
 Version 7.3
 -----------

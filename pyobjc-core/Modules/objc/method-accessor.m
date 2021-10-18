@@ -6,8 +6,10 @@
  */
 #include "pyobjc.h"
 
-static PyObject*
-find_selector(PyObject* self, const char* name, int class_method)
+NS_ASSUME_NONNULL_BEGIN
+
+static PyObject* _Nullable find_selector(PyObject* self, const char* name,
+                                         int class_method)
 {
     SEL                sel = PyObjCSelector_DefaultSelector(name);
     id                 objc_object;
@@ -60,7 +62,8 @@ find_selector(PyObject* self, const char* name, int class_method)
     }
 
     if (strcmp(object_getClassName(objc_object), "_NSZombie") == 0) {
-        PyErr_Format(PyExc_AttributeError, "Cannot access NSProxy.%s", name);
+        PyErr_Format(PyExc_AttributeError, "Cannot access '%s' on deallocated object",
+                     name);
         return NULL;
     }
 
@@ -93,6 +96,7 @@ find_selector(PyObject* self, const char* name, int class_method)
         objc_object = (id)object_getClass(objc_object);
     }
 
+    /* XXX: This needs documentation */
     PyObject* meta = PyObjCClass_HiddenSelector(class_object, sel, class_method);
 
     if (meta && meta != Py_None) {
@@ -110,8 +114,7 @@ find_selector(PyObject* self, const char* name, int class_method)
     return PyObjCSelector_NewNative((Class)objc_object, sel, flattened, class_method);
 }
 
-static PyObject*
-make_dict(PyObject* self, int class_method)
+static PyObject* _Nullable make_dict(PyObject* self, int class_method)
 {
     Class        cls;
     PyObject*    res;
@@ -146,6 +149,8 @@ make_dict(PyObject* self, int class_method)
         }
 
     } else {
+        /* XXX: Don't particularly like PyErr_BadInternalCall */
+        /* XXX: Verify if this can be triggered, if not: use PyObjC_InternalError() */
         PyErr_BadInternalCall();
         return NULL;
     }
@@ -160,6 +165,9 @@ make_dict(PyObject* self, int class_method)
         methods  = class_copyMethodList(objc_class, &method_count);
 
         if (methods == NULL) {
+            /* XXX: this is the same as the code after the for loop below,
+             *      restructure the code.
+             */
             objc_class = class_getSuperclass((Class)objc_class);
             cls        = class_getSuperclass((Class)cls);
             continue;
@@ -170,6 +178,11 @@ make_dict(PyObject* self, int class_method)
             char*     name;
 
             name = PyObjC_SELToPythonName(method_getName(methods[i]), buf, sizeof(buf));
+            if (name == NULL) {
+                free(methods);
+                Py_DECREF(res);
+                return NULL;
+            }
 
             v = PyObject_GetAttrString(self, name);
 
@@ -230,9 +243,11 @@ static void
 obj_dealloc(PyObject* _self)
 {
     ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
-    Py_XDECREF(self->base);
-    self->base = NULL;
 
+    /* XXX: Can 'base' every be NULL? */
+    Py_XDECREF(self->base);
+
+    /* XXX:  Why not just call PyObject_Del? */
     if (Py_TYPE(self)->tp_free) {
         Py_TYPE(self)->tp_free((PyObject*)self);
 
@@ -241,8 +256,7 @@ obj_dealloc(PyObject* _self)
     }
 }
 
-static PyObject*
-obj_getattro(PyObject* _self, PyObject* name)
+static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
 {
     ObjCMethodAccessor* self   = (ObjCMethodAccessor*)_self;
     PyObject*           result = NULL;
@@ -257,23 +271,26 @@ obj_getattro(PyObject* _self, PyObject* name)
         return NULL;
     }
 
-    if (strcmp(PyObjC_Unicode_Fast_Bytes(name), "__dict__") == 0) {
+    if (PyObjC_is_ascii_string(name, "__dict__")) {
 
         PyObject* dict;
         dict = make_dict(self->base, self->class_method);
+        if (dict == NULL) {
+            return NULL;
+        }
 
         result = PyDictProxy_New(dict);
         Py_DECREF(dict);
         return result;
     }
 
-    if (strcmp(PyObjC_Unicode_Fast_Bytes(name), "__methods__") == 0) {
+    if (PyObjC_is_ascii_string(name, "__methods__")) {
 
         PyErr_SetString(PyExc_AttributeError, "No such attribute: __methods__");
         return NULL;
     }
 
-    if (strcmp(PyObjC_Unicode_Fast_Bytes(name), "__members__") == 0) {
+    if (PyObjC_is_ascii_string(name, "__members__")) {
 
         PyErr_SetString(PyExc_AttributeError, "No such attribute: __members__");
         return NULL;
@@ -383,8 +400,7 @@ obj_getattro(PyObject* _self, PyObject* name)
     return result;
 }
 
-static PyObject*
-obj_repr(PyObject* _self)
+static PyObject* _Nullable obj_repr(PyObject* _self)
 {
     ObjCMethodAccessor* self = (ObjCMethodAccessor*)_self;
     PyObject*           rval;
@@ -395,8 +411,7 @@ obj_repr(PyObject* _self)
     return rval;
 }
 
-static PyObject*
-obj_dir(PyObject* self)
+static PyObject* _Nullable obj_dir(PyObject* self)
 {
     PyObject* dict = make_dict(((ObjCMethodAccessor*)self)->base,
                                ((ObjCMethodAccessor*)self)->class_method);
@@ -432,10 +447,11 @@ PyTypeObject PyObjCMethodAccessor_Type = {
     .tp_methods                                    = obj_methods,
 };
 
-PyObject*
-PyObjCMethodAccessor_New(PyObject* base, int class_method)
+PyObject* _Nullable PyObjCMethodAccessor_New(PyObject* base, int class_method)
 {
     ObjCMethodAccessor* result;
+
+    /* XXX: This shou;ld check that 'base' is valid */
 
     result = PyObject_New(ObjCMethodAccessor, &PyObjCMethodAccessor_Type);
     if (result == NULL)
@@ -447,3 +463,5 @@ PyObjCMethodAccessor_New(PyObject* base, int class_method)
 
     return (PyObject*)result;
 }
+
+NS_ASSUME_NONNULL_END

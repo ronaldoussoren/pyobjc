@@ -9,6 +9,16 @@ NSAutoreleasePool = objc.lookUpClass("NSAutoreleasePool")
 
 
 class TestSubclassing(TestCase):
+    def test_dont_inherit_from_objc_root(self):
+        with self.assertRaises(TypeError):
+
+            class DirectObjectObject(objc.objc_object):
+                pass
+
+    # XXX: Likewise for objc.objc_class?
+    #      This currently does not raise, not sure
+    #      if subclassing would ever be valid or useful.
+
     def testMethodRaise(self):
         # Defining a method whose name is a keyword followed by two underscores
         # should define the method name without underscores in the runtime,

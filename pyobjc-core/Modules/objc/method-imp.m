@@ -323,6 +323,10 @@ static PyObject* _Nullable imp_metadata(PyObject* self)
     PyObject* result = PyObjCMethodSignature_AsDict(((PyObjCIMPObject*)self)->signature);
     int       r;
 
+    if (result == NULL) {
+        return NULL;
+    }
+
     if (((PyObjCIMPObject*)self)->flags & PyObjCSelector_kCLASS_METHOD) {
         r = PyDict_SetItemString(result, "classmethod", Py_True);
 
