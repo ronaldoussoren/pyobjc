@@ -350,7 +350,11 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
     }
 
     if (func == NULL) {
-        generic = find_signature(PyObjCSelector_Signature(sel));
+        const char* sel_signature = PyObjCSelector_Signature(sel);
+        if (sel_signature == NULL) {
+            return NULL;
+        }
+        generic = find_signature(sel_signature);
         if (generic != NULL) {
             func = generic->call_to_python;
         }
@@ -363,9 +367,13 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
     }
 
     if (func != NULL) {
+        const char* sel_signature = PyObjCSelector_Signature(sel);
+        if (sel_signature == NULL) {
+            return NULL;
+        }
         methinfo = PyObjCMethodSignature_ForSelector(
             class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
-            PyObjCSelector_GetSelector(sel), PyObjCSelector_Signature(sel),
+            PyObjCSelector_GetSelector(sel), sel_signature,
             PyObjCNativeSelector_Check(sel));
         if (methinfo == NULL) {
             return NULL;
@@ -379,15 +387,19 @@ PyObjC_MakeIMP(Class class, Class _Nullable super_class, PyObject* sel, PyObject
     } else {
         PyErr_Clear();
 
+        const char* sel_signature = PyObjCSelector_Signature(sel);
+        if (sel_signature == NULL) {
+            return NULL;
+        }
         methinfo = PyObjCMethodSignature_ForSelector(
             class, (PyObjCSelector_GetFlags(sel) & PyObjCSelector_kCLASS_METHOD) != 0,
-            PyObjCSelector_GetSelector(sel), PyObjCSelector_Signature(sel),
+            PyObjCSelector_GetSelector(sel), sel_signature,
             PyObjCNativeSelector_Check(sel));
         if (methinfo == NULL) {
             return NULL;
         }
-        retval = blockimpForSignature(PyObjCSelector_GetSelector(sel),
-                                      PyObjCSelector_Signature(sel), imp, methinfo);
+        retval = blockimpForSignature(PyObjCSelector_GetSelector(sel), sel_signature, imp,
+                                      methinfo);
         if (retval != NULL) {
             return retval;
         }

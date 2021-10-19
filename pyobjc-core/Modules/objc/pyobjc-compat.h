@@ -1,6 +1,8 @@
 #ifndef PyObjC_COMPAT_H
 #define PyObjC_COMPAT_H
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*
  *
  * Start of compiler definitions
@@ -37,15 +39,13 @@
  *
  * Also ensure that MAC_OS_X_VERSION_... macros are available
  * for all existing OSX versions.
+ *
+ * XXX: Are these really needed?
  */
 
-/* On 10.1 there are no defines for the OS version. */
 #ifndef MAC_OS_X_VERSION_10_1
 #define MAC_OS_X_VERSION_10_1 1010
 #define MAC_OS_X_VERSION_MAX_ALLOWED MAC_OS_X_VERSION_10_1
-
-#error "MAC_OS_X_VERSION_10_1 not defined. You aren't running 10.1 are you?"
-
 #endif
 
 #ifndef MAC_OS_X_VERSION_10_2
@@ -249,117 +249,6 @@
 #endif
 
 /*
- * Explicit support for weak-linking functions
- *
- * For some reason implicit weak-linking using '#pragma weak' and
- * '__attribute__((__weak__))' doesn't work (at least of some functions)
- * when building on 10.8 and deploying to * 10.5)
- *
- * The code below introduces infrastructure that makes it fairly
- * painless to do weak-linking anyway.
- *
- * Usage for function CFArrayCreate:
- * * Use 'WEAK_LINKED_NAME(CFArrayCreate)' at the start of a wrapper module
- * * Use 'USE(CFArrayCreate)' to actually call the function, don't use the
- *   actual function.
- * * Use 'CHECK_WEAK_LINK(module, CFArrayCreate)' in the module init function,
- *   this will remove "CFArrayCreate" from the module dictionary when the function
- *   cannot by found by dlsym.
- * * All access to function should be done through weak-refs like this.
- *
- * NOTE: When the version that introduced the function is known, that version number
- *       can be appended to the macros and the function will be hard-linked when
- *       the minimal deployment target is high enough.
- */
-#include <dlfcn.h>
-
-#define WEAK_LINKED_NAME(NAME) static __typeof__(&NAME) ptr_##NAME;
-#define USE(NAME) ptr_##NAME
-#define CHECK_WEAK_LINK(module, NAME)                                                    \
-    do {                                                                                 \
-        void* dl   = dlopen(NULL, RTLD_GLOBAL);                                          \
-        ptr_##NAME = dlsym(dl, PyObjC_STR(NAME));                                        \
-        dlclose(dl);                                                                     \
-        if (ptr_##NAME == NULL) {                                                        \
-            if (PyDict_DelItemString(PyModule_GetDict(module), PyObjC_STR(NAME)) < 0) {  \
-                return NULL;                                                             \
-            }                                                                            \
-        }                                                                                \
-    } while (0)
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_5
-#define WEAK_LINKED_NAME_10_5(NAME)
-#define USE_10_5(NAME) NAME
-#define CHECK_WEAK_LINK_10_5(module, NAME)                                               \
-    do {                                                                                 \
-    } while (0)
-#else
-#define WEAK_LINKED_NAME_10_5(NAME) WEAK_LINKED_NAME(NAME)
-#define USE_10_5(NAME) USE(NAME)
-#define CHECK_WEAK_LINK_10_5(module, NAME) CHECK_WEAK_LINK(module, NAME)
-#endif
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_6
-#define WEAK_LINKED_NAME_10_6(NAME)
-#define USE_10_6(NAME) NAME
-#define CHECK_WEAK_LINK_10_6(module, NAME)                                               \
-    do {                                                                                 \
-    } while (0)
-#else
-#define WEAK_LINKED_NAME_10_6(NAME) WEAK_LINKED_NAME(NAME)
-#define USE_10_6(NAME) USE(NAME)
-#define CHECK_WEAK_LINK_10_6(module, NAME) CHECK_WEAK_LINK(module, NAME)
-#endif
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_7
-#define WEAK_LINKED_NAME_10_7(NAME)
-#define USE_10_7(NAME) NAME
-#define CHECK_WEAK_LINK_10_7(module, NAME)                                               \
-    do {                                                                                 \
-    } while (0)
-#else
-#define WEAK_LINKED_NAME_10_7(NAME) WEAK_LINKED_NAME(NAME)
-#define USE_10_7(NAME) USE(NAME)
-#define CHECK_WEAK_LINK_10_7(module, NAME) CHECK_WEAK_LINK(module, NAME)
-#endif
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_8
-#define WEAK_LINKED_NAME_10_8(NAME)
-#define USE_10_8(NAME) NAME
-#define CHECK_WEAK_LINK_10_8(module, NAME)                                               \
-    do {                                                                                 \
-    } while (0)
-#else
-#define WEAK_LINKED_NAME_10_8(NAME) WEAK_LINKED_NAME(NAME)
-#define USE_10_8(NAME) USE(NAME)
-#define CHECK_WEAK_LINK_10_8(module, NAME) CHECK_WEAK_LINK(module, NAME)
-#endif
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_9
-#define WEAK_LINKED_NAME_10_9(NAME)
-#define USE_10_9(NAME) NAME
-#define CHECK_WEAK_LINK_10_9(module, NAME)                                               \
-    do {                                                                                 \
-    } while (0)
-#else
-#define WEAK_LINKED_NAME_10_9(NAME) WEAK_LINKED_NAME(NAME)
-#define USE_10_9(NAME) USE(NAME)
-#define CHECK_WEAK_LINK_10_9(module, NAME) CHECK_WEAK_LINK(module, NAME)
-#endif
-
-#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_10
-#define WEAK_LINKED_NAME_10_10(NAME)
-#define USE_10_10(NAME) NAME
-#define CHECK_WEAK_LINK_10_10(module, NAME)                                              \
-    do {                                                                                 \
-    } while (0)
-#else
-#define WEAK_LINKED_NAME_10_10(NAME) WEAK_LINKED_NAME(NAME)
-#define USE_10_10(NAME) USE(NAME)
-#define CHECK_WEAK_LINK_10_10(module, NAME) CHECK_WEAK_LINK(module, NAME)
-#endif
-
-/*
  *
  * End of Cocoa definitions
  *
@@ -369,6 +258,7 @@
  *
  * Start of compiler support helpers
  *
+ * XXX: Are these needed?
  */
 
 #ifdef __GNUC__
@@ -393,6 +283,8 @@
  *
  * End of compiler support helpers
  *
+ * XXX: These two are no longer needed, all supported platforms
+ *      are 64-bit
  */
 
 #if __LP64__
@@ -450,10 +342,13 @@
 #define PyObject_Vectorcall PyObjC_Vectorcall
 #define PyObject_VectorcallMethod PyObjC_VectorcallMethod
 
-extern PyObject* PyObject_Vectorcall(PyObject* callable, PyObject* const* args,
-                                     size_t nargsf, PyObject* kwnames);
-extern PyObject* PyObject_VectorcallMethod(PyObject* name, PyObject* const* args,
-                                           size_t nargsf, PyObject* kwnames);
+extern PyObject* _Nullable PyObject_Vectorcall(PyObject* callable,
+                                               PyObject* _Nonnull const* _Nonnull args,
+                                               size_t nargsf,
+                                               PyObject* _Nullable kwnames);
+extern PyObject* _Nullable PyObject_VectorcallMethod(
+    PyObject* name, PyObject* _Nonnull const* _Nonnull args, size_t nargsf,
+    PyObject* _Nullable kwnames);
 #endif
 
 #endif /* Python < 3.9 */
@@ -464,18 +359,11 @@ extern PyObject* PyObject_VectorcallMethod(PyObject* name, PyObject* const* args
  */
 #define CLINIC_SEP "--\n"
 
-/* Define PyObjC_UNICODE_FAST_PATH when
- * 1) We're before Python 3.3, and
- * 2) Py_UNICODE has the same size as unichar
- *
- * Python 3.3 has an optimized representation that
- * makes it impossible (and unnecessary) to use the
- * "fast path"
- */
+extern int PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
 
-extern int       PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result);
-extern PyObject* PyBytes_InternFromString(const char* v);
-extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
+/* XXX: Naming! */
+extern PyObject* _Nullable PyBytes_InternFromString(const char* v);
+extern PyObject* _Nullable PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
 
 /*
  * A micro optimization: when using Python 3.3 or later it
@@ -489,14 +377,13 @@ extern PyObject* PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l);
  *
  * XXX: Use PyUnicode_AsUTF8 instead.
  */
-extern const char* PyObjC_Unicode_Fast_Bytes(PyObject* object);
+extern const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object);
 
 #ifdef __clang__
 
 #ifndef Py_LIMITED_API
 
-static inline PyObject**
-PyTuple_ITEMS(PyObject* tuple)
+static inline PyObject* _Nullable* _Nonnull PyTuple_ITEMS(PyObject* tuple)
 {
     return &PyTuple_GET_ITEM(tuple, 0);
 }
@@ -507,7 +394,7 @@ PyTuple_ITEMS(PyObject* tuple)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warray-bounds"
 static inline void
-_PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* value)
+_PyObjCTuple_SetItem(PyObject* tuple, Py_ssize_t idx, PyObject* _Nullable value)
 {
     PyTuple_SET_ITEM(tuple, idx, value);
 }
@@ -553,5 +440,7 @@ _PyObjCTuple_GetItem(PyObject* tuple, Py_ssize_t idx)
 #define PyObjC_END_WITH_GIL                                                              \
     PyGILState_Release(_GILState);                                                       \
     }
+
+NS_ASSUME_NONNULL_END
 
 #endif /* PyObjC_COMPAT_H */

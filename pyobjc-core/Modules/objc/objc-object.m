@@ -273,8 +273,12 @@ PyObjCClass_TryResolveSelector(PyObject* base, PyObject* name, SEL sel)
 #endif
 
         /* Create (unbound) selector */
-        PyObject* result =
-            PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 0);
+        const char* encoding = method_getTypeEncoding(m);
+        if (encoding == NULL) {
+            PyErr_SetString(PyObjCExc_Error, "Native selector with Nil type encoding");
+            return NULL;
+        }
+        PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
         if (result == NULL) {
             return NULL;
         }
@@ -308,12 +312,16 @@ _get_dictptr(PyObject* obj)
 static inline PyObject*
 _type_lookup(PyTypeObject* tp, PyObject* name)
 {
-    Py_ssize_t i, n;
-    PyObject * mro, *base, *dict;
-    PyObject*  first_class = NULL;
-    PyObject*  descr       = NULL;
-    PyObject*  res;
-    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    Py_ssize_t  i, n;
+    PyObject *  mro, *base, *dict;
+    PyObject*   first_class = NULL;
+    PyObject*   descr       = NULL;
+    PyObject*   res;
+    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    if (name_bytes == NULL) {
+        return NULL;
+    }
+    SEL sel = PyObjCSelector_DefaultSelector(name_bytes);
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -438,10 +446,16 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
                 continue;
 
             if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
+                const char* encoding = method_getTypeEncoding(m);
+                if (encoding == NULL) {
+                    free(methods);
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "Native selector with Nil type encoding");
+                    return NULL;
+                }
 
                 /* Create (unbound) selector */
-                descr = PyObjCSelector_NewNative(cls, method_getName(m),
-                                                 method_getTypeEncoding(m), 0);
+                descr = PyObjCSelector_NewNative(cls, method_getName(m), encoding, 0);
                 free(methods);
                 if (descr == NULL) {
                     return NULL;

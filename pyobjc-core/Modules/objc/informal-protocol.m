@@ -321,8 +321,12 @@ PyObjCInformalProtocol_CheckClass(PyObject* obj, char* name, PyObject* super_cla
             }
 
         } else {
-            if (!PyObjCRT_SignaturesEqual(PyObjCSelector_Signature(m),
-                                          PyObjCSelector_Signature(cur))) {
+            const char* l_sig = PyObjCSelector_Signature(m);
+            const char* r_sig = PyObjCSelector_Signature(cur);
+            if (l_sig == NULL || r_sig == NULL) {
+                return 0;
+            }
+            if (!PyObjCRT_SignaturesEqual(l_sig, r_sig)) {
 
                 PyErr_Format(PyExc_TypeError,
                              "class %s does not correctly implement "

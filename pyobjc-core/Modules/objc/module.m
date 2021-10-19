@@ -24,13 +24,15 @@
 
 #include <dlfcn.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 static int PyObjC_Initialized = 0;
 
-PyObject* PyObjCClass_DefaultModule = NULL;
+PyObject* _Nullable PyObjCClass_DefaultModule;
 
-PyObject* PyObjC_TypeStr2CFTypeID = NULL;
+PyObject* _Nullable PyObjC_TypeStr2CFTypeID;
 
-static NSAutoreleasePool* global_release_pool = nil;
+static NSAutoreleasePool* _Nullable global_release_pool;
 
 /* Calculate the current version of macOS in a format that
  * can be compared with MAC_OS_VERSION_X_... constants
@@ -137,8 +139,8 @@ calc_current_version(void)
 PyDoc_STRVAR(pyobjc_id_doc, "pyobjc_id(obj)\n" CLINIC_SEP "\n"
                             "Return the id of the underlying NSObject as an int.");
 
-static PyObject*
-pyobjc_id(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable pyobjc_id(PyObject* self __attribute__((__unused__)),
+                                     PyObject* args, PyObject* kwds)
 {
     static char* keywords[] = {"obj", NULL};
     PyObject*    o;
@@ -159,8 +161,8 @@ PyDoc_STRVAR(repythonify_doc, "repythonify(obj, type='@')\n" CLINIC_SEP "\n"
                               "depythonify_c_value then pythonify_c_value.\n"
                               "This is for internal use only.");
 
-static PyObject*
-repythonify(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable repythonify(PyObject* self __attribute__((__unused__)),
+                                       PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"obj", "type", NULL};
     const char*  type       = "@";
@@ -199,9 +201,9 @@ PyDoc_STRVAR(macos_available_doc,
              "Return true if the current macOS release is "
              "at least the provided version");
 
-static PyObject*
-macos_available(PyObject* self __attribute__((__unused__)), PyObject* args,
-                PyObject* kwds)
+static PyObject* _Nullable macos_available(PyObject* self __attribute__((__unused__)),
+                                           PyObject* _Nullable args,
+                                           PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"major", "minor", "patch", NULL};
     long         major;
@@ -238,8 +240,8 @@ PyDoc_STRVAR(lookUpClass_doc,
              "Search for the named classes in the Objective-C runtime and return it.\n"
              "Raises noclass_error when the class doesn't exist.");
 
-static PyObject*
-lookUpClass(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable lookUpClass(PyObject* self __attribute__((__unused__)),
+                                       PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"class_name", NULL};
     char*        class_name = NULL;
@@ -264,9 +266,9 @@ PyDoc_STRVAR(classAddMethods_doc,
              "methodsArray, the original implementation will be replaced by the \n"
              "implementation from methodsArray.");
 
-static PyObject*
-classAddMethods(PyObject* self __attribute__((__unused__)), PyObject* args,
-                PyObject* keywds)
+static PyObject* _Nullable classAddMethods(PyObject* self __attribute__((__unused__)),
+                                           PyObject* _Nullable args,
+                                           PyObject* _Nullable keywds)
 {
     static char* kwlist[]     = {"targetClass", "methodsArray", NULL};
     PyObject*    classObject  = NULL;
@@ -303,9 +305,10 @@ PyDoc_STRVAR(remove_autorelease_pool_doc,
              "This removes the global NSAutoreleasePool. You should do this\n"
              "at the end of a plugin's initialization script.\n");
 
-static PyObject*
-remove_autorelease_pool(PyObject* self __attribute__((__unused__)), PyObject* args,
-                        PyObject* kwds)
+static PyObject* _Nullable remove_autorelease_pool(PyObject* self
+                                                   __attribute__((__unused__)),
+                                                   PyObject* _Nullable args,
+                                                   PyObject* _Nullable kwds)
 {
     static char* keywords[] = {NULL};
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "", keywords)) {
@@ -333,9 +336,10 @@ PyDoc_STRVAR(recycle_autorelease_pool_doc,
              "recycleAutoreleasePool()\n" CLINIC_SEP "\n"
              "This 'releases' the global autorelease pool and creates a new one.\n"
              "This method is for system use only\n");
-static PyObject*
-recycle_autorelease_pool(PyObject* self __attribute__((__unused__)), PyObject* args,
-                         PyObject* kwds)
+static PyObject* _Nullable recycle_autorelease_pool(PyObject* self
+                                                    __attribute__((__unused__)),
+                                                    PyObject* _Nullable args,
+                                                    PyObject* _Nullable kwds)
 {
     static char* keywords[] = {NULL};
 
@@ -363,6 +367,9 @@ recycle_autorelease_pool(PyObject* self __attribute__((__unused__)), PyObject* a
     return Py_None;
 }
 
+/*
+ * XXX: Move this functionality to options.m
+ */
 PyDoc_STRVAR(set_class_extender_doc,
              "_setClassExtender(func)\n" CLINIC_SEP "\n"
              "Register a function that will be called to update the class\n"
@@ -379,9 +386,9 @@ PyDoc_STRVAR(set_class_extender_doc,
              "  The proposed class dictionary. The callback is supposed to update\n"
              "  this dictionary.\n"
              "");
-static PyObject*
-set_class_extender(PyObject* self __attribute__((__unused__)), PyObject* args,
-                   PyObject* kwds)
+static PyObject* _Nullable set_class_extender(PyObject* self __attribute__((__unused__)),
+                                              PyObject* _Nullable args,
+                                              PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"callback", NULL};
     PyObject*    callback;
@@ -405,17 +412,18 @@ set_class_extender(PyObject* self __attribute__((__unused__)), PyObject* args,
 PyDoc_STRVAR(getClassList_doc,
              "getClassList()\n" CLINIC_SEP "\n"
              "Return a list with all Objective-C classes known to the runtime.\n");
-static PyObject*
-getClassList(PyObject* self __attribute__((__unused__)))
+static PyObject* _Nullable getClassList(PyObject* self __attribute__((__unused__)))
 {
+    /* XXX: Is PyObjC_GetClassList used anywhere else? */
     return PyObjC_GetClassList();
 }
 
 PyDoc_STRVAR(allocateBuffer_doc, "allocateBuffer(size)\n" CLINIC_SEP "\n"
                                  "Allocate a buffer of memory of size. Buffer is \n"
                                  "read/write.");
-static PyObject*
-allocateBuffer(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable allocateBuffer(PyObject* self __attribute__((__unused__)),
+                                          PyObject* _Nullable args,
+                                          PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"length", 0};
     Py_ssize_t   length;
@@ -441,8 +449,7 @@ PyDoc_STRVAR(currentBundle_doc, "currentBundle()\n" CLINIC_SEP "\n"
                                 "so calling it explicitly is rarely useful.\n"
                                 "After module initialization, use\n"
                                 "NSBundle.bundleForClass_(ClassInYourBundle).");
-static PyObject*
-currentBundle(PyObject* self __attribute__((__unused__)))
+static PyObject* _Nullable currentBundle(PyObject* self __attribute__((__unused__)))
 {
     void* rval;
     /* XXX: Replace scanf */
@@ -465,8 +472,8 @@ PyDoc_STRVAR(loadBundle_doc,
              "using NSBundle's +bundleWithIdentifier:.\n"
              "If 'bundle_path' is specified the right bundle is located using\n"
              "NSBundle's +bundleWithPath:. The path must be an absolute pathname\n");
-static PyObject*
-loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable loadBundle(PyObject* self __attribute__((__unused__)),
+                                      PyObject* _Nullable args, PyObject* _Nullable kwds)
 {
     static char*      keywords[] = {"module_name",       "module_globals", "bundle_path",
                                "bundle_identifier", "scan_classes",   NULL};
@@ -564,9 +571,9 @@ loadBundle(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject*
 
 PyDoc_STRVAR(objc_splitSignature_doc, "splitSignature(signature)\n" CLINIC_SEP "\n"
                                       "Split a signature string into a list of items.");
-static PyObject*
-objc_splitSignature(PyObject* self __attribute__((__unused__)), PyObject* args,
-                    PyObject* kwds)
+static PyObject* _Nullable objc_splitSignature(PyObject* self __attribute__((__unused__)),
+                                               PyObject* _Nullable args,
+                                               PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"signature", NULL};
     const char*  signature;
@@ -622,9 +629,10 @@ objc_splitSignature(PyObject* self __attribute__((__unused__)), PyObject* args,
 PyDoc_STRVAR(objc_splitStructSignature_doc,
              "splitStructSignature(signature)\n" CLINIC_SEP "\n"
              "Split a struct signature string into a list of items.");
-static PyObject*
-objc_splitStructSignature(PyObject* self __attribute__((__unused__)), PyObject* args,
-                          PyObject* kwds)
+static PyObject* _Nullable objc_splitStructSignature(PyObject* self
+                                                     __attribute__((__unused__)),
+                                                     PyObject* _Nullable args,
+                                                     PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"signature", NULL};
     const char*  signature;
@@ -784,8 +792,7 @@ PyDoc_STRVAR(PyObjC_loadSpecialVar_doc,
 PyDoc_STRVAR(protocolsForProcess_doc,
              "protocolsForProcess()\n" CLINIC_SEP "\n"
              "Returns a list of Protocol objects that are present in the process");
-static PyObject*
-protocolsForProcess(PyObject* self __attribute__((__unused__)))
+static PyObject* _Nullable protocolsForProcess(PyObject* self __attribute__((__unused__)))
 {
     PyObject*    protocols;
     Protocol**   protlist;
@@ -823,8 +830,9 @@ PyDoc_STRVAR(protocolNamed_doc,
              "_protocolNamed(name)\n" CLINIC_SEP "\n"
              "Returns an Objective-C protocol named *name*.\n"
              "Raises AttributeError when no such protocol can be found.\n");
-static PyObject*
-protocolNamed(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable protocolNamed(PyObject* self __attribute__((__unused__)),
+                                         PyObject* _Nullable args,
+                                         PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", NULL};
     char*        name;
@@ -848,9 +856,9 @@ PyDoc_STRVAR(protocolsForClass_doc,
              "protocolsForClass(cls)\n" CLINIC_SEP "\n"
              "Returns a list of Protocol objects that the class claims\n"
              "to implement directly.");
-static PyObject*
-protocolsForClass(PyObject* self __attribute__((__unused__)), PyObject* args,
-                  PyObject* kwds)
+static PyObject* _Nullable protocolsForClass(PyObject* self __attribute__((__unused__)),
+                                             PyObject* _Nullable args,
+                                             PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"cls", NULL};
     Protocol**   protocol_list;
@@ -893,9 +901,10 @@ PyDoc_STRVAR(createOpaquePointerType_doc,
              "Return a wrapper type for opaque pointers of the given type. The type \n"
              "will be registered with PyObjC and will be used to wrap pointers of the \n"
              "given type.");
-static PyObject*
-createOpaquePointerType(PyObject* self __attribute__((__unused__)), PyObject* args,
-                        PyObject* kwds)
+static PyObject* _Nullable createOpaquePointerType(PyObject* self
+                                                   __attribute__((__unused__)),
+                                                   PyObject* _Nullable args,
+                                                   PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", "typestr", "doc", NULL};
     char*        name;
@@ -912,9 +921,10 @@ createOpaquePointerType(PyObject* self __attribute__((__unused__)), PyObject* ar
 
 PyDoc_STRVAR(copyMetadataRegistry_doc, "_copyMetadataRegistry()\n" CLINIC_SEP "\n"
                                        "Return a copy of the metadata registry.");
-static PyObject*
-copyMetadataRegistry(PyObject* self __attribute__((__unused__)), PyObject* args,
-                     PyObject* kwds)
+static PyObject* _Nullable copyMetadataRegistry(PyObject* self
+                                                __attribute__((__unused__)),
+                                                PyObject* _Nullable args,
+                                                PyObject* _Nullable kwds)
 {
     static char* keywords[] = {NULL};
 
@@ -928,9 +938,9 @@ PyDoc_STRVAR(registerMetaData_doc,
              "registerMetaDataForSelector(classObject, selector, metadata)\n" CLINIC_SEP
              "\n"
              "Registers a metadata dictionary for method *selector* in *class*");
-static PyObject*
-registerMetaData(PyObject* self __attribute__((__unused__)), PyObject* args,
-                 PyObject* kwds)
+static PyObject* _Nullable registerMetaData(PyObject* self __attribute__((__unused__)),
+                                            PyObject* _Nullable args,
+                                            PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"class_", "selector", "metadata", NULL};
 
@@ -958,9 +968,9 @@ PyDoc_STRVAR(registerStructAlias_doc,
              "Registers 'typestr' as a type that should be mapped onto 'structType'\n"
              "'structType' must be created using 'createStructType' (or through \n"
              "a metadata file.");
-static PyObject*
-registerStructAlias(PyObject* self __attribute__((__unused__)), PyObject* args,
-                    PyObject* kwds)
+static PyObject* _Nullable registerStructAlias(PyObject* self __attribute__((__unused__)),
+                                               PyObject* _Nullable args,
+                                               PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"typestr", "structType", NULL};
     char*        typestr;
@@ -984,9 +994,9 @@ PyDoc_STRVAR(createStructType_doc,
              "registered with PyObjC and will be used to wrap structs of the given "
              "type.\n"
              "The field names can be ``None`` iff the typestr contains field names.");
-static PyObject*
-createStructType(PyObject* self __attribute__((__unused__)), PyObject* args,
-                 PyObject* kwds)
+static PyObject* _Nullable createStructType(PyObject* self __attribute__((__unused__)),
+                                            PyObject* _Nullable args,
+                                            PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", "typestr", "fieldnames", "doc", "pack", NULL};
     char*        name;
@@ -1122,9 +1132,9 @@ PyDoc_STRVAR(registerCFSignature_doc,
              "tollfreeName=None)\n" CLINIC_SEP "\n"
              "Register a CoreFoundation based type with the bridge. If \n"
              "tollFreeName is supplied the type is tollfree bridged to that class.");
-static PyObject*
-registerCFSignature(PyObject* self __attribute__((__unused__)), PyObject* args,
-                    PyObject* kwds)
+static PyObject* _Nullable registerCFSignature(PyObject* self __attribute__((__unused__)),
+                                               PyObject* _Nullable args,
+                                               PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", "encoding", "typeId", "tollfreeName", NULL};
     char*        name;
@@ -1188,9 +1198,9 @@ registerCFSignature(PyObject* self __attribute__((__unused__)), PyObject* args,
 
 PyDoc_STRVAR(_updatingMetadata_doc, "_updatingMetadata(flag)\n" CLINIC_SEP "\n"
                                     "PRIVATE FUNCTION");
-static PyObject*
-_updatingMetadata(PyObject* self __attribute__((__unused__)), PyObject* args,
-                  PyObject* kwds)
+static PyObject* _Nullable _updatingMetadata(PyObject* self __attribute__((__unused__)),
+                                             PyObject* _Nullable args,
+                                             PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"flag", NULL};
     PyObject*    flag;
@@ -1212,8 +1222,9 @@ _updatingMetadata(PyObject* self __attribute__((__unused__)), PyObject* args,
 }
 
 /* Support for locking */
-static PyObject*
-PyObjC_objc_sync_enter(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable PyObjC_objc_sync_enter(PyObject* self
+                                                  __attribute__((__unused__)),
+                                                  PyObject* _Nullable args)
 {
     NSObject* object;
     int       rv;
@@ -1236,8 +1247,9 @@ PyObjC_objc_sync_enter(PyObject* self __attribute__((__unused__)), PyObject* arg
     return NULL;
 }
 
-static PyObject*
-PyObjC_objc_sync_exit(PyObject* self __attribute__((__unused__)), PyObject* args)
+static PyObject* _Nullable PyObjC_objc_sync_exit(PyObject* self
+                                                 __attribute__((__unused__)),
+                                                 PyObject* _Nullable args)
 {
     NSObject* object;
     int       rv;
@@ -1269,8 +1281,9 @@ _callback_cleanup(PyObject* closure)
     PyObjCFFI_FreeIMP((IMP)PyCapsule_GetPointer(closure, "objc.__imp__"));
 }
 
-static PyObject*
-_makeClosure(PyObject* self __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable _makeClosure(PyObject* self __attribute__((__unused__)),
+                                        PyObject* _Nullable args,
+                                        PyObject* _Nullable kwds)
 {
     static char*           keywords[] = {"callable", "closureFor", "argIndex", NULL};
     PyObject*              callable;
@@ -1360,9 +1373,9 @@ PyDoc_STRVAR(_closurePointer_doc, "_closurePointer(closure)\n" CLINIC_SEP "\n"
                                   "Returns an integer that corresponds to the "
                                   "numeric value of the C pointer\n"
                                   "for the closure.");
-static PyObject*
-_closurePointer(PyObject* self __attribute__((__unused__)), PyObject* args,
-                PyObject* kwds)
+static PyObject* _Nullable _closurePointer(PyObject* self __attribute__((__unused__)),
+                                           PyObject* _Nullable args,
+                                           PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"closure", NULL};
     PyObject*    closure;
@@ -1379,15 +1392,16 @@ _closurePointer(PyObject* self __attribute__((__unused__)), PyObject* args,
     return PyLong_FromVoidPtr(pointer);
 }
 
-static PyObject*
-ivar_dict(PyObject* self __attribute__((__unused__)))
+static PyObject* _Nullable ivar_dict(PyObject* self __attribute__((__unused__)))
 {
+    /* XXX: How safe is this... */
     Py_INCREF(PyObjCInstanceVariable_Type.tp_dict);
     return PyObjCInstanceVariable_Type.tp_dict;
 }
 
-static PyObject*
-mod_propertiesForClass(PyObject* mod __attribute__((__unused__)), PyObject* object)
+static PyObject* _Nullable mod_propertiesForClass(PyObject* mod
+                                                  __attribute__((__unused__)),
+                                                  PyObject* object)
 {
     return PyObjCClass_ListProperties(object);
 }
@@ -1400,6 +1414,9 @@ mod_propertiesForClass(PyObject* mod __attribute__((__unused__)), PyObject* obje
  * be used to represent 'bool' which has a different size on
  * PPC. Therefore swap usage of _C_BOOL and _C_NSBOOL in data
  * from metadata files.
+ *
+ * XXX: This function is similar, but not the same, as tc2tc
+ *      in class-builder.m.
  */
 static void
 typecode2typecode(char* buf)
@@ -1434,14 +1451,14 @@ exit:
         while (buf && *buf && *buf != _C_STRUCT_E) {
             if (*buf == '"') {
                 /* embedded field name */
-                buf = strchr(buf + 1, '"');
-                if (buf == NULL) {
+                char* tmp = strchr(buf + 1, '"');
+                if (tmp == NULL) {
                     return;
                 }
-                buf++;
+                buf = tmp + 1;
             }
             typecode2typecode(buf);
-            buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            // buf = (char*)PyObjCRT_SkipTypeSpec(buf);
         }
         break;
 
@@ -1451,14 +1468,14 @@ exit:
         while (buf && *buf && *buf != _C_UNION_E) {
             if (*buf == '"') {
                 /* embedded field name */
-                buf = strchr(buf + 1, '"');
-                if (buf == NULL) {
+                char* tmp = strchr(buf + 1, '"');
+                if (tmp == NULL) {
                     return;
                 }
-                buf++;
+                buf = tmp + 1;
             }
             typecode2typecode(buf);
-            buf = (char*)PyObjCRT_SkipTypeSpec(buf);
+            // buf = (char*)PyObjCRT_SkipTypeSpec(buf);
         }
         break;
 
@@ -1470,8 +1487,7 @@ exit:
     }
 }
 
-static PyObject*
-typestr2typestr(PyObject* args)
+static PyObject* _Nullable typestr2typestr(PyObject* args)
 {
     char* s;
     char* buf;
@@ -1528,9 +1544,10 @@ PyDoc_STRVAR(PyObjC_setAssociatedObject_doc,
              "policy=objc.OBJC_ASSOCIATION_RETAIN)\n" CLINIC_SEP "\n"
              "Set the value for an object association. Use 'None' as the\n"
              "value to clear an association.");
-static PyObject*
-PyObjC_setAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject* args,
-                           PyObject* kwds)
+static PyObject* _Nullable PyObjC_setAssociatedObject(PyObject* self
+                                                      __attribute__((__unused__)),
+                                                      PyObject* _Nullable args,
+                                                      PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"object", "key", "value", "policy", NULL};
     id           object;
@@ -1571,9 +1588,10 @@ PyDoc_STRVAR(PyObjC_getAssociatedObject_doc,
              "getAssociatedObject(object, key)\n" CLINIC_SEP "\n"
              "Get the value for an object association. Returns None \n"
              "when they association doesn't exist.");
-static PyObject*
-PyObjC_getAssociatedObject(PyObject* self __attribute__((__unused__)), PyObject* args,
-                           PyObject* kwds)
+static PyObject* _Nullable PyObjC_getAssociatedObject(PyObject* self
+                                                      __attribute__((__unused__)),
+                                                      PyObject* _Nullable args,
+                                                      PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"object", "key", NULL};
     id           object;
@@ -1614,9 +1632,10 @@ PyDoc_STRVAR(PyObjC_removeAssociatedObjects_doc,
              "because\n"
              "it clear all references, including those made from unrelated code.\n");
 
-static PyObject*
-PyObjC_removeAssociatedObjects(PyObject* self __attribute__((__unused__)), PyObject* args,
-                               PyObject* kwds)
+static PyObject* _Nullable PyObjC_removeAssociatedObjects(PyObject* self
+                                                          __attribute__((__unused__)),
+                                                          PyObject* _Nullable args,
+                                                          PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"object", NULL};
     id           object;
@@ -1650,9 +1669,9 @@ PyObjC_removeAssociatedObjects(PyObject* self __attribute__((__unused__)), PyObj
 }
 #endif
 
-static PyObject*
-PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)), PyObject* args,
-                    PyObject* kwds)
+static PyObject* _Nullable PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)),
+                                               PyObject* _Nullable args,
+                                               PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", "type", "magic", NULL};
     char*        name;
@@ -1689,8 +1708,8 @@ PyObjC_LoadConstant(PyObject* self __attribute__((__unused__)), PyObject* args,
     return v;
 }
 
-PyObject*
-PyObjC_callable_docstr_get(PyObject* callable, void* closure __attribute__((__unused__)))
+PyObject* _Nullable PyObjC_callable_docstr_get(PyObject* callable, void* _Nullable closure
+                                               __attribute__((__unused__)))
 
 {
     if (PyObjC_CallableDocFunction == NULL) {
@@ -1702,9 +1721,9 @@ PyObjC_callable_docstr_get(PyObject* callable, void* closure __attribute__((__un
                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
-PyObject*
-PyObjC_callable_signature_get(PyObject* callable,
-                              void*     closure __attribute__((__unused__)))
+PyObject* _Nullable PyObjC_callable_signature_get(PyObject* callable,
+                                                  void* _Nullable closure
+                                                  __attribute__((__unused__)))
 
 {
     if (PyObjC_CallableSignatureFunction == NULL) {
@@ -1716,8 +1735,8 @@ PyObjC_callable_signature_get(PyObject* callable,
                                1 | PY_VECTORCALL_ARGUMENTS_OFFSET, NULL);
 }
 
-static PyObject*
-name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signature)
+static PyObject* _Nullable name_for_signature(PyObject* mod __attribute__((__unused__)),
+                                              PyObject* signature)
 {
     char* typestr;
     if (!PyBytes_Check(signature)) {
@@ -1751,8 +1770,8 @@ name_for_signature(PyObject* mod __attribute__((__unused__)), PyObject* signatur
     return Py_None;
 }
 
-static PyObject*
-block_signature(PyObject* mod __attribute__((__unused__)), PyObject* block)
+static PyObject* _Nullable block_signature(PyObject* mod __attribute__((__unused__)),
+                                           PyObject* block)
 {
     if (!PyObjCObject_Check(block) || !PyObjCObject_IsBlock(block)) {
         PyErr_SetString(PyExc_ValueError, "Not a block");
@@ -1768,8 +1787,9 @@ block_signature(PyObject* mod __attribute__((__unused__)), PyObject* block)
     return PyBytes_FromString(sig);
 }
 
-static PyObject*
-force_rescan(PyObject* mod __attribute__((__unused__)), PyObject* args, PyObject* kwds)
+static PyObject* _Nullable force_rescan(PyObject* mod __attribute__((__unused__)),
+                                        PyObject* _Nullable args,
+                                        PyObject* _Nullable kwds)
 {
     static char* keywords[] = {"name", NULL};
     const char*  class_name;
@@ -1798,9 +1818,8 @@ done:
 }
 
 #if PyObjC_BUILD_RELEASE >= 1100
-static PyObject*
-mod_dyld_shared_cache_contains_path(PyObject* mod __attribute__((__unused__)),
-                                    PyObject* object)
+static PyObject* _Nullable mod_dyld_shared_cache_contains_path(
+    PyObject* _Nullable mod __attribute__((__unused__)), PyObject* object)
 {
     if (@available(macOS 10.16, *)) {
         if (!PyUnicode_Check(object)) {
@@ -1820,6 +1839,7 @@ mod_dyld_shared_cache_contains_path(PyObject* mod __attribute__((__unused__)),
         return NULL;
     }
 }
+/* XXX: Add variant that can be used when building on older OS versions */
 #endif
 
 static PyMethodDef mod_methods[] = {
@@ -2205,7 +2225,7 @@ struct objc_string_values {
 static struct PyModuleDef mod_module = {
     PyModuleDef_HEAD_INIT, "_objc", NULL, 0, mod_methods, NULL, NULL, NULL, NULL};
 
-PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
+PyObject* _Nullable __attribute__((__visibility__("default"))) PyInit__objc(void)
 {
     PyObject *m, *d, *v;
 
@@ -2584,3 +2604,5 @@ PyObject* __attribute__((__visibility__("default"))) PyInit__objc(void)
     PyObjC_Initialized = 1;
     return m;
 }
+
+NS_ASSUME_NONNULL_END

@@ -41,6 +41,9 @@ PyObjCClass_SetHidden(PyObject* tp, SEL sel, BOOL classMethod, PyObject* metadat
     }
 
     v = PyBytes_InternFromString(sel_getName(sel));
+    if (v == NULL) {
+        return -1;
+    }
     r = PyDict_SetItem(hidden, v, metadata);
     Py_DECREF(v);
     return r;
@@ -1169,11 +1172,15 @@ metaclass_dir(PyObject* self)
 static inline PyObject*
 _type_lookup(PyTypeObject* tp, PyObject* name)
 {
-    Py_ssize_t i, n;
-    PyObject * mro, *base, *dict;
-    PyObject*  descr = NULL;
-    PyObject*  res;
-    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    Py_ssize_t  i, n;
+    PyObject *  mro, *base, *dict;
+    PyObject*   descr = NULL;
+    PyObject*   res;
+    const char* sel_name = PyObjC_Unicode_Fast_Bytes(name);
+    if (sel_name == NULL) {
+        return NULL;
+    }
+    SEL sel = PyObjCSelector_DefaultSelector(sel_name);
 
     /* TODO: if sel.startswith('__') and sel.endswith('__'): look_in_runtime = False */
 
@@ -1244,12 +1251,19 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
         char*        sel_name;
 
         base = PyTuple_GET_ITEM(mro, i);
+        PyObjC_Assert(base != NULL, NULL);
 
         if (!PyObject_IsSubclass(base, (PyObject*)&PyObjCMetaClass_Type)) {
             continue;
         }
+        if (base == (PyObject*)&PyObjCClass_Type
+            || base == (PyObject*)&PyObjCMetaClass_Type) {
+            /* Root of the PyObjC class tree, these do not refer to an ObjC class */
+            continue;
+        }
 
         cls = objc_metaclass_locate(base);
+        PyObjC_Assert(cls != Nil, NULL);
 
         /* class_copyMethodList only returns NULL when it sets method_count
          * to 0
@@ -1268,8 +1282,14 @@ _type_lookup_harder(PyTypeObject* tp, PyObject* name)
                 (char*)PyObjC_SELToPythonName(method_getName(m), selbuf, sizeof(selbuf));
             if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
                 /* Create (unbound) selector */
-                descr = PyObjCSelector_NewNative(cls, method_getName(m),
-                                                 method_getTypeEncoding(m), 1);
+                const char* encoding = method_getTypeEncoding(m);
+                if (encoding == NULL) {
+                    free(methods);
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "Native selector with Nil type encoding");
+                    return NULL;
+                }
+                descr = PyObjCSelector_NewNative(cls, method_getName(m), encoding, 1);
                 free(methods);
                 if (descr == NULL) {
                     return NULL;
@@ -1445,11 +1465,15 @@ _type_lookup_instance(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 static inline PyObject*
 _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* name)
 {
-    Py_ssize_t i, n;
-    PyObject * mro, *base;
-    PyObject*  descr = NULL;
-    PyObject*  res;
-    SEL        sel = PyObjCSelector_DefaultSelector(PyObjC_Unicode_Fast_Bytes(name));
+    Py_ssize_t  i, n;
+    PyObject *  mro, *base;
+    PyObject*   descr = NULL;
+    PyObject*   res;
+    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    if (name_bytes == NULL) {
+        return NULL;
+    }
+    SEL sel = PyObjCSelector_DefaultSelector(name_bytes);
 
     /* Look in tp_dict of types in MRO */
     mro = tp->tp_mro;
@@ -1486,8 +1510,14 @@ _type_lookup_instance_harder(PyObject* class_dict, PyTypeObject* tp, PyObject* n
 
             if (strcmp(sel_name, PyObjC_Unicode_Fast_Bytes(name)) == 0) {
                 /* Create (unbound) selector */
-                PyObject* result =
-                    PyObjCSelector_NewNative(cls, sel, method_getTypeEncoding(m), 0);
+                const char* encoding = method_getTypeEncoding(m);
+                if (encoding == NULL) {
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "Native selector with Nil type encoding");
+                    free(methods);
+                    return NULL;
+                }
+                PyObject* result = PyObjCSelector_NewNative(cls, sel, encoding, 0);
                 free(methods);
                 if (result == NULL) {
                     return NULL;
@@ -1609,6 +1639,7 @@ class_getattro(PyObject* self, PyObject* name)
             f = Py_TYPE(descr)->tp_descr_get;
         }
         if (PyErr_Occurred()) {
+            /* XXX: can this happen without descr being NULL? */
             return NULL;
         }
     }
@@ -1626,13 +1657,20 @@ class_getattro(PyObject* self, PyObject* name)
 
     /* Try to find the method anyway */
     PyErr_Clear();
-    if (PyObjCClass_HiddenSelector(self, sel_getUid(PyObjC_Unicode_Fast_Bytes(name)),
-                                   YES)) {
+    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    if (name_bytes == NULL) {
+        return NULL;
+    }
+    if (PyObjCClass_HiddenSelector(self, sel_getUid(name_bytes), YES)) {
         PyErr_SetObject(PyExc_AttributeError, name);
         return NULL;
     }
 
-    result = PyObjCSelector_FindNative(self, PyObjC_Unicode_Fast_Bytes(name));
+    name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    if (name_bytes == NULL) {
+        return NULL;
+    }
+    result = PyObjCSelector_FindNative(self, name_bytes);
 
     if (result != NULL) {
         int res = PyDict_SetItem(((PyTypeObject*)self)->tp_dict, name, result);

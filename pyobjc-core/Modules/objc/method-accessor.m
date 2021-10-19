@@ -203,9 +203,17 @@ static PyObject* _Nullable make_dict(PyObject* self, int class_method)
             }
 
             if (v == NULL) {
+                const char* type_encoding = method_getTypeEncoding(methods[i]);
+                if (type_encoding == NULL) {
+                    PyErr_SetString(PyObjCExc_Error,
+                                    "Native selector with Nil type encoding");
+                    free(methods);
+                    Py_DECREF(res);
+                    return NULL;
+                }
+
                 v = PyObjCSelector_NewNative(cls, method_getName(methods[i]),
-                                             method_getTypeEncoding(methods[i]),
-                                             class_method);
+                                             type_encoding, class_method);
 
                 if (v == NULL) {
                     free(methods);
@@ -378,8 +386,11 @@ static PyObject* _Nullable obj_getattro(PyObject* _self, PyObject* name)
     }
 
     /* Didn't find the selector the first trip around, try harder. */
-    result =
-        find_selector(self->base, PyObjC_Unicode_Fast_Bytes(name), self->class_method);
+    const char* name_bytes = PyObjC_Unicode_Fast_Bytes(name);
+    if (name_bytes == NULL) {
+        return NULL;
+    }
+    result = find_selector(self->base, name_bytes, self->class_method);
     if (result == NULL) {
         return result;
     }

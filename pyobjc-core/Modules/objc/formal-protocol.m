@@ -548,7 +548,11 @@ do_verify(const char* protocol_name, struct objc_method_description* descr, BOOL
         }
     }
 
-    if (PyObjCRT_SignaturesEqual(descr->types, PyObjCSelector_Signature(meth))) {
+    const char* sel_sig = PyObjCSelector_Signature(meth);
+    if (sel_sig == NULL) {
+        return 0;
+    }
+    if (PyObjCRT_SignaturesEqual(descr->types, sel_sig)) {
         return 1;
     }
 

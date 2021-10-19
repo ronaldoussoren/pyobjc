@@ -1,5 +1,7 @@
 #include "pyobjc.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 int
 PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result)
 {
@@ -35,8 +37,7 @@ PyObjC_Cmp(PyObject* o1, PyObject* o2, int* result)
 
 static PyObject* registry = NULL;
 
-PyObject*
-PyBytes_InternFromString(const char* v)
+PyObject* _Nullable PyBytes_InternFromString(const char* v)
 {
     PyObject* key;
     PyObject* value;
@@ -71,8 +72,7 @@ PyBytes_InternFromString(const char* v)
     }
 }
 
-PyObject*
-PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
+PyObject* _Nullable PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
 {
     PyObject* key;
     PyObject* value;
@@ -108,8 +108,7 @@ PyBytes_InternFromStringAndSize(const char* v, Py_ssize_t l)
     }
 }
 
-const char*
-PyObjC_Unicode_Fast_Bytes(PyObject* object)
+const char* _Nullable PyObjC_Unicode_Fast_Bytes(PyObject* object)
 {
     if (!PyUnicode_Check(object)) {
         PyErr_SetString(PyExc_UnicodeDecodeError, "Not a unicode object");
@@ -130,9 +129,9 @@ PyObjC_Unicode_Fast_Bytes(PyObject* object)
  * complicates the implementation and is not necessary for PyObjC.
  */
 
-PyObject*
-PyObject_Vectorcall(PyObject* callable, PyObject* const* args, size_t nargsf,
-                    PyObject* kwnames)
+PyObject* _Nullable PyObject_Vectorcall(PyObject* callable,
+                                        PyObject* _Nonnull const* _Nonnull args,
+                                        size_t nargsf, PyObject* _Nullable kwnames)
 {
     size_t i;
     if (kwnames != NULL) {
@@ -162,8 +161,8 @@ PyObject_Vectorcall(PyObject* callable, PyObject* const* args, size_t nargsf,
 }
 
 PyObject*
-PyObject_VectorcallMethod(PyObject* name, PyObject* const* args, size_t nargsf,
-                          PyObject* kwnames)
+PyObject_VectorcallMethod(PyObject* name, PyObject* _Nonnull const* _Nonnull args,
+                          size_t    nargsf, PyObject* _Nullable kwnames)
 {
     size_t i;
     if (kwnames != NULL) {
@@ -213,3 +212,5 @@ PyObject_VectorcallMethod(PyObject* name, PyObject* const* args, size_t nargsf,
 }
 
 #endif
+
+NS_ASSUME_NONNULL_END

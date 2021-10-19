@@ -3,6 +3,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*
+ * XXX: Move assertions to crash instead of raising exceptions (and
+ *      check that assertions actually check code invariants).
+ */
+
 /* XXX: defined in pyobjc_util.m, move declaration */
 extern PyObject* PyObjCExc_InternalError;
 

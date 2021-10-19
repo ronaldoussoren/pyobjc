@@ -1965,11 +1965,28 @@ static PyObject* _Nullable PyObjC_CallPython(id self, SEL selector, PyObject* ar
     }
 
     if (isAlloc != NULL) {
-        *isAlloc = PyObjCSelector_GetMetadata(pymeth)->rettype->alreadyRetained;
+        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(pymeth);
+        if (methinfo == NULL) {
+            Py_DECREF(arglist);
+            Py_DECREF(pymeth);
+            Py_DECREF(pyself);
+            return NULL;
+
+        } else {
+            *isAlloc = methinfo->rettype->alreadyRetained;
+        }
     }
 
     if (isCFAlloc != NULL) {
-        *isCFAlloc = PyObjCSelector_GetMetadata(pymeth)->rettype->alreadyCFRetained;
+        PyObjCMethodSignature* methinfo = PyObjCSelector_GetMetadata(pymeth);
+        if (methinfo == NULL) {
+            Py_DECREF(arglist);
+            Py_DECREF(pymeth);
+            Py_DECREF(pyself);
+            return NULL;
+        } else {
+            *isCFAlloc = methinfo->rettype->alreadyCFRetained;
+        }
     }
 
     result = PyObject_Call(pymeth, arglist, NULL);

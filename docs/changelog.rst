@@ -143,7 +143,9 @@ Generic Implementation Quality
 * #388: Added "nullability" attributes to Objectice-C sources for pyobjc-core.
 
   This gives the compiler and clang static analyzer more information
-  that can be used to pinpoint possible bugs in the implementation.
+  that can be used to pinpoint possible bugs in the implementation. As a
+  side effect of this a number of internal checks were strengthened, although
+  most of them were for error conditions that should never happen.
 
 * Add more error checking to pyobjc-core to catch (very) unlikely error conditions.
 

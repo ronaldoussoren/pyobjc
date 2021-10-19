@@ -48,7 +48,7 @@ static PyObject* _Nullable super_getattro(PyObject* self, PyObject* name)
 
     if (PyUnicode_Check(name)) {
         const char* b = PyObjC_Unicode_Fast_Bytes(name);
-        if (name == NULL) {
+        if (b == NULL) {
             return NULL;
         }
 
