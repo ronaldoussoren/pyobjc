@@ -441,11 +441,12 @@ PyObject* _Nullable PyObjCFunc_WithMethodSignature(PyObject* _Nullable name, voi
     result->methinfo = methinfo;
     Py_XINCREF(methinfo);
 
-    result->cif = PyObjCFFI_CIFForSignature(result->methinfo);
-    if (result->cif == NULL) {
+    ffi_cif* cif = PyObjCFFI_CIFForSignature(result->methinfo);
+    if (cif == NULL) {
         Py_DECREF(result);
         return NULL;
     }
+    result->cif = cif;
 
     return (PyObject*)result;
 }

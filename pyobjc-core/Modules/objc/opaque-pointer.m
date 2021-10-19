@@ -228,7 +228,10 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (new_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_WithMetaData(new_cif_signature, NULL, NO);
-        new_cif   = PyObjCFFI_CIFForSignature(signature);
+        if (signature == NULL) {
+            return NULL;
+        }
+        new_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (new_cif == NULL) {
             return NULL;
@@ -238,6 +241,9 @@ PyObject* _Nullable PyObjCCreateOpaquePointerType(const char* name, const char* 
     if (convert_cif == NULL) {
         PyObjCMethodSignature* signature;
         signature = PyObjCMethodSignature_WithMetaData(convert_cif_signature, NULL, YES);
+        if (signature == NULL) {
+            return NULL;
+        }
         convert_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (convert_cif == NULL) {

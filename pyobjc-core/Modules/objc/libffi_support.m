@@ -17,6 +17,8 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/NSHost.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*
  * Define SMALL_STRUCT_LIMIT as the largest struct that will be returned
  * in registers instead of with a hidden pointer argument.
@@ -112,6 +114,7 @@ describe_ffitype(ffi_type* type)
 }
 
 static void describe_cif(ffi_cif* cif) __attribute__((__unused__));
+
 static void
 describe_cif(ffi_cif* cif)
 {
@@ -131,9 +134,10 @@ describe_cif(ffi_cif* cif)
 #endif /* PyObjC_DEBUG */
 
 static Py_ssize_t
-num_struct_fields(const char* argtype)
+num_struct_fields(const char* orig_argtype)
 {
-    Py_ssize_t res = 0;
+    const char* _Nullable argtype = orig_argtype;
+    Py_ssize_t res                = 0;
 
     if (*argtype != _C_STRUCT_B)
         return -1;
@@ -166,7 +170,7 @@ free_type(void* obj)
     PyMem_Free(obj);
 }
 
-static ffi_type* signature_to_ffi_type(const char* argtype);
+static ffi_type* _Nullable signature_to_ffi_type(const char* argtype);
 
 static void
 cleanup_ffitype_capsule(PyObject* ptr)
@@ -174,8 +178,7 @@ cleanup_ffitype_capsule(PyObject* ptr)
     free_type(PyCapsule_GetPointer(ptr, "objc.__ffi_type__"));
 }
 
-static ffi_type*
-array_to_ffi_type(const char* argtype)
+static ffi_type* _Nullable array_to_ffi_type(const char* argtype)
 {
     static PyObject* array_types = NULL;
 
@@ -248,8 +251,7 @@ array_to_ffi_type(const char* argtype)
     return type;
 }
 
-static ffi_type*
-struct_to_ffi_type(const char* argtype)
+static ffi_type* _Nullable struct_to_ffi_type(const char* argtype)
 {
     static PyObject* struct_types = NULL;
 
@@ -348,14 +350,12 @@ struct_to_ffi_type(const char* argtype)
     return type;
 }
 
-ffi_type*
-PyObjCFFI_Typestr2FFI(const char* argtype)
+ffi_type* _Nullable PyObjCFFI_Typestr2FFI(const char* argtype)
 {
     return signature_to_ffi_type(argtype);
 }
 
-static ffi_type*
-signature_to_ffi_type(const char* argtype)
+static ffi_type* _Nullable signature_to_ffi_type(const char* argtype)
 {
     const char* _Nullable t = PyObjCRT_SkipTypeQualifiers(argtype);
     if (t == NULL)
@@ -2064,8 +2064,8 @@ _argcount(PyObject* callable, BOOL* haveVarArgs, BOOL* haveVarKwds, BOOL* haveKw
     }
 }
 
-PyObjC_callback_function
-PyObjCFFI_MakeFunctionClosure(PyObjCMethodSignature* methinfo, PyObject* callable)
+PyObjC_callback_function _Nullable PyObjCFFI_MakeFunctionClosure(
+    PyObjCMethodSignature* methinfo, PyObject* callable)
 {
     _method_stub_userdata*   stubUserdata;
     PyObjC_callback_function closure;
@@ -2216,9 +2216,8 @@ validate_callable_signature(PyObject* callable, SEL sel, PyObjCMethodSignature* 
     return nargs;
 }
 
-IMP
-PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel,
-                              PyObject* callable)
+IMP _Nullable PyObjCFFI_MakeIMPForSignature(PyObjCMethodSignature* methinfo, SEL sel,
+                                            PyObject* callable)
 {
     _method_stub_userdata* stubUserdata;
     IMP                    closure;
@@ -2305,6 +2304,9 @@ IMP _Nullable PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
                   (pythonSelector->base.sel_flags & PyObjCSelector_kCLASS_METHOD) != 0,
                   pythonSelector->base.sel_selector, pythonSelector->base.sel_python_signature,
                   PyObjCNativeSelector_Check((PyObject*)pythonSelector));
+        if (methinfo == NULL) {
+            return NULL;
+        }
 
         result = PyObjCFFI_MakeIMPForSignature(
             methinfo, pythonSelector->base.sel_selector, pythonSelector->callable);
@@ -2313,8 +2315,8 @@ IMP _Nullable PyObjCFFI_MakeIMPForPyObjCSelector(PyObjCSelector* aSelector)
     }
 }
 
-PyObjCBlockFunction
-PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo, PyObject* callable)
+PyObjCBlockFunction _Nullable PyObjCFFI_MakeBlockFunction(PyObjCMethodSignature* methinfo,
+                                                          PyObject*              callable)
 {
     _method_stub_userdata* stubUserdata;
     PyObjCBlockFunction    closure;
@@ -3478,11 +3480,12 @@ PyObjCFFI_ParseArguments_Simple(
 }
 #endif
 
-PyObject*
-PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo, Py_ssize_t argOffset,
-                      void* pRetval, void** byref, struct byref_attr* byref_attr,
-                      Py_ssize_t byref_out_count, PyObject* self, int flags,
-                      void** argvalues)
+PyObject* _Nullable PyObjCFFI_BuildResult(PyObjCMethodSignature* methinfo,
+                                          Py_ssize_t argOffset, void* pRetval,
+                                          void** byref, struct byref_attr* byref_attr,
+                                          Py_ssize_t byref_out_count,
+                                          PyObject* _Nullable self, int flags,
+                                          void** argvalues)
 {
     PyObject*  objc_result = NULL;
     PyObject*  result      = NULL;
@@ -3926,9 +3929,9 @@ error_cleanup:
 }
 
 #if PY_VERSION_HEX >= 0x03090000
-PyObject*
-PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo, void* pRetval,
-                             PyObject* self, int flags)
+PyObject* _Nullable PyObjCFFI_BuildResult_Simple(PyObjCMethodSignature* methinfo,
+                                                 void* pRetval, PyObject* _Nullable self,
+                                                 int   flags)
 /*
  * A variant of ParseArguments for "simple" functions (see method-signature.m for the
  * definition
@@ -4048,7 +4051,7 @@ PyObjCFFI_FreeByRef(Py_ssize_t argcount, void** byref, struct byref_attr* byref_
                  * without using the CArray functions.
                  */
                 Py_XDECREF(byref_attr[i].obj);
-                byref_attr[i].obj = NULL;
+                byref_attr[i].obj = (PyObject* _Nonnull)NULL;
 
             } else {
                 PyMem_Free(byref[i]);
@@ -4082,8 +4085,8 @@ PyObjCRT_ResultUsesStret(const char* typestr)
 }
 #endif /* !__arm64__ */
 
-PyObject*
-PyObjCFFI_Caller(PyObject* aMeth, PyObject* self, PyObject* const* args, size_t nargs)
+PyObject* _Nullable PyObjCFFI_Caller(PyObject* aMeth, PyObject* self,
+                                     PyObject* const* args, size_t nargs)
 {
     Py_ssize_t             argbuf_len      = 0;
     Py_ssize_t             argbuf_cur      = 0;
@@ -4428,9 +4431,8 @@ error_cleanup:
 }
 
 #if PY_VERSION_HEX >= 0x03090000
-PyObject*
-PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self, PyObject* const* args,
-                        size_t nargs)
+PyObject* _Nullable PyObjCFFI_Caller_Simple(PyObject* aMeth, PyObject* self,
+                                            PyObject* const* args, size_t nargs)
 {
     unsigned char argbuf[256];
     void*         values[MAX_ARGCOUNT_SIMPLE];
@@ -4626,9 +4628,8 @@ error_cleanup:
     return NULL;
 }
 
-PyObject*
-PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self, PyObject* const* args,
-                           size_t nargsf)
+PyObject* _Nullable PyObjCFFI_Caller_SimpleSEL(PyObject* aMeth, PyObject* self,
+                                               PyObject* const* args, size_t nargsf)
 {
     unsigned char argbuf[256];
     void*         values[MAX_ARGCOUNT_SIMPLE];
@@ -4820,8 +4821,7 @@ ffi_status_str(ffi_status rv)
     }
 }
 
-ffi_cif*
-PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
+ffi_cif* _Nullable PyObjCFFI_CIFForSignature(PyObjCMethodSignature* methinfo)
 {
     ffi_cif*    cif;
     ffi_type**  cl_arg_types;
@@ -4920,9 +4920,8 @@ PyObjCFFI_FreeCIF(ffi_cif* cif)
  * Return the closure, or NULL. The 'func' will be called with a CIF object,
  * a pointer to the return value, the argument array and the 'userdata'.
  */
-IMP
-PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo, PyObjCFFI_ClosureFunc func,
-                      void* userdata)
+IMP _Nullable PyObjCFFI_MakeClosure(PyObjCMethodSignature* methinfo,
+                                    PyObjCFFI_ClosureFunc func, void* userdata)
 {
     ffi_cif*     cif;
     ffi_closure* cl;
@@ -5023,3 +5022,5 @@ PyObjCFFI_FreeClosure(IMP closure)
 #endif
     return retval;
 }
+
+NS_ASSUME_NONNULL_END

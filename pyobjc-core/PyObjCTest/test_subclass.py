@@ -389,15 +389,25 @@ class TestOverridingSpecials(TestCase):
         def __foo_bar__(self, a, b, c):
             pass
 
+        # XXX: The call to python_method is needed as of PyObjC 8 due
+        #      to better errro checking in the implementation.
+        #      Need to check if this silently did the wrong thing in ealier
+        #      versions.
+        with self.assertRaises(objc.BadPrototypeError):
+            MethodNamesClass.__foo_bar__ = __foo_bar__
+
+        def __foo_bar__(self):
+            pass
+
         MethodNamesClass.__foo_bar__ = __foo_bar__
 
         self.assertEqual(
             MethodNamesClass.someName_andArg_.selector, b"someName:andArg:"
         )
+        self.assertEqual(MethodNamesClass.__foo_bar__.selector, b"__foo_bar__")
         self.assertEqual(
             MethodNamesClass._someName_andArg_.selector, b"_someName:andArg:"
         )
-        self.assertEqual(MethodNamesClass.__foo_bar__.selector, b"__foo_bar__")
         self.assertEqual(MethodNamesClass.raise__.selector, b"raise")
         self.assertEqual(MethodNamesClass.froobnicate__.selector, b"froobnicate::")
 

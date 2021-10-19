@@ -67,6 +67,25 @@ Backward incompatible changes
   integratie with pyobjc-core) has changed in an incompatible way, in particular
   the API for "caller" functions now mostly mirrors the vectorcall convention.
 
+* Adding a method with a double underscore name will now raise an exception at
+  class definition time instead of silently not creating the Objective-C method.
+
+  .. sourcecode::
+
+        class AClass (NSObject):
+            ...
+
+        def __foo_bar__(self, a, b, c):
+            pass
+
+        MethodNamesClass.__foo_bar__ = __foo_bar__
+
+
+   Before PyObjC 8 this would add a ``__foo_bar__`` selector to the Python
+   representation of the class without adding a selector to the Objective-C class.
+
+   Use :func:`objc.python_method` to mark this as a python-only function.
+
 Upcoming incompatible changes
 .............................
 
@@ -79,6 +98,7 @@ Upcoming incompatible changes
   These functions implement support for ".bridgesupport" XML files,
   something that PyObjC hasn't used itself in a number of releases (in
   part because system versions of those files are at best incomplete).
+
 
 Performance
 ...........

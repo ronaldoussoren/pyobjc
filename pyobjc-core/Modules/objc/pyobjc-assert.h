@@ -20,12 +20,14 @@ extern PyObject* PyObjCExc_InternalError;
 
 #endif /* !PyObjC_ERROR_ABORT */
 
+/* XXX: Always abort here because continuing is not really possible */
 #define PyObjCErr_InternalError()                                                        \
     do {                                                                                 \
         PyErr_Format(PyObjCExc_InternalError, "PyObjC: internal error in %s at %s:%d",   \
                      __FUNCTION__, __FILE__, __LINE__);                                  \
         _PyObjC_InternalError_Bailout("PyObjC: internal error in %s at %s:%d\n",         \
                                       __FUNCTION__, __FILE__, __LINE__);                 \
+        abort();                                                                         \
     } while (0)
 
 #define PyObjCErr_InternalErrorMesg(msg)                                                 \

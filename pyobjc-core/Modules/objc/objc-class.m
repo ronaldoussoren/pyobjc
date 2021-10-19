@@ -1721,10 +1721,16 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
         }
 
         if (curMethod) {
-            method_setImplementation(
-                curMethod, PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal));
+            IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
+            if (newIMP == NULL) {
+                Py_DECREF(newVal);
+                return -1;
+            }
+
+            method_setImplementation(curMethod, newIMP);
 
         } else {
+            /* XXX: Why use "strdup" here and not the pyobjc_util variant? */
             char* types = strdup(PyObjCSelector_Signature(newVal));
 
             if (types == NULL) {
@@ -1732,9 +1738,14 @@ class_setattro(PyObject* self, PyObject* name, PyObject* value)
                 return -1;
             }
 
-            b = class_addMethod(
-                curClass, PyObjCSelector_GetSelector(newVal),
-                PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal), types);
+            IMP newIMP = PyObjCFFI_MakeIMPForPyObjCSelector((PyObjCSelector*)newVal);
+            if (newIMP == NULL) {
+                free(types);
+                Py_DECREF(newVal);
+                return -1;
+            }
+            b = class_addMethod(curClass, PyObjCSelector_GetSelector(newVal), newIMP,
+                                types);
 
             if (!b) {
                 free(types);

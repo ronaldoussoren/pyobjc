@@ -906,9 +906,12 @@ static initproc _Nullable make_init(const char* _typestr)
     }
 
     if (init_cif == NULL) {
-        PyObjCMethodSignature* signature;
-        signature = PyObjCMethodSignature_WithMetaData("i^v^v^v", NULL, YES);
-        init_cif  = PyObjCFFI_CIFForSignature(signature);
+        PyObjCMethodSignature* signature =
+            PyObjCMethodSignature_WithMetaData("i^v^v^v", NULL, YES);
+        if (signature == NULL) {
+            return NULL;
+        }
+        init_cif = PyObjCFFI_CIFForSignature(signature);
         Py_DECREF(signature);
         if (init_cif == NULL) {
             PyMem_Free((void*)typestr_copy);

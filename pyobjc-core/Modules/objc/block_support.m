@@ -447,12 +447,13 @@ void* _Nullable PyObjCBlock_Create(PyObjCMethodSignature* signature, PyObject* c
     }
     block->descriptor->signature = typestr;
     block->flags |= BLOCK_HAS_SIGNATURE;
-    block->isa    = gGlobalBlockClass;
-    block->invoke = PyObjCFFI_MakeBlockFunction(signature, callable);
-    if (block->invoke == NULL) {
+    block->isa                     = gGlobalBlockClass;
+    PyObjCBlockFunction block_func = PyObjCFFI_MakeBlockFunction(signature, callable);
+    if (block_func == NULL) {
         PyMem_Free(block);
         return NULL;
     }
+    block->invoke = block_func;
 
     block->invoke_cleanup = PyCapsule_New(block->invoke, "objc.__block_release__",
                                           PyObjCBlock_CleanupCapsule);
